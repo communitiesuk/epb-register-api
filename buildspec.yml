@@ -4,9 +4,8 @@ runtime-versions:
   ruby: 2.6
 
 env:
-  variables:
-    parameter-store:
-      PAAS_USER_INTEGRATION: "/aws/reference/secretsmanager/epbr/govpaas/integration"
+  parameter-store:
+    PAAS_USER_INTEGRATION: "/aws/reference/secretsmanager/epbr/govpaas/integration"
 
 phases:
   install:
