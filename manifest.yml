@@ -1,6 +1,6 @@
 ---
 applications:
-  - name: COMMUNITIES_EPBR_API_ASSESSOR
+  - name: COMMUNITIES_EPBR_INTEGRATION_API_ASSESSOR
     memory: 256M
     buildpacks:
       - ruby_buildpack
