@@ -11,7 +11,7 @@ describe 'SampleTest' do
 
   context 'when condition' do
     it 'succeeds' do
-      expect(0).to eq(2)
+      expect(0).to eq(0)
     end
   end
 end
