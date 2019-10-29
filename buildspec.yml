@@ -8,4 +8,5 @@ phases:
     runtime-versions:
       ruby: 2.6
     commands:
+      - gem install bundler:2.0.2
       - bundle install
