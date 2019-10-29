@@ -5,9 +5,9 @@ runtime-versions:
 
 env:
   parameter-store:
-    PAAS_LOGIN_INTEGRATION: "/aws/reference/secretsmanager/epbr/govpaas/integration"
-    PAAS_LOGIN_STAGING: "/aws/reference/secretsmanager/epbr/govpaas/staging"
-    PAAS_LOGIN_PRODUCTION: "/aws/reference/secretsmanager/epbr/govpaas/production"
+    PAAS_LOGIN_INTEGRATION: "/aws/reference/secretsmanager/epbr/govpaas/integration/PAAS_LOGIN"
+    PAAS_LOGIN_STAGING: "/aws/reference/secretsmanager/epbr/govpaas/staging/PAAS_LOGIN"
+    PAAS_LOGIN_PRODUCTION: "/aws/reference/secretsmanager/epbr/govpaas/production/PAAS_LOGIN"
 
 phases:
   install:
