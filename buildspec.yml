@@ -5,7 +5,9 @@ runtime-versions:
 
 env:
   parameter-store:
-    PAAS_USER_INTEGRATION: "/aws/reference/secretsmanager/epbr/govpaas/integration"
+    PAAS_LOGIN_INTEGRATION: "/aws/reference/secretsmanager/epbr/govpaas/integration"
+    PAAS_LOGIN_STAGING: "/aws/reference/secretsmanager/epbr/govpaas/staging"
+    PAAS_LOGIN_PRODUCTION: "/aws/reference/secretsmanager/epbr/govpaas/production"
 
 phases:
   install:
@@ -21,4 +23,4 @@ phases:
   build:
     commands:
       - rake spec
-      - echo $PAAS_USER_INTEGRATION
+      - echo $PAAS_LOGIN_INTEGRATION
