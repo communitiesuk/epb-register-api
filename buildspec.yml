@@ -5,7 +5,7 @@ runtime-versions:
 
 env:
   parameter-store:
-    PAAS_LOGIN_INTEGRATION: "/aws/reference/secretsmanager/epbr/govpaaswrong/integration/PAAS_LOGINWRONG"
+    PAAS_LOGIN_INTEGRATION: "epbr-govpaas-integration-login"
 
 phases:
   install:
