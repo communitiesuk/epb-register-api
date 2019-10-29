@@ -22,5 +22,6 @@ phases:
       - apt-get install cf-cli
   build:
     commands:
+      - echo ">>>>>>>> RUNNING UNIT TESTS"
       - rake spec
       - cf login -a $PAAS_API -u $PAAS_LOGIN_INTEGRATION -p $PAAS_PW_INTEGRATION
