@@ -6,7 +6,7 @@ runtime-versions:
 env:
   variables:
     parameter-store:
-      PAAS_USER_INTEGRATION: /aws/reference/secretsmanager/epbr/govpaas/integration
+      PAAS_USER_INTEGRATION: "/aws/reference/secretsmanager/epbr/govpaas/integration"
 
 phases:
   install:
