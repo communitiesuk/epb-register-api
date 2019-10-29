@@ -11,7 +11,5 @@ phases:
       - gem install bundler:2.0.2
       - bundle install
   build:
-    runtime-versions:
-      ruby: 2.6
     commands:
       - rake spec
