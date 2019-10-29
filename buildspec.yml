@@ -27,4 +27,4 @@ phases:
       - echo ">>>>>>>> RUNNING UNIT TESTS"
       - rake spec
       - echo $PAAS_API
-      - cf login -a $PAAS_API -u $PAAS_LOGIN_INTEGRATION -p $PAAS_PW_INTEGRATION -o $PAAS_ORG -s integration
+      - cf login -a $PAAS_API -u $PAAS_LOGIN_INTEGRATION -p $PAAS_PW_INTEGRATION -o $PAAS_ORG -s $PAAS_SPACE_INTEGRATION
