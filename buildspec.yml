@@ -10,7 +10,7 @@ phases:
     commands:
       - gem install bundler:2.0.2
       - bundle install
-      - wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | sudo apt-key add -
+      - wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | apt-key add -
   build:
     commands:
       - rake spec
