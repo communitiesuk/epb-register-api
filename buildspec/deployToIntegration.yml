@@ -1,0 +1,28 @@
+version: 0.2
+
+runtime-versions:
+  ruby: 2.6
+
+env:
+  parameter-store:
+    PAAS_LOGIN_INTEGRATION: "epbr-govpaas-integration-login"
+    PAAS_PW_INTEGRATION: "epbr-govpaas-integration-pw"
+    PAAS_SPACE_INTEGRATION: "epbr-govpaas-integration-space"
+    PAAS_API: "epbr-govpaas-api"
+    PAAS_ORG: "epbr-govpaas-orgname"
+
+phases:
+  install:
+    runtime-versions:
+      ruby: 2.6
+    commands:
+      - wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | apt-key add -
+      - echo "deb https://packages.cloudfoundry.org/debian stable main" | tee /etc/apt/sources.list.d/cloudfoundry-cli.list
+      - apt-get update
+      - apt-get install cf-cli
+  build:
+    commands:
+      - echo ">>>>>>>> DEPLOY TO INTEGRATION ENV"
+      - cf login -a $PAAS_API -u $PAAS_LOGIN_INTEGRATION -p "$PAAS_PW_INTEGRATION" -o $PAAS_ORG -s $PAAS_SPACE_INTEGRATION
+      - cf push
+      - cf logout
