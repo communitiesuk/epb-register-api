@@ -3,7 +3,6 @@ version: 0.2
 runtime-versions:
   ruby: 2.6
 
-env:
 phases:
   install:
     runtime-versions:
