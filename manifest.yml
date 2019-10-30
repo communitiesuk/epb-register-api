@@ -6,3 +6,5 @@ applications:
       - ruby_buildpack
     health-check-type: http
     health-check-http-endpoint: /healthcheck
+    services:
+      - communities-db-epb-assessor-integration
