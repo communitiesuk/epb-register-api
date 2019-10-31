@@ -14,8 +14,8 @@ describe 'SampleTest' do
       expect(0).to eq(0)
     end
 
-    it 'fails' do
-      expect(0).to eq(1)
+    it 'succeeds example two' do
+      expect(1).to eq(1)
     end
   end
 end
