@@ -1,6 +1,6 @@
 ---
 applications:
-  - name: communities-assessor-api-integration
+  - name: communities-epb-assessor-api-integration
     memory: 256M
     buildpacks:
       - ruby_buildpack
