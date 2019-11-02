@@ -7,4 +7,4 @@ applications:
     health-check-type: http
     health-check-http-endpoint: /healthcheck
     services:
-      - communities-db-epb-assessor-integration
+      - mhclg-epb-assessor-db-integration
