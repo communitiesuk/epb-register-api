@@ -8,3 +8,21 @@ applications:
     health-check-http-endpoint: /healthcheck
     services:
       - mhclg-epb-assessor-db-integration
+  - name: mhclg-epb-assessor-api-staging
+    memory: 256M
+    buildpacks:
+      - ruby_buildpack
+    health-check-type: http
+    health-check-http-endpoint: /healthcheck
+    services:
+      - mhclg-epb-assessor-db-staging
+
+  - name: mhclg-epb-assessor-api-production
+    memory: 256M
+    buildpacks:
+      - ruby_buildpack
+    health-check-type: http
+    health-check-http-endpoint: /healthcheck
+    services:
+      - mhclg-epb-assessor-db-production
+
