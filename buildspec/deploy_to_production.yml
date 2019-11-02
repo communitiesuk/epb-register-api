@@ -5,9 +5,9 @@ runtime-versions:
 
 env:
   parameter-store:
-    PAAS_LOGIN_STAGING: "epbr-govpaas-production-login"
-    PAAS_PW_STAGING: "epbr-govpaas-production-pw"
-    PAAS_SPACE_STAGING: "epbr-govpaas-production-space"
+    PAAS_LOGIN_PRODUCTION: "epbr-govpaas-production-login"
+    PAAS_PW_PRODUCTION: "epbr-govpaas-production-pw"
+    PAAS_SPACE_PRODUCTION: "epbr-govpaas-production-space"
     PAAS_API: "epbr-govpaas-api"
     PAAS_ORG: "epbr-govpaas-orgname"
 
