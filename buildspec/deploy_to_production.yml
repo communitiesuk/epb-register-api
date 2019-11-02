@@ -5,9 +5,9 @@ runtime-versions:
 
 env:
   parameter-store:
-    PAAS_LOGIN_STAGING: "epbr-govpaas-staging-login"
-    PAAS_PW_STAGING: "epbr-govpaas-staging-pw"
-    PAAS_SPACE_STAGING: "epbr-govpaas-staging-space"
+    PAAS_LOGIN_STAGING: "epbr-govpaas-production-login"
+    PAAS_PW_STAGING: "epbr-govpaas-production-pw"
+    PAAS_SPACE_STAGING: "epbr-govpaas-production-space"
     PAAS_API: "epbr-govpaas-api"
     PAAS_ORG: "epbr-govpaas-orgname"
 
@@ -22,7 +22,7 @@ phases:
       - apt-get install cf-cli
   build:
     commands:
-      - echo ">>>>>>>> DEPLOY TO STAGING ENV"
-      - cf login -a $PAAS_API -u $PAAS_LOGIN_STAGING -p "$PAAS_PW_STAGING" -o $PAAS_ORG -s $PAAS_SPACE_STAGING
-      - cf push mhclg-epb-assessor-api-staging
+      - echo ">>>>>>>> DEPLOY TO PRODUCTION ENV"
+      - cf login -a $PAAS_API -u $PAAS_LOGIN_PRODUCTION -p "$PAAS_PW_PRODUCTION" -o $PAAS_ORG -s $PAAS_SPACE_PRODUCTION
+      - cf push mhclg-epb-assessor-api-production
       - cf logout
