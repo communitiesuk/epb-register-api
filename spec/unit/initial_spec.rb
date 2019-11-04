@@ -15,7 +15,7 @@ describe 'SampleTest' do
     end
 
     it 'succeeds example two' do
-      expect(1).to eq(1)
+      expect(3).to eq(3)
     end
   end
 end
