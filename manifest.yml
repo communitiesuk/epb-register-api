@@ -8,6 +8,7 @@ applications:
     health-check-http-endpoint: /healthcheck
     services:
       - mhclg-epb-assessor-db-integration
+      - logit-ssl-drain
   - name: mhclg-epb-assessor-api-staging
     memory: 256M
     buildpacks:
@@ -16,7 +17,7 @@ applications:
     health-check-http-endpoint: /healthcheck
     services:
       - mhclg-epb-assessor-db-staging
-
+      - logit-ssl-drain
   - name: mhclg-epb-assessor-api-production
     memory: 256M
     buildpacks:
@@ -25,4 +26,5 @@ applications:
     health-check-http-endpoint: /healthcheck
     services:
       - mhclg-epb-assessor-db-production
+      - logit-ssl-drain
 
