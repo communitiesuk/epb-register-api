@@ -8,4 +8,4 @@ describe AssessorService do
       expect(response.status).to eq 200
     end 
   end
-end 
+end
