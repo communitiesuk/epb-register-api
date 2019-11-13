@@ -12,5 +12,5 @@ phases:
       - bundle install
   build:
     commands:
-      - echo ">>>>>>>> RUNNING UNIT TESTS"
+      - echo ">>>>>>>> RUNNING TESTS"
       - rake spec
