@@ -2,14 +2,13 @@ require 'net/http'
 
 require 'pry'
 
+$process = 0
+
 describe 'starts server outside of ruby'  do
   describe 'the server running live' do
-    $process = 0
     before(:all) do
-        fork do
-          process = IO.popen("rackup")
-          $process = process.pid
-        end
+      process = IO.popen("rackup")
+      $process = process.pid
       sleep 1
     end
 
