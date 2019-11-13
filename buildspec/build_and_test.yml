@@ -10,7 +10,6 @@ phases:
     commands:
       - gem install bundler:2.0.2
       - bundle install
-      - yum install lsof
   build:
     commands:
       - echo ">>>>>>>> RUNNING TESTS"
