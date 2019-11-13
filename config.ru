@@ -1,3 +1,3 @@
-require File.expand_path('app/api', File.dirname(__FILE__))
+require File.expand_path('lib/api', File.dirname(__FILE__))
 
 run AssessorService
