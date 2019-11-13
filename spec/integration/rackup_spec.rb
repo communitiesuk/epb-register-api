@@ -7,7 +7,8 @@ $process = 0
 describe 'starts server outside of ruby'  do
   describe 'the server running live' do
     before(:all) do
-      process = IO.popen("rackup")
+      $stdout = StringIO.new
+      process = IO.popen('rackup')
       $process = process.pid
       sleep 1
     end
@@ -16,19 +17,19 @@ describe 'starts server outside of ruby'  do
       `kill -9 #{$process}`
     end 
 
-    let(:request) { Net::HTTP.new("localhost", 9292) }
+    let(:request) { Net::HTTP.new('localhost', 9292) }
  
-    context "it is running" do
-      it "returns status 200" do
-        req = Net::HTTP::Get.new("/healthcheck")
+    context 'it is running' do
+      it 'returns status 200' do
+        req = Net::HTTP::Get.new('/healthcheck')
         response = request.request(req)
-        expect(response.code).to eq("200")
+        expect(response.code).to eq('200')
       end
 
-      it "returns status 404" do
-        req = Net::HTTP::Get.new("/error-message")
+      it 'returns status 404' do
+        req = Net::HTTP::Get.new('/error-message')
         response = request.request(req)
-        expect(response.code).to eq("404")
+        expect(response.code).to eq('404')
       end
     end
   end 
