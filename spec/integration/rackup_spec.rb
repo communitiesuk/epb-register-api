@@ -18,7 +18,7 @@ describe 'starts server outside of ruby'  do
 
     after(:all) do
       pid = return_pid_from_lsof(9292)
-      `kill #{pid}`
+      `kill -9 #{pid}`
     end 
 
     let(:request) { Net::HTTP.new("localhost", 9292) }
