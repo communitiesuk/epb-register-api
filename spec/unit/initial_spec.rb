@@ -1,5 +1,3 @@
-require 'rspec'
-
 describe 'SampleTest' do
   before do
     # Do nothing
