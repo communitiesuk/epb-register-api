@@ -1,24 +1,20 @@
 require 'net/http'
 
-describe 'starts server outside of ruby'  do
-  def return_pid_from_lsof(port)
-    lines = `lsof -i :#{port}`.split('ruby')
-    first_line = lines[1].strip
-    first_line.split(" ")[0]
-  end 
+require 'pry'
 
+describe 'starts server outside of ruby'  do
   describe 'the server running live' do
+    $process = 0
     before(:all) do
-      fork  do
-        _, _ = IO.pipe
-        IO.popen("rackup") 
-      end 
+        fork do
+          process = IO.popen("rackup")
+          $process = process.pid
+        end
       sleep 1
     end
 
     after(:all) do
-      pid = return_pid_from_lsof(9292)
-      `kill -9 #{pid}`
+      `kill -9 #{$process}`
     end 
 
     let(:request) { Net::HTTP.new("localhost", 9292) }
