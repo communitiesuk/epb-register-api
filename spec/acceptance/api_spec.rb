@@ -1,3 +1,5 @@
+require 'api'
+
 describe AssessorService do
   context "GET to /healthcheck" do
     let(:response) { get "/healthcheck" }

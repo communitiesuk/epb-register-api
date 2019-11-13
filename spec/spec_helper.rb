@@ -1,6 +1,5 @@
 require 'rspec'
 require 'rack/test'
-require_relative '../app/api.rb'
 
 module RSpecMixin
   def app
