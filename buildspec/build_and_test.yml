@@ -3,6 +3,10 @@ version: 0.2
 runtime-versions:
   ruby: 2.6
 
+env:
+  parameter-store:
+    UNLEASH_URI: "epbr-unleash-build-and-test-uri"
+
 phases:
   install:
     runtime-versions:
