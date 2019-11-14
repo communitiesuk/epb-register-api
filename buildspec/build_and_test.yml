@@ -5,7 +5,7 @@ runtime-versions:
 
 env:
   parameter-store:
-    UNLEASH_URI: "epbr-unleash-build-and-test-uri"
+    UNLEASH_URI: "epbr-unleash-uri"
 
 phases:
   install:
