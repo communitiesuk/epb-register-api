@@ -5,7 +5,6 @@ class Toggles
     Unleash.configure do |config|
       config.url          = ENV['UNLEASH_URI']
       config.app_name     = 'epb-fund-assessor'
-      config.backup_file = 'tmp/unleash.json'
 
       @unleash = Unleash::Client.new
     end
