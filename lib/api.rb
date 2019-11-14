@@ -1,5 +1,5 @@
 require 'sinatra/base'
-require 'helpers/toggles'
+require_relative 'helpers/toggles'
 
 class AssessorService < Sinatra::Base
   attr_reader :toggles
