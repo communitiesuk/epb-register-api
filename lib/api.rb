@@ -2,6 +2,8 @@ require 'sinatra/base'
 require 'helpers/toggles'
 
 class AssessorService < Sinatra::Base
+  attr_reader :toggles
+
   def initialize(toggles = false)
     super
 
