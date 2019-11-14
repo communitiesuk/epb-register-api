@@ -10,6 +10,7 @@ env:
     PAAS_SPACE_INTEGRATION: "epbr-govpaas-integration-space"
     PAAS_API: "epbr-govpaas-api"
     PAAS_ORG: "epbr-govpaas-orgname"
+    UNLEASH_URI: "epbr-unleash-integration-uri"
 
 phases:
   install:
@@ -21,5 +22,6 @@ phases:
     commands:
       - echo ">>>>>>>> DEPLOY TO INTEGRATION ENV"
       - cf login -a $PAAS_API -u $PAAS_LOGIN_INTEGRATION -p "$PAAS_PW_INTEGRATION" -o $PAAS_ORG -s $PAAS_SPACE_INTEGRATION
+      - cf set-env mhclg-epb-assessor-api-integration UNLEASH_URI $UNLEASH_URI
       - cf push mhclg-epb-assessor-api-integration
       - cf logout

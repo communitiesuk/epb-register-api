@@ -5,7 +5,7 @@ runtime-versions:
 
 env:
   parameter-store:
-    UNLEASH_URI: "epbr-unleash-uri"
+    UNLEASH_URI: "epbr-unleash-test-uri"
 
 phases:
   install:
@@ -17,4 +17,5 @@ phases:
   build:
     commands:
       - echo ">>>>>>>> RUNNING TESTS"
+      - echo $UNLEASH_URI
       - rake spec

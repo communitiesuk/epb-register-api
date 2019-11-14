@@ -10,6 +10,7 @@ env:
     PAAS_SPACE_PRODUCTION: "epbr-govpaas-production-space"
     PAAS_API: "epbr-govpaas-api"
     PAAS_ORG: "epbr-govpaas-orgname"
+    UNLEASH_URI: "epbr-unleash-production-uri"
 
 phases:
   install:
@@ -21,5 +22,6 @@ phases:
     commands:
       - echo ">>>>>>>> DEPLOY TO PRODUCTION ENV"
       - cf login -a $PAAS_API -u $PAAS_LOGIN_PRODUCTION -p "$PAAS_PW_PRODUCTION" -o $PAAS_ORG -s $PAAS_SPACE_PRODUCTION
+      - cf set-env mhclg-epb-assessor-api-production UNLEASH_URI $UNLEASH_URI
       - cf push mhclg-epb-assessor-api-production
       - cf logout
