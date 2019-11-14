@@ -8,14 +8,14 @@ describe 'starts server outside of ruby'  do
   describe 'the server running live' do
     before(:all) do
       $stdout = StringIO.new
-      process = IO.popen('rackup')
+      process = IO.popen('rackup 2>&1')
       $process = process.pid
       sleep 1
     end
 
     after(:all) do
-      `kill -9 #{$process}`
-    end 
+      Process.kill('KILL', $process)
+    end
 
     let(:request) { Net::HTTP.new('localhost', 9292) }
  
