@@ -31,3 +31,7 @@ deploy-app: ## Deploys the app to PaaS
 
 	cf v3-apply-manifest -f manifest.yml
 	cf v3-zdt-push "${DEPLOY_APPNAME}" --wait-for-deploy-complete
+
+.PHONY: test
+test:
+	rake spec
