@@ -1,4 +1,5 @@
 require 'sinatra/base'
+require 'helpers/unleash'
 
 class AssessorService < Sinatra::Base
   get '/' do
@@ -6,6 +7,6 @@ class AssessorService < Sinatra::Base
   end
 
   get '/healthcheck' do
-    200
+    status 200
   end
 end
