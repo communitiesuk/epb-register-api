@@ -30,8 +30,8 @@ deploy-app: ## Deploys the app to PaaS
 	@$(MAKE) generate-manifest
 
 	cf v3-apply-manifest -f manifest.yml
-	cf set-env "${DEPLOY_APPNAME}" UNLEASH_URI "{$UNLEASH_URI}"
-	cf set-env "${DEPLOY_APPNAME}" STAGE "{$STAGE}"
+	cf set-env "${DEPLOY_APPNAME}" UNLEASH_URI "${UNLEASH_URI}"
+	cf set-env "${DEPLOY_APPNAME}" STAGE "${STAGE}"
 	cf v3-zdt-push "${DEPLOY_APPNAME}" --wait-for-deploy-complete
 
 .PHONY: test
