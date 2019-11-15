@@ -7,7 +7,7 @@ env:
   parameter-store:
     PAAS_LOGIN_STAGING: "epbr-govpaas-staging-login"
     PAAS_PW_STAGING: "epbr-govpaas-staging-pw"
-    PAAS_SPACE_STAGING: "epbr-govpaas-staging-space"
+    STAGE: "epbr-govpaas-staging-space"
     PAAS_API: "epbr-govpaas-api"
     PAAS_ORG: "epbr-govpaas-orgname"
     UNLEASH_URI: "epbr-unleash-staging-uri"
@@ -21,7 +21,6 @@ phases:
   build:
     commands:
       - echo ">>>>>>>> DEPLOY TO STAGING ENV"
-      - cf login -a $PAAS_API -u $PAAS_LOGIN_STAGING -p "$PAAS_PW_STAGING" -o $PAAS_ORG -s $PAAS_SPACE_STAGING
-      - cf set-env mhclg-epb-assessor-api-staging UNLEASH_URI $UNLEASH_URI
-      - cf push mhclg-epb-assessor-api-staging
+      - cf login -a $PAAS_API -u $PAAS_LOGIN_STAGING -p "$PAAS_PW_STAGING" -o $PAAS_ORG -s $STAGE
+      - make deploy-app
       - cf logout
