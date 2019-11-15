@@ -5,7 +5,8 @@ runtime-versions:
 
 env:
   parameter-store:
-    UNLEASH_URI: "epbr-unleash-test-uri"
+    UNLEASH_URI: "epbr-unleash-integration-uri"
+    STAGE: "epbr-govpaas-integration-space"
 
 phases:
   install:
