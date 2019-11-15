@@ -18,5 +18,4 @@ phases:
   build:
     commands:
       - echo ">>>>>>>> RUNNING TESTS"
-      - echo $UNLEASH_URI
       - rake spec
