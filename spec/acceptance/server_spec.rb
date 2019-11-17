@@ -4,7 +4,7 @@ describe AssessorService do
   describe 'the server having started' do
     context 'responses from /healthcheck' do
       let(:response) { get '/healthcheck' }
-      
+
       it 'returns status 200' do
         expect(response.status).to eq(200)
       end
