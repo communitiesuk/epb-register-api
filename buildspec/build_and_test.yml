@@ -20,7 +20,7 @@ phases:
     commands:
       - echo ">>>>>>>> Starting database"
       - service postgresql start
-      - rake db:init
+      - rake db:create
       - rake db:migrate
 
   build:
