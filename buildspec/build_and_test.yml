@@ -19,7 +19,7 @@ phases:
   pre_build:
     commands:
       - echo ">>>>>>>> Starting database"
-      - service postgresql start
+#      - service postgresql start
 #      - rake db:create
 #      - rake db:migrate
 
