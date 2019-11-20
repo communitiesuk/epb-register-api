@@ -15,7 +15,7 @@ phases:
     commands:
       - gem install bundler:2.0.2
       - bundle install
-      - docker pull postgres
+#      - docker pull postgres
   pre_build:
     commands:
       - echo ">>>>>>>> Starting database"
