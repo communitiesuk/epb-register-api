@@ -63,7 +63,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  pg (~> 1.1.4)!
+  pg!
   pry (~> 0.12.2)!
   rack-test (~> 0.8.3)!
   rspec (~> 3.0)!
