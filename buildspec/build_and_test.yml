@@ -19,7 +19,6 @@ phases:
   pre_build:
     commands:
       - echo ">>>>>>>> Starting database"
-      - service postgresql initdb
       - service postgresql start
 
   build:
