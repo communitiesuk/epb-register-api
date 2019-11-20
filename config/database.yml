@@ -1,0 +1,12 @@
+development:
+  adapter: 'postgresql'
+  database: 'schemes_development'
+integration:
+  adapter: 'postgresql'
+  database: 'schemes_integration'
+staging:
+  adapter: 'postgresql'
+  database: 'schemes_staging'
+production:
+  adapter: 'postgresql'
+  database: 'schemes'
