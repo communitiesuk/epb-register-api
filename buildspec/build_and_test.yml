@@ -15,7 +15,7 @@ phases:
     commands:
       - gem install bundler:2.0.2
       - bundle install
-      - apt -y install postgresql postgresql-server postgresql-devel postgresql-contrib postgresql-docs
+      - apt -y install postgresql postgresql-contrib
   pre_build:
     commands:
       - echo ">>>>>>>> Starting database"
