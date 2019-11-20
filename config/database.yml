@@ -1,12 +1,12 @@
 development:
   adapter: 'postgresql'
-  database: 'schemes_development'
+  database: 'epb_development'
 integration:
   adapter: 'postgresql'
-  database: 'schemes_integration'
+  database: 'epb_integration'
 staging:
   adapter: 'postgresql'
-  database: 'schemes_staging'
+  database: 'epb_staging'
 production:
   adapter: 'postgresql'
-  database: 'schemes'
+  database: 'epb'

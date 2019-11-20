@@ -6,7 +6,7 @@ describe ActiveRecord::Base do
   before do
     described_class.establish_connection(
       adapter: 'postgresql',
-      database: 'schemes_development'
+      database: 'epb_development'
     )
   end
 
