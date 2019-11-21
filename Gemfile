@@ -1,6 +1,7 @@
 ruby '~>2.6'
 
 source 'https://rubygems.org' do
+  gem 'dotenv'
   gem 'pg'
   gem 'pry', '~> 0.12.2'
   gem 'rack-test', '~> 0.8.3'
