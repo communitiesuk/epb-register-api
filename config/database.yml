@@ -5,11 +5,11 @@ development:
   username: postgres
   password: <%= ENV['DOCKER_POSTGRES_PASSWORD'] %>
 integration:
-  adapter: postgresql
   database: epb_integration
+  url: <%= ENV['DATABASE_URL'] %>
 staging:
-  adapter: postgresql
   database: epb_staging
+  url: <%= ENV['DATABASE_URL'] %>
 production:
-  adapter: postgresql
   database: epb
+  url: <%= ENV['DATABASE_URL'] %>
