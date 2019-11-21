@@ -36,8 +36,8 @@ deploy-app: ## Deploys the app to PaaS
 
 .PHONY: setup-db
 setup-db:
-    rake db:create
-    rake db:migrate
+	rake db:create
+	rake db:migrate
 
 .PHONY: test
 test:
