@@ -21,11 +21,11 @@ phases:
       - gem install bundler:2.0.2
       - bundle install
       - docker run -d -p 5432:5432 --name postgres-test -e POSTGRES_PASSWORD=$DOCKER_POSTGRES_PASSWORD postgres:11
-      - echo ">>>>>>>> Setting up the database"
-      - rake db:create
-      - rake db:migrate
 
   build:
     commands:
+      - echo ">>>>>>>> Setting up the database"
+      - rake db:create
+      - rake db:migrate
       - echo ">>>>>>>> RUNNING TESTS"
       - rake spec
