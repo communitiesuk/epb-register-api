@@ -4,12 +4,12 @@ development:
   host: 127.0.0.1
   username: postgres
   password: <%= ENV['DOCKER_POSTGRES_PASSWORD'] %>
-integration:
-  database: epb_integration
-  url: <%= ENV['DATABASE_URL'] %>
-staging:
-  database: epb_staging
-  url: <%= ENV['DATABASE_URL'] %>
+test:
+  adapter: postgresql
+  database: epb_test
+  username: postgres
+  password: ''
+  host: 127.0.0.1
 production:
   database: epb
   url: <%= ENV['DATABASE_URL'] %>
