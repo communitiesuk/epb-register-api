@@ -34,6 +34,11 @@ deploy-app: ## Deploys the app to PaaS
 	cf set-env "${DEPLOY_APPNAME}" STAGE "${STAGE}"
 	cf v3-zdt-push "${DEPLOY_APPNAME}" --wait-for-deploy-complete
 
+.PHONY: setup-db
+setup-db:
+    rake db:create
+    rake db:migrate
+
 .PHONY: test
 test:
 	rake spec
