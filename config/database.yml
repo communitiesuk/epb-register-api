@@ -8,7 +8,7 @@ test:
   adapter: postgresql
   database: epb_test
   username: postgres
-  password: ''
+  password: <%= ENV['DOCKER_POSTGRES_PASSWORD'] %>
   host: 127.0.0.1
 production:
   database: epb
