@@ -1,9 +1,11 @@
+ENV['RACK_ENV'] = 'test'
+
 require 'rspec'
 require 'rack/test'
 
 module RSpecMixin
   def app
-    described_class 
+    described_class
   end
 end
 
