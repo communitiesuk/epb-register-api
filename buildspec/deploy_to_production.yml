@@ -22,6 +22,6 @@ phases:
     commands:
       - echo ">>>>>>>> DEPLOY TO PRODUCTION ENV"
       - cf login -a $PAAS_API -u $PAAS_LOGIN_PRODUCTION -p "$PAAS_PW_PRODUCTION" -o $PAAS_ORG -s $STAGE
-      - make setup-db
+      #- make setup-db
       - make deploy-app
       - cf logout
