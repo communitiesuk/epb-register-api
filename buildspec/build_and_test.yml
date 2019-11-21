@@ -25,7 +25,6 @@ phases:
   build:
     commands:
       - echo ">>>>>>>> Setting up the database"
-      - rake db:create
-      - rake db:migrate
+      - make setup-db
       - echo ">>>>>>>> RUNNING TESTS"
-      - rake spec
+      - make test
