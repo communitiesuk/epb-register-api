@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(version: 2019_11_20_133528) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "schemes", primary_key: "schemeId", force: :cascade do |t|
+  create_table "schemes", primary_key: "scheme_id", force: :cascade do |t|
     t.string "name"
   end
 
