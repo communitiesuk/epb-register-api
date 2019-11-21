@@ -7,6 +7,7 @@ env:
   parameter-store:
     UNLEASH_URI: "epbr-unleash-integration-uri"
     STAGE: "epbr-govpaas-integration-space"
+    DOCKER_POSTGRES_PASSWORD: "docker-postgres-password"
 
 phases:
   install:
@@ -15,13 +16,12 @@ phases:
     commands:
       - gem install bundler:2.0.2
       - bundle install
-#      - docker pull postgres
+      - docker run -d -p 5432:5432 --name postgres-test -e POSTGRES_PASSWORD=$DOCKER_POSTGRES_PASSWORD postgres:11
   pre_build:
     commands:
-      - echo ">>>>>>>> Starting database"
-#      - service postgresql start
-#      - rake db:create
-#      - rake db:migrate
+      - echo ">>>>>>>> Setting up the database"
+      - rake db:create
+      - rake db:migrate
 
   build:
     commands:

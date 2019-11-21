@@ -1,12 +1,15 @@
 development:
-  adapter: 'postgresql'
-  database: 'epb_development'
+  adapter: postgresql
+  database: epb_development
+  host: localhost
+  username: postgres
+  password: <%= ENV['DOCKER_POSTGRES_PASSWORD'] %>
 integration:
-  adapter: 'postgresql'
-  database: 'epb_integration'
+  adapter: postgresql
+  database: epb_integration
 staging:
-  adapter: 'postgresql'
-  database: 'epb_staging'
+  adapter: postgresql
+  database: epb_staging
 production:
-  adapter: 'postgresql'
-  database: 'epb'
+  adapter: postgresql
+  database: epb
