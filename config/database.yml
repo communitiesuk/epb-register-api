@@ -1,7 +1,7 @@
 development:
   adapter: postgresql
   database: epb_development
-  host: localhost
+  host: 127.0.0.1
   username: postgres
   password: <%= ENV['DOCKER_POSTGRES_PASSWORD'] %>
 integration:
