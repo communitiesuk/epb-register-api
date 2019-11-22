@@ -18,6 +18,8 @@ phases:
       ruby: 2.6
     commands:
       - echo ">>>>>>>> READY TO DEPLOY"
+      - gem install bundler:2.0.2
+      - bundle install
   build:
     commands:
       - echo ">>>>>>>> DEPLOY TO INTEGRATION ENV"
