@@ -16,12 +16,18 @@ phases:
   install:
     runtime-versions:
       ruby: 2.6
-    commands:
-      - echo ">>>>>>>> READY TO DEPLOY"
   build:
     commands:
       - echo ">>>>>>>> DEPLOY TO STAGING ENV"
       - cf login -a $PAAS_API -u $PAAS_LOGIN_STAGING -p "$PAAS_PW_STAGING" -o $PAAS_ORG -s $STAGE
-      #- make setup-db
-      - make deploy-app
+
+      - export DEPLOY_APPNAME="mhclg-epb-assessor-api-${STAGE}"
+      - make generate-manifest
+
+      - cf v3-apply-manifest -f manifest.yml
+      - cf set-env "${DEPLOY_APPNAME}" UNLEASH_URI $UNLEASH_URI
+      - cf set-env "${DEPLOY_APPNAME}" STAGE "${STAGE}"
+      - cf v3-zdt-push --wait-for-deploy-complete $DEPLOY_APPNAME
+      - cf run-task $DEPLOY_APPNAME "rake db:migrate" --name migrate
+      - cf v3-start $DEPLOY_APPNAME
       - cf logout
