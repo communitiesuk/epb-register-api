@@ -17,4 +17,9 @@ class AssessorService < Sinatra::Base
   get '/healthcheck' do
     status 200
   end
+
+  get '/schemes' do
+    status 200
+  end
+
 end
