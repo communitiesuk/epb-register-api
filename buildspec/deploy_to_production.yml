@@ -21,16 +21,17 @@ phases:
       - echo ">>>>>>>> DEPLOY TO PRODUCTION ENV"
       - cf login -a $PAAS_API -u $PAAS_LOGIN_PRODUCTION -p "$PAAS_PW_PRODUCTION" -o $PAAS_ORG -s $STAGE
       - export DEPLOY_APPNAME="mhclg-epb-assessor-api-${STAGE}"
-
-      - cf set-env "${DEPLOY_APPNAME}" UNLEASH_URI $UNLEASH_URI
-      - cf set-env "${DEPLOY_APPNAME}" STAGE "${STAGE}"
+      - cf v3-cancel-zdt-push ${DEPLOY_APPNAME} || true
   build:
     commands:
       - make generate-manifest
 
       - cf v3-apply-manifest -f manifest.yml
 
-      - cf v3-zdt-push --no-start $DEPLOY_APPNAME
+      - cf set-env "${DEPLOY_APPNAME}" UNLEASH_URI $UNLEASH_URI
+      - cf set-env "${DEPLOY_APPNAME}" STAGE "${STAGE}"
+
+      - cf v3-zdt-push --wait-for-deploy-complete --no-start $DEPLOY_APPNAME
       - cf run-task $DEPLOY_APPNAME "rake db:migrate" --name migrate
   post_build:
     commands:
