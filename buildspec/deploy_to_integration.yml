@@ -16,22 +16,17 @@ phases:
   install:
     runtime-versions:
       ruby: 2.6
-    commands:
-      - echo ">>>>>>>> READY TO DEPLOY"
-      - gem install bundler:2.0.2
-      - bundle install
   build:
     commands:
       - echo ">>>>>>>> DEPLOY TO INTEGRATION ENV"
       - cf login -a $PAAS_API -u $PAAS_LOGIN_INTEGRATION -p "$PAAS_PW_INTEGRATION" -o $PAAS_ORG -s $STAGE
-      - $(if ${STAGE},,$(error Must specify STAGE))
 
-      - $(eval export DEPLOY_APPNAME="mhclg-epb-assessor-api-${STAGE}")
+      - export DEPLOY_APPNAME="mhclg-epb-assessor-api-${STAGE}"
       - make generate-manifest
 
       - cf v3-apply-manifest -f manifest.yml
-      - cf set-env "${DEPLOY_APPNAME}" UNLEASH_URI "${UNLEASH_URI}"
+      - cf set-env "${DEPLOY_APPNAME}" UNLEASH_URI $UNLEASH_URI
       - cf set-env "${DEPLOY_APPNAME}" STAGE "${STAGE}"
-      - cf v3-zdt-push --wait-for-deploy-complete --no-start "${DEPLOY_APPNAME}"
-      - cf v3-start "${DEPLOY_APPNAME}"
+      - cf v3-zdt-push --wait-for-deploy-complete --no-start $DEPLOY_APPNAME
+      - cf v3-start $DEPLOY_APPNAME
       - cf logout
