@@ -17,5 +17,22 @@ describe AssessorService do
         expect(response.status).to eq(404)
       end
     end
+
+    context 'responses from /schemes' do
+      let(:response) { get '/schemes' }
+
+      it 'returns status 200' do
+        expect(response.status).to eq(200)
+      end
+    end
+
+    context 'responses from a 404-page' do
+      let(:response) { get '/error-page' }
+
+      it 'returns status 404' do
+        expect(response.status).to eq(404)
+      end
+    end
+
   end
 end

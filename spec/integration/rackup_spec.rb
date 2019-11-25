@@ -32,5 +32,14 @@ describe 'starts server outside of ruby'  do
         expect(response.code).to eq('404')
       end
     end
+
+    context 'it is running' do
+      it 'returns status 200' do
+        req = Net::HTTP::Get.new('/schemes')
+        response = request.request(req)
+        expect(response.code).to eq('200')
+      end
+    end
+    
   end
 end
