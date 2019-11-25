@@ -28,5 +28,6 @@ phases:
       - cf set-env "${DEPLOY_APPNAME}" UNLEASH_URI $UNLEASH_URI
       - cf set-env "${DEPLOY_APPNAME}" STAGE "${STAGE}"
       - cf v3-zdt-push --wait-for-deploy-complete --no-start $DEPLOY_APPNAME
+      - rake db:migrate
       - cf v3-start $DEPLOY_APPNAME
       - cf logout
