@@ -27,6 +27,6 @@ phases:
       - export DATABASE_URL=$(cf v3-ssh mhclg-epb-assessor-api-$STAGE -c 'echo $DATABASE_URL')
       - export DATABASE_HOST=$(echo $DATABASE_URL | cut -d'@' -f 2 | cut -d':' -f 1)
       - nohup cf v3-ssh -L 127.0.0.1:5432:$DATABASE_HOST:5432 mhclg-epb-assessor-api-$STAGE -N &
-      - make setup-db
+      - rake db:migrate
       - make deploy-app
       - cf logout
