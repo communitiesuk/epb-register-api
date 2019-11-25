@@ -31,7 +31,7 @@ phases:
       - cf v3-apply-manifest -f manifest.yml
 
       - cf v3-zdt-push --no-start $DEPLOY_APPNAME
-      - cf run-task $DEPLOY_APPNAME "bundle exec rake db:migrate" --name migrate
+      - cf run-task $DEPLOY_APPNAME "rake db:migrate" --name migrate
   post_build:
     commands:
       - cf v3-start $DEPLOY_APPNAME
