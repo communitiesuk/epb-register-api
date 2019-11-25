@@ -8,7 +8,7 @@ describe 'starts server outside of ruby'  do
   describe 'the server running live' do
     before(:all) do
       $stdout = StringIO.new
-      process = IO.popen('rackup')
+      process = IO.popen('rackup -q')
       $process = process.pid
       sleep 1
     end
