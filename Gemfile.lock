@@ -31,6 +31,7 @@ GEM
       rack
     rack-test (0.8.3)
       rack (>= 1.0, < 3)
+    rake (13.0.1)
     rspec (3.9.0)
       rspec-core (~> 3.9.0)
       rspec-expectations (~> 3.9.0)
@@ -68,6 +69,7 @@ DEPENDENCIES
   pg!
   pry (~> 0.12.2)!
   rack-test (~> 0.8.3)!
+  rake!
   rspec (~> 3.0)!
   sinatra (~> 2.0, >= 2.0.7)!
   sinatra-activerecord (~> 2.0.14)!
