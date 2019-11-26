@@ -1,9 +1,9 @@
-require 'sinatra/base'
-require_relative '../gateways/schemes/scheme'
+require_relative '../gateways/schemes/schemes_gateway'
 
 class GetAllSchemes
   def execute
-    @schemes = Scheme.all
-    { schemes: @schemes }
+    gateway = SchemesGateway.new
+    schemes = gateway.all_schemes
+    { schemes: schemes }
   end
 end

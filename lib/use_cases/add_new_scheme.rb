@@ -1,8 +1,8 @@
-require 'sinatra/base'
-require_relative '../gateways/schemes/scheme'
+require_relative '../gateways/schemes/schemes_gateway'
 
 class AddNewScheme
   def execute(name)
-    @scheme = Scheme.create(name: 'CIBSE')
+    gateway = SchemesGateway.new
+    gateway.add_scheme(name)
   end
 end
