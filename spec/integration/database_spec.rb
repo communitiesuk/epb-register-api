@@ -28,11 +28,13 @@ describe ActiveRecord::Base do
     expect(described_class.connection.table_exists?('schemes')).to eq(true)
   end
 
-  it 'can find the scheme_id view' do
+  it 'can find the scheme_id column' do
     connect('epb_development')
 
     ActiveRecord::Base.establish_connection
 
-    expect(described_class.connection.view_exists?('schemes')).to eq(true)
+    schemes = ActiveRecord::Base.connection.execute('SELECT scheme_id FROM schemes')
+
+    expect(schemes.to_a).to eq([])
   end
 end
