@@ -1,20 +1,16 @@
 require 'net/http'
-
 require 'pry'
-
-$process = 0
 
 describe 'starts server outside of ruby'  do
   describe 'the server running live' do
     before(:all) do
-      $stdout = StringIO.new
-      process = IO.popen('rackup -q')
-      $process = process.pid
+      process_id = IO.popen('rackup -q')
+      @process_id = process_id.pid
       sleep 1
     end
 
     after(:all) do
-      Process.kill('KILL', $process)
+      Process.kill('KILL', @process_id)
     end
 
     let(:request) { Net::HTTP.new('localhost', 9292) }
