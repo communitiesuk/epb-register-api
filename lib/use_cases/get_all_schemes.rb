@@ -1,5 +1,5 @@
 require 'sinatra/base'
-require_relative '../models/scheme'
+require_relative '../gateways/schemes/scheme'
 
 class GetAllSchemes
   def execute
