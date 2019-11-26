@@ -4,9 +4,10 @@ require 'pry'
 describe 'starts server outside of ruby'  do
   describe 'the server running live' do
     before(:all) do
-      process_id = IO.popen('rackup -q')
-      @process_id = process_id.pid
-      sleep 1
+      process = IO.popen('rackup -q')
+      @process_id = process.pid
+
+      sleep 2
     end
 
     after(:all) do
