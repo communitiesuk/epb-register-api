@@ -1,6 +1,6 @@
 require 'sinatra/base'
 require_relative 'helpers/toggles'
-require_relative './models/scheme'
+require_relative 'use_cases/get_all_schemes'
 
 class AssessorService < Sinatra::Base
   attr_reader :toggles
@@ -22,8 +22,8 @@ class AssessorService < Sinatra::Base
   get '/schemes' do
     content_type :json
 
-    @schemes = Scheme.all
-    { 'schemes' => @schemes}.to_json
+    @use_case = GetAllSchemes.new
+    @use_case.execute.to_json
   end
 
   post '/schemes' do
