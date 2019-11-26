@@ -42,8 +42,8 @@ describe ActiveRecord::Base do
 
     described_class.establish_connection
 
-    schemes = described_class.connection.execute('SELECT scheme_id FROM schemes')
+    scheme_id = described_class.connection.execute('SELECT scheme_id FROM schemes')
 
-    expect(schemes.to_a).to eq([])
+    expect(scheme_id).not_to be_nil
   end
 end
