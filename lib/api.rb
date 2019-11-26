@@ -25,4 +25,8 @@ class AssessorService < Sinatra::Base
     @schemes = Scheme.all
     { 'schemes' => "#{@schemes.to_json}"}.to_json
   end
+
+  post '/schemes' do
+    @scheme = Scheme.create({:name => 'CIBSE'})
+  end 
 end

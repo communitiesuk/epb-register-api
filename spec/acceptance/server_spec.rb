@@ -18,8 +18,16 @@ describe AssessorService do
       end
     end
 
-    context 'responses from /schemes' do
+    context 'responses from get /schemes' do
       let(:response) { get '/schemes' }
+
+      it 'returns status 200' do
+        expect(response.status).to eq(200)
+      end
+    end
+
+    context 'responses from post /schemes' do
+      let(:response) { post '/schemes', :schemes => {:name => "Scheme name"} }
 
       it 'returns status 200' do
         expect(response.status).to eq(200)
@@ -33,6 +41,5 @@ describe AssessorService do
         expect(response.status).to eq(404)
       end
     end
-
   end
 end
