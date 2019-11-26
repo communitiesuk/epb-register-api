@@ -5,19 +5,28 @@ require 'dotenv'
 
 describe ActiveRecord::Base do
   def connect(database_name)
-    ENV['RACK_ENV'] = if database_name == 'epb_development'
-      'development'
-    else
-      'test'
-    end
+    ENV['RACK_ENV'] = database_name.remove('epb_')
 
     described_class.connection
+  end
+
+  def migration_has_been_run?(version)
+    table_name = ActiveRecord::SchemaMigration.table_name
+
+    query = "SELECT version FROM %s WHERE version = '%s'" % [table_name, version]
+    described_class.connection.execute(query).any?
   end
 
   it 'can connect to an existing database' do
     connect('epb_test')
 
     expect(described_class.connected?).to be_truthy
+  end
+
+  it 'has run the create schemes migration' do
+    connect('epb_development')
+
+    expect(migration_has_been_run?('20191120133528')).to be_truthy
   end
 
   it 'can find the schemes table' do
@@ -28,11 +37,13 @@ describe ActiveRecord::Base do
     expect(described_class.connection.table_exists?('schemes')).to eq(true)
   end
 
-  it 'can find the scheme_id view' do
+  it 'can find the scheme_id column' do
     connect('epb_development')
 
-    ActiveRecord::Base.establish_connection
+    described_class.establish_connection
 
-    expect(described_class.connection.view_exists?('schemes')).to eq(true)
+    scheme_id = described_class.connection.execute('SELECT scheme_id FROM schemes')
+
+    expect(scheme_id).not_to be_nil
   end
 end
