@@ -42,3 +42,7 @@ setup-db:
 .PHONY: test
 test:
 	rake spec
+
+.PHONY: run
+run:
+	rackup

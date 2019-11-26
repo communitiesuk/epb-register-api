@@ -1,5 +1,11 @@
 # epb-find-assessor
 
+## Prerequisites
+
+* [Ruby](https://www.ruby-lang.org/en/)
+* [PostgreSQL](https://www.postgresql.org/)
+* Bundler (run `gem install bundler:2.0.2`)
+
 ## Installing
 `bundle install`
 
@@ -22,10 +28,10 @@ Set the endpoint of unleash to be any valid URL. You will need to run your own l
 `export UNLEASH_URI=https://google.com`
 
 ## Running tests
-`rake spec`
+`make test`
 
 ## Running server
-`rackup`
+`make run`
 
 # CI
 Build commands are stored in the buildspec directory

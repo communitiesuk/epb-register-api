@@ -4,18 +4,35 @@ require 'sinatra/activerecord'
 require 'dotenv'
 
 describe ActiveRecord::Base do
-  before do
-    described_class.establish_connection
+  def connect(database_name)
+    ENV['RACK_ENV'] = if database_name == 'epb_development'
+      'development'
+    else
+      'test'
+    end
+
+    described_class.connection
   end
 
   it 'can connect to an existing database' do
-    described_class.connection
+    connect('epb_test')
 
     expect(described_class.connected?).to be_truthy
   end
 
   it 'can find the schemes table' do
-    ENV['RACK_ENV'] = 'development'
-    described_class.connection
+    connect('epb_development')
+
+    ActiveRecord::Base.establish_connection
+
+    expect(described_class.connection.table_exists?('schemes')).to eq(true)
+  end
+
+  it 'can find the scheme_id view' do
+    connect('epb_development')
+
+    ActiveRecord::Base.establish_connection
+
+    expect(described_class.connection.view_exists?('schemes')).to eq(true)
   end
 end
