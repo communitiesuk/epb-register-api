@@ -22,12 +22,12 @@ class AssessorService < Sinatra::Base
   get '/schemes' do
     content_type :json
 
-    @use_case = GetAllSchemes.new
-    @use_case.execute.to_json
+    use_case = GetAllSchemes.new
+    use_case.execute.to_json
   end
 
   post '/schemes' do
-    @use_case = AddNewScheme.new
-    @use_case.execute('CIBSE')
+    use_case = AddNewScheme.new
+    use_case.execute('CIBSE')
   end
 end
