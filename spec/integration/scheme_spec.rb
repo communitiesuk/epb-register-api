@@ -7,8 +7,20 @@ describe AssessorService do
 
       it 'includes an empty scheme' do
         parsed_response = JSON.parse(response.body)
-        expect(parsed_response).to eq({"schemes"=>"[]"})
+        expect(parsed_response).to eq({"schemes"=>[]})
       end
     end
+
+    context 'responses from schemes after posting' do
+      let(:response) do 
+        post '/schemes', :schemes => {:name => "Scheme name"}
+        get '/schemes' 
+      end 
+
+      it 'returns scheme object' do
+        parsed_response = JSON.parse(response.body)
+        expect(parsed_response["schemes"].count).to eq(1)
+      end 
+    end 
   end 
 end 

@@ -23,7 +23,7 @@ class AssessorService < Sinatra::Base
     content_type :json
 
     @schemes = Scheme.all
-    { 'schemes' => "#{@schemes.to_json}"}.to_json
+    { 'schemes' => @schemes}.to_json
   end
 
   post '/schemes' do
