@@ -1,6 +1,6 @@
-require 'sinatra/base'
 require_relative 'helpers/toggles'
 require_relative 'use_cases/get_all_schemes'
+require_relative 'use_cases/add_new_scheme'
 
 class AssessorService < Sinatra::Base
   attr_reader :toggles
@@ -27,6 +27,7 @@ class AssessorService < Sinatra::Base
   end
 
   post '/schemes' do
-    @scheme = Scheme.create({:name => 'CIBSE'})
-  end 
+    @use_case = AddNewScheme.new
+    @use_case.execute('CIBSE')
+  end
 end
