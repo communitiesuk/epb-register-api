@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require_relative 'helpers/toggles'
+require_relative './models/scheme'
 
 class AssessorService < Sinatra::Base
   attr_reader :toggles
@@ -19,7 +20,9 @@ class AssessorService < Sinatra::Base
   end
 
   get '/schemes' do
-    status 200
-  end
+    content_type :json
 
+    @schemes = Scheme.all
+    { 'schemes' => "#{@schemes.to_json}"}.to_json
+  end
 end
