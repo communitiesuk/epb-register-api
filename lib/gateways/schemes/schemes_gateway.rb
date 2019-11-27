@@ -8,8 +8,8 @@ class SchemesGateway
 
   def all_schemes
     Scheme.all.map do |s|
-      {name: s.name,
-      scheme_id: s.id}
+      { name: s.name,
+        scheme_id: s.id }
     end
   end
 
