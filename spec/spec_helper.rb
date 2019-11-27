@@ -1,6 +1,7 @@
 ENV['RACK_ENV'] = 'development'
 
 require 'rspec'
+require 'sinatra/activerecord'
 require 'rack/test'
 require 'database_cleaner'
 
