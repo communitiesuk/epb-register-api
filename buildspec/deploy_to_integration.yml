@@ -36,5 +36,5 @@ phases:
       - cf run-task $DEPLOY_APPNAME "rake db:migrate" --name migrate
   post_build:
     commands:
-      - cf v3-start $DEPLOY_APPNAME
+      - cf v3-zdt-restart $DEPLOY_APPNAME
       - cf logout
