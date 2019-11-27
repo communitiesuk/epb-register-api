@@ -30,6 +30,7 @@ phases:
 
       - cf set-env "${DEPLOY_APPNAME}" UNLEASH_URI $UNLEASH_URI
       - cf set-env "${DEPLOY_APPNAME}" STAGE "${STAGE}"
+      - cf set-env "${DEPLOY_APPNAME}" BUNDLE_WITHOUT "test"
 
       - cf v3-zdt-push --wait-for-deploy-complete --no-start $DEPLOY_APPNAME
       - cf run-task $DEPLOY_APPNAME "rake db:migrate" --name migrate
