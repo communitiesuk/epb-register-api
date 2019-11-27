@@ -1,7 +1,16 @@
+# frozen_string_literal: true
+
 require_relative 'helpers/toggles'
 require_relative 'container'
 
 class AssessorService < Sinatra::Base
+  STATUS_CODES = {
+    '400' => [
+      PG::UniqueViolation,
+      ActiveRecord::RecordNotUnique
+    ]
+  }.freeze
+
   attr_reader :toggles
 
   def initialize(toggles = false)
@@ -27,5 +36,15 @@ class AssessorService < Sinatra::Base
 
   post '/schemes' do
     @container.get_object(:add_new_scheme_use_case).execute('CIBSE').to_json
+  rescue StandardError => e
+    handle_exception(e)
+  end
+
+  private
+
+  def handle_exception(error)
+    return status 400 if STATUS_CODES['400'].include?(error.class)
+
+    status 500
   end
 end
