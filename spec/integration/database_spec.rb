@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'sinatra/activerecord'
 require 'dotenv'
 
 describe ActiveRecord::Base do
@@ -26,7 +25,7 @@ describe ActiveRecord::Base do
   it 'has run the create schemes migration' do
     connect('epb_development')
 
-    expect(migration_has_been_run?('20191120133528')).to be_truthy
+    expect(migration_has_been_run?('20191127154333')).to be_truthy
   end
 
   it 'can find the schemes table' do
