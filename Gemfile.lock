@@ -54,6 +54,7 @@ GEM
     sinatra-activerecord (2.0.14)
       activerecord (>= 3.2)
       sinatra (>= 1.0)
+    sinatra-cross_origin (0.4.0)
     thread_safe (0.3.6)
     tilt (2.0.10)
     tzinfo (1.2.5)
@@ -75,6 +76,7 @@ DEPENDENCIES
   rspec (~> 3.0)!
   sinatra (~> 2.0, >= 2.0.7)!
   sinatra-activerecord (~> 2.0.14)!
+  sinatra-cross_origin (~> 0.4.0)!
   unleash (~> 0.1.6)!
 
 RUBY VERSION

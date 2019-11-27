@@ -2,6 +2,7 @@
 
 require_relative 'helpers/toggles'
 require_relative 'container'
+require('sinatra/cross_origin')
 
 class AssessorService < Sinatra::Base
   STATUS_CODES = {
@@ -20,6 +21,15 @@ class AssessorService < Sinatra::Base
     @container = Container.new
   end
 
+  configure do
+    enable :cross_origin
+    set :protection, :except => [:remote_token]
+  end
+
+  before do
+    response.headers['Access-Control-Allow-Origin'] = '*'
+  end
+
   get '/' do
     'Hello world!'
   end
@@ -29,8 +39,6 @@ class AssessorService < Sinatra::Base
   end
 
   get '/schemes' do
-    content_type :json
-
     @container.get_object(:get_all_schemes_use_case).execute.to_json
   end
 
