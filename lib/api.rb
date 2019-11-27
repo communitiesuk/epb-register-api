@@ -1,7 +1,5 @@
 require_relative 'helpers/toggles'
-require_relative 'use_cases/get_all_schemes'
-require_relative 'use_cases/add_new_scheme'
-require_relative 'gateways/schemes/schemes_gateway'
+require_relative 'container'
 
 class AssessorService < Sinatra::Base
   attr_reader :toggles
@@ -10,7 +8,7 @@ class AssessorService < Sinatra::Base
     super
 
     @toggles = toggles || Toggles.new
-    @schemes_gateway = SchemesGateway.new
+    @container = Container.new
   end
 
   get '/' do
@@ -24,12 +22,10 @@ class AssessorService < Sinatra::Base
   get '/schemes' do
     content_type :json
 
-    use_case = GetAllSchemes.new(@schemes_gateway)
-    use_case.execute.to_json
+    @container.get_object(:get_all_schemes_use_case).execute.to_json
   end
 
   post '/schemes' do
-    use_case = AddNewScheme.new(@schemes_gateway)
-    use_case.execute('CIBSE')
+    @container.get_object(:add_new_scheme_use_case).execute('CIBSE').to_json
   end
 end
