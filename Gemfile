@@ -13,5 +13,6 @@ source 'https://rubygems.org' do
   gem 'rake'
   gem 'sinatra', '~> 2.0', '>= 2.0.7'
   gem 'sinatra-activerecord', '~> 2.0.14'
+  gem "sinatra-cross_origin", "~> 0.4.0"
   gem 'unleash', '~> 0.1.6'
 end

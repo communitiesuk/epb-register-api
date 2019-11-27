@@ -1,5 +1,6 @@
 require_relative 'helpers/toggles'
 require_relative 'container'
+require('sinatra/cross_origin')
 
 class AssessorService < Sinatra::Base
   attr_reader :toggles
@@ -9,6 +10,14 @@ class AssessorService < Sinatra::Base
 
     @toggles = toggles || Toggles.new
     @container = Container.new
+  end
+
+  configure do
+    enable :cross_origin
+  end
+
+  before do
+    response.headers['Access-Control-Allow-Origin'] = '*'
   end
 
   get '/' do
