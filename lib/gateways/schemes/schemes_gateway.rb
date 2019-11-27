@@ -7,7 +7,10 @@ class SchemesGateway
   end
 
   def all_schemes
-    Scheme.all
+    Scheme.all.map do |s|
+      {name: s.name,
+      scheme_id: s.id}
+    end
   end
 
   def add_scheme(name)
