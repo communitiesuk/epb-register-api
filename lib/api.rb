@@ -2,7 +2,7 @@
 
 require_relative 'helpers/toggles'
 require_relative 'container'
-require('sinatra/cross_origin')
+require 'sinatra/cross_origin'
 
 class AssessorService < Sinatra::Base
   STATUS_CODES = {
