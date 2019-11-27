@@ -23,7 +23,7 @@ class AssessorService < Sinatra::Base
 
   configure do
     enable :cross_origin
-    set :protection, :except => [:remote_token]
+    set :protection, except: [:remote_token]
   end
 
   before do
