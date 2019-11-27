@@ -14,6 +14,7 @@ class AssessorService < Sinatra::Base
 
   configure do
     enable :cross_origin
+    set :protection, :except => [:remote_token]
   end
 
   before do
@@ -29,8 +30,6 @@ class AssessorService < Sinatra::Base
   end
 
   get '/schemes' do
-    content_type :json
-
     @container.get_object(:get_all_schemes_use_case).execute.to_json
   end
 
