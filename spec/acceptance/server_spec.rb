@@ -27,7 +27,7 @@ describe AssessorService do
     end
 
     context 'responses from post /schemes' do
-      let(:response) { post '/schemes', :schemes => {:name => "Scheme name"} }
+      let(:response) { post '/schemes', '{"name": "Scheme name"}' }
 
       it 'returns status 200' do
         expect(response.status).to eq(200)
