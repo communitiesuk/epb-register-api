@@ -30,6 +30,11 @@ class AssessorService < Sinatra::Base
     response.headers['Access-Control-Allow-Origin'] = '*'
   end
 
+  options "*" do
+    response.headers["Allow"] = "HEAD,GET,PUT,DELETE,OPTIONS"
+    200
+  end
+
   get '/' do
     'Hello world!'
   end

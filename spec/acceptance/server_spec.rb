@@ -41,5 +41,12 @@ describe AssessorService do
         expect(response.status).to eq(404)
       end
     end
+
+    context 'responses to pre-flight request' do
+      let(:response) { options '/schemes'}
+      it 'returns 200' do
+        expect(response.status).to eq(200)
+      end
+    end
   end
 end
