@@ -29,7 +29,7 @@ describe AssessorService do
       end
 
       it 'returns a status code of 200' do
-        expect(post_request.status).to eq(200)
+        expect(post_request.status).to eq(201)
       end
 
       it 'is visible in the list of schemes' do
@@ -38,6 +38,16 @@ describe AssessorService do
         get_response = get '/schemes'
 
         expect(get_response.body).to include('XYMZALERO')
+      end
+
+      it 'cannot have the same name twice' do
+        post_response = false
+
+        2.times do
+          post_response = post '/schemes', '{"name": "XYMZALERO"}'
+        end
+
+        expect(post_response.status).to eq(400)
       end
     end
   end
