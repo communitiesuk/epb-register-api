@@ -17,10 +17,10 @@ describe AssessorService do
       end
     end
 
-    context 'responses from post /api/schemes' do
+    context 'posting to the schemes api' do
       let(:response) { post '/api/schemes', '{"name": "Scheme name"}' }
 
-      it 'returns status 200' do
+      it 'returns status 201' do
         expect(response.status).to eq(201)
       end
     end
