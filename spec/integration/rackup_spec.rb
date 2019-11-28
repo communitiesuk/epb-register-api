@@ -1,5 +1,4 @@
 require 'net/http'
-require 'pry'
 
 describe 'starts server outside of ruby'  do
   describe 'the server running live' do
@@ -32,11 +31,11 @@ describe 'starts server outside of ruby'  do
 
     context 'it is running' do
       it 'returns status 200' do
-        req = Net::HTTP::Get.new('/schemes')
+        req = Net::HTTP::Get.new('/api/schemes')
         response = request.request(req)
         expect(response.code).to eq('200')
       end
     end
-    
+
   end
 end

@@ -5,9 +5,9 @@ info:
   version: "1.0"
 
 servers:
-  - url: https://mhclg-epb-assessor-api-integration.london.cloudapps.digital
+  - url: https://mhclg-epb-assessor-api-integration.london.cloudapps.digital/api
     description: Integration server
-  - url: https://mhclg-epb-assessor-api-staging.london.cloudapps.digital
+  - url: https://mhclg-epb-assessor-api-staging.london.cloudapps.digital/api
     description: Staging server
 tags:
   - name: Manage schemes

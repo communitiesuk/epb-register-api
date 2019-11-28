@@ -18,16 +18,16 @@ describe AssessorService do
       end
     end
 
-    context 'responses from get /schemes' do
-      let(:response) { get '/schemes' }
+    context 'responses from get /api/schemes' do
+      let(:response) { get '/api/schemes' }
 
       it 'returns status 200' do
         expect(response.status).to eq(200)
       end
     end
 
-    context 'responses from post /schemes' do
-      let(:response) { post '/schemes', '{"name": "Scheme name"}' }
+    context 'responses from post /api/schemes' do
+      let(:response) { post '/api/schemes', '{"name": "Scheme name"}' }
 
       it 'returns status 200' do
         expect(response.status).to eq(201)
@@ -43,7 +43,7 @@ describe AssessorService do
     end
 
     context 'responses to pre-flight request' do
-      let(:response) { options '/schemes'}
+      let(:response) { options '/api/schemes'}
       it 'returns 200' do
         expect(response.status).to eq(200)
       end

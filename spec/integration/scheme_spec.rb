@@ -2,8 +2,8 @@ require 'api'
 
 describe AssessorService do
   describe 'the server having started' do
-    context 'responses from /schemes' do
-      let(:response) { get '/schemes' }
+    context 'responses from /api/schemes' do
+      let(:response) { get '/api/schemes' }
 
       it 'includes an empty scheme' do
         parsed_response = JSON.parse(response.body)
@@ -13,8 +13,8 @@ describe AssessorService do
 
     context 'responses from schemes after posting' do
       let(:response) do
-        post '/schemes', '{"name": "Scheme name"}'
-        get '/schemes'
+        post '/api/schemes', '{"name": "Scheme name"}'
+        get '/api/schemes'
       end
 
       it 'returns scheme object' do
@@ -25,7 +25,7 @@ describe AssessorService do
 
     context 'when adding a scheme' do
       let(:post_request) do
-        post '/schemes', '{"name": "XYMZALERO"}'
+        post '/api/schemes', '{"name": "XYMZALERO"}'
       end
 
       it 'returns a status code of 200' do
@@ -35,7 +35,7 @@ describe AssessorService do
       it 'is visible in the list of schemes' do
         post_request
 
-        get_response = get '/schemes'
+        get_response = get '/api/schemes'
 
         expect(get_response.body).to include('XYMZALERO')
       end
@@ -44,7 +44,7 @@ describe AssessorService do
         post_response = false
 
         2.times do
-          post_response = post '/schemes', '{"name": "XYMZALERO"}'
+          post_response = post '/api/schemes', '{"name": "XYMZALERO"}'
         end
 
         expect(post_response.status).to eq(400)

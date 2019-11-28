@@ -47,11 +47,11 @@ class AssessorService < Sinatra::Base
     status 200
   end
 
-  get '/schemes' do
+  get '/api/schemes' do
     @container.get_object(:get_all_schemes_use_case).execute.to_json
   end
 
-  post '/schemes' do
+  post '/api/schemes' do
     data = JSON.parse(request.body.read.to_s)
     @container.get_object(:add_new_scheme_use_case).execute(data['name']).to_json
 
