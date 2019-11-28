@@ -1,7 +1,6 @@
 class SchemesGateway
 
   class Scheme < ActiveRecord::Base
-
   end
 
   def all_schemes

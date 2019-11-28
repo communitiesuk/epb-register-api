@@ -78,6 +78,7 @@ DEPENDENCIES
   sinatra-activerecord (~> 2.0.14)!
   sinatra-cross_origin (~> 0.4.0)!
   unleash (~> 0.1.6)!
+  zeitwerk (~> 2.2.1)!
 
 RUBY VERSION
    ruby 2.6.5p114
