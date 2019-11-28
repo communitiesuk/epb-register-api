@@ -21,7 +21,7 @@ phases:
       - gem install bundler:2.0.2
       - bundle install
       - docker run -d -p 5432:5432 --name postgres-test -e POSTGRES_PASSWORD=$DOCKER_POSTGRES_PASSWORD postgres:11
-      - while [ "`docker inspect -f {{.State.Health.Status}} postgres-test`" != "healthy" ]; do sleep 2; done
+      - while [ "`docker inspect -f {{.State.Status}} postgres-test`" != "running" ]; do sleep 2; done
   build:
     commands:
       - echo ">>>>>>>> Setting up the database"
