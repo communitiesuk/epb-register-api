@@ -7,29 +7,37 @@ describe AssessorService do
 
       it 'includes an empty scheme' do
         parsed_response = JSON.parse(response.body)
-        expect(parsed_response).to eq({"schemes"=>[]})
+        expect(parsed_response).to eq('schemes'=>[])
       end
     end
 
     context 'responses from schemes after posting' do
       let(:response) do
-        post '/schemes', :schemes => {:name => "Scheme name"}
+        post '/schemes', '{"name": "Scheme name"}'
         get '/schemes'
       end
 
       it 'returns scheme object' do
         parsed_response = JSON.parse(response.body)
-        expect(parsed_response["schemes"].count).to eq(1)
+        expect(parsed_response['schemes'].count).to eq(1)
       end
     end
 
-    context 'responses from schemes after posting' do
-      let(:response) do
-        post '/schemes', :schemes => {:name => "Scheme name"}
+    context 'when adding a scheme' do
+      let(:post_request) do
+        post '/schemes', '{"name": "XYMZALERO"}'
       end
 
       it 'returns a status code of 200' do
-        expect(response.status).to eq(200)
+        expect(post_request.status).to eq(200)
+      end
+
+      it 'is visible in the list of schemes' do
+        post_request
+
+        get_response = get '/schemes'
+
+        expect(get_response.body).to include('XYMZALERO')
       end
     end
   end
