@@ -1,6 +1,6 @@
 describe AssessorService do
   describe 'The Schemes API' do
-    context 'responses from get /api/schemes' do
+    context 'getting an empty list of schemes' do
       let(:response) { get '/api/schemes' }
 
       it 'returns status 200' do
@@ -10,6 +10,11 @@ describe AssessorService do
       it 'returns JSON' do
         expect(response.headers['Content-Type']).to eq('application/json')
       end
+
+      it 'includes an empty list of schemes' do
+        parsed_response = JSON.parse(response.body)
+        expect(parsed_response).to eq('schemes'=>[])
+      end
     end
 
     context 'responses from post /api/schemes' do
@@ -17,15 +22,6 @@ describe AssessorService do
 
       it 'returns status 200' do
         expect(response.status).to eq(201)
-      end
-    end
-
-    context 'responses from /api/schemes' do
-      let(:response) { get '/api/schemes' }
-
-      it 'includes an empty scheme' do
-        parsed_response = JSON.parse(response.body)
-        expect(parsed_response).to eq('schemes'=>[])
       end
     end
 
