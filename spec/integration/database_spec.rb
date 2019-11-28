@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'dotenv'
-
 describe ActiveRecord::Base do
   def connect(database_name)
     ENV['RACK_ENV'] = database_name.remove('epb_')
