@@ -4,7 +4,7 @@ describe Gateway::SchemesGateway do
       expect(Gateway::SchemesGateway::Scheme).to receive(:create)
 
       subject = described_class.new
-      subject.add_scheme('test')
+      subject.add('test')
     end
   end
 
@@ -15,7 +15,7 @@ describe Gateway::SchemesGateway do
       expect(Gateway::SchemesGateway::Scheme).to receive(:all)
 
       subject = described_class.new
-      subject.all_schemes
+      subject.all
     end
   end
 
@@ -23,7 +23,7 @@ describe Gateway::SchemesGateway do
     it 'can show results' do
       allow(Gateway::SchemesGateway::Scheme).to receive(:all).and_return([{ id: 1, name: 'hello' }])
 
-      expect(described_class.new.all_schemes).to eq([{ scheme_id: 1, name: 'hello' }])
+      expect(described_class.new.all).to eq([{ scheme_id: 1, name: 'hello' }])
     end
   end
 end
