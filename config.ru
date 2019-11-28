@@ -1,3 +1,7 @@
-require File.expand_path('lib/api', File.dirname(__FILE__))
+require 'zeitwerk'
+
+loader = Zeitwerk::Loader.new
+loader.push_dir("#{__dir__}/lib/")
+loader.setup
 
 run AssessorService
