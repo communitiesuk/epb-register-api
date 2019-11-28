@@ -6,8 +6,8 @@ module Gateway
     def all_schemes
       Scheme.all.map do |s|
         {
-          scheme_id: s.id,
-          name: s.name
+          scheme_id: s[:id],
+          name: s[:name]
         }
       end
     end
