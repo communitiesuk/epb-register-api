@@ -30,7 +30,7 @@ describe AssessorService do
       let(:response) { post '/schemes', '{"name": "Scheme name"}' }
 
       it 'returns status 200' do
-        expect(response.status).to eq(200)
+        expect(response.status).to eq(201)
       end
     end
 
