@@ -52,10 +52,10 @@ class AssessorService < Sinatra::Base
   end
 
   post '/schemes' do
-    if true
-      data = JSON.parse(request.body.read.to_s)
-      @container.get_object(:add_new_scheme_use_case).execute(data['name']).to_json
-    end
+    data = JSON.parse(request.body.read.to_s)
+    @container.get_object(:add_new_scheme_use_case).execute(data['name']).to_json
+
+    status 201
   rescue StandardError => e
     handle_exception(e)
   end
