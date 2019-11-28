@@ -3,7 +3,5 @@ class CreateSchemes < ActiveRecord::Migration[6.0]
     create_table :schemes, primary_key: :scheme_id do |t|
       t.string :name
     end
-
-    add_index :schemes, :name, unique: true
   end
 end

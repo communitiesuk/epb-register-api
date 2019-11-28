@@ -19,13 +19,19 @@ describe ActiveRecord::Base do
   it 'can connect to an existing database' do
     connect('epb_test')
 
-    expect(described_class.connected?).to be_truthy
+    expect(described_class.connected?).to be true
   end
 
   it 'has run the create schemes migration' do
     connect('epb_development')
 
-    expect(migration_has_been_run?('20191127154333')).to be_truthy
+    expect(migration_has_been_run?('20191120133528')).to be true
+  end
+
+  it 'has run the add unique index to scheme name migration' do
+    connect('epb_development')
+
+    expect(migration_has_been_run?('20191127191652')).to be true
   end
 
   it 'can find the schemes table' do
@@ -33,7 +39,7 @@ describe ActiveRecord::Base do
 
     ActiveRecord::Base.establish_connection
 
-    expect(described_class.connection.table_exists?('schemes')).to eq(true)
+    expect(described_class.connection.table_exists?('schemes')).to be true
   end
 
   it 'can find the scheme_id column' do
