@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'helpers/toggles'
+require_relative 'helper/toggles'
 require_relative 'container'
 require 'sinatra/cross_origin'
 

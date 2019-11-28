@@ -1,4 +1,4 @@
-class AddNewScheme
+class AddScheme
   def initialize(gateway)
     @gateway = gateway
   end

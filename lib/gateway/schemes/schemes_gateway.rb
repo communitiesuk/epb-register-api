@@ -1,5 +1,3 @@
-require 'sinatra/activerecord'
-
 class SchemesGateway
 
   class Scheme < ActiveRecord::Base

@@ -1,5 +1,4 @@
-
-class FetchAllSchemes
+class FetchSchemes
   def initialize(gateway)
     @gateway = gateway
   end
