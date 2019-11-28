@@ -9,6 +9,9 @@ class AssessorService < Sinatra::Base
     '400' => [
       PG::UniqueViolation,
       ActiveRecord::RecordNotUnique
+    ],
+    '401' => [
+        JSON::ParserError
     ]
   }.freeze
 
@@ -48,7 +51,10 @@ class AssessorService < Sinatra::Base
   end
 
   post '/schemes' do
-    @container.get_object(:add_new_scheme_use_case).execute('CIBSE').to_json
+    if true
+      data = JSON.parse(request.body.read.to_s)
+      @container.get_object(:add_new_scheme_use_case).execute(data['name']).to_json
+    end
   rescue StandardError => e
     handle_exception(e)
   end
@@ -57,6 +63,7 @@ class AssessorService < Sinatra::Base
 
   def handle_exception(error)
     return status 400 if STATUS_CODES['400'].include?(error.class)
+    return status 401 if STATUS_CODES['401'].include?(error.class)
 
     status 500
   end
