@@ -15,13 +15,12 @@ phases:
       ruby: 2.6
     commands:
       - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2&
-      - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
+      - while [ "`docker inspect -f {{.State.Health.Status}} postgres-test`" != "healthy" ]; do sleep 2; done
   pre_build:
     commands:
       - gem install bundler:2.0.2
       - bundle install
       - docker run -d -p 5432:5432 --name postgres-test -e POSTGRES_PASSWORD=$DOCKER_POSTGRES_PASSWORD postgres:11
-
   build:
     commands:
       - echo ">>>>>>>> Setting up the database"
