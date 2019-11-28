@@ -5,7 +5,7 @@ module UseCase
     end
 
     def execute(name)
-      @gateway.add_scheme(name)
+      @gateway.add(name)
     end
   end
 end
