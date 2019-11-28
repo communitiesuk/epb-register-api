@@ -3,7 +3,7 @@ module Gateway
     class Scheme < ActiveRecord::Base
     end
 
-    def all_schemes
+    def all
       Scheme.all.map do |s|
         {
           scheme_id: s[:id],
@@ -12,7 +12,7 @@ module Gateway
       end
     end
 
-    def add_scheme(name)
+    def add(name)
       Scheme.create(name: name)
     end
   end
