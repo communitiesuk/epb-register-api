@@ -19,8 +19,9 @@ describe AssessorService do
 
     context 'posting to the schemes api' do
       response = false
+      request_body = { name: 'XYMZALERO' }.to_json
       before(:each) do
-        response = post('/api/schemes', '{"name": "XYMZALERO"}')
+        response = post('/api/schemes', request_body)
       end
 
       it 'returns status 201' do
@@ -37,7 +38,7 @@ describe AssessorService do
       end
 
       it 'cannot have the same name twice' do
-        second_post_response = post '/api/schemes', '{"name": "XYMZALERO"}'
+        second_post_response = post '/api/schemes', request_body
         expect(second_post_response.status).to eq(400)
       end
     end
