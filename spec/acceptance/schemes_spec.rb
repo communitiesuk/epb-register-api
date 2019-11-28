@@ -6,6 +6,10 @@ describe AssessorService do
       it 'returns status 200' do
         expect(response.status).to eq(200)
       end
+
+      it 'returns JSON' do
+        expect(response.headers['Content-Type']).to eq('application/json')
+      end
     end
 
     context 'responses from post /api/schemes' do

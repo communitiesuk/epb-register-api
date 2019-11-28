@@ -48,6 +48,7 @@ class AssessorService < Sinatra::Base
   end
 
   get '/api/schemes' do
+    content_type :json
     @container.get_object(:get_all_schemes_use_case).execute.to_json
   end
 
