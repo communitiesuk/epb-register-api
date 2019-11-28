@@ -1,12 +1,8 @@
-require 'api'
-
 class StubToggles
-  def toggles
-
-  end
+  def toggles; end
 
   def state(name)
-    name=="a"
+    name == 'a'
   end
 end
 
@@ -16,10 +12,10 @@ describe AssessorService do
   it 'is a' do
     described_class.new
 
-    expect(subject.toggles.state("a")).to eq(true)
+    expect(subject.toggles.state('a')).to eq(true)
   end
 
   it 'is not b' do
-    expect(subject.toggles.state("b")).to eq(false)
+    expect(subject.toggles.state('b')).to eq(false)
   end
 end

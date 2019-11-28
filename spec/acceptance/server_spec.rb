@@ -1,5 +1,3 @@
-require 'api'
-
 describe AssessorService do
   describe 'the server having started' do
     context 'responses from /healthcheck' do

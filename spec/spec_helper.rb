@@ -4,6 +4,11 @@ require 'rspec'
 require 'sinatra/activerecord'
 require 'rack/test'
 require 'database_cleaner'
+require 'zeitwerk'
+
+loader = Zeitwerk::Loader.new
+loader.push_dir("#{__dir__}/../lib/")
+loader.setup
 
 module RSpecMixin
   def app
