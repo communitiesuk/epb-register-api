@@ -1,0 +1,258 @@
+openapi: "3.0.0"
+info:
+  title: Energy Performance of Buildings Register API
+  description: API for all EPBR services (EPC, DEC, ACIR), maintained by the EPBR Service Team at MHCLG.
+  version: "1.0"
+
+servers:
+  - url: https://mhclg-epb-assessor-api-integration.london.cloudapps.digital
+    description: Integration server
+  - url: https://mhclg-epb-assessor-api-staging.london.cloudapps.digital
+    description: Staging server
+  - url: https://mhclg-epb-assessor-api-staging.london.cloudapps.digital
+    description: Production server
+tags:
+  - name: Batch update assessors
+    description: Updating assessors as a batch process
+  - name: Individually update assessors
+    description: Updating assessors in a RESTful web services paradigm
+  - name: Manage schemes
+    description: Operations for managing schemes in the register
+paths:
+  /schemes:
+    get:
+      tags:
+        - Manage schemes
+      summary: Get a list of all energy assessment schemes in the register
+      responses:
+        200:
+          description: List of all schemes
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  schemes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SchemeSummary'
+
+    post:
+      tags:
+        - Manage schemes
+      summary: Add a new energy assessment scheme to the register
+      requestBody:
+        description: The scheme to be added
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "EPCs 4 U"
+      responses:
+        201:
+          description: Scheme succesfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SchemeSummary'
+
+        400:
+          description: Scheme already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                          example: "SCHEME_ALREADY_EXISTS"
+                        title:
+                          type: string
+                          example: "A scheme with this name already exists in the register"
+
+
+  /{scheme}/assessors/{canonicalAssessorId}:
+    delete:
+      tags:
+        - Individually update assessors
+      summary: Remove an assessor from this schemes list of qualified assessors
+      parameters:
+        - name: canonicalAssessorId
+          in: path
+          required: true
+          description: Canonical assessor ID
+          schema:
+            type: string
+        - name: scheme
+          in: path
+          required: true
+          description: Unique identifier for scheme
+          schema:
+            type: string
+      responses:
+        204:
+          description: Assessor succesfully removed
+  /{scheme}/assessors/:
+    put:
+      tags:
+        - Batch update assessors
+      summary: Submit a list of assessors for a scheme
+      parameters:
+        - name: scheme
+          in: path
+          required: true
+          description: Unique identifier for scheme
+          schema:
+            type: string
+      requestBody:
+        description: List of assessors for this scheme
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                assessors:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      firstName:
+                        type: string
+                      lastName:
+                        type: string
+                      middleNames:
+                        type: string
+                      canonicalAssessorId:
+                        type: string
+                      telephoneNumber:
+                        type: string
+                      searchResultsComparisonPostcode:
+                        type: string
+                        example: SW1A 1AA
+                      dateOfBirth:
+                        type: string
+                        format: date
+                      status:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            qualificationType:
+                              type: string
+                              enum: [CC4, DEC, NOS3, NOS4, NOS5, SP3, GDAL3, GDAL4, GDAL5]
+                            status:
+                              type: string
+                              enum: [INACTIVE,REGISTERED,STRUCK_OFF,SUSPENDED,HEIGHTENED_QA]
+
+      responses:
+        200:
+          description: List of assessors succesfully submitted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  assessorsNewToSchemeCount:
+                    type: number
+                  assessorsRemovedFromSchemeCount:
+                    type: number
+                  totalAssessorsOnSchemeCount:
+                    type: number
+
+  /assessors:
+    post:
+      tags:
+        - Individually update assessors
+      summary: Register a new assessor to assign them a canonical assessor ID, this must be done before assigning them to your scheme
+      parameters:
+        - in: query
+          name: force
+          description: Register the assessor even though there are already registered assessors with similar details
+          schema:
+            type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                middleNames:
+                  type: string
+                dateOfBirth:
+                  type: string
+                  format: date
+      responses:
+        201:
+          description: Assessor succesfully registered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShortAssessorSummary'
+
+        409:
+          description: Assessor may already be registered, verify then re-attempt with force true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  potentialMatches:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ShortAssessorSummary'
+
+
+
+
+  /assessors/search:
+    get:
+      summary: Search for an assessor by postcode
+      parameters:
+        - in: query
+          name: postcode
+          description: The postcode of the property to be assessed
+          schema:
+            type: string
+      responses:
+        200:
+          description: List of assessors sorted by distance
+
+components:
+  schemas:
+    SchemeSummary:
+      type: object
+      properties:
+        schemeId:
+          type: string
+          example: "432"
+        name:
+          type: string
+          example: "EPBs 4 U"
+    ShortAssessorSummary:
+      type: object
+      properties:
+        canonicalAssessorId:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        middleNames:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date
