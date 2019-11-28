@@ -31,10 +31,11 @@ class AssessorService < Sinatra::Base
 
   before do
     response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Cache-Control, Accept'
   end
 
-  options "*" do
-    response.headers["Allow"] = "HEAD,GET,PUT,DELETE,OPTIONS"
+  options '*' do
+    response.headers['Allow'] = 'HEAD,GET,PUT,DELETE,OPTIONS'
     200
   end
 

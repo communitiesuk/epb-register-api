@@ -47,6 +47,11 @@ describe AssessorService do
       it 'returns 200' do
         expect(response.status).to eq(200)
       end
+
+      it 'allows headers for access control' do
+        headers = response.headers['Access-Control-Allow-Headers'].split(/[,\s]+/)
+        expect(headers).to contain_exactly('Content-Type', 'Cache-Control', 'Accept')
+      end
     end
   end
 end
