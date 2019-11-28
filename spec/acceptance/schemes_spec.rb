@@ -33,8 +33,8 @@ describe AssessorService do
       end
 
       it 'cannot have the same name twice' do
-        post_response = post '/api/schemes', '{"name": "XYMZALERO"}'
-        expect(post_response.status).to eq(400)
+        second_post_response = post '/api/schemes', '{"name": "XYMZALERO"}'
+        expect(second_post_response.status).to eq(400)
       end
     end
   end
