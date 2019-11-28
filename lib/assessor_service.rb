@@ -53,6 +53,7 @@ class AssessorService < Sinatra::Base
   end
 
   post '/api/schemes' do
+    content_type :json
     data = JSON.parse(request.body.read.to_s)
     @container.get_object(:add_new_scheme_use_case).execute(data['name']).to_json
 

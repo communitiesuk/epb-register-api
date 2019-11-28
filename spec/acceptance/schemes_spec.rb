@@ -27,6 +27,10 @@ describe AssessorService do
         expect(response.status).to eq(201)
       end
 
+      it 'returns json' do
+        expect(response.headers['Content-Type']).to eq('application/json')
+      end
+
       it 'is visible in the list of schemes' do
         get_response = get '/api/schemes'
         expect(get_response.body).to include('XYMZALERO')
