@@ -11,7 +11,7 @@ class AssessorService < Sinatra::Base
       ActiveRecord::RecordNotUnique
     ],
     '401' => [
-        JSON::ParserError
+      JSON::ParserError
     ]
   }.freeze
 
@@ -40,7 +40,11 @@ class AssessorService < Sinatra::Base
   end
 
   get '/' do
-    'Hello world!'
+    redirect '/api'
+  end
+
+  get '/api' do
+    '<a href="https://mhclg-epb-swagger.london.cloudapps.digital">API</a>'
   end
 
   get '/healthcheck' do
