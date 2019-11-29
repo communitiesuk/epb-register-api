@@ -44,7 +44,13 @@ class AssessorService < Sinatra::Base
   end
 
   get '/api' do
-    '<a href="https://mhclg-epb-swagger.london.cloudapps.digital">API</a>'
+    content_type :json
+
+    {
+      links: {
+        apispec: "https://mhclg-epb-swagger.london.cloudapps.digital"
+      }
+    }.to_json
   end
 
   get '/healthcheck' do
