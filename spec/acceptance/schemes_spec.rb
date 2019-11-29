@@ -33,8 +33,8 @@ describe AssessorService do
       end
 
       it 'is visible in the list of schemes' do
-        get_response = get '/api/schemes'
-        expect(get_response.body).to include('XYMZALERO')
+        get_response = JSON.parse((get '/api/schemes').body)
+        expect(get_response['schemes'][0]['name']).to eq('XYMZALERO')
       end
 
       it 'cannot have the same name twice' do
