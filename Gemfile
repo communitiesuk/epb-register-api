@@ -1,6 +1,10 @@
 ruby '~> 2.6'
 
 source 'https://rubygems.org' do
+  group :development do
+    gem 'sinatra-contrib'
+  end
+
   group :test do
     gem 'database_cleaner'
     gem 'pry', '~> 0.12.2'

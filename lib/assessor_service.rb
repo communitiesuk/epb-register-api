@@ -24,6 +24,12 @@ class AssessorService < Sinatra::Base
     @container = Container.new
   end
 
+  configure :development do
+    require "sinatra/reloader"
+    register Sinatra::Reloader
+    also_reload 'lib/**/*.rb'
+  end
+
   configure do
     enable :cross_origin
     set :protection, except: [:remote_token]
