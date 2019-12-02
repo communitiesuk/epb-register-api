@@ -1,8 +1,20 @@
+# frozen_string_literal: true
+
 describe UseCase::AddAssessor do
+  VALID_ASSESSOR = JSON.parse(
+    {
+      firstName: 'John',
+      lastName: 'Smith',
+      middleNames: 'Brain',
+      dateOfBirth: '1991-02-25'
+    }.to_json
+  )
+
   class SchemesGatewayStub
     def initialize(result)
       @result = result
     end
+
     def all(*)
       @result
     end
@@ -10,16 +22,9 @@ describe UseCase::AddAssessor do
 
   context 'when adding an assessor' do
     let(:add_assessor_with_stub_data) do
-      schemes_gateway = SchemesGatewayStub.new([{scheme_id: 25, name: 'Best scheme'}])
+      schemes_gateway = SchemesGatewayStub.new([{ scheme_id: 25, name: 'Best scheme' }])
       described_class.new(schemes_gateway)
     end
-
-    VALID_ASSESSOR = JSON.parse({
-        firstName: 'John',
-        lastName: 'Smith',
-        middleNames: 'Brain',
-        dateOfBirth: '1991-02-25'
-    }.to_json)
 
     it 'returns an error if the scheme doesnt exist' do
       schemes_gateway = SchemesGatewayStub.new([])
@@ -32,7 +37,7 @@ describe UseCase::AddAssessor do
     end
 
     it 'returns the scheme that the assessor belongs to' do
-      expect(add_assessor_with_stub_data.execute('25', 'SCHE234950', {})[:registeredBy]).to eq({schemeId: '25', name: 'Best scheme'})
+      expect(add_assessor_with_stub_data.execute('25', 'SCHE234950', {})[:registeredBy]).to eq(schemeId: '25', name: 'Best scheme')
     end
 
     it 'returns the scheme assessor ID' do
