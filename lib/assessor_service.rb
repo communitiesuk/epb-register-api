@@ -79,6 +79,14 @@ class AssessorService < Sinatra::Base
     handle_exception(e)
   end
 
+  put '/api/schemes/:scheme_id/assessors/:scheme_assessor_id' do
+
+    result = @container.get_object(:add_assessor_use_case).execute(params['scheme_id']).to_json
+    status 201
+  rescue UseCase::AddAssessor::SchemeNotFoundException
+    status 404
+  end
+
   private
 
   def handle_exception(error)

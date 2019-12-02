@@ -16,7 +16,7 @@ describe AssessorService do
     end
 
     def add_scheme(scheme_name)
-      post("/api/schemes", { name: scheme_name }.to_json)
+      post("/api/schemes", {name: scheme_name}.to_json)
     end
 
     context 'When a scheme doesnt exist' do
@@ -31,19 +31,29 @@ describe AssessorService do
 
     context 'when an assessor doesnt exist' do
       it 'returns status 404' do
-        schemeid = JSON.parse(add_scheme('scheme245').body)['schemeId']
-
+        schemeid = JSON.parse(add_scheme('scheme245').body)['scheme_id']
         expect(fetch_assessor(schemeid, 'SCHE2354246').status).to eq(404)
       end
     end
 
     context 'when getting an assessor on the wrong scheme' do
       it 'returns status 404' do
-        schemeid = JSON.parse(add_scheme('scheme245').body)['schemeId']
-        second_schemeid = JSON.parse(add_scheme('scheme987').body)['schemeId']
+        schemeid = JSON.parse(add_scheme('scheme245').body)['scheme_id']
+        second_schemeid = JSON.parse(add_scheme('scheme987').body)['scheme_id']
         add_assessor(second_schemeid, 'SCHE987654', VALID_ASSESSOR_REQUEST_BODY)
 
         expect(fetch_assessor(schemeid, 'SCHE987654').status).to eq(404)
+      end
+    end
+
+    context 'when creating an assessor' do
+      context 'which is valid' do
+        it 'returns 201 created' do
+          schemeid = JSON.parse(add_scheme('scheme245').body)['scheme_id']
+          assessor_response = add_assessor(schemeid, 'SCHE55443', VALID_ASSESSOR_REQUEST_BODY)
+
+          expect(assessor_response.status).to eq(201)
+        end
       end
     end
   end
