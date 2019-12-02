@@ -7,10 +7,13 @@ describe AssessorService do
         dateOfBirth: '1991-02-25'
     }
 
+    def fetch_assessor(scheme_id, assessor_id)
+      get "/api/schemes/#{scheme_id}/assessors/#{assessor_id}"
+    end
+
     context 'When a scheme doesnt exist' do
       it 'returns status 404 for a get' do
-        response = get '/api/schemes/20/assessors/SCHEME4532'
-        expect(response.status).to eq(404)
+        expect(fetch_assessor(20, 'SCHEME4233').status).to eq(404)
       end
 
       it 'returns status 404 for a PUT' do
