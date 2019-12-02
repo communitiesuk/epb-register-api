@@ -4,10 +4,13 @@ runtime-versions:
   ruby: 2.6
 
 env:
+  variables:
+    DEPLOY_APPNAME: "mhclg-epb-assessor-api-integration"
+
   parameter-store:
-    PAAS_LOGIN_INTEGRATION: "epbr-govpaas-integration-login"
-    PAAS_PW_INTEGRATION: "epbr-govpaas-integration-pw"
-    STAGE: "epbr-govpaas-integration-space"
+    PAAS_LOGIN: "epbr-govpaas-integration-login"
+    PAAS_PW: "epbr-govpaas-integration-pw"
+    PAAS_SPACE: "epbr-govpaas-integration-space"
     PAAS_API: "epbr-govpaas-api"
     PAAS_ORG: "epbr-govpaas-orgname"
     UNLEASH_URI: "epbr-unleash-integration-uri"
@@ -19,20 +22,12 @@ phases:
   pre_build:
     commands:
       - echo ">>>>>>>> DEPLOY TO INTEGRATION ENV"
-      - cf login -a $PAAS_API -u $PAAS_LOGIN_INTEGRATION -p "$PAAS_PW_INTEGRATION" -o $PAAS_ORG -s $STAGE
-      - export DEPLOY_APPNAME="mhclg-epb-assessor-api-${STAGE}"
+      - cf login -a $PAAS_API -u $PAAS_LOGIN -p "$PAAS_PW" -o $PAAS_ORG -s $PAAS_SPACE
       - cf v3-cancel-zdt-push ${DEPLOY_APPNAME} || true
+      - cf set-env "${DEPLOY_APPNAME}" BUNDLE_WITHOUT "test"
   build:
     commands:
-      - make generate-manifest
-
-      - cf v3-apply-manifest -f manifest.yml
-
-      - cf set-env "${DEPLOY_APPNAME}" UNLEASH_URI $UNLEASH_URI
-      - cf set-env "${DEPLOY_APPNAME}" STAGE "${STAGE}"
-      - cf set-env "${DEPLOY_APPNAME}" BUNDLE_WITHOUT "test"
-
-      - cf v3-zdt-push --wait-for-deploy-complete $DEPLOY_APPNAME
+      - make deploy-app
       - cf run-task $DEPLOY_APPNAME "rake db:migrate" --name migrate
   post_build:
     commands:
