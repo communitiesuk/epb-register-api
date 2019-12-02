@@ -25,7 +25,7 @@ class AssessorService < Sinatra::Base
   end
 
   configure :development do
-    require "sinatra/reloader"
+    require 'sinatra/reloader'
     register Sinatra::Reloader
     also_reload 'lib/**/*.rb'
   end
@@ -54,7 +54,7 @@ class AssessorService < Sinatra::Base
 
     {
       links: {
-        apispec: "https://mhclg-epb-swagger.london.cloudapps.digital"
+        apispec: 'https://mhclg-epb-swagger.london.cloudapps.digital'
       }
     }.to_json
   end
@@ -80,8 +80,12 @@ class AssessorService < Sinatra::Base
   end
 
   put '/api/schemes/:scheme_id/assessors/:scheme_assessor_id' do
+    result = @container.get_object(:add_assessor_use_case).execute(
+      params['scheme_id'],
+      params['scheme_assessor_id'],
+      JSON.parse(request.body.read.to_s)
+    ).to_json
 
-    result = @container.get_object(:add_assessor_use_case).execute(params['scheme_id'], params['scheme_assessor_id'], JSON.parse(request.body.read.to_s)).to_json
     status 201
     result
   rescue UseCase::AddAssessor::SchemeNotFoundException
