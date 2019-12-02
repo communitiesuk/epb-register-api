@@ -9,6 +9,11 @@ describe UseCase::AddAssessor do
   end
 
   context 'when adding an assessor' do
+    let(:add_assessor_with_stub_data) do
+      schemes_gateway = SchemesGatewayStub.new([{scheme_id: 25, name: 'Best scheme'}])
+      described_class.new(schemes_gateway)
+    end
+
     VALID_ASSESSOR = JSON.parse({
         firstName: 'John',
         lastName: 'Smith',
@@ -23,51 +28,31 @@ describe UseCase::AddAssessor do
     end
 
     it 'returns no errors if the scheme does exist' do
-      schemes_gateway = SchemesGatewayStub.new([{scheme_id: 25, name: 'Best scheme'}])
-      add_assessor = described_class.new(schemes_gateway)
-      expect { add_assessor.execute('25', 'SCHE904572', {}) }.to_not raise_exception
+      expect { add_assessor_with_stub_data.execute('25', 'SCHE904572', {}) }.to_not raise_exception
     end
 
     it 'returns the scheme that the assessor belongs to' do
-      schemes_gateway = SchemesGatewayStub.new([{scheme_id: 25, name: 'Best scheme'}])
-      add_assessor = described_class.new(schemes_gateway)
-
-      expect(add_assessor.execute('25', 'SCHE234950', {})[:registeredBy]).to eq({schemeId: '25', name: 'Best scheme'})
+      expect(add_assessor_with_stub_data.execute('25', 'SCHE234950', {})[:registeredBy]).to eq({schemeId: '25', name: 'Best scheme'})
     end
 
     it 'returns the scheme assessor ID' do
-      schemes_gateway = SchemesGatewayStub.new([{scheme_id: 25, name: 'Best scheme'}])
-      add_assessor = described_class.new(schemes_gateway)
-
-      expect(add_assessor.execute('25', 'SCHE234950', {})[:schemeAssessorId]).to eq('SCHE234950')
+      expect(add_assessor_with_stub_data.execute('25', 'SCHE234950', {})[:schemeAssessorId]).to eq('SCHE234950')
     end
 
     it 'returns the assessors first name' do
-      schemes_gateway = SchemesGatewayStub.new([{scheme_id: 25, name: 'Best scheme'}])
-      add_assessor = described_class.new(schemes_gateway)
-
-      expect(add_assessor.execute('25', 'SCHE234950', VALID_ASSESSOR)[:firstName]).to eq('John')
+      expect(add_assessor_with_stub_data.execute('25', 'SCHE234950', VALID_ASSESSOR)[:firstName]).to eq('John')
     end
 
     it 'returns the assessors last name' do
-      schemes_gateway = SchemesGatewayStub.new([{scheme_id: 25, name: 'Best scheme'}])
-      add_assessor = described_class.new(schemes_gateway)
-
-      expect(add_assessor.execute('25', 'SCHE234950', VALID_ASSESSOR)[:lastName]).to eq('Smith')
+      expect(add_assessor_with_stub_data.execute('25', 'SCHE234950', VALID_ASSESSOR)[:lastName]).to eq('Smith')
     end
 
     it 'returns the assessors middle names' do
-      schemes_gateway = SchemesGatewayStub.new([{scheme_id: 25, name: 'Best scheme'}])
-      add_assessor = described_class.new(schemes_gateway)
-
-      expect(add_assessor.execute('25', 'SCHE234950', VALID_ASSESSOR)[:middleNames]).to eq('Brain')
+      expect(add_assessor_with_stub_data.execute('25', 'SCHE234950', VALID_ASSESSOR)[:middleNames]).to eq('Brain')
     end
 
     it 'returns the assessors date of birth' do
-      schemes_gateway = SchemesGatewayStub.new([{scheme_id: 25, name: 'Best scheme'}])
-      add_assessor = described_class.new(schemes_gateway)
-
-      expect(add_assessor.execute('25', 'SCHE234950', VALID_ASSESSOR)[:dateOfBirth]).to eq('1991-02-25')
+      expect(add_assessor_with_stub_data.execute('25', 'SCHE234950', VALID_ASSESSOR)[:dateOfBirth]).to eq('1991-02-25')
     end
   end
 end
