@@ -18,20 +18,21 @@ help:
 .PHONY: generate-manifest
 generate-manifest: ## Generate manifest file for PaaS
 	$(if ${DEPLOY_APPNAME},,$(error Must specify DEPLOY_APPNAME))
-	$(if ${STAGE},,$(error Must specify STAGE))
-	@scripts/generate-paas-manifest.sh ${DEPLOY_APPNAME} ${STAGE} > manifest.yml
+	$(if ${PAAS_SPACE},,$(error Must specify PAAS_SPACE))
+	@scripts/generate-paas-manifest.sh ${DEPLOY_APPNAME} ${PAAS_SPACE} > manifest.yml
 
 .PHONY: deploy-app
 deploy-app: ## Deploys the app to PaaS
 	$(call check_space)
-	$(if ${STAGE},,$(error Must specify STAGE))
+	$(if ${DEPLOY_APPNAME},,$(error Must specify DEPLOY_APPNAME))
 
-	$(eval export DEPLOY_APPNAME="mhclg-epb-assessor-api-${STAGE}")
 	@$(MAKE) generate-manifest
 
 	cf v3-apply-manifest -f manifest.yml
+
 	cf set-env "${DEPLOY_APPNAME}" UNLEASH_URI "${UNLEASH_URI}"
-	cf set-env "${DEPLOY_APPNAME}" STAGE "${STAGE}"
+	cf set-env "${DEPLOY_APPNAME}" STAGE "${PAAS_SPACE}"
+
 	cf v3-zdt-push "${DEPLOY_APPNAME}" --wait-for-deploy-complete
 
 .PHONY: setup-db
