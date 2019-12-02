@@ -15,6 +15,10 @@ describe AssessorService do
       put("/api/schemes/#{scheme_id}/assessors/#{assessor_id}", body.to_json)
     end
 
+    def add_scheme(scheme_name)
+      post("/api/schemes", { name: scheme_name }.to_json)
+    end
+
     context 'When a scheme doesnt exist' do
       it 'returns status 404 for a get' do
         expect(fetch_assessor(20, 'SCHEME4233').status).to eq(404)
@@ -26,10 +30,8 @@ describe AssessorService do
     end
 
     context 'when an assessor doesnt exist' do
-      let(:post_response) { post('/api/schemes', { name: 'scheme245'}.to_json) }
-
       it 'returns status 404' do
-        schemeid = JSON.parse(post_response.body)['schemeId']
+        schemeid = JSON.parse(add_scheme('scheme245').body)['schemeId']
 
         expect(fetch_assessor(schemeid, 'SCHE2354246').status).to eq(404)
       end
@@ -39,8 +41,8 @@ describe AssessorService do
       let(:post_response) { post('/api/schemes', { name: 'scheme245'}.to_json) }
 
       it 'returns status 404' do
-        schemeid = JSON.parse(post_response.body)['schemeId']
-        second_schemeid = JSON.parse(post('/api/schemes', { name: 'scheme987'}.to_json).body)['schemeId']
+        schemeid = JSON.parse(add_scheme('scheme245').body)['schemeId']
+        second_schemeid = JSON.parse(add_scheme('scheme987').body)['schemeId']
         add_assessor(second_schemeid, 'SCHE987654', VALID_ASSESSOR_REQUEST_BODY)
 
         expect(fetch_assessor(schemeid, 'SCHE987654').status).to eq(404)
