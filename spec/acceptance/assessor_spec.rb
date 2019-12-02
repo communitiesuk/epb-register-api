@@ -54,6 +54,24 @@ describe AssessorService do
 
           expect(assessor_response.status).to eq(201)
         end
+        it 'returns assessor details with scheme details' do
+          schemeid = JSON.parse(add_scheme('scheme245').body)['scheme_id']
+          assessor_response = JSON.parse(add_assessor(schemeid, 'SCHE55443', VALID_ASSESSOR_REQUEST_BODY).body)
+
+          expected_response = JSON.parse({
+              registeredBy: {
+                  schemeId: schemeid.to_s,
+                  name: 'scheme245'
+              },
+              schemeAssessorId: 'SCHE55443',
+              firstName: VALID_ASSESSOR_REQUEST_BODY[:firstName],
+              middleNames: VALID_ASSESSOR_REQUEST_BODY[:middleNames],
+              lastName: VALID_ASSESSOR_REQUEST_BODY[:lastName],
+              dateOfBirth: VALID_ASSESSOR_REQUEST_BODY[:dateOfBirth]
+          }.to_json)
+
+          expect(assessor_response).to eq(expected_response)
+        end
       end
     end
   end

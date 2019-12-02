@@ -9,12 +9,21 @@ module UseCase
       @gateway = gateway
     end
 
-    def execute(scheme_id)
-      scheme_exists = @gateway.all.map do |scheme|
-        scheme[:scheme_id].to_s
-      end.include?(scheme_id)
+    def execute(scheme_id, scheme_assessor_id, assessor)
+      scheme = @gateway.all.select { |scheme| scheme[:scheme_id].to_s == scheme_id}[0]
 
-      if scheme_exists
+      if scheme
+        {
+            registeredBy: {
+                schemeId: scheme_id,
+                name: scheme[:name]
+            },
+            schemeAssessorId: scheme_assessor_id,
+            firstName: assessor['firstName'],
+            middleNames: assessor['middleNames'],
+            lastName: assessor['lastName'],
+            dateOfBirth: assessor['dateOfBirth']
+        }
       else
         raise SchemeNotFoundException
       end
