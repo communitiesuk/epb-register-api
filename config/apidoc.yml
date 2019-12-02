@@ -12,6 +12,8 @@ servers:
 tags:
   - name: Manage schemes
     description: Operations for managing schemes in the register
+  - name: Individually manage assessors
+    description: Managing assessors in a RESTful web services paradigm
 paths:
   /schemes:
     get:
@@ -73,6 +75,86 @@ paths:
                           type: string
                           example: "A scheme with this name already exists in the register"
 
+  /schemes/{schemeId}/assessors/{schemeAssessorId}:
+    get:
+      tags:
+        - Individually manage assessors
+      summary: Get all details for an individual assessor registration
+      parameters:
+        - in: path
+          required: true
+          name: schemeId
+          description: ID of the scheme
+          schema:
+            type: integer
+        - in: path
+          required: true
+          name: schemeAssessorId
+          description: The Assessor ID assigned by the scheme
+          schema:
+            type: string
+          example: "STER514421/02"
+      responses:
+        404:
+          description: Assessor not found
+        200:
+          description: Assessor found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShortAssessorSummary'
+
+    put:
+      tags:
+        - Individually manage assessors
+      summary: Register a new assessor to associate them with your scheme
+      parameters:
+        - in: path
+          name: schemeId
+          required: true
+          description: ID of the registering scheme
+          schema:
+            type: integer
+        - in: path
+          name: schemeAssessorId
+          required: true
+          description: Assessor ID assigned by the registering scheme
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                middleNames:
+                  type: string
+                dateOfBirth:
+                  type: string
+                  format: date
+      responses:
+        201:
+          description: Assessor succesfully registered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShortAssessorSummary'
+
+        200:
+          description: Existing assessor updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShortAssessorSummary'
+
+        400:
+          description: Problem with assessor registration record
+        409:
+          description: Assessor already exists on a different scheme
 components:
   schemas:
     SchemeSummary:
@@ -84,3 +166,19 @@ components:
         name:
           type: string
           example: "EPBs 4 U"
+    ShortAssessorSummary:
+      type: object
+      properties:
+        registeredBy:
+          $ref: '#/components/schemas/SchemeSummary'
+        schemeAssessorId:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        middleNames:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date
