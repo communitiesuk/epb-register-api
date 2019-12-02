@@ -38,8 +38,6 @@ describe AssessorService do
     end
 
     context 'when getting an assessor on the wrong scheme' do
-      let(:post_response) { post('/api/schemes', { name: 'scheme245'}.to_json) }
-
       it 'returns status 404' do
         schemeid = JSON.parse(add_scheme('scheme245').body)['schemeId']
         second_schemeid = JSON.parse(add_scheme('scheme987').body)['schemeId']
