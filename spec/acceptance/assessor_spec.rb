@@ -14,7 +14,6 @@ describe AssessorService do
       end
 
       it 'returns status 404 for a PUT' do
-
         response = put('/api/schemes/20/assessors/SCHEME4532', VALID_ASSESSOR_REQUEST_BODY.to_json)
 
         expect(response.status).to eq(404)
@@ -38,7 +37,6 @@ describe AssessorService do
       it 'returns status 404' do
         schemeid = JSON.parse(post_response.body)['schemeId']
         second_schemeid = JSON.parse(post('/api/schemes', { name: 'scheme987'}.to_json).body)['schemeId']
-
         put("/api/schemes/#{second_schemeid}/assessors/SCHE987654", VALID_ASSESSOR_REQUEST_BODY)
 
         get_response = get "/api/schemes/#{schemeid}/assessors/SCHE987654"
