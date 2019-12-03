@@ -28,19 +28,19 @@ describe UseCase::AddAssessor do
     it 'returns an error if the scheme doesnt exist' do
       schemes_gateway = SchemesGatewayStub.new([])
       add_assessor = described_class.new(schemes_gateway)
-      expect { add_assessor.execute('6', 'SCHE24352', {}) }.to raise_exception(UseCase::AddAssessor::SchemeNotFoundException)
+      expect { add_assessor.execute('6', 'SCHE24352', VALID_ASSESSOR) }.to raise_exception(UseCase::AddAssessor::SchemeNotFoundException)
     end
 
     it 'returns no errors if the scheme does exist' do
-      expect { add_assessor_with_stub_data.execute('25', 'SCHE904572', {}) }.to_not raise_exception
+      expect { add_assessor_with_stub_data.execute('25', 'SCHE904572', VALID_ASSESSOR) }.to_not raise_exception
     end
 
     it 'returns the scheme that the assessor belongs to' do
-      expect(add_assessor_with_stub_data.execute('25', 'SCHE234950', {})[:registeredBy]).to eq(schemeId: '25', name: 'Best scheme')
+      expect(add_assessor_with_stub_data.execute('25', 'SCHE234950', VALID_ASSESSOR)[:registeredBy]).to eq(schemeId: '25', name: 'Best scheme')
     end
 
     it 'returns the scheme assessor ID' do
-      expect(add_assessor_with_stub_data.execute('25', 'SCHE234950', {})[:schemeAssessorId]).to eq('SCHE234950')
+      expect(add_assessor_with_stub_data.execute('25', 'SCHE234950', VALID_ASSESSOR)[:schemeAssessorId]).to eq('SCHE234950')
     end
 
     it 'returns the assessors first name' do
@@ -66,9 +66,30 @@ describe UseCase::AddAssessor do
       described_class.new(schemes_gateway)
     end
 
-    it 'rejects badly formatted dates of birth' do
+    it 'rejects American style dates of birth' do
       assessor = VALID_ASSESSOR.dup
-      assessor[:date_of_birth] = "01/01/1990"
+      assessor[:date_of_birth] = "12/20/1990"
+
+      expect { add_assessor_with_stub_data.execute('25', 'SCHE93452', assessor) }.to raise_exception(UseCase::AddAssessor::InvalidAssessorDetailsException)
+    end
+
+    it 'rejects UK style dates of birth with slashes' do
+      assessor = VALID_ASSESSOR.dup
+      assessor[:date_of_birth] = "10/12/1990"
+
+      expect { add_assessor_with_stub_data.execute('25', 'SCHE93452', assessor) }.to raise_exception(UseCase::AddAssessor::InvalidAssessorDetailsException)
+    end
+
+    it 'rejects dates that arent dates at all' do
+      assessor = VALID_ASSESSOR.dup
+      assessor[:date_of_birth] = "55555555555"
+
+      expect { add_assessor_with_stub_data.execute('25', 'SCHE93452', assessor) }.to raise_exception(UseCase::AddAssessor::InvalidAssessorDetailsException)
+    end
+
+    it 'rejects dates that are YYYY-DD-MM' do
+      assessor = VALID_ASSESSOR.dup
+      assessor[:date_of_birth] = "1990-30-07"
 
       expect { add_assessor_with_stub_data.execute('25', 'SCHE93452', assessor) }.to raise_exception(UseCase::AddAssessor::InvalidAssessorDetailsException)
     end
