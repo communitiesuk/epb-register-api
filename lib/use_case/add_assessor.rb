@@ -18,6 +18,10 @@ module UseCase
         raise InvalidAssessorDetailsException
       end
 
+      unless (assessor[:first_name].class == String)
+        raise InvalidAssessorDetailsException
+      end
+
       if scheme
         created_assessor = {
           registered_by: {

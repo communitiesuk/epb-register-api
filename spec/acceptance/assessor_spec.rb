@@ -154,6 +154,15 @@ describe AssessorService do
 
           expect(assessor_response.status).to eq(400)
         end
+
+        it 'rejects requests with invalid first name' do
+          scheme_id = add_scheme
+          invalid_body = VALID_ASSESSOR_REQUEST_BODY.dup
+          invalid_body[:firstName] = 1000
+          assessor_response = put("/api/schemes/#{scheme_id}/assessors/thebrokenassessor", invalid_body.to_json)
+
+          expect(assessor_response.status).to eq(400)
+        end
       end
     end
   end
