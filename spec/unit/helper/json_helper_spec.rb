@@ -23,4 +23,27 @@ describe Helper::JsonHelper do
       expect(result[:foo_bar].keys).to include(:bar_baz)
     end
   end
+
+  context 'when converting ruby hashes to json' do
+    it 'changes top level keys to strings' do
+      result = HELPER.convert_to_json({foo: 'bar'})
+      expect(result.keys).to include('foo')
+    end
+
+    it 'changes nested keys to strings' do
+      result = HELPER.convert_to_json({foo: {bar: 'baz'}})
+      expect(result['foo'].keys).to include('bar')
+    end
+
+    it 'changes top level keys to camel case' do
+      result = HELPER.convert_to_json({foo_bar: 'baz'})
+      expect(result.keys).to include('fooBar')
+    end
+
+    it 'changes nested level keys to camel case' do
+      result = HELPER.convert_to_json({foo_bar: {bar_baz: 'boo'}})
+      expect(result.keys).to include('fooBar')
+      expect(result['fooBar'].keys).to include('barBaz')
+    end
+  end
 end
