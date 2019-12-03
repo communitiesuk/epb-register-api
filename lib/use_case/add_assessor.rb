@@ -11,15 +11,10 @@ module UseCase
       @gateway = gateway
     end
 
-    def valid_date?(str)
-      Date.strptime(str,'%Y-%m-%d') rescue false
-    end
-
-
     def execute(scheme_id, scheme_assessor_id, assessor)
       scheme = @gateway.all.select { |scheme| scheme[:scheme_id].to_s == scheme_id}[0]
 
-      unless valid_date?(assessor[:date_of_birth])
+      unless (Date.strptime(assessor[:date_of_birth], '%Y-%m-%d') rescue false)
         raise InvalidAssessorDetailsException
       end
 
