@@ -11,14 +11,24 @@ module UseCase
       @gateway = gateway
     end
 
-    def execute(scheme_id, scheme_assessor_id, assessor)
-      scheme = @gateway.all.select { |scheme| scheme[:scheme_id].to_s == scheme_id }[0]
-
+    def validate_input(assessor)
+      errors = []
       unless (Date.strptime(assessor[:date_of_birth], '%Y-%m-%d') rescue false)
-        raise InvalidAssessorDetailsException
+        errors << "INVALID_DATE_OF_BIRTH"
       end
 
       unless assessor[:first_name].class == String
+        errors << "INVALID_FIRST_NAME"
+      end
+
+      errors
+    end
+
+    def execute(scheme_id, scheme_assessor_id, assessor)
+      scheme = @gateway.all.select { |scheme| scheme[:scheme_id].to_s == scheme_id }[0]
+      errors = validate_input(assessor)
+
+      unless errors.empty?
         raise InvalidAssessorDetailsException
       end
 
