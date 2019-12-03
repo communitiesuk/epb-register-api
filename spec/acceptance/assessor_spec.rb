@@ -73,6 +73,13 @@ describe AssessorService do
           expect(assessor_response).to eq(expected_response)
         end
       end
+      context 'which is invalid' do
+        it 'rejects anything that isnt JSON' do
+          scheme_id = JSON.parse(add_scheme('scheme245').body)['schemeId']
+          assessor_response = put("/api/schemes/#{scheme_id}/assessors/thebrokenassessor", ">>>this is not json<<<")
+          expect(assessor_response.status).to eq(400)
+        end
+      end
     end
   end
 end

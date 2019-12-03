@@ -93,8 +93,14 @@ class AssessorService < Sinatra::Base
 
     status 201
     @json_helper.convert_to_json(created_scheme)
-  rescue UseCase::AddAssessor::SchemeNotFoundException
-    status 404
+
+  rescue Exception => e
+    case e
+    when UseCase::AddAssessor::SchemeNotFoundException
+      status 404
+    else
+      status 400
+    end
   end
 
   private
