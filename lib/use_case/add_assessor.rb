@@ -18,7 +18,7 @@ module UseCase
         raise InvalidAssessorDetailsException
       end
 
-      unless (assessor[:first_name].class == String)
+      unless assessor[:first_name].class == String
         raise InvalidAssessorDetailsException
       end
 
