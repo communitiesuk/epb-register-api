@@ -49,13 +49,13 @@ describe AssessorService do
     context 'when creating an assessor' do
       context 'which is valid' do
         it 'returns 201 created' do
-          schemeid = JSON.parse(add_scheme('scheme245').body)['scheme_id']
+          schemeid = JSON.parse(add_scheme('scheme245').body)['schemeId']
           assessor_response = add_assessor(schemeid, 'SCHE55443', VALID_ASSESSOR_REQUEST_BODY)
 
           expect(assessor_response.status).to eq(201)
         end
         it 'returns assessor details with scheme details' do
-          schemeid = JSON.parse(add_scheme('scheme245').body)['scheme_id']
+          schemeid = JSON.parse(add_scheme('scheme245').body)['schemeId']
           assessor_response = JSON.parse(add_assessor(schemeid, 'SCHE55443', VALID_ASSESSOR_REQUEST_BODY).body)
 
           expected_response = JSON.parse({
