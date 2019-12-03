@@ -85,14 +85,14 @@ class AssessorService < Sinatra::Base
     scheme_id = params['scheme_id']
     scheme_assessor_id = params['scheme_assessor_id']
     assessor_details = @json_helper.convert_to_ruby_hash(request.body.read.to_s)
-    result = @container.get_object(:add_assessor_use_case).execute(
+    created_scheme = @container.get_object(:add_assessor_use_case).execute(
         scheme_id,
         scheme_assessor_id,
         assessor_details
-    ).to_json
+    )
 
     status 201
-    result
+    @json_helper.convert_to_json(created_scheme).to_json
   rescue UseCase::AddAssessor::SchemeNotFoundException
     status 404
   end
