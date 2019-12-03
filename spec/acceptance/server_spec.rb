@@ -34,6 +34,12 @@ describe AssessorService do
         headers = response.headers['Access-Control-Allow-Headers'].split(/[,\s]+/)
         expect(headers).to contain_exactly('Content-Type', 'Cache-Control', 'Accept')
       end
+
+      it 'allows clients to use all methods used' do
+        headers = response.headers['Access-Control-Allow-Methods'].split(/[,\s]+/)
+        expect(headers).to contain_exactly('HEAD', 'GET', 'PUT', 'POST', 'OPTIONS', 'DELETE')
+      end
+
     end
   end
 end

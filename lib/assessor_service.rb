@@ -42,6 +42,7 @@ class AssessorService < Sinatra::Base
 
   options '*' do
     response.headers['Allow'] = 'HEAD,GET,PUT,DELETE,OPTIONS'
+    response.headers['Access-Control-Allow-Methods'] = 'HEAD, GET, PUT, OPTIONS, DELETE, POST'
     200
   end
 
