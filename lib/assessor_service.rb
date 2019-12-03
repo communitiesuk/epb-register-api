@@ -67,7 +67,7 @@ class AssessorService < Sinatra::Base
   get '/api/schemes' do
     content_type :json
     all_schemes = @container.get_object(:get_all_schemes_use_case).execute
-    @json_helper.convert_to_json(all_schemes).to_json
+    @json_helper.convert_to_json(all_schemes)
   end
 
   post '/api/schemes' do
@@ -76,7 +76,7 @@ class AssessorService < Sinatra::Base
     result = @container.get_object(:add_new_scheme_use_case).execute(request_body[:name])
 
     status 201
-    @json_helper.convert_to_json(result).to_json
+    @json_helper.convert_to_json(result)
   rescue StandardError => e
     handle_exception(e)
   end
@@ -92,7 +92,7 @@ class AssessorService < Sinatra::Base
     )
 
     status 201
-    @json_helper.convert_to_json(created_scheme).to_json
+    @json_helper.convert_to_json(created_scheme)
   rescue UseCase::AddAssessor::SchemeNotFoundException
     status 404
   end
