@@ -59,4 +59,18 @@ describe UseCase::AddAssessor do
       expect(add_assessor_with_stub_data.execute('25', 'SCHE234950', VALID_ASSESSOR)[:dateOfBirth]).to eq('1991-02-25')
     end
   end
+
+  context 'when adding with invalid data' do
+    let(:add_assessor_with_stub_data) do
+      schemes_gateway = SchemesGatewayStub.new([{ scheme_id: 25, name: 'Best scheme' }])
+      described_class.new(schemes_gateway)
+    end
+
+    it 'rejects badly formatted dates of birth' do
+      assessor = VALID_ASSESSOR.dup
+      assessor[:date_of_birth] = "01/01/1990"
+
+      expect { add_assessor_with_stub_data.execute('25', 'SCHE93452', assessor) }.to raise_exception(UseCase::AddAssessor::InvalidAssessorDetailsException)
+    end
+  end
 end

@@ -7,7 +7,7 @@ describe AssessorService do
       middleNames: 'middle',
       lastName: 'Person',
       dateOfBirth: '1991-02-25'
-    }
+    }.freeze
 
     def fetch_assessor(scheme_id, assessor_id)
       get "/api/schemes/#{scheme_id}/assessors/#{assessor_id}"
@@ -94,7 +94,7 @@ describe AssessorService do
 
         it 'rejects requests without firstname' do
           scheme_id = add_scheme
-          invalid_body = VALID_ASSESSOR_REQUEST_BODY.delete(:firstName)
+          invalid_body = VALID_ASSESSOR_REQUEST_BODY.dup.delete(:firstName).to_json
           assessor_response = put("/api/schemes/#{scheme_id}/assessors/thebrokenassessor", invalid_body)
 
           expect(assessor_response.status).to eq(400)
@@ -102,7 +102,7 @@ describe AssessorService do
 
         it 'rejects requests without last name' do
           scheme_id = add_scheme
-          invalid_body = VALID_ASSESSOR_REQUEST_BODY.delete(:lastName)
+          invalid_body = VALID_ASSESSOR_REQUEST_BODY.dup.delete(:lastName).to_json
           assessor_response = put("/api/schemes/#{scheme_id}/assessors/thebrokenassessor", invalid_body)
 
           expect(assessor_response.status).to eq(400)
@@ -110,8 +110,17 @@ describe AssessorService do
 
         it 'rejects requests without date of birth' do
           scheme_id = add_scheme
-          invalid_body = VALID_ASSESSOR_REQUEST_BODY.delete(:dateOfBirth)
+          invalid_body = VALID_ASSESSOR_REQUEST_BODY.dup.delete(:dateOfBirth).to_json
           assessor_response = put("/api/schemes/#{scheme_id}/assessors/thebrokenassessor", invalid_body)
+
+          expect(assessor_response.status).to eq(400)
+        end
+
+        it 'rejects requests with invalid date of birth' do
+          scheme_id = add_scheme
+          invalid_body = VALID_ASSESSOR_REQUEST_BODY.dup
+          invalid_body[:dateOfBirth] = "02/28/1987"
+          assessor_response = put("/api/schemes/#{scheme_id}/assessors/thebrokenassessor", invalid_body.to_json)
 
           expect(assessor_response.status).to eq(400)
         end
