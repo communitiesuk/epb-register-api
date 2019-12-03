@@ -7,7 +7,7 @@ describe AssessorService do
       middleNames: 'middle',
       lastName: 'Person',
       dateOfBirth: '1991-02-25'
-    }.freeze
+    }
 
     def fetch_assessor(scheme_id, assessor_id)
       get "/api/schemes/#{scheme_id}/assessors/#{assessor_id}"
@@ -88,6 +88,30 @@ describe AssessorService do
         it 'rejects an empty request body' do
           scheme_id = add_scheme
           assessor_response = put("/api/schemes/#{scheme_id}/assessors/thebrokenassessor")
+
+          expect(assessor_response.status).to eq(400)
+        end
+
+        it 'rejects requests without firstname' do
+          scheme_id = add_scheme
+          invalid_body = VALID_ASSESSOR_REQUEST_BODY.delete(:firstName)
+          assessor_response = put("/api/schemes/#{scheme_id}/assessors/thebrokenassessor", invalid_body)
+
+          expect(assessor_response.status).to eq(400)
+        end
+
+        it 'rejects requests without last name' do
+          scheme_id = add_scheme
+          invalid_body = VALID_ASSESSOR_REQUEST_BODY.delete(:lastName)
+          assessor_response = put("/api/schemes/#{scheme_id}/assessors/thebrokenassessor", invalid_body)
+
+          expect(assessor_response.status).to eq(400)
+        end
+
+        it 'rejects requests without date of birth' do
+          scheme_id = add_scheme
+          invalid_body = VALID_ASSESSOR_REQUEST_BODY.delete(:dateOfBirth)
+          assessor_response = put("/api/schemes/#{scheme_id}/assessors/thebrokenassessor", invalid_body)
 
           expect(assessor_response.status).to eq(400)
         end
