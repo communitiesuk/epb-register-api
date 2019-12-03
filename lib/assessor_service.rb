@@ -19,7 +19,7 @@ class AssessorService < Sinatra::Base
 
   def initialize(toggles = false)
     super
-
+    @json_helper = Helper::JsonHelper.new
     @toggles = toggles || Toggles.new
     @container = Container.new
   end
@@ -66,7 +66,8 @@ class AssessorService < Sinatra::Base
 
   get '/api/schemes' do
     content_type :json
-    @container.get_object(:get_all_schemes_use_case).execute.to_json
+    all_schemes = @container.get_object(:get_all_schemes_use_case).execute
+    @json_helper.convert_to_json(all_schemes).to_json
   end
 
   post '/api/schemes' do
