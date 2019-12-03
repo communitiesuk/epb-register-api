@@ -77,6 +77,14 @@ describe AssessorService do
         it 'rejects anything that isnt JSON' do
           scheme_id = JSON.parse(add_scheme('scheme245').body)['schemeId']
           assessor_response = put("/api/schemes/#{scheme_id}/assessors/thebrokenassessor", ">>>this is not json<<<")
+
+          expect(assessor_response.status).to eq(400)
+        end
+
+        it 'rejects an empty request body' do
+          scheme_id = JSON.parse(add_scheme('scheme245').body)['schemeId']
+          assessor_response = put("/api/schemes/#{scheme_id}/assessors/thebrokenassessor")
+
           expect(assessor_response.status).to eq(400)
         end
       end
