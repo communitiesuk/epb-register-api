@@ -7,7 +7,7 @@ describe UseCase::AddAssessor do
       last_name: 'Smith',
       middle_names: 'Brain',
       date_of_birth: '1991-02-25'
-    }
+    }.freeze
 
   class SchemesGatewayStub
     def initialize(result)
@@ -57,6 +57,12 @@ describe UseCase::AddAssessor do
 
     it 'returns the assessors date of birth' do
       expect(add_assessor_with_stub_data.execute('25', 'SCHE234950', VALID_ASSESSOR)[:date_of_birth]).to eq('1991-02-25')
+    end
+
+    it 'does not return an error if middle names are missing' do
+      assessor_without_middle_names = VALID_ASSESSOR.dup
+      assessor_without_middle_names.delete(:middle_names)
+      expect { add_assessor_with_stub_data.execute('25', 'SCHE2435', assessor_without_middle_names) }.to_not raise_exception
     end
   end
 
