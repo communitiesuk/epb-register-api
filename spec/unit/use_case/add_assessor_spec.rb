@@ -106,5 +106,12 @@ describe UseCase::AddAssessor do
 
       expect { add_assessor_with_stub_data.execute('25', 'SCHE2736', assessor) }.to raise_exception(UseCase::AddAssessor::InvalidAssessorDetailsException)
     end
+
+    it 'rejects last names that arent strings' do
+      assessor = VALID_ASSESSOR.dup
+      assessor[:last_name] = 24523
+
+      expect { add_assessor_with_stub_data.execute('25', 'SCHE2736', assessor) }.to raise_exception(UseCase::AddAssessor::InvalidAssessorDetailsException)
+    end
   end
 end

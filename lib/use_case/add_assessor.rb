@@ -21,6 +21,10 @@ module UseCase
         errors << "INVALID_FIRST_NAME"
       end
 
+      unless assessor[:last_name].class == String
+        errors << "INVALID_LAST_NAME"
+      end
+
       errors
     end
 
