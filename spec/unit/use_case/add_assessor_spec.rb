@@ -1,14 +1,13 @@
 # frozen_string_literal: true
 
 describe UseCase::AddAssessor do
-  VALID_ASSESSOR = JSON.parse(
+  VALID_ASSESSOR =
     {
-      firstName: 'John',
-      lastName: 'Smith',
-      middleNames: 'Brain',
-      dateOfBirth: '1991-02-25'
-    }.to_json
-  )
+      first_name: 'John',
+      last_name: 'Smith',
+      middle_names: 'Brain',
+      date_of_birth: '1991-02-25'
+    }
 
   class SchemesGatewayStub
     def initialize(result)

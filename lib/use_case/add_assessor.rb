@@ -19,10 +19,10 @@ module UseCase
                 name: scheme[:name]
             },
             schemeAssessorId: scheme_assessor_id,
-            firstName: assessor['firstName'],
-            middleNames: assessor['middleNames'],
-            lastName: assessor['lastName'],
-            dateOfBirth: assessor['dateOfBirth']
+            firstName: assessor[:first_name],
+            middleNames: assessor[:middle_names],
+            lastName: assessor[:last_name],
+            dateOfBirth: assessor[:date_of_birth]
         }
       else
         raise SchemeNotFoundException
