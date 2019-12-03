@@ -36,27 +36,27 @@ describe UseCase::AddAssessor do
     end
 
     it 'returns the scheme that the assessor belongs to' do
-      expect(add_assessor_with_stub_data.execute('25', 'SCHE234950', VALID_ASSESSOR)[:registeredBy]).to eq(schemeId: '25', name: 'Best scheme')
+      expect(add_assessor_with_stub_data.execute('25', 'SCHE234950', VALID_ASSESSOR)[:registered_by]).to eq(scheme_id: '25', name: 'Best scheme')
     end
 
     it 'returns the scheme assessor ID' do
-      expect(add_assessor_with_stub_data.execute('25', 'SCHE234950', VALID_ASSESSOR)[:schemeAssessorId]).to eq('SCHE234950')
+      expect(add_assessor_with_stub_data.execute('25', 'SCHE234950', VALID_ASSESSOR)[:scheme_assessor_id]).to eq('SCHE234950')
     end
 
     it 'returns the assessors first name' do
-      expect(add_assessor_with_stub_data.execute('25', 'SCHE234950', VALID_ASSESSOR)[:firstName]).to eq('John')
+      expect(add_assessor_with_stub_data.execute('25', 'SCHE234950', VALID_ASSESSOR)[:first_name]).to eq('John')
     end
 
     it 'returns the assessors last name' do
-      expect(add_assessor_with_stub_data.execute('25', 'SCHE234950', VALID_ASSESSOR)[:lastName]).to eq('Smith')
+      expect(add_assessor_with_stub_data.execute('25', 'SCHE234950', VALID_ASSESSOR)[:last_name]).to eq('Smith')
     end
 
     it 'returns the assessors middle names' do
-      expect(add_assessor_with_stub_data.execute('25', 'SCHE234950', VALID_ASSESSOR)[:middleNames]).to eq('Brain')
+      expect(add_assessor_with_stub_data.execute('25', 'SCHE234950', VALID_ASSESSOR)[:middle_names]).to eq('Brain')
     end
 
     it 'returns the assessors date of birth' do
-      expect(add_assessor_with_stub_data.execute('25', 'SCHE234950', VALID_ASSESSOR)[:dateOfBirth]).to eq('1991-02-25')
+      expect(add_assessor_with_stub_data.execute('25', 'SCHE234950', VALID_ASSESSOR)[:date_of_birth]).to eq('1991-02-25')
     end
   end
 

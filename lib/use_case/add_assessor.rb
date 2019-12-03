@@ -20,15 +20,15 @@ module UseCase
 
       if scheme
         {
-            registeredBy: {
-                schemeId: scheme_id,
-                name: scheme[:name]
-            },
-            schemeAssessorId: scheme_assessor_id,
-            firstName: assessor[:first_name],
-            middleNames: assessor[:middle_names],
-            lastName: assessor[:last_name],
-            dateOfBirth: assessor[:date_of_birth]
+          registered_by: {
+              scheme_id: scheme_id,
+              name: scheme[:name]
+          },
+          scheme_assessor_id: scheme_assessor_id,
+          first_name: assessor[:first_name],
+          middle_names: assessor[:middle_names],
+          last_name: assessor[:last_name],
+          date_of_birth: assessor[:date_of_birth]
         }
       else
         raise SchemeNotFoundException
