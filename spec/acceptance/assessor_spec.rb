@@ -15,8 +15,8 @@ describe AssessorService do
       put("/api/schemes/#{scheme_id}/assessors/#{assessor_id}", body.to_json)
     end
 
-    def add_scheme(scheme_name)
-      post("/api/schemes", {name: scheme_name}.to_json)
+    def add_scheme(name = 'test scheme')
+      JSON.parse(post("/api/schemes", {name: name}.to_json).body)['schemeId']
     end
 
     context 'When a scheme doesnt exist' do
@@ -31,37 +31,37 @@ describe AssessorService do
 
     context 'when an assessor doesnt exist' do
       it 'returns status 404' do
-        schemeid = JSON.parse(add_scheme('scheme245').body)['scheme_id']
-        expect(fetch_assessor(schemeid, 'SCHE2354246').status).to eq(404)
+        scheme_id = add_scheme
+        expect(fetch_assessor(scheme_id, 'SCHE2354246').status).to eq(404)
       end
     end
 
     context 'when getting an assessor on the wrong scheme' do
       it 'returns status 404' do
-        schemeid = JSON.parse(add_scheme('scheme245').body)['scheme_id']
-        second_schemeid = JSON.parse(add_scheme('scheme987').body)['scheme_id']
+        scheme_id = add_scheme
+        second_schemeid = add_scheme(name = 'second scheme')
         add_assessor(second_schemeid, 'SCHE987654', VALID_ASSESSOR_REQUEST_BODY)
 
-        expect(fetch_assessor(schemeid, 'SCHE987654').status).to eq(404)
+        expect(fetch_assessor(scheme_id, 'SCHE987654').status).to eq(404)
       end
     end
 
     context 'when creating an assessor' do
       context 'which is valid' do
         it 'returns 201 created' do
-          schemeid = JSON.parse(add_scheme('scheme245').body)['schemeId']
-          assessor_response = add_assessor(schemeid, 'SCHE55443', VALID_ASSESSOR_REQUEST_BODY)
+          scheme_id = add_scheme
+          assessor_response = add_assessor(scheme_id, 'SCHE55443', VALID_ASSESSOR_REQUEST_BODY)
 
           expect(assessor_response.status).to eq(201)
         end
         it 'returns assessor details with scheme details' do
-          schemeid = JSON.parse(add_scheme('scheme245').body)['schemeId']
-          assessor_response = JSON.parse(add_assessor(schemeid, 'SCHE55443', VALID_ASSESSOR_REQUEST_BODY).body)
+          scheme_id = add_scheme
+          assessor_response = JSON.parse(add_assessor(scheme_id, 'SCHE55443', VALID_ASSESSOR_REQUEST_BODY).body)
 
           expected_response = JSON.parse({
               registeredBy: {
-                  schemeId: schemeid.to_s,
-                  name: 'scheme245'
+                  schemeId: scheme_id.to_s,
+                  name: 'test scheme'
               },
               schemeAssessorId: 'SCHE55443',
               firstName: VALID_ASSESSOR_REQUEST_BODY[:firstName],
@@ -74,15 +74,16 @@ describe AssessorService do
         end
       end
       context 'which is invalid' do
+
         it 'rejects anything that isnt JSON' do
-          scheme_id = JSON.parse(add_scheme('scheme245').body)['schemeId']
+          scheme_id = add_scheme
           assessor_response = put("/api/schemes/#{scheme_id}/assessors/thebrokenassessor", ">>>this is not json<<<")
 
           expect(assessor_response.status).to eq(400)
         end
 
         it 'rejects an empty request body' do
-          scheme_id = JSON.parse(add_scheme('scheme245').body)['schemeId']
+          scheme_id = add_scheme
           assessor_response = put("/api/schemes/#{scheme_id}/assessors/thebrokenassessor")
 
           expect(assessor_response.status).to eq(400)
