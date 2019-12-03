@@ -182,6 +182,18 @@ describe AssessorService do
           expect(assessor_response.status).to eq(400)
         end
       end
+
+      context 'which has a clashing ID for an assessor on another scheme' do
+        it 'Returns a status code 409' do
+          first_scheme = add_scheme
+          second_scheme = add_scheme(name='scheme two')
+
+          add_assessor(first_scheme, 'SCHE4001', VALID_ASSESSOR_REQUEST_BODY)
+          second_response = add_assessor(second_scheme, 'SCHE4001', VALID_ASSESSOR_REQUEST_BODY)
+
+          expect(second_response.status).to eq(409)
+        end
+      end
     end
   end
 end

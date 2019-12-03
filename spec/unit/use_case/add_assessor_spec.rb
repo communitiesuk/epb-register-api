@@ -2,12 +2,12 @@
 
 describe UseCase::AddAssessor do
   VALID_ASSESSOR =
-    {
-      first_name: 'John',
-      last_name: 'Smith',
-      middle_names: 'Brain',
-      date_of_birth: '1991-02-25'
-    }.freeze
+      {
+          first_name: 'John',
+          last_name: 'Smith',
+          middle_names: 'Brain',
+          date_of_birth: '1991-02-25'
+      }.freeze
 
   class SchemesGatewayStub
     def initialize(result)
@@ -19,15 +19,36 @@ describe UseCase::AddAssessor do
     end
   end
 
+  class AssessorGatewayFake
+    attr_reader :saved_assessor_details, :saved_registered_by, :saved_scheme_assessor_id
+
+    def initialize(result)
+      @result = result
+      @saved_scheme_assessor_id = false
+      @saved_assessor_details = false
+      @saved_registered_by = false
+    end
+
+    def fetch(*)
+      @result
+    end
+
+    def update(scheme_assessor_id, registered_by, assessor_details)
+      @saved_scheme_assessor_id = scheme_assessor_id
+      @saved_assessor_details = assessor_details
+      @saved_registered_by = registered_by
+    end
+  end
+
   context 'when adding an assessor' do
     let(:add_assessor_with_stub_data) do
-      schemes_gateway = SchemesGatewayStub.new([{ scheme_id: 25, name: 'Best scheme' }])
-      described_class.new(schemes_gateway)
+      schemes_gateway = SchemesGatewayStub.new([{scheme_id: 25, name: 'Best scheme'}])
+      described_class.new(schemes_gateway, AssessorGatewayFake.new(nil))
     end
 
     it 'returns an error if the scheme doesnt exist' do
       schemes_gateway = SchemesGatewayStub.new([])
-      add_assessor = described_class.new(schemes_gateway)
+      add_assessor = described_class.new(schemes_gateway, AssessorGatewayFake.new(nil))
       expect { add_assessor.execute('6', 'SCHE24352', VALID_ASSESSOR) }.to raise_exception(UseCase::AddAssessor::SchemeNotFoundException)
     end
 
@@ -64,12 +85,44 @@ describe UseCase::AddAssessor do
       assessor_without_middle_names.delete(:middle_names)
       expect { add_assessor_with_stub_data.execute('25', 'SCHE2435', assessor_without_middle_names) }.to_not raise_exception
     end
+
+    it 'saves the assessors details' do
+      schemes_gateway = SchemesGatewayStub.new([{scheme_id: 25, name: 'Best scheme'}])
+      assessor_gateway = AssessorGatewayFake.new(nil)
+      add_assessor_with_spy = described_class.new(schemes_gateway, assessor_gateway)
+      add_assessor_with_spy.execute('25', 'SCHE4353', VALID_ASSESSOR)
+      expect(assessor_gateway.saved_assessor_details).to eq(VALID_ASSESSOR)
+    end
+  end
+
+  context 'when adding with same ID from another scheme' do
+    it 'returns an error' do
+      schemes_gateway = SchemesGatewayStub.new(
+          [{scheme_id: 25, name: 'Best scheme'}, {scheme_id: 26, name: 'Worst scheme'}]
+      )
+      assessor_gateway = AssessorGatewayFake.new(
+          {
+              registered_by: {
+                  scheme_id: 25,
+                  name: 'Best scheme'
+              },
+              scheme_assessor_id: 'SCHE001',
+              first_name: VALID_ASSESSOR[:first_name],
+              last_name: VALID_ASSESSOR[:last_name],
+              date_of_birth: VALID_ASSESSOR[:date_of_birth]
+          }
+      )
+
+      add_assessor = described_class.new(schemes_gateway, assessor_gateway)
+
+      expect { add_assessor.execute(26, 'SCHE001', VALID_ASSESSOR) }.to raise_exception(UseCase::AddAssessor::AssessorRegisteredOnAnotherScheme)
+    end
   end
 
   context 'when adding with invalid data' do
     let(:add_assessor_with_stub_data) do
-      schemes_gateway = SchemesGatewayStub.new([{ scheme_id: 25, name: 'Best scheme' }])
-      described_class.new(schemes_gateway)
+      schemes_gateway = SchemesGatewayStub.new([{scheme_id: 25, name: 'Best scheme'}])
+      described_class.new(schemes_gateway, AssessorGatewayFake.new(nil))
     end
 
     it 'rejects American style dates of birth' do

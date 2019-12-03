@@ -7,8 +7,12 @@ module UseCase
     class InvalidAssessorDetailsException < Exception
     end
 
-    def initialize(gateway)
-      @gateway = gateway
+    class AssessorRegisteredOnAnotherScheme < Exception
+    end
+
+    def initialize(schemes_gateway, assessors_gateway)
+      @schemes_gateway = schemes_gateway
+      @assessors_gateway = assessors_gateway
     end
 
     def validate_input(assessor)
@@ -33,32 +37,40 @@ module UseCase
     end
 
     def execute(scheme_id, scheme_assessor_id, assessor)
-      scheme = @gateway.all.select { |scheme| scheme[:scheme_id].to_s == scheme_id }[0]
+      scheme = @schemes_gateway.all.select { |scheme| scheme[:scheme_id].to_s == scheme_id.to_s }[0]
+      existing_assessor = @assessors_gateway.fetch(scheme_assessor_id)
       errors = validate_input(assessor)
+
+      unless scheme
+        raise SchemeNotFoundException
+      end
+
+      if existing_assessor && existing_assessor[:registered_by] != scheme_id
+        raise AssessorRegisteredOnAnotherScheme
+      end
 
       unless errors.empty?
         raise InvalidAssessorDetailsException
       end
 
       if scheme
-        created_assessor = {
-          registered_by: {
-              scheme_id: scheme_id,
-              name: scheme[:name]
-          },
-          scheme_assessor_id: scheme_assessor_id,
+        new_assessor = {
           first_name: assessor[:first_name],
           last_name: assessor[:last_name],
           date_of_birth: assessor[:date_of_birth]
         }
 
         if assessor.key?(:middle_names)
-          created_assessor[:middle_names] = assessor[:middle_names]
+          new_assessor[:middle_names] = assessor[:middle_names]
         end
 
+        @assessors_gateway.update(scheme_assessor_id, scheme[:scheme_id], new_assessor)
+
+        created_assessor = new_assessor.dup
+        created_assessor[:registered_by] = {scheme_id: scheme_id,
+                                            name: scheme[:name]}
+        created_assessor[:scheme_assessor_id] = scheme_assessor_id
         created_assessor
-      else
-        raise SchemeNotFoundException
       end
     end
   end
