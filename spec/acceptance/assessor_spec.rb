@@ -33,7 +33,9 @@ describe AssessorService do
       end
 
       it 'returns status 404 for a PUT' do
-        expect(add_assessor(20, 'SCHEME4532', VALID_ASSESSOR_REQUEST_BODY).status).to eq(404)
+        expect(
+          add_assessor(20, 'SCHEME4532', VALID_ASSESSOR_REQUEST_BODY).status
+        ).to eq(404)
       end
     end
 
@@ -48,7 +50,11 @@ describe AssessorService do
       it 'returns status 404' do
         scheme_id = add_scheme
         second_scheme_id = add_scheme(name = 'second scheme')
-        add_assessor(second_scheme_id, 'SCHE987654', VALID_ASSESSOR_REQUEST_BODY)
+        add_assessor(
+          second_scheme_id,
+          'SCHE987654',
+          VALID_ASSESSOR_REQUEST_BODY
+        )
 
         expect(fetch_assessor(scheme_id, 'SCHE987654').status).to eq(404)
       end
@@ -58,26 +64,31 @@ describe AssessorService do
       context 'which is valid with all fields' do
         it 'returns 201 created' do
           scheme_id = add_scheme
-          assessor_response = add_assessor(scheme_id, 'SCHE55443', VALID_ASSESSOR_REQUEST_BODY)
+          assessor_response =
+            add_assessor(scheme_id, 'SCHE55443', VALID_ASSESSOR_REQUEST_BODY)
 
           expect(assessor_response.status).to eq(201)
         end
 
         it 'returns assessor details with scheme details' do
           scheme_id = add_scheme
-          assessor_response = JSON.parse(add_assessor(scheme_id, 'SCHE55443', VALID_ASSESSOR_REQUEST_BODY).body)
+          assessor_response =
+            JSON.parse(
+              add_assessor(scheme_id, 'SCHE55443', VALID_ASSESSOR_REQUEST_BODY)
+                .body
+            )
 
-          expected_response = JSON.parse({
-            registeredBy: {
-              schemeId: scheme_id.to_s,
-              name: 'test scheme'
-            },
-            schemeAssessorId: 'SCHE55443',
-            firstName: VALID_ASSESSOR_REQUEST_BODY[:firstName],
-            middleNames: VALID_ASSESSOR_REQUEST_BODY[:middleNames],
-            lastName: VALID_ASSESSOR_REQUEST_BODY[:lastName],
-            dateOfBirth: VALID_ASSESSOR_REQUEST_BODY[:dateOfBirth]
-          }.to_json)
+          expected_response =
+            JSON.parse(
+              {
+                registeredBy: { schemeId: scheme_id.to_s, name: 'test scheme' },
+                schemeAssessorId: 'SCHE55443',
+                firstName: VALID_ASSESSOR_REQUEST_BODY[:firstName],
+                middleNames: VALID_ASSESSOR_REQUEST_BODY[:middleNames],
+                lastName: VALID_ASSESSOR_REQUEST_BODY[:lastName],
+                dateOfBirth: VALID_ASSESSOR_REQUEST_BODY[:dateOfBirth]
+              }.to_json
+            )
 
           expect(assessor_response).to eq(expected_response)
         end
@@ -86,25 +97,38 @@ describe AssessorService do
       context 'which is valid with optional fields missing' do
         it 'returns 201 created' do
           scheme_id = add_scheme
-          assessor_response = add_assessor(scheme_id, 'SCHE55443', assessor_without_key(:middleNames))
+          assessor_response =
+            add_assessor(
+              scheme_id,
+              'SCHE55443',
+              assessor_without_key(:middleNames)
+            )
 
           expect(assessor_response.status).to eq(201)
         end
 
         it 'returns assessor details with scheme details' do
           scheme_id = add_scheme
-          assessor_response = JSON.parse(add_assessor(scheme_id, 'SCHE55443', assessor_without_key(:middleNames)).body)
+          assessor_response =
+            JSON.parse(
+              add_assessor(
+                scheme_id,
+                'SCHE55443',
+                assessor_without_key(:middleNames)
+              )
+                .body
+            )
 
-          expected_response = JSON.parse({
-            registeredBy: {
-              schemeId: scheme_id.to_s,
-              name: 'test scheme'
-            },
-            schemeAssessorId: 'SCHE55443',
-            firstName: assessor_without_key(:middleNames)[:firstName],
-            lastName: assessor_without_key(:middleNames)[:lastName],
-            dateOfBirth: assessor_without_key(:middleNames)[:dateOfBirth]
-          }.to_json)
+          expected_response =
+            JSON.parse(
+              {
+                registeredBy: { schemeId: scheme_id.to_s, name: 'test scheme' },
+                schemeAssessorId: 'SCHE55443',
+                firstName: assessor_without_key(:middleNames)[:firstName],
+                lastName: assessor_without_key(:middleNames)[:lastName],
+                dateOfBirth: assessor_without_key(:middleNames)[:dateOfBirth]
+              }.to_json
+            )
 
           expect(assessor_response).to eq(expected_response)
         end
@@ -113,35 +137,52 @@ describe AssessorService do
       context 'which is invalid' do
         it 'rejects anything that isnt JSON' do
           scheme_id = add_scheme
-          assessor_response = put("/api/schemes/#{scheme_id}/assessors/thebrokenassessor", '>>>this is not json<<<')
+          assessor_response =
+            put(
+              "/api/schemes/#{scheme_id}/assessors/thebrokenassessor",
+              '>>>this is not json<<<'
+            )
 
           expect(assessor_response.status).to eq(400)
         end
 
         it 'rejects an empty request body' do
           scheme_id = add_scheme
-          assessor_response = put("/api/schemes/#{scheme_id}/assessors/thebrokenassessor")
+          assessor_response =
+            put("/api/schemes/#{scheme_id}/assessors/thebrokenassessor")
 
           expect(assessor_response.status).to eq(400)
         end
 
         it 'rejects requests without firstname' do
           scheme_id = add_scheme
-          assessor_response = put("/api/schemes/#{scheme_id}/assessors/thebrokenassessor", assessor_without_key(:firstName))
+          assessor_response =
+            put(
+              "/api/schemes/#{scheme_id}/assessors/thebrokenassessor",
+              assessor_without_key(:firstName)
+            )
 
           expect(assessor_response.status).to eq(400)
         end
 
         it 'rejects requests without last name' do
           scheme_id = add_scheme
-          assessor_response = put("/api/schemes/#{scheme_id}/assessors/thebrokenassessor", assessor_without_key(:lastName))
+          assessor_response =
+            put(
+              "/api/schemes/#{scheme_id}/assessors/thebrokenassessor",
+              assessor_without_key(:lastName)
+            )
 
           expect(assessor_response.status).to eq(400)
         end
 
         it 'rejects requests without date of birth' do
           scheme_id = add_scheme
-          assessor_response = put("/api/schemes/#{scheme_id}/assessors/thebrokenassessor", assessor_without_key(:dateOfBirth))
+          assessor_response =
+            put(
+              "/api/schemes/#{scheme_id}/assessors/thebrokenassessor",
+              assessor_without_key(:dateOfBirth)
+            )
 
           expect(assessor_response.status).to eq(400)
         end
@@ -149,8 +190,12 @@ describe AssessorService do
         it 'rejects requests with invalid date of birth' do
           scheme_id = add_scheme
           invalid_body = VALID_ASSESSOR_REQUEST_BODY.dup
-          invalid_body[:dateOfBirth] = "02/28/1987"
-          assessor_response = put("/api/schemes/#{scheme_id}/assessors/thebrokenassessor", invalid_body.to_json)
+          invalid_body[:dateOfBirth] = '02/28/1987'
+          assessor_response =
+            put(
+              "/api/schemes/#{scheme_id}/assessors/thebrokenassessor",
+              invalid_body.to_json
+            )
 
           expect(assessor_response.status).to eq(400)
         end
@@ -158,8 +203,12 @@ describe AssessorService do
         it 'rejects requests with invalid first name' do
           scheme_id = add_scheme
           invalid_body = VALID_ASSESSOR_REQUEST_BODY.dup
-          invalid_body[:firstName] = 1000
-          assessor_response = put("/api/schemes/#{scheme_id}/assessors/thebrokenassessor", invalid_body.to_json)
+          invalid_body[:firstName] = 1_000
+          assessor_response =
+            put(
+              "/api/schemes/#{scheme_id}/assessors/thebrokenassessor",
+              invalid_body.to_json
+            )
 
           expect(assessor_response.status).to eq(400)
         end
@@ -168,7 +217,11 @@ describe AssessorService do
           scheme_id = add_scheme
           invalid_body = VALID_ASSESSOR_REQUEST_BODY.dup
           invalid_body[:lastName] = false
-          assessor_response = put("/api/schemes/#{scheme_id}/assessors/thebrokenassessor", invalid_body.to_json)
+          assessor_response =
+            put(
+              "/api/schemes/#{scheme_id}/assessors/thebrokenassessor",
+              invalid_body.to_json
+            )
 
           expect(assessor_response.status).to eq(400)
         end
@@ -176,8 +229,12 @@ describe AssessorService do
         it 'rejects requests with invalid middle names' do
           scheme_id = add_scheme
           invalid_body = VALID_ASSESSOR_REQUEST_BODY.dup
-          invalid_body[:middleNames] = ['adsfasd']
-          assessor_response = put("/api/schemes/#{scheme_id}/assessors/thebrokenassessor", invalid_body.to_json)
+          invalid_body[:middleNames] = %w[adsfasd]
+          assessor_response =
+            put(
+              "/api/schemes/#{scheme_id}/assessors/thebrokenassessor",
+              invalid_body.to_json
+            )
 
           expect(assessor_response.status).to eq(400)
         end
@@ -186,10 +243,11 @@ describe AssessorService do
       context 'which has a clashing ID for an assessor on another scheme' do
         it 'Returns a status code 409' do
           first_scheme = add_scheme
-          second_scheme = add_scheme(name='scheme two')
+          second_scheme = add_scheme(name = 'scheme two')
 
           add_assessor(first_scheme, 'SCHE4001', VALID_ASSESSOR_REQUEST_BODY)
-          second_response = add_assessor(second_scheme, 'SCHE4001', VALID_ASSESSOR_REQUEST_BODY)
+          second_response =
+            add_assessor(second_scheme, 'SCHE4001', VALID_ASSESSOR_REQUEST_BODY)
 
           expect(second_response.status).to eq(409)
         end

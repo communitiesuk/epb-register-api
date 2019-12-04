@@ -11,23 +11,27 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 2019_12_03_162034) do
-
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  enable_extension 'plpgsql'
 
-  create_table "assessors", primary_key: "scheme_assessor_id", id: :string, force: :cascade do |t|
-    t.string "first_name"
-    t.string "last_name"
-    t.string "middle_names"
-    t.datetime "date_of_birth"
-    t.bigint "registered_by"
-    t.index ["registered_by"], name: "index_assessors_on_registered_by"
+  create_table 'assessors',
+               primary_key: 'scheme_assessor_id',
+               id: :string,
+               force: :cascade do |t|
+    t.string 'first_name'
+    t.string 'last_name'
+    t.string 'middle_names'
+    t.datetime 'date_of_birth'
+    t.bigint 'registered_by'
+    t.index %w[registered_by], name: 'index_assessors_on_registered_by'
   end
 
-  create_table "schemes", primary_key: "scheme_id", force: :cascade do |t|
-    t.string "name"
-    t.index ["name"], name: "index_schemes_on_name", unique: true
+  create_table 'schemes', primary_key: 'scheme_id', force: :cascade do |t|
+    t.string 'name'
+    t.index %w[name], name: 'index_schemes_on_name', unique: true
   end
 
-  add_foreign_key "assessors", "schemes", column: "registered_by", primary_key: "scheme_id"
+  add_foreign_key 'assessors',
+                  'schemes',
+                  column: 'registered_by', primary_key: 'scheme_id'
 end

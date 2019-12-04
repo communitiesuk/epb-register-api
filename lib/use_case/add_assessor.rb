@@ -1,14 +1,10 @@
 module UseCase
   class AddAssessor
+    class SchemeNotFoundException < Exception; end
 
-    class SchemeNotFoundException < Exception
-    end
+    class InvalidAssessorDetailsException < Exception; end
 
-    class InvalidAssessorDetailsException < Exception
-    end
-
-    class AssessorRegisteredOnAnotherScheme < Exception
-    end
+    class AssessorRegisteredOnAnotherScheme < Exception; end
 
     def initialize(schemes_gateway, assessors_gateway)
       @schemes_gateway = schemes_gateway
@@ -17,41 +13,46 @@ module UseCase
 
     def validate_input(assessor)
       errors = []
-      unless (Date.strptime(assessor[:date_of_birth], '%Y-%m-%d') rescue false)
-        errors << "INVALID_DATE_OF_BIRTH"
+      unless (
+               begin
+                 Date.strptime(assessor[:date_of_birth], '%Y-%m-%d')
+               rescue StandardError
+                 false
+               end
+             )
+        errors << 'INVALID_DATE_OF_BIRTH'
       end
 
       unless assessor[:first_name].class == String
-        errors << "INVALID_FIRST_NAME"
+        errors << 'INVALID_FIRST_NAME'
       end
 
-      unless assessor[:last_name].class == String
-        errors << "INVALID_LAST_NAME"
-      end
+      errors << 'INVALID_LAST_NAME' unless assessor[:last_name].class == String
 
       if assessor[:middle_names] && assessor[:middle_names].class != String
-        errors << "INVALID_MIDDLE_NAMES"
+        errors << 'INVALID_MIDDLE_NAMES'
       end
 
       errors
     end
 
     def execute(scheme_id, scheme_assessor_id, assessor)
-      scheme = @schemes_gateway.all.select { |scheme| scheme[:scheme_id].to_s == scheme_id.to_s }[0]
+      scheme =
+        @schemes_gateway.all.select do |scheme|
+          scheme[:scheme_id].to_s == scheme_id.to_s
+        end[
+          0
+        ]
       existing_assessor = @assessors_gateway.fetch(scheme_assessor_id)
       errors = validate_input(assessor)
 
-      unless scheme
-        raise SchemeNotFoundException
-      end
+      raise SchemeNotFoundException unless scheme
 
       if existing_assessor && existing_assessor[:registered_by] != scheme_id
         raise AssessorRegisteredOnAnotherScheme
       end
 
-      unless errors.empty?
-        raise InvalidAssessorDetailsException
-      end
+      raise InvalidAssessorDetailsException unless errors.empty?
 
       if scheme
         new_assessor = {
@@ -64,11 +65,16 @@ module UseCase
           new_assessor[:middle_names] = assessor[:middle_names]
         end
 
-        @assessors_gateway.update(scheme_assessor_id, scheme[:scheme_id], new_assessor)
+        @assessors_gateway.update(
+          scheme_assessor_id,
+          scheme[:scheme_id],
+          new_assessor
+        )
 
         created_assessor = new_assessor.dup
-        created_assessor[:registered_by] = {scheme_id: scheme_id,
-                                            name: scheme[:name]}
+        created_assessor[:registered_by] = {
+          scheme_id: scheme_id, name: scheme[:name]
+        }
         created_assessor[:scheme_assessor_id] = scheme_assessor_id
         created_assessor
       end

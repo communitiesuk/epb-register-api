@@ -1,7 +1,6 @@
 module Gateway
   class AssessorsGateway
-    class Assessor < ActiveRecord::Base
-    end
+    class Assessor < ActiveRecord::Base; end
 
     def fetch(scheme_assessor_id)
       Assessor.find_by(scheme_assessor_id: scheme_assessor_id)

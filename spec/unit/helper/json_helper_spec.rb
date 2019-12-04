@@ -3,22 +3,26 @@ describe Helper::JsonHelper do
 
   context 'when converting json to ruby hashes' do
     it 'changes top level keys to symbols' do
-      result = HELPER.convert_to_ruby_hash({"foo" => "Bar"}.to_json)
+      result = HELPER.convert_to_ruby_hash({ 'foo' => 'Bar' }.to_json)
       expect(result.keys).to include(:foo)
     end
 
     it 'changes nested keys to symbols' do
-      result = HELPER.convert_to_ruby_hash({"foo" => {"bar" => "baz"}}.to_json)
+      result =
+        HELPER.convert_to_ruby_hash({ 'foo' => { 'bar' => 'baz' } }.to_json)
       expect(result[:foo].keys).to include(:bar)
     end
 
     it 'changes top level keys to snake case' do
-      result = HELPER.convert_to_ruby_hash({"fooBar" => "baz"}.to_json)
+      result = HELPER.convert_to_ruby_hash({ 'fooBar' => 'baz' }.to_json)
       expect(result.keys).to include(:foo_bar)
     end
 
     it 'changes nested level keys to snake case' do
-      result = HELPER.convert_to_ruby_hash({"fooBar" => {"barBaz" => "boo"}}.to_json)
+      result =
+        HELPER.convert_to_ruby_hash(
+          { 'fooBar' => { 'barBaz' => 'boo' } }.to_json
+        )
       expect(result.keys).to include(:foo_bar)
       expect(result[:foo_bar].keys).to include(:bar_baz)
     end
@@ -26,22 +30,22 @@ describe Helper::JsonHelper do
 
   context 'when converting ruby hashes to json' do
     it 'changes top level keys to strings' do
-      result = HELPER.convert_to_json({foo: 'bar'})
+      result = HELPER.convert_to_json({ foo: 'bar' })
       expect(JSON.parse(result).keys).to include('foo')
     end
 
     it 'changes nested keys to strings' do
-      result = HELPER.convert_to_json({foo: {bar: 'baz'}})
+      result = HELPER.convert_to_json({ foo: { bar: 'baz' } })
       expect(JSON.parse(result)['foo'].keys).to include('bar')
     end
 
     it 'changes top level keys to camel case' do
-      result = HELPER.convert_to_json({foo_bar: 'baz'})
+      result = HELPER.convert_to_json({ foo_bar: 'baz' })
       expect(JSON.parse(result).keys).to include('fooBar')
     end
 
     it 'changes nested level keys to camel case' do
-      result = HELPER.convert_to_json({foo_bar: {bar_baz: 'boo'}})
+      result = HELPER.convert_to_json({ foo_bar: { bar_baz: 'boo' } })
       expect(JSON.parse(result).keys).to include('fooBar')
       expect(JSON.parse(result)['fooBar'].keys).to include('barBaz')
     end

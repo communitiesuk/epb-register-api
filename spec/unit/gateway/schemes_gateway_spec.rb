@@ -21,7 +21,9 @@ describe Gateway::SchemesGateway do
 
   context 'when there are schemes' do
     it 'can show results' do
-      allow(Gateway::SchemesGateway::Scheme).to receive(:all).and_return([{ id: 1, name: 'hello' }])
+      allow(Gateway::SchemesGateway::Scheme).to receive(:all).and_return(
+        [{ id: 1, name: 'hello' }]
+      )
 
       expect(described_class.new.all).to eq([{ scheme_id: 1, name: 'hello' }])
     end

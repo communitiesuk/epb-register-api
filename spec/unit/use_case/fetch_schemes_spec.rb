@@ -13,9 +13,7 @@ describe UseCase::FetchSchemes do
 
   let(:schemes_gateway) { SchemesGatewayFake.new }
 
-  let(:response) do
-    described_class.new(schemes_gateway).execute
-  end
+  let(:response) { described_class.new(schemes_gateway).execute }
 
   context 'when there are no schemes' do
     it 'displays an empty hash' do
@@ -25,9 +23,9 @@ describe UseCase::FetchSchemes do
 
   context 'when there are schemes' do
     it 'displays the schemes in a hash' do
-      schemes_gateway.schemes = {name: 'hello'}
+      schemes_gateway.schemes = { name: 'hello' }
 
-      expect(response).to eq(schemes: {name: 'hello'})
+      expect(response).to eq(schemes: { name: 'hello' })
     end
   end
 end

@@ -30,31 +30,17 @@ RSpec.configure do |config|
 
   config.shared_context_metadata_behavior = :apply_to_host_groups
 
-  config.before(:suite) do
-    DatabaseCleaner.clean_with(:truncation)
-  end
+  config.before(:suite) { DatabaseCleaner.clean_with(:truncation) }
 
-  config.before(:each) do
-    DatabaseCleaner.strategy = :transaction
-  end
+  config.before(:each) { DatabaseCleaner.strategy = :transaction }
 
-  config.before(:each, :js => true) do
-    DatabaseCleaner.strategy = :truncation
-  end
+  config.before(:each, js: true) { DatabaseCleaner.strategy = :truncation }
 
-  config.before(:each) do
-    DatabaseCleaner.start
-  end
+  config.before(:each) { DatabaseCleaner.start }
 
-  config.after(:each) do
-    DatabaseCleaner.clean
-  end
+  config.after(:each) { DatabaseCleaner.clean }
 
-  config.before(:all) do
-    DatabaseCleaner.start
-  end
+  config.before(:all) { DatabaseCleaner.start }
 
-  config.after(:all) do
-    DatabaseCleaner.clean
-  end
+  config.after(:all) { DatabaseCleaner.clean }
 end

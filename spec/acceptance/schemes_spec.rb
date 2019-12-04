@@ -13,16 +13,14 @@ describe AssessorService do
 
       it 'includes an empty list of schemes' do
         parsed_response = JSON.parse(response.body)
-        expect(parsed_response).to eq('schemes'=>[])
+        expect(parsed_response).to eq('schemes' => [])
       end
     end
 
     context 'posting to the schemes api' do
       response = false
       request_body = { name: 'XYMZALERO' }.to_json
-      before(:each) do
-        response = post('/api/schemes', request_body)
-      end
+      before(:each) { response = post('/api/schemes', request_body) }
 
       it 'returns status 201' do
         expect(response.status).to eq(201)

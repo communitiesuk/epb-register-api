@@ -6,13 +6,8 @@ require 'sinatra/cross_origin'
 
 class AssessorService < Sinatra::Base
   STATUS_CODES = {
-    '400' => [
-      PG::UniqueViolation,
-      ActiveRecord::RecordNotUnique
-    ],
-    '401' => [
-      JSON::ParserError
-    ]
+    '400' => [PG::UniqueViolation, ActiveRecord::RecordNotUnique],
+    '401' => [JSON::ParserError]
   }.freeze
 
   attr_reader :toggles
@@ -32,17 +27,19 @@ class AssessorService < Sinatra::Base
 
   configure do
     enable :cross_origin
-    set :protection, except: [:remote_token]
+    set :protection, except: %i[remote_token]
   end
 
   before do
     response.headers['Access-Control-Allow-Origin'] = '*'
-    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Cache-Control, Accept'
+    response.headers['Access-Control-Allow-Headers'] =
+      'Content-Type, Cache-Control, Accept'
   end
 
   options '*' do
     response.headers['Allow'] = 'HEAD,GET,PUT,DELETE,OPTIONS'
-    response.headers['Access-Control-Allow-Methods'] = 'HEAD, GET, PUT, OPTIONS, DELETE, POST'
+    response.headers['Access-Control-Allow-Methods'] =
+      'HEAD, GET, PUT, OPTIONS, DELETE, POST'
     200
   end
 
@@ -54,9 +51,7 @@ class AssessorService < Sinatra::Base
     content_type :json
 
     {
-      links: {
-        apispec: 'https://mhclg-epb-swagger.london.cloudapps.digital'
-      }
+      links: { apispec: 'https://mhclg-epb-swagger.london.cloudapps.digital' }
     }.to_json
   end
 
@@ -73,7 +68,10 @@ class AssessorService < Sinatra::Base
   post '/api/schemes' do
     content_type :json
     request_body = @json_helper.convert_to_ruby_hash(request.body.read.to_s)
-    result = @container.get_object(:add_new_scheme_use_case).execute(request_body[:name])
+    result =
+      @container.get_object(:add_new_scheme_use_case).execute(
+        request_body[:name]
+      )
 
     status 201
     @json_helper.convert_to_json(result)
@@ -85,15 +83,15 @@ class AssessorService < Sinatra::Base
     scheme_id = params['scheme_id']
     scheme_assessor_id = params['scheme_assessor_id']
     assessor_details = @json_helper.convert_to_ruby_hash(request.body.read.to_s)
-    created_assessor = @container.get_object(:add_assessor_use_case).execute(
+    created_assessor =
+      @container.get_object(:add_assessor_use_case).execute(
         scheme_id,
         scheme_assessor_id,
         assessor_details
-    )
+      )
 
     status 201
     @json_helper.convert_to_json(created_assessor)
-
   rescue Exception => e
     case e
     when UseCase::AddAssessor::SchemeNotFoundException

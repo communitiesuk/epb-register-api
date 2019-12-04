@@ -5,7 +5,9 @@ module Helper
     end
 
     def convert_to_json(hash)
-      JSON.parse(hash.to_json).deep_transform_keys { |k| k.camelize(:lower) }.to_json
+      JSON.parse(hash.to_json).deep_transform_keys do |k|
+        k.camelize(:lower)
+      end.to_json
     end
   end
 end

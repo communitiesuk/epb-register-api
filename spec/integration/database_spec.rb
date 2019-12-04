@@ -10,7 +10,8 @@ describe ActiveRecord::Base do
   def migration_has_been_run?(version)
     table_name = ActiveRecord::SchemaMigration.table_name
 
-    query = "SELECT version FROM %s WHERE version = '%s'" % [table_name, version]
+    query =
+      "SELECT version FROM %s WHERE version = '%s'" % [table_name, version]
     described_class.connection.execute(query).any?
   end
 
@@ -45,7 +46,8 @@ describe ActiveRecord::Base do
 
     described_class.establish_connection
 
-    scheme_id = described_class.connection.execute('SELECT scheme_id FROM schemes')
+    scheme_id =
+      described_class.connection.execute('SELECT scheme_id FROM schemes')
 
     expect(scheme_id).not_to be_nil
   end

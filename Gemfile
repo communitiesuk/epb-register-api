@@ -3,6 +3,7 @@ ruby '~> 2.6'
 source 'https://rubygems.org' do
   group :development do
     gem 'sinatra-contrib'
+    gem "prettier", "~> 0.16.0"
   end
 
   group :test do
