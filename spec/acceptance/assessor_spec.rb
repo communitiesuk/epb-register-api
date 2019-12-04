@@ -60,8 +60,8 @@ describe AssessorService do
       end
     end
 
-    context 'when a scheme does exist' do
-      context 'when there are assessors' do
+    context 'when getting an assessor' do
+      context 'and the assessor exists on the correct scheme' do
         it 'returns status 200 for a get' do
           scheme_id = add_scheme
           add_assessor(scheme_id, 'SCHEME4233', VALID_ASSESSOR_REQUEST_BODY)
