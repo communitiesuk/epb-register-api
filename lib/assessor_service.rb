@@ -82,10 +82,11 @@ class AssessorService < Sinatra::Base
   get '/api/schemes/:scheme_id/assessors/:scheme_assessor_id' do
     scheme_id = params[:scheme_id]
     scheme_assessor_id = params[:scheme_assessor_id]
-    result = @container.get_object(:fetch_assessor_use_case).execute(
+    result =
+      @container.get_object(:fetch_assessor_use_case).execute(
         scheme_id,
         scheme_assessor_id
-    )
+      )
   rescue Exception => e
     case e
     when UseCase::FetchAssessor::SchemeNotFoundException

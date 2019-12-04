@@ -8,7 +8,8 @@ class Container
     get_all_schemes_use_case = UseCase::FetchSchemes.new(schemes_gateway)
     add_assessor_use_case =
       UseCase::AddAssessor.new(schemes_gateway, assessors_gateway)
-    fetch_assessor_use_case = UseCase::FetchAssessor.new(assessors_gateway, schemes_gateway)
+    fetch_assessor_use_case =
+      UseCase::FetchAssessor.new(assessors_gateway, schemes_gateway)
 
     @objects = {
       schemes_gateway: schemes_gateway,
