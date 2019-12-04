@@ -176,6 +176,34 @@ describe UseCase::AddAssessor do
     end
   end
 
+  context 'when updating an assessor' do
+    let(:add_assessor_with_stub_data) do
+      schemes_gateway =
+        SchemesGatewayStub.new([{ scheme_id: 25, name: 'Best scheme' }])
+      described_class.new(
+        schemes_gateway,
+        AssessorGatewayFake.new(
+          {
+            registered_by: 25,
+            scheme_assessor_id: 'SCHE234950',
+            first_name: 'John',
+            last_name: 'Smith',
+            middle_names: 'Brain',
+            date_of_birth: '1991-02-25'
+          }
+        )
+      )
+    end
+
+    it 'returns false when assessor already exists' do
+      expect(
+        add_assessor_with_stub_data.execute('25', 'SCHE234950', VALID_ASSESSOR)[
+          :assessor_was_newly_created
+        ]
+      ).to be false
+    end
+  end
+
   context 'when adding with invalid data' do
     let(:add_assessor_with_stub_data) do
       schemes_gateway =
