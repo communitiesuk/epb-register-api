@@ -33,6 +33,12 @@ describe ActiveRecord::Base do
     expect(migration_has_been_run?('20191127191652')).to be true
   end
 
+  it 'has run the create assessors migration' do
+    connect('epb_development')
+
+    expect(migration_has_been_run?('20191203162034')).to be true
+  end
+
   it 'can find the schemes table' do
     connect('epb_development')
 
