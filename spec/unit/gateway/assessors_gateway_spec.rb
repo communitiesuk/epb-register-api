@@ -9,7 +9,7 @@ describe Gateway::AssessorsGateway do
   end
 
   context 'when there are no assessors' do
-    it 'can show an empty hash' do
+    it 'can return nil' do
       allow(Gateway::AssessorsGateway::Assessor).to receive(:find_by)
         .and_return(nil)
 
