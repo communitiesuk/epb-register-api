@@ -11,14 +11,14 @@ describe Gateway::AssessorsGateway do
   context 'when there are no assessors' do
     it 'can show an empty hash' do
       allow(Gateway::AssessorsGateway::Assessor).to receive(:find_by)
-        .and_return({})
+        .and_return(nil)
 
       expect(Gateway::AssessorsGateway::Assessor).to receive(:find_by).with(
         scheme_assessor_id: 'SCHE1234'
       )
 
       subject = described_class.new
-      expect(subject.fetch('SCHE1234')).to eq({})
+      expect(subject.fetch('SCHE1234')).to eq(nil)
     end
   end
 
