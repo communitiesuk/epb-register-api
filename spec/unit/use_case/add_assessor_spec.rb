@@ -144,6 +144,14 @@ describe UseCase::AddAssessor do
       add_assessor_with_spy.execute('25', 'SCHE4353', VALID_ASSESSOR)
       expect(assessor_gateway.saved_assessor_details).to eq(VALID_ASSESSOR)
     end
+
+    it 'returns true when assessor already exists' do
+      expect(
+        add_assessor_with_stub_data.execute('25', 'SCHE234950', VALID_ASSESSOR)[
+          :assessor_was_newly_created
+        ]
+      ).to be true
+    end
   end
 
   context 'when adding with same ID from another scheme' do
