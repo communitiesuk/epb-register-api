@@ -79,6 +79,18 @@ class AssessorService < Sinatra::Base
     handle_exception(e)
   end
 
+  get '/api/schemes/:scheme_id/assessors/:scheme_assessor_id' do
+    scheme_id = params[:scheme_id]
+    scheme_assessor_id = params[:scheme_assessor_id]
+    result = @container.get_object(:fetch_assessor_use_case).execute(
+        scheme_id,
+        scheme_assessor_id
+    )
+
+    200
+    result
+  end
+
   put '/api/schemes/:scheme_id/assessors/:scheme_assessor_id' do
     scheme_id = params['scheme_id']
     scheme_assessor_id = params['scheme_assessor_id']
