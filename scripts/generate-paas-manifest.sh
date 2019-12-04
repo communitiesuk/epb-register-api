@@ -14,7 +14,7 @@ applications:
     health-check-type: http
     health-check-http-endpoint: /healthcheck
     services:
-      - mhclg-epb-assessor-db-$STAGE
+      - mhclg-epb-db-$STAGE
       - logit-ssl-drain
 
 EOF
