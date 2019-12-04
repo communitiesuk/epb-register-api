@@ -66,6 +66,8 @@ describe UseCase::AddAssessor do
     it 'returns the scheme that the assessor belongs to' do
       expect(
         add_assessor_with_stub_data.execute('25', 'SCHE234950', VALID_ASSESSOR)[
+          :assessor
+        ][
           :registered_by
         ]
       ).to eq(scheme_id: '25', name: 'Best scheme')
@@ -74,6 +76,8 @@ describe UseCase::AddAssessor do
     it 'returns the scheme assessor ID' do
       expect(
         add_assessor_with_stub_data.execute('25', 'SCHE234950', VALID_ASSESSOR)[
+          :assessor
+        ][
           :scheme_assessor_id
         ]
       ).to eq('SCHE234950')
@@ -82,6 +86,8 @@ describe UseCase::AddAssessor do
     it 'returns the assessors first name' do
       expect(
         add_assessor_with_stub_data.execute('25', 'SCHE234950', VALID_ASSESSOR)[
+          :assessor
+        ][
           :first_name
         ]
       ).to eq('John')
@@ -90,6 +96,8 @@ describe UseCase::AddAssessor do
     it 'returns the assessors last name' do
       expect(
         add_assessor_with_stub_data.execute('25', 'SCHE234950', VALID_ASSESSOR)[
+          :assessor
+        ][
           :last_name
         ]
       ).to eq('Smith')
@@ -98,6 +106,8 @@ describe UseCase::AddAssessor do
     it 'returns the assessors middle names' do
       expect(
         add_assessor_with_stub_data.execute('25', 'SCHE234950', VALID_ASSESSOR)[
+          :assessor
+        ][
           :middle_names
         ]
       ).to eq('Brain')
@@ -106,6 +116,8 @@ describe UseCase::AddAssessor do
     it 'returns the assessors date of birth' do
       expect(
         add_assessor_with_stub_data.execute('25', 'SCHE234950', VALID_ASSESSOR)[
+          :assessor
+        ][
           :date_of_birth
         ]
       ).to eq('1991-02-25')

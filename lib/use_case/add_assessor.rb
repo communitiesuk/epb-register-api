@@ -77,7 +77,10 @@ module UseCase
           scheme_id: scheme_id, name: scheme[:name]
         }
         created_assessor[:scheme_assessor_id] = scheme_assessor_id
-        created_assessor
+        {
+          assessor_was_newly_created: (existing_assessor == nil),
+          assessor: created_assessor
+        }
       end
     end
   end

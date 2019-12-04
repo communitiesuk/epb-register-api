@@ -83,15 +83,18 @@ class AssessorService < Sinatra::Base
     scheme_id = params['scheme_id']
     scheme_assessor_id = params['scheme_assessor_id']
     assessor_details = @json_helper.convert_to_ruby_hash(request.body.read.to_s)
-    created_assessor =
+    create_assessor_response =
       @container.get_object(:add_assessor_use_case).execute(
         scheme_id,
         scheme_assessor_id,
         assessor_details
       )
-
-    status 201
-    @json_helper.convert_to_json(created_assessor)
+    if create_assessor_response[:assessor_was_newly_created]
+      status 201
+    else
+      status 200
+    end
+    @json_helper.convert_to_json(create_assessor_response[:assessor])
   rescue Exception => e
     case e
     when UseCase::AddAssessor::SchemeNotFoundException
@@ -102,14 +105,9 @@ class AssessorService < Sinatra::Base
       @json_helper.convert_to_json(
         { errors: [{ code: 'ASSESSOR_ID_ON_ANOTHER_SCHEME' }] }
       )
-    when UseCase::AddAssessor::InvalidAssessorDetailsException
+    else
       status 400
       @json_helper.convert_to_json({ errors: [{ code: 'INVALID_REQUEST' }] })
-    else
-      status 500
-      @json_helper.convert_to_json(
-        { errors: [{ code: 'SERVER_ERROR', title: e.message }] }
-      )
     end
   end
 

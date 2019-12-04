@@ -15,8 +15,11 @@ module Gateway
         Assessor.find_by(
           scheme_assessor_id: scheme_assessor_id, registered_by: registered_by
         )
-      existing_assessor.update(assessor) if existing_assessor
-      Assessor.create(assessor)
+      if existing_assessor
+        existing_assessor.update(assessor)
+      else
+        Assessor.create(assessor)
+      end
     end
   end
 end
