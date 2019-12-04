@@ -7,4 +7,31 @@ describe Gateway::AssessorsGateway do
       subject.update('SCHE4321', 10, {})
     end
   end
+
+  context 'when there are no assessors' do
+    it 'can show an empty hash' do
+      allow(Gateway::AssessorsGateway::Assessor).to receive(:find_by)
+        .and_return({})
+
+      expect(Gateway::AssessorsGateway::Assessor).to receive(:find_by).with(
+        scheme_assessor_id: 'SCHE1234'
+      )
+
+      subject = described_class.new
+      expect(subject.fetch('SCHE1234')).to eq({})
+    end
+  end
+
+  context 'when there are assessors' do
+    it 'can show results' do
+      allow(Gateway::AssessorsGateway::Assessor).to receive(:find_by).with(
+        scheme_assessor_id: 'SCHE5678'
+      )
+        .and_return([{ registered_by: 20, scheme_assessor_id: 'SCHE5678' }])
+
+      expect(described_class.new.fetch('SCHE5678')).to eq(
+        [{ registered_by: 20, scheme_assessor_id: 'SCHE5678' }]
+      )
+    end
+  end
 end
