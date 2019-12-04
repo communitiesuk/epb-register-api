@@ -33,5 +33,9 @@ Set the endpoint of unleash to be any valid URL. You will need to run your own l
 ## Running server
 `make run`
 
+## Code Formatting 
+Use Prettier to format ruby code to save arguing about it.
+`make format`
+
 # CI
 Build commands are stored in the buildspec directory

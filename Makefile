@@ -47,3 +47,7 @@ test:
 .PHONY: run
 run:
 	rackup
+
+.PHONY: format
+format:
+	bundle exec rbprettier --write '**/*.rb'
