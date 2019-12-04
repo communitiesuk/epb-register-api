@@ -48,7 +48,8 @@ module UseCase
 
       raise SchemeNotFoundException unless scheme
 
-      if existing_assessor && existing_assessor[:registered_by] != scheme_id
+      if existing_assessor &&
+           existing_assessor[:registered_by].to_s != scheme_id.to_s
         raise AssessorRegisteredOnAnotherScheme
       end
 

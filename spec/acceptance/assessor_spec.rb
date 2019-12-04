@@ -253,5 +253,17 @@ describe AssessorService do
         end
       end
     end
+
+    context 'when updating an assessor' do
+      context 'which is valid with all fields' do
+        it 'returns 200 on the update' do
+          scheme_id = add_scheme
+          add_assessor(scheme_id, 'ASSESSOR99', VALID_ASSESSOR_REQUEST_BODY)
+          second_response =
+            add_assessor(scheme_id, 'ASSESSOR99', VALID_ASSESSOR_REQUEST_BODY)
+          expect(second_response.status).to eq(200)
+        end
+      end
+    end
   end
 end

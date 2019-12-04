@@ -96,10 +96,20 @@ class AssessorService < Sinatra::Base
     case e
     when UseCase::AddAssessor::SchemeNotFoundException
       status 404
+      @json_helper.convert_to_json({ errors: [{ code: 'SCHEME_NOT_FOUND' }] })
     when UseCase::AddAssessor::AssessorRegisteredOnAnotherScheme
       status 409
-    else
+      @json_helper.convert_to_json(
+        { errors: [{ code: 'ASSESSOR_ID_ON_ANOTHER_SCHEME' }] }
+      )
+    when UseCase::AddAssessor::InvalidAssessorDetailsException
       status 400
+      @json_helper.convert_to_json({ errors: [{ code: 'INVALID_REQUEST' }] })
+    else
+      status 500
+      @json_helper.convert_to_json(
+        { errors: [{ code: 'SERVER_ERROR', title: e.message }] }
+      )
     end
   end
 

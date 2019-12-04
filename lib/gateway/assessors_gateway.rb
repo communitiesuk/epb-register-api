@@ -11,6 +11,11 @@ module Gateway
       assessor[:registered_by] = registered_by
       assessor[:scheme_assessor_id] = scheme_assessor_id
 
+      existing_assessor =
+        Assessor.find_by(
+          scheme_assessor_id: scheme_assessor_id, registered_by: registered_by
+        )
+      existing_assessor.update(assessor) if existing_assessor
       Assessor.create(assessor)
     end
   end
