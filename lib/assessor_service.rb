@@ -86,7 +86,15 @@ class AssessorService < Sinatra::Base
         scheme_id,
         scheme_assessor_id
     )
-
+  rescue Exception => e
+    case e
+    when UseCase::FetchAssessor::SchemeNotFoundException
+      status 404
+    when UseCase::FetchAssessor::AssessorNotFoundException
+      status 404
+    else
+      status 404
+    end
     200
     result
   end
