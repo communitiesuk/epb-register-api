@@ -15,11 +15,13 @@ module UseCase
       if scheme[:scheme_id].to_s == scheme_id.to_s
         if @assessor_gateway.fetch(scheme_assessor_id) == nil
           raise AssessorNotFoundException
-        else
-          @assessor_gateway.fetch(scheme_assessor_id)
         end
+        unless scheme_assessor_id == @assessor_gateway.fetch(scheme_assessor_id)[:scheme_assessor_id]
+          raise AssessorNotFoundException
+        end
+        @assessor_gateway.fetch(scheme_assessor_id)
       else
-        'fail'
+        raise UseCase::AddAssessor::SchemeNotFoundException
       end
     end
   end
