@@ -35,6 +35,7 @@ Set the endpoint of unleash to be any valid URL. You will need to run your own l
 
 ## Code Formatting 
 Use Prettier to format ruby code to save arguing about it.
+
 `make format`
 
 # CI
