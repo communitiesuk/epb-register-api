@@ -104,6 +104,14 @@ describe AssessorService do
           expect(assessor_response.status).to eq(201)
         end
 
+        it 'returns JSON' do
+          scheme_id = add_scheme
+          assessor_response =
+              add_assessor(scheme_id, 'SCHE55443', VALID_ASSESSOR_REQUEST_BODY)
+
+          expect(assessor_response.headers['Content-type']).to eq('application/json')
+        end
+
         it 'returns assessor details with scheme details' do
           scheme_id = add_scheme
           assessor_response =

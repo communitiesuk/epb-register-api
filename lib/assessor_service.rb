@@ -105,6 +105,7 @@ class AssessorService < Sinatra::Base
   end
 
   put '/api/schemes/:scheme_id/assessors/:scheme_assessor_id' do
+    content_type :json
     scheme_id = params['scheme_id']
     scheme_assessor_id = params['scheme_assessor_id']
     assessor_details = @json_helper.convert_to_ruby_hash(request.body.read.to_s)
