@@ -68,6 +68,12 @@ describe AssessorService do
           expect(fetch_assessor(scheme_id, 'SCHEME4233').status).to eq(200)
         end
 
+        it 'returns json' do
+          scheme_id = add_scheme
+          add_assessor(scheme_id, 'SCHEME4233', VALID_ASSESSOR_REQUEST_BODY)
+          expect(fetch_assessor(scheme_id, 'SCHEME4233').headers['Content-type']).to eq('application/json')
+        end
+
         it 'returns the correct details for the assessor' do
           scheme_id = add_scheme
           add_assessor(scheme_id, 'SCHEME4233', VALID_ASSESSOR_REQUEST_BODY)

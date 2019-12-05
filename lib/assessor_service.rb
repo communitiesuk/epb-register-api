@@ -80,6 +80,7 @@ class AssessorService < Sinatra::Base
   end
 
   get '/api/schemes/:scheme_id/assessors/:scheme_assessor_id' do
+    content_type :json
     scheme_id = params[:scheme_id]
     scheme_assessor_id = params[:scheme_assessor_id]
     result =
