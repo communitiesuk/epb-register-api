@@ -97,6 +97,7 @@ class AssessorService < Sinatra::Base
     when UseCase::FetchAssessor::AssessorNotFoundException
       status 404
     else
+      status 500
       @json_helper.convert_to_json(
         { errors: [{ code: 'SERVER_ERROR', title: e.message }] }
       )
