@@ -87,6 +87,8 @@ class AssessorService < Sinatra::Base
         scheme_id,
         scheme_assessor_id
       )
+    200
+    @json_helper.convert_to_json(result)
   rescue Exception => e
     case e
     when UseCase::FetchAssessor::SchemeNotFoundException
@@ -94,10 +96,10 @@ class AssessorService < Sinatra::Base
     when UseCase::FetchAssessor::AssessorNotFoundException
       status 404
     else
-      status 404
+      @json_helper.convert_to_json(
+        { errors: [{ code: 'SERVER_ERROR', title: e.message }] }
+      )
     end
-    200
-    result
   end
 
   put '/api/schemes/:scheme_id/assessors/:scheme_assessor_id' do

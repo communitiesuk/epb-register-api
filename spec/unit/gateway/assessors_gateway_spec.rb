@@ -1,3 +1,5 @@
+require 'date'
+
 describe Gateway::AssessorsGateway do
   context 'when adding an assessor' do
     it 'can add an assessor' do
@@ -27,10 +29,10 @@ describe Gateway::AssessorsGateway do
       allow(Gateway::AssessorsGateway::Assessor).to receive(:find_by).with(
         scheme_assessor_id: 'SCHE5678'
       )
-        .and_return([{ registered_by: 20, scheme_assessor_id: 'SCHE5678' }])
+        .and_return({ registered_by: 20, scheme_assessor_id: 'SCHE5678' })
 
       expect(described_class.new.fetch('SCHE5678')).to eq(
-        [{ registered_by: 20, scheme_assessor_id: 'SCHE5678' }]
+        { registered_by: 20, scheme_assessor_id: 'SCHE5678' }
       )
     end
   end

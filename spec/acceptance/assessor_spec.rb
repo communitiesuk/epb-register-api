@@ -67,6 +67,24 @@ describe AssessorService do
           add_assessor(scheme_id, 'SCHEME4233', VALID_ASSESSOR_REQUEST_BODY)
           expect(fetch_assessor(scheme_id, 'SCHEME4233').status).to eq(200)
         end
+
+        it 'returns the correct details for the assessor' do
+          scheme_id = add_scheme
+          add_assessor(scheme_id, 'SCHEME4233', VALID_ASSESSOR_REQUEST_BODY)
+          expected_response =
+            JSON.parse(
+              {
+                registeredBy: { schemeId: scheme_id, name: 'test scheme' },
+                schemeAssessorId: 'SCHEME4233',
+                firstName: VALID_ASSESSOR_REQUEST_BODY[:firstName],
+                middleNames: VALID_ASSESSOR_REQUEST_BODY[:middleNames],
+                lastName: VALID_ASSESSOR_REQUEST_BODY[:lastName],
+                dateOfBirth: VALID_ASSESSOR_REQUEST_BODY[:dateOfBirth]
+              }.to_json
+            )
+          response = JSON.parse(fetch_assessor(scheme_id, 'SCHEME4233').body)
+          expect(response).to eq(expected_response)
+        end
       end
     end
 
