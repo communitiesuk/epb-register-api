@@ -1,9 +1,16 @@
 module Gateway
   class SchemesGateway
-    class Scheme < ActiveRecord::Base; end
+    class Scheme < ActiveRecord::Base;
+
+      def to_hash
+        {scheme_id: self[:id],
+         name: self[:name]}
+      end
+
+    end
 
     def all
-      Scheme.all.map { |s| { scheme_id: s[:id], name: s[:name] } }
+      Scheme.all.map { |s| s.to_hash }
     end
 
     def add(name)
