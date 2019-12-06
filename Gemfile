@@ -13,6 +13,7 @@ source 'https://rubygems.org' do
     gem 'pry', '~> 0.12.2'
     gem 'rack-test', '~> 0.8.3'
     gem 'rspec', '~>3.0'
+    gem "simplecov", "~> 0.17.1"
   end
 
   gem 'pg'
