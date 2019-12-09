@@ -6,7 +6,9 @@ module Controller
     PUT_SCHEMA = {
       type: 'object',
       required: %w[firstName lastName dateOfBirth],
-      properties: { firstName: { type: 'string' } }
+      properties: {
+        firstName: { type: 'string' }, lastName: { type: 'string' }
+      }
     }
 
     def initialize(toggles = false)
