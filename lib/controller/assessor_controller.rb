@@ -4,7 +4,9 @@ module Controller
 
   class AssessorController < Sinatra::Base
     PUT_SCHEMA = {
-      type: 'object', required: %w[firstName lastName dateOfBirth]
+      type: 'object',
+      required: %w[firstName lastName dateOfBirth],
+      properties: { firstName: { type: 'string' } }
     }
 
     def initialize(toggles = false)
