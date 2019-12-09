@@ -16,6 +16,7 @@ source 'https://rubygems.org' do
     gem "simplecov", "~> 0.17.1"
   end
 
+  gem "json-schema", "~> 2.8"
   gem 'pg'
   gem 'rake'
   gem 'sinatra', '~> 2.0', '>= 2.0.7'

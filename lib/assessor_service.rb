@@ -36,6 +36,8 @@ class AssessorService < Sinatra::Base
       'Content-Type, Cache-Control, Accept'
   end
 
+  use Controller::AssessorController
+
   options '*' do
     response.headers['Allow'] = 'HEAD,GET,PUT,DELETE,OPTIONS'
     response.headers['Access-Control-Allow-Methods'] =
@@ -77,31 +79,6 @@ class AssessorService < Sinatra::Base
     @json_helper.convert_to_json(result)
   rescue StandardError => e
     handle_exception(e)
-  end
-
-  get '/api/schemes/:scheme_id/assessors/:scheme_assessor_id' do
-    content_type :json
-    scheme_id = params[:scheme_id]
-    scheme_assessor_id = params[:scheme_assessor_id]
-    result =
-      @container.get_object(:fetch_assessor_use_case).execute(
-        scheme_id,
-        scheme_assessor_id
-      )
-    200
-    @json_helper.convert_to_json(result)
-  rescue Exception => e
-    case e
-    when UseCase::FetchAssessor::SchemeNotFoundException
-      status 404
-    when UseCase::FetchAssessor::AssessorNotFoundException
-      status 404
-    else
-      status 500
-      @json_helper.convert_to_json(
-        { errors: [{ code: 'SERVER_ERROR', title: e.message }] }
-      )
-    end
   end
 
   put '/api/schemes/:scheme_id/assessors/:scheme_assessor_id' do
