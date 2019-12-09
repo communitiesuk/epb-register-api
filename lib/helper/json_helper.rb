@@ -1,7 +1,8 @@
 module Helper
   class JsonHelper
-    def convert_to_ruby_hash(json)
-      JSON.parse(json).deep_transform_keys { |k| k.to_s.underscore.to_sym }
+    def convert_to_ruby_hash(json_string, schema=false)
+      json = JSON.parse(json_string)
+      json.deep_transform_keys { |k| k.to_s.underscore.to_sym }
     end
 
     def convert_to_json(hash)
