@@ -1,16 +1,9 @@
 module Controller
-  class SchemesController < Sinatra::Base
+  class SchemesController < Controller::BaseController
     STATUS_CODES = {
       '400' => [PG::UniqueViolation, ActiveRecord::RecordNotUnique],
       '401' => [JSON::ParserError]
     }.freeze
-
-    def initialize(toggles = false)
-      super
-      @json_helper = Helper::JsonHelper.new
-      @toggles = toggles || Toggles.new
-      @container = Container.new
-    end
 
     get '/api/schemes' do
       content_type :json

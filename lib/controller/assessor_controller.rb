@@ -1,8 +1,5 @@
 module Controller
-  require_relative '../container'
-  require 'sinatra/cross_origin'
-
-  class AssessorController < Sinatra::Base
+  class AssessorController < Controller::BaseController
     PUT_SCHEMA = {
       type: 'object',
       required: %w[firstName lastName dateOfBirth],
@@ -13,13 +10,6 @@ module Controller
         dateOfBirth: { type: 'string', format: 'iso-date' }
       }
     }
-
-    def initialize(toggles = false)
-      super
-      @json_helper = Helper::JsonHelper.new
-      @toggles = toggles || Toggles.new
-      @container = Container.new
-    end
 
     get '/api/schemes/:scheme_id/assessors/:scheme_assessor_id' do
       content_type :json
