@@ -27,8 +27,11 @@ module Controller
     before do
       response.headers['Access-Control-Allow-Origin'] = '*'
       response.headers['Access-Control-Allow-Headers'] =
-          'Content-Type, Cache-Control, Accept'
+        'Content-Type, Cache-Control, Accept'
     end
 
+    def single_error_response(code, title)
+      @json_helper.convert_to_json({ errors: [{ code: code, title: title }] })
+    end
   end
 end

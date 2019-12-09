@@ -26,13 +26,16 @@ module Controller
       case e
       when UseCase::FetchAssessor::SchemeNotFoundException
         status 404
+        single_error_response('NOT_FOUND', 'The requested scheme was not found')
       when UseCase::FetchAssessor::AssessorNotFoundException
         status 404
+        single_error_response(
+          'NOT_FOUND',
+          'The requested assessor was not found'
+        )
       else
         status 500
-        @json_helper.convert_to_json(
-          { errors: [{ code: 'SERVER_ERROR', title: e.message }] }
-        )
+        single_error_response('SERVER_ERROR', e.message)
       end
     end
 
@@ -58,20 +61,19 @@ module Controller
       case e
       when UseCase::AddAssessor::SchemeNotFoundException
         status 404
-        @json_helper.convert_to_json({ errors: [{ code: 'SCHEME_NOT_FOUND' }] })
+        single_error_response('NOT_FOUND', 'The requested scheme was not found')
       when UseCase::AddAssessor::AssessorRegisteredOnAnotherScheme
         status 409
-        @json_helper.convert_to_json(
-          { errors: [{ code: 'ASSESSOR_ID_ON_ANOTHER_SCHEME' }] }
+        single_error_response(
+          'ASSESSOR_ID_ON_ANOTHER_SCHEME',
+          'The assessor ID you are trying to update is registered by a different scheme'
         )
       when JSON::Schema::ValidationError, JSON::ParserError
         status 400
-        { errors: [{ code: 'INVALID_REQUEST', title: e.message }] }
+        single_error_response('INVALID_REQUEST', e.message)
       else
         status 500
-        @json_helper.convert_to_json(
-          { errors: [{ code: 'SERVER_ERROR', title: e.message }] }
-        )
+        single_error_response('SERVER_ERROR', e.message)
       end
     end
   end
