@@ -14,20 +14,6 @@ module Controller
       }
     }
 
-    DATE_FORMAT_PROC = lambda do |value|
-      unless (
-               begin
-                 Date.strptime(value, '%Y-%m-%d')
-               rescue StandardError
-                 false
-               end
-             )
-        raise JSON::Schema::CustomFormatError.new(
-                'Must be date in format YYYY-MM-DD'
-              )
-      end
-    end
-
     def initialize(toggles = false)
       super
       @json_helper = Helper::JsonHelper.new
@@ -62,7 +48,6 @@ module Controller
 
     put '/api/schemes/:scheme_id/assessors/:scheme_assessor_id' do
       content_type :json
-      JSON::Validator.register_format_validator('iso-date', DATE_FORMAT_PROC)
       scheme_id = params['scheme_id']
       scheme_assessor_id = params['scheme_assessor_id']
       assessor_details =

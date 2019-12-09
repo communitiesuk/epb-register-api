@@ -2,6 +2,24 @@ require 'json-schema'
 
 module Helper
   class JsonHelper
+    DATE_FORMAT_PROC = lambda do |value|
+      unless (
+               begin
+                 Date.strptime(value, '%Y-%m-%d')
+               rescue StandardError
+                 false
+               end
+             )
+        raise JSON::Schema::CustomFormatError.new(
+                'Must be date in format YYYY-MM-DD'
+              )
+      end
+    end
+
+    def initialize
+      JSON::Validator.register_format_validator('iso-date', DATE_FORMAT_PROC)
+    end
+
     def convert_to_ruby_hash(json_string, schema = false)
       json = JSON.parse(json_string)
 
