@@ -11,11 +11,6 @@ module UseCase
       @assessors_gateway = assessors_gateway
     end
 
-    def validate_input(assessor)
-      errors = []
-      errors
-    end
-
     def execute(scheme_id, scheme_assessor_id, assessor)
       scheme =
         @schemes_gateway.all.select do |scheme|
@@ -24,7 +19,6 @@ module UseCase
           0
         ]
       existing_assessor = @assessors_gateway.fetch(scheme_assessor_id)
-      errors = validate_input(assessor)
 
       raise SchemeNotFoundException unless scheme
 
@@ -32,8 +26,6 @@ module UseCase
            existing_assessor[:registered_by].to_s != scheme_id.to_s
         raise AssessorRegisteredOnAnotherScheme
       end
-
-      raise InvalidAssessorDetailsException unless errors.empty?
 
       if scheme
         new_assessor = {
