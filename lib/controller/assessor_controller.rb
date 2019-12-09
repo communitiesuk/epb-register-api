@@ -7,7 +7,9 @@ module Controller
       type: 'object',
       required: %w[firstName lastName dateOfBirth],
       properties: {
-        firstName: { type: 'string' }, lastName: { type: 'string' }
+        firstName: { type: 'string' },
+        lastName: { type: 'string' },
+        middleNames: { type: 'string' }
       }
     }
 

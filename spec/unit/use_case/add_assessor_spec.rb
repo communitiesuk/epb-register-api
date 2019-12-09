@@ -262,16 +262,5 @@ describe UseCase::AddAssessor do
         UseCase::AddAssessor::InvalidAssessorDetailsException
       )
     end
-
-    it 'rejects middle names that arent strings' do
-      assessor = VALID_ASSESSOR.dup
-      assessor[:middle_names] = %w[hello]
-
-      expect {
-        add_assessor_with_stub_data.execute('25', 'SCHE2736', assessor)
-      }.to raise_exception(
-        UseCase::AddAssessor::InvalidAssessorDetailsException
-      )
-    end
   end
 end
