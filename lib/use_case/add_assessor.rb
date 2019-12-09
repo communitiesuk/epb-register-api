@@ -13,16 +13,6 @@ module UseCase
 
     def validate_input(assessor)
       errors = []
-      unless (
-               begin
-                 Date.strptime(assessor[:date_of_birth], '%Y-%m-%d')
-               rescue StandardError
-                 false
-               end
-             )
-        errors << 'INVALID_DATE_OF_BIRTH'
-      end
-
       errors
     end
 

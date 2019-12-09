@@ -9,9 +9,24 @@ module Controller
       properties: {
         firstName: { type: 'string' },
         lastName: { type: 'string' },
-        middleNames: { type: 'string' }
+        middleNames: { type: 'string' },
+        dateOfBirth: { type: 'string', format: 'iso-date' }
       }
     }
+
+    DATE_FORMAT_PROC = lambda do |value|
+      unless (
+               begin
+                 Date.strptime(value, '%Y-%m-%d')
+               rescue StandardError
+                 false
+               end
+             )
+        raise JSON::Schema::CustomFormatError.new(
+                'Must be date in format YYYY-MM-DD'
+              )
+      end
+    end
 
     def initialize(toggles = false)
       super
@@ -47,6 +62,7 @@ module Controller
 
     put '/api/schemes/:scheme_id/assessors/:scheme_assessor_id' do
       content_type :json
+      JSON::Validator.register_format_validator('iso-date', DATE_FORMAT_PROC)
       scheme_id = params['scheme_id']
       scheme_assessor_id = params['scheme_assessor_id']
       assessor_details =
@@ -73,12 +89,14 @@ module Controller
         @json_helper.convert_to_json(
           { errors: [{ code: 'ASSESSOR_ID_ON_ANOTHER_SCHEME' }] }
         )
-      when JSON::Schema::ValidationError
+      when JSON::Schema::ValidationError, JSON::ParserError
         status 400
         { errors: [{ code: 'INVALID_REQUEST', title: e.message }] }
       else
-        status 400
-        @json_helper.convert_to_json({ errors: [{ code: 'INVALID_REQUEST' }] })
+        status 500
+        @json_helper.convert_to_json(
+          { errors: [{ code: 'SERVER_ERROR', title: e.message }] }
+        )
       end
     end
   end

@@ -218,49 +218,5 @@ describe UseCase::AddAssessor do
         SchemesGatewayStub.new([{ scheme_id: 25, name: 'Best scheme' }])
       described_class.new(schemes_gateway, AssessorGatewayFake.new(nil))
     end
-
-    it 'rejects American style dates of birth' do
-      assessor = VALID_ASSESSOR.dup
-      assessor[:date_of_birth] = '12/20/1990'
-
-      expect {
-        add_assessor_with_stub_data.execute('25', 'SCHE93452', assessor)
-      }.to raise_exception(
-        UseCase::AddAssessor::InvalidAssessorDetailsException
-      )
-    end
-
-    it 'rejects UK style dates of birth with slashes' do
-      assessor = VALID_ASSESSOR.dup
-      assessor[:date_of_birth] = '10/12/1990'
-
-      expect {
-        add_assessor_with_stub_data.execute('25', 'SCHE93452', assessor)
-      }.to raise_exception(
-        UseCase::AddAssessor::InvalidAssessorDetailsException
-      )
-    end
-
-    it 'rejects dates that arent dates at all' do
-      assessor = VALID_ASSESSOR.dup
-      assessor[:date_of_birth] = '55555555555'
-
-      expect {
-        add_assessor_with_stub_data.execute('25', 'SCHE93452', assessor)
-      }.to raise_exception(
-        UseCase::AddAssessor::InvalidAssessorDetailsException
-      )
-    end
-
-    it 'rejects dates that are YYYY-DD-MM' do
-      assessor = VALID_ASSESSOR.dup
-      assessor[:date_of_birth] = '1990-30-07'
-
-      expect {
-        add_assessor_with_stub_data.execute('25', 'SCHE93452', assessor)
-      }.to raise_exception(
-        UseCase::AddAssessor::InvalidAssessorDetailsException
-      )
-    end
   end
 end
