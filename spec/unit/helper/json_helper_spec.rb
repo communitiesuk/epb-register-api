@@ -26,6 +26,13 @@ describe Helper::JsonHelper do
       expect(result.keys).to include(:foo_bar)
       expect(result[:foo_bar].keys).to include(:bar_baz)
     end
+
+    it 'throws an error when validation doesnt match type' do
+      schema = { type: 'object', required: 'firstName' }
+      expect { HELPER.convert_to_ruby_hash('4', schema) }.to raise_exception(
+        JSON::Schema::ValidationError
+      )
+    end
   end
 
   context 'when converting ruby hashes to json' do
