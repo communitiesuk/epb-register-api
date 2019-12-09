@@ -1,9 +1,3 @@
-# frozen_string_literal: true
-
-require_relative 'helper/toggles'
-require_relative 'container'
-require 'sinatra/cross_origin'
-
 class AssessorService < Controller::BaseController
   options '*' do
     response.headers['Allow'] = 'HEAD,GET,PUT,DELETE,OPTIONS'
