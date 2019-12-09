@@ -3,6 +3,10 @@ module Controller
   require 'sinatra/cross_origin'
 
   class AssessorController < Sinatra::Base
+    PUT_SCHEMA = {
+      type: 'object', required: %w[firstName lastName dateOfBirth]
+    }
+
     def initialize(toggles = false)
       super
       @json_helper = Helper::JsonHelper.new
@@ -40,7 +44,7 @@ module Controller
       scheme_id = params['scheme_id']
       scheme_assessor_id = params['scheme_assessor_id']
       assessor_details =
-        @json_helper.convert_to_ruby_hash(request.body.read.to_s)
+        @json_helper.convert_to_ruby_hash(request.body.read.to_s, PUT_SCHEMA)
       create_assessor_response =
         @container.get_object(:add_assessor_use_case).execute(
           scheme_id,
@@ -63,6 +67,9 @@ module Controller
         @json_helper.convert_to_json(
           { errors: [{ code: 'ASSESSOR_ID_ON_ANOTHER_SCHEME' }] }
         )
+      when JSON::Schema::ValidationError
+        status 400
+        { errors: [{ code: 'INVALID_REQUEST', title: e.message }] }
       else
         status 400
         @json_helper.convert_to_json({ errors: [{ code: 'INVALID_REQUEST' }] })
