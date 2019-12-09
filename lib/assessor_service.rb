@@ -5,11 +5,6 @@ require_relative 'container'
 require 'sinatra/cross_origin'
 
 class AssessorService < Sinatra::Base
-  STATUS_CODES = {
-    '400' => [PG::UniqueViolation, ActiveRecord::RecordNotUnique],
-    '401' => [JSON::ParserError]
-  }.freeze
-
   attr_reader :toggles
 
   def initialize(toggles = false)
@@ -36,8 +31,6 @@ class AssessorService < Sinatra::Base
       'Content-Type, Cache-Control, Accept'
   end
 
-  use Controller::AssessorController
-
   options '*' do
     response.headers['Allow'] = 'HEAD,GET,PUT,DELETE,OPTIONS'
     response.headers['Access-Control-Allow-Methods'] =
@@ -61,32 +54,6 @@ class AssessorService < Sinatra::Base
     status 200
   end
 
-  get '/api/schemes' do
-    content_type :json
-    all_schemes = @container.get_object(:get_all_schemes_use_case).execute
-    @json_helper.convert_to_json(all_schemes)
-  end
-
-  post '/api/schemes' do
-    content_type :json
-    request_body = @json_helper.convert_to_ruby_hash(request.body.read.to_s)
-    result =
-      @container.get_object(:add_new_scheme_use_case).execute(
-        request_body[:name]
-      )
-
-    status 201
-    @json_helper.convert_to_json(result)
-  rescue StandardError => e
-    handle_exception(e)
-  end
-
-  private
-
-  def handle_exception(error)
-    return status 400 if STATUS_CODES['400'].include?(error.class)
-    return status 401 if STATUS_CODES['401'].include?(error.class)
-
-    status 500
-  end
+  use Controller::AssessorController
+  use Controller::SchemesController
 end
