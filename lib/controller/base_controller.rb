@@ -33,5 +33,9 @@ module Controller
     def single_error_response(code, title)
       @json_helper.convert_to_json({ errors: [{ code: code, title: title }] })
     end
+
+    def request_body(schema = false)
+      @json_helper.convert_to_ruby_hash(request.body.read.to_s, schema)
+    end
   end
 end

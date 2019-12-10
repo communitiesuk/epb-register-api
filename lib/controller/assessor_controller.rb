@@ -43,8 +43,7 @@ module Controller
       content_type :json
       scheme_id = params['scheme_id']
       scheme_assessor_id = params['scheme_assessor_id']
-      assessor_details =
-        @json_helper.convert_to_ruby_hash(request.body.read.to_s, PUT_SCHEMA)
+      assessor_details = request_body(PUT_SCHEMA)
       create_assessor_response =
         @container.get_object(:add_assessor_use_case).execute(
           scheme_id,

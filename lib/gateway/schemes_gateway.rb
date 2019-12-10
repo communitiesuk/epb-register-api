@@ -1,7 +1,6 @@
 module Gateway
   class SchemesGateway
-    class DuplicateSchemeException < Exception
-    end
+    class DuplicateSchemeException < Exception; end
 
     class Scheme < ActiveRecord::Base
       def to_hash
@@ -22,7 +21,6 @@ module Gateway
       else
         raise e
       end
-
     end
   end
 end
