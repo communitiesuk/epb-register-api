@@ -12,7 +12,6 @@ module Controller
     }
 
     get '/api/schemes/:scheme_id/assessors/:scheme_assessor_id' do
-      content_type :json
       scheme_id = params[:scheme_id]
       scheme_assessor_id = params[:scheme_assessor_id]
       result =
@@ -20,8 +19,7 @@ module Controller
           scheme_id,
           scheme_assessor_id
         )
-      200
-      @json_helper.convert_to_json(result)
+      json_response(200, result)
     rescue Exception => e
       case e
       when UseCase::FetchAssessor::SchemeNotFoundException
@@ -40,7 +38,6 @@ module Controller
     end
 
     put '/api/schemes/:scheme_id/assessors/:scheme_assessor_id' do
-      content_type :json
       scheme_id = params['scheme_id']
       scheme_assessor_id = params['scheme_assessor_id']
       assessor_details = request_body(PUT_SCHEMA)
@@ -51,11 +48,10 @@ module Controller
           assessor_details
         )
       if create_assessor_response[:assessor_was_newly_created]
-        status 201
+        json_response(201, create_assessor_response[:assessor])
       else
-        status 200
+        json_response(200, create_assessor_response[:assessor])
       end
-      @json_helper.convert_to_json(create_assessor_response[:assessor])
     rescue Exception => e
       case e
       when UseCase::AddAssessor::SchemeNotFoundException

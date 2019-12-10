@@ -37,5 +37,11 @@ module Controller
     def request_body(schema = false)
       @json_helper.convert_to_ruby_hash(request.body.read.to_s, schema)
     end
+
+    def json_response(code = 200, object)
+      content_type :json
+      status code
+      @json_helper.convert_to_json(object)
+    end
   end
 end
