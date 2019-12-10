@@ -4,6 +4,8 @@ require 'sinatra/cross_origin'
 
 module Controller
   class BaseController < Sinatra::Base
+    ERROR_NOT_FOUND = 'NOT FOUND'
+    ERROR_SERVER_ERROR = 'SERVER_ERROR'
     attr_reader :toggles
 
     def initialize(toggles = false)

@@ -23,11 +23,19 @@ module Controller
     rescue Exception => e
       case e
       when UseCase::FetchAssessor::SchemeNotFoundException
-        error_response(404, 'NOT_FOUND', 'The requested scheme was not found')
+        error_response(
+          404,
+          ERROR_NOT_FOUND,
+          'The requested scheme was not found'
+        )
       when UseCase::FetchAssessor::AssessorNotFoundException
-        error_response(404, 'NOT_FOUND', 'The requested assessor was not found')
+        error_response(
+          404,
+          ERROR_NOT_FOUND,
+          'The requested assessor was not found'
+        )
       else
-        error_response(500, 'SERVER_ERROR', e.message)
+        error_response(500, ERROR_SERVER_ERROR, e.message)
       end
     end
 
@@ -49,7 +57,11 @@ module Controller
     rescue Exception => e
       case e
       when UseCase::AddAssessor::SchemeNotFoundException
-        error_response(404, 'NOT_FOUND', 'The requested scheme was not found')
+        error_response(
+          404,
+          ERROR_NOT_FOUND,
+          'The requested scheme was not found'
+        )
       when UseCase::AddAssessor::AssessorRegisteredOnAnotherScheme
         error_response(
           409,
@@ -59,7 +71,7 @@ module Controller
       when JSON::Schema::ValidationError, JSON::ParserError
         error_response(400, 'INVALID_REQUEST', e.message)
       else
-        error_response(500, 'SERVER_ERROR', e.message)
+        error_response(500, ERROR_SERVER_ERROR, e.message)
       end
     end
   end
