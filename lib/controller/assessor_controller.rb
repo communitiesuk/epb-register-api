@@ -35,7 +35,7 @@ module Controller
           'The requested assessor was not found'
         )
       else
-        error_response(500, ERROR_SERVER_ERROR, e.message)
+        server_error(e.message)
       end
     end
 
@@ -71,7 +71,7 @@ module Controller
       when JSON::Schema::ValidationError, JSON::ParserError
         error_response(400, 'INVALID_REQUEST', e.message)
       else
-        error_response(500, ERROR_SERVER_ERROR, e.message)
+        server_error(e.message)
       end
     end
   end

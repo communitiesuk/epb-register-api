@@ -29,7 +29,7 @@ module Controller
           'Scheme with this name already exists'
         )
       else
-        error_response(500, ERROR_SERVER_ERROR, e.message)
+        server_error(e.message)
       end
     end
   end

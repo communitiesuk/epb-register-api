@@ -5,7 +5,6 @@ require 'sinatra/cross_origin'
 module Controller
   class BaseController < Sinatra::Base
     ERROR_NOT_FOUND = 'NOT FOUND'
-    ERROR_SERVER_ERROR = 'SERVER_ERROR'
     attr_reader :toggles
 
     def initialize(toggles = false)
@@ -48,6 +47,10 @@ module Controller
       @json_helper.convert_to_json(
         { errors: [{ code: error_code, title: title }] }
       )
+    end
+
+    def server_error(exception)
+      error_response(500, 'SERVER_ERROR', exception.message)
     end
   end
 end
