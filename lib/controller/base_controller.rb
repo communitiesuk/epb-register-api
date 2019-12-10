@@ -41,9 +41,8 @@ module Controller
     end
 
     def error_response(response_code = 500, error_code, title)
-      content_type :json
-      status response_code
-      @json_helper.convert_to_json(
+      json_response(
+        response_code,
         { errors: [{ code: error_code, title: title }] }
       )
     end
