@@ -23,17 +23,9 @@ module Controller
     rescue Exception => e
       case e
       when UseCase::FetchAssessor::SchemeNotFoundException
-        error_response(
-          404,
-          ERROR_NOT_FOUND,
-          'The requested scheme was not found'
-        )
+        not_found_error('The requested scheme was not found')
       when UseCase::FetchAssessor::AssessorNotFoundException
-        error_response(
-          404,
-          ERROR_NOT_FOUND,
-          'The requested assessor was not found'
-        )
+        not_found_error('The requested assessor was not found')
       else
         server_error(e.message)
       end
@@ -57,11 +49,7 @@ module Controller
     rescue Exception => e
       case e
       when UseCase::AddAssessor::SchemeNotFoundException
-        error_response(
-          404,
-          ERROR_NOT_FOUND,
-          'The requested scheme was not found'
-        )
+        not_found_error('The requested scheme was not found')
       when UseCase::AddAssessor::AssessorRegisteredOnAnotherScheme
         error_response(
           409,

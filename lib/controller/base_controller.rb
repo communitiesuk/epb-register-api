@@ -4,7 +4,6 @@ require 'sinatra/cross_origin'
 
 module Controller
   class BaseController < Sinatra::Base
-    ERROR_NOT_FOUND = 'NOT FOUND'
     attr_reader :toggles
 
     def initialize(toggles = false)
@@ -51,6 +50,10 @@ module Controller
 
     def server_error(exception)
       error_response(500, 'SERVER_ERROR', exception.message)
+    end
+
+    def not_found_error(title)
+      error_response(404, 'NOT_FOUND', title)
     end
   end
 end
