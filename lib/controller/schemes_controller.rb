@@ -12,10 +12,10 @@ module Controller
     end
 
     post '/api/schemes' do
-      request_body = request_body(POST_SCHEMA)
+      new_scheme_details = request_body(POST_SCHEMA)
       result =
         @container.get_object(:add_new_scheme_use_case).execute(
-          request_body[:name]
+          new_scheme_details[:name]
         )
       json_response(201, result)
     rescue Exception => e
