@@ -30,10 +30,6 @@ module Controller
         'Content-Type, Cache-Control, Accept'
     end
 
-    def single_error_response(code, title)
-      @json_helper.convert_to_json({ errors: [{ code: code, title: title }] })
-    end
-
     def request_body(schema = false)
       @json_helper.convert_to_ruby_hash(request.body.read.to_s, schema)
     end
@@ -42,6 +38,14 @@ module Controller
       content_type :json
       status code
       @json_helper.convert_to_json(object)
+    end
+
+    def error_response(response_code = 500, error_code, title)
+      content_type :json
+      status response_code
+      @json_helper.convert_to_json(
+        { errors: [{ code: error_code, title: title }] }
+      )
     end
   end
 end

@@ -21,17 +21,15 @@ module Controller
     rescue Exception => e
       case e
       when JSON::Schema::ValidationError, JSON::ParserError
-        status 401
-        single_error_response('INVALID REQUEST', e.message)
+        error_response(401, 'INVALID_REQUEST', e.message)
       when Gateway::SchemesGateway::DuplicateSchemeException
-        status 400
-        single_error_response(
+        error_response(
+          400,
           'DUPLICATE_SCHEME',
           'Scheme with this name already exists'
         )
       else
-        status 500
-        single_error_response('SERVER_ERROR', e.message)
+        error_response(500, 'SERVER_ERROR', e.message)
       end
     end
   end
