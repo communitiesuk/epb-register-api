@@ -42,10 +42,8 @@ module Controller
           assessor_details
         )
       if create_assessor_response[:assessor_was_newly_created]
-        p 'assessor-created-success'
         json_response(201, create_assessor_response[:assessor])
       else
-        p 'assessor-updated-success'
         json_response(200, create_assessor_response[:assessor])
       end
     rescue Exception => e
