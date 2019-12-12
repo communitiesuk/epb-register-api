@@ -11,6 +11,7 @@ module Controller
       @json_helper = Helper::JsonHelper.new
       @toggles = toggles || Toggles.new
       @container = Container.new
+      @logger = Logger.new(STDOUT)
     end
 
     configure :development do
@@ -48,6 +49,7 @@ module Controller
     end
 
     def server_error(exception)
+      logger.error(exception.message)
       error_response(500, 'SERVER_ERROR', exception.message)
     end
 
