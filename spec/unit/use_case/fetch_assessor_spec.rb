@@ -1,10 +1,13 @@
 describe UseCase::FetchAssessor do
-  VALID_ASSESSOR = {
-    first_name: 'John',
-    last_name: 'Smith',
-    middle_names: 'Brain',
-    date_of_birth: '1991-02-25'
-  }.freeze
+
+  let (:valid_assessor) do
+    {
+      first_name: 'John',
+      last_name: 'Smith',
+      middle_names: 'Brain',
+      date_of_birth: '1991-02-25'
+    }
+  end
 
   class AssessorGatewayStub
     attr_reader :assessor
@@ -52,9 +55,9 @@ describe UseCase::FetchAssessor do
           {
             registered_by: 25,
             scheme_assessor_id: 'SCHE001',
-            first_name: VALID_ASSESSOR[:first_name],
-            last_name: VALID_ASSESSOR[:last_name],
-            date_of_birth: VALID_ASSESSOR[:date_of_birth]
+            first_name: valid_assessor[:first_name],
+            last_name: valid_assessor[:last_name],
+            date_of_birth: valid_assessor[:date_of_birth]
           }
         )
       fetch_assessor = described_class.new(assessor_gateway, schemes_gateway)
@@ -67,9 +70,9 @@ describe UseCase::FetchAssessor do
           {
             registered_by: 25,
             scheme_assessor_id: 'SCHE001',
-            first_name: VALID_ASSESSOR[:first_name],
-            last_name: VALID_ASSESSOR[:last_name],
-            date_of_birth: VALID_ASSESSOR[:date_of_birth]
+            first_name: valid_assessor[:first_name],
+            last_name: valid_assessor[:last_name],
+            date_of_birth: valid_assessor[:date_of_birth]
           }
         )
       fetch_assessor = described_class.new(assessor_gateway, schemes_gateway)
@@ -82,10 +85,10 @@ describe UseCase::FetchAssessor do
           {
             registered_by: 25,
             scheme_assessor_id: 'SCHE001',
-            first_name: VALID_ASSESSOR[:first_name],
-            middle_names: VALID_ASSESSOR[:middle_names],
-            last_name: VALID_ASSESSOR[:last_name],
-            date_of_birth: VALID_ASSESSOR[:date_of_birth]
+            first_name: valid_assessor[:first_name],
+            middle_names: valid_assessor[:middle_names],
+            last_name: valid_assessor[:last_name],
+            date_of_birth: valid_assessor[:date_of_birth]
           }
         )
       fetch_assessor = described_class.new(assessor_gateway, schemes_gateway)
@@ -100,9 +103,9 @@ describe UseCase::FetchAssessor do
           {
             registered_by: 25,
             scheme_assessor_id: 'SCHE001',
-            first_name: VALID_ASSESSOR[:first_name],
-            last_name: VALID_ASSESSOR[:last_name],
-            date_of_birth: VALID_ASSESSOR[:date_of_birth]
+            first_name: valid_assessor[:first_name],
+            last_name: valid_assessor[:last_name],
+            date_of_birth: valid_assessor[:date_of_birth]
           }
         )
       fetch_assessor = described_class.new(assessor_gateway, schemes_gateway)
@@ -117,9 +120,9 @@ describe UseCase::FetchAssessor do
           {
             registered_by: 25,
             scheme_assessor_id: 'SCHE001',
-            first_name: VALID_ASSESSOR[:first_name],
-            last_name: VALID_ASSESSOR[:last_name],
-            date_of_birth: VALID_ASSESSOR[:date_of_birth]
+            first_name: valid_assessor[:first_name],
+            last_name: valid_assessor[:last_name],
+            date_of_birth: valid_assessor[:date_of_birth]
           }
         )
       fetch_assessor = described_class.new(assessor_gateway, schemes_gateway)
@@ -134,9 +137,9 @@ describe UseCase::FetchAssessor do
           {
             registered_by: 25,
             scheme_assessor_id: 'SCHE001',
-            first_name: VALID_ASSESSOR[:first_name],
-            last_name: VALID_ASSESSOR[:last_name],
-            date_of_birth: VALID_ASSESSOR[:date_of_birth]
+            first_name: valid_assessor[:first_name],
+            last_name: valid_assessor[:last_name],
+            date_of_birth: valid_assessor[:date_of_birth]
           }
         )
       fetch_assessor = described_class.new(assessor_gateway, schemes_gateway)
@@ -151,9 +154,9 @@ describe UseCase::FetchAssessor do
           {
             registered_by: { scheme_id: 25, name: 'Best scheme' },
             scheme_assessor_id: 'SCHE001',
-            first_name: VALID_ASSESSOR[:first_name],
-            last_name: VALID_ASSESSOR[:last_name],
-            date_of_birth: VALID_ASSESSOR[:date_of_birth]
+            first_name: valid_assessor[:first_name],
+            last_name: valid_assessor[:last_name],
+            date_of_birth: valid_assessor[:date_of_birth]
           }
         )
       fetch_assessor = described_class.new(assessor_gateway, schemes_gateway)

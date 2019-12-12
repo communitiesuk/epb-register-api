@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 describe UseCase::AddAssessor do
-  VALID_ASSESSOR = {
+  let (:valid_assessor) do {
     first_name: 'John',
     last_name: 'Smith',
     middle_names: 'Brain',
     date_of_birth: '1991-02-25'
-  }.freeze
+  }
+  end
 
   class SchemesGatewayStub
     def initialize(result)
@@ -53,19 +54,19 @@ describe UseCase::AddAssessor do
       add_assessor =
         described_class.new(schemes_gateway, AssessorGatewayFake.new(nil))
       expect {
-        add_assessor.execute('6', 'SCHE24352', VALID_ASSESSOR)
+        add_assessor.execute('6', 'SCHE24352', valid_assessor)
       }.to raise_exception(UseCase::AddAssessor::SchemeNotFoundException)
     end
 
     it 'returns no errors if the scheme does exist' do
       expect {
-        add_assessor_with_stub_data.execute('25', 'SCHE904572', VALID_ASSESSOR)
+        add_assessor_with_stub_data.execute('25', 'SCHE904572', valid_assessor)
       }.to_not raise_exception
     end
 
     it 'returns the scheme that the assessor belongs to' do
       expect(
-        add_assessor_with_stub_data.execute('25', 'SCHE234950', VALID_ASSESSOR)[
+        add_assessor_with_stub_data.execute('25', 'SCHE234950', valid_assessor)[
           :assessor
         ][
           :registered_by
@@ -75,7 +76,7 @@ describe UseCase::AddAssessor do
 
     it 'returns the scheme assessor ID' do
       expect(
-        add_assessor_with_stub_data.execute('25', 'SCHE234950', VALID_ASSESSOR)[
+        add_assessor_with_stub_data.execute('25', 'SCHE234950', valid_assessor)[
           :assessor
         ][
           :scheme_assessor_id
@@ -85,7 +86,7 @@ describe UseCase::AddAssessor do
 
     it 'returns the assessors first name' do
       expect(
-        add_assessor_with_stub_data.execute('25', 'SCHE234950', VALID_ASSESSOR)[
+        add_assessor_with_stub_data.execute('25', 'SCHE234950', valid_assessor)[
           :assessor
         ][
           :first_name
@@ -95,7 +96,7 @@ describe UseCase::AddAssessor do
 
     it 'returns the assessors last name' do
       expect(
-        add_assessor_with_stub_data.execute('25', 'SCHE234950', VALID_ASSESSOR)[
+        add_assessor_with_stub_data.execute('25', 'SCHE234950', valid_assessor)[
           :assessor
         ][
           :last_name
@@ -105,7 +106,7 @@ describe UseCase::AddAssessor do
 
     it 'returns the assessors middle names' do
       expect(
-        add_assessor_with_stub_data.execute('25', 'SCHE234950', VALID_ASSESSOR)[
+        add_assessor_with_stub_data.execute('25', 'SCHE234950', valid_assessor)[
           :assessor
         ][
           :middle_names
@@ -115,7 +116,7 @@ describe UseCase::AddAssessor do
 
     it 'returns the assessors date of birth' do
       expect(
-        add_assessor_with_stub_data.execute('25', 'SCHE234950', VALID_ASSESSOR)[
+        add_assessor_with_stub_data.execute('25', 'SCHE234950', valid_assessor)[
           :assessor
         ][
           :date_of_birth
@@ -124,7 +125,7 @@ describe UseCase::AddAssessor do
     end
 
     it 'does not return an error if middle names are missing' do
-      assessor_without_middle_names = VALID_ASSESSOR.dup
+      assessor_without_middle_names = valid_assessor.dup
       assessor_without_middle_names.delete(:middle_names)
       expect {
         add_assessor_with_stub_data.execute(
@@ -141,13 +142,13 @@ describe UseCase::AddAssessor do
       assessor_gateway = AssessorGatewayFake.new(nil)
       add_assessor_with_spy =
         described_class.new(schemes_gateway, assessor_gateway)
-      add_assessor_with_spy.execute('25', 'SCHE4353', VALID_ASSESSOR)
-      expect(assessor_gateway.saved_assessor_details).to eq(VALID_ASSESSOR)
+      add_assessor_with_spy.execute('25', 'SCHE4353', valid_assessor)
+      expect(assessor_gateway.saved_assessor_details).to eq(valid_assessor)
     end
 
     it 'returns true when assessor already exists' do
       expect(
-        add_assessor_with_stub_data.execute('25', 'SCHE234950', VALID_ASSESSOR)[
+        add_assessor_with_stub_data.execute('25', 'SCHE234950', valid_assessor)[
           :assessor_was_newly_created
         ]
       ).to be true
@@ -168,16 +169,16 @@ describe UseCase::AddAssessor do
           {
             registered_by: { scheme_id: 25, name: 'Best scheme' },
             scheme_assessor_id: 'SCHE001',
-            first_name: VALID_ASSESSOR[:first_name],
-            last_name: VALID_ASSESSOR[:last_name],
-            date_of_birth: VALID_ASSESSOR[:date_of_birth]
+            first_name: valid_assessor[:first_name],
+            last_name: valid_assessor[:last_name],
+            date_of_birth: valid_assessor[:date_of_birth]
           }
         )
 
       add_assessor = described_class.new(schemes_gateway, assessor_gateway)
 
       expect {
-        add_assessor.execute(26, 'SCHE001', VALID_ASSESSOR)
+        add_assessor.execute(26, 'SCHE001', valid_assessor)
       }.to raise_exception(
         UseCase::AddAssessor::AssessorRegisteredOnAnotherScheme
       )
@@ -205,7 +206,7 @@ describe UseCase::AddAssessor do
 
     it 'returns false when assessor already exists' do
       expect(
-        add_assessor_with_stub_data.execute('25', 'SCHE234950', VALID_ASSESSOR)[
+        add_assessor_with_stub_data.execute('25', 'SCHE234950', valid_assessor)[
           :assessor_was_newly_created
         ]
       ).to be false
