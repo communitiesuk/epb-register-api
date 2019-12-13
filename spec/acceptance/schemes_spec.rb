@@ -37,8 +37,6 @@ describe AssessorService do
 
       it 'cannot have the same name twice' do
         second_post_response = post '/api/schemes', request_body
-        pp response.body
-        pp second_post_response.body
         expect(second_post_response.status).to eq(400)
       end
     end

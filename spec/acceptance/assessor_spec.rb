@@ -4,10 +4,23 @@ describe AssessorService do
   describe 'The Assessor API' do
     let (:valid_assessor_request_body) do
       {
+        firstName: 'Someone',
+        middleNames: 'muddle',
+        lastName: 'Person',
+        dateOfBirth: '1991-02-25'
+      }
+    end
+
+    let (:valid_assessor_with_contact_request_body) do
+      {
         firstName: 'Some',
         middleNames: 'middle',
         lastName: 'Person',
-        dateOfBirth: '1991-02-25'
+        dateOfBirth: '1991-02-25',
+        contactDetails: {
+          telephoneNumber: '010199991010101',
+          email: 'person@person.com'
+        }
       }
     end
 
@@ -19,16 +32,12 @@ describe AssessorService do
       put("/api/schemes/#{scheme_id}/assessors/#{assessor_id}", body.to_json)
     end
 
-    def update_assessor(scheme_id, assessor_id, body)
-      patch("/api/schemes/#{scheme_id}/assessors/#{assessor_id}", body.to_json)
-    end
-
     def add_scheme(name = 'test scheme')
       JSON.parse(post('/api/schemes', { name: name }.to_json).body)['schemeId']
     end
 
-    def assessor_without_key(missing)
-      assessor = valid_assessor_request_body.dup
+    def assessor_without_key(missing, request_body)
+      assessor = request_body.dup
       assessor.delete(missing)
       assessor
     end
@@ -93,7 +102,11 @@ describe AssessorService do
                 firstName: valid_assessor_request_body[:firstName],
                 middleNames: valid_assessor_request_body[:middleNames],
                 lastName: valid_assessor_request_body[:lastName],
-                dateOfBirth: valid_assessor_request_body[:dateOfBirth]
+                dateOfBirth: valid_assessor_request_body[:dateOfBirth],
+                contactDetails: {
+                  telephoneNumber: '',
+                  email: ''
+                }
               }.to_json
             )
           response = JSON.parse(fetch_assessor(scheme_id, 'SCHEME4233').body)
@@ -153,7 +166,7 @@ describe AssessorService do
             add_assessor(
               scheme_id,
               'SCHE55443',
-              assessor_without_key(:middleNames)
+              assessor_without_key(:middleNames, valid_assessor_request_body)
             )
 
           expect(assessor_response.status).to eq(201)
@@ -166,7 +179,7 @@ describe AssessorService do
               add_assessor(
                 scheme_id,
                 'SCHE55443',
-                assessor_without_key(:middleNames)
+                assessor_without_key(:middleNames, valid_assessor_request_body)
               )
                 .body
             )
@@ -176,9 +189,9 @@ describe AssessorService do
               {
                 registeredBy: { schemeId: scheme_id.to_s, name: 'test scheme' },
                 schemeAssessorId: 'SCHE55443',
-                firstName: assessor_without_key(:middleNames)[:firstName],
-                lastName: assessor_without_key(:middleNames)[:lastName],
-                dateOfBirth: assessor_without_key(:middleNames)[:dateOfBirth]
+                firstName: assessor_without_key(:middleNames, valid_assessor_request_body)[:firstName],
+                lastName: assessor_without_key(:middleNames, valid_assessor_request_body)[:lastName],
+                dateOfBirth: assessor_without_key(:middleNames, valid_assessor_request_body)[:dateOfBirth]
               }.to_json
             )
 
@@ -211,7 +224,7 @@ describe AssessorService do
           assessor_response =
             put(
               "/api/schemes/#{scheme_id}/assessors/thebrokenassessor",
-              assessor_without_key(:firstName)
+              assessor_without_key(:firstName, valid_assessor_request_body)
             )
 
           expect(assessor_response.status).to eq(400)
@@ -222,7 +235,7 @@ describe AssessorService do
           assessor_response =
             put(
               "/api/schemes/#{scheme_id}/assessors/thebrokenassessor",
-              assessor_without_key(:lastName)
+              assessor_without_key(:lastName, valid_assessor_request_body)
             )
 
           expect(assessor_response.status).to eq(400)
@@ -233,7 +246,7 @@ describe AssessorService do
           assessor_response =
             put(
               "/api/schemes/#{scheme_id}/assessors/thebrokenassessor",
-              assessor_without_key(:dateOfBirth)
+              assessor_without_key(:dateOfBirth, valid_assessor_request_body)
             )
 
           expect(assessor_response.status).to eq(400)
@@ -302,6 +315,40 @@ describe AssessorService do
             add_assessor(second_scheme, 'SCHE4001', valid_assessor_request_body)
 
           expect(second_response.status).to eq(409)
+        end
+      end
+    end
+    context 'when updating an assessor' do
+      context 'which is valid with all fields' do
+        it 'returns 200 on the update' do
+          scheme_id = add_scheme
+          add_assessor(scheme_id, 'ASSESSOR99', valid_assessor_request_body)
+          second_response =
+            add_assessor(scheme_id, 'ASSESSOR99', valid_assessor_with_contact_request_body)
+          expect(second_response.status).to eq(200)
+        end
+
+        it 'replaces a previous assessors details successfully' do
+          scheme_id = add_scheme
+          add_assessor(scheme_id, 'ASSESSOR99', valid_assessor_request_body)
+          add_assessor(scheme_id, 'ASSESSOR99', valid_assessor_with_contact_request_body)
+          assessor = fetch_assessor(scheme_id, 'ASSESSOR99')
+          expected_response =
+            JSON.parse(
+              {
+                registeredBy: { schemeId: scheme_id, name: 'test scheme' },
+                schemeAssessorId: 'ASSESSOR99',
+                firstName: assessor_without_key(:middleNames, valid_assessor_with_contact_request_body)[:firstName],
+                middleNames: valid_assessor_with_contact_request_body[:middleNames],
+                lastName: assessor_without_key(:middleNames, valid_assessor_with_contact_request_body)[:lastName],
+                dateOfBirth: assessor_without_key(:middleNames, valid_assessor_with_contact_request_body)[:dateOfBirth],
+                contactDetails: {
+                  telephoneNumber: assessor_without_key(:middleNames, valid_assessor_with_contact_request_body)[:contactDetails][:telephoneNumber],
+                  email: assessor_without_key(:middleNames, valid_assessor_with_contact_request_body)[:contactDetails][:email]
+                }
+              }.to_json
+            )
+          expect(JSON.parse(assessor.body)).to eq(expected_response)
         end
       end
     end
