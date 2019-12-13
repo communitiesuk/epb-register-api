@@ -89,7 +89,7 @@ PLATFORMS
 
 DEPENDENCIES
   database_cleaner!
-  json-schema (~> 2.8)
+  json-schema (~> 2.8)!
   pg!
   prettier (~> 0.16.0)!
   pry (~> 0.12.2)!
