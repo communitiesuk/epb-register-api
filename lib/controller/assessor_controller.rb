@@ -7,7 +7,14 @@ module Controller
         firstName: { type: 'string' },
         lastName: { type: 'string' },
         middleNames: { type: 'string' },
-        dateOfBirth: { type: 'string', format: 'iso-date' }
+        dateOfBirth: { type: 'string', format: 'iso-date' },
+        contactDetails: {
+          type: 'object',
+          properties: {
+            telephoneNumber: { type: 'string' },
+            email: { type: 'string' }
+          }
+        }
       }
     }
 

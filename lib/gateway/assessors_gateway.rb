@@ -8,7 +8,11 @@ module Gateway
           middle_names: self[:middle_names],
           registered_by: self[:registered_by],
           scheme_assessor_id: self[:scheme_assessor_id],
-          date_of_birth: self[:date_of_birth].strftime('%Y-%m-%d')
+          date_of_birth: self[:date_of_birth].strftime('%Y-%m-%d'),
+          contact_details: {
+            telephone_number: self[:telephone_number],
+            email: self[:email]
+          }
         }
       end
     end
@@ -27,11 +31,23 @@ module Gateway
         Assessor.find_by(
           scheme_assessor_id: scheme_assessor_id, registered_by: registered_by
         )
+
+      assessor = flatten(assessor)
+
       if existing_assessor
         existing_assessor.update(assessor)
       else
         Assessor.create(assessor)
       end
+    end
+
+  private
+
+    def flatten(assessor)
+      assessor[:telephone_number] = assessor.key?(:contact_details)?assessor[:contact_details][:telephone_number]:''
+      assessor[:email] = assessor.key?(:contact_details)?assessor[:contact_details][:email]:''
+      assessor.delete(:contact_details)
+      assessor
     end
   end
 end
