@@ -1,12 +1,26 @@
 # frozen_string_literal: true
 
 describe UseCase::AddAssessor do
-  let (:valid_assessor) do {
-    first_name: 'John',
-    last_name: 'Smith',
-    middle_names: 'Brain',
-    date_of_birth: '1991-02-25'
-  }
+  let (:valid_assessor) do
+    {
+      first_name: 'John',
+      last_name: 'Smith',
+      middle_names: 'Brain',
+      date_of_birth: '1991-02-25'
+    }
+  end
+
+  let (:valid_assessor_with_contact_details) do
+    {
+      first_name: 'John',
+      last_name: 'Doe',
+      middle_names: 'Brain',
+      date_of_birth: '1991-02-25',
+      contact_details: {
+        telephone_number: '004622416767',
+        email: 'mar@ten.com'
+      }
+    }
   end
 
   class SchemesGatewayStub
@@ -124,6 +138,19 @@ describe UseCase::AddAssessor do
       ).to eq('1991-02-25')
     end
 
+    it 'returns the assessors contact details if present' do
+      expect(
+        add_assessor_with_stub_data.execute('25', 'SCHE234950', valid_assessor_with_contact_details)[
+          :assessor
+        ][
+          :contact_details
+        ]
+      ).to eq({
+        telephone_number: '004622416767',
+        email: 'mar@ten.com'
+      })
+    end
+
     it 'does not return an error if middle names are missing' do
       assessor_without_middle_names = valid_assessor.dup
       assessor_without_middle_names.delete(:middle_names)
@@ -204,7 +231,7 @@ describe UseCase::AddAssessor do
       )
     end
 
-    it 'returns false when assessor already exists' do
+    it 'assessor_was_newly_created is false when assessor already exists' do
       expect(
         add_assessor_with_stub_data.execute('25', 'SCHE234950', valid_assessor)[
           :assessor_was_newly_created
