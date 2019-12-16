@@ -7,6 +7,14 @@ describe ActiveRecord::Base do
     described_class.connection
   end
 
+  before(:all) do
+    @rack_env = ENV['RACK_ENV']
+  end
+
+  after(:all) do
+    ENV['RACK_ENV'] = @rack_env
+  end
+
   def migration_has_been_run?(version)
     table_name = ActiveRecord::SchemaMigration.table_name
 
