@@ -39,6 +39,13 @@ describe ActiveRecord::Base do
     expect(migration_has_been_run?('20191203162034')).to be true
   end
 
+  it 'has run the add assessor contact details migration' do
+    connect('epb_development')
+
+    expect(migration_has_been_run?('20191212150246')).to be true
+  end
+
+
   it 'can find the schemes table' do
     connect('epb_development')
 
