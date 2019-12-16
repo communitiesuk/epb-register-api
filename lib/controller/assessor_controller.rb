@@ -11,8 +11,8 @@ module Controller
         contactDetails: {
           type: 'object',
           properties: {
-            telephoneNumber: { type: 'string' },
-            email: { type: 'string' }
+            telephoneNumber: { type: 'string', format: 'telephone' },
+            email: { type: 'string', format: 'email' }
           }
         }
       }

@@ -351,6 +351,62 @@ describe AssessorService do
           expect(JSON.parse(assessor.body)).to eq(expected_response)
         end
       end
+
+      context 'which has an invalid email' do
+        it 'returns error 400' do
+          scheme_id = add_scheme
+
+          invalid_request_body = valid_assessor_with_contact_request_body
+          invalid_request_body[:contactDetails][:email] = "54"
+
+          expect(add_assessor(scheme_id, 'ASSESSOR99', invalid_request_body).status).to eq(400)
+        end
+      end
+
+      context 'which has a valid email' do
+        it 'saves it successfully' do
+          scheme_id = add_scheme
+
+          request_body = valid_assessor_with_contact_request_body
+          request_body[:contactDetails][:email] = "mar@ten.com"
+
+          response_body = add_assessor(scheme_id, 'ASSESSOR99', request_body).body
+
+          json_response = JSON.parse(response_body)
+
+          expect(json_response['contactDetails']['email']).to eq('mar@ten.com')
+        end
+      end
+
+      context 'which has an invalid phone number' do
+        it 'returns error 400' do
+          scheme_id = add_scheme
+
+          invalid_telephone = "0"*257
+
+          request_body = valid_assessor_with_contact_request_body
+          request_body[:contactDetails][:telephoneNumber] = invalid_telephone
+
+          expect(add_assessor(scheme_id, 'ASSESSOR99', request_body).status).to eq(400)
+        end
+      end
+
+      context 'which has a valid phone number' do
+        it 'successfully saves it' do
+          scheme_id = add_scheme
+
+          valid_telephone = "0"*256
+
+          request_body = valid_assessor_with_contact_request_body
+          request_body[:contactDetails][:telephoneNumber] = valid_telephone
+
+          response_body = add_assessor(scheme_id, 'ASSESSOR99', request_body).body
+
+          json_response = JSON.parse(response_body)
+
+          expect(json_response['contactDetails']['telephoneNumber']).to eq(valid_telephone)
+        end
+      end
     end
   end
 end
