@@ -49,10 +49,10 @@ module Controller
           assessor_details
         )
       if create_assessor_response[:assessor_was_newly_created]
-        @events.event(:new_assessor_registered)
+        @events.event(:new_assessor_registered, create_assessor_response[:assessor][:scheme_assessor_id])
         json_response(201, create_assessor_response[:assessor])
       else
-        @events.event(:assessor_updated)
+        @events.event(:assessor_updated, create_assessor_response[:assessor][:scheme_assessor_id])
         json_response(200, create_assessor_response[:assessor])
       end
     rescue Exception => e

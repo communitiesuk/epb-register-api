@@ -30,6 +30,9 @@ GEM
     multi_json (1.14.1)
     murmurhash3 (0.1.6)
     mustermann (1.0.3)
+    oj (3.10.0)
+    ougai (1.8.2)
+      oj (~> 3.4)
     pg (1.1.4)
     prettier (0.16.0)
     pry (0.12.2)
@@ -90,6 +93,7 @@ PLATFORMS
 DEPENDENCIES
   database_cleaner!
   json-schema (~> 2.8)!
+  ougai (~> 1.8)
   pg!
   prettier (~> 0.16.0)!
   pry (~> 0.12.2)!
