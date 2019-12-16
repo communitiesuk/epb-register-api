@@ -3,15 +3,9 @@ require 'json-schema'
 module Helper
   class JsonHelper
     DATE_FORMAT_PROC = lambda do |value|
-      unless begin
-               Date.strptime(value, '%Y-%m-%d')
-             rescue StandardError
-               false
-             end
-        raise JSON::Schema::CustomFormatError.new(
-                'Must be date in format YYYY-MM-DD'
-              )
-      end
+      Date.strptime(value, '%Y-%m-%d')
+    rescue StandardError
+      raise JSON::Schema::CustomFormatError, 'Must be date in format YYYY-MM-DD'
     end
 
     EMAIL_FORMAT_PROC = lambda do |value|
