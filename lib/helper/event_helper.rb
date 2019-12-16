@@ -4,7 +4,7 @@ module Helper
       $stdout.sync = true
       @logger = Logger.new($stdout)
       @logger.formatter = proc do |severity, datetime, progname, msg|
-        "[#{datetime}] #{severity} EVENT:#{msg}\n"
+        "[#{datetime}] #{severity} event:#{msg}\n"
       end
 
     end
