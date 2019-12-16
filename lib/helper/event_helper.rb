@@ -1,7 +1,8 @@
 module Helper
   class EventHelper
     def initialize
-      @logger = Logger.new(STDOUT)
+      $stdout.sync = true
+      @logger = Logger.new($stdout)
       @logger.formatter = proc do |severity, datetime, progname, msg|
         "[#{datetime}] #{severity} EVENT:#{msg}\n"
       end
