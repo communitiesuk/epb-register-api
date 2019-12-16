@@ -136,6 +136,15 @@ paths:
                 dateOfBirth:
                   type: string
                   format: date
+                contactDetails:
+                  type: object
+                  properties:
+                    telephoneNumber:
+                      type: string
+                      maxLength: 256
+                    email:
+                      type: string
+                      format: email
       responses:
         201:
           description: Assessor succesfully registered
@@ -182,3 +191,12 @@ components:
         dateOfBirth:
           type: string
           format: date
+        contactDetails:
+          type: object
+          properties:
+            telephoneNumber:
+              type: string
+              maxLength: 256
+            email:
+              type: string
+              format: email
