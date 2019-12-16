@@ -4,32 +4,31 @@ module Helper
   class JsonHelper
     DATE_FORMAT_PROC = lambda do |value|
       unless begin
-        Date.strptime(value, '%Y-%m-%d')
-        rescue StandardError
-          false
-        end
+               Date.strptime(value, '%Y-%m-%d')
+             rescue StandardError
+               false
+             end
         raise JSON::Schema::CustomFormatError.new(
-          'Must be date in format YYYY-MM-DD'
-        )
+                'Must be date in format YYYY-MM-DD'
+              )
       end
     end
 
     EMAIL_FORMAT_PROC = lambda do |value|
-      unless value.include?('@')
-        raise JSON::Schema::CustomFormatError
-      end
+      raise JSON::Schema::CustomFormatError unless value.include?('@')
     end
 
     TELEPHONE_FORMAT_PROC = lambda do |value|
-      if value.size > 256
-        raise JSON::Schema::CustomFormatError
-      end
+      raise JSON::Schema::CustomFormatError if value.size > 256
     end
 
     def initialize
       JSON::Validator.register_format_validator('email', EMAIL_FORMAT_PROC)
       JSON::Validator.register_format_validator('iso-date', DATE_FORMAT_PROC)
-      JSON::Validator.register_format_validator('telephone', TELEPHONE_FORMAT_PROC)
+      JSON::Validator.register_format_validator(
+        'telephone',
+        TELEPHONE_FORMAT_PROC
+      )
     end
 
     def convert_to_ruby_hash(json_string, schema = false)

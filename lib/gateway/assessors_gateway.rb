@@ -10,8 +10,7 @@ module Gateway
           scheme_assessor_id: self[:scheme_assessor_id],
           date_of_birth: self[:date_of_birth].strftime('%Y-%m-%d'),
           contact_details: {
-            telephone_number: self[:telephone_number],
-            email: self[:email]
+            telephone_number: self[:telephone_number], email: self[:email]
           }
         }
       end
@@ -41,11 +40,21 @@ module Gateway
       end
     end
 
-  private
+    private
 
     def flatten(assessor)
-      assessor[:telephone_number] = assessor.key?(:contact_details)?assessor[:contact_details][:telephone_number]:''
-      assessor[:email] = assessor.key?(:contact_details)?assessor[:contact_details][:email]:''
+      assessor[:telephone_number] =
+        if assessor.key?(:contact_details)
+          assessor[:contact_details][:telephone_number]
+        else
+          ''
+        end
+      assessor[:email] =
+        if assessor.key?(:contact_details)
+          assessor[:contact_details][:email]
+        else
+          ''
+        end
       assessor.delete(:contact_details)
       assessor
     end

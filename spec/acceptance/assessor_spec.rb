@@ -18,8 +18,7 @@ describe AssessorService do
         lastName: 'Person',
         dateOfBirth: '1991-02-25',
         contactDetails: {
-          telephoneNumber: '010199991010101',
-          email: 'person@person.com'
+          telephoneNumber: '010199991010101', email: 'person@person.com'
         }
       }
     end
@@ -103,10 +102,7 @@ describe AssessorService do
                 middleNames: valid_assessor_request_body[:middleNames],
                 lastName: valid_assessor_request_body[:lastName],
                 dateOfBirth: valid_assessor_request_body[:dateOfBirth],
-                contactDetails: {
-                  telephoneNumber: '',
-                  email: ''
-                }
+                contactDetails: { telephoneNumber: '', email: '' }
               }.to_json
             )
           response = JSON.parse(fetch_assessor(scheme_id, 'SCHEME4233').body)
@@ -189,9 +185,27 @@ describe AssessorService do
               {
                 registeredBy: { schemeId: scheme_id.to_s, name: 'test scheme' },
                 schemeAssessorId: 'SCHE55443',
-                firstName: assessor_without_key(:middleNames, valid_assessor_request_body)[:firstName],
-                lastName: assessor_without_key(:middleNames, valid_assessor_request_body)[:lastName],
-                dateOfBirth: assessor_without_key(:middleNames, valid_assessor_request_body)[:dateOfBirth]
+                firstName:
+                  assessor_without_key(
+                    :middleNames,
+                    valid_assessor_request_body
+                  )[
+                    :firstName
+                  ],
+                lastName:
+                  assessor_without_key(
+                    :middleNames,
+                    valid_assessor_request_body
+                  )[
+                    :lastName
+                  ],
+                dateOfBirth:
+                  assessor_without_key(
+                    :middleNames,
+                    valid_assessor_request_body
+                  )[
+                    :dateOfBirth
+                  ]
               }.to_json
             )
 
@@ -324,27 +338,70 @@ describe AssessorService do
           scheme_id = add_scheme
           add_assessor(scheme_id, 'ASSESSOR99', valid_assessor_request_body)
           second_response =
-            add_assessor(scheme_id, 'ASSESSOR99', valid_assessor_with_contact_request_body)
+            add_assessor(
+              scheme_id,
+              'ASSESSOR99',
+              valid_assessor_with_contact_request_body
+            )
           expect(second_response.status).to eq(200)
         end
 
         it 'replaces a previous assessors details successfully' do
           scheme_id = add_scheme
           add_assessor(scheme_id, 'ASSESSOR99', valid_assessor_request_body)
-          add_assessor(scheme_id, 'ASSESSOR99', valid_assessor_with_contact_request_body)
+          add_assessor(
+            scheme_id,
+            'ASSESSOR99',
+            valid_assessor_with_contact_request_body
+          )
           assessor = fetch_assessor(scheme_id, 'ASSESSOR99')
           expected_response =
             JSON.parse(
               {
                 registeredBy: { schemeId: scheme_id, name: 'test scheme' },
                 schemeAssessorId: 'ASSESSOR99',
-                firstName: assessor_without_key(:middleNames, valid_assessor_with_contact_request_body)[:firstName],
-                middleNames: valid_assessor_with_contact_request_body[:middleNames],
-                lastName: assessor_without_key(:middleNames, valid_assessor_with_contact_request_body)[:lastName],
-                dateOfBirth: assessor_without_key(:middleNames, valid_assessor_with_contact_request_body)[:dateOfBirth],
+                firstName:
+                  assessor_without_key(
+                    :middleNames,
+                    valid_assessor_with_contact_request_body
+                  )[
+                    :firstName
+                  ],
+                middleNames:
+                  valid_assessor_with_contact_request_body[:middleNames],
+                lastName:
+                  assessor_without_key(
+                    :middleNames,
+                    valid_assessor_with_contact_request_body
+                  )[
+                    :lastName
+                  ],
+                dateOfBirth:
+                  assessor_without_key(
+                    :middleNames,
+                    valid_assessor_with_contact_request_body
+                  )[
+                    :dateOfBirth
+                  ],
                 contactDetails: {
-                  telephoneNumber: assessor_without_key(:middleNames, valid_assessor_with_contact_request_body)[:contactDetails][:telephoneNumber],
-                  email: assessor_without_key(:middleNames, valid_assessor_with_contact_request_body)[:contactDetails][:email]
+                  telephoneNumber:
+                    assessor_without_key(
+                      :middleNames,
+                      valid_assessor_with_contact_request_body
+                    )[
+                      :contactDetails
+                    ][
+                      :telephoneNumber
+                    ],
+                  email:
+                    assessor_without_key(
+                      :middleNames,
+                      valid_assessor_with_contact_request_body
+                    )[
+                      :contactDetails
+                    ][
+                      :email
+                    ]
                 }
               }.to_json
             )
@@ -357,9 +414,11 @@ describe AssessorService do
           scheme_id = add_scheme
 
           invalid_request_body = valid_assessor_with_contact_request_body
-          invalid_request_body[:contactDetails][:email] = "54"
+          invalid_request_body[:contactDetails][:email] = '54'
 
-          expect(add_assessor(scheme_id, 'ASSESSOR99', invalid_request_body).status).to eq(400)
+          expect(
+            add_assessor(scheme_id, 'ASSESSOR99', invalid_request_body).status
+          ).to eq(400)
         end
       end
 
@@ -368,9 +427,10 @@ describe AssessorService do
           scheme_id = add_scheme
 
           request_body = valid_assessor_with_contact_request_body
-          request_body[:contactDetails][:email] = "mar@ten.com"
+          request_body[:contactDetails][:email] = 'mar@ten.com'
 
-          response_body = add_assessor(scheme_id, 'ASSESSOR99', request_body).body
+          response_body =
+            add_assessor(scheme_id, 'ASSESSOR99', request_body).body
 
           json_response = JSON.parse(response_body)
 
@@ -382,12 +442,14 @@ describe AssessorService do
         it 'returns error 400' do
           scheme_id = add_scheme
 
-          invalid_telephone = "0"*257
+          invalid_telephone = '0' * 257
 
           request_body = valid_assessor_with_contact_request_body
           request_body[:contactDetails][:telephoneNumber] = invalid_telephone
 
-          expect(add_assessor(scheme_id, 'ASSESSOR99', request_body).status).to eq(400)
+          expect(
+            add_assessor(scheme_id, 'ASSESSOR99', request_body).status
+          ).to eq(400)
         end
       end
 
@@ -395,16 +457,19 @@ describe AssessorService do
         it 'successfully saves it' do
           scheme_id = add_scheme
 
-          valid_telephone = "0"*256
+          valid_telephone = '0' * 256
 
           request_body = valid_assessor_with_contact_request_body
           request_body[:contactDetails][:telephoneNumber] = valid_telephone
 
-          response_body = add_assessor(scheme_id, 'ASSESSOR99', request_body).body
+          response_body =
+            add_assessor(scheme_id, 'ASSESSOR99', request_body).body
 
           json_response = JSON.parse(response_body)
 
-          expect(json_response['contactDetails']['telephoneNumber']).to eq(valid_telephone)
+          expect(json_response['contactDetails']['telephoneNumber']).to eq(
+            valid_telephone
+          )
         end
       end
     end

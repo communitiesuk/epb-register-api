@@ -17,8 +17,7 @@ describe UseCase::AddAssessor do
       middle_names: 'Brain',
       date_of_birth: '1991-02-25',
       contact_details: {
-        telephone_number: '004622416767',
-        email: 'mar@ten.com'
+        telephone_number: '004622416767', email: 'mar@ten.com'
       }
     }
   end
@@ -140,15 +139,16 @@ describe UseCase::AddAssessor do
 
     it 'returns the assessors contact details if present' do
       expect(
-        add_assessor_with_stub_data.execute('25', 'SCHE234950', valid_assessor_with_contact_details)[
+        add_assessor_with_stub_data.execute(
+          '25',
+          'SCHE234950',
+          valid_assessor_with_contact_details
+        )[
           :assessor
         ][
           :contact_details
         ]
-      ).to eq({
-        telephone_number: '004622416767',
-        email: 'mar@ten.com'
-      })
+      ).to eq({ telephone_number: '004622416767', email: 'mar@ten.com' })
     end
 
     it 'does not return an error if middle names are missing' do

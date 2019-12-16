@@ -49,10 +49,10 @@ module Controller
           assessor_details
         )
       if create_assessor_response[:assessor_was_newly_created]
-        @logger.info("New assessor registered")
+        @events.event(:new_assessor_registered)
         json_response(201, create_assessor_response[:assessor])
       else
-        @logger.info("Assessor details updated")
+        @events.event(:assessor_updated)
         json_response(200, create_assessor_response[:assessor])
       end
     rescue Exception => e

@@ -45,7 +45,6 @@ describe ActiveRecord::Base do
     expect(migration_has_been_run?('20191212150246')).to be true
   end
 
-
   it 'can find the schemes table' do
     connect('epb_development')
 
