@@ -50,10 +50,12 @@ module Controller
         )
       if create_assessor_response[:assessor_was_newly_created]
         @logger.info("New assessor registered")
+        p "Print new assessor registered"
         json_response(201, create_assessor_response[:assessor])
       else
         @logger.info("Assessor details updated")
         json_response(200, create_assessor_response[:assessor])
+        p "print new assessor registered"
       end
     rescue Exception => e
       case e
