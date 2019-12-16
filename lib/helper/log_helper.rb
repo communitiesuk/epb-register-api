@@ -1,16 +1,16 @@
 module Helper
-  class EventHelper
+  class LogHelper
     def initialize
       $stdout.sync = true
       @logger = Logger.new($stdout)
       @logger.formatter = proc do |severity, datetime, progname, msg|
-        "[#{datetime}] #{severity} event:#{msg}\n"
+        "#{{timestamp: datetime}.merge(msg).to_json}\n"
       end
 
     end
 
     def event(event_code)
-      @logger.info(event_code.to_s.upcase)
+      @logger.info({event_type: event_code})
     end
   end
 end

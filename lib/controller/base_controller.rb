@@ -12,7 +12,7 @@ module Controller
       @toggles = toggles || Toggles.new
       @container = Container.new
       @logger = Logger.new(STDOUT)
-      @events = Helper::EventHelper.new
+      @events = Helper::LogHelper.new
     end
 
     configure :development do
