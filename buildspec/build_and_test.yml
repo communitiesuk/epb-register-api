@@ -25,6 +25,6 @@ phases:
   build:
     commands:
       - echo ">>>>>>>> Setting up the test database"
-      - export RACK_ENV=test && make setup-db
+      - make setup-db
       - echo ">>>>>>>> RUNNING TESTS"
       - make test
