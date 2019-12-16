@@ -26,5 +26,6 @@ phases:
     commands:
       - echo ">>>>>>>> Setting up the test database"
       - make setup-db
+      - RACK_ENV=test make setup-db
       - echo ">>>>>>>> RUNNING TESTS"
       - make test
