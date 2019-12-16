@@ -332,6 +332,7 @@ describe AssessorService do
         end
       end
     end
+
     context 'when updating an assessor' do
       context 'which is valid with all fields' do
         it 'returns 200 on the update' do
