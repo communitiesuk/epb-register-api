@@ -10,7 +10,7 @@ module Helper
     end
 
     def event(event_code)
-      @logger.info({event_type: event_code})
+      p "#{{timestamp: Time.now.to_s, event_type: event_code}.to_json}\n"
     end
   end
 end
