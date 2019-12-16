@@ -24,7 +24,7 @@ phases:
       - until docker run --rm --link postgres-test:pg postgres:11 pg_isready -U postgres -h pg; do sleep 1; done
   build:
     commands:
-      - echo ">>>>>>>> Setting up the database"
-      - make setup-db
+      - echo ">>>>>>>> Setting up the test database"
+      - export RACK_ENV=test && make setup-db
       - echo ">>>>>>>> RUNNING TESTS"
       - make test
