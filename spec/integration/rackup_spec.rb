@@ -3,15 +3,16 @@ require 'net/http'
 describe 'starts server outside of ruby' do
   describe 'the server running live' do
     before(:all) do
-      process = IO.popen(['rackup', '-q', err: %i[child out]])
+      process = IO.popen(['rackup', '-q', err: [:child, :out]])
       @process_id = process.pid
 
-      sleep 2
+      unless process.readline.include?('port=9292')
+      end
     end
 
     after(:all) { Process.kill('KILL', @process_id) }
 
-    let(:request) { Net::HTTP.new('localhost', 9_292) }
+    let(:request) { Net::HTTP.new('localhost', 9292) }
 
     context 'it is running' do
       it 'returns status 200' do
