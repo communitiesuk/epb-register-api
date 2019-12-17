@@ -238,7 +238,8 @@ describe AssessorService do
           assessor_response =
             put(
               "/api/schemes/#{scheme_id}/assessors/thebrokenassessor",
-              assessor_without_key(:firstName, valid_assessor_request_body).to_json
+              assessor_without_key(:firstName, valid_assessor_request_body)
+                .to_json
             )
 
           expect(assessor_response.status).to eq(422)
@@ -249,7 +250,8 @@ describe AssessorService do
           assessor_response =
             put(
               "/api/schemes/#{scheme_id}/assessors/thebrokenassessor",
-              assessor_without_key(:lastName, valid_assessor_request_body).to_json
+              assessor_without_key(:lastName, valid_assessor_request_body)
+                .to_json
             )
 
           expect(assessor_response.status).to eq(422)
@@ -260,7 +262,8 @@ describe AssessorService do
           assessor_response =
             put(
               "/api/schemes/#{scheme_id}/assessors/thebrokenassessor",
-              assessor_without_key(:dateOfBirth, valid_assessor_request_body).to_json
+              assessor_without_key(:dateOfBirth, valid_assessor_request_body)
+                .to_json
             )
 
           expect(assessor_response.status).to eq(422)
@@ -432,8 +435,7 @@ describe AssessorService do
 
           add_assessor(scheme_id, 'ASSESSOR99', request_body).body
 
-          response_body =
-            fetch_assessor(scheme_id, 'ASSESSOR99').body
+          response_body = fetch_assessor(scheme_id, 'ASSESSOR99').body
           json_response = JSON.parse(response_body)
 
           expect(json_response['contactDetails']['email']).to eq('mar@ten.com')
@@ -466,8 +468,7 @@ describe AssessorService do
 
           add_assessor(scheme_id, 'ASSESSOR99', request_body).body
 
-          response_body =
-            fetch_assessor(scheme_id, 'ASSESSOR99').body
+          response_body = fetch_assessor(scheme_id, 'ASSESSOR99').body
           json_response = JSON.parse(response_body)
 
           expect(json_response['contactDetails']['telephoneNumber']).to eq(

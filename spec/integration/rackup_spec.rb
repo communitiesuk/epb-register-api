@@ -11,7 +11,7 @@ describe 'starts server outside of ruby' do
 
     after(:all) { Process.kill('KILL', @process_id) }
 
-    let(:request) { Net::HTTP.new('localhost', 9292) }
+    let(:request) { Net::HTTP.new('localhost', 9_292) }
 
     context 'it is running' do
       it 'returns status 200' do
