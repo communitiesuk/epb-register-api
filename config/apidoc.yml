@@ -164,6 +164,8 @@ paths:
           description: Problem with assessor registration record
         409:
           description: Assessor already exists on a different scheme
+        422:
+          description: Assessor does not pass validation
 components:
   schemas:
     SchemeSummary:
