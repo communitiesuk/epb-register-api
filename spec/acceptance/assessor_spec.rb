@@ -2,7 +2,7 @@
 
 describe AssessorService do
   describe 'The Assessor API' do
-    let (:valid_assessor_request_body) do
+    let(:valid_assessor_request_body) do
       {
         firstName: 'Someone',
         middleNames: 'muddle',
@@ -11,7 +11,7 @@ describe AssessorService do
       }
     end
 
-    let (:valid_assessor_with_contact_request_body) do
+    let(:valid_assessor_with_contact_request_body) do
       {
         firstName: 'Some',
         middleNames: 'middle',
@@ -63,7 +63,7 @@ describe AssessorService do
     context 'when getting an assessor on the wrong scheme' do
       it 'returns status 404' do
         scheme_id = add_scheme
-        second_scheme_id = add_scheme(name = 'second scheme')
+        second_scheme_id = add_scheme('second scheme')
         add_assessor(
           second_scheme_id,
           'SCHE987654',
@@ -322,7 +322,7 @@ describe AssessorService do
       context 'which has a clashing ID for an assessor on another scheme' do
         it 'Returns a status code 409' do
           first_scheme = add_scheme
-          second_scheme = add_scheme(name = 'scheme two')
+          second_scheme = add_scheme('scheme two')
 
           add_assessor(first_scheme, 'SCHE4001', valid_assessor_request_body)
           second_response =
@@ -430,9 +430,10 @@ describe AssessorService do
           request_body = valid_assessor_with_contact_request_body
           request_body[:contactDetails][:email] = 'mar@ten.com'
 
-          response_body =
-            add_assessor(scheme_id, 'ASSESSOR99', request_body).body
+          add_assessor(scheme_id, 'ASSESSOR99', request_body).body
 
+          response_body =
+            fetch_assessor(scheme_id, 'ASSESSOR99').body
           json_response = JSON.parse(response_body)
 
           expect(json_response['contactDetails']['email']).to eq('mar@ten.com')
@@ -451,6 +452,7 @@ describe AssessorService do
           expect(
             add_assessor(scheme_id, 'ASSESSOR99', request_body).status
           ).to eq(400)
+          #TODO Make a 422
         end
       end
 
@@ -463,9 +465,10 @@ describe AssessorService do
           request_body = valid_assessor_with_contact_request_body
           request_body[:contactDetails][:telephoneNumber] = valid_telephone
 
-          response_body =
-            add_assessor(scheme_id, 'ASSESSOR99', request_body).body
+          add_assessor(scheme_id, 'ASSESSOR99', request_body).body
 
+          response_body =
+            fetch_assessor(scheme_id, 'ASSESSOR99').body
           json_response = JSON.parse(response_body)
 
           expect(json_response['contactDetails']['telephoneNumber']).to eq(
