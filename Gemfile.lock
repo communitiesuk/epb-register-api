@@ -93,7 +93,7 @@ PLATFORMS
 DEPENDENCIES
   database_cleaner!
   json-schema (~> 2.8)!
-  ougai (~> 1.8)
+  ougai (~> 1.8)!
   pg!
   prettier (~> 0.16.0)!
   pry (~> 0.12.2)!
@@ -112,4 +112,4 @@ RUBY VERSION
    ruby 2.6.5p114
 
 BUNDLED WITH
-   2.0.2
+   2.1.0
