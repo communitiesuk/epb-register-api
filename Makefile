@@ -51,4 +51,4 @@ run:
 
 .PHONY: format
 format:
-	bundle exec rbprettier --write '**/*.rb'
+	@bundle exec rbprettier --write `find . -name '*.rb' -not -path './db/schema.rb'` *.ru Gemfile
