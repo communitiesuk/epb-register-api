@@ -13,11 +13,11 @@ source 'https://rubygems.org' do
     gem 'pry', '~> 0.12.2'
     gem 'rack-test', '~> 0.8.3'
     gem 'rspec', '~>3.0'
-    gem "simplecov", "~> 0.17.1"
+    gem 'simplecov', '~> 0.17.1'
   end
 
-  gem "json-schema", "~> 2.8"
-  gem "ougai", "~> 1.8"
+  gem 'json-schema', '~> 2.8'
+  gem 'ougai', '~> 1.8'
   gem 'pg'
   gem 'rake'
   gem 'sinatra', '~> 2.0', '>= 2.0.7'
