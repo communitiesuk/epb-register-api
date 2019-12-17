@@ -65,8 +65,10 @@ module Controller
           'ASSESSOR_ID_ON_ANOTHER_SCHEME',
           'The assessor ID you are trying to update is registered by a different scheme'
         )
-      when JSON::Schema::ValidationError, JSON::ParserError
+      when JSON::ParserError
         error_response(400, 'INVALID_REQUEST', e.message)
+      when JSON::Schema::ValidationError
+        error_response(422, 'INVALID_REQUEST', e.message)
       else
         server_error(e.message)
       end

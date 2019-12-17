@@ -238,10 +238,10 @@ describe AssessorService do
           assessor_response =
             put(
               "/api/schemes/#{scheme_id}/assessors/thebrokenassessor",
-              assessor_without_key(:firstName, valid_assessor_request_body)
+              assessor_without_key(:firstName, valid_assessor_request_body).to_json
             )
 
-          expect(assessor_response.status).to eq(400)
+          expect(assessor_response.status).to eq(422)
         end
 
         it 'rejects requests without last name' do
@@ -249,10 +249,10 @@ describe AssessorService do
           assessor_response =
             put(
               "/api/schemes/#{scheme_id}/assessors/thebrokenassessor",
-              assessor_without_key(:lastName, valid_assessor_request_body)
+              assessor_without_key(:lastName, valid_assessor_request_body).to_json
             )
 
-          expect(assessor_response.status).to eq(400)
+          expect(assessor_response.status).to eq(422)
         end
 
         it 'rejects requests without date of birth' do
@@ -260,10 +260,10 @@ describe AssessorService do
           assessor_response =
             put(
               "/api/schemes/#{scheme_id}/assessors/thebrokenassessor",
-              assessor_without_key(:dateOfBirth, valid_assessor_request_body)
+              assessor_without_key(:dateOfBirth, valid_assessor_request_body).to_json
             )
 
-          expect(assessor_response.status).to eq(400)
+          expect(assessor_response.status).to eq(422)
         end
 
         it 'rejects requests with invalid date of birth' do
@@ -276,7 +276,7 @@ describe AssessorService do
               invalid_body.to_json
             )
 
-          expect(assessor_response.status).to eq(400)
+          expect(assessor_response.status).to eq(422)
         end
 
         it 'rejects requests with invalid first name' do
@@ -289,7 +289,7 @@ describe AssessorService do
               invalid_body.to_json
             )
 
-          expect(assessor_response.status).to eq(400)
+          expect(assessor_response.status).to eq(422)
         end
 
         it 'rejects requests with invalid last name' do
@@ -302,7 +302,7 @@ describe AssessorService do
               invalid_body.to_json
             )
 
-          expect(assessor_response.status).to eq(400)
+          expect(assessor_response.status).to eq(422)
         end
 
         it 'rejects requests with invalid middle names' do
@@ -315,7 +315,7 @@ describe AssessorService do
               invalid_body.to_json
             )
 
-          expect(assessor_response.status).to eq(400)
+          expect(assessor_response.status).to eq(422)
         end
       end
 
@@ -419,7 +419,7 @@ describe AssessorService do
 
           expect(
             add_assessor(scheme_id, 'ASSESSOR99', invalid_request_body).status
-          ).to eq(400)
+          ).to eq(422)
         end
       end
 
@@ -451,8 +451,7 @@ describe AssessorService do
 
           expect(
             add_assessor(scheme_id, 'ASSESSOR99', request_body).status
-          ).to eq(400)
-          #TODO Make a 422
+          ).to eq(422)
         end
       end
 
