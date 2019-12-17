@@ -9,11 +9,15 @@ module Helper
     end
 
     EMAIL_FORMAT_PROC = lambda do |value|
-      raise JSON::Schema::CustomFormatError unless value.include?('@')
+      unless value.include?('@')
+        raise JSON::Schema::CustomFormatError, 'Must be a valid email'
+      end
     end
 
     TELEPHONE_FORMAT_PROC = lambda do |value|
-      raise JSON::Schema::CustomFormatError if value.size > 256
+      if value.size > 256
+        raise JSON::Schema::CustomFormatError, 'Must be less than 257 chars'
+      end
     end
 
     def initialize
