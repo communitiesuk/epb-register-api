@@ -46,7 +46,7 @@ setup-db:
 
 .PHONY: test
 test:
-	rake spec
+	@STAGE=test UNLEASH_URI=https://google.com bundle exec rake spec
 
 .PHONY: run
 run:
