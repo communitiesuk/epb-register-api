@@ -2,6 +2,7 @@ require 'simplecov'
 SimpleCov.start
 
 ENV['RACK_ENV'] = 'test'
+ENV['UNLEASH_URI'] = 'https://google.com'
 
 require 'rspec'
 require 'sinatra/activerecord'
@@ -13,10 +14,33 @@ loader = Zeitwerk::Loader.new
 loader.push_dir("#{__dir__}/../lib/")
 loader.setup
 
+ENV['JWT_ISSUER'] = 'test.issuer'
+ENV['JWT_SECRET'] = 'test.secret'
+
 module RSpecMixin
   def app
     described_class
   end
+end
+
+def authenticate_and(request = nil, &block)
+  auth = 'Bearer ' + get_valid_jwt
+
+  if request.nil?
+    header 'Authorization', auth
+  else
+    request['Authorization'] = auth
+  end
+
+  block.call
+end
+
+def get_valid_jwt
+  token = Auth::Token.new iat: Time.now.to_i,
+                          iss: ENV['JWT_ISSUER'],
+                          sub: 'test-subject'
+
+  token.encode ENV['JWT_SECRET']
 end
 
 RSpec.configure do |config|

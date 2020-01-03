@@ -1,6 +1,7 @@
 require_relative '../helper/toggles'
 require_relative '../container'
 require 'sinatra/cross_origin'
+require 'epb_auth_tools'
 
 module Controller
   class BaseController < Sinatra::Base
@@ -30,6 +31,15 @@ module Controller
       response.headers['Access-Control-Allow-Origin'] = '*'
       response.headers['Access-Control-Allow-Headers'] =
         'Content-Type, Cache-Control, Accept'
+    end
+
+    set(:jwt_auth) do
+      condition do
+        Auth::Sinatra::Conditional.process_request env
+      rescue Auth::Errors::Error => e
+        content_type :json
+        halt 401, { error: e }.to_json
+      end
     end
 
     def request_body(schema = false)

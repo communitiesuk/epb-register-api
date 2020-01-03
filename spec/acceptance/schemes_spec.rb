@@ -1,7 +1,7 @@
 describe AssessorService do
   describe 'The Schemes API' do
     context 'getting an empty list of schemes' do
-      let(:response) { get '/api/schemes' }
+      let(:response) { authenticate_and { get '/api/schemes' } }
 
       it 'returns status 200' do
         expect(response.status).to eq(200)
@@ -31,7 +31,8 @@ describe AssessorService do
       end
 
       it 'is visible in the list of schemes' do
-        get_response = JSON.parse((get '/api/schemes').body)
+        response = authenticate_and { get '/api/schemes' }
+        get_response = JSON.parse(response.body)
         expect(get_response['schemes'][0]['name']).to eq('XYMZALERO')
       end
 
