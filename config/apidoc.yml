@@ -46,6 +46,8 @@ paths:
       tags:
         - Manage schemes
       summary: Add a new energy assessment scheme to the register
+      security:
+        - oauth: []
       requestBody:
         description: The scheme to be added
         required: true
