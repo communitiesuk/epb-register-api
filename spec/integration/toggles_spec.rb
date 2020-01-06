@@ -1,14 +1,6 @@
-class StubToggles
-  def toggles; end
-
-  def state(name)
-    name == 'a'
-  end
-end
-
 describe 'Integration::ToggleService' do
   context 'when the AssessorService is instantiated with Toggles' do
-    let(:service) { AssessorService.new(StubToggles.new).helpers }
+    let(:service) { AssessorService.new(TogglesStub.new).helpers }
 
     it 'feature a is active' do
       expect(service.toggles.state('a')).to eq(true)
