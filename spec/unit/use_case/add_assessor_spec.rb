@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe UseCase::AddAssessor do
-  let (:valid_assessor) do
+  let(:valid_assessor) do
     {
       first_name: 'John',
       last_name: 'Smith',
@@ -10,7 +10,7 @@ describe UseCase::AddAssessor do
     }
   end
 
-  let (:valid_assessor_with_contact_details) do
+  let(:valid_assessor_with_contact_details) do
     {
       first_name: 'John',
       last_name: 'Doe',

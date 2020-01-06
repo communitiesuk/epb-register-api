@@ -1,5 +1,5 @@
 describe UseCase::FetchAssessor do
-  let (:valid_assessor) do
+  let(:valid_assessor) do
     {
       first_name: 'John',
       last_name: 'Smith',

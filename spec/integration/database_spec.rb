@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-describe ActiveRecord::Base do
+describe 'Integration::Database::Activerecord' do
   def connect(database_name)
     ENV['RACK_ENV'] = database_name.remove('epb_')
 
-    described_class.connection
+    ActiveRecord::Base.connection
   end
 
   before(:all) { @rack_env = ENV['RACK_ENV'] }
@@ -16,13 +16,13 @@ describe ActiveRecord::Base do
 
     query =
       "SELECT version FROM %s WHERE version = '%s'" % [table_name, version]
-    described_class.connection.execute(query).any?
+    ActiveRecord::Base.connection.execute(query).any?
   end
 
   it 'can connect to an existing database' do
     connect('epb_test')
 
-    expect(described_class.connected?).to be true
+    expect(ActiveRecord::Base.connected?).to be true
   end
 
   it 'has run the create schemes migration' do
@@ -54,16 +54,16 @@ describe ActiveRecord::Base do
 
     ActiveRecord::Base.establish_connection
 
-    expect(described_class.connection.table_exists?('schemes')).to be true
+    expect(ActiveRecord::Base.connection.table_exists?('schemes')).to be true
   end
 
   it 'can find the scheme_id column' do
     connect('epb_development')
 
-    described_class.establish_connection
+    ActiveRecord::Base.establish_connection
 
     scheme_id =
-      described_class.connection.execute('SELECT scheme_id FROM schemes')
+      ActiveRecord::Base.connection.execute('SELECT scheme_id FROM schemes')
 
     expect(scheme_id).not_to be_nil
   end

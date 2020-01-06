@@ -1,45 +1,49 @@
-describe AssessorService do
-  describe 'The Schemes API' do
-    context 'getting an empty list of schemes' do
-      let(:response) { authenticate_and { get '/api/schemes' } }
+describe 'Acceptance::Schemes' do
+  include Rack::Test::Methods
 
-      it 'returns status 200' do
-        expect(response.status).to eq(200)
-      end
+  def app
+    AssessorService
+  end
 
-      it 'returns JSON' do
-        expect(response.headers['Content-Type']).to eq('application/json')
-      end
+  context 'getting an empty list of schemes' do
+    let(:response) { authenticate_and { get '/api/schemes' } }
 
-      it 'includes an empty list of schemes' do
-        parsed_response = JSON.parse(response.body)
-        expect(parsed_response).to eq('schemes' => [])
-      end
+    it 'returns status 200' do
+      expect(response.status).to eq(200)
     end
 
-    context 'posting to the schemes api' do
-      response = false
-      request_body = { name: 'XYMZALERO' }.to_json
-      before(:each) { response = post('/api/schemes', request_body) }
+    it 'returns JSON' do
+      expect(response.headers['Content-Type']).to eq('application/json')
+    end
 
-      it 'returns status 201' do
-        expect(response.status).to eq(201)
-      end
+    it 'includes an empty list of schemes' do
+      parsed_response = JSON.parse(response.body)
+      expect(parsed_response).to eq('schemes' => [])
+    end
+  end
 
-      it 'returns json' do
-        expect(response.headers['Content-Type']).to eq('application/json')
-      end
+  context 'posting to the schemes api' do
+    response = false
+    request_body = { name: 'XYMZALERO' }.to_json
+    before(:each) { response = post('/api/schemes', request_body) }
 
-      it 'is visible in the list of schemes' do
-        response = authenticate_and { get '/api/schemes' }
-        get_response = JSON.parse(response.body)
-        expect(get_response['schemes'][0]['name']).to eq('XYMZALERO')
-      end
+    it 'returns status 201' do
+      expect(response.status).to eq(201)
+    end
 
-      it 'cannot have the same name twice' do
-        second_post_response = post '/api/schemes', request_body
-        expect(second_post_response.status).to eq(400)
-      end
+    it 'returns json' do
+      expect(response.headers['Content-Type']).to eq('application/json')
+    end
+
+    it 'is visible in the list of schemes' do
+      response = authenticate_and { get '/api/schemes' }
+      get_response = JSON.parse(response.body)
+      expect(get_response['schemes'][0]['name']).to eq('XYMZALERO')
+    end
+
+    it 'cannot have the same name twice' do
+      second_post_response = post '/api/schemes', request_body
+      expect(second_post_response.status).to eq(400)
     end
   end
 end
