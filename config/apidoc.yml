@@ -27,6 +27,8 @@ paths:
       tags:
         - Manage schemes
       summary: Get a list of all energy assessment schemes in the register
+      security:
+        - oauth: []
       responses:
         200:
           description: List of all schemes
