@@ -33,7 +33,7 @@ describe 'Acceptance::Assessor' do
   end
 
   def add_scheme(name = 'test scheme')
-    JSON.parse(post('/api/schemes', { name: name }.to_json).body)['schemeId']
+    JSON.parse(authenticate_and { post('/api/schemes', { name: name }.to_json) }.body)['schemeId']
   end
 
   def assessor_without_key(missing, request_body)

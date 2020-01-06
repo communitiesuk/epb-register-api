@@ -1,6 +1,14 @@
 describe 'Acceptance::Schemes' do
   include RSpecAssessorServiceMixin
 
+  context 'getting an empty list of schemes without authentication' do
+    let(:response) { get '/api/schemes' }
+
+    it 'returns status 401' do
+      expect(response.status).to eq 401
+    end
+  end
+
   context 'getting an empty list of schemes' do
     let(:response) { authenticate_and { get '/api/schemes' } }
 
@@ -18,10 +26,20 @@ describe 'Acceptance::Schemes' do
     end
   end
 
-  context 'posting to the schemes api' do
+  context 'posting to the schemes api without authentication' do
     response = false
     request_body = { name: 'XYMZALERO' }.to_json
     before(:each) { response = post('/api/schemes', request_body) }
+
+    it 'returns status 401' do
+      expect(response.status).to eq(401)
+    end
+  end
+
+  context 'posting to the schemes api' do
+    response = false
+    request_body = { name: 'XYMZALERO' }.to_json
+    before(:each) { response = authenticate_and { post('/api/schemes', request_body) }}
 
     it 'returns status 201' do
       expect(response.status).to eq(201)
