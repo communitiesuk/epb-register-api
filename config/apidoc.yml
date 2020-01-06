@@ -91,6 +91,8 @@ paths:
       tags:
         - Individually manage assessors
       summary: Get all details for an individual assessor registration
+      security:
+        - oauth: []
       parameters:
         - in: path
           required: true
@@ -119,6 +121,8 @@ paths:
       tags:
         - Individually manage assessors
       summary: Register a new assessor to associate them with your scheme
+      security:
+        - oauth: []
       parameters:
         - in: path
           name: schemeId
