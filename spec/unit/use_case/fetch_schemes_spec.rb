@@ -1,16 +1,4 @@
 describe UseCase::FetchSchemes do
-  class SchemesGatewayFake
-    attr_writer :schemes
-
-    def initialize
-      @schemes = {}
-    end
-
-    def all
-      @schemes
-    end
-  end
-
   let(:schemes_gateway) { SchemesGatewayFake.new }
 
   let(:response) { described_class.new(schemes_gateway).execute }

@@ -8,28 +8,6 @@ describe UseCase::FetchAssessor do
     }
   end
 
-  class AssessorGatewayStub
-    attr_reader :assessor
-
-    def initialize(assessor = nil)
-      @assessor = assessor
-    end
-
-    def fetch(*)
-      @assessor
-    end
-  end
-
-  class SchemesGatewayStub
-    def initialize(result)
-      @result = result
-    end
-
-    def all(*)
-      @result
-    end
-  end
-
   let(:assessor_gateway) { AssessorGatewayStub.new }
   let(:schemes_gateway) do
     SchemesGatewayStub.new([{ scheme_id: 25, name: 'Best scheme' }])
