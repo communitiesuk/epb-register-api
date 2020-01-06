@@ -1,6 +1,6 @@
 module Controller
   class SchemesController < Controller::BaseController
-    POST_SCHEMA = {
+    @post_schema = {
       type: 'object',
       required: %w[name],
       properties: { name: { type: 'string' } }
@@ -12,7 +12,7 @@ module Controller
     end
 
     post '/api/schemes', jwt_auth: [] do
-      new_scheme_details = request_body(POST_SCHEMA)
+      new_scheme_details = request_body(@post_schema)
       result =
         @container.get_object(:add_new_scheme_use_case).execute(
           new_scheme_details[:name]
