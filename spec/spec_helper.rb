@@ -24,6 +24,15 @@ module RSpecMixin
   end
 end
 
+module RSpecAssessorServiceMixin
+  include Rack::Test::Methods
+
+  def app
+    AssessorService
+  end
+end
+
+
 def authenticate_and(request = nil, &block)
   auth = 'Bearer ' + get_valid_jwt
 

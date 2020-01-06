@@ -1,9 +1,5 @@
 describe 'Acceptance::Responses' do
-  include Rack::Test::Methods
-
-  def app
-    AssessorService
-  end
+  include RSpecAssessorServiceMixin
 
   context 'responses from /healthcheck' do
     let(:response) { get '/healthcheck' }

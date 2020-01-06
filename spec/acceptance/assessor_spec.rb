@@ -1,11 +1,7 @@
 # frozen_string_literal: true
 
 describe 'Acceptance::Assessor' do
-  include Rack::Test::Methods
-
-  def app
-    AssessorService
-  end
+  include RSpecAssessorServiceMixin
 
   let(:valid_assessor_request_body) do
     {

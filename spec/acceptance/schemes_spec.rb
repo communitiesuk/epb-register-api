@@ -1,9 +1,5 @@
 describe 'Acceptance::Schemes' do
-  include Rack::Test::Methods
-
-  def app
-    AssessorService
-  end
+  include RSpecAssessorServiceMixin
 
   context 'getting an empty list of schemes' do
     let(:response) { authenticate_and { get '/api/schemes' } }
