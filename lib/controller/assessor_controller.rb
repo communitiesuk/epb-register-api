@@ -18,7 +18,7 @@ module Controller
       }
     }
 
-    get '/api/schemes/:scheme_id/assessors/:scheme_assessor_id' do
+    get '/api/schemes/:scheme_id/assessors/:scheme_assessor_id', jwt_auth: [] do
       scheme_id = params[:scheme_id]
       scheme_assessor_id = params[:scheme_assessor_id]
       result =
@@ -38,7 +38,7 @@ module Controller
       end
     end
 
-    put '/api/schemes/:scheme_id/assessors/:scheme_assessor_id' do
+    put '/api/schemes/:scheme_id/assessors/:scheme_assessor_id', jwt_auth: [] do
       scheme_id = params['scheme_id']
       scheme_assessor_id = params['scheme_assessor_id']
       assessor_details = request_body(PUT_SCHEMA)

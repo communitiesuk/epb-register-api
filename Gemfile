@@ -17,8 +17,7 @@ source 'https://rubygems.org' do
   end
 
   gem 'epb_auth_tools',
-      git: 'https://github.com/communitiesuk/epb-auth-tools',
-      branch: 'master'
+      git: 'https://github.com/communitiesuk/epb-auth-tools', branch: 'master'
   gem 'json-schema', '~> 2.8'
   gem 'ougai', '~> 1.8'
   gem 'pg'

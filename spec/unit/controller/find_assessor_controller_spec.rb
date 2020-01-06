@@ -3,7 +3,7 @@ describe Controller::FindAssessorController do
     it 'returns an object' do
       response = get '/api/findassessor/E2+0SZ'
 
-      expect(response.body).to eq("1")
+      expect(response.body).to eq('1')
     end
   end
 end

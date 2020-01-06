@@ -2,7 +2,7 @@ require 'net/http'
 
 describe 'Integration::Rackup' do
   before(:all) do
-    process = IO.popen(['rackup', err: [:child, :out]])
+    process = IO.popen(['rackup', err: %i[child out]])
     @process_id = process.pid
 
     unless process.readline.include?('port=9292')
@@ -11,7 +11,7 @@ describe 'Integration::Rackup' do
 
   after(:all) { Process.kill('KILL', @process_id) }
 
-  let(:request) { Net::HTTP.new('localhost', 9292) }
+  let(:request) { Net::HTTP.new('localhost', 9_292) }
 
   context 'when rackup has started' do
     context 'requests to /healthcheck' do

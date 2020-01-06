@@ -36,7 +36,7 @@ module Controller
     set(:jwt_auth) do
       condition do
         Auth::Sinatra::Conditional.process_request env
-      rescue Auth::Errors::Error => e
+      rescue Exception => e
         content_type :json
         halt 401, { error: e }.to_json
       end
