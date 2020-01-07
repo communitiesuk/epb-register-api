@@ -52,6 +52,36 @@ end
         authenticate_and { assessors_search_by_postcode('SE17EZ') }.status
       ).to eq(200)
     end
+
+    it 'looks as it should' do
+      response = authenticate_and { assessors_search_by_postcode('SE17EZ') }
+
+      response_json = JSON.parse(response.body)
+
+      expect(
+        response_json["results"]
+      ).to be_an(Array)
+    end
+
+    it 'has the properties we expect' do
+      response = authenticate_and { assessors_search_by_postcode('SE17EZ') }
+
+      response_json = JSON.parse(response.body)
+
+      expect(
+        response_json
+      ).to include('results', 'timestamp', 'searchPostcode')
+    end
+
+    it 'has the assessors of the shape we expect' do
+      response = authenticate_and { assessors_search_by_postcode('SE17EZ') }
+
+      response_json = JSON.parse(response.body)
+
+      expect(
+        response_json['results'][0]
+      ).to include('assessor', 'distanceFromPostcodeInMiles')
+    end
   end
 
   context "when a scheme doesn't exist" do
