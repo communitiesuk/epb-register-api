@@ -30,7 +30,8 @@ module UseCase
       new_assessor = {
         first_name: assessor[:first_name],
         last_name: assessor[:last_name],
-        date_of_birth: assessor[:date_of_birth]
+        date_of_birth: assessor[:date_of_birth],
+        search_results_comparison_postcode: assessor[:search_results_comparison_postcode]
       }
 
       if assessor.key?(:middle_names)
