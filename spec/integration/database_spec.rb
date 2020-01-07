@@ -49,6 +49,12 @@ describe 'Integration::Database::Activerecord' do
     expect(migration_has_been_run?('20191212150246')).to be true
   end
 
+  it 'has run the add assessor search postcode migration' do
+    connect('epb_development')
+
+    expect(migration_has_been_run?('20200107162305')).to be true
+  end
+
   it 'can find the schemes table' do
     connect('epb_development')
 
