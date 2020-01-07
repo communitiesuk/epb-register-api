@@ -8,7 +8,8 @@ describe 'Acceptance::Assessor' do
       firstName: 'Someone',
       middleNames: 'muddle',
       lastName: 'Person',
-      dateOfBirth: '1991-02-25'
+      dateOfBirth: '1991-02-25',
+      searchResultsComparisonPostcode: ''
     }
   end
 
@@ -20,7 +21,8 @@ describe 'Acceptance::Assessor' do
       dateOfBirth: '1991-02-25',
       contactDetails: {
         telephoneNumber: '010199991010101', email: 'person@person.com'
-      }
+      },
+      searchResultsComparisonPostcode: ''
     }
   end
 
@@ -176,7 +178,8 @@ end
               middleNames: valid_assessor_request_body[:middleNames],
               lastName: valid_assessor_request_body[:lastName],
               dateOfBirth: valid_assessor_request_body[:dateOfBirth],
-              contactDetails: { telephoneNumber: '', email: '' }
+              contactDetails: { telephoneNumber: '', email: '' },
+              searchResultsComparisonPostcode: ''
             }.to_json
           )
         response =
@@ -229,7 +232,8 @@ end
               firstName: valid_assessor_request_body[:firstName],
               middleNames: valid_assessor_request_body[:middleNames],
               lastName: valid_assessor_request_body[:lastName],
-              dateOfBirth: valid_assessor_request_body[:dateOfBirth]
+              dateOfBirth: valid_assessor_request_body[:dateOfBirth],
+              searchResultsComparisonPostcode: valid_assessor_request_body[:searchResultsComparisonPostcode]
             }.to_json
           )
 
@@ -281,6 +285,10 @@ end
               dateOfBirth:
                 assessor_without_key(:middleNames, valid_assessor_request_body)[
                   :dateOfBirth
+                ],
+              searchResultsComparisonPostcode:
+                assessor_without_key(:middleNames, valid_assessor_request_body)[
+                  :searchResultsComparisonPostcode
                 ]
             }.to_json
           )
@@ -510,7 +518,8 @@ end
                   ][
                     :email
                   ]
-              }
+              },
+              searchResultsComparisonPostcode: ""
             }.to_json
           )
         expect(JSON.parse(assessor.body)).to eq(expected_response)
