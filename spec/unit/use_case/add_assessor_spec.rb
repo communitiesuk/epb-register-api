@@ -6,7 +6,8 @@ describe UseCase::AddAssessor do
       first_name: 'John',
       last_name: 'Smith',
       middle_names: 'Brain',
-      date_of_birth: '1991-02-25'
+      date_of_birth: '1991-02-25',
+      search_results_comparison_postcode: 'E2 0SZ'
     }
   end
 
@@ -18,7 +19,8 @@ describe UseCase::AddAssessor do
       date_of_birth: '1991-02-25',
       contact_details: {
         telephone_number: '004622416767', email: 'mar@ten.com'
-      }
+      },
+      search_results_comparison_postcode: 'E2 0SZ'
     }
   end
 
