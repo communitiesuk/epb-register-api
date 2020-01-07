@@ -9,6 +9,7 @@ require 'sinatra/activerecord'
 require 'rack/test'
 require 'database_cleaner'
 require 'zeitwerk'
+require 'epb_auth_tools'
 
 loader = Zeitwerk::Loader.new
 loader.push_dir("#{__dir__}/../lib/")
@@ -59,6 +60,7 @@ end
 RSpec.configure do |config|
   config.include RSpecMixin
   config.include Rack::Test::Methods
+  config.order = :random
 
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
