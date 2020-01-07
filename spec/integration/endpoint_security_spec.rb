@@ -1,9 +1,9 @@
 describe 'Integration::EndpointSecurity' do
   include RSpecAssessorServiceMixin
 
-  controllers_to_ignore = %w[BaseController]
+  controllers_to_ignore = { BaseController: {} }
 
-  methods_with_no_body = %w[head]
+  methods_with_no_body = %w[head options]
 
   controllers_to_test =
     Controller.constants.select do |constant|
@@ -15,7 +15,7 @@ describe 'Integration::EndpointSecurity' do
   controllers_to_test.each do |controller|
     routes =
       Controller.const_get(controller).routes.map do |method, routes|
-        routes.map { |r| r.first.to_s }.map do |route|
+        routes.map { |route| route.first.to_s }.map do |route|
           { verb: method.downcase, path: route }
         end
       end.map(&:first)
