@@ -18,6 +18,64 @@ module Controller
       }
     }
 
+
+    get '/api/assessors/search/:postcode', jwt_auth: []  do
+      body '{
+      "results": [{
+        "assessor": {
+          "firstName": "Juan",
+          "lastName": "Uno",
+          "contactDetails": {
+            "telephoneNumber": "string",
+            "email": "user@example.com"
+          },
+          "searchResultsComparisonPostcode": "SW1A 1AA",
+          "registeredBy": {
+            "schemeId": "432",
+            "name": "EPBs 4 U"
+          }
+        },
+        "distanceFromPostcodeInMiles": 0.1
+      },
+      {
+        "assessor": {
+          "firstName": "Doux",
+          "lastName": "Twose",
+          "contactDetails": {
+            "telephoneNumber": "string",
+            "email": "user@example.com"
+          },
+          "searchResultsComparisonPostcode": "SW1A 1AA",
+          "registeredBy": {
+            "schemeId": "432",
+            "name": "EPBs 4 U"
+          }
+        },
+        "distanceFromPostcodeInMiles": 0.26780459
+      },
+      {
+        "assessor": {
+          "firstName": "Tri",
+          "lastName": "Triple",
+          "contactDetails": {
+            "telephoneNumber": "string",
+            "email": "user@example.com"
+          },
+          "searchResultsComparisonPostcode": "SW1A 1AA",
+          "registeredBy": {
+            "schemeId": "432",
+            "name": "EPBs 4 U"
+          }
+        },
+        "distanceFromPostcodeInMiles": 0.3
+      }
+      ],
+      "timestamp": 1234567,
+      "searchPostcode": "SW1 5RW"
+    }'
+    end
+
+
     get '/api/schemes/:scheme_id/assessors/:scheme_assessor_id', jwt_auth: [] do
       scheme_id = params[:scheme_id]
       scheme_assessor_id = params[:scheme_assessor_id]
