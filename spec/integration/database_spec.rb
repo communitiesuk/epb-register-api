@@ -4,6 +4,8 @@ describe 'Integration::Database::Activerecord' do
   def connect(database_name)
     ENV['RACK_ENV'] = database_name.remove('epb_')
 
+    ActiveRecord::Base.establish_connection
+
     ActiveRecord::Base.connection
   end
 
