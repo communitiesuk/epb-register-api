@@ -60,12 +60,6 @@ describe UseCase::FindAssessors do
       ).to eq([])
     end
 
-    it 'contains timestamp of when query was made' do
-      response = find_assessors_without_stub_data.execute('F3 1LL')
-
-      expect(response[:timestamp]).to be_within(1).of(Time.now.to_i)
-    end
-
     it 'return assessors where they exist' do
       response = find_assessors_with_stub_data.execute('S0 0CS')
 

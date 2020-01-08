@@ -69,7 +69,6 @@ module Controller
         "distanceFromPostcodeInMiles": 0.3
       }
       ],
-      "timestamp": 1234567,
       "searchPostcode": "SW1 5RW"
     }'
     end

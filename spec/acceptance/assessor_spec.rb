@@ -68,7 +68,7 @@ describe 'Acceptance::Assessor' do
 
       response_json = JSON.parse(response.body)
 
-      expect(response_json).to include('results', 'timestamp', 'searchPostcode')
+      expect(response_json).to include('results', 'searchPostcode')
     end
 
     it 'has the assessors of the shape we expect' do

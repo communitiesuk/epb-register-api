@@ -18,7 +18,6 @@ module UseCase
 
       {
         'results': @assessor_gateway.fetch,
-        'timestamp': Time.now.to_i,
         'searchPostcode': postcode
       }
     end
