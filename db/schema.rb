@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_07_162305) do
+ActiveRecord::Schema.define(version: 2020_01_08_160946) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,13 @@ ActiveRecord::Schema.define(version: 2020_01_07_162305) do
     t.string "email"
     t.string "search_results_comparison_postcode"
     t.index ["registered_by"], name: "index_assessors_on_registered_by"
+    t.index ["search_results_comparison_postcode"], name: "index_assessors_on_search_results_comparison_postcode"
+  end
+
+  create_table "postcode_geolocation", force: :cascade do |t|
+    t.string "postcode"
+    t.decimal "latitude"
+    t.decimal "longitude"
   end
 
   create_table "schemes", primary_key: "scheme_id", force: :cascade do |t|
