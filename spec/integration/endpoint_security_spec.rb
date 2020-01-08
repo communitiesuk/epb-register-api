@@ -36,8 +36,8 @@ describe 'Integration::EndpointSecurity' do
       end
 
       unless methods_with_no_body.include? verb
-        it "returns #{Auth::Errors::TokenDecodeError.to_s} in the body" do
-          expect(response.body).to include Auth::Errors::TokenDecodeError.to_s
+        it "returns #{Auth::Errors::TokenMissing.to_s} in the body" do
+          expect(response.body).to include Auth::Errors::TokenMissing.to_s
         end
       end
     end
