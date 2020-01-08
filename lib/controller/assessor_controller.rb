@@ -18,8 +18,7 @@ module Controller
       }
     }
 
-
-    get '/api/assessors/search/:postcode', jwt_auth: []  do
+    get '/api/assessors/search/:postcode', jwt_auth: [] do
       body '{
       "results": [{
         "assessor": {
@@ -74,7 +73,6 @@ module Controller
       "searchPostcode": "SW1 5RW"
     }'
     end
-
 
     get '/api/schemes/:scheme_id/assessors/:scheme_assessor_id', jwt_auth: [] do
       scheme_id = params[:scheme_id]

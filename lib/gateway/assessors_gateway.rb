@@ -12,7 +12,8 @@ module Gateway
           contact_details: {
             telephone_number: self[:telephone_number], email: self[:email]
           },
-          search_results_comparison_postcode: self[:search_results_comparison_postcode]
+          search_results_comparison_postcode:
+            self[:search_results_comparison_postcode]
         }
       end
     end
