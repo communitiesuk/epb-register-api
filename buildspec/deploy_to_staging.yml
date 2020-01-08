@@ -26,6 +26,8 @@ phases:
       - echo ">>>>>>>> DEPLOY TO STAGING ENV"
       - cf login -a $PAAS_API -u $PAAS_LOGIN -p "$PAAS_PW" -o $PAAS_ORG -s $PAAS_SPACE
       - cf v3-cancel-zdt-push ${DEPLOY_APPNAME} || true
+      - cf set-env "${DEPLOY_APPNAME}" JWT_ISSUER "${JWT_ISSUER}"
+      - cf set-env "${DEPLOY_APPNAME}" JWT_SECRET "${JWT_SECRET}"
   build:
     commands:
       - make deploy-app

@@ -15,7 +15,7 @@ module UseCase
                .match(postcode)
         raise PostcodeNotValid
       end
-      
+
       {
         'results': @assessor_gateway.fetch,
         'searchPostcode': postcode
