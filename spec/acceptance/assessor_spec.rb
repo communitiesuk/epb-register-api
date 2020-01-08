@@ -27,8 +27,8 @@ describe 'Acceptance::Assessor' do
   end
 
   def assessors_search_by_postcode(postcode)
-  get "/api/assessors/search/#{postcode}"
-end
+    get "/api/assessors/search/#{postcode}"
+  end
 
   def fetch_assessor(scheme_id, assessor_id)
     get "/api/schemes/#{scheme_id}/assessors/#{assessor_id}"
@@ -60,9 +60,7 @@ end
 
       response_json = JSON.parse(response.body)
 
-      expect(
-        response_json["results"]
-      ).to be_an(Array)
+      expect(response_json['results']).to be_an(Array)
     end
 
     it 'has the properties we expect' do
@@ -70,9 +68,7 @@ end
 
       response_json = JSON.parse(response.body)
 
-      expect(
-        response_json
-      ).to include('results', 'timestamp', 'searchPostcode')
+      expect(response_json).to include('results', 'searchPostcode')
     end
 
     it 'has the assessors of the shape we expect' do
@@ -80,9 +76,10 @@ end
 
       response_json = JSON.parse(response.body)
 
-      expect(
-        response_json['results'][0]
-      ).to include('assessor', 'distanceFromPostcodeInMiles')
+      expect(response_json['results'][0]).to include(
+        'assessor',
+        'distanceFromPostcodeInMiles'
+      )
     end
   end
 
@@ -233,7 +230,8 @@ end
               middleNames: valid_assessor_request_body[:middleNames],
               lastName: valid_assessor_request_body[:lastName],
               dateOfBirth: valid_assessor_request_body[:dateOfBirth],
-              searchResultsComparisonPostcode: valid_assessor_request_body[:searchResultsComparisonPostcode]
+              searchResultsComparisonPostcode:
+                valid_assessor_request_body[:searchResultsComparisonPostcode]
             }.to_json
           )
 
@@ -519,7 +517,7 @@ end
                     :email
                   ]
               },
-              searchResultsComparisonPostcode: ""
+              searchResultsComparisonPostcode: ''
             }.to_json
           )
         expect(JSON.parse(assessor.body)).to eq(expected_response)

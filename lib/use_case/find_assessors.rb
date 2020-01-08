@@ -8,11 +8,16 @@ module UseCase
     end
 
     def execute(postcode)
-      raise PostcodeNotValid unless Regexp.new('^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$', Regexp::IGNORECASE).match(postcode)
-
+      unless Regexp.new(
+               '^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$',
+               Regexp::IGNORECASE
+             )
+               .match(postcode)
+        raise PostcodeNotValid
+      end
+      
       {
         'results': @assessor_gateway.fetch,
-        'timestamp': Time.now.to_i,
         'searchPostcode': postcode
       }
     end
