@@ -54,7 +54,7 @@ task :test_speed do
 
   puts "Sort"
   start = Time.now
-  result.sort_by(&:distance)
+  result.sort_by{ |k, v| v[:distance] }
   puts(((Time.now - start)*1000).to_s+" milliseconds")
 
 
@@ -119,11 +119,6 @@ ORDER BY distance LIMIT 100")
 
     row
   end
-  puts(((Time.now - start)*1000).to_s+" milliseconds")
-
-  puts "Sort those assessors"
-  start = Time.now
-  result.sort_by(&:distance)
   puts(((Time.now - start)*1000).to_s+" milliseconds")
 
   puts 'Get & order assessors by internal lat/long'
