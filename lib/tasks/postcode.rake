@@ -46,9 +46,9 @@ task :test_speed do
 
     assessor = [row['latitude'], row['longitude']]
 
-    entry['distance'] = Geocoder::Calculations.distance_between target, assessor, units: :mi
+    row['distance'] = Geocoder::Calculations.distance_between target, assessor, units: :mi
 
-    entry
+    row
   end
   puts(((Time.now - start)*1000).to_s+" milliseconds")
 
@@ -115,9 +115,9 @@ ORDER BY distance LIMIT 100")
 
     assessor = [row['latitude'], row['longitude']]
 
-    entry['distance'] = Geocoder::Calculations.distance_between target, assessor, units: :mi
+    row['distance'] = Geocoder::Calculations.distance_between target, assessor, units: :mi
 
-    entry
+    row
   end
   puts(((Time.now - start)*1000).to_s+" milliseconds")
 
