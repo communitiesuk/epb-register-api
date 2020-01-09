@@ -28,4 +28,5 @@ source 'https://rubygems.org' do
   gem 'unleash', '~> 0.1.6'
   gem 'zeitwerk', '~> 2.2.1'
   gem 'rubyzip'
+  gem 'geocoder'
 end
