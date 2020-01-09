@@ -27,4 +27,5 @@ source 'https://rubygems.org' do
   gem 'sinatra-cross_origin', '~> 0.4.0'
   gem 'unleash', '~> 0.1.6'
   gem 'zeitwerk', '~> 2.2.1'
+  gem 'rubyzip'
 end
