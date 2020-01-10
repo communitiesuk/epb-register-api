@@ -4,7 +4,7 @@
 
 * [Ruby](https://www.ruby-lang.org/en/)
 * [PostgreSQL](https://www.postgresql.org/)
-* Bundler (run `gem install bundler:2.0.2`)
+* Bundler (run `gem install bundler:2.1.4`)
 
 ## Installing
 `bundle install`
