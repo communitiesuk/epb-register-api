@@ -7,13 +7,15 @@ desc 'Import postcode geolocation data'
 task :postcode do
   db = ActiveRecord::Base.connection
 
+  ActiveRecord::Base.logger = Logger.new(STDOUT)
+
   db.execute('TRUNCATE TABLE postcode_geolocation')
 
-  ActiveRecord::Base.logger = nil
 
   uri = URI('https://www.freemaptools.com/download/full-postcodes/ukpostcodesmysql.zip')
   resp = Net::HTTP.get(uri)
   Zip::InputStream.open(StringIO.new(resp)) do |io|
+    io.get_next_entry
     query = io.read.gsub 'postcodelatlng', 'postcode_geolocation'
     query = query.gsub "'',''", "'0', '0'"
 
@@ -54,7 +56,9 @@ task :test_speed do
 
   puts "Sort"
   start = Time.now
-  result.sort_by{ |k, v| v[:distance] }
+  result.sort_by do |v|
+    v[:distance]
+  end
   puts(((Time.now - start)*1000).to_s+" milliseconds")
 
 
