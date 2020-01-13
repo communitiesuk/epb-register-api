@@ -84,5 +84,12 @@ describe 'Acceptance::Assessor' do
       expect(response.status).to eq(422)
     end
 
+    it 'rejects a certificate without a date of assessment' do
+      epc_without_date_of_assessment = valid_epc_body.dup
+      epc_without_date_of_assessment.delete(:dateOfAssessment)
+      response = authenticate_and { migrate_certificate('123-456', epc_without_date_of_assessment)}
+      expect(response.status).to eq(422)
+    end
+
   end
 end
