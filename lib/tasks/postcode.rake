@@ -31,6 +31,11 @@ task :test_speed do
 
   db = ActiveRecord::Base.connection
 
+
+
+
+
+
   puts 'Order by distance, square within 2 lat/long'
   start = Time.now
   result = db.execute("SELECT * FROM postcode_geolocation WHERE
@@ -40,6 +45,11 @@ task :test_speed do
 
     ORDER BY power(longitude - "+longitude+", 2)+power(latitude - "+latitude+", 2) LIMIT 100")
   puts(((Time.now - start)*1000).to_s+" milliseconds")
+
+
+
+
+
 
   puts "Get distance"
   start = Time.now
@@ -62,6 +72,10 @@ task :test_speed do
   puts(((Time.now - start)*1000).to_s+" milliseconds")
 
 
+
+
+
+
   puts 'Get & order by distance, precise within 2 lat/long'
   start = Time.now
   db.execute("SELECT *,
@@ -79,6 +93,11 @@ AND longitude BETWEEN "+longitude+"-1 AND "+longitude+"+1
 
 ORDER BY distance LIMIT 100")
   puts(((Time.now - start)*1000).to_s+" milliseconds")
+
+
+
+
+
 
   puts 'Get & order by distance, precise within 2 lat/long, filtered by existing assessors postcodes'
   start = Time.now
@@ -100,6 +119,10 @@ ORDER BY distance LIMIT 100")
   puts(((Time.now - start)*1000).to_s+" milliseconds")
 
 
+
+
+
+
   puts 'Get those within that postcode'
   start = Time.now
 
@@ -111,6 +134,11 @@ ORDER BY distance LIMIT 100")
 
   result = db.execute("SELECT * FROM assessors a LEFT JOIN postcode_geolocation b ON(a.search_results_comparison_postcode = b.postcode) WHERE postcode IN('"+postcodes.join("', '")+"')")
   puts(((Time.now - start)*1000).to_s+" milliseconds")
+
+
+
+
+
 
   puts 'Order those assessors'
   start = Time.now
@@ -125,18 +153,10 @@ ORDER BY distance LIMIT 100")
   end
   puts(((Time.now - start)*1000).to_s+" milliseconds")
 
-  puts 'Get & order assessors by internal lat/long'
-  start = Time.now
-  db.execute("SELECT *,
 
-(
-    sqrt(abs(POWER(69.1 * (latitude - "+latitude+"), 2) + POWER(69.1 * (longitude - "+longitude+") * cos("+latitude+" / 57.3), 2)))
-) AS distance
 
-FROM assessors
 
-ORDER BY distance LIMIT 100")
-  puts(((Time.now - start)*1000).to_s+" milliseconds")
+
 
   puts 'Get & order assessors by internal lat/long'
   start = Time.now
@@ -150,6 +170,29 @@ FROM assessors
 
 ORDER BY distance LIMIT 100")
   puts(((Time.now - start)*1000).to_s+" milliseconds")
+
+
+
+
+
+
+  puts 'Get & order assessors by internal lat/long'
+  start = Time.now
+  db.execute("SELECT *,
+
+(
+    sqrt(abs(POWER(69.1 * (latitude - "+latitude+"), 2) + POWER(69.1 * (longitude - "+longitude+") * cos("+latitude+" / 57.3), 2)))
+) AS distance
+
+FROM assessors
+
+ORDER BY distance LIMIT 100")
+  puts(((Time.now - start)*1000).to_s+" milliseconds")
+
+
+
+
+
 
   puts 'Get & order assessors by internal lat/long, precise within 2 lat/long'
   start = Time.now
@@ -168,6 +211,11 @@ AND longitude BETWEEN "+longitude+"-1 AND "+longitude+"+1
 ORDER BY distance LIMIT 100")
   puts(((Time.now - start)*1000).to_s+" milliseconds")
 
+
+
+
+
+
   puts 'Get & order assessors by internal lat/long, precise within 2 lat/long'
   start = Time.now
   db.execute("SELECT *,
@@ -184,6 +232,11 @@ AND longitude BETWEEN "+longitude+"-1 AND "+longitude+"+1
 
 ORDER BY distance LIMIT 100")
   puts(((Time.now - start)*1000).to_s+" milliseconds")
+
+
+
+
+
 
   puts 'Get & order assessors by joined lat/long, precise within 2 lat/long'
   start = Time.now
@@ -202,6 +255,11 @@ AND b.longitude BETWEEN "+longitude+"-1 AND "+longitude+"+1
 ORDER BY distance LIMIT 100")
   puts(((Time.now - start)*1000).to_s+" milliseconds")
 
+
+
+
+
+
   puts 'Get & order assessors by joined lat/long square, precise within 2 lat/long'
   start = Time.now
   db.execute("SELECT *
@@ -213,5 +271,45 @@ b.latitude BETWEEN "+latitude+"-1 AND "+latitude+"+1
 AND b.longitude BETWEEN "+longitude+"-1 AND "+longitude+"+1
 
 ORDER BY power(b.longitude - "+longitude+", 2)+power(b.latitude - "+latitude+", 2) LIMIT 100")
+  puts(((Time.now - start)*1000).to_s+" milliseconds")
+
+
+
+
+
+
+  puts 'Get assessors by inner joined postcode, precise within 2 lat/long'
+  start = Time.now
+  db.execute("SELECT *
+
+FROM postcode_geolocation a
+INNER JOIN assessors b ON(b.search_results_comparison_postcode = a.postcode)
+WHERE
+a.latitude BETWEEN "+latitude+"-1 AND "+latitude+"+1
+AND a.longitude BETWEEN "+longitude+"-1 AND "+longitude+"+1
+
+ORDER BY power(a.longitude - "+longitude+", 2)+power(a.latitude - "+latitude+", 2) LIMIT 100")
+  puts(((Time.now - start)*1000).to_s+" milliseconds")
+
+
+
+
+
+
+  puts 'Get assessors by inner joined postcode, precise within 2 lat/long'
+  start = Time.now
+  db.execute("SELECT *,
+
+(
+    sqrt(abs(POWER(69.1 * (a.latitude - "+latitude+"), 2) + POWER(69.1 * (a.longitude - "+longitude+") * cos("+latitude+" / 57.3), 2)))
+) AS distance
+
+FROM postcode_geolocation a
+INNER JOIN assessors b ON(b.search_results_comparison_postcode = a.postcode)
+WHERE
+a.latitude BETWEEN "+latitude+"-1 AND "+latitude+"+1
+AND a.longitude BETWEEN "+longitude+"-1 AND "+longitude+"+1
+
+ORDER BY distance LIMIT 100")
   puts(((Time.now - start)*1000).to_s+" milliseconds")
 end
