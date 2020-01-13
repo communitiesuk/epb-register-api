@@ -32,16 +32,20 @@ describe 'Acceptance::Assessor' do
   end
 
   context 'when migrating a domestic EPC (put)' do
+
+    VALID_EPC_BODY = {addressSummary: '123 Victoria Street, London, SW1A 1BD'}
+
     it 'returns a 200 for a valid EPC' do
-      response = authenticate_and { migrate_certificate('123-456', {}) }
+      response = authenticate_and { migrate_certificate('123-456', VALID_EPC_BODY)}
       expect(response.status).to eq(200)
     end
 
-    it 'returns the certificate that was migrated' do
-      response = authenticate_and { migrate_certificate('123-456', {}) }
+    it 'returns the certificate ID that was migrated' do
+      response = authenticate_and { migrate_certificate('123-456', VALID_EPC_BODY)}
       migrated_certificate = JSON.parse(response.body)
 
-      expect(migrated_certificate).to eq({'certificateId' => '123-456'})
+      expect(migrated_certificate).to eq({'certificateId' => '123-456', 'addressSummary' => '123 Victoria Street, London, SW1A 1BD'})
     end
+
   end
 end
