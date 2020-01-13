@@ -7,11 +7,17 @@ describe 'Acceptance::Assessor' do
     {
       dateOfAssessment: '2020-01-13',
       dateOfCertificate: '2020-01-13',
-      totalFloorArea: 1000,
+      totalFloorArea: 1_000,
       typeOfAssessment: 'string',
       dwellingType: 'string',
       addressSummary: '123 Victoria Street, London, SW1A 1BD'
     }
+  end
+
+  def certificate_without(key)
+    certificate = valid_epc_body.dup
+    certificate = certificate.delete(key)
+    certificate
   end
 
   def fetch_certificate(certificate_id)
@@ -74,10 +80,10 @@ describe 'Acceptance::Assessor' do
     end
 
     it 'rejects a certificate without an address summary' do
-      epc_without_address = valid_epc_body.dup
-      epc_without_address.delete(:addressSummary)
       response =
-        authenticate_and { migrate_certificate('123-456', epc_without_address) }
+        authenticate_and do
+          migrate_certificate('123-456', certificate_without(:addressSummary))
+        end
       expect(response.status).to eq(422)
     end
 
@@ -92,11 +98,9 @@ describe 'Acceptance::Assessor' do
     end
 
     it 'rejects a certificate without a date of assessment' do
-      epc_without_date_of_assessment = valid_epc_body.dup
-      epc_without_date_of_assessment.delete(:dateOfAssessment)
       response =
         authenticate_and do
-          migrate_certificate('123-456', epc_without_date_of_assessment)
+          migrate_certificate('123-456', certificate_without(:dateOfAssessment))
         end
       expect(response.status).to eq(422)
     end
@@ -112,11 +116,12 @@ describe 'Acceptance::Assessor' do
     end
 
     it 'rejects a certificate without a date of certificate' do
-      epc_without_date_of_certificate = valid_epc_body.dup
-      epc_without_date_of_certificate.delete(:dateOfCertificate)
       response =
         authenticate_and do
-          migrate_certificate('123-456', epc_without_date_of_certificate)
+          migrate_certificate(
+            '123-456',
+            certificate_without(:dateOfCertificate)
+          )
         end
       expect(response.status).to eq(422)
     end
@@ -132,12 +137,10 @@ describe 'Acceptance::Assessor' do
     end
 
     it 'rejects a certificate without a total floor area' do
-      epc_without_total_floor_area = valid_epc_body.dup
-      epc_without_total_floor_area.delete(:totalFloorArea)
       response =
-          authenticate_and do
-            migrate_certificate('123-456', epc_without_total_floor_area)
-          end
+        authenticate_and do
+          migrate_certificate('123-456', certificate_without(:totalFloorArea))
+        end
       expect(response.status).to eq(422)
     end
 
@@ -145,9 +148,9 @@ describe 'Acceptance::Assessor' do
       epc_with_dodgy_total_floor_area = valid_epc_body.dup
       epc_with_dodgy_total_floor_area[:totalFloorArea] = 'horse'
       response =
-          authenticate_and do
-            migrate_certificate('123-456', epc_with_dodgy_total_floor_area)
-          end
+        authenticate_and do
+          migrate_certificate('123-456', epc_with_dodgy_total_floor_area)
+        end
       expect(response.status).to eq(422)
     end
   end

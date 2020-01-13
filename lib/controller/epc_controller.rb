@@ -2,7 +2,12 @@ module Controller
   class EpcController < Controller::BaseController
     PUT_SCHEMA = {
       type: 'object',
-      required: %w[addressSummary dateOfAssessment dateOfCertificate totalFloorArea],
+      required: %w[
+        addressSummary
+        dateOfAssessment
+        dateOfCertificate
+        totalFloorArea
+      ],
       properties: {
         addressSummary: { type: 'string' },
         dateOfAssessment: { type: 'string', format: 'iso-date' },
