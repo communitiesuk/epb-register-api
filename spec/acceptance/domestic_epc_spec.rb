@@ -3,6 +3,17 @@
 describe 'Acceptance::Assessor' do
   include RSpecAssessorServiceMixin
 
+  let(:valid_epc_body) do
+    {
+      dateOfAssessment: "2020-01-13",
+      dateOfCertificate: "2020-01-13",
+      totalFloorArea: "string",
+      typeOfAssessment: "string",
+      dwellingType: "string",
+      addressSummary: "123 Victoria Street, London, SW1A 1BD"
+    }
+  end
+
   def fetch_certificate(certificate_id)
     get "api/epc/domestic/#{certificate_id}"
   end
@@ -32,19 +43,31 @@ describe 'Acceptance::Assessor' do
   end
 
   context 'when migrating a domestic EPC (put)' do
-
-    VALID_EPC_BODY = {addressSummary: '123 Victoria Street, London, SW1A 1BD'}
-
     it 'returns a 200 for a valid EPC' do
-      response = authenticate_and { migrate_certificate('123-456', VALID_EPC_BODY)}
+      response = authenticate_and do
+        migrate_certificate('123-456', valid_epc_body)
+      end
       expect(response.status).to eq(200)
     end
 
     it 'returns the certificate ID that was migrated' do
-      response = authenticate_and { migrate_certificate('123-456', VALID_EPC_BODY)}
-      migrated_certificate = JSON.parse(response.body)
+      response = authenticate_and do
+        migrate_certificate('123-456', valid_epc_body).body
+      end
 
-      expect(migrated_certificate).to eq({'certificateId' => '123-456', 'addressSummary' => '123 Victoria Street, London, SW1A 1BD'})
+      migrated_certificate = JSON.parse(response)
+      expected_response =
+          JSON.parse({
+              dateOfAssessment: valid_epc_body[:dateOfAssessment],
+              dateOfCertificate: valid_epc_body[:dateOfCertificate],
+              totalFloorArea: valid_epc_body[:totalFloorArea],
+              typeOfAssessment: valid_epc_body[:typeOfAssessment],
+              dwellingType: valid_epc_body[:dwellingType],
+              addressSummary: valid_epc_body[:addressSummary],
+              certificateId: '123-456'
+          }.to_json)
+
+      expect(migrated_certificate).to eq(expected_response)
     end
 
   end
