@@ -3,7 +3,11 @@ module Controller
     PUT_SCHEMA = {
         type: 'object',
         required: %w[addressSummary],
+        properties: {
+            addressSummary: {type: 'string'}
+        }
     }
+
     get '/api/certificates/epc/domestic/:certificate_id', jwt_auth: [] do
       not_found_error('Certificate not found')
     end

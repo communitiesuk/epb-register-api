@@ -77,5 +77,12 @@ describe 'Acceptance::Assessor' do
       expect(response.status).to eq(422)
     end
 
+    it 'rejects a certificate with an address summary that is not a string' do
+      epc_with_dodgy_address = valid_epc_body.dup
+      epc_with_dodgy_address[:addressSummary] = 123321
+      response = authenticate_and { migrate_certificate('123-456', epc_with_dodgy_address)}
+      expect(response.status).to eq(422)
+    end
+
   end
 end
