@@ -4,7 +4,7 @@ class Container
   def initialize
     schemes_gateway = Gateway::SchemesGateway.new
     assessors_gateway = Gateway::AssessorsGateway.new
-    domestic_epcs_gateway = Gateway::DomesticEpcsGateway.new
+    domestic_epcs_gateway = Gateway::DomesticEnergyAssessmentsGateway.new
     add_new_scheme_use_case = UseCase::AddScheme.new(schemes_gateway)
     get_all_schemes_use_case = UseCase::FetchSchemes.new(schemes_gateway)
     add_assessor_use_case =

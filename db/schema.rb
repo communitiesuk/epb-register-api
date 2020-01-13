@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_13_163913) do
+ActiveRecord::Schema.define(version: 2020_01_13_165013) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 2020_01_13_163913) do
     t.index ["search_results_comparison_postcode"], name: "index_assessors_on_search_results_comparison_postcode"
   end
 
-  create_table "domestic_epcs", primary_key: "certificate_id", id: :string, force: :cascade do |t|
+  create_table "domestic_energy_assessments", primary_key: "certificate_id", id: :string, force: :cascade do |t|
     t.datetime "date_of_assessment"
     t.datetime "date_registered"
     t.string "dwelling_type"
