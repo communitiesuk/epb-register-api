@@ -8,4 +8,12 @@ describe UseCase::FetchDomesticEpc do
       expect { fetch_domestic_epc.execute('123-456') }.to raise_exception(UseCase::FetchDomesticEpc::NotFoundException)
     end
   end
+
+  context 'when there is an EPC' do
+    it 'returns the EPC' do
+      domestic_epcs_gateway.domestic_epc = {some: 'value'}
+      result = fetch_domestic_epc.execute('123-456')
+      expect(result).to eq({some: 'value'})
+    end
+  end
 end
