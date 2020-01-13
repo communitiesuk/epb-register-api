@@ -36,5 +36,12 @@ describe 'Acceptance::Assessor' do
       response = authenticate_and { migrate_certificate('123-456', {}) }
       expect(response.status).to eq(200)
     end
+
+    it 'returns the certificate that was migrated' do
+      response = authenticate_and { migrate_certificate('123-456', {}) }
+      migrated_certificate = JSON.parse(response.body)
+
+      expect(migrated_certificate).to eq({'certificateId' => '123-456'})
+    end
   end
 end
