@@ -11,7 +11,7 @@ describe 'Acceptance::Assessor' do
       typeOfAssessment: 'RdSAP',
       dwellingType: 'Top floor flat',
       addressSummary: '123 Victoria Street, London, SW1A 1BD'
-    }
+    }.freeze
   end
 
   def certificate_without(key)
@@ -48,6 +48,14 @@ describe 'Acceptance::Assessor' do
           ]
         }
       )
+    end
+  end
+
+  context 'when a domestic certificate exists' do
+    it 'returns a 200' do
+      authenticate_and {migrate_certificate('15650-651625-18267167', valid_epc_body)}
+      response = authenticate_and {fetch_certificate('15650-651625-18267167')}
+      expect(response.status).to eq(200)
     end
   end
 
