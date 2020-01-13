@@ -21,6 +21,9 @@ tags:
     description: Operations for managing schemes in the register
   - name: Individually manage assessors
     description: Managing assessors in a RESTful web services paradigm
+  - name: Certificates
+    description: Manage EPCs
+
 paths:
   /schemes:
     get:
@@ -182,6 +185,55 @@ paths:
         422:
           description: Assessor does not pass validation
 
+  /certificates/epc/domestic/{certificateId}:
+    get:
+      tags:
+        - Certificates
+      summary: Get a domestic EPC
+      parameters:
+        - in: path
+          name: certificateId
+          required: true
+          description: The ID of the certificate being requested
+          schema:
+            type: string
+            example: "145fv-1644-njs11"
+      responses:
+        200:
+          description: EPC Certificate
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DomesticEPC'
+        404:
+          description: Certificate not found
+        500:
+          description: Server error
+    put:
+      tags:
+        - Certificates
+      summary: Migrate an existing EPC to the register
+      parameters:
+        - in: path
+          name: certificateId
+          required: true
+          description: The ID of the certificate being added
+          schema:
+            type: string
+            example: "145fv-1644-njs11"
+      responses:
+        200:
+          description: Certificate added / replaced
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MigrateEPC'
+        400:
+          description: Bad request
+        500:
+          description: Server error
+
+
 components:
   securitySchemes:
     oauth:
@@ -225,3 +277,36 @@ components:
             email:
               type: string
               format: email
+    DomesticEPC:
+      allOf:
+        - $ref: '#/components/schemas/EPCBasicInfo'
+        - type: object
+          properties:
+            certificateId:
+              type: string
+              example: "154d-616-nn177"
+
+    EPCBasicInfo:
+      type: object
+      properties:
+        dateOfAssessment:
+          type: string
+          format: date
+          description: The date that the assessor carried out the assessment of the property
+        dateOfCertificate:
+          type: string
+          format: date
+          description: The date that the certificate was produced
+        totalFloorArea:
+          type: string
+        typeOfAssessment:
+          type: string
+        dwellingType:
+          type: string
+        addressSummary:
+          type: string
+          example: "2 Marsham Street, London, SW1P 4JA"
+
+    MigrateEPC:
+      allOf:
+        - $ref: '#/components/schemas/EPCBasicInfo'
