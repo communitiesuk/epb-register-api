@@ -7,6 +7,10 @@ describe 'Acceptance::Assessor' do
     get "api/epc/domestic/#{certificate_id}"
   end
 
+  def migrate_certificate(certificate_id, certificate_body)
+    put("api/epc/domestic/#{certificate_id}", certificate_body.to_json)
+  end
+
   context 'when a domestic certificate doesnt exist' do
     it 'returns status 404 for a get' do
       expect(
@@ -24,6 +28,13 @@ describe 'Acceptance::Assessor' do
           ]
         }
       )
+    end
+  end
+
+  context 'when migrating a domestic EPC (put)' do
+    it 'returns a 200 for a valid EPC' do
+      response = authenticate_and {migrate_certificate('123-456', {})}
+      expect(response.status).to eq(200)
     end
   end
 end
