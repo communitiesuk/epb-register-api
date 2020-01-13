@@ -190,6 +190,8 @@ paths:
       tags:
         - Certificates
       summary: Get a domestic EPC
+      security:
+        - oauth: []
       parameters:
         - in: path
           name: certificateId
@@ -213,6 +215,8 @@ paths:
       tags:
         - Certificates
       summary: Migrate an existing EPC to the register
+      security:
+        - oauth: []
       parameters:
         - in: path
           name: certificateId
@@ -221,13 +225,18 @@ paths:
           schema:
             type: string
             example: "145fv-1644-njs11"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MigrateEPC'
       responses:
         200:
           description: Certificate added / replaced
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MigrateEPC'
+                $ref: '#/components/schemas/DomesticEPC'
         400:
           description: Bad request
         500:
