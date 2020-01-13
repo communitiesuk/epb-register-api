@@ -1,7 +1,7 @@
 openapi: "3.0.0"
 info:
   title: Energy Performance of Buildings Register API
-  description: API for all EPBR services (EPC, DEC, ACIR), maintained by the EPBR Service Team at MHCLG.
+  description: API for all EPBR services (Energy Performance Assessment, DEC, ACIR), maintained by the EPBR Service Team at MHCLG.
   version: "1.0"
 
 servers:
@@ -21,8 +21,8 @@ tags:
     description: Operations for managing schemes in the register
   - name: Individually manage assessors
     description: Managing assessors in a RESTful web services paradigm
-  - name: Certificates
-    description: Manage EPCs
+  - name: Assessments
+    description: Manage Energy Assessments
 
 paths:
   /schemes:
@@ -61,7 +61,7 @@ paths:
               properties:
                 name:
                   type: string
-                  example: "EPCs 4 U"
+                  example: "Energy Performance Assessments 4 U"
       responses:
         201:
           description: Scheme succesfully created
@@ -185,43 +185,43 @@ paths:
         422:
           description: Assessor does not pass validation
 
-  /certificates/epc/domestic/{certificateId}:
+  /assessments/domestic-energy-performance/{assessmentId}:
     get:
       tags:
-        - Certificates
-      summary: Get a domestic EPC
+        - Assessments
+      summary: Get a domestic Energy Performance Assessment
       security:
         - oauth: []
       parameters:
         - in: path
-          name: certificateId
+          name: assessmentId
           required: true
-          description: The ID of the certificate being requested
+          description: The ID of the assessment being requested
           schema:
             type: string
             example: "145fv-1644-njs11"
       responses:
         200:
-          description: EPC Certificate
+          description: Energy Performance Assessment
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DomesticEPC'
+                $ref: '#/components/schemas/DomesticEnergyAssessment'
         404:
-          description: Certificate not found
+          description: Assessment not found
         500:
           description: Server error
     put:
       tags:
-        - Certificates
-      summary: Migrate an existing EPC to the register
+        - Assessments
+      summary: Migrate an existing Energy Performance Assessment to the register
       security:
         - oauth: []
       parameters:
         - in: path
-          name: certificateId
+          name: assessmentId
           required: true
-          description: The ID of the certificate being added
+          description: The ID of the assessment being added
           schema:
             type: string
             example: "145fv-1644-njs11"
@@ -229,14 +229,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/MigrateEPC'
+              $ref: '#/components/schemas/MigrateDomesticEnergyAssessment'
       responses:
         200:
-          description: Certificate added / replaced
+          description: Assessment added / replaced
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DomesticEPC'
+                $ref: '#/components/schemas/DomesticEnergyAssessment'
         400:
           description: Bad request
         500:
@@ -286,16 +286,16 @@ components:
             email:
               type: string
               format: email
-    DomesticEPC:
+    DomesticEnergyAssessment:
       allOf:
-        - $ref: '#/components/schemas/EPCBasicInfo'
+        - $ref: '#/components/schemas/EnergyAssessmentBasicInfo'
         - type: object
           properties:
-            certificateId:
+            assessmentId:
               type: string
               example: "154d-616-nn177"
 
-    EPCBasicInfo:
+    EnergyAssessmentBasicInfo:
       type: object
       properties:
         dateOfAssessment:
@@ -305,7 +305,7 @@ components:
         dateRegistered:
           type: string
           format: date
-          description: The date that the certificate was produced
+          description: The date that the assessment was submitted to the Register
         totalFloorArea:
           type: string
         typeOfAssessment:
@@ -316,6 +316,6 @@ components:
           type: string
           example: "2 Marsham Street, London, SW1P 4JA"
 
-    MigrateEPC:
+    MigrateDomesticEnergyAssessment:
       allOf:
-        - $ref: '#/components/schemas/EPCBasicInfo'
+        - $ref: '#/components/schemas/EnergyAssessmentBasicInfo'
