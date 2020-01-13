@@ -7,7 +7,7 @@ describe 'Acceptance::Assessor' do
     {
       dateOfAssessment: '2020-01-13',
       dateOfCertificate: '2020-01-13',
-      totalFloorArea: 'string',
+      totalFloorArea: 1000,
       typeOfAssessment: 'string',
       dwellingType: 'string',
       addressSummary: '123 Victoria Street, London, SW1A 1BD'
@@ -131,6 +131,24 @@ describe 'Acceptance::Assessor' do
       expect(response.status).to eq(422)
     end
 
+    it 'rejects a certificate without a total floor area' do
+      epc_without_total_floor_area = valid_epc_body.dup
+      epc_without_total_floor_area.delete(:totalFloorArea)
+      response =
+          authenticate_and do
+            migrate_certificate('123-456', epc_without_total_floor_area)
+          end
+      expect(response.status).to eq(422)
+    end
 
+    it 'rejects a certificate with a total floor area that is not an integer' do
+      epc_with_dodgy_total_floor_area = valid_epc_body.dup
+      epc_with_dodgy_total_floor_area[:totalFloorArea] = 'horse'
+      response =
+          authenticate_and do
+            migrate_certificate('123-456', epc_with_dodgy_total_floor_area)
+          end
+      expect(response.status).to eq(422)
+    end
   end
 end
