@@ -9,9 +9,7 @@ module UseCase
     def execute(certificate_id)
       epc = @domestic_epcs_gateway.fetch(certificate_id)
 
-      unless epc
-        raise NotFoundException
-      end
+      raise NotFoundException unless epc
 
       epc
     end

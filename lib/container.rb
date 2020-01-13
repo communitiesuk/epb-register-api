@@ -11,8 +11,10 @@ class Container
       UseCase::AddAssessor.new(schemes_gateway, assessors_gateway)
     fetch_assessor_use_case =
       UseCase::FetchAssessor.new(assessors_gateway, schemes_gateway)
-    migrate_domestic_epc_use_case = UseCase::MigrateDomesticEpc.new(domestic_epcs_gateway)
-    fetch_domestic_epcs_use_case = UseCase::FetchDomesticEpc.new(domestic_epcs_gateway)
+    migrate_domestic_epc_use_case =
+      UseCase::MigrateDomesticEpc.new(domestic_epcs_gateway)
+    fetch_domestic_epcs_use_case =
+      UseCase::FetchDomesticEpc.new(domestic_epcs_gateway)
 
     @objects = {
       schemes_gateway: schemes_gateway,

@@ -53,26 +53,34 @@ describe 'Acceptance::Assessor' do
 
   context 'when a domestic certificate exists' do
     it 'returns a 200' do
-      authenticate_and {migrate_certificate('15650-651625-18267167', valid_epc_body)}
-      response = authenticate_and {fetch_certificate('15650-651625-18267167')}
+      authenticate_and do
+        migrate_certificate('15650-651625-18267167', valid_epc_body)
+      end
+      response = authenticate_and { fetch_certificate('15650-651625-18267167') }
       expect(response.status).to eq(200)
     end
 
     it 'returns the certificate details' do
-      authenticate_and {migrate_certificate('15650-651625-18267167', valid_epc_body)}
-      response = JSON.parse(authenticate_and {fetch_certificate('15650-651625-18267167')}.body)
-      expected_response = JSON.parse({
-                                         dateOfAssessment: valid_epc_body[:dateOfAssessment],
-                                         dateOfCertificate: valid_epc_body[:dateOfCertificate],
-                                         totalFloorArea: valid_epc_body[:totalFloorArea],
-                                         typeOfAssessment: valid_epc_body[:typeOfAssessment],
-                                         dwellingType: valid_epc_body[:dwellingType],
-                                         addressSummary: valid_epc_body[:addressSummary],
-                                         certificateId: '15650-651625-18267167'
-                                     }.to_json)
-      expect(response).to eq(
-                              expected_response
-                          )
+      authenticate_and do
+        migrate_certificate('15650-651625-18267167', valid_epc_body)
+      end
+      response =
+        JSON.parse(
+          authenticate_and { fetch_certificate('15650-651625-18267167') }.body
+        )
+      expected_response =
+        JSON.parse(
+          {
+            dateOfAssessment: valid_epc_body[:dateOfAssessment],
+            dateOfCertificate: valid_epc_body[:dateOfCertificate],
+            totalFloorArea: valid_epc_body[:totalFloorArea],
+            typeOfAssessment: valid_epc_body[:typeOfAssessment],
+            dwellingType: valid_epc_body[:dwellingType],
+            addressSummary: valid_epc_body[:addressSummary],
+            certificateId: '15650-651625-18267167'
+          }.to_json
+        )
+      expect(response).to eq(expected_response)
     end
   end
 
@@ -189,7 +197,7 @@ describe 'Acceptance::Assessor' do
 
     it 'rejects a certificate with a dwelling type that is not a string' do
       epc_with_dodgy_dwelling_type = valid_epc_body.dup
-      epc_with_dodgy_dwelling_type[:dwellingType] = 456765
+      epc_with_dodgy_dwelling_type[:dwellingType] = 456_765
       response =
         authenticate_and do
           migrate_certificate('123-456', epc_with_dodgy_dwelling_type)
@@ -199,9 +207,9 @@ describe 'Acceptance::Assessor' do
 
     it 'rejects a certificate without a type of assessment' do
       response =
-          authenticate_and do
-            migrate_certificate('123-456', certificate_without(:typeOfAssessment))
-          end
+        authenticate_and do
+          migrate_certificate('123-456', certificate_without(:typeOfAssessment))
+        end
       expect(response.status).to eq(422)
     end
 
@@ -209,9 +217,9 @@ describe 'Acceptance::Assessor' do
       epc_with_dodgy_type_of_assessment = valid_epc_body.dup
       epc_with_dodgy_type_of_assessment[:typeOfAssessment] = 'bird'
       response =
-          authenticate_and do
-            migrate_certificate('123-456', epc_with_dodgy_type_of_assessment)
-          end
+        authenticate_and do
+          migrate_certificate('123-456', epc_with_dodgy_type_of_assessment)
+        end
       expect(response.status).to eq(422)
     end
   end

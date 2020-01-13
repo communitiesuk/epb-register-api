@@ -5,10 +5,7 @@ module UseCase
     end
 
     def execute(certificate_id, epc_body)
-      @domestic_epcs_gateway.insert_or_update(
-          certificate_id,
-          epc_body
-      )
+      @domestic_epcs_gateway.insert_or_update(certificate_id, epc_body)
 
       epc_body[:certificate_id] = certificate_id
       epc_body

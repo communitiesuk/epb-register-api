@@ -16,16 +16,16 @@ module Controller
         dateOfCertificate: { type: 'string', format: 'iso-date' },
         totalFloorArea: { type: 'integer' },
         dwellingType: { type: 'string' },
-        typeOfAssessment: {type: 'string', enum: %w(SAP RdSAP)}
+        typeOfAssessment: { type: 'string', enum: %w[SAP RdSAP] }
       }
     }
 
     get '/api/certificates/epc/domestic/:certificate_id', jwt_auth: [] do
       certificate_id = params[:certificate_id]
       result =
-          @container.get_object(:fetch_domestic_epcs_use_case).execute(
-              certificate_id
-          )
+        @container.get_object(:fetch_domestic_epcs_use_case).execute(
+          certificate_id
+        )
       json_response(200, result)
     rescue Exception => e
       case e
