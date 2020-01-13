@@ -57,6 +57,23 @@ describe 'Acceptance::Assessor' do
       response = authenticate_and {fetch_certificate('15650-651625-18267167')}
       expect(response.status).to eq(200)
     end
+
+    it 'returns the certificate details' do
+      authenticate_and {migrate_certificate('15650-651625-18267167', valid_epc_body)}
+      response = JSON.parse(authenticate_and {fetch_certificate('15650-651625-18267167')}.body)
+      expected_response = JSON.parse({
+                                         dateOfAssessment: valid_epc_body[:dateOfAssessment],
+                                         dateOfCertificate: valid_epc_body[:dateOfCertificate],
+                                         totalFloorArea: valid_epc_body[:totalFloorArea],
+                                         typeOfAssessment: valid_epc_body[:typeOfAssessment],
+                                         dwellingType: valid_epc_body[:dwellingType],
+                                         addressSummary: valid_epc_body[:addressSummary],
+                                         certificateId: '15650-651625-18267167'
+                                     }.to_json)
+      expect(response).to eq(
+                              expected_response
+                          )
+    end
   end
 
   context 'when migrating a domestic EPC (put)' do

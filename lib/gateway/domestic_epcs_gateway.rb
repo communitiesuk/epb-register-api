@@ -8,7 +8,8 @@ module Gateway
             dwelling_type: self[:dwelling_type],
             type_of_assessment: self[:type_of_assessment],
             total_floor_area: self[:total_floor_area],
-            certificate_id: self[:certificate_id]
+            certificate_id: self[:certificate_id],
+            address_summary: self[:address_summary]
         }
       end
     end
