@@ -24,4 +24,5 @@ class AssessorService < Controller::BaseController
 
   use Controller::AssessorController
   use Controller::SchemesController
+  use Controller::EpcController
 end

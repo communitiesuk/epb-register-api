@@ -1,8 +1,5 @@
 module Gateway
   class FilteredAssessorsByPostcodeGateway
-
-    def search(postcode)
-    end
-
+    def search(postcode); end
   end
 end
