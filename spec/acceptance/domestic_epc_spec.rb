@@ -101,7 +101,7 @@ describe 'Acceptance::Assessor' do
       expect(response.status).to eq(422)
     end
 
-    it 'rejects a certificate with an address summary that is not a date' do
+    it 'rejects a certificate with an date of assessment that is not a date' do
       epc_with_dodge_date_of_address = valid_epc_body.dup
       epc_with_dodge_date_of_address[:dateOfAssessment] = 'horse'
       response =
@@ -110,5 +110,27 @@ describe 'Acceptance::Assessor' do
         end
       expect(response.status).to eq(422)
     end
+
+    it 'rejects a certificate without a date of certificate' do
+      epc_without_date_of_certificate = valid_epc_body.dup
+      epc_without_date_of_certificate.delete(:dateOfCertificate)
+      response =
+        authenticate_and do
+          migrate_certificate('123-456', epc_without_date_of_certificate)
+        end
+      expect(response.status).to eq(422)
+    end
+
+    it 'rejects a certificate with a date of certificate that is not a date' do
+      epc_with_dodge_date_of_certificate = valid_epc_body.dup
+      epc_with_dodge_date_of_certificate[:dateOfCertificate] = 'horse'
+      response =
+        authenticate_and do
+          migrate_certificate('123-456', epc_with_dodge_date_of_certificate)
+        end
+      expect(response.status).to eq(422)
+    end
+
+
   end
 end
