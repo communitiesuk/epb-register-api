@@ -53,6 +53,9 @@ test:
 
 .PHONY: run
 run:
+	$(if ${JWT_ISSUER},,$(error Must specify JWT_ISSUER))
+	$(if ${JWT_SECRET},,$(error Must specify JWT_SECRET))
+	$(if ${UNLEASH_URI},,$(error Must specify UNLEASH_URI))
 	@bundle exec rackup
 
 .PHONY: format
