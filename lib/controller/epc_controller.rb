@@ -5,7 +5,6 @@ module Controller
     end
 
     put '/api/epc/domestic/:certificate_id', jwt_auth: [] do
-
     end
   end
 end

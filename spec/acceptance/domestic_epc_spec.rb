@@ -33,7 +33,7 @@ describe 'Acceptance::Assessor' do
 
   context 'when migrating a domestic EPC (put)' do
     it 'returns a 200 for a valid EPC' do
-      response = authenticate_and {migrate_certificate('123-456', {})}
+      response = authenticate_and { migrate_certificate('123-456', {}) }
       expect(response.status).to eq(200)
     end
   end
