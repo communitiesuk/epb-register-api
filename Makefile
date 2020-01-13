@@ -53,7 +53,7 @@ test:
 
 .PHONY: run
 run:
-	rackup
+	@bundle exec rackup
 
 .PHONY: format
 format:
