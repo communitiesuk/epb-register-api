@@ -8,13 +8,15 @@ module Controller
         dateOfCertificate
         totalFloorArea
         dwellingType
+        typeOfAssessment
       ],
       properties: {
         addressSummary: { type: 'string' },
         dateOfAssessment: { type: 'string', format: 'iso-date' },
         dateOfCertificate: { type: 'string', format: 'iso-date' },
         totalFloorArea: { type: 'integer' },
-        dwellingType: { type: 'string' }
+        dwellingType: { type: 'string' },
+        typeOfAssessment: {type: 'string', enum: %w(SAP RdSAP)}
       }
     }
 

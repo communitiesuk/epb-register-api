@@ -8,7 +8,7 @@ describe 'Acceptance::Assessor' do
       dateOfAssessment: '2020-01-13',
       dateOfCertificate: '2020-01-13',
       totalFloorArea: 1_000,
-      typeOfAssessment: 'string',
+      typeOfAssessment: 'RdSAP',
       dwellingType: 'Top floor flat',
       addressSummary: '123 Victoria Street, London, SW1A 1BD'
     }
@@ -169,6 +169,24 @@ describe 'Acceptance::Assessor' do
         authenticate_and do
           migrate_certificate('123-456', epc_with_dodgy_dwelling_type)
         end
+      expect(response.status).to eq(422)
+    end
+
+    it 'rejects a certificate without a type of assessment' do
+      response =
+          authenticate_and do
+            migrate_certificate('123-456', certificate_without(:typeOfAssessment))
+          end
+      expect(response.status).to eq(422)
+    end
+
+    it 'rejects a certificate with a type of assessment that is not a string' do
+      epc_with_dodgy_type_of_assessment = valid_epc_body.dup
+      epc_with_dodgy_type_of_assessment[:typeOfAssessment] = 'bird'
+      response =
+          authenticate_and do
+            migrate_certificate('123-456', epc_with_dodgy_type_of_assessment)
+          end
       expect(response.status).to eq(422)
     end
   end
