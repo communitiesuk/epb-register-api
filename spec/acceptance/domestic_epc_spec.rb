@@ -15,11 +15,11 @@ describe 'Acceptance::Assessor' do
   end
 
   def fetch_certificate(certificate_id)
-    get "api/epc/domestic/#{certificate_id}"
+    get "api/certificates/epc/domestic/#{certificate_id}"
   end
 
   def migrate_certificate(certificate_id, certificate_body)
-    put("api/epc/domestic/#{certificate_id}", certificate_body.to_json)
+    put("api/certificates/epc/domestic/#{certificate_id}", certificate_body.to_json)
   end
 
   context 'when a domestic certificate doesnt exist' do
