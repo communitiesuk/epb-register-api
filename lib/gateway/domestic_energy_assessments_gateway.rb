@@ -8,23 +8,23 @@ module Gateway
           dwelling_type: self[:dwelling_type],
           type_of_assessment: self[:type_of_assessment],
           total_floor_area: self[:total_floor_area],
-          certificate_id: self[:certificate_id],
+          assessment_id: self[:assessment_id],
           address_summary: self[:address_summary]
         }
       end
     end
 
-    def fetch(certificate_id)
-      energy_assessment = DomesticEnergyAssessment.find_by({ certificate_id: certificate_id })
+    def fetch(assessment_id)
+      energy_assessment = DomesticEnergyAssessment.find_by({ assessment_id: assessment_id })
       energy_assessment ? energy_assessment.to_hash : nil
     end
 
-    def insert_or_update(certificate_id, assessment_body)
+    def insert_or_update(assessment_id, assessment_body)
       domestic_energy_assessment = assessment_body.dup
-      domestic_energy_assessment[:certificate_id] = certificate_id
+      domestic_energy_assessment[:assessment_id] = assessment_id
 
       existing_assessment =
-        DomesticEnergyAssessment.find_by(certificate_id: certificate_id)
+        DomesticEnergyAssessment.find_by(assessment_id: assessment_id)
 
       if existing_assessment
         existing_assessment.update(domestic_energy_assessment)
