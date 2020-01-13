@@ -5,12 +5,12 @@ describe 'Acceptance::Assessor' do
 
   let(:valid_epc_body) do
     {
-      dateOfAssessment: "2020-01-13",
-      dateOfCertificate: "2020-01-13",
-      totalFloorArea: "string",
-      typeOfAssessment: "string",
-      dwellingType: "string",
-      addressSummary: "123 Victoria Street, London, SW1A 1BD"
+      dateOfAssessment: '2020-01-13',
+      dateOfCertificate: '2020-01-13',
+      totalFloorArea: 'string',
+      typeOfAssessment: 'string',
+      dwellingType: 'string',
+      addressSummary: '123 Victoria Street, London, SW1A 1BD'
     }
   end
 
@@ -19,7 +19,10 @@ describe 'Acceptance::Assessor' do
   end
 
   def migrate_certificate(certificate_id, certificate_body)
-    put("api/certificates/epc/domestic/#{certificate_id}", certificate_body.to_json)
+    put(
+      "api/certificates/epc/domestic/#{certificate_id}",
+      certificate_body.to_json
+    )
   end
 
   context 'when a domestic certificate doesnt exist' do
@@ -44,28 +47,28 @@ describe 'Acceptance::Assessor' do
 
   context 'when migrating a domestic EPC (put)' do
     it 'returns a 200 for a valid EPC' do
-      response = authenticate_and do
-        migrate_certificate('123-456', valid_epc_body)
-      end
+      response =
+        authenticate_and { migrate_certificate('123-456', valid_epc_body) }
       expect(response.status).to eq(200)
     end
 
     it 'returns the certificate that was migrated' do
-      response = authenticate_and do
-        migrate_certificate('123-456', valid_epc_body).body
-      end
+      response =
+        authenticate_and { migrate_certificate('123-456', valid_epc_body).body }
 
       migrated_certificate = JSON.parse(response)
       expected_response =
-          JSON.parse({
-              dateOfAssessment: valid_epc_body[:dateOfAssessment],
-              dateOfCertificate: valid_epc_body[:dateOfCertificate],
-              totalFloorArea: valid_epc_body[:totalFloorArea],
-              typeOfAssessment: valid_epc_body[:typeOfAssessment],
-              dwellingType: valid_epc_body[:dwellingType],
-              addressSummary: valid_epc_body[:addressSummary],
-              certificateId: '123-456'
-          }.to_json)
+        JSON.parse(
+          {
+            dateOfAssessment: valid_epc_body[:dateOfAssessment],
+            dateOfCertificate: valid_epc_body[:dateOfCertificate],
+            totalFloorArea: valid_epc_body[:totalFloorArea],
+            typeOfAssessment: valid_epc_body[:typeOfAssessment],
+            dwellingType: valid_epc_body[:dwellingType],
+            addressSummary: valid_epc_body[:addressSummary],
+            certificateId: '123-456'
+          }.to_json
+        )
 
       expect(migrated_certificate).to eq(expected_response)
     end
@@ -73,23 +76,39 @@ describe 'Acceptance::Assessor' do
     it 'rejects a certificate without an address summary' do
       epc_without_address = valid_epc_body.dup
       epc_without_address.delete(:addressSummary)
-      response = authenticate_and { migrate_certificate('123-456', epc_without_address)}
+      response =
+        authenticate_and { migrate_certificate('123-456', epc_without_address) }
       expect(response.status).to eq(422)
     end
 
     it 'rejects a certificate with an address summary that is not a string' do
       epc_with_dodgy_address = valid_epc_body.dup
-      epc_with_dodgy_address[:addressSummary] = 123321
-      response = authenticate_and { migrate_certificate('123-456', epc_with_dodgy_address)}
+      epc_with_dodgy_address[:addressSummary] = 123_321
+      response =
+        authenticate_and do
+          migrate_certificate('123-456', epc_with_dodgy_address)
+        end
       expect(response.status).to eq(422)
     end
 
     it 'rejects a certificate without a date of assessment' do
       epc_without_date_of_assessment = valid_epc_body.dup
       epc_without_date_of_assessment.delete(:dateOfAssessment)
-      response = authenticate_and { migrate_certificate('123-456', epc_without_date_of_assessment)}
+      response =
+        authenticate_and do
+          migrate_certificate('123-456', epc_without_date_of_assessment)
+        end
       expect(response.status).to eq(422)
     end
 
+    it 'rejects a certificate with an address summary that is not a date' do
+      epc_with_dodge_date_of_address = valid_epc_body.dup
+      epc_with_dodge_date_of_address[:dateOfAssessment] = 'horse'
+      response =
+        authenticate_and do
+          migrate_certificate('123-456', epc_with_dodge_date_of_address)
+        end
+      expect(response.status).to eq(422)
+    end
   end
 end

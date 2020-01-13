@@ -1,11 +1,12 @@
 module Controller
   class EpcController < Controller::BaseController
     PUT_SCHEMA = {
-        type: 'object',
-        required: %w[addressSummary dateOfAssessment],
-        properties: {
-            addressSummary: {type: 'string'}
-        }
+      type: 'object',
+      required: %w[addressSummary dateOfAssessment],
+      properties: {
+        addressSummary: { type: 'string' },
+        dateOfAssessment: { type: 'string', format: 'iso-date' }
+      }
     }
 
     get '/api/certificates/epc/domestic/:certificate_id', jwt_auth: [] do
