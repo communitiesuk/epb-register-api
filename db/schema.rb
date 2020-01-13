@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_13_142843) do
+ActiveRecord::Schema.define(version: 2020_01_13_163913) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 2020_01_13_142843) do
 
   create_table "domestic_epcs", primary_key: "certificate_id", id: :string, force: :cascade do |t|
     t.datetime "date_of_assessment"
-    t.datetime "date_of_certificate"
+    t.datetime "date_registered"
     t.string "dwelling_type"
     t.string "type_of_assessment"
     t.bigint "total_floor_area"

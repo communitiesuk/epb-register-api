@@ -6,7 +6,7 @@ describe 'Acceptance::Assessor' do
   let(:valid_epc_body) do
     {
       dateOfAssessment: '2020-01-13',
-      dateOfCertificate: '2020-01-13',
+      dateRegistered: '2020-01-13',
       totalFloorArea: 1_000,
       typeOfAssessment: 'RdSAP',
       dwellingType: 'Top floor flat',
@@ -72,7 +72,7 @@ describe 'Acceptance::Assessor' do
         JSON.parse(
           {
             dateOfAssessment: valid_epc_body[:dateOfAssessment],
-            dateOfCertificate: valid_epc_body[:dateOfCertificate],
+            dateRegistered: valid_epc_body[:dateRegistered],
             totalFloorArea: valid_epc_body[:totalFloorArea],
             typeOfAssessment: valid_epc_body[:typeOfAssessment],
             dwellingType: valid_epc_body[:dwellingType],
@@ -100,7 +100,7 @@ describe 'Acceptance::Assessor' do
         JSON.parse(
           {
             dateOfAssessment: valid_epc_body[:dateOfAssessment],
-            dateOfCertificate: valid_epc_body[:dateOfCertificate],
+            dateRegistered: valid_epc_body[:dateRegistered],
             totalFloorArea: valid_epc_body[:totalFloorArea],
             typeOfAssessment: valid_epc_body[:typeOfAssessment],
             dwellingType: valid_epc_body[:dwellingType],
@@ -153,7 +153,7 @@ describe 'Acceptance::Assessor' do
         authenticate_and do
           migrate_certificate(
             '123-456',
-            certificate_without(:dateOfCertificate)
+            certificate_without(:dateRegistered)
           )
         end
       expect(response.status).to eq(422)
@@ -161,7 +161,7 @@ describe 'Acceptance::Assessor' do
 
     it 'rejects a certificate with a date of certificate that is not a date' do
       epc_with_dodge_date_of_certificate = valid_epc_body.dup
-      epc_with_dodge_date_of_certificate[:dateOfCertificate] = 'horse'
+      epc_with_dodge_date_of_certificate[:dateRegistered] = 'horse'
       response =
         authenticate_and do
           migrate_certificate('123-456', epc_with_dodge_date_of_certificate)

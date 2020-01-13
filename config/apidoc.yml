@@ -302,7 +302,7 @@ components:
           type: string
           format: date
           description: The date that the assessor carried out the assessment of the property
-        dateOfCertificate:
+        dateRegistered:
           type: string
           format: date
           description: The date that the certificate was produced

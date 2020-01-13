@@ -4,7 +4,7 @@ module Gateway
       def to_hash
         {
           date_of_assessment: self[:date_of_assessment].strftime('%Y-%m-%d'),
-          date_of_certificate: self[:date_of_certificate].strftime('%Y-%m-%d'),
+          date_registered: self[:date_registered].strftime('%Y-%m-%d'),
           dwelling_type: self[:dwelling_type],
           type_of_assessment: self[:type_of_assessment],
           total_floor_area: self[:total_floor_area],
