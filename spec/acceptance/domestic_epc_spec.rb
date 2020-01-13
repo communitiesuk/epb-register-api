@@ -50,7 +50,7 @@ describe 'Acceptance::Assessor' do
       expect(response.status).to eq(200)
     end
 
-    it 'returns the certificate ID that was migrated' do
+    it 'returns the certificate that was migrated' do
       response = authenticate_and do
         migrate_certificate('123-456', valid_epc_body).body
       end
