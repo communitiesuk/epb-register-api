@@ -9,14 +9,14 @@ describe 'Acceptance::Assessor' do
       dateOfCertificate: '2020-01-13',
       totalFloorArea: 1_000,
       typeOfAssessment: 'string',
-      dwellingType: 'string',
+      dwellingType: 'Top floor flat',
       addressSummary: '123 Victoria Street, London, SW1A 1BD'
     }
   end
 
   def certificate_without(key)
     certificate = valid_epc_body.dup
-    certificate = certificate.delete(key)
+    certificate.delete(key)
     certificate
   end
 
@@ -150,6 +150,24 @@ describe 'Acceptance::Assessor' do
       response =
         authenticate_and do
           migrate_certificate('123-456', epc_with_dodgy_total_floor_area)
+        end
+      expect(response.status).to eq(422)
+    end
+
+    it 'rejects a certificate without a dwelling type' do
+      response =
+        authenticate_and do
+          migrate_certificate('123-456', certificate_without(:dwellingType))
+        end
+      expect(response.status).to eq(422)
+    end
+
+    it 'rejects a certificate with a dwelling type that is not a string' do
+      epc_with_dodgy_dwelling_type = valid_epc_body.dup
+      epc_with_dodgy_dwelling_type[:dwellingType] = 456765
+      response =
+        authenticate_and do
+          migrate_certificate('123-456', epc_with_dodgy_dwelling_type)
         end
       expect(response.status).to eq(422)
     end

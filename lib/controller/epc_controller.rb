@@ -7,12 +7,14 @@ module Controller
         dateOfAssessment
         dateOfCertificate
         totalFloorArea
+        dwellingType
       ],
       properties: {
         addressSummary: { type: 'string' },
         dateOfAssessment: { type: 'string', format: 'iso-date' },
         dateOfCertificate: { type: 'string', format: 'iso-date' },
-        totalFloorArea: { type: 'integer' }
+        totalFloorArea: { type: 'integer' },
+        dwellingType: { type: 'string' }
       }
     }
 
