@@ -13,7 +13,7 @@ env:
     PAAS_SPACE: "epbr-govpaas-production-space"
     PAAS_API: "epbr-govpaas-api"
     PAAS_ORG: "epbr-govpaas-orgname"
-    UNLEASH_URI: "epbr-unleash-production-uri"
+    EPB_UNLEASH_URI: "epbr-unleash-production-uri"
     JWT_ISSUER: "epbr-jwt-issuer-production"
     JWT_SECRET: "epbr-jwt-secret-production"
 

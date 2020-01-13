@@ -34,7 +34,7 @@ deploy-app: ## Deploys the app to PaaS
 	cf set-env "${DEPLOY_APPNAME}" JWT_ISSUER "${JWT_ISSUER}"
 	cf set-env "${DEPLOY_APPNAME}" JWT_SECRET "${JWT_SECRET}"
 	cf set-env "${DEPLOY_APPNAME}" STAGE "${PAAS_SPACE}"
-	cf set-env "${DEPLOY_APPNAME}" UNLEASH_URI "${UNLEASH_URI}"
+	cf set-env "${DEPLOY_APPNAME}" EPB_UNLEASH_URI "${EPB_UNLEASH_URI}"
 
 	cf v3-zdt-push "${DEPLOY_APPNAME}" --wait-for-deploy-complete
 
@@ -49,13 +49,13 @@ setup-db:
 
 .PHONY: test
 test:
-	@STAGE=test UNLEASH_URI=https://google.com bundle exec rake spec
+	@STAGE=test EPB_UNLEASH_URI=https://google.com bundle exec rake spec
 
 .PHONY: run
 run:
 	$(if ${JWT_ISSUER},,$(error Must specify JWT_ISSUER))
 	$(if ${JWT_SECRET},,$(error Must specify JWT_SECRET))
-	$(if ${UNLEASH_URI},,$(error Must specify UNLEASH_URI))
+	$(if ${EPB_UNLEASH_URI},,$(error Must specify EPB_UNLEASH_URI))
 	@bundle exec rackup
 
 .PHONY: format

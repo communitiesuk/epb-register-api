@@ -2,7 +2,7 @@ require 'simplecov'
 SimpleCov.start
 
 ENV['RACK_ENV'] = 'test'
-ENV['UNLEASH_URI'] = 'https://google.com'
+ENV['EPB_UNLEASH_URI'] = 'https://google.com'
 
 require 'rspec'
 require 'sinatra/activerecord'

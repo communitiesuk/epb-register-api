@@ -25,7 +25,7 @@ Once you have set this up, run the command
 
 Set the endpoint of unleash to be any valid URL. You will need to run your own local version of unleash if you want to use feature toggles.  
 
-`export UNLEASH_URI=https://google.com`
+`export EPB_UNLEASH_URI=https://google.com`
 
 To decode and validate JWTs passed in to the API the environment variables `JWT_ISSUER` and `JWT_SECRET` need to be set. 
 The values for these should match those on the auth server being connected to.
