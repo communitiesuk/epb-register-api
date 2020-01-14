@@ -4,7 +4,9 @@ module Gateway
       db = ActiveRecord::Base
 
       db.connection.execute(
-        "INSERT INTO postcode_geolocation (postcode, latitude, longitude) VALUES('#{db.sanitize_sql(postcode)}', #{latitude.to_f}, #{longitude.to_f})"
+        "INSERT INTO postcode_geolocation (postcode, latitude, longitude) VALUES('#{
+          db.sanitize_sql(postcode)
+        }', #{latitude.to_f}, #{longitude.to_f})"
       )
     end
 
