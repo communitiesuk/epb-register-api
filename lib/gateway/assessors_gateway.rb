@@ -2,20 +2,29 @@ module Gateway
   class AssessorsGateway
     class Assessor < ActiveRecord::Base
       def to_hash
-        {
-          first_name: self[:first_name],
-          last_name: self[:last_name],
-          middle_names: self[:middle_names],
-          registered_by: self[:registered_by],
-          scheme_assessor_id: self[:scheme_assessor_id],
-          date_of_birth: self[:date_of_birth].strftime('%Y-%m-%d'),
-          contact_details: {
-            telephone_number: self[:telephone_number], email: self[:email]
-          },
-          search_results_comparison_postcode:
-            self[:search_results_comparison_postcode]
-        }
+        Gateway::AssessorsGateway.new.to_hash(self)
       end
+    end
+
+    def to_hash(assessor)
+      {
+        first_name: assessor[:first_name],
+        last_name: assessor[:last_name],
+        middle_names: assessor[:middle_names],
+        registered_by: assessor[:registered_by],
+        scheme_assessor_id: assessor[:scheme_assessor_id],
+        date_of_birth:
+          if assessor[:date_of_birth].methods.include?(:strftime)
+            assessor[:date_of_birth].strftime('%Y-%m-%d')
+          else
+            Date.parse(assessor[:date_of_birth])
+          end,
+        contact_details: {
+          telephone_number: assessor[:telephone_number], email: assessor[:email]
+        },
+        search_results_comparison_postcode:
+          assessor[:search_results_comparison_postcode]
+      }
     end
 
     def fetch(scheme_assessor_id)
@@ -43,45 +52,44 @@ module Gateway
     end
 
     def search(latitude, longitude)
-      db = Assessor.connection.raw_connection
-
-      salt = rand.to_s
-
-      db.prepare(
-        'assessors_by_geolocation' + salt,
-        'SELECT
+      response =
+        Assessor.connection.execute(
+          "SELECT
           first_name, last_name, middle_names, date_of_birth, registered_by,
           scheme_assessor_id, telephone_number, email,
           search_results_comparison_postcode,
           (
-            sqrt(abs(POWER(69.1 * (a.latitude - $1 ), 2) +
-            POWER(69.1 * (a.longitude - $2 ) * cos( $1 / 57.3), 2)))
+            sqrt(abs(POWER(69.1 * (a.latitude - #{
+            latitude
+          } ), 2) +
+            POWER(69.1 * (a.longitude - #{
+            longitude
+          } ) * cos( #{
+            latitude
+          } / 57.3), 2)))
           ) AS distance
 
         FROM postcode_geolocation a
         INNER JOIN assessors b ON(b.search_results_comparison_postcode = a.postcode)
         WHERE
-          a.latitude BETWEEN $3 AND $4
-          AND a.longitude BETWEEN $5 AND $6
+          a.latitude BETWEEN #{
+            latitude - 1
+          } AND #{latitude + 1}
+          AND a.longitude BETWEEN #{
+            longitude - 1
+          } AND #{longitude + 1}
 
-        ORDER BY distance LIMIT 100'
-      )
-
-      response =
-        db.exec_prepared(
-          'assessors_by_geolocation' + salt,
-          [
-            latitude,
-            longitude,
-            (latitude - 1),
-            (latitude + 1),
-            (longitude - 1),
-            (longitude + 1)
-          ]
+        ORDER BY distance LIMIT 100"
         )
 
       result = []
-      response.each { |row| result << row }
+      response.each do |row|
+        hash = to_hash(row.symbolize_keys)
+
+        hash[:distance] = row['distance']
+
+        result.push(hash)
+      end
 
       result
     end
