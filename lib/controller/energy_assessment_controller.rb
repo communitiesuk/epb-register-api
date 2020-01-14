@@ -42,11 +42,14 @@ module Controller
       assessment_body = request_body(PUT_SCHEMA)
       result = migrate_epc.execute(assessment_id, assessment_body)
 
+      @events.event(:domestic_energy_assessment_migrated, params[:assessment_id])
       json_response(200, result)
     rescue Exception => e
       case e
       when JSON::Schema::ValidationError
         error_response(422, 'INVALID_REQUEST', e.message)
+      else
+        server_error(e)
       end
     end
   end
