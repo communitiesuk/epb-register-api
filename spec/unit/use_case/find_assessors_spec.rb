@@ -1,16 +1,22 @@
 describe UseCase::FindAssessors do
   context 'when finding an assessor' do
     let(:find_assessors_without_stub_data) do
-      schemes_gateway =
-        SchemesGatewayStub.new([{ scheme_id: 25, name: 'Best scheme' }])
-      described_class.new(schemes_gateway, AssessorGatewayFake.new([]))
+      postcodes_gateway =
+        PostcodesGatewayStub.new([{'postcode': 'BF1 3AD', 'latitude': 0, 'longitude': 0}])
+      described_class.new(postcodes_gateway, AssessorGatewayFake.new([]))
+    end
+
+    let(:find_assessors_without_existing_postcode) do
+      postcodes_gateway =
+        PostcodesGatewayStub.new([])
+      described_class.new(postcodes_gateway, AssessorGatewayFake.new([]))
     end
 
     let(:find_assessors_with_stub_data) do
-      schemes_gateway =
-        SchemesGatewayStub.new([{ scheme_id: 25, name: 'Best scheme' }])
+      postcodes_gateway =
+        PostcodesGatewayStub.new([{'postcode': 'BF1 3AD', 'latitude': 0, 'longitude': 0}])
       described_class.new(
-        schemes_gateway,
+        postcodes_gateway,
         AssessorGatewayFake.new(
           [
             {
@@ -52,6 +58,12 @@ describe UseCase::FindAssessors do
       expect {
         find_assessors_without_stub_data.execute('733 34')
       }.to raise_exception UseCase::FindAssessors::PostcodeNotValid
+    end
+
+    it 'return an error when the postcode is not registered' do
+      expect {
+        find_assessors_without_existing_postcode.execute('BF1 3AD')
+      }.to raise_exception UseCase::FindAssessors::PostcodeNotRegistered
     end
 
     it 'return empty when no assessors are present' do
