@@ -56,7 +56,7 @@ run:
 	$(if ${JWT_ISSUER},,$(error Must specify JWT_ISSUER))
 	$(if ${JWT_SECRET},,$(error Must specify JWT_SECRET))
 	$(if ${EPB_UNLEASH_URI},,$(error Must specify EPB_UNLEASH_URI))
-	@bundle exec rackup
+	@bundle exec rackup -p 9191
 
 .PHONY: format
 format:

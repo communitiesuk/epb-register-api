@@ -39,6 +39,8 @@ The values for these should match those on the auth server being connected to.
 ## Running server
 `make run`
 
+This will make the API available at `http://localhost:9191`. 
+
 ## Code Formatting 
 Use Prettier to format ruby code to save arguing about it.
 
