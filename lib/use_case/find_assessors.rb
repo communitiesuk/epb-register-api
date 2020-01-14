@@ -1,10 +1,11 @@
 module UseCase
   class FindAssessors
     class PostcodeNotValid < Exception; end
+    class PostcodeNotRegistered < Exception; end
 
-    def initialize(schemes_gateway, assessor_gateway)
-      @schemes_gateway = schemes_gateway
-      @assessor_gateway = assessor_gateway
+    def initialize(postcodes_gateway, assessor_by_geolocation_gateway)
+      @postcodes_gateway = postcodes_gateway
+      @assessor_by_geolocation_gateway = assessor_by_geolocation_gateway
     end
 
     def execute(postcode)
@@ -16,7 +17,16 @@ module UseCase
         raise PostcodeNotValid
       end
 
-      { 'results': @assessor_gateway.fetch, 'searchPostcode': postcode }
+      postcodes_geolocation = @postcodes_gateway.fetch(postcode)
+
+      if postcodes_geolocation.size < 1
+        raise PostcodeNotRegistered
+      end
+
+      latitude = postcodes_geolocation.first[:latitude]
+      longitude = postcodes_geolocation.first[:longitude]
+
+      { 'results': @assessor_by_geolocation_gateway.search(latitude, longitude), 'searchPostcode': postcode }
     end
   end
 end
