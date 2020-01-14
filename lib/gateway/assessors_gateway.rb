@@ -51,7 +51,7 @@ module Gateway
       end
     end
 
-    def search(latitude, longitude)
+    def search(latitude, longitude, entries = 100)
       response =
         Assessor.connection.execute(
           "SELECT
@@ -79,7 +79,9 @@ module Gateway
             (longitude - 1).to_f
           } AND #{(longitude + 1).to_f}
 
-        ORDER BY distance LIMIT 100"
+        ORDER BY distance LIMIT #{
+            entries
+          }"
         )
 
       result = []
