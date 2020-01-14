@@ -20,12 +20,12 @@ module Controller
       }
     }
 
-    get '/api/assessments/domestic-energy-performance/:assessment_id', jwt_auth: [] do
+    get '/api/assessments/domestic-energy-performance/:assessment_id',
+        jwt_auth: [] do
       assessment_id = params[:assessment_id]
       result =
-        @container.get_object(:fetch_domestic_energy_assessment_use_case).execute(
-          assessment_id
-        )
+        @container.get_object(:fetch_domestic_energy_assessment_use_case)
+          .execute(assessment_id)
       json_response(200, result)
     rescue Exception => e
       case e
@@ -36,13 +36,18 @@ module Controller
       end
     end
 
-    put '/api/assessments/domestic-energy-performance/:assessment_id', jwt_auth: [] do
+    put '/api/assessments/domestic-energy-performance/:assessment_id',
+        jwt_auth: [] do
       assessment_id = params[:assessment_id]
-      migrate_epc = @container.get_object(:migrate_domestic_energy_assessment_use_case)
+      migrate_epc =
+        @container.get_object(:migrate_domestic_energy_assessment_use_case)
       assessment_body = request_body(PUT_SCHEMA)
       result = migrate_epc.execute(assessment_id, assessment_body)
 
-      @events.event(:domestic_energy_assessment_migrated, params[:assessment_id])
+      @events.event(
+        :domestic_energy_assessment_migrated,
+        params[:assessment_id]
+      )
       json_response(200, result)
     rescue Exception => e
       case e

@@ -41,7 +41,7 @@ describe 'Integration::FilterAndOrderAssessorsByPostcode' do
         response = Gateway::PostcodesGateway.new.fetch('BF1 3AD')
 
         expect(response).to eq(
-          [{ 'latitude' => '27.7172', 'longitude' => '-85.3240' }]
+          [{ 'postcode': 'BF1 3AD', 'latitude': 27.7172, 'longitude': -85.3240 }]
         )
       end
     end
@@ -60,9 +60,9 @@ describe 'Integration::FilterAndOrderAssessorsByPostcode' do
       postcode = Gateway::PostcodesGateway.new.fetch('BF1 3AD').first
 
       assessors =
-        Gateway::AssessorsByGeolocationGateway.new.search(
-          postcode['latitude'].to_f,
-          postcode['longitude'].to_f
+        Gateway::AssessorsGateway.new.search(
+          postcode[:latitude],
+          postcode[:longitude]
         )
 
       expect(assessors.first['distance']).to eq(0.0)
