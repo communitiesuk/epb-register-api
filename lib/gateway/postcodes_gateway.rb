@@ -7,13 +7,19 @@ module Gateway
 
       db.prepare(
         'postcode_search' + salt,
-        'SELECT latitude, longitude FROM postcode_geolocation WHERE postcode = $1'
+        'SELECT postcode, latitude, longitude FROM postcode_geolocation WHERE postcode = $1'
       )
 
       response = db.exec_prepared('postcode_search' + salt, [postcode])
 
       result = []
-      response.each { |row| result << row }
+      response.map do |row|
+        result.push({
+          'postcode': row['postcode'],
+          'latitude': row['latitude'].to_f,
+          'longitude': row['longitude'].to_f
+        })
+      end
 
       result
     end
