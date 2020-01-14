@@ -39,8 +39,7 @@ describe 'Acceptance::Assessor' do
     end
 
     it 'returns an error message structure' do
-      response_body =
-        authenticate_and { fetch_assessment('DOESNT-EXIST') }.body
+      response_body = authenticate_and { fetch_assessment('DOESNT-EXIST') }.body
       expect(JSON.parse(response_body)).to eq(
         {
           'errors' => [
@@ -87,13 +86,17 @@ describe 'Acceptance::Assessor' do
   context 'when migrating a domestic assessment (put)' do
     it 'returns a 200 for a valid assessment' do
       response =
-        authenticate_and { migrate_assessment('123-456', valid_assessment_body) }
+        authenticate_and do
+          migrate_assessment('123-456', valid_assessment_body)
+        end
       expect(response.status).to eq(200)
     end
 
     it 'returns the assessment that was migrated' do
       response =
-        authenticate_and { migrate_assessment('123-456', valid_assessment_body).body }
+        authenticate_and do
+          migrate_assessment('123-456', valid_assessment_body).body
+        end
 
       migrated_assessment = JSON.parse(response)
       expected_response =
@@ -151,10 +154,7 @@ describe 'Acceptance::Assessor' do
     it 'rejects a assessment without a date of assessment' do
       response =
         authenticate_and do
-          migrate_assessment(
-            '123-456',
-            assessment_without(:dateRegistered)
-          )
+          migrate_assessment('123-456', assessment_without(:dateRegistered))
         end
       expect(response.status).to eq(422)
     end
@@ -164,7 +164,10 @@ describe 'Acceptance::Assessor' do
       assessment_with_dodge_date_of_assessment[:dateRegistered] = 'horse'
       response =
         authenticate_and do
-          migrate_assessment('123-456', assessment_with_dodge_date_of_assessment)
+          migrate_assessment(
+            '123-456',
+            assessment_with_dodge_date_of_assessment
+          )
         end
       expect(response.status).to eq(422)
     end
@@ -218,7 +221,10 @@ describe 'Acceptance::Assessor' do
       assessment_with_dodgy_type_of_assessment[:typeOfAssessment] = 'bird'
       response =
         authenticate_and do
-          migrate_assessment('123-456', assessment_with_dodgy_type_of_assessment)
+          migrate_assessment(
+            '123-456',
+            assessment_with_dodgy_type_of_assessment
+          )
         end
       expect(response.status).to eq(422)
     end

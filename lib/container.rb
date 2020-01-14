@@ -4,7 +4,8 @@ class Container
   def initialize
     schemes_gateway = Gateway::SchemesGateway.new
     assessors_gateway = Gateway::AssessorsGateway.new
-    domestic_energy_assessments_gateway = Gateway::DomesticEnergyAssessmentsGateway.new
+    domestic_energy_assessments_gateway =
+      Gateway::DomesticEnergyAssessmentsGateway.new
     add_new_scheme_use_case = UseCase::AddScheme.new(schemes_gateway)
     get_all_schemes_use_case = UseCase::FetchSchemes.new(schemes_gateway)
     add_assessor_use_case =
@@ -12,9 +13,13 @@ class Container
     fetch_assessor_use_case =
       UseCase::FetchAssessor.new(assessors_gateway, schemes_gateway)
     migrate_domestic_energy_assessment_use_case =
-      UseCase::MigrateDomesticEnergyAssessment.new(domestic_energy_assessments_gateway)
+      UseCase::MigrateDomesticEnergyAssessment.new(
+        domestic_energy_assessments_gateway
+      )
     fetch_domestic_energy_assessment_use_case =
-      UseCase::FetchDomesticEnergyAssessment.new(domestic_energy_assessments_gateway)
+      UseCase::FetchDomesticEnergyAssessment.new(
+        domestic_energy_assessments_gateway
+      )
 
     @objects = {
       schemes_gateway: schemes_gateway,
@@ -22,8 +27,10 @@ class Container
       get_all_schemes_use_case: get_all_schemes_use_case,
       add_assessor_use_case: add_assessor_use_case,
       fetch_assessor_use_case: fetch_assessor_use_case,
-      migrate_domestic_energy_assessment_use_case: migrate_domestic_energy_assessment_use_case,
-      fetch_domestic_energy_assessment_use_case: fetch_domestic_energy_assessment_use_case
+      migrate_domestic_energy_assessment_use_case:
+        migrate_domestic_energy_assessment_use_case,
+      fetch_domestic_energy_assessment_use_case:
+        fetch_domestic_energy_assessment_use_case
     }
   end
 

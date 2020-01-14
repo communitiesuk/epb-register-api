@@ -15,7 +15,8 @@ module Gateway
     end
 
     def fetch(assessment_id)
-      energy_assessment = DomesticEnergyAssessment.find_by({ assessment_id: assessment_id })
+      energy_assessment =
+        DomesticEnergyAssessment.find_by({ assessment_id: assessment_id })
       energy_assessment ? energy_assessment.to_hash : nil
     end
 
