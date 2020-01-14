@@ -1,24 +1,74 @@
 describe 'Integration::FilterAndOrderAssessorsByPostcode' do
   include RSpecAssessorServiceMixin
 
+  def add_assessor(scheme_id, assessor_id, body)
+    put("/api/schemes/#{scheme_id}/assessors/#{assessor_id}", body.to_json)
+  end
+
+  def add_scheme(name = 'test scheme')
+    JSON.parse(post('/api/schemes', { name: name }.to_json).body)['schemeId']
+  end
+
+  let(:valid_assessor_request_body) do
+    {
+      firstName: 'Someone',
+      middleNames: 'muddle',
+      lastName: 'Person',
+      dateOfBirth: '1991-02-25',
+      searchResultsComparisonPostcode: 'BF1 3AD'
+    }
+  end
+
+  let(:populate_postcode_geolocation) do
+    ActiveRecord::Base.connection.execute( "INSERT INTO postcode_geolocation (id, postcode, latitude, longitude) VALUES (1, 'BF1 3AD', 27.7172, -85.3240)")
+  end
+
   context 'when searching for a postcode' do
     context 'and postcode_geolocation table is empty' do
       it 'returns an empty hash' do
-        response = Gateway::PostcodesGateway.new.search('BF1 3AD')
+        response = Gateway::PostcodesGateway.new.fetch('BF1 3AD')
         expect(response).to eq([])
       end
     end
 
-    context ' and postcode_geolocation table is not empty' do
-      let!(:populate_postcode_geolocation) do
-        ActiveRecord::Base.connection.execute( "TRUNCATE TABLE postcode_geolocation")
-        ActiveRecord::Base.connection.execute( "INSERT INTO postcode_geolocation (id, postcode, latitude, longitude) VALUES (1, 'BF1 3AD', 27.7172, -85.3240)")
-      end
-
+    context 'and postcode_geolocation table is not empty' do
       it 'returns a single record' do
-        response = Gateway::PostcodesGateway.new.search('BF1 3AD')
+        populate_postcode_geolocation
+
+        response = Gateway::PostcodesGateway.new.fetch('BF1 3AD')
+
         expect(response).to eq([{"latitude"=>"27.7172", "longitude"=>"-85.3240"}])
       end
+    end
+  end
+
+  context 'when ordering and filtering assessors by postcode' do
+    it 'returns a single assessor when it exists' do
+      scheme_id = authenticate_and { add_scheme }
+      assessor = false
+
+      authenticate_and do
+        assessor = add_assessor(scheme_id, 'SCHEME4233', valid_assessor_request_body)
+      end
+
+      ActiveRecord::Base.connection.execute( "INSERT INTO postcode_geolocation (id, postcode, latitude, longitude) VALUES (1, 'BF1 3AD', 27.7172, -85.3240)")
+
+      postcode = Gateway::PostcodesGateway.new.fetch('BF1 3AD').first
+
+      assessors = Gateway::AssessorsByGeolocationGateway.new.search(postcode['latitude'].to_f, postcode['longitude'].to_f)
+
+      expect(assessors).to eq(
+                             [{"date_of_birth"=>"1991-02-25 00:00:00.000000000 +0000",
+                               "distance"=>0.0,
+                               "email"=>"",
+                               "first_name"=>"Someone",
+                               "last_name"=>"Person",
+                               "middle_names"=>"muddle",
+                               "registered_by" => 1,
+                               "scheme_assessor_id"=>"SCHEME4233",
+                               "search_results_comparison_postcode"=>"BF1 3AD",
+                               "telephone_number"=>""}]
+                           )
     end
   end
 end
