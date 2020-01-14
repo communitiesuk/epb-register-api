@@ -4,7 +4,7 @@ describe 'Integration::FilterAndOrderAssessorsByPostcode' do
   context 'when searching for a postcode' do
     context 'and postcode_geolocation table is empty' do
       it 'returns an empty hash' do
-        response = Gateway::Postcodes.new.search('BF1 3AD')
+        response = Gateway::PostcodesGateway.new.search('BF1 3AD')
         expect(response).to eq([])
       end
     end
@@ -16,7 +16,7 @@ describe 'Integration::FilterAndOrderAssessorsByPostcode' do
       end
 
       it 'returns a single record' do
-        response = Gateway::Postcodes.new.search('BF1 3AD')
+        response = Gateway::PostcodesGateway.new.search('BF1 3AD')
         expect(response).to eq([{"latitude"=>"27.7172", "longitude"=>"-85.3240"}])
       end
     end

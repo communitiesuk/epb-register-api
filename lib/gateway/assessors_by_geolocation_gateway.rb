@@ -1,21 +1,39 @@
 module Gateway
-  class FilteredAssessorsByPostcodeGateway
-    def search(latitude, longitude);
+  class AssessorsByGeolocationGateway
+    def search(latitude, longitude)
 
-      db = ActiveRecord::Base.connection
+      db = ActiveRecord::Base.connection.raw_connection
 
-      db.execute("SELECT *,
-      (
-          sqrt(abs(POWER(69.1 * (a.latitude - "+latitude+"), 2) + POWER(69.1 * (a.longitude - "+longitude+") * cos("+latitude+" / 57.3), 2)))
-      ) AS distance
+      salt = rand.to_s
 
-      FROM postcode_geolocation a
-      INNER JOIN assessors b ON(b.search_results_comparison_postcode = a.postcode)
-      WHERE
-      a.latitude BETWEEN "+latitude+"-1 AND "+latitude+"+1
-      AND a.longitude BETWEEN "+longitude+"-1 AND "+longitude+"+1
+      db.prepare(
+        "assessors_by_geolocation"+salt,
+        "SELECT
+          first_name, last_name, middle_names, date_of_birth, registered_by,
+          scheme_assessor_id, telephone_number, email,
+          search_results_comparison_postcode,
+          (
+            sqrt(abs(POWER(69.1 * (a.latitude - $1), 2) +
+            POWER(69.1 * (a.longitude - $2) * cos($1 / 57.3), 2)))
+          ) AS distance
 
-      ORDER BY distance LIMIT 100")
+        FROM postcode_geolocation a
+        INNER JOIN assessors b ON(b.search_results_comparison_postcode = a.postcode)
+        WHERE
+          a.latitude BETWEEN $1-1 AND $1+1
+          AND a.longitude BETWEEN $2-1 AND $2+1
+
+        ORDER BY distance LIMIT 100"
+      )
+
+      response = db.exec_prepared('assessors_by_geolocation'+salt, [latitude, longitude])
+
+      result = []
+      response.each do |row|
+        result << row
+      end
+
+      result
     end
   end
 end
