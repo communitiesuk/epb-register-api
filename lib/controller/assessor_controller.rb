@@ -19,58 +19,25 @@ module Controller
     }
 
     get '/api/assessors/search/:postcode', jwt_auth: [] do
-      body '{
-      "results": [{
-        "assessor": {
-          "firstName": "Juan",
-          "lastName": "Uno",
-          "contactDetails": {
-            "telephoneNumber": "string",
-            "email": "user@example.com"
-          },
-          "searchResultsComparisonPostcode": "SW1A 1AA",
-          "registeredBy": {
-            "schemeId": "432",
-            "name": "EPBs 4 U"
-          }
-        },
-        "distanceFromPostcodeInMiles": 0.1
-      },
-      {
-        "assessor": {
-          "firstName": "Doux",
-          "lastName": "Twose",
-          "contactDetails": {
-            "telephoneNumber": "string",
-            "email": "user@example.com"
-          },
-          "searchResultsComparisonPostcode": "SW1A 1AA",
-          "registeredBy": {
-            "schemeId": "432",
-            "name": "EPBs 4 U"
-          }
-        },
-        "distanceFromPostcodeInMiles": 0.26780459
-      },
-      {
-        "assessor": {
-          "firstName": "Tri",
-          "lastName": "Triple",
-          "contactDetails": {
-            "telephoneNumber": "string",
-            "email": "user@example.com"
-          },
-          "searchResultsComparisonPostcode": "SW1A 1AA",
-          "registeredBy": {
-            "schemeId": "432",
-            "name": "EPBs 4 U"
-          }
-        },
-        "distanceFromPostcodeInMiles": 0.3
-      }
-      ],
-      "searchPostcode": "SW1 5RW"
-    }'
+      postcode = params[:postcode]
+
+      postcode = postcode.insert(-4, ' ') if postcode[-4] != ' '
+
+      result = @container.get_object(:find_assessors_use_case).execute(postcode)
+      json_response(200, result)
+    rescue Exception => e
+      case e
+      when UseCase::FindAssessors::PostcodeNotRegistered
+        not_found_error('The requested postcode is not registered')
+      when UseCase::FindAssessors::PostcodeNotValid
+        error_response(
+          409,
+          'INVALID_REQUEST',
+          'The requested postcode is not valid'
+        )
+      else
+        server_error(e.message)
+      end
     end
 
     get '/api/schemes/:scheme_id/assessors/:scheme_assessor_id', jwt_auth: [] do
@@ -103,6 +70,7 @@ module Controller
           scheme_assessor_id,
           assessor_details
         )
+
       if create_assessor_response[:assessor_was_newly_created]
         @events.event(
           :new_assessor_registered,
