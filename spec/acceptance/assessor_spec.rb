@@ -26,10 +26,6 @@ describe 'Acceptance::Assessor' do
     }
   end
 
-  def assessors_search_by_postcode(postcode)
-    get "/api/assessors/search/#{postcode}"
-  end
-
   def fetch_assessor(scheme_id, assessor_id)
     get "/api/schemes/#{scheme_id}/assessors/#{assessor_id}"
   end
@@ -46,41 +42,6 @@ describe 'Acceptance::Assessor' do
     assessor = request_body.dup
     assessor.delete(missing)
     assessor
-  end
-
-  context 'when a search postcode is valid' do
-    it 'returns status 200 for a get' do
-      expect(
-        authenticate_and { assessors_search_by_postcode('SE17EZ') }.status
-      ).to eq(200)
-    end
-
-    it 'looks as it should' do
-      response = authenticate_and { assessors_search_by_postcode('SE17EZ') }
-
-      response_json = JSON.parse(response.body)
-
-      expect(response_json['results']).to be_an(Array)
-    end
-
-    it 'has the properties we expect' do
-      response = authenticate_and { assessors_search_by_postcode('SE17EZ') }
-
-      response_json = JSON.parse(response.body)
-
-      expect(response_json).to include('results', 'searchPostcode')
-    end
-
-    it 'has the assessors of the shape we expect' do
-      response = authenticate_and { assessors_search_by_postcode('SE17EZ') }
-
-      response_json = JSON.parse(response.body)
-
-      expect(response_json['results'][0]).to include(
-        'assessor',
-        'distanceFromPostcodeInMiles'
-      )
-    end
   end
 
   context "when a scheme doesn't exist" do
