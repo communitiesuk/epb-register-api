@@ -20,10 +20,10 @@ describe 'Integration::FilterAndOrderAssessorsByPostcode' do
   end
 
   def populate_postcode_geolocation
-    ActiveRecord::Base.connection.execute("TRUNCATE TABLE postcode_geolocation")
-    ActiveRecord::Base.connection.execute(
-      "INSERT INTO postcode_geolocation (id, postcode, latitude, longitude) VALUES (1, 'BF1 3AD', 27.7172, -85.3240)"
-    )
+    postcode_gateway = Gateway::PostcodesGateway.new
+
+    postcode_gateway.truncate
+    postcode_gateway.add('BF1 3AD', 27.7172, -85.3240)
   end
 
   context 'when searching for a postcode' do
@@ -41,7 +41,11 @@ describe 'Integration::FilterAndOrderAssessorsByPostcode' do
         response = Gateway::PostcodesGateway.new.fetch('BF1 3AD')
 
         expect(response).to eq(
-          [{ 'postcode': 'BF1 3AD', 'latitude': 27.7172, 'longitude': -85.3240 }]
+          [
+            {
+              'postcode': 'BF1 3AD', 'latitude': 27.7172, 'longitude': -85.3240
+            }
+          ]
         )
       end
     end
@@ -65,7 +69,7 @@ describe 'Integration::FilterAndOrderAssessorsByPostcode' do
           postcode[:longitude]
         )
 
-      expect(assessors.first['distance']).to eq(0.0)
+      expect(assessors.first[:distance]).to eq(0.0)
     end
   end
 end
