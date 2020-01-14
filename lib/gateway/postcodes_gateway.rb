@@ -1,16 +1,11 @@
 module Gateway
   class PostcodesGateway
     def add(postcode, latitude, longitude)
-      db = ActiveRecord::Base.connection.raw_connection
+      db = ActiveRecord::Base
 
-      salt = rand.to_s
-
-      db.prepare(
-        'postcode_add' + salt,
-        'INSERT INTO postcode_geolocation (postcode, latitude, longitude) VALUES($1, $2, $3)'
+      db.connection.execute(
+        "INSERT INTO postcode_geolocation (postcode, latitude, longitude) VALUES('#{db.sanitize_sql(postcode)}', #{latitude.to_f}, #{longitude.to_f})"
       )
-
-      db.exec_prepared('postcode_add' + salt, [postcode, latitude, longitude])
     end
 
     def truncate
