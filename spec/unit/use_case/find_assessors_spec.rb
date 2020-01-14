@@ -2,19 +2,22 @@ describe UseCase::FindAssessors do
   context 'when finding an assessor' do
     let(:find_assessors_without_stub_data) do
       postcodes_gateway =
-        PostcodesGatewayStub.new([{'postcode': 'BF1 3AD', 'latitude': 0, 'longitude': 0}])
+        PostcodesGatewayStub.new(
+          [{ 'postcode': 'BF1 3AD', 'latitude': 0, 'longitude': 0 }]
+        )
       described_class.new(postcodes_gateway, AssessorGatewayFake.new([]))
     end
 
     let(:find_assessors_without_existing_postcode) do
-      postcodes_gateway =
-        PostcodesGatewayStub.new([])
+      postcodes_gateway = PostcodesGatewayStub.new([])
       described_class.new(postcodes_gateway, AssessorGatewayFake.new([]))
     end
 
     let(:find_assessors_with_stub_data) do
       postcodes_gateway =
-        PostcodesGatewayStub.new([{'postcode': 'BF1 3AD', 'latitude': 0, 'longitude': 0}])
+        PostcodesGatewayStub.new(
+          [{ 'postcode': 'BF1 3AD', 'latitude': 0, 'longitude': 0 }]
+        )
       described_class.new(
         postcodes_gateway,
         AssessorGatewayFake.new(
