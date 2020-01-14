@@ -60,12 +60,12 @@ module Gateway
           search_results_comparison_postcode,
           (
             sqrt(abs(POWER(69.1 * (a.latitude - #{
-            latitude
+            latitude.to_f
           } ), 2) +
             POWER(69.1 * (a.longitude - #{
-            longitude
+            longitude.to_f
           } ) * cos( #{
-            latitude
+            latitude.to_f
           } / 57.3), 2)))
           ) AS distance
 
@@ -73,11 +73,11 @@ module Gateway
         INNER JOIN assessors b ON(b.search_results_comparison_postcode = a.postcode)
         WHERE
           a.latitude BETWEEN #{
-            latitude - 1
-          } AND #{latitude + 1}
+            (latitude - 1).to_f
+          } AND #{(latitude + 1).to_f}
           AND a.longitude BETWEEN #{
-            longitude - 1
-          } AND #{longitude + 1}
+            (longitude - 1).to_f
+          } AND #{(longitude + 1).to_f}
 
         ORDER BY distance LIMIT 100"
         )
