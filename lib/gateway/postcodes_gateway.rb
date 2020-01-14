@@ -1,6 +1,6 @@
 module Gateway
   class PostcodesGateway
-    def search(postcode)
+    def fetch(postcode)
       salt = rand.to_s
 
       db = ActiveRecord::Base.connection.raw_connection
