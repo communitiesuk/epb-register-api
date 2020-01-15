@@ -11,7 +11,11 @@ describe 'Integration::Database::Activerecord' do
 
   before(:all) { @rack_env = ENV['RACK_ENV'] }
 
-  after(:all) { ENV['RACK_ENV'] = @rack_env }
+  after(:all) {
+    ENV['RACK_ENV'] = @rack_env
+
+    ActiveRecord::Base.establish_connection
+  }
 
   def migration_has_been_run?(version)
     table_name = ActiveRecord::SchemaMigration.table_name
