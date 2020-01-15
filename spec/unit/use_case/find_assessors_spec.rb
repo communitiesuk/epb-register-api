@@ -5,7 +5,11 @@ describe UseCase::FindAssessors do
         PostcodesGatewayStub.new(
           [{ 'postcode': 'BF1 3AD', 'latitude': 0, 'longitude': 0 }]
         )
-      described_class.new(postcodes_gateway, AssessorGatewayFake.new([]), schemes_gateway)
+      described_class.new(
+        postcodes_gateway,
+        AssessorGatewayFake.new([]),
+        schemes_gateway
+      )
     end
 
     let(:schemes_gateway) do
@@ -14,38 +18,46 @@ describe UseCase::FindAssessors do
 
     let(:find_assessors_without_existing_postcode) do
       postcodes_gateway = PostcodesGatewayStub.new([])
-      described_class.new(postcodes_gateway, AssessorGatewayFake.new([]), schemes_gateway)
+      described_class.new(
+        postcodes_gateway,
+        AssessorGatewayFake.new([]),
+        schemes_gateway
+      )
     end
 
     let(:find_assessors_without_scheme) do
       postcodes_gateway =
-          PostcodesGatewayStub.new(
-              [{ 'postcode': 'E12 0GL', 'latitude': 0, 'longitude': 0 }]
-          )
-      schemes_gateway =  SchemesGatewayStub.new([])
-      results =   [
-          {
-              'firstName': 'Juan',
-              'last_name': 'Uno',
-              'contact_details': {
-                  'telephone_number': 'string', 'email': 'user@example.com'
-              },
-              'search_results_comparison_postcode': 'SW1A 1AA',
-              'distance': 0.1,
-              'registered_by': 15
+        PostcodesGatewayStub.new(
+          [{ 'postcode': 'E12 0GL', 'latitude': 0, 'longitude': 0 }]
+        )
+      schemes_gateway = SchemesGatewayStub.new([])
+      results = [
+        {
+          'firstName': 'Juan',
+          'last_name': 'Uno',
+          'contact_details': {
+            'telephone_number': 'string', 'email': 'user@example.com'
           },
-          {
-              'first_name': 'Juan',
-              'last_name': 'Uno',
-              'contact_details': {
-                  'telephone_number': 'string', 'email': 'user@example.com'
-              },
-              'search_results_comparison_postcode': 'SW1A 1AA',
-              'distance': 0.1,
-              'registered_by': 15
-          }
+          'search_results_comparison_postcode': 'SW1A 1AA',
+          'distance': 0.1,
+          'registered_by': 15
+        },
+        {
+          'first_name': 'Juan',
+          'last_name': 'Uno',
+          'contact_details': {
+            'telephone_number': 'string', 'email': 'user@example.com'
+          },
+          'search_results_comparison_postcode': 'SW1A 1AA',
+          'distance': 0.1,
+          'registered_by': 15
+        }
       ]
-      described_class.new(postcodes_gateway, AssessorGatewayFake.new(results), schemes_gateway)
+      described_class.new(
+        postcodes_gateway,
+        AssessorGatewayFake.new(results),
+        schemes_gateway
+      )
     end
 
     let(:find_assessors_with_stub_data) do

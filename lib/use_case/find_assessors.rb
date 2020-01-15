@@ -32,7 +32,6 @@ module UseCase
         schemes[scheme[:scheme_id]] = scheme
       end
 
-
       result = []
       @assessor_gateway.search(latitude, longitude).each do |assessor|
         scheme = schemes[assessor[:registered_by]]
