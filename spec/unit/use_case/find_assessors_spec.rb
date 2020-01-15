@@ -5,12 +5,16 @@ describe UseCase::FindAssessors do
         PostcodesGatewayStub.new(
           [{ 'postcode': 'BF1 3AD', 'latitude': 0, 'longitude': 0 }]
         )
-      described_class.new(postcodes_gateway, AssessorGatewayFake.new([]))
+      described_class.new(postcodes_gateway, AssessorGatewayFake.new([]), schemes_gateway)
+    end
+
+    let(:schemes_gateway) do
+      SchemesGatewayStub.new([{ scheme_id: 25, name: 'Best scheme' }])
     end
 
     let(:find_assessors_without_existing_postcode) do
       postcodes_gateway = PostcodesGatewayStub.new([])
-      described_class.new(postcodes_gateway, AssessorGatewayFake.new([]))
+      described_class.new(postcodes_gateway, AssessorGatewayFake.new([]), schemes_gateway)
     end
 
     let(:find_assessors_with_stub_data) do
@@ -24,36 +28,37 @@ describe UseCase::FindAssessors do
           [
             {
               'firstName': 'Juan',
-              'lastName': 'Uno',
-              'contactDetails': {
-                'telephoneNumber': 'string', 'email': 'user@example.com'
+              'last_name': 'Uno',
+              'contact_details': {
+                'telephone_number': 'string', 'email': 'user@example.com'
               },
-              'searchResultsComparisonPostcode': 'SW1A 1AA',
-              'registeredBy': { 'schemeId': '432', 'name': 'EPBs 4 U' },
-              'distanceFromPostcodeInMiles': 0.1
+              'search_results_comparison_postcode': 'SW1A 1AA',
+              'distance': 0.1,
+              'registered_by': 25
             },
             {
-              'firstName': 'Juan',
-              'lastName': 'Uno',
-              'contactDetails': {
-                'telephoneNumber': 'string', 'email': 'user@example.com'
+              'first_name': 'Juan',
+              'last_name': 'Uno',
+              'contact_details': {
+                'telephone_number': 'string', 'email': 'user@example.com'
               },
-              'searchResultsComparisonPostcode': 'SW1A 1AA',
-              'registeredBy': { 'schemeId': '432', 'name': 'EPBs 4 U' },
-              'distanceFromPostcodeInMiles': 0.1
+              'search_results_comparison_postcode': 'SW1A 1AA',
+              'distance': 0.1,
+              'registered_by': 25
             },
             {
-              'firstName': 'Juan',
-              'lastName': 'Uno',
-              'contactDetails': {
-                'telephoneNumber': 'string', 'email': 'user@example.com'
+              'first_name': 'Juan',
+              'last_name': 'Uno',
+              'contact_details': {
+                'telephone_number': 'string', 'email': 'user@example.com'
               },
-              'searchResultsComparisonPostcode': 'SW1A 1AA',
-              'registeredBy': { 'schemeId': '432', 'name': 'EPBs 4 U' },
-              'distanceFromPostcodeInMiles': 0.1
+              'search_results_comparison_postcode': 'SW1A 1AA',
+              'distance': 0.1,
+              'registered_by': 25
             }
           ]
-        )
+        ),
+        schemes_gateway
       )
     end
 
