@@ -35,6 +35,12 @@ module Controller
           'INVALID_REQUEST',
           'The requested postcode is not valid'
         )
+      when UseCase::FindAssessors::SchemeNotFoundException
+        error_response(
+            500,
+            'SCHEME_NOT_FOUND',
+            'There is no scheme for one of the requested assessor'
+        )
       else
         server_error(e.message)
       end
@@ -55,9 +61,6 @@ module Controller
         not_found_error('The requested scheme was not found')
       when UseCase::FetchAssessor::AssessorNotFoundException
         not_found_error('The requested assessor was not found')
-      when UseCase::FetchAssessor::SchemeNotFoundException
-        message = 'There is no scheme for one of the requested assessor'
-        error_response(500, 'SCHEME_NOT_FOUND', message)
       else
         server_error(e.message)
       end
