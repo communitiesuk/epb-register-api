@@ -2,10 +2,12 @@ module UseCase
   class FindAssessors
     class PostcodeNotValid < Exception; end
     class PostcodeNotRegistered < Exception; end
+    class SchemeNotFoundException < Exception; end
 
-    def initialize(postcodes_gateway, assessor_gateway)
+    def initialize(postcodes_gateway, assessor_gateway, schemes_gateway)
       @postcodes_gateway = postcodes_gateway
       @assessor_gateway = assessor_gateway
+      @schemes_gateway = schemes_gateway
     end
 
     def execute(postcode)
@@ -24,8 +26,22 @@ module UseCase
       latitude = postcodes_geolocation.first[:latitude]
       longitude = postcodes_geolocation.first[:longitude]
 
+      schemes = []
+
+      @schemes_gateway.all.each do |scheme|
+        schemes[scheme[:scheme_id]] = scheme
+      end
+
+      puts schemes
+
       result = []
       @assessor_gateway.search(latitude, longitude).each do |assessor|
+        puts assessor
+
+        puts assessor[:registered_by]
+        puts "Above"
+        assessor[:registered_by] = schemes[assessor[:registered_by]]
+
         result.push({ 'assessor': assessor, 'distance': assessor[:distance] })
       end
 

@@ -22,7 +22,7 @@ class Container
         domestic_energy_assessments_gateway
       )
     find_assessors_use_case =
-      UseCase::FindAssessors.new(postcode_gateway, assessors_gateway)
+      UseCase::FindAssessors.new(postcode_gateway, assessors_gateway, schemes_gateway)
 
     @objects = {
       schemes_gateway: schemes_gateway,
