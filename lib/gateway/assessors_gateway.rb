@@ -51,7 +51,7 @@ module Gateway
       end
     end
 
-    def search(latitude, longitude, entries = 100)
+    def search(latitude, longitude, entries = 10)
       response =
         Assessor.connection.execute(
           "SELECT
