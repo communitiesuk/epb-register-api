@@ -60,8 +60,14 @@ module Controller
     end
 
     def server_error(exception)
-      logger.error(exception.message)
-      error_response(500, 'SERVER_ERROR', exception.message)
+      if exception.methods.include?(:message)
+        message = exception.message
+      else
+        message = exception
+      end
+
+      logger.error(message)
+      error_response(500, 'SERVER_ERROR', message)
     end
 
     def not_found_error(title)
