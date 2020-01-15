@@ -55,6 +55,8 @@ module Controller
         not_found_error('The requested scheme was not found')
       when UseCase::FetchAssessor::AssessorNotFoundException
         not_found_error('The requested assessor was not found')
+      when UseCase::FetchAssessor::SchemeNotFoundException
+        server_error('There is no scheme for one of the requested assessor')
       else
         server_error(e.message)
       end

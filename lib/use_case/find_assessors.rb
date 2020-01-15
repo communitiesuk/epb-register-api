@@ -32,15 +32,12 @@ module UseCase
         schemes[scheme[:scheme_id]] = scheme
       end
 
-      puts schemes
 
       result = []
       @assessor_gateway.search(latitude, longitude).each do |assessor|
-        puts assessor
-
-        puts assessor[:registered_by]
-        puts "Above"
-        assessor[:registered_by] = schemes[assessor[:registered_by]]
+        scheme = schemes[assessor[:registered_by]]
+        raise SchemeNotFoundException unless scheme
+        assessor[:registered_by] = scheme
 
         result.push({ 'assessor': assessor, 'distance': assessor[:distance] })
       end
