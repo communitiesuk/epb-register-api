@@ -59,6 +59,16 @@ describe 'Acceptance::Postcodes' do
       expect(response_json['results']).to be_an(Array)
     end
 
+    it 'can handle a lowercase postcode' do
+      add_postcodes('E2 0SZ')
+
+      response = authenticate_and { assessors_search_by_postcode('e20sz') }
+
+      response_json = JSON.parse(response.body)
+
+      expect(response_json['results']).to be_an(Array)
+    end
+
     it 'has the properties we expect' do
       add_postcodes('SE1 7EZ')
 

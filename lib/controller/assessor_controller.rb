@@ -19,7 +19,7 @@ module Controller
     }
 
     get '/api/assessors/search/:postcode', jwt_auth: [] do
-      postcode = params[:postcode]
+      postcode = params[:postcode].upcase
 
       postcode = postcode.insert(-4, ' ') if postcode[-4] != ' '
 
