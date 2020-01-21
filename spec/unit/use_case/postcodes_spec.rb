@@ -99,7 +99,7 @@ describe 'Acceptance::Postcodes' do
       expect(response_json['results'][0]).to include('assessor', 'distance')
     end
 
-    it 'has the over all hash of the shape we expect' do
+    it 'has the assessors of the shape we expect' do
       add_postcodes('SE1 7EZ')
 
       scheme_id = authenticate_and { add_scheme('Happy EPC') }
@@ -124,7 +124,7 @@ describe 'Acceptance::Postcodes' do
                   middleNames: "Middle",
                   registeredBy: {
                     name: "Happy EPC",
-                    schemeId: 25
+                    schemeId: 35
                   },
                   schemeAssessorId: "ASSESSOR999",
                   searchResultsComparisonPostcode: "SE1 7EZ",
@@ -138,7 +138,7 @@ describe 'Acceptance::Postcodes' do
           }.to_json
       )
 
-      response_json['results'][0]['assessor']['registeredBy']['schemeId'] = 25
+      response_json['results'][0]['assessor']['registeredBy']['schemeId'] = 35
 
       expect(response_json['results'][0]).to eq(expected_response)
     end

@@ -34,13 +34,11 @@ module UseCase
 
       result = []
       @assessor_gateway.search(latitude, longitude).each do |assessor|
-        scheme = schemes[assessor[:registered_by]]
+        scheme = schemes[assessor[:assessor][:registered_by]]
         raise SchemeNotFoundException unless scheme
-        assessor[:registered_by] = scheme
-
-        result.push({ 'assessor': assessor, 'distance': assessor[:distance] })
+        assessor[:assessor][:registered_by] = scheme
+        result.push(assessor)
       end
-
       { 'results': result, 'searchPostcode': postcode }
     end
   end

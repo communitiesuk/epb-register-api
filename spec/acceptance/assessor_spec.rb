@@ -6,7 +6,7 @@ describe 'Acceptance::Assessor' do
   let(:valid_assessor_request_body) do
     {
       firstName: 'Someone',
-      middleNames: 'muddle',
+      middleNames: 'Muddle',
       lastName: 'Person',
       dateOfBirth: '1991-02-25',
       searchResultsComparisonPostcode: ''
@@ -16,7 +16,7 @@ describe 'Acceptance::Assessor' do
   let(:valid_assessor_with_contact_request_body) do
     {
       firstName: 'Some',
-      middleNames: 'middle',
+      middleNames: 'Middle',
       lastName: 'Person',
       dateOfBirth: '1991-02-25',
       contactDetails: {

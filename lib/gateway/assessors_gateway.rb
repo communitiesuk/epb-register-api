@@ -86,13 +86,16 @@ module Gateway
 
       result = []
       response.each do |row|
-        hash = to_hash(row.symbolize_keys)
+        assessor_hash = to_hash(row.symbolize_keys)
+        distance_result = row['distance']
 
-        hash[:distance] = row['distance']
+        full_hash = {
+          assessor: assessor_hash,
+          distance: distance_result
+        }
 
-        result.push(hash)
+        result.push(full_hash)
       end
-
       result
     end
 
