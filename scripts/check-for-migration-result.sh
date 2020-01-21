@@ -1,15 +1,18 @@
 #!/usr/bin/env bash
 
-while [[ $(make cf-check-api-db-migration-task) = "RUNNING" ]]
+STATE="$(cf curl /v3/apps/`cf app --guid ${DEPLOY_APPNAME}`/tasks?order_by=-created_at | jq -r '.resources[0].state')"
+echo "${STATE}"
+
+while [[ ${STATE} = "RUNNING" ]]
 do
 	sleep 2
+	STATE="$(cf curl /v3/apps/`cf app --guid ${DEPLOY_APPNAME}`/tasks?order_by=-created_at | jq -r '.resources[0].state')"
 done
 
-if [[ $(make cf-check-api-db-migration-task) = "SUCCEEDED" ]] 
+echo "Migration result is ${STATE}"
+if [[ ${STATE} = "SUCCEEDED" ]] 
 then
-	echo "Migration succeeded"
 	exit 0
 else
-	echo "Migration result is $(make cf-check-api-db-migration-task)"
 	exit 1
 fi
