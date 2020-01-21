@@ -37,9 +37,9 @@ module Controller
         )
       when UseCase::FindAssessors::SchemeNotFoundException
         error_response(
-            500,
-            'SCHEME_NOT_FOUND',
-            'There is no scheme for one of the requested assessor'
+          500,
+          'SCHEME_NOT_FOUND',
+          'There is no scheme for one of the requested assessor'
         )
       else
         server_error(e.message)

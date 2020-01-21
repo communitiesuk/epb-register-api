@@ -34,30 +34,36 @@ describe UseCase::FindAssessors do
         postcodes_gateway,
         AssessorGatewayFake.new(
           [
-              { assessor: {
-                               'first_name': 'Juan',
-                               'last_name': 'Uno',
-                               'middle_name': 'Middle',
-                               'scheme_assessor_id': 'HEHSNHTBWEHJ',
-                               'date_of_birth': '12/12/1963',
-                               'contact_details': {
-                                   'telephone_number': 'string', 'email': 'user@example.com'
-                               },
-                               'search_results_comparison_postcode': 'SW1A 1AA',
-                               'registered_by': 25
-                           }, 'distance': 0.1},
-               { assessor: {
-                                'first_name': 'Juan',
-                                'last_name': 'Uno',
-                                'middle_name': 'Middle',
-                                'scheme_assessor_id': 'HEHSNHTBWEHJ',
-                                'date_of_birth': '12/12/1963',
-                                'contact_details': {
-                                    'telephone_number': 'string', 'email': 'user@example.com'
-                                },
-                                'search_results_comparison_postcode': 'SW1A 1AA',
-                                'registered_by': 25
-                            }, 'distance': 0.1}
+            {
+              assessor: {
+                'first_name': 'Juan',
+                'last_name': 'Uno',
+                'middle_name': 'Middle',
+                'scheme_assessor_id': 'HEHSNHTBWEHJ',
+                'date_of_birth': '12/12/1963',
+                'contact_details': {
+                  'telephone_number': 'string', 'email': 'user@example.com'
+                },
+                'search_results_comparison_postcode': 'SW1A 1AA',
+                'registered_by': 25
+              },
+              'distance': 0.1
+            },
+            {
+              assessor: {
+                'first_name': 'Juan',
+                'last_name': 'Uno',
+                'middle_name': 'Middle',
+                'scheme_assessor_id': 'HEHSNHTBWEHJ',
+                'date_of_birth': '12/12/1963',
+                'contact_details': {
+                  'telephone_number': 'string', 'email': 'user@example.com'
+                },
+                'search_results_comparison_postcode': 'SW1A 1AA',
+                'registered_by': 25
+              },
+              'distance': 0.1
+            }
           ]
         ),
         schemes_gateway

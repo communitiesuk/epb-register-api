@@ -34,7 +34,7 @@ module Gateway
           }
         )
       end
-      
+
       result
     end
   end

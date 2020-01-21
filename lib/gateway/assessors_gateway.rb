@@ -89,10 +89,7 @@ module Gateway
         assessor_hash = to_hash(row.symbolize_keys)
         distance_result = row['distance']
 
-        full_hash = {
-          assessor: assessor_hash,
-          distance: distance_result
-        }
+        full_hash = { assessor: assessor_hash, distance: distance_result }
 
         result.push(full_hash)
       end

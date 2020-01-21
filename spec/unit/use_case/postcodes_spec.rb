@@ -116,27 +116,24 @@ describe 'Acceptance::Postcodes' do
 
       response_json = JSON.parse(response.body)
 
-      expected_response = JSON.parse(
-        {
-              assessor: {
-                  firstName: "Some",
-                  lastName: "Person",
-                  middleNames: "Middle",
-                  registeredBy: {
-                    name: "Happy EPC",
-                    schemeId: 35
-                  },
-                  schemeAssessorId: "ASSESSOR999",
-                  searchResultsComparisonPostcode: "SE1 7EZ",
-                  dateOfBirth: "1991-02-25",
-                  contactDetails: {
-                      telephoneNumber: "010199991010101",
-                      email: "person@person.com"
-                  }
-              },
-              distance: 0.0
+      expected_response =
+        JSON.parse(
+          {
+            assessor: {
+              firstName: 'Some',
+              lastName: 'Person',
+              middleNames: 'Middle',
+              registeredBy: { name: 'Happy EPC', schemeId: 35 },
+              schemeAssessorId: 'ASSESSOR999',
+              searchResultsComparisonPostcode: 'SE1 7EZ',
+              dateOfBirth: '1991-02-25',
+              contactDetails: {
+                telephoneNumber: '010199991010101', email: 'person@person.com'
+              }
+            },
+            distance: 0.0
           }.to_json
-      )
+        )
 
       response_json['results'][0]['assessor']['registeredBy']['schemeId'] = 35
 
