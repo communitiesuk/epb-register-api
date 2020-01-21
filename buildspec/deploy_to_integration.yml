@@ -29,7 +29,7 @@ phases:
   build:
     commands:
       - make deploy-app
-      - cf run-task $DEPLOY_APPNAME "rake db:migrate" --name migrate
+      - make migrate-db-and-wait-for-success
   post_build:
     commands:
       - cf logout

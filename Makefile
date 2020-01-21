@@ -47,6 +47,12 @@ setup-db:
 	@echo ">>>>> Populating Test DB"
 	@bundle exec rake db:test:prepare
 
+.PHONY: migrate-db-and-wait-for-success
+migrate-db-and-wait-for-success:
+	$(if ${DEPLOY_APPNAME},,$(error Must specify DEPLOY_APPNAME))
+	cf run-task "${DEPLOY_APPNAME}" "rake db:migrate" --name migrate
+	@scripts/check-for-migration-result.sh
+
 .PHONY: test
 test:
 	@STAGE=test EPB_UNLEASH_URI=https://google.com bundle exec rake spec
@@ -61,3 +67,7 @@ run:
 .PHONY: format
 format:
 	@bundle exec rbprettier --write `find . -name '*.rb' -not -path './db/schema.rb'` *.ru Gemfile
+
+.PHONY: cf-check-api-db-migration-task
+cf-check-api-db-migration-task: ## Get the status for the last migrate-db task
+	@cf curl /v3/apps/`cf app --guid ${DEPLOY_APPNAME}`/tasks?order_by=-created_at | jq -r ".resources[0].state"
