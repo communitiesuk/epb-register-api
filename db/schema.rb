@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_22_111750) do
+ActiveRecord::Schema.define(version: 2020_01_22_152714) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,12 @@ ActiveRecord::Schema.define(version: 2020_01_22_111750) do
 
   create_table "postcode_geolocation", force: :cascade do |t|
     t.string "postcode"
+    t.decimal "latitude"
+    t.decimal "longitude"
+  end
+
+  create_table "postcode_outcode_geolocations", force: :cascade do |t|
+    t.string "outcode"
     t.decimal "latitude"
     t.decimal "longitude"
   end
