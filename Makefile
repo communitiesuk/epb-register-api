@@ -51,6 +51,7 @@ setup-db:
 migrate-db-and-wait-for-success:
 	$(if ${DEPLOY_APPNAME},,$(error Must specify DEPLOY_APPNAME))
 	cf run-task "${DEPLOY_APPNAME}" "rake db:migrate" --name migrate
+	cf run-task "${DEPLOY_APPNAME}" "rake import_postcode_outcode" --name import_postcode_outcode
 	@scripts/check-for-migration-result.sh
 
 .PHONY: test
