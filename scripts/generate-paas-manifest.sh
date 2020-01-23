@@ -8,7 +8,7 @@ cat << EOF
 ---
 applications:
   - name: $APPLICATION_NAME
-    command: bundle exec rake cf:on_first_instance import_postcode_outcode
+    command: bundle exec rake cf:on_first_instance import_postcode_outcode && bundle exec rackup -p $PORT
     memory: 1G
     buildpacks:
       - ruby_buildpack
