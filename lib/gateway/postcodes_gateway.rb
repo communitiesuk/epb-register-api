@@ -1,13 +1,7 @@
 module Gateway
   class PostcodesGateway
     def fetch(postcode)
-      response =
-        ActiveRecord::Base.connection.execute(
-          "SELECT postcode, latitude, longitude FROM postcode_geolocation WHERE postcode = '#{
-            ActiveRecord::Base.sanitize_sql(postcode)
-          }'"
-        )
-
+      response = db_response(postcode)
       result = []
       response.map do |row|
         result.push(
@@ -22,11 +16,7 @@ module Gateway
         outcode_array = postcode.split(' ')
         outcode = outcode_array[0]
         response =
-          ActiveRecord::Base.connection.execute(
-            "SELECT outcode, latitude, longitude FROM postcode_outcode_geolocations WHERE outcode = '#{
-              ActiveRecord::Base.sanitize_sql(outcode)
-            }'"
-          )
+          db_response('outcode', 'postcode_outcode_geolocations', outcode)
 
         response.map do |row|
           result.push(
@@ -39,6 +29,17 @@ module Gateway
         end
       end
       result
+    end
+
+    private
+
+    def db_response(code = 'postcode', table = 'postcode_geolocation', postcode)
+      response =
+        ActiveRecord::Base.connection.execute(
+          "SELECT #{code}, latitude, longitude FROM #{table} WHERE #{code} = '#{
+            ActiveRecord::Base.sanitize_sql(postcode)
+          }'"
+        )
     end
   end
 end
