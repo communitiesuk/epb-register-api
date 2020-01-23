@@ -8,6 +8,7 @@ cat << EOF
 ---
 applications:
   - name: $APPLICATION_NAME
+    command: bundle exec rake cf:on_first_instance import_postcode_outcode
     memory: 1G
     buildpacks:
       - ruby_buildpack
@@ -16,5 +17,4 @@ applications:
     services:
       - mhclg-epb-db-$STAGE
       - logit-ssl-drain
-
 EOF
