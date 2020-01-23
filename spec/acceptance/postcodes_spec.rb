@@ -196,13 +196,11 @@ describe 'Acceptance::Postcodes' do
       expect(response_json['results'][0]['distance']).to be_between(2, 4)
     end
 
-
     context 'when the postcode is not found' do
       it 'returns results based on the outcode of the postcode' do
-
         add_postcodes('SE1 5BN', 51.5045, 0.0865)
 
-        add_outcodes('SE1', 51.5045, 0.4865  )
+        add_outcodes('SE1', 51.5045, 0.4865)
 
         scheme_id = authenticate_and { add_scheme('Happy EPC') }
 
@@ -220,7 +218,30 @@ describe 'Acceptance::Postcodes' do
 
         response_json = JSON.parse(response.body)
         expect(response_json['results'][0]).to include('distance')
+      end
 
+      it 'returns error when neither postcode or outcode are found' do
+        add_postcodes('SE1 5BN', 51.5045, 0.0865)
+
+        add_outcodes('SE1', 51.5045, 0.4865)
+
+        scheme_id = authenticate_and { add_scheme('Happy EPC') }
+
+        assessor = valid_assessor_with_contact_request_body
+        assessor[:searchResultsComparisonPostcode] = 'SE1 5BN'
+
+        authenticate_and do
+          add_assessor(
+            scheme_id,
+            'ASSESSOR999',
+            valid_assessor_with_contact_request_body
+          )
+        end
+        response = authenticate_and { assessors_search_by_postcode('NE19SY') }
+
+        response_json = JSON.parse(response.body)
+        p response_json
+        expect((response_json).key?('errors')).to eq(true)
       end
     end
   end

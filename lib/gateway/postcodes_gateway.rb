@@ -20,7 +20,6 @@ module Gateway
       )
     end
 
-
     def truncate
       ActiveRecord::Base.connection.execute(
         'TRUNCATE TABLE postcode_geolocation'
@@ -41,16 +40,16 @@ module Gateway
           }'"
         )
 
-        result = []
-        response.map do |row|
-          result.push(
-            {
-              'postcode': row['postcode'],
-              'latitude': row['latitude'].to_f,
-              'longitude': row['longitude'].to_f
-            }
-          )
-        end
+      result = []
+      response.map do |row|
+        result.push(
+          {
+            'postcode': row['postcode'],
+            'latitude': row['latitude'].to_f,
+            'longitude': row['longitude'].to_f
+          }
+        )
+      end
       if result.empty?
         outcode_array = postcode.split(' ')
         outcode = outcode_array[0]
@@ -61,15 +60,15 @@ module Gateway
             }'"
           )
 
-          response.map do |row|
-            result.push(
-              {
-                'outcode': row['outcode'],
-                'latitude': row['latitude'].to_f,
-                'longitude': row['longitude'].to_f
-              }
-            )
-          end
+        response.map do |row|
+          result.push(
+            {
+              'outcode': row['outcode'],
+              'latitude': row['latitude'].to_f,
+              'longitude': row['longitude'].to_f
+            }
+          )
+        end
       end
       result
     end
