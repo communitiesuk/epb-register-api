@@ -1,6 +1,31 @@
 describe 'Integration::FilterAndOrderAssessorsByPostcode' do
   include RSpecAssessorServiceMixin
 
+  def truncate(postcode = postcode)
+    if postcode ==
+         Regexp.new('^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$', Regexp::IGNORECASE)
+      ActiveRecord::Base.connection.execute(
+        'TRUNCATE TABLE postcode_geolocation'
+      )
+    else
+      ActiveRecord::Base.connection.execute(
+        'TRUNCATE TABLE postcode_outcode_geolocations'
+      )
+    end
+  end
+
+  def add_postcodes(postcode, latitude = 0, longitude = 0, clean = true)
+    db = ActiveRecord::Base
+
+    truncate(postcode) if clean
+
+    db.connection.execute(
+      "INSERT INTO postcode_geolocation (postcode, latitude, longitude) VALUES('#{
+        db.sanitize_sql(postcode)
+      }', #{latitude.to_f}, #{longitude.to_f})"
+    )
+  end
+
   def add_assessor(scheme_id, assessor_id, body)
     put("/api/schemes/#{scheme_id}/assessors/#{assessor_id}", body.to_json)
   end
@@ -22,8 +47,8 @@ describe 'Integration::FilterAndOrderAssessorsByPostcode' do
   def populate_postcode_geolocation
     postcode_gateway = Gateway::PostcodesGateway.new
 
-    postcode_gateway.truncate
-    postcode_gateway.add('BF1 3AD', 27.7172, -85.3240)
+    truncate
+    add_postcodes('BF1 3AD', 27.7172, -85.3240)
   end
 
   context 'when searching for a postcode' do

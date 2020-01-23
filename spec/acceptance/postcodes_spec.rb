@@ -15,17 +15,40 @@ describe 'Acceptance::Postcodes' do
   end
 
   def add_postcodes(postcode, latitude = 0, longitude = 0, clean = true)
-    postcodes_gateway = Gateway::PostcodesGateway.new
+    db = ActiveRecord::Base
 
-    postcodes_gateway.truncate if clean
-    postcodes_gateway.add(postcode, latitude, longitude)
+    truncate(postcode) if clean
+
+    db.connection.execute(
+      "INSERT INTO postcode_geolocation (postcode, latitude, longitude) VALUES('#{
+        db.sanitize_sql(postcode)
+      }', #{latitude.to_f}, #{longitude.to_f})"
+    )
   end
 
   def add_outcodes(outcode, latitude = 0, longitude = 0, clean = true)
-    postcodes_gateway = Gateway::PostcodesGateway.new
+    db = ActiveRecord::Base
 
-    postcodes_gateway.truncate_outcode if clean
-    postcodes_gateway.add_outcodes(outcode, latitude, longitude)
+    truncate(outcode) if clean
+
+    db.connection.execute(
+      "INSERT INTO postcode_outcode_geolocations (outcode, latitude, longitude) VALUES('#{
+        db.sanitize_sql(outcode)
+      }', #{latitude.to_f}, #{longitude.to_f})"
+    )
+  end
+
+  def truncate(postcode)
+    if postcode ==
+         Regexp.new('^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$', Regexp::IGNORECASE)
+      ActiveRecord::Base.connection.execute(
+        'TRUNCATE TABLE postcode_geolocation'
+      )
+    else
+      ActiveRecord::Base.connection.execute(
+        'TRUNCATE TABLE postcode_outcode_geolocations'
+      )
+    end
   end
 
   def assessors_search_by_postcode(postcode)
