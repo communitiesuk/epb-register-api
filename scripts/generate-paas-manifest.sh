@@ -8,6 +8,7 @@ cat << EOF
 ---
 applications:
   - name: $APPLICATION_NAME
+    command: null
     memory: 1G
     buildpacks:
       - ruby_buildpack
