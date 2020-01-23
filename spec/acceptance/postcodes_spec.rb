@@ -21,6 +21,13 @@ describe 'Acceptance::Postcodes' do
     postcodes_gateway.add(postcode, latitude, longitude)
   end
 
+  def add_outcodes(outcode, latitude = 0, longitude = 0, clean = true)
+    postcodes_gateway = Gateway::PostcodesGateway.new
+
+    postcodes_gateway.truncate_outcode if clean
+    postcodes_gateway.add_outcodes(outcode, latitude, longitude)
+  end
+
   def assessors_search_by_postcode(postcode)
     get "/api/assessors/search/#{postcode}"
   end
@@ -165,7 +172,7 @@ describe 'Acceptance::Postcodes' do
       expect(response_json['results'].size).to eq(0)
     end
 
-    it 'does not show assessors outside of 1 degree latitude/longitude' do
+    it 'shows distance of assessors inside of 1 degree latitude/longitude' do
       add_postcodes('SE1 9SG', 51.5045, 0.0865)
 
       add_postcodes('SW8 5BN', 51.4818, 0.1444, false)
@@ -187,6 +194,34 @@ describe 'Acceptance::Postcodes' do
 
       response_json = JSON.parse(response.body)
       expect(response_json['results'][0]['distance']).to be_between(2, 4)
+    end
+
+
+    context 'when the postcode is not found' do
+      it 'returns results based on the outcode of the postcode' do
+
+        add_postcodes('SE1 5BN', 51.5045, 0.0865)
+
+        add_outcodes('SE1', 51.5045, 0.4865  )
+
+        scheme_id = authenticate_and { add_scheme('Happy EPC') }
+
+        assessor = valid_assessor_with_contact_request_body
+        assessor[:searchResultsComparisonPostcode] = 'SE1 5BN'
+
+        authenticate_and do
+          add_assessor(
+            scheme_id,
+            'ASSESSOR999',
+            valid_assessor_with_contact_request_body
+          )
+        end
+        response = authenticate_and { assessors_search_by_postcode('SE19SY') }
+
+        response_json = JSON.parse(response.body)
+        expect(response_json['results'][0]).to include('distance')
+
+      end
     end
   end
 end
