@@ -2,7 +2,6 @@ module UseCase
   class FindAssessors
     class PostcodeNotValid < Exception; end
     class PostcodeNotRegistered < Exception; end
-    class SchemeNotFoundException < Exception; end
 
     def initialize(postcodes_gateway, assessor_gateway, schemes_gateway)
       @postcodes_gateway = postcodes_gateway
@@ -35,7 +34,6 @@ module UseCase
       result = []
       @assessor_gateway.search(latitude, longitude).each do |assessor|
         scheme = schemes[assessor[:assessor][:registered_by]]
-        raise SchemeNotFoundException unless scheme
         assessor[:assessor][:registered_by] = scheme
         result.push(assessor)
       end
