@@ -118,7 +118,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ShortAssessorSummary'
+                $ref: '#/components/schemas/BasicAssessorDetails'
 
     put:
       tags:
@@ -169,14 +169,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ShortAssessorSummary'
+                $ref: '#/components/schemas/BasicAssessorDetails'
 
         200:
           description: Existing assessor updated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ShortAssessorSummary'
+                $ref: '#/components/schemas/BasicAssessorDetails'
 
         400:
           description: Problem with assessor registration record
@@ -184,6 +184,32 @@ paths:
           description: Assessor already exists on a different scheme
         422:
           description: Assessor does not pass validation
+
+  /assessors/search/{postcode}:
+    get:
+      tags:
+        - Search for assessors
+      summary: Search for an assessor by postcode
+      security:
+        - oauth: []
+      parameters:
+        - in: path
+          name: postcode
+          required: true
+          description: The postcode of the property to be assessed
+          schema:
+            type: string
+      responses:
+        200:
+          description: List of assessors sorted by distance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssessorSearchResult'
+        400:
+          description: Invalid postcode
+        502:
+          description: Geolocation provider not available
 
   /assessments/domestic-energy-performance/{assessmentId}:
     get:
@@ -261,7 +287,8 @@ components:
         name:
           type: string
           example: "EPBs 4 U"
-    ShortAssessorSummary:
+
+    BasicAssessorDetails:
       type: object
       properties:
         registeredBy:
@@ -286,6 +313,18 @@ components:
             email:
               type: string
               format: email
+
+    AssessorSearchResult:
+      allOf:
+        - $ref: '#/components/schemas/BasicAssessorDetails'
+        - type: object
+          properties:
+            distanceFromPostcodeInMiles:
+              type: number
+              example: "0.2"
+            registeredBy:
+              $ref: '#/components/schemas/SchemeSummary'
+
     DomesticEnergyAssessment:
       allOf:
         - $ref: '#/components/schemas/EnergyAssessmentBasicInfo'
