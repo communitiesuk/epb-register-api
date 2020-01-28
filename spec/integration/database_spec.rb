@@ -85,4 +85,26 @@ describe 'Integration::Database::Activerecord' do
 
     expect(scheme_id).not_to be_nil
   end
+
+  it 'can find the current energy efficiency rating column' do
+    connect('epb_development')
+
+    ActiveRecord::Base.establish_connection
+
+    current_energy_efficiency_rating =
+        ActiveRecord::Base.connection.execute('SELECT current_energy_efficiency_rating FROM domestic_energy_assessments')
+
+    expect(current_energy_efficiency_rating).not_to be_nil
+  end
+
+  it 'can find the potential energy efficiency rating column' do
+    connect('epb_development')
+
+    ActiveRecord::Base.establish_connection
+
+    potential_energy_efficiency_rating =
+        ActiveRecord::Base.connection.execute('SELECT potential_energy_efficiency_rating FROM domestic_energy_assessments')
+
+    expect(potential_energy_efficiency_rating).not_to be_nil
+  end
 end

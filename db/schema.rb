@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_22_152714) do
+ActiveRecord::Schema.define(version: 2020_01_28_103751) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,8 @@ ActiveRecord::Schema.define(version: 2020_01_22_152714) do
     t.string "type_of_assessment"
     t.bigint "total_floor_area"
     t.string "address_summary"
+    t.integer "current_energy_efficiency_rating", limit: 2, null: false
+    t.integer "potential_energy_efficiency_rating", limit: 2, null: false
   end
 
   create_table "postcode_geolocation", force: :cascade do |t|
