@@ -92,7 +92,9 @@ describe 'Integration::Database::Activerecord' do
     ActiveRecord::Base.establish_connection
 
     current_energy_efficiency_rating =
-        ActiveRecord::Base.connection.execute('SELECT current_energy_efficiency_rating FROM domestic_energy_assessments')
+      ActiveRecord::Base.connection.execute(
+        'SELECT current_energy_efficiency_rating FROM domestic_energy_assessments'
+      )
 
     expect(current_energy_efficiency_rating).not_to be_nil
   end
@@ -103,7 +105,9 @@ describe 'Integration::Database::Activerecord' do
     ActiveRecord::Base.establish_connection
 
     potential_energy_efficiency_rating =
-        ActiveRecord::Base.connection.execute('SELECT potential_energy_efficiency_rating FROM domestic_energy_assessments')
+      ActiveRecord::Base.connection.execute(
+        'SELECT potential_energy_efficiency_rating FROM domestic_energy_assessments'
+      )
 
     expect(potential_energy_efficiency_rating).not_to be_nil
   end
