@@ -1,5 +1,7 @@
 module Gateway
   class DomesticEnergyAssessmentsGateway
+    class InvalidCurrentEnergyRatingException < Exception; end
+    class InvalidPotentialEnergyRatingException < Exception; end
     class DomesticEnergyAssessment < ActiveRecord::Base
       def to_hash
         {
@@ -27,7 +29,25 @@ module Gateway
     def insert_or_update(assessment_id, assessment_body)
       domestic_energy_assessment = assessment_body.dup
       domestic_energy_assessment[:assessment_id] = assessment_id
+      current_rating =
+        domestic_energy_assessment[:current_energy_efficiency_rating]
+      potential_rating =
+        domestic_energy_assessment[:potential_energy_efficiency_rating]
 
+      if !(current_rating.is_a?(Integer) && current_rating.between?(1, 100))
+        raise InvalidCurrentEnergyRatingException
+      elsif !(
+            potential_rating.is_a?(Integer) && potential_rating.between?(1, 100)
+          )
+        raise InvalidPotentialEnergyRatingException
+      else
+        send_to_db(assessment_id, domestic_energy_assessment)
+      end
+    end
+
+    private
+
+    def send_to_db(assessment_id, domestic_energy_assessment)
       existing_assessment =
         DomesticEnergyAssessment.find_by(assessment_id: assessment_id)
 

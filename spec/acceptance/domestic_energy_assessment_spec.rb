@@ -238,5 +238,48 @@ describe 'Acceptance::Assessor' do
         end
       expect(response.status).to eq(422)
     end
+
+    it 'rejects a assessment with a type of current energy efficiency rating that is not an integer' do
+      assessment_with_dodgy_current_rating = valid_assessment_body.dup
+      assessment_with_dodgy_current_rating[:currentEnergyEfficiencyRating] =
+        'one'
+      response =
+        authenticate_and do
+          migrate_assessment('123-456', assessment_with_dodgy_current_rating)
+        end
+      expect(response.status).to eq(422)
+    end
+
+    it 'rejects a assessment with a type of potential energy efficiency rating that is not an integer' do
+      assessment_with_dodgy_potential_rating = valid_assessment_body.dup
+      assessment_with_dodgy_potential_rating[:potentialEnergyEfficiencyRating] =
+        'two'
+      response =
+        authenticate_and do
+          migrate_assessment('123-456', assessment_with_dodgy_potential_rating)
+        end
+      expect(response.status).to eq(422)
+    end
+
+    it 'rejects an assessment with a invalid current energy efficiency rating' do
+      assessment_with_dodgy_current_rating = valid_assessment_body.dup
+      assessment_with_dodgy_current_rating[:currentEnergyEfficiencyRating] = 175
+      response =
+        authenticate_and do
+          migrate_assessment('123-456', assessment_with_dodgy_current_rating)
+        end
+      expect(response.status).to eq(422)
+    end
+
+    it 'rejects an assessment with a invalid potential energy efficiency rating' do
+      assessment_with_dodgy_potential_rating = valid_assessment_body.dup
+      assessment_with_dodgy_potential_rating[:currentEnergyEfficiencyRating] =
+        175
+      response =
+        authenticate_and do
+          migrate_assessment('123-456', assessment_with_dodgy_potential_rating)
+        end
+      expect(response.status).to eq(422)
+    end
   end
 end

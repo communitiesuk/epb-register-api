@@ -9,6 +9,8 @@ module Controller
         totalFloorArea
         dwellingType
         typeOfAssessment
+        currentEnergyEfficiencyRating
+        potentialEnergyEfficiencyRating
       ],
       properties: {
         addressSummary: { type: 'string' },
@@ -16,7 +18,9 @@ module Controller
         dateRegistered: { type: 'string', format: 'iso-date' },
         totalFloorArea: { type: 'integer' },
         dwellingType: { type: 'string' },
-        typeOfAssessment: { type: 'string', enum: %w[SAP RdSAP] }
+        typeOfAssessment: { type: 'string', enum: %w[SAP RdSAP] },
+        currentEnergyEfficiencyRating: { type: 'integer' },
+        potentialEnergyEfficiencyRating: { type: 'integer' }
       }
     }
 
@@ -53,6 +57,18 @@ module Controller
       case e
       when JSON::Schema::ValidationError
         error_response(422, 'INVALID_REQUEST', e.message)
+      when Gateway::DomesticEnergyAssessmentsGateway::InvalidCurrentEnergyRatingException
+        error_response(
+          422,
+          'INVALID_REQUEST',
+          'Current energy efficiency rating is not an integer between 1 and 100'
+        )
+      when Gateway::DomesticEnergyAssessmentsGateway::InvalidPotentialEnergyRatingException
+        error_response(
+          422,
+          'INVALID_REQUEST',
+          'Potential energy efficiency rating is not an integer between 1 and 100'
+        )
       else
         server_error(e)
       end
