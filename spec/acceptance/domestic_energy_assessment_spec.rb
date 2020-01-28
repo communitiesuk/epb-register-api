@@ -10,7 +10,9 @@ describe 'Acceptance::Assessor' do
       totalFloorArea: 1_000,
       typeOfAssessment: 'RdSAP',
       dwellingType: 'Top floor flat',
-      addressSummary: '123 Victoria Street, London, SW1A 1BD'
+      addressSummary: '123 Victoria Street, London, SW1A 1BD',
+      currentEnergyEfficiencyRating: 75,
+      potentialEnergyEfficiencyRating: 80
     }.freeze
   end
 
@@ -76,7 +78,11 @@ describe 'Acceptance::Assessor' do
             typeOfAssessment: valid_assessment_body[:typeOfAssessment],
             dwellingType: valid_assessment_body[:dwellingType],
             addressSummary: valid_assessment_body[:addressSummary],
-            assessmentId: '15650-651625-18267167'
+            assessmentId: '15650-651625-18267167',
+            currentEnergyEfficiencyRating:
+              valid_assessment_body[:currentEnergyEfficiencyRating],
+            potentialEnergyEfficiencyRating:
+              valid_assessment_body[:potentialEnergyEfficiencyRating]
           }.to_json
         )
       expect(response).to eq(expected_response)
@@ -108,7 +114,11 @@ describe 'Acceptance::Assessor' do
             typeOfAssessment: valid_assessment_body[:typeOfAssessment],
             dwellingType: valid_assessment_body[:dwellingType],
             addressSummary: valid_assessment_body[:addressSummary],
-            assessmentId: '123-456'
+            assessmentId: '123-456',
+            currentEnergyEfficiencyRating:
+              valid_assessment_body[:currentEnergyEfficiencyRating],
+            potentialEnergyEfficiencyRating:
+              valid_assessment_body[:potentialEnergyEfficiencyRating]
           }.to_json
         )
 

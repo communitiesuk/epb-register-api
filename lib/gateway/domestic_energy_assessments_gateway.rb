@@ -9,7 +9,11 @@ module Gateway
           type_of_assessment: self[:type_of_assessment],
           total_floor_area: self[:total_floor_area],
           assessment_id: self[:assessment_id],
-          address_summary: self[:address_summary]
+          address_summary: self[:address_summary],
+          current_energy_efficiency_rating:
+            self[:current_energy_efficiency_rating],
+          potential_energy_efficiency_rating:
+            self[:potential_energy_efficiency_rating]
         }
       end
     end
