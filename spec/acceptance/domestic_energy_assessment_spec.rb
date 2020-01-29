@@ -82,7 +82,9 @@ describe 'Acceptance::Assessor' do
             currentEnergyEfficiencyRating:
               valid_assessment_body[:currentEnergyEfficiencyRating],
             potentialEnergyEfficiencyRating:
-              valid_assessment_body[:potentialEnergyEfficiencyRating]
+              valid_assessment_body[:potentialEnergyEfficiencyRating],
+            currentEnergyEfficiencyRatingBand: 'c',
+            potentialEnergyEfficiencyRatingBand: 'c'
           }.to_json
         )
       expect(response).to eq(expected_response)

@@ -13,9 +13,30 @@ describe UseCase::FetchDomesticEnergyAssessment do
 
   context 'when there is an EPC' do
     it 'returns the EPC' do
-      domestic_epcs_gateway.domestic_epc = { some: 'value' }
+      domestic_epcs_gateway.domestic_epc =     {
+            dateOfAssessment: '2020-01-13',
+            dateRegistered: '2020-01-13',
+            totalFloorArea: 1_000,
+            typeOfAssessment: 'RdSAP',
+            dwellingType: 'Top floor flat',
+            addressSummary: '123 Victoria Street, London, SW1A 1BD',
+            current_energy_efficiency_rating: 75,
+            potential_energy_efficiency_rating: 80
+          }
       result = fetch_domestic_epc.execute('123-456')
-      expect(result).to eq({ some: 'value' })
+
+      expect(result).to eq(    {
+            dateOfAssessment: '2020-01-13',
+            dateRegistered: '2020-01-13',
+            totalFloorArea: 1_000,
+            typeOfAssessment: 'RdSAP',
+            dwellingType: 'Top floor flat',
+            addressSummary: '123 Victoria Street, London, SW1A 1BD',
+            current_energy_efficiency_rating: 75,
+            potential_energy_efficiency_rating: 80,
+            currentEnergyEfficiencyRatingBand: 'c',
+            potentialEnergyEfficiencyRatingBand: 'c'
+          })
     end
   end
 end
