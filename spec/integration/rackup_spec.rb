@@ -42,9 +42,6 @@ describe 'Integration::Rackup' do
       it 'return a status of 401' do
         req = Net::HTTP::Get.new '/api/schemes'
         response = request.request req
-
-        puts response.body
-
         expect(response.code).to eq '401'
       end
     end
