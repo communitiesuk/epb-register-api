@@ -2,16 +2,16 @@ require 'net/http'
 
 describe 'Integration::Rackup' do
   before(:all) do
-    process = IO.popen(['rackup', err: %i[child out]])
+    process = IO.popen(['rackup', '-p 9191', err: %i[child out]])
     @process_id = process.pid
 
-    unless process.readline.include?('port=9292')
+    unless process.readline.include?('port=9191')
     end
   end
 
   after(:all) { Process.kill('KILL', @process_id) }
 
-  let(:request) { Net::HTTP.new('127.0.0.1', 9_292) }
+  let(:request) { Net::HTTP.new('127.0.0.1', 9191) }
 
   context 'when rackup has started' do
     context 'requests to /healthcheck' do
@@ -42,6 +42,9 @@ describe 'Integration::Rackup' do
       it 'return a status of 401' do
         req = Net::HTTP::Get.new '/api/schemes'
         response = request.request req
+
+        puts response.body
+
         expect(response.code).to eq '401'
       end
     end
