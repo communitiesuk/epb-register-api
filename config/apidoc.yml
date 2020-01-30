@@ -5,7 +5,7 @@ info:
   version: "1.0"
 
 servers:
-  - url: https://mhclg-epb-assessor-api-integration.london.cloudapps.digital/api
+  - url: https://mhclg-epb-register-api-integration.london.cloudapps.digital/api
     description: Integration server
     variables:
       authServer:
