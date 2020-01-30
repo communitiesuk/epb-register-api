@@ -5,7 +5,7 @@ runtime-versions:
 
 env:
   variables:
-    DEPLOY_APPNAME: "mhclg-epb-assessor-api-integration"
+    DEPLOY_APPNAME: "mhclg-epb-register-api-integration"
 
   parameter-store:
     PAAS_LOGIN: "epbr-govpaas-integration-login"
