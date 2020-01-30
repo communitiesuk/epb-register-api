@@ -1,4 +1,4 @@
-# epb-find-assessor
+# epb-register-api
 
 ## Prerequisites
 
