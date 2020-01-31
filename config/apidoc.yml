@@ -10,7 +10,7 @@ servers:
     variables:
       authServer:
         default: https://mhclg-epb-auth-server-integration.london.cloudapps.digital
-  - url: https://mhclg-epb-assessor-api-staging.london.cloudapps.digital/api
+  - url: https://mhclg-epb-register-api-staging.london.cloudapps.digital/api
     description: Staging server
     variables:
       authServer:
