@@ -38,7 +38,7 @@ module Controller
         Auth::Sinatra::Conditional.process_request env
       rescue Auth::Errors::Error => e
         content_type :json
-        halt 401, { errors: [{:code =>e}] }.to_json
+        halt 401, { errors: [{ code: e }] }.to_json
       end
     end
 
