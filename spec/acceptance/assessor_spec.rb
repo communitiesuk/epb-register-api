@@ -9,7 +9,8 @@ describe 'Acceptance::Assessor' do
       middleNames: 'Muddle',
       lastName: 'Person',
       dateOfBirth: '1991-02-25',
-      searchResultsComparisonPostcode: ''
+      searchResultsComparisonPostcode: '',
+      qualifications: { domesticEnergyPerformanceCertificates: 'ACTIVE' }
     }
   end
 
@@ -139,7 +140,7 @@ describe 'Acceptance::Assessor' do
               contactDetails: { telephoneNumber: '', email: '' },
               searchResultsComparisonPostcode: '',
               qualifications: {
-                domesticEnergyPerformanceCertificates: 'INACTIVE'
+                domesticEnergyPerformanceCertificates: 'ACTIVE'
               }
             }.to_json
           )
@@ -153,7 +154,11 @@ describe 'Acceptance::Assessor' do
       it 'returns EPC domestic qualification as inactive by default' do
         scheme_id = authenticate_and { add_scheme }
         authenticate_and do
-          add_assessor(scheme_id, 'SCHEME4233', valid_assessor_request_body)
+          add_assessor(
+            scheme_id,
+            'SCHEME4233',
+            assessor_without_key(:qualifications, valid_assessor_request_body)
+          )
         end
         expected_qualifications =
           JSON.parse(
@@ -211,7 +216,10 @@ describe 'Acceptance::Assessor' do
               lastName: valid_assessor_request_body[:lastName],
               dateOfBirth: valid_assessor_request_body[:dateOfBirth],
               searchResultsComparisonPostcode:
-                valid_assessor_request_body[:searchResultsComparisonPostcode]
+                valid_assessor_request_body[:searchResultsComparisonPostcode],
+              qualifications: {
+                domesticEnergyPerformanceCertificates: 'ACTIVE'
+              }
             }.to_json
           )
 
@@ -267,7 +275,8 @@ describe 'Acceptance::Assessor' do
               searchResultsComparisonPostcode:
                 assessor_without_key(:middleNames, valid_assessor_request_body)[
                   :searchResultsComparisonPostcode
-                ]
+                ],
+              qualifications: valid_assessor_request_body[:qualifications]
             }.to_json
           )
 

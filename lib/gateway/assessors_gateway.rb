@@ -24,7 +24,14 @@ module Gateway
         },
         search_results_comparison_postcode:
           assessor[:search_results_comparison_postcode],
-        qualifications: { domestic_energy_performance_certificates: 'INACTIVE' }
+        qualifications: {
+          domestic_energy_performance_certificates:
+            if assessor[:domestic_energy_performance_qualification] == 'ACTIVE'
+              'ACTIVE'
+            else
+              'INACTIVE'
+            end
+        }
       }
     end
 
@@ -112,7 +119,19 @@ module Gateway
         else
           ''
         end
+      assessor[:domestic_energy_performance_qualification] =
+        if (
+             assessor[:qualifications] &&
+               assessor[:qualifications][
+                 :domestic_energy_performance_certificates
+               ]
+           )
+          assessor[:qualifications][:domestic_energy_performance_certificates]
+        else
+          nil
+        end
       assessor.delete(:contact_details)
+      assessor.delete(:qualifications)
       assessor
     end
   end

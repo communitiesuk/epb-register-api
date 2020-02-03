@@ -67,6 +67,12 @@ describe 'Integration::Database::Activerecord' do
     expect(migration_has_been_run?('20200108152717')).to be true
   end
 
+  it 'has run the add domestic epc qualification column' do
+    connect('epb_development')
+
+    expect(migration_has_been_run?('20200203125126')).to be true
+  end
+
   it 'can find the schemes table' do
     connect('epb_development')
 
@@ -110,5 +116,18 @@ describe 'Integration::Database::Activerecord' do
       )
 
     expect(potential_energy_efficiency_rating).not_to be_nil
+  end
+
+  it 'can find the domestic epc qualification column' do
+    connect('epb_development')
+
+    ActiveRecord::Base.establish_connection
+
+    domestic_epc_qual_column =
+      ActiveRecord::Base.connection.execute(
+        'SELECT domestic_energy_performance_qualification FROM assessors'
+      )
+
+    expect(domestic_epc_qual_column).not_to be_nil
   end
 end

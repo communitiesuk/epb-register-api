@@ -52,6 +52,10 @@ module UseCase
         end
       end
 
+      if assessor.key?(:qualifications)
+        new_assessor[:qualifications] = assessor[:qualifications]
+      end
+
       @assessors_gateway.update(
         scheme_assessor_id,
         scheme[:scheme_id],

@@ -20,7 +20,8 @@ describe UseCase::AddAssessor do
       contact_details: {
         telephone_number: '004622416767', email: 'mar@ten.com'
       },
-      search_results_comparison_postcode: 'E2 0SZ'
+      search_results_comparison_postcode: 'E2 0SZ',
+      qualifications: { domestic_energy_performance_certificates: 'ACTIVE' }
     }
   end
 
@@ -118,6 +119,20 @@ describe UseCase::AddAssessor do
           :contact_details
         ]
       ).to eq({ telephone_number: '004622416767', email: 'mar@ten.com' })
+    end
+
+    it 'returns the assessors qualifications' do
+      expect(
+        add_assessor_with_stub_data.execute(
+          '25',
+          'SCHE234950',
+          valid_assessor_with_contact_details
+        )[
+          :assessor
+        ][
+          :qualifications
+        ]
+      ).to eq({ domestic_energy_performance_certificates: 'ACTIVE' })
     end
 
     it 'does not return an error if middle names are missing' do
