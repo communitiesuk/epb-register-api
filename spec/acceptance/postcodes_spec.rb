@@ -223,6 +223,64 @@ describe 'Acceptance::Postcodes' do
       expect(response_json['results'][0]['distance']).to be_between(2, 4)
     end
 
+    it 'does not return inactive assessors' do
+      add_postcodes('SE1 5BN', 51.5045, 0.0865)
+
+      scheme_id = authenticate_and { add_scheme('Happy EPC') }
+
+      assessor = valid_assessor_with_contact_request_body
+      assessor[:qualifications][:domesticEnergyPerformanceCertificates] =
+        'INACTIVE'
+
+      authenticate_and do
+        add_assessor(
+          scheme_id,
+          'ASSESSOR999',
+          valid_assessor_with_contact_request_body
+        )
+      end
+      response = authenticate_and { assessors_search_by_postcode('SE15BN') }
+
+      response_json = JSON.parse(response.body)
+
+      expect(response_json['results']).to eq([])
+    end
+
+    it 'does return reactivated assessors' do
+      add_postcodes('SE1 7EZ', 51.5045, 0.0865)
+
+      scheme_id = authenticate_and { add_scheme('Happy EPC') }
+
+      assessor = valid_assessor_with_contact_request_body
+      assessor[:qualifications][:domesticEnergyPerformanceCertificates] =
+        'INACTIVE'
+
+      authenticate_and do
+        add_assessor(
+          scheme_id,
+          'ASSESSOR999',
+          valid_assessor_with_contact_request_body
+        )
+      end
+
+      assessor[:qualifications][:domesticEnergyPerformanceCertificates] =
+        'ACTIVE'
+
+      authenticate_and do
+        add_assessor(
+          scheme_id,
+          'ASSESSOR999',
+          valid_assessor_with_contact_request_body
+        )
+      end
+
+      response = authenticate_and { assessors_search_by_postcode('SE17EZ') }
+
+      response_json = JSON.parse(response.body)
+
+      expect(response_json['results'].size).to eq(1)
+    end
+
     context 'when the postcode is not found' do
       it 'returns results based on the outcode of the postcode' do
         add_postcodes('SE1 5BN', 51.5045, 0.0865)
@@ -268,31 +326,6 @@ describe 'Acceptance::Postcodes' do
 
         response_json = JSON.parse(response.body)
         expect((response_json).key?('errors')).to eq(true)
-      end
-
-      it 'does not return inactive assessors' do
-        add_postcodes('SE1 5BN', 51.5045, 0.0865)
-
-        add_outcodes('SE1', 51.5045, 0.4865)
-
-        scheme_id = authenticate_and { add_scheme('Happy EPC') }
-
-        assessor = valid_assessor_with_contact_request_body
-        assessor[:qualifications][:domesticEnergyPerformanceCertificates] =
-          'INACTIVE'
-
-        authenticate_and do
-          add_assessor(
-            scheme_id,
-            'ASSESSOR999',
-            valid_assessor_with_contact_request_body
-          )
-        end
-        response = authenticate_and { assessors_search_by_postcode('SE15BN') }
-
-        response_json = JSON.parse(response.body)
-
-        expect(response_json['results']).to eq([])
       end
     end
   end
