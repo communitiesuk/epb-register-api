@@ -23,7 +23,8 @@ module Gateway
           telephone_number: assessor[:telephone_number], email: assessor[:email]
         },
         search_results_comparison_postcode:
-          assessor[:search_results_comparison_postcode]
+          assessor[:search_results_comparison_postcode],
+        qualifications: { domestic_energy_performance_certificates: 'INACTIVE' }
       }
     end
 

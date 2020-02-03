@@ -137,7 +137,10 @@ describe 'Acceptance::Assessor' do
               lastName: valid_assessor_request_body[:lastName],
               dateOfBirth: valid_assessor_request_body[:dateOfBirth],
               contactDetails: { telephoneNumber: '', email: '' },
-              searchResultsComparisonPostcode: ''
+              searchResultsComparisonPostcode: '',
+              qualifications: {
+                domesticEnergyPerformanceCertificates: 'INACTIVE'
+              }
             }.to_json
           )
         response =
@@ -145,6 +148,22 @@ describe 'Acceptance::Assessor' do
             authenticate_and { fetch_assessor(scheme_id, 'SCHEME4233') }.body
           )
         expect(response).to eq(expected_response)
+      end
+
+      it 'returns EPC domestic qualification as inactive by default' do
+        scheme_id = authenticate_and { add_scheme }
+        authenticate_and do
+          add_assessor(scheme_id, 'SCHEME4233', valid_assessor_request_body)
+        end
+        expected_qualifications =
+          JSON.parse(
+            { domesticEnergyPerformanceCertificates: 'INACTIVE' }.to_json
+          )
+        response =
+          JSON.parse(
+            authenticate_and { fetch_assessor(scheme_id, 'SCHEME4233') }.body
+          )
+        expect(response['qualifications']).to eq(expected_qualifications)
       end
     end
   end
@@ -478,7 +497,10 @@ describe 'Acceptance::Assessor' do
                     :email
                   ]
               },
-              searchResultsComparisonPostcode: ''
+              searchResultsComparisonPostcode: '',
+              qualifications: {
+                domesticEnergyPerformanceCertificates: 'INACTIVE'
+              }
             }.to_json
           )
         expect(JSON.parse(assessor.body)).to eq(expected_response)

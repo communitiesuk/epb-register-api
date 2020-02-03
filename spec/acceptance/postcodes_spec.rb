@@ -159,6 +159,9 @@ describe 'Acceptance::Postcodes' do
               dateOfBirth: '1991-02-25',
               contactDetails: {
                 telephoneNumber: '010199991010101', email: 'person@person.com'
+              },
+              qualifications: {
+                domesticEnergyPerformanceCertificates: 'INACTIVE'
               }
             },
             distance: 0.0

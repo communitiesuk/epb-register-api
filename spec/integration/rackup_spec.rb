@@ -11,7 +11,7 @@ describe 'Integration::Rackup' do
 
   after(:all) { Process.kill('KILL', @process_id) }
 
-  let(:request) { Net::HTTP.new('127.0.0.1', 9191) }
+  let(:request) { Net::HTTP.new('127.0.0.1', 9_191) }
 
   context 'when rackup has started' do
     context 'requests to /healthcheck' do

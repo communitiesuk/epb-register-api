@@ -313,6 +313,12 @@ components:
             email:
               type: string
               format: email
+        qualifications:
+          type: object
+          properties:
+            domesticEnergyPerformanceCertificates:
+              type: string
+              enum: ['ACTIVE', 'INACTIVE']
 
     AssessorSearchResult:
       allOf:
