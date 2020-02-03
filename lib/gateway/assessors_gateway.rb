@@ -59,7 +59,12 @@ module Gateway
       end
     end
 
-    def search(latitude, longitude, entries = 10)
+    def search(
+      latitude,
+      longitude,
+      qualification = 'domestic_energy_performance_qualification',
+      entries = 10
+    )
       response =
         Assessor.connection.execute(
           "SELECT
@@ -80,7 +85,10 @@ module Gateway
         FROM postcode_geolocation a
         INNER JOIN assessors b ON(b.search_results_comparison_postcode = a.postcode)
         WHERE
-          a.latitude BETWEEN #{
+          #{
+            qualification
+          } = 'ACTIVE'
+          AND a.latitude BETWEEN #{
             (latitude - 1).to_f
           } AND #{(latitude + 1).to_f}
           AND a.longitude BETWEEN #{

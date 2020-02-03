@@ -11,9 +11,7 @@ describe 'Acceptance::Postcodes' do
         telephoneNumber: '010199991010101', email: 'person@person.com'
       },
       searchResultsComparisonPostcode: 'SE1 7EZ',
-      qualifications: {
-          domesticEnergyPerformanceCertificates: 'ACTIVE'
-      }
+      qualifications: { domesticEnergyPerformanceCertificates: 'ACTIVE' }
     }
   end
 
@@ -269,8 +267,32 @@ describe 'Acceptance::Postcodes' do
         response = authenticate_and { assessors_search_by_postcode('NE19SY') }
 
         response_json = JSON.parse(response.body)
-        p response_json
         expect((response_json).key?('errors')).to eq(true)
+      end
+
+      it 'does not return inactive assessors' do
+        add_postcodes('SE1 5BN', 51.5045, 0.0865)
+
+        add_outcodes('SE1', 51.5045, 0.4865)
+
+        scheme_id = authenticate_and { add_scheme('Happy EPC') }
+
+        assessor = valid_assessor_with_contact_request_body
+        assessor[:qualifications][:domesticEnergyPerformanceCertificates] =
+          'INACTIVE'
+
+        authenticate_and do
+          add_assessor(
+            scheme_id,
+            'ASSESSOR999',
+            valid_assessor_with_contact_request_body
+          )
+        end
+        response = authenticate_and { assessors_search_by_postcode('SE15BN') }
+
+        response_json = JSON.parse(response.body)
+
+        expect(response_json['results']).to eq([])
       end
     end
   end
