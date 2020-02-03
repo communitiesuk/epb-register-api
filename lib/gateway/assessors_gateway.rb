@@ -59,12 +59,9 @@ module Gateway
       end
     end
 
-    def search(
-      latitude,
-      longitude,
-      qualification = 'domestic_energy_performance_qualification',
-      entries = 10
-    )
+    def search(latitude, longitude, entries = 10)
+      qualification = 'domestic_energy_performance_qualification'
+
       response =
         Assessor.connection.execute(
           "SELECT
