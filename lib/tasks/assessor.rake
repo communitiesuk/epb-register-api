@@ -1,7 +1,7 @@
 desc 'Import some random assessors data'
 
 task :generate_assessor do
-  ActiveRecord::Base.connection.execute('TRUNCATE TABLE assessors')
+  ActiveRecord::Base.connection.execute('TRUNCATE TABLE assessors RESTART IDENTITY')
 
   result = ActiveRecord::Base.connection.execute('SELECT * FROM postcode_geolocation ORDER BY random() LIMIT 20000')
 

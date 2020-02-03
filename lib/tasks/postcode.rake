@@ -7,7 +7,7 @@ desc 'Import postcode geolocation data'
 task :import_postcode do
   db = ActiveRecord::Base.connection
 
-  db.execute('TRUNCATE TABLE postcode_geolocation')
+  db.execute('TRUNCATE TABLE postcode_geolocation RESTART IDENTITY')
 
   ActiveRecord::Base.logger = nil
 

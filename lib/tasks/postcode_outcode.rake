@@ -8,7 +8,7 @@ class PostcodeOutcodeGeolocation < ActiveRecord::Base; end
 task :import_postcode_outcode do
   db = ActiveRecord::Base.connection
 
-  db.execute('TRUNCATE TABLE postcode_outcode_geolocations')
+  db.execute('TRUNCATE TABLE postcode_outcode_geolocations RESTART IDENTITY')
 
   ActiveRecord::Base.logger = nil
 
