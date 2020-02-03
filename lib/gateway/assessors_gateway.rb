@@ -65,7 +65,7 @@ module Gateway
           "SELECT
           first_name, last_name, middle_names, date_of_birth, registered_by,
           scheme_assessor_id, telephone_number, email,
-          search_results_comparison_postcode,
+          search_results_comparison_postcode, domestic_energy_performance_qualification,
           (
             sqrt(abs(POWER(69.1 * (a.latitude - #{
             latitude.to_f

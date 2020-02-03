@@ -10,7 +10,10 @@ describe 'Acceptance::Postcodes' do
       contactDetails: {
         telephoneNumber: '010199991010101', email: 'person@person.com'
       },
-      searchResultsComparisonPostcode: 'SE1 7EZ'
+      searchResultsComparisonPostcode: 'SE1 7EZ',
+      qualifications: {
+          domesticEnergyPerformanceCertificates: 'ACTIVE'
+      }
     }
   end
 
@@ -161,7 +164,7 @@ describe 'Acceptance::Postcodes' do
                 telephoneNumber: '010199991010101', email: 'person@person.com'
               },
               qualifications: {
-                domesticEnergyPerformanceCertificates: 'INACTIVE'
+                domesticEnergyPerformanceCertificates: 'ACTIVE'
               }
             },
             distance: 0.0
