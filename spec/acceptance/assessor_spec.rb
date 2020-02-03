@@ -23,7 +23,8 @@ describe 'Acceptance::Assessor' do
       contactDetails: {
         telephoneNumber: '010199991010101', email: 'person@person.com'
       },
-      searchResultsComparisonPostcode: ''
+      searchResultsComparisonPostcode: '',
+      qualifications: { domesticEnergyPerformanceCertificates: 'ACTIVE' }
     }
   end
 
@@ -525,7 +526,7 @@ describe 'Acceptance::Assessor' do
               },
               searchResultsComparisonPostcode: '',
               qualifications: {
-                domesticEnergyPerformanceCertificates: 'INACTIVE'
+                domesticEnergyPerformanceCertificates: 'ACTIVE'
               }
             }.to_json
           )
