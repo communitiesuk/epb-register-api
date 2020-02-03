@@ -13,7 +13,16 @@ task :generate_assessor do
   result.each do |row|
     first_name = first_names[rand(first_names.size)]
     last_name = last_names[rand(last_names.size)]
-    query = "INSERT INTO assessors (first_name, last_name, date_of_birth, registered_by, scheme_assessor_id, telephone_number, email, search_results_comparison_postcode, domestic_energy_performance_qualification) VALUES(
+    query =
+      "INSERT INTO
+        assessors
+          (
+            first_name, last_name, date_of_birth, registered_by,
+            scheme_assessor_id, telephone_number, email,
+            search_results_comparison_postcode,
+            domestic_energy_performance_qualification
+          )
+        VALUES(
           '#{first_name}',
           '#{last_name}',
           '#{rand(1970..1999)}-01-01',
