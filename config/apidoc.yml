@@ -340,6 +340,19 @@ components:
               type: string
               example: "154d-616-nn177"
 
+    DomesticEnergyAssessmentWithBand:
+      allOf:
+        - $ref: '#/components/schemas/EnergyAssessmentBasicInfo'
+      properties:
+        currentEnergyEfficiencyBand:
+          type: string
+          example: 'a'
+          description: The band, from a to g, the current Energy Rating falls within
+        potentialEnergyEfficiencyBand:
+          type: string
+          example: 'a'
+          description: The band, from a to g, the potential Energy Rating falls within
+
     EnergyAssessmentBasicInfo:
       type: object
       properties:
@@ -371,19 +384,6 @@ components:
           minimum: 1
           maximum: 100
           description: The potential energy rating to be submitted, must be equal to or larger than currentEnergyEfficiencyRating
-
-    EnergyAssessmentBasicInfoWithBand:
-      allOf:
-        - $ref: '#/components/schemas/EnergyAssessmentBasicInfo'
-      properties:
-        currentEnergyEfficiencyBand:
-          type: string
-          example: 'a'
-          description: The band, from a to g, the current Energy Rating falls within
-        potentialEnergyEfficiencyBand:
-          type: string
-          example: 'a'
-          description: The band, from a to g, the potential Energy Rating falls within
 
     MigrateDomesticEnergyAssessment:
       allOf:
