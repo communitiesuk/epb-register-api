@@ -232,7 +232,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DomesticEnergyAssessment'
+                $ref: '#/components/schemas/DomesticEnergyAssessmentWithBand'
         404:
           description: Assessment not found
         500:
@@ -352,14 +352,38 @@ components:
           format: date
           description: The date that the assessment was submitted to the Register
         totalFloorArea:
-          type: string
+          type: integer
         typeOfAssessment:
           type: string
+          enum: [SAP, RdSAP]
         dwellingType:
           type: string
         addressSummary:
           type: string
-          example: "2 Marsham Street, London, SW1P 4JA"
+          example: 2 Marsham Street, London, SW1P 4JA
+        currentEnergyEfficiencyRating:
+          type: integer
+          minimum: 1
+          maximum: 100
+          description: The current energy rating to be submitted to the Register
+        potentialEnergyEfficiencyRating:
+          type: integer
+          minimum: 1
+          maximum: 100
+          description: The potential energy rating to be submitted, must be equal to or larger than currentEnergyEfficiencyRating
+
+    EnergyAssessmentBasicInfoWithBand:
+      allOf:
+        - $ref: '#/components/schemas/EnergyAssessmentBasicInfo'
+      properties:
+        currentEnergyEfficiencyBand:
+          type: string
+          example: 'a'
+          description: The band, from a to g, the current Energy Rating falls within
+        potentialEnergyEfficiencyBand:
+          type: string
+          example: 'a'
+          description: The band, from a to g, the potential Energy Rating falls within
 
     MigrateDomesticEnergyAssessment:
       allOf:
