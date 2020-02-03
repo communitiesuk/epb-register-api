@@ -409,6 +409,23 @@ describe 'Acceptance::Assessor' do
 
         expect(assessor_response.status).to eq(422)
       end
+
+      it 'rejects an assessor qualification status of horse' do
+        scheme_id = authenticate_and { add_scheme }
+        invalid_body = valid_assessor_request_body.dup
+        invalid_body[:qualifications] = {
+          domesticEnergyPerformanceCertificates: 'horse'
+        }
+        assessor_response =
+          authenticate_and do
+            put(
+              "/api/schemes/#{scheme_id}/assessors/thebrokenassessor",
+              invalid_body.to_json
+            )
+          end
+
+        expect(assessor_response.status).to eq(422)
+      end
     end
 
     context 'which has a clashing ID for an assessor on another scheme' do

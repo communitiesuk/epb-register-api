@@ -14,6 +14,14 @@ module Controller
             telephoneNumber: { type: 'string', format: 'telephone' },
             email: { type: 'string', format: 'email' }
           }
+        },
+        qualifications: {
+          type: 'object',
+          properties: {
+            domesticEnergyPerformanceCertificates: {
+              type: 'string', enum: %w[ACTIVE INACTIVE]
+            }
+          }
         }
       }
     }
