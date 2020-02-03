@@ -40,7 +40,8 @@ describe 'Integration::FilterAndOrderAssessorsByPostcode' do
       middleNames: 'muddle',
       lastName: 'Person',
       dateOfBirth: '1991-02-25',
-      searchResultsComparisonPostcode: 'BF1 3AD'
+      searchResultsComparisonPostcode: 'BF1 3AD',
+      qualifications: { domesticEnergyPerformanceCertificates: 'ACTIVE' }
     }
   end
 
