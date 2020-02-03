@@ -1,7 +1,7 @@
 desc 'Import some random schemes data'
 
 task :generate_schemes do
-  ActiveRecord::Base.connection.execute('TRUNCATE TABLE schemes CASCADE')
+  ActiveRecord::Base.connection.execute('TRUNCATE TABLE schemes RESTART IDENTITY CASCADE')
 
   ActiveRecord::Base.logger = nil
 
