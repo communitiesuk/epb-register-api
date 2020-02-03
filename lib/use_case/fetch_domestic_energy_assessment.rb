@@ -10,8 +10,10 @@ module UseCase
       assessment = @domestic_energy_assessments_gateway.fetch(assessment_id)
       raise NotFoundException unless assessment
 
-      assessment[:current_energy_efficiency_band] = get_energy_rating_band(assessment[:current_energy_efficiency_rating])
-      assessment[:potential_energy_efficiency_band] = get_energy_rating_band(assessment[:potential_energy_efficiency_rating])
+      assessment[:current_energy_efficiency_band] =
+        get_energy_rating_band(assessment[:current_energy_efficiency_rating])
+      assessment[:potential_energy_efficiency_band] =
+        get_energy_rating_band(assessment[:potential_energy_efficiency_rating])
 
       assessment
     end
@@ -36,6 +38,5 @@ module UseCase
         'a'
       end
     end
-
   end
 end
