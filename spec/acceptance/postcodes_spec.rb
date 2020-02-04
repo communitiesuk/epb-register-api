@@ -281,6 +281,43 @@ describe 'Acceptance::Postcodes' do
       expect(response_json['results'].size).to eq(1)
     end
 
+
+
+    it 'does not return unactivated assessors' do
+      add_postcodes('SE1 7EZ', 51.5045, 0.0865)
+
+      scheme_id = authenticate_and { add_scheme('Happy EPC') }
+
+      assessor = valid_assessor_with_contact_request_body
+      assessor[:qualifications][:domesticEnergyPerformanceCertificates] =
+        'ACTIVE'
+
+      authenticate_and do
+        add_assessor(
+          scheme_id,
+          'ASSESSOR999',
+          valid_assessor_with_contact_request_body
+        )
+      end
+
+      assessor[:qualifications][:domesticEnergyPerformanceCertificates] =
+        'INACTIVE'
+
+      authenticate_and do
+        add_assessor(
+          scheme_id,
+          'ASSESSOR999',
+          valid_assessor_with_contact_request_body
+        )
+      end
+
+      response = authenticate_and { assessors_search_by_postcode('SE17EZ') }
+
+      response_json = JSON.parse(response.body)
+
+      expect(response_json['results'].size).to eq(0)
+    end
+
     context 'when the postcode is not found' do
       it 'returns results based on the outcode of the postcode' do
         add_postcodes('SE1 5BN', 51.5045, 0.0865)
