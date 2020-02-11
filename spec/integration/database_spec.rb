@@ -73,6 +73,12 @@ describe 'Integration::Database::Activerecord' do
     expect(migration_has_been_run?('20200203125126')).to be true
   end
 
+  it 'has run the add postcode column migration' do
+    connect('epb_development')
+
+    expect(migration_has_been_run?('20200211104126')).to be true
+  end
+
   it 'can find the schemes table' do
     connect('epb_development')
 
@@ -129,5 +135,18 @@ describe 'Integration::Database::Activerecord' do
       )
 
     expect(domestic_epc_qual_column).not_to be_nil
+  end
+
+  it 'can find the postcode column from domestic energy assessments table' do
+    connect('epb_development')
+
+    ActiveRecord::Base.establish_connection
+
+    domestic_epc_postcode_column =
+      ActiveRecord::Base.connection.execute(
+        'SELECT postcode FROM domestic_energy_assessments'
+      )
+
+    expect(domestic_epc_postcode_column).not_to be_nil
   end
 end
