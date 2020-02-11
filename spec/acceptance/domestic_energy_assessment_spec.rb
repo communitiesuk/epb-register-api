@@ -14,7 +14,7 @@ describe 'Acceptance::Assessor' do
       addressSummary: '123 Victoria Street, London, SW1A 1BD',
       currentEnergyEfficiencyRating: 75,
       potentialEnergyEfficiencyRating: 80,
-      postcode: 'E2 0SZ',
+      postcode: 'SE1 7EZ',
       dateOfExpiry: '2021-01-01'
     }.freeze
   end
@@ -298,7 +298,10 @@ describe 'Acceptance::Assessor' do
     end
 
     def add_assessment(assessment_id, body)
-      put("/api/assessments/domestic-energy-performance/#{assessment_id}", body.to_json)
+      put(
+        "/api/assessments/domestic-energy-performance/#{assessment_id}",
+        body.to_json
+      )
     end
 
     context 'when a search postcode is invalid' do
@@ -341,12 +344,7 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'has the over all hash of the shape we expect' do
-        authenticate_and do
-          add_assessment(
-            '123-987',
-            valid_assessment_body
-          )
-        end
+        authenticate_and { add_assessment('123-987', valid_assessment_body) }
 
         response = authenticate_and { assessments_search_by_postcode('SE17EZ') }
 
@@ -364,12 +362,10 @@ describe 'Acceptance::Assessor' do
               addressSummary: '123 Victoria Street, London, SW1A 1BD',
               currentEnergyEfficiencyRating: 75,
               potentialEnergyEfficiencyRating: 80,
-              postcode: 'E2 0SZ',
+              postcode: 'SE1 7EZ',
               dateOfExpiry: '2021-01-01'
             }.to_json
           )
-
-        response_json['results'][0]['assessor']['registeredBy']['schemeId'] = 25
 
         expect(response_json['results'][0]).to eq(expected_response)
       end

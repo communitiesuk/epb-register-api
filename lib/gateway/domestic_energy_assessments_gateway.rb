@@ -4,22 +4,27 @@ module Gateway
     class InvalidPotentialEnergyRatingException < Exception; end
     class DomesticEnergyAssessment < ActiveRecord::Base
       def to_hash
-        {
-          date_of_assessment: self[:date_of_assessment].strftime('%Y-%m-%d'),
-          date_registered: self[:date_registered].strftime('%Y-%m-%d'),
-          dwelling_type: self[:dwelling_type],
-          type_of_assessment: self[:type_of_assessment],
-          total_floor_area: self[:total_floor_area],
-          assessment_id: self[:assessment_id],
-          address_summary: self[:address_summary],
-          current_energy_efficiency_rating:
-            self[:current_energy_efficiency_rating],
-          potential_energy_efficiency_rating:
-            self[:potential_energy_efficiency_rating],
-          postcode: self[:postcode],
-          date_of_expiry: self[:date_of_expiry].strftime('%Y-%m-%d')
-        }
+        Gateway::DomesticEnergyAssessmentsGateway.new.to_hash(self)
       end
+    end
+
+    def to_hash(assessment)
+      {
+        date_of_assessment:
+          assessment[:date_of_assessment].strftime('%Y-%m-%d'),
+        date_registered: assessment[:date_registered].strftime('%Y-%m-%d'),
+        dwelling_type: assessment[:dwelling_type],
+        type_of_assessment: assessment[:type_of_assessment],
+        total_floor_area: assessment[:total_floor_area],
+        assessment_id: assessment[:assessment_id],
+        address_summary: assessment[:address_summary],
+        current_energy_efficiency_rating:
+          assessment[:current_energy_efficiency_rating],
+        potential_energy_efficiency_rating:
+          assessment[:potential_energy_efficiency_rating],
+        postcode: assessment[:postcode],
+        date_of_expiry: assessment[:date_of_expiry].strftime('%Y-%m-%d')
+      }
     end
 
     def fetch(assessment_id)
@@ -49,12 +54,16 @@ module Gateway
 
     def search(postcode)
       response =
-        Assessor.connection.execute(
+        DomesticEnergyAssessment.connection.execute(
           "SELECT
-            assessment_id, date_of_assessment, date_registered, dwelling_type, type_of_assessment, total_floor_area, address_summary, current_energy_efficiency_rating, potential_energy_efficiency_rating, postcode, date_of_expiry
+            assessment_id, date_of_assessment, date_registered, dwelling_type,
+            type_of_assessment, total_floor_area, address_summary, current_energy_efficiency_rating,
+            potential_energy_efficiency_rating, postcode, date_of_expiry
         FROM domestic_energy_assessments
         WHERE
-          postcode = #{postcode}"
+          postcode = '#{
+            ActiveRecord::Base.sanitize_sql(postcode)
+          }'"
         )
 
       result = []
@@ -63,6 +72,7 @@ module Gateway
 
         result.push(assessment_hash)
       end
+
       result
     end
 
