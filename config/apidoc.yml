@@ -384,6 +384,14 @@ components:
           minimum: 1
           maximum: 100
           description: The potential energy rating to be submitted, must be equal to or larger than currentEnergyEfficiencyRating
+        postcode:
+          type: string
+          example: SW1P 4JA
+          description: The postcode of the property
+        dateOfExpiry:
+          type: string
+          format: date
+          description: The date that the certificate expires
 
     MigrateDomesticEnergyAssessment:
       allOf:
