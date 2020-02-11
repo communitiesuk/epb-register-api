@@ -15,7 +15,9 @@ module Gateway
           current_energy_efficiency_rating:
             self[:current_energy_efficiency_rating],
           potential_energy_efficiency_rating:
-            self[:potential_energy_efficiency_rating]
+            self[:potential_energy_efficiency_rating],
+          postcode: self[:postcode],
+          date_of_expiry: self[:date_of_expiry].strftime('%Y-%m-%d')
         }
       end
     end
@@ -43,6 +45,25 @@ module Gateway
       else
         send_to_db(assessment_id, domestic_energy_assessment)
       end
+    end
+
+    def search(postcode)
+      response =
+        Assessor.connection.execute(
+          "SELECT
+            assessment_id, date_of_assessment, date_registered, dwelling_type, type_of_assessment, total_floor_area, address_summary, current_energy_efficiency_rating, potential_energy_efficiency_rating, postcode, date_of_expiry
+        FROM domestic_energy_assessments
+        WHERE
+          postcode = #{postcode}"
+        )
+
+      result = []
+      response.each do |row|
+        assessment_hash = to_hash(row.symbolize_keys)
+
+        result.push(assessment_hash)
+      end
+      result
     end
 
     private

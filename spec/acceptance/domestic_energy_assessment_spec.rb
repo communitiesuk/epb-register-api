@@ -5,6 +5,7 @@ describe 'Acceptance::Assessor' do
 
   let(:valid_assessment_body) do
     {
+      assessmentId: '123-987',
       dateOfAssessment: '2020-01-13',
       dateRegistered: '2020-01-13',
       totalFloorArea: 1_000,
@@ -12,7 +13,9 @@ describe 'Acceptance::Assessor' do
       dwellingType: 'Top floor flat',
       addressSummary: '123 Victoria Street, London, SW1A 1BD',
       currentEnergyEfficiencyRating: 75,
-      potentialEnergyEfficiencyRating: 80
+      potentialEnergyEfficiencyRating: 80,
+      postcode: 'E2 0SZ',
+      dateOfExpiry: '2021-01-01'
     }.freeze
   end
 
@@ -84,7 +87,9 @@ describe 'Acceptance::Assessor' do
             potentialEnergyEfficiencyRating:
               valid_assessment_body[:potentialEnergyEfficiencyRating],
             currentEnergyEfficiencyBand: 'c',
-            potentialEnergyEfficiencyBand: 'c'
+            potentialEnergyEfficiencyBand: 'c',
+            postcode: valid_assessment_body[:postcode],
+            dateOfExpiry: valid_assessment_body[:dateOfExpiry]
           }.to_json
         )
       expect(response).to eq(expected_response)
@@ -120,7 +125,9 @@ describe 'Acceptance::Assessor' do
             currentEnergyEfficiencyRating:
               valid_assessment_body[:currentEnergyEfficiencyRating],
             potentialEnergyEfficiencyRating:
-              valid_assessment_body[:potentialEnergyEfficiencyRating]
+              valid_assessment_body[:potentialEnergyEfficiencyRating],
+            postcode: valid_assessment_body[:postcode],
+            dateOfExpiry: valid_assessment_body[:dateOfExpiry]
           }.to_json
         )
 
@@ -282,6 +289,90 @@ describe 'Acceptance::Assessor' do
           migrate_assessment('123-456', assessment_with_dodgy_potential_rating)
         end
       expect(response.status).to eq(422)
+    end
+  end
+
+  context 'when searching for an assessment' do
+    def assessments_search_by_postcode(postcode)
+      get "/api/assessments/domestic-energy-performance/search/#{postcode}"
+    end
+
+    def add_assessment(assessment_id, body)
+      put("/api/assessments/domestic-energy-performance/#{assessment_id}", body.to_json)
+    end
+
+    context 'when a search postcode is invalid' do
+      it 'returns status 409 for a get' do
+        expect(
+          authenticate_and { assessments_search_by_postcode('73334') }.status
+        ).to eq(409)
+      end
+    end
+
+    context 'when a search postcode is valid' do
+      it 'returns status 200 for a get' do
+        expect(
+          authenticate_and { assessments_search_by_postcode('SE17EZ') }.status
+        ).to eq(200)
+      end
+
+      it 'looks as it should' do
+        response = authenticate_and { assessments_search_by_postcode('SE17EZ') }
+
+        response_json = JSON.parse(response.body)
+
+        expect(response_json['results']).to be_an(Array)
+      end
+
+      it 'can handle a lowercase postcode' do
+        response = authenticate_and { assessments_search_by_postcode('e20sz') }
+
+        response_json = JSON.parse(response.body)
+
+        expect(response_json['results']).to be_an(Array)
+      end
+
+      it 'has the properties we expect' do
+        response = authenticate_and { assessments_search_by_postcode('SE17EZ') }
+
+        response_json = JSON.parse(response.body)
+
+        expect(response_json).to include('results', 'searchPostcode')
+      end
+
+      it 'has the over all hash of the shape we expect' do
+        authenticate_and do
+          add_assessment(
+            '123-987',
+            valid_assessment_body
+          )
+        end
+
+        response = authenticate_and { assessments_search_by_postcode('SE17EZ') }
+
+        response_json = JSON.parse(response.body)
+
+        expected_response =
+          JSON.parse(
+            {
+              assessmentId: '123-987',
+              dateOfAssessment: '2020-01-13',
+              dateRegistered: '2020-01-13',
+              totalFloorArea: 1_000,
+              typeOfAssessment: 'RdSAP',
+              dwellingType: 'Top floor flat',
+              addressSummary: '123 Victoria Street, London, SW1A 1BD',
+              currentEnergyEfficiencyRating: 75,
+              potentialEnergyEfficiencyRating: 80,
+              postcode: 'E2 0SZ',
+              dateOfExpiry: '2021-01-01'
+            }.to_json
+          )
+
+        response_json['results'][0]['assessor']['registeredBy']['schemeId'] = 25
+
+        expect(response_json['results'][0]).to eq(expected_response)
+      end
     end
   end
 end
