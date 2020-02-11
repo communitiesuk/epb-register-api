@@ -281,8 +281,6 @@ describe 'Acceptance::Postcodes' do
       expect(response_json['results'].size).to eq(1)
     end
 
-
-
     it 'does not return unactivated assessors' do
       add_postcodes('SE1 7EZ', 51.5045, 0.0865)
 

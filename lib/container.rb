@@ -27,7 +27,8 @@ class Container
         assessors_gateway,
         schemes_gateway
       )
-    find_assessments_use_case = UseCase::FindAssessments.new(domestic_energy_assessments_gateway)
+    find_assessments_use_case =
+      UseCase::FindAssessments.new(domestic_energy_assessments_gateway)
 
     @objects = {
       schemes_gateway: schemes_gateway,

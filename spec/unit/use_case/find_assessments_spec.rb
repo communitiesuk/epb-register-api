@@ -9,30 +9,30 @@ describe UseCase::FindAssessments do
         DomesticEnergyAssessmentsGatewayStub.new(
           [
             {
-                assessmentId: '123-987',
-                dateOfAssessment: '2020-01-13',
-                dateRegistered: '2020-01-13',
-                totalFloorArea: 1_000,
-                typeOfAssessment: 'RdSAP',
-                dwellingType: 'Top floor flat',
-                addressSummary: '123 Victoria Street, London, SW1A 1BD',
-                currentEnergyEfficiencyRating: 75,
-                potentialEnergyEfficiencyRating: 80,
-                postcode: 'SE1 7EZ',
-                dateOfExpiry: '2021-01-02'
+              assessmentId: '123-987',
+              dateOfAssessment: '2020-01-13',
+              dateRegistered: '2020-01-13',
+              totalFloorArea: 1_000,
+              typeOfAssessment: 'RdSAP',
+              dwellingType: 'Top floor flat',
+              addressSummary: '123 Victoria Street, London, SW1A 1BD',
+              currentEnergyEfficiencyRating: 75,
+              potentialEnergyEfficiencyRating: 80,
+              postcode: 'SE1 7EZ',
+              dateOfExpiry: '2021-01-02'
             },
             {
-                assessmentId: '113-987',
-                dateOfAssessment: '2020-01-14',
-                dateRegistered: '2020-01-03',
-                totalFloorArea: 1_000,
-                typeOfAssessment: 'RdSAP',
-                dwellingType: 'Top floor flat',
-                addressSummary: '13 Victoria Street, London, SW1A 1BD',
-                currentEnergyEfficiencyRating: 75,
-                potentialEnergyEfficiencyRating: 80,
-                postcode: 'SE1 7EZ',
-                dateOfExpiry: '2021-01-02'
+              assessmentId: '113-987',
+              dateOfAssessment: '2020-01-14',
+              dateRegistered: '2020-01-03',
+              totalFloorArea: 1_000,
+              typeOfAssessment: 'RdSAP',
+              dwellingType: 'Top floor flat',
+              addressSummary: '13 Victoria Street, London, SW1A 1BD',
+              currentEnergyEfficiencyRating: 75,
+              potentialEnergyEfficiencyRating: 80,
+              postcode: 'SE1 7EZ',
+              dateOfExpiry: '2021-01-02'
             }
           ]
         )

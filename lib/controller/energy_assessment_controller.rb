@@ -40,12 +40,14 @@ module Controller
       end
     end
 
-    get '/api/assessments/domestic-energy-performance/search/:postcode', jwt_auth: [] do
+    get '/api/assessments/domestic-energy-performance/search/:postcode',
+        jwt_auth: [] do
       postcode = params[:postcode].upcase
 
       postcode = postcode.insert(-4, ' ') if postcode[-4] != ' '
 
-      result = @container.get_object(:find_assessments_use_case).execute(postcode)
+      result =
+        @container.get_object(:find_assessments_use_case).execute(postcode)
       json_response(200, result)
     rescue Exception => e
       case e
