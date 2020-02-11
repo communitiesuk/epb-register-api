@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_11_104126) do
+ActiveRecord::Schema.define(version: 2020_02_11_112211) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 2020_02_11_104126) do
     t.integer "current_energy_efficiency_rating", limit: 2, default: 1, null: false
     t.integer "potential_energy_efficiency_rating", limit: 2, default: 2, null: false
     t.string "postcode"
+    t.datetime "date_of_expiry"
   end
 
   create_table "postcode_geolocation", force: :cascade do |t|
