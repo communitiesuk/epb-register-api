@@ -52,19 +52,22 @@ module Gateway
       end
     end
 
-    def search(postcode)
-      response =
-        DomesticEnergyAssessment.connection.execute(
-          "SELECT
+    def search(query, postcode = true)
+      sql =
+        'SELECT
             assessment_id, date_of_assessment, date_registered, dwelling_type,
             type_of_assessment, total_floor_area, address_summary, current_energy_efficiency_rating,
             potential_energy_efficiency_rating, postcode, date_of_expiry
         FROM domestic_energy_assessments
-        WHERE
-          postcode = '#{
-            ActiveRecord::Base.sanitize_sql(postcode)
-          }'"
-        )
+        WHERE '
+
+      if postcode
+        sql += "postcode = '#{ActiveRecord::Base.sanitize_sql(query)}'"
+      else
+        sql += "assessment_id = '#{ActiveRecord::Base.sanitize_sql(query)}'"
+      end
+
+      response = DomesticEnergyAssessment.connection.execute(sql)
 
       result = []
       response.each do |row|

@@ -39,12 +39,6 @@ describe UseCase::FindAssessments do
       )
     end
 
-    it 'return an error when the postcode is not valid' do
-      expect {
-        find_assessments_without_stub_data.execute('733 34')
-      }.to raise_exception UseCase::FindAssessments::PostcodeNotValid
-    end
-
     it 'return empty when no assessments are present' do
       expect(
         find_assessments_without_stub_data.execute('E2 0SZ')[:results]

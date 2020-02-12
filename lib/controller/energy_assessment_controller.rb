@@ -40,26 +40,15 @@ module Controller
       end
     end
 
-    get '/api/assessments/domestic-energy-performance/search/:postcode',
+    get '/api/assessments/domestic-energy-performance/search/:query',
         jwt_auth: [] do
-      postcode = params[:postcode].upcase
-
-      postcode = postcode.insert(-4, ' ') if postcode[-4] != ' '
-
       result =
-        @container.get_object(:find_assessments_use_case).execute(postcode)
+        @container.get_object(:find_assessments_use_case).execute(
+          params[:query]
+        )
       json_response(200, result)
     rescue Exception => e
-      case e
-      when UseCase::FindAssessments::PostcodeNotValid
-        error_response(
-          409,
-          'INVALID_REQUEST',
-          'The requested postcode is not valid'
-        )
-      else
-        server_error(e.message)
-      end
+      server_error(e.message)
     end
 
     put '/api/assessments/domestic-energy-performance/:assessment_id',

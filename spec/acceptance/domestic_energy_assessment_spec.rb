@@ -293,8 +293,8 @@ describe 'Acceptance::Assessor' do
   end
 
   context 'when searching for an assessment' do
-    def assessments_search_by_postcode(postcode)
-      get "/api/assessments/domestic-energy-performance/search/#{postcode}"
+    def assessments_search_by_query(query)
+      get "/api/assessments/domestic-energy-performance/search/#{query}"
     end
 
     def add_assessment(assessment_id, body)
@@ -304,23 +304,15 @@ describe 'Acceptance::Assessor' do
       )
     end
 
-    context 'when a search postcode is invalid' do
-      it 'returns status 409 for a get' do
-        expect(
-          authenticate_and { assessments_search_by_postcode('73334') }.status
-        ).to eq(409)
-      end
-    end
-
     context 'when a search postcode is valid' do
       it 'returns status 200 for a get' do
         expect(
-          authenticate_and { assessments_search_by_postcode('SE17EZ') }.status
+          authenticate_and { assessments_search_by_query('SE17EZ') }.status
         ).to eq(200)
       end
 
       it 'looks as it should' do
-        response = authenticate_and { assessments_search_by_postcode('SE17EZ') }
+        response = authenticate_and { assessments_search_by_query('SE17EZ') }
 
         response_json = JSON.parse(response.body)
 
@@ -328,7 +320,7 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'can handle a lowercase postcode' do
-        response = authenticate_and { assessments_search_by_postcode('e20sz') }
+        response = authenticate_and { assessments_search_by_query('e20sz') }
 
         response_json = JSON.parse(response.body)
 
@@ -336,17 +328,70 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'has the properties we expect' do
-        response = authenticate_and { assessments_search_by_postcode('SE17EZ') }
+        response = authenticate_and { assessments_search_by_query('SE17EZ') }
 
         response_json = JSON.parse(response.body)
 
-        expect(response_json).to include('results', 'searchPostcode')
+        expect(response_json).to include('results', 'searchQuery')
       end
 
       it 'has the over all hash of the shape we expect' do
         authenticate_and { add_assessment('123-987', valid_assessment_body) }
 
-        response = authenticate_and { assessments_search_by_postcode('SE17EZ') }
+        response = authenticate_and { assessments_search_by_query('SE17EZ') }
+
+        response_json = JSON.parse(response.body)
+
+        expected_response =
+          JSON.parse(
+            {
+              assessmentId: '123-987',
+              dateOfAssessment: '2020-01-13',
+              dateRegistered: '2020-01-13',
+              totalFloorArea: 1_000,
+              typeOfAssessment: 'RdSAP',
+              dwellingType: 'Top floor flat',
+              addressSummary: '123 Victoria Street, London, SW1A 1BD',
+              currentEnergyEfficiencyRating: 75,
+              potentialEnergyEfficiencyRating: 80,
+              currentEnergyEfficiencyBand: 'c',
+              potentialEnergyEfficiencyBand: 'c',
+              postcode: 'SE1 7EZ',
+              dateOfExpiry: '2021-01-01'
+            }.to_json
+          )
+
+        expect(response_json['results'][0]).to eq(expected_response)
+      end
+    end
+
+    context 'when a search assessment id is valid' do
+      it 'returns status 200 for a get' do
+        expect(
+          authenticate_and { assessments_search_by_query('123-987') }.status
+        ).to eq(200)
+      end
+
+      it 'looks as it should' do
+        response = authenticate_and { assessments_search_by_query('123-987') }
+
+        response_json = JSON.parse(response.body)
+
+        expect(response_json['results']).to be_an(Array)
+      end
+
+      it 'has the properties we expect' do
+        response = authenticate_and { assessments_search_by_query('123-987') }
+
+        response_json = JSON.parse(response.body)
+
+        expect(response_json).to include('results', 'searchQuery')
+      end
+
+      it 'has the over all hash of the shape we expect' do
+        authenticate_and { add_assessment('123-987', valid_assessment_body) }
+
+        response = authenticate_and { assessments_search_by_query('123-987') }
 
         response_json = JSON.parse(response.body)
 

@@ -6,25 +6,27 @@ module UseCase
       @assessment_gateway = assessment_gateway
     end
 
-    def execute(postcode)
-      unless Regexp.new(
-               '^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$',
-               Regexp::IGNORECASE
-             )
-               .match(postcode)
-        raise PostcodeNotValid
-      end
-
+    def execute(query)
       result = []
-      @assessment_gateway.search(postcode).each do |assessment|
+
+      uniform_query = transform_when_postcode(query)
+
+      @assessment_gateway.search(
+        uniform_query,
+        Regexp.new('^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$', Regexp::IGNORECASE)
+          .match(uniform_query)
+      )
+        .each do |assessment|
         assessment[:current_energy_efficiency_band] =
           get_energy_rating_band(assessment[:current_energy_efficiency_rating])
         assessment[:potential_energy_efficiency_band] =
-          get_energy_rating_band(assessment[:potential_energy_efficiency_rating])
+          get_energy_rating_band(
+            assessment[:potential_energy_efficiency_rating]
+          )
 
         result.push(assessment)
       end
-      { 'results': result, 'searchPostcode': postcode }
+      { 'results': result, 'searchQuery': query }
     end
 
     private
@@ -46,6 +48,21 @@ module UseCase
       when 92..100
         'a'
       end
+    end
+
+    def transform_when_postcode(query)
+      potential_postcode = query.upcase
+
+      if potential_postcode[-4] != ' '
+        potential_postcode = potential_postcode.insert(-4, ' ')
+      end
+
+      if Regexp.new('^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$', Regexp::IGNORECASE)
+           .match(potential_postcode)
+        return potential_postcode
+      end
+
+      query
     end
   end
 end
