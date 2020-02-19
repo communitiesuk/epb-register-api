@@ -1,5 +1,5 @@
 module UseCase
-  class FindAssessors
+  class FindAssessorsByPostcode
     class PostcodeNotValid < Exception; end
     class PostcodeNotRegistered < Exception; end
 

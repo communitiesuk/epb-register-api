@@ -1,4 +1,4 @@
-describe UseCase::FindAssessors do
+describe UseCase::FindAssessorsByPostcode do
   context 'when finding an assessor' do
     let(:find_assessors_without_stub_data) do
       postcodes_gateway =
@@ -73,13 +73,13 @@ describe UseCase::FindAssessors do
     it 'return an error when the postcode is not valid' do
       expect {
         find_assessors_without_stub_data.execute('733 34')
-      }.to raise_exception UseCase::FindAssessors::PostcodeNotValid
+      }.to raise_exception UseCase::FindAssessorsByPostcode::PostcodeNotValid
     end
 
     it 'return an error when the postcode is not registered' do
       expect {
         find_assessors_without_existing_postcode.execute('BF1 3AD')
-      }.to raise_exception UseCase::FindAssessors::PostcodeNotRegistered
+      }.to raise_exception UseCase::FindAssessorsByPostcode::PostcodeNotRegistered
     end
 
     it 'return empty when no assessors are present' do

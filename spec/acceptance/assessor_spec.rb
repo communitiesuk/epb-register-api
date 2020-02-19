@@ -261,22 +261,11 @@ describe 'Acceptance::Assessor' do
             {
               registeredBy: { schemeId: scheme_id.to_s, name: 'test scheme' },
               schemeAssessorId: 'SCHE55443',
-              firstName:
-                assessor_without_key(:middleNames, valid_assessor_request_body)[
-                  :firstName
-                ],
-              lastName:
-                assessor_without_key(:middleNames, valid_assessor_request_body)[
-                  :lastName
-                ],
-              dateOfBirth:
-                assessor_without_key(:middleNames, valid_assessor_request_body)[
-                  :dateOfBirth
-                ],
+              firstName: valid_assessor_request_body[:firstName],
+              lastName: valid_assessor_request_body[:lastName],
+              dateOfBirth: valid_assessor_request_body[:dateOfBirth],
               searchResultsComparisonPostcode:
-                assessor_without_key(:middleNames, valid_assessor_request_body)[
-                  :searchResultsComparisonPostcode
-                ],
+                valid_assessor_request_body[:searchResultsComparisonPostcode],
               qualifications: valid_assessor_request_body[:qualifications]
             }.to_json
           )
@@ -603,6 +592,53 @@ describe 'Acceptance::Assessor' do
 
         expect(json_response['contactDetails']['telephoneNumber']).to eq(
           valid_telephone
+        )
+      end
+    end
+  end
+
+  context 'when searching for an assessor by name' do
+    context 'when there are no results' do
+      it 'returns the status code 404' do
+        scheme_id = authenticate_and { add_scheme }
+
+        authenticate_and do
+          add_assessor(scheme_id, 'SCHE55443', valid_assessor_request_body)
+        end
+
+        search_response =
+          authenticate_and { get '/api/assessors/?name=Marten%20Sheikh' }
+
+        expect(search_response.status).to eq(404)
+      end
+    end
+
+    context 'when there are results' do
+      it 'returns the assessors details' do
+        scheme_id = authenticate_and { add_scheme }
+
+        authenticate_and do
+          add_assessor(scheme_id, 'SCHE55443', valid_assessor_request_body)
+        end
+
+        search_response =
+          authenticate_and { get '/api/assessors?name=Someone%20Person' }.body
+
+        response = JSON.parse(search_response)
+
+        expect(response['results'][0]).to eq(
+          JSON.parse({
+            registeredBy: { schemeId: scheme_id, name: 'test scheme' },
+            schemeAssessorId: 'SCHE55443',
+            firstName: valid_assessor_request_body[:firstName],
+            lastName: valid_assessor_request_body[:lastName],
+            middleNames: valid_assessor_request_body[:middleNames],
+            dateOfBirth: valid_assessor_request_body[:dateOfBirth],
+            searchResultsComparisonPostcode:
+              valid_assessor_request_body[:searchResultsComparisonPostcode],
+            qualifications: valid_assessor_request_body[:qualifications],
+            contactDetails: {email: "", telephoneNumber: ""}
+          }.to_json)
         )
       end
     end

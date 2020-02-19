@@ -27,17 +27,22 @@ module Controller
     }
 
     get '/api/assessors', jwt_auth: [] do
-      postcode = params[:postcode].upcase
+      if params.has_key?(:postcode)
+        postcode = params[:postcode].upcase
 
-      postcode = postcode.insert(-4, ' ') if postcode[-4] != ' '
+        postcode = postcode.insert(-4, ' ') if postcode[-4] != ' '
 
-      result = @container.get_object(:find_assessors_use_case).execute(postcode)
+        result = @container.get_object(:find_assessors_by_postcode_use_case).execute(postcode)
+      elsif params.has_key?(:name)
+        result = @container.get_object(:find_assessors_by_name_use_case).execute(params[:name])
+      end
+
       json_response(200, result)
     rescue Exception => e
       case e
-      when UseCase::FindAssessors::PostcodeNotRegistered
+      when UseCase::FindAssessorsByPostcode::PostcodeNotRegistered
         not_found_error('The requested postcode is not registered')
-      when UseCase::FindAssessors::PostcodeNotValid
+      when UseCase::FindAssessorsByPostcode::PostcodeNotValid
         error_response(
           409,
           'INVALID_REQUEST',

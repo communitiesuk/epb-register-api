@@ -1,5 +1,7 @@
 module Gateway
   class AssessorsGateway
+    class TooManyResults < Exception; end
+
     class Assessor < ActiveRecord::Base
       def to_hash
         Gateway::AssessorsGateway.new.to_hash(self)
@@ -105,6 +107,34 @@ module Gateway
         full_hash = { assessor: assessor_hash, distance: distance_result }
 
         result.push(full_hash)
+      end
+      result
+    end
+
+    def search_by(name, max_length = 20)
+      response =
+        Assessor.connection.execute(
+          "SELECT
+          first_name, last_name, middle_names, date_of_birth, registered_by,
+          scheme_assessor_id, telephone_number, email,
+          search_results_comparison_postcode, domestic_energy_performance_qualification
+
+        FROM assessors
+        WHERE
+          CONCAT(first_name, ' ', last_name) LIKE '#{
+            ActiveRecord::Base.sanitize_sql(name)
+          }'
+        LIMIT #{ max_length+1 }
+        "
+        )
+
+      raise TooManyResults if response.count > max_length
+
+      puts "error not here..."
+
+      result = []
+      response.each do |row|
+        result.push(to_hash(row.symbolize_keys))
       end
       result
     end

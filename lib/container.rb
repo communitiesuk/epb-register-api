@@ -21,9 +21,14 @@ class Container
       UseCase::FetchDomesticEnergyAssessment.new(
         domestic_energy_assessments_gateway
       )
-    find_assessors_use_case =
-      UseCase::FindAssessors.new(
+    find_assessors_by_postcode_use_case =
+      UseCase::FindAssessorsByPostcode.new(
         postcode_gateway,
+        assessors_gateway,
+        schemes_gateway
+      )
+    find_assessors_by_name_use_case =
+      UseCase::FindAssessorsByName.new(
         assessors_gateway,
         schemes_gateway
       )
@@ -40,7 +45,8 @@ class Container
         migrate_domestic_energy_assessment_use_case,
       fetch_domestic_energy_assessment_use_case:
         fetch_domestic_energy_assessment_use_case,
-      find_assessors_use_case: find_assessors_use_case,
+      find_assessors_by_postcode_use_case: find_assessors_by_postcode_use_case,
+      find_assessors_by_name_use_case: find_assessors_by_name_use_case,
       find_assessments_use_case: find_assessments_use_case
     }
   end
