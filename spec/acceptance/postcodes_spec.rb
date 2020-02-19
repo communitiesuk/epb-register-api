@@ -53,7 +53,7 @@ describe 'Acceptance::Postcodes' do
   end
 
   def assessors_search_by_postcode(postcode)
-    get "/api/assessors/search/#{postcode}"
+    get "/api/assessors?postcode=#{postcode}"
   end
 
   def add_assessor(scheme_id, assessor_id, body)
