@@ -10,6 +10,7 @@ class AssessorGatewayFake
     @saved_registered_by = false
     @saved_latitude = false
     @saved_longitude = false
+    @saved_name = false
   end
 
   def fetch(*)
@@ -25,6 +26,12 @@ class AssessorGatewayFake
   def search(latitude, longitude)
     @saved_latitude = latitude
     @saved_longitude = longitude
+
+    @result
+  end
+
+  def search_by(name)
+    @saved_name = name
 
     @result
   end
