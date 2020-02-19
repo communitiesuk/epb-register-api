@@ -1,5 +1,6 @@
 module UseCase
   class FindAssessorsByName
+    class TooManyResults < Exception; end
 
     def initialize(assessor_gateway, schemes_gateway)
       @assessor_gateway = assessor_gateway
@@ -21,6 +22,8 @@ module UseCase
         result.push(assessor)
       end
       { 'results': result, 'searchName': name }
+    rescue Gateway::AssessorsGateway::TooManyResults
+      raise TooManyResults
     end
   end
 end

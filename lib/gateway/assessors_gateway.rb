@@ -130,8 +130,6 @@ module Gateway
 
       raise TooManyResults if response.count > max_length
 
-      puts "error not here..."
-
       result = []
       response.each do |row|
         result.push(to_hash(row.symbolize_keys))
