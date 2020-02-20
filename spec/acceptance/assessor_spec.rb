@@ -675,8 +675,6 @@ describe 'Acceptance::Assessor' do
 
         response = JSON.parse(search_response)
 
-        puts response
-
         expect(response['results'].size).to eq(1)
       end
 
@@ -691,8 +689,6 @@ describe 'Acceptance::Assessor' do
           authenticate_and { get '/api/assessors?name=Per%20Some' }.body
 
         response = JSON.parse(search_response)
-
-        puts response
 
         expect(response['results'].size).to eq(1)
       end
