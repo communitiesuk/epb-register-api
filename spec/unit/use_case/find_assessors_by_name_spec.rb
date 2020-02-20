@@ -1,10 +1,7 @@
 describe UseCase::FindAssessorsByName do
   context 'when finding an assessor' do
     let(:find_assessors_without_stub_data) do
-      described_class.new(
-        AssessorGatewayFake.new([]),
-        schemes_gateway
-      )
+      described_class.new(AssessorGatewayFake.new([]), schemes_gateway)
     end
 
     let(:schemes_gateway) do

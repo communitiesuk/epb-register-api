@@ -111,29 +111,55 @@ module Gateway
       result
     end
 
-    def search_by(name, max_length = 20)
-      response =
-        Assessor.connection.execute(
-          "SELECT
+    def search_by(
+      name: '', max_response_size: 20, loose_match: false, exclude: []
+    )
+      sql =
+        'SELECT
           first_name, last_name, middle_names, date_of_birth, registered_by,
           scheme_assessor_id, telephone_number, email,
           search_results_comparison_postcode, domestic_energy_performance_qualification
 
         FROM assessors
         WHERE
-          CONCAT(first_name, ' ', last_name) LIKE '#{
-            ActiveRecord::Base.sanitize_sql(name)
-          }'
-        LIMIT #{ max_length+1 }
-        "
-        )
+          1=1
+      '
 
-      raise TooManyResults if response.count > max_length
+      unless exclude.empty?
+        sql << "AND scheme_assessor_id NOT IN('" + exclude.join("', '") + "')"
+      end
+
+      if loose_match
+        names = name.split(' ')
+
+        sql <<
+          " AND((first_name LIKE '%#{
+            ActiveRecord::Base.sanitize_sql(names[0])
+          }%' AND last_name LIKE '%#{
+            ActiveRecord::Base.sanitize_sql(names[1])
+          }%')"
+        sql <<
+          " OR (first_name LIKE '%#{
+            ActiveRecord::Base.sanitize_sql(names[1])
+          }%' AND last_name LIKE '%#{
+            ActiveRecord::Base.sanitize_sql(names[0])
+          }%'))"
+      else
+        sql <<
+          " AND CONCAT(first_name, ' ', last_name) LIKE '#{
+            ActiveRecord::Base.sanitize_sql(name)
+          }' LIMIT " +
+            (max_response_size + 1).to_s
+      end
+
+      response = Assessor.connection.execute(sql)
+
+      if response.count > max_response_size and !loose_match
+        raise TooManyResults
+      end
 
       result = []
-      response.each do |row|
-        result.push(to_hash(row.symbolize_keys))
-      end
+      response.each { |row| result.push(to_hash(row.symbolize_keys)) }
       result
     end
 

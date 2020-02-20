@@ -627,32 +627,38 @@ describe 'Acceptance::Assessor' do
         response = JSON.parse(search_response)
 
         expect(response['results'][0]).to eq(
-          JSON.parse({
-            registeredBy: { schemeId: scheme_id, name: 'test scheme' },
-            schemeAssessorId: 'SCHE55443',
-            firstName: valid_assessor_request_body[:firstName],
-            lastName: valid_assessor_request_body[:lastName],
-            middleNames: valid_assessor_request_body[:middleNames],
-            dateOfBirth: valid_assessor_request_body[:dateOfBirth],
-            searchResultsComparisonPostcode:
-              valid_assessor_request_body[:searchResultsComparisonPostcode],
-            qualifications: valid_assessor_request_body[:qualifications],
-            contactDetails: {email: "", telephoneNumber: ""}
-          }.to_json)
+          JSON.parse(
+            {
+              registeredBy: { schemeId: scheme_id, name: 'test scheme' },
+              schemeAssessorId: 'SCHE55443',
+              firstName: valid_assessor_request_body[:firstName],
+              lastName: valid_assessor_request_body[:lastName],
+              middleNames: valid_assessor_request_body[:middleNames],
+              dateOfBirth: valid_assessor_request_body[:dateOfBirth],
+              searchResultsComparisonPostcode:
+                valid_assessor_request_body[:searchResultsComparisonPostcode],
+              qualifications: valid_assessor_request_body[:qualifications],
+              contactDetails: { email: '', telephoneNumber: '' }
+            }.to_json
+          )
         )
       end
-
 
       it 'gives an error code 400 if there are too many responses' do
         scheme_id = authenticate_and { add_scheme }
 
         (0...30).each do |number|
           authenticate_and do
-            add_assessor(scheme_id, 'SCHE55443' + number.to_s, valid_assessor_request_body)
+            add_assessor(
+              scheme_id,
+              'SCHE55443' + number.to_s,
+              valid_assessor_request_body
+            )
           end
         end
 
-        search_response = authenticate_and { get '/api/assessors?name=Someone%20Person' }
+        search_response =
+          authenticate_and { get '/api/assessors?name=Someone%20Person' }
 
         expect(search_response.status).to eq(400)
       end

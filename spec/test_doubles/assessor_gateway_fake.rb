@@ -30,9 +30,11 @@ class AssessorGatewayFake
     @result
   end
 
-  def search_by(name)
+  def search_by(
+    name: '', max_response_size: 20, loose_match: false, exclude: []
+  )
     @saved_name = name
 
-    @result
+    exclude.empty? ? @result : []
   end
 end

@@ -32,9 +32,15 @@ module Controller
 
         postcode = postcode.insert(-4, ' ') if postcode[-4] != ' '
 
-        result = @container.get_object(:find_assessors_by_postcode_use_case).execute(postcode)
+        result =
+          @container.get_object(:find_assessors_by_postcode_use_case).execute(
+            postcode
+          )
       elsif params.has_key?(:name)
-        result = @container.get_object(:find_assessors_by_name_use_case).execute(params[:name])
+        result =
+          @container.get_object(:find_assessors_by_name_use_case).execute(
+            params[:name]
+          )
       end
 
       json_response(200, result)
