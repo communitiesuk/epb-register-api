@@ -662,6 +662,40 @@ describe 'Acceptance::Assessor' do
 
         expect(search_response.status).to eq(400)
       end
+
+      it 'lets you search for swapped names' do
+        scheme_id = authenticate_and { add_scheme }
+
+        authenticate_and do
+          add_assessor(scheme_id, 'SCHE55443', valid_assessor_request_body)
+        end
+
+        search_response =
+          authenticate_and { get '/api/assessors?name=Person%20Someone' }.body
+
+        response = JSON.parse(search_response)
+
+        puts response
+
+        expect(response['results'].size).to eq(1)
+      end
+
+      it 'lets you search for half names' do
+        scheme_id = authenticate_and { add_scheme }
+
+        authenticate_and do
+          add_assessor(scheme_id, 'SCHE55443', valid_assessor_request_body)
+        end
+
+        search_response =
+          authenticate_and { get '/api/assessors?name=Per%20Some' }.body
+
+        response = JSON.parse(search_response)
+
+        puts response
+
+        expect(response['results'].size).to eq(1)
+      end
     end
   end
 end
