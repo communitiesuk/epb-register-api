@@ -23,10 +23,6 @@ module Gateway
           self[:domestic_energy_performance_qualification]
         )
       end
-
-      def to_hash_with_scheme
-        self.to_domain.to_hash
-      end
     end
 
     class Scheme < ActiveRecord::Base; end
@@ -38,7 +34,7 @@ module Gateway
 
     def fetch_list(scheme_id)
       assessor = Assessor.where(registered_by: scheme_id)
-      assessor.map(&:to_hash_with_scheme)
+      assessor.map(&:to_domain)
     end
 
     def update(scheme_assessor_id, registered_by, assessor_details)

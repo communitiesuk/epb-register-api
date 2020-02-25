@@ -10,7 +10,7 @@ module UseCase
     def execute(scheme_id)
       raise SchemeNotFoundException unless @schemes_gateway.exists?(scheme_id)
 
-      @assessors_gateway.fetch_list(scheme_id)
+      @assessors_gateway.fetch_list(scheme_id).map(&:to_hash)
     end
   end
 end
