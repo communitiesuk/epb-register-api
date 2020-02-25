@@ -42,6 +42,11 @@ module Gateway
       assessor ? assessor.to_hash : nil
     end
 
+    def fetch_list(scheme_id)
+      assessor = Assessor.where(registered_by: scheme_id)
+      assessor.map { |record| {} }
+    end
+
     def update(scheme_assessor_id, registered_by, assessor_details)
       assessor = assessor_details.dup
       assessor[:registered_by] = registered_by
