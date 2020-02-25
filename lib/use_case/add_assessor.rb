@@ -17,7 +17,7 @@ module UseCase
           scheme[:scheme_id].to_s == scheme_id.to_s
         end.first
       existing_assessor =
-        @assessors_gateway.fetch_with_scheme(scheme_assessor_id)
+        @assessors_gateway.fetch(scheme_assessor_id)
 
       raise SchemeNotFoundException unless scheme
 

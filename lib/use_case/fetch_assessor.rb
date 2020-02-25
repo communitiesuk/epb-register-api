@@ -10,7 +10,7 @@ module UseCase
     end
 
     def execute(scheme_id, scheme_assessor_id)
-      assessor = @assessor_gateway.fetch_with_scheme(scheme_assessor_id).dup
+      assessor = @assessor_gateway.fetch(scheme_assessor_id).dup
       unless assessor &&
                assessor[:registered_by][:scheme_id].to_s == scheme_id.to_s
         raise AssessorNotFoundException

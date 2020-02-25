@@ -69,7 +69,7 @@ module Gateway
       }
     end
 
-    def fetch_with_scheme(scheme_assessor_id)
+    def fetch(scheme_assessor_id)
       assessor = Assessor.find_by(scheme_assessor_id: scheme_assessor_id)
       assessor ? assessor.to_hash_with_scheme : nil
     end
