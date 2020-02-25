@@ -10,9 +10,8 @@ module UseCase
     end
 
     def execute(scheme_id, scheme_assessor_id)
-      assessor = @assessor_gateway.fetch_as_model(scheme_assessor_id)
-      unless assessor &&
-               assessor.registered_by_id.to_s == scheme_id.to_s
+      assessor = @assessor_gateway.fetch(scheme_assessor_id)
+      unless assessor && assessor.registered_by_id.to_s == scheme_id.to_s
         raise AssessorNotFoundException
       end
 

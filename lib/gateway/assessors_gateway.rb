@@ -10,17 +10,17 @@ module Gateway
       def to_domain
         scheme = Scheme.find_by(scheme_id: self[:registered_by])
         Domain::Assessor.new(
-            self[:scheme_assessor_id],
-            self[:first_name],
-            self[:last_name],
-            self[:middle_names],
-            self[:date_of_birth],
-            self[:email],
-            self[:telephone_number],
-            scheme[:scheme_id],
-            scheme[:name],
-            self[:search_results_comparison_postcode],
-            self[:domestic_energy_performance_qualification]
+          self[:scheme_assessor_id],
+          self[:first_name],
+          self[:last_name],
+          self[:middle_names],
+          self[:date_of_birth],
+          self[:email],
+          self[:telephone_number],
+          scheme[:scheme_id],
+          scheme[:name],
+          self[:search_results_comparison_postcode],
+          self[:domestic_energy_performance_qualification]
         )
       end
 
@@ -31,7 +31,7 @@ module Gateway
 
     class Scheme < ActiveRecord::Base; end
 
-    def fetch_as_model(scheme_assessor_id)
+    def fetch(scheme_assessor_id)
       assessor = Assessor.find_by(scheme_assessor_id: scheme_assessor_id)
       assessor ? assessor.to_domain : nil
     end
