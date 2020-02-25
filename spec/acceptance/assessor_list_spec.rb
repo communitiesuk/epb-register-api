@@ -35,9 +35,12 @@ describe 'Acceptance::AssessorList' do
     end
 
     it 'returns an empty list' do
-      scheme_id = authenticate_and {add_scheme}
-      expected = {data: {assessors: []}}.to_json
-      expect(authenticate_and { fetch_assessors(scheme_id) }.body).to eq(expected)
+      scheme_id = authenticate_and { add_scheme }
+      expected = { 'assessors' => [] }
+      response = authenticate_and { fetch_assessors(scheme_id) }.body
+      actual = JSON.parse(response)['data']
+
+      expect(actual).to eq expected
     end
   end
 end

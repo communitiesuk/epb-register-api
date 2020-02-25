@@ -73,5 +73,9 @@ module Controller
     def not_found_error(title)
       error_response(404, 'NOT_FOUND', title)
     end
+
+    def json_api_response(code = 200, data, meta: {})
+      json_response(code, { data: data, meta: meta })
+    end
   end
 end
