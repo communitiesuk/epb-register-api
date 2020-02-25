@@ -15,6 +15,7 @@ module UseCase
       end
 
       result = []
+      loose_match = false
 
       response = @assessor_gateway.search_by(name: name, max_response_size: 0)
 
@@ -34,6 +35,8 @@ module UseCase
 
         (max_response_size - response.size).times do |index|
           response.push(second_response[index]) if second_response[index]
+
+          loose_match = true
         end
       end
 
@@ -43,7 +46,7 @@ module UseCase
         result.push(assessor)
       end
 
-      { 'results': result, 'searchName': name }
+      { 'results': result, 'searchName': name, 'looseMatch': loose_match}
     end
   end
 end

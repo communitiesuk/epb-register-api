@@ -153,8 +153,11 @@ module Gateway
         sql <<
           " AND CONCAT(first_name, ' ', last_name) ILIKE '#{
             ActiveRecord::Base.sanitize_sql(name)
-          }' LIMIT " +
+          }'"
+        if max_response_size > 0
+          sql << "LIMIT " +
             (max_response_size + 1).to_s
+        end
       end
 
       response = Assessor.connection.execute(sql)
