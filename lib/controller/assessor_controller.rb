@@ -48,8 +48,6 @@ module Controller
       case e
       when UseCase::FindAssessorsByPostcode::PostcodeNotRegistered
         not_found_error('The requested postcode is not registered')
-      when UseCase::FindAssessorsByName::TooManyResults
-        error_response(400, 'TOO_MANY_RESULTS', 'Too many results')
       when UseCase::FindAssessorsByPostcode::PostcodeNotValid
         error_response(
           409,

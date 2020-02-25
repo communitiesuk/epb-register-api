@@ -644,25 +644,6 @@ describe 'Acceptance::Assessor' do
         )
       end
 
-      it 'gives an error code 400 if there are too many responses' do
-        scheme_id = authenticate_and { add_scheme }
-
-        (0...30).each do |number|
-          authenticate_and do
-            add_assessor(
-              scheme_id,
-              'SCHE55443' + number.to_s,
-              valid_assessor_request_body
-            )
-          end
-        end
-
-        search_response =
-          authenticate_and { get '/api/assessors?name=Someone%20Person' }
-
-        expect(search_response.status).to eq(400)
-      end
-
       it 'lets you search for swapped names' do
         scheme_id = authenticate_and { add_scheme }
 

@@ -18,7 +18,7 @@ module UseCase
 
       response =
         @assessor_gateway.search_by(
-          name: name, max_response_size: max_response_size
+          name: name, max_response_size: 0
         )
 
       if response.size <= max_response_size
@@ -47,8 +47,6 @@ module UseCase
       end
 
       { 'results': result, 'searchName': name }
-    rescue Gateway::AssessorsGateway::TooManyResults
-      raise TooManyResults
     end
   end
 end

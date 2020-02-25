@@ -133,30 +133,26 @@ module Gateway
         names = name.split(' ')
 
         sql <<
-          " AND((first_name LIKE '%#{
+          " AND((first_name ILIKE '#{
             ActiveRecord::Base.sanitize_sql(names[0])
-          }%' AND last_name LIKE '%#{
+          }%' AND last_name ILIKE '#{
             ActiveRecord::Base.sanitize_sql(names[1])
           }%')"
         sql <<
-          " OR (first_name LIKE '%#{
+          " OR (first_name ILIKE '#{
             ActiveRecord::Base.sanitize_sql(names[1])
-          }%' AND last_name LIKE '%#{
+          }%' AND last_name ILIKE '#{
             ActiveRecord::Base.sanitize_sql(names[0])
           }%'))"
       else
         sql <<
-          " AND CONCAT(first_name, ' ', last_name) LIKE '#{
+          " AND CONCAT(first_name, ' ', last_name) ILIKE '#{
             ActiveRecord::Base.sanitize_sql(name)
           }' LIMIT " +
             (max_response_size + 1).to_s
       end
 
       response = Assessor.connection.execute(sql)
-
-      if response.count > max_response_size and !loose_match
-        raise TooManyResults
-      end
 
       result = []
       response.each { |row| result.push(to_hash(row.symbolize_keys)) }

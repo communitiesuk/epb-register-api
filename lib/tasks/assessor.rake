@@ -7,8 +7,8 @@ task :generate_assessor do
 
   ActiveRecord::Base.logger = nil
 
-  first_names = %w(Abul Jaseera Lawrence Kevin Christine Tito Matt Barry Yusuf Andreas Becks Dean Marten)
-  last_names = %w(Kibria Abubacker Goldstien Keenoy Horrocks Sarrionandia Anderson Anderson Sheikh England Henze Wanless Wetterberg)
+  first_names = %w(Abul Jaseera Lawrence Kevin Christine Tito Matt Barry Yusuf Andreas Becks Dean Marten Tristan)
+  last_names = %w(Kibria Abubacker Goldstien Keenoy Horrocks Sarrionandia Anderson Anderson Sheikh England Henze Wanless Wetterberg Tonks)
 
   result.each do |row|
     first_name = first_names[rand(first_names.size)]
