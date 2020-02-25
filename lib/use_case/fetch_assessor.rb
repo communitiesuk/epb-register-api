@@ -16,13 +16,7 @@ module UseCase
         raise AssessorNotFoundException
       end
 
-      scheme =
-        @schemes_gateway.all.select do |scheme|
-          scheme[:scheme_id].to_s == scheme_id.to_s
-        end[
-          0
-        ]
-      raise SchemeNotFoundException unless scheme
+      raise SchemeNotFoundException unless @schemes_gateway.exists?(scheme_id)
       assessor
     end
   end
