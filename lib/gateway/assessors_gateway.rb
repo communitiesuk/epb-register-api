@@ -7,34 +7,25 @@ module Gateway
         Gateway::AssessorsGateway.new.to_hash(self)
       end
 
-      def to_hash_with_scheme
+      def to_domain
         scheme = Scheme.find_by(scheme_id: self[:registered_by])
-        {
-          first_name: self[:first_name],
-          last_name: self[:last_name],
-          middle_names: self[:middle_names],
-          registered_by: { name: scheme[:name], scheme_id: scheme[:scheme_id] },
-          scheme_assessor_id: self[:scheme_assessor_id],
-          date_of_birth:
-            if self[:date_of_birth].methods.include?(:strftime)
-              self[:date_of_birth].strftime('%Y-%m-%d')
-            else
-              Date.parse(self[:date_of_birth])
-            end,
-          contact_details: {
-            telephone_number: self[:telephone_number], email: self[:email]
-          },
-          search_results_comparison_postcode:
+        Domain::Assessor.new(
+            self[:scheme_assessor_id],
+            self[:first_name],
+            self[:last_name],
+            self[:middle_names],
+            self[:date_of_birth],
+            self[:email],
+            self[:telephone_number],
+            scheme[:scheme_id],
+            scheme[:name],
             self[:search_results_comparison_postcode],
-          qualifications: {
-            domestic_energy_performance_certificates:
-              if self[:domestic_energy_performance_qualification] == 'ACTIVE'
-                'ACTIVE'
-              else
-                'INACTIVE'
-              end
-          }
-        }
+            self[:domestic_energy_performance_qualification]
+        )
+      end
+
+      def to_hash_with_scheme
+        self.to_domain.to_hash
       end
     end
 
