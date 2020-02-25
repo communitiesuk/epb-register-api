@@ -28,6 +28,9 @@ module Controller
 
     get '/api/schemes/:scheme_id/assessors', jwt_auth: [] do
       scheme_id = params[:scheme_id]
+      @container.get_object(:fetch_assessor_list_use_case).execute(scheme_id)
+      json_response(200, {})
+    rescue UseCase::FetchAssessorList::SchemeNotFoundException
       not_found_error('The requested scheme was not found')
     end
 

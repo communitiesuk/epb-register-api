@@ -7,6 +7,10 @@ describe 'Acceptance::AssessorList' do
     get "/api/schemes/#{scheme_id}/assessors"
   end
 
+  def add_scheme(name = 'test scheme')
+    JSON.parse(post('/api/schemes', { name: name }.to_json).body)['schemeId']
+  end
+
   context "when a scheme doesn't exist" do
     it 'returns status 404 for a get' do
       expect(authenticate_and { fetch_assessors(20) }.status).to eq(404)
@@ -20,6 +24,15 @@ describe 'Acceptance::AssessorList' do
           ]
         }.to_json
       )
+    end
+  end
+
+  context 'when a scheme has no assessors' do
+    it 'returns status 200 for a get' do
+      scheme_id = authenticate_and { add_scheme }
+      puts scheme_id
+
+      expect(authenticate_and { fetch_assessors(scheme_id) }.status).to eq(200)
     end
   end
 end
