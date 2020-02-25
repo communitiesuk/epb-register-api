@@ -105,7 +105,7 @@ module Gateway
         Assessor.connection.execute(
           "SELECT
           first_name, last_name, middle_names, date_of_birth, registered_by,
-          scheme_assessor_id, telephone_number, email,
+          scheme_assessor_id, telephone_number, email, c.name AS scheme_name,
           search_results_comparison_postcode, domestic_energy_performance_qualification,
           (
             sqrt(abs(POWER(69.1 * (a.latitude - #{
@@ -120,6 +120,7 @@ module Gateway
 
         FROM postcode_geolocation a
         INNER JOIN assessors b ON(b.search_results_comparison_postcode = a.postcode)
+        LEFT JOIN schemes c ON(b.registered_by = c.scheme_id)
         WHERE
           #{
             qualification
@@ -138,10 +139,23 @@ module Gateway
 
       result = []
       response.each do |row|
-        assessor_hash = to_hash(row.symbolize_keys)
-        distance_result = row['distance']
+        assessor =
+          Entity::Assessor.new(
+            row['scheme_assessor_id'],
+            row['first_name'],
+            row['last_name'],
+            row['middle_names'],
+            row['date_of_birth'],
+            row['email'],
+            row['telephone_number'],
+            row['registered_by'],
+            row['scheme_name'],
+            row['search_results_comparison_postcode'],
+            row['domestic_energy_performance_qualification']
+          )
 
-        full_hash = { assessor: assessor_hash, distance: distance_result }
+        distance_result = row['distance']
+        full_hash = { assessor: assessor.to_hash, distance: distance_result }
 
         result.push(full_hash)
       end

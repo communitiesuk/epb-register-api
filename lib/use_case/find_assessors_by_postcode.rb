@@ -31,12 +31,8 @@ module UseCase
         schemes[scheme[:scheme_id]] = scheme
       end
 
-      result = []
-      @assessor_gateway.search(latitude, longitude).each do |assessor|
-        scheme = schemes[assessor[:assessor][:registered_by]]
-        assessor[:assessor][:registered_by] = scheme
-        result.push(assessor)
-      end
+      result = @assessor_gateway.search(latitude, longitude)
+
       { 'results': result, 'searchPostcode': postcode }
     end
   end
