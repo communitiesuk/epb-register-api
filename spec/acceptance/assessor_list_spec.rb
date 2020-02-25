@@ -42,5 +42,12 @@ describe 'Acceptance::AssessorList' do
 
       expect(actual).to eq expected
     end
+
+    it 'returns JSON for a get' do
+      scheme_id = authenticate_and { add_scheme }
+      response = authenticate_and { fetch_assessors(scheme_id) }
+
+      expect(response.headers['Content-type']).to eq('application/json')
+    end
   end
 end
