@@ -168,10 +168,11 @@ module Gateway
       sql =
         'SELECT
           first_name, last_name, middle_names, date_of_birth, registered_by,
-          scheme_assessor_id, telephone_number, email,
+          scheme_assessor_id, telephone_number, email, b.name AS scheme_name,
           search_results_comparison_postcode, domestic_energy_performance_qualification
 
-        FROM assessors
+        FROM assessors a
+        LEFT JOIN schemes b ON(a.registered_by = b.scheme_id)
         WHERE
           1=1
       '
@@ -206,7 +207,24 @@ module Gateway
       response = Assessor.connection.execute(sql)
 
       result = []
-      response.each { |row| result.push(to_hash(row.symbolize_keys)) }
+      response.each do |row|
+        assessor =
+          Domain::Assessor.new(
+            row['scheme_assessor_id'],
+            row['first_name'],
+            row['last_name'],
+            row['middle_names'],
+            row['date_of_birth'],
+            row['email'],
+            row['telephone_number'],
+            row['registered_by'],
+            row['scheme_name'],
+            row['search_results_comparison_postcode'],
+            row['domestic_energy_performance_qualification']
+          )
+
+        result.push(assessor.to_hash)
+      end
       result
     end
 

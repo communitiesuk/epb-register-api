@@ -14,7 +14,6 @@ module UseCase
         schemes[scheme[:scheme_id].to_i] = scheme
       end
 
-      result = []
       loose_match = false
 
       response = @assessor_gateway.search_by(name: name, max_response_size: 0)
@@ -40,13 +39,7 @@ module UseCase
         end
       end
 
-      response.each do |assessor|
-        scheme = schemes[assessor[:registered_by].to_i]
-        assessor[:registered_by] = scheme
-        result.push(assessor)
-      end
-
-      { 'results': result, 'searchName': name, 'looseMatch': loose_match }
+      { 'results': response, 'searchName': name, 'looseMatch': loose_match }
     end
   end
 end
