@@ -16,12 +16,12 @@ module UseCase
         @schemes_gateway.all.select do |scheme|
           scheme[:scheme_id].to_s == scheme_id.to_s
         end.first
-      existing_assessor = @assessors_gateway.fetch(scheme_assessor_id)
+      existing_assessor = @assessors_gateway.fetch_as_model(scheme_assessor_id)
 
       raise SchemeNotFoundException unless scheme
 
       if existing_assessor &&
-           existing_assessor[:registered_by][:scheme_id].to_s != scheme_id.to_s
+           existing_assessor.registered_by_id.to_s != scheme_id.to_s
         raise AssessorRegisteredOnAnotherScheme
       end
 
