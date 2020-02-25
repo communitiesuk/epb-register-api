@@ -26,6 +26,11 @@ module Controller
       }
     }
 
+    get '/api/schemes/:scheme_id/assessors', jwt_auth: [] do
+      scheme_id = params[:scheme_id]
+      not_found_error('The requested scheme was not found')
+    end
+
     get '/api/assessors', jwt_auth: [] do
       if params.has_key?(:postcode)
         postcode = params[:postcode].upcase

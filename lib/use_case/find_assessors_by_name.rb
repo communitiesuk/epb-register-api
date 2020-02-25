@@ -16,10 +16,7 @@ module UseCase
 
       result = []
 
-      response =
-        @assessor_gateway.search_by(
-          name: name, max_response_size: 0
-        )
+      response = @assessor_gateway.search_by(name: name, max_response_size: 0)
 
       if response.size <= max_response_size
         excluded = []
