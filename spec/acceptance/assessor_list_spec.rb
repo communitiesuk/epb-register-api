@@ -30,9 +30,14 @@ describe 'Acceptance::AssessorList' do
   context 'when a scheme has no assessors' do
     it 'returns status 200 for a get' do
       scheme_id = authenticate_and { add_scheme }
-      puts scheme_id
 
       expect(authenticate_and { fetch_assessors(scheme_id) }.status).to eq(200)
+    end
+
+    it 'returns an empty list' do
+      scheme_id = authenticate_and {add_scheme}
+      expected = {data: {assessors: []}}.to_json
+      expect(authenticate_and { fetch_assessors(scheme_id) }.body).to eq(expected)
     end
   end
 end
