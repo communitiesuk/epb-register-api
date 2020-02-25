@@ -3,10 +3,6 @@ module Gateway
     class TooManyResults < Exception; end
 
     class Assessor < ActiveRecord::Base
-      def to_hash
-        Gateway::AssessorsGateway.new.to_hash(self)
-      end
-
       def to_domain
         scheme = Scheme.find_by(scheme_id: self[:registered_by])
         Domain::Assessor.new(
