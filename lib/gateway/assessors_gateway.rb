@@ -8,7 +8,32 @@ module Gateway
       end
 
       def to_hash_with_scheme(scheme)
-        Gateway::AssessorsGateway.new.to_hash_with_scheme(self, scheme)
+        {
+            first_name: self[:first_name],
+            last_name: self[:last_name],
+            middle_names: self[:middle_names],
+            registered_by: { name: scheme[:name], schemeId: scheme[:id] },
+            scheme_assessor_id: self[:scheme_assessor_id],
+            date_of_birth:
+                if self[:date_of_birth].methods.include?(:strftime)
+                  self[:date_of_birth].strftime('%Y-%m-%d')
+                else
+                  Date.parse(self[:date_of_birth])
+                end,
+            contact_details: {
+                telephone_number: self[:telephone_number], email: self[:email]
+            },
+            search_results_comparison_postcode:
+                self[:search_results_comparison_postcode],
+            qualifications: {
+                domestic_energy_performance_certificates:
+                    if self[:domestic_energy_performance_qualification] == 'ACTIVE'
+                      'ACTIVE'
+                    else
+                      'INACTIVE'
+                    end
+            }
+        }
       end
     end
 
@@ -22,35 +47,6 @@ module Gateway
         last_name: assessor[:last_name],
         middle_names: assessor[:middle_names],
         registered_by: assessor[:registered_by],
-        scheme_assessor_id: assessor[:scheme_assessor_id],
-        date_of_birth:
-          if assessor[:date_of_birth].methods.include?(:strftime)
-            assessor[:date_of_birth].strftime('%Y-%m-%d')
-          else
-            Date.parse(assessor[:date_of_birth])
-          end,
-        contact_details: {
-          telephone_number: assessor[:telephone_number], email: assessor[:email]
-        },
-        search_results_comparison_postcode:
-          assessor[:search_results_comparison_postcode],
-        qualifications: {
-          domestic_energy_performance_certificates:
-            if assessor[:domestic_energy_performance_qualification] == 'ACTIVE'
-              'ACTIVE'
-            else
-              'INACTIVE'
-            end
-        }
-      }
-    end
-
-    def to_hash_with_scheme(assessor, scheme)
-      {
-        first_name: assessor[:first_name],
-        last_name: assessor[:last_name],
-        middle_names: assessor[:middle_names],
-        registered_by: { name: scheme[:name], schemeId: scheme[:id] },
         scheme_assessor_id: assessor[:scheme_assessor_id],
         date_of_birth:
           if assessor[:date_of_birth].methods.include?(:strftime)
