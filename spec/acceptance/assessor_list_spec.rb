@@ -75,7 +75,25 @@ describe 'Acceptance::AssessorList' do
       response = authenticate_and { fetch_assessors(scheme_id) }.body
 
       actual = JSON.parse(response)['data']
-      expected = { 'assessors' => [{}] }
+      expected = {
+        'assessors' => [
+          {
+            'registeredBy' => {
+              'schemeId' => scheme_id, 'name' => 'test scheme'
+            },
+            'schemeAssessorId' => 'SCHEME4233',
+            'firstName' => valid_assessor_request_body[:firstName],
+            'middleNames' => valid_assessor_request_body[:middleNames],
+            'lastName' => valid_assessor_request_body[:lastName],
+            'dateOfBirth' => valid_assessor_request_body[:dateOfBirth],
+            'contactDetails' => { 'telephoneNumber' => '', 'email' => '' },
+            'searchResultsComparisonPostcode' => '',
+            'qualifications' => {
+              'domesticEnergyPerformanceCertificates' => 'ACTIVE'
+            }
+          }
+        ]
+      }
 
       expect(actual).to eq expected
     end

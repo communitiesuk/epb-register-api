@@ -6,7 +6,15 @@ module Gateway
       def to_hash
         Gateway::AssessorsGateway.new.to_hash(self)
       end
+
+      def to_hash_with_scheme(scheme)
+        Gateway::AssessorsGateway.new.to_hash_with_scheme(self, scheme)
+      end
     end
+
+    class SchemeNotFoundException < Exception; end
+
+    class Scheme < ActiveRecord::Base; end
 
     def to_hash(assessor)
       {
@@ -37,14 +45,46 @@ module Gateway
       }
     end
 
+    def to_hash_with_scheme(assessor, scheme)
+      {
+        first_name: assessor[:first_name],
+        last_name: assessor[:last_name],
+        middle_names: assessor[:middle_names],
+        registered_by: { name: scheme[:name], schemeId: scheme[:id] },
+        scheme_assessor_id: assessor[:scheme_assessor_id],
+        date_of_birth:
+          if assessor[:date_of_birth].methods.include?(:strftime)
+            assessor[:date_of_birth].strftime('%Y-%m-%d')
+          else
+            Date.parse(assessor[:date_of_birth])
+          end,
+        contact_details: {
+          telephone_number: assessor[:telephone_number], email: assessor[:email]
+        },
+        search_results_comparison_postcode:
+          assessor[:search_results_comparison_postcode],
+        qualifications: {
+          domestic_energy_performance_certificates:
+            if assessor[:domestic_energy_performance_qualification] == 'ACTIVE'
+              'ACTIVE'
+            else
+              'INACTIVE'
+            end
+        }
+      }
+    end
+
     def fetch(scheme_assessor_id)
       assessor = Assessor.find_by(scheme_assessor_id: scheme_assessor_id)
       assessor ? assessor.to_hash : nil
     end
 
     def fetch_list(scheme_id)
+      scheme = Scheme.find_by(scheme_id: scheme_id)
+      raise SchemeNotFoundException unless scheme
+
       assessor = Assessor.where(registered_by: scheme_id)
-      assessor.map { |record| {} }
+      assessor.map { |record| record.to_hash_with_scheme(scheme) }
     end
 
     def update(scheme_assessor_id, registered_by, assessor_details)
