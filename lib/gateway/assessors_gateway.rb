@@ -36,6 +36,11 @@ module Gateway
       assessor ? assessor.to_hash_with_scheme : nil
     end
 
+    def fetch_as_model(scheme_assessor_id)
+      assessor = Assessor.find_by(scheme_assessor_id: scheme_assessor_id)
+      assessor ? assessor.to_domain : nil
+    end
+
     def fetch_list(scheme_id)
       assessor = Assessor.where(registered_by: scheme_id)
       assessor.map(&:to_hash_with_scheme)

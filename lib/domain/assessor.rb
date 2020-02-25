@@ -1,5 +1,8 @@
 module Domain
   class Assessor
+
+    attr_reader :registered_by_id
+
     def initialize(
       scheme_assessor_id,
       first_name,
