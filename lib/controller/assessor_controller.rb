@@ -31,7 +31,7 @@ module Controller
       result =
         @container.get_object(:fetch_assessor_list_use_case).execute(scheme_id)
       json_api_response(200, { assessors: result }, {})
-    rescue Gateway::AssessorsGateway::SchemeNotFoundException
+    rescue UseCase::FetchAssessorList::SchemeNotFoundException
       not_found_error('The requested scheme was not found')
     end
 

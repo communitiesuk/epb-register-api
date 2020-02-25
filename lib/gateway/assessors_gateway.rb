@@ -7,7 +7,8 @@ module Gateway
         Gateway::AssessorsGateway.new.to_hash(self)
       end
 
-      def to_hash_with_scheme(scheme)
+      def to_hash_with_scheme
+        scheme = Scheme.find_by(scheme_id: self[:registered_by])
         {
             first_name: self[:first_name],
             last_name: self[:last_name],
@@ -36,8 +37,6 @@ module Gateway
         }
       end
     end
-
-    class SchemeNotFoundException < Exception; end
 
     class Scheme < ActiveRecord::Base; end
 
@@ -76,11 +75,8 @@ module Gateway
     end
 
     def fetch_list(scheme_id)
-      scheme = Scheme.find_by(scheme_id: scheme_id)
-      raise SchemeNotFoundException unless scheme
-
       assessor = Assessor.where(registered_by: scheme_id)
-      assessor.map { |record| record.to_hash_with_scheme(scheme) }
+      assessor.map { |record| record.to_hash_with_scheme }
     end
 
     def update(scheme_assessor_id, registered_by, assessor_details)
