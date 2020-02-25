@@ -1,6 +1,5 @@
 module UseCase
   class FetchAssessorList
-
     class SchemeNotFoundException < Exception; end
 
     def initialize(assessors_gateway, schemes_gateway)

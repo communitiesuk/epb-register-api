@@ -214,14 +214,6 @@ describe UseCase::AddAssessor do
         )
       )
     end
-
-    it 'assessor_was_newly_created is false when assessor already exists' do
-      expect(
-        add_assessor_with_stub_data.execute('25', 'SCHE234950', valid_assessor)[
-          :assessor_was_newly_created
-        ]
-      ).to be false
-    end
   end
 
   context 'when adding with invalid data' do

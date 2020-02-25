@@ -46,7 +46,7 @@ module UseCase
         result.push(assessor)
       end
 
-      { 'results': result, 'searchName': name, 'looseMatch': loose_match}
+      { 'results': result, 'searchName': name, 'looseMatch': loose_match }
     end
   end
 end

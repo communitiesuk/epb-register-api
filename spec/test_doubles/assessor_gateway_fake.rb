@@ -17,6 +17,10 @@ class AssessorGatewayFake
     @result
   end
 
+  def fetch_with_scheme(*)
+    @result
+  end
+
   def update(scheme_assessor_id, registered_by, assessor_details)
     @saved_scheme_assessor_id = scheme_assessor_id
     @saved_assessor_details = assessor_details

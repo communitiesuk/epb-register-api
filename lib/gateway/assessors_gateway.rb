@@ -10,30 +10,30 @@ module Gateway
       def to_hash_with_scheme
         scheme = Scheme.find_by(scheme_id: self[:registered_by])
         {
-            first_name: self[:first_name],
-            last_name: self[:last_name],
-            middle_names: self[:middle_names],
-            registered_by: { name: scheme[:name], schemeId: scheme[:id] },
-            scheme_assessor_id: self[:scheme_assessor_id],
-            date_of_birth:
-                if self[:date_of_birth].methods.include?(:strftime)
-                  self[:date_of_birth].strftime('%Y-%m-%d')
-                else
-                  Date.parse(self[:date_of_birth])
-                end,
-            contact_details: {
-                telephone_number: self[:telephone_number], email: self[:email]
-            },
-            search_results_comparison_postcode:
-                self[:search_results_comparison_postcode],
-            qualifications: {
-                domestic_energy_performance_certificates:
-                    if self[:domestic_energy_performance_qualification] == 'ACTIVE'
-                      'ACTIVE'
-                    else
-                      'INACTIVE'
-                    end
-            }
+          first_name: self[:first_name],
+          last_name: self[:last_name],
+          middle_names: self[:middle_names],
+          registered_by: { name: scheme[:name], scheme_id: scheme[:scheme_id] },
+          scheme_assessor_id: self[:scheme_assessor_id],
+          date_of_birth:
+            if self[:date_of_birth].methods.include?(:strftime)
+              self[:date_of_birth].strftime('%Y-%m-%d')
+            else
+              Date.parse(self[:date_of_birth])
+            end,
+          contact_details: {
+            telephone_number: self[:telephone_number], email: self[:email]
+          },
+          search_results_comparison_postcode:
+            self[:search_results_comparison_postcode],
+          qualifications: {
+            domestic_energy_performance_certificates:
+              if self[:domestic_energy_performance_qualification] == 'ACTIVE'
+                'ACTIVE'
+              else
+                'INACTIVE'
+              end
+          }
         }
       end
     end
@@ -74,9 +74,14 @@ module Gateway
       assessor ? assessor.to_hash : nil
     end
 
+    def fetch_with_scheme(scheme_assessor_id)
+      assessor = Assessor.find_by(scheme_assessor_id: scheme_assessor_id)
+      assessor ? assessor.to_hash_with_scheme : nil
+    end
+
     def fetch_list(scheme_id)
       assessor = Assessor.where(registered_by: scheme_id)
-      assessor.map { |record| record.to_hash_with_scheme }
+      assessor.map(&:to_hash_with_scheme)
     end
 
     def update(scheme_assessor_id, registered_by, assessor_details)
@@ -186,10 +191,7 @@ module Gateway
           " AND CONCAT(first_name, ' ', last_name) ILIKE '#{
             ActiveRecord::Base.sanitize_sql(name)
           }'"
-        if max_response_size > 0
-          sql << "LIMIT " +
-            (max_response_size + 1).to_s
-        end
+        sql << 'LIMIT ' + (max_response_size + 1).to_s if max_response_size > 0
       end
 
       response = Assessor.connection.execute(sql)
