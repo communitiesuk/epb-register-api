@@ -1,4 +1,4 @@
-module Entity
+module Domain
   class Assessor
     def initialize(
       scheme_assessor_id,

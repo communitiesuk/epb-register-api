@@ -140,7 +140,7 @@ module Gateway
       result = []
       response.each do |row|
         assessor =
-          Entity::Assessor.new(
+          Domain::Assessor.new(
             row['scheme_assessor_id'],
             row['first_name'],
             row['last_name'],
