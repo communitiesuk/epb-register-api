@@ -30,7 +30,7 @@ module Controller
       scheme_id = params[:scheme_id]
       result =
         @container.get_object(:fetch_assessor_list_use_case).execute(scheme_id)
-      json_api_response(200, { assessors: result }, {})
+      json_api_response(200, { assessors: result.map(&:to_hash) }, {})
     rescue UseCase::FetchAssessorList::SchemeNotFoundException
       not_found_error('The requested scheme was not found')
     end
