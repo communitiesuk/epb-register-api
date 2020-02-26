@@ -39,7 +39,6 @@ module Controller
       end
 
       json_api_response(200, { assessors: result.map(&:to_hash) }, {})
-
     rescue UseCase::FetchAssessorList::SchemeNotFoundException
       not_found_error('The requested scheme was not found')
     end
