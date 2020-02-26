@@ -33,9 +33,12 @@ module Controller
         'Content-Type, Cache-Control, Accept'
     end
 
-    set(:jwt_auth) do
+    set(:jwt_auth) do |*scopes|
       condition do
-        Auth::Sinatra::Conditional.process_request env
+        token = Auth::Sinatra::Conditional.process_request env
+        unless token.scopes?(scopes)
+          halt 403, { errors: [{ code: 'UNAUTHORISED' }] }.to_json
+        end
       rescue Auth::Errors::Error => e
         content_type :json
         halt 401, { errors: [{ code: e }] }.to_json

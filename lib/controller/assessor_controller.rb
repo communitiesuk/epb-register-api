@@ -26,7 +26,8 @@ module Controller
       }
     }
 
-    get '/api/schemes/:scheme_id/assessors', jwt_auth: [] do
+    get '/api/schemes/:scheme_id/assessors',
+        jwt_auth: %w[scheme:assessor:list] do
       scheme_id = params[:scheme_id]
       result =
         @container.get_object(:fetch_assessor_list_use_case).execute(scheme_id)

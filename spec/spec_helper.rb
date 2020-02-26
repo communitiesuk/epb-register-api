@@ -33,8 +33,8 @@ module RSpecAssessorServiceMixin
   end
 end
 
-def authenticate_and(request = nil, &block)
-  auth = 'Bearer ' + get_valid_jwt
+def authenticate_and(request = nil, scopes = [], &block)
+  auth = 'Bearer ' + get_valid_jwt(scopes)
 
   if request.nil?
     header 'Authorization', auth
@@ -48,12 +48,12 @@ def authenticate_and(request = nil, &block)
   response
 end
 
-def get_valid_jwt
+def get_valid_jwt(scopes = [])
   token =
     Auth::Token.new iat: Time.now.to_i,
                     iss: ENV['JWT_ISSUER'],
-                    sub: 'test-subject'
-
+                    sub: 'test-subject',
+                    scopes: scopes
   token.encode ENV['JWT_SECRET']
 end
 
