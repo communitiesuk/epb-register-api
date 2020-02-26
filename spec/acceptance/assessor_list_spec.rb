@@ -127,6 +127,66 @@ describe 'Acceptance::AssessorList' do
     end
   end
 
+  context 'when a scheme has multiple assessors' do
+    it 'returns an array of assessors' do
+      scheme_id = authenticate_and { add_scheme }
+
+      authenticate_and do
+        add_assessor(scheme_id, 'SCHEME1234', valid_assessor_request_body)
+      end
+
+      authenticate_and do
+        add_assessor(scheme_id, 'SCHEME5678', valid_assessor_request_body)
+      end
+      response =
+        authenticate_with_data('scheme_ids': [scheme_id]) do
+          fetch_assessors(scheme_id)
+        end.body
+
+      actual = JSON.parse(response)['data']
+      expected = {
+        'assessors' => [
+          {
+            'registeredBy' => {
+              'schemeId' => scheme_id, 'name' => 'test scheme'
+            },
+            'schemeAssessorId' => 'SCHEME5678',
+            'firstName' => valid_assessor_request_body[:firstName],
+            'middleNames' => valid_assessor_request_body[:middleNames],
+            'lastName' => valid_assessor_request_body[:lastName],
+            'dateOfBirth' => valid_assessor_request_body[:dateOfBirth],
+            'contactDetails' => {
+              'telephoneNumber' => '01234 567', 'email' => 'someone@energy.gov'
+            },
+            'searchResultsComparisonPostcode' => '',
+            'qualifications' => {
+              'domesticEnergyPerformanceCertificates' => 'ACTIVE'
+            }
+          },
+          {
+            'registeredBy' => {
+              'schemeId' => scheme_id, 'name' => 'test scheme'
+            },
+            'schemeAssessorId' => 'SCHEME1234',
+            'firstName' => valid_assessor_request_body[:firstName],
+            'middleNames' => valid_assessor_request_body[:middleNames],
+            'lastName' => valid_assessor_request_body[:lastName],
+            'dateOfBirth' => valid_assessor_request_body[:dateOfBirth],
+            'contactDetails' => {
+              'telephoneNumber' => '01234 567', 'email' => 'someone@energy.gov'
+            },
+            'searchResultsComparisonPostcode' => '',
+            'qualifications' => {
+              'domesticEnergyPerformanceCertificates' => 'ACTIVE'
+            }
+          }
+        ]
+      }
+
+      expect(actual).to eq expected
+    end
+  end
+
   context 'when a client is not authenticated' do
     it 'returns a 401 unauthorised' do
       scheme_id = authenticate_and { add_scheme }
