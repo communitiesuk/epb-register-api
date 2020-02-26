@@ -172,36 +172,5 @@ module Gateway
       end
       result
     end
-
-    private
-
-    def flatten(assessor)
-      assessor[:telephone_number] =
-        if assessor.key?(:contact_details)
-          assessor[:contact_details][:telephone_number]
-        else
-          ''
-        end
-      assessor[:email] =
-        if assessor.key?(:contact_details)
-          assessor[:contact_details][:email]
-        else
-          ''
-        end
-      assessor[:domestic_energy_performance_qualification] =
-        if (
-             assessor[:qualifications] &&
-               assessor[:qualifications][
-                 :domestic_energy_performance_certificates
-               ]
-           )
-          assessor[:qualifications][:domestic_energy_performance_certificates]
-        else
-          nil
-        end
-      assessor.delete(:contact_details)
-      assessor.delete(:qualifications)
-      assessor
-    end
   end
 end
