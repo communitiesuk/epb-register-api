@@ -29,23 +29,19 @@ describe 'Acceptance::AssessorList' do
     JSON.parse(post('/api/schemes', { name: name }.to_json).body)['schemeId']
   end
 
-  def authenticate_with_list_scope(&block)
-    authenticate_and(nil, %w[scheme:assessor:list]) { block.call }
-  end
-
-  def authenticate_with_sup(data = {}, &block)
+  def authenticate_with_data(data = {}, &block)
     authenticate_and(nil, %w[scheme:assessor:list], data) { block.call }
   end
 
   context "when a scheme doesn't exist" do
     it 'returns status 404 for a get' do
-      expect(authenticate_with_sup { fetch_assessors(20) }.status).to eq(
+      expect(authenticate_with_data { fetch_assessors(20) }.status).to eq(
         404
       )
     end
 
     it 'returns the error response for a get' do
-      expect(authenticate_with_sup { fetch_assessors(20) }.body).to eq(
+      expect(authenticate_with_data { fetch_assessors(20) }.body).to eq(
         {
           errors: [
             { "code": 'NOT_FOUND', title: 'The requested scheme was not found' }
@@ -60,7 +56,7 @@ describe 'Acceptance::AssessorList' do
       scheme_id = authenticate_and { add_scheme }
 
       expect(
-        authenticate_with_sup('scheme_ids': [scheme_id]) { fetch_assessors(scheme_id) }.status
+          authenticate_with_data('scheme_ids': [scheme_id]) { fetch_assessors(scheme_id) }.status
       ).to eq(200)
     end
 
@@ -69,7 +65,7 @@ describe 'Acceptance::AssessorList' do
 
       expected = { 'assessors' => [] }
       response =
-        authenticate_with_sup('scheme_ids': [scheme_id]) { fetch_assessors(scheme_id) }.body
+        authenticate_with_data('scheme_ids': [scheme_id]) { fetch_assessors(scheme_id) }.body
 
       actual = JSON.parse(response)['data']
 
@@ -78,7 +74,7 @@ describe 'Acceptance::AssessorList' do
 
     it 'returns JSON for a get' do
       scheme_id = authenticate_and { add_scheme }
-      response = authenticate_with_sup('scheme_ids': [scheme_id]) { fetch_assessors(scheme_id) }
+      response = authenticate_with_data('scheme_ids': [scheme_id]) { fetch_assessors(scheme_id) }
 
       expect(response.headers['Content-type']).to eq('application/json')
     end
@@ -91,7 +87,7 @@ describe 'Acceptance::AssessorList' do
         add_assessor(scheme_id, 'SCHEME4233', valid_assessor_request_body)
       end
       response =
-        authenticate_with_sup('scheme_ids': [scheme_id]) { fetch_assessors(scheme_id) }.body
+        authenticate_with_data('scheme_ids': [scheme_id]) { fetch_assessors(scheme_id) }.body
 
       actual = JSON.parse(response)['data']
       expected = {
@@ -142,7 +138,7 @@ describe 'Acceptance::AssessorList' do
       second_scheme_id = authenticate_and { add_scheme 'second test scheme' }
 
 
-      expect(authenticate_with_sup('scheme_ids': [scheme_id]) { fetch_assessors(second_scheme_id) }.status).to eq(403)
+      expect(authenticate_with_data('scheme_ids': [scheme_id]) { fetch_assessors(second_scheme_id) }.status).to eq(403)
     end
   end
 end
