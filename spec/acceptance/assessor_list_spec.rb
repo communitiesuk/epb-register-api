@@ -36,9 +36,9 @@ describe 'Acceptance::AssessorList' do
   context "when a scheme doesn't exist" do
     it 'returns status 404 for a get' do
       expect(
-        authenticate_with_data('scheme_ids': [20]) {
+        authenticate_with_data('scheme_ids': [20]) do
           fetch_assessors(20)
-        }.status
+        end.status
       ).to eq(404)
     end
 
@@ -58,9 +58,9 @@ describe 'Acceptance::AssessorList' do
       scheme_id = authenticate_and { add_scheme }
 
       expect(
-        authenticate_with_data('scheme_ids': [scheme_id]) {
+        authenticate_with_data('scheme_ids': [scheme_id]) do
           fetch_assessors(scheme_id)
-        }.status
+        end.status
       ).to eq(200)
     end
 
@@ -138,6 +138,7 @@ describe 'Acceptance::AssessorList' do
       authenticate_and do
         add_assessor(scheme_id, 'SCHEME5678', valid_assessor_request_body)
       end
+
       response =
         authenticate_with_data('scheme_ids': [scheme_id]) do
           fetch_assessors(scheme_id)
@@ -209,9 +210,9 @@ describe 'Acceptance::AssessorList' do
       second_scheme_id = authenticate_and { add_scheme 'second test scheme' }
 
       expect(
-        authenticate_with_data('scheme_ids': [scheme_id]) {
+        authenticate_with_data('scheme_ids': [scheme_id]) do
           fetch_assessors(second_scheme_id)
-        }.status
+        end.status
       ).to eq(403)
     end
   end
@@ -221,9 +222,9 @@ describe 'Acceptance::AssessorList' do
       scheme_id = authenticate_and { add_scheme }
 
       expect(
-        authenticate_with_data('test': [scheme_id]) {
+        authenticate_with_data('test': [scheme_id]) do
           fetch_assessors(scheme_id)
-        }.status
+        end.status
       ).to eq(403)
     end
   end
