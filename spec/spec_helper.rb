@@ -53,7 +53,9 @@ def get_valid_jwt(scopes = [])
     Auth::Token.new iat: Time.now.to_i,
                     iss: ENV['JWT_ISSUER'],
                     sub: 'test-subject',
-                    scopes: scopes
+                    scopes: scopes,
+                    sup:
+
   token.encode ENV['JWT_SECRET']
 end
 

@@ -129,4 +129,14 @@ describe 'Acceptance::AssessorList' do
       expect(authenticate_and { fetch_assessors(scheme_id) }.status).to eq(403)
     end
   end
+
+  context 'when a client tries to access another clients assessors' do
+    it 'returns a 403 forbidden' do
+      scheme_id = authenticate_and { add_scheme }
+      second_scheme_id = authenticate_and { add_scheme 'second test scheme' }
+
+
+      expect(authenticate_with_list_scope { fetch_assessors(scheme_id) }.status).to eq(403)
+    end
+  end
 end
