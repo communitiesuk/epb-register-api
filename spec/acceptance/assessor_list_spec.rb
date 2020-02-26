@@ -33,19 +33,19 @@ describe 'Acceptance::AssessorList' do
     authenticate_and(nil, %w[scheme:assessor:list]) { block.call }
   end
 
-  def authenticate_with_sup(data = nil, &block)
+  def authenticate_with_sup(data = {}, &block)
     authenticate_and(nil, %w[scheme:assessor:list], data) { block.call }
   end
 
   context "when a scheme doesn't exist" do
     it 'returns status 404 for a get' do
-      expect(authenticate_with_list_scope { fetch_assessors(20) }.status).to eq(
+      expect(authenticate_with_sup { fetch_assessors(20) }.status).to eq(
         404
       )
     end
 
     it 'returns the error response for a get' do
-      expect(authenticate_with_list_scope { fetch_assessors(20) }.body).to eq(
+      expect(authenticate_with_sup { fetch_assessors(20) }.body).to eq(
         {
           errors: [
             { "code": 'NOT_FOUND', title: 'The requested scheme was not found' }
