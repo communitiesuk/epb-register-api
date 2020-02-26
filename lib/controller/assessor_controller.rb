@@ -29,9 +29,17 @@ module Controller
     get '/api/schemes/:scheme_id/assessors',
         jwt_auth: %w[scheme:assessor:list] do
       scheme_id = params[:scheme_id]
+      sup = env[:jwt_auth].supplemental('scheme_ids')
+
       result =
         @container.get_object(:fetch_assessor_list_use_case).execute(scheme_id)
+
+      unless sup.include? scheme_id.to_i
+        halt 403, { errors: [{ code: 'UNAUTHORISED' }] }.to_json
+      end
+
       json_api_response(200, { assessors: result.map(&:to_hash) }, {})
+
     rescue UseCase::FetchAssessorList::SchemeNotFoundException
       not_found_error('The requested scheme was not found')
     end

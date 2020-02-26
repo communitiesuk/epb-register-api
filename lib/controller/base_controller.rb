@@ -36,6 +36,7 @@ module Controller
     set(:jwt_auth) do |*scopes|
       condition do
         token = Auth::Sinatra::Conditional.process_request env
+        env[:jwt_auth] = token
         unless token.scopes?(scopes)
           halt 403, { errors: [{ code: 'UNAUTHORISED' }] }.to_json
         end
