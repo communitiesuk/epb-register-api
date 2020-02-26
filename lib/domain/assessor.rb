@@ -1,6 +1,6 @@
 module Domain
   class Assessor
-    attr_reader :registered_by_id
+    attr_reader :registered_by_id, :scheme_assessor_id
 
     def initialize(
       scheme_assessor_id,
@@ -30,10 +30,9 @@ module Domain
     end
 
     def to_hash
-      {
+      hash = {
         first_name: @first_name,
         last_name: @last_name,
-        middle_names: @middle_names,
         registered_by: {
           name: @registered_by_name, scheme_id: @registered_by_id
         },
@@ -44,7 +43,7 @@ module Domain
           else
             Date.parse(@date_of_birth)
           end,
-        contact_details: { telephone_number: @telephone_number, email: @email },
+        contact_details: {},
         search_results_comparison_postcode: @search_results_comparison_postcode,
         qualifications: {
           domestic_energy_performance_certificates:
@@ -54,6 +53,29 @@ module Domain
               'INACTIVE'
             end
         }
+      }
+
+      hash[:contact_details][:email] = @email if @email
+      if @telephone_number
+        hash[:contact_details][:telephone_number] = @telephone_number
+      end
+      hash[:middle_names] = @middle_names if @middle_names
+      hash
+    end
+
+    def to_record
+      {
+        scheme_assessor_id: @scheme_assessor_id,
+        first_name: @first_name,
+        last_name: @last_name,
+        middle_names: @middle_names,
+        date_of_birth: @date_of_birth,
+        email: @email,
+        telephone_number: @telephone_number,
+        registered_by: @registered_by_id,
+        search_results_comparison_postcode: @search_results_comparison_postcode,
+        domestic_energy_performance_qualification:
+          @domestic_energy_performance_qualification
       }
     end
   end

@@ -93,10 +93,12 @@ module Controller
       scheme_assessor_id = params['scheme_assessor_id']
       assessor_details = request_body(PUT_SCHEMA)
       create_assessor_response =
-        @container.get_object(:add_assessor_use_case).execute(
-          scheme_id,
-          scheme_assessor_id,
-          assessor_details
+        @container.get_object(:add_assessor_use_case).execute_domain(
+          Boundary::AssessorRequest.new(
+            assessor_details,
+            scheme_assessor_id,
+            scheme_id
+          )
         )
 
       if create_assessor_response[:assessor_was_newly_created]

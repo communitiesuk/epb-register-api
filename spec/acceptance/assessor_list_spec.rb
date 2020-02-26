@@ -10,7 +10,10 @@ describe 'Acceptance::AssessorList' do
       lastName: 'Person',
       dateOfBirth: '1991-02-25',
       searchResultsComparisonPostcode: '',
-      qualifications: { domesticEnergyPerformanceCertificates: 'ACTIVE' }
+      qualifications: { domesticEnergyPerformanceCertificates: 'ACTIVE' },
+      contact_details: {
+        email: 'someone@energy.gov', telephone_number: '01234 567'
+      }
     }
   end
 
@@ -86,7 +89,9 @@ describe 'Acceptance::AssessorList' do
             'middleNames' => valid_assessor_request_body[:middleNames],
             'lastName' => valid_assessor_request_body[:lastName],
             'dateOfBirth' => valid_assessor_request_body[:dateOfBirth],
-            'contactDetails' => { 'telephoneNumber' => '', 'email' => '' },
+            'contactDetails' => {
+              'telephoneNumber' => '01234 567', 'email' => 'someone@energy.gov'
+            },
             'searchResultsComparisonPostcode' => '',
             'qualifications' => {
               'domesticEnergyPerformanceCertificates' => 'ACTIVE'

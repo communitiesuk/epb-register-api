@@ -52,6 +52,16 @@ module Gateway
       end
     end
 
+    def update_from_domain(assessor)
+      existing_assessor =
+        Assessor.find_by(scheme_assessor_id: assessor.scheme_assessor_id)
+      if existing_assessor
+        existing_assessor.update(assessor.to_record)
+      else
+        Assessor.create(assessor.to_record)
+      end
+    end
+
     def search(latitude, longitude, entries = 10)
       qualification = 'domestic_energy_performance_qualification'
 

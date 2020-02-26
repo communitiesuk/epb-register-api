@@ -138,7 +138,7 @@ describe 'Acceptance::Assessor' do
               middleNames: valid_assessor_request_body[:middleNames],
               lastName: valid_assessor_request_body[:lastName],
               dateOfBirth: valid_assessor_request_body[:dateOfBirth],
-              contactDetails: { telephoneNumber: '', email: '' },
+              contactDetails: {},
               searchResultsComparisonPostcode: '',
               qualifications: {
                 domesticEnergyPerformanceCertificates: 'ACTIVE'
@@ -220,7 +220,8 @@ describe 'Acceptance::Assessor' do
                 valid_assessor_request_body[:searchResultsComparisonPostcode],
               qualifications: {
                 domesticEnergyPerformanceCertificates: 'ACTIVE'
-              }
+              },
+              contactDetails: {}
             }.to_json
           )
 
@@ -266,7 +267,8 @@ describe 'Acceptance::Assessor' do
               dateOfBirth: valid_assessor_request_body[:dateOfBirth],
               searchResultsComparisonPostcode:
                 valid_assessor_request_body[:searchResultsComparisonPostcode],
-              qualifications: valid_assessor_request_body[:qualifications]
+              qualifications: valid_assessor_request_body[:qualifications],
+              contactDetails: {}
             }.to_json
           )
 
@@ -638,7 +640,7 @@ describe 'Acceptance::Assessor' do
               searchResultsComparisonPostcode:
                 valid_assessor_request_body[:searchResultsComparisonPostcode],
               qualifications: valid_assessor_request_body[:qualifications],
-              contactDetails: { email: '', telephoneNumber: '' }
+              contactDetails: {}
             }.to_json
           )
         )
