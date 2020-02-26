@@ -76,7 +76,7 @@ module Controller
           scheme_id,
           scheme_assessor_id
         )
-      json_response(200, result)
+      json_response(200, result.to_hash)
     rescue Exception => e
       case e
       when UseCase::FetchAssessor::SchemeNotFoundException

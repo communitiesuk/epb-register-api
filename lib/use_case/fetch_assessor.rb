@@ -16,7 +16,7 @@ module UseCase
       end
 
       raise SchemeNotFoundException unless @schemes_gateway.exists?(scheme_id)
-      assessor.to_hash
+      assessor
     end
   end
 end
