@@ -103,4 +103,12 @@ describe 'Acceptance::AssessorList' do
       expect(actual).to eq expected
     end
   end
+
+  context 'when a client is not authenticated' do
+    it 'returns a 401 unauthorised' do
+      scheme_id = authenticate_and { add_scheme }
+
+      expect(fetch_assessors(scheme_id).status).to eq(401)
+    end
+  end
 end
