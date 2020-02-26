@@ -41,7 +41,7 @@ module UseCase
           add_assessor_request.domestic_energy_performance_qualification
         )
 
-      @assessors_gateway.update_from_domain(assessor)
+      @assessors_gateway.update(assessor)
 
       {
         assessor_was_newly_created: (existing_assessor == nil),

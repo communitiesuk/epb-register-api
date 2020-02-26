@@ -33,26 +33,7 @@ module Gateway
       assessor.map(&:to_domain)
     end
 
-    def update(scheme_assessor_id, registered_by, assessor_details)
-      assessor = assessor_details.dup
-      assessor[:registered_by] = registered_by
-      assessor[:scheme_assessor_id] = scheme_assessor_id
-
-      existing_assessor =
-        Assessor.find_by(
-          scheme_assessor_id: scheme_assessor_id, registered_by: registered_by
-        )
-
-      assessor = flatten(assessor)
-
-      if existing_assessor
-        existing_assessor.update(assessor)
-      else
-        Assessor.create(assessor)
-      end
-    end
-
-    def update_from_domain(assessor)
+    def update(assessor)
       existing_assessor =
         Assessor.find_by(scheme_assessor_id: assessor.scheme_assessor_id)
       if existing_assessor
