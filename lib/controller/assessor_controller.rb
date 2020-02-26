@@ -100,19 +100,14 @@ module Controller
             scheme_id
           )
         )
+      assessor_record = create_assessor_response[:assessor]
 
       if create_assessor_response[:assessor_was_newly_created]
-        @events.event(
-          :new_assessor_registered,
-          create_assessor_response[:assessor][:scheme_assessor_id]
-        )
+        @events.event(:new_assessor_registered, scheme_assessor_id)
         json_response(201, create_assessor_response[:assessor])
       else
-        @events.event(
-          :assessor_updated,
-          create_assessor_response[:assessor][:scheme_assessor_id]
-        )
-        json_response(200, create_assessor_response[:assessor])
+        @events.event(:assessor_updated, scheme_assessor_id)
+        json_response(200, assessor_record.to_hash)
       end
     rescue Exception => e
       case e

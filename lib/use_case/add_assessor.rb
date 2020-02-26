@@ -45,7 +45,7 @@ module UseCase
 
       {
         assessor_was_newly_created: (existing_assessor == nil),
-        assessor: assessor.to_hash
+        assessor: assessor
       }
     end
   end
