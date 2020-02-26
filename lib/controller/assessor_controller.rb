@@ -93,7 +93,7 @@ module Controller
       scheme_assessor_id = params['scheme_assessor_id']
       assessor_details = request_body(PUT_SCHEMA)
       create_assessor_response =
-        @container.get_object(:add_assessor_use_case).execute_domain(
+        @container.get_object(:add_assessor_use_case).execute(
           Boundary::AssessorRequest.new(
             assessor_details,
             scheme_assessor_id,
