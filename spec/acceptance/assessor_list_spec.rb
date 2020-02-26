@@ -35,7 +35,7 @@ describe 'Acceptance::AssessorList' do
 
   context "when a scheme doesn't exist" do
     it 'returns status 404 for a get' do
-      expect(authenticate_with_data { fetch_assessors(20) }.status).to eq(
+      expect(authenticate_with_data('scheme_ids': [20]) { fetch_assessors(20) }.status).to eq(
         404
       )
     end
@@ -124,7 +124,7 @@ describe 'Acceptance::AssessorList' do
     end
   end
 
-  context 'when a client does not have the right role' do
+  context 'when a client does not have the right scope' do
     it 'returns a 403 forbidden' do
       scheme_id = authenticate_and { add_scheme }
 
@@ -136,7 +136,6 @@ describe 'Acceptance::AssessorList' do
     it 'returns a 403 forbidden' do
       scheme_id = authenticate_and { add_scheme }
       second_scheme_id = authenticate_and { add_scheme 'second test scheme' }
-
 
       expect(authenticate_with_data('scheme_ids': [scheme_id]) { fetch_assessors(second_scheme_id) }.status).to eq(403)
     end
