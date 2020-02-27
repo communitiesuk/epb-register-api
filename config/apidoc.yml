@@ -89,6 +89,49 @@ paths:
                           type: string
                           example: "A scheme with this name already exists in the register"
 
+  '/schemes/{schemeId}/assessors':
+    get:
+      tags:
+        - Manage Assessors
+      summary: List a summary of assessors belonging to a scheme
+      security:
+        - oauth:
+            - 'scheme:assessor:list'
+      parameters:
+        - in: path
+          required: true
+          name: schemeId
+          description: ID of the scheme
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: List of assessors for a scheme
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      assessors:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/AssessorBody'
+        '404':
+          description: Scheme not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorised'
+
   /schemes/{schemeId}/assessors/{schemeAssessorId}:
     get:
       tags:
@@ -288,6 +331,48 @@ components:
           type: string
           example: "EPBs 4 U"
 
+    Assessor:
+      type: object
+      properties:
+        firstName:
+          type: string
+          example: Jo
+        lastName:
+          type: string
+          example: Bloggs
+        middleNames:
+          type: string
+          example: T
+        contactDetails:
+          type: object
+          properties:
+            telephoneNumber:
+              type: string
+              maxLength: 256
+              example: 01632 960375
+            email:
+              type: string
+              format: email
+              example: j.t.bloggs@example.com
+
+    AssessorBody:
+      allOf:
+        - $ref: '#/components/schemas/Assessor'
+        - type: object
+          properties:
+            dateOfBirth:
+              type: string
+              format: date
+              example: '1980-01-10'
+            searchResultsComparisonPostcode:
+              $ref: '#/components/schemas/AddressPostcode'
+            qualifications:
+              type: object
+              properties:
+                domesticEnergyPerformanceCertificates:
+                  type: string
+                  enum: ['ACTIVE', 'INACTIVE']
+
     BasicAssessorDetails:
       type: object
       properties:
@@ -352,6 +437,40 @@ components:
           type: string
           example: 'a'
           description: The band, from a to g, the potential Energy Rating falls within
+
+    AddressPostcode:
+      type: string
+      example: SW1P 4JA
+
+    NotFound:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: "NOT_FOUND"
+              title:
+                type: string
+                example: "The requested scheme was not found"
+
+    Unauthorised:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: "UNAUTHORISED"
+              title:
+                type: string
+                example: "You are not authorised to perform this request"
 
     EnergyAssessmentBasicInfo:
       type: object
