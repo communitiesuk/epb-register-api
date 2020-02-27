@@ -57,10 +57,7 @@ module Controller
     end
 
     def error_response(response_code = 500, error_code, title)
-      json_response(
-        response_code,
-        { errors: [{ code: error_code, title: title }] }
-      )
+      json_response(response_code, errors: [{ code: error_code, title: title }])
     end
 
     def server_error(exception)
@@ -79,7 +76,13 @@ module Controller
     end
 
     def json_api_response(code = 200, data, meta: {})
-      json_response(code, { data: data, meta: meta })
+      json_response(code, data: data, meta: meta)
+    end
+
+    def forbidden(error_code, title, code = 403)
+      content_type :json
+      halt code
+      @json_helper.convert_to_json(errors: [{ code: error_code, title: title }])
     end
   end
 end
