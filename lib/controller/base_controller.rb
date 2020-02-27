@@ -84,8 +84,7 @@ module Controller
 
     def forbidden(error_code, title, code = 403)
       content_type :json
-      halt code
-      @json_helper.convert_to_json(errors: [{ code: error_code, title: title }])
+      halt code, @json_helper.convert_to_json(errors: [{ code: error_code, title: title }])
     end
   end
 end
