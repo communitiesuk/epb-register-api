@@ -119,6 +119,8 @@ paths:
                         type: array
                         items:
                           $ref: '#/components/schemas/AssessorBody'
+                  meta:
+                    type: object
         '404':
           description: Scheme not found
           content:
@@ -131,6 +133,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Unauthorised'
+        '401':
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthenticated'
 
   /schemes/{schemeId}/assessors/{schemeAssessorId}:
     get:
@@ -471,6 +479,18 @@ components:
               title:
                 type: string
                 example: "You are not authorised to perform this request"
+
+    Unauthenticated:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: "Auth::Errors::TokenMissing"
 
     EnergyAssessmentBasicInfo:
       type: object
