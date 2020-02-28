@@ -46,7 +46,7 @@ describe 'Acceptance::AssessorList' do
       expect(authenticate_with_data { fetch_assessors(20) }.body).to eq(
         {
           errors: [
-            { "code": 'NOT_FOUND', title: 'The requested scheme was not found' }
+            { "code": 'UNAUTHORISED', title: 'You are not authorised to perform this request' }
           ]
         }.to_json
       )
