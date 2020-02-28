@@ -34,37 +34,49 @@ describe 'Acceptance::AssessorList' do
   end
 
   context "when a scheme doesn't exist" do
-    it 'returns status 404 for a get' do
-      expect(
-        authenticate_with_data('scheme_ids': [20]) {
-          fetch_assessors(20)
-        }.status
-      ).to eq(404)
+    context 'when a client is authorised' do
+      it 'returns status 404 for a get' do
+        expect(
+          authenticate_with_data('scheme_ids': [20]) {
+            fetch_assessors(20)
+          }.status
+        ).to eq(404)
+      end
+
+      it 'returns the 404 error response' do
+        expect(
+          authenticate_with_data('scheme_ids': [20]) {
+            fetch_assessors(20)
+          }.body
+        ).to eq(
+          {
+            errors: [
+              {
+                "code": 'NOT_FOUND', title: 'The requested scheme was not found'
+              }
+            ]
+          }.to_json
+        )
+      end
     end
 
-    it 'returns the 404 error response' do
-      expect(
-        authenticate_with_data('scheme_ids': [20]) { fetch_assessors(20) }.body
-      ).to eq(
-        {
-          errors: [
-            { "code": 'NOT_FOUND', title: 'The requested scheme was not found' }
-          ]
-        }.to_json
-      )
-    end
+    context 'when a client is not authorised' do
+      it 'returns status 403 for a get' do
+        expect(authenticate_with_data { fetch_assessors(20) }.status).to eq(403)
+      end
 
-    it 'returns the error response for a get' do
-      expect(authenticate_with_data { fetch_assessors(20) }.body).to eq(
-        {
-          errors: [
-            {
-              "code": 'UNAUTHORISED',
-              title: 'You are not authorised to perform this request'
-            }
-          ]
-        }.to_json
-      )
+      it 'returns the 403 error response for a get' do
+        expect(authenticate_with_data { fetch_assessors(20) }.body).to eq(
+          {
+            errors: [
+              {
+                "code": 'UNAUTHORISED',
+                title: 'You are not authorised to perform this request'
+              }
+            ]
+          }.to_json
+        )
+      end
     end
   end
 
