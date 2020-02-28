@@ -42,11 +42,26 @@ describe 'Acceptance::AssessorList' do
       ).to eq(404)
     end
 
+    it 'returns the 404 error response' do
+      expect(
+        authenticate_with_data('scheme_ids': [20]) { fetch_assessors(20) }.body
+      ).to eq(
+        {
+          errors: [
+            { "code": 'NOT_FOUND', title: 'The requested scheme was not found' }
+          ]
+        }.to_json
+      )
+    end
+
     it 'returns the error response for a get' do
       expect(authenticate_with_data { fetch_assessors(20) }.body).to eq(
         {
           errors: [
-            { "code": 'UNAUTHORISED', title: 'You are not authorised to perform this request' }
+            {
+              "code": 'UNAUTHORISED',
+              title: 'You are not authorised to perform this request'
+            }
           ]
         }.to_json
       )
