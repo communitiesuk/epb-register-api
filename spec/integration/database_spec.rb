@@ -88,7 +88,19 @@ describe 'Integration::Database::Activerecord' do
   it 'has run the add not null constraint to column date_of_expiry' do
     connect('epb_development')
 
-    expect(migration_has_been_run?('20200211112211')).to be true
+    expect(migration_has_been_run?('20200211172559')).to be true
+  end
+
+  it 'has run the add not null constraint to required fields on assessors' do
+    connect('epb_development')
+
+    expect(migration_has_been_run?('20200227094053')).to be true
+  end
+
+  it 'has run the add address columns to certificates' do
+    connect('epb_development')
+
+    expect(migration_has_been_run?('20200302123538')).to be true
   end
 
   it 'can find the schemes table' do
