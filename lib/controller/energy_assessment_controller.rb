@@ -30,12 +30,17 @@ module Controller
       elsif params.has_key?(:assessment_id)
         result = @container.get_object(:find_assessments_by_assessment_id_use_case).execute(params[:assessment_id])
       else
-        raise "Query not implemented"
+        result = @container.get_object(:find_assessments_by_street_name_and_town_use_case).execute(params[:street_name], params[:town])
       end
 
       json_response(200, result)
     rescue Exception => e
-      server_error(e.message)
+      case e
+      when UseCase::FindAssessmentsByStreetNameAndTown::ParameterMissing
+        error_response(400, 'MALFORMED_REQUEST', 'Required query params missing')
+      else
+        server_error(e.message)
+      end
     end
 
     get '/api/assessments/domestic-energy-performance/:assessment_id',

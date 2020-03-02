@@ -314,6 +314,9 @@ describe 'Acceptance::Assessor' do
     def assessments_search_by_assessment_id(assessment_id)
       get "/api/assessments/domestic-energy-performance/search?assessment_id=#{assessment_id}"
     end
+    def assessments_search_by_street_name_and_town(street_name, town)
+      get "/api/assessments/domestic-energy-performance/search?street_name=#{street_name}&town=#{town}"
+    end
 
     def add_assessment(assessment_id, body)
       put(
@@ -445,6 +448,104 @@ describe 'Acceptance::Assessor' do
           )
 
         expect(response_json['results'][0]).to eq(expected_response)
+      end
+    end
+
+    context 'when using town and street name' do
+      context 'and town is missing but street name is present' do
+        it 'returns status 400 for a get' do
+          expect(
+            authenticate_and { assessments_search_by_street_name_and_town('Palmtree Road', '') }.status
+          ).to eq(400)
+        end
+
+        it 'contains the correct error message' do
+          response_body = authenticate_and { assessments_search_by_street_name_and_town('Palmtree Road', '') }.body
+          expect(JSON.parse(response_body)).to eq(
+                                                 {
+                                                   'errors' => [
+                                                     { 'code' => 'MALFORMED_REQUEST', 'title' => 'Required query params missing' }
+                                                   ]
+                                                 }
+                                               )
+        end
+      end
+
+      context 'and street name is missing but town is present' do
+        it 'returns status 400 for a get' do
+          expect(
+            authenticate_and { assessments_search_by_street_name_and_town('', 'Brighton') }.status
+          ).to eq(400)
+        end
+
+        it 'contains the correct error message' do
+          response_body = authenticate_and { assessments_search_by_street_name_and_town('', 'Brighton') }.body
+          expect(JSON.parse(response_body)).to eq(
+                                                 {
+                                                   'errors' => [
+                                                     { 'code' => 'MALFORMED_REQUEST', 'title' => 'Required query params missing' }
+                                                   ]
+                                                 }
+                                               )
+        end
+      end
+
+      context 'and required parameters are present' do
+        it 'returns status 200 for a get' do
+          expect(
+            authenticate_and { assessments_search_by_street_name_and_town('Palmtree Road', 'Brighton') }.status
+          ).to eq(200)
+        end
+
+        it 'looks as it should' do
+          response = authenticate_and { assessments_search_by_street_name_and_town('Palmtree Road', 'Brighton') }
+
+          response_json = JSON.parse(response.body)
+
+          expect(response_json['results']).to be_an(Array)
+        end
+
+        it 'has the properties we expect' do
+          response = authenticate_and { assessments_search_by_street_name_and_town('Palmtree Road', 'Brighton') }
+
+          response_json = JSON.parse(response.body)
+
+          expect(response_json).to include('results', 'searchQuery')
+        end
+
+        it 'has the over all hash of the shape we expect' do
+          authenticate_and { add_assessment('123-987', valid_assessment_body) }
+
+          response = authenticate_and { assessments_search_by_street_name_and_town('Palmtree Road', 'Brighton') }
+
+          response_json = JSON.parse(response.body)
+
+          expected_response =
+            JSON.parse(
+              {
+                assessmentId: '123-987',
+                dateOfAssessment: '2020-01-13',
+                dateRegistered: '2020-01-13',
+                totalFloorArea: 1_000,
+                typeOfAssessment: 'RdSAP',
+                dwellingType: 'Top floor flat',
+                addressSummary: '123 Victoria Street, London, SW1A 1BD',
+                currentEnergyEfficiencyRating: 75,
+                potentialEnergyEfficiencyRating: 80,
+                currentEnergyEfficiencyBand: 'c',
+                potentialEnergyEfficiencyBand: 'c',
+                postcode: 'SE1 7EZ',
+                dateOfExpiry: '2021-01-01',
+                town: 'Brighton',
+                addressLine1: 'Flat 33',
+                addressLine2: '18 Palmtree Road',
+                addressLine3: '',
+                addressLine4: ''
+              }.to_json
+            )
+
+          expect(response_json['results'][0]).to eq(expected_response)
+        end
       end
     end
   end
