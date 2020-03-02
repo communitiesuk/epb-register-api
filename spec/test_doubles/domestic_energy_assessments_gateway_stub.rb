@@ -3,7 +3,7 @@ class DomesticEnergyAssessmentsGatewayStub
     @result = result
   end
 
-  def search(*)
+  def search_by_postcode(*)
     @result
   end
 end

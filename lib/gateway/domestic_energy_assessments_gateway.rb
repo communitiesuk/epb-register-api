@@ -29,6 +29,8 @@ module Gateway
         address_line_3: assessment[:address_line3],
         address_line_4: assessment[:address_line4],
         town: assessment[:town],
+        current_energy_efficiency_band: get_energy_rating_band(assessment[:current_energy_efficiency_rating]),
+        potential_energy_efficiency_band: get_energy_rating_band(assessment[:potential_energy_efficiency_rating])
       }
     end
 
@@ -57,21 +59,59 @@ module Gateway
       end
     end
 
-    def search(query, postcode = true)
+    def search_by_postcode(postcode)
       sql =
-        'SELECT
+        "SELECT
             assessment_id, date_of_assessment, date_registered, dwelling_type,
             type_of_assessment, total_floor_area, address_summary, current_energy_efficiency_rating,
             potential_energy_efficiency_rating, postcode, date_of_expiry,
             address_line1, address_line2, address_line3, address_line4, town
         FROM domestic_energy_assessments
-        WHERE '
+        WHERE postcode = '#{ActiveRecord::Base.sanitize_sql(postcode)}'"
 
-      if postcode
-        sql += "postcode = '#{ActiveRecord::Base.sanitize_sql(query)}'"
-      else
-        sql += "assessment_id = '#{ActiveRecord::Base.sanitize_sql(query)}'"
+      response = DomesticEnergyAssessment.connection.execute(sql)
+
+      result = []
+      response.each do |row|
+        assessment_hash = to_hash(row.symbolize_keys)
+
+        result.push(assessment_hash)
       end
+
+      result
+    end
+
+    def search_by_assessment_id(assessment_id)
+      sql =
+        "SELECT
+            assessment_id, date_of_assessment, date_registered, dwelling_type,
+            type_of_assessment, total_floor_area, address_summary, current_energy_efficiency_rating,
+            potential_energy_efficiency_rating, postcode, date_of_expiry,
+            address_line1, address_line2, address_line3, address_line4, town
+        FROM domestic_energy_assessments
+        WHERE assessment_id = '#{ActiveRecord::Base.sanitize_sql(assessment_id)}'"
+
+      response = DomesticEnergyAssessment.connection.execute(sql)
+
+      result = []
+      response.each do |row|
+        assessment_hash = to_hash(row.symbolize_keys)
+
+        result.push(assessment_hash)
+      end
+
+      result
+    end
+
+    def search_by_street_name_and_town(street_name, town)
+      sql =
+        "SELECT
+            assessment_id, date_of_assessment, date_registered, dwelling_type,
+            type_of_assessment, total_floor_area, address_summary, current_energy_efficiency_rating,
+            potential_energy_efficiency_rating, postcode, date_of_expiry,
+            address_line1, address_line2, address_line3, address_line4, town
+        FROM domestic_energy_assessments
+        WHERE (address_line1 ILIKE '%#{ActiveRecord::Base.sanitize_sql(street_name)}' OR address_line2 ILIKE '%#{ActiveRecord::Base.sanitize_sql(street_name)}' OR address_line3 ILIKE '%#{ActiveRecord::Base.sanitize_sql(street_name)}') AND (town ILIKE '#{ActiveRecord::Base.sanitize_sql(street_name)}')"
 
       response = DomesticEnergyAssessment.connection.execute(sql)
 
@@ -95,6 +135,25 @@ module Gateway
         existing_assessment.update(domestic_energy_assessment)
       else
         DomesticEnergyAssessment.create(domestic_energy_assessment)
+      end
+    end
+
+    def get_energy_rating_band(number)
+      case number
+      when 1..20
+        'g'
+      when 21..38
+        'f'
+      when 39..54
+        'e'
+      when 55..68
+        'd'
+      when 69..80
+        'c'
+      when 81..91
+        'b'
+      when 92..100
+        'a'
       end
     end
   end
