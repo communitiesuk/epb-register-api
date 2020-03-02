@@ -24,10 +24,10 @@ module Gateway
           assessment[:potential_energy_efficiency_rating],
         postcode: assessment[:postcode],
         date_of_expiry: assessment[:date_of_expiry].strftime('%Y-%m-%d'),
-        address_line_1: assessment[:address_line1],
-        address_line_2: assessment[:address_line2],
-        address_line_3: assessment[:address_line3],
-        address_line_4: assessment[:address_line4],
+        address_line1: assessment[:address_line1],
+        address_line2: assessment[:address_line2],
+        address_line3: assessment[:address_line3],
+        address_line4: assessment[:address_line4],
         town: assessment[:town],
         current_energy_efficiency_band:
           get_energy_rating_band(assessment[:current_energy_efficiency_rating]),
@@ -74,7 +74,6 @@ module Gateway
         WHERE postcode = '#{
           ActiveRecord::Base.sanitize_sql(postcode)
         }'"
-
       response = DomesticEnergyAssessment.connection.execute(sql)
 
       result = []
@@ -125,7 +124,7 @@ module Gateway
           ActiveRecord::Base.sanitize_sql(street_name)
         }' OR address_line3 ILIKE '%#{
           ActiveRecord::Base.sanitize_sql(street_name)
-        }') AND (town ILIKE '#{ActiveRecord::Base.sanitize_sql(street_name)}')"
+        }') AND (town ILIKE '#{ActiveRecord::Base.sanitize_sql(town)}')"
 
       response = DomesticEnergyAssessment.connection.execute(sql)
 

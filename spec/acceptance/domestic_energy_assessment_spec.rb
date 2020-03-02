@@ -308,8 +308,11 @@ describe 'Acceptance::Assessor' do
   end
 
   context 'when searching for an assessment' do
-    def assessments_search_by_query(query)
-      get "/api/assessments/domestic-energy-performance/search/#{query}"
+    def assessments_search_by_postcode(postcode)
+      get "/api/assessments/domestic-energy-performance/search?postcode=#{postcode}"
+    end
+    def assessments_search_by_assessment_id(assessment_id)
+      get "/api/assessments/domestic-energy-performance/search?assessment_id=#{assessment_id}"
     end
 
     def add_assessment(assessment_id, body)
@@ -322,12 +325,12 @@ describe 'Acceptance::Assessor' do
     context 'when a search postcode is valid' do
       it 'returns status 200 for a get' do
         expect(
-          authenticate_and { assessments_search_by_query('SE17EZ') }.status
+          authenticate_and { assessments_search_by_postcode('SE17EZ') }.status
         ).to eq(200)
       end
 
       it 'looks as it should' do
-        response = authenticate_and { assessments_search_by_query('SE17EZ') }
+        response = authenticate_and { assessments_search_by_postcode('SE17EZ') }
 
         response_json = JSON.parse(response.body)
 
@@ -335,7 +338,7 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'can handle a lowercase postcode' do
-        response = authenticate_and { assessments_search_by_query('e20sz') }
+        response = authenticate_and { assessments_search_by_postcode('e20sz') }
 
         response_json = JSON.parse(response.body)
 
@@ -343,7 +346,7 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'has the properties we expect' do
-        response = authenticate_and { assessments_search_by_query('SE17EZ') }
+        response = authenticate_and { assessments_search_by_postcode('SE17EZ') }
 
         response_json = JSON.parse(response.body)
 
@@ -353,9 +356,11 @@ describe 'Acceptance::Assessor' do
       it 'has the over all hash of the shape we expect' do
         authenticate_and { add_assessment('123-987', valid_assessment_body) }
 
-        response = authenticate_and { assessments_search_by_query('SE17EZ') }
+        response = authenticate_and { assessments_search_by_postcode('SE17EZ') }
 
         response_json = JSON.parse(response.body)
+
+        puts response.body
 
         expected_response =
           JSON.parse(
@@ -388,12 +393,12 @@ describe 'Acceptance::Assessor' do
     context 'when a search assessment id is valid' do
       it 'returns status 200 for a get' do
         expect(
-          authenticate_and { assessments_search_by_query('123-987') }.status
+          authenticate_and { assessments_search_by_assessment_id('123-987') }.status
         ).to eq(200)
       end
 
       it 'looks as it should' do
-        response = authenticate_and { assessments_search_by_query('123-987') }
+        response = authenticate_and { assessments_search_by_assessment_id('123-987') }
 
         response_json = JSON.parse(response.body)
 
@@ -401,7 +406,7 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'has the properties we expect' do
-        response = authenticate_and { assessments_search_by_query('123-987') }
+        response = authenticate_and { assessments_search_by_assessment_id('123-987') }
 
         response_json = JSON.parse(response.body)
 
@@ -411,7 +416,7 @@ describe 'Acceptance::Assessor' do
       it 'has the over all hash of the shape we expect' do
         authenticate_and { add_assessment('123-987', valid_assessment_body) }
 
-        response = authenticate_and { assessments_search_by_query('123-987') }
+        response = authenticate_and { assessments_search_by_assessment_id('123-987') }
 
         response_json = JSON.parse(response.body)
 

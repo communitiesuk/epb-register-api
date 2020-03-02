@@ -24,6 +24,20 @@ module Controller
       }
     }
 
+    get '/api/assessments/domestic-energy-performance/search', jwt_auth: [] do
+      if params.has_key?(:postcode)
+        result = @container.get_object(:find_assessments_by_postcode_use_case).execute(params[:postcode])
+      elsif params.has_key?(:assessment_id)
+        result = @container.get_object(:find_assessments_by_assessment_id_use_case).execute(params[:assessment_id])
+      else
+        raise "Query not implemented"
+      end
+
+      json_response(200, result)
+    rescue Exception => e
+      server_error(e.message)
+    end
+
     get '/api/assessments/domestic-energy-performance/:assessment_id',
         jwt_auth: [] do
       assessment_id = params[:assessment_id]
@@ -38,31 +52,6 @@ module Controller
       else
         server_error(e)
       end
-    end
-
-    get '/api/assessments/domestic-energy-performance/search', jwt_auth: [] do
-      use_case = ''
-      if params[:postcode]
-        use_case = :find_assessments_by_postcode_use_case
-      elsif params[:assessment_id]
-        use_case = :find_assessments_by_assessment_id_use_case
-      end
-
-      result = @container.get_object(use_case).execute(params[:query])
-      json_response(200, result)
-    rescue Exception => e
-      server_error(e.message)
-    end
-
-    get '/api/assessments/domestic-energy-performance/search/:query',
-        jwt_auth: [] do
-      result =
-        @container.get_object(:find_assessments_use_case).execute(
-          params[:query]
-        )
-      json_response(200, result)
-    rescue Exception => e
-      server_error(e.message)
     end
 
     put '/api/assessments/domestic-energy-performance/:assessment_id',
