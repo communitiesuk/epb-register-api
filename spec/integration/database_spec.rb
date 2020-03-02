@@ -103,6 +103,12 @@ describe 'Integration::Database::Activerecord' do
     expect(migration_has_been_run?('20200302123538')).to be true
   end
 
+  it 'has run the rename address columns to certificates' do
+    connect('epb_development')
+
+    expect(migration_has_been_run?('20200302131954')).to be true
+  end
+
   it 'can find the schemes table' do
     connect('epb_development')
 
