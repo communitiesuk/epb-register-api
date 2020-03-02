@@ -15,7 +15,12 @@ describe 'Acceptance::Assessor' do
       currentEnergyEfficiencyRating: 75,
       potentialEnergyEfficiencyRating: 80,
       postcode: 'SE1 7EZ',
-      dateOfExpiry: '2021-01-01'
+      dateOfExpiry: '2021-01-01',
+      addressLine1: 'Flat 33',
+      addressLine2: '18 Palmtree Road',
+      addressLine3: '',
+      addressLine4: '',
+      town: 'Brighton'
     }.freeze
   end
 
@@ -89,7 +94,12 @@ describe 'Acceptance::Assessor' do
             currentEnergyEfficiencyBand: 'c',
             potentialEnergyEfficiencyBand: 'c',
             postcode: valid_assessment_body[:postcode],
-            dateOfExpiry: valid_assessment_body[:dateOfExpiry]
+            dateOfExpiry: valid_assessment_body[:dateOfExpiry],
+            town: valid_assessment_body[:town],
+            addressLine1: valid_assessment_body[:addressLine1],
+            addressLine2: valid_assessment_body[:addressLine2],
+            addressLine3: valid_assessment_body[:addressLine4],
+            addressLine4: valid_assessment_body[:addressLine4]
           }.to_json
         )
       expect(response).to eq(expected_response)
@@ -127,7 +137,12 @@ describe 'Acceptance::Assessor' do
             potentialEnergyEfficiencyRating:
               valid_assessment_body[:potentialEnergyEfficiencyRating],
             postcode: valid_assessment_body[:postcode],
-            dateOfExpiry: valid_assessment_body[:dateOfExpiry]
+            dateOfExpiry: valid_assessment_body[:dateOfExpiry],
+            town: valid_assessment_body[:town],
+            addressLine1: valid_assessment_body[:addressLine1],
+            addressLine2: valid_assessment_body[:addressLine2],
+            addressLine3: valid_assessment_body[:addressLine4],
+            addressLine4: valid_assessment_body[:addressLine4]
           }.to_json
         )
 
@@ -357,7 +372,12 @@ describe 'Acceptance::Assessor' do
               currentEnergyEfficiencyBand: 'c',
               potentialEnergyEfficiencyBand: 'c',
               postcode: 'SE1 7EZ',
-              dateOfExpiry: '2021-01-01'
+              dateOfExpiry: '2021-01-01',
+              town: 'Brighton',
+              addressLine1: 'Flat 33',
+              addressLine2: '18 Palmtree Road',
+              addressLine3: '',
+              addressLine4: ''
             }.to_json
           )
 
@@ -410,7 +430,12 @@ describe 'Acceptance::Assessor' do
               currentEnergyEfficiencyBand: 'c',
               potentialEnergyEfficiencyBand: 'c',
               postcode: 'SE1 7EZ',
-              dateOfExpiry: '2021-01-01'
+              dateOfExpiry: '2021-01-01',
+              town: 'Brighton',
+              addressLine1: 'Flat 33',
+              addressLine2: '18 Palmtree Road',
+              addressLine3: '',
+              addressLine4: ''
             }.to_json
           )
 

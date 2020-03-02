@@ -23,7 +23,12 @@ module Gateway
         potential_energy_efficiency_rating:
           assessment[:potential_energy_efficiency_rating],
         postcode: assessment[:postcode],
-        date_of_expiry: assessment[:date_of_expiry].strftime('%Y-%m-%d')
+        date_of_expiry: assessment[:date_of_expiry].strftime('%Y-%m-%d'),
+        address_line_1: assessment[:address_line1],
+        address_line_2: assessment[:address_line2],
+        address_line_3: assessment[:address_line3],
+        address_line_4: assessment[:address_line4],
+        town: assessment[:town],
       }
     end
 
@@ -57,7 +62,8 @@ module Gateway
         'SELECT
             assessment_id, date_of_assessment, date_registered, dwelling_type,
             type_of_assessment, total_floor_area, address_summary, current_energy_efficiency_rating,
-            potential_energy_efficiency_rating, postcode, date_of_expiry
+            potential_energy_efficiency_rating, postcode, date_of_expiry,
+            address_line1, address_line2, address_line3, address_line4, town
         FROM domestic_energy_assessments
         WHERE '
 

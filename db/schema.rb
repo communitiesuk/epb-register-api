@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_02_123538) do
+ActiveRecord::Schema.define(version: 2020_03_02_131954) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,10 +40,10 @@ ActiveRecord::Schema.define(version: 2020_03_02_123538) do
     t.integer "potential_energy_efficiency_rating", limit: 2, default: 2, null: false
     t.string "postcode"
     t.datetime "date_of_expiry", null: false
-    t.string "address_line_1"
-    t.string "address_line_2"
-    t.string "address_line_3"
-    t.string "address_line_4"
+    t.string "address_line1"
+    t.string "address_line2"
+    t.string "address_line3"
+    t.string "address_line4"
     t.string "town"
   end
 
