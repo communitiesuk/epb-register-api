@@ -9,7 +9,8 @@ module UseCase
     def execute(query)
       uniform_query = transform_when_postcode(query)
 
-      if Regexp.new('^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$', Regexp::IGNORECASE).match(uniform_query)
+      if Regexp.new('^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$', Regexp::IGNORECASE)
+           .match(uniform_query)
         result = @assessment_gateway.search_by_postcode(uniform_query)
       else
         result = @assessment_gateway.search_by_assessment_id(uniform_query)

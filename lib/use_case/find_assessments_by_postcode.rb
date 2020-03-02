@@ -9,12 +9,15 @@ module UseCase
     def execute(postcode)
       postcode.upcase!
 
-      if postcode[-4] != ' '
-        postcode = postcode.insert(-4, ' ')
-      end
+      postcode = postcode.insert(-4, ' ') if postcode[-4] != ' '
 
-      raise PostcodeNotValid unless Regexp.new('^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$', Regexp::IGNORECASE)
-              .match(postcode)
+      unless Regexp.new(
+               '^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$',
+               Regexp::IGNORECASE
+             )
+               .match(postcode)
+        raise PostcodeNotValid
+      end
 
       result = @assessment_gateway.search_by_postcode(postcode)
 

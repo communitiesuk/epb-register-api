@@ -29,8 +29,12 @@ module Gateway
         address_line_3: assessment[:address_line3],
         address_line_4: assessment[:address_line4],
         town: assessment[:town],
-        current_energy_efficiency_band: get_energy_rating_band(assessment[:current_energy_efficiency_rating]),
-        potential_energy_efficiency_band: get_energy_rating_band(assessment[:potential_energy_efficiency_rating])
+        current_energy_efficiency_band:
+          get_energy_rating_band(assessment[:current_energy_efficiency_rating]),
+        potential_energy_efficiency_band:
+          get_energy_rating_band(
+            assessment[:potential_energy_efficiency_rating]
+          )
       }
     end
 
@@ -67,7 +71,9 @@ module Gateway
             potential_energy_efficiency_rating, postcode, date_of_expiry,
             address_line1, address_line2, address_line3, address_line4, town
         FROM domestic_energy_assessments
-        WHERE postcode = '#{ActiveRecord::Base.sanitize_sql(postcode)}'"
+        WHERE postcode = '#{
+          ActiveRecord::Base.sanitize_sql(postcode)
+        }'"
 
       response = DomesticEnergyAssessment.connection.execute(sql)
 
@@ -89,7 +95,9 @@ module Gateway
             potential_energy_efficiency_rating, postcode, date_of_expiry,
             address_line1, address_line2, address_line3, address_line4, town
         FROM domestic_energy_assessments
-        WHERE assessment_id = '#{ActiveRecord::Base.sanitize_sql(assessment_id)}'"
+        WHERE assessment_id = '#{
+          ActiveRecord::Base.sanitize_sql(assessment_id)
+        }'"
 
       response = DomesticEnergyAssessment.connection.execute(sql)
 
@@ -111,7 +119,13 @@ module Gateway
             potential_energy_efficiency_rating, postcode, date_of_expiry,
             address_line1, address_line2, address_line3, address_line4, town
         FROM domestic_energy_assessments
-        WHERE (address_line1 ILIKE '%#{ActiveRecord::Base.sanitize_sql(street_name)}' OR address_line2 ILIKE '%#{ActiveRecord::Base.sanitize_sql(street_name)}' OR address_line3 ILIKE '%#{ActiveRecord::Base.sanitize_sql(street_name)}') AND (town ILIKE '#{ActiveRecord::Base.sanitize_sql(street_name)}')"
+        WHERE (address_line1 ILIKE '%#{
+          ActiveRecord::Base.sanitize_sql(street_name)
+        }' OR address_line2 ILIKE '%#{
+          ActiveRecord::Base.sanitize_sql(street_name)
+        }' OR address_line3 ILIKE '%#{
+          ActiveRecord::Base.sanitize_sql(street_name)
+        }') AND (town ILIKE '#{ActiveRecord::Base.sanitize_sql(street_name)}')"
 
       response = DomesticEnergyAssessment.connection.execute(sql)
 

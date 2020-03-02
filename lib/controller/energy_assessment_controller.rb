@@ -40,6 +40,20 @@ module Controller
       end
     end
 
+    get '/api/assessments/domestic-energy-performance/search', jwt_auth: [] do
+      use_case = ''
+      if params[:postcode]
+        use_case = :find_assessments_by_postcode_use_case
+      elsif params[:assessment_id]
+        use_case = :find_assessments_by_assessment_id_use_case
+      end
+
+      result = @container.get_object(use_case).execute(params[:query])
+      json_response(200, result)
+    rescue Exception => e
+      server_error(e.message)
+    end
+
     get '/api/assessments/domestic-energy-performance/search/:query',
         jwt_auth: [] do
       result =

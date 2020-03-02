@@ -41,12 +41,15 @@ describe UseCase::FindAssessmentsByAssessmentId do
 
     it 'return empty when no assessments are present' do
       expect(
-        find_assessments_without_stub_data.execute('1234-5678-9101-1121-3141')[:results]
+        find_assessments_without_stub_data.execute('1234-5678-9101-1121-3141')[
+          :results
+        ]
       ).to eq([])
     end
 
     it 'return assessments where they exist' do
-      response = find_assessments_with_stub_data.execute('1234-5678-9101-1121-3141')
+      response =
+        find_assessments_with_stub_data.execute('1234-5678-9101-1121-3141')
       expect(response[:results].size).to eq(2)
     end
   end
