@@ -364,7 +364,7 @@ paths:
         content:
           application/xml+RdSAP-Schema-19.0:
             schema:
-              $ref: './schemas/xml/RdSAP-Schema-19.0/RdSAP/Templates/RdSAP-Report.xsd'
+              $ref: '#/components/schemas/Empty'
       responses:
         '201':
           description: New assessment lodged
