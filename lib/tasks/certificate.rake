@@ -61,7 +61,7 @@ task :generate_certificate do
           '#{dwelling_type.sample}',
           '#{type_of_assessment.sample}',
           '#{rand(20..200)}',
-          '#{ActiveRecord::Base.sanitize_sql(line_1 + ', ' + line_2 + ', ' + internal_town + ', ' + internal_postcode)}',
+          '#{ActiveRecord::Base.sanitize_sql((line_1 + ', ' + line_2 + ', ' + internal_town + ', ' + internal_postcode).replace(', , ', ', '))}',
           '#{current_energy_efficiency_rating}',
           '#{[current_energy_efficiency_rating + rand(1..20), 99].min}',
           '#{internal_postcode}',
