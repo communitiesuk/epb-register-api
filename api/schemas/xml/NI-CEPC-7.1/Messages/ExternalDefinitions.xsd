@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2006 rel. 3 U (http://www.altova.com) by Jim Bowery (Landmark Information Group Ltd.) -->
+<xs:schema xmlns="EPC" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="EPC" attributeFormDefault="unqualified">
+	<xs:annotation>
+		<xs:documentation>
+			This schema is used to provide 
+				(a) the options for Related Party Disclosure
+		</xs:documentation>
+	</xs:annotation>
+	<xs:element name="ExternalDefinitions" type="ExternalDefinitions"/>
+	<xs:complexType name="ExternalDefinitions">
+		<xs:sequence>
+			<xs:element name="Revision-Number" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The version number of the latest revision to any of the texts</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Revision-Date" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>The date of the latest revision to any of the texts</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DEC-Related-Party-Disclosure" type="DEC-Related-Party-Disclosure" maxOccurs="unbounded"/>
+			<xs:element name="EPC-Related-Party-Disclosure" type="EPC-Related-Party-Disclosure" maxOccurs="unbounded"/>
+			<xs:element name="ACI-Related-Party-Disclosure" type="ACI-Related-Party-Disclosure" maxOccurs="unbounded"/>
+			<xs:element name="Refrigerant-Type" type="Refrigerant-Type" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DEC-Related-Party-Disclosure">
+		<xs:annotation>
+			<xs:documentation>List of possible texts for Related Party Disclosure on DECs</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DEC-Disclosure-Code" type="xs:positiveInteger"/>
+			<xs:element name="DEC-Disclosure-Text" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EPC-Related-Party-Disclosure">
+		<xs:annotation>
+			<xs:documentation>List of possible texts for Related Party Disclosure on EPCs</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="EPC-Disclosure-Code" type="xs:positiveInteger"/>
+			<xs:element name="EPC-Disclosure-Text" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ACI-Related-Party-Disclosure">
+		<xs:annotation>
+			<xs:documentation>List of possible texts for Related Party Disclosure on ACIs</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ACI-Disclosure-Code" type="xs:positiveInteger"/>
+			<xs:element name="ACI-Disclosure-Text" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Refrigerant-Type">
+		<xs:sequence>
+			<xs:element name="Type" type="xs:string"/>
+			<xs:element name="ECFGasRegulation" type="RefrigerantRegulationFlag"/>
+			<xs:element name="ECOzoneRegulation" type="RefrigerantRegulationFlag"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="RefrigerantRegulationFlag">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Relevant and must comply"/>
+			<xs:enumeration value="Not relevant"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

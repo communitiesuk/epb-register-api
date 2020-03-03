@@ -1,0 +1,556 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<n1:ExternalDefinitions xmlns:n1="EPC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="EPC
+.\ExternalDefinitions.xsd">
+	<Revision-Number>3.1</Revision-Number>
+	<Revision-Date>2011-05-11</Revision-Date>
+	<DEC-Related-Party-Disclosure>
+		<DEC-Disclosure-Code>1</DEC-Disclosure-Code>
+		<DEC-Disclosure-Text>Not related to the occupier.</DEC-Disclosure-Text>
+	</DEC-Related-Party-Disclosure>
+	<DEC-Related-Party-Disclosure>
+		<DEC-Disclosure-Code>2</DEC-Disclosure-Code>
+		<DEC-Disclosure-Text>Employed by the occupier.</DEC-Disclosure-Text>
+	</DEC-Related-Party-Disclosure>
+	<DEC-Related-Party-Disclosure>
+		<DEC-Disclosure-Code>3</DEC-Disclosure-Code>
+		<DEC-Disclosure-Text>Contractor to the occupier for EPBD services only.</DEC-Disclosure-Text>
+	</DEC-Related-Party-Disclosure>
+	<DEC-Related-Party-Disclosure>
+		<DEC-Disclosure-Code>4</DEC-Disclosure-Code>
+		<DEC-Disclosure-Text>Contractor to the occupier for non-EPBD services.</DEC-Disclosure-Text>
+	</DEC-Related-Party-Disclosure>
+	<DEC-Related-Party-Disclosure>
+		<DEC-Disclosure-Code>5</DEC-Disclosure-Code>
+		<DEC-Disclosure-Text>Indirect relation to the occupier.</DEC-Disclosure-Text>
+	</DEC-Related-Party-Disclosure>
+	<DEC-Related-Party-Disclosure>
+		<DEC-Disclosure-Code>6</DEC-Disclosure-Code>
+		<DEC-Disclosure-Text>Financial interest in the occupier and/or property.</DEC-Disclosure-Text>
+	</DEC-Related-Party-Disclosure>
+	<DEC-Related-Party-Disclosure>
+		<DEC-Disclosure-Code>7</DEC-Disclosure-Code>
+		<DEC-Disclosure-Text>Previous relation to the occupier.</DEC-Disclosure-Text>
+	</DEC-Related-Party-Disclosure>
+	<DEC-Related-Party-Disclosure>
+		<DEC-Disclosure-Code>8</DEC-Disclosure-Code>
+		<DEC-Disclosure-Text>Not recorded.</DEC-Disclosure-Text>
+	</DEC-Related-Party-Disclosure>
+	<EPC-Related-Party-Disclosure>
+		<EPC-Disclosure-Code>1</EPC-Disclosure-Code>
+		<EPC-Disclosure-Text>Not related to the owner.</EPC-Disclosure-Text>
+	</EPC-Related-Party-Disclosure>
+	<EPC-Related-Party-Disclosure>
+		<EPC-Disclosure-Code>2</EPC-Disclosure-Code>
+		<EPC-Disclosure-Text>Relative of the owner.</EPC-Disclosure-Text>
+	</EPC-Related-Party-Disclosure>
+	<EPC-Related-Party-Disclosure>
+		<EPC-Disclosure-Code>3</EPC-Disclosure-Code>
+		<EPC-Disclosure-Text>Relative of the professional dealing with the property transaction.</EPC-Disclosure-Text>
+	</EPC-Related-Party-Disclosure>
+	<EPC-Related-Party-Disclosure>
+		<EPC-Disclosure-Code>4</EPC-Disclosure-Code>
+		<EPC-Disclosure-Text>Indirect relation to the owner (e.g relative employed/contracted by owner).</EPC-Disclosure-Text>
+	</EPC-Related-Party-Disclosure>
+	<EPC-Related-Party-Disclosure>
+		<EPC-Disclosure-Code>5</EPC-Disclosure-Code>
+		<EPC-Disclosure-Text>Occupier of the property.</EPC-Disclosure-Text>
+	</EPC-Related-Party-Disclosure>
+	<EPC-Related-Party-Disclosure>
+		<EPC-Disclosure-Code>6</EPC-Disclosure-Code>
+		<EPC-Disclosure-Text>Owner or Director of the organisation dealing with the property transaction.</EPC-Disclosure-Text>
+	</EPC-Related-Party-Disclosure>
+	<EPC-Related-Party-Disclosure>
+		<EPC-Disclosure-Code>7</EPC-Disclosure-Code>
+		<EPC-Disclosure-Text>Employed by the organisation dealing with the property transaction.</EPC-Disclosure-Text>
+	</EPC-Related-Party-Disclosure>
+	<EPC-Related-Party-Disclosure>
+		<EPC-Disclosure-Code>8</EPC-Disclosure-Code>
+		<EPC-Disclosure-Text>Financial interest in the property.</EPC-Disclosure-Text>
+	</EPC-Related-Party-Disclosure>
+	<EPC-Related-Party-Disclosure>
+		<EPC-Disclosure-Code>9</EPC-Disclosure-Code>
+		<EPC-Disclosure-Text>Employed by the owner.</EPC-Disclosure-Text>
+	</EPC-Related-Party-Disclosure>
+	<EPC-Related-Party-Disclosure>
+		<EPC-Disclosure-Code>10</EPC-Disclosure-Code>
+		<EPC-Disclosure-Text>Contracted by the owner to provide other Energy Assessment services.</EPC-Disclosure-Text>
+	</EPC-Related-Party-Disclosure>
+	<EPC-Related-Party-Disclosure>
+		<EPC-Disclosure-Code>11</EPC-Disclosure-Code>
+		<EPC-Disclosure-Text>Contracted by the owner to provide other (non Energy Assessment) services.</EPC-Disclosure-Text>
+	</EPC-Related-Party-Disclosure>
+	<EPC-Related-Party-Disclosure>
+		<EPC-Disclosure-Code>12</EPC-Disclosure-Code>
+		<EPC-Disclosure-Text>Previous relation to the owner (e.g. employee/contractor).</EPC-Disclosure-Text>
+	</EPC-Related-Party-Disclosure>
+	<EPC-Related-Party-Disclosure>
+		<EPC-Disclosure-Code>13</EPC-Disclosure-Code>
+		<EPC-Disclosure-Text>Not recorded.</EPC-Disclosure-Text>
+	</EPC-Related-Party-Disclosure>
+	<ACI-Related-Party-Disclosure>
+		<ACI-Disclosure-Code>1</ACI-Disclosure-Code>
+		<ACI-Disclosure-Text>Not related to the owner/occupier or person who has technical control of the system or subcontractor.</ACI-Disclosure-Text>
+	</ACI-Related-Party-Disclosure>
+	<ACI-Related-Party-Disclosure>
+		<ACI-Disclosure-Code>2</ACI-Disclosure-Code>
+		<ACI-Disclosure-Text>Related to the building owner/occupier.</ACI-Disclosure-Text>
+	</ACI-Related-Party-Disclosure>
+	<ACI-Related-Party-Disclosure>
+		<ACI-Disclosure-Code>3</ACI-Disclosure-Code>
+		<ACI-Disclosure-Text>Related to the person who has technical control of the system or subcontractor.</ACI-Disclosure-Text>
+	</ACI-Related-Party-Disclosure>
+	<ACI-Related-Party-Disclosure>
+		<ACI-Disclosure-Code>4</ACI-Disclosure-Code>
+		<ACI-Disclosure-Text>Occupier of the building.</ACI-Disclosure-Text>
+	</ACI-Related-Party-Disclosure>
+	<ACI-Related-Party-Disclosure>
+		<ACI-Disclosure-Code>5</ACI-Disclosure-Code>
+		<ACI-Disclosure-Text>Owner or Director of the organisation.</ACI-Disclosure-Text>
+	</ACI-Related-Party-Disclosure>
+	<ACI-Related-Party-Disclosure>
+		<ACI-Disclosure-Code>6</ACI-Disclosure-Code>
+		<ACI-Disclosure-Text>Financial interest in the building/organisation with technical control of the system or subcontractor.</ACI-Disclosure-Text>
+	</ACI-Related-Party-Disclosure>
+	<ACI-Related-Party-Disclosure>
+		<ACI-Disclosure-Code>7</ACI-Disclosure-Code>
+		<ACI-Disclosure-Text>Contracted by the owner to provide other Energy Assessment services.</ACI-Disclosure-Text>
+	</ACI-Related-Party-Disclosure>
+	<ACI-Related-Party-Disclosure>
+		<ACI-Disclosure-Code>8</ACI-Disclosure-Code>
+		<ACI-Disclosure-Text>Contracted by the owner to provide other (non-Energy Assessment) services.</ACI-Disclosure-Text>
+	</ACI-Related-Party-Disclosure>
+	<ACI-Related-Party-Disclosure>
+		<ACI-Disclosure-Code>9</ACI-Disclosure-Code>
+		<ACI-Disclosure-Text>Contracted by the owner to provide air conditioning maintenance services.</ACI-Disclosure-Text>
+	</ACI-Related-Party-Disclosure>
+		<Refrigerant-Type>
+		<Type>HCFC 22</Type>
+		<ECFGasRegulation>Not relevant</ECFGasRegulation>
+		<ECOzoneRegulation>Relevant and must comply</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>HCFC 123</Type>
+		<ECFGasRegulation>Not relevant</ECFGasRegulation>
+		<ECOzoneRegulation>Relevant and must comply</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>HCFC 124</Type>
+		<ECFGasRegulation>Not relevant</ECFGasRegulation>
+		<ECOzoneRegulation>Relevant and must comply</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>HCFC 142b</Type>
+		<ECFGasRegulation>Not relevant</ECFGasRegulation>
+		<ECOzoneRegulation>Relevant and must comply</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>HFC 23</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>HFC 32</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>HFC 41</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>HFC 43-10mee</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>HFC 125</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>HFC 134</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>HFC 134a</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>HFC 143</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>HFC 143a</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>HFC 152a</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>HFC 227ea</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>HFC 236cb</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>HFC 236ea</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>HFC 236fa</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>HFC 245ca</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>HFC 245fa</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>HFC 365mfc</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>PFC 14 - Perfluoromethane</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>PFC 116 - Perfluoroethane</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>PFC 218 - Perfluoropropane</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>PFC 3110 - Perfluorobutane</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>PFC 4112 - Perfluoropentane</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>PFC 5114 - Perfluorohexane</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>PFC 318 - Perfluorocyclobutane</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>SF6 - Sulphur Hexafluoride</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>HC 290 - Propane</Type>
+		<ECFGasRegulation>Not relevant</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>HC 600a - Iso-butane</Type>
+		<ECFGasRegulation>Not relevant</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R 717 - Ammonia</Type>
+		<ECFGasRegulation>Not relevant</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R401</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Relevant and must comply</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R402</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Relevant and must comply</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R403</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Relevant and must comply</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R404</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R406</Type>
+		<ECFGasRegulation>Not relevant</ECFGasRegulation>
+		<ECOzoneRegulation>Relevant and must comply</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R407</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R408</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Relevant and must comply</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R409</Type>
+		<ECFGasRegulation>Not relevant</ECFGasRegulation>
+		<ECOzoneRegulation>Relevant and must comply</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R410</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R411</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Relevant and must comply</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R413</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R416</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R417</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R422</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R423</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R424</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R427</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R428</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R434</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R507</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R508</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R22</Type>
+		<ECFGasRegulation>Not relevant</ECFGasRegulation>
+		<ECOzoneRegulation>Relevant and must comply</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R123</Type>
+		<ECFGasRegulation>Not relevant</ECFGasRegulation>
+		<ECOzoneRegulation>Relevant and must comply</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R134a</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R290</Type>
+		<ECFGasRegulation>Not relevant</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R600a</Type>
+		<ECFGasRegulation>Not relevant</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R717</Type>
+		<ECFGasRegulation>Not relevant</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R401A</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Relevant and must comply</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R401B</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Relevant and must comply</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R401C</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Relevant and must comply</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R402A</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Relevant and must comply</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R402B</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Relevant and must comply</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R403A</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Relevant and must comply</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R403B</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Relevant and must comply</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R404A</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R406A</Type>
+		<ECFGasRegulation>Not relevant</ECFGasRegulation>
+		<ECOzoneRegulation>Relevant and must comply</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R407A</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R407B</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R407C</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R408A</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Relevant and must comply</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R409A</Type>
+		<ECFGasRegulation>Not relevant</ECFGasRegulation>
+		<ECOzoneRegulation>Relevant and must comply</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R409B</Type>
+		<ECFGasRegulation>Not relevant</ECFGasRegulation>
+		<ECOzoneRegulation>Relevant and must comply</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R410A</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R411B</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Relevant and must comply</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R413A</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R416A</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R417A</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R422A</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R422D</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R423A</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R424A</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R427A</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R428A</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+	<Refrigerant-Type>
+		<Type>R434A</Type>
+		<ECFGasRegulation>Relevant and must comply</ECFGasRegulation>
+		<ECOzoneRegulation>Not relevant</ECOzoneRegulation>
+	</Refrigerant-Type>
+</n1:ExternalDefinitions>
