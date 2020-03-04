@@ -16,7 +16,7 @@ module Gateway
           scheme[:scheme_id],
           scheme[:name],
           self[:search_results_comparison_postcode],
-          self[:domestic_energy_performance_qualification]
+          self[:domestic_rd_sap_qualification]
         )
       end
     end
@@ -44,14 +44,14 @@ module Gateway
     end
 
     def search(latitude, longitude, entries = 10)
-      qualification = 'domestic_energy_performance_qualification'
+      qualification = 'domestic_rd_sap_qualification'
 
       response =
         Assessor.connection.execute(
           "SELECT
           first_name, last_name, middle_names, date_of_birth, registered_by,
           scheme_assessor_id, telephone_number, email, c.name AS scheme_name,
-          search_results_comparison_postcode, domestic_energy_performance_qualification,
+          search_results_comparison_postcode, domestic_rd_sap_qualification,
           (
             sqrt(abs(POWER(69.1 * (a.latitude - #{
             latitude.to_f
@@ -96,7 +96,7 @@ module Gateway
             row['registered_by'],
             row['scheme_name'],
             row['search_results_comparison_postcode'],
-            row['domestic_energy_performance_qualification']
+            row['domestic_rd_sap_qualification']
           )
 
         distance_result = row['distance']
@@ -114,7 +114,7 @@ module Gateway
         'SELECT
           first_name, last_name, middle_names, date_of_birth, registered_by,
           scheme_assessor_id, telephone_number, email, b.name AS scheme_name,
-          search_results_comparison_postcode, domestic_energy_performance_qualification
+          search_results_comparison_postcode, domestic_rd_sap_qualification
 
         FROM assessors a
         LEFT JOIN schemes b ON(a.registered_by = b.scheme_id)
@@ -165,7 +165,7 @@ module Gateway
             row['registered_by'],
             row['scheme_name'],
             row['search_results_comparison_postcode'],
-            row['domestic_energy_performance_qualification']
+            row['domestic_rd_sap_qualification']
           )
 
         result.push(assessor.to_hash)

@@ -10,7 +10,7 @@ describe 'Acceptance::Assessor' do
       lastName: 'Person',
       dateOfBirth: '1991-02-25',
       searchResultsComparisonPostcode: '',
-      qualifications: { domesticEnergyPerformanceCertificates: 'ACTIVE' }
+      qualifications: { domesticRdSap: 'ACTIVE' }
     }
   end
 
@@ -24,7 +24,7 @@ describe 'Acceptance::Assessor' do
         telephoneNumber: '010199991010101', email: 'person@person.com'
       },
       searchResultsComparisonPostcode: '',
-      qualifications: { domesticEnergyPerformanceCertificates: 'ACTIVE' }
+      qualifications: { domesticRdSap: 'ACTIVE' }
     }
   end
 
@@ -141,7 +141,7 @@ describe 'Acceptance::Assessor' do
               contactDetails: {},
               searchResultsComparisonPostcode: '',
               qualifications: {
-                domesticEnergyPerformanceCertificates: 'ACTIVE'
+                domesticRdSap: 'ACTIVE'
               }
             }.to_json
           )
@@ -163,7 +163,7 @@ describe 'Acceptance::Assessor' do
         end
         expected_qualifications =
           JSON.parse(
-            { domesticEnergyPerformanceCertificates: 'INACTIVE' }.to_json
+            { domesticRdSap: 'INACTIVE' }.to_json
           )
         response =
           JSON.parse(
@@ -219,7 +219,7 @@ describe 'Acceptance::Assessor' do
               searchResultsComparisonPostcode:
                 valid_assessor_request_body[:searchResultsComparisonPostcode],
               qualifications: {
-                domesticEnergyPerformanceCertificates: 'ACTIVE'
+                domesticRdSap: 'ACTIVE'
               },
               contactDetails: {}
             }.to_json
@@ -406,7 +406,7 @@ describe 'Acceptance::Assessor' do
         scheme_id = authenticate_and { add_scheme }
         invalid_body = valid_assessor_request_body.dup
         invalid_body[:qualifications] = {
-          domesticEnergyPerformanceCertificates: 'horse'
+          domesticRdSap: 'horse'
         }
         assessor_response =
           authenticate_and do
@@ -517,7 +517,7 @@ describe 'Acceptance::Assessor' do
               },
               searchResultsComparisonPostcode: '',
               qualifications: {
-                domesticEnergyPerformanceCertificates: 'ACTIVE'
+                domesticRdSap: 'ACTIVE'
               }
             }.to_json
           )

@@ -18,7 +18,7 @@ module Controller
         qualifications: {
           type: 'object',
           properties: {
-            domesticEnergyPerformanceCertificates: {
+            domesticRdSap: {
               type: 'string', enum: %w[ACTIVE INACTIVE]
             }
           }
@@ -103,6 +103,7 @@ module Controller
       scheme_id = params['scheme_id']
       scheme_assessor_id = params['scheme_assessor_id']
       assessor_details = request_body(PUT_SCHEMA)
+
       create_assessor_response =
         @container.get_object(:add_assessor_use_case).execute(
           Boundary::AssessorRequest.new(

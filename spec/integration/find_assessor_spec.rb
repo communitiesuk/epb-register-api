@@ -41,7 +41,7 @@ describe 'Integration::FilterAndOrderAssessorsByPostcode' do
       lastName: 'Person',
       dateOfBirth: '1991-02-25',
       searchResultsComparisonPostcode: 'BF1 3AD',
-      qualifications: { domesticEnergyPerformanceCertificates: 'ACTIVE' }
+      qualifications: { domesticRdSap: 'ACTIVE' }
     }
   end
 

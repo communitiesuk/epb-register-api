@@ -10,7 +10,7 @@ describe 'Acceptance::AssessorList' do
       lastName: 'Person',
       dateOfBirth: '1991-02-25',
       searchResultsComparisonPostcode: '',
-      qualifications: { domesticEnergyPerformanceCertificates: 'ACTIVE' },
+      qualifications: { domesticRdSap: 'ACTIVE' },
       contact_details: {
         email: 'someone@energy.gov', telephone_number: '01234 567'
       }
@@ -144,7 +144,7 @@ describe 'Acceptance::AssessorList' do
             },
             'searchResultsComparisonPostcode' => '',
             'qualifications' => {
-              'domesticEnergyPerformanceCertificates' => 'ACTIVE'
+              'domesticRdSap' => 'ACTIVE'
             }
           }
         ]
@@ -188,7 +188,7 @@ describe 'Acceptance::AssessorList' do
             },
             'searchResultsComparisonPostcode' => '',
             'qualifications' => {
-              'domesticEnergyPerformanceCertificates' => 'ACTIVE'
+              'domesticRdSap' => 'ACTIVE'
             }
           },
           {
@@ -205,7 +205,7 @@ describe 'Acceptance::AssessorList' do
             },
             'searchResultsComparisonPostcode' => '',
             'qualifications' => {
-              'domesticEnergyPerformanceCertificates' => 'ACTIVE'
+              'domesticRdSap' => 'ACTIVE'
             }
           }
         ]

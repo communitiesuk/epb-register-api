@@ -20,7 +20,7 @@ task :generate_assessor do
             first_name, last_name, date_of_birth, registered_by,
             scheme_assessor_id, telephone_number, email,
             search_results_comparison_postcode,
-            domestic_energy_performance_qualification
+            domestic_rd_sap_qualification
           )
         VALUES(
           '#{first_name}',

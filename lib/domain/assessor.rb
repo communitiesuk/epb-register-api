@@ -13,7 +13,7 @@ module Domain
       registered_by_id,
       registered_by_name,
       search_results_comparison_postcode,
-      domestic_energy_performance_qualification
+      domestic_rd_sap_qualification
     )
       @scheme_assessor_id = scheme_assessor_id
       @first_name = first_name
@@ -25,8 +25,8 @@ module Domain
       @registered_by_id = registered_by_id
       @registered_by_name = registered_by_name
       @search_results_comparison_postcode = search_results_comparison_postcode
-      @domestic_energy_performance_qualification =
-        domestic_energy_performance_qualification
+      @domestic_rd_sap_qualification =
+        domestic_rd_sap_qualification
     end
 
     def to_hash
@@ -46,8 +46,8 @@ module Domain
         contact_details: {},
         search_results_comparison_postcode: @search_results_comparison_postcode,
         qualifications: {
-          domestic_energy_performance_certificates:
-            if @domestic_energy_performance_qualification == 'ACTIVE'
+          domestic_rd_sap:
+            if @domestic_rd_sap_qualification == 'ACTIVE'
               'ACTIVE'
             else
               'INACTIVE'
@@ -74,8 +74,8 @@ module Domain
         telephone_number: @telephone_number,
         registered_by: @registered_by_id,
         search_results_comparison_postcode: @search_results_comparison_postcode,
-        domestic_energy_performance_qualification:
-          @domestic_energy_performance_qualification
+        domestic_rd_sap_qualification:
+          @domestic_rd_sap_qualification
       }
     end
   end

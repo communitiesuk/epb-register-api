@@ -11,7 +11,7 @@ describe 'Acceptance::Postcodes' do
         telephoneNumber: '010199991010101', email: 'person@person.com'
       },
       searchResultsComparisonPostcode: 'SE1 7EZ',
-      qualifications: { domesticEnergyPerformanceCertificates: 'ACTIVE' }
+      qualifications: { domesticRdSap: 'ACTIVE' }
     }
   end
 
@@ -162,7 +162,7 @@ describe 'Acceptance::Postcodes' do
                 telephoneNumber: '010199991010101', email: 'person@person.com'
               },
               qualifications: {
-                domesticEnergyPerformanceCertificates: 'ACTIVE'
+                domesticRdSap: 'ACTIVE'
               }
             },
             distance: 0.0
@@ -229,7 +229,7 @@ describe 'Acceptance::Postcodes' do
       scheme_id = authenticate_and { add_scheme('Happy EPC') }
 
       assessor = valid_assessor_with_contact_request_body
-      assessor[:qualifications][:domesticEnergyPerformanceCertificates] =
+      assessor[:qualifications][:domesticRdSap] =
         'INACTIVE'
 
       authenticate_and do
@@ -252,7 +252,7 @@ describe 'Acceptance::Postcodes' do
       scheme_id = authenticate_and { add_scheme('Happy EPC') }
 
       assessor = valid_assessor_with_contact_request_body
-      assessor[:qualifications][:domesticEnergyPerformanceCertificates] =
+      assessor[:qualifications][:domesticRdSap] =
         'INACTIVE'
 
       authenticate_and do
@@ -263,7 +263,7 @@ describe 'Acceptance::Postcodes' do
         )
       end
 
-      assessor[:qualifications][:domesticEnergyPerformanceCertificates] =
+      assessor[:qualifications][:domesticRdSap] =
         'ACTIVE'
 
       authenticate_and do
@@ -287,7 +287,7 @@ describe 'Acceptance::Postcodes' do
       scheme_id = authenticate_and { add_scheme('Happy EPC') }
 
       assessor = valid_assessor_with_contact_request_body
-      assessor[:qualifications][:domesticEnergyPerformanceCertificates] =
+      assessor[:qualifications][:domesticRdSap] =
         'ACTIVE'
 
       authenticate_and do
@@ -298,7 +298,7 @@ describe 'Acceptance::Postcodes' do
         )
       end
 
-      assessor[:qualifications][:domesticEnergyPerformanceCertificates] =
+      assessor[:qualifications][:domesticRdSap] =
         'INACTIVE'
 
       authenticate_and do
