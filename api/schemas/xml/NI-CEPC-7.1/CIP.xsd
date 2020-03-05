@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-  targetNamespace="http://www.landmark.co.uk/solutions/registers/nondomestic/cip"
-  xmlns:cip="http://www.landmark.co.uk/solutions/registers/nondomestic/cip" version="1.0">
+  targetNamespace="https://epbr.digital.communities.gov.uk/nondomestic/cip"
+  xmlns:cip="https://epbr.digital.communities.gov.uk/nondomestic/cip" version="1.0">
   <xs:element name="CIP">
     <xs:complexType>
       <xs:sequence>

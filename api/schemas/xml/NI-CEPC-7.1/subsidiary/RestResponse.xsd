@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns="http://www.landmark.co.uk/solutions/registers/rest"
-    targetNamespace="http://www.landmark.co.uk/solutions/registers/rest" version="1.0" elementFormDefault="qualified">
+    xmlns="https://epbr.digital.communities.gov.uk/rest"
+    targetNamespace="https://epbr.digital.communities.gov.uk/rest" version="1.0" elementFormDefault="qualified">
     <xs:simpleType name="errorType">
         <xs:restriction base="xs:string">
             <xs:enumeration value="validation"/>
