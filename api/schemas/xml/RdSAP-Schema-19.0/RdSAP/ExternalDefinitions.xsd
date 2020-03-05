@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns="EPC" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="EPC" attributeFormDefault="unqualified" version="NIR-19.0">
+<xs:schema xmlns="EPC" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="EPC" attributeFormDefault="unqualified" version="NI-19.0">
 	<xs:annotation>
 		<xs:documentation>
 			This schema is used to provide 
