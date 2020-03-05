@@ -19,9 +19,9 @@ tags:
   - name: Manage Assessors
     description: Manage assessors for a given Scheme
   - name: Manage Assessments
-    description: 'Manage EPCs, DECs and ACIRs'
+    description: 'Manage EPCs, DECs, RRs and ACIRs'
   - name: Manage Addresses
-    description: Manage addresses in the registerdsd
+    description: Manage addresses in the register
   - name: Manage Schemes
     description: Operations for managing schemes in the register
   - name: Migration
@@ -175,8 +175,8 @@ paths:
       tags:
         - Manage Assessors
       summary: >-
-        Register a new assessor to associate them with your scheme.
-        Alternatively, update an assessor
+        Register a new assessor to associate them with your scheme,
+        or update details of an assessor already on your scheme.
       security:
         - oauth:
             - 'scheme:assessor:update'
