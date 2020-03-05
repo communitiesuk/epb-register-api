@@ -3,7 +3,7 @@ openapi: 3.0.0
 info:
   title: Energy Performance of Buildings Register API
   description: Public API for EPBR integrations
-  version: 1.0.0-rc3
+  version: 1.0.0-rc4
 
 servers:
   - url: 'https://api.epb-integration.digital.communities.gov.uk/'
