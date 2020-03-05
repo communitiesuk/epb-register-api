@@ -771,7 +771,6 @@ components:
         - INACTIVE
         - STRUCKOFF
         - SUSPENDED
-        - UNREGISTERED
       example: ACTIVE
 
     AssessorQualificationChangeEvent:
@@ -803,10 +802,15 @@ components:
 
     AssessmentType:
       type: string
-      example: DOMESTIC_EPC
+      example: domestic-epc
       enum:
-        - DOMESTIC_EPC
-        - NON_DOMESTIC_EPC
+        - domestic-epc
+        - non-domestic-epc
+        - recommendation-report
+        - dec
+        - dec-recommendation-report
+        - ac-report
+        - ac-cert
 
     # Schemes
     Scheme:
