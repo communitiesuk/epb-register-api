@@ -747,13 +747,21 @@ components:
     AssessorQualifications:
       type: object
       properties:
-        domesticEnergyPerformanceCertificates:
+        domesticRdSap:
           $ref: '#/components/schemas/AssessorQualificationStatus'
-        nonDomesticEnergyPerformanceCertificates:
+        domesticSap:
           $ref: '#/components/schemas/AssessorQualificationStatus'
-        displayEnergyCertificates:
+        nonDomesticDec:
           $ref: '#/components/schemas/AssessorQualificationStatus'
-        airConditioningInspectionReports:
+        nonDomesticNos3:
+          $ref: '#/components/schemas/AssessorQualificationStatus'
+        nonDomesticNos4:
+          $ref: '#/components/schemas/AssessorQualificationStatus'
+        nonDomesticNos5:
+          $ref: '#/components/schemas/AssessorQualificationStatus'
+        nonDomesticSp3:
+          $ref: '#/components/schemas/AssessorQualificationStatus'
+        nonDomesticCc4:
           $ref: '#/components/schemas/AssessorQualificationStatus'
 
     AssessorQualificationStatus:

@@ -414,7 +414,6 @@ components:
         - INACTIVE
         - STRUCKOFF
         - SUSPENDED
-        - UNREGISTERED
       example: ACTIVE
 
     BasicAssessorDetails:
