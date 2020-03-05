@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-    targetNamespace="http://www.ndepcregister.com/rest/secure/2011/02"
-    xmlns="http://www.ndepcregister.com/rest/secure/2011/02">
+    targetNamespace="https://epbr.digital.communities.gov.uk/rest/secure/2011/02"
+    xmlns="https://epbr.digital.communities.gov.uk/rest/secure/2011/02">
     <xs:element name="VerificationServiceResponse">
         <xs:complexType>
             <xs:choice>
