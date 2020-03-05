@@ -1,5 +1,5 @@
-<xs:schema xmlns="http://www.epcregister.com/xsd/rdsap" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    targetNamespace="http://www.epcregister.com/xsd/rdsap" elementFormDefault="qualified"
+<xs:schema xmlns="https://epbr.digital.communities.gov.uk/xsd/rdsap" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="https://epbr.digital.communities.gov.uk/xsd/rdsap" elementFormDefault="qualified"
     attributeFormDefault="unqualified" version="LIG-19.0">
     <xs:element name="ExceptionList">
         <xs:complexType>
