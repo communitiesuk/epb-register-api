@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SAP-Report xmlns="http://www.epbniregister.com/xsd/sap"
+<SAP-Report xmlns="https://epbr.digital.communities.gov.uk/xsd/sap"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="http://www.epbniregister.com/xsd/sap ../SAP-Schema-NI-17.4/SAP/Templates/SAP-Report.xsd">
+ xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/sap ../SAP-Schema-NI-17.4/SAP/Templates/SAP-Report.xsd">
     <SAP-Version>9.80</SAP-Version>
     <Calculation-Software-Name>Calculation-Software-Name0</Calculation-Software-Name>
     <Calculation-Software-Version>Calculation-Software-Version0</Calculation-Software-Version>

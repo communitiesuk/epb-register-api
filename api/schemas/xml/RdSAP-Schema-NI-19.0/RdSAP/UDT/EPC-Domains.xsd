@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.epbniregister.com/xsd/rdsap" targetNamespace="http://www.epbniregister.com/xsd/rdsap" elementFormDefault="qualified" attributeFormDefault="unqualified" version="LIG-NI-19.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="https://epbr.digital.communities.gov.uk/xsd/rdsap" targetNamespace="https://epbr.digital.communities.gov.uk/xsd/rdsap" elementFormDefault="qualified" attributeFormDefault="unqualified" version="LIG-NI-19.0">
 	<xs:annotation>
 		<xs:documentation>© Department of Communities and Local Government. © Crown copyright, 2007. The Home Condition Report logo and associated wording is a registered trade mark - any unlicensed use is not permitted. Copyright in the typographical arrangement of this document rests with the Crown. This publication, excluding logos, may be reproduced free of charge in any format or medium for research, private study, for internal circulation within an organisation or by registered scheme users. This is subject to it being reproduced accurately and not used in a misleading context. 
 </xs:documentation>

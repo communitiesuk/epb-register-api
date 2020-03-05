@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns="http://www.epbniregister.com/xsd/sap" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	targetNamespace="http://www.epbniregister.com/xsd/sap" elementFormDefault="qualified"
+<xs:schema xmlns="https://epbr.digital.communities.gov.uk/xsd/sap" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="https://epbr.digital.communities.gov.uk/xsd/sap" elementFormDefault="qualified"
 	version="LIG-NI-17.4">
 	<xs:annotation>
 		<xs:documentation>The purpose of Base Data Type declarations is to provide a point of declaration of all the primitive  datatypes that are in use within the domain and can be used to describe the contents of the Business Information Model. 
