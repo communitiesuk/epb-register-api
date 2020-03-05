@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CS="DCLG-CEPC/CommonStructures" targetNamespace="DCLG-CEPC/CommonStructures" elementFormDefault="qualified" attributeFormDefault="unqualified" version="LIG-CEPC-7.1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CS="EPBR-CEPC/CommonStructures" targetNamespace="EPBR-CEPC/CommonStructures" elementFormDefault="qualified" attributeFormDefault="unqualified" version="LIG-CEPC-7.1">
 	<!-- ***************************************************************************
 	Simple Type declarations for Identification Block property values
 	 *************************************************************************** -->

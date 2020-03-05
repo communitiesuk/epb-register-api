@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<LodgeReportRequest xmlns:CEPC="DCLG-CEPC"
- xmlns:CS="DCLG-CEPC/CommonStructures"
+<LodgeReportRequest xmlns:CEPC="EPBR-CEPC"
+ xmlns:CS="EPBR-CEPC/CommonStructures"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xmlns:ERR="DCLG-CEPC/Exceptions"
- xmlns:UDT="DCLG-CEPC/BaseDataTypes"
+ xmlns:ERR="EPBR-CEPC/Exceptions"
+ xmlns:UDT="EPBR-CEPC/BaseDataTypes"
  xsi:noNamespaceSchemaLocation="../NI-CEPC-7.1/Messages/LodgeReportRequest.xsd">
     <MessageIdentifier>
         <CS:TransactionID>TransactionID0</CS:TransactionID>

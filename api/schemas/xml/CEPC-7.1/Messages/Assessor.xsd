@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-	xmlns:CEPC="DCLG-CEPC" version="EA-1.0">
+	xmlns:CEPC="EPBR-CEPC" version="EA-1.0">
 	<xs:annotation>
 		<xs:documentation>© Department of Communities and Local Government. © Crown copyright, 2007. The Home Condition Report logo and associated wording is a registered trade mark - any unlicensed use is not permitted. Copyright in the typographical arrangement of this document rests with the Crown. This publication, excluding logos, may be reproduced free of charge in any format or medium for research, private study, for internal circulation within an organisation or by registered scheme users. This is subject to it being reproduced accurately and not used in a misleading context.</xs:documentation>
 	</xs:annotation>
-	<xs:import namespace="DCLG-CEPC" schemaLocation="../Reports/Report-Header.xsd"/>
+	<xs:import namespace="EPBR-CEPC" schemaLocation="../Reports/Report-Header.xsd"/>
 	<xs:element name="Assessor" type="Assessor"/>
 	<xs:element name="Assessors" type="Assessors"/>
 	<xs:element name="Upload" type="Upload"/>

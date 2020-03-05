@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns="DCLG-CEPC" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:UDT="DCLG-CEPC" xmlns:CEPC="DCLG-CEPC" targetNamespace="DCLG-CEPC" version="LIG-CEPC-7.1">
+<xs:schema xmlns="EPBR-CEPC" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:UDT="EPBR-CEPC" xmlns:CEPC="EPBR-CEPC" targetNamespace="EPBR-CEPC" version="LIG-CEPC-7.1">
 	<xs:include schemaLocation="Report-Header.xsd"/>
 	<xs:include schemaLocation="BaseDataTypes.xsd"/>
 	<xs:element name="Report-Data" type="Report-Data"/>

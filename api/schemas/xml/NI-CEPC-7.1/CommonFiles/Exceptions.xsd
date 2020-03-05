@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns="DCLG-CEPC/Exceptions" xmlns:ERR="DCLG-CEPC/Exceptions" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:UDT="DCLG-CEPC" targetNamespace="DCLG-CEPC/Exceptions" elementFormDefault="qualified" version="LIG-CEPC-7.1">
+<xs:schema xmlns="EPBR-CEPC/Exceptions" xmlns:ERR="EPBR-CEPC/Exceptions" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:UDT="EPBR-CEPC" targetNamespace="EPBR-CEPC/Exceptions" elementFormDefault="qualified" version="LIG-CEPC-7.1">
 	<xs:annotation>
 		<xs:documentation>© Department of Communities and Local Government. © Crown copyright, 2007. The Home Condition Report logo and associated wording is a registered trade mark - any unlicensed use is not permitted. Copyright in the typographical arrangement of this document rests with the Crown. This publication, excluding logos, may be reproduced free of charge in any format or medium for research, private study, for internal circulation within an organisation or by registered scheme users. This is subject to it being reproduced accurately and not used in a misleading context.</xs:documentation>
 	</xs:annotation>
-	<xs:import namespace="DCLG-CEPC" schemaLocation="../Reports/BaseDataTypes.xsd"/>
+	<xs:import namespace="EPBR-CEPC" schemaLocation="../Reports/BaseDataTypes.xsd"/>
 	<xs:element name="DataItem" type="DataItem"/>
 	<xs:complexType name="DataItem">
 		<xs:annotation>
