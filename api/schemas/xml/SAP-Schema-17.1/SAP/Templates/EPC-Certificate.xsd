@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns="https://epbr.digital.communities.gov.uk/xsd/sap" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="https://epbr.digital.communities.gov.uk/xsd/sap" elementFormDefault="qualified" attributeFormDefault="unqualified" version="LIG-17.1">
+<xs:schema xmlns="https://epbr.digital.communities.gov.uk/xsd/sap" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="https://epbr.digital.communities.gov.uk/xsd/sap" elementFormDefault="qualified" attributeFormDefault="unqualified" version="17.1">
 	<xs:include schemaLocation="../UDT/EPC-Domains.xsd"/>
 	<xs:include schemaLocation="../UDT/SAP-Domains.xsd"/>
 	<xs:element name="LZC-Energy-Sources" type="LZC-Energy-Sources"/>

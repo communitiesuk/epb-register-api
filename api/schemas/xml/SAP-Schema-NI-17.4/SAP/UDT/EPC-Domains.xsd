@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema targetNamespace="https://epbr.digital.communities.gov.uk/xsd/sap"
 	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="https://epbr.digital.communities.gov.uk/xsd/sap"
-	elementFormDefault="qualified" version="LIG-NI-17.4">
+	elementFormDefault="qualified" version="NI-17.4">
 	<xs:simpleType name="RecommendationSummaryCode">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="1">

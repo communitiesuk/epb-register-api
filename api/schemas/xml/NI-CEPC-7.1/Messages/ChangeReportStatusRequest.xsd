@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:CS="EPBR-CEPC/CommonStructures" xmlns:ERR="EPBR-CEPC/Exceptions" xmlns:UDT="EPBR-CEPC/BaseDataTypes" xmlns:CEPC="EPBR-CEPC" elementFormDefault="qualified" attributeFormDefault="unqualified" version="LIG-CEPC-7.1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:CS="EPBR-CEPC/CommonStructures" xmlns:ERR="EPBR-CEPC/Exceptions" xmlns:UDT="EPBR-CEPC/BaseDataTypes" xmlns:CEPC="EPBR-CEPC" elementFormDefault="qualified" attributeFormDefault="unqualified" version="CEPC-7.1">
 	<xs:import namespace="EPBR-CEPC" schemaLocation="../Reports/CEPC-Reports.xsd"/>
 	<xs:import namespace="EPBR-CEPC/CommonStructures" schemaLocation="../CommonFiles/CommonStructures.xsd"/>
 	<xs:element name="ChangeReportStatusRequest">

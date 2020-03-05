@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns="https://epbr.digital.communities.gov.uk/xsd/sap" xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	targetNamespace="https://epbr.digital.communities.gov.uk/xsd/sap" elementFormDefault="qualified"
-	version="LIG-NI-17.4">
+	version="NI-17.4">
 	<xs:simpleType name="SAP-StoreyFloorCode">
 		<xs:annotation>
 			<xs:documentation>Code which identifies a particular storey in a building part.</xs:documentation>
