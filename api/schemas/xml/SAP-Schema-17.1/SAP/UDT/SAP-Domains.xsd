@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2006 rel. 3 U (http://www.altova.com) by Jim Bowery (Landmark Information Group Ltd.) -->
 <xs:schema xmlns="http://www.epcregister.com/xsd/sap" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.epcregister.com/xsd/sap" elementFormDefault="qualified" attributeFormDefault="unqualified" version="LIG-17.1">
 	<xs:simpleType name="SAP-StoreyFloorCode">
 		<xs:annotation>
