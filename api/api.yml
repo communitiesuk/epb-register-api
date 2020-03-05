@@ -357,7 +357,7 @@ paths:
         - in: path
           name: assessmentType
           required: true
-          description: 'The ID of the assessment being added, usually RRN'
+          description: 'The type of the assessment being added'
           schema:
             $ref: '#/components/schemas/AssessmentType'
       requestBody:
