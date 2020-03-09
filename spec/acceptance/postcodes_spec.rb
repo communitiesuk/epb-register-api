@@ -161,9 +161,7 @@ describe 'Acceptance::Postcodes' do
               contactDetails: {
                 telephoneNumber: '010199991010101', email: 'person@person.com'
               },
-              qualifications: {
-                domesticRdSap: 'ACTIVE'
-              }
+              qualifications: { domesticRdSap: 'ACTIVE' }
             },
             distance: 0.0
           }.to_json
@@ -229,8 +227,7 @@ describe 'Acceptance::Postcodes' do
       scheme_id = authenticate_and { add_scheme('Happy EPC') }
 
       assessor = valid_assessor_with_contact_request_body
-      assessor[:qualifications][:domesticRdSap] =
-        'INACTIVE'
+      assessor[:qualifications][:domesticRdSap] = 'INACTIVE'
 
       authenticate_and do
         add_assessor(
@@ -252,8 +249,7 @@ describe 'Acceptance::Postcodes' do
       scheme_id = authenticate_and { add_scheme('Happy EPC') }
 
       assessor = valid_assessor_with_contact_request_body
-      assessor[:qualifications][:domesticRdSap] =
-        'INACTIVE'
+      assessor[:qualifications][:domesticRdSap] = 'INACTIVE'
 
       authenticate_and do
         add_assessor(
@@ -263,8 +259,7 @@ describe 'Acceptance::Postcodes' do
         )
       end
 
-      assessor[:qualifications][:domesticRdSap] =
-        'ACTIVE'
+      assessor[:qualifications][:domesticRdSap] = 'ACTIVE'
 
       authenticate_and do
         add_assessor(
@@ -287,8 +282,7 @@ describe 'Acceptance::Postcodes' do
       scheme_id = authenticate_and { add_scheme('Happy EPC') }
 
       assessor = valid_assessor_with_contact_request_body
-      assessor[:qualifications][:domesticRdSap] =
-        'ACTIVE'
+      assessor[:qualifications][:domesticRdSap] = 'ACTIVE'
 
       authenticate_and do
         add_assessor(
@@ -298,8 +292,7 @@ describe 'Acceptance::Postcodes' do
         )
       end
 
-      assessor[:qualifications][:domesticRdSap] =
-        'INACTIVE'
+      assessor[:qualifications][:domesticRdSap] = 'INACTIVE'
 
       authenticate_and do
         add_assessor(

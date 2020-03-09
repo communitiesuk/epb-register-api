@@ -7,9 +7,7 @@ module UseCase
     end
 
     def execute(street_name, town)
-      if street_name.blank? || town.blank?
-        raise ParameterMissing
-      end
+      raise ParameterMissing if street_name.blank? || town.blank?
 
       result =
         @assessment_gateway.search_by_street_name_and_town(street_name, town)

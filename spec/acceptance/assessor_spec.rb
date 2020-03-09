@@ -140,9 +140,7 @@ describe 'Acceptance::Assessor' do
               dateOfBirth: valid_assessor_request_body[:dateOfBirth],
               contactDetails: {},
               searchResultsComparisonPostcode: '',
-              qualifications: {
-                domesticRdSap: 'ACTIVE'
-              }
+              qualifications: { domesticRdSap: 'ACTIVE' }
             }.to_json
           )
         response =
@@ -162,9 +160,7 @@ describe 'Acceptance::Assessor' do
           )
         end
         expected_qualifications =
-          JSON.parse(
-            { domesticRdSap: 'INACTIVE' }.to_json
-          )
+          JSON.parse({ domesticRdSap: 'INACTIVE' }.to_json)
         response =
           JSON.parse(
             authenticate_and { fetch_assessor(scheme_id, 'SCHEME4233') }.body
@@ -218,9 +214,7 @@ describe 'Acceptance::Assessor' do
               dateOfBirth: valid_assessor_request_body[:dateOfBirth],
               searchResultsComparisonPostcode:
                 valid_assessor_request_body[:searchResultsComparisonPostcode],
-              qualifications: {
-                domesticRdSap: 'ACTIVE'
-              },
+              qualifications: { domesticRdSap: 'ACTIVE' },
               contactDetails: {}
             }.to_json
           )
@@ -405,9 +399,7 @@ describe 'Acceptance::Assessor' do
       it 'rejects an assessor qualification status of horse' do
         scheme_id = authenticate_and { add_scheme }
         invalid_body = valid_assessor_request_body.dup
-        invalid_body[:qualifications] = {
-          domesticRdSap: 'horse'
-        }
+        invalid_body[:qualifications] = { domesticRdSap: 'horse' }
         assessor_response =
           authenticate_and do
             put(
@@ -516,9 +508,7 @@ describe 'Acceptance::Assessor' do
                   ]
               },
               searchResultsComparisonPostcode: '',
-              qualifications: {
-                domesticRdSap: 'ACTIVE'
-              }
+              qualifications: { domesticRdSap: 'ACTIVE' }
             }.to_json
           )
         expect(JSON.parse(assessor.body)).to eq(expected_response)

@@ -18,9 +18,7 @@ module Controller
         qualifications: {
           type: 'object',
           properties: {
-            domesticRdSap: {
-              type: 'string', enum: %w[ACTIVE INACTIVE]
-            }
+            domesticRdSap: { type: 'string', enum: %w[ACTIVE INACTIVE] }
           }
         }
       }
