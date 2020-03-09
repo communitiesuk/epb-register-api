@@ -17,6 +17,7 @@ module Gateway
         type_of_assessment: assessment[:type_of_assessment],
         total_floor_area: assessment[:total_floor_area],
         assessment_id: assessment[:assessment_id],
+        scheme_assessor_id: assessment[:scheme_assessor_id],
         address_summary: assessment[:address_summary],
         current_energy_efficiency_rating:
           assessment[:current_energy_efficiency_rating],
@@ -66,7 +67,7 @@ module Gateway
     def search_by_postcode(postcode)
       sql =
         "SELECT
-            assessment_id, date_of_assessment, date_registered, dwelling_type,
+            scheme_assessor_id, assessment_id, date_of_assessment, date_registered, dwelling_type,
             type_of_assessment, total_floor_area, address_summary, current_energy_efficiency_rating,
             potential_energy_efficiency_rating, postcode, date_of_expiry,
             address_line1, address_line2, address_line3, address_line4, town
@@ -89,7 +90,7 @@ module Gateway
     def search_by_assessment_id(assessment_id)
       sql =
         "SELECT
-            assessment_id, date_of_assessment, date_registered, dwelling_type,
+            scheme_assessor_id, assessment_id, date_of_assessment, date_registered, dwelling_type,
             type_of_assessment, total_floor_area, address_summary, current_energy_efficiency_rating,
             potential_energy_efficiency_rating, postcode, date_of_expiry,
             address_line1, address_line2, address_line3, address_line4, town
@@ -113,7 +114,7 @@ module Gateway
     def search_by_street_name_and_town(street_name, town)
       sql =
         "SELECT
-            assessment_id, date_of_assessment, date_registered, dwelling_type,
+            scheme_assessor_id, assessment_id, date_of_assessment, date_registered, dwelling_type,
             type_of_assessment, total_floor_area, address_summary, current_energy_efficiency_rating,
             potential_energy_efficiency_rating, postcode, date_of_expiry,
             address_line1, address_line2, address_line3, address_line4, town

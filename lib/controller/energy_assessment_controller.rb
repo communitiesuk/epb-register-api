@@ -11,6 +11,7 @@ module Controller
         typeOfAssessment
         currentEnergyEfficiencyRating
         potentialEnergyEfficiencyRating
+        schemeAssessorId
       ],
       properties: {
         addressSummary: { type: 'string' },
@@ -20,24 +21,38 @@ module Controller
         dwellingType: { type: 'string' },
         typeOfAssessment: { type: 'string', enum: %w[SAP RdSAP] },
         currentEnergyEfficiencyRating: { type: 'integer' },
-        potentialEnergyEfficiencyRating: { type: 'integer' }
+        potentialEnergyEfficiencyRating: { type: 'integer' },
+        schemeAssessorId: { type: 'string' }
       }
     }
 
     get '/api/assessments/domestic-energy-performance/search', jwt_auth: [] do
       if params.has_key?(:postcode)
-        result = @container.get_object(:find_assessments_by_postcode_use_case).execute(params[:postcode])
+        result =
+          @container.get_object(:find_assessments_by_postcode_use_case).execute(
+            params[:postcode]
+          )
       elsif params.has_key?(:assessment_id)
-        result = @container.get_object(:find_assessments_by_assessment_id_use_case).execute(params[:assessment_id])
+        result =
+          @container.get_object(:find_assessments_by_assessment_id_use_case)
+            .execute(params[:assessment_id])
       else
-        result = @container.get_object(:find_assessments_by_street_name_and_town_use_case).execute(params[:street_name], params[:town])
+        result =
+          @container.get_object(
+            :find_assessments_by_street_name_and_town_use_case
+          )
+            .execute(params[:street_name], params[:town])
       end
 
       json_response(200, result)
     rescue Exception => e
       case e
       when UseCase::FindAssessmentsByStreetNameAndTown::ParameterMissing
-        error_response(400, 'MALFORMED_REQUEST', 'Required query params missing')
+        error_response(
+          400,
+          'MALFORMED_REQUEST',
+          'Required query params missing'
+        )
       else
         server_error(e.message)
       end

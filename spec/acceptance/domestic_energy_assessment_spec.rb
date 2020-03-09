@@ -3,9 +3,21 @@
 describe 'Acceptance::Assessor' do
   include RSpecAssessorServiceMixin
 
+  let(:valid_assessor_request_body) do
+    {
+      firstName: 'Someone',
+      middleNames: 'Muddle',
+      lastName: 'Person',
+      dateOfBirth: '1991-02-25',
+      searchResultsComparisonPostcode: '',
+      qualifications: { domesticRdSap: 'ACTIVE' }
+    }
+  end
+
   let(:valid_assessment_body) do
     {
       assessmentId: '123-987',
+      schemeAssessorId: 'TEST123456',
       dateOfAssessment: '2020-01-13',
       dateRegistered: '2020-01-13',
       totalFloorArea: 1_000,
@@ -28,6 +40,14 @@ describe 'Acceptance::Assessor' do
     assessment = valid_assessment_body.dup
     assessment.delete(key)
     assessment
+  end
+
+  def add_scheme(name = 'test scheme')
+    JSON.parse(post('/api/schemes', { name: name }.to_json).body)['schemeId']
+  end
+
+  def add_assessor(scheme_id, assessor_id, body)
+    put("/api/schemes/#{scheme_id}/assessors/#{assessor_id}", body.to_json)
   end
 
   def fetch_assessment(assessment_id)
@@ -62,6 +82,11 @@ describe 'Acceptance::Assessor' do
 
   context 'when a domestic assessment exists' do
     it 'returns a 200' do
+      scheme_id = authenticate_and { add_scheme }
+      authenticate_and do
+        add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
+      end
+
       authenticate_and do
         migrate_assessment('15650-651625-18267167', valid_assessment_body)
       end
@@ -70,6 +95,11 @@ describe 'Acceptance::Assessor' do
     end
 
     it 'returns the assessment details' do
+      scheme_id = authenticate_and { add_scheme }
+      authenticate_and do
+        add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
+      end
+
       authenticate_and do
         migrate_assessment('15650-651625-18267167', valid_assessment_body)
       end
@@ -80,6 +110,7 @@ describe 'Acceptance::Assessor' do
       expected_response =
         JSON.parse(
           {
+            schemeAssessorId: valid_assessment_body[:schemeAssessorId],
             dateOfAssessment: valid_assessment_body[:dateOfAssessment],
             dateRegistered: valid_assessment_body[:dateRegistered],
             totalFloorArea: valid_assessment_body[:totalFloorArea],
@@ -108,6 +139,11 @@ describe 'Acceptance::Assessor' do
 
   context 'when migrating a domestic assessment (put)' do
     it 'returns a 200 for a valid assessment' do
+      scheme_id = authenticate_and { add_scheme }
+      authenticate_and do
+        add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
+      end
+
       response =
         authenticate_and do
           migrate_assessment('123-456', valid_assessment_body)
@@ -116,6 +152,11 @@ describe 'Acceptance::Assessor' do
     end
 
     it 'returns the assessment that was migrated' do
+      scheme_id = authenticate_and { add_scheme }
+      authenticate_and do
+        add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
+      end
+
       response =
         authenticate_and do
           migrate_assessment('123-456', valid_assessment_body).body
@@ -142,7 +183,8 @@ describe 'Acceptance::Assessor' do
             addressLine1: valid_assessment_body[:addressLine1],
             addressLine2: valid_assessment_body[:addressLine2],
             addressLine3: valid_assessment_body[:addressLine4],
-            addressLine4: valid_assessment_body[:addressLine4]
+            addressLine4: valid_assessment_body[:addressLine4],
+            schemeAssessorId: valid_assessment_body[:schemeAssessorId]
           }.to_json
         )
 
@@ -309,13 +351,19 @@ describe 'Acceptance::Assessor' do
 
   context 'when searching for an assessment' do
     def assessments_search_by_postcode(postcode)
-      get "/api/assessments/domestic-energy-performance/search?postcode=#{postcode}"
+      get "/api/assessments/domestic-energy-performance/search?postcode=#{
+            postcode
+          }"
     end
     def assessments_search_by_assessment_id(assessment_id)
-      get "/api/assessments/domestic-energy-performance/search?assessment_id=#{assessment_id}"
+      get "/api/assessments/domestic-energy-performance/search?assessment_id=#{
+            assessment_id
+          }"
     end
     def assessments_search_by_street_name_and_town(street_name, town)
-      get "/api/assessments/domestic-energy-performance/search?street_name=#{street_name}&town=#{town}"
+      get "/api/assessments/domestic-energy-performance/search?street_name=#{
+            street_name
+          }&town=#{town}"
     end
 
     def add_assessment(assessment_id, body)
@@ -357,6 +405,11 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'has the over all hash of the shape we expect' do
+        scheme_id = authenticate_and { add_scheme }
+        authenticate_and do
+          add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
+        end
+
         authenticate_and { add_assessment('123-987', valid_assessment_body) }
 
         response = authenticate_and { assessments_search_by_postcode('SE17EZ') }
@@ -368,6 +421,7 @@ describe 'Acceptance::Assessor' do
         expected_response =
           JSON.parse(
             {
+              schemeAssessorId: 'TEST123456',
               assessmentId: '123-987',
               dateOfAssessment: '2020-01-13',
               dateRegistered: '2020-01-13',
@@ -396,12 +450,15 @@ describe 'Acceptance::Assessor' do
     context 'when a search assessment id is valid' do
       it 'returns status 200 for a get' do
         expect(
-          authenticate_and { assessments_search_by_assessment_id('123-987') }.status
+          authenticate_and {
+            assessments_search_by_assessment_id('123-987')
+          }.status
         ).to eq(200)
       end
 
       it 'looks as it should' do
-        response = authenticate_and { assessments_search_by_assessment_id('123-987') }
+        response =
+          authenticate_and { assessments_search_by_assessment_id('123-987') }
 
         response_json = JSON.parse(response.body)
 
@@ -409,7 +466,8 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'has the properties we expect' do
-        response = authenticate_and { assessments_search_by_assessment_id('123-987') }
+        response =
+          authenticate_and { assessments_search_by_assessment_id('123-987') }
 
         response_json = JSON.parse(response.body)
 
@@ -417,15 +475,22 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'has the over all hash of the shape we expect' do
+        scheme_id = authenticate_and { add_scheme }
+        authenticate_and do
+          add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
+        end
+
         authenticate_and { add_assessment('123-987', valid_assessment_body) }
 
-        response = authenticate_and { assessments_search_by_assessment_id('123-987') }
+        response =
+          authenticate_and { assessments_search_by_assessment_id('123-987') }
 
         response_json = JSON.parse(response.body)
 
         expected_response =
           JSON.parse(
             {
+              schemeAssessorId: 'TEST123456',
               assessmentId: '123-987',
               dateOfAssessment: '2020-01-13',
               dateRegistered: '2020-01-13',
@@ -455,50 +520,77 @@ describe 'Acceptance::Assessor' do
       context 'and town is missing but street name is present' do
         it 'returns status 400 for a get' do
           expect(
-            authenticate_and { assessments_search_by_street_name_and_town('Palmtree Road', '') }.status
+            authenticate_and {
+              assessments_search_by_street_name_and_town('Palmtree Road', '')
+            }.status
           ).to eq(400)
         end
 
         it 'contains the correct error message' do
-          response_body = authenticate_and { assessments_search_by_street_name_and_town('Palmtree Road', '') }.body
+          response_body =
+            authenticate_and do
+              assessments_search_by_street_name_and_town('Palmtree Road', '')
+            end.body
           expect(JSON.parse(response_body)).to eq(
-                                                 {
-                                                   'errors' => [
-                                                     { 'code' => 'MALFORMED_REQUEST', 'title' => 'Required query params missing' }
-                                                   ]
-                                                 }
-                                               )
+            {
+              'errors' => [
+                {
+                  'code' => 'MALFORMED_REQUEST',
+                  'title' => 'Required query params missing'
+                }
+              ]
+            }
+          )
         end
       end
 
       context 'and street name is missing but town is present' do
         it 'returns status 400 for a get' do
           expect(
-            authenticate_and { assessments_search_by_street_name_and_town('', 'Brighton') }.status
+            authenticate_and {
+              assessments_search_by_street_name_and_town('', 'Brighton')
+            }.status
           ).to eq(400)
         end
 
         it 'contains the correct error message' do
-          response_body = authenticate_and { assessments_search_by_street_name_and_town('', 'Brighton') }.body
+          response_body =
+            authenticate_and do
+              assessments_search_by_street_name_and_town('', 'Brighton')
+            end.body
           expect(JSON.parse(response_body)).to eq(
-                                                 {
-                                                   'errors' => [
-                                                     { 'code' => 'MALFORMED_REQUEST', 'title' => 'Required query params missing' }
-                                                   ]
-                                                 }
-                                               )
+            {
+              'errors' => [
+                {
+                  'code' => 'MALFORMED_REQUEST',
+                  'title' => 'Required query params missing'
+                }
+              ]
+            }
+          )
         end
       end
 
       context 'and required parameters are present' do
         it 'returns status 200 for a get' do
           expect(
-            authenticate_and { assessments_search_by_street_name_and_town('Palmtree Road', 'Brighton') }.status
+            authenticate_and {
+              assessments_search_by_street_name_and_town(
+                'Palmtree Road',
+                'Brighton'
+              )
+            }.status
           ).to eq(200)
         end
 
         it 'looks as it should' do
-          response = authenticate_and { assessments_search_by_street_name_and_town('Palmtree Road', 'Brighton') }
+          response =
+            authenticate_and do
+              assessments_search_by_street_name_and_town(
+                'Palmtree Road',
+                'Brighton'
+              )
+            end
 
           response_json = JSON.parse(response.body)
 
@@ -506,7 +598,13 @@ describe 'Acceptance::Assessor' do
         end
 
         it 'has the properties we expect' do
-          response = authenticate_and { assessments_search_by_street_name_and_town('Palmtree Road', 'Brighton') }
+          response =
+            authenticate_and do
+              assessments_search_by_street_name_and_town(
+                'Palmtree Road',
+                'Brighton'
+              )
+            end
 
           response_json = JSON.parse(response.body)
 
@@ -514,15 +612,27 @@ describe 'Acceptance::Assessor' do
         end
 
         it 'has the over all hash of the shape we expect' do
+          scheme_id = authenticate_and { add_scheme }
+          authenticate_and do
+            add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
+          end
+
           authenticate_and { add_assessment('123-987', valid_assessment_body) }
 
-          response = authenticate_and { assessments_search_by_street_name_and_town('Palmtree Road', 'Brighton') }
+          response =
+            authenticate_and do
+              assessments_search_by_street_name_and_town(
+                'Palmtree Road',
+                'Brighton'
+              )
+            end
 
           response_json = JSON.parse(response.body)
 
           expected_response =
             JSON.parse(
               {
+                schemeAssessorId: 'TEST123456',
                 assessmentId: '123-987',
                 dateOfAssessment: '2020-01-13',
                 dateRegistered: '2020-01-13',
