@@ -25,7 +25,7 @@ class Container
       )
     fetch_domestic_energy_assessment_use_case =
       UseCase::FetchDomesticEnergyAssessment.new(
-        domestic_energy_assessments_gateway
+        domestic_energy_assessments_gateway, assessors_gateway
       )
 
     find_assessors_by_postcode_use_case =

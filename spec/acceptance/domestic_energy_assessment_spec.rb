@@ -10,7 +10,10 @@ describe 'Acceptance::Assessor' do
       lastName: 'Person',
       dateOfBirth: '1991-02-25',
       searchResultsComparisonPostcode: '',
-      qualifications: { domesticRdSap: 'ACTIVE' }
+      qualifications: { domesticRdSap: 'ACTIVE' },
+      contactDetails: {
+        telephoneNumber: '010199991010101', email: 'person@person.com'
+      }
     }
   end
 
@@ -110,7 +113,20 @@ describe 'Acceptance::Assessor' do
       expected_response =
         JSON.parse(
           {
-            schemeAssessorId: valid_assessment_body[:schemeAssessorId],
+            assessor: {
+              schemeAssessorId: valid_assessment_body[:schemeAssessorId],
+              registeredBy: { schemeId: scheme_id, name: 'test scheme' },
+              firstName: valid_assessor_request_body[:firstName],
+              middleNames: valid_assessor_request_body[:middleNames],
+              lastName: valid_assessor_request_body[:lastName],
+              dateOfBirth: valid_assessor_request_body[:dateOfBirth],
+              contactDetails: {
+                telephoneNumber: valid_assessor_request_body[:contactDetails][:telephoneNumber],
+                email: valid_assessor_request_body[:contactDetails][:email]
+              },
+              searchResultsComparisonPostcode: '',
+              qualifications: { domesticRdSap: 'ACTIVE' }
+            },
             dateOfAssessment: valid_assessment_body[:dateOfAssessment],
             dateRegistered: valid_assessment_body[:dateRegistered],
             totalFloorArea: valid_assessment_body[:totalFloorArea],

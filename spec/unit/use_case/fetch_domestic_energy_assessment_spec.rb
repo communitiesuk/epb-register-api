@@ -3,8 +3,12 @@ describe UseCase::FetchDomesticEnergyAssessment do
     DomesticEnergyAssessmentsGatewayFake.new
   end
 
+  let(:assessors_gateway) do
+    AssessorGatewayStub.new
+  end
+
   let(:fetch_domestic_energy_assessment) do
-    described_class.new(domestic_energy_assessment_gateway)
+    described_class.new(domestic_energy_assessment_gateway, assessors_gateway)
   end
 
   context 'when there are no energy assessments' do
@@ -27,6 +31,7 @@ describe UseCase::FetchDomesticEnergyAssessment do
 
       expect(result).to eq(
         {
+          assessor: assessors_gateway.assessor,
           current_energy_efficiency_band: 'c',
           potential_energy_efficiency_band: 'c',
           current_energy_efficiency_rating: 75,

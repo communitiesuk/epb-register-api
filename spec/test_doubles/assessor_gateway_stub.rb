@@ -1,7 +1,7 @@
 class AssessorGatewayStub
   attr_reader :assessor
 
-  def initialize(assessor = nil)
+  def initialize(assessor = {})
     @assessor = assessor
   end
 
