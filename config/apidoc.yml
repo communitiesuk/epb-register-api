@@ -284,6 +284,21 @@ paths:
                   - $ref: '#/components/schemas/DomesticEnergyAssessmentWithBand'
                 type: object
                 properties:
+                  addressLine1:
+                    type: string
+                    example: 2 Marsham Street
+                  addressLine2:
+                    type: string
+                    example: ''
+                  addressLine3:
+                    type: string
+                    example: ''
+                  addressLine4:
+                    type: string
+                    example: ''
+                  town:
+                    type: string
+                    example: London
                   assessor:
                     $ref: '#/components/schemas/AssessorSummary'
         404:
@@ -560,8 +575,7 @@ components:
           maximum: 100
           description: The potential energy rating to be submitted, must be equal to or larger than currentEnergyEfficiencyRating
         postcode:
-          type: string
-          example: SW1P 4JA
+          $ref: '#/components/schemas/AddressPostcode'
           description: The postcode of the property
         dateOfExpiry:
           type: string
