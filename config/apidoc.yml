@@ -280,7 +280,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DomesticEnergyAssessmentWithBand'
+                allOf:
+                  - $ref: '#/components/schemas/DomesticEnergyAssessmentWithBand'
+                type: object
+                properties:
+                  assessor:
+                    $ref: '#/components/schemas/AssessorSummary'
         404:
           description: Assessment not found
         500:
@@ -562,6 +567,8 @@ components:
           type: string
           format: date
           description: The date that the certificate expires
+        schemeAssessorId:
+          $ref: '#/components/schemas/AssessorSchemeId'
 
     MigrateDomesticEnergyAssessment:
       allOf:
