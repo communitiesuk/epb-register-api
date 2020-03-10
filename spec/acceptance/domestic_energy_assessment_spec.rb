@@ -121,7 +121,10 @@ describe 'Acceptance::Assessor' do
               lastName: valid_assessor_request_body[:lastName],
               dateOfBirth: valid_assessor_request_body[:dateOfBirth],
               contactDetails: {
-                telephoneNumber: valid_assessor_request_body[:contactDetails][:telephoneNumber],
+                telephoneNumber:
+                  valid_assessor_request_body[:contactDetails][
+                    :telephoneNumber
+                  ],
                 email: valid_assessor_request_body[:contactDetails][:email]
               },
               searchResultsComparisonPostcode: '',

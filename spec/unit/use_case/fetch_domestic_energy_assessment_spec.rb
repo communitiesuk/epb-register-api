@@ -3,9 +3,7 @@ describe UseCase::FetchDomesticEnergyAssessment do
     DomesticEnergyAssessmentsGatewayFake.new
   end
 
-  let(:assessors_gateway) do
-    AssessorGatewayStub.new
-  end
+  let(:assessors_gateway) { AssessorGatewayStub.new }
 
   let(:fetch_domestic_energy_assessment) do
     described_class.new(domestic_energy_assessment_gateway, assessors_gateway)
