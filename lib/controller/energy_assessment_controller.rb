@@ -12,6 +12,7 @@ module Controller
         currentEnergyEfficiencyRating
         potentialEnergyEfficiencyRating
         schemeAssessorId
+        heatDemand
       ],
       properties: {
         addressSummary: { type: 'string' },
@@ -22,7 +23,12 @@ module Controller
         typeOfAssessment: { type: 'string', enum: %w[SAP RdSAP] },
         currentEnergyEfficiencyRating: { type: 'integer' },
         potentialEnergyEfficiencyRating: { type: 'integer' },
-        schemeAssessorId: { type: 'string' }
+        schemeAssessorId: { type: 'string' },
+        heatDemand: { type: 'object', required: %w[currentSpaceHeatingDemand], properties: {
+            currentSpaceHeatingDemand: {
+                type: 'integer'
+            }
+        }}
       }
     }
 
@@ -80,13 +86,34 @@ module Controller
       migrate_epc =
         @container.get_object(:migrate_domestic_energy_assessment_use_case)
       assessment_body = request_body(PUT_SCHEMA)
-      result = migrate_epc.execute(assessment_id, assessment_body)
+
+      new_assessment = Domain::DomesticEnergyAssessment.new(
+          assessment_body[:date_of_assessment],
+          assessment_body[:date_registered],
+          assessment_body[:dwelling_type],
+          assessment_body[:type_of_assessment],
+          assessment_body[:total_floor_area],
+          assessment_id,
+          assessment_body[:scheme_assessor_id],
+          assessment_body[:address_summary],
+          assessment_body[:current_energy_efficiency_rating],
+          assessment_body[:potential_energy_efficiency_rating],
+          assessment_body[:postcode],
+          assessment_body[:date_of_expiry],
+          assessment_body[:address_line1],
+          assessment_body[:address_line2],
+          assessment_body[:address_line3],
+          assessment_body[:address_line4],
+          assessment_body[:town]
+          )
+
+      result = migrate_epc.execute_with_object(new_assessment)
 
       @events.event(
         :domestic_energy_assessment_migrated,
         params[:assessment_id]
       )
-      json_response(200, result)
+      json_response(200, result.to_hash)
     rescue Exception => e
       case e
       when JSON::Schema::ValidationError

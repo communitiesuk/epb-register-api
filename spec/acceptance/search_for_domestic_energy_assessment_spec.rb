@@ -17,7 +17,6 @@ describe 'Searching for assessments' do
 
   let(:valid_assessment_body) do
     {
-      assessmentId: '123-987',
       schemeAssessorId: 'TEST123456',
       dateOfAssessment: '2020-01-13',
       dateRegistered: '2020-01-13',
@@ -33,7 +32,8 @@ describe 'Searching for assessments' do
       addressLine2: '18 Palmtree Road',
       addressLine3: '',
       addressLine4: '',
-      town: 'Brighton'
+      town: 'Brighton',
+      heatDemand: {currentSpaceHeatingDemand: 222}
     }.freeze
   end
 

@@ -19,7 +19,6 @@ describe 'Acceptance::Assessor' do
 
   let(:valid_assessment_body) do
     {
-      assessmentId: '123-987',
       schemeAssessorId: 'TEST123456',
       dateOfAssessment: '2020-01-13',
       dateRegistered: '2020-01-13',
@@ -35,7 +34,10 @@ describe 'Acceptance::Assessor' do
       addressLine2: '18 Palmtree Road',
       addressLine3: '',
       addressLine4: '',
-      town: 'Brighton'
+      town: 'Brighton',
+      heatDemand: {
+          currentSpaceHeatingDemand: 415
+      }
     }.freeze
   end
 
@@ -203,7 +205,9 @@ describe 'Acceptance::Assessor' do
             addressLine2: valid_assessment_body[:addressLine2],
             addressLine3: valid_assessment_body[:addressLine4],
             addressLine4: valid_assessment_body[:addressLine4],
-            schemeAssessorId: valid_assessment_body[:schemeAssessorId]
+            schemeAssessorId: valid_assessment_body[:schemeAssessorId],
+            potentialEnergyEfficiencyBand: 'c',
+            currentEnergyEfficiencyBand: 'c'
           }.to_json
         )
 
@@ -364,6 +368,21 @@ describe 'Acceptance::Assessor' do
         authenticate_and do
           migrate_assessment('123-456', assessment_with_dodgy_potential_rating)
         end
+      expect(response.status).to eq(422)
+    end
+
+    it 'rejects an assessment without current space heating demand' do
+      assessment_without_space_heating_data  = valid_assessment_body.dup
+      assessment_without_space_heating_data[:heatDemand] = {}
+      scheme_id = authenticate_and { add_scheme }
+      authenticate_and do
+        add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
+      end
+
+      response =
+          authenticate_and do
+            migrate_assessment('456-982', assessment_without_space_heating_data)
+          end
       expect(response.status).to eq(422)
     end
   end

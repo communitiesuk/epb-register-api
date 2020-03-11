@@ -13,5 +13,10 @@ module UseCase
       assessment_body[:assessment_id] = assessment_id
       assessment_body
     end
+
+    def execute_with_object(domestic_energy_assessment)
+      @domestic_energy_assessments_gateway.insert_or_update_with_object(domestic_energy_assessment)
+      domestic_energy_assessment
+    end
   end
 end

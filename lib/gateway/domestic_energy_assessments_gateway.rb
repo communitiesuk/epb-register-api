@@ -64,6 +64,23 @@ module Gateway
       end
     end
 
+    def insert_or_update_with_object(domestic_energy_assessment)
+      current_rating =
+          domestic_energy_assessment.current_energy_efficiency_rating
+      potential_rating =
+          domestic_energy_assessment.potential_energy_efficiency_rating
+
+      if !(current_rating.is_a?(Integer) && current_rating.between?(1, 100))
+        raise InvalidCurrentEnergyRatingException
+      elsif !(
+      potential_rating.is_a?(Integer) && potential_rating.between?(1, 100)
+      )
+        raise InvalidPotentialEnergyRatingException
+      else
+        send_to_db(domestic_energy_assessment.assessment_id, domestic_energy_assessment.to_record)
+      end
+    end
+
     def search_by_postcode(postcode)
       sql =
         "SELECT
