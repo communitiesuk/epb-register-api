@@ -47,7 +47,7 @@ As such the broad description of a Property can be regarded as a framework, cont
 	</xs:complexType>
 	<xs:simpleType name="UPRNType">
 		<xs:annotation>
-			<xs:documentation>Unique Property Reference Number - a 10-digit numeric string unmiquely identifuying each Property that may have a HCR registered against it.</xs:documentation>
+			<xs:documentation>Unique Property Reference Number - a 10-digit numeric string uniquely identifying each Property that may have a HCR registered against it.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:pattern value="[0-9]{10}"/>
