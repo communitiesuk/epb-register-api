@@ -30,6 +30,12 @@ module Gateway
         address_line3: assessment[:address_line3],
         address_line4: assessment[:address_line4],
         town: assessment[:town],
+        heat_demand: {
+          current_space_heating_demand:
+            assessment[:current_space_heating_demand],
+          current_water_heating_demand:
+            assessment[:current_water_heating_demand]
+        },
         current_energy_efficiency_band:
           get_energy_rating_band(assessment[:current_energy_efficiency_rating]),
         potential_energy_efficiency_band:
@@ -47,15 +53,15 @@ module Gateway
 
     def insert_or_update(domestic_energy_assessment)
       current_rating =
-          domestic_energy_assessment.current_energy_efficiency_rating
+        domestic_energy_assessment.current_energy_efficiency_rating
       potential_rating =
-          domestic_energy_assessment.potential_energy_efficiency_rating
+        domestic_energy_assessment.potential_energy_efficiency_rating
 
       if !(current_rating.is_a?(Integer) && current_rating.between?(1, 100))
         raise InvalidCurrentEnergyRatingException
       elsif !(
-      potential_rating.is_a?(Integer) && potential_rating.between?(1, 100)
-      )
+            potential_rating.is_a?(Integer) && potential_rating.between?(1, 100)
+          )
         raise InvalidPotentialEnergyRatingException
       else
         send_to_db(domestic_energy_assessment)
@@ -68,7 +74,7 @@ module Gateway
             scheme_assessor_id, assessment_id, date_of_assessment, date_registered, dwelling_type,
             type_of_assessment, total_floor_area, address_summary, current_energy_efficiency_rating,
             potential_energy_efficiency_rating, postcode, date_of_expiry,
-            address_line1, address_line2, address_line3, address_line4, town
+            address_line1, address_line2, address_line3, address_line4, town, current_space_heating_demand, current_water_heating_demand
         FROM domestic_energy_assessments
         WHERE postcode = '#{
           ActiveRecord::Base.sanitize_sql(postcode)
@@ -91,7 +97,7 @@ module Gateway
             scheme_assessor_id, assessment_id, date_of_assessment, date_registered, dwelling_type,
             type_of_assessment, total_floor_area, address_summary, current_energy_efficiency_rating,
             potential_energy_efficiency_rating, postcode, date_of_expiry,
-            address_line1, address_line2, address_line3, address_line4, town
+            address_line1, address_line2, address_line3, address_line4, town, current_space_heating_demand, current_water_heating_demand
         FROM domestic_energy_assessments
         WHERE assessment_id = '#{
           ActiveRecord::Base.sanitize_sql(assessment_id)
@@ -115,7 +121,7 @@ module Gateway
             scheme_assessor_id, assessment_id, date_of_assessment, date_registered, dwelling_type,
             type_of_assessment, total_floor_area, address_summary, current_energy_efficiency_rating,
             potential_energy_efficiency_rating, postcode, date_of_expiry,
-            address_line1, address_line2, address_line3, address_line4, town
+            address_line1, address_line2, address_line3, address_line4, town, current_space_heating_demand, current_water_heating_demand
         FROM domestic_energy_assessments
         WHERE (address_line1 ILIKE '%#{
           ActiveRecord::Base.sanitize_sql(street_name)
@@ -141,7 +147,9 @@ module Gateway
 
     def send_to_db(domestic_energy_assessment)
       existing_assessment =
-        DomesticEnergyAssessment.find_by(assessment_id: domestic_energy_assessment.assessment_id)
+        DomesticEnergyAssessment.find_by(
+          assessment_id: domestic_energy_assessment.assessment_id
+        )
 
       if existing_assessment
         existing_assessment.update(domestic_energy_assessment.to_record)

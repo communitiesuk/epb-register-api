@@ -34,8 +34,7 @@ describe 'Searching for assessments' do
       addressLine4: '',
       town: 'Brighton',
       heatDemand: {
-        currentSpaceHeatingDemand: 222,
-        currentWaterHeatingDemand: 321
+        currentSpaceHeatingDemand: 222, currentWaterHeatingDemand: 321
       }
     }.freeze
   end
@@ -137,7 +136,10 @@ describe 'Searching for assessments' do
             addressLine1: 'Flat 33',
             addressLine2: '18 Palmtree Road',
             addressLine3: '',
-            addressLine4: ''
+            addressLine4: '',
+            heatDemand: {
+              currentSpaceHeatingDemand: 222, currentWaterHeatingDemand: 321
+            }
           }.to_json
         )
 
@@ -206,7 +208,10 @@ describe 'Searching for assessments' do
             addressLine1: 'Flat 33',
             addressLine2: '18 Palmtree Road',
             addressLine3: '',
-            addressLine4: ''
+            addressLine4: '',
+            heatDemand: {
+              currentSpaceHeatingDemand: 222, currentWaterHeatingDemand: 321
+            }
           }.to_json
         )
 
@@ -348,7 +353,10 @@ describe 'Searching for assessments' do
               addressLine1: 'Flat 33',
               addressLine2: '18 Palmtree Road',
               addressLine3: '',
-              addressLine4: ''
+              addressLine4: '',
+              heatDemand: {
+                currentSpaceHeatingDemand: 222, currentWaterHeatingDemand: 321
+              }
             }.to_json
           )
 

@@ -24,14 +24,14 @@ module Controller
         currentEnergyEfficiencyRating: { type: 'integer' },
         potentialEnergyEfficiencyRating: { type: 'integer' },
         schemeAssessorId: { type: 'string' },
-        heatDemand: { type: 'object', required: %w[currentSpaceHeatingDemand currentWaterHeatingDemand], properties: {
-            currentSpaceHeatingDemand: {
-                type: 'integer'
-            },
-            currentWaterHeatingDemand: {
-                type: 'integer'
-            }
-        }}
+        heatDemand: {
+          type: 'object',
+          required: %w[currentSpaceHeatingDemand currentWaterHeatingDemand],
+          properties: {
+            currentSpaceHeatingDemand: { type: 'integer' },
+            currentWaterHeatingDemand: { type: 'integer' }
+          }
+        }
       }
     }
 
@@ -90,7 +90,8 @@ module Controller
         @container.get_object(:migrate_domestic_energy_assessment_use_case)
       assessment_body = request_body(PUT_SCHEMA)
 
-      new_assessment = Domain::DomesticEnergyAssessment.new(
+      new_assessment =
+        Domain::DomesticEnergyAssessment.new(
           assessment_body[:date_of_assessment],
           assessment_body[:date_registered],
           assessment_body[:dwelling_type],
@@ -107,8 +108,10 @@ module Controller
           assessment_body[:address_line2],
           assessment_body[:address_line3],
           assessment_body[:address_line4],
-          assessment_body[:town]
-          )
+          assessment_body[:town],
+          assessment_body[:heat_demand][:current_space_heating_demand],
+          assessment_body[:heat_demand][:current_water_heating_demand]
+        )
 
       result = migrate_epc.execute(new_assessment)
 

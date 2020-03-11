@@ -36,8 +36,7 @@ describe 'Acceptance::Assessor' do
       addressLine4: '',
       town: 'Brighton',
       heatDemand: {
-          currentSpaceHeatingDemand: 415,
-          currentWaterHeatingDemand: 321
+        currentSpaceHeatingDemand: 415, currentWaterHeatingDemand: 321
       }
     }.freeze
   end
@@ -152,7 +151,13 @@ describe 'Acceptance::Assessor' do
             addressLine1: valid_assessment_body[:addressLine1],
             addressLine2: valid_assessment_body[:addressLine2],
             addressLine3: valid_assessment_body[:addressLine4],
-            addressLine4: valid_assessment_body[:addressLine4]
+            addressLine4: valid_assessment_body[:addressLine4],
+            heatDemand: {
+              currentSpaceHeatingDemand:
+                valid_assessment_body[:heatDemand][:currentSpaceHeatingDemand],
+              currentWaterHeatingDemand:
+                valid_assessment_body[:heatDemand][:currentWaterHeatingDemand]
+            }
           }.to_json
         )
       expect(response).to eq(expected_response)
@@ -208,7 +213,13 @@ describe 'Acceptance::Assessor' do
             addressLine4: valid_assessment_body[:addressLine4],
             schemeAssessorId: valid_assessment_body[:schemeAssessorId],
             potentialEnergyEfficiencyBand: 'c',
-            currentEnergyEfficiencyBand: 'c'
+            currentEnergyEfficiencyBand: 'c',
+            heatDemand: {
+              currentSpaceHeatingDemand:
+                valid_assessment_body[:heatDemand][:currentSpaceHeatingDemand],
+              currentWaterHeatingDemand:
+                valid_assessment_body[:heatDemand][:currentWaterHeatingDemand]
+            }
           }.to_json
         )
 
@@ -373,32 +384,36 @@ describe 'Acceptance::Assessor' do
     end
 
     it 'rejects an assessment without current space heating demand' do
-      assessment_without_space_heating_data  = valid_assessment_body.dup
-      assessment_without_space_heating_data[:heatDemand] = { currentWaterHeatingDemand: 4354 }
+      assessment_without_space_heating_data = valid_assessment_body.dup
+      assessment_without_space_heating_data[:heatDemand] = {
+        currentWaterHeatingDemand: 4_354
+      }
       scheme_id = authenticate_and { add_scheme }
       authenticate_and do
         add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
       end
 
       response =
-          authenticate_and do
-            migrate_assessment('456-982', assessment_without_space_heating_data)
-          end
+        authenticate_and do
+          migrate_assessment('456-982', assessment_without_space_heating_data)
+        end
       expect(response.status).to eq(422)
     end
 
     it 'rejects an assessment without current water heating demand' do
-      assessment_without_water_heating_data  = valid_assessment_body.dup
-      assessment_without_water_heating_data[:heatDemand] = { currentSpaceHeatingDemand: 4354 }
+      assessment_without_water_heating_data = valid_assessment_body.dup
+      assessment_without_water_heating_data[:heatDemand] = {
+        currentSpaceHeatingDemand: 4_354
+      }
       scheme_id = authenticate_and { add_scheme }
       authenticate_and do
         add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
       end
 
       response =
-          authenticate_and do
-            migrate_assessment('456-982', assessment_without_water_heating_data)
-          end
+        authenticate_and do
+          migrate_assessment('456-982', assessment_without_water_heating_data)
+        end
       expect(response.status).to eq(422)
     end
   end

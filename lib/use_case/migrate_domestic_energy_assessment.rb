@@ -5,7 +5,9 @@ module UseCase
     end
 
     def execute(domestic_energy_assessment)
-      @domestic_energy_assessments_gateway.insert_or_update(domestic_energy_assessment)
+      @domestic_energy_assessments_gateway.insert_or_update(
+        domestic_energy_assessment
+      )
       domestic_energy_assessment
     end
   end

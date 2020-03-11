@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_09_142931) do
+ActiveRecord::Schema.define(version: 2020_03_11_142056) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,11 @@ ActiveRecord::Schema.define(version: 2020_03_09_142931) do
     t.string "address_line4"
     t.string "town"
     t.string "scheme_assessor_id", null: false
+    t.integer "current_space_heating_demand"
+    t.integer "current_water_heating_demand"
+    t.integer "impact_of_loft_insulation"
+    t.integer "impact_of_cavity_insulation"
+    t.integer "impact_of_solid_wall_insulation"
   end
 
   create_table "postcode_geolocation", force: :cascade do |t|
