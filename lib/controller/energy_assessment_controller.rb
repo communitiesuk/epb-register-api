@@ -24,8 +24,11 @@ module Controller
         currentEnergyEfficiencyRating: { type: 'integer' },
         potentialEnergyEfficiencyRating: { type: 'integer' },
         schemeAssessorId: { type: 'string' },
-        heatDemand: { type: 'object', required: %w[currentSpaceHeatingDemand], properties: {
+        heatDemand: { type: 'object', required: %w[currentSpaceHeatingDemand currentWaterHeatingDemand], properties: {
             currentSpaceHeatingDemand: {
+                type: 'integer'
+            },
+            currentWaterHeatingDemand: {
                 type: 'integer'
             }
         }}

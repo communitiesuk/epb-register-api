@@ -33,7 +33,10 @@ describe 'Searching for assessments' do
       addressLine3: '',
       addressLine4: '',
       town: 'Brighton',
-      heatDemand: {currentSpaceHeatingDemand: 222}
+      heatDemand: {
+        currentSpaceHeatingDemand: 222,
+        currentWaterHeatingDemand: 321
+      }
     }.freeze
   end
 
