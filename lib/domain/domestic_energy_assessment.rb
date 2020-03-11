@@ -23,7 +23,10 @@ module Domain
       address_line4,
       town,
       current_space_heating_demand,
-      current_water_heating_demand
+      current_water_heating_demand,
+      impact_of_loft_insulation,
+      impact_of_cavity_insulation,
+      impact_of_solid_wall_insulation
     )
       @date_of_assessment = Date.strptime(date_of_assessment, '%Y-%m-%d')
       @date_registered = Date.strptime(date_registered, '%Y-%m-%d')
@@ -44,6 +47,9 @@ module Domain
       @town = town
       @current_space_heating_demand = current_space_heating_demand
       @current_water_heating_demand = current_water_heating_demand
+      @impact_of_loft_insulation = impact_of_loft_insulation
+      @impact_of_cavity_insulation = impact_of_cavity_insulation
+      @impact_of_solid_wall_insulation = impact_of_solid_wall_insulation
     end
 
     def get_energy_rating_band(number)
@@ -86,7 +92,10 @@ module Domain
         town: @town,
         heat_demand: {
           current_space_heating_demand: @current_space_heating_demand,
-          current_water_heating_demand: @current_water_heating_demand
+          current_water_heating_demand: @current_water_heating_demand,
+          impact_of_loft_insulation: @impact_of_loft_insulation,
+          impact_of_cavity_insulation: @impact_of_cavity_insulation,
+          impact_of_solid_wall_insulation: @impact_of_solid_wall_insulation
         },
         current_energy_efficiency_band:
           get_energy_rating_band(@current_energy_efficiency_rating),
@@ -115,7 +124,10 @@ module Domain
         address_line4: @address_line4,
         town: @town,
         current_space_heating_demand: @current_space_heating_demand,
-        current_water_heating_demand: @current_water_heating_demand
+        current_water_heating_demand: @current_water_heating_demand,
+        impact_of_loft_insulation: @impact_of_loft_insulation,
+        impact_of_cavity_insulation: @impact_of_cavity_insulation,
+        impact_of_solid_wall_insulation: @impact_of_solid_wall_insulation
       }
     end
   end

@@ -29,7 +29,10 @@ module Controller
           required: %w[currentSpaceHeatingDemand currentWaterHeatingDemand],
           properties: {
             currentSpaceHeatingDemand: { type: 'integer' },
-            currentWaterHeatingDemand: { type: 'integer' }
+            currentWaterHeatingDemand: { type: 'integer' },
+            impactOfLoftInsulation: { type: 'integer' },
+            impactOfCavityInsulation: { type: 'integer' },
+            impactOfSolidWallInsulation: { type: 'integer' }
           }
         }
       }
@@ -110,7 +113,10 @@ module Controller
           assessment_body[:address_line4],
           assessment_body[:town],
           assessment_body[:heat_demand][:current_space_heating_demand],
-          assessment_body[:heat_demand][:current_water_heating_demand]
+          assessment_body[:heat_demand][:current_water_heating_demand],
+          assessment_body[:heat_demand][:impact_of_loft_insulation],
+          assessment_body[:heat_demand][:impact_of_cavity_insulation],
+          assessment_body[:heat_demand][:impact_of_solid_wall_insulation]
         )
 
       result = migrate_epc.execute(new_assessment)

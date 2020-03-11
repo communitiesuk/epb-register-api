@@ -34,7 +34,11 @@ module Gateway
           current_space_heating_demand:
             assessment[:current_space_heating_demand],
           current_water_heating_demand:
-            assessment[:current_water_heating_demand]
+            assessment[:current_water_heating_demand],
+          impact_of_loft_insulation: assessment[:impact_of_loft_insulation],
+          impact_of_cavity_insulation: assessment[:impact_of_cavity_insulation],
+          impact_of_solid_wall_insulation:
+            assessment[:impact_of_solid_wall_insulation]
         },
         current_energy_efficiency_band:
           get_energy_rating_band(assessment[:current_energy_efficiency_rating]),
@@ -74,7 +78,9 @@ module Gateway
             scheme_assessor_id, assessment_id, date_of_assessment, date_registered, dwelling_type,
             type_of_assessment, total_floor_area, address_summary, current_energy_efficiency_rating,
             potential_energy_efficiency_rating, postcode, date_of_expiry,
-            address_line1, address_line2, address_line3, address_line4, town, current_space_heating_demand, current_water_heating_demand
+            address_line1, address_line2, address_line3, address_line4, town,
+            current_space_heating_demand, current_water_heating_demand, impact_of_loft_insulation,
+            impact_of_cavity_insulation, impact_of_solid_wall_insulation
         FROM domestic_energy_assessments
         WHERE postcode = '#{
           ActiveRecord::Base.sanitize_sql(postcode)
@@ -94,11 +100,13 @@ module Gateway
     def search_by_assessment_id(assessment_id)
       sql =
         "SELECT
-            scheme_assessor_id, assessment_id, date_of_assessment, date_registered, dwelling_type,
-            type_of_assessment, total_floor_area, address_summary, current_energy_efficiency_rating,
-            potential_energy_efficiency_rating, postcode, date_of_expiry,
-            address_line1, address_line2, address_line3, address_line4, town, current_space_heating_demand, current_water_heating_demand
-        FROM domestic_energy_assessments
+          scheme_assessor_id, assessment_id, date_of_assessment, date_registered, dwelling_type,
+          type_of_assessment, total_floor_area, address_summary, current_energy_efficiency_rating,
+          potential_energy_efficiency_rating, postcode, date_of_expiry,
+          address_line1, address_line2, address_line3, address_line4, town,
+          current_space_heating_demand, current_water_heating_demand, impact_of_loft_insulation,
+          impact_of_cavity_insulation, impact_of_solid_wall_insulation
+          FROM domestic_energy_assessments
         WHERE assessment_id = '#{
           ActiveRecord::Base.sanitize_sql(assessment_id)
         }'"
@@ -118,10 +126,12 @@ module Gateway
     def search_by_street_name_and_town(street_name, town)
       sql =
         "SELECT
-            scheme_assessor_id, assessment_id, date_of_assessment, date_registered, dwelling_type,
-            type_of_assessment, total_floor_area, address_summary, current_energy_efficiency_rating,
-            potential_energy_efficiency_rating, postcode, date_of_expiry,
-            address_line1, address_line2, address_line3, address_line4, town, current_space_heating_demand, current_water_heating_demand
+          scheme_assessor_id, assessment_id, date_of_assessment, date_registered, dwelling_type,
+          type_of_assessment, total_floor_area, address_summary, current_energy_efficiency_rating,
+          potential_energy_efficiency_rating, postcode, date_of_expiry,
+          address_line1, address_line2, address_line3, address_line4, town,
+          current_space_heating_demand, current_water_heating_demand, impact_of_loft_insulation,
+          impact_of_cavity_insulation, impact_of_solid_wall_insulation
         FROM domestic_energy_assessments
         WHERE (address_line1 ILIKE '%#{
           ActiveRecord::Base.sanitize_sql(street_name)

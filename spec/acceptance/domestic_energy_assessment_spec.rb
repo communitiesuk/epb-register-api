@@ -36,7 +36,11 @@ describe 'Acceptance::Assessor' do
       addressLine4: '',
       town: 'Brighton',
       heatDemand: {
-        currentSpaceHeatingDemand: 415, currentWaterHeatingDemand: 321
+        currentSpaceHeatingDemand: 222,
+        currentWaterHeatingDemand: 321,
+        impactOfLoftInsulation: 79,
+        impactOfCavityInsulation: 67,
+        impactOfSolidWallInsulation: 69
       }
     }.freeze
   end
@@ -156,7 +160,13 @@ describe 'Acceptance::Assessor' do
               currentSpaceHeatingDemand:
                 valid_assessment_body[:heatDemand][:currentSpaceHeatingDemand],
               currentWaterHeatingDemand:
-                valid_assessment_body[:heatDemand][:currentWaterHeatingDemand]
+                valid_assessment_body[:heatDemand][:currentWaterHeatingDemand],
+              impactOfLoftInsulation:
+                valid_assessment_body[:heatDemand][:impactOfLoftInsulation],
+              impactOfCavityInsulation:
+                valid_assessment_body[:heatDemand][:impactOfCavityInsulation],
+              impactOfSolidWallInsulation:
+                valid_assessment_body[:heatDemand][:impactOfSolidWallInsulation]
             }
           }.to_json
         )
@@ -218,7 +228,13 @@ describe 'Acceptance::Assessor' do
               currentSpaceHeatingDemand:
                 valid_assessment_body[:heatDemand][:currentSpaceHeatingDemand],
               currentWaterHeatingDemand:
-                valid_assessment_body[:heatDemand][:currentWaterHeatingDemand]
+                valid_assessment_body[:heatDemand][:currentWaterHeatingDemand],
+              impactOfLoftInsulation:
+                valid_assessment_body[:heatDemand][:impactOfLoftInsulation],
+              impactOfCavityInsulation:
+                valid_assessment_body[:heatDemand][:impactOfCavityInsulation],
+              impactOfSolidWallInsulation:
+                valid_assessment_body[:heatDemand][:impactOfSolidWallInsulation]
             }
           }.to_json
         )

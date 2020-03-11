@@ -34,7 +34,11 @@ describe 'Searching for assessments' do
       addressLine4: '',
       town: 'Brighton',
       heatDemand: {
-        currentSpaceHeatingDemand: 222, currentWaterHeatingDemand: 321
+        currentSpaceHeatingDemand: 222,
+        currentWaterHeatingDemand: 321,
+        impactOfLoftInsulation: 79,
+        impactOfCavityInsulation: 67,
+        impactOfSolidWallInsulation: 69
       }
     }.freeze
   end
@@ -138,7 +142,11 @@ describe 'Searching for assessments' do
             addressLine3: '',
             addressLine4: '',
             heatDemand: {
-              currentSpaceHeatingDemand: 222, currentWaterHeatingDemand: 321
+              currentSpaceHeatingDemand: 222,
+              currentWaterHeatingDemand: 321,
+              impactOfLoftInsulation: 79,
+              impactOfCavityInsulation: 67,
+              impactOfSolidWallInsulation: 69
             }
           }.to_json
         )
@@ -210,7 +218,11 @@ describe 'Searching for assessments' do
             addressLine3: '',
             addressLine4: '',
             heatDemand: {
-              currentSpaceHeatingDemand: 222, currentWaterHeatingDemand: 321
+              currentSpaceHeatingDemand: 222,
+              currentWaterHeatingDemand: 321,
+              impactOfLoftInsulation: 79,
+              impactOfCavityInsulation: 67,
+              impactOfSolidWallInsulation: 69
             }
           }.to_json
         )
@@ -355,7 +367,11 @@ describe 'Searching for assessments' do
               addressLine3: '',
               addressLine4: '',
               heatDemand: {
-                currentSpaceHeatingDemand: 222, currentWaterHeatingDemand: 321
+                currentSpaceHeatingDemand: 222,
+                currentWaterHeatingDemand: 321,
+                impactOfLoftInsulation: 79,
+                impactOfCavityInsulation: 67,
+                impactOfSolidWallInsulation: 69
               }
             }.to_json
           )
