@@ -58,7 +58,7 @@ module Gateway
       )
         raise InvalidPotentialEnergyRatingException
       else
-        send_to_db(domestic_energy_assessment.assessment_id, domestic_energy_assessment.to_record)
+        send_to_db(domestic_energy_assessment)
       end
     end
 
@@ -139,14 +139,14 @@ module Gateway
 
     private
 
-    def send_to_db(assessment_id, domestic_energy_assessment)
+    def send_to_db(domestic_energy_assessment)
       existing_assessment =
-        DomesticEnergyAssessment.find_by(assessment_id: assessment_id)
+        DomesticEnergyAssessment.find_by(assessment_id: domestic_energy_assessment.assessment_id)
 
       if existing_assessment
-        existing_assessment.update(domestic_energy_assessment)
+        existing_assessment.update(domestic_energy_assessment.to_record)
       else
-        DomesticEnergyAssessment.create(domestic_energy_assessment)
+        DomesticEnergyAssessment.create(domestic_energy_assessment.to_record)
       end
     end
 
