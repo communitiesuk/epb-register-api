@@ -205,7 +205,7 @@ describe 'Acceptance::AssessorList' do
         ]
       }
 
-      expect(actual).to eq expected
+      expect(expected['assessors']).to match_array actual['assessors']
     end
   end
 
