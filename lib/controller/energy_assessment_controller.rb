@@ -107,7 +107,7 @@ module Controller
           assessment_body[:town]
           )
 
-      result = migrate_epc.execute_with_object(new_assessment)
+      result = migrate_epc.execute(new_assessment)
 
       @events.event(
         :domestic_energy_assessment_migrated,
