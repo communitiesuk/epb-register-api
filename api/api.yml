@@ -630,7 +630,7 @@ components:
 
     AddressId:
       type: string
-      example: 'UPRN-7163757'
+      example: 'UPRN-716375734512'
 
     AddressLine1:
       type: string
