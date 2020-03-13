@@ -33,7 +33,7 @@ As such the broad description of a Property can be regarded as a framework, cont
 </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Address-Line-1" type="xs:string" minOccurs="0"/>
+			<xs:element name="Address-Line-1" type="xs:string"/>
 			<xs:element name="Address-Line-2" type="xs:string" minOccurs="0"/>
 			<xs:element name="Address-Line-3" type="xs:string" minOccurs="0"/>
 			<xs:element name="Post-Town" type="xs:string"/>
