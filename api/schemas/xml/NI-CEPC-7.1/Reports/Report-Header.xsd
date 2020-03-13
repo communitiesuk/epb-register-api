@@ -386,7 +386,7 @@
 </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Address-Line-1" type="xs:string" minOccurs="0"/>
+			<xs:element name="Address-Line-1" type="xs:string"/>
 			<xs:element name="Address-Line-2" type="xs:string" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>The District part of the Address.
