@@ -56,13 +56,4 @@ As such the broad description of a Property can be regarded as a framework, cont
 			<xs:pattern value="[A-Z]{1,2}[0-9R][0-9A-Z]? [0-9][A-Z]{2}"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:element name="PropertyKeyFields" type="PropertyKeyFields"/>
-	<xs:complexType name="PropertyKeyFields">
-		<xs:annotation>
-			<xs:documentation>This is the primary key definition for the Property class - used when a message requires a reference to a Property to be passed rather than the details.</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="UPRN" type="UPRNType"/>
-		</xs:sequence>
-	</xs:complexType>
 </xs:schema>
