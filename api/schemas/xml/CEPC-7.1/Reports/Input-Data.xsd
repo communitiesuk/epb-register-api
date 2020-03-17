@@ -181,7 +181,15 @@ This is a string rather than an enumerated list because the potential sources ar
 			<xs:element name="Data-Blob" type="Data-Blob" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:element name="Data-Blob" type="Data-Blob"/>
+	<xs:element name="Data-Blob" type="Data-Blob" minOccurs="0">
+		<xs:annotation>
+			<xs:documentation>
+				DEPRECATED - DO NOT USE
+				This element is allowed for backwards-compatibility but any data sent here will 
+				not be read, processed or stored by the register.
+			</xs:documentation>
+		</xs:annotation>
+	</xs:element>
 	<xs:complexType name="Data-Blob">
 		<xs:sequence>
 			<xs:element name="File-Location" type="xs:string" minOccurs="0"/>
