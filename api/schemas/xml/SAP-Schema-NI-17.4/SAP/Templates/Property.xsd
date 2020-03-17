@@ -16,7 +16,7 @@ As such the broad description of a Property can be regarded as a framework, cont
 					<xs:documentation>Address for the property.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="UPRN" type="UPRNType">
+			<xs:element name="UPRN" type="UPRNType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Unique Property Reference Number</xs:documentation>
 				</xs:annotation>
