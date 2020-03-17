@@ -52,10 +52,6 @@ describe 'Acceptance::Postcodes' do
     end
   end
 
-  def assessors_search_by_postcode(postcode)
-    get "/api/assessors?postcode=#{postcode}"
-  end
-
   def assessors_search(postcode, qualification)
     get "/api/assessors?postcode=#{postcode}&qualification=#{qualification}"
   end
