@@ -244,6 +244,12 @@ paths:
           description: The name of the assessor
           schema:
             $ref: '#/components/schemas/AssessorFullName'
+
+        - in: query
+          name: qualification
+          description: Only show assessors who have this qualification
+          schema:
+            $ref: '#/components/schemas/AssessorQualificationSearchOptions'
       responses:
         '200':
           description: List of assessors matching the search criteria
@@ -763,6 +769,18 @@ components:
           $ref: '#/components/schemas/AssessorQualificationStatus'
         nonDomesticCc4:
           $ref: '#/components/schemas/AssessorQualificationStatus'
+
+    AssessorQualificationSearchOptions:
+      type: string
+      enum:
+        - domesticRdSap
+        - domesticSap
+        - nonDomesticDec
+        - nonDomesticNos3
+        - nonDomesticNos4
+        - nonDomesticNos5
+        - nonDomesticSp3
+        - nonDomesticCc4
 
     AssessorQualificationStatus:
       type: string
