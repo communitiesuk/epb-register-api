@@ -56,6 +56,10 @@ describe 'Acceptance::Postcodes' do
     get "/api/assessors?postcode=#{postcode}"
   end
 
+  def assessors_search(postcode, qualification)
+    get "/api/assessors?postcode=#{postcode}&qualification=#{qualification}"
+  end
+
   def add_assessor(scheme_id, assessor_id, body)
     put("/api/schemes/#{scheme_id}/assessors/#{assessor_id}", body.to_json)
   end
@@ -67,7 +71,7 @@ describe 'Acceptance::Postcodes' do
   context 'when a search postcode is invalid' do
     it 'returns status 409 for a get' do
       expect(
-        authenticate_and { assessors_search_by_postcode('73334') }.status
+        authenticate_and { assessors_search('73334', 'domesticRdSap') }.status
       ).to eq(409)
     end
   end
@@ -76,14 +80,15 @@ describe 'Acceptance::Postcodes' do
     it 'returns status 200 for a get' do
       add_postcodes('SE1 7EZ')
       expect(
-        authenticate_and { assessors_search_by_postcode('SE17EZ') }.status
+        authenticate_and { assessors_search('SE17EZ', 'domesticRdSap') }.status
       ).to eq(200)
     end
 
     it 'looks as it should' do
       add_postcodes('SE1 7EZ')
 
-      response = authenticate_and { assessors_search_by_postcode('SE17EZ') }
+      response =
+        authenticate_and { assessors_search('SE17EZ', 'domesticRdSap') }
 
       response_json = JSON.parse(response.body)
 
@@ -93,7 +98,7 @@ describe 'Acceptance::Postcodes' do
     it 'can handle a lowercase postcode' do
       add_postcodes('E2 0SZ')
 
-      response = authenticate_and { assessors_search_by_postcode('e20sz') }
+      response = authenticate_and { assessors_search('e20sz', 'domesticRdSap') }
 
       response_json = JSON.parse(response.body)
 
@@ -103,7 +108,8 @@ describe 'Acceptance::Postcodes' do
     it 'has the properties we expect' do
       add_postcodes('SE1 7EZ')
 
-      response = authenticate_and { assessors_search_by_postcode('SE17EZ') }
+      response =
+        authenticate_and { assessors_search('SE17EZ', 'domesticRdSap') }
 
       response_json = JSON.parse(response.body)
 
@@ -123,7 +129,8 @@ describe 'Acceptance::Postcodes' do
         )
       end
 
-      response = authenticate_and { assessors_search_by_postcode('SE17EZ') }
+      response =
+        authenticate_and { assessors_search('SE17EZ', 'domesticRdSap') }
 
       response_json = JSON.parse(response.body)
 
@@ -143,7 +150,8 @@ describe 'Acceptance::Postcodes' do
         )
       end
 
-      response = authenticate_and { assessors_search_by_postcode('SE17EZ') }
+      response =
+        authenticate_and { assessors_search('SE17EZ', 'domesticRdSap') }
 
       response_json = JSON.parse(response.body)
 
@@ -190,7 +198,8 @@ describe 'Acceptance::Postcodes' do
         )
       end
 
-      response = authenticate_and { assessors_search_by_postcode('SE19SG') }
+      response =
+        authenticate_and { assessors_search('SE19SG', 'domesticRdSap') }
 
       response_json = JSON.parse(response.body)
 
@@ -215,7 +224,8 @@ describe 'Acceptance::Postcodes' do
         )
       end
 
-      response = authenticate_and { assessors_search_by_postcode('SE19SG') }
+      response =
+        authenticate_and { assessors_search('SE19SG', 'domesticRdSap') }
 
       response_json = JSON.parse(response.body)
       expect(response_json['results'][0]['distance']).to be_between(2, 4)
@@ -236,7 +246,8 @@ describe 'Acceptance::Postcodes' do
           valid_assessor_with_contact_request_body
         )
       end
-      response = authenticate_and { assessors_search_by_postcode('SE15BN') }
+      response =
+        authenticate_and { assessors_search('SE15BN', 'domesticRdSap') }
 
       response_json = JSON.parse(response.body)
 
@@ -269,7 +280,8 @@ describe 'Acceptance::Postcodes' do
         )
       end
 
-      response = authenticate_and { assessors_search_by_postcode('SE17EZ') }
+      response =
+        authenticate_and { assessors_search('SE17EZ', 'domesticRdSap') }
 
       response_json = JSON.parse(response.body)
 
@@ -302,7 +314,8 @@ describe 'Acceptance::Postcodes' do
         )
       end
 
-      response = authenticate_and { assessors_search_by_postcode('SE17EZ') }
+      response =
+        authenticate_and { assessors_search('SE17EZ', 'domesticRdSap') }
 
       response_json = JSON.parse(response.body)
 
@@ -327,7 +340,8 @@ describe 'Acceptance::Postcodes' do
             valid_assessor_with_contact_request_body
           )
         end
-        response = authenticate_and { assessors_search_by_postcode('SE19SY') }
+        response =
+          authenticate_and { assessors_search('SE19SY', 'domesticRdSap') }
 
         response_json = JSON.parse(response.body)
         expect(response_json['results'][0]).to include('distance')
@@ -350,7 +364,8 @@ describe 'Acceptance::Postcodes' do
             valid_assessor_with_contact_request_body
           )
         end
-        response = authenticate_and { assessors_search_by_postcode('NE19SY') }
+        response =
+          authenticate_and { assessors_search('NE19SY', 'domesticRdSap') }
 
         response_json = JSON.parse(response.body)
         expect((response_json).key?('errors')).to eq(true)

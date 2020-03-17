@@ -244,7 +244,6 @@ paths:
           description: The name of the assessor
           schema:
             $ref: '#/components/schemas/AssessorFullName'
-
         - in: query
           name: qualification
           description: Only show assessors who have this qualification
