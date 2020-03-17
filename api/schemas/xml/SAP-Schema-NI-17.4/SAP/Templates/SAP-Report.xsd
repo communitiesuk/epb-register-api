@@ -43,7 +43,7 @@ but others things will be added in future revisions.</xs:documentation>
 			<xs:element name="Report-Header" type="Report-Header"/>
 			<xs:element name="Energy-Assessment" type="Energy-Assessment"/>
 			<xs:element name="SAP09-Data" type="SAP09-Data"/>
-			<xs:element name="PDF" type="xs:base64Binary"/>
+			<xs:element name="PDF" type="xs:base64Binary" minOccurs="0"/>
 			<xs:element name="Insurance-Details" type="Insurance-Details" minOccurs="0"/>
 			<xs:element name="ExternalDefinitions-Revision-Number" type="xs:string">
 				<xs:annotation>
