@@ -44,24 +44,35 @@ module Controller
       not_found_error('The requested scheme was not found')
     end
 
-    get '/api/assessors', jwt_auth: [] do
-      if params.has_key?(:postcode)
-        postcode = params[:postcode].upcase
-
-        postcode = postcode.insert(-4, ' ') if postcode[-4] != ' '
-
-        result =
-          @container.get_object(:find_assessors_by_postcode_use_case).execute(
-            postcode
-          )
-      elsif params.has_key?(:name)
-        result =
-          @container.get_object(:find_assessors_by_name_use_case).execute(
-            params[:name]
-          )
-      end
-
+    def search_by_name(name)
+      result =
+        @container.get_object(:find_assessors_by_name_use_case).execute(name)
       json_response(200, result)
+    end
+
+    def search_by_postcode(postcode)
+      postcode = postcode.upcase
+      postcode = postcode.insert(-4, ' ') if postcode[-4] != ' '
+
+      result =
+        @container.get_object(:find_assessors_by_postcode_use_case).execute(
+          postcode
+        )
+      json_response(200, result)
+    end
+
+    get '/api/assessors', jwt_auth: [] do
+      if params.has_key?(:name)
+        search_by_name(params[:name])
+      elsif params.has_key?(:postcode) && params.has_key?(:qualification)
+        search_by_postcode(params[:postcode])
+      else
+        error_response(
+          409,
+          'INVALID_QUERY',
+          'Must specify either name or postcode & qualification when searching'
+        )
+      end
     rescue Exception => e
       case e
       when UseCase::FindAssessorsByPostcode::PostcodeNotRegistered

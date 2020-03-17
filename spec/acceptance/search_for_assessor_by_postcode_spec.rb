@@ -72,6 +72,15 @@ describe 'Acceptance::Postcodes' do
     end
   end
 
+  context 'when searching by postcode but qualification type isnt specified' do
+    it 'returns status 409 for a get' do
+      add_postcodes('SE1 7EZ')
+      expect(
+        authenticate_and { get '/api/assessors?postcode=SE17EZ' }.status
+      ).to eq(409)
+    end
+  end
+
   context 'when a search postcode is valid' do
     it 'returns status 200 for a get' do
       add_postcodes('SE1 7EZ')
