@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Acceptance::Assessor' do
+describe 'Acceptance::DomesticEnergyAssessment' do
   include RSpecAssessorServiceMixin
 
   let(:valid_assessor_request_body) do
@@ -134,7 +134,9 @@ describe 'Acceptance::Assessor' do
                 email: valid_assessor_request_body[:contactDetails][:email]
               },
               searchResultsComparisonPostcode: '',
-              qualifications: { domesticRdSap: 'ACTIVE' }
+              qualifications: {
+                domesticRdSap: 'ACTIVE', nonDomesticSp3: 'INACTIVE'
+              }
             },
             dateOfAssessment: valid_assessment_body[:dateOfAssessment],
             dateRegistered: valid_assessment_body[:dateRegistered],

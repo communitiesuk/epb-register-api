@@ -81,9 +81,7 @@ describe 'Acceptance::SearchForAssessor' do
     end
     it 'returns status 409 for no parameters' do
       add_postcodes('SE1 7EZ')
-      expect(
-        authenticate_and { get '/api/assessors' }.status
-      ).to eq(409)
+      expect(authenticate_and { get '/api/assessors' }.status).to eq(409)
     end
   end
 
@@ -180,7 +178,9 @@ describe 'Acceptance::SearchForAssessor' do
               contactDetails: {
                 telephoneNumber: '010199991010101', email: 'person@person.com'
               },
-              qualifications: { domesticRdSap: 'ACTIVE' }
+              qualifications: {
+                domesticRdSap: 'ACTIVE', nonDomesticSp3: 'INACTIVE'
+              }
             },
             distance: 0.0
           }.to_json

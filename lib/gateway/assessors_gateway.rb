@@ -16,7 +16,8 @@ module Gateway
           scheme[:scheme_id],
           scheme[:name],
           self[:search_results_comparison_postcode],
-          self[:domestic_rd_sap_qualification]
+          self[:domestic_rd_sap_qualification],
+          self[:non_domestic_sp3_qualification]
         )
       end
     end
@@ -96,7 +97,8 @@ module Gateway
             row['registered_by'],
             row['scheme_name'],
             row['search_results_comparison_postcode'],
-            row['domestic_rd_sap_qualification']
+            row['domestic_rd_sap_qualification'],
+            row['non_domestic_sp3_qualification']
           )
 
         distance_result = row['distance']
@@ -114,7 +116,8 @@ module Gateway
         'SELECT
           first_name, last_name, middle_names, date_of_birth, registered_by,
           scheme_assessor_id, telephone_number, email, b.name AS scheme_name,
-          search_results_comparison_postcode, domestic_rd_sap_qualification
+          search_results_comparison_postcode, domestic_rd_sap_qualification,
+          non_domestic_sp3_qualification
 
         FROM assessors a
         LEFT JOIN schemes b ON(a.registered_by = b.scheme_id)
@@ -165,7 +168,8 @@ module Gateway
             row['registered_by'],
             row['scheme_name'],
             row['search_results_comparison_postcode'],
-            row['domestic_rd_sap_qualification']
+            row['domestic_rd_sap_qualification'],
+            row['non_domestic_sp3_qualification']
           )
 
         result.push(assessor.to_hash)

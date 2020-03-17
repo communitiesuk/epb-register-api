@@ -9,7 +9,8 @@ module Boundary
                 :email,
                 :telephone_number,
                 :search_results_comparison_postcode,
-                :domestic_rd_sap_qualification
+                :domestic_rd_sap_qualification,
+                :non_domestic_sp3_qualification
 
     def initialize(body, scheme_assessor_id, registered_by_id)
       @scheme_assessor_id = scheme_assessor_id
@@ -25,6 +26,8 @@ module Boundary
         body[:search_results_comparison_postcode]
       @domestic_rd_sap_qualification =
         body.dig(:qualifications, :domestic_rd_sap)
+      @non_domestic_sp3_qualification =
+        body.dig(:qualifications, :non_domestic_sp3)
     end
   end
 end

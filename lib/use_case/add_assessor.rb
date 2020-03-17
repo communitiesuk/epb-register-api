@@ -38,7 +38,8 @@ module UseCase
           add_assessor_request.registered_by_id,
           scheme[:name],
           add_assessor_request.search_results_comparison_postcode,
-          add_assessor_request.domestic_rd_sap_qualification
+          add_assessor_request.domestic_rd_sap_qualification,
+          add_assessor_request.non_domestic_sp3_qualification
         )
 
       @assessors_gateway.update(assessor)

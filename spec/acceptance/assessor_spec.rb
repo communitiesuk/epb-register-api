@@ -10,7 +10,7 @@ describe 'Acceptance::Assessor' do
       lastName: 'Person',
       dateOfBirth: '1991-02-25',
       searchResultsComparisonPostcode: '',
-      qualifications: { domesticRdSap: 'ACTIVE' }
+      qualifications: { domesticRdSap: 'ACTIVE', nonDomesticSp3: 'ACTIVE' }
     }
   end
 
@@ -140,7 +140,9 @@ describe 'Acceptance::Assessor' do
               dateOfBirth: valid_assessor_request_body[:dateOfBirth],
               contactDetails: {},
               searchResultsComparisonPostcode: '',
-              qualifications: { domesticRdSap: 'ACTIVE' }
+              qualifications: {
+                domesticRdSap: 'ACTIVE', nonDomesticSp3: 'ACTIVE'
+              }
             }.to_json
           )
         response =
@@ -159,13 +161,11 @@ describe 'Acceptance::Assessor' do
             assessor_without_key(:qualifications, valid_assessor_request_body)
           )
         end
-        expected_qualifications =
-          JSON.parse({ domesticRdSap: 'INACTIVE' }.to_json)
         response =
           JSON.parse(
             authenticate_and { fetch_assessor(scheme_id, 'SCHEME4233') }.body
           )
-        expect(response['qualifications']).to eq(expected_qualifications)
+        expect(response['qualifications']['domesticRdSap']).to eq('INACTIVE')
       end
     end
   end
@@ -214,7 +214,9 @@ describe 'Acceptance::Assessor' do
               dateOfBirth: valid_assessor_request_body[:dateOfBirth],
               searchResultsComparisonPostcode:
                 valid_assessor_request_body[:searchResultsComparisonPostcode],
-              qualifications: { domesticRdSap: 'ACTIVE' },
+              qualifications: {
+                domesticRdSap: 'ACTIVE', nonDomesticSp3: 'ACTIVE'
+              },
               contactDetails: {}
             }.to_json
           )
@@ -508,7 +510,9 @@ describe 'Acceptance::Assessor' do
                   ]
               },
               searchResultsComparisonPostcode: '',
-              qualifications: { domesticRdSap: 'ACTIVE' }
+              qualifications: {
+                domesticRdSap: 'ACTIVE', nonDomesticSp3: 'INACTIVE'
+              }
             }.to_json
           )
         expect(JSON.parse(assessor.body)).to eq(expected_response)
