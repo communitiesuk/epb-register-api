@@ -1,4 +1,4 @@
-describe 'Acceptance::Postcodes' do
+describe 'Acceptance::SearchForAssessor' do
   include RSpecAssessorServiceMixin
 
   let(:valid_assessor_with_contact_request_body) do
