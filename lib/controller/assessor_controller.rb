@@ -51,13 +51,13 @@ module Controller
       json_response(200, result)
     end
 
-    def search_by_postcode(postcode)
+    def search_by_postcode(postcode, qualification)
       postcode = postcode.upcase
       postcode = postcode.insert(-4, ' ') if postcode[-4] != ' '
 
       result =
         @container.get_object(:find_assessors_by_postcode_use_case).execute(
-          postcode
+          postcode, qualification
         )
       json_response(200, result)
     end
@@ -66,7 +66,7 @@ module Controller
       if params.has_key?(:name)
         search_by_name(params[:name])
       elsif params.has_key?(:postcode) && params.has_key?(:qualification)
-        search_by_postcode(params[:postcode])
+        search_by_postcode(params[:postcode], params[:qualification])
       else
         error_response(
           409,

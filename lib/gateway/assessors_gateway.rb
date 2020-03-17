@@ -44,8 +44,14 @@ module Gateway
       end
     end
 
-    def search(latitude, longitude, entries = 10)
-      qualification = 'domestic_rd_sap_qualification'
+    def search(latitude, longitude, qualification_type, entries = 10)
+
+
+      if qualification_type == 'domesticRdSap'
+        qualification = 'domestic_rd_sap_qualification'
+      elsif qualification_type == 'nonDomesticSp3'
+        qualification = "non_domestic_sp3_qualification"
+      end
 
       response =
         Assessor.connection.execute(

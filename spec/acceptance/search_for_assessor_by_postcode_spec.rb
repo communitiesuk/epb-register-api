@@ -3,15 +3,15 @@ describe 'Acceptance::SearchForAssessor' do
 
   let(:valid_assessor_with_contact_request_body) do
     {
-      firstName: 'Some',
-      middleNames: 'Middle',
-      lastName: 'Person',
-      dateOfBirth: '1991-02-25',
-      contactDetails: {
-        telephoneNumber: '010199991010101', email: 'person@person.com'
-      },
-      searchResultsComparisonPostcode: 'SE1 7EZ',
-      qualifications: { domesticRdSap: 'ACTIVE' }
+        firstName: 'Some',
+        middleNames: 'Middle',
+        lastName: 'Person',
+        dateOfBirth: '1991-02-25',
+        contactDetails: {
+            telephoneNumber: '010199991010101', email: 'person@person.com'
+        },
+        searchResultsComparisonPostcode: 'SE1 7EZ',
+        qualifications: {domesticRdSap: 'ACTIVE'}
     }
   end
 
@@ -21,9 +21,9 @@ describe 'Acceptance::SearchForAssessor' do
     truncate(postcode) if clean
 
     db.connection.execute(
-      "INSERT INTO postcode_geolocation (postcode, latitude, longitude) VALUES('#{
+        "INSERT INTO postcode_geolocation (postcode, latitude, longitude) VALUES('#{
         db.sanitize_sql(postcode)
-      }', #{latitude.to_f}, #{longitude.to_f})"
+        }', #{latitude.to_f}, #{longitude.to_f})"
     )
   end
 
@@ -33,21 +33,21 @@ describe 'Acceptance::SearchForAssessor' do
     truncate(outcode) if clean
 
     db.connection.execute(
-      "INSERT INTO postcode_outcode_geolocations (outcode, latitude, longitude) VALUES('#{
+        "INSERT INTO postcode_outcode_geolocations (outcode, latitude, longitude) VALUES('#{
         db.sanitize_sql(outcode)
-      }', #{latitude.to_f}, #{longitude.to_f})"
+        }', #{latitude.to_f}, #{longitude.to_f})"
     )
   end
 
   def truncate(postcode)
     if postcode ==
-         Regexp.new('^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$', Regexp::IGNORECASE)
+        Regexp.new('^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$', Regexp::IGNORECASE)
       ActiveRecord::Base.connection.execute(
-        'TRUNCATE TABLE postcode_geolocation'
+          'TRUNCATE TABLE postcode_geolocation'
       )
     else
       ActiveRecord::Base.connection.execute(
-        'TRUNCATE TABLE postcode_outcode_geolocations'
+          'TRUNCATE TABLE postcode_outcode_geolocations'
       )
     end
   end
@@ -61,13 +61,13 @@ describe 'Acceptance::SearchForAssessor' do
   end
 
   def add_scheme(name = 'test scheme')
-    JSON.parse(post('/api/schemes', { name: name }.to_json).body)['schemeId']
+    JSON.parse(post('/api/schemes', {name: name}.to_json).body)['schemeId']
   end
 
   context 'when a search postcode is invalid' do
     it 'returns status 409 for a get' do
       expect(
-        authenticate_and { assessors_search('73334', 'domesticRdSap') }.status
+          authenticate_and { assessors_search('73334', 'domesticRdSap') }.status
       ).to eq(409)
     end
   end
@@ -76,7 +76,7 @@ describe 'Acceptance::SearchForAssessor' do
     it 'returns status 409 for postcode search without qualification' do
       add_postcodes('SE1 7EZ')
       expect(
-        authenticate_and { get '/api/assessors?postcode=SE17EZ' }.status
+          authenticate_and { get '/api/assessors?postcode=SE17EZ' }.status
       ).to eq(409)
     end
     it 'returns status 409 for no parameters' do
@@ -89,7 +89,7 @@ describe 'Acceptance::SearchForAssessor' do
     it 'returns status 200 for a get' do
       add_postcodes('SE1 7EZ')
       expect(
-        authenticate_and { assessors_search('SE17EZ', 'domesticRdSap') }.status
+          authenticate_and { assessors_search('SE17EZ', 'domesticRdSap') }.status
       ).to eq(200)
     end
 
@@ -97,7 +97,7 @@ describe 'Acceptance::SearchForAssessor' do
       add_postcodes('SE1 7EZ')
 
       response =
-        authenticate_and { assessors_search('SE17EZ', 'domesticRdSap') }
+          authenticate_and { assessors_search('SE17EZ', 'domesticRdSap') }
 
       response_json = JSON.parse(response.body)
 
@@ -118,7 +118,7 @@ describe 'Acceptance::SearchForAssessor' do
       add_postcodes('SE1 7EZ')
 
       response =
-        authenticate_and { assessors_search('SE17EZ', 'domesticRdSap') }
+          authenticate_and { assessors_search('SE17EZ', 'domesticRdSap') }
 
       response_json = JSON.parse(response.body)
 
@@ -132,14 +132,14 @@ describe 'Acceptance::SearchForAssessor' do
 
       authenticate_and do
         add_assessor(
-          scheme_id,
-          'ASSESSOR999',
-          valid_assessor_with_contact_request_body
+            scheme_id,
+            'ASSESSOR999',
+            valid_assessor_with_contact_request_body
         )
       end
 
       response =
-        authenticate_and { assessors_search('SE17EZ', 'domesticRdSap') }
+          authenticate_and { assessors_search('SE17EZ', 'domesticRdSap') }
 
       response_json = JSON.parse(response.body)
 
@@ -153,38 +153,38 @@ describe 'Acceptance::SearchForAssessor' do
 
       authenticate_and do
         add_assessor(
-          scheme_id,
-          'ASSESSOR999',
-          valid_assessor_with_contact_request_body
+            scheme_id,
+            'ASSESSOR999',
+            valid_assessor_with_contact_request_body
         )
       end
 
       response =
-        authenticate_and { assessors_search('SE17EZ', 'domesticRdSap') }
+          authenticate_and { assessors_search('SE17EZ', 'domesticRdSap') }
 
       response_json = JSON.parse(response.body)
 
       expected_response =
-        JSON.parse(
-          {
-            assessor: {
-              firstName: 'Some',
-              lastName: 'Person',
-              middleNames: 'Middle',
-              registeredBy: { name: 'Happy EPC', schemeId: 25 },
-              schemeAssessorId: 'ASSESSOR999',
-              searchResultsComparisonPostcode: 'SE1 7EZ',
-              dateOfBirth: '1991-02-25',
-              contactDetails: {
-                telephoneNumber: '010199991010101', email: 'person@person.com'
-              },
-              qualifications: {
-                domesticRdSap: 'ACTIVE', nonDomesticSp3: 'INACTIVE'
-              }
-            },
-            distance: 0.0
-          }.to_json
-        )
+          JSON.parse(
+              {
+                  assessor: {
+                      firstName: 'Some',
+                      lastName: 'Person',
+                      middleNames: 'Middle',
+                      registeredBy: {name: 'Happy EPC', schemeId: 25},
+                      schemeAssessorId: 'ASSESSOR999',
+                      searchResultsComparisonPostcode: 'SE1 7EZ',
+                      dateOfBirth: '1991-02-25',
+                      contactDetails: {
+                          telephoneNumber: '010199991010101', email: 'person@person.com'
+                      },
+                      qualifications: {
+                          domesticRdSap: 'ACTIVE', nonDomesticSp3: 'INACTIVE'
+                      }
+                  },
+                  distance: 0.0
+              }.to_json
+          )
 
       response_json['results'][0]['assessor']['registeredBy']['schemeId'] = 25
 
@@ -203,14 +203,14 @@ describe 'Acceptance::SearchForAssessor' do
 
       authenticate_and do
         add_assessor(
-          scheme_id,
-          'ASSESSOR999',
-          valid_assessor_with_contact_request_body
+            scheme_id,
+            'ASSESSOR999',
+            valid_assessor_with_contact_request_body
         )
       end
 
       response =
-        authenticate_and { assessors_search('SE19SG', 'domesticRdSap') }
+          authenticate_and { assessors_search('SE19SG', 'domesticRdSap') }
 
       response_json = JSON.parse(response.body)
 
@@ -229,14 +229,14 @@ describe 'Acceptance::SearchForAssessor' do
 
       authenticate_and do
         add_assessor(
-          scheme_id,
-          'ASSESSOR999',
-          valid_assessor_with_contact_request_body
+            scheme_id,
+            'ASSESSOR999',
+            valid_assessor_with_contact_request_body
         )
       end
 
       response =
-        authenticate_and { assessors_search('SE19SG', 'domesticRdSap') }
+          authenticate_and { assessors_search('SE19SG', 'domesticRdSap') }
 
       response_json = JSON.parse(response.body)
       expect(response_json['results'][0]['distance']).to be_between(2, 4)
@@ -252,13 +252,13 @@ describe 'Acceptance::SearchForAssessor' do
 
       authenticate_and do
         add_assessor(
-          scheme_id,
-          'ASSESSOR999',
-          valid_assessor_with_contact_request_body
+            scheme_id,
+            'ASSESSOR999',
+            valid_assessor_with_contact_request_body
         )
       end
       response =
-        authenticate_and { assessors_search('SE15BN', 'domesticRdSap') }
+          authenticate_and { assessors_search('SE15BN', 'domesticRdSap') }
 
       response_json = JSON.parse(response.body)
 
@@ -275,9 +275,9 @@ describe 'Acceptance::SearchForAssessor' do
 
       authenticate_and do
         add_assessor(
-          scheme_id,
-          'ASSESSOR999',
-          valid_assessor_with_contact_request_body
+            scheme_id,
+            'ASSESSOR999',
+            valid_assessor_with_contact_request_body
         )
       end
 
@@ -285,14 +285,14 @@ describe 'Acceptance::SearchForAssessor' do
 
       authenticate_and do
         add_assessor(
-          scheme_id,
-          'ASSESSOR999',
-          valid_assessor_with_contact_request_body
+            scheme_id,
+            'ASSESSOR999',
+            valid_assessor_with_contact_request_body
         )
       end
 
       response =
-        authenticate_and { assessors_search('SE17EZ', 'domesticRdSap') }
+          authenticate_and { assessors_search('SE17EZ', 'domesticRdSap') }
 
       response_json = JSON.parse(response.body)
 
@@ -309,9 +309,9 @@ describe 'Acceptance::SearchForAssessor' do
 
       authenticate_and do
         add_assessor(
-          scheme_id,
-          'ASSESSOR999',
-          valid_assessor_with_contact_request_body
+            scheme_id,
+            'ASSESSOR999',
+            valid_assessor_with_contact_request_body
         )
       end
 
@@ -319,14 +319,14 @@ describe 'Acceptance::SearchForAssessor' do
 
       authenticate_and do
         add_assessor(
-          scheme_id,
-          'ASSESSOR999',
-          valid_assessor_with_contact_request_body
+            scheme_id,
+            'ASSESSOR999',
+            valid_assessor_with_contact_request_body
         )
       end
 
       response =
-        authenticate_and { assessors_search('SE17EZ', 'domesticRdSap') }
+          authenticate_and { assessors_search('SE17EZ', 'domesticRdSap') }
 
       response_json = JSON.parse(response.body)
 
@@ -346,13 +346,13 @@ describe 'Acceptance::SearchForAssessor' do
 
         authenticate_and do
           add_assessor(
-            scheme_id,
-            'ASSESSOR999',
-            valid_assessor_with_contact_request_body
+              scheme_id,
+              'ASSESSOR999',
+              valid_assessor_with_contact_request_body
           )
         end
         response =
-          authenticate_and { assessors_search('SE19SY', 'domesticRdSap') }
+            authenticate_and { assessors_search('SE19SY', 'domesticRdSap') }
 
         response_json = JSON.parse(response.body)
         expect(response_json['results'][0]).to include('distance')
@@ -370,16 +370,44 @@ describe 'Acceptance::SearchForAssessor' do
 
         authenticate_and do
           add_assessor(
-            scheme_id,
-            'ASSESSOR999',
-            valid_assessor_with_contact_request_body
+              scheme_id,
+              'ASSESSOR999',
+              valid_assessor_with_contact_request_body
           )
         end
         response =
-          authenticate_and { assessors_search('NE19SY', 'domesticRdSap') }
+            authenticate_and { assessors_search('NE19SY', 'domesticRdSap') }
 
         response_json = JSON.parse(response.body)
         expect((response_json).key?('errors')).to eq(true)
+      end
+    end
+  end
+
+  context 'when searching by qualification' do
+    context 'for air conditioning level 3 assessors' do
+      it 'returns only the assessors qualified' do
+        add_postcodes('SE1 7EZ', 51.5045, 0.0865)
+
+        scheme_id = authenticate_and { add_scheme('AirConScheme') }
+
+        assessor = valid_assessor_with_contact_request_body
+        assessor[:qualifications][:domesticRdSap] = 'INACTIVE'
+        assessor[:qualifications][:nonDomesticSp3] = 'ACTIVE'
+        authenticate_and do
+          add_assessor(scheme_id, 'AIR_CON_ASSESSOR', assessor)
+        end
+
+        assessor[:qualifications][:domesticRdSap] = 'ACTIVE'
+        assessor[:qualifications][:nonDomesticSp3] = 'INACTIVE'
+        authenticate_and do
+          add_assessor(scheme_id, 'RDSAP_ASSESSOR', assessor)
+        end
+
+        response = authenticate_and { assessors_search('SE17EZ', 'nonDomesticSp3')}
+        response_json = JSON.parse(response.body)
+        expect(response_json['results'].length).to eq(1)
+        expect(response_json['results'].first['assessor']['schemeAssessorId']).to eq('AIR_CON_ASSESSOR')
       end
     end
   end

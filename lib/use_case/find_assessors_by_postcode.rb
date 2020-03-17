@@ -9,7 +9,7 @@ module UseCase
       @schemes_gateway = schemes_gateway
     end
 
-    def execute(postcode)
+    def execute(postcode, qualification)
       unless Regexp.new(
                '^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$',
                Regexp::IGNORECASE
@@ -31,7 +31,7 @@ module UseCase
         schemes[scheme[:scheme_id]] = scheme
       end
 
-      result = @assessor_gateway.search(latitude, longitude)
+      result = @assessor_gateway.search(latitude, longitude, qualification)
 
       { 'results': result, 'searchPostcode': postcode }
     end
