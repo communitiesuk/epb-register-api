@@ -48,7 +48,15 @@
 			<xs:element name="Report-Header" type="Report-Header"/>
 			<xs:element name="Energy-Assessment" type="Energy-Assessment"/>
 			<xs:element name="SAP2012-Data" type="SAP2012-Data"/>
-			<xs:element name="PDF" type="xs:base64Binary" minOccurs="0"/>
+			<xs:element name="PDF" type="xs:base64Binary" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						DEPRECATED - DO NOT USE
+						This element is allowed for backwards-compatibility but any data sent here will 
+						not be read, processed or stored by the register.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="Insurance-Details" type="Insurance-Details" minOccurs="0"/>
 			<xs:element name="ExternalDefinitions-Revision-Number" type="xs:string">
 				<xs:annotation>
