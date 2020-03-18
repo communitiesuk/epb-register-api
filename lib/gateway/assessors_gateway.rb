@@ -1,5 +1,14 @@
 module Gateway
   class AssessorsGateway
+    SCHEME_ASSESSOR_ID_COLUMN = :scheme_assessor_id
+    FIRST_NAME_COLUMN = :first_name
+    LAST_NAME_COLUMN = :last_name
+    MIDDLE_NAMES_COLUMN = :middle_names
+    DATE_OF_BIRTH_COLUMN = :date_of_birth
+    EMAIL_COLUMN = :email
+    TELEPHONE_NUMBER_COLUMN = :telephone_number
+    SEARCH_RESULTS_COMPARISON_POSTCODE_COLUMN =
+      :search_results_comparison_postcode
     DOMESTIC_RD_SAP_COLUMN = :domestic_rd_sap_qualification
     NON_DOMESTIC_SP3_COLUMN = :non_domestic_sp3_qualification
 
@@ -8,16 +17,16 @@ module Gateway
       def to_domain
         scheme = Scheme.find_by(scheme_id: self[:registered_by])
         Domain::Assessor.new(
-          self[:scheme_assessor_id],
-          self[:first_name],
-          self[:last_name],
-          self[:middle_names],
-          self[:date_of_birth],
-          self[:email],
-          self[:telephone_number],
+          self[SCHEME_ASSESSOR_ID_COLUMN],
+          self[FIRST_NAME_COLUMN],
+          self[LAST_NAME_COLUMN],
+          self[MIDDLE_NAMES_COLUMN],
+          self[DATE_OF_BIRTH_COLUMN],
+          self[EMAIL_COLUMN],
+          self[TELEPHONE_NUMBER_COLUMN],
           scheme[:scheme_id],
           scheme[:name],
-          self[:search_results_comparison_postcode],
+          self[SEARCH_RESULTS_COMPARISON_POSTCODE_COLUMN],
           self[DOMESTIC_RD_SAP_COLUMN],
           self[NON_DOMESTIC_SP3_COLUMN]
         )
@@ -93,16 +102,16 @@ module Gateway
       response.each do |row|
         assessor =
           Domain::Assessor.new(
-            row['scheme_assessor_id'],
-            row['first_name'],
-            row['last_name'],
-            row['middle_names'],
-            row['date_of_birth'],
-            row['email'],
-            row['telephone_number'],
+            row[SCHEME_ASSESSOR_ID_COLUMN.to_s],
+            row[FIRST_NAME_COLUMN.to_s],
+            row[LAST_NAME_COLUMN.to_s],
+            row[MIDDLE_NAMES_COLUMN.to_s],
+            row[DATE_OF_BIRTH_COLUMN.to_s],
+            row[EMAIL_COLUMN.to_s],
+            row[TELEPHONE_NUMBER_COLUMN.to_s],
             row['registered_by'],
             row['scheme_name'],
-            row['search_results_comparison_postcode'],
+            row[SEARCH_RESULTS_COMPARISON_POSTCODE_COLUMN.to_s],
             row[DOMESTIC_RD_SAP_COLUMN.to_s],
             row[NON_DOMESTIC_SP3_COLUMN.to_s]
           )
@@ -164,16 +173,16 @@ module Gateway
       response.each do |row|
         assessor =
           Domain::Assessor.new(
-            row['scheme_assessor_id'],
-            row['first_name'],
-            row['last_name'],
-            row['middle_names'],
-            row['date_of_birth'],
-            row['email'],
-            row['telephone_number'],
+            row[SCHEME_ASSESSOR_ID_COLUMN.to_s],
+            row[FIRST_NAME_COLUMN.to_s],
+            row[LAST_NAME_COLUMN.to_s],
+            row[MIDDLE_NAMES_COLUMN.to_s],
+            row[DATE_OF_BIRTH_COLUMN.to_s],
+            row[EMAIL_COLUMN.to_s],
+            row[TELEPHONE_NUMBER_COLUMN.to_s],
             row['registered_by'],
             row['scheme_name'],
-            row['search_results_comparison_postcode'],
+            row[SEARCH_RESULTS_COMPARISON_POSTCODE_COLUMN.to_s],
             row[DOMESTIC_RD_SAP_COLUMN.to_s],
             row[NON_DOMESTIC_SP3_COLUMN.to_s]
           )
