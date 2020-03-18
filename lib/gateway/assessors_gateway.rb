@@ -13,52 +13,38 @@ module Gateway
     NON_DOMESTIC_SP3_COLUMN = :non_domestic_sp3_qualification
 
     def row_to_assessor_domain(row)
-          Domain::Assessor.new(
-              row[SCHEME_ASSESSOR_ID_COLUMN.to_s],
-              row[FIRST_NAME_COLUMN.to_s],
-              row[LAST_NAME_COLUMN.to_s],
-              row[MIDDLE_NAMES_COLUMN.to_s],
-              row[DATE_OF_BIRTH_COLUMN.to_s],
-              row[EMAIL_COLUMN.to_s],
-              row[TELEPHONE_NUMBER_COLUMN.to_s],
-              row['registered_by'],
-              row['scheme_name'],
-              row[SEARCH_RESULTS_COMPARISON_POSTCODE_COLUMN.to_s],
-              row[DOMESTIC_RD_SAP_COLUMN.to_s],
-              row[NON_DOMESTIC_SP3_COLUMN.to_s]
-          )
-    end
-
-    class Assessor < ActiveRecord::Base
-      def to_domain
-        scheme = Scheme.find_by(scheme_id: self[:registered_by])
-        Domain::Assessor.new(
-          self[SCHEME_ASSESSOR_ID_COLUMN],
-          self[FIRST_NAME_COLUMN],
-          self[LAST_NAME_COLUMN],
-          self[MIDDLE_NAMES_COLUMN],
-          self[DATE_OF_BIRTH_COLUMN],
-          self[EMAIL_COLUMN],
-          self[TELEPHONE_NUMBER_COLUMN],
-          scheme[:scheme_id],
-          scheme[:name],
-          self[SEARCH_RESULTS_COMPARISON_POSTCODE_COLUMN],
-          self[DOMESTIC_RD_SAP_COLUMN],
-          self[NON_DOMESTIC_SP3_COLUMN]
-        )
+      scheme_name = row['scheme_name']
+      unless scheme_name
+        scheme = Scheme.find_by(scheme_id: row['registered_by'])
+        scheme_name = scheme[:name]
       end
+      Domain::Assessor.new(
+        row[SCHEME_ASSESSOR_ID_COLUMN.to_s],
+        row[FIRST_NAME_COLUMN.to_s],
+        row[LAST_NAME_COLUMN.to_s],
+        row[MIDDLE_NAMES_COLUMN.to_s],
+        row[DATE_OF_BIRTH_COLUMN.to_s],
+        row[EMAIL_COLUMN.to_s],
+        row[TELEPHONE_NUMBER_COLUMN.to_s],
+        row['registered_by'],
+        scheme_name,
+        row[SEARCH_RESULTS_COMPARISON_POSTCODE_COLUMN.to_s],
+        row[DOMESTIC_RD_SAP_COLUMN.to_s],
+        row[NON_DOMESTIC_SP3_COLUMN.to_s]
+      )
     end
 
+    class Assessor < ActiveRecord::Base; end
     class Scheme < ActiveRecord::Base; end
 
     def fetch(scheme_assessor_id)
       assessor = Assessor.find_by(scheme_assessor_id: scheme_assessor_id)
-      assessor ? assessor.to_domain : nil
+      assessor ? row_to_assessor_domain(assessor) : nil
     end
 
     def fetch_list(scheme_id)
-      assessor = Assessor.where(registered_by: scheme_id)
-      assessor.map(&:to_domain)
+      assessors = Assessor.where(registered_by: scheme_id)
+      assessors.map { |assessor| row_to_assessor_domain(assessor) }
     end
 
     def update(assessor)
@@ -116,7 +102,10 @@ module Gateway
 
       result = []
       response.each do |row|
-        full_hash = { assessor: row_to_assessor_domain(row).to_hash, distance: row['distance'] }
+        full_hash = {
+          assessor: row_to_assessor_domain(row).to_hash,
+          distance: row['distance']
+        }
         result.push(full_hash)
       end
       result
@@ -168,9 +157,7 @@ module Gateway
       response = Assessor.connection.execute(sql)
 
       result = []
-      response.each do |row|
-        result.push(row_to_assessor_domain(row).to_hash)
-      end
+      response.each { |row| result.push(row_to_assessor_domain(row).to_hash) }
       result
     end
   end
