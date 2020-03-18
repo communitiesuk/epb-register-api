@@ -6,6 +6,10 @@ module Gateway
       end
     end
 
+    def valid_energy_rating(rating)
+      rating.is_a?(Integer) && rating.between?(1, 100)
+    end
+
     def to_hash(assessment)
       {
         date_of_assessment:
@@ -53,21 +57,14 @@ module Gateway
       energy_assessment ? energy_assessment.to_hash : nil
     end
 
-    def insert_or_update(domestic_energy_assessment)
-      current_rating =
-        domestic_energy_assessment.current_energy_efficiency_rating
-      potential_rating =
-        domestic_energy_assessment.potential_energy_efficiency_rating
-
-      if !(current_rating.is_a?(Integer) && current_rating.between?(1, 100))
+    def insert_or_update(assessment)
+      unless valid_energy_rating(assessment.current_energy_efficiency_rating)
         raise ArgumentError.new('Invalid current energy rating')
-      elsif !(
-            potential_rating.is_a?(Integer) && potential_rating.between?(1, 100)
-          )
-        raise ArgumentError.new('Invalid potential energy rating')
-      else
-        send_to_db(domestic_energy_assessment)
       end
+      unless valid_energy_rating(assessment.potential_energy_efficiency_rating)
+        raise ArgumentError.new('Invalid potential energy rating')
+      end
+      send_to_db(assessment)
     end
 
     def search_by_postcode(postcode)

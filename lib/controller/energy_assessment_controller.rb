@@ -131,11 +131,7 @@ module Controller
       when JSON::Schema::ValidationError
         error_response(422, 'INVALID_REQUEST', e.message)
       when ArgumentError
-        error_response(
-          422,
-          'INVALID_REQUEST',
-          e.message
-        )
+        error_response(422, 'INVALID_REQUEST', e.message)
       else
         server_error(e)
       end
