@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns:CEPC="EPBR-CEPC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <CEPC:Report-Header>
+        <CEPC:RRN>0000-0000-0000-0000-0000</CEPC:RRN>
+        <CEPC:Issue-Date>2006-05-04</CEPC:Issue-Date>
+        <CEPC:Report-Type>1</CEPC:Report-Type>
+        <CEPC:Valid-Until>2006-05-04</CEPC:Valid-Until>
+        <CEPC:Inspection-Date>2006-05-04</CEPC:Inspection-Date>
+        <CEPC:Registration-Date>2006-05-04</CEPC:Registration-Date>
+        <CEPC:Status>cancelled</CEPC:Status>
+        <CEPC:Language-Code>1</CEPC:Language-Code>
+        <CEPC:Energy-Assessor>
+            <CEPC:Certificate-Number>////000000</CEPC:Certificate-Number>
+            <CEPC:Name>Name1</CEPC:Name>
+            <CEPC:Accreditation-Scheme-Name>Accreditation-Scheme-Name1</CEPC:Accreditation-Scheme-Name>
+        </CEPC:Energy-Assessor>
+        <CEPC:Property-Details>
+            <CEPC:UPRN>UPRN-000000000000</CEPC:UPRN>
+            <CEPC:Property-Address>
+                <CEPC:Address-Line-1>2 Lonely Street</CEPC:Address-Line-1>
+                <CEPC:Post-Town>Post-Town1</CEPC:Post-Town>
+                <CEPC:Postcode>A0 0AA</CEPC:Postcode>
+            </CEPC:Property-Address>
+            <CEPC:Property-Type>Property-Type1</CEPC:Property-Type>
+        </CEPC:Property-Details>
+        <CEPC:Calculation-Details>
+            <CEPC:Calculation-Tool>Calculation-Tool1</CEPC:Calculation-Tool>
+        </CEPC:Calculation-Details>
+    </CEPC:Report-Header>
+    <CEPC:Formatted-Report>ZGVmYXVsdA==</CEPC:Formatted-Report>
+    <CEPC:Air-Conditioning-Inspection-Certificate>
+        <Building-Name>Building-Name0</Building-Name>
+        <F-Gas-Compliant-Date>00/00/,,00</F-Gas-Compliant-Date>
+        <AC-Rated-Output>
+            <AC-Rating-Unknown-Flag>false</AC-Rating-Unknown-Flag>
+        </AC-Rated-Output>
+        <Random-Sampling-Flag>Y</Random-Sampling-Flag>
+        <Treated-Floor-Area>50</Treated-Floor-Area>
+        <AC-System-Metered-Flag>0</AC-System-Metered-Flag>
+        <Refrigerant-Charge-Total>50</Refrigerant-Charge-Total>
+        <AC-Sub-Systems>
+            <AC-Sub-System>
+                <Sub-System-Number>Sub-System-Number0</Sub-System-Number>
+                <Sub-System-Description>Sub-System-Description0</Sub-System-Description>
+                <Refrigerant-Type>Refrigerant-Type0</Refrigerant-Type>
+                <Sub-System-Age>Sub-System-Age0</Sub-System-Age>
+            </AC-Sub-System>
+            <AC-Sub-System>
+                <Sub-System-Number>Sub-System-Number1</Sub-System-Number>
+                <Sub-System-Description>Sub-System-Description1</Sub-System-Description>
+                <Refrigerant-Type>Refrigerant-Type1</Refrigerant-Type>
+                <Sub-System-Age>Sub-System-Age1</Sub-System-Age>
+            </AC-Sub-System>
+        </AC-Sub-Systems>
+    </CEPC:Air-Conditioning-Inspection-Certificate>
+</Report>
