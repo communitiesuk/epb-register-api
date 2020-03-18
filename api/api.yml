@@ -224,7 +224,7 @@ paths:
         '409':
           description: Assessor already exists on a different scheme
 
-  /search/assessors:
+  /assessors:
     get:
       tags:
         - Search

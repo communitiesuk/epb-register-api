@@ -233,31 +233,44 @@ paths:
         422:
           description: Assessor does not pass validation
 
-  /assessors/search/{postcode}:
+  /assessors:
     get:
       tags:
-        - Search for assessors
-      summary: Search for an assessor by postcode
+        - Search
+        - Manage Assessors
+      summary: Search for an assessor by postcode or name
       security:
-        - oauth: []
+        - oauth:
+            - 'assessment:search'
       parameters:
-        - in: path
+        - in: query
           name: postcode
-          required: true
-          description: The postcode of the property to be assessed
+          description: A postcode to search from for an assessor
           schema:
-            type: string
+            $ref: '#/components/schemas/AddressPostcode'
+        - in: query
+          name: name
+          description: The name of the assessor
+          schema:
+            $ref: '#/components/schemas/AssessorFullName'
+        - in: query
+          name: qualification
+          description: Only show assessors who have this qualification
+          schema:
+            $ref: '#/components/schemas/AssessorQualificationSearchOptions'
       responses:
-        200:
-          description: List of assessors sorted by distance
+        '200':
+          description: List of assessors matching the search criteria
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AssessorSearchResult'
-        400:
-          description: Invalid postcode
-        502:
-          description: Geolocation provider not available
+                oneOf:
+                  - $ref: '#/components/schemas/AssessorSearchResults'
+                  - $ref: '#/components/schemas/AssessorSearchByPostcodeResults'
+        '400':
+          description: Invalid query
+        '403':
+          description: Forbidden
 
   /assessments/domestic-energy-performance/{assessmentId}:
     get:
@@ -609,3 +622,59 @@ components:
     MigrateDomesticEnergyAssessment:
       allOf:
         - $ref: '#/components/schemas/EnergyAssessmentBasicInfo'
+
+    AssessorFullName:
+      type: string
+      example: Jo Bloggs
+
+    AssessorQualificationSearchOptions:
+      type: string
+      enum:
+        - domesticRdSap
+        - domesticSap
+        - nonDomesticDec
+        - nonDomesticNos3
+        - nonDomesticNos4
+        - nonDomesticNos5
+        - nonDomesticSp3
+        - nonDomesticCc4
+
+    AssessorSearchResults:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            assessors:
+              type: array
+              items:
+                allOf:
+                  - $ref: '#/components/schemas/AssessorDetail'
+
+    AssessorSearchByPostcodeResults:
+      allOf:
+        - $ref: '#/components/schemas/AssessorSearchResults'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                assessors:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      distanceFromPostcodeInMiles:
+                        type: number
+                        example: 0.2
+
+    AssessorDetail:
+      allOf:
+        - $ref: '#/components/schemas/Assessor'
+        - type: object
+          properties:
+            assessorSchemeId:
+              $ref: '#/components/schemas/AssessorSchemeId'
+            registeredBy:
+              $ref: '#/components/schemas/Scheme'
+
