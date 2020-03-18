@@ -53,10 +53,11 @@
         </Home-Inspector>
         <Property>
             <Address>
-                <Post-Town>Post-Town2</Post-Town>
-                <Postcode>A0 0AA</Postcode>
+                <Address-Line-1>2 Some Street</CEPC:Address-Line-1>
+                <Post-Town>Post-Town2</CEPC:Post-Town>
+                <Postcode>A0 0AA</CEPC:Postcode>
             </Address>
-            <UPRN>0000000000</UPRN>
+            <UPRN>UPRN-000000000000</UPRN>
         </Property>
         <Related-Party-Disclosure>
             <Related-Party-Disclosure-Text>Related-Party-Disclosure-Text0</Related-Party-Disclosure-Text>
