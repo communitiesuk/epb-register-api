@@ -11,11 +11,12 @@ module Gateway
       :search_results_comparison_postcode
     DOMESTIC_RD_SAP_COLUMN = :domestic_rd_sap_qualification
     NON_DOMESTIC_SP3_COLUMN = :non_domestic_sp3_qualification
+    REGISTERED_BY_COLUMN = :registered_by
 
     def row_to_assessor_domain(row)
       scheme_name = row['scheme_name']
       unless scheme_name
-        scheme = Scheme.find_by(scheme_id: row['registered_by'])
+        scheme = Scheme.find_by(scheme_id: row[REGISTERED_BY_COLUMN.to_s])
         scheme_name = scheme[:name]
       end
       Domain::Assessor.new(
@@ -26,7 +27,7 @@ module Gateway
         row[DATE_OF_BIRTH_COLUMN.to_s],
         row[EMAIL_COLUMN.to_s],
         row[TELEPHONE_NUMBER_COLUMN.to_s],
-        row['registered_by'],
+        row[REGISTERED_BY_COLUMN.to_s],
         scheme_name,
         row[SEARCH_RESULTS_COMPARISON_POSTCODE_COLUMN.to_s],
         row[DOMESTIC_RD_SAP_COLUMN.to_s],
