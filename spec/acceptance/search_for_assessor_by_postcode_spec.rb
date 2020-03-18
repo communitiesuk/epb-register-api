@@ -409,6 +409,11 @@ describe 'Acceptance::SearchForAssessor' do
         expect(
           response_json['results'].first['assessor']['schemeAssessorId']
         ).to eq('AIR_CON_ASSESSOR')
+        expect(
+          response_json['results'].first['assessor']['qualifications'][
+            'nonDomesticSp3'
+          ]
+        ).to eq('ACTIVE')
       end
     end
   end

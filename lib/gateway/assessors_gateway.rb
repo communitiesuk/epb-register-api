@@ -71,6 +71,7 @@ module Gateway
           first_name, last_name, middle_names, date_of_birth, registered_by,
           scheme_assessor_id, telephone_number, email, c.name AS scheme_name,
           search_results_comparison_postcode, domestic_rd_sap_qualification,
+          non_domestic_sp3_qualification,
           (
             sqrt(abs(POWER(69.1 * (a.latitude - #{
             latitude.to_f
