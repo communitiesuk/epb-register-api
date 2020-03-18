@@ -1,7 +1,9 @@
 module Gateway
   class AssessorsGateway
-    class TooManyResults < Exception; end
+    DOMESTIC_RD_SAP_COLUMN = :domestic_rd_sap_qualification
+    NON_DOMESTIC_SP3_COLUMN = :non_domestic_sp3_qualification
 
+    class TooManyResults < Exception; end
     class Assessor < ActiveRecord::Base
       def to_domain
         scheme = Scheme.find_by(scheme_id: self[:registered_by])
@@ -16,8 +18,8 @@ module Gateway
           scheme[:scheme_id],
           scheme[:name],
           self[:search_results_comparison_postcode],
-          self[:domestic_rd_sap_qualification],
-          self[:non_domestic_sp3_qualification]
+          self[DOMESTIC_RD_SAP_COLUMN],
+          self[NON_DOMESTIC_SP3_COLUMN]
         )
       end
     end
@@ -45,12 +47,10 @@ module Gateway
     end
 
     def search(latitude, longitude, qualification_type, entries = 10)
-
-
       if qualification_type == 'domesticRdSap'
-        qualification = 'domestic_rd_sap_qualification'
+        qualification = DOMESTIC_RD_SAP_COLUMN
       elsif qualification_type == 'nonDomesticSp3'
-        qualification = "non_domestic_sp3_qualification"
+        qualification = NON_DOMESTIC_SP3_COLUMN
       end
 
       response =
@@ -103,8 +103,8 @@ module Gateway
             row['registered_by'],
             row['scheme_name'],
             row['search_results_comparison_postcode'],
-            row['domestic_rd_sap_qualification'],
-            row['non_domestic_sp3_qualification']
+            row[DOMESTIC_RD_SAP_COLUMN.to_s],
+            row[NON_DOMESTIC_SP3_COLUMN.to_s]
           )
 
         distance_result = row['distance']
@@ -174,8 +174,8 @@ module Gateway
             row['registered_by'],
             row['scheme_name'],
             row['search_results_comparison_postcode'],
-            row['domestic_rd_sap_qualification'],
-            row['non_domestic_sp3_qualification']
+            row[DOMESTIC_RD_SAP_COLUMN.to_s],
+            row[NON_DOMESTIC_SP3_COLUMN.to_s]
           )
 
         result.push(assessor.to_hash)

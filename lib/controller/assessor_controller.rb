@@ -57,7 +57,8 @@ module Controller
 
       result =
         @container.get_object(:find_assessors_by_postcode_use_case).execute(
-          postcode, qualification
+          postcode,
+          qualification
         )
       json_response(200, result)
     end
