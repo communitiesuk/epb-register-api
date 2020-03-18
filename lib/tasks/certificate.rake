@@ -19,10 +19,17 @@ task :generate_certificate do
   address_line4 = Array.new(100, '')
   address_line4.push('Westminster')
   town = ['Brighton', 'Bournemouth', 'London', 'Cardiff', 'Newcastle', 'Manchester', 'Bristol']
+  current_space_heating_demand  = [1233, 3445, 4546, 6748, 8910, 7483, 8963]
+  current_water_heating_demand = [7983, 2321, 454, 648, 8932, 6483, 72363]
+  impact_of_loft_insulation = [ -21, -543, -764, -836, -13, -94, -35]
+  impact_of_cavity_insulation = [ -21, -764, -836, -13, -94, -35]
+  impact_of_solid_wall_insulation = [ -4, -53, -64, -99, -23, -73, -5]
+  scheme_assessor_id = 0
 
   200.times do |number|
     line_1 = address_line1.sample
     line_2 = address_line2.sample
+    scheme_assessor_id = scheme_assessor_id + 1
     if line_1.empty?
       line_1 = line_2
       line_2 = ''
@@ -36,6 +43,12 @@ task :generate_certificate do
     date_of_expiry =  (Date.parse(date_of_assessment) + 10.year).strftime('%Y-%m-%d')
     internal_town = town.sample
     current_energy_efficiency_rating = rand(1..99)
+    internal_current_space_heating_demand = current_space_heating_demand.sample
+    internal_current_water_heating_demand = current_water_heating_demand.sample
+    internal_impact_of_loft_insulation = impact_of_loft_insulation.sample
+    internal_impact_of_cavity_insulation = impact_of_cavity_insulation.sample
+    internal_impact_of_solid_wall_insulation = impact_of_solid_wall_insulation.sample
+
 
     query =
       "INSERT INTO
@@ -56,7 +69,13 @@ task :generate_certificate do
             address_line2,
             address_line3,
             address_line4,
-            town
+            town,
+            current_space_heating_demand,
+            current_water_heating_demand,
+            impact_of_loft_insulation,
+            impact_of_cavity_insulation,
+            impact_of_solid_wall_insulation,
+            scheme_assessor_id
           )
         VALUES(
           '1234-5678-7890-8909-#{number.to_s.rjust(4, '0')}',
@@ -65,7 +84,7 @@ task :generate_certificate do
           '#{dwelling_type.sample}',
           '#{type_of_assessment.sample}',
           '#{rand(20..200)}',
-          '#{ActiveRecord::Base.sanitize_sql((line_1 + ', ' + line_2 + ', ' + internal_town + ', ' + internal_postcode).replace(', , ', ', '))}',
+          '#{ActiveRecord::Base.sanitize_sql((line_1 + ', ' + line_2 + ', ' + internal_town + ', ' + internal_postcode).gsub(', , ', ', '))}',
           '#{current_energy_efficiency_rating}',
           '#{[current_energy_efficiency_rating + rand(1..20), 99].min}',
           '#{internal_postcode}',
@@ -74,7 +93,13 @@ task :generate_certificate do
           '#{ActiveRecord::Base.sanitize_sql(line_2)}',
           '#{line_3}',
           '#{line_4}',
-          '#{internal_town}'
+          '#{internal_town}',
+          '#{internal_current_space_heating_demand}',
+          '#{internal_current_water_heating_demand}',
+          '#{internal_impact_of_loft_insulation}',
+          '#{internal_impact_of_cavity_insulation}',
+          '#{internal_impact_of_solid_wall_insulation}',
+          '#{scheme_assessor_id}'
         )"
 
     ActiveRecord::Base.connection.execute(query)
