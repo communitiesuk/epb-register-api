@@ -1,7 +1,5 @@
 module Gateway
   class DomesticEnergyAssessmentsGateway
-    class InvalidCurrentEnergyRatingException < Exception; end
-    class InvalidPotentialEnergyRatingException < Exception; end
     class DomesticEnergyAssessment < ActiveRecord::Base
       def to_hash
         Gateway::DomesticEnergyAssessmentsGateway.new.to_hash(self)
@@ -62,11 +60,11 @@ module Gateway
         domestic_energy_assessment.potential_energy_efficiency_rating
 
       if !(current_rating.is_a?(Integer) && current_rating.between?(1, 100))
-        raise InvalidCurrentEnergyRatingException
+        raise ArgumentError.new('Invalid current energy rating')
       elsif !(
             potential_rating.is_a?(Integer) && potential_rating.between?(1, 100)
           )
-        raise InvalidPotentialEnergyRatingException
+        raise ArgumentError.new('Invalid potential energy rating')
       else
         send_to_db(domestic_energy_assessment)
       end

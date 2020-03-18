@@ -130,17 +130,11 @@ module Controller
       case e
       when JSON::Schema::ValidationError
         error_response(422, 'INVALID_REQUEST', e.message)
-      when Gateway::DomesticEnergyAssessmentsGateway::InvalidCurrentEnergyRatingException
+      when ArgumentError
         error_response(
           422,
           'INVALID_REQUEST',
-          'Current energy efficiency rating is not an integer between 1 and 100'
-        )
-      when Gateway::DomesticEnergyAssessmentsGateway::InvalidPotentialEnergyRatingException
-        error_response(
-          422,
-          'INVALID_REQUEST',
-          'Potential energy efficiency rating is not an integer between 1 and 100'
+          e.message
         )
       else
         server_error(e)
