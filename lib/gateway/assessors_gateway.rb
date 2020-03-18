@@ -12,8 +12,6 @@ module Gateway
     DOMESTIC_RD_SAP_COLUMN = :domestic_rd_sap_qualification
     NON_DOMESTIC_SP3_COLUMN = :non_domestic_sp3_qualification
 
-    class TooManyResults < Exception; end
-
     def row_to_assessor_domain(row)
           Domain::Assessor.new(
               row[SCHEME_ASSESSOR_ID_COLUMN.to_s],
