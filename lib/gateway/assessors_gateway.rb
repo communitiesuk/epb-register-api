@@ -13,6 +13,24 @@ module Gateway
     NON_DOMESTIC_SP3_COLUMN = :non_domestic_sp3_qualification
 
     class TooManyResults < Exception; end
+
+    def row_to_assessor_domain(row)
+          Domain::Assessor.new(
+              row[SCHEME_ASSESSOR_ID_COLUMN.to_s],
+              row[FIRST_NAME_COLUMN.to_s],
+              row[LAST_NAME_COLUMN.to_s],
+              row[MIDDLE_NAMES_COLUMN.to_s],
+              row[DATE_OF_BIRTH_COLUMN.to_s],
+              row[EMAIL_COLUMN.to_s],
+              row[TELEPHONE_NUMBER_COLUMN.to_s],
+              row['registered_by'],
+              row['scheme_name'],
+              row[SEARCH_RESULTS_COMPARISON_POSTCODE_COLUMN.to_s],
+              row[DOMESTIC_RD_SAP_COLUMN.to_s],
+              row[NON_DOMESTIC_SP3_COLUMN.to_s]
+          )
+    end
+
     class Assessor < ActiveRecord::Base
       def to_domain
         scheme = Scheme.find_by(scheme_id: self[:registered_by])
@@ -101,23 +119,8 @@ module Gateway
       result = []
       response.each do |row|
         assessor =
-          Domain::Assessor.new(
-            row[SCHEME_ASSESSOR_ID_COLUMN.to_s],
-            row[FIRST_NAME_COLUMN.to_s],
-            row[LAST_NAME_COLUMN.to_s],
-            row[MIDDLE_NAMES_COLUMN.to_s],
-            row[DATE_OF_BIRTH_COLUMN.to_s],
-            row[EMAIL_COLUMN.to_s],
-            row[TELEPHONE_NUMBER_COLUMN.to_s],
-            row['registered_by'],
-            row['scheme_name'],
-            row[SEARCH_RESULTS_COMPARISON_POSTCODE_COLUMN.to_s],
-            row[DOMESTIC_RD_SAP_COLUMN.to_s],
-            row[NON_DOMESTIC_SP3_COLUMN.to_s]
-          )
-
         distance_result = row['distance']
-        full_hash = { assessor: assessor.to_hash, distance: distance_result }
+        full_hash = { assessor: row_to_assessor_domain(row).to_hash, distance: distance_result }
 
         result.push(full_hash)
       end
@@ -171,23 +174,7 @@ module Gateway
 
       result = []
       response.each do |row|
-        assessor =
-          Domain::Assessor.new(
-            row[SCHEME_ASSESSOR_ID_COLUMN.to_s],
-            row[FIRST_NAME_COLUMN.to_s],
-            row[LAST_NAME_COLUMN.to_s],
-            row[MIDDLE_NAMES_COLUMN.to_s],
-            row[DATE_OF_BIRTH_COLUMN.to_s],
-            row[EMAIL_COLUMN.to_s],
-            row[TELEPHONE_NUMBER_COLUMN.to_s],
-            row['registered_by'],
-            row['scheme_name'],
-            row[SEARCH_RESULTS_COMPARISON_POSTCODE_COLUMN.to_s],
-            row[DOMESTIC_RD_SAP_COLUMN.to_s],
-            row[NON_DOMESTIC_SP3_COLUMN.to_s]
-          )
-
-        result.push(assessor.to_hash)
+        result.push(row_to_assessor_domain(row).to_hash)
       end
       result
     end
