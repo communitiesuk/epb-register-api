@@ -23,6 +23,10 @@ task :generate_assessor do
   result.each_with_index do |row, index|
     first_name = first_names[rand(first_names.size)]
     last_name = last_names[rand(last_names.size)]
+
+    rd_sap = rand(2)
+    sp3 = rand(2)
+
     query =
       "INSERT INTO
         assessors
@@ -30,7 +34,8 @@ task :generate_assessor do
             first_name, last_name, date_of_birth, registered_by,
             scheme_assessor_id, telephone_number, email,
             search_results_comparison_postcode,
-            domestic_rd_sap_qualification
+            domestic_rd_sap_qualification,
+            non_domestic_sp3_qualification
           )
         VALUES(
           '#{first_name}',
@@ -41,7 +46,8 @@ task :generate_assessor do
           '0#{rand(1000000..9999999)}',
           '#{first_name.downcase + '.' + last_name.downcase}@epb-assessors.com',
           '#{row['postcode']}',
-          'ACTIVE'
+          '#{rd_sap != 0 ? 'ACTIVE' : 'INACTIVE'}',
+          '#{sp3 != 0 ? 'ACTIVE' : 'INACTIVE'}'
         )"
 
     ActiveRecord::Base.connection.execute(query)
