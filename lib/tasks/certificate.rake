@@ -1,5 +1,13 @@
 desc 'Import some random certificate data'
 
+task :truncate_certificate do
+  if ENV['STAGE'] == 'production'
+    exit
+  end
+
+  ActiveRecord::Base.connection.execute('TRUNCATE TABLE domestic_energy_assessments RESTART IDENTITY')
+end
+
 task :generate_certificate do
   if ENV['STAGE'] == 'production'
     exit

@@ -1,11 +1,17 @@
 desc 'Import some random assessors data'
 
-task :generate_assessor do
+task :truncate_assessor do
   if ENV['STAGE'] == 'production'
     exit
   end
 
   ActiveRecord::Base.connection.execute('TRUNCATE TABLE assessors RESTART IDENTITY CASCADE')
+end
+
+task :generate_assessor do
+  if ENV['STAGE'] == 'production'
+    exit
+  end
 
   result = ActiveRecord::Base.connection.execute('SELECT * FROM postcode_geolocation ORDER BY random() LIMIT 1000')
 
