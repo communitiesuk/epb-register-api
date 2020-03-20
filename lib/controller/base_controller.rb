@@ -1,7 +1,7 @@
 require_relative '../helper/toggles'
 require_relative '../container'
 require 'sinatra/cross_origin'
-require 'epb_auth_tools'
+require 'epb-auth-tools'
 
 module Controller
   class BaseController < Sinatra::Base

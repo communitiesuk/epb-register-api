@@ -9,7 +9,7 @@ require 'sinatra/activerecord'
 require 'rack/test'
 require 'database_cleaner'
 require 'zeitwerk'
-require 'epb_auth_tools'
+require 'epb-auth-tools'
 
 loader = Zeitwerk::Loader.new
 loader.push_dir("#{__dir__}/../lib/")

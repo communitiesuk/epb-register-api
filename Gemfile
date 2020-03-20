@@ -16,8 +16,7 @@ source 'https://rubygems.org' do
     gem 'simplecov', '~> 0.17.1'
   end
 
-  gem 'epb_auth_tools',
-      git: 'https://github.com/communitiesuk/epb-auth-tools', branch: 'master'
+  gem 'epb-auth-tools', '~> 1.0', '>= 1.0.2'
   gem 'json-schema', '~> 2.8'
   gem 'ougai', '~> 1.8'
   gem 'pg'
