@@ -2,7 +2,7 @@
 
 This page is to provide information to anyone contributing to this repo. It will outline all the various aspects to consider when adding something to the API.
 
-## When adding an item to the domestic energy assessment
+## When adding an item to an object on the api
 
 * Migrations will need to be added.
 * Don't forget to run the migrations followed by all of the tests
@@ -13,4 +13,4 @@ This page is to provide information to anyone contributing to this repo. It will
 * Update the documentation in config/apidoc.yml to include the changes
 * Check the aspirational documentation in api/api.yml is correct incase any updates or changes have made
 * All of this should be done through TTD, with tests being checked and updated along the way
-* In lib/tasks make sure to update all relevant rake tasks. Once they run locally, log into cloud flare on the command line and run the tasks there. Make sure to give them a moment for the changes to go through and then check the db tables. 
+* In lib/tasks make sure to update all relevant rake tasks. Once they run locally, log into cloud flare on the command line and run the tasks there. Make sure to give them a moment for the changes to go through and then check the db tables.
