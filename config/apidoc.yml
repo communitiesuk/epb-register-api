@@ -272,7 +272,7 @@ paths:
         '403':
           description: Forbidden
 
-  /assessments/domestic-energy-performance/{assessmentId}:
+  /assessments/domestic-epc/{assessmentId}:
     get:
       tags:
         - Assessments
@@ -677,4 +677,3 @@ components:
               $ref: '#/components/schemas/AssessorSchemeId'
             registeredBy:
               $ref: '#/components/schemas/Scheme'
-

@@ -60,12 +60,12 @@ describe 'Acceptance::DomesticEnergyAssessment' do
   end
 
   def fetch_assessment(assessment_id)
-    get "api/assessments/domestic-energy-performance/#{assessment_id}"
+    get "api/assessments/domestic-epc/#{assessment_id}"
   end
 
   def migrate_assessment(assessment_id, assessment_body)
     put(
-      "api/assessments/domestic-energy-performance/#{assessment_id}",
+      "api/assessments/domestic-epc/#{assessment_id}",
       assessment_body.to_json
     )
   end
