@@ -38,40 +38,6 @@ module Controller
       }
     }
 
-    # The methods containg domestic-energy-performance in the api url are being deprocated
-
-    get '/api/assessments/domestic-energy-performance/search', jwt_auth: [] do
-      if params.has_key?(:postcode)
-        result =
-          @container.get_object(:find_assessments_by_postcode_use_case).execute(
-            params[:postcode]
-          )
-      elsif params.has_key?(:assessment_id)
-        result =
-          @container.get_object(:find_assessments_by_assessment_id_use_case)
-            .execute(params[:assessment_id])
-      else
-        result =
-          @container.get_object(
-            :find_assessments_by_street_name_and_town_use_case
-          )
-            .execute(params[:street_name], params[:town])
-      end
-
-      json_response(200, result)
-    rescue Exception => e
-      case e
-      when UseCase::FindAssessmentsByStreetNameAndTown::ParameterMissing
-        error_response(
-          400,
-          'MALFORMED_REQUEST',
-          'Required query params missing'
-        )
-      else
-        server_error(e.message)
-      end
-    end
-
     get '/api/assessments/domestic-epc/search', jwt_auth: [] do
       if params.has_key?(:postcode)
         result =
@@ -104,8 +70,7 @@ module Controller
       end
     end
 
-    get '/api/assessments/domestic-energy-performance/:assessment_id',
-        jwt_auth: [] do
+    get '/api/assessments/domestic-epc/:assessment_id', jwt_auth: [] do
       assessment_id = params[:assessment_id]
       result =
         @container.get_object(:fetch_domestic_energy_assessment_use_case)
@@ -120,75 +85,7 @@ module Controller
       end
     end
 
-    get '/api/assessments/domestic-epc/:assessment_id',
-        jwt_auth: [] do
-      assessment_id = params[:assessment_id]
-      result =
-        @container.get_object(:fetch_domestic_energy_assessment_use_case)
-          .execute(assessment_id)
-      json_response(200, result)
-    rescue Exception => e
-      case e
-      when UseCase::FetchDomesticEnergyAssessment::NotFoundException
-        not_found_error('Assessment not found')
-      else
-        server_error(e)
-      end
-    end
-
-    put '/api/assessments/domestic-energy-performance/:assessment_id',
-        jwt_auth: [] do
-      assessment_id = params[:assessment_id]
-      migrate_epc =
-        @container.get_object(:migrate_domestic_energy_assessment_use_case)
-      assessment_body = request_body(PUT_SCHEMA)
-
-      new_assessment =
-        Domain::DomesticEnergyAssessment.new(
-          assessment_body[:date_of_assessment],
-          assessment_body[:date_registered],
-          assessment_body[:dwelling_type],
-          assessment_body[:type_of_assessment],
-          assessment_body[:total_floor_area],
-          assessment_id,
-          assessment_body[:scheme_assessor_id],
-          assessment_body[:address_summary],
-          assessment_body[:current_energy_efficiency_rating],
-          assessment_body[:potential_energy_efficiency_rating],
-          assessment_body[:postcode],
-          assessment_body[:date_of_expiry],
-          assessment_body[:address_line1],
-          assessment_body[:address_line2],
-          assessment_body[:address_line3],
-          assessment_body[:address_line4],
-          assessment_body[:town],
-          assessment_body[:heat_demand][:current_space_heating_demand],
-          assessment_body[:heat_demand][:current_water_heating_demand],
-          assessment_body[:heat_demand][:impact_of_loft_insulation],
-          assessment_body[:heat_demand][:impact_of_cavity_insulation],
-          assessment_body[:heat_demand][:impact_of_solid_wall_insulation]
-        )
-
-      result = migrate_epc.execute(new_assessment)
-
-      @events.event(
-        :domestic_energy_assessment_migrated,
-        params[:assessment_id]
-      )
-      json_response(200, result.to_hash)
-    rescue Exception => e
-      case e
-      when JSON::Schema::ValidationError
-        error_response(422, 'INVALID_REQUEST', e.message)
-      when ArgumentError
-        error_response(422, 'INVALID_REQUEST', e.message)
-      else
-        server_error(e)
-      end
-    end
-
-    put '/api/assessments/domestic-epc/:assessment_id',
-        jwt_auth: [] do
+    put '/api/assessments/domestic-epc/:assessment_id', jwt_auth: [] do
       assessment_id = params[:assessment_id]
       migrate_epc =
         @container.get_object(:migrate_domestic_energy_assessment_use_case)

@@ -52,26 +52,19 @@ describe 'Searching for assessments' do
   end
 
   def assessments_search_by_postcode(postcode)
-    get "/api/assessments/domestic-epc/search?postcode=#{
-          postcode
-        }"
+    get "/api/assessments/domestic-epc/search?postcode=#{postcode}"
   end
   def assessments_search_by_assessment_id(assessment_id)
-    get "/api/assessments/domestic-epc/search?assessment_id=#{
-          assessment_id
-        }"
+    get "/api/assessments/domestic-epc/search?assessment_id=#{assessment_id}"
   end
   def assessments_search_by_street_name_and_town(street_name, town)
-    get "/api/assessments/domestic-epc/search?street_name=#{
-          street_name
-        }&town=#{town}"
+    get "/api/assessments/domestic-epc/search?street_name=#{street_name}&town=#{
+          town
+        }"
   end
 
   def add_assessment(assessment_id, body)
-    put(
-      "/api/assessments/domestic-epc/#{assessment_id}",
-      body.to_json
-    )
+    put("/api/assessments/domestic-epc/#{assessment_id}", body.to_json)
   end
 
   context 'when a search postcode is valid' do
