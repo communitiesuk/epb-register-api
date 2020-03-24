@@ -24,7 +24,7 @@ module Controller
 
     configure do
       enable :cross_origin
-      set :protection, except: %i[remote_token]
+      set :protection, except: %i[remote_token path_traversal]
     end
 
     before do

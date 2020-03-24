@@ -430,6 +430,38 @@ describe 'Acceptance::Assessor' do
         expect(second_response.status).to eq(409)
       end
     end
+
+    context 'which has an escaped assessor scheme id' do
+      let(:escaped_assessor_scheme_id) { 'TEST%2F000000' }
+
+      it 'adds an assessor' do
+        scheme_id = authenticate_and { add_scheme }
+
+        add_assessor_response = authenticate_and do
+          add_assessor scheme_id,
+                       escaped_assessor_scheme_id,
+                       valid_assessor_with_contact_request_body
+        end
+
+        expect(add_assessor_response.status).to eq 201
+      end
+
+      it 'fetches an assessor' do
+        scheme_id = authenticate_and { add_scheme }
+
+        authenticate_and do
+          add_assessor scheme_id,
+                       escaped_assessor_scheme_id,
+                       valid_assessor_with_contact_request_body
+        end
+
+        fetch_assessor_response = authenticate_and do
+          fetch_assessor(scheme_id, escaped_assessor_scheme_id)
+        end
+
+        expect(fetch_assessor_response.status).to eq 200
+      end
+    end
   end
 
   context 'when updating an assessor' do
