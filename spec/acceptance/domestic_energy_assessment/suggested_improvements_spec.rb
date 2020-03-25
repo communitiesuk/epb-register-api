@@ -53,7 +53,8 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
 
   context 'when migrating an assessment with badly structured improvements' do
     it 'rejects an assessment where the improvements key is missing' do
-      assessment_without_improvements_key = assessment_without(:recommendedImprovements)
+      assessment_without_improvements_key =
+        assessment_without(:recommendedImprovements)
       scheme_id = authenticate_and { add_scheme }
       add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
 
@@ -65,6 +66,16 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
     it 'rejects an assessment where the improvements is not a list' do
       bad_assessment = valid_assessment_body.dup
       bad_assessment[:recommendedImprovements] = 'Get a new boiler'
+      scheme_id = authenticate_and { add_scheme }
+      add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
+
+      response = migrate_assessment('456-982', bad_assessment)
+      expect(response.status).to eq(422)
+    end
+
+    it 'rejects an assessment where each improvement is not an object' do
+      bad_assessment = valid_assessment_body.dup
+      bad_assessment[:recommendedImprovements] = [1, 3, 5]
       scheme_id = authenticate_and { add_scheme }
       add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
 

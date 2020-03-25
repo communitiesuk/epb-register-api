@@ -36,7 +36,7 @@ module Controller
             impactOfSolidWallInsulation: { type: 'integer' }
           }
         },
-        recommendedImprovements: { type: 'array' }
+        recommendedImprovements: { type: 'array', items: { type: 'object' } }
       }
     }
 
