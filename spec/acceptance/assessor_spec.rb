@@ -46,7 +46,13 @@ describe 'Acceptance::Assessor' do
     end
   end
 
-  def assessor_without_key(missing, request_body)
+  def add_scheme_then_assessor(body)
+    scheme_id = add_scheme
+    add_assessor(scheme_id, 'TEST_ASSESSOR', body)
+  end
+
+  def assessor_without_key(missing, request_body = nil)
+    request_body = valid_assessor_request_body unless request_body
     assessor = request_body.dup
     assessor.delete(missing)
     assessor
@@ -150,7 +156,7 @@ describe 'Acceptance::Assessor' do
         add_assessor(
           scheme_id,
           'SCHEME4233',
-          assessor_without_key(:qualifications, valid_assessor_request_body)
+          assessor_without_key(:qualifications)
         )
         response = JSON.parse(fetch_assessor(scheme_id, 'SCHEME4233').body)
         expect(response['qualifications']['domesticRdSap']).to eq('INACTIVE')
@@ -215,7 +221,7 @@ describe 'Acceptance::Assessor' do
           add_assessor(
             scheme_id,
             'SCHE55443',
-            assessor_without_key(:middleNames, valid_assessor_request_body)
+            assessor_without_key(:middleNames)
           )
 
         expect(assessor_response.status).to eq(201)
@@ -228,7 +234,7 @@ describe 'Acceptance::Assessor' do
             add_assessor(
               scheme_id,
               'SCHE55443',
-              assessor_without_key(:middleNames, valid_assessor_request_body)
+              assessor_without_key(:middleNames)
             )
               .body
           )
@@ -282,7 +288,7 @@ describe 'Acceptance::Assessor' do
           add_assessor(
             scheme_id,
             'thebrokenassessor',
-            assessor_without_key(:firstName, valid_assessor_request_body)
+            assessor_without_key(:firstName)
           )
 
         expect(assessor_response.status).to eq(422)
@@ -294,7 +300,7 @@ describe 'Acceptance::Assessor' do
           add_assessor(
             scheme_id,
             'thebrokenassessor',
-            assessor_without_key(:lastName, valid_assessor_request_body)
+            assessor_without_key(:lastName)
           )
 
         expect(assessor_response.status).to eq(422)
@@ -306,7 +312,7 @@ describe 'Acceptance::Assessor' do
           add_assessor(
             scheme_id,
             'thebrokenassessor',
-            assessor_without_key(:dateOfBirth, valid_assessor_request_body)
+            assessor_without_key(:dateOfBirth)
           )
 
         expect(assessor_response.status).to eq(422)
