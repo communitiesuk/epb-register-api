@@ -53,8 +53,7 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
 
   context 'when migrating an assessment with badly structured improvements' do
     it 'rejects an assessment where the improvements key is missing' do
-      assessment_without_improvements_key = valid_assessment_body.dup
-      assessment_without_improvements_key.delete(:recommendedImprovements)
+      assessment_without_improvements_key = assessment_without(:recommendedImprovements)
       scheme_id = authenticate_and { add_scheme }
       add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
 
