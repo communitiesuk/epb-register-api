@@ -29,7 +29,9 @@ describe 'Acceptance::Assessor' do
   end
 
   def fetch_assessor(scheme_id, assessor_id)
-    get "/api/schemes/#{scheme_id}/assessors/#{assessor_id}"
+    authenticate_and do
+      get("/api/schemes/#{scheme_id}/assessors/#{assessor_id}")
+    end
   end
 
   def add_assessor(scheme_id, assessor_id, body)
@@ -52,22 +54,18 @@ describe 'Acceptance::Assessor' do
 
   context "when a scheme doesn't exist" do
     it 'returns status 404 for a get' do
-      expect(
-        authenticate_and { fetch_assessor(20, 'SCHEME4233') }.status
-      ).to eq(404)
+      expect(fetch_assessor(20, 'SCHEME4233').status).to eq(404)
     end
 
     it 'returns status 404 for a PUT' do
       expect(
-        authenticate_and {
-          add_assessor(20, 'SCHEME4532', valid_assessor_request_body)
-        }.status
+        add_assessor(20, 'SCHEME4532', valid_assessor_request_body).status
       ).to eq(404)
     end
 
     context 'and the client is unauthenticated' do
       it 'returns status 401 for a get' do
-        expect(fetch_assessor(20, 'SCHEME4233').status).to eq(401)
+        expect(get('/api/schemes/20/assessors/SCHEME4233').status).to eq(401)
       end
 
       it 'returns status 401 for a PUT' do
@@ -86,14 +84,14 @@ describe 'Acceptance::Assessor' do
     let!(:scheme_id) { add_scheme }
 
     it 'returns status 404' do
-      expect(
-        authenticate_and { fetch_assessor(scheme_id, 'SCHE2354246') }.status
-      ).to eq(404)
+      expect(fetch_assessor(scheme_id, 'SCHE2354246').status).to eq(404)
     end
 
     context 'and the client is unauthenticated' do
       it 'returns status 401' do
-        expect(fetch_assessor(scheme_id, 'SCHE2354246').status).to eq(401)
+        expect(
+          get("/api/schemes/#{scheme_id}/assessors/SCHE2354246").status
+        ).to eq(401)
       end
     end
   end
@@ -104,9 +102,7 @@ describe 'Acceptance::Assessor' do
       second_scheme_id = add_scheme('second scheme')
       add_assessor(second_scheme_id, 'SCHE987654', valid_assessor_request_body)
 
-      expect(
-        authenticate_and { fetch_assessor(scheme_id, 'SCHE987654') }.status
-      ).to eq(404)
+      expect(fetch_assessor(scheme_id, 'SCHE987654').status).to eq(404)
     end
   end
 
@@ -115,18 +111,14 @@ describe 'Acceptance::Assessor' do
       it 'returns status 200 for a get' do
         scheme_id = add_scheme
         add_assessor(scheme_id, 'SCHEME4233', valid_assessor_request_body)
-        expect(
-          authenticate_and { fetch_assessor(scheme_id, 'SCHEME4233') }.status
-        ).to eq(200)
+        expect(fetch_assessor(scheme_id, 'SCHEME4233').status).to eq(200)
       end
 
       it 'returns json' do
         scheme_id = add_scheme
         add_assessor(scheme_id, 'SCHEME4233', valid_assessor_request_body)
         expect(
-          authenticate_and { fetch_assessor(scheme_id, 'SCHEME4233') }.headers[
-            'Content-type'
-          ]
+          fetch_assessor(scheme_id, 'SCHEME4233').headers['Content-type']
         ).to eq('application/json')
       end
 
@@ -149,10 +141,7 @@ describe 'Acceptance::Assessor' do
               }
             }.to_json
           )
-        response =
-          JSON.parse(
-            authenticate_and { fetch_assessor(scheme_id, 'SCHEME4233') }.body
-          )
+        response = JSON.parse(fetch_assessor(scheme_id, 'SCHEME4233').body)
         expect(response).to eq(expected_response)
       end
 
@@ -163,10 +152,7 @@ describe 'Acceptance::Assessor' do
           'SCHEME4233',
           assessor_without_key(:qualifications, valid_assessor_request_body)
         )
-        response =
-          JSON.parse(
-            authenticate_and { fetch_assessor(scheme_id, 'SCHEME4233') }.body
-          )
+        response = JSON.parse(fetch_assessor(scheme_id, 'SCHEME4233').body)
         expect(response['qualifications']['domesticRdSap']).to eq('INACTIVE')
       end
     end
@@ -293,13 +279,11 @@ describe 'Acceptance::Assessor' do
       it 'rejects requests without firstname' do
         scheme_id = add_scheme
         assessor_response =
-          authenticate_and do
-            put(
-              "/api/schemes/#{scheme_id}/assessors/thebrokenassessor",
-              assessor_without_key(:firstName, valid_assessor_request_body)
-                .to_json
-            )
-          end
+          add_assessor(
+            scheme_id,
+            'thebrokenassessor',
+            assessor_without_key(:firstName, valid_assessor_request_body)
+          )
 
         expect(assessor_response.status).to eq(422)
       end
@@ -570,8 +554,7 @@ describe 'Acceptance::Assessor' do
 
         add_assessor(scheme_id, 'ASSESSOR99', request_body).body
 
-        response_body =
-          authenticate_and { fetch_assessor(scheme_id, 'ASSESSOR99') }.body
+        response_body = fetch_assessor(scheme_id, 'ASSESSOR99').body
         json_response = JSON.parse(response_body)
 
         expect(json_response['contactDetails']['email']).to eq('mar@ten.com')
@@ -604,8 +587,7 @@ describe 'Acceptance::Assessor' do
 
         add_assessor(scheme_id, 'ASSESSOR99', request_body)
 
-        response_body =
-          authenticate_and { fetch_assessor(scheme_id, 'ASSESSOR99') }.body
+        response_body = fetch_assessor(scheme_id, 'ASSESSOR99').body
 
         json_response = JSON.parse(response_body)
 
