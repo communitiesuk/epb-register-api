@@ -13,6 +13,7 @@ module Controller
         potentialEnergyEfficiencyRating
         schemeAssessorId
         heatDemand
+        recommendedImprovements
       ],
       properties: {
         addressSummary: { type: 'string' },

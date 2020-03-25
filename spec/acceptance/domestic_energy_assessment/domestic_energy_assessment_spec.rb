@@ -41,7 +41,8 @@ describe 'Acceptance::DomesticEnergyAssessment' do
         impactOfLoftInsulation: 79,
         impactOfCavityInsulation: 67,
         impactOfSolidWallInsulation: 69
-      }
+      },
+      recommendedImprovements: []
     }.freeze
   end
 
