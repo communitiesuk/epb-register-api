@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_17_111928) do
+ActiveRecord::Schema.define(version: 2020_03_25_141433) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,11 @@ ActiveRecord::Schema.define(version: 2020_03_17_111928) do
     t.integer "impact_of_solid_wall_insulation"
   end
 
+  create_table "domestic_epc_energy_improvements", id: false, force: :cascade do |t|
+    t.string "assessment_id"
+    t.integer "sequence"
+  end
+
   create_table "postcode_geolocation", force: :cascade do |t|
     t.string "postcode"
     t.decimal "latitude"
@@ -73,4 +78,5 @@ ActiveRecord::Schema.define(version: 2020_03_17_111928) do
 
   add_foreign_key "assessors", "schemes", column: "registered_by", primary_key: "scheme_id"
   add_foreign_key "domestic_energy_assessments", "assessors", column: "scheme_assessor_id", primary_key: "scheme_assessor_id"
+  add_foreign_key "domestic_epc_energy_improvements", "domestic_energy_assessments", column: "assessment_id", primary_key: "assessment_id"
 end

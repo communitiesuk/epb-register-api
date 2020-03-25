@@ -103,7 +103,10 @@ module Controller
       assessment_body = request_body(PUT_SCHEMA)
       recommendedImprovements =
         assessment_body[:recommended_improvements].map do |improvement|
-          Domain::RecommendedImprovement.new(improvement[:sequence])
+          Domain::RecommendedImprovement.new(
+            assessment_id,
+            improvement[:sequence]
+          )
         end
 
       new_assessment =

@@ -6,6 +6,8 @@ module Gateway
       end
     end
 
+    class DomesticEpcEnergyImprovement < ActiveRecord::Base; end
+
     def valid_energy_rating(rating)
       rating.is_a?(Integer) && rating.between?(1, 100)
     end
@@ -51,10 +53,26 @@ module Gateway
       }
     end
 
+    def row_to_energy_improvement(row)
+      Domain::RecommendedImprovement.new(row[:assessment_id], row[:sequence])
+    end
+
     def fetch(assessment_id)
-      energy_assessment =
+      energy_assessment_record =
         DomesticEnergyAssessment.find_by({ assessment_id: assessment_id })
-      energy_assessment ? energy_assessment.to_hash : nil
+
+      improvement_records =
+        DomesticEpcEnergyImprovement.where(assessment_id: assessment_id)
+      improvements =
+        improvement_records.map { |i| row_to_energy_improvement(i).to_hash }
+
+      if energy_assessment_record
+        energy_assessment = energy_assessment_record.to_hash
+        energy_assessment[:recommended_improvements] = improvements
+        energy_assessment
+      else
+        nil
+      end
     end
 
     def insert_or_update(assessment)
@@ -150,6 +168,13 @@ module Gateway
 
     private
 
+    def replace_improvements(improvements)
+      improvements = improvements.map(&:to_record)
+      improvements.each do |improvement|
+        DomesticEpcEnergyImprovement.create(improvement)
+      end
+    end
+
     def send_to_db(domestic_energy_assessment)
       existing_assessment =
         DomesticEnergyAssessment.find_by(
@@ -161,6 +186,7 @@ module Gateway
       else
         DomesticEnergyAssessment.create(domestic_energy_assessment.to_record)
       end
+      replace_improvements(domestic_energy_assessment.recommended_improvements)
     end
 
     def get_energy_rating_band(number)
