@@ -385,26 +385,29 @@ describe 'Acceptance::Assessor' do
     context 'which is valid with all fields' do
       it 'returns 200 on the update' do
         scheme_id = add_scheme
-        add_assessor(scheme_id, 'ASSESSOR99', valid_assessor_request)
+        assessor = valid_assessor_request
+        add_assessor(scheme_id, 'ASSESSOR99', assessor)
+        assessor[:firstName] = "Janine"
         second_response =
-          add_assessor(scheme_id, 'ASSESSOR99', valid_assessor_request)
+          add_assessor(scheme_id, 'ASSESSOR99', assessor)
         expect(second_response.status).to eq(200)
       end
 
       it 'replaces a previous assessors details successfully' do
         scheme_id = add_scheme
-        add_assessor(scheme_id, 'ASSESSOR99', valid_assessor_request)
-        add_assessor(scheme_id, 'ASSESSOR99', valid_assessor_request)
-        assessor = fetch_assessor(scheme_id, 'ASSESSOR99')
+        assessor = valid_assessor_request
+        add_assessor(scheme_id, 'ASSESSOR99', assessor)
+
+        assessor[:firstName] = "Janine"
+        add_assessor(scheme_id, 'ASSESSOR99', assessor)
+
+        response = fetch_assessor(scheme_id, 'ASSESSOR99')
         expected_response =
           JSON.parse(
             {
               registeredBy: { schemeId: scheme_id, name: 'test scheme' },
               schemeAssessorId: 'ASSESSOR99',
-              firstName:
-                assessor_without_key(:middleNames, valid_assessor_request)[
-                  :firstName
-                ],
+              firstName: 'Janine',
               middleNames: valid_assessor_request[:middleNames],
               lastName:
                 assessor_without_key(:middleNames, valid_assessor_request)[
@@ -434,7 +437,7 @@ describe 'Acceptance::Assessor' do
               }
             }.to_json
           )
-        expect(JSON.parse(assessor.body)).to eq(expected_response)
+        expect(JSON.parse(response.body)).to eq(expected_response)
       end
     end
 
