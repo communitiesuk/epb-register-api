@@ -49,9 +49,7 @@ def authenticate_and(request = nil, scopes = [], supplementary = {}, &block)
 end
 
 def fetch_assessor(scheme_id, assessor_id)
-  authenticate_and do
-    get("/api/schemes/#{scheme_id}/assessors/#{assessor_id}")
-  end
+  authenticate_and { get("/api/schemes/#{scheme_id}/assessors/#{assessor_id}") }
 end
 
 def add_assessor(scheme_id, assessor_id, body)
@@ -72,7 +70,6 @@ def add_scheme_then_assessor(body)
   response
 end
 
-
 def fetch_assessment(assessment_id)
   authenticate_and { get "api/assessments/domestic-epc/#{assessment_id}" }
 end
@@ -80,8 +77,8 @@ end
 def migrate_assessment(assessment_id, assessment_body)
   authenticate_and do
     put(
-        "api/assessments/domestic-epc/#{assessment_id}",
-        assessment_body.to_json
+      "api/assessments/domestic-epc/#{assessment_id}",
+      assessment_body.to_json
     )
   end
 end

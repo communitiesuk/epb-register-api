@@ -35,7 +35,8 @@ module Controller
             impactOfCavityInsulation: { type: 'integer' },
             impactOfSolidWallInsulation: { type: 'integer' }
           }
-        }
+        },
+        recommendedImprovements: { type: 'array' }
       }
     }
 
