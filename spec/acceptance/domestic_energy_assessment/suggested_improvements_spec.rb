@@ -17,6 +17,10 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
     }
   end
 
+  let (:valid_recommendations) do
+    [{sequence: 0}]
+  end
+
   let(:valid_assessment_body) do
     {
       schemeAssessorId: 'TEST123456',
@@ -42,7 +46,7 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
         impactOfCavityInsulation: 67,
         impactOfSolidWallInsulation: 69
       },
-      recommendedImprovements: [{ sequence: 0 }]
+      recommendedImprovements: valid_recommendations
     }.freeze
   end
 
@@ -52,58 +56,43 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
     assessment
   end
 
+  def migrate_invalid_recommendations(recommendations)
+    assessment =  valid_assessment_body.dup
+
+    if recommendations
+      assessment[:recommendedImprovements] = recommendations
+    else
+      assessment.delete(:recommendedImprovements)
+    end
+
+    scheme_id = add_scheme
+    add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
+
+    response = migrate_assessment('123-456', assessment)
+    expect(response.status).to eq(422)
+  end
+
   context 'when migrating an assessment with badly structured improvements' do
     it 'rejects an assessment where the improvements key is missing' do
-      assessment_without_improvements_key =
-        assessment_without(:recommendedImprovements)
-      scheme_id = authenticate_and { add_scheme }
-      add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
-
-      response =
-        migrate_assessment('456-982', assessment_without_improvements_key)
-      expect(response.status).to eq(422)
+      migrate_invalid_recommendations(nil)
     end
 
     it 'rejects an assessment where the improvements is not a list' do
-      bad_assessment = valid_assessment_body.dup
-      bad_assessment[:recommendedImprovements] = 'Get a new boiler'
-      scheme_id = authenticate_and { add_scheme }
-      add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
-
-      response = migrate_assessment('456-982', bad_assessment)
-      expect(response.status).to eq(422)
+      migrate_invalid_recommendations('Get a new boiler')
     end
 
     it 'rejects an assessment where each improvement is not an object' do
-      bad_assessment = valid_assessment_body.dup
-      bad_assessment[:recommendedImprovements] = [1, 3, 5]
-      scheme_id = authenticate_and { add_scheme }
-      add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
-
-      response = migrate_assessment('456-982', bad_assessment)
-      expect(response.status).to eq(422)
+      migrate_invalid_recommendations([1,3,5])
     end
 
     it 'rejects improvements that dont contain a sequence' do
-      bad_assessment = valid_assessment_body.dup
-      bad_assessment[:recommendedImprovements][0].delete(:sequence)
-      scheme_id = authenticate_and { add_scheme }
-      add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
-
-      pp bad_assessment
-      response = migrate_assessment('456-982', bad_assessment)
-      expect(response.status).to eq(422)
+      recommendations = valid_recommendations
+      recommendations[0].delete(:sequence)
+      migrate_invalid_recommendations(recommendations)
     end
 
     it 'rejects sequences that are not integers' do
-      bad_assessment = valid_assessment_body.dup
-      bad_assessment[:recommendedImprovements][0][:sequence] = 'First'
-      scheme_id = authenticate_and { add_scheme }
-      add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
-
-      pp bad_assessment
-      response = migrate_assessment('456-982', bad_assessment)
-      expect(response.status).to eq(422)
+      migrate_invalid_recommendations([{sequence: 'first'}])
     end
   end
 end
