@@ -101,9 +101,9 @@ module Controller
       migrate_epc =
         @container.get_object(:migrate_domestic_energy_assessment_use_case)
       assessment_body = request_body(PUT_SCHEMA)
-      new_assessment =
+      request =
         Boundary::MigrateDomesticEpcRequest.new(assessment_id, assessment_body)
-      result = migrate_epc.execute(new_assessment)
+      result = migrate_epc.execute(request)
 
       @events.event(
         :domestic_energy_assessment_migrated,

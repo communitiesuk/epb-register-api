@@ -21,7 +21,8 @@ class Container
 
     migrate_domestic_energy_assessment_use_case =
       UseCase::MigrateDomesticEnergyAssessment.new(
-        domestic_energy_assessments_gateway
+        domestic_energy_assessments_gateway,
+        assessors_gateway
       )
     fetch_domestic_energy_assessment_use_case =
       UseCase::FetchDomesticEnergyAssessment.new(

@@ -12,7 +12,7 @@ module Domain
       type_of_assessment,
       total_floor_area,
       assessment_id,
-      scheme_assessor_id,
+      assessor,
       address_summary,
       current_energy_efficiency_rating,
       potential_energy_efficiency_rating,
@@ -36,7 +36,7 @@ module Domain
       @type_of_assessment = type_of_assessment
       @total_floor_area = total_floor_area
       @assessment_id = assessment_id
-      @scheme_assessor_id = scheme_assessor_id
+      @assessor = assessor
       @address_summary = address_summary
       @current_energy_efficiency_rating = current_energy_efficiency_rating
       @potential_energy_efficiency_rating = potential_energy_efficiency_rating
@@ -82,7 +82,7 @@ module Domain
         type_of_assessment: @type_of_assessment,
         total_floor_area: @total_floor_area,
         assessment_id: @assessment_id,
-        scheme_assessor_id: @scheme_assessor_id,
+        scheme_assessor_id: @assessor.scheme_assessor_id,
         address_summary: @address_summary,
         current_energy_efficiency_rating: @current_energy_efficiency_rating,
         potential_energy_efficiency_rating: @potential_energy_efficiency_rating,
@@ -103,7 +103,8 @@ module Domain
         current_energy_efficiency_band:
           get_energy_rating_band(@current_energy_efficiency_rating),
         potential_energy_efficiency_band:
-          get_energy_rating_band(@potential_energy_efficiency_rating)
+          get_energy_rating_band(@potential_energy_efficiency_rating),
+        recommended_improvements: @recommended_improvements.map(&:to_hash)
       }
     end
 
@@ -115,7 +116,7 @@ module Domain
         type_of_assessment: @type_of_assessment,
         total_floor_area: @total_floor_area,
         assessment_id: @assessment_id,
-        scheme_assessor_id: @scheme_assessor_id,
+        scheme_assessor_id: @assessor.scheme_assessor_id,
         address_summary: @address_summary,
         current_energy_efficiency_rating: @current_energy_efficiency_rating,
         potential_energy_efficiency_rating: @potential_energy_efficiency_rating,

@@ -220,7 +220,8 @@ describe 'Acceptance::DomesticEnergyAssessment' do
                 valid_assessment_body[:heatDemand][:impactOfCavityInsulation],
               impactOfSolidWallInsulation:
                 valid_assessment_body[:heatDemand][:impactOfSolidWallInsulation]
-            }
+            },
+            recommendedImprovements: [{ sequence: 0 }]
           }.to_json
         )
 
