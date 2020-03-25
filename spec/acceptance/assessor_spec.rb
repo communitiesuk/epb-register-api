@@ -37,7 +37,7 @@ describe 'Acceptance::Assessor' do
   end
 
   def add_scheme(name = 'test scheme')
-    JSON.parse(post('/api/schemes', { name: name }.to_json).body)['schemeId']
+    authenticate_and { JSON.parse(post('/api/schemes', { name: name }.to_json).body)['schemeId'] }
   end
 
   def assessor_without_key(missing, request_body)
@@ -75,7 +75,7 @@ describe 'Acceptance::Assessor' do
   end
 
   context "when an assessor doesn't exist" do
-    let!(:scheme_id) { authenticate_and { add_scheme } }
+    let!(:scheme_id) { add_scheme }
 
     it 'returns status 404' do
       expect(
@@ -94,16 +94,16 @@ describe 'Acceptance::Assessor' do
     it 'returns status 404' do
       scheme_id = add_scheme
       second_scheme_id = add_scheme('second scheme')
-      add_assessor(second_scheme_id, 'SCHE987654', valid_assessor_request_body)
+      authenticate_and { add_assessor(second_scheme_id, 'SCHE987654', valid_assessor_request_body) }
 
-      expect(fetch_assessor(scheme_id, 'SCHE987654').status).to eq(404)
+      expect(authenticate_and { fetch_assessor(scheme_id, 'SCHE987654' ) }.status).to eq(404)
     end
   end
 
   context 'when getting an assessor' do
     context 'and the assessor exists on the correct scheme' do
       it 'returns status 200 for a get' do
-        scheme_id = authenticate_and { add_scheme }
+        scheme_id = add_scheme
         authenticate_and do
           add_assessor(scheme_id, 'SCHEME4233', valid_assessor_request_body)
         end
@@ -113,7 +113,7 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'returns json' do
-        scheme_id = authenticate_and { add_scheme }
+        scheme_id = add_scheme
         authenticate_and do
           add_assessor(scheme_id, 'SCHEME4233', valid_assessor_request_body)
         end
@@ -125,7 +125,7 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'returns the correct details for the assessor' do
-        scheme_id = authenticate_and { add_scheme }
+        scheme_id = add_scheme
         authenticate_and do
           add_assessor(scheme_id, 'SCHEME4233', valid_assessor_request_body)
         end
@@ -153,7 +153,7 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'returns EPC domestic qualification as inactive by default' do
-        scheme_id = authenticate_and { add_scheme }
+        scheme_id = add_scheme
         authenticate_and do
           add_assessor(
             scheme_id,
@@ -173,7 +173,7 @@ describe 'Acceptance::Assessor' do
   context 'when creating an assessor' do
     context 'which is valid with all fields' do
       it 'returns 201 created' do
-        scheme_id = authenticate_and { add_scheme }
+        scheme_id = add_scheme
         assessor_response =
           authenticate_and do
             add_assessor(scheme_id, 'SCHE55443', valid_assessor_request_body)
@@ -183,7 +183,7 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'returns JSON' do
-        scheme_id = authenticate_and { add_scheme }
+        scheme_id = add_scheme
         assessor_response =
           authenticate_and do
             add_assessor(scheme_id, 'SCHE55443', valid_assessor_request_body)
@@ -195,7 +195,7 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'returns assessor details with scheme details' do
-        scheme_id = authenticate_and { add_scheme }
+        scheme_id = add_scheme
         assessor_response =
           JSON.parse(
             authenticate_and do
@@ -227,7 +227,7 @@ describe 'Acceptance::Assessor' do
 
     context 'which is valid with optional fields missing' do
       it 'returns 201 created' do
-        scheme_id = authenticate_and { add_scheme }
+        scheme_id = add_scheme
         assessor_response =
           authenticate_and do
             add_assessor(
@@ -241,7 +241,7 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'returns assessor details with scheme details' do
-        scheme_id = authenticate_and { add_scheme }
+        scheme_id = add_scheme
         assessor_response =
           JSON.parse(
             authenticate_and do
@@ -274,7 +274,7 @@ describe 'Acceptance::Assessor' do
 
     context 'which is invalid' do
       it "rejects anything that isn't JSON" do
-        scheme_id = authenticate_and { add_scheme }
+        scheme_id = add_scheme
         assessor_response =
           authenticate_and do
             put(
@@ -287,7 +287,7 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'rejects an empty request body' do
-        scheme_id = authenticate_and { add_scheme }
+        scheme_id = add_scheme
         assessor_response =
           authenticate_and do
             put("/api/schemes/#{scheme_id}/assessors/thebrokenassessor")
@@ -297,7 +297,7 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'rejects requests without firstname' do
-        scheme_id = authenticate_and { add_scheme }
+        scheme_id = add_scheme
         assessor_response =
           authenticate_and do
             put(
@@ -311,7 +311,7 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'rejects requests without last name' do
-        scheme_id = authenticate_and { add_scheme }
+        scheme_id = add_scheme
         assessor_response =
           authenticate_and do
             put(
@@ -325,7 +325,7 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'rejects requests without date of birth' do
-        scheme_id = authenticate_and { add_scheme }
+        scheme_id = add_scheme
         assessor_response =
           authenticate_and do
             put(
@@ -339,7 +339,7 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'rejects requests with invalid date of birth' do
-        scheme_id = authenticate_and { add_scheme }
+        scheme_id = add_scheme
         invalid_body = valid_assessor_request_body.dup
         invalid_body[:dateOfBirth] = '02/28/1987'
         assessor_response =
@@ -354,7 +354,7 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'rejects requests with invalid first name' do
-        scheme_id = authenticate_and { add_scheme }
+        scheme_id = add_scheme
         invalid_body = valid_assessor_request_body.dup
         invalid_body[:firstName] = 1_000
         assessor_response =
@@ -369,7 +369,7 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'rejects requests with invalid last name' do
-        scheme_id = authenticate_and { add_scheme }
+        scheme_id = add_scheme
         invalid_body = valid_assessor_request_body.dup
         invalid_body[:lastName] = false
         assessor_response =
@@ -384,7 +384,7 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'rejects requests with invalid middle names' do
-        scheme_id = authenticate_and { add_scheme }
+        scheme_id = add_scheme
         invalid_body = valid_assessor_request_body.dup
         invalid_body[:middleNames] = %w[adsfasd]
         assessor_response =
@@ -399,7 +399,7 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'rejects an assessor qualification that isnt a valid status' do
-        scheme_id = authenticate_and { add_scheme }
+        scheme_id = add_scheme
         invalid_body = valid_assessor_request_body.dup
         invalid_body[:qualifications] = { domesticRdSap: 'horse' }
         assessor_response =
@@ -414,7 +414,7 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'rejects a search results comparison postcode that isnt a string' do
-        scheme_id = authenticate_and { add_scheme }
+        scheme_id = add_scheme
         invalid_body = valid_assessor_request_body.dup
         invalid_body[:searchResultsComparisonPostcode] = 25
         assessor_response =
@@ -431,7 +431,7 @@ describe 'Acceptance::Assessor' do
 
     context 'which has a clashing ID for an assessor on another scheme' do
       it 'Returns a status code 409' do
-        first_scheme = authenticate_and { add_scheme }
+        first_scheme = add_scheme
         second_scheme = authenticate_and { add_scheme 'scheme two' }
 
         authenticate_and do
@@ -450,7 +450,7 @@ describe 'Acceptance::Assessor' do
       let(:escaped_assessor_scheme_id) { 'TEST%2F000000' }
 
       it 'adds an assessor' do
-        scheme_id = authenticate_and { add_scheme }
+        scheme_id = add_scheme
 
         add_assessor_response =
           authenticate_and do
@@ -463,7 +463,7 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'fetches an assessor' do
-        scheme_id = authenticate_and { add_scheme }
+        scheme_id = add_scheme
 
         authenticate_and do
           add_assessor scheme_id,
@@ -484,7 +484,7 @@ describe 'Acceptance::Assessor' do
   context 'when updating an assessor' do
     context 'which is valid with all fields' do
       it 'returns 200 on the update' do
-        scheme_id = authenticate_and { add_scheme }
+        scheme_id = add_scheme
         authenticate_and do
           add_assessor(scheme_id, 'ASSESSOR99', valid_assessor_request_body)
         end
@@ -500,7 +500,7 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'replaces a previous assessors details successfully' do
-        scheme_id = authenticate_and { add_scheme }
+        scheme_id = add_scheme
         authenticate_and do
           add_assessor(scheme_id, 'ASSESSOR99', valid_assessor_request_body)
           add_assessor(
@@ -570,7 +570,7 @@ describe 'Acceptance::Assessor' do
 
     context 'which has an invalid email' do
       it 'returns error 400' do
-        scheme_id = authenticate_and { add_scheme }
+        scheme_id = add_scheme
 
         invalid_request_body = valid_assessor_with_contact_request_body
         invalid_request_body[:contactDetails][:email] = '54'
@@ -585,7 +585,7 @@ describe 'Acceptance::Assessor' do
 
     context 'which has a valid email' do
       it 'saves it successfully' do
-        scheme_id = authenticate_and { add_scheme }
+        scheme_id = add_scheme
 
         request_body = valid_assessor_with_contact_request_body
         request_body[:contactDetails][:email] = 'mar@ten.com'
@@ -604,7 +604,7 @@ describe 'Acceptance::Assessor' do
 
     context 'which has an invalid phone number' do
       it 'returns error 400' do
-        scheme_id = authenticate_and { add_scheme }
+        scheme_id = add_scheme
 
         invalid_telephone = '0' * 257
 
@@ -621,7 +621,7 @@ describe 'Acceptance::Assessor' do
 
     context 'which has a valid phone number' do
       it 'successfully saves it' do
-        scheme_id = authenticate_and { add_scheme }
+        scheme_id = add_scheme
 
         valid_telephone = '0' * 256
 
@@ -645,7 +645,7 @@ describe 'Acceptance::Assessor' do
   context 'when searching for an assessor by name' do
     context 'when there are no results' do
       it 'returns the status code 404' do
-        scheme_id = authenticate_and { add_scheme }
+        scheme_id = add_scheme
 
         authenticate_and do
           add_assessor(scheme_id, 'SCHE55443', valid_assessor_request_body)
@@ -660,7 +660,7 @@ describe 'Acceptance::Assessor' do
 
     context 'when there are results' do
       it 'returns the assessors details' do
-        scheme_id = authenticate_and { add_scheme }
+        scheme_id = add_scheme
 
         authenticate_and do
           add_assessor(scheme_id, 'SCHE55443', valid_assessor_request_body)
@@ -690,7 +690,7 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'lets you search for swapped names' do
-        scheme_id = authenticate_and { add_scheme }
+        scheme_id = add_scheme
 
         authenticate_and do
           add_assessor(scheme_id, 'SCHE55443', valid_assessor_request_body)
@@ -705,7 +705,7 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'lets you search for half names' do
-        scheme_id = authenticate_and { add_scheme }
+        scheme_id = add_scheme
 
         authenticate_and do
           add_assessor(scheme_id, 'SCHE55443', valid_assessor_request_body)
