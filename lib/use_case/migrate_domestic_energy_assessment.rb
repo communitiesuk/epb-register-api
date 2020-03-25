@@ -15,13 +15,12 @@ module UseCase
       end
     end
 
-    def execute(domestic_energy_assessment)
-      check_improvements(domestic_energy_assessment.recommended_improvements)
+    def execute(migrate_domestic_energy_assessment_request)
+      assessment = migrate_domestic_energy_assessment_request.to_domain
+      check_improvements(assessment.recommended_improvements)
 
-      @domestic_energy_assessments_gateway.insert_or_update(
-        domestic_energy_assessment
-      )
-      domestic_energy_assessment
+      @domestic_energy_assessments_gateway.insert_or_update(assessment)
+      assessment
     end
   end
 end

@@ -101,41 +101,8 @@ module Controller
       migrate_epc =
         @container.get_object(:migrate_domestic_energy_assessment_use_case)
       assessment_body = request_body(PUT_SCHEMA)
-      recommendedImprovements =
-        assessment_body[:recommended_improvements].map do |improvement|
-          Domain::RecommendedImprovement.new(
-            assessment_id,
-            improvement[:sequence]
-          )
-        end
-
       new_assessment =
-        Domain::DomesticEnergyAssessment.new(
-          assessment_body[:date_of_assessment],
-          assessment_body[:date_registered],
-          assessment_body[:dwelling_type],
-          assessment_body[:type_of_assessment],
-          assessment_body[:total_floor_area],
-          assessment_id,
-          assessment_body[:scheme_assessor_id],
-          assessment_body[:address_summary],
-          assessment_body[:current_energy_efficiency_rating],
-          assessment_body[:potential_energy_efficiency_rating],
-          assessment_body[:postcode],
-          assessment_body[:date_of_expiry],
-          assessment_body[:address_line1],
-          assessment_body[:address_line2],
-          assessment_body[:address_line3],
-          assessment_body[:address_line4],
-          assessment_body[:town],
-          assessment_body[:heat_demand][:current_space_heating_demand],
-          assessment_body[:heat_demand][:current_water_heating_demand],
-          assessment_body[:heat_demand][:impact_of_loft_insulation],
-          assessment_body[:heat_demand][:impact_of_cavity_insulation],
-          assessment_body[:heat_demand][:impact_of_solid_wall_insulation],
-          recommendedImprovements
-        )
-
+        Boundary::MigrateDomesticEpcRequest.new(assessment_id, assessment_body)
       result = migrate_epc.execute(new_assessment)
 
       @events.event(
