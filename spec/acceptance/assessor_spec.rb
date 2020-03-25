@@ -387,9 +387,8 @@ describe 'Acceptance::Assessor' do
         scheme_id = add_scheme
         assessor = valid_assessor_request
         add_assessor(scheme_id, 'ASSESSOR99', assessor)
-        assessor[:firstName] = "Janine"
-        second_response =
-          add_assessor(scheme_id, 'ASSESSOR99', assessor)
+        assessor[:firstName] = 'Janine'
+        second_response = add_assessor(scheme_id, 'ASSESSOR99', assessor)
         expect(second_response.status).to eq(200)
       end
 
@@ -398,46 +397,20 @@ describe 'Acceptance::Assessor' do
         assessor = valid_assessor_request
         add_assessor(scheme_id, 'ASSESSOR99', assessor)
 
-        assessor[:firstName] = "Janine"
+        assessor[:firstName] = 'Janine'
         add_assessor(scheme_id, 'ASSESSOR99', assessor)
 
         response = fetch_assessor(scheme_id, 'ASSESSOR99')
-        expected_response =
-          JSON.parse(
-            {
-              registeredBy: { schemeId: scheme_id, name: 'test scheme' },
-              schemeAssessorId: 'ASSESSOR99',
-              firstName: 'Janine',
-              middleNames: valid_assessor_request[:middleNames],
-              lastName:
-                assessor_without_key(:middleNames, valid_assessor_request)[
-                  :lastName
-                ],
-              dateOfBirth:
-                assessor_without_key(:middleNames, valid_assessor_request)[
-                  :dateOfBirth
-                ],
-              contactDetails: {
-                telephoneNumber:
-                  assessor_without_key(:middleNames, valid_assessor_request)[
-                    :contactDetails
-                  ][
-                    :telephoneNumber
-                  ],
-                email:
-                  assessor_without_key(:middleNames, valid_assessor_request)[
-                    :contactDetails
-                  ][
-                    :email
-                  ]
-              },
-              searchResultsComparisonPostcode: '',
-              qualifications: {
-                domesticRdSap: 'ACTIVE', nonDomesticSp3: 'ACTIVE'
-              }
-            }.to_json
-          )
-        expect(JSON.parse(response.body)).to eq(expected_response)
+
+        expected_response = valid_assessor_request
+        expected_response[:registeredBy] = {
+          schemeId: scheme_id, name: 'test scheme'
+        }
+        expected_response[:schemeAssessorId] = 'ASSESSOR99'
+        expected_response[:firstName] = 'Janine'
+        expect(JSON.parse(response.body)).to eq(
+          JSON.parse(expected_response.to_json)
+        )
       end
     end
 
