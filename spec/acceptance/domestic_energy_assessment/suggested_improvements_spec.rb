@@ -92,7 +92,9 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
     end
 
     it 'rejects sequences that are not integers' do
-      migrate_invalid_recommendations([{sequence: 'first'}])
+      recommendations = valid_recommendations
+      recommendations[0][:sequence] = 'first'
+      migrate_invalid_recommendations(recommendations)
     end
   end
 end
