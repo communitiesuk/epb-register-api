@@ -16,40 +16,36 @@ module UseCase
       end
     end
 
-    def execute(migrate_domestic_energy_assessment_request)
-      request_data = migrate_domestic_energy_assessment_request.data
-      assessor_id = request_data[:scheme_assessor_id]
+    def execute(assessment_id, assessment_data)
+      assessor_id = assessment_data[:scheme_assessor_id]
       assessor = @assessors_gateway.fetch(assessor_id)
 
       assessment =
         Domain::DomesticEnergyAssessment.new(
-          request_data[:date_of_assessment],
-          request_data[:date_registered],
-          request_data[:dwelling_type],
-          request_data[:type_of_assessment],
-          request_data[:total_floor_area],
-          migrate_domestic_energy_assessment_request.assessment_id,
+          assessment_data[:date_of_assessment],
+          assessment_data[:date_registered],
+          assessment_data[:dwelling_type],
+          assessment_data[:type_of_assessment],
+          assessment_data[:total_floor_area],
+          assessment_id,
           assessor,
-          request_data[:address_summary],
-          request_data[:current_energy_efficiency_rating],
-          request_data[:potential_energy_efficiency_rating],
-          request_data[:postcode],
-          request_data[:date_of_expiry],
-          request_data[:address_line1],
-          request_data[:address_line2],
-          request_data[:address_line3],
-          request_data[:address_line4],
-          request_data[:town],
-          request_data[:heat_demand][:current_space_heating_demand],
-          request_data[:heat_demand][:current_water_heating_demand],
-          request_data[:heat_demand][:impact_of_loft_insulation],
-          request_data[:heat_demand][:impact_of_cavity_insulation],
-          request_data[:heat_demand][:impact_of_solid_wall_insulation],
-          request_data[:recommended_improvements].map do |i|
-            Domain::RecommendedImprovement.new(
-              migrate_domestic_energy_assessment_request.assessment_id,
-              i[:sequence]
-            )
+          assessment_data[:address_summary],
+          assessment_data[:current_energy_efficiency_rating],
+          assessment_data[:potential_energy_efficiency_rating],
+          assessment_data[:postcode],
+          assessment_data[:date_of_expiry],
+          assessment_data[:address_line1],
+          assessment_data[:address_line2],
+          assessment_data[:address_line3],
+          assessment_data[:address_line4],
+          assessment_data[:town],
+          assessment_data[:heat_demand][:current_space_heating_demand],
+          assessment_data[:heat_demand][:current_water_heating_demand],
+          assessment_data[:heat_demand][:impact_of_loft_insulation],
+          assessment_data[:heat_demand][:impact_of_cavity_insulation],
+          assessment_data[:heat_demand][:impact_of_solid_wall_insulation],
+          assessment_data[:recommended_improvements].map do |i|
+            Domain::RecommendedImprovement.new(assessment_id, i[:sequence])
           end
         )
 
