@@ -36,7 +36,8 @@ describe 'Acceptance::Assessor' do
 
   def add_scheme_then_assessor(body)
     scheme_id = add_scheme
-    add_assessor(scheme_id, 'TEST_ASSESSOR', body)
+    response = add_assessor(scheme_id, 'TEST_ASSESSOR', body)
+    response
   end
 
   def assessor_without_key(missing, request_body = nil)
@@ -272,97 +273,67 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'rejects requests without firstname' do
-        scheme_id = add_scheme
         assessor_response =
-          add_assessor(
-            scheme_id,
-            'thebrokenassessor',
-            assessor_without_key(:firstName)
-          )
-
+          add_scheme_then_assessor(assessor_without_key :firstName)
         expect(assessor_response.status).to eq(422)
       end
 
       it 'rejects requests without last name' do
-        scheme_id = add_scheme
         assessor_response =
-          add_assessor(
-            scheme_id,
-            'thebrokenassessor',
-            assessor_without_key(:lastName)
-          )
-
+          add_scheme_then_assessor(assessor_without_key :lastName)
         expect(assessor_response.status).to eq(422)
       end
 
       it 'rejects requests without date of birth' do
-        scheme_id = add_scheme
         assessor_response =
-          add_assessor(
-            scheme_id,
-            'thebrokenassessor',
-            assessor_without_key(:dateOfBirth)
-          )
-
+          add_scheme_then_assessor(assessor_without_key :dateOfBirth)
         expect(assessor_response.status).to eq(422)
       end
 
       it 'rejects requests with invalid date of birth' do
-        scheme_id = add_scheme
         invalid_body = valid_assessor_request.dup
         invalid_body[:dateOfBirth] = '02/28/1987'
-        assessor_response =
-          add_assessor(scheme_id, 'thebrokenassessor', invalid_body)
+        assessor_response = add_scheme_then_assessor(invalid_body)
 
         expect(assessor_response.status).to eq(422)
       end
 
       it 'rejects requests with invalid first name' do
-        scheme_id = add_scheme
         invalid_body = valid_assessor_request.dup
         invalid_body[:firstName] = 1_000
-        assessor_response =
-          add_assessor(scheme_id, 'thebrokenassessor', invalid_body)
+        assessor_response = add_scheme_then_assessor(invalid_body)
 
         expect(assessor_response.status).to eq(422)
       end
 
       it 'rejects requests with invalid last name' do
-        scheme_id = add_scheme
         invalid_body = valid_assessor_request.dup
         invalid_body[:lastName] = false
-        assessor_response =
-          add_assessor(scheme_id, 'thebrokenassessor', invalid_body)
+        assessor_response = add_scheme_then_assessor(invalid_body)
 
         expect(assessor_response.status).to eq(422)
       end
 
       it 'rejects requests with invalid middle names' do
-        scheme_id = add_scheme
         invalid_body = valid_assessor_request.dup
         invalid_body[:middleNames] = %w[adsfasd]
-        assessor_response =
-          add_assessor(scheme_id, 'thebrokenassessor', invalid_body)
+        assessor_response = add_scheme_then_assessor(invalid_body)
 
         expect(assessor_response.status).to eq(422)
       end
 
       it 'rejects an assessor qualification that isnt a valid status' do
-        scheme_id = add_scheme
         invalid_body = valid_assessor_request.dup
         invalid_body[:qualifications] = { domesticRdSap: 'horse' }
-        assessor_response =
-          add_assessor(scheme_id, 'thebrokenassessor', invalid_body)
+        assessor_response = add_scheme_then_assessor(invalid_body)
 
         expect(assessor_response.status).to eq(422)
       end
 
       it 'rejects a search results comparison postcode that isnt a string' do
-        scheme_id = add_scheme
         invalid_body = valid_assessor_request.dup
         invalid_body[:searchResultsComparisonPostcode] = 25
-        assessor_response =
-          add_assessor(scheme_id, 'thebrokenassessor', invalid_body)
+        assessor_response = add_scheme_then_assessor(invalid_body)
 
         expect(assessor_response.status).to eq(422)
       end
@@ -469,13 +440,12 @@ describe 'Acceptance::Assessor' do
 
     context 'which has an invalid email' do
       it 'returns error 400' do
-        scheme_id = add_scheme
-
         invalid_request_body = valid_assessor_request
         invalid_request_body[:contactDetails][:email] = '54'
 
         expect(
-          add_assessor(scheme_id, 'ASSESSOR99', invalid_request_body).status
+          assessor_response =
+            add_scheme_then_assessor(invalid_request_body).status
         ).to eq(422)
       end
     end
@@ -498,16 +468,10 @@ describe 'Acceptance::Assessor' do
 
     context 'which has an invalid phone number' do
       it 'returns error 400' do
-        scheme_id = add_scheme
-
-        invalid_telephone = '0' * 257
-
         request_body = valid_assessor_request
-        request_body[:contactDetails][:telephoneNumber] = invalid_telephone
+        request_body[:contactDetails][:telephoneNumber] = '0' * 257
 
-        expect(
-          add_assessor(scheme_id, 'ASSESSOR99', request_body).status
-        ).to eq(422)
+        expect(add_scheme_then_assessor(request_body).status).to eq(422)
       end
     end
 
@@ -536,10 +500,7 @@ describe 'Acceptance::Assessor' do
   context 'when searching for an assessor by name' do
     context 'when there are no results' do
       it 'returns the status code 404' do
-        scheme_id = add_scheme
-
-        add_assessor(scheme_id, 'SCHE55443', valid_assessor_request)
-
+        add_scheme_then_assessor(valid_assessor_request)
         search_response =
           authenticate_and { get '/api/assessors/?name=Marten%20Sheikh' }
 
@@ -550,9 +511,7 @@ describe 'Acceptance::Assessor' do
     context 'when there are results' do
       it 'returns the assessors details' do
         scheme_id = add_scheme
-
         add_assessor(scheme_id, 'SCHE55443', valid_assessor_request)
-
         search_response =
           authenticate_and { get '/api/assessors?name=Some%20Person' }.body
 
@@ -577,10 +536,7 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'lets you search for swapped names' do
-        scheme_id = add_scheme
-
-        add_assessor(scheme_id, 'SCHE55443', valid_assessor_request)
-
+        add_scheme_then_assessor(valid_assessor_request)
         search_response =
           authenticate_and { get '/api/assessors?name=Person%20Some' }.body
 
@@ -590,10 +546,7 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'lets you search for half names' do
-        scheme_id = add_scheme
-
-        add_assessor(scheme_id, 'SCHE55443', valid_assessor_request)
-
+        add_scheme_then_assessor(valid_assessor_request)
         search_response =
           authenticate_and { get '/api/assessors?name=Per%20Some' }.body
 
