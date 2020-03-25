@@ -93,7 +93,7 @@ describe 'Acceptance::SearchForAssessor' do
 
       response_json = JSON.parse(response.body)
 
-      expect(response_json['results']).to be_an(Array)
+      expect(response_json['data']['assessors']).to be_an(Array)
     end
 
     it 'can handle a lowercase postcode' do
@@ -103,7 +103,7 @@ describe 'Acceptance::SearchForAssessor' do
 
       response_json = JSON.parse(response.body)
 
-      expect(response_json['results']).to be_an(Array)
+      expect(response_json['data']['assessors']).to be_an(Array)
     end
 
     it 'has the properties we expect' do
@@ -114,7 +114,7 @@ describe 'Acceptance::SearchForAssessor' do
 
       response_json = JSON.parse(response.body)
 
-      expect(response_json).to include('results', 'searchPostcode')
+      expect(response_json).to include('data', 'meta')
     end
 
     it 'has the assessors of the shape we expect' do
@@ -135,7 +135,7 @@ describe 'Acceptance::SearchForAssessor' do
 
       response_json = JSON.parse(response.body)
 
-      expect(response_json['results'][0]).to include('assessor', 'distance')
+      expect(response_json['data']).to include('assessors')
     end
 
     it 'has the over all hash of the shape we expect' do
@@ -159,7 +159,6 @@ describe 'Acceptance::SearchForAssessor' do
       expected_response =
         JSON.parse(
           {
-            assessor: {
               firstName: 'Some',
               lastName: 'Person',
               middleNames: 'Middle',
@@ -172,15 +171,14 @@ describe 'Acceptance::SearchForAssessor' do
               },
               qualifications: {
                 domesticRdSap: 'ACTIVE', nonDomesticSp3: 'INACTIVE'
-              }
-            },
-            distance: 0.0
+              },
+            distanceFromPostcodeInMiles: 0.0
           }.to_json
         )
 
-      response_json['results'][0]['assessor']['registeredBy']['schemeId'] = 25
+      response_json['data']['assessors'][0]['registeredBy']['schemeId'] = 25
 
-      expect(response_json['results'][0]).to eq(expected_response)
+      expect(response_json['data']['assessors'][0]).to eq(expected_response)
     end
 
     it 'does not show assessors outside of 1 degree latitude/longitude' do
@@ -206,7 +204,7 @@ describe 'Acceptance::SearchForAssessor' do
 
       response_json = JSON.parse(response.body)
 
-      expect(response_json['results'].size).to eq(0)
+      expect(response_json['data']['assessors'].size).to eq(0)
     end
 
     it 'shows distance of assessors inside of 1 degree latitude/longitude' do
@@ -231,7 +229,7 @@ describe 'Acceptance::SearchForAssessor' do
         authenticate_and { assessors_search('SE19SG', 'domesticRdSap') }
 
       response_json = JSON.parse(response.body)
-      expect(response_json['results'][0]['distance']).to be_between(2, 4)
+      expect(response_json['data']['assessors'][0]['distanceFromPostcodeInMiles']).to be_between(2, 4)
     end
 
     it 'does not return inactive assessors' do
@@ -254,7 +252,7 @@ describe 'Acceptance::SearchForAssessor' do
 
       response_json = JSON.parse(response.body)
 
-      expect(response_json['results']).to eq([])
+      expect(response_json['data']['assessors']).to eq([])
     end
 
     it 'does return reactivated assessors' do
@@ -288,7 +286,7 @@ describe 'Acceptance::SearchForAssessor' do
 
       response_json = JSON.parse(response.body)
 
-      expect(response_json['results'].size).to eq(1)
+      expect(response_json['data']['assessors'].size).to eq(1)
     end
 
     it 'does not return unactivated assessors' do
@@ -322,7 +320,7 @@ describe 'Acceptance::SearchForAssessor' do
 
       response_json = JSON.parse(response.body)
 
-      expect(response_json['results'].size).to eq(0)
+      expect(response_json['data']['assessors'].size).to eq(0)
     end
 
     context 'when the postcode is not found' do
@@ -347,7 +345,7 @@ describe 'Acceptance::SearchForAssessor' do
           authenticate_and { assessors_search('SE19SY', 'domesticRdSap') }
 
         response_json = JSON.parse(response.body)
-        expect(response_json['results'][0]).to include('distance')
+        expect(response_json['data']['assessors'][0]).to include('distanceFromPostcodeInMiles')
       end
 
       it 'returns error when neither postcode or outcode are found' do
@@ -397,12 +395,12 @@ describe 'Acceptance::SearchForAssessor' do
         response =
           authenticate_and { assessors_search('SE17EZ', 'nonDomesticSp3') }
         response_json = JSON.parse(response.body)
-        expect(response_json['results'].length).to eq(1)
+        expect(response_json['data']['assessors'].length).to eq(1)
         expect(
-          response_json['results'].first['assessor']['schemeAssessorId']
+          response_json['data']['assessors'].first['schemeAssessorId']
         ).to eq('AIR_CON_ASSESSOR')
         expect(
-          response_json['results'].first['assessor']['qualifications'][
+          response_json['data']['assessors'].first['qualifications'][
             'nonDomesticSp3'
           ]
         ).to eq('ACTIVE')

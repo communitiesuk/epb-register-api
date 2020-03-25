@@ -115,6 +115,18 @@ describe 'Integration::Database::Activerecord' do
     expect(migration_has_been_run?('20200304104905')).to be true
   end
 
+  it 'has run the add assessor_id to assessments' do
+    connect('epb_development')
+
+    expect(migration_has_been_run?('20200304104905')).to be true
+  end
+
+  it 'has run the ' do
+    connect('epb_development')
+
+    expect(migration_has_been_run?('20200304104905')).to be true
+  end
+
   it 'can find the schemes table' do
     connect('epb_development')
 

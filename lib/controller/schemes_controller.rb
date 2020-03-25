@@ -8,7 +8,7 @@ module Controller
 
     get '/api/schemes', jwt_auth: [] do
       all_schemes = @container.get_object(:get_all_schemes_use_case).execute
-      json_response(200, all_schemes)
+      json_api_response(200, all_schemes)
     end
 
     post '/api/schemes', jwt_auth: [] do
@@ -17,7 +17,7 @@ module Controller
         @container.get_object(:add_new_scheme_use_case).execute(
           new_scheme_details[:name]
         )
-      json_response(201, result)
+      json_api_response(201, result)
     rescue Exception => e
       case e
       when JSON::Schema::ValidationError, JSON::ParserError

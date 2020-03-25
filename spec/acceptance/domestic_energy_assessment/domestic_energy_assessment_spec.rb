@@ -184,9 +184,8 @@ describe 'Acceptance::DomesticEnergyAssessment' do
           migrate_assessment('123-456', valid_assessment_body).body
         end
 
-      migrated_assessment = JSON.parse(response)
+      migrated_assessment = JSON.parse(response, symbolize_names: true)
       expected_response =
-        JSON.parse(
           {
             dateOfAssessment: valid_assessment_body[:dateOfAssessment],
             dateRegistered: valid_assessment_body[:dateRegistered],
@@ -222,10 +221,9 @@ describe 'Acceptance::DomesticEnergyAssessment' do
                 valid_assessment_body[:heatDemand][:impactOfSolidWallInsulation]
             },
             recommendedImprovements: [{ sequence: 0 }]
-          }.to_json
-        )
+          }
 
-      expect(migrated_assessment).to eq(expected_response)
+      expect(migrated_assessment[:data]).to eq(expected_response)
     end
 
     it 'rejects a assessment without an address summary' do

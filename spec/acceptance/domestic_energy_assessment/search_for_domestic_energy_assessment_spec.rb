@@ -72,7 +72,7 @@ describe 'Searching for assessments' do
 
       response_json = JSON.parse(response.body)
 
-      expect(response_json['results']).to be_an(Array)
+      expect(response_json['data']['assessments']).to be_an(Array)
     end
 
     it 'can handle a lowercase postcode' do
@@ -80,7 +80,7 @@ describe 'Searching for assessments' do
 
       response_json = JSON.parse(response.body)
 
-      expect(response_json['results']).to be_an(Array)
+      expect(response_json['data']['assessments']).to be_an(Array)
     end
 
     it 'has the properties we expect' do
@@ -88,7 +88,7 @@ describe 'Searching for assessments' do
 
       response_json = JSON.parse(response.body)
 
-      expect(response_json).to include('results', 'searchQuery')
+      expect(response_json).to include('data', 'meta')
     end
 
     it 'has the over all hash of the shape we expect' do
@@ -137,7 +137,7 @@ describe 'Searching for assessments' do
           }.to_json
         )
 
-      expect(response_json['results'][0]).to eq(expected_response)
+      expect(response_json['data']['assessments'][0]).to eq(expected_response)
     end
   end
 
@@ -156,7 +156,7 @@ describe 'Searching for assessments' do
 
       response_json = JSON.parse(response.body)
 
-      expect(response_json['results']).to be_an(Array)
+      expect(response_json['data']['assessments']).to be_an(Array)
     end
 
     it 'has the properties we expect' do
@@ -165,7 +165,7 @@ describe 'Searching for assessments' do
 
       response_json = JSON.parse(response.body)
 
-      expect(response_json).to include('results', 'searchQuery')
+      expect(response_json).to include('data', 'meta')
     end
 
     it 'has the over all hash of the shape we expect' do
@@ -213,7 +213,7 @@ describe 'Searching for assessments' do
           }.to_json
         )
 
-      expect(response_json['results'][0]).to eq(expected_response)
+      expect(response_json['data']['assessments'][0]).to eq(expected_response)
     end
   end
 
@@ -295,7 +295,7 @@ describe 'Searching for assessments' do
 
         response_json = JSON.parse(response.body)
 
-        expect(response_json['results']).to be_an(Array)
+        expect(response_json['data']['assessments']).to be_an(Array)
       end
 
       it 'has the properties we expect' do
@@ -309,7 +309,7 @@ describe 'Searching for assessments' do
 
         response_json = JSON.parse(response.body)
 
-        expect(response_json).to include('results', 'searchQuery')
+        expect(response_json).to include('data', 'meta')
       end
 
       it 'has the over all hash of the shape we expect' do
@@ -362,7 +362,7 @@ describe 'Searching for assessments' do
             }.to_json
           )
 
-        expect(response_json['results'][0]).to eq(expected_response)
+        expect(response_json['data']['assessments'][0]).to eq(expected_response)
       end
     end
   end

@@ -107,7 +107,7 @@ module Controller
         :domestic_energy_assessment_migrated,
         params[:assessment_id]
       )
-      json_response(200, result.to_hash)
+      json_api_response(200, result.to_hash)
     rescue Exception => e
       case e
       when JSON::Schema::ValidationError

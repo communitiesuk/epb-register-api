@@ -17,18 +17,6 @@ describe 'Acceptance::AssessorList' do
     }
   end
 
-  def fetch_assessors(scheme_id)
-    get "/api/schemes/#{scheme_id}/assessors"
-  end
-
-  def add_assessor(scheme_id, assessor_id, body)
-    put("/api/schemes/#{scheme_id}/assessors/#{assessor_id}", body.to_json)
-  end
-
-  def add_scheme(name = 'test scheme')
-    JSON.parse(post('/api/schemes', { name: name }.to_json).body)['schemeId']
-  end
-
   def authenticate_with_data(data = {}, &block)
     authenticate_and(nil, %w[scheme:assessor:list], data) { block.call }
   end

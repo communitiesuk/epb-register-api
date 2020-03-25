@@ -21,8 +21,8 @@ describe 'Acceptance::Schemes' do
     end
 
     it 'includes an empty list of schemes' do
-      parsed_response = JSON.parse(response.body)
-      expect(parsed_response).to eq('schemes' => [])
+      parsed_response = JSON.parse(response.body, symbolize_names: true)
+      expect(parsed_response).to eq({:data => {:schemes => []}, :meta => {}})
     end
   end
 
@@ -54,7 +54,7 @@ describe 'Acceptance::Schemes' do
     it 'is visible in the list of schemes' do
       response = authenticate_and { get '/api/schemes' }
       get_response = JSON.parse(response.body)
-      expect(get_response['schemes'][0]['name']).to eq('XYMZALERO')
+      expect(get_response['data']['schemes'][0]['name']).to eq('XYMZALERO')
     end
 
     it 'cannot have the same name twice' do

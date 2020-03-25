@@ -11,7 +11,7 @@ module UseCase
 
       result =
         @assessment_gateway.search_by_street_name_and_town(street_name, town)
-      { 'results': result, 'searchQuery': [street_name, town] }
+      { 'data': {'assessments': result}, 'meta': {'searchQuery': [street_name, town]} }
     end
   end
 end

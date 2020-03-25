@@ -39,7 +39,7 @@ module UseCase
         end
       end
 
-      { 'results': response, 'searchName': name, 'looseMatch': loose_match }
+      { 'data': {'assessors': response}, 'meta': {'searchName': name, 'looseMatch': loose_match }}
     end
   end
 end

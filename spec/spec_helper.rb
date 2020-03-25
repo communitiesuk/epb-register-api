@@ -48,6 +48,10 @@ def authenticate_and(request = nil, scopes = [], supplementary = {}, &block)
   response
 end
 
+def fetch_assessors(scheme_id)
+  get "/api/schemes/#{scheme_id}/assessors"
+end
+
 def fetch_assessor(scheme_id, assessor_id)
   authenticate_and { get("/api/schemes/#{scheme_id}/assessors/#{assessor_id}") }
 end
@@ -60,7 +64,7 @@ end
 
 def add_scheme(name = 'test scheme')
   authenticate_and do
-    JSON.parse(post('/api/schemes', { name: name }.to_json).body)['schemeId']
+    JSON.parse(post('/api/schemes', { name: name }.to_json).body)['data']['schemeId']
   end
 end
 

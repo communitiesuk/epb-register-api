@@ -99,7 +99,7 @@ module Controller
           scheme_id,
           scheme_assessor_id
         )
-      json_response(200, result.to_hash)
+      json_api_response(200, result.to_hash)
     rescue Exception => e
       case e
       when UseCase::FetchAssessor::SchemeNotFoundException
@@ -128,10 +128,10 @@ module Controller
 
       if create_assessor_response[:assessor_was_newly_created]
         @events.event(:new_assessor_registered, scheme_assessor_id)
-        json_response(201, create_assessor_response[:assessor])
+        json_api_response(201, create_assessor_response[:assessor])
       else
         @events.event(:assessor_updated, scheme_assessor_id)
-        json_response(200, assessor_record.to_hash)
+        json_api_response(200, assessor_record.to_hash)
       end
     rescue Exception => e
       case e

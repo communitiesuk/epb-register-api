@@ -26,14 +26,6 @@ describe 'Integration::FilterAndOrderAssessorsByPostcode' do
     )
   end
 
-  def add_assessor(scheme_id, assessor_id, body)
-    put("/api/schemes/#{scheme_id}/assessors/#{assessor_id}", body.to_json)
-  end
-
-  def add_scheme(name = 'test scheme')
-    JSON.parse(post('/api/schemes', { name: name }.to_json).body)['schemeId']
-  end
-
   let(:valid_assessor_request_body) do
     {
       firstName: 'Someone',
@@ -96,7 +88,7 @@ describe 'Integration::FilterAndOrderAssessorsByPostcode' do
           'domesticRdSap'
         )
 
-      expect(assessors.first[:distance]).to eq(0.0)
+      expect(assessors.first[:distance_from_postcode_in_miles]).to eq(0.0)
     end
   end
 end

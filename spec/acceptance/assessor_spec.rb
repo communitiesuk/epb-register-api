@@ -99,17 +99,20 @@ describe 'Acceptance::Assessor' do
         expected_response =
           JSON.parse(
             {
-              registeredBy: { schemeId: scheme_id, name: 'test scheme' },
-              schemeAssessorId: 'SCHEME4233',
-              firstName: valid_assessor_request[:firstName],
-              middleNames: valid_assessor_request[:middleNames],
-              lastName: valid_assessor_request[:lastName],
-              dateOfBirth: valid_assessor_request[:dateOfBirth],
-              contactDetails: valid_assessor_request[:contactDetails],
-              searchResultsComparisonPostcode: '',
-              qualifications: {
-                domesticRdSap: 'ACTIVE', nonDomesticSp3: 'ACTIVE'
-              }
+              data: {
+                registeredBy: { schemeId: scheme_id, name: 'test scheme' },
+                schemeAssessorId: 'SCHEME4233',
+                firstName: valid_assessor_request[:firstName],
+                middleNames: valid_assessor_request[:middleNames],
+                lastName: valid_assessor_request[:lastName],
+                dateOfBirth: valid_assessor_request[:dateOfBirth],
+                contactDetails: valid_assessor_request[:contactDetails],
+                searchResultsComparisonPostcode: '',
+                qualifications: {
+                  domesticRdSap: 'ACTIVE', nonDomesticSp3: 'ACTIVE'
+                }
+              },
+              meta: {}
             }.to_json
           )
         response = JSON.parse(fetch_assessor(scheme_id, 'SCHEME4233').body)
@@ -124,7 +127,7 @@ describe 'Acceptance::Assessor' do
           assessor_without_key(:qualifications)
         )
         response = JSON.parse(fetch_assessor(scheme_id, 'SCHEME4233').body)
-        expect(response['qualifications']['domesticRdSap']).to eq('INACTIVE')
+        expect(response['data']['qualifications']['domesticRdSap']).to eq('INACTIVE')
       end
     end
   end
@@ -154,7 +157,7 @@ describe 'Acceptance::Assessor' do
         assessor_response =
           JSON.parse(
             add_assessor(scheme_id, 'SCHE55443', valid_assessor_request).body
-          )
+          )['data']
 
         expected_response =
           JSON.parse(
@@ -203,7 +206,7 @@ describe 'Acceptance::Assessor' do
               assessor_without_key(:middleNames)
             )
               .body
-          )
+          )['data']
 
         expected_response =
           JSON.parse(
@@ -384,7 +387,7 @@ describe 'Acceptance::Assessor' do
         }
         expected_response[:schemeAssessorId] = 'ASSESSOR99'
         expected_response[:firstName] = 'Janine'
-        expect(JSON.parse(response.body)).to eq(
+        expect(JSON.parse(response.body)['data']).to eq(
           JSON.parse(expected_response.to_json)
         )
       end
@@ -414,7 +417,7 @@ describe 'Acceptance::Assessor' do
         response_body = fetch_assessor(scheme_id, 'ASSESSOR99').body
         json_response = JSON.parse(response_body)
 
-        expect(json_response['contactDetails']['email']).to eq('mar@ten.com')
+        expect(json_response['data']['contactDetails']['email']).to eq('mar@ten.com')
       end
     end
 
@@ -442,7 +445,7 @@ describe 'Acceptance::Assessor' do
 
         json_response = JSON.parse(response_body)
 
-        expect(json_response['contactDetails']['telephoneNumber']).to eq(
+        expect(json_response['data']['contactDetails']['telephoneNumber']).to eq(
           valid_telephone
         )
       end
@@ -469,7 +472,7 @@ describe 'Acceptance::Assessor' do
 
         response = JSON.parse(search_response)
 
-        expect(response['results'][0]).to eq(
+        expect(response['data']['assessors'][0]).to eq(
           JSON.parse(
             {
               registeredBy: { schemeId: scheme_id, name: 'test scheme' },
@@ -494,7 +497,7 @@ describe 'Acceptance::Assessor' do
 
         response = JSON.parse(search_response)
 
-        expect(response['results'].size).to eq(1)
+        expect(response['data']['assessors'].size).to eq(1)
       end
 
       it 'lets you search for half names' do
@@ -504,7 +507,7 @@ describe 'Acceptance::Assessor' do
 
         response = JSON.parse(search_response)
 
-        expect(response['results'].size).to eq(1)
+        expect(response['data']['assessors'].size).to eq(1)
       end
     end
   end
