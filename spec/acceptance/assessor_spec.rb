@@ -291,13 +291,11 @@ describe 'Acceptance::Assessor' do
       it 'rejects requests without last name' do
         scheme_id = add_scheme
         assessor_response =
-          authenticate_and do
-            put(
-              "/api/schemes/#{scheme_id}/assessors/thebrokenassessor",
-              assessor_without_key(:lastName, valid_assessor_request_body)
-                .to_json
-            )
-          end
+          add_assessor(
+            scheme_id,
+            'thebrokenassessor',
+            assessor_without_key(:lastName, valid_assessor_request_body)
+          )
 
         expect(assessor_response.status).to eq(422)
       end
@@ -305,13 +303,11 @@ describe 'Acceptance::Assessor' do
       it 'rejects requests without date of birth' do
         scheme_id = add_scheme
         assessor_response =
-          authenticate_and do
-            put(
-              "/api/schemes/#{scheme_id}/assessors/thebrokenassessor",
-              assessor_without_key(:dateOfBirth, valid_assessor_request_body)
-                .to_json
-            )
-          end
+          add_assessor(
+            scheme_id,
+            'thebrokenassessor',
+            assessor_without_key(:dateOfBirth, valid_assessor_request_body)
+          )
 
         expect(assessor_response.status).to eq(422)
       end
@@ -321,12 +317,7 @@ describe 'Acceptance::Assessor' do
         invalid_body = valid_assessor_request_body.dup
         invalid_body[:dateOfBirth] = '02/28/1987'
         assessor_response =
-          authenticate_and do
-            put(
-              "/api/schemes/#{scheme_id}/assessors/thebrokenassessor",
-              invalid_body.to_json
-            )
-          end
+          add_assessor(scheme_id, 'thebrokenassessor', invalid_body)
 
         expect(assessor_response.status).to eq(422)
       end
@@ -336,12 +327,7 @@ describe 'Acceptance::Assessor' do
         invalid_body = valid_assessor_request_body.dup
         invalid_body[:firstName] = 1_000
         assessor_response =
-          authenticate_and do
-            put(
-              "/api/schemes/#{scheme_id}/assessors/thebrokenassessor",
-              invalid_body.to_json
-            )
-          end
+          add_assessor(scheme_id, 'thebrokenassessor', invalid_body)
 
         expect(assessor_response.status).to eq(422)
       end
@@ -351,12 +337,7 @@ describe 'Acceptance::Assessor' do
         invalid_body = valid_assessor_request_body.dup
         invalid_body[:lastName] = false
         assessor_response =
-          authenticate_and do
-            put(
-              "/api/schemes/#{scheme_id}/assessors/thebrokenassessor",
-              invalid_body.to_json
-            )
-          end
+          add_assessor(scheme_id, 'thebrokenassessor', invalid_body)
 
         expect(assessor_response.status).to eq(422)
       end
@@ -366,12 +347,7 @@ describe 'Acceptance::Assessor' do
         invalid_body = valid_assessor_request_body.dup
         invalid_body[:middleNames] = %w[adsfasd]
         assessor_response =
-          authenticate_and do
-            put(
-              "/api/schemes/#{scheme_id}/assessors/thebrokenassessor",
-              invalid_body.to_json
-            )
-          end
+          add_assessor(scheme_id, 'thebrokenassessor', invalid_body)
 
         expect(assessor_response.status).to eq(422)
       end
@@ -381,12 +357,7 @@ describe 'Acceptance::Assessor' do
         invalid_body = valid_assessor_request_body.dup
         invalid_body[:qualifications] = { domesticRdSap: 'horse' }
         assessor_response =
-          authenticate_and do
-            put(
-              "/api/schemes/#{scheme_id}/assessors/thebrokenassessor",
-              invalid_body.to_json
-            )
-          end
+          add_assessor(scheme_id, 'thebrokenassessor', invalid_body)
 
         expect(assessor_response.status).to eq(422)
       end
@@ -396,12 +367,7 @@ describe 'Acceptance::Assessor' do
         invalid_body = valid_assessor_request_body.dup
         invalid_body[:searchResultsComparisonPostcode] = 25
         assessor_response =
-          authenticate_and do
-            put(
-              "/api/schemes/#{scheme_id}/assessors/thebrokenassessor",
-              invalid_body.to_json
-            )
-          end
+          add_assessor(scheme_id, 'thebrokenassessor', invalid_body)
 
         expect(assessor_response.status).to eq(422)
       end
@@ -410,7 +376,7 @@ describe 'Acceptance::Assessor' do
     context 'which has a clashing ID for an assessor on another scheme' do
       it 'Returns a status code 409' do
         first_scheme = add_scheme
-        second_scheme = authenticate_and { add_scheme 'scheme two' }
+        second_scheme = add_scheme 'scheme two'
 
         add_assessor(first_scheme, 'SCHE4001', valid_assessor_request_body)
         second_response =
@@ -442,9 +408,7 @@ describe 'Acceptance::Assessor' do
                      valid_assessor_with_contact_request_body
 
         fetch_assessor_response =
-          authenticate_and do
-            fetch_assessor(scheme_id, escaped_assessor_scheme_id)
-          end
+          fetch_assessor(scheme_id, escaped_assessor_scheme_id)
 
         expect(fetch_assessor_response.status).to eq 200
       end
@@ -473,7 +437,7 @@ describe 'Acceptance::Assessor' do
           'ASSESSOR99',
           valid_assessor_with_contact_request_body
         )
-        assessor = authenticate_and { fetch_assessor(scheme_id, 'ASSESSOR99') }
+        assessor = fetch_assessor(scheme_id, 'ASSESSOR99')
         expected_response =
           JSON.parse(
             {
