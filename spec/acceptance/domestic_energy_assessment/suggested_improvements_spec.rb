@@ -51,31 +51,6 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
     assessment
   end
 
-  def add_scheme(name = 'test scheme')
-    authenticate_and do
-      JSON.parse(post('/api/schemes', { name: name }.to_json).body)['schemeId']
-    end
-  end
-
-  def add_assessor(scheme_id, assessor_id, body)
-    authenticate_and do
-      put("/api/schemes/#{scheme_id}/assessors/#{assessor_id}", body.to_json)
-    end
-  end
-
-  def fetch_assessment(assessment_id)
-    authenticate_and { get "api/assessments/domestic-epc/#{assessment_id}" }
-  end
-
-  def migrate_assessment(assessment_id, assessment_body)
-    authenticate_and do
-      put(
-        "api/assessments/domestic-epc/#{assessment_id}",
-        assessment_body.to_json
-      )
-    end
-  end
-
   context 'when migrating the suggested improvements' do
     it 'rejects an assessment where the improvements key is missing' do
       assessment_without_improvements_key = valid_assessment_body.dup

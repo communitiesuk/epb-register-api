@@ -16,30 +16,6 @@ describe 'Acceptance::Assessor' do
     }
   end
 
-  def fetch_assessor(scheme_id, assessor_id)
-    authenticate_and do
-      get("/api/schemes/#{scheme_id}/assessors/#{assessor_id}")
-    end
-  end
-
-  def add_assessor(scheme_id, assessor_id, body)
-    authenticate_and do
-      put("/api/schemes/#{scheme_id}/assessors/#{assessor_id}", body.to_json)
-    end
-  end
-
-  def add_scheme(name = 'test scheme')
-    authenticate_and do
-      JSON.parse(post('/api/schemes', { name: name }.to_json).body)['schemeId']
-    end
-  end
-
-  def add_scheme_then_assessor(body)
-    scheme_id = add_scheme
-    response = add_assessor(scheme_id, 'TEST_ASSESSOR', body)
-    response
-  end
-
   def assessor_without_key(missing, request_body = nil)
     request_body = valid_assessor_request unless request_body
     assessor = request_body.dup

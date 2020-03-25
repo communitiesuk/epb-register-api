@@ -48,6 +48,44 @@ def authenticate_and(request = nil, scopes = [], supplementary = {}, &block)
   response
 end
 
+def fetch_assessor(scheme_id, assessor_id)
+  authenticate_and do
+    get("/api/schemes/#{scheme_id}/assessors/#{assessor_id}")
+  end
+end
+
+def add_assessor(scheme_id, assessor_id, body)
+  authenticate_and do
+    put("/api/schemes/#{scheme_id}/assessors/#{assessor_id}", body.to_json)
+  end
+end
+
+def add_scheme(name = 'test scheme')
+  authenticate_and do
+    JSON.parse(post('/api/schemes', { name: name }.to_json).body)['schemeId']
+  end
+end
+
+def add_scheme_then_assessor(body)
+  scheme_id = add_scheme
+  response = add_assessor(scheme_id, 'TEST_ASSESSOR', body)
+  response
+end
+
+
+def fetch_assessment(assessment_id)
+  authenticate_and { get "api/assessments/domestic-epc/#{assessment_id}" }
+end
+
+def migrate_assessment(assessment_id, assessment_body)
+  authenticate_and do
+    put(
+        "api/assessments/domestic-epc/#{assessment_id}",
+        assessment_body.to_json
+    )
+  end
+end
+
 def get_valid_jwt(scopes = [], sup = {})
   token =
     Auth::Token.new iat: Time.now.to_i,

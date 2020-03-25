@@ -56,14 +56,6 @@ describe 'Acceptance::SearchForAssessor' do
     get "/api/assessors?postcode=#{postcode}&qualification=#{qualification}"
   end
 
-  def add_assessor(scheme_id, assessor_id, body)
-    put("/api/schemes/#{scheme_id}/assessors/#{assessor_id}", body.to_json)
-  end
-
-  def add_scheme(name = 'test scheme')
-    JSON.parse(post('/api/schemes', { name: name }.to_json).body)['schemeId']
-  end
-
   context 'when a search postcode is invalid' do
     it 'returns status 409 for a get' do
       expect(

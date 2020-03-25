@@ -52,25 +52,6 @@ describe 'Acceptance::DomesticEnergyAssessment' do
     assessment
   end
 
-  def add_scheme(name = 'test scheme')
-    JSON.parse(post('/api/schemes', { name: name }.to_json).body)['schemeId']
-  end
-
-  def add_assessor(scheme_id, assessor_id, body)
-    put("/api/schemes/#{scheme_id}/assessors/#{assessor_id}", body.to_json)
-  end
-
-  def fetch_assessment(assessment_id)
-    get "api/assessments/domestic-epc/#{assessment_id}"
-  end
-
-  def migrate_assessment(assessment_id, assessment_body)
-    put(
-      "api/assessments/domestic-epc/#{assessment_id}",
-      assessment_body.to_json
-    )
-  end
-
   context 'when a domestic assessment doesnt exist' do
     it 'returns status 404 for a get' do
       expect(
