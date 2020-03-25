@@ -18,7 +18,7 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
   end
 
   let (:valid_recommendations) do
-    [{ sequence: 0 }]
+    [{ sequence: 0 }, { sequence: 1 }]
   end
 
   let(:valid_assessment_body) do
@@ -100,6 +100,13 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
     it 'rejects sequences that dont have a zero sequence' do
       recommendations = valid_recommendations
       recommendations[0][:sequence] = 2
+      migrate_invalid_recommendations(recommendations)
+    end
+
+    it 'rejects non-continuous sequences' do
+      recommendations = valid_recommendations
+      recommendations[0][:sequence] = 0
+      recommendations[1][:sequence] = 5
       migrate_invalid_recommendations(recommendations)
     end
   end

@@ -1,5 +1,6 @@
 module UseCase
   class MigrateDomesticEnergyAssessment
+    SEQUENCE_ERROR = 'Sequences must contain 0 and be continuous'
     def initialize(domestic_energy_assessments_gateway)
       @domestic_energy_assessments_gateway = domestic_energy_assessments_gateway
     end
@@ -7,8 +8,10 @@ module UseCase
     def check_improvements(improvements)
       sequences = improvements.map(&:sequence)
 
-      unless sequences.include? 0
-        raise ArgumentError.new('Sequences must contain 0')
+      raise ArgumentError.new(SEQUENCE_ERROR) unless sequences.include? 0
+
+      unless sequences.sort.each_cons(2).all? { |x, y| y == x + 1 }
+        raise ArgumentError.new(SEQUENCE_ERROR)
       end
     end
 
