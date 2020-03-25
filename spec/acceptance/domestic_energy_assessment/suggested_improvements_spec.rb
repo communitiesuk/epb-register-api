@@ -18,7 +18,7 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
   end
 
   let (:valid_recommendations) do
-    [{sequence: 0}]
+    [{ sequence: 0 }]
   end
 
   let(:valid_assessment_body) do
@@ -57,7 +57,7 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
   end
 
   def migrate_invalid_recommendations(recommendations)
-    assessment =  valid_assessment_body.dup
+    assessment = valid_assessment_body.dup
 
     if recommendations
       assessment[:recommendedImprovements] = recommendations
@@ -82,7 +82,7 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
     end
 
     it 'rejects an assessment where each improvement is not an object' do
-      migrate_invalid_recommendations([1,3,5])
+      migrate_invalid_recommendations([1, 3, 5])
     end
 
     it 'rejects improvements that dont contain a sequence' do

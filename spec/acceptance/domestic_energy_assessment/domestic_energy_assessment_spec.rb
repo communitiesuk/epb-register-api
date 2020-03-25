@@ -42,7 +42,7 @@ describe 'Acceptance::DomesticEnergyAssessment' do
         impactOfCavityInsulation: 67,
         impactOfSolidWallInsulation: 69
       },
-      recommendedImprovements: []
+      recommendedImprovements: [{ sequence: 0 }]
     }.freeze
   end
 
