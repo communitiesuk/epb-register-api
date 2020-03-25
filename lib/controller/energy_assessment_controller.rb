@@ -41,7 +41,9 @@ module Controller
           items: {
             type: 'object',
             required: %w[sequence],
-            properties: { sequence: { type: 'integer' } }
+            properties: {
+              sequence: { type: 'integer', format: 'positive-int' }
+            }
           }
         }
       }

@@ -20,9 +20,19 @@ module Helper
       end
     end
 
+    POSITIVE_INT_FORMAT_PROC = lambda do |value|
+      if value < 0
+        raise JSON::Schema::CustomFormatError, 'Must be a positive number'
+      end
+    end
+
     def initialize
       JSON::Validator.register_format_validator('email', EMAIL_FORMAT_PROC)
       JSON::Validator.register_format_validator('iso-date', DATE_FORMAT_PROC)
+      JSON::Validator.register_format_validator(
+        'positive-int',
+        POSITIVE_INT_FORMAT_PROC
+      )
       JSON::Validator.register_format_validator(
         'telephone',
         TELEPHONE_FORMAT_PROC

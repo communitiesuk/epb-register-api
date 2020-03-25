@@ -109,5 +109,12 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
       recommendations[1][:sequence] = 5
       migrate_invalid_recommendations(recommendations)
     end
+
+    it 'rejects sequences that contain negative numbers' do
+      recommendations = valid_recommendations
+      recommendations[0][:sequence] = -1
+      recommendations[1][:sequence] = 0
+      migrate_invalid_recommendations(recommendations)
+    end
   end
 end
