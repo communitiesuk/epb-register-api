@@ -398,7 +398,7 @@ describe 'Acceptance::Assessor' do
         expect(assessor_response.status).to eq(422)
       end
 
-      it 'rejects an assessor qualification status of horse' do
+      it 'rejects an assessor qualification that isnt a valid status' do
         scheme_id = authenticate_and { add_scheme }
         invalid_body = valid_assessor_request_body.dup
         invalid_body[:qualifications] = { domesticRdSap: 'horse' }
