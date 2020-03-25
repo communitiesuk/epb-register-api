@@ -99,6 +99,10 @@ module Controller
       migrate_epc =
         @container.get_object(:migrate_domestic_energy_assessment_use_case)
       assessment_body = request_body(PUT_SCHEMA)
+      recommendedImprovements =
+        assessment_body[:recommended_improvements].map do |improvement|
+          Domain::RecommendedImprovement.new(improvement[:sequence])
+        end
 
       new_assessment =
         Domain::DomesticEnergyAssessment.new(
@@ -123,7 +127,8 @@ module Controller
           assessment_body[:heat_demand][:current_water_heating_demand],
           assessment_body[:heat_demand][:impact_of_loft_insulation],
           assessment_body[:heat_demand][:impact_of_cavity_insulation],
-          assessment_body[:heat_demand][:impact_of_solid_wall_insulation]
+          assessment_body[:heat_demand][:impact_of_solid_wall_insulation],
+          recommendedImprovements
         )
 
       result = migrate_epc.execute(new_assessment)

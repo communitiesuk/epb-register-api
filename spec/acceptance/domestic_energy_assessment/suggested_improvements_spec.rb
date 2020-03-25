@@ -96,5 +96,11 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
       recommendations[0][:sequence] = 'first'
       migrate_invalid_recommendations(recommendations)
     end
+
+    it 'rejects sequences that dont have a zero sequence' do
+      recommendations = valid_recommendations
+      recommendations[0][:sequence] = 2
+      migrate_invalid_recommendations(recommendations)
+    end
   end
 end

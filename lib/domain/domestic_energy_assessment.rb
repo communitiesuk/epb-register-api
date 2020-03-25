@@ -2,7 +2,8 @@ module Domain
   class DomesticEnergyAssessment
     attr_reader :current_energy_efficiency_rating,
                 :potential_energy_efficiency_rating,
-                :assessment_id
+                :assessment_id,
+                :recommended_improvements
 
     def initialize(
       date_of_assessment,
@@ -26,7 +27,8 @@ module Domain
       current_water_heating_demand,
       impact_of_loft_insulation,
       impact_of_cavity_insulation,
-      impact_of_solid_wall_insulation
+      impact_of_solid_wall_insulation,
+      recommended_improvements
     )
       @date_of_assessment = Date.strptime(date_of_assessment, '%Y-%m-%d')
       @date_registered = Date.strptime(date_registered, '%Y-%m-%d')
@@ -50,6 +52,7 @@ module Domain
       @impact_of_loft_insulation = impact_of_loft_insulation
       @impact_of_cavity_insulation = impact_of_cavity_insulation
       @impact_of_solid_wall_insulation = impact_of_solid_wall_insulation
+      @recommended_improvements = recommended_improvements
     end
 
     def get_energy_rating_band(number)
