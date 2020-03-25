@@ -8,6 +8,7 @@ module Controller
         lastName: { type: 'string' },
         middleNames: { type: 'string' },
         dateOfBirth: { type: 'string', format: 'iso-date' },
+        searchResultsComparisonPostcode: { type: 'string' },
         contactDetails: {
           type: 'object',
           properties: {

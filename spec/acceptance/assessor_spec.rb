@@ -412,6 +412,21 @@ describe 'Acceptance::Assessor' do
 
         expect(assessor_response.status).to eq(422)
       end
+
+      it 'rejects a search results comparison postcode that isnt a string' do
+        scheme_id = authenticate_and { add_scheme }
+        invalid_body = valid_assessor_request_body.dup
+        invalid_body[:searchResultsComparisonPostcode] = 25
+        assessor_response =
+          authenticate_and do
+            put(
+              "/api/schemes/#{scheme_id}/assessors/thebrokenassessor",
+              invalid_body.to_json
+            )
+          end
+
+        expect(assessor_response.status).to eq(422)
+      end
     end
 
     context 'which has a clashing ID for an assessor on another scheme' do
@@ -437,11 +452,12 @@ describe 'Acceptance::Assessor' do
       it 'adds an assessor' do
         scheme_id = authenticate_and { add_scheme }
 
-        add_assessor_response = authenticate_and do
-          add_assessor scheme_id,
-                       escaped_assessor_scheme_id,
-                       valid_assessor_with_contact_request_body
-        end
+        add_assessor_response =
+          authenticate_and do
+            add_assessor scheme_id,
+                         escaped_assessor_scheme_id,
+                         valid_assessor_with_contact_request_body
+          end
 
         expect(add_assessor_response.status).to eq 201
       end
@@ -455,9 +471,10 @@ describe 'Acceptance::Assessor' do
                        valid_assessor_with_contact_request_body
         end
 
-        fetch_assessor_response = authenticate_and do
-          fetch_assessor(scheme_id, escaped_assessor_scheme_id)
-        end
+        fetch_assessor_response =
+          authenticate_and do
+            fetch_assessor(scheme_id, escaped_assessor_scheme_id)
+          end
 
         expect(fetch_assessor_response.status).to eq 200
       end
