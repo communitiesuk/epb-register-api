@@ -86,7 +86,7 @@ module Controller
       result =
         @container.get_object(:fetch_domestic_energy_assessment_use_case)
           .execute(assessment_id)
-      json_response(200, result)
+      json_api_response(200, result)
     rescue Exception => e
       case e
       when UseCase::FetchDomesticEnergyAssessment::NotFoundException

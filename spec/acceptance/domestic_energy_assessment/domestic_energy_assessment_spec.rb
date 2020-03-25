@@ -155,7 +155,7 @@ describe 'Acceptance::DomesticEnergyAssessment' do
             recommendedImprovements: [{ sequence: 0 }]
           }.to_json
         )
-      expect(response).to eq(expected_response)
+      expect(response['data']).to eq(expected_response)
     end
   end
 
