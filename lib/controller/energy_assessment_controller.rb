@@ -37,7 +37,12 @@ module Controller
           }
         },
         recommendedImprovements: {
-          type: 'array', items: { type: 'object', required: %w[sequence] }
+          type: 'array',
+          items: {
+            type: 'object',
+            required: %w[sequence],
+            properties: { sequence: { type: 'integer' } }
+          }
         }
       }
     }

@@ -94,5 +94,16 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
       response = migrate_assessment('456-982', bad_assessment)
       expect(response.status).to eq(422)
     end
+
+    it 'rejects sequences that are not integers' do
+      bad_assessment = valid_assessment_body.dup
+      bad_assessment[:recommendedImprovements][0][:sequence] = 'First'
+      scheme_id = authenticate_and { add_scheme }
+      add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
+
+      pp bad_assessment
+      response = migrate_assessment('456-982', bad_assessment)
+      expect(response.status).to eq(422)
+    end
   end
 end
