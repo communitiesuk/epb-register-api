@@ -33,9 +33,11 @@ module UseCase
           )
 
         (max_response_size - response.size).times do |index|
-          response.push(second_response[index]) if second_response[index]
+          if second_response[index]
+            response.push(second_response[index])
 
-          loose_match = true
+            loose_match = true
+          end
         end
       end
 
