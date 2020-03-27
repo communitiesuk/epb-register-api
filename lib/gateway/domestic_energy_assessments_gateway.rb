@@ -54,7 +54,18 @@ module Gateway
     end
 
     def row_to_energy_improvement(row)
-      Domain::RecommendedImprovement.new(row[:assessment_id], row[:sequence])
+      Domain::RecommendedImprovement.new(
+        row[:assessment_id],
+        row[:sequence],
+        row[:improvement_code],
+        row[:indicative_cost],
+        row[:typical_saving],
+        row[:improvement_category],
+        row[:improvement_type],
+        row[:energy_performance_rating],
+        row[:environmental_impact_rating],
+        row[:green_deal_category_code]
+      )
     end
 
     def fetch(assessment_id)

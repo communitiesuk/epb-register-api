@@ -42,7 +42,19 @@ describe 'Acceptance::DomesticEnergyAssessment' do
         impactOfCavityInsulation: 67,
         impactOfSolidWallInsulation: 69
       },
-      recommendedImprovements: [{ sequence: 0 }]
+      recommendedImprovements: [
+        {
+          sequence: 0,
+          improvementCode: '1',
+          indicativeCost: "£200 - £4,000",
+          typicalSaving: 400.21,
+          improvementCategory: "string",
+          improvementType: "string",
+          energyPerformanceRating: "C",
+          environmentalImpactRating: "string",
+          greenDealCategoryCode: "string"
+        }
+      ]
     }.freeze
   end
 
@@ -81,6 +93,7 @@ describe 'Acceptance::DomesticEnergyAssessment' do
       authenticate_and do
         migrate_assessment('15650-651625-18267167', valid_assessment_body)
       end
+
       response = authenticate_and { fetch_assessment('15650-651625-18267167') }
       expect(response.status).to eq(200)
     end
@@ -152,7 +165,19 @@ describe 'Acceptance::DomesticEnergyAssessment' do
               impactOfSolidWallInsulation:
                 valid_assessment_body[:heatDemand][:impactOfSolidWallInsulation]
             },
-            recommendedImprovements: [{ sequence: 0 }]
+            recommendedImprovements: [
+              {
+                sequence: 0,
+                improvementCode: '1',
+                indicativeCost: "£200 - £4,000",
+                typicalSaving: "400.21",
+                improvementCategory: "string",
+                improvementType: "string",
+                energyPerformanceRating: "C",
+                environmentalImpactRating: "string",
+                greenDealCategoryCode: "string"
+              }
+            ]
           }.to_json
         )
       expect(response['data']).to eq(expected_response)
@@ -220,7 +245,19 @@ describe 'Acceptance::DomesticEnergyAssessment' do
               impactOfSolidWallInsulation:
                 valid_assessment_body[:heatDemand][:impactOfSolidWallInsulation]
             },
-            recommendedImprovements: [{ sequence: 0 }]
+            recommendedImprovements: [
+              {
+                sequence: 0,
+                improvementCode: '1',
+                indicativeCost: "£200 - £4,000",
+                typicalSaving: 400.21,
+                improvementCategory: "string",
+                improvementType: "string",
+                energyPerformanceRating: "C",
+                environmentalImpactRating: "string",
+                greenDealCategoryCode: "string"
+              }
+            ]
           }
 
       expect(migrated_assessment[:data]).to eq(expected_response)

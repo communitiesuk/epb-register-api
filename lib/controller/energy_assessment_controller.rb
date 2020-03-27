@@ -42,7 +42,15 @@ module Controller
             type: 'object',
             required: %w[sequence],
             properties: {
-              sequence: { type: 'integer', format: 'positive-int' }
+              sequence: { type: 'integer', format: 'positive-int' },
+              improvementCode: { type: 'string' },
+              indicativeCost: { type: 'string' },
+              typicalSaving: { type: 'decimal' },
+              improvementCategory: { type: 'string' },
+              improvementType: { type: 'string' },
+              energyPerformanceRating: { type: 'string' },
+              environmentalImpactRating: { type: 'string' },
+              greenDealCategoryCode: { type: 'string' }
             }
           }
         }

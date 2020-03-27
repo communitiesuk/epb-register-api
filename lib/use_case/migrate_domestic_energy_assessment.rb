@@ -45,7 +45,17 @@ module UseCase
           assessment_data[:heat_demand][:impact_of_cavity_insulation],
           assessment_data[:heat_demand][:impact_of_solid_wall_insulation],
           assessment_data[:recommended_improvements].map do |i|
-            Domain::RecommendedImprovement.new(assessment_id, i[:sequence])
+            Domain::RecommendedImprovement.new(assessment_id,
+              i[:sequence],
+              i[:improvement_code],
+              i[:indicative_cost],
+              i[:typical_saving],
+              i[:improvement_category],
+              i[:improvement_type],
+              i[:energy_performance_rating],
+              i[:environmental_impact_rating],
+              i[:green_deal_category_code]
+            )
           end
         )
 

@@ -18,7 +18,30 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
   end
 
   let (:valid_recommendations) do
-    [{ sequence: 0 }, { sequence: 1 }]
+    [
+      {
+        sequence: 0,
+        improvementCode: '1',
+        indicativeCost: "£200 - £4,000",
+        typicalSaving: 400.21,
+        improvementCategory: "string",
+        improvementType: "string",
+        energyPerformanceRating: "C",
+        environmentalImpactRating: "string",
+        greenDealCategoryCode: "string"
+      },
+      {
+        sequence: 1,
+        improvementCode: '2',
+        indicativeCost: "£430 - £4,000",
+        typicalSaving: 50.21,
+        improvementCategory: "string",
+        improvementType: "string",
+        energyPerformanceRating: "C",
+        environmentalImpactRating: "string",
+        greenDealCategoryCode: "string"
+      }
+    ]
   end
 
   let(:valid_assessment_body) do
@@ -115,6 +138,19 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
       recommendations[0][:sequence] = -1
       recommendations[1][:sequence] = 0
       migrate_invalid_recommendations(recommendations)
+    end
+  end
+
+  context 'when migrating an assessment with correctly structured improvements' do
+    it 'returns a 200 for a put' do
+      assessment = valid_assessment_body.dup
+      assessment[:recommendedImprovements] = valid_recommendations
+
+      scheme_id = add_scheme
+      add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
+
+      response = migrate_assessment('123-456', assessment)
+      expect(response.status).to eq(200)
     end
   end
 end

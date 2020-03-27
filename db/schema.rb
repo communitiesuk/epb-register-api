@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_25_141433) do
+ActiveRecord::Schema.define(version: 2020_03_26_133853) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,6 +57,14 @@ ActiveRecord::Schema.define(version: 2020_03_25_141433) do
   create_table "domestic_epc_energy_improvements", id: false, force: :cascade do |t|
     t.string "assessment_id"
     t.integer "sequence"
+    t.string "improvement_code"
+    t.string "indicative_cost"
+    t.decimal "typical_saving"
+    t.string "improvement_category"
+    t.string "improvement_type"
+    t.string "energy_performance_rating"
+    t.string "environmental_impact_rating"
+    t.string "green_deal_category_code"
   end
 
   create_table "postcode_geolocation", force: :cascade do |t|
