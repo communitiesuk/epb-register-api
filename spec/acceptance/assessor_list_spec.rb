@@ -17,26 +17,15 @@ describe 'Acceptance::AssessorList' do
     }
   end
 
-  def authenticate_with_data(data = {}, &block)
-    authenticate_and(nil, %w[scheme:assessor:list], data) { block.call }
-  end
-
   context "when a scheme doesn't exist" do
     context 'when a client is authorised' do
       it 'returns status 404 for a get' do
-        expect(
-          authenticate_with_data('scheme_ids': [20]) {
-            fetch_assessors(20)
-          }.status
-        ).to eq(404)
+        fetch_assessors(20, [404], true, {'scheme_ids': [20]})
       end
 
       it 'returns the 404 error response' do
-        expect(
-          authenticate_with_data('scheme_ids': [20]) {
-            fetch_assessors(20)
-          }.body
-        ).to eq(
+        response = fetch_assessors(20, [404], true, {'scheme_ids': [20]})
+        expect(response.body).to eq(
           {
             errors: [
               {
@@ -50,11 +39,12 @@ describe 'Acceptance::AssessorList' do
 
     context 'when a client is not authorised' do
       it 'returns status 403 for a get' do
-        expect(authenticate_with_data { fetch_assessors(20) }.status).to eq(403)
+        fetch_assessors(20, [403], true)
       end
 
       it 'returns the 403 error response for a get' do
-        expect(authenticate_with_data { fetch_assessors(20) }.body).to eq(
+        response = fetch_assessors(20, [403], true)
+        expect(response.body).to eq(
           {
             errors: [
               {
@@ -71,34 +61,22 @@ describe 'Acceptance::AssessorList' do
   context 'when a scheme has no assessors' do
     it 'returns status 200 for a get' do
       scheme_id = add_scheme_and_get_name
-
-      expect(
-        authenticate_with_data('scheme_ids': [scheme_id]) {
-          fetch_assessors(scheme_id)
-        }.status
-      ).to eq(200)
+      fetch_assessors(scheme_id, [200], true, {'scheme_ids': [scheme_id]})
     end
 
     it 'returns an empty list' do
       scheme_id = add_scheme_and_get_name
-
       expected = { 'assessors' => [] }
-      response =
-        authenticate_with_data('scheme_ids': [scheme_id]) do
-          fetch_assessors(scheme_id)
-        end.body
+      response = fetch_assessors(scheme_id, [200], true, {'scheme_ids': [scheme_id]})
 
-      actual = JSON.parse(response)['data']
+      actual = JSON.parse(response.body)['data']
 
       expect(actual).to eq expected
     end
 
     it 'returns JSON for a get' do
       scheme_id = add_scheme_and_get_name
-      response =
-        authenticate_with_data('scheme_ids': [scheme_id]) do
-          fetch_assessors(scheme_id)
-        end
+      response = fetch_assessors(scheme_id, [200], true, {'scheme_ids': [scheme_id]})
 
       expect(response.headers['Content-type']).to eq('application/json')
     end
@@ -107,15 +85,10 @@ describe 'Acceptance::AssessorList' do
   context 'when a scheme has one assessor' do
     it 'returns an array of assessors' do
       scheme_id = add_scheme_and_get_name
-      authenticate_and do
-        add_assessor(scheme_id, 'SCHEME4233', valid_assessor_request_body)
-      end
-      response =
-        authenticate_with_data('scheme_ids': [scheme_id]) do
-          fetch_assessors(scheme_id)
-        end.body
+      add_assessor(scheme_id, 'SCHEME4233', valid_assessor_request_body)
+      response = fetch_assessors(scheme_id, [200], true, {'scheme_ids': [scheme_id]})
 
-      actual = JSON.parse(response)['data']
+      actual = JSON.parse(response.body)['data']
       expected = {
         'assessors' => [
           {
@@ -145,21 +118,11 @@ describe 'Acceptance::AssessorList' do
   context 'when a scheme has multiple assessors' do
     it 'returns an array of assessors' do
       scheme_id = add_scheme_and_get_name
+      add_assessor(scheme_id, 'SCHEME1234', valid_assessor_request_body)
+      add_assessor(scheme_id, 'SCHEME5678', valid_assessor_request_body)
 
-      authenticate_and do
-        add_assessor(scheme_id, 'SCHEME1234', valid_assessor_request_body)
-      end
-
-      authenticate_and do
-        add_assessor(scheme_id, 'SCHEME5678', valid_assessor_request_body)
-      end
-
-      response =
-        authenticate_with_data('scheme_ids': [scheme_id]) do
-          fetch_assessors(scheme_id)
-        end.body
-
-      actual = JSON.parse(response)['data']
+      response = fetch_assessors(scheme_id, [200], true, {'scheme_ids': [scheme_id]})
+      actual = JSON.parse(response.body)['data']
       expected = {
         'assessors' => [
           {
@@ -206,42 +169,30 @@ describe 'Acceptance::AssessorList' do
   context 'when a client is not authenticated' do
     it 'returns a 401 unauthorised' do
       scheme_id = add_scheme_and_get_name
-
-      expect(fetch_assessors(scheme_id).status).to eq(401)
+      fetch_assessors(scheme_id, [401], false)
     end
   end
 
   context 'when a client does not have the right scope' do
     it 'returns a 403 forbidden' do
       scheme_id = add_scheme_and_get_name
-
-      expect(authenticate_and { fetch_assessors(scheme_id) }.status).to eq(403)
+      fetch_assessors(scheme_id, [403])
     end
   end
 
   context 'when a client tries to access another clients assessors' do
     it 'returns a 403 forbidden' do
       scheme_id = add_scheme_and_get_name
-      second_scheme_id =
-        authenticate_and { add_scheme_and_get_name 'second test scheme' }
+      second_scheme_id = add_scheme_and_get_name('second test scheme')
 
-      expect(
-        authenticate_with_data('scheme_ids': [scheme_id]) {
-          fetch_assessors(second_scheme_id)
-        }.status
-      ).to eq(403)
+      fetch_assessors(second_scheme_id, [403], true, {'scheme_ids': [scheme_id]})
     end
   end
 
   context 'when supplemental data object does not contain the schemes_ids key' do
     it 'returns a 403 forbidden' do
       scheme_id = add_scheme_and_get_name
-
-      expect(
-        authenticate_with_data('test': [scheme_id]) {
-          fetch_assessors(scheme_id)
-        }.status
-      ).to eq(403)
+      fetch_assessors(scheme_id, [403], true, {'test': [scheme_id]})
     end
   end
 end

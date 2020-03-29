@@ -51,6 +51,10 @@ def authenticate_and(request = nil, scopes = [], supplementary = {}, &block)
   response
 end
 
+def authenticate_with_data(data = {}, &block)
+  authenticate_and(nil, %w[scheme:assessor:list], data) { block.call }
+end
+
 def check_response(response, accepted_responses)
   if accepted_responses.include?(response.status)
     response
