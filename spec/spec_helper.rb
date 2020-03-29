@@ -50,6 +50,21 @@ def authenticate_and(request = nil, scopes = [], supplementary = {}, &block)
   response
 end
 
+def assertive_put(path, body, accepted_responses)
+  response = authenticate_and { put(path, body.to_json) }
+  if accepted_responses.include?(response.status)
+    response
+  else
+    raise UnexpectedApiError.new(
+        {
+            expected_status: accepted_responses,
+            actual_status: response.status,
+            response_body: response.body
+        }
+    )
+  end
+end
+
 def fetch_assessors(scheme_id)
   get "/api/schemes/#{scheme_id}/assessors"
 end
@@ -76,21 +91,6 @@ def add_scheme_then_assessor(body)
   scheme_id = add_scheme
   response = add_assessor(scheme_id, 'TEST_ASSESSOR', body)
   response
-end
-
-def assertive_put(path, body, accepted_responses)
-  response = authenticate_and { put(path, body.to_json) }
-  if accepted_responses.include?(response.status)
-    response
-  else
-    raise UnexpectedApiError.new(
-            {
-              expected_status: accepted_responses,
-              actual_status: response.status,
-              response_body: response.body
-            }
-          )
-  end
 end
 
 def fetch_assessment(assessment_id)
