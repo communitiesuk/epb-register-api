@@ -197,18 +197,13 @@ describe 'Searching for assessments' do
   context 'when using town and street name' do
     context 'and town is missing but street name is present' do
       it 'returns status 400 for a get' do
-        expect(
-          authenticate_and {
-            assessments_search_by_street_name_and_town('Palmtree Road', '')
-          }.status
-        ).to eq(400)
+        assessments_search_by_street_name_and_town('Palmtree Road', '', [400])
       end
 
       it 'contains the correct error message' do
         response_body =
-          authenticate_and do
-            assessments_search_by_street_name_and_town('Palmtree Road', '')
-          end.body
+          assessments_search_by_street_name_and_town('Palmtree Road', '', [400])
+            .body
         expect(JSON.parse(response_body)).to eq(
           {
             'errors' => [
@@ -224,18 +219,12 @@ describe 'Searching for assessments' do
 
     context 'and street name is missing but town is present' do
       it 'returns status 400 for a get' do
-        expect(
-          authenticate_and {
-            assessments_search_by_street_name_and_town('', 'Brighton')
-          }.status
-        ).to eq(400)
+        assessments_search_by_street_name_and_town('', 'Brighton', [400])
       end
 
       it 'contains the correct error message' do
         response_body =
-          authenticate_and do
-            assessments_search_by_street_name_and_town('', 'Brighton')
-          end.body
+          assessments_search_by_street_name_and_town('', 'Brighton', [400]).body
         expect(JSON.parse(response_body)).to eq(
           {
             'errors' => [
@@ -251,24 +240,19 @@ describe 'Searching for assessments' do
 
     context 'and required parameters are present' do
       it 'returns status 200 for a get' do
-        expect(
-          authenticate_and {
-            assessments_search_by_street_name_and_town(
-              'Palmtree Road',
-              'Brighton'
-            )
-          }.status
-        ).to eq(200)
+        assessments_search_by_street_name_and_town(
+          'Palmtree Road',
+          'Brighton',
+          [200]
+        )
       end
 
       it 'looks as it should' do
         response =
-          authenticate_and do
-            assessments_search_by_street_name_and_town(
-              'Palmtree Road',
-              'Brighton'
-            )
-          end
+          assessments_search_by_street_name_and_town(
+            'Palmtree Road',
+            'Brighton'
+          )
 
         response_json = JSON.parse(response.body)
 
@@ -277,12 +261,10 @@ describe 'Searching for assessments' do
 
       it 'has the properties we expect' do
         response =
-          authenticate_and do
-            assessments_search_by_street_name_and_town(
-              'Palmtree Road',
-              'Brighton'
-            )
-          end
+          assessments_search_by_street_name_and_town(
+            'Palmtree Road',
+            'Brighton'
+          )
 
         response_json = JSON.parse(response.body)
 
@@ -291,18 +273,14 @@ describe 'Searching for assessments' do
 
       it 'has the over all hash of the shape we expect' do
         scheme_id = add_scheme
-        authenticate_and do
-          add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
-        end
+        add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
 
         migrate_assessment('123-987', valid_assessment_body)
         response =
-          authenticate_and do
-            assessments_search_by_street_name_and_town(
-              'Palmtree Road',
-              'Brighton'
-            )
-          end
+          assessments_search_by_street_name_and_town(
+            'Palmtree Road',
+            'Brighton'
+          )
 
         response_json = JSON.parse(response.body)
 
