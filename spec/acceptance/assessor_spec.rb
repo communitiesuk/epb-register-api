@@ -29,9 +29,7 @@ describe 'Acceptance::Assessor' do
     end
 
     it 'returns status 404 for a PUT' do
-      expect(
-        add_assessor(20, 'SCHEME4532', valid_assessor_request).status
-      ).to eq(404)
+      add_assessor(20, 'SCHEME4532', valid_assessor_request, [404])
     end
 
     context 'and the client is unauthenticated' do
@@ -258,69 +256,51 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'rejects requests without firstname' do
-        assessor_response =
-          add_scheme_then_assessor(assessor_without_key :firstName)
-        expect(assessor_response.status).to eq(422)
+        add_scheme_then_assessor(assessor_without_key(:firstName), [422])
       end
 
       it 'rejects requests without last name' do
-        assessor_response =
-          add_scheme_then_assessor(assessor_without_key :lastName)
-        expect(assessor_response.status).to eq(422)
+        add_scheme_then_assessor(assessor_without_key(:lastName), [422])
       end
 
       it 'rejects requests without date of birth' do
-        assessor_response =
-          add_scheme_then_assessor(assessor_without_key :dateOfBirth)
-        expect(assessor_response.status).to eq(422)
+        add_scheme_then_assessor(assessor_without_key(:dateOfBirth), [422])
       end
 
       it 'rejects requests with invalid date of birth' do
         invalid_body = valid_assessor_request.dup
         invalid_body[:dateOfBirth] = '02/28/1987'
-        assessor_response = add_scheme_then_assessor(invalid_body)
-
-        expect(assessor_response.status).to eq(422)
+        add_scheme_then_assessor(invalid_body, [422])
       end
 
       it 'rejects requests with invalid first name' do
         invalid_body = valid_assessor_request.dup
         invalid_body[:firstName] = 1_000
-        assessor_response = add_scheme_then_assessor(invalid_body)
-
-        expect(assessor_response.status).to eq(422)
+        add_scheme_then_assessor(invalid_body, [422])
       end
 
       it 'rejects requests with invalid last name' do
         invalid_body = valid_assessor_request.dup
         invalid_body[:lastName] = false
-        assessor_response = add_scheme_then_assessor(invalid_body)
-
-        expect(assessor_response.status).to eq(422)
+        add_scheme_then_assessor(invalid_body, [422])
       end
 
       it 'rejects requests with invalid middle names' do
         invalid_body = valid_assessor_request.dup
         invalid_body[:middleNames] = %w[adsfasd]
-        assessor_response = add_scheme_then_assessor(invalid_body)
-
-        expect(assessor_response.status).to eq(422)
+        add_scheme_then_assessor(invalid_body, [422])
       end
 
       it 'rejects an assessor qualification that isnt a valid status' do
         invalid_body = valid_assessor_request.dup
         invalid_body[:qualifications] = { domesticRdSap: 'horse' }
-        assessor_response = add_scheme_then_assessor(invalid_body)
-
-        expect(assessor_response.status).to eq(422)
+        add_scheme_then_assessor(invalid_body, [422])
       end
 
       it 'rejects a search results comparison postcode that isnt a string' do
         invalid_body = valid_assessor_request.dup
         invalid_body[:searchResultsComparisonPostcode] = 25
-        assessor_response = add_scheme_then_assessor(invalid_body)
-
-        expect(assessor_response.status).to eq(422)
+        add_scheme_then_assessor(invalid_body, [422])
       end
     end
 
@@ -330,10 +310,7 @@ describe 'Acceptance::Assessor' do
         second_scheme = add_scheme 'scheme two'
 
         add_assessor(first_scheme, 'SCHE4001', valid_assessor_request)
-        second_response =
-          add_assessor(second_scheme, 'SCHE4001', valid_assessor_request)
-
-        expect(second_response.status).to eq(409)
+        add_assessor(second_scheme, 'SCHE4001', valid_assessor_request, [409])
       end
     end
 
@@ -400,14 +377,11 @@ describe 'Acceptance::Assessor' do
     end
 
     context 'which has an invalid email' do
-      it 'returns error 400' do
+      it 'rejects the assessor' do
         invalid_request_body = valid_assessor_request
         invalid_request_body[:contactDetails][:email] = '54'
 
-        expect(
-          assessor_response =
-            add_scheme_then_assessor(invalid_request_body).status
-        ).to eq(422)
+        add_scheme_then_assessor(invalid_request_body, [422])
       end
     end
 
@@ -433,8 +407,7 @@ describe 'Acceptance::Assessor' do
       it 'returns error 400' do
         request_body = valid_assessor_request
         request_body[:contactDetails][:telephoneNumber] = '0' * 257
-
-        expect(add_scheme_then_assessor(request_body).status).to eq(422)
+        add_scheme_then_assessor(request_body, [422])
       end
     end
 
