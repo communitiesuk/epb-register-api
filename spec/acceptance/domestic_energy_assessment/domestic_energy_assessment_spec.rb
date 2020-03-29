@@ -46,13 +46,13 @@ describe 'Acceptance::DomesticEnergyAssessment' do
         {
           sequence: 0,
           improvementCode: '1',
-          indicativeCost: "£200 - £4,000",
+          indicativeCost: '£200 - £4,000',
           typicalSaving: 400.21,
-          improvementCategory: "string",
-          improvementType: "string",
-          energyPerformanceRating: "C",
-          environmentalImpactRating: "string",
-          greenDealCategoryCode: "string"
+          improvementCategory: 'string',
+          improvementType: 'string',
+          energyPerformanceRating: 'C',
+          environmentalImpactRating: 'string',
+          greenDealCategoryCode: 'string'
         }
       ]
     }.freeze
@@ -169,13 +169,13 @@ describe 'Acceptance::DomesticEnergyAssessment' do
               {
                 sequence: 0,
                 improvementCode: '1',
-                indicativeCost: "£200 - £4,000",
-                typicalSaving: "400.21",
-                improvementCategory: "string",
-                improvementType: "string",
-                energyPerformanceRating: "C",
-                environmentalImpactRating: "string",
-                greenDealCategoryCode: "string"
+                indicativeCost: '£200 - £4,000',
+                typicalSaving: '400.21',
+                improvementCategory: 'string',
+                improvementType: 'string',
+                energyPerformanceRating: 'C',
+                environmentalImpactRating: 'string',
+                greenDealCategoryCode: 'string'
               }
             ]
           }.to_json
@@ -210,55 +210,54 @@ describe 'Acceptance::DomesticEnergyAssessment' do
         end
 
       migrated_assessment = JSON.parse(response, symbolize_names: true)
-      expected_response =
+      expected_response = {
+        dateOfAssessment: valid_assessment_body[:dateOfAssessment],
+        dateRegistered: valid_assessment_body[:dateRegistered],
+        totalFloorArea: valid_assessment_body[:totalFloorArea],
+        typeOfAssessment: valid_assessment_body[:typeOfAssessment],
+        dwellingType: valid_assessment_body[:dwellingType],
+        addressSummary: valid_assessment_body[:addressSummary],
+        assessmentId: '123-456',
+        currentEnergyEfficiencyRating:
+          valid_assessment_body[:currentEnergyEfficiencyRating],
+        potentialEnergyEfficiencyRating:
+          valid_assessment_body[:potentialEnergyEfficiencyRating],
+        postcode: valid_assessment_body[:postcode],
+        dateOfExpiry: valid_assessment_body[:dateOfExpiry],
+        town: valid_assessment_body[:town],
+        addressLine1: valid_assessment_body[:addressLine1],
+        addressLine2: valid_assessment_body[:addressLine2],
+        addressLine3: valid_assessment_body[:addressLine4],
+        addressLine4: valid_assessment_body[:addressLine4],
+        schemeAssessorId: valid_assessment_body[:schemeAssessorId],
+        potentialEnergyEfficiencyBand: 'c',
+        currentEnergyEfficiencyBand: 'c',
+        heatDemand: {
+          currentSpaceHeatingDemand:
+            valid_assessment_body[:heatDemand][:currentSpaceHeatingDemand],
+          currentWaterHeatingDemand:
+            valid_assessment_body[:heatDemand][:currentWaterHeatingDemand],
+          impactOfLoftInsulation:
+            valid_assessment_body[:heatDemand][:impactOfLoftInsulation],
+          impactOfCavityInsulation:
+            valid_assessment_body[:heatDemand][:impactOfCavityInsulation],
+          impactOfSolidWallInsulation:
+            valid_assessment_body[:heatDemand][:impactOfSolidWallInsulation]
+        },
+        recommendedImprovements: [
           {
-            dateOfAssessment: valid_assessment_body[:dateOfAssessment],
-            dateRegistered: valid_assessment_body[:dateRegistered],
-            totalFloorArea: valid_assessment_body[:totalFloorArea],
-            typeOfAssessment: valid_assessment_body[:typeOfAssessment],
-            dwellingType: valid_assessment_body[:dwellingType],
-            addressSummary: valid_assessment_body[:addressSummary],
-            assessmentId: '123-456',
-            currentEnergyEfficiencyRating:
-              valid_assessment_body[:currentEnergyEfficiencyRating],
-            potentialEnergyEfficiencyRating:
-              valid_assessment_body[:potentialEnergyEfficiencyRating],
-            postcode: valid_assessment_body[:postcode],
-            dateOfExpiry: valid_assessment_body[:dateOfExpiry],
-            town: valid_assessment_body[:town],
-            addressLine1: valid_assessment_body[:addressLine1],
-            addressLine2: valid_assessment_body[:addressLine2],
-            addressLine3: valid_assessment_body[:addressLine4],
-            addressLine4: valid_assessment_body[:addressLine4],
-            schemeAssessorId: valid_assessment_body[:schemeAssessorId],
-            potentialEnergyEfficiencyBand: 'c',
-            currentEnergyEfficiencyBand: 'c',
-            heatDemand: {
-              currentSpaceHeatingDemand:
-                valid_assessment_body[:heatDemand][:currentSpaceHeatingDemand],
-              currentWaterHeatingDemand:
-                valid_assessment_body[:heatDemand][:currentWaterHeatingDemand],
-              impactOfLoftInsulation:
-                valid_assessment_body[:heatDemand][:impactOfLoftInsulation],
-              impactOfCavityInsulation:
-                valid_assessment_body[:heatDemand][:impactOfCavityInsulation],
-              impactOfSolidWallInsulation:
-                valid_assessment_body[:heatDemand][:impactOfSolidWallInsulation]
-            },
-            recommendedImprovements: [
-              {
-                sequence: 0,
-                improvementCode: '1',
-                indicativeCost: "£200 - £4,000",
-                typicalSaving: 400.21,
-                improvementCategory: "string",
-                improvementType: "string",
-                energyPerformanceRating: "C",
-                environmentalImpactRating: "string",
-                greenDealCategoryCode: "string"
-              }
-            ]
+            sequence: 0,
+            improvementCode: '1',
+            indicativeCost: '£200 - £4,000',
+            typicalSaving: 400.21,
+            improvementCategory: 'string',
+            improvementType: 'string',
+            energyPerformanceRating: 'C',
+            environmentalImpactRating: 'string',
+            greenDealCategoryCode: 'string'
           }
+        ]
+      }
 
       expect(migrated_assessment[:data]).to eq(expected_response)
     end
@@ -266,9 +265,12 @@ describe 'Acceptance::DomesticEnergyAssessment' do
     it 'rejects a assessment without an address summary' do
       response =
         authenticate_and do
-          migrate_assessment('123-456', assessment_without(:addressSummary))
+          migrate_assessment(
+            '123-456',
+            assessment_without(:addressSummary),
+            [422]
+          )
         end
-      expect(response.status).to eq(422)
     end
 
     it 'rejects a assessment with an address summary that is not a string' do
@@ -276,17 +278,19 @@ describe 'Acceptance::DomesticEnergyAssessment' do
       assessment_with_dodgy_address[:addressSummary] = 123_321
       response =
         authenticate_and do
-          migrate_assessment('123-456', assessment_with_dodgy_address)
+          migrate_assessment('123-456', assessment_with_dodgy_address, [422])
         end
-      expect(response.status).to eq(422)
     end
 
     it 'rejects a assessment without a date of assessment' do
       response =
         authenticate_and do
-          migrate_assessment('123-456', assessment_without(:dateOfAssessment))
+          migrate_assessment(
+            '123-456',
+            assessment_without(:dateOfAssessment),
+            [422]
+          )
         end
-      expect(response.status).to eq(422)
     end
 
     it 'rejects a assessment with an date of assessment that is not a date' do
@@ -294,17 +298,23 @@ describe 'Acceptance::DomesticEnergyAssessment' do
       assessment_with_dodge_date_of_address[:dateOfAssessment] = 'horse'
       response =
         authenticate_and do
-          migrate_assessment('123-456', assessment_with_dodge_date_of_address)
+          migrate_assessment(
+            '123-456',
+            assessment_with_dodge_date_of_address,
+            [422]
+          )
         end
-      expect(response.status).to eq(422)
     end
 
     it 'rejects a assessment without a date of assessment' do
       response =
         authenticate_and do
-          migrate_assessment('123-456', assessment_without(:dateRegistered))
+          migrate_assessment(
+            '123-456',
+            assessment_without(:dateRegistered),
+            [422]
+          )
         end
-      expect(response.status).to eq(422)
     end
 
     it 'rejects a assessment with a date of assessment that is not a date' do
@@ -314,18 +324,21 @@ describe 'Acceptance::DomesticEnergyAssessment' do
         authenticate_and do
           migrate_assessment(
             '123-456',
-            assessment_with_dodge_date_of_assessment
+            assessment_with_dodge_date_of_assessment,
+            [422]
           )
         end
-      expect(response.status).to eq(422)
     end
 
     it 'rejects a assessment without a total floor area' do
       response =
         authenticate_and do
-          migrate_assessment('123-456', assessment_without(:totalFloorArea))
+          migrate_assessment(
+            '123-456',
+            assessment_without(:totalFloorArea),
+            [422]
+          )
         end
-      expect(response.status).to eq(422)
     end
 
     it 'rejects a assessment with a total floor area that is not an integer' do
@@ -333,17 +346,23 @@ describe 'Acceptance::DomesticEnergyAssessment' do
       assessment_with_dodgy_total_floor_area[:totalFloorArea] = 'horse'
       response =
         authenticate_and do
-          migrate_assessment('123-456', assessment_with_dodgy_total_floor_area)
+          migrate_assessment(
+            '123-456',
+            assessment_with_dodgy_total_floor_area,
+            [422]
+          )
         end
-      expect(response.status).to eq(422)
     end
 
     it 'rejects a assessment without a dwelling type' do
       response =
         authenticate_and do
-          migrate_assessment('123-456', assessment_without(:dwellingType))
+          migrate_assessment(
+            '123-456',
+            assessment_without(:dwellingType),
+            [422]
+          )
         end
-      expect(response.status).to eq(422)
     end
 
     it 'rejects a assessment with a dwelling type that is not a string' do
@@ -351,17 +370,23 @@ describe 'Acceptance::DomesticEnergyAssessment' do
       assessment_with_dodgy_dwelling_type[:dwellingType] = 456_765
       response =
         authenticate_and do
-          migrate_assessment('123-456', assessment_with_dodgy_dwelling_type)
+          migrate_assessment(
+            '123-456',
+            assessment_with_dodgy_dwelling_type,
+            [422]
+          )
         end
-      expect(response.status).to eq(422)
     end
 
     it 'rejects a assessment without a type of assessment' do
       response =
         authenticate_and do
-          migrate_assessment('123-456', assessment_without(:typeOfAssessment))
+          migrate_assessment(
+            '123-456',
+            assessment_without(:typeOfAssessment),
+            [422]
+          )
         end
-      expect(response.status).to eq(422)
     end
 
     it 'rejects a assessment with a type of assessment that is not a string' do
@@ -371,10 +396,10 @@ describe 'Acceptance::DomesticEnergyAssessment' do
         authenticate_and do
           migrate_assessment(
             '123-456',
-            assessment_with_dodgy_type_of_assessment
+            assessment_with_dodgy_type_of_assessment,
+            [422]
           )
         end
-      expect(response.status).to eq(422)
     end
 
     it 'rejects a assessment with a type of current energy efficiency rating that is not an integer' do
@@ -383,9 +408,12 @@ describe 'Acceptance::DomesticEnergyAssessment' do
         'one'
       response =
         authenticate_and do
-          migrate_assessment('123-456', assessment_with_dodgy_current_rating)
+          migrate_assessment(
+            '123-456',
+            assessment_with_dodgy_current_rating,
+            [422]
+          )
         end
-      expect(response.status).to eq(422)
     end
 
     it 'rejects a assessment with a type of potential energy efficiency rating that is not an integer' do
@@ -394,9 +422,12 @@ describe 'Acceptance::DomesticEnergyAssessment' do
         'two'
       response =
         authenticate_and do
-          migrate_assessment('123-456', assessment_with_dodgy_potential_rating)
+          migrate_assessment(
+            '123-456',
+            assessment_with_dodgy_potential_rating,
+            [422]
+          )
         end
-      expect(response.status).to eq(422)
     end
 
     it 'rejects an assessment with a invalid current energy efficiency rating' do
@@ -404,9 +435,12 @@ describe 'Acceptance::DomesticEnergyAssessment' do
       assessment_with_dodgy_current_rating[:currentEnergyEfficiencyRating] = 175
       response =
         authenticate_and do
-          migrate_assessment('123-456', assessment_with_dodgy_current_rating)
+          migrate_assessment(
+            '123-456',
+            assessment_with_dodgy_current_rating,
+            [422]
+          )
         end
-      expect(response.status).to eq(422)
     end
 
     it 'rejects an assessment with a invalid potential energy efficiency rating' do
@@ -415,9 +449,12 @@ describe 'Acceptance::DomesticEnergyAssessment' do
         175
       response =
         authenticate_and do
-          migrate_assessment('123-456', assessment_with_dodgy_potential_rating)
+          migrate_assessment(
+            '123-456',
+            assessment_with_dodgy_potential_rating,
+            [422]
+          )
         end
-      expect(response.status).to eq(422)
     end
 
     it 'rejects an assessment without current space heating demand' do
@@ -432,9 +469,12 @@ describe 'Acceptance::DomesticEnergyAssessment' do
 
       response =
         authenticate_and do
-          migrate_assessment('456-982', assessment_without_space_heating_data)
+          migrate_assessment(
+            '456-982',
+            assessment_without_space_heating_data,
+            [422]
+          )
         end
-      expect(response.status).to eq(422)
     end
 
     it 'rejects an assessment without current water heating demand' do
@@ -449,9 +489,12 @@ describe 'Acceptance::DomesticEnergyAssessment' do
 
       response =
         authenticate_and do
-          migrate_assessment('456-982', assessment_without_water_heating_data)
+          migrate_assessment(
+            '456-982',
+            assessment_without_water_heating_data,
+            [422]
+          )
         end
-      expect(response.status).to eq(422)
     end
   end
 end

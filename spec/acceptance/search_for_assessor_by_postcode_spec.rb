@@ -159,19 +159,19 @@ describe 'Acceptance::SearchForAssessor' do
       expected_response =
         JSON.parse(
           {
-              firstName: 'Some',
-              lastName: 'Person',
-              middleNames: 'Middle',
-              registeredBy: { name: 'Happy EPC', schemeId: 25 },
-              schemeAssessorId: 'ASSESSOR999',
-              searchResultsComparisonPostcode: 'SE1 7EZ',
-              dateOfBirth: '1991-02-25',
-              contactDetails: {
-                telephoneNumber: '010199991010101', email: 'person@person.com'
-              },
-              qualifications: {
-                domesticRdSap: 'ACTIVE', nonDomesticSp3: 'INACTIVE'
-              },
+            firstName: 'Some',
+            lastName: 'Person',
+            middleNames: 'Middle',
+            registeredBy: { name: 'Happy EPC', schemeId: 25 },
+            schemeAssessorId: 'ASSESSOR999',
+            searchResultsComparisonPostcode: 'SE1 7EZ',
+            dateOfBirth: '1991-02-25',
+            contactDetails: {
+              telephoneNumber: '010199991010101', email: 'person@person.com'
+            },
+            qualifications: {
+              domesticRdSap: 'ACTIVE', nonDomesticSp3: 'INACTIVE'
+            },
             distanceFromPostcodeInMiles: 0.0
           }.to_json
         )
@@ -229,7 +229,9 @@ describe 'Acceptance::SearchForAssessor' do
         authenticate_and { assessors_search('SE19SG', 'domesticRdSap') }
 
       response_json = JSON.parse(response.body)
-      expect(response_json['data']['assessors'][0]['distanceFromPostcodeInMiles']).to be_between(2, 4)
+      expect(
+        response_json['data']['assessors'][0]['distanceFromPostcodeInMiles']
+      ).to be_between(2, 4)
     end
 
     it 'does not return inactive assessors' do
@@ -345,7 +347,9 @@ describe 'Acceptance::SearchForAssessor' do
           authenticate_and { assessors_search('SE19SY', 'domesticRdSap') }
 
         response_json = JSON.parse(response.body)
-        expect(response_json['data']['assessors'][0]).to include('distanceFromPostcodeInMiles')
+        expect(response_json['data']['assessors'][0]).to include(
+          'distanceFromPostcodeInMiles'
+        )
       end
 
       it 'returns error when neither postcode or outcode are found' do

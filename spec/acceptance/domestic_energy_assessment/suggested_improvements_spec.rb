@@ -22,24 +22,24 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
       {
         sequence: 0,
         improvementCode: '1',
-        indicativeCost: "£200 - £4,000",
+        indicativeCost: '£200 - £4,000',
         typicalSaving: 400.21,
-        improvementCategory: "string",
-        improvementType: "string",
-        energyPerformanceRating: "C",
-        environmentalImpactRating: "string",
-        greenDealCategoryCode: "string"
+        improvementCategory: 'string',
+        improvementType: 'string',
+        energyPerformanceRating: 'C',
+        environmentalImpactRating: 'string',
+        greenDealCategoryCode: 'string'
       },
       {
         sequence: 1,
         improvementCode: '2',
-        indicativeCost: "£430 - £4,000",
+        indicativeCost: '£430 - £4,000',
         typicalSaving: 50.21,
-        improvementCategory: "string",
-        improvementType: "string",
-        energyPerformanceRating: "C",
-        environmentalImpactRating: "string",
-        greenDealCategoryCode: "string"
+        improvementCategory: 'string',
+        improvementType: 'string',
+        energyPerformanceRating: 'C',
+        environmentalImpactRating: 'string',
+        greenDealCategoryCode: 'string'
       }
     ]
   end
@@ -91,8 +91,7 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
     scheme_id = add_scheme
     add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
 
-    response = migrate_assessment('123-456', assessment)
-    expect(response.status).to eq(422)
+    migrate_assessment('123-456', assessment, [422])
   end
 
   context 'when migrating an assessment with badly structured improvements' do

@@ -22,7 +22,7 @@ describe 'Acceptance::Schemes' do
 
     it 'includes an empty list of schemes' do
       parsed_response = JSON.parse(response.body, symbolize_names: true)
-      expect(parsed_response).to eq({:data => {:schemes => []}, :meta => {}})
+      expect(parsed_response).to eq({ data: { schemes: [] }, meta: {} })
     end
   end
 

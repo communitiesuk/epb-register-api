@@ -43,7 +43,9 @@ describe UseCase::FindAssessmentsByAssessmentId do
       expect(
         find_assessments_without_stub_data.execute('1234-5678-9101-1121-3141')[
           :data
-        ][:assessments]
+        ][
+          :assessments
+        ]
       ).to eq([])
     end
 

@@ -33,7 +33,9 @@ module UseCase
 
       result = @assessor_gateway.search(latitude, longitude, qualification)
 
-      { 'data': {'assessors': result}, 'meta': {'searchPostcode': postcode} }
+      {
+        'data': { 'assessors': result }, 'meta': { 'searchPostcode': postcode }
+      }
     end
   end
 end

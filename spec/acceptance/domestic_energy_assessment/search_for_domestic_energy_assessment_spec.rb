@@ -44,13 +44,13 @@ describe 'Searching for assessments' do
         {
           sequence: 0,
           improvementCode: '1',
-          indicativeCost: "£200 - £4,000",
+          indicativeCost: '£200 - £4,000',
           typicalSaving: 400.21,
-          improvementCategory: "string",
-          improvementType: "string",
-          energyPerformanceRating: "C",
-          environmentalImpactRating: "string",
-          greenDealCategoryCode: "string"
+          improvementCategory: 'string',
+          improvementType: 'string',
+          energyPerformanceRating: 'C',
+          environmentalImpactRating: 'string',
+          greenDealCategoryCode: 'string'
         }
       ]
     }.freeze

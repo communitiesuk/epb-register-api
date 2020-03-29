@@ -21,7 +21,7 @@ module UseCase
 
       result = @assessment_gateway.search_by_postcode(postcode)
 
-      { 'data': {'assessments': result}, 'meta': {'searchQuery': postcode} }
+      { 'data': { 'assessments': result }, 'meta': { 'searchQuery': postcode } }
     end
   end
 end

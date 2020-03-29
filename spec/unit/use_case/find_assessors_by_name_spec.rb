@@ -44,7 +44,9 @@ describe UseCase::FindAssessorsByName do
 
     it 'return empty when no assessors are present' do
       expect(
-        find_assessors_without_stub_data.execute('Someones Name')[:data][:assessors]
+        find_assessors_without_stub_data.execute('Someones Name')[:data][
+          :assessors
+        ]
       ).to eq([])
     end
 

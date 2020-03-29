@@ -19,6 +19,8 @@ loader.setup
 ENV['JWT_ISSUER'] = 'test.issuer'
 ENV['JWT_SECRET'] = 'test.secret'
 
+class UnexpectedApiError < Exception; end
+
 module RSpecMixin
   def app
     described_class
@@ -64,7 +66,9 @@ end
 
 def add_scheme(name = 'test scheme')
   authenticate_and do
-    JSON.parse(post('/api/schemes', { name: name }.to_json).body)['data']['schemeId']
+    JSON.parse(post('/api/schemes', { name: name }.to_json).body)['data'][
+      'schemeId'
+    ]
   end
 end
 
@@ -74,17 +78,33 @@ def add_scheme_then_assessor(body)
   response
 end
 
+def assertive_put(path, body, accepted_responses)
+  response = authenticate_and { put(path, body.to_json) }
+  if accepted_responses.include?(response.status)
+    response
+  else
+    raise UnexpectedApiError.new(
+            {
+              expected_status: accepted_responses,
+              actual_status: response.status,
+              response_body: response.body
+            }
+          )
+  end
+end
+
 def fetch_assessment(assessment_id)
   authenticate_and { get "api/assessments/domestic-epc/#{assessment_id}" }
 end
 
-def migrate_assessment(assessment_id, assessment_body)
-  authenticate_and do
-    put(
-      "api/assessments/domestic-epc/#{assessment_id}",
-      assessment_body.to_json
-    )
-  end
+def migrate_assessment(
+  assessment_id, assessment_body, accepted_responses = [200]
+)
+  assertive_put(
+    "api/assessments/domestic-epc/#{assessment_id}",
+    assessment_body,
+    accepted_responses
+  )
 end
 
 def get_valid_jwt(scopes = [], sup = {})

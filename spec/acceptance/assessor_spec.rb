@@ -127,7 +127,9 @@ describe 'Acceptance::Assessor' do
           assessor_without_key(:qualifications)
         )
         response = JSON.parse(fetch_assessor(scheme_id, 'SCHEME4233').body)
-        expect(response['data']['qualifications']['domesticRdSap']).to eq('INACTIVE')
+        expect(response['data']['qualifications']['domesticRdSap']).to eq(
+          'INACTIVE'
+        )
       end
     end
   end
@@ -157,7 +159,9 @@ describe 'Acceptance::Assessor' do
         assessor_response =
           JSON.parse(
             add_assessor(scheme_id, 'SCHE55443', valid_assessor_request).body
-          )['data']
+          )[
+            'data'
+          ]
 
         expected_response =
           JSON.parse(
@@ -206,7 +210,9 @@ describe 'Acceptance::Assessor' do
               assessor_without_key(:middleNames)
             )
               .body
-          )['data']
+          )[
+            'data'
+          ]
 
         expected_response =
           JSON.parse(
@@ -417,7 +423,9 @@ describe 'Acceptance::Assessor' do
         response_body = fetch_assessor(scheme_id, 'ASSESSOR99').body
         json_response = JSON.parse(response_body)
 
-        expect(json_response['data']['contactDetails']['email']).to eq('mar@ten.com')
+        expect(json_response['data']['contactDetails']['email']).to eq(
+          'mar@ten.com'
+        )
       end
     end
 
@@ -445,9 +453,9 @@ describe 'Acceptance::Assessor' do
 
         json_response = JSON.parse(response_body)
 
-        expect(json_response['data']['contactDetails']['telephoneNumber']).to eq(
-          valid_telephone
-        )
+        expect(
+          json_response['data']['contactDetails']['telephoneNumber']
+        ).to eq(valid_telephone)
       end
     end
   end
