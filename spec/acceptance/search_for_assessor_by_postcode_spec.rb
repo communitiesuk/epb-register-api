@@ -52,15 +52,9 @@ describe 'Acceptance::SearchForAssessor' do
     end
   end
 
-  def assessors_search(postcode, qualification)
-    get "/api/assessors?postcode=#{postcode}&qualification=#{qualification}"
-  end
-
   context 'when a search postcode is invalid' do
     it 'returns status 409 for a get' do
-      expect(
-        authenticate_and { assessors_search('73334', 'domesticRdSap') }.status
-      ).to eq(409)
+      assessors_search('73334', 'domesticRdSap', [409])
     end
   end
 
@@ -80,16 +74,13 @@ describe 'Acceptance::SearchForAssessor' do
   context 'when a search postcode is valid' do
     it 'returns status 200 for a get' do
       add_postcodes('SE1 7EZ')
-      expect(
-        authenticate_and { assessors_search('SE17EZ', 'domesticRdSap') }.status
-      ).to eq(200)
+      assessors_search('SE17EZ', 'domesticRdSap', [200])
     end
 
     it 'looks as it should' do
       add_postcodes('SE1 7EZ')
 
-      response =
-        authenticate_and { assessors_search('SE17EZ', 'domesticRdSap') }
+      response = assessors_search('SE17EZ', 'domesticRdSap')
 
       response_json = JSON.parse(response.body)
 
@@ -99,7 +90,7 @@ describe 'Acceptance::SearchForAssessor' do
     it 'can handle a lowercase postcode' do
       add_postcodes('E2 0SZ')
 
-      response = authenticate_and { assessors_search('e20sz', 'domesticRdSap') }
+      response = assessors_search('e20sz', 'domesticRdSap')
 
       response_json = JSON.parse(response.body)
 
@@ -109,8 +100,7 @@ describe 'Acceptance::SearchForAssessor' do
     it 'has the properties we expect' do
       add_postcodes('SE1 7EZ')
 
-      response =
-        authenticate_and { assessors_search('SE17EZ', 'domesticRdSap') }
+      response = assessors_search('SE17EZ', 'domesticRdSap')
 
       response_json = JSON.parse(response.body)
 
@@ -120,18 +110,13 @@ describe 'Acceptance::SearchForAssessor' do
     it 'has the assessors of the shape we expect' do
       add_postcodes('SE1 7EZ')
       scheme_id = add_scheme_and_get_name
+      add_assessor(
+        scheme_id,
+        'ASSESSOR999',
+        valid_assessor_with_contact_request_body
+      )
 
-      authenticate_and do
-        add_assessor(
-          scheme_id,
-          'ASSESSOR999',
-          valid_assessor_with_contact_request_body
-        )
-      end
-
-      response =
-        authenticate_and { assessors_search('SE17EZ', 'domesticRdSap') }
-
+      response = assessors_search('SE17EZ', 'domesticRdSap')
       response_json = JSON.parse(response.body)
 
       expect(response_json['data']).to include('assessors')
@@ -142,16 +127,13 @@ describe 'Acceptance::SearchForAssessor' do
 
       scheme_id = add_scheme_and_get_name
 
-      authenticate_and do
-        add_assessor(
-          scheme_id,
-          'ASSESSOR999',
-          valid_assessor_with_contact_request_body
-        )
-      end
+      add_assessor(
+        scheme_id,
+        'ASSESSOR999',
+        valid_assessor_with_contact_request_body
+      )
 
-      response =
-        authenticate_and { assessors_search('SE17EZ', 'domesticRdSap') }
+      response = assessors_search('SE17EZ', 'domesticRdSap')
 
       response_json = JSON.parse(response.body)
 
@@ -182,25 +164,17 @@ describe 'Acceptance::SearchForAssessor' do
 
     it 'does not show assessors outside of 1 degree latitude/longitude' do
       add_postcodes('SE1 9SG', 51.5045, 0.0865)
-
       add_postcodes('NE8 2BH', 54.9680, 1.6062, false)
-
       scheme_id = add_scheme_and_get_name
-
       assessor = valid_assessor_with_contact_request_body
       assessor[:searchResultsComparisonPostcode] = 'NE8 2BH'
+      add_assessor(
+        scheme_id,
+        'ASSESSOR999',
+        valid_assessor_with_contact_request_body
+      )
 
-      authenticate_and do
-        add_assessor(
-          scheme_id,
-          'ASSESSOR999',
-          valid_assessor_with_contact_request_body
-        )
-      end
-
-      response =
-        authenticate_and { assessors_search('SE19SG', 'domesticRdSap') }
-
+      response = assessors_search('SE19SG', 'domesticRdSap')
       response_json = JSON.parse(response.body)
 
       expect(response_json['data']['assessors'].size).to eq(0)
@@ -215,17 +189,13 @@ describe 'Acceptance::SearchForAssessor' do
 
       assessor = valid_assessor_with_contact_request_body
       assessor[:searchResultsComparisonPostcode] = 'SW8 5BN'
+      add_assessor(
+        scheme_id,
+        'ASSESSOR999',
+        valid_assessor_with_contact_request_body
+      )
 
-      authenticate_and do
-        add_assessor(
-          scheme_id,
-          'ASSESSOR999',
-          valid_assessor_with_contact_request_body
-        )
-      end
-
-      response =
-        authenticate_and { assessors_search('SE19SG', 'domesticRdSap') }
+      response = assessors_search('SE19SG', 'domesticRdSap')
 
       response_json = JSON.parse(response.body)
       expect(
@@ -240,16 +210,12 @@ describe 'Acceptance::SearchForAssessor' do
 
       assessor = valid_assessor_with_contact_request_body
       assessor[:qualifications][:domesticRdSap] = 'INACTIVE'
-
-      authenticate_and do
-        add_assessor(
-          scheme_id,
-          'ASSESSOR999',
-          valid_assessor_with_contact_request_body
-        )
-      end
-      response =
-        authenticate_and { assessors_search('SE15BN', 'domesticRdSap') }
+      add_assessor(
+        scheme_id,
+        'ASSESSOR999',
+        valid_assessor_with_contact_request_body
+      )
+      response = assessors_search('SE15BN', 'domesticRdSap')
 
       response_json = JSON.parse(response.body)
 
@@ -264,26 +230,20 @@ describe 'Acceptance::SearchForAssessor' do
       assessor = valid_assessor_with_contact_request_body
       assessor[:qualifications][:domesticRdSap] = 'INACTIVE'
 
-      authenticate_and do
-        add_assessor(
-          scheme_id,
-          'ASSESSOR999',
-          valid_assessor_with_contact_request_body
-        )
-      end
-
+      add_assessor(
+        scheme_id,
+        'ASSESSOR999',
+        valid_assessor_with_contact_request_body
+      )
       assessor[:qualifications][:domesticRdSap] = 'ACTIVE'
 
-      authenticate_and do
-        add_assessor(
-          scheme_id,
-          'ASSESSOR999',
-          valid_assessor_with_contact_request_body
-        )
-      end
+      add_assessor(
+        scheme_id,
+        'ASSESSOR999',
+        valid_assessor_with_contact_request_body
+      )
 
-      response =
-        authenticate_and { assessors_search('SE17EZ', 'domesticRdSap') }
+      response = assessors_search('SE17EZ', 'domesticRdSap')
 
       response_json = JSON.parse(response.body)
 
@@ -297,26 +257,20 @@ describe 'Acceptance::SearchForAssessor' do
       assessor = valid_assessor_with_contact_request_body
       assessor[:qualifications][:domesticRdSap] = 'ACTIVE'
 
-      authenticate_and do
-        add_assessor(
-          scheme_id,
-          'ASSESSOR999',
-          valid_assessor_with_contact_request_body
-        )
-      end
+      add_assessor(
+        scheme_id,
+        'ASSESSOR999',
+        valid_assessor_with_contact_request_body
+      )
 
       assessor[:qualifications][:domesticRdSap] = 'INACTIVE'
+      add_assessor(
+        scheme_id,
+        'ASSESSOR999',
+        valid_assessor_with_contact_request_body
+      )
 
-      authenticate_and do
-        add_assessor(
-          scheme_id,
-          'ASSESSOR999',
-          valid_assessor_with_contact_request_body
-        )
-      end
-
-      response =
-        authenticate_and { assessors_search('SE17EZ', 'domesticRdSap') }
+      response = assessors_search('SE17EZ', 'domesticRdSap')
 
       response_json = JSON.parse(response.body)
 
@@ -331,16 +285,12 @@ describe 'Acceptance::SearchForAssessor' do
 
         assessor = valid_assessor_with_contact_request_body
         assessor[:searchResultsComparisonPostcode] = 'SE1 5BN'
-
-        authenticate_and do
-          add_assessor(
-            scheme_id,
-            'ASSESSOR999',
-            valid_assessor_with_contact_request_body
-          )
-        end
-        response =
-          authenticate_and { assessors_search('SE19SY', 'domesticRdSap') }
+        add_assessor(
+          scheme_id,
+          'ASSESSOR999',
+          valid_assessor_with_contact_request_body
+        )
+        response = assessors_search('SE19SY', 'domesticRdSap')
 
         response_json = JSON.parse(response.body)
         expect(response_json['data']['assessors'][0]).to include(
@@ -355,17 +305,12 @@ describe 'Acceptance::SearchForAssessor' do
 
         assessor = valid_assessor_with_contact_request_body
         assessor[:searchResultsComparisonPostcode] = 'SE1 5BN'
-
-        authenticate_and do
-          add_assessor(
-            scheme_id,
-            'ASSESSOR999',
-            valid_assessor_with_contact_request_body
-          )
-        end
-        response =
-          authenticate_and { assessors_search('NE19SY', 'domesticRdSap') }
-
+        add_assessor(
+          scheme_id,
+          'ASSESSOR999',
+          valid_assessor_with_contact_request_body
+        )
+        response = assessors_search('NE19SY', 'domesticRdSap', [404])
         response_json = JSON.parse(response.body)
         expect((response_json).key?('errors')).to eq(true)
       end
@@ -381,16 +326,13 @@ describe 'Acceptance::SearchForAssessor' do
         assessor = valid_assessor_with_contact_request_body
         assessor[:qualifications][:domesticRdSap] = 'INACTIVE'
         assessor[:qualifications][:nonDomesticSp3] = 'ACTIVE'
-        authenticate_and do
-          add_assessor(scheme_id, 'AIR_CON_ASSESSOR', assessor)
-        end
+        add_assessor(scheme_id, 'AIR_CON_ASSESSOR', assessor)
 
         assessor[:qualifications][:domesticRdSap] = 'ACTIVE'
         assessor[:qualifications][:nonDomesticSp3] = 'INACTIVE'
-        authenticate_and { add_assessor(scheme_id, 'RDSAP_ASSESSOR', assessor) }
+        add_assessor(scheme_id, 'RDSAP_ASSESSOR', assessor)
 
-        response =
-          authenticate_and { assessors_search('SE17EZ', 'nonDomesticSp3') }
+        response = assessors_search('SE17EZ', 'nonDomesticSp3')
         response_json = JSON.parse(response.body)
         expect(response_json['data']['assessors'].length).to eq(1)
         expect(

@@ -128,3 +128,13 @@ def assessments_search_by_street_name_and_town(
     authenticate
   )
 end
+
+def assessors_search(
+  postcode, qualification, accepted_responses = [200], authenticate = true
+)
+  assertive_get(
+    "/api/assessors?postcode=#{postcode}&qualification=#{qualification}",
+    accepted_responses,
+    authenticate
+  )
+end
