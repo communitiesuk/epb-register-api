@@ -96,15 +96,13 @@ def add_assessor(scheme_id, assessor_id, body, accepted_responses = [200, 201])
 end
 
 def add_scheme(name = 'test scheme', accepted_responses = [201])
-  authenticate_and do
-    JSON.parse(
-      assertive_post('/api/schemes', { name: name }, accepted_responses).body
-    )[
-      'data'
-    ][
-      'schemeId'
-    ]
-  end
+  JSON.parse(
+    assertive_post('/api/schemes', { name: name }, accepted_responses).body
+  )[
+    'data'
+  ][
+    'schemeId'
+  ]
 end
 
 def add_scheme_then_assessor(body, accepted_responses = [200, 201])
