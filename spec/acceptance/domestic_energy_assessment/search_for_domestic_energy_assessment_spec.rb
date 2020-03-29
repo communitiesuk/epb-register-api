@@ -56,7 +56,6 @@ describe 'Searching for assessments' do
     }.freeze
   end
 
-
   context 'when a search postcode is valid' do
     it 'returns status 200 for a get' do
       assessments_search_by_postcode('SE17EZ', [200])
@@ -132,16 +131,11 @@ describe 'Searching for assessments' do
 
   context 'when a search assessment id is valid' do
     it 'returns status 200 for a get' do
-      expect(
-        authenticate_and {
-          assessments_search_by_assessment_id('123-987')
-        }.status
-      ).to eq(200)
+      assessments_search_by_assessment_id('123-987', [200])
     end
 
     it 'looks as it should' do
-      response =
-        authenticate_and { assessments_search_by_assessment_id('123-987') }
+      response = assessments_search_by_assessment_id('123-987')
 
       response_json = JSON.parse(response.body)
 
@@ -149,8 +143,7 @@ describe 'Searching for assessments' do
     end
 
     it 'has the properties we expect' do
-      response =
-        authenticate_and { assessments_search_by_assessment_id('123-987') }
+      response = assessments_search_by_assessment_id('123-987')
 
       response_json = JSON.parse(response.body)
 
@@ -161,8 +154,7 @@ describe 'Searching for assessments' do
       scheme_id = add_scheme
       add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
       migrate_assessment('123-987', valid_assessment_body)
-      response =
-        authenticate_and { assessments_search_by_assessment_id('123-987') }
+      response = assessments_search_by_assessment_id('123-987')
 
       response_json = JSON.parse(response.body)
 

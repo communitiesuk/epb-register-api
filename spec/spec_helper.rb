@@ -127,18 +127,26 @@ def migrate_assessment(
   )
 end
 
-def assessments_search_by_postcode(postcode, accepted_responses=[200])
-  assertive_get( "/api/assessments/domestic-epc/search?postcode=#{postcode}", accepted_responses)
+def assessments_search_by_postcode(postcode, accepted_responses = [200])
+  assertive_get(
+    "/api/assessments/domestic-epc/search?postcode=#{postcode}",
+    accepted_responses
+  )
 end
 
-def assessments_search_by_assessment_id(assessment_id)
-  get "/api/assessments/domestic-epc/search?assessment_id=#{assessment_id}"
+def assessments_search_by_assessment_id(
+  assessment_id, accepted_responses = [200]
+)
+  assertive_get(
+    "/api/assessments/domestic-epc/search?assessment_id=#{assessment_id}",
+    accepted_responses
+  )
 end
 
 def assessments_search_by_street_name_and_town(street_name, town)
   get "/api/assessments/domestic-epc/search?street_name=#{street_name}&town=#{
-  town
-  }"
+        town
+      }"
 end
 
 def get_valid_jwt(scopes = [], sup = {})
