@@ -50,23 +50,37 @@ def authenticate_and(request = nil, scopes = [], supplementary = {}, &block)
   response
 end
 
-def assertive_put(path, body, accepted_responses)
-  response = authenticate_and { put(path, body.to_json) }
+def check_response(response, accepted_responses)
   if accepted_responses.include?(response.status)
     response
   else
     raise UnexpectedApiError.new(
-            {
-              expected_status: accepted_responses,
-              actual_status: response.status,
-              response_body: response.body
-            }
-          )
+        {
+            expected_status: accepted_responses,
+            actual_status: response.status,
+            response_body: response.body
+        }
+    )
   end
 end
 
-def fetch_assessors(scheme_id)
-  get "/api/schemes/#{scheme_id}/assessors"
+def assertive_put(path, body, accepted_responses)
+  response = authenticate_and { put(path, body.to_json) }
+  check_response(response, accepted_responses)
+end
+
+def assertive_get(path, accepted_responses)
+  response = authenticate_and { get(path) }
+  check_response(response, accepted_responses)
+end
+
+def assertive_post(path, body, accepted_responses)
+  response = authenticate_and { post(path, body.to_json) }
+  check_response(response, accepted_responses)
+end
+
+def fetch_assessors(scheme_id, accepted_responses=[200])
+  get("/api/schemes/#{scheme_id}/assessors")
 end
 
 def fetch_assessor(scheme_id, assessor_id)
@@ -81,11 +95,9 @@ def add_assessor(scheme_id, assessor_id, body, accepted_responses = [200, 201])
   )
 end
 
-def add_scheme(name = 'test scheme')
+def add_scheme(name = 'test scheme', accepted_responses = [201])
   authenticate_and do
-    JSON.parse(post('/api/schemes', { name: name }.to_json).body)['data'][
-      'schemeId'
-    ]
+    JSON.parse(assertive_post('/api/schemes', {name: name}, accepted_responses).body)['data']['schemeId']
   end
 end
 
