@@ -27,40 +27,31 @@ describe 'Acceptance::Schemes' do
   end
 
   context 'posting to the schemes api without authentication' do
-    response = false
-    request_body = { name: 'XYMZALERO' }.to_json
-    before(:each) { response = post('/api/schemes', request_body) }
-
     it 'returns status 401' do
-      expect(response.status).to eq(401)
+      add_scheme('TEST', [401], false)
     end
   end
 
   context 'posting to the schemes api' do
-    response = false
-    request_body = { name: 'XYMZALERO' }.to_json
-    before(:each) do
-      response = authenticate_and { post('/api/schemes', request_body) }
-    end
-
     it 'returns status 201' do
-      expect(response.status).to eq(201)
+      add_scheme('XYMZALERO', [201])
     end
 
     it 'returns json' do
+      response = add_scheme('XYMZALERO', [201])
       expect(response.headers['Content-Type']).to eq('application/json')
     end
 
     it 'is visible in the list of schemes' do
+      add_scheme('XYMZALERO')
       response = authenticate_and { get '/api/schemes' }
       get_response = JSON.parse(response.body)
       expect(get_response['data']['schemes'][0]['name']).to eq('XYMZALERO')
     end
 
     it 'cannot have the same name twice' do
-      second_post_response =
-        authenticate_and { post '/api/schemes', request_body }
-      expect(second_post_response.status).to eq(400)
+      add_scheme('XYMZALERO', [201])
+      add_scheme('XYMZALERO', [400])
     end
   end
 end

@@ -86,7 +86,7 @@ describe 'Searching for assessments' do
     end
 
     it 'has the over all hash of the shape we expect' do
-      scheme_id = add_scheme
+      scheme_id = add_scheme_and_get_name
       add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
       migrate_assessment('123-987', valid_assessment_body)
 
@@ -151,7 +151,7 @@ describe 'Searching for assessments' do
     end
 
     it 'has the over all hash of the shape we expect' do
-      scheme_id = add_scheme
+      scheme_id = add_scheme_and_get_name
       add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
       migrate_assessment('123-987', valid_assessment_body)
       response = assessments_search_by_assessment_id('123-987')
@@ -272,7 +272,7 @@ describe 'Searching for assessments' do
       end
 
       it 'has the over all hash of the shape we expect' do
-        scheme_id = add_scheme
+        scheme_id = add_scheme_and_get_name
         add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
 
         migrate_assessment('123-987', valid_assessment_body)

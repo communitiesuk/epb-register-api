@@ -65,7 +65,6 @@ def check_response(response, accepted_responses)
   end
 end
 
-
 def get_valid_jwt(scopes = [], sup = {})
   token =
     Auth::Token.new iat: Time.now.to_i,
