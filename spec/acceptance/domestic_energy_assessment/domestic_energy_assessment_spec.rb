@@ -85,7 +85,7 @@ describe 'Acceptance::DomesticEnergyAssessment' do
 
   context 'when a domestic assessment exists' do
     it 'returns a 200' do
-      scheme_id = authenticate_and { add_scheme }
+      scheme_id = add_scheme
       authenticate_and do
         add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
       end
@@ -99,7 +99,7 @@ describe 'Acceptance::DomesticEnergyAssessment' do
     end
 
     it 'returns the assessment details' do
-      scheme_id = authenticate_and { add_scheme }
+      scheme_id = add_scheme
       authenticate_and do
         add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
       end
@@ -186,7 +186,7 @@ describe 'Acceptance::DomesticEnergyAssessment' do
 
   context 'when migrating a domestic assessment (put)' do
     it 'returns a 200 for a valid assessment' do
-      scheme_id = authenticate_and { add_scheme }
+      scheme_id = add_scheme
       authenticate_and do
         add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
       end
@@ -199,7 +199,7 @@ describe 'Acceptance::DomesticEnergyAssessment' do
     end
 
     it 'returns the assessment that was migrated' do
-      scheme_id = authenticate_and { add_scheme }
+      scheme_id = add_scheme
       authenticate_and do
         add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
       end
@@ -462,7 +462,7 @@ describe 'Acceptance::DomesticEnergyAssessment' do
       assessment_without_space_heating_data[:heatDemand] = {
         currentWaterHeatingDemand: 4_354
       }
-      scheme_id = authenticate_and { add_scheme }
+      scheme_id = add_scheme
       authenticate_and do
         add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
       end
@@ -482,7 +482,7 @@ describe 'Acceptance::DomesticEnergyAssessment' do
       assessment_without_water_heating_data[:heatDemand] = {
         currentSpaceHeatingDemand: 4_354
       }
-      scheme_id = authenticate_and { add_scheme }
+      scheme_id = add_scheme
       authenticate_and do
         add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
       end

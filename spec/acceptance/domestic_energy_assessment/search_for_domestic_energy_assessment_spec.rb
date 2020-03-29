@@ -104,7 +104,7 @@ describe 'Searching for assessments' do
     end
 
     it 'has the over all hash of the shape we expect' do
-      scheme_id = authenticate_and { add_scheme }
+      scheme_id = add_scheme
       authenticate_and do
         add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
       end
@@ -181,7 +181,7 @@ describe 'Searching for assessments' do
     end
 
     it 'has the over all hash of the shape we expect' do
-      scheme_id = authenticate_and { add_scheme }
+      scheme_id = add_scheme
       authenticate_and do
         add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
       end
@@ -325,7 +325,7 @@ describe 'Searching for assessments' do
       end
 
       it 'has the over all hash of the shape we expect' do
-        scheme_id = authenticate_and { add_scheme }
+        scheme_id = add_scheme
         authenticate_and do
           add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
         end
