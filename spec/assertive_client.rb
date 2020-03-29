@@ -1,28 +1,30 @@
-def assertive_put(path, body, accepted_responses, authenticate)
+def assertive_request(request, accepted_responses, authenticate)
   if authenticate
-    response = authenticate_and { put(path, body.to_json) }
+    response = authenticate_and { request.call }
   else
-    response = put(path, body.to_json)
+    response = request.call
   end
   check_response(response, accepted_responses)
+end
+
+def assertive_put(path, body, accepted_responses, authenticate)
+  assertive_request(
+    -> { put(path, body.to_json) },
+    accepted_responses,
+    authenticate
+  )
 end
 
 def assertive_get(path, accepted_responses, authenticate)
-  if authenticate
-    response = authenticate_and { get(path) }
-  else
-    response = get(path)
-  end
-  check_response(response, accepted_responses)
+  assertive_request(-> { get(path) }, accepted_responses, authenticate)
 end
 
 def assertive_post(path, body, accepted_responses, authenticate)
-  if authenticate
-    response = authenticate_and { post(path, body.to_json) }
-  else
-    response = post(path, body.to_json)
-  end
-  check_response(response, accepted_responses)
+  assertive_request(
+    -> { post(path, body.to_json) },
+    accepted_responses,
+    authenticate
+  )
 end
 
 def fetch_assessors(scheme_id, accepted_responses = [200], authenticate = true)
