@@ -86,13 +86,8 @@ describe 'Acceptance::DomesticEnergyAssessment' do
   context 'when a domestic assessment exists' do
     it 'returns a 200' do
       scheme_id = add_scheme
-      authenticate_and do
-        add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
-      end
-
-      authenticate_and do
-        migrate_assessment('15650-651625-18267167', valid_assessment_body)
-      end
+      add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
+      migrate_assessment('15650-651625-18267167', valid_assessment_body, [200])
 
       response = authenticate_and { fetch_assessment('15650-651625-18267167') }
       expect(response.status).to eq(200)
@@ -100,17 +95,11 @@ describe 'Acceptance::DomesticEnergyAssessment' do
 
     it 'returns the assessment details' do
       scheme_id = add_scheme
-      authenticate_and do
-        add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
-      end
+      add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
+      migrate_assessment('15650-651625-18267167', valid_assessment_body)
 
-      authenticate_and do
-        migrate_assessment('15650-651625-18267167', valid_assessment_body)
-      end
-      response =
-        JSON.parse(
-          authenticate_and { fetch_assessment('15650-651625-18267167') }.body
-        )
+      response = JSON.parse(fetch_assessment('15650-651625-18267167').body)
+
       expected_response =
         JSON.parse(
           {
@@ -187,27 +176,15 @@ describe 'Acceptance::DomesticEnergyAssessment' do
   context 'when migrating a domestic assessment (put)' do
     it 'returns a 200 for a valid assessment' do
       scheme_id = add_scheme
-      authenticate_and do
-        add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
-      end
-
-      response =
-        authenticate_and do
-          migrate_assessment('123-456', valid_assessment_body)
-        end
-      expect(response.status).to eq(200)
+      add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
+      migrate_assessment('123-456', valid_assessment_body, [200])
     end
 
     it 'returns the assessment that was migrated' do
       scheme_id = add_scheme
-      authenticate_and do
-        add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
-      end
+      add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
 
-      response =
-        authenticate_and do
-          migrate_assessment('123-456', valid_assessment_body).body
-        end
+      response = migrate_assessment('123-456', valid_assessment_body).body
 
       migrated_assessment = JSON.parse(response, symbolize_names: true)
       expected_response = {
@@ -263,198 +240,148 @@ describe 'Acceptance::DomesticEnergyAssessment' do
     end
 
     it 'rejects a assessment without an address summary' do
-      response =
-        authenticate_and do
-          migrate_assessment(
-            '123-456',
-            assessment_without(:addressSummary),
-            [422]
-          )
-        end
-    end
+      migrate_assessment('123-456',
+          assessment_without(:addressSummary),
+          [422]
+      )    end
 
     it 'rejects a assessment with an address summary that is not a string' do
       assessment_with_dodgy_address = valid_assessment_body.dup
       assessment_with_dodgy_address[:addressSummary] = 123_321
-      response =
-        authenticate_and do
-          migrate_assessment('123-456', assessment_with_dodgy_address, [422])
-        end
+      migrate_assessment('123-456', assessment_with_dodgy_address, [422])
     end
 
     it 'rejects a assessment without a date of assessment' do
-      response =
-        authenticate_and do
-          migrate_assessment(
-            '123-456',
-            assessment_without(:dateOfAssessment),
-            [422]
-          )
-        end
+      migrate_assessment(
+          '123-456',
+          assessment_without(:dateOfAssessment),
+          [422]
+      )
     end
 
     it 'rejects a assessment with an date of assessment that is not a date' do
       assessment_with_dodge_date_of_address = valid_assessment_body.dup
       assessment_with_dodge_date_of_address[:dateOfAssessment] = 'horse'
-      response =
-        authenticate_and do
-          migrate_assessment(
-            '123-456',
-            assessment_with_dodge_date_of_address,
-            [422]
-          )
-        end
+      migrate_assessment(
+          '123-456',
+          assessment_with_dodge_date_of_address,
+          [422]
+      )
     end
 
     it 'rejects a assessment without a date of assessment' do
-      response =
-        authenticate_and do
-          migrate_assessment(
-            '123-456',
-            assessment_without(:dateRegistered),
-            [422]
-          )
-        end
+      migrate_assessment(
+          '123-456',
+          assessment_without(:dateRegistered),
+          [422]
+      )
     end
 
     it 'rejects a assessment with a date of assessment that is not a date' do
       assessment_with_dodge_date_of_assessment = valid_assessment_body.dup
       assessment_with_dodge_date_of_assessment[:dateRegistered] = 'horse'
-      response =
-        authenticate_and do
-          migrate_assessment(
-            '123-456',
-            assessment_with_dodge_date_of_assessment,
-            [422]
-          )
-        end
+      migrate_assessment(
+          '123-456',
+          assessment_with_dodge_date_of_assessment,
+          [422]
+      )
     end
 
     it 'rejects a assessment without a total floor area' do
-      response =
-        authenticate_and do
-          migrate_assessment(
-            '123-456',
-            assessment_without(:totalFloorArea),
-            [422]
-          )
-        end
+      migrate_assessment(
+          '123-456',
+          assessment_without(:totalFloorArea),
+          [422]
+      )
     end
 
     it 'rejects a assessment with a total floor area that is not an integer' do
       assessment_with_dodgy_total_floor_area = valid_assessment_body.dup
       assessment_with_dodgy_total_floor_area[:totalFloorArea] = 'horse'
-      response =
-        authenticate_and do
-          migrate_assessment(
-            '123-456',
-            assessment_with_dodgy_total_floor_area,
-            [422]
-          )
-        end
+      migrate_assessment(
+          '123-456',
+          assessment_with_dodgy_total_floor_area,
+          [422]
+      )
     end
 
     it 'rejects a assessment without a dwelling type' do
-      response =
-        authenticate_and do
-          migrate_assessment(
-            '123-456',
-            assessment_without(:dwellingType),
-            [422]
-          )
-        end
+      migrate_assessment(
+          '123-456',
+          assessment_without(:dwellingType),
+          [422]
+      )
     end
 
     it 'rejects a assessment with a dwelling type that is not a string' do
       assessment_with_dodgy_dwelling_type = valid_assessment_body.dup
       assessment_with_dodgy_dwelling_type[:dwellingType] = 456_765
-      response =
-        authenticate_and do
-          migrate_assessment(
-            '123-456',
-            assessment_with_dodgy_dwelling_type,
-            [422]
-          )
-        end
+      migrate_assessment(
+          '123-456',
+          assessment_with_dodgy_dwelling_type,
+          [422]
+      )
     end
 
     it 'rejects a assessment without a type of assessment' do
-      response =
-        authenticate_and do
-          migrate_assessment(
-            '123-456',
-            assessment_without(:typeOfAssessment),
-            [422]
-          )
-        end
+      migrate_assessment(
+          '123-456',
+          assessment_without(:typeOfAssessment),
+          [422]
+      )
     end
 
     it 'rejects a assessment with a type of assessment that is not a string' do
       assessment_with_dodgy_type_of_assessment = valid_assessment_body.dup
       assessment_with_dodgy_type_of_assessment[:typeOfAssessment] = 'bird'
-      response =
-        authenticate_and do
-          migrate_assessment(
-            '123-456',
-            assessment_with_dodgy_type_of_assessment,
-            [422]
-          )
-        end
+      migrate_assessment(
+          '123-456',
+          assessment_with_dodgy_type_of_assessment,
+          [422]
+      )
     end
 
     it 'rejects a assessment with a type of current energy efficiency rating that is not an integer' do
       assessment_with_dodgy_current_rating = valid_assessment_body.dup
       assessment_with_dodgy_current_rating[:currentEnergyEfficiencyRating] =
         'one'
-      response =
-        authenticate_and do
-          migrate_assessment(
-            '123-456',
-            assessment_with_dodgy_current_rating,
-            [422]
-          )
-        end
+      migrate_assessment(
+          '123-456',
+          assessment_with_dodgy_current_rating,
+          [422]
+      )
     end
 
     it 'rejects a assessment with a type of potential energy efficiency rating that is not an integer' do
       assessment_with_dodgy_potential_rating = valid_assessment_body.dup
       assessment_with_dodgy_potential_rating[:potentialEnergyEfficiencyRating] =
         'two'
-      response =
-        authenticate_and do
-          migrate_assessment(
-            '123-456',
-            assessment_with_dodgy_potential_rating,
-            [422]
-          )
-        end
+      migrate_assessment(
+          '123-456',
+          assessment_with_dodgy_potential_rating,
+          [422]
+      )
     end
 
     it 'rejects an assessment with a invalid current energy efficiency rating' do
       assessment_with_dodgy_current_rating = valid_assessment_body.dup
       assessment_with_dodgy_current_rating[:currentEnergyEfficiencyRating] = 175
-      response =
-        authenticate_and do
-          migrate_assessment(
-            '123-456',
-            assessment_with_dodgy_current_rating,
-            [422]
-          )
-        end
+      migrate_assessment(
+          '123-456',
+          assessment_with_dodgy_current_rating,
+          [422]
+      )
     end
 
     it 'rejects an assessment with a invalid potential energy efficiency rating' do
       assessment_with_dodgy_potential_rating = valid_assessment_body.dup
       assessment_with_dodgy_potential_rating[:currentEnergyEfficiencyRating] =
         175
-      response =
-        authenticate_and do
-          migrate_assessment(
-            '123-456',
-            assessment_with_dodgy_potential_rating,
-            [422]
-          )
-        end
+      migrate_assessment(
+          '123-456',
+          assessment_with_dodgy_potential_rating,
+          [422]
+      )
     end
 
     it 'rejects an assessment without current space heating demand' do
@@ -463,18 +390,13 @@ describe 'Acceptance::DomesticEnergyAssessment' do
         currentWaterHeatingDemand: 4_354
       }
       scheme_id = add_scheme
-      authenticate_and do
-        add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
-      end
+      add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
 
-      response =
-        authenticate_and do
-          migrate_assessment(
-            '456-982',
-            assessment_without_space_heating_data,
-            [422]
-          )
-        end
+      migrate_assessment(
+          '456-982',
+          assessment_without_space_heating_data,
+          [422]
+      )
     end
 
     it 'rejects an assessment without current water heating demand' do
@@ -483,18 +405,12 @@ describe 'Acceptance::DomesticEnergyAssessment' do
         currentSpaceHeatingDemand: 4_354
       }
       scheme_id = add_scheme
-      authenticate_and do
-        add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
-      end
-
-      response =
-        authenticate_and do
-          migrate_assessment(
-            '456-982',
-            assessment_without_water_heating_data,
-            [422]
-          )
-        end
+      add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
+      migrate_assessment(
+          '456-982',
+          assessment_without_water_heating_data,
+          [422]
+      )
     end
   end
 end
