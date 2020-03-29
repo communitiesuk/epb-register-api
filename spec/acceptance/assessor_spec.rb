@@ -34,17 +34,11 @@ describe 'Acceptance::Assessor' do
 
     context 'and the client is unauthenticated' do
       it 'returns status 401 for a get' do
-        expect(get('/api/schemes/20/assessors/SCHEME4233').status).to eq(401)
+        fetch_assessor(20, 'SCHEME4233', [401], false)
       end
 
       it 'returns status 401 for a PUT' do
-        expect(
-          put(
-            '/api/schemes/20/assessors/SCHEME4532',
-            valid_assessor_request.to_json
-          )
-            .status
-        ).to eq(401)
+        add_assessor(20, 'SCHEME4532', valid_assessor_request, [401], false)
       end
     end
   end
