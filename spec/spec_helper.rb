@@ -55,12 +55,12 @@ def check_response(response, accepted_responses)
     response
   else
     raise UnexpectedApiError.new(
-        {
-            expected_status: accepted_responses,
-            actual_status: response.status,
-            response_body: response.body
-        }
-    )
+            {
+              expected_status: accepted_responses,
+              actual_status: response.status,
+              response_body: response.body
+            }
+          )
   end
 end
 
@@ -79,7 +79,7 @@ def assertive_post(path, body, accepted_responses)
   check_response(response, accepted_responses)
 end
 
-def fetch_assessors(scheme_id, accepted_responses=[200])
+def fetch_assessors(scheme_id, accepted_responses = [200])
   get("/api/schemes/#{scheme_id}/assessors")
 end
 
@@ -97,7 +97,13 @@ end
 
 def add_scheme(name = 'test scheme', accepted_responses = [201])
   authenticate_and do
-    JSON.parse(assertive_post('/api/schemes', {name: name}, accepted_responses).body)['data']['schemeId']
+    JSON.parse(
+      assertive_post('/api/schemes', { name: name }, accepted_responses).body
+    )[
+      'data'
+    ][
+      'schemeId'
+    ]
   end
 end
 

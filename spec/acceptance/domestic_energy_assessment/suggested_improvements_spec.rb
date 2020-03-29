@@ -144,12 +144,10 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
     it 'returns a 200 for a put' do
       assessment = valid_assessment_body.dup
       assessment[:recommendedImprovements] = valid_recommendations
-
       scheme_id = add_scheme
       add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
 
-      response = migrate_assessment('123-456', assessment)
-      expect(response.status).to eq(200)
+      migrate_assessment('123-456', assessment, [200])
     end
   end
 end
