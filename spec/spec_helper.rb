@@ -19,6 +19,7 @@ loader.setup
 
 ENV['JWT_ISSUER'] = 'test.issuer'
 ENV['JWT_SECRET'] = 'test.secret'
+ENV['SILENT_EVENTS'] = 'true'
 
 class UnexpectedApiError < Exception; end
 

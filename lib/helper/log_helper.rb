@@ -8,7 +8,9 @@ module Helper
     end
 
     def event(event_code, message = 'No message')
-      @logger.info({ event_type: event_code, msg: message })
+      unless ENV['SILENT_EVENTS'] == 'true'
+        @logger.info({ event_type: event_code, msg: message })
+      end
     end
   end
 end
