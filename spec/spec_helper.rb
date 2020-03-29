@@ -127,6 +127,20 @@ def migrate_assessment(
   )
 end
 
+def assessments_search_by_postcode(postcode)
+  get "/api/assessments/domestic-epc/search?postcode=#{postcode}"
+end
+
+def assessments_search_by_assessment_id(assessment_id)
+  get "/api/assessments/domestic-epc/search?assessment_id=#{assessment_id}"
+end
+
+def assessments_search_by_street_name_and_town(street_name, town)
+  get "/api/assessments/domestic-epc/search?street_name=#{street_name}&town=#{
+  town
+  }"
+end
+
 def get_valid_jwt(scopes = [], sup = {})
   token =
     Auth::Token.new iat: Time.now.to_i,

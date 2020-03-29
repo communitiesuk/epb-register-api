@@ -56,21 +56,6 @@ describe 'Searching for assessments' do
     }.freeze
   end
 
-  def assessments_search_by_postcode(postcode)
-    get "/api/assessments/domestic-epc/search?postcode=#{postcode}"
-  end
-  def assessments_search_by_assessment_id(assessment_id)
-    get "/api/assessments/domestic-epc/search?assessment_id=#{assessment_id}"
-  end
-  def assessments_search_by_street_name_and_town(street_name, town)
-    get "/api/assessments/domestic-epc/search?street_name=#{street_name}&town=#{
-          town
-        }"
-  end
-
-  def add_assessment(assessment_id, body)
-    put("/api/assessments/domestic-epc/#{assessment_id}", body.to_json)
-  end
 
   context 'when a search postcode is valid' do
     it 'returns status 200 for a get' do
@@ -105,17 +90,11 @@ describe 'Searching for assessments' do
 
     it 'has the over all hash of the shape we expect' do
       scheme_id = add_scheme
-      authenticate_and do
-        add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
-      end
-
-      authenticate_and { add_assessment('123-987', valid_assessment_body) }
+      add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
+      migrate_assessment('123-987', valid_assessment_body)
 
       response = authenticate_and { assessments_search_by_postcode('SE17EZ') }
-
       response_json = JSON.parse(response.body)
-
-      puts response.body
 
       expected_response =
         JSON.parse(
@@ -182,12 +161,8 @@ describe 'Searching for assessments' do
 
     it 'has the over all hash of the shape we expect' do
       scheme_id = add_scheme
-      authenticate_and do
-        add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
-      end
-
-      authenticate_and { add_assessment('123-987', valid_assessment_body) }
-
+      add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
+      migrate_assessment('123-987', valid_assessment_body)
       response =
         authenticate_and { assessments_search_by_assessment_id('123-987') }
 
@@ -330,8 +305,7 @@ describe 'Searching for assessments' do
           add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
         end
 
-        authenticate_and { add_assessment('123-987', valid_assessment_body) }
-
+        migrate_assessment('123-987', valid_assessment_body)
         response =
           authenticate_and do
             assessments_search_by_street_name_and_town(
