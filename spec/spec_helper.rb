@@ -127,8 +127,8 @@ def migrate_assessment(
   )
 end
 
-def assessments_search_by_postcode(postcode)
-  get "/api/assessments/domestic-epc/search?postcode=#{postcode}"
+def assessments_search_by_postcode(postcode, accepted_responses=[200])
+  assertive_get( "/api/assessments/domestic-epc/search?postcode=#{postcode}", accepted_responses)
 end
 
 def assessments_search_by_assessment_id(assessment_id)
