@@ -113,8 +113,11 @@ def add_scheme_then_assessor(body, accepted_responses = [200, 201])
   response
 end
 
-def fetch_assessment(assessment_id)
-  authenticate_and { get "api/assessments/domestic-epc/#{assessment_id}" }
+def fetch_assessment(assessment_id, accepted_responses = [200])
+  assertive_get(
+    "api/assessments/domestic-epc/#{assessment_id}",
+    accepted_responses
+  )
 end
 
 def migrate_assessment(

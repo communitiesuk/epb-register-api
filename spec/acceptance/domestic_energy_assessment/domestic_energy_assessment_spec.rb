@@ -66,13 +66,11 @@ describe 'Acceptance::DomesticEnergyAssessment' do
 
   context 'when a domestic assessment doesnt exist' do
     it 'returns status 404 for a get' do
-      expect(
-        authenticate_and { fetch_assessment('DOESNT-EXIST') }.status
-      ).to eq(404)
+      fetch_assessment('DOESNT-EXIST', [404])
     end
 
     it 'returns an error message structure' do
-      response_body = authenticate_and { fetch_assessment('DOESNT-EXIST') }.body
+      response_body = fetch_assessment('DOESNT-EXIST', [404]).body
       expect(JSON.parse(response_body)).to eq(
         {
           'errors' => [
@@ -89,7 +87,7 @@ describe 'Acceptance::DomesticEnergyAssessment' do
       add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
       migrate_assessment('15650-651625-18267167', valid_assessment_body, [200])
 
-      response = authenticate_and { fetch_assessment('15650-651625-18267167') }
+      response = fetch_assessment('15650-651625-18267167')
       expect(response.status).to eq(200)
     end
 
@@ -240,10 +238,8 @@ describe 'Acceptance::DomesticEnergyAssessment' do
     end
 
     it 'rejects a assessment without an address summary' do
-      migrate_assessment('123-456',
-          assessment_without(:addressSummary),
-          [422]
-      )    end
+      migrate_assessment('123-456', assessment_without(:addressSummary), [422])
+    end
 
     it 'rejects a assessment with an address summary that is not a string' do
       assessment_with_dodgy_address = valid_assessment_body.dup
@@ -253,9 +249,9 @@ describe 'Acceptance::DomesticEnergyAssessment' do
 
     it 'rejects a assessment without a date of assessment' do
       migrate_assessment(
-          '123-456',
-          assessment_without(:dateOfAssessment),
-          [422]
+        '123-456',
+        assessment_without(:dateOfAssessment),
+        [422]
       )
     end
 
@@ -263,71 +259,55 @@ describe 'Acceptance::DomesticEnergyAssessment' do
       assessment_with_dodge_date_of_address = valid_assessment_body.dup
       assessment_with_dodge_date_of_address[:dateOfAssessment] = 'horse'
       migrate_assessment(
-          '123-456',
-          assessment_with_dodge_date_of_address,
-          [422]
+        '123-456',
+        assessment_with_dodge_date_of_address,
+        [422]
       )
     end
 
     it 'rejects a assessment without a date of assessment' do
-      migrate_assessment(
-          '123-456',
-          assessment_without(:dateRegistered),
-          [422]
-      )
+      migrate_assessment('123-456', assessment_without(:dateRegistered), [422])
     end
 
     it 'rejects a assessment with a date of assessment that is not a date' do
       assessment_with_dodge_date_of_assessment = valid_assessment_body.dup
       assessment_with_dodge_date_of_assessment[:dateRegistered] = 'horse'
       migrate_assessment(
-          '123-456',
-          assessment_with_dodge_date_of_assessment,
-          [422]
+        '123-456',
+        assessment_with_dodge_date_of_assessment,
+        [422]
       )
     end
 
     it 'rejects a assessment without a total floor area' do
-      migrate_assessment(
-          '123-456',
-          assessment_without(:totalFloorArea),
-          [422]
-      )
+      migrate_assessment('123-456', assessment_without(:totalFloorArea), [422])
     end
 
     it 'rejects a assessment with a total floor area that is not an integer' do
       assessment_with_dodgy_total_floor_area = valid_assessment_body.dup
       assessment_with_dodgy_total_floor_area[:totalFloorArea] = 'horse'
       migrate_assessment(
-          '123-456',
-          assessment_with_dodgy_total_floor_area,
-          [422]
+        '123-456',
+        assessment_with_dodgy_total_floor_area,
+        [422]
       )
     end
 
     it 'rejects a assessment without a dwelling type' do
-      migrate_assessment(
-          '123-456',
-          assessment_without(:dwellingType),
-          [422]
-      )
+      migrate_assessment('123-456', assessment_without(:dwellingType), [422])
     end
 
     it 'rejects a assessment with a dwelling type that is not a string' do
       assessment_with_dodgy_dwelling_type = valid_assessment_body.dup
       assessment_with_dodgy_dwelling_type[:dwellingType] = 456_765
-      migrate_assessment(
-          '123-456',
-          assessment_with_dodgy_dwelling_type,
-          [422]
-      )
+      migrate_assessment('123-456', assessment_with_dodgy_dwelling_type, [422])
     end
 
     it 'rejects a assessment without a type of assessment' do
       migrate_assessment(
-          '123-456',
-          assessment_without(:typeOfAssessment),
-          [422]
+        '123-456',
+        assessment_without(:typeOfAssessment),
+        [422]
       )
     end
 
@@ -335,9 +315,9 @@ describe 'Acceptance::DomesticEnergyAssessment' do
       assessment_with_dodgy_type_of_assessment = valid_assessment_body.dup
       assessment_with_dodgy_type_of_assessment[:typeOfAssessment] = 'bird'
       migrate_assessment(
-          '123-456',
-          assessment_with_dodgy_type_of_assessment,
-          [422]
+        '123-456',
+        assessment_with_dodgy_type_of_assessment,
+        [422]
       )
     end
 
@@ -345,11 +325,7 @@ describe 'Acceptance::DomesticEnergyAssessment' do
       assessment_with_dodgy_current_rating = valid_assessment_body.dup
       assessment_with_dodgy_current_rating[:currentEnergyEfficiencyRating] =
         'one'
-      migrate_assessment(
-          '123-456',
-          assessment_with_dodgy_current_rating,
-          [422]
-      )
+      migrate_assessment('123-456', assessment_with_dodgy_current_rating, [422])
     end
 
     it 'rejects a assessment with a type of potential energy efficiency rating that is not an integer' do
@@ -357,20 +333,16 @@ describe 'Acceptance::DomesticEnergyAssessment' do
       assessment_with_dodgy_potential_rating[:potentialEnergyEfficiencyRating] =
         'two'
       migrate_assessment(
-          '123-456',
-          assessment_with_dodgy_potential_rating,
-          [422]
+        '123-456',
+        assessment_with_dodgy_potential_rating,
+        [422]
       )
     end
 
     it 'rejects an assessment with a invalid current energy efficiency rating' do
       assessment_with_dodgy_current_rating = valid_assessment_body.dup
       assessment_with_dodgy_current_rating[:currentEnergyEfficiencyRating] = 175
-      migrate_assessment(
-          '123-456',
-          assessment_with_dodgy_current_rating,
-          [422]
-      )
+      migrate_assessment('123-456', assessment_with_dodgy_current_rating, [422])
     end
 
     it 'rejects an assessment with a invalid potential energy efficiency rating' do
@@ -378,9 +350,9 @@ describe 'Acceptance::DomesticEnergyAssessment' do
       assessment_with_dodgy_potential_rating[:currentEnergyEfficiencyRating] =
         175
       migrate_assessment(
-          '123-456',
-          assessment_with_dodgy_potential_rating,
-          [422]
+        '123-456',
+        assessment_with_dodgy_potential_rating,
+        [422]
       )
     end
 
@@ -393,9 +365,9 @@ describe 'Acceptance::DomesticEnergyAssessment' do
       add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
 
       migrate_assessment(
-          '456-982',
-          assessment_without_space_heating_data,
-          [422]
+        '456-982',
+        assessment_without_space_heating_data,
+        [422]
       )
     end
 
@@ -407,9 +379,9 @@ describe 'Acceptance::DomesticEnergyAssessment' do
       scheme_id = add_scheme
       add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
       migrate_assessment(
-          '456-982',
-          assessment_without_water_heating_data,
-          [422]
+        '456-982',
+        assessment_without_water_heating_data,
+        [422]
       )
     end
   end
