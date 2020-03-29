@@ -25,7 +25,7 @@ describe 'Acceptance::Assessor' do
 
   context "when a scheme doesn't exist" do
     it 'returns status 404 for a get' do
-      expect(fetch_assessor(20, 'SCHEME4233').status).to eq(404)
+      fetch_assessor(20, 'SCHEME4233', [404])
     end
 
     it 'returns status 404 for a PUT' do
@@ -53,7 +53,7 @@ describe 'Acceptance::Assessor' do
     let!(:scheme_id) { add_scheme_and_get_name }
 
     it 'returns status 404' do
-      expect(fetch_assessor(scheme_id, 'SCHE2354246').status).to eq(404)
+      fetch_assessor(scheme_id, 'SCHE2354246', [404])
     end
 
     context 'and the client is unauthenticated' do
@@ -70,8 +70,7 @@ describe 'Acceptance::Assessor' do
       scheme_id = add_scheme_and_get_name
       second_scheme_id = add_scheme_and_get_name('second scheme')
       add_assessor(second_scheme_id, 'SCHE987654', valid_assessor_request)
-
-      expect(fetch_assessor(scheme_id, 'SCHE987654').status).to eq(404)
+      fetch_assessor(scheme_id, 'SCHE987654', [404])
     end
   end
 

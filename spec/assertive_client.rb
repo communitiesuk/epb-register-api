@@ -31,8 +31,8 @@ def fetch_assessors(scheme_id, accepted_responses = [200], authenticate = true)
   get("/api/schemes/#{scheme_id}/assessors")
 end
 
-def fetch_assessor(scheme_id, assessor_id)
-  authenticate_and { get("/api/schemes/#{scheme_id}/assessors/#{assessor_id}") }
+def fetch_assessor(scheme_id, assessor_id, accepted_responses=[200], authenticate=true)
+  assertive_get("/api/schemes/#{scheme_id}/assessors/#{assessor_id}", accepted_responses, authenticate)
 end
 
 def add_assessor(
