@@ -1,15 +1,27 @@
-def assertive_put(path, body, accepted_responses)
-  response = authenticate_and { put(path, body.to_json) }
+def assertive_put(path, body, accepted_responses, authenticate=true)
+  if authenticate
+    response = authenticate_and { put(path, body.to_json) }
+  else
+    response = put(path, body.to_json)
+  end
   check_response(response, accepted_responses)
 end
 
-def assertive_get(path, accepted_responses)
-  response = authenticate_and { get(path) }
+def assertive_get(path, accepted_responses, authenticate=true)
+  if authenticate
+    response = authenticate_and { get(path) }
+  else
+    response = get(path)
+  end
   check_response(response, accepted_responses)
 end
 
-def assertive_post(path, body, accepted_responses)
-  response = authenticate_and { post(path, body.to_json) }
+def assertive_post(path, body, accepted_responses, authenticate=true)
+  if authenticate
+    response = authenticate_and { post(path, body.to_json) }
+  else
+    response = post(path, body.to_json)
+  end
   check_response(response, accepted_responses)
 end
 
