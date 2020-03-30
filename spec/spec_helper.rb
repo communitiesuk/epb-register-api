@@ -56,20 +56,6 @@ def authenticate_with_data(data = {}, &block)
   authenticate_and(nil, %w[scheme:assessor:list], data) { block.call }
 end
 
-def check_response(response, accepted_responses)
-  if accepted_responses.include?(response.status)
-    response
-  else
-    raise UnexpectedApiError.new(
-            {
-              expected_status: accepted_responses,
-              actual_status: response.status,
-              response_body: response.body
-            }
-          )
-  end
-end
-
 def get_valid_jwt(scopes = [], sup = {})
   token =
     Auth::Token.new iat: Time.now.to_i,

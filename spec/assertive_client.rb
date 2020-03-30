@@ -1,3 +1,17 @@
+def check_response(response, accepted_responses)
+  if accepted_responses.include?(response.status)
+    response
+  else
+    raise UnexpectedApiError.new(
+        {
+            expected_status: accepted_responses,
+            actual_status: response.status,
+            response_body: response.body
+        }
+    )
+  end
+end
+
 def assertive_request(request, accepted_responses, authenticate, auth_data)
   if authenticate
     if auth_data
