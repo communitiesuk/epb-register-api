@@ -347,5 +347,30 @@ describe 'Acceptance::SearchForAssessor' do
         ).to eq('ACTIVE')
       end
     end
+
+    context 'for multiple types of qualification' do
+      it 'returns each of the assessors with matching qualifications' do
+        add_postcodes('SE1 7EZ', 51.5045, 0.0865)
+        scheme_id = add_scheme_and_get_name
+
+        assessor = valid_assessor_with_contact_request_body
+        assessor[:qualifications][:nonDomesticSp3] = 'ACTIVE'
+        assessor[:qualifications][:nonDomesticCc4] = 'INACTIVE'
+        add_assessor(scheme_id, 'AIR_CON_ASSESSOR', assessor)
+
+        assessor[:qualifications][:nonDomesticSp3] = 'INACTIVE'
+        assessor[:qualifications][:nonDomesticCc4] = 'ACTIVE'
+        add_assessor(scheme_id, 'COMPLEXED_AIR_CON_ASSESSOR', assessor)
+
+        response = assessors_search('SE17EZ', 'nonDomesticSp3,nonDomesticCc4')
+        response_json = JSON.parse(response.body)
+        returned_assessor_ids =
+          response_json['data']['assessors'].map { |a| a['schemeAssessorId'] }
+        expect(returned_assessor_ids).to contain_exactly(
+          'AIR_CON_ASSESSOR',
+          'COMPLEXED_AIR_CON_ASSESSOR'
+        )
+      end
+    end
   end
 end

@@ -40,6 +40,26 @@ module Gateway
     class Assessor < ActiveRecord::Base; end
     class Scheme < ActiveRecord::Base; end
 
+    def qualification_to_column(qualification)
+      case qualification
+      when 'domesticRdSap'
+        DOMESTIC_RD_SAP_COLUMN
+      when 'nonDomesticSp3'
+        NON_DOMESTIC_SP3_COLUMN
+      when 'nonDomesticCc4'
+        NON_DOMESTIC_CC4_COLUMN
+      else
+        raise ArgumentError.new('Unrecognised qualification type')
+      end
+    end
+
+    def qualification_columns_to_sql(columns)
+      first_selectors = columns[0...-1].map { |c| "#{c} = 'ACTIVE' OR " }
+      last_selector = "#{columns.last} = 'ACTIVE' "
+      query = first_selectors.join
+      query + last_selector
+    end
+
     def fetch(scheme_assessor_id)
       assessor = Assessor.find_by(scheme_assessor_id: scheme_assessor_id)
       assessor ? row_to_assessor_domain(assessor) : nil
@@ -60,12 +80,11 @@ module Gateway
       end
     end
 
-    def search(latitude, longitude, qualification_type, entries = 10)
-      if qualification_type == 'domesticRdSap'
-        qualification = DOMESTIC_RD_SAP_COLUMN
-      elsif qualification_type == 'nonDomesticSp3'
-        qualification = NON_DOMESTIC_SP3_COLUMN
-      end
+    def search(latitude, longitude, qualifications, entries = 10)
+      qualification_selector =
+        qualification_columns_to_sql(
+          qualifications.map { |q| qualification_to_column(q) }
+        )
 
       response =
         Assessor.connection.execute(
@@ -90,18 +109,16 @@ module Gateway
         LEFT JOIN schemes c ON(b.registered_by = c.scheme_id)
         WHERE
           #{
-            qualification
-          } = 'ACTIVE'
-          AND a.latitude BETWEEN #{
-            (latitude - 1).to_f
-          } AND #{(latitude + 1).to_f}
-          AND a.longitude BETWEEN #{
-            (longitude - 1).to_f
-          } AND #{(longitude + 1).to_f}
+            qualification_selector
+          }
+          AND a.latitude BETWEEN #{(latitude - 1).to_f} AND #{
+            (latitude + 1).to_f
+          }
+          AND a.longitude BETWEEN #{(longitude - 1).to_f} AND #{
+            (longitude + 1).to_f
+          }
 
-        ORDER BY distance LIMIT #{
-            entries
-          }"
+        ORDER BY distance LIMIT #{entries}"
         )
 
       result = []

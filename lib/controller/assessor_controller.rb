@@ -53,14 +53,14 @@ module Controller
       json_response(200, result)
     end
 
-    def search_by_postcode(postcode, qualification)
+    def search_by_postcode(postcode, qualifications)
       postcode = postcode.upcase
       postcode = postcode.insert(-4, ' ') if postcode[-4] != ' '
 
       result =
         @container.get_object(:find_assessors_by_postcode_use_case).execute(
           postcode,
-          qualification
+          qualifications.split(',')
         )
       json_response(200, result)
     end

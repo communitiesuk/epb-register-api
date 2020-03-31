@@ -85,7 +85,7 @@ describe 'Integration::FilterAndOrderAssessorsByPostcode' do
         Gateway::AssessorsGateway.new.search(
           postcode[:latitude],
           postcode[:longitude],
-          'domesticRdSap'
+          %w[domesticRdSap]
         )
 
       expect(assessors.first[:distance_from_postcode_in_miles]).to eq(0.0)
