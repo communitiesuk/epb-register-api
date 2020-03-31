@@ -138,10 +138,29 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
       recommendations[1][:sequence] = 0
       migrate_invalid_recommendations(recommendations)
     end
+
+    # it 'rejects typicalSavings which are not integers' do
+    #   recommendations = valid_recommendations
+    #   recommendations[0][:typicalSaving] = '400'
+    #   recommendations[1][:typicalSaving] = '23'
+    #   migrate_invalid_recommendations(recommendations)
+    # end
   end
 
   context 'when migrating an assessment with correctly structured improvements' do
-    it 'returns a 200 for a put' do
+    it 'returns a 200 when all possible recommendation data items present' do
+      assessment = valid_assessment_body.dup
+      assessment[:recommendedImprovements] = valid_recommendations
+      scheme_id = add_scheme_and_get_name
+      add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
+
+      migrate_assessment('123-456', assessment, [200])
+    end
+
+    it 'returns 200 when the optional data items are empty' do
+      recommendations = valid_recommendations
+      recommendations[0][:indicativeCost] = ''
+      recommendations[1][:improvementCategory] = ''
       assessment = valid_assessment_body.dup
       assessment[:recommendedImprovements] = valid_recommendations
       scheme_id = add_scheme_and_get_name
