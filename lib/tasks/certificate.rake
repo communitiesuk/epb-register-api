@@ -13,8 +13,6 @@ task :generate_certificate do
     exit
   end
 
-  ActiveRecord::Base.connection.execute('TRUNCATE TABLE domestic_energy_assessments RESTART IDENTITY')
-
   ActiveRecord::Base.logger = nil
 
   dwelling_type = ['end-terrace house', 'terrace house', 'flat', 'bungalow', 'mansion', 'castle']
