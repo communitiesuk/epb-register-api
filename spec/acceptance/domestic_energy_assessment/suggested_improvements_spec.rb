@@ -138,13 +138,12 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
       recommendations[1][:sequence] = 0
       migrate_invalid_recommendations(recommendations)
     end
+  end
 
-    # it 'rejects typicalSavings which are not integers' do
-    #   recommendations = valid_recommendations
-    #   recommendations[0][:typicalSaving] = '400'
-    #   recommendations[1][:typicalSaving] = '23'
-    #   migrate_invalid_recommendations(recommendations)
-    # end
+  it 'rejects typicalSavings that are not decimals' do
+    recommendations = valid_recommendations
+    recommendations[0][:typicalSaving] = 'first'
+    migrate_invalid_recommendations(recommendations)
   end
 
   context 'when migrating an assessment with correctly structured improvements' do

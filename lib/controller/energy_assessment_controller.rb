@@ -45,7 +45,7 @@ module Controller
               sequence: { type: 'integer', format: 'positive-int' },
               improvementCode: { type: 'string' },
               indicativeCost: { type: 'string' },
-              typicalSaving: { type: 'decimal' },
+              typicalSaving: { type: 'decimal', format: 'positive-int' },
               improvementCategory: { type: 'string' },
               improvementType: { type: 'string' },
               energyPerformanceRating: { type: 'string' },

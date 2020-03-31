@@ -50,7 +50,7 @@ module UseCase
               i[:sequence],
               i[:improvement_code],
               i[:indicative_cost],
-              i[:typical_saving],
+              i[:typical_saving] ? i[:typical_saving].round(2) : 0,
               i[:improvement_category],
               i[:improvement_type],
               i[:energy_performance_rating],
