@@ -12,7 +12,11 @@ describe 'Acceptance::Assessor' do
         telephoneNumber: '010199991010101', email: 'person@person.com'
       },
       searchResultsComparisonPostcode: '',
-      qualifications: { domesticRdSap: 'ACTIVE', nonDomesticSp3: 'ACTIVE' }
+      qualifications: {
+        domesticRdSap: 'ACTIVE',
+        nonDomesticSp3: 'ACTIVE',
+        nonDomesticCc4: 'ACTIVE'
+      }
     }
   end
 
@@ -100,7 +104,9 @@ describe 'Acceptance::Assessor' do
                 contactDetails: valid_assessor_request[:contactDetails],
                 searchResultsComparisonPostcode: '',
                 qualifications: {
-                  domesticRdSap: 'ACTIVE', nonDomesticSp3: 'ACTIVE'
+                  domesticRdSap: 'ACTIVE',
+                  nonDomesticSp3: 'ACTIVE',
+                  nonDomesticCc4: 'ACTIVE'
                 }
               },
               meta: {}
@@ -166,7 +172,9 @@ describe 'Acceptance::Assessor' do
               searchResultsComparisonPostcode:
                 valid_assessor_request[:searchResultsComparisonPostcode],
               qualifications: {
-                domesticRdSap: 'ACTIVE', nonDomesticSp3: 'ACTIVE'
+                domesticRdSap: 'ACTIVE',
+                nonDomesticSp3: 'ACTIVE',
+                nonDomesticCc4: 'ACTIVE'
               },
               contactDetails: {
                 email: 'person@person.com', telephoneNumber: '010199991010101'

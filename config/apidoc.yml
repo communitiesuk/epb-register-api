@@ -443,6 +443,11 @@ components:
       properties:
         domesticRdSap:
           $ref: '#/components/schemas/AssessorQualificationStatus'
+        nonDomesticSp3:
+          $ref: '#/components/schemas/AssessorQualificationStatus'
+        nonDomesticCc4:
+          $ref: '#/components/schemas/AssessorQualificationStatus'
+
 
     AssessorQualificationStatus:
       type: string

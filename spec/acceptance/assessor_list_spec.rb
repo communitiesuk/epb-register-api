@@ -20,11 +20,11 @@ describe 'Acceptance::AssessorList' do
   context "when a scheme doesn't exist" do
     context 'when a client is authorised' do
       it 'returns status 404 for a get' do
-        fetch_assessors(20, [404], true, {'scheme_ids': [20]})
+        fetch_assessors(20, [404], true, { 'scheme_ids': [20] })
       end
 
       it 'returns the 404 error response' do
-        response = fetch_assessors(20, [404], true, {'scheme_ids': [20]})
+        response = fetch_assessors(20, [404], true, { 'scheme_ids': [20] })
         expect(response.body).to eq(
           {
             errors: [
@@ -61,13 +61,14 @@ describe 'Acceptance::AssessorList' do
   context 'when a scheme has no assessors' do
     it 'returns status 200 for a get' do
       scheme_id = add_scheme_and_get_name
-      fetch_assessors(scheme_id, [200], true, {'scheme_ids': [scheme_id]})
+      fetch_assessors(scheme_id, [200], true, { 'scheme_ids': [scheme_id] })
     end
 
     it 'returns an empty list' do
       scheme_id = add_scheme_and_get_name
       expected = { 'assessors' => [] }
-      response = fetch_assessors(scheme_id, [200], true, {'scheme_ids': [scheme_id]})
+      response =
+        fetch_assessors(scheme_id, [200], true, { 'scheme_ids': [scheme_id] })
 
       actual = JSON.parse(response.body)['data']
 
@@ -76,7 +77,8 @@ describe 'Acceptance::AssessorList' do
 
     it 'returns JSON for a get' do
       scheme_id = add_scheme_and_get_name
-      response = fetch_assessors(scheme_id, [200], true, {'scheme_ids': [scheme_id]})
+      response =
+        fetch_assessors(scheme_id, [200], true, { 'scheme_ids': [scheme_id] })
 
       expect(response.headers['Content-type']).to eq('application/json')
     end
@@ -86,7 +88,8 @@ describe 'Acceptance::AssessorList' do
     it 'returns an array of assessors' do
       scheme_id = add_scheme_and_get_name
       add_assessor(scheme_id, 'SCHEME4233', valid_assessor_request_body)
-      response = fetch_assessors(scheme_id, [200], true, {'scheme_ids': [scheme_id]})
+      response =
+        fetch_assessors(scheme_id, [200], true, { 'scheme_ids': [scheme_id] })
 
       actual = JSON.parse(response.body)['data']
       expected = {
@@ -105,7 +108,9 @@ describe 'Acceptance::AssessorList' do
             },
             'searchResultsComparisonPostcode' => '',
             'qualifications' => {
-              'domesticRdSap' => 'ACTIVE', 'nonDomesticSp3' => 'INACTIVE'
+              'domesticRdSap' => 'ACTIVE',
+              'nonDomesticSp3' => 'INACTIVE',
+              'nonDomesticCc4' => 'INACTIVE'
             }
           }
         ]
@@ -121,7 +126,8 @@ describe 'Acceptance::AssessorList' do
       add_assessor(scheme_id, 'SCHEME1234', valid_assessor_request_body)
       add_assessor(scheme_id, 'SCHEME5678', valid_assessor_request_body)
 
-      response = fetch_assessors(scheme_id, [200], true, {'scheme_ids': [scheme_id]})
+      response =
+        fetch_assessors(scheme_id, [200], true, { 'scheme_ids': [scheme_id] })
       actual = JSON.parse(response.body)['data']
       expected = {
         'assessors' => [
@@ -139,7 +145,9 @@ describe 'Acceptance::AssessorList' do
             },
             'searchResultsComparisonPostcode' => '',
             'qualifications' => {
-              'domesticRdSap' => 'ACTIVE', 'nonDomesticSp3' => 'INACTIVE'
+              'domesticRdSap' => 'ACTIVE',
+              'nonDomesticSp3' => 'INACTIVE',
+              'nonDomesticCc4' => 'INACTIVE'
             }
           },
           {
@@ -156,7 +164,9 @@ describe 'Acceptance::AssessorList' do
             },
             'searchResultsComparisonPostcode' => '',
             'qualifications' => {
-              'domesticRdSap' => 'ACTIVE', 'nonDomesticSp3' => 'INACTIVE'
+              'domesticRdSap' => 'ACTIVE',
+              'nonDomesticSp3' => 'INACTIVE',
+              'nonDomesticCc4' => 'INACTIVE'
             }
           }
         ]
@@ -185,14 +195,19 @@ describe 'Acceptance::AssessorList' do
       scheme_id = add_scheme_and_get_name
       second_scheme_id = add_scheme_and_get_name('second test scheme')
 
-      fetch_assessors(second_scheme_id, [403], true, {'scheme_ids': [scheme_id]})
+      fetch_assessors(
+        second_scheme_id,
+        [403],
+        true,
+        { 'scheme_ids': [scheme_id] }
+      )
     end
   end
 
   context 'when supplemental data object does not contain the schemes_ids key' do
     it 'returns a 403 forbidden' do
       scheme_id = add_scheme_and_get_name
-      fetch_assessors(scheme_id, [403], true, {'test': [scheme_id]})
+      fetch_assessors(scheme_id, [403], true, { 'test': [scheme_id] })
     end
   end
 end

@@ -3,12 +3,12 @@ def check_response(response, accepted_responses)
     response
   else
     raise UnexpectedApiError.new(
-        {
-            expected_status: accepted_responses,
-            actual_status: response.status,
-            response_body: response.body
-        }
-    )
+            {
+              expected_status: accepted_responses,
+              actual_status: response.status,
+              response_body: response.body
+            }
+          )
   end
 end
 
@@ -35,7 +35,12 @@ def assertive_put(path, body, accepted_responses, authenticate, auth_data)
 end
 
 def assertive_get(path, accepted_responses, authenticate, auth_data)
-  assertive_request(-> { get(path) }, accepted_responses, authenticate, auth_data)
+  assertive_request(
+    -> { get(path) },
+    accepted_responses,
+    authenticate,
+    auth_data
+  )
 end
 
 def assertive_post(path, body, accepted_responses, authenticate, auth_data)
@@ -47,12 +52,23 @@ def assertive_post(path, body, accepted_responses, authenticate, auth_data)
   )
 end
 
-def fetch_assessors(scheme_id, accepted_responses = [200], authenticate = true, auth_data=nil)
-  assertive_get("/api/schemes/#{scheme_id}/assessors", accepted_responses, authenticate, auth_data)
+def fetch_assessors(
+  scheme_id, accepted_responses = [200], authenticate = true, auth_data = nil
+)
+  assertive_get(
+    "/api/schemes/#{scheme_id}/assessors",
+    accepted_responses,
+    authenticate,
+    auth_data
+  )
 end
 
 def fetch_assessor(
-  scheme_id, assessor_id, accepted_responses = [200], authenticate = true, auth_data=nil
+  scheme_id,
+  assessor_id,
+  accepted_responses = [200],
+  authenticate = true,
+  auth_data = nil
 )
   assertive_get(
     "/api/schemes/#{scheme_id}/assessors/#{assessor_id}",
@@ -68,7 +84,7 @@ def add_assessor(
   body,
   accepted_responses = [200, 201],
   authenticate = true,
-  auth_data=nil
+  auth_data = nil
 )
   assertive_put(
     "/api/schemes/#{scheme_id}/assessors/#{assessor_id}",
@@ -80,7 +96,10 @@ def add_assessor(
 end
 
 def add_scheme(
-  name = 'test scheme', accepted_responses = [201], authenticate = true, auth_data=nil
+  name = 'test scheme',
+  accepted_responses = [201],
+  authenticate = true,
+  auth_data = nil
 )
   assertive_post(
     '/api/schemes',
@@ -106,7 +125,10 @@ def add_scheme_then_assessor(body, accepted_responses = [200, 201])
 end
 
 def fetch_assessment(
-  assessment_id, accepted_responses = [200], authenticate = true, auth_data = nil
+  assessment_id,
+  accepted_responses = [200],
+  authenticate = true,
+  auth_data = nil
 )
   assertive_get(
     "api/assessments/domestic-epc/#{assessment_id}",
@@ -144,7 +166,10 @@ def assessments_search_by_postcode(
 end
 
 def assessments_search_by_assessment_id(
-  assessment_id, accepted_responses = [200], authenticate = true, auth_data = nil
+  assessment_id,
+  accepted_responses = [200],
+  authenticate = true,
+  auth_data = nil
 )
   assertive_get(
     "/api/assessments/domestic-epc/search?assessment_id=#{assessment_id}",
@@ -155,7 +180,11 @@ def assessments_search_by_assessment_id(
 end
 
 def assessments_search_by_street_name_and_town(
-  street_name, town, accepted_responses = [200], authenticate = true, auth_data=nil
+  street_name,
+  town,
+  accepted_responses = [200],
+  authenticate = true,
+  auth_data = nil
 )
   assertive_get(
     "/api/assessments/domestic-epc/search?street_name=#{street_name}&town=#{
@@ -168,7 +197,11 @@ def assessments_search_by_street_name_and_town(
 end
 
 def assessors_search(
-  postcode, qualification, accepted_responses = [200], authenticate = true, auth_data = nil
+  postcode,
+  qualification,
+  accepted_responses = [200],
+  authenticate = true,
+  auth_data = nil
 )
   assertive_get(
     "/api/assessors?postcode=#{postcode}&qualification=#{qualification}",

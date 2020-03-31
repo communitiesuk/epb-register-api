@@ -39,7 +39,8 @@ module UseCase
           scheme[:name],
           add_assessor_request.search_results_comparison_postcode,
           add_assessor_request.domestic_rd_sap_qualification,
-          add_assessor_request.non_domestic_sp3_qualification
+          add_assessor_request.non_domestic_sp3_qualification,
+          add_assessor_request.non_domestic_cc4_qualification
         )
 
       @assessors_gateway.update(assessor)

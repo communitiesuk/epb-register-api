@@ -151,7 +151,9 @@ describe 'Acceptance::SearchForAssessor' do
               telephoneNumber: '010199991010101', email: 'person@person.com'
             },
             qualifications: {
-              domesticRdSap: 'ACTIVE', nonDomesticSp3: 'INACTIVE'
+              domesticRdSap: 'ACTIVE',
+              nonDomesticSp3: 'INACTIVE',
+              nonDomesticCc4: 'INACTIVE'
             },
             distanceFromPostcodeInMiles: 0.0
           }.to_json

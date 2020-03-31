@@ -117,7 +117,9 @@ describe 'Acceptance::DomesticEnergyAssessment' do
               },
               searchResultsComparisonPostcode: '',
               qualifications: {
-                domesticRdSap: 'ACTIVE', nonDomesticSp3: 'INACTIVE'
+                domesticRdSap: 'ACTIVE',
+                nonDomesticSp3: 'INACTIVE',
+                nonDomesticCc4: 'INACTIVE'
               }
             },
             dateOfAssessment: valid_assessment_body[:dateOfAssessment],

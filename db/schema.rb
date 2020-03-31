@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_26_133853) do
+ActiveRecord::Schema.define(version: 2020_03_31_100511) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 2020_03_26_133853) do
     t.string "search_results_comparison_postcode"
     t.string "domestic_rd_sap_qualification"
     t.string "non_domestic_sp3_qualification"
+    t.string "non_domestic_cc4_qualification"
     t.index ["registered_by"], name: "index_assessors_on_registered_by"
     t.index ["search_results_comparison_postcode"], name: "index_assessors_on_search_results_comparison_postcode"
   end
