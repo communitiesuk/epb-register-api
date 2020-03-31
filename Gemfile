@@ -26,6 +26,7 @@ source 'https://rubygems.org' do
   gem 'sinatra-cross_origin', '~> 0.4.0'
   gem 'unleash', '~> 0.1.6'
   gem 'zeitwerk', '~> 2.2.1'
-  gem 'rubyzip'
-  gem 'geocoder'
+  gem 'rubyzip', '~> 2.3.0'
+  gem 'geocoder', '~> 1.6.2'
+  gem 'nokogiri', '~> 1.10.9'
 end

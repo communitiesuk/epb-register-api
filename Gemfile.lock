@@ -33,6 +33,7 @@ GEM
       addressable (>= 2.4)
     jwt (2.2.1)
     method_source (0.9.2)
+    mini_portile2 (2.4.0)
     minitest (5.14.0)
     multi_json (1.14.1)
     multi_xml (0.6.0)
@@ -40,6 +41,8 @@ GEM
     murmurhash3 (0.1.6)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
+    nokogiri (1.10.9)
+      mini_portile2 (~> 2.4.0)
     oauth2 (1.4.4)
       faraday (>= 0.8, < 2.0)
       jwt (>= 1.0, < 3.0)
@@ -111,8 +114,9 @@ PLATFORMS
 DEPENDENCIES
   database_cleaner!
   epb-auth-tools (~> 1.0, >= 1.0.2)!
-  geocoder!
+  geocoder (~> 1.6.2)!
   json-schema (~> 2.8)!
+  nokogiri (~> 1.10.9)!
   ougai (~> 1.8)!
   pg!
   prettier (~> 0.16.0)!
@@ -120,7 +124,7 @@ DEPENDENCIES
   rack-test (~> 0.8.3)!
   rake!
   rspec (~> 3.0)!
-  rubyzip!
+  rubyzip (~> 2.3.0)!
   simplecov (~> 0.17.1)!
   sinatra (~> 2.0, >= 2.0.7)!
   sinatra-activerecord (~> 2.0.14)!
