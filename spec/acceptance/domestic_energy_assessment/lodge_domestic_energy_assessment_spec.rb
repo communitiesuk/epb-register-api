@@ -13,8 +13,8 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         'domestic-epc',
         '123-456',
         'body',
-        [401],
-        false,
+        [403],
+        true,
         {},
         %w[wrong:scope]
       )

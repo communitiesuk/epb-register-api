@@ -104,7 +104,8 @@ module Controller
       end
     end
 
-    post '/api/assessments/:assessment_type/:assessment_id', jwt_auth: [] do
+    post '/api/assessments/:assessment_type/:assessment_id',
+         jwt_auth: %w[assessment:lodge] do
     end
 
     put '/api/assessments/domestic-epc/:assessment_id', jwt_auth: [] do
