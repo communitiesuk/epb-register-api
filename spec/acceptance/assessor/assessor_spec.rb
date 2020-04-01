@@ -154,6 +154,20 @@ describe 'Acceptance::Assessor' do
           %w[wrong:scope]
         )
       end
+
+      it 'rejects a request that is from the wrong scheme but has the right scope' do
+        scheme_id = add_scheme_and_get_id
+        wrong_scheme_id = scheme_id + 10
+        add_assessor(
+          scheme_id,
+          'TEST',
+          valid_assessor_request,
+          [403],
+          true,
+          { 'scheme_ids': [wrong_scheme_id] },
+          %w[scheme:assessor:update]
+        )
+      end
     end
 
     context 'which is valid with all fields' do
@@ -264,7 +278,7 @@ describe 'Acceptance::Assessor' do
           '>>>this is not json<<<',
           [422],
           true,
-          {},
+          { 'scheme_ids': [scheme_id] },
           %w[scheme:assessor:update]
         )
       end
@@ -276,7 +290,7 @@ describe 'Acceptance::Assessor' do
           {},
           [422],
           true,
-          {},
+          { 'scheme_ids': [scheme_id] },
           %w[scheme:assessor:update]
         )
       end

@@ -126,6 +126,14 @@ module Controller
         jwt_auth: %w[scheme:assessor:update] do
       scheme_id = params['scheme_id']
       scheme_assessor_id = params['scheme_assessor_id']
+      sup = env[:jwt_auth].supplemental('scheme_ids')
+      unless sup.include? scheme_id.to_i
+        forbidden(
+          'UNAUTHORISED',
+          'You are not authorised to perform this request'
+        )
+      end
+
       assessor_details = request_body(PUT_SCHEMA)
 
       create_assessor_response =

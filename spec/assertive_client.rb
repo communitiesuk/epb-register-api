@@ -106,6 +106,7 @@ def add_assessor(
   auth_data = nil,
   scopes = %w[scheme:assessor:update]
 )
+  auth_data = { 'scheme_ids': [scheme_id] } unless auth_data
   assertive_put(
     "/api/schemes/#{scheme_id}/assessors/#{assessor_id}",
     body,
