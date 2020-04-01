@@ -29,7 +29,7 @@ module Controller
 
     def search_by_name(name)
       result =
-          @container.get_object(:find_assessors_by_name_use_case).execute(name)
+        @container.get_object(:find_assessors_by_name_use_case).execute(name)
       json_response(200, result)
     end
 
@@ -38,10 +38,10 @@ module Controller
       postcode = postcode.insert(-4, ' ') if postcode[-4] != ' '
 
       result =
-          @container.get_object(:find_assessors_by_postcode_use_case).execute(
-              postcode,
-              qualifications.split(',')
-          )
+        @container.get_object(:find_assessors_by_postcode_use_case).execute(
+          postcode,
+          qualifications.split(',')
+        )
       json_response(200, result)
     end
 
@@ -65,7 +65,7 @@ module Controller
       not_found_error('The requested scheme was not found')
     end
 
-    get '/api/assessors', jwt_auth: [] do
+    get '/api/assessors', jwt_auth: %w[assessor:search] do
       if params.has_key?(:name)
         search_by_name(params[:name])
       elsif params.has_key?(:postcode) && params.has_key?(:qualification)

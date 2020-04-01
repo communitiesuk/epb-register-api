@@ -230,10 +230,26 @@ def assessors_search(
   accepted_responses = [200],
   authenticate = true,
   auth_data = nil,
-  scopes = []
+  scopes = %w[assessor:search]
 )
   assertive_get(
     "/api/assessors?postcode=#{postcode}&qualification=#{qualification}",
+    accepted_responses,
+    authenticate,
+    auth_data,
+    scopes
+  )
+end
+
+def assessors_search_by_name(
+  name,
+  accepted_responses = [200],
+  authenticate = true,
+  auth_data = nil,
+  scopes = %w[assessor:search]
+)
+  assertive_get(
+    "/api/assessors?name=#{name}",
     accepted_responses,
     authenticate,
     auth_data,

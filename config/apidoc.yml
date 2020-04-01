@@ -237,7 +237,7 @@ paths:
       summary: Search for an assessor by postcode or name
       security:
         - oauth:
-            - 'assessment:search'
+            - 'assessor:search'
       parameters:
         - in: query
           name: postcode
@@ -367,9 +367,25 @@ components:
   securitySchemes:
     oauth:
       type: oauth2
+      description: This API uses OAuth 2 with the client credentials grant flow
       flows:
         clientCredentials:
           tokenUrl: "/auth/oauth/token"
+          scopes:
+            'scheme:create': Create a new scheme on the register
+            'scheme:list': List schemes on the register
+            'scheme:assessor:list': List assessors
+            'scheme:assessor:update': Add or Update assessors
+            'scheme:assessor:fetch': Get full details of an individual assessor
+            'assessment:fetch': Get full details of an individual assessment
+            'assessment:lodge': Lodge a new assessment with the register
+            'assessment:search': Search the register for an assessment
+            'assessor:search': Search the register for an assessor
+            'address:search': List addresses that match a given search criteria, along with existing assessments
+            'migrate:assessment': Migrate an assessment to the register
+            'migrate:assessor': Migrate an assessor to the register
+            'migrate:address': Migrate an address to the register
+            'report:assessor:status': Get a report of changes to assessors status for a given date
 
   schemas:
     Scheme:

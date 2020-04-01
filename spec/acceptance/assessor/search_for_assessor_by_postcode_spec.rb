@@ -61,13 +61,17 @@ describe 'Acceptance::SearchForAssessor' do
   context 'when searching without the right params' do
     it 'returns status 409 for postcode search without qualification' do
       add_postcodes('SE1 7EZ')
-      expect(
-        authenticate_and { get '/api/assessors?postcode=SE17EZ' }.status
-      ).to eq(409)
+      assertive_get(
+        '/api/assessors?postcode=SE17EZ',
+        [409],
+        true,
+        {},
+        %w[assessor:search]
+      )
     end
     it 'returns status 409 for no parameters' do
       add_postcodes('SE1 7EZ')
-      expect(authenticate_and { get '/api/assessors' }.status).to eq(409)
+      assertive_get('/api/assessors', [409], true, {}, %w[assessor:search])
     end
   end
 
@@ -371,6 +375,21 @@ describe 'Acceptance::SearchForAssessor' do
           'COMPLEXED_AIR_CON_ASSESSOR'
         )
       end
+    end
+  end
+  context 'security' do
+    it 'returns a 401 when not authenticated' do
+      assessors_search('SE1 7EZ', 'domesticRdSap', [401], false)
+    end
+    it 'returns a 403 when the right scopes are not present' do
+      assessors_search(
+        'SE1 7EZ',
+        'domesticRdSap',
+        [403],
+        true,
+        {},
+        %w[wrong:scope]
+      )
     end
   end
 end

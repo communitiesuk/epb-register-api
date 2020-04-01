@@ -232,7 +232,7 @@ paths:
       summary: Search for an assessor by postcode or name
       security:
         - oauth:
-            - 'assessment:search'
+            - 'assessor:search'
       parameters:
         - in: query
           name: postcode
@@ -584,6 +584,7 @@ components:
             'assessment:fetch': Get full details of an individual assessment
             'assessment:lodge': Lodge a new assessment with the register
             'assessment:search': Search the register for an assessment
+            'assessor:search': Search the register for an assessor
             'address:search': List addresses that match a given search criteria, along with existing assessments
             'migrate:assessment': Migrate an assessment to the register
             'migrate:assessor': Migrate an assessor to the register
