@@ -65,14 +65,14 @@ task :generate_certificate do
     internal_impact_of_cavity_insulation = impact_of_cavity_insulation.sample
     internal_impact_of_solid_wall_insulation = impact_of_solid_wall_insulation.sample
     sequence = 0
-    internal_improvement_code = improvement_code
-    internal_indicative_cost = indicative_cost
-    internal_typical_saving = typical_saving
-    internal_improvement_category = improvement_category
-    internal_improvement_type = improvement_type
-    internal_energy_performance_rating = energy_performance_rating
-    internal_environmental_impact_rating = environmental_impact_rating
-    internal_green_deal_category_code = green_deal_category_code
+    internal_improvement_code = improvement_code.sample
+    internal_indicative_cost = indicative_cost.sample
+    internal_typical_saving = typical_saving.sample
+    internal_improvement_category = improvement_category.sample
+    internal_improvement_type = improvement_type.sample
+    internal_energy_performance_rating = energy_performance_rating.sample
+    internal_environmental_impact_rating = environmental_impact_rating.sample
+    internal_green_deal_category_code = green_deal_category_code.sample
     assessment_id = '4321-8765-0987-7654-' + number.to_s.rjust(4, '0')
 
 
