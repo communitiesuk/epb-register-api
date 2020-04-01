@@ -340,7 +340,8 @@ paths:
         - Assessments
       summary: Migrate an existing Energy Performance Assessment to the register
       security:
-        - oauth: []
+        - oauth:
+            - 'migrate:assessment'
       parameters:
         - in: path
           name: assessmentId

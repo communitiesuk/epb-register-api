@@ -184,6 +184,22 @@ describe 'Acceptance::DomesticEnergyAssessment' do
   end
 
   context 'when migrating a domestic assessment (put)' do
+    context 'security' do
+      it 'rejects a request that is not authenticated' do
+        migrate_assessment('123', valid_assessment_body, [401], false)
+      end
+      it 'rejects a request with the wrong scopes' do
+        migrate_assessment(
+          '123',
+          valid_assessment_body,
+          [403],
+          true,
+          {},
+          %w[wrong:scope]
+        )
+      end
+    end
+
     it 'returns a 200 for a valid assessment' do
       scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)

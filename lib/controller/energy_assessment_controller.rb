@@ -109,7 +109,8 @@ module Controller
          jwt_auth: %w[assessment:lodge] do
     end
 
-    put '/api/assessments/domestic-epc/:assessment_id', jwt_auth: [] do
+    put '/api/assessments/domestic-epc/:assessment_id',
+        jwt_auth: %w[migrate:assessment] do
       assessment_id = params[:assessment_id]
       migrate_epc =
         @container.get_object(:migrate_domestic_energy_assessment_use_case)
