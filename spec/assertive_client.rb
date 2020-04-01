@@ -134,6 +134,25 @@ def add_scheme(
   )
 end
 
+def lodge_assessment(
+    assessment_type,
+    assessment_id,
+    assessment_body,
+    accepted_responses = [201],
+    authenticate = true,
+    auth_data = nil,
+    scopes = %w[assessment:lodge]
+)
+  assertive_post(
+      "api/assessments/#{assessment_type}/#{assessment_id}",
+      assessment_body,
+      accepted_responses,
+      authenticate,
+      auth_data,
+      scopes
+  )
+end
+
 def add_scheme_and_get_id(
   name = 'test scheme', accepted_responses = [201], authenticate = true
 )
