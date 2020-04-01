@@ -1,3 +1,5 @@
+ALL_SCOPES = %w[scheme:assessor:list]
+
 def check_response(response, accepted_responses)
   if accepted_responses.include?(response.status)
     response
@@ -12,12 +14,12 @@ def check_response(response, accepted_responses)
   end
 end
 
-def assertive_request(request, accepted_responses, authenticate, auth_data)
+def assertive_request(request, accepted_responses, authenticate, auth_data, scopes=ALL_SCOPES)
   if authenticate
     if auth_data
-      response = authenticate_with_data(auth_data) { request.call }
+      response = authenticate_with_data(auth_data, scopes) { request.call }
     else
-      response = authenticate_and { request.call }
+      response = authenticate_with_data({}, scopes) { request.call }
     end
   else
     response = request.call
