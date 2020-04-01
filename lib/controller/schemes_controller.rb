@@ -6,7 +6,7 @@ module Controller
       properties: { name: { type: 'string' } }
     }
 
-    get '/api/schemes', jwt_auth: [] do
+    get '/api/schemes', jwt_auth: %w[scheme:list] do
       all_schemes = @container.get_object(:get_all_schemes_use_case).execute
       json_api_response(200, all_schemes)
     end

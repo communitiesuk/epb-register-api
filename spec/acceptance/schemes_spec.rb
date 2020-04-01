@@ -1,9 +1,12 @@
 describe 'Acceptance::Schemes' do
   include RSpecAssessorServiceMixin
 
-  context 'getting an empty list of schemes without authentication' do
-    it 'returns status 401' do
-      schemes_list([401], false, {})
+  context 'getting a list of schemes security' do
+    it 'returns status 401 with no authentication' do
+      schemes_list([401], false)
+    end
+    it 'returns status 403 without the right scope' do
+      schemes_list([403], true, {}, %w[wrong:scope])
     end
   end
 

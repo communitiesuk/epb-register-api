@@ -33,7 +33,8 @@ describe 'Integration::Rackup' do
     context 'requests to /api/schemes' do
       it 'return a status of 200' do
         req = Net::HTTP::Get.new '/api/schemes'
-        response = authenticate_and(req) { request.request req }
+        response =
+          authenticate_and(req, %w[scheme:list]) { request.request req }
         expect(response.code).to eq '200'
       end
     end

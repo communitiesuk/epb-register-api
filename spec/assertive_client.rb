@@ -38,12 +38,13 @@ def assertive_put(path, body, accepted_responses, authenticate, auth_data)
   )
 end
 
-def assertive_get(path, accepted_responses, authenticate, auth_data)
+def assertive_get(path, accepted_responses, authenticate, auth_data, scopes)
   assertive_request(
     -> { get(path) },
     accepted_responses,
     authenticate,
-    auth_data
+    auth_data,
+    scopes
   )
 end
 
@@ -57,13 +58,18 @@ def assertive_post(path, body, accepted_responses, authenticate, auth_data)
 end
 
 def fetch_assessors(
-  scheme_id, accepted_responses = [200], authenticate = true, auth_data = nil
+  scheme_id,
+  accepted_responses = [200],
+  authenticate = true,
+  auth_data = nil,
+  scopes = %w[scheme:assessor:list]
 )
   assertive_get(
     "/api/schemes/#{scheme_id}/assessors",
     accepted_responses,
     authenticate,
-    auth_data
+    auth_data,
+    scopes
   )
 end
 
@@ -72,13 +78,15 @@ def fetch_assessor(
   assessor_id,
   accepted_responses = [200],
   authenticate = true,
-  auth_data = nil
+  auth_data = nil,
+  scopes = []
 )
   assertive_get(
     "/api/schemes/#{scheme_id}/assessors/#{assessor_id}",
     accepted_responses,
     authenticate,
-    auth_data
+    auth_data,
+    scopes
   )
 end
 
@@ -132,13 +140,15 @@ def fetch_assessment(
   assessment_id,
   accepted_responses = [200],
   authenticate = true,
-  auth_data = nil
+  auth_data = nil,
+  scopes = []
 )
   assertive_get(
     "api/assessments/domestic-epc/#{assessment_id}",
     accepted_responses,
     authenticate,
-    auth_data
+    auth_data,
+    scopes
   )
 end
 
@@ -159,13 +169,18 @@ def migrate_assessment(
 end
 
 def assessments_search_by_postcode(
-  postcode, accepted_responses = [200], authenticate = true, auth_data = nil
+  postcode,
+  accepted_responses = [200],
+  authenticate = true,
+  auth_data = nil,
+  scopes = []
 )
   assertive_get(
     "/api/assessments/domestic-epc/search?postcode=#{postcode}",
     accepted_responses,
     authenticate,
-    auth_data
+    auth_data,
+    scopes
   )
 end
 
@@ -173,13 +188,15 @@ def assessments_search_by_assessment_id(
   assessment_id,
   accepted_responses = [200],
   authenticate = true,
-  auth_data = nil
+  auth_data = nil,
+  scopes = []
 )
   assertive_get(
     "/api/assessments/domestic-epc/search?assessment_id=#{assessment_id}",
     accepted_responses,
     authenticate,
-    auth_data
+    auth_data,
+    scopes
   )
 end
 
@@ -188,7 +205,8 @@ def assessments_search_by_street_name_and_town(
   town,
   accepted_responses = [200],
   authenticate = true,
-  auth_data = nil
+  auth_data = nil,
+  scopes = []
 )
   assertive_get(
     "/api/assessments/domestic-epc/search?street_name=#{street_name}&town=#{
@@ -196,7 +214,8 @@ def assessments_search_by_street_name_and_town(
     }",
     accepted_responses,
     authenticate,
-    auth_data
+    auth_data,
+    scopes
   )
 end
 
@@ -205,18 +224,29 @@ def assessors_search(
   qualification,
   accepted_responses = [200],
   authenticate = true,
-  auth_data = nil
+  auth_data = nil,
+  scopes = []
 )
   assertive_get(
     "/api/assessors?postcode=#{postcode}&qualification=#{qualification}",
     accepted_responses,
     authenticate,
-    auth_data
+    auth_data,
+    scopes
   )
 end
 
 def schemes_list(
-  accepted_responses = [200], authenticate = true, auth_data = nil
+  accepted_responses = [200],
+  authenticate = true,
+  auth_data = nil,
+  scopes = %w[scheme:list]
 )
-  assertive_get('/api/schemes', accepted_responses, authenticate, auth_data)
+  assertive_get(
+    '/api/schemes',
+    accepted_responses,
+    authenticate,
+    auth_data,
+    scopes
+  )
 end
