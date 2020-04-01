@@ -92,7 +92,8 @@ module Controller
       end
     end
 
-    get '/api/schemes/:scheme_id/assessors/:scheme_assessor_id', jwt_auth: [] do
+    get '/api/schemes/:scheme_id/assessors/:scheme_assessor_id',
+        jwt_auth: %w[scheme:assessor:fetch] do
       scheme_id = params[:scheme_id]
       scheme_assessor_id = params[:scheme_assessor_id]
       result =

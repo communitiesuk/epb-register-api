@@ -82,7 +82,7 @@ def fetch_assessor(
   accepted_responses = [200],
   authenticate = true,
   auth_data = nil,
-  scopes = []
+  scopes = %w[scheme:assessor:fetch]
 )
   assertive_get(
     "/api/schemes/#{scheme_id}/assessors/#{assessor_id}",

@@ -139,7 +139,8 @@ paths:
         - Individually manage assessors
       summary: Get all details for an individual assessor registration
       security:
-        - oauth: []
+        - oauth:
+            - 'scheme:assessor:fetch'
       parameters:
         - in: path
           required: true

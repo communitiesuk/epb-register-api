@@ -37,10 +37,6 @@ describe 'Acceptance::Assessor' do
     end
 
     context 'and the client is unauthenticated' do
-      it 'returns status 401 for a get' do
-        fetch_assessor(20, 'SCHEME4233', [401], false)
-      end
-
       it 'returns status 401 for a PUT' do
         add_assessor(20, 'SCHEME4532', valid_assessor_request, [401], false)
       end
@@ -52,14 +48,6 @@ describe 'Acceptance::Assessor' do
 
     it 'returns status 404' do
       fetch_assessor(scheme_id, 'SCHE2354246', [404])
-    end
-
-    context 'and the client is unauthenticated' do
-      it 'returns status 401' do
-        expect(
-          get("/api/schemes/#{scheme_id}/assessors/SCHE2354246").status
-        ).to eq(401)
-      end
     end
   end
 
@@ -127,6 +115,16 @@ describe 'Acceptance::Assessor' do
         expect(response['data']['qualifications']['domesticRdSap']).to eq(
           'INACTIVE'
         )
+      end
+    end
+
+    context 'security' do
+      it 'rejects a request that is not authenticated' do
+        fetch_assessor(2, 'test', [401], false)
+      end
+
+      it 'rejects a request without the right scope' do
+        fetch_assessor(2, 'test', [403], true, {}, %w[wrong:scope])
       end
     end
   end
