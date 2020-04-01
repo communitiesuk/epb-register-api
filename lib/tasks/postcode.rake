@@ -18,8 +18,14 @@ task :import_postcode do
     io.get_next_entry
     query = io.read.gsub 'INSERT INTO postcodelatlng (id,postcode,latitude,longitude) VALUES ', ''
     query = query.gsub "'',''", "'0', '0'"
-    query = query.gsub ";", ","
+    statements = query.split(";")
 
-    db.execute('INSERT INTO postcode_geolocation (id,postcode,latitude,longitude) VALUES ' + query[0...-3])
+    statements.pop
+
+    statements.each_slice(50000) do |batch|
+      batch = batch.join(', ')
+
+      db.execute('INSERT INTO postcode_geolocation (id,postcode,latitude,longitude) VALUES ' + batch)
+    end
   end
 end
