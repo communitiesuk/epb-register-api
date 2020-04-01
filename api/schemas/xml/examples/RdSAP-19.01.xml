@@ -128,6 +128,11 @@
         <Energy-Assessor>
             <Name>Name0</Name>
             <Contact-Address>
+              <Address-Line-1></Address-Line-1>
+              <Address-Line-2></Address-Line-2>
+              <Address-Line-3></Address-Line-3>
+              <Post-Town></Post-Town>
+              <Postcode>AB1C 2DE</Postcode>
             </Contact-Address>
             <Company-Name>Company-Name0</Company-Name>
             <Scheme-Name>Scheme-Name0</Scheme-Name>
