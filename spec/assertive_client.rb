@@ -1,4 +1,4 @@
-ALL_SCOPES = %w[scheme:assessor:list]
+ALL_SCOPES = %w[scheme:assessor:list scheme:list]
 
 def check_response(response, accepted_responses)
   if accepted_responses.include?(response.status)
@@ -14,7 +14,9 @@ def check_response(response, accepted_responses)
   end
 end
 
-def assertive_request(request, accepted_responses, authenticate, auth_data, scopes=ALL_SCOPES)
+def assertive_request(
+  request, accepted_responses, authenticate, auth_data, scopes = ALL_SCOPES
+)
   if authenticate
     if auth_data
       response = authenticate_with_data(auth_data, scopes) { request.call }
@@ -211,4 +213,10 @@ def assessors_search(
     authenticate,
     auth_data
   )
+end
+
+def schemes_list(
+  accepted_responses = [200], authenticate = true, auth_data = nil
+)
+  assertive_get('/api/schemes', accepted_responses, authenticate, auth_data)
 end

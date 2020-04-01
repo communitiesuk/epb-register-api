@@ -387,17 +387,30 @@ describe 'Acceptance::DomesticEnergyAssessment' do
       )
     end
 
-    it 'always enters a recommended improvement typical saving with two decimal places'do
+    it 'always enters a recommended improvement typical saving with two decimal places' do
       scheme_id = add_scheme_and_get_name
       add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
-      valid_assessment_body_typical_saving_more_than_two_dp = valid_assessment_body.dup
-      valid_assessment_body_typical_saving_more_than_two_dp[:recommendedImprovements][0][:typicalSaving] =  374.6464
+      valid_assessment_body_typical_saving_more_than_two_dp =
+        valid_assessment_body.dup
+      valid_assessment_body_typical_saving_more_than_two_dp[
+        :recommendedImprovements
+      ][
+        0
+      ][
+        :typicalSaving
+      ] =
+        374.6464
 
-      migrate_assessment('15650-651625-18267167', valid_assessment_body_typical_saving_more_than_two_dp)
+      migrate_assessment(
+        '15650-651625-18267167',
+        valid_assessment_body_typical_saving_more_than_two_dp
+      )
 
       response = JSON.parse(fetch_assessment('15650-651625-18267167').body)
 
-      expect(response['data']['recommendedImprovements'][0]['typicalSaving']).to eq('374.65')
+      expect(
+        response['data']['recommendedImprovements'][0]['typicalSaving']
+      ).to eq('374.65')
     end
   end
 end

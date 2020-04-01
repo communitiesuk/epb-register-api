@@ -2,26 +2,22 @@ describe 'Acceptance::Schemes' do
   include RSpecAssessorServiceMixin
 
   context 'getting an empty list of schemes without authentication' do
-    let(:response) { get '/api/schemes' }
-
     it 'returns status 401' do
-      expect(response.status).to eq 401
+      schemes_list([401], false, {})
     end
   end
 
   context 'getting an empty list of schemes' do
-    let(:response) { authenticate_and { get '/api/schemes' } }
-
     it 'returns status 200' do
-      expect(response.status).to eq(200)
+      schemes_list([200], true, {})
     end
 
     it 'returns JSON' do
-      expect(response.headers['Content-Type']).to eq('application/json')
+      expect(schemes_list.headers['Content-Type']).to eq('application/json')
     end
 
     it 'includes an empty list of schemes' do
-      parsed_response = JSON.parse(response.body, symbolize_names: true)
+      parsed_response = JSON.parse(schemes_list.body, symbolize_names: true)
       expect(parsed_response).to eq({ data: { schemes: [] }, meta: {} })
     end
   end
@@ -44,7 +40,7 @@ describe 'Acceptance::Schemes' do
 
     it 'is visible in the list of schemes' do
       add_scheme('XYMZALERO')
-      response = authenticate_and { get '/api/schemes' }
+      response = schemes_list
       get_response = JSON.parse(response.body)
       expect(get_response['data']['schemes'][0]['name']).to eq('XYMZALERO')
     end
