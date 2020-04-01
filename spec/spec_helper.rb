@@ -20,6 +20,7 @@ loader.setup
 ENV['JWT_ISSUER'] = 'test.issuer'
 ENV['JWT_SECRET'] = 'test.secret'
 ENV['SILENT_EVENTS'] = 'true'
+ALL_SCOPES = %w[scheme:assessor:list]
 
 class UnexpectedApiError < Exception; end
 
@@ -52,8 +53,8 @@ def authenticate_and(request = nil, scopes = [], supplementary = {}, &block)
   response
 end
 
-def authenticate_with_data(data = {}, &block)
-  authenticate_and(nil, %w[scheme:assessor:list], data) { block.call }
+def authenticate_with_data(data = {}, scopes=ALL_SCOPES, &block)
+  authenticate_and(nil, scopes, data) { block.call }
 end
 
 def get_valid_jwt(scopes = [], sup = {})
