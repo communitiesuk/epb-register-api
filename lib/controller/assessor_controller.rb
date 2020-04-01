@@ -27,6 +27,24 @@ module Controller
       }
     }
 
+    def search_by_name(name)
+      result =
+          @container.get_object(:find_assessors_by_name_use_case).execute(name)
+      json_response(200, result)
+    end
+
+    def search_by_postcode(postcode, qualifications)
+      postcode = postcode.upcase
+      postcode = postcode.insert(-4, ' ') if postcode[-4] != ' '
+
+      result =
+          @container.get_object(:find_assessors_by_postcode_use_case).execute(
+              postcode,
+              qualifications.split(',')
+          )
+      json_response(200, result)
+    end
+
     get '/api/schemes/:scheme_id/assessors',
         jwt_auth: %w[scheme:assessor:list] do
       scheme_id = params[:scheme_id]
@@ -45,24 +63,6 @@ module Controller
       json_api_response(200, { assessors: result.map(&:to_hash) }, {})
     rescue UseCase::FetchAssessorList::SchemeNotFoundException
       not_found_error('The requested scheme was not found')
-    end
-
-    def search_by_name(name)
-      result =
-        @container.get_object(:find_assessors_by_name_use_case).execute(name)
-      json_response(200, result)
-    end
-
-    def search_by_postcode(postcode, qualifications)
-      postcode = postcode.upcase
-      postcode = postcode.insert(-4, ' ') if postcode[-4] != ' '
-
-      result =
-        @container.get_object(:find_assessors_by_postcode_use_case).execute(
-          postcode,
-          qualifications.split(',')
-        )
-      json_response(200, result)
     end
 
     get '/api/assessors', jwt_auth: [] do
