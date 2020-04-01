@@ -172,7 +172,7 @@ def fetch_assessment(
   accepted_responses = [200],
   authenticate = true,
   auth_data = nil,
-  scopes = []
+  scopes = %w[assessment:fetch]
 )
   assertive_get(
     "api/assessments/domestic-epc/#{assessment_id}",

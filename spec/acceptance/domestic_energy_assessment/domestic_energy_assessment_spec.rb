@@ -64,6 +64,16 @@ describe 'Acceptance::DomesticEnergyAssessment' do
     assessment
   end
 
+  context 'security' do
+    it 'rejects a request that is not authenticated' do
+      fetch_assessment('123', [401], false)
+    end
+
+    it 'rejects a request with the wrong scopes' do
+      fetch_assessment('124', [403], true, {}, %w[wrong:scope])
+    end
+  end
+
   context 'when a domestic assessment doesnt exist' do
     it 'returns status 404 for a get' do
       fetch_assessment('DOESNT-EXIST', [404])

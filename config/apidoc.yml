@@ -276,7 +276,8 @@ paths:
         - Assessments
       summary: Get a domestic Energy Performance Assessment
       security:
-        - oauth: []
+        - oauth:
+            - 'assessment:fetch'
       parameters:
         - in: path
           name: assessmentId

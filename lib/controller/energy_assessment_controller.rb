@@ -89,7 +89,8 @@ module Controller
       end
     end
 
-    get '/api/assessments/domestic-epc/:assessment_id', jwt_auth: [] do
+    get '/api/assessments/domestic-epc/:assessment_id',
+        jwt_auth: %w[assessment:fetch] do
       assessment_id = params[:assessment_id]
       result =
         @container.get_object(:fetch_domestic_energy_assessment_use_case)
