@@ -48,12 +48,15 @@ def assertive_get(path, accepted_responses, authenticate, auth_data, scopes)
   )
 end
 
-def assertive_post(path, body, accepted_responses, authenticate, auth_data)
+def assertive_post(
+  path, body, accepted_responses, authenticate, auth_data, scopes
+)
   assertive_request(
     -> { post(path, body.to_json) },
     accepted_responses,
     authenticate,
-    auth_data
+    auth_data,
+    scopes
   )
 end
 
@@ -111,14 +114,16 @@ def add_scheme(
   name = 'test scheme',
   accepted_responses = [201],
   authenticate = true,
-  auth_data = nil
+  auth_data = nil,
+  scopes = %w[scheme:create]
 )
   assertive_post(
     '/api/schemes',
     { name: name },
     accepted_responses,
     authenticate,
-    auth_data
+    auth_data,
+    scopes
   )
 end
 

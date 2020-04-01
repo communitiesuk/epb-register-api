@@ -25,9 +25,13 @@ describe 'Acceptance::Schemes' do
     end
   end
 
-  context 'posting to the schemes api without authentication' do
-    it 'returns status 401' do
+  context 'adding a scheme security' do
+    it 'returns status 401 with no authentication' do
       add_scheme('TEST', [401], false)
+    end
+
+    it 'returns status 403 with wrong scopes' do
+      add_scheme('TEST', [403], true, {}, %w[wrong:scope])
     end
   end
 

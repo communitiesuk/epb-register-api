@@ -11,7 +11,7 @@ module Controller
       json_api_response(200, all_schemes)
     end
 
-    post '/api/schemes', jwt_auth: [] do
+    post '/api/schemes', jwt_auth: %w[scheme:create] do
       new_scheme_details = request_body(POST_SCHEMA)
       result =
         @container.get_object(:add_new_scheme_use_case).execute(
