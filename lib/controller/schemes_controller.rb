@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 module Controller
   class SchemesController < Controller::BaseController
     POST_SCHEMA = {
       type: 'object',
       required: %w[name],
       properties: { name: { type: 'string' } }
-    }
+    }.freeze
 
     get '/api/schemes', jwt_auth: %w[scheme:list] do
       all_schemes = @container.get_object(:get_all_schemes_use_case).execute
@@ -18,7 +20,7 @@ module Controller
           new_scheme_details[:name]
         )
       json_api_response(201, result)
-    rescue Exception => e
+    rescue StandardError => e
       case e
       when JSON::Schema::ValidationError, JSON::ParserError
         error_response(401, 'INVALID_REQUEST', e.message)

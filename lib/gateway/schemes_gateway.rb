@@ -1,6 +1,6 @@
 module Gateway
   class SchemesGateway
-    class DuplicateSchemeException < Exception; end
+    class DuplicateSchemeException < StandardError; end
 
     class Scheme < ActiveRecord::Base
       def to_hash
@@ -18,12 +18,12 @@ module Gateway
 
     def add(name)
       Scheme.create(name: name)
-    rescue Exception => e
+    rescue StandardError => e
       case e
       when PG::UniqueViolation, ActiveRecord::RecordNotUnique
         raise DuplicateSchemeException
       else
-        raise e
+        raise
       end
     end
   end
