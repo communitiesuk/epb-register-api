@@ -1,4 +1,4 @@
-desc 'Import some random assessors data'
+desc 'Truncate assessors data'
 
 task :truncate_assessor do
   if ENV['STAGE'] == 'production'
@@ -7,6 +7,8 @@ task :truncate_assessor do
 
   ActiveRecord::Base.connection.execute('TRUNCATE TABLE assessors RESTART IDENTITY CASCADE')
 end
+
+desc 'Import some random assessors data'
 
 task :generate_assessor do
   if ENV['STAGE'] == 'production'

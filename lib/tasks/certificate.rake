@@ -1,4 +1,4 @@
-desc 'Import some random certificate data'
+desc 'Truncate all certificate data'
 
 task :truncate_certificate do
   if ENV['STAGE'] == 'production'
@@ -8,8 +8,10 @@ task :truncate_certificate do
   ActiveRecord::Base.connection.execute('TRUNCATE TABLE domestic_energy_assessments RESTART IDENTITY')
 end
 
+desc 'Import some random certificate data'
+
 task :generate_certificate do
-  if ENV['STAGE'] == 'production'
+  unless ENV['STAGE'] == 'staging' || ENV['STAGE'] == 'integration'
     exit
   end
 
@@ -31,6 +33,14 @@ task :generate_certificate do
   impact_of_cavity_insulation = [ -21, -764, -836, -13, -94, -35]
   impact_of_solid_wall_insulation = [ -4, -53, -64, -99, -23, -73, -5]
   scheme_assessor_id = 0
+  improvement_code = ['1', '2', '3', '4', '5']
+  indicative_cost = ['£448 - £463', '£30', '£82765 - £700000']
+  typical_saving = [453.45, 200, 310.49, 999.99]
+  improvement_category = ['a', 'b', 'c', 'd', 'e','f']
+  improvement_type = ['minor', 'medium', 'major']
+  energy_performance_rating = ['a', 'b', 'c', 'd','e']
+  environmental_impact_rating = ['a', 'b', 'c', 'd','e']
+  green_deal_category_code = ['a', 'b', 'c', 'd','e']
 
   200.times do |number|
     line_1 = address_line1.sample
@@ -54,6 +64,16 @@ task :generate_certificate do
     internal_impact_of_loft_insulation = impact_of_loft_insulation.sample
     internal_impact_of_cavity_insulation = impact_of_cavity_insulation.sample
     internal_impact_of_solid_wall_insulation = impact_of_solid_wall_insulation.sample
+    sequence = 0
+    internal_improvement_code = improvement_code
+    internal_indicative_cost = indicative_cost
+    internal_typical_saving = typical_saving
+    internal_improvement_category = improvement_category
+    internal_improvement_type = improvement_type
+    internal_energy_performance_rating = energy_performance_rating
+    internal_environmental_impact_rating = environmental_impact_rating
+    internal_green_deal_category_code = green_deal_category_code
+    assessment_id = '4321-8765-0987-7654-' + number.to_s.rjust(4, '0')
 
 
     query =
@@ -84,7 +104,7 @@ task :generate_certificate do
             scheme_assessor_id
           )
         VALUES(
-          '1234-5678-7890-8909-#{number.to_s.rjust(4, '0')}',
+          '#{assessment_id}',
           '#{date_of_assessment}',
           '#{date_registered}',
           '#{dwelling_type.sample}',
@@ -108,6 +128,35 @@ task :generate_certificate do
           '#{scheme_assessor_id}'
         )"
 
+    recommended_improvements_query =
+        "INSERT INTO
+        domestic_epc_energy_improvements
+          (
+            assessment_id,
+            sequence,
+            internal_improvement_code,
+            internal_indicative_cost,
+            internal_typical_saving,
+            internal_improvement_category,
+            internal_improvement_type,
+            internal_energy_performance_rating,
+            internal_environmental_impact_rating,
+            internal_green_deal_category_code
+          )
+        VALUES(
+            '#{assessment_id}'
+            '#{sequence}',
+            '#{internal_improvement_code}',
+            '#{internal_indicative_cost}',
+            '#{internal_typical_saving}',
+            '#{internal_improvement_category}',
+            '#{internal_improvement_type}',
+            '#{internal_energy_performance_rating}',
+            '#{internal_environmental_impact_rating}',
+            '#{internal_green_deal_category_code}'
+        )"
+
     ActiveRecord::Base.connection.execute(query)
+    ActiveRecord::Base.connection.execute(recommended_improvements_query)
   end
 end
