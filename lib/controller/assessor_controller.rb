@@ -96,6 +96,15 @@ module Controller
         jwt_auth: %w[scheme:assessor:fetch] do
       scheme_id = params[:scheme_id]
       scheme_assessor_id = params[:scheme_assessor_id]
+      sup = env[:jwt_auth].supplemental('scheme_ids')
+
+      unless sup.include? scheme_id.to_i
+        forbidden(
+          'UNAUTHORISED',
+          'You are not authorised to perform this request'
+        )
+      end
+
       result =
         @container.get_object(:fetch_assessor_use_case).execute(
           scheme_id,

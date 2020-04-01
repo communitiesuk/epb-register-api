@@ -83,7 +83,7 @@ describe 'Acceptance::DomesticEnergyAssessment' do
 
   context 'when a domestic assessment exists' do
     it 'returns a 200' do
-      scheme_id = add_scheme_and_get_name
+      scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
       migrate_assessment('15650-651625-18267167', valid_assessment_body, [200])
 
@@ -92,7 +92,7 @@ describe 'Acceptance::DomesticEnergyAssessment' do
     end
 
     it 'returns the assessment details' do
-      scheme_id = add_scheme_and_get_name
+      scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
       migrate_assessment('15650-651625-18267167', valid_assessment_body)
 
@@ -175,13 +175,13 @@ describe 'Acceptance::DomesticEnergyAssessment' do
 
   context 'when migrating a domestic assessment (put)' do
     it 'returns a 200 for a valid assessment' do
-      scheme_id = add_scheme_and_get_name
+      scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
       migrate_assessment('123-456', valid_assessment_body, [200])
     end
 
     it 'returns the assessment that was migrated' do
-      scheme_id = add_scheme_and_get_name
+      scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
 
       response = migrate_assessment('123-456', valid_assessment_body).body
@@ -363,7 +363,7 @@ describe 'Acceptance::DomesticEnergyAssessment' do
       assessment_without_space_heating_data[:heatDemand] = {
         currentWaterHeatingDemand: 4_354
       }
-      scheme_id = add_scheme_and_get_name
+      scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
 
       migrate_assessment(
@@ -378,7 +378,7 @@ describe 'Acceptance::DomesticEnergyAssessment' do
       assessment_without_water_heating_data[:heatDemand] = {
         currentSpaceHeatingDemand: 4_354
       }
-      scheme_id = add_scheme_and_get_name
+      scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
       migrate_assessment(
         '456-982',
@@ -388,7 +388,7 @@ describe 'Acceptance::DomesticEnergyAssessment' do
     end
 
     it 'always enters a recommended improvement typical saving with two decimal places' do
-      scheme_id = add_scheme_and_get_name
+      scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
       valid_assessment_body_typical_saving_more_than_two_dp =
         valid_assessment_body.dup

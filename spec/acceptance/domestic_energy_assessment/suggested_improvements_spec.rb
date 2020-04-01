@@ -88,7 +88,7 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
       assessment.delete(:recommendedImprovements)
     end
 
-    scheme_id = add_scheme_and_get_name
+    scheme_id = add_scheme_and_get_id
     add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
 
     migrate_assessment('123-456', assessment, [422])
@@ -150,7 +150,7 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
     it 'returns a 200 when all possible recommendation data items present' do
       assessment = valid_assessment_body.dup
       assessment[:recommendedImprovements] = valid_recommendations
-      scheme_id = add_scheme_and_get_name
+      scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
 
       migrate_assessment('123-456', assessment, [200])
@@ -162,7 +162,7 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
       recommendations[1][:improvementCategory] = ''
       assessment = valid_assessment_body.dup
       assessment[:recommendedImprovements] = valid_recommendations
-      scheme_id = add_scheme_and_get_name
+      scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
 
       migrate_assessment('123-456', assessment, [200])

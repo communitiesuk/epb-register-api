@@ -84,6 +84,7 @@ def fetch_assessor(
   auth_data = nil,
   scopes = %w[scheme:assessor:fetch]
 )
+  auth_data = { 'scheme_ids': [scheme_id] } unless auth_data
   assertive_get(
     "/api/schemes/#{scheme_id}/assessors/#{assessor_id}",
     accepted_responses,
@@ -127,7 +128,7 @@ def add_scheme(
   )
 end
 
-def add_scheme_and_get_name(
+def add_scheme_and_get_id(
   name = 'test scheme', accepted_responses = [201], authenticate = true
 )
   JSON.parse(add_scheme(name, accepted_responses, authenticate).body)['data'][
@@ -136,7 +137,7 @@ def add_scheme_and_get_name(
 end
 
 def add_scheme_then_assessor(body, accepted_responses = [200, 201])
-  scheme_id = add_scheme_and_get_name
+  scheme_id = add_scheme_and_get_id
   response = add_assessor(scheme_id, 'TEST_ASSESSOR', body, accepted_responses)
   response
 end

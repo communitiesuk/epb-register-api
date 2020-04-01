@@ -28,7 +28,7 @@ describe 'Searching for an assessor by name' do
 
   context 'when there are results' do
     it 'returns the assessors details' do
-      scheme_id = add_scheme_and_get_name
+      scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, 'SCHE55443', valid_assessor_request)
       search_response = assessors_search_by_name('Some%20Person').body
       response = JSON.parse(search_response)

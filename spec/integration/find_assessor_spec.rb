@@ -71,7 +71,7 @@ describe 'Integration::FilterAndOrderAssessorsByPostcode' do
 
   context 'when ordering and filtering assessors by postcode' do
     it 'the returned assessor is within 0.0 distance' do
-      scheme_id = authenticate_and { add_scheme_and_get_name }
+      scheme_id = authenticate_and { add_scheme_and_get_id }
 
       authenticate_and do
         add_assessor(scheme_id, 'SCHEME4233', valid_assessor_request_body)

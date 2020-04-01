@@ -113,7 +113,7 @@ describe 'Acceptance::SearchForAssessor' do
 
     it 'has the assessors of the shape we expect' do
       add_postcodes('SE1 7EZ')
-      scheme_id = add_scheme_and_get_name
+      scheme_id = add_scheme_and_get_id
       add_assessor(
         scheme_id,
         'ASSESSOR999',
@@ -129,7 +129,7 @@ describe 'Acceptance::SearchForAssessor' do
     it 'has the over all hash of the shape we expect' do
       add_postcodes('SE1 7EZ')
 
-      scheme_id = add_scheme_and_get_name
+      scheme_id = add_scheme_and_get_id
 
       add_assessor(
         scheme_id,
@@ -171,7 +171,7 @@ describe 'Acceptance::SearchForAssessor' do
     it 'does not show assessors outside of 1 degree latitude/longitude' do
       add_postcodes('SE1 9SG', 51.5045, 0.0865)
       add_postcodes('NE8 2BH', 54.9680, 1.6062, false)
-      scheme_id = add_scheme_and_get_name
+      scheme_id = add_scheme_and_get_id
       assessor = valid_assessor_with_contact_request_body
       assessor[:searchResultsComparisonPostcode] = 'NE8 2BH'
       add_assessor(
@@ -191,7 +191,7 @@ describe 'Acceptance::SearchForAssessor' do
 
       add_postcodes('SW8 5BN', 51.4818, 0.1444, false)
 
-      scheme_id = add_scheme_and_get_name
+      scheme_id = add_scheme_and_get_id
 
       assessor = valid_assessor_with_contact_request_body
       assessor[:searchResultsComparisonPostcode] = 'SW8 5BN'
@@ -212,7 +212,7 @@ describe 'Acceptance::SearchForAssessor' do
     it 'does not return inactive assessors' do
       add_postcodes('SE1 5BN', 51.5045, 0.0865)
 
-      scheme_id = add_scheme_and_get_name
+      scheme_id = add_scheme_and_get_id
 
       assessor = valid_assessor_with_contact_request_body
       assessor[:qualifications][:domesticRdSap] = 'INACTIVE'
@@ -231,7 +231,7 @@ describe 'Acceptance::SearchForAssessor' do
     it 'does return reactivated assessors' do
       add_postcodes('SE1 7EZ', 51.5045, 0.0865)
 
-      scheme_id = add_scheme_and_get_name
+      scheme_id = add_scheme_and_get_id
 
       assessor = valid_assessor_with_contact_request_body
       assessor[:qualifications][:domesticRdSap] = 'INACTIVE'
@@ -258,7 +258,7 @@ describe 'Acceptance::SearchForAssessor' do
 
     it 'does not return unactivated assessors' do
       add_postcodes('SE1 7EZ', 51.5045, 0.0865)
-      scheme_id = add_scheme_and_get_name
+      scheme_id = add_scheme_and_get_id
 
       assessor = valid_assessor_with_contact_request_body
       assessor[:qualifications][:domesticRdSap] = 'ACTIVE'
@@ -287,7 +287,7 @@ describe 'Acceptance::SearchForAssessor' do
       it 'returns results based on the outcode of the postcode' do
         add_postcodes('SE1 5BN', 51.5045, 0.0865)
         add_outcodes('SE1', 51.5045, 0.4865)
-        scheme_id = add_scheme_and_get_name
+        scheme_id = add_scheme_and_get_id
 
         assessor = valid_assessor_with_contact_request_body
         assessor[:searchResultsComparisonPostcode] = 'SE1 5BN'
@@ -307,7 +307,7 @@ describe 'Acceptance::SearchForAssessor' do
       it 'returns error when neither postcode or outcode are found' do
         add_postcodes('SE1 5BN', 51.5045, 0.0865)
         add_outcodes('SE1', 51.5045, 0.4865)
-        scheme_id = add_scheme_and_get_name
+        scheme_id = add_scheme_and_get_id
 
         assessor = valid_assessor_with_contact_request_body
         assessor[:searchResultsComparisonPostcode] = 'SE1 5BN'
@@ -327,7 +327,7 @@ describe 'Acceptance::SearchForAssessor' do
     context 'for air conditioning level 3 assessors' do
       it 'returns only the assessors qualified' do
         add_postcodes('SE1 7EZ', 51.5045, 0.0865)
-        scheme_id = add_scheme_and_get_name
+        scheme_id = add_scheme_and_get_id
 
         assessor = valid_assessor_with_contact_request_body
         assessor[:qualifications][:domesticRdSap] = 'INACTIVE'
@@ -355,7 +355,7 @@ describe 'Acceptance::SearchForAssessor' do
     context 'for multiple types of qualification' do
       it 'returns each of the assessors with matching qualifications' do
         add_postcodes('SE1 7EZ', 51.5045, 0.0865)
-        scheme_id = add_scheme_and_get_name
+        scheme_id = add_scheme_and_get_id
 
         assessor = valid_assessor_with_contact_request_body
         assessor[:qualifications][:nonDomesticSp3] = 'ACTIVE'

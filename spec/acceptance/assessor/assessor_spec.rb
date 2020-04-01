@@ -44,7 +44,7 @@ describe 'Acceptance::Assessor' do
   end
 
   context "when an assessor doesn't exist" do
-    let!(:scheme_id) { add_scheme_and_get_name }
+    let!(:scheme_id) { add_scheme_and_get_id }
 
     it 'returns status 404' do
       fetch_assessor(scheme_id, 'SCHE2354246', [404])
@@ -53,8 +53,8 @@ describe 'Acceptance::Assessor' do
 
   context 'when getting an assessor on the wrong scheme' do
     it 'returns status 404' do
-      scheme_id = add_scheme_and_get_name
-      second_scheme_id = add_scheme_and_get_name('second scheme')
+      scheme_id = add_scheme_and_get_id
+      second_scheme_id = add_scheme_and_get_id('second scheme')
       add_assessor(second_scheme_id, 'SCHE987654', valid_assessor_request)
       fetch_assessor(scheme_id, 'SCHE987654', [404])
     end
@@ -63,13 +63,13 @@ describe 'Acceptance::Assessor' do
   context 'when getting an assessor' do
     context 'and the assessor exists on the correct scheme' do
       it 'returns status 200 for a get' do
-        scheme_id = add_scheme_and_get_name
+        scheme_id = add_scheme_and_get_id
         add_assessor(scheme_id, 'SCHEME4233', valid_assessor_request)
         expect(fetch_assessor(scheme_id, 'SCHEME4233').status).to eq(200)
       end
 
       it 'returns json' do
-        scheme_id = add_scheme_and_get_name
+        scheme_id = add_scheme_and_get_id
         add_assessor(scheme_id, 'SCHEME4233', valid_assessor_request)
         expect(
           fetch_assessor(scheme_id, 'SCHEME4233').headers['Content-type']
@@ -77,7 +77,7 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'returns the correct details for the assessor' do
-        scheme_id = add_scheme_and_get_name
+        scheme_id = add_scheme_and_get_id
         add_assessor(scheme_id, 'SCHEME4233', valid_assessor_request)
         expected_response =
           JSON.parse(
@@ -105,7 +105,7 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'returns EPC domestic qualification as inactive by default' do
-        scheme_id = add_scheme_and_get_name
+        scheme_id = add_scheme_and_get_id
         add_assessor(
           scheme_id,
           'SCHEME4233',
@@ -126,13 +126,27 @@ describe 'Acceptance::Assessor' do
       it 'rejects a request without the right scope' do
         fetch_assessor(2, 'test', [403], true, {}, %w[wrong:scope])
       end
+
+      it 'rejects a request with the right scope but from the wrong scheme' do
+        scheme_id = add_scheme_and_get_id
+        wrong_scheme_id = scheme_id + 10
+        add_assessor(scheme_id, 'test', valid_assessor_request)
+
+        fetch_assessor(
+          scheme_id,
+          'test',
+          [403],
+          true,
+          { scheme_ids: [wrong_scheme_id] }
+        )
+      end
     end
   end
 
   context 'when creating an assessor' do
     context 'which is valid with all fields' do
       it 'returns 201 created' do
-        scheme_id = add_scheme_and_get_name
+        scheme_id = add_scheme_and_get_id
         assessor_response =
           add_assessor(scheme_id, 'SCHE55443', valid_assessor_request)
 
@@ -140,7 +154,7 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'returns JSON' do
-        scheme_id = add_scheme_and_get_name
+        scheme_id = add_scheme_and_get_id
         assessor_response =
           add_assessor(scheme_id, 'SCHE55443', valid_assessor_request)
 
@@ -150,7 +164,7 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'returns assessor details with scheme details' do
-        scheme_id = add_scheme_and_get_name
+        scheme_id = add_scheme_and_get_id
         assessor_response =
           JSON.parse(
             add_assessor(scheme_id, 'SCHE55443', valid_assessor_request).body
@@ -186,7 +200,7 @@ describe 'Acceptance::Assessor' do
 
     context 'which is valid with optional fields missing' do
       it 'returns 201 created' do
-        scheme_id = add_scheme_and_get_name
+        scheme_id = add_scheme_and_get_id
         assessor_response =
           add_assessor(
             scheme_id,
@@ -198,7 +212,7 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'returns assessor details with scheme details' do
-        scheme_id = add_scheme_and_get_name
+        scheme_id = add_scheme_and_get_id
         assessor_response =
           JSON.parse(
             add_assessor(
@@ -232,7 +246,7 @@ describe 'Acceptance::Assessor' do
 
     context 'which is invalid' do
       it "rejects anything that isn't JSON" do
-        scheme_id = add_scheme_and_get_name
+        scheme_id = add_scheme_and_get_id
         assessor_response =
           authenticate_and do
             put(
@@ -245,7 +259,7 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'rejects an empty request body' do
-        scheme_id = add_scheme_and_get_name
+        scheme_id = add_scheme_and_get_id
         assessor_response =
           authenticate_and do
             put("/api/schemes/#{scheme_id}/assessors/thebrokenassessor")
@@ -305,8 +319,8 @@ describe 'Acceptance::Assessor' do
 
     context 'which has a clashing ID for an assessor on another scheme' do
       it 'Returns a status code 409' do
-        first_scheme = add_scheme_and_get_name
-        second_scheme = add_scheme_and_get_name 'scheme two'
+        first_scheme = add_scheme_and_get_id
+        second_scheme = add_scheme_and_get_id 'scheme two'
 
         add_assessor(first_scheme, 'SCHE4001', valid_assessor_request)
         add_assessor(second_scheme, 'SCHE4001', valid_assessor_request, [409])
@@ -317,7 +331,7 @@ describe 'Acceptance::Assessor' do
       let(:escaped_assessor_scheme_id) { 'TEST%2F000000' }
 
       it 'adds an assessor' do
-        scheme_id = add_scheme_and_get_name
+        scheme_id = add_scheme_and_get_id
 
         add_assessor_response =
           add_assessor scheme_id,
@@ -328,7 +342,7 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'fetches an assessor' do
-        scheme_id = add_scheme_and_get_name
+        scheme_id = add_scheme_and_get_id
 
         add_assessor scheme_id,
                      escaped_assessor_scheme_id,
@@ -345,7 +359,7 @@ describe 'Acceptance::Assessor' do
   context 'when updating an assessor' do
     context 'which is valid with all fields' do
       it 'returns 200 on the update' do
-        scheme_id = add_scheme_and_get_name
+        scheme_id = add_scheme_and_get_id
         assessor = valid_assessor_request
         add_assessor(scheme_id, 'ASSESSOR99', assessor)
         assessor[:firstName] = 'Janine'
@@ -354,7 +368,7 @@ describe 'Acceptance::Assessor' do
       end
 
       it 'replaces a previous assessors details successfully' do
-        scheme_id = add_scheme_and_get_name
+        scheme_id = add_scheme_and_get_id
         assessor = valid_assessor_request
         add_assessor(scheme_id, 'ASSESSOR99', assessor)
 
@@ -386,7 +400,7 @@ describe 'Acceptance::Assessor' do
 
     context 'which has a valid email' do
       it 'saves it successfully' do
-        scheme_id = add_scheme_and_get_name
+        scheme_id = add_scheme_and_get_id
 
         request_body = valid_assessor_request
         request_body[:contactDetails][:email] = 'mar@ten.com'
@@ -412,7 +426,7 @@ describe 'Acceptance::Assessor' do
 
     context 'which has a valid phone number' do
       it 'successfully saves it' do
-        scheme_id = add_scheme_and_get_name
+        scheme_id = add_scheme_and_get_id
 
         valid_telephone = '0' * 256
 
