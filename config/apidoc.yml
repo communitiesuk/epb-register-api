@@ -8,14 +8,8 @@ info:
 servers:
   - url: https://mhclg-epb-register-api-integration.london.cloudapps.digital/api
     description: Integration server
-    variables:
-      authServer:
-        default: https://mhclg-epb-auth-server-integration.london.cloudapps.digital
   - url: https://mhclg-epb-register-api-staging.london.cloudapps.digital/api
     description: Staging server
-    variables:
-      authServer:
-        default: https://mhclg-epb-auth-server-staging.london.cloudapps.digital
 
 tags:
   - name: Manage schemes
@@ -375,7 +369,7 @@ components:
       type: oauth2
       flows:
         clientCredentials:
-          tokenUrl: "{authServer}"
+          tokenUrl: "/auth/oauth/token"
 
   schemas:
     Scheme:

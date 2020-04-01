@@ -574,7 +574,7 @@ components:
       description: This API uses OAuth 2 with the client credentials grant flow
       flows:
         clientCredentials:
-          tokenUrl: /oauth/token
+          tokenUrl: /auth/oauth/token
           scopes:
             'scheme:create': Create a new scheme on the register
             'scheme:list': List schemes on the register
