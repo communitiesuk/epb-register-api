@@ -87,6 +87,8 @@ module Controller
           'INVALID_REQUEST',
           'The requested postcode is not valid'
         )
+      when ArgumentError
+        error_response(422, 'INVALID_QUERY', e.message)
       else
         server_error(e.message)
       end

@@ -73,6 +73,11 @@ describe 'Acceptance::SearchForAssessor' do
       add_postcodes('SE1 7EZ')
       assertive_get('/api/assessors', [409], true, {}, %w[assessor:search])
     end
+
+    it 'rejects a request which searches for a bad qualification' do
+      add_postcodes('SA70 7BD')
+      assessors_search('SA707BD', 'doubleGlazingFitter', [422])
+    end
   end
 
   context 'when a search postcode is valid' do
