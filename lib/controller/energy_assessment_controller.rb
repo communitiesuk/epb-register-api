@@ -57,7 +57,8 @@ module Controller
       }
     }
 
-    get '/api/assessments/domestic-epc/search', jwt_auth: [] do
+    get '/api/assessments/domestic-epc/search',
+        jwt_auth: %w[assessment:search] do
       if params.has_key?(:postcode)
         result =
           @container.get_object(:find_assessments_by_postcode_use_case).execute(

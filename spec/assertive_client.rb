@@ -206,7 +206,7 @@ def assessments_search_by_postcode(
   accepted_responses = [200],
   authenticate = true,
   auth_data = nil,
-  scopes = []
+  scopes = %w[assessment:search]
 )
   assertive_get(
     "/api/assessments/domestic-epc/search?postcode=#{postcode}",
@@ -222,7 +222,7 @@ def assessments_search_by_assessment_id(
   accepted_responses = [200],
   authenticate = true,
   auth_data = nil,
-  scopes = []
+  scopes = %w[assessment:search]
 )
   assertive_get(
     "/api/assessments/domestic-epc/search?assessment_id=#{assessment_id}",
@@ -239,7 +239,7 @@ def assessments_search_by_street_name_and_town(
   accepted_responses = [200],
   authenticate = true,
   auth_data = nil,
-  scopes = []
+  scopes = %w[assessment:search]
 )
   assertive_get(
     "/api/assessments/domestic-epc/search?street_name=#{street_name}&town=#{

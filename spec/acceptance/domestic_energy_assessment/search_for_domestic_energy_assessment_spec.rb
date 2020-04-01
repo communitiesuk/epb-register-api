@@ -56,6 +56,22 @@ describe 'Searching for assessments' do
     }.freeze
   end
 
+  context 'Security' do
+    it 'rejects a request without authentication' do
+      assessments_search_by_assessment_id('123', [401], false)
+    end
+
+    it 'rejects a request without the right scope' do
+      assessments_search_by_assessment_id(
+        '123',
+        [403],
+        true,
+        {},
+        %w[wrong:scope]
+      )
+    end
+  end
+
   context 'when a search postcode is valid' do
     it 'returns status 200 for a get' do
       assessments_search_by_postcode('SE17EZ', [200])
