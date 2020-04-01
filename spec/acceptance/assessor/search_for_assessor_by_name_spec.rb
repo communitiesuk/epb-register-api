@@ -19,7 +19,7 @@ describe 'Searching for an assessor by name' do
   end
 
   context 'when there are no results' do
-    it 'returns an empty lidy' do
+    it 'returns an empty list' do
       add_scheme_then_assessor(valid_assessor_request)
       response = JSON.parse(assessors_search_by_name('Marten%20Sheikh').body)
       expect(response['data']['assessors']).to eq([])
