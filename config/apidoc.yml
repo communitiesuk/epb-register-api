@@ -172,7 +172,8 @@ paths:
         - Individually manage assessors
       summary: Register a new assessor to associate them with your scheme
       security:
-        - oauth: []
+        - oauth:
+            - 'scheme:assessor:update'
       parameters:
         - in: path
           name: schemeId

@@ -35,12 +35,6 @@ describe 'Acceptance::Assessor' do
     it 'returns status 404 for a PUT' do
       add_assessor(20, 'SCHEME4532', valid_assessor_request, [404])
     end
-
-    context 'and the client is unauthenticated' do
-      it 'returns status 401 for a PUT' do
-        add_assessor(20, 'SCHEME4532', valid_assessor_request, [401], false)
-      end
-    end
   end
 
   context "when an assessor doesn't exist" do
@@ -144,6 +138,24 @@ describe 'Acceptance::Assessor' do
   end
 
   context 'when creating an assessor' do
+    context 'security' do
+      it 'rejects a request which is not authenticated' do
+        add_assessor(20, 'SCHEME4532', valid_assessor_request, [401], false)
+      end
+
+      it 'rejects a request that doesnt have the right scopes' do
+        add_assessor(
+          20,
+          'SCHEME4532',
+          valid_assessor_request,
+          [403],
+          true,
+          {},
+          %w[wrong:scope]
+        )
+      end
+    end
+
     context 'which is valid with all fields' do
       it 'returns 201 created' do
         scheme_id = add_scheme_and_get_id
@@ -247,25 +259,26 @@ describe 'Acceptance::Assessor' do
     context 'which is invalid' do
       it "rejects anything that isn't JSON" do
         scheme_id = add_scheme_and_get_id
-        assessor_response =
-          authenticate_and do
-            put(
-              "/api/schemes/#{scheme_id}/assessors/thebrokenassessor",
-              '>>>this is not json<<<'
-            )
-          end
-
-        expect(assessor_response.status).to eq(400)
+        assertive_put(
+          "/api/schemes/#{scheme_id}/assessors/thebrokenassessor",
+          '>>>this is not json<<<',
+          [422],
+          true,
+          {},
+          %w[scheme:assessor:update]
+        )
       end
 
       it 'rejects an empty request body' do
         scheme_id = add_scheme_and_get_id
-        assessor_response =
-          authenticate_and do
-            put("/api/schemes/#{scheme_id}/assessors/thebrokenassessor")
-          end
-
-        expect(assessor_response.status).to eq(400)
+        assertive_put(
+          "/api/schemes/#{scheme_id}/assessors/thebrokenassessor",
+          {},
+          [422],
+          true,
+          {},
+          %w[scheme:assessor:update]
+        )
       end
 
       it 'rejects requests without firstname' do
