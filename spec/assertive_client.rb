@@ -52,10 +52,11 @@ def assertive_get(path, accepted_responses, authenticate, auth_data, scopes)
 end
 
 def assertive_post(
-  path, body, accepted_responses, authenticate, auth_data, scopes
+  path, body, accepted_responses, authenticate, auth_data, scopes, json = true
 )
+  body = body.to_json if json
   assertive_request(
-    -> { post(path, body.to_json) },
+    -> { post(path, body) },
     accepted_responses,
     authenticate,
     auth_data,
@@ -135,21 +136,22 @@ def add_scheme(
 end
 
 def lodge_assessment(
-  assessment_type,
   assessment_id,
   assessment_body,
   accepted_responses = [201],
   authenticate = true,
   auth_data = nil,
-  scopes = %w[assessment:lodge]
+  scopes = %w[assessment:lodge],
+  json = false
 )
   assertive_post(
-    "api/assessments/#{assessment_type}/#{assessment_id}",
+    "api/assessments/#{assessment_id}",
     assessment_body,
     accepted_responses,
     authenticate,
     auth_data,
-    scopes
+    scopes,
+    json
   )
 end
 

@@ -106,8 +106,18 @@ module Controller
       end
     end
 
-    post '/api/assessments/:assessment_type/:assessment_id',
-         jwt_auth: %w[assessment:lodge] do
+    post '/api/assessments/:assessment_id', jwt_auth: %w[assessment:lodge] do
+      pp request.env["rack.input"].read
+      content_type = request.env['CONTENT_TYPE']
+      assessment_id = params[:assessment_id]
+      schema =
+        'api/schemas/xml/RdSAP-Schema-19.0/RdSAP/Templates/RdSAP-Report.xsd'
+
+      assessment_body = xml_request_body(schema)
+
+      #lodge_assessment =
+      #  @container.get_object(:lodge_domestic_energy_assessment_use_case)
+
       json_api_response(201)
     end
 
