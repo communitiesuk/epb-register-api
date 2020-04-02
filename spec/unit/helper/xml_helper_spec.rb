@@ -4,6 +4,9 @@ describe Helper::XmlHelper do
   let(:helper) { described_class.new }
   let(:xml) { File.read File.join File.dirname(__FILE__), 'xml/example.xml' }
   let(:schema) { File.read File.join File.dirname(__FILE__), 'xml/example.xsd' }
+  let(:invalid_xml) do
+    File.read File.join File.dirname(__FILE__), 'xml/invalid.xml'
+  end
 
   context 'when validating valid xml' do
     it 'load a valid xml file' do
@@ -40,6 +43,14 @@ describe Helper::XmlHelper do
       }
 
       expect(response).to eq expected_response
+    end
+  end
+
+  context 'when validating invalid xml' do
+    it 'raises an error' do
+      expect {
+        helper.convert_to_hash(invalid_xml, schema)
+      }.to raise_error instance_of Helper::InvalidXml
     end
   end
 end
