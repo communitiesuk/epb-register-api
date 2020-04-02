@@ -2,22 +2,18 @@
 
 describe Helper::XmlHelper do
   let(:helper) { described_class.new }
-  let(:xml) do
-    File.read File.join File.dirname(__FILE__), 'xml/example.xml'
-  end
-  let(:schema) do
-    File.read File.join File.dirname(__FILE__), 'xml/example.xsd'
-  end
+  let(:xml) { File.read File.join File.dirname(__FILE__), 'xml/example.xml' }
+  let(:schema) { File.read File.join File.dirname(__FILE__), 'xml/example.xsd' }
 
   context 'when validating valid xml' do
     it 'load a valid xml file' do
-      response = helper.load_xml(xml, schema)
+      response = helper.convert_to_hash(xml, schema)
 
       expect(response).to be_a Hash
     end
 
     it 'returns the correct ruby hash' do
-      response = helper.load_xml(xml, schema)
+      response = helper.convert_to_hash(xml, schema)
 
       expected_response = {
         shiporder: {
@@ -35,11 +31,7 @@ describe Helper::XmlHelper do
               "quantity": '1',
               "price": '10.90'
             },
-            {
-              "title": 'Hide your heart',
-              "quantity": '1',
-              "price": '9.90'
-            }
+            { "title": 'Hide your heart', "quantity": '1', "price": '9.90' }
           ],
           "xmlns:xsi": 'http://www.w3.org/2001/XMLSchema-instance',
           "orderid": '889923',
@@ -47,7 +39,7 @@ describe Helper::XmlHelper do
         }
       }
 
-      expect(response). to eq expected_response
+      expect(response).to eq expected_response
     end
   end
 end
