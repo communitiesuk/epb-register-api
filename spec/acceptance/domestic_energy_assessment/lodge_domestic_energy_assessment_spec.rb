@@ -25,10 +25,14 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
       expect(response.headers['Content-Type']).to eq('application/json')
     end
 
-    it 'returns the assessment in the correct format' do
+    it 'returns the assessment as a hash' do
       response = JSON.parse(lodge_assessment('123-456', valid_xml, [201]).body, symbolize_names: true)
 
-      expect(response[:data]).to eq({})
+      expect(response[:data]).to be_a Hash
+    end
+
+    it 'returns the assessment in the correct format' do
+
     end
   end
 end

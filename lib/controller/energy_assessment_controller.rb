@@ -112,9 +112,11 @@ module Controller
 
       assessment_body = xml_request_body(schema)
 
-      #lodge_assessment = @container.get_object(:lodge_domestic_energy_assessment_use_case)
+      lodge_assessment = @container.get_object(:lodge_assessment_use_case)
 
-      json_api_response(201)
+      result = lodge_assessment.execute(assessment_body, params[:assessment_id], request.env['CONTENT_TYPE'])
+
+      json_api_response(201, result)
     end
 
     put '/api/assessments/domestic-epc/:assessment_id',
