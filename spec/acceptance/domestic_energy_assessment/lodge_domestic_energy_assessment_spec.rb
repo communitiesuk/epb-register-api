@@ -19,5 +19,9 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         %w[wrong:scope]
       )
     end
+
+    it 'returns status 201' do
+      lodge_assessment('domestic-epc', '123-456', 'body', [201])
+    end
   end
 end

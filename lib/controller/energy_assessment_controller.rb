@@ -108,6 +108,7 @@ module Controller
 
     post '/api/assessments/:assessment_type/:assessment_id',
          jwt_auth: %w[assessment:lodge] do
+      json_api_response(201)
     end
 
     put '/api/assessments/domestic-epc/:assessment_id',
