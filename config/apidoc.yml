@@ -42,6 +42,19 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Scheme'
+        401:
+          description: HTTP 401 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTP_UNAUTHORISED'
+        403:
+          description: HTTP 403 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTP_FORBIDDEN'
+
     post:
       tags:
         - Manage schemes
@@ -81,6 +94,18 @@ paths:
                         title:
                           type: string
                           example: "A scheme with this name already exists in the register"
+        401:
+          description: HTTP 401 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTP_UNAUTHORISED'
+        403:
+          description: HTTP 403 response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTP_FORBIDDEN'
 
   '/schemes/{schemeId}/assessors':
     get:
@@ -114,19 +139,19 @@ paths:
                           $ref: '#/components/schemas/AssessorSummary'
                   meta:
                     type: object
-        '404':
+        404:
           description: Scheme not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorNotFound'
-        '403':
+        403:
           description: Forbidden
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorUnauthorised'
-        '401':
+        401:
           description: Unauthenticated
           content:
             application/json:
@@ -167,6 +192,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BasicAssessorDetails'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthorised'
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthenticated'
+
     put:
       tags:
         - Individually manage assessors
@@ -230,6 +268,18 @@ paths:
           description: Assessor already exists on a different scheme
         422:
           description: Assessor does not pass validation
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthorised'
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthenticated'
 
   /assessors:
     get:
@@ -265,10 +315,20 @@ paths:
                 oneOf:
                   - $ref: '#/components/schemas/AssessorSearchResults'
                   - $ref: '#/components/schemas/AssessorSearchByPostcodeResults'
-        '400':
+        400:
           description: Invalid query
-        '403':
+        403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthorised'
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthenticated'
 
   /assessments/domestic-epc/{assessmentId}:
     get:
@@ -335,6 +395,19 @@ paths:
           description: Assessment not found
         500:
           description: Server error
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthorised'
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthenticated'
+
     put:
       tags:
         - Assessments
@@ -366,6 +439,18 @@ paths:
           description: Bad request
         500:
           description: Server error
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthorised'
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthenticated'
 
 components:
   securitySchemes:
