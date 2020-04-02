@@ -231,7 +231,7 @@ The Improved Energy Ratings that result from carrying out a Suggested Improvemen
 			</xs:element>
 			<xs:element name="Energy-Efficiency-Rating" type="EnergyEfficiencySummaryCode">
 				<xs:annotation>
-					<xs:documentation>Overall summary of the energy effiocuemcy of the property feature.</xs:documentation>
+					<xs:documentation>Overall summary of the energy efficiency of the property feature.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Environmental-Efficiency-Rating" type="EnergyEfficiencySummaryCode">
