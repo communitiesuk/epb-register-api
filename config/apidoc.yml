@@ -42,18 +42,18 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Scheme'
-        401:
-          description: HTTP 401 response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTP_UNAUTHORISED'
         403:
-          description: HTTP 403 response
+          description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTP_FORBIDDEN'
+                $ref: '#/components/schemas/ErrorUnauthorised'
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthenticated'
 
     post:
       tags:
@@ -94,18 +94,18 @@ paths:
                         title:
                           type: string
                           example: "A scheme with this name already exists in the register"
-        401:
-          description: HTTP 401 response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTP_UNAUTHORISED'
         403:
-          description: HTTP 403 response
+          description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTP_FORBIDDEN'
+                $ref: '#/components/schemas/ErrorUnauthorised'
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthenticated'
 
   '/schemes/{schemeId}/assessors':
     get:
