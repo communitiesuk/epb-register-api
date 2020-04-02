@@ -11,6 +11,7 @@ require 'database_cleaner'
 require 'zeitwerk'
 require 'epb-auth-tools'
 require 'assertive_client'
+require 'nokogiri'
 
 loader = Zeitwerk::Loader.new
 loader.push_dir("#{__dir__}/../lib/")
