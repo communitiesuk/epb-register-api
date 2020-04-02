@@ -23,5 +23,10 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
     it 'returns status 201' do
       lodge_assessment('domestic-epc', '123-456', 'body', [201])
     end
+
+    it 'returns json' do
+      response = lodge_assessment('domestic-epc', '123-456', 'body', [201])
+      expect(response.headers['Content-Type']).to eq('application/json')
+    end
   end
 end
