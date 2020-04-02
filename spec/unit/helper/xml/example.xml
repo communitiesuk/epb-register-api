@@ -21,4 +21,5 @@
     <quantity>1</quantity>
     <price>9.90</price>
   </item>
+  <test-data/>
 </shiporder>

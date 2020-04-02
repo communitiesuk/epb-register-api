@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-
+  <xs:include schemaLocation="example_two.xsd"/>
   <xs:element name="shiporder">
     <xs:complexType>
       <xs:sequence>
@@ -25,6 +25,7 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+        <xs:element name="test-data" type="test-data" minOccurs="0"/>
       </xs:sequence>
       <xs:attribute name="orderid" type="xs:string" use="required"/>
     </xs:complexType>

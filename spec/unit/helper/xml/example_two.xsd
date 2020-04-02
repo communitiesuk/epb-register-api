@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="test-data" type="test-data"/>
+  <xs:complexType name="test-data">
+    <xs:annotation>
+      <xs:documentation>These are the specific data-items collected by the HI / EA needed to perform the SAP calculation.</xs:documentation>
+    </xs:annotation>
+  </xs:complexType>
+</xs:schema>

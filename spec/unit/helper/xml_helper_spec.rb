@@ -3,7 +3,7 @@
 describe Helper::XmlHelper do
   let(:helper) { described_class.new }
   let(:xml) { File.read File.join File.dirname(__FILE__), 'xml/example.xml' }
-  let(:schema) { File.read File.join File.dirname(__FILE__), 'xml/example.xsd' }
+  let(:schema) { File.join File.dirname(__FILE__), 'xml/example.xsd' }
   let(:invalid_xml) do
     File.read File.join File.dirname(__FILE__), 'xml/invalid.xml'
   end
@@ -36,6 +36,7 @@ describe Helper::XmlHelper do
             },
             { "title": 'Hide your heart', "quantity": '1', "price": '9.90' }
           ],
+          "test_data": nil,
           "xmlns:xsi": 'http://www.w3.org/2001/XMLSchema-instance',
           "orderid": '889923',
           "xsi:noNamespaceSchemaLocation": 'example.xsd'
@@ -48,6 +49,7 @@ describe Helper::XmlHelper do
 
   context 'when validating invalid xml' do
     it 'raises an error' do
+      pp schema
       expect {
         helper.convert_to_hash(invalid_xml, schema)
       }.to raise_error instance_of Helper::InvalidXml
