@@ -2,8 +2,8 @@
 
 describe Helper::XmlHelper do
   let(:helper) { described_class.new }
-  let(:xml) { File.read File.join Dir.pwd, 'lib/schemas/xml/examples/RdSAP-19.01.xml' }
-  let(:schema) { File.join Dir.pwd, 'lib/schemas/xml/RdSAP-Schema-19.0/RdSAP/Templates/RdSAP-Report.xsd' }
+  let(:xml) { File.read File.join File.dirname(__FILE__), 'xml/example.xml' }
+  let(:schema) { File.join File.dirname(__FILE__), 'xml/example.xsd' }
   let(:invalid_xml) do
     File.read File.join File.dirname(__FILE__), 'xml/invalid.xml'
   end
