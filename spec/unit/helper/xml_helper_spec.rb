@@ -49,7 +49,6 @@ describe Helper::XmlHelper do
 
   context 'when validating invalid xml' do
     it 'raises an error' do
-      pp schema
       expect {
         helper.convert_to_hash(invalid_xml, schema)
       }.to raise_error instance_of Helper::InvalidXml
