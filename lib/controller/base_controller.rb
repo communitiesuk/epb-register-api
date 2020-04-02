@@ -9,6 +9,7 @@ module Controller
 
     def initialize(toggles = false)
       super
+      @xml_helper = Helper::XmlHelper.new
       @json_helper = Helper::JsonHelper.new
       @toggles = toggles || Toggles.new
       @container = Container.new
@@ -47,6 +48,10 @@ module Controller
         content_type :json
         halt 401, { errors: [{ code: e }] }.to_json
       end
+    end
+
+    def xml_request_body(schema)
+      @xml_helper.convert_to_hash(request.body.read.to_s, schema)
     end
 
     def request_body(schema = false)
