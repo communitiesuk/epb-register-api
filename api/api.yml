@@ -569,12 +569,46 @@ paths:
         '500':
           description: Server error
 
+'/greendeal/assessments/{assessmentId}':
+  get:
+    tags:
+      - Green Deal
+      summary: 'Get the Green Deal details from the assessment with reference
+                {assessmentId}'
+    security:
+      - oauth:
+          - 'greendeal:assessment:fetch'
+    parameters:
+      - in: path
+        name: assessmentId
+        required: true
+        description: 'The ID of the assessment being requested, usually RRN'
+        schema:
+          $ref: '#/components/schemas/AssessmentId'
+    responses:
+      '200':
+        description: Green Deal Energy Performance data
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  $ref: '#/components/schemas/AssessmentGreenDealDetails'
+      '403':
+        description: Forbidden
+      '404':
+        description: Assessment not found
+      '500':
+        description: Server error
+
   '/greendeal/rhi/assessments/{assessmentId}/latest':
     get:
       tags:
         - Green Deal
-      summary: 'Get the most recent Energy Performance Assessment for the
-                address of the assessment with reference {assessmentId}'
+      summary: 'Get the RHI details of the most recent Energy Performance
+                Assessment for the address of the assessment with reference
+                {assessmentId}'
       security:
         - oauth:
             - 'greendeal:assessment:fetch'
@@ -867,11 +901,64 @@ components:
         - ac-report
         - ac-cert
 
+    AssessmentGreenDealDetails:
+      type: object
+      properties:
+        Address:
+          $ref: '#/components/schemas/Address'
+        CountryCode:
+          type: string
+          example: 'EAW'
+        InspectionDate:
+          type: string
+          format: date
+          example: '2020-02-29'
+        LodgementDate:
+          type: string
+          format: date
+          example: '2020-02-29'
+        MainFuelType:
+          type: string
+          example: 'Natural Gas'
+        SecondaryFuelType:
+          type: string
+          example: 'Grid Supplied Electricity'
+        WaterHeatingFuel:
+          type: string
+          example: 'Smokeless Fuel (inc Coke)'
+
     AssessmentRHIDetails:
       type: object
       properties:
         EPCRrn:
           $ref: '#/components/schemas/AssessmentId'
+        AssessorName:
+          $ref: '#/components/schemas/AssessorFullName'
+        ReportType:
+          type: string
+          example: 'Energy Performance Certificate'
+        InspectionDate:
+          type: string
+          format: date
+          example: '2020-01-30'
+        LodgementDate:
+          type: string
+          format: date
+          example: '2020-02-29'
+        DwellingType:
+          type: string
+          example: 'Top-floor flat'
+        Postcode:
+          $ref: '#/components/schemas/AddressPostcode'
+        PropertyAgeBand:
+          type: string
+          example: 'D'
+        Tenure:
+          type: string
+          example: 'Owner-occupied'
+        TotalFloorArea:
+          type: number
+          example: 123.5
         SecondaryHeating:
           $ref: '#/components/schemas/PropertyFeatureSummary'
         SpaceHeating:
@@ -880,42 +967,9 @@ components:
         WaterHeating:
           type: number
           example: 30
-        LodgementDate:
-          type: string
-          format: date
-          example: '2020-01-30'
-        LoftInsulationRecommendation:
-          type: string
-          example: 'Increase loft insulation to 270 mm'
-        CavityWallInsulationRecommendation:
-          type: string
-          example: 'Cavity wall insulation'
-        Tenure:
-          type: string
-          example: 'Owner-occupied'
-        Postcode:
-          $ref: '#/components/schemas/AddressPostcode'
-        AssessorName:
-          $ref: '#/components/schemas/AssessorFullName'
-        ReportType:
-          type: string
-          example: 'Energy Performance Certificate'
-        TotalFloorArea:
-          type: number
-          example: 123.5
-        DwellingType:
-          type: string
-          example: 'Top-floor flat'
         EnergyEfficiency:
-          type: string
-          example:
-        PropertyAgeBand:
-          type: string
-          example: 'D'
-        InspectionDate:
-          type: string
-          format: date
-          example: '2020-02-29'
+          type: number
+          example: 3
         CurrentRating:
           type: number
           example: 64
@@ -928,6 +982,12 @@ components:
         PotentialBand:
           type: string
           example: C
+        CavityWallInsulationRecommendation:
+          type: string
+          example: 'Cavity wall insulation'
+        LoftInsulationRecommendation:
+          type: string
+          example: 'Increase loft insulation to 270 mm'
 
     PropertyFeatureSummary:
       type: object
