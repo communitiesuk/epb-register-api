@@ -8,7 +8,7 @@ module UseCase
     end
 
     def execute(body, assessment_id, content_type)
-      {}
+      body
     end
   end
 end

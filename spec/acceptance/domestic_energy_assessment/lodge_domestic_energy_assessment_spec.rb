@@ -32,7 +32,9 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
     end
 
     it 'returns the assessment in the correct format' do
+      response = JSON.parse(lodge_assessment('123-456', valid_xml, [201]).body, symbolize_names: true)
 
+      expect(response[:data][:rdSAPReport].keys).to match_array([:xmlns, :"xmlns:xsi", :"xsi:schemaLocation", :calculationSoftwareName, :calculationSoftwareVersion, :userInterfaceName, :userInterfaceVersion, :schemaVersionOriginal, :sAPVersion, :pCDFRevisionNumber, :previousEpcCheck, :energyAssessment, :reportHeader, :insuranceDetails, :externalDefinitionsRevisionNumber])
     end
   end
 end
