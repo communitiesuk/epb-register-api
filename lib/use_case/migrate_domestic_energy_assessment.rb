@@ -7,6 +7,8 @@ module UseCase
     end
 
     def check_improvements(improvements)
+      return true if improvements == []
+
       sequences = improvements.map(&:sequence)
 
       raise ArgumentError.new(SEQUENCE_ERROR) unless sequences.include? 0
