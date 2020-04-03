@@ -26,6 +26,8 @@ tags:
     description: Operations for managing schemes in the register
   - name: Migration
     description: Endpoints used to migrate information from the legacy system
+  - name: Green Deal
+    description: Endpoints used by the Green Deal register integration, including Renewable Heat Initiative
 
 paths:
   /schemes:
@@ -567,6 +569,40 @@ paths:
         '500':
           description: Server error
 
+  '/greendeal/rhi/assessments/{assessmentId}/latest':
+    get:
+      tags:
+        - Green Deal
+      summary: 'Get the most recent Energy Performance Assessment for the
+                address of the assessment with reference {assessmentId}'
+      security:
+        - oauth:
+            - 'greendeal:assessment:fetch'
+      parameters:
+        - in: path
+          name: assessmentId
+          required: true
+          description: 'The ID of the assessment being requested, usually RRN'
+          schema:
+            $ref: '#/components/schemas/AssessmentId'
+      responses:
+        '200':
+          description: RHI Energy Performance data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AssessmentRHIDetails'
+        '403':
+          description: Forbidden
+        '404':
+          description: Assessment not found
+        '500':
+          description: Server error
+
+
 components:
   securitySchemes:
     oauth:
@@ -590,6 +626,7 @@ components:
             'migrate:assessor': Migrate an assessor to the register
             'migrate:address': Migrate an address to the register
             'report:assessor:status': Get a report of changes to assessors status for a given date
+            'greendeal:assessment:fetch': Get limited details (RHI required fields) of an individual assessment
 
   schemas:
     ## Addresses
@@ -829,6 +866,78 @@ components:
         - dec-recommendation-report
         - ac-report
         - ac-cert
+
+    AssessmentRHIDetails:
+      type: object
+      properties:
+        EPCRrn:
+          $ref: '#/components/schemas/AssessmentId'
+        SecondaryHeating:
+          $ref: '#/components/schemas/PropertyFeatureSummary'
+        SpaceHeating:
+          type: number
+          example: 25
+        WaterHeating:
+          type: number
+          example: 30
+        LodgementDate:
+          type: string
+          format: date
+          example: '2020-01-30'
+        LoftInsulationRecommendation:
+          type: string
+          example: 'Increase loft insulation to 270 mm'
+        CavityWallInsulationRecommendation:
+          type: string
+          example: 'Cavity wall insulation'
+        Tenure:
+          type: string
+          example: 'Owner-occupied'
+        Postcode:
+          $ref: '#/components/schemas/AddressPostcode'
+        AssessorName:
+          $ref: '#/components/schemas/AssessorFullName'
+        ReportType:
+          type: string
+          example: 'Energy Performance Certificate'
+        TotalFloorArea:
+          type: number
+          example: 123.5
+        DwellingType:
+          type: string
+          example: 'Top-floor flat'
+        EnergyEfficiency:
+          type: string
+          example:
+        PropertyAgeBand:
+          type: string
+          example: 'D'
+        InspectionDate:
+          type: string
+          format: date
+          example: '2020-02-29'
+        CurrentRating:
+          type: number
+          example: 64
+        CurrentBand:
+          type: string
+          example: D
+        PotentialRating:
+          type: number
+          example: 75
+        PotentialBand:
+          type: string
+          example: C
+
+    PropertyFeatureSummary:
+      type: object
+      properties:
+        Description:
+          type:string
+        EnergyEfficiencyRating:
+          type: string
+        EnvironmentalEfficiencyRating:
+          type: string
 
     # Schemes
     Scheme:
