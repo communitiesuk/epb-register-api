@@ -10,7 +10,7 @@
 	<xs:element name="Energy-Assessment" type="Energy-Assessment"/>
 	<xs:complexType name="Energy-Assessment">
 		<xs:annotation>
-			<xs:documentation>Energy Efficiency Assessment Report is an inspection report whose purpose is to assess the energy efficiency of the inspected property and provide energy ratings for the significant heat-loss features of the property. 
+			<xs:documentation>Energy Efficiency Assessment Report is an inspection report whose purpose is to assess the energy efficiency of the inspected property and provide energy ratings for the significant heat-loss features of the property.
 
 The report also identifies a number of potential improvements that may be made to the property in order to increase the energy efficiency.</xs:documentation>
 		</xs:annotation>
@@ -231,7 +231,7 @@ The Improved Energy Ratings that result from carrying out a Suggested Improvemen
 			</xs:element>
 			<xs:element name="Energy-Efficiency-Rating" type="EnergyEfficiencySummaryCode">
 				<xs:annotation>
-					<xs:documentation>Overall summary of the energy effiocuemcy of the property feature.</xs:documentation>
+					<xs:documentation>Overall summary of the energy efficiency of the property feature.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Environmental-Efficiency-Rating" type="EnergyEfficiencySummaryCode">
