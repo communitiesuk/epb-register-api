@@ -569,38 +569,38 @@ paths:
         '500':
           description: Server error
 
-'/greendeal/assessments/{assessmentId}':
-  get:
-    tags:
-      - Green Deal
-      summary: 'Get the Green Deal details from the assessment with reference
-                {assessmentId}'
-    security:
-      - oauth:
-          - 'greendeal:assessment:fetch'
-    parameters:
-      - in: path
-        name: assessmentId
-        required: true
-        description: 'The ID of the assessment being requested, usually RRN'
-        schema:
-          $ref: '#/components/schemas/AssessmentId'
-    responses:
-      '200':
-        description: Green Deal Energy Performance data
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                data:
-                  $ref: '#/components/schemas/AssessmentGreenDealDetails'
-      '403':
-        description: Forbidden
-      '404':
-        description: Assessment not found
-      '500':
-        description: Server error
+  '/greendeal/assessments/{assessmentId}':
+    get:
+      tags:
+        - Green Deal
+        summary: 'Get the Green Deal details from the assessment with reference
+                  {assessmentId}'
+      security:
+        - oauth:
+            - 'greendeal:assessment:fetch'
+      parameters:
+        - in: path
+          name: assessmentId
+          required: true
+          description: 'The ID of the assessment being requested, usually RRN'
+          schema:
+            $ref: '#/components/schemas/AssessmentId'
+      responses:
+        '200':
+          description: Green Deal Energy Performance data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AssessmentGreenDealDetails'
+        '403':
+          description: Forbidden
+        '404':
+          description: Assessment not found
+        '500':
+          description: Server error
 
   '/greendeal/rhi/assessments/{assessmentId}/latest':
     get:
