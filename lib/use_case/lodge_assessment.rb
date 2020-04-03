@@ -9,6 +9,41 @@ module UseCase
 
     def execute(body, assessment_id, content_type)
       body
+
+
+      # assessor = @assessors_gateway.fetch(body[:RdSAP_Report][:Report_Header][:Energy_Assessor][:Identification_Number][:Membership_Number])
+      #
+      # pp assessor
+      #
+      # assessment =
+      #   Domain::DomesticEnergyAssessment.new(
+      #     '2019-01-01',
+      #     '2019-01-01',
+      #    'end-terrace house',
+      #     'RdSAP',
+      #     '500',
+      #      body[:RdSAP_Report][:Report_Header][:RRN],
+      #      assessor,
+      #     'Blah di blah',
+      #     99,
+      #     99,
+      #     'E20SZ',
+      #     '2020-01-01',
+      #     'Makeup Street',
+      #     'Beauty Town',
+      #     '',
+      #     '',
+      #     'Beer-king town',
+      #     100,
+      #     50,
+      #     10,
+      #     20,
+      #     30,
+      #     []
+      #   )
+      #
+      # @domestic_energy_assessments_gateway.insert_or_update(assessment)
+      # assessment
     end
   end
 end

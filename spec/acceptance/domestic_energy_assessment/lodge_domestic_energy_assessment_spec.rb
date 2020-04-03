@@ -3,6 +3,20 @@
 describe 'Acceptance::LodgeDomesticEnergyAssessment' do
   include RSpecAssessorServiceMixin
 
+  let(:valid_assessor_request_body) do
+    {
+      firstName: 'Someone',
+      middleNames: 'Muddle',
+      lastName: 'Person',
+      dateOfBirth: '1991-02-25',
+      searchResultsComparisonPostcode: '',
+      qualifications: { domesticRdSap: 'ACTIVE' },
+      contactDetails: {
+        telephoneNumber: '010199991010101', email: 'person@person.com'
+      }
+    }
+  end
+
   let(:valid_xml) do
     File.read File.join Dir.pwd, 'api/schemas/xml/examples/RdSAP-19.01.xml'
   end
@@ -80,6 +94,22 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
           :membershipNumber
         )
       ).to eq('Membership-Number0')
+    end
+
+    it 'can successfully save an assessment' do
+      # scheme_id = add_scheme_and_get_id
+      # add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
+      #
+      # lodgement_xml = valid_xml
+      #
+      # lodgement_xml.gsub('<Membership-Number>Membership-Number0</Membership-Number>', '<Membership-Number>TEST123456</Membership-Number>')
+      # lodgement_xml.gsub('<RRN>0000-0000-0000-0000-0000</RRN>', '<RRN>123-456</RRN>')
+      #
+      # lodge_assessment('123-456', lodgement_xml, [201])
+      #
+      # response = fetch_assessment('123-456')
+      #
+      # expect(response['data']['assessor']['schemeAssessorId']).to eq('123-456')
     end
   end
 end
