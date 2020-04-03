@@ -678,7 +678,8 @@ components:
           format: date
           description: The date that the assessment was submitted to the Register
         totalFloorArea:
-          type: integer
+          type: number
+          example: 120.55
         typeOfAssessment:
           type: string
           enum: [SAP, RdSAP]
@@ -713,11 +714,11 @@ components:
           type: object
           properties:
             currentSpaceHeatingDemand:
-              type: integer
-              example: 4564
+              type: number
+              example: 456.45
             currentWaterHeatingDemand:
-              type: integer
-              example: 3253
+              type: number
+              example: 325.33
             impactOfLoftInsulation:
               type: integer
               example: -453

@@ -19,7 +19,7 @@ module Controller
         addressSummary: { type: 'string' },
         dateOfAssessment: { type: 'string', format: 'iso-date' },
         dateRegistered: { type: 'string', format: 'iso-date' },
-        totalFloorArea: { type: 'integer' },
+        totalFloorArea: { type: 'number' },
         dwellingType: { type: 'string' },
         typeOfAssessment: { type: 'string', enum: %w[SAP RdSAP] },
         currentEnergyEfficiencyRating: { type: 'integer' },
@@ -29,8 +29,8 @@ module Controller
           type: 'object',
           required: %w[currentSpaceHeatingDemand currentWaterHeatingDemand],
           properties: {
-            currentSpaceHeatingDemand: { type: 'integer' },
-            currentWaterHeatingDemand: { type: 'integer' },
+            currentSpaceHeatingDemand: { type: 'number' },
+            currentWaterHeatingDemand: { type: 'number' },
             impactOfLoftInsulation: { type: 'integer' },
             impactOfCavityInsulation: { type: 'integer' },
             impactOfSolidWallInsulation: { type: 'integer' }

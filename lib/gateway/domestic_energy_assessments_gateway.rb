@@ -19,7 +19,7 @@ module Gateway
         date_registered: assessment[:date_registered].strftime('%Y-%m-%d'),
         dwelling_type: assessment[:dwelling_type],
         type_of_assessment: assessment[:type_of_assessment],
-        total_floor_area: assessment[:total_floor_area],
+        total_floor_area: assessment[:total_floor_area].to_f,
         assessment_id: assessment[:assessment_id],
         scheme_assessor_id: assessment[:scheme_assessor_id],
         address_summary: assessment[:address_summary],
@@ -36,9 +36,9 @@ module Gateway
         town: assessment[:town],
         heat_demand: {
           current_space_heating_demand:
-            assessment[:current_space_heating_demand],
+            assessment[:current_space_heating_demand].to_f,
           current_water_heating_demand:
-            assessment[:current_water_heating_demand],
+            assessment[:current_water_heating_demand].to_f,
           impact_of_loft_insulation: assessment[:impact_of_loft_insulation],
           impact_of_cavity_insulation: assessment[:impact_of_cavity_insulation],
           impact_of_solid_wall_insulation:

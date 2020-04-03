@@ -34,7 +34,7 @@ module Domain
       @date_registered = Date.strptime(date_registered, '%Y-%m-%d')
       @dwelling_type = dwelling_type
       @type_of_assessment = type_of_assessment
-      @total_floor_area = total_floor_area
+      @total_floor_area = total_floor_area.to_f
       @assessment_id = assessment_id
       @assessor = assessor
       @address_summary = address_summary
@@ -47,8 +47,8 @@ module Domain
       @address_line3 = address_line3
       @address_line4 = address_line4
       @town = town
-      @current_space_heating_demand = current_space_heating_demand
-      @current_water_heating_demand = current_water_heating_demand
+      @current_space_heating_demand = current_space_heating_demand.to_f
+      @current_water_heating_demand = current_water_heating_demand.to_f
       @impact_of_loft_insulation = impact_of_loft_insulation
       @impact_of_cavity_insulation = impact_of_cavity_insulation
       @impact_of_solid_wall_insulation = impact_of_solid_wall_insulation
@@ -80,7 +80,7 @@ module Domain
         date_registered: @date_registered.strftime('%Y-%m-%d'),
         dwelling_type: @dwelling_type,
         type_of_assessment: @type_of_assessment,
-        total_floor_area: @total_floor_area,
+        total_floor_area: @total_floor_area.to_f,
         assessment_id: @assessment_id,
         scheme_assessor_id: @assessor.scheme_assessor_id,
         address_summary: @address_summary,
@@ -94,8 +94,8 @@ module Domain
         address_line4: @address_line4,
         town: @town,
         heat_demand: {
-          current_space_heating_demand: @current_space_heating_demand,
-          current_water_heating_demand: @current_water_heating_demand,
+          current_space_heating_demand: @current_space_heating_demand.to_f,
+          current_water_heating_demand: @current_water_heating_demand.to_f,
           impact_of_loft_insulation: @impact_of_loft_insulation,
           impact_of_cavity_insulation: @impact_of_cavity_insulation,
           impact_of_solid_wall_insulation: @impact_of_solid_wall_insulation
@@ -114,12 +114,12 @@ module Domain
         date_registered: @date_registered,
         dwelling_type: @dwelling_type,
         type_of_assessment: @type_of_assessment,
-        total_floor_area: @total_floor_area,
+        total_floor_area: @total_floor_area.to_f,
         assessment_id: @assessment_id,
         scheme_assessor_id: @assessor.scheme_assessor_id,
         address_summary: @address_summary,
-        current_energy_efficiency_rating: @current_energy_efficiency_rating,
-        potential_energy_efficiency_rating: @potential_energy_efficiency_rating,
+        current_energy_efficiency_rating: @current_energy_efficiency_rating.to_f,
+        potential_energy_efficiency_rating: @potential_energy_efficiency_rating.to_f,
         postcode: @postcode,
         date_of_expiry: @date_of_expiry,
         address_line1: @address_line1,

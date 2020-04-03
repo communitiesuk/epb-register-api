@@ -22,7 +22,7 @@ describe 'Acceptance::DomesticEnergyAssessment' do
       schemeAssessorId: 'TEST123456',
       dateOfAssessment: '2020-01-13',
       dateRegistered: '2020-01-13',
-      totalFloorArea: 1_000,
+      totalFloorArea: 1_000.45,
       typeOfAssessment: 'RdSAP',
       dwellingType: 'Top floor flat',
       addressSummary: '123 Victoria Street, London, SW1A 1BD',
@@ -36,8 +36,8 @@ describe 'Acceptance::DomesticEnergyAssessment' do
       addressLine4: '',
       town: 'Brighton',
       heatDemand: {
-        currentSpaceHeatingDemand: 222,
-        currentWaterHeatingDemand: 321,
+        currentSpaceHeatingDemand: 222.23,
+        currentWaterHeatingDemand: 321.14,
         impactOfLoftInsulation: 79,
         impactOfCavityInsulation: 67,
         impactOfSolidWallInsulation: 69
