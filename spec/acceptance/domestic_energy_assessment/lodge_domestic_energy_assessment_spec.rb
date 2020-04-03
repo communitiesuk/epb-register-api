@@ -26,15 +26,60 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
     end
 
     it 'returns the assessment as a hash' do
-      response = JSON.parse(lodge_assessment('123-456', valid_xml, [201]).body, symbolize_names: true)
+      response =
+        JSON.parse(
+          lodge_assessment('123-456', valid_xml, [201]).body,
+          symbolize_names: true
+        )
 
       expect(response[:data]).to be_a Hash
     end
 
     it 'returns the assessment in the correct format' do
-      response = JSON.parse(lodge_assessment('123-456', valid_xml, [201]).body, symbolize_names: true)
+      response =
+        JSON.parse(
+          lodge_assessment('123-456', valid_xml, [201]).body,
+          symbolize_names: true
+        )
 
-      expect(response[:data][:rdSAPReport].keys).to match_array([:xmlns, :"xmlns:xsi", :"xsi:schemaLocation", :calculationSoftwareName, :calculationSoftwareVersion, :userInterfaceName, :userInterfaceVersion, :schemaVersionOriginal, :sAPVersion, :pCDFRevisionNumber, :previousEpcCheck, :energyAssessment, :reportHeader, :insuranceDetails, :externalDefinitionsRevisionNumber])
+      expect(response[:data][:rdSAPReport].keys).to match_array(
+        [
+          :xmlns,
+          :"xmlns:xsi",
+          :"xsi:schemaLocation",
+          :calculationSoftwareName,
+          :calculationSoftwareVersion,
+          :userInterfaceName,
+          :userInterfaceVersion,
+          :schemaVersionOriginal,
+          :sAPVersion,
+          :pCDFRevisionNumber,
+          :previousEpcCheck,
+          :energyAssessment,
+          :reportHeader,
+          :insuranceDetails,
+          :externalDefinitionsRevisionNumber
+        ]
+      )
+    end
+
+    it 'returns the assessment in the correct format' do
+      response =
+        JSON.parse(
+          lodge_assessment('123-456', valid_xml, [201]).body,
+          symbolize_names: true
+        )
+
+      expect(
+        response.dig(
+          :data,
+          :rdSAPReport,
+          :reportHeader,
+          :energyAssessor,
+          :identificationNumber,
+          :membershipNumber
+        )
+      ).to eq('Membership-Number0')
     end
   end
 end
