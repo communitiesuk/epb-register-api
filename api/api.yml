@@ -636,7 +636,7 @@ paths:
         '500':
           description: Server error
 
-  '/greendeal/disclosure/plans/{assessmentId}':
+  '/greendeal/disclosure/assessments/{assessmentId}/plans':
     post:
       tags:
         - Green Deal
@@ -663,9 +663,51 @@ paths:
                   data:
                     $ref: '#/components/schemas/GreenDealPlan'
         '400':
-          description: Problem with Green Deal record
+          description: Problem with Green Deal record request
         '403':
           description: Forbidden
+        '404':
+          description: Energy assessment with RRN assessmentId can not be found
+        '409':
+          description: Plan with the submitted ID already exists
+        '500':
+          description: Server error
+
+  '/greendeal/disclosure/plans/{planId}':
+    put:
+      tags:
+        - Green Deal
+      summary: 'Update an existing Green Deal plan'
+      security:
+        - oauth:
+            - 'greendeal:disclosure:update'
+      requestBody:
+        description: Green Deal disclosure data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GreenDealPlan'
+      responses:
+        '200':
+          description: Green Deal disclosure successfully updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/GreenDealPlan'
+        '400':
+          description: Problem with Green Deal record request
+        '403':
+          description: Forbidden
+        '404':
+          description: Green Deal plan with ID planId can not be found
+        '409':
+          description: Plan is not active or Identifier in request body doesn't match the planId in the URL
+        '500':
+          description: Server error
 
 components:
   securitySchemes:
