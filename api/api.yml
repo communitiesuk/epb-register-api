@@ -636,6 +636,34 @@ paths:
         '500':
           description: Server error
 
+  '/greendeal/disclosure/plans/{assessmentId}':
+    post:
+      tags:
+        - Green Deal
+      summary: 'Disclose new live Green Deal plan to appear on EPC with RRN
+                {assessmentId}'
+      security:
+        - oauth:
+            - 'greendeal:disclosure:update'
+      requestBody:
+        description: Green Deal disclosure data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GreenDealPlan'
+      responses:
+        '201':
+          description: Green Deal disclosure successfully added
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/GreenDealPlan'
+        '403':
+          description: Forbidden
 
 components:
   securitySchemes:
@@ -661,6 +689,7 @@ components:
             'migrate:address': Migrate an address to the register
             'report:assessor:status': Get a report of changes to assessors status for a given date
             'greendeal:assessment:fetch': Get limited details (RHI required fields) of an individual assessment
+            'greendeal:disclosure:update': Submit or update details of a Green Deal Plan
 
   schemas:
     ## Addresses
@@ -901,6 +930,7 @@ components:
         - ac-report
         - ac-cert
 
+    # Green Deal
     AssessmentGreenDealDetails:
       type: object
       properties:
@@ -998,6 +1028,105 @@ components:
           type: string
         EnvironmentalEfficiencyRating:
           type: string
+
+    GreenDealPlan:
+      type: object
+      properties:
+        Identifier:
+          type: string
+          maxLength: 12
+          example: ABC123456DEF
+      StartDate:
+        type: string
+        format: date
+        example: '2020-01-30'
+      EndDate:
+        type: string
+        format: date
+        example: '2030-02-28'
+      ProviderDetails:
+        $ref: '#/components/schemas/GreenDealProvider'
+      Interest:
+        $ref: '#/components/schemas/GreenDealInterest'
+      ChargeUplift:
+        $ref: '#/components/schemas/GreenDealChargeUplift'
+      CCARegulated:
+        type: boolean
+        example: true
+      StructureChanged:
+        type: boolean
+        example: false
+      Measures:
+        type: array
+        items:
+          $ref: '#/components/schemas/GreenDealMeasure'
+      Charges:
+        type: array
+        items:
+          $ref: '#/components/schemas/GreenDealCharge'
+
+    GreenDealProvider:
+      type: object
+      properties:
+        Name:
+          type: string
+          example: 'The Bank'
+        Telephone:
+          type: string
+          example: '0800 0000000'
+        Email:
+          type: string
+          example: 'lender@example.com'
+
+    GreenDealInterest:
+      type: object
+      properties:
+        Rate:
+          type: number
+          example: 12.3
+        Fixed:
+          type: boolean
+          example: true
+
+    GreenDealChargeUplift:
+      type: object
+      properties:
+        Amount:
+          type: number
+          example: 12.3
+        Date:
+          type: string
+          format: date
+          example: '2025-03-29'
+
+    GreenDealMeasure:
+      type: object
+      properties:
+        MeasureType:
+          type: string
+          example: 'Loft insulation'
+        Product:
+          type: string
+          example: 'WarmHome lagging stuff (TM)'
+        RepaidDate:
+          type: string
+          format: date
+          example: '2025-03-29'
+
+    GreenDealCharge:
+      type: object
+      properties:
+        StartDate:
+          type: string
+          format: date
+          example: '2020-03-29'
+        EndDate:
+          type: string
+          format: date
+          example: '2030-03-29'
+        DailyCharge:
+          type: number
+          example: '0.34'
 
     # Schemes
     Scheme:
