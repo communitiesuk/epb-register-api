@@ -662,6 +662,8 @@ paths:
                 properties:
                   data:
                     $ref: '#/components/schemas/GreenDealPlan'
+        '400':
+          description: Problem with Green Deal record
         '403':
           description: Forbidden
 
