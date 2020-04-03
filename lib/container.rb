@@ -54,10 +54,11 @@ class Container
     fetch_assessor_list_use_case =
       UseCase::FetchAssessorList.new(assessors_gateway, schemes_gateway)
 
-    lodge_assessment_use_case = UseCase::LodgeAssessment.new(
-      domestic_energy_assessments_gateway,
-      assessors_gateway
-    )
+    lodge_assessment_use_case =
+      UseCase::LodgeAssessment.new(
+        domestic_energy_assessments_gateway,
+        assessors_gateway
+      )
 
     @objects = {
       schemes_gateway: schemes_gateway,

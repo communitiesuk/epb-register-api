@@ -114,7 +114,12 @@ module Controller
 
       lodge_assessment = @container.get_object(:lodge_assessment_use_case)
 
-      result = lodge_assessment.execute(assessment_body, params[:assessment_id], request.env['CONTENT_TYPE'])
+      result =
+        lodge_assessment.execute(
+          assessment_body,
+          params[:assessment_id],
+          request.env['CONTENT_TYPE']
+        )
 
       json_api_response(201, result)
     end
