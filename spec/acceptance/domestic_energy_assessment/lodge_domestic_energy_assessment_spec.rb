@@ -178,6 +178,15 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
 
         expect(response['data']['totalFloorArea']).to eq(100.0)
       end
+
+      it 'can return the correct date of assessment' do
+        date_of_assessment = doc.at('Inspection-Date')
+        date_of_assessment.children = '2006-10-25'
+
+        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
+
+        expect(response['data']['dateOfAssessment']).to eq('2006-10-25')
+      end
     end
 
     context 'when rejecting an assessment' do

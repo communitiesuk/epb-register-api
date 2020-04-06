@@ -14,7 +14,7 @@ module UseCase
 
       assessment =
         Domain::DomesticEnergyAssessment.new(
-          '2019-01-01',
+          fetch(body, :Inspection_Date),
           fetch(body, :Registration_Date),
           fetch(body, :Dwelling_Type),
           'RdSAP',
