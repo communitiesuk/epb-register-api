@@ -121,7 +121,9 @@ module Controller
           request.env['CONTENT_TYPE']
         )
 
-      json_api_response(201, result)
+      json_api_response(201, result.to_hash)
+    rescue Helper::InvalidXml => e
+      error_response(422, 'INVALID REQUEST', e.message)
     end
 
     put '/api/assessments/domestic-epc/:assessment_id',

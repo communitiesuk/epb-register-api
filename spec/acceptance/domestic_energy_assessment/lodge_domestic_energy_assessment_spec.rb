@@ -129,5 +129,17 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         'TEST123456'
       )
     end
+
+    it 'rejects an assessment without an address' do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(scheme_id, 'Membership-Number0', valid_assessor_request_body)
+
+      doc = Nokogiri.XML valid_xml
+
+      scheme_assessor_id = doc.at('Address')
+      scheme_assessor_id.children = ''
+
+      lodge_assessment('123-456', doc.to_xml, [422])
+    end
   end
 end
