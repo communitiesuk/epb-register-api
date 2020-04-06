@@ -594,7 +594,10 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: '#/components/schemas/AssessmentGreenDealDetails'
+                    type: object
+                    properties:
+                      assessment:
+                      $ref: '#/components/schemas/AssessmentGreenDealDetails'
         '403':
           description: Forbidden
         '404':
@@ -628,7 +631,10 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: '#/components/schemas/AssessmentRHIDetails'
+                    type: object
+                    properties:
+                      assessment:
+                      $ref: '#/components/schemas/AssessmentRHIDetails'
         '403':
           description: Forbidden
         '404':
