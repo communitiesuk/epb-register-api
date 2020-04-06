@@ -8,35 +8,22 @@ module UseCase
     end
 
     def execute(body, _assessment_id, _content_type)
-      assessor =
-        @assessors_gateway.fetch(
-          body[:RdSAP_Report][:Report_Header][:Energy_Assessor][
-            :Identification_Number
-          ][
-            :Membership_Number
-          ]
-        )
+      scheme_assessor_id = fetch(body, :Membership_Number)
+
+      assessor = @assessors_gateway.fetch scheme_assessor_id
 
       assessment =
         Domain::DomesticEnergyAssessment.new(
           '2019-01-01',
           '2019-01-01',
-          body[:RdSAP_Report][:Energy_Assessment][:Property_Summary][
-            :Dwelling_Type
-          ],
+          fetch(body, :Dwelling_Type),
           'RdSAP',
           '500',
-          body[:RdSAP_Report][:Report_Header][:RRN],
+          fetch(body, :RRN),
           assessor,
           'Blah di blah',
-          body[:RdSAP_Report][:Energy_Assessment][:Energy_Use][
-            :Energy_Rating_Current
-          ]
-            .to_i,
-          body[:RdSAP_Report][:Energy_Assessment][:Energy_Use][
-            :Energy_Rating_Potential
-          ]
-            .to_i,
+          fetch(body, :Energy_Rating_Current).to_i,
+          fetch(body, :Energy_Rating_Potential).to_i,
           'E20SZ',
           '2020-01-01',
           'Makeup Street',
@@ -55,6 +42,19 @@ module UseCase
       @domestic_energy_assessments_gateway.insert_or_update(assessment)
 
       assessment
+    end
+
+    private
+
+    def fetch(hash, key)
+      return hash[key] if hash.fetch(key, false)
+
+      hash.each_key do |hash_key|
+        result = fetch(hash[hash_key], key) if hash[hash_key].is_a? Hash
+        return result if result
+      end
+
+      false
     end
   end
 end
