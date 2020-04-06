@@ -118,8 +118,10 @@ module Domain
         assessment_id: @assessment_id,
         scheme_assessor_id: @assessor.scheme_assessor_id,
         address_summary: @address_summary,
-        current_energy_efficiency_rating: @current_energy_efficiency_rating.to_f,
-        potential_energy_efficiency_rating: @potential_energy_efficiency_rating.to_f,
+        current_energy_efficiency_rating:
+          @current_energy_efficiency_rating.to_f,
+        potential_energy_efficiency_rating:
+          @potential_energy_efficiency_rating.to_f,
         postcode: @postcode,
         date_of_expiry: @date_of_expiry,
         address_line1: @address_line1,

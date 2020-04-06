@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_31_100511) do
+ActiveRecord::Schema.define(version: 2020_04_03_084606) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 2020_03_31_100511) do
     t.datetime "date_registered"
     t.string "dwelling_type"
     t.string "type_of_assessment"
-    t.bigint "total_floor_area"
+    t.decimal "total_floor_area"
     t.string "address_summary"
     t.integer "current_energy_efficiency_rating", limit: 2, default: 1, null: false
     t.integer "potential_energy_efficiency_rating", limit: 2, default: 2, null: false
@@ -48,8 +48,8 @@ ActiveRecord::Schema.define(version: 2020_03_31_100511) do
     t.string "address_line4"
     t.string "town"
     t.string "scheme_assessor_id", null: false
-    t.integer "current_space_heating_demand"
-    t.integer "current_water_heating_demand"
+    t.decimal "current_space_heating_demand"
+    t.decimal "current_water_heating_demand"
     t.integer "impact_of_loft_insulation"
     t.integer "impact_of_cavity_insulation"
     t.integer "impact_of_solid_wall_insulation"

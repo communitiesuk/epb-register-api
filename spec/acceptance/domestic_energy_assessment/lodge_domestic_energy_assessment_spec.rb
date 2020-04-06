@@ -106,19 +106,14 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
           symbolize_names: true
         )
 
-      expect(
-        response.dig(
-          :data,
-          :schemeAssessorId
-        )
-      ).to eq('Membership-Number0')
+      expect(response.dig(:data, :schemeAssessorId)).to eq('Membership-Number0')
     end
 
     it 'can successfully save an assessment' do
       scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
 
-      doc = Nokogiri::XML valid_xml
+      doc = Nokogiri.XML valid_xml
 
       scheme_assessor_id = doc.at('Membership-Number')
       scheme_assessor_id.children = 'TEST123456'
@@ -130,7 +125,9 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
 
       response = JSON.parse fetch_assessment('1234-1234-1234-1234-1234').body
 
-      expect(response['data']['assessor']['schemeAssessorId']).to eq('TEST123456')
+      expect(response['data']['assessor']['schemeAssessorId']).to eq(
+        'TEST123456'
+      )
     end
   end
 end

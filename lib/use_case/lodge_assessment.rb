@@ -8,9 +8,14 @@ module UseCase
     end
 
     def execute(body, _assessment_id, _content_type)
-      assessor = @assessors_gateway.fetch(
-        body[:RdSAP_Report][:Report_Header][:Energy_Assessor][:Identification_Number][:Membership_Number]
-      )
+      assessor =
+        @assessors_gateway.fetch(
+          body[:RdSAP_Report][:Report_Header][:Energy_Assessor][
+            :Identification_Number
+          ][
+            :Membership_Number
+          ]
+        )
 
       assessment =
         Domain::DomesticEnergyAssessment.new(
