@@ -18,7 +18,7 @@ module UseCase
           fetch(body, :Registration_Date),
           fetch(body, :Dwelling_Type),
           'RdSAP',
-          '500',
+          fetch(body, :Total_Floor_Area),
           fetch(body, :RRN),
           assessor,
           'Blah di blah',

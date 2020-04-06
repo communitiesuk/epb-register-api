@@ -169,6 +169,15 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
 
         expect(response['data']['dateRegistered']).to eq('2006-10-30')
       end
+
+      it 'can return the correct total floor area' do
+        total_floor_area = doc.at('Total-Floor-Area')
+        total_floor_area.children = '100'
+
+        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
+
+        expect(response['data']['totalFloorArea']).to eq(100.0)
+      end
     end
 
     context 'when rejecting an assessment' do
