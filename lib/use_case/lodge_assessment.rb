@@ -21,7 +21,9 @@ module UseCase
         Domain::DomesticEnergyAssessment.new(
           '2019-01-01',
           '2019-01-01',
-          'end-terrace house',
+          body[:RdSAP_Report][:Energy_Assessment][:Property_Summary][
+            :Dwelling_Type
+          ],
           'RdSAP',
           '500',
           body[:RdSAP_Report][:Report_Header][:RRN],

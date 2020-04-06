@@ -109,51 +109,79 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
       expect(response.dig(:data, :schemeAssessorId)).to eq('Membership-Number0')
     end
 
-    it 'can successfully save an assessment' do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
+    context 'when saving an assessment' do
+      let(:scheme_id) { add_scheme_and_get_id }
+      let(:doc) { Nokogiri.XML valid_xml }
 
-      doc = Nokogiri.XML valid_xml
+      before do
+        add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
 
-      scheme_assessor_id = doc.at('Membership-Number')
-      scheme_assessor_id.children = 'TEST123456'
+        assessment_id = doc.at('RRN')
+        assessment_id.children = '1234-1234-1234-1234-1234'
 
-      assessment_id = doc.at('RRN')
-      assessment_id.children = '1234-1234-1234-1234-1234'
+        scheme_assessor_id = doc.at('Membership-Number')
+        scheme_assessor_id.children = 'TEST123456'
+      end
 
-      lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
+      it 'can return the correct scheme assessor id' do
+        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
 
-      response = JSON.parse fetch_assessment('1234-1234-1234-1234-1234').body
+        response = JSON.parse fetch_assessment('1234-1234-1234-1234-1234').body
 
-      expect(response['data']['assessor']['schemeAssessorId']).to eq(
-        'TEST123456'
-      )
+        expect(response['data']['assessor']['schemeAssessorId']).to eq(
+          'TEST123456'
+        )
+      end
+
+      it 'can return the correct dwelling type' do
+        dwelling_type = doc.at('Dwelling-Type')
+        dwelling_type.children = 'valid dwelling type'
+
+        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
+
+        response = JSON.parse fetch_assessment('1234-1234-1234-1234-1234').body
+
+        expect(response['data']['dwellingType']).to eq('valid dwelling type')
+      end
     end
 
-    it 'rejects an assessment without an address' do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, 'Membership-Number0', valid_assessor_request_body)
+    context 'when rejecting an assessment' do
+      it 'rejects an assessment without an address' do
+        scheme_id = add_scheme_and_get_id
+        add_assessor(
+          scheme_id,
+          'Membership-Number0',
+          valid_assessor_request_body
+        )
 
-      doc = Nokogiri.XML valid_xml
+        doc = Nokogiri.XML valid_xml
 
-      scheme_assessor_id = doc.at('Address')
-      scheme_assessor_id.children = ''
+        scheme_assessor_id = doc.at('Address')
+        scheme_assessor_id.children = ''
 
-      lodge_assessment('123-456', doc.to_xml, [422])
-    end
+        lodge_assessment('123-456', doc.to_xml, [422])
+      end
 
-    it 'rejects an assessment with an incorrect element' do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, 'Membership-Number0', valid_assessor_request_body)
+      it 'rejects an assessment with an incorrect element' do
+        scheme_id = add_scheme_and_get_id
+        add_assessor(
+          scheme_id,
+          'Membership-Number0',
+          valid_assessor_request_body
+        )
 
-      doc = Nokogiri.XML valid_xml
+        doc = Nokogiri.XML valid_xml
 
-      scheme_assessor_id = doc.at('Address')
-      scheme_assessor_id.children = '<Postcode>invalid</Postcode>'
+        scheme_assessor_id = doc.at('Address')
+        scheme_assessor_id.children = '<Postcode>invalid</Postcode>'
 
-      response_body = JSON.parse lodge_assessment('123-456', doc.to_xml, [422]).body
+        response_body =
+          JSON.parse lodge_assessment('123-456', doc.to_xml, [422]).body
 
-      expect(response_body['errors'][0]['title']).to include 'This element is not expected.'
+        expect(
+          response_body['errors'][0]['title']
+        ).to include 'This element is not expected.'
+      end
     end
   end
 end
