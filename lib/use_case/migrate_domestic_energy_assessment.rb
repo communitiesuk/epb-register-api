@@ -1,21 +1,10 @@
+# frozen_string_literal: true
+
 module UseCase
   class MigrateDomesticEnergyAssessment
-    SEQUENCE_ERROR = 'Sequences must contain 0 and be continuous'
     def initialize(domestic_energy_assessments_gateway, assessors_gateway)
       @domestic_energy_assessments_gateway = domestic_energy_assessments_gateway
       @assessors_gateway = assessors_gateway
-    end
-
-    def check_improvements(improvements)
-      return true if improvements == []
-
-      sequences = improvements.map(&:sequence)
-
-      raise ArgumentError.new(SEQUENCE_ERROR) unless sequences.include? 0
-
-      unless sequences.sort.each_cons(2).all? { |x, y| y == x + 1 }
-        raise ArgumentError.new(SEQUENCE_ERROR)
-      end
     end
 
     def execute(assessment_id, assessment_data)
@@ -66,6 +55,19 @@ module UseCase
 
       @domestic_energy_assessments_gateway.insert_or_update(assessment)
       assessment
+    end
+
+    private
+
+    def check_improvements(improvements)
+      return true if improvements == []
+
+      sequences = improvements.map(&:sequence)
+
+      unless sequences.include?(0) &&
+               sequences.sort.each_cons(2).all? { |x, y| y == x + 1 }
+        raise ArgumentError, 'Sequences must contain 0 and be continuous'
+      end
     end
   end
 end
