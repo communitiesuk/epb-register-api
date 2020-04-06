@@ -21,7 +21,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
     File.read File.join Dir.pwd, 'api/schemas/xml/examples/RdSAP-19.01.xml'
   end
 
-  context 'when lodging a domestic assessment (post)' do
+  context 'when lodging a domestic energy assessment (post)' do
     it 'returns 401 with no authentication' do
       lodge_assessment('123-456', 'body', [401], false)
     end
@@ -31,15 +31,25 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
     end
 
     it 'returns status 201' do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(scheme_id, 'Membership-Number0', valid_assessor_request_body)
+
       lodge_assessment('123-456', valid_xml, [201])
     end
 
     it 'returns json' do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(scheme_id, 'Membership-Number0', valid_assessor_request_body)
+
       response = lodge_assessment('123-456', valid_xml, [201])
+
       expect(response.headers['Content-Type']).to eq('application/json')
     end
 
     it 'returns the assessment as a hash' do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(scheme_id, 'Membership-Number0', valid_assessor_request_body)
+
       response =
         JSON.parse(
           lodge_assessment('123-456', valid_xml, [201]).body,
@@ -49,35 +59,47 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
       expect(response[:data]).to be_a Hash
     end
 
-    it 'returns the assessment in the correct format' do
+    it 'returns the assessment with the correct keys' do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(scheme_id, 'Membership-Number0', valid_assessor_request_body)
+
       response =
         JSON.parse(
           lodge_assessment('123-456', valid_xml, [201]).body,
           symbolize_names: true
         )
 
-      expect(response[:data][:rdSAPReport].keys).to match_array(
-        [
-          :xmlns,
-          :"xmlns:xsi",
-          :"xsi:schemaLocation",
-          :calculationSoftwareName,
-          :calculationSoftwareVersion,
-          :userInterfaceName,
-          :userInterfaceVersion,
-          :schemaVersionOriginal,
-          :sAPVersion,
-          :pCDFRevisionNumber,
-          :previousEpcCheck,
-          :energyAssessment,
-          :reportHeader,
-          :insuranceDetails,
-          :externalDefinitionsRevisionNumber
+      expect(response[:data].keys).to match_array(
+        %i[
+          dateOfAssessment
+          dateRegistered
+          dwellingType
+          typeOfAssessment
+          totalFloorArea
+          assessmentId
+          schemeAssessorId
+          addressSummary
+          currentEnergyEfficiencyRating
+          potentialEnergyEfficiencyRating
+          postcode
+          dateOfExpiry
+          addressLine1
+          addressLine2
+          addressLine3
+          addressLine4
+          town
+          heatDemand
+          currentEnergyEfficiencyBand
+          potentialEnergyEfficiencyBand
+          recommendedImprovements
         ]
       )
     end
 
-    it 'returns the assessment in the correct format' do
+    it 'returns the correct scheme assessor id' do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(scheme_id, 'Membership-Number0', valid_assessor_request_body)
+
       response =
         JSON.parse(
           lodge_assessment('123-456', valid_xml, [201]).body,
@@ -87,29 +109,28 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
       expect(
         response.dig(
           :data,
-          :rdSAPReport,
-          :reportHeader,
-          :energyAssessor,
-          :identificationNumber,
-          :membershipNumber
+          :schemeAssessorId
         )
       ).to eq('Membership-Number0')
     end
 
     it 'can successfully save an assessment' do
-      # scheme_id = add_scheme_and_get_id
-      # add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
-      #
-      # lodgement_xml = valid_xml
-      #
-      # lodgement_xml.gsub('<Membership-Number>Membership-Number0</Membership-Number>', '<Membership-Number>TEST123456</Membership-Number>')
-      # lodgement_xml.gsub('<RRN>0000-0000-0000-0000-0000</RRN>', '<RRN>123-456</RRN>')
-      #
-      # lodge_assessment('123-456', lodgement_xml, [201])
-      #
-      # response = fetch_assessment('123-456')
-      #
-      # expect(response['data']['assessor']['schemeAssessorId']).to eq('123-456')
+      scheme_id = add_scheme_and_get_id
+      add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
+
+      doc = Nokogiri::XML valid_xml
+
+      scheme_assessor_id = doc.at('Membership-Number')
+      scheme_assessor_id.children = 'TEST123456'
+
+      assessment_id = doc.at('RRN')
+      assessment_id.children = '1234-1234-1234-1234-1234'
+
+      lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
+
+      response = JSON.parse fetch_assessment('1234-1234-1234-1234-1234').body
+
+      expect(response['data']['assessor']['schemeAssessorId']).to eq('TEST123456')
     end
   end
 end
