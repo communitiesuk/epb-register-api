@@ -986,133 +986,133 @@ components:
     AssessmentGreenDealDetails:
       type: object
       properties:
-        Address:
+        address:
           $ref: '#/components/schemas/Address'
-        CountryCode:
+        countryCode:
           type: string
           example: 'EAW'
-        InspectionDate:
+        inspectionDate:
           type: string
           format: date
           example: '2020-02-29'
-        LodgementDate:
+        lodgementDate:
           type: string
           format: date
           example: '2020-02-29'
-        MainFuelType:
+        mainFuelType:
           type: string
           example: 'Natural Gas'
-        SecondaryFuelType:
+        secondaryFuelType:
           type: string
           example: 'Grid Supplied Electricity'
-        WaterHeatingFuel:
+        waterHeatingFuel:
           type: string
           example: 'Smokeless Fuel (inc Coke)'
 
     AssessmentRHIDetails:
       type: object
       properties:
-        EPCRrn:
+        epcRrn:
           $ref: '#/components/schemas/AssessmentId'
-        AssessorName:
+        assessorName:
           $ref: '#/components/schemas/AssessorFullName'
-        ReportType:
+        reportType:
           type: string
           example: 'Energy Performance Certificate'
-        InspectionDate:
+        inspectionDate:
           type: string
           format: date
           example: '2020-01-30'
-        LodgementDate:
+        lodgementDate:
           type: string
           format: date
           example: '2020-02-29'
-        DwellingType:
+        dwellingType:
           type: string
           example: 'Top-floor flat'
-        Postcode:
+        postcode:
           $ref: '#/components/schemas/AddressPostcode'
-        PropertyAgeBand:
+        propertyAgeBand:
           type: string
           example: 'D'
-        Tenure:
+        tenure:
           type: string
           example: 'Owner-occupied'
-        TotalFloorArea:
+        totalFloorArea:
           type: number
           example: 123.5
-        SecondaryHeating:
+        secondaryHeating:
           $ref: '#/components/schemas/PropertyFeatureSummary'
-        SpaceHeating:
+        spaceHeating:
           type: number
           example: 25
-        WaterHeating:
+        waterHeating:
           type: number
           example: 30
-        EnergyEfficiency:
+        energyEfficiency:
           type: number
           example: 3
-        CurrentRating:
+        currentRating:
           type: number
           example: 64
-        CurrentBand:
+        currentBand:
           type: string
           example: D
-        PotentialRating:
+        potentialRating:
           type: number
           example: 75
-        PotentialBand:
+        potentialBand:
           type: string
           example: C
-        CavityWallInsulationRecommendation:
+        cavityWallInsulationRecommendation:
           type: string
           example: 'Cavity wall insulation'
-        LoftInsulationRecommendation:
+        loftInsulationRecommendation:
           type: string
           example: 'Increase loft insulation to 270 mm'
 
     PropertyFeatureSummary:
       type: object
       properties:
-        Description:
+        description:
           type:string
-        EnergyEfficiencyRating:
+        energyEfficiencyRating:
           type: string
-        EnvironmentalEfficiencyRating:
+        environmentalEfficiencyRating:
           type: string
 
     GreenDealPlan:
       type: object
       properties:
-        Identifier:
+        identifier:
           type: string
           maxLength: 12
           example: ABC123456DEF
-        StartDate:
+        startDate:
           type: string
           format: date
           example: '2020-01-30'
-        EndDate:
+        endDate:
           type: string
           format: date
           example: '2030-02-28'
-        ProviderDetails:
+        providerDetails:
           $ref: '#/components/schemas/GreenDealProvider'
-        Interest:
+        interest:
           $ref: '#/components/schemas/GreenDealInterest'
-        ChargeUplift:
+        chargeUplift:
           $ref: '#/components/schemas/GreenDealChargeUplift'
-        CCARegulated:
+        ccaRegulated:
           type: boolean
           example: true
-        StructureChanged:
+        structureChanged:
           type: boolean
           example: false
-        Measures:
+        measures:
           type: array
           items:
             $ref: '#/components/schemas/GreenDealMeasure'
-        Charges:
+        charges:
           type: array
           items:
             $ref: '#/components/schemas/GreenDealCharge'
@@ -1120,33 +1120,33 @@ components:
     GreenDealProvider:
       type: object
       properties:
-        Name:
+        name:
           type: string
           example: 'The Bank'
-        Telephone:
+        telephone:
           type: string
           example: '0800 0000000'
-        Email:
+        email:
           type: string
           example: 'lender@example.com'
 
     GreenDealInterest:
       type: object
       properties:
-        Rate:
+        rate:
           type: number
           example: 12.3
-        Fixed:
+        fixed:
           type: boolean
           example: true
 
     GreenDealChargeUplift:
       type: object
       properties:
-        Amount:
+        amount:
           type: number
           example: 12.3
-        Date:
+        date:
           type: string
           format: date
           example: '2025-03-29'
@@ -1154,13 +1154,13 @@ components:
     GreenDealMeasure:
       type: object
       properties:
-        MeasureType:
+        measureType:
           type: string
           example: 'Loft insulation'
-        Product:
+        product:
           type: string
           example: 'WarmHome lagging stuff (TM)'
-        RepaidDate:
+        repaidDate:
           type: string
           format: date
           example: '2025-03-29'
@@ -1168,15 +1168,15 @@ components:
     GreenDealCharge:
       type: object
       properties:
-        StartDate:
+        startDate:
           type: string
           format: date
           example: '2020-03-29'
-        EndDate:
+        endDate:
           type: string
           format: date
           example: '2030-03-29'
-        DailyCharge:
+        dailyCharge:
           type: number
           example: '0.34'
 
