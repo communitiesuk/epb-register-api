@@ -141,5 +141,19 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
 
       lodge_assessment('123-456', doc.to_xml, [422])
     end
+
+    it 'rejects an assessment with an incorrect element' do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(scheme_id, 'Membership-Number0', valid_assessor_request_body)
+
+      doc = Nokogiri.XML valid_xml
+
+      scheme_assessor_id = doc.at('Address')
+      scheme_assessor_id.children = '<Postcode>invalid</Postcode>'
+
+      response_body = JSON.parse lodge_assessment('123-456', doc.to_xml, [422]).body
+
+      expect(response_body['errors'][0]['title']).to include 'This element is not expected.'
+    end
   end
 end

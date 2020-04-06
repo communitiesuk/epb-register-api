@@ -123,7 +123,7 @@ module Controller
 
       json_api_response(201, result.to_hash)
     rescue Helper::InvalidXml => e
-      error_response(422, 'INVALID REQUEST', e.message)
+      error_response(422, 'INVALID_REQUEST', e.message)
     end
 
     put '/api/assessments/domestic-epc/:assessment_id',
