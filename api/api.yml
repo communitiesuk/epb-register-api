@@ -573,8 +573,8 @@ paths:
     get:
       tags:
         - Green Deal
-        summary: 'Get the Green Deal details from the assessment with reference
-                  {assessmentId}'
+      summary: 'Get the Green Deal details from the assessment with reference
+                {assessmentId}'
       security:
         - oauth:
             - 'greendeal:assessment:fetch'
