@@ -1080,34 +1080,34 @@ components:
           type: string
           maxLength: 12
           example: ABC123456DEF
-      StartDate:
-        type: string
-        format: date
-        example: '2020-01-30'
-      EndDate:
-        type: string
-        format: date
-        example: '2030-02-28'
-      ProviderDetails:
-        $ref: '#/components/schemas/GreenDealProvider'
-      Interest:
-        $ref: '#/components/schemas/GreenDealInterest'
-      ChargeUplift:
-        $ref: '#/components/schemas/GreenDealChargeUplift'
-      CCARegulated:
-        type: boolean
-        example: true
-      StructureChanged:
-        type: boolean
-        example: false
-      Measures:
-        type: array
-        items:
-          $ref: '#/components/schemas/GreenDealMeasure'
-      Charges:
-        type: array
-        items:
-          $ref: '#/components/schemas/GreenDealCharge'
+        StartDate:
+          type: string
+          format: date
+          example: '2020-01-30'
+        EndDate:
+          type: string
+          format: date
+          example: '2030-02-28'
+        ProviderDetails:
+          $ref: '#/components/schemas/GreenDealProvider'
+        Interest:
+          $ref: '#/components/schemas/GreenDealInterest'
+        ChargeUplift:
+          $ref: '#/components/schemas/GreenDealChargeUplift'
+        CCARegulated:
+          type: boolean
+          example: true
+        StructureChanged:
+          type: boolean
+          example: false
+        Measures:
+          type: array
+          items:
+            $ref: '#/components/schemas/GreenDealMeasure'
+        Charges:
+          type: array
+          items:
+            $ref: '#/components/schemas/GreenDealCharge'
 
     GreenDealProvider:
       type: object
