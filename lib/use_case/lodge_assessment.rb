@@ -29,7 +29,10 @@ module UseCase
           body[:RdSAP_Report][:Report_Header][:RRN],
           assessor,
           'Blah di blah',
-          99,
+          body[:RdSAP_Report][:Energy_Assessment][:Energy_Use][
+            :Energy_Rating_Current
+          ]
+            .to_i,
           99,
           'E20SZ',
           '2020-01-01',

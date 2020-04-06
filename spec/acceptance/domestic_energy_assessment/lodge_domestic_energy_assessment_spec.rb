@@ -112,6 +112,9 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
     context 'when saving an assessment' do
       let(:scheme_id) { add_scheme_and_get_id }
       let(:doc) { Nokogiri.XML valid_xml }
+      let(:response) do
+        JSON.parse fetch_assessment('1234-1234-1234-1234-1234').body
+      end
 
       before do
         add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
@@ -126,8 +129,6 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
       it 'can return the correct scheme assessor id' do
         lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
 
-        response = JSON.parse fetch_assessment('1234-1234-1234-1234-1234').body
-
         expect(response['data']['assessor']['schemeAssessorId']).to eq(
           'TEST123456'
         )
@@ -139,9 +140,16 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
 
         lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
 
-        response = JSON.parse fetch_assessment('1234-1234-1234-1234-1234').body
-
         expect(response['data']['dwellingType']).to eq('valid dwelling type')
+      end
+
+      it 'can return the correct current energy efficiency band' do
+        current_energy_efficiency_ratng = doc.at('Energy-Rating-Current')
+        current_energy_efficiency_ratng.children = '80'
+
+        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
+
+        expect(response['data']['currentEnergyEfficiencyBand']).to eq('c')
       end
     end
 
