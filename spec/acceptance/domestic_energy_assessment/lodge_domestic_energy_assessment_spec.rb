@@ -160,6 +160,15 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
 
         expect(response['data']['potentialEnergyEfficiencyBand']).to eq('b')
       end
+
+      it 'can return the correct registered date' do
+        date_registered = doc.at('Registration-Date')
+        date_registered.children = '2006-10-30'
+
+        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
+
+        expect(response['data']['dateRegistered']).to eq('2006-10-30')
+      end
     end
 
     context 'when rejecting an assessment' do
