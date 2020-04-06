@@ -33,7 +33,10 @@ module UseCase
             :Energy_Rating_Current
           ]
             .to_i,
-          99,
+          body[:RdSAP_Report][:Energy_Assessment][:Energy_Use][
+            :Energy_Rating_Potential
+          ]
+            .to_i,
           'E20SZ',
           '2020-01-01',
           'Makeup Street',

@@ -151,6 +151,15 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
 
         expect(response['data']['currentEnergyEfficiencyBand']).to eq('c')
       end
+
+      it 'can return the correct potential energy efficiency band' do
+        potential_energy_efficiency_ratng = doc.at('Energy-Rating-Potential')
+        potential_energy_efficiency_ratng.children = '90'
+
+        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
+
+        expect(response['data']['potentialEnergyEfficiencyBand']).to eq('b')
+      end
     end
 
     context 'when rejecting an assessment' do
