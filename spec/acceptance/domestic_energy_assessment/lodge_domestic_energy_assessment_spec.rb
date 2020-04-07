@@ -324,7 +324,9 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
 
         lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
 
-        expect(response['data']['recommendedImprovements'][0]['sequence']).to eq(1)
+        expect(
+          response['data']['recommendedImprovements'][0]['sequence']
+        ).to eq(1)
       end
 
       it 'can return the correct improvement category of the improvement' do
@@ -333,7 +335,9 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
 
         lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
 
-        expect(response['data']['recommendedImprovements'][0]['improvementCategory']).to eq('2')
+        expect(
+          response['data']['recommendedImprovements'][0]['improvementCategory']
+        ).to eq('2')
       end
 
       it 'can return the correct improvement type of the improvement' do
@@ -342,7 +346,9 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
 
         lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
 
-        expect(response['data']['recommendedImprovements'][0]['improvementType']).to eq('A')
+        expect(
+          response['data']['recommendedImprovements'][0]['improvementType']
+        ).to eq('A')
       end
 
       it 'can return the correct typical saving of the improvement' do
@@ -351,7 +357,9 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
 
         lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
 
-        expect(response['data']['recommendedImprovements'][0]['typicalSaving']).to eq('123.456')
+        expect(
+          response['data']['recommendedImprovements'][0]['typicalSaving']
+        ).to eq('123.456')
       end
 
       it 'can return the correct energy performance rating of the improvement' do
@@ -360,7 +368,24 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
 
         lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
 
-        expect(response['data']['recommendedImprovements'][0]['energyPerformanceRating']).to eq('95')
+        expect(
+          response['data']['recommendedImprovements'][0][
+            'energyPerformanceRating'
+          ]
+        ).to eq('95')
+      end
+
+      it 'can return the correct environmental impact rating of the improvement' do
+        environmental_impact_rating = doc.at('Environmental-Impact-Rating')
+        environmental_impact_rating.children = '70'
+
+        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
+
+        expect(
+          response['data']['recommendedImprovements'][0][
+            'environmentalImpactRating'
+          ]
+        ).to eq('70')
       end
 
       context 'when missing optional elements' do
