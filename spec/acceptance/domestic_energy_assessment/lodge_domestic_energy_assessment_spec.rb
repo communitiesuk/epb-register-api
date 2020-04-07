@@ -189,8 +189,8 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
       end
 
       it 'can return the correct postcode of the property' do
-        date_of_assessment = doc.search('Postcode')[1]
-        date_of_assessment.content = 'AB4A 9AA'
+        postcode = doc.search('Postcode')[1]
+        postcode.content = 'AB4A 9AA'
 
         lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
 
@@ -198,8 +198,8 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
       end
 
       it 'can return the correct town of the property' do
-        date_of_assessment = doc.search('Post-Town')[1]
-        date_of_assessment.content = 'London'
+        town = doc.search('Post-Town')[1]
+        town.content = 'London'
 
         lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
 
