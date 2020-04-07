@@ -27,7 +27,7 @@ module UseCase
           body[:RdSAP_Report][:Report_Header][:Property][:Address][:Postcode],
           '2020-01-01',
           body[:RdSAP_Report][:Report_Header][:Property][:Address][:Address_Line_1],
-          'Beauty Town',
+          body[:RdSAP_Report][:Report_Header][:Property][:Address][:Address_Line_2],
           '',
           '',
           body[:RdSAP_Report][:Report_Header][:Property][:Address][:Post_Town],
