@@ -113,6 +113,24 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
       migrate_invalid_recommendations(recommendations)
     end
 
+    it 'rejects improvements that dont contain a improvementCode' do
+      recommendations = valid_recommendations
+      recommendations[0].delete(:improvementCode)
+      migrate_invalid_recommendations(recommendations)
+    end
+
+    it 'rejects improvements that dont contain a indicativeCost' do
+      recommendations = valid_recommendations
+      recommendations[0].delete(:indicativeCost)
+      migrate_invalid_recommendations(recommendations)
+    end
+
+    it 'rejects improvements that dont contain a typicalSaving' do
+      recommendations = valid_recommendations
+      recommendations[0].delete(:typicalSaving)
+      migrate_invalid_recommendations(recommendations)
+    end
+
     it 'rejects sequences that are not integers' do
       recommendations = valid_recommendations
       recommendations[0][:sequence] = 'first'

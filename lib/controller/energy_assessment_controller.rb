@@ -53,7 +53,7 @@ module Controller
           type: 'array',
           items: {
             type: 'object',
-            required: %w[sequence],
+            required: %w[sequence improvementCode indicativeCost typicalSaving],
             properties: {
               sequence: { type: 'integer', format: 'positive-int' },
               improvementCode: { type: 'string' },
