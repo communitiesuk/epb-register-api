@@ -196,6 +196,15 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
 
         expect(response['data']['postcode']).to eq('AB4A 9AA')
       end
+
+      it 'can return the correct town of the property' do
+        date_of_assessment = doc.search('Post-Town')[1]
+        date_of_assessment.content = 'London'
+
+        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
+
+        expect(response['data']['town']).to eq('London')
+      end
     end
 
     context 'when rejecting an assessment' do

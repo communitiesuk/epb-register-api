@@ -30,7 +30,7 @@ module UseCase
           'Beauty Town',
           '',
           '',
-          'Beer-king town',
+          body[:RdSAP_Report][:Report_Header][:Property][:Address][:Post_Town],
           100,
           50,
           10,
