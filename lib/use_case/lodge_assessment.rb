@@ -63,7 +63,7 @@ module UseCase
               fetch(body, :Sequence),
               1,
               '',
-              0,
+              fetch(body, :Typical_Saving),
               fetch(body, :Improvement_Category),
               fetch(body, :Improvement_Type),
               '',

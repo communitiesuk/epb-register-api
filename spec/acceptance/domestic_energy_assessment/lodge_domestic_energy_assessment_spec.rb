@@ -345,6 +345,15 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         expect(response['data']['recommendedImprovements'][0]['improvementType']).to eq('A')
       end
 
+      it 'can return the correct typical saving of the improvement' do
+        typical_saving = doc.at('Typical-Saving')
+        typical_saving.children = '123.456'
+
+        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
+
+        expect(response['data']['recommendedImprovements'][0]['typicalSaving']).to eq('123.456')
+      end
+
       context 'when missing optional elements' do
         it 'can return an empty string' do
           lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
