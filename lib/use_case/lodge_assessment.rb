@@ -10,6 +10,15 @@ module UseCase
     def execute(body, _assessment_id, _content_type)
       scheme_assessor_id = fetch(body, :Membership_Number)
       address = body[:RdSAP_Report][:Report_Header][:Property][:Address]
+      address_summary =
+        [
+          address[:Address_Line_1],
+          address[:Address_Line_2],
+          address[:Address_Line_3],
+          address[:Post_Town],
+          address[:Postcode]
+        ].compact
+          .join(', ')
 
       assessor = @assessors_gateway.fetch scheme_assessor_id
 
@@ -22,7 +31,7 @@ module UseCase
           fetch(body, :Total_Floor_Area),
           fetch(body, :RRN),
           assessor,
-          'Blah di blah',
+          address_summary,
           fetch(body, :Energy_Rating_Current).to_i,
           fetch(body, :Energy_Rating_Potential).to_i,
           address[:Postcode],
