@@ -243,6 +243,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
 
           expect(response['data']['addressLine2']).to eq('')
           expect(response['data']['addressLine3']).to eq('')
+          expect(response['data']['addressLine4']).to eq('')
         end
       end
     end
