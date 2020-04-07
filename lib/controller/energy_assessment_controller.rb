@@ -12,6 +12,7 @@ module Controller
         postcode
         dateOfAssessment
         dateRegistered
+        dateOfExpiry
         totalFloorArea
         dwellingType
         typeOfAssessment
@@ -31,6 +32,7 @@ module Controller
         postcode: { type: 'string' },
         dateOfAssessment: { type: 'string', format: 'iso-date' },
         dateRegistered: { type: 'string', format: 'iso-date' },
+        dateOfExpiry: { type: 'string', format: 'iso-date' },
         totalFloorArea: { type: 'number' },
         dwellingType: { type: 'string' },
         typeOfAssessment: { type: 'string', enum: %w[SAP RdSAP] },
