@@ -597,7 +597,6 @@ paths:
                     type: object
                     properties:
                       assessment:
-                        type: object
                         $ref: '#/components/schemas/AssessmentGreenDealDetails'
         '403':
           description: Forbidden
@@ -635,7 +634,6 @@ paths:
                     type: object
                     properties:
                       assessment:
-                        type: object
                         $ref: '#/components/schemas/AssessmentRHIDetails'
         '403':
           description: Forbidden
@@ -653,6 +651,13 @@ paths:
       security:
         - oauth:
             - 'greendeal:disclosure:update'
+      parameters:
+        - in: path
+          name: assessmentId
+          required: true
+          description: 'The ID of the assessment being requested, usually RRN'
+          schema:
+            $ref: '#/components/schemas/AssessmentId'
       requestBody:
         description: Green Deal disclosure data
         required: true
@@ -689,6 +694,13 @@ paths:
       security:
         - oauth:
             - 'greendeal:disclosure:update'
+      parameters:
+        - in: path
+          name: planId
+          required: true
+          description: 'The ID of the plan being requested'
+          schema:
+            $ref: '#/components/schemas/GreanDealPlanId'
       requestBody:
         description: Green Deal disclosure data
         required: true
@@ -1069,25 +1081,28 @@ components:
           example: 'Cavity wall insulation'
         loftInsulationRecommendation:
           type: string
-          example: 'Increase loft insulation to 270 mm'
+          example: 'Increase loft insulation to 270 mm'
 
     PropertyFeatureSummary:
       type: object
       properties:
         description:
-          type:string
+          type: string
         energyEfficiencyRating:
           type: string
         environmentalEfficiencyRating:
           type: string
 
+    GreanDealPlanId:
+      type: string
+      maxLength: 12
+      example: ABC123456DEF
+
     GreenDealPlan:
       type: object
       properties:
-        identifier:
-          type: string
-          maxLength: 12
-          example: ABC123456DEF
+        GreanDealPlanId:
+          $ref: '#/components/schemas/GreanDealPlanId'
         startDate:
           type: string
           format: date
@@ -1208,4 +1223,3 @@ components:
 
   links: {}
   callbacks: {}
-security: []
