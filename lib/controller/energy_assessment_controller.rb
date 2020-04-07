@@ -4,6 +4,12 @@ module Controller
       type: 'object',
       required: %w[
         addressSummary
+        addressLine1
+        addressLine2
+        addressLine3
+        addressLine4
+        town
+        postcode
         dateOfAssessment
         dateRegistered
         totalFloorArea
@@ -17,6 +23,12 @@ module Controller
       ],
       properties: {
         addressSummary: { type: 'string' },
+        addressLine1: { type: 'string' },
+        addressLine2: { type: 'string' },
+        addressLine3: { type: 'string' },
+        addressLine4: { type: 'string' },
+        town: { type: 'string' },
+        postcode: { type: 'string', format: 'iso-date' },
         dateOfAssessment: { type: 'string', format: 'iso-date' },
         dateRegistered: { type: 'string', format: 'iso-date' },
         totalFloorArea: { type: 'number' },
