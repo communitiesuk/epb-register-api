@@ -107,6 +107,20 @@
             <Hot-Water-Cost-Current>0</Hot-Water-Cost-Current>
             <Hot-Water-Cost-Potential>0</Hot-Water-Cost-Potential>
         </Energy-Use>
+      <Suggested-Improvements>
+        <Improvement>
+          <Sequence>0</Sequence>
+          <Improvement-Category>6</Improvement-Category>
+          <Improvement-Type>Z3</Improvement-Type>
+          <Typical-Saving>0.0</Typical-Saving>
+          <Energy-Performance-Rating>50</Energy-Performance-Rating>
+          <Environmental-Impact-Rating>50</Environmental-Impact-Rating>
+          <Improvement-Details>
+            <Improvement-Number>5</Improvement-Number>
+          </Improvement-Details>
+          <Green-Deal-Category>1</Green-Deal-Category>
+        </Improvement>
+      </Suggested-Improvements>
         <Renewable-Heat-Incentive>
             <Space-Heating-Existing-Dwelling>0</Space-Heating-Existing-Dwelling>
             <Water-Heating>0</Water-Heating>

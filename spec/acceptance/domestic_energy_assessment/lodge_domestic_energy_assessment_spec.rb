@@ -318,6 +318,15 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         )
       end
 
+      it 'can return the correct sequence of the improvement' do
+        address_line_one = doc.at('Sequence')
+        address_line_one.children = '1'
+
+        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
+
+        expect(response['data']['recommendedImprovements'][0]['sequence']).to eq(1)
+      end
+
       context 'when missing optional elements' do
         it 'can return an empty string' do
           lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])

@@ -57,7 +57,20 @@ module UseCase
           10,
           20,
           30,
-          []
+          [
+            Domain::RecommendedImprovement.new(
+              fetch(body, :RRN),
+              fetch(body, :Sequence),
+              1,
+              '',
+              0,
+              '',
+              '',
+              '',
+              '',
+              ''
+            )
+          ]
         )
 
       @domestic_energy_assessments_gateway.insert_or_update(assessment)
