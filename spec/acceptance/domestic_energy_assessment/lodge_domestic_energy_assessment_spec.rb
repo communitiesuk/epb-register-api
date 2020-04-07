@@ -225,6 +225,14 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
 
         expect(response['data']['addressLine2']).to eq('2 test street')
       end
+
+      context 'when missing optional parameters' do
+        it 'can return an empty string for the second address line' do
+          lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
+
+          expect(response['data']['addressLine2']).to eq('')
+        end
+      end
     end
 
     context 'when rejecting an assessment' do
