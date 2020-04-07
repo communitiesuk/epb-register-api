@@ -26,6 +26,12 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
       it 'returns status 400' do
         lodge_assessment('123-456', valid_xml, [400])
       end
+
+      it 'returns status 400 with the correct error response' do
+        response = JSON.parse lodge_assessment('123-456', valid_xml, [400]).body
+
+        expect(response['errors'][0]['title']).to eq('Assessor is not registered.')
+      end
     end
 
     it 'returns 401 with no authentication' do
