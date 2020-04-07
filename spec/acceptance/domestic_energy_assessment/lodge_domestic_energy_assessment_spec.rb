@@ -161,6 +161,15 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         expect(response['data']['potentialEnergyEfficiencyBand']).to eq('b')
       end
 
+      it 'can return the correct date of assessment' do
+        date_of_assessment = doc.at('Inspection-Date')
+        date_of_assessment.children = '2006-10-25'
+
+        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
+
+        expect(response['data']['dateOfAssessment']).to eq('2006-10-25')
+      end
+
       it 'can return the correct registered date' do
         date_registered = doc.at('Registration-Date')
         date_registered.children = '2006-10-30'
@@ -170,6 +179,15 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         expect(response['data']['dateRegistered']).to eq('2006-10-30')
       end
 
+      it 'can return the correct expiry date' do
+        date_of_assessment = doc.at('Inspection-Date')
+        date_of_assessment.children = '2006-10-25'
+
+        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
+
+        expect(response['data']['dateOfExpiry']).to eq('2016-10-25')
+      end
+
       it 'can return the correct total floor area' do
         total_floor_area = doc.at('Total-Floor-Area')
         total_floor_area.children = '100'
@@ -177,15 +195,6 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
 
         expect(response['data']['totalFloorArea']).to eq(100.0)
-      end
-
-      it 'can return the correct date of assessment' do
-        date_of_assessment = doc.at('Inspection-Date')
-        date_of_assessment.children = '2006-10-25'
-
-        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
-
-        expect(response['data']['dateOfAssessment']).to eq('2006-10-25')
       end
 
       it 'can return the correct postcode of the property' do

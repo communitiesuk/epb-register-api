@@ -10,6 +10,7 @@ module UseCase
     def execute(body, _assessment_id, _content_type)
       scheme_assessor_id = fetch(body, :Membership_Number)
       address = body[:RdSAP_Report][:Report_Header][:Property][:Address]
+
       address_summary =
         [
           address[:Address_Line_1],
@@ -19,6 +20,8 @@ module UseCase
           address[:Postcode]
         ].compact
           .join(', ')
+
+      expiry_date = Date.parse(fetch(body, :Inspection_Date)).next_year(10).to_s
 
       assessor = @assessors_gateway.fetch scheme_assessor_id
 
@@ -35,7 +38,7 @@ module UseCase
           fetch(body, :Energy_Rating_Current).to_i,
           fetch(body, :Energy_Rating_Potential).to_i,
           address[:Postcode],
-          '2020-01-01',
+          expiry_date,
           address[:Address_Line_1],
           address[:Address_Line_2] || '',
           address[:Address_Line_3] || '',
