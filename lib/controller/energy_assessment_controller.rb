@@ -125,7 +125,7 @@ module Controller
     rescue StandardError => e
       case e
       when Helper::InvalidXml
-        error_response(422, 'INVALID_REQUEST', e.message)
+        error_response(400, 'INVALID_REQUEST', e.message)
       when UseCase::FetchAssessor::AssessorNotFoundException
         error_response(400, 'IVALID_REQUEST', 'Assessor is not registered.')
       else

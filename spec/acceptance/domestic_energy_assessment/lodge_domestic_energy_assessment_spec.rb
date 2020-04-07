@@ -301,7 +301,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         scheme_assessor_id = doc.at('Address')
         scheme_assessor_id.children = ''
 
-        lodge_assessment('123-456', doc.to_xml, [422])
+        lodge_assessment('123-456', doc.to_xml, [400])
       end
 
       it 'rejects an assessment with an incorrect element' do
@@ -318,7 +318,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         scheme_assessor_id.children = '<Postcode>invalid</Postcode>'
 
         response_body =
-          JSON.parse lodge_assessment('123-456', doc.to_xml, [422]).body
+          JSON.parse lodge_assessment('123-456', doc.to_xml, [400]).body
 
         expect(
           response_body['errors'][0]['title']
