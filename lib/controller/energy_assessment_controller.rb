@@ -28,7 +28,7 @@ module Controller
         addressLine3: { type: 'string' },
         addressLine4: { type: 'string' },
         town: { type: 'string' },
-        postcode: { type: 'string', format: 'iso-date' },
+        postcode: { type: 'string' },
         dateOfAssessment: { type: 'string', format: 'iso-date' },
         dateRegistered: { type: 'string', format: 'iso-date' },
         totalFloorArea: { type: 'number' },
