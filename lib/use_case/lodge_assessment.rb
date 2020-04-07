@@ -66,7 +66,7 @@ module UseCase
               fetch(body, :Typical_Saving),
               fetch(body, :Improvement_Category),
               fetch(body, :Improvement_Type),
-              '',
+              fetch(body, :Energy_Performance_Rating),
               '',
               ''
             )
