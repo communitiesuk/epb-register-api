@@ -22,6 +22,12 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
   end
 
   context 'when lodging a domestic energy assessment (post)' do
+    context 'when an assessor is not registered' do
+      it 'returns status 400' do
+        lodge_assessment('123-456', valid_xml, [400])
+      end
+    end
+
     it 'returns 401 with no authentication' do
       lodge_assessment('123-456', 'body', [401], false)
     end

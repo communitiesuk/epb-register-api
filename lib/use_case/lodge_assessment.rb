@@ -25,6 +25,8 @@ module UseCase
 
       assessor = @assessors_gateway.fetch scheme_assessor_id
 
+      raise UseCase::FetchAssessor::AssessorNotFoundException unless assessor
+
       assessment =
         Domain::DomesticEnergyAssessment.new(
           fetch(body, :Inspection_Date),

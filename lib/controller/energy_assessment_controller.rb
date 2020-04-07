@@ -122,8 +122,15 @@ module Controller
         )
 
       json_api_response(201, result.to_hash)
-    rescue Helper::InvalidXml => e
-      error_response(422, 'INVALID_REQUEST', e.message)
+    rescue StandardError => e
+      case e
+      when Helper::InvalidXml
+        error_response(422, 'INVALID_REQUEST', e.message)
+      when UseCase::FetchAssessor::AssessorNotFoundException
+        error_response(400, 'IVALID_REQUEST', 'Assessor is not registered.')
+      else
+        server_error(e)
+      end
     end
 
     put '/api/assessments/domestic-epc/:assessment_id',
