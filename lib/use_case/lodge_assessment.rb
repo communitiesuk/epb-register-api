@@ -65,7 +65,7 @@ module UseCase
               '',
               0,
               fetch(body, :Improvement_Category),
-              '',
+              fetch(body, :Improvement_Type),
               '',
               '',
               ''

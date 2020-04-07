@@ -336,6 +336,15 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         expect(response['data']['recommendedImprovements'][0]['improvementCategory']).to eq('2')
       end
 
+      it 'can return the correct improvement type of the improvement' do
+        improvement_type = doc.at('Improvement-Type')
+        improvement_type.children = 'A'
+
+        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
+
+        expect(response['data']['recommendedImprovements'][0]['improvementType']).to eq('A')
+      end
+
       context 'when missing optional elements' do
         it 'can return an empty string' do
           lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
