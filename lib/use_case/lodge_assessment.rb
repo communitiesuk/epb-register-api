@@ -26,7 +26,7 @@ module UseCase
           fetch(body, :Energy_Rating_Potential).to_i,
           body[:RdSAP_Report][:Report_Header][:Property][:Address][:Postcode],
           '2020-01-01',
-          'Makeup Street',
+          body[:RdSAP_Report][:Report_Header][:Property][:Address][:Address_Line_1],
           'Beauty Town',
           '',
           '',

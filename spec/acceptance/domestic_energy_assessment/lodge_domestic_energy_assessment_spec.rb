@@ -205,6 +205,15 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
 
         expect(response['data']['town']).to eq('London')
       end
+
+      it 'can return the correct first address line of the property' do
+        address_line_one = doc.search('Address-Line-1')[1]
+        address_line_one.content = '1 test street'
+
+        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
+
+        expect(response['data']['addressLine1']).to eq('1 test street')
+      end
     end
 
     context 'when rejecting an assessment' do
