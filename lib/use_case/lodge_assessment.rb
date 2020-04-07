@@ -64,7 +64,7 @@ module UseCase
               1,
               '',
               0,
-              '',
+              fetch(body, :Improvement_Category),
               '',
               '',
               '',
