@@ -1,6 +1,8 @@
 module Domain
   class Assessor
-    attr_reader :registered_by_id, :scheme_assessor_id
+    attr_reader :registered_by_id,
+                :scheme_assessor_id,
+                :domestic_rd_sap_qualification
 
     def initialize(
       scheme_assessor_id,

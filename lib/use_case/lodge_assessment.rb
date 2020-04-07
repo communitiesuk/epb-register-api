@@ -2,6 +2,8 @@
 
 module UseCase
   class LodgeAssessment
+    class InactiveAssessorException < StandardError; end
+
     def initialize(domestic_energy_assessments_gateway, assessors_gateway)
       @domestic_energy_assessments_gateway = domestic_energy_assessments_gateway
       @assessors_gateway = assessors_gateway
@@ -26,6 +28,10 @@ module UseCase
       assessor = @assessors_gateway.fetch scheme_assessor_id
 
       raise UseCase::FetchAssessor::AssessorNotFoundException unless assessor
+
+      unless assessor.domestic_rd_sap_qualification == 'ACTIVE'
+        raise InactiveAssessorException
+      end
 
       assessment =
         Domain::DomesticEnergyAssessment.new(

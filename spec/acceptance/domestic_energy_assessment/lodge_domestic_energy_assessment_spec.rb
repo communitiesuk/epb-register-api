@@ -17,6 +17,20 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
     }
   end
 
+  let(:inactive_assessor_request_body) do
+    {
+      firstName: 'Someone',
+      middleNames: 'Muddle',
+      lastName: 'Person',
+      dateOfBirth: '1991-02-25',
+      searchResultsComparisonPostcode: '',
+      qualifications: { domesticRdSap: 'INACTIVE' },
+      contactDetails: {
+        telephoneNumber: '010199991010101', email: 'person@person.com'
+      }
+    }
+  end
+
   let(:valid_xml) do
     File.read File.join Dir.pwd, 'api/schemas/xml/examples/RdSAP-19.01.xml'
   end
@@ -30,7 +44,22 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
       it 'returns status 400 with the correct error response' do
         response = JSON.parse lodge_assessment('123-456', valid_xml, [400]).body
 
-        expect(response['errors'][0]['title']).to eq('Assessor is not registered.')
+        expect(response['errors'][0]['title']).to eq(
+          'Assessor is not registered.'
+        )
+      end
+    end
+
+    context 'when an assessor is inactive' do
+      it 'returns status 400' do
+        scheme_id = add_scheme_and_get_id
+        add_assessor(
+          scheme_id,
+          'Membership-Number0',
+          inactive_assessor_request_body
+        )
+
+        lodge_assessment('123-456', valid_xml, [400])
       end
     end
 
