@@ -217,7 +217,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
 
       it 'can return the correct second address line of the property' do
         address_line_one = doc.search('Address-Line-1')[1]
-        address_line_two = Nokogiri::XML::Node.new "Address-Line-2", doc
+        address_line_two = Nokogiri::XML::Node.new 'Address-Line-2', doc
         address_line_two.content = '2 test street'
         address_line_one.add_next_sibling address_line_two
 
@@ -228,7 +228,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
 
       it 'can return the correct third address line of the property' do
         address_line_one = doc.search('Address-Line-1')[1]
-        address_line_three = Nokogiri::XML::Node.new "Address-Line-3", doc
+        address_line_three = Nokogiri::XML::Node.new 'Address-Line-3', doc
         address_line_three.content = '3 test street'
         address_line_one.add_next_sibling address_line_three
 
@@ -236,7 +236,6 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
 
         expect(response['data']['addressLine3']).to eq('3 test street')
       end
-
 
       context 'when missing optional elements' do
         it 'can return an empty string' do
