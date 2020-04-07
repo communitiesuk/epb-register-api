@@ -61,6 +61,19 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
 
         lodge_assessment('123-456', valid_xml, [400])
       end
+
+      it 'returns status 400 with the correct error response' do
+        scheme_id = add_scheme_and_get_id
+        add_assessor(
+          scheme_id,
+          'Membership-Number0',
+          inactive_assessor_request_body
+        )
+
+        response = JSON.parse lodge_assessment('123-456', valid_xml, [400]).body
+
+        expect(response['errors'][0]['title']).to eq('Assessor is not active.')
+      end
     end
 
     it 'returns 401 with no authentication' do

@@ -141,7 +141,7 @@ module Controller
       when UseCase::FetchAssessor::AssessorNotFoundException
         error_response(400, 'IVALID_REQUEST', 'Assessor is not registered.')
       when UseCase::LodgeAssessment::InactiveAssessorException
-        error_response(400, 'INVALID_REQUEST', e.message)
+        error_response(400, 'INVALID_REQUEST', 'Assessor is not active.')
       else
         server_error(e)
       end
