@@ -388,6 +388,19 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         ).to eq('70')
       end
 
+      it 'can return the correct indicative cost of the improvement' do
+        indicative_cost = doc.at('Indicative-Cost')
+        indicative_cost.children = '3'
+
+        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
+
+        expect(
+            response['data']['recommendedImprovements'][0][
+                'indicativeCost'
+            ]
+        ).to eq('3')
+      end
+
       context 'when missing optional elements' do
         it 'can return an empty string' do
           lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])

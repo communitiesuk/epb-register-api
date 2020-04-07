@@ -62,7 +62,7 @@ module UseCase
               fetch(body, :RRN),
               fetch(body, :Sequence),
               1,
-              '',
+              fetch(body, :Indicative_Cost),
               fetch(body, :Typical_Saving),
               fetch(body, :Improvement_Category),
               fetch(body, :Improvement_Type),
