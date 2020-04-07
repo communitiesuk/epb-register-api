@@ -131,6 +131,12 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
       migrate_invalid_recommendations(recommendations)
     end
 
+    it 'rejects typicalSaving that are not numbers' do
+      recommendations = valid_recommendations
+      recommendations[0][:typicalSaving] = '124.90'
+      migrate_invalid_recommendations(recommendations)
+    end
+
     it 'rejects sequences that are not integers' do
       recommendations = valid_recommendations
       recommendations[0][:sequence] = 'first'
