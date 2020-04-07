@@ -187,6 +187,15 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
 
         expect(response['data']['dateOfAssessment']).to eq('2006-10-25')
       end
+
+      it 'can return the correct postcode of the property' do
+        date_of_assessment = doc.search('Postcode')[1]
+        date_of_assessment.content = 'AB4A 9AA'
+
+        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
+
+        expect(response['data']['postcode']).to eq('AB4A 9AA')
+      end
     end
 
     context 'when rejecting an assessment' do

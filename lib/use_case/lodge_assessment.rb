@@ -24,7 +24,7 @@ module UseCase
           'Blah di blah',
           fetch(body, :Energy_Rating_Current).to_i,
           fetch(body, :Energy_Rating_Potential).to_i,
-          'E20SZ',
+          body[:RdSAP_Report][:Report_Header][:Property][:Address][:Postcode],
           '2020-01-01',
           'Makeup Street',
           'Beauty Town',
