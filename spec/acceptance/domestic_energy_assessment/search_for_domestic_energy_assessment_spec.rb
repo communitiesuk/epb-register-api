@@ -43,7 +43,7 @@ describe 'Searching for assessments' do
       recommendedImprovements: [
         {
           sequence: 0,
-          improvementCode: '1',
+          improvementCode: 'EPC-R1',
           indicativeCost: '£200 - £4,000',
           typicalSaving: 400.21,
           improvementCategory: 'string',

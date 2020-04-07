@@ -1,5 +1,20 @@
 module Controller
   class EnergyAssessmentController < Controller::BaseController
+    VALID_IMPROVEMENT_CODES = %w[
+      EPC-R1
+      EPC-R2
+      EPC-R3
+      EPC-R4
+      EPC-R5
+      EPC-R6
+      EPC-R7
+      EPC-R8
+      EPC-R9
+      EPC-R10
+      EPC-R11
+      EPC-R12
+      EPC-R13
+    ]
     PUT_SCHEMA = {
       type: 'object',
       required: %w[
@@ -56,7 +71,9 @@ module Controller
             required: %w[sequence improvementCode indicativeCost typicalSaving],
             properties: {
               sequence: { type: 'integer', format: 'positive-int' },
-              improvementCode: { type: 'string' },
+              improvementCode: {
+                type: 'string', enum: VALID_IMPROVEMENT_CODES
+              },
               indicativeCost: { type: 'string' },
               typicalSaving: { type: 'number', format: 'positive-int' },
               improvementCategory: { type: 'string' },

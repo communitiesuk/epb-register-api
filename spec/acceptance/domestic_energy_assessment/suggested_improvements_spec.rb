@@ -21,7 +21,7 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
     [
       {
         sequence: 0,
-        improvementCode: '1',
+        improvementCode: 'EPC-R1',
         indicativeCost: '£200 - £4,000',
         typicalSaving: 400.21,
         improvementCategory: 'string',
@@ -32,7 +32,7 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
       },
       {
         sequence: 1,
-        improvementCode: '2',
+        improvementCode: 'EPC-R2',
         indicativeCost: '£430 - £4,000',
         typicalSaving: 50.21,
         improvementCategory: 'string',
@@ -137,6 +137,12 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
       migrate_invalid_recommendations(recommendations)
     end
 
+    it 'rejects improvementCode that are not valid' do
+      recommendations = valid_recommendations
+      recommendations[0][:improvementCode] = 'EPC-99'
+      migrate_invalid_recommendations(recommendations)
+    end
+
     it 'rejects sequences that are not integers' do
       recommendations = valid_recommendations
       recommendations[0][:sequence] = 'first'
@@ -182,8 +188,8 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
 
     it 'returns 200 when the optional data items are empty' do
       recommendations = valid_recommendations
-      recommendations[0][:indicativeCost] = ''
-      recommendations[1][:improvementCategory] = ''
+      recommendations[0][:greenDealCategoryCode] = ''
+      recommendations[1][:improvementType] = ''
       assessment = valid_assessment_body.dup
       assessment[:recommendedImprovements] = valid_recommendations
       scheme_id = add_scheme_and_get_id
