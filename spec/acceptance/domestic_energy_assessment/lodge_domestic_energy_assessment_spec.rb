@@ -238,11 +238,12 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
       end
 
 
-      context 'when missing optional parameters' do
-        it 'can return an empty string for the second address line' do
+      context 'when missing optional elements' do
+        it 'can return an empty string' do
           lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
 
           expect(response['data']['addressLine2']).to eq('')
+          expect(response['data']['addressLine3']).to eq('')
         end
       end
     end

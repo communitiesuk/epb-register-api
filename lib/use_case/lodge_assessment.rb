@@ -28,7 +28,7 @@ module UseCase
           '2020-01-01',
           body[:RdSAP_Report][:Report_Header][:Property][:Address][:Address_Line_1],
           body[:RdSAP_Report][:Report_Header][:Property][:Address][:Address_Line_2] || '',
-          body[:RdSAP_Report][:Report_Header][:Property][:Address][:Address_Line_3],
+          body[:RdSAP_Report][:Report_Header][:Property][:Address][:Address_Line_3] || '',
           '',
           body[:RdSAP_Report][:Report_Header][:Property][:Address][:Post_Town],
           100,
