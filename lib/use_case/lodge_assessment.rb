@@ -52,7 +52,7 @@ module UseCase
           address[:Address_Line_3] || '',
           '',
           address[:Post_Town],
-          100,
+          fetch(body, :Space_Heating_Existing_Dwelling),
           50,
           10,
           20,

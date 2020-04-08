@@ -442,6 +442,17 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         )
       end
 
+      it 'can return the correct space heating demand' do
+        space_heating_demand = doc.at('Space-Heating-Existing-Dwelling')
+        space_heating_demand.children = '20'
+
+        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
+
+        expect(
+          response['data']['heatDemand']['currentSpaceHeatingDemand']
+        ).to eq(20)
+      end
+
       context 'when missing optional elements' do
         it 'can return an empty string' do
           lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
