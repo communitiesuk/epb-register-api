@@ -220,7 +220,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
             'currentSpaceHeatingDemand' => 30.0,
             'currentWaterHeatingDemand' => 60.0,
             'impactOfCavityInsulation' => 20,
-            'impactOfLoftInsulation' => 10,
+            'impactOfLoftInsulation' => -8,
             'impactOfSolidWallInsulation' => 30
           },
           'postcode' => 'A0 0AA',

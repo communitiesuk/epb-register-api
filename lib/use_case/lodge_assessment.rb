@@ -54,7 +54,7 @@ module UseCase
           address[:Post_Town],
           fetch(body, :Space_Heating_Existing_Dwelling),
           fetch(body, :Water_Heating),
-          10,
+          fetch(body, :Impact_Of_Loft_Insulation),
           20,
           30,
           create_list_of_suggested_improvements(body)

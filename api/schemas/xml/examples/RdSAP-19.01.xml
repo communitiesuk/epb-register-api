@@ -138,6 +138,7 @@
         <Renewable-Heat-Incentive>
             <Space-Heating-Existing-Dwelling>30</Space-Heating-Existing-Dwelling>
             <Water-Heating>60</Water-Heating>
+            <Impact-Of-Loft-Insulation>-8</Impact-Of-Loft-Insulation>
         </Renewable-Heat-Incentive>
     </Energy-Assessment>
     <Report-Header>
