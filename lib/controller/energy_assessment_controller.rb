@@ -137,24 +137,31 @@ module Controller
     post '/api/assessments/:assessment_id', jwt_auth: %w[assessment:lodge] do
       schema =
         'api/schemas/xml/RdSAP-Schema-19.0/RdSAP/Templates/RdSAP-Report.xsd'
-
       assessment_body = xml_request_body(schema)
-
       lodge_assessment = @container.get_object(:lodge_assessment_use_case)
+      sup = env[:jwt_auth].supplemental('scheme_ids')
 
-      result =
-        lodge_assessment.execute(
-          assessment_body,
-          params[:assessment_id],
-          request.env['CONTENT_TYPE']
+      if scheme_is_authorised_to_lodge(sup, assessment_body)
+        result =
+          lodge_assessment.execute(
+            assessment_body,
+            params[:assessment_id],
+            request.env['CONTENT_TYPE']
+          )
+
+        json_api_response(201, result.to_hash)
+      else
+        error_response(
+          403,
+          'UNAUTHORISED',
+          'Not authorised to lodge reports as this scheme'
         )
-
-      json_api_response(201, result.to_hash)
+      end
     rescue Exception => e
       case e
       when Helper::InvalidXml
         error_response(400, 'INVALID_REQUEST', e.message)
-      when UseCase::FetchAssessor::AssessorNotFoundException
+      when UseCase::CheckAssessorBelongsToScheme::AssessorNotFoundException
         error_response(400, 'IVALID_REQUEST', 'Assessor is not registered.')
       when UseCase::LodgeAssessment::InactiveAssessorException
         error_response(400, 'INVALID_REQUEST', 'Assessor is not active.')
@@ -185,6 +192,20 @@ module Controller
       else
         server_error(e)
       end
+    end
+
+    private
+
+    def scheme_is_authorised_to_lodge(scheme_ids_from_auth, request_body)
+      scheme_assessor_id =
+        request_body[:RdSAP_Report][:Report_Header][:Energy_Assessor][
+          :Identification_Number
+        ][
+          :Membership_Number
+        ]
+      use_case =
+        @container.get_object(:check_assessor_belongs_to_scheme_use_case)
+      use_case.execute(scheme_assessor_id, scheme_ids_from_auth)
     end
   end
 end

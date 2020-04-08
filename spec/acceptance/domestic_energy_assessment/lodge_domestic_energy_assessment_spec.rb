@@ -59,7 +59,13 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
           inactive_assessor_request_body
         )
 
-        lodge_assessment('123-456', valid_xml, [400])
+        lodge_assessment(
+          '123-456',
+          valid_xml,
+          [400],
+          true,
+          { scheme_ids: [scheme_id] }
+        )
       end
 
       it 'returns status 400 with the correct error response' do
@@ -70,7 +76,15 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
           inactive_assessor_request_body
         )
 
-        response = JSON.parse lodge_assessment('123-456', valid_xml, [400]).body
+        response =
+          JSON.parse lodge_assessment(
+                       '123-456',
+                       valid_xml,
+                       [400],
+                       true,
+                       { scheme_ids: [scheme_id] }
+                     )
+                       .body
 
         expect(response['errors'][0]['title']).to eq('Assessor is not active.')
       end
@@ -84,18 +98,45 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
       lodge_assessment('123-456', 'body', [403], true, {}, %w[wrong:scope])
     end
 
+    it 'returns 403 if it is being lodged by the wrong scheme' do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(scheme_id, 'Membership-Number0', valid_assessor_request_body)
+      different_scheme_id = add_scheme_and_get_id('BADSCHEME')
+
+      lodge_assessment(
+        '123-344',
+        valid_xml,
+        [403],
+        true,
+        { scheme_ids: [different_scheme_id] }
+      )
+    end
+
     it 'returns status 201' do
       scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, 'Membership-Number0', valid_assessor_request_body)
 
-      lodge_assessment('123-456', valid_xml, [201])
+      lodge_assessment(
+        '123-456',
+        valid_xml,
+        [201],
+        true,
+        { scheme_ids: [scheme_id] }
+      )
     end
 
     it 'returns json' do
       scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, 'Membership-Number0', valid_assessor_request_body)
 
-      response = lodge_assessment('123-456', valid_xml, [201])
+      response =
+        lodge_assessment(
+          '123-456',
+          valid_xml,
+          [201],
+          true,
+          { scheme_ids: [scheme_id] }
+        )
 
       expect(response.headers['Content-Type']).to eq('application/json')
     end
@@ -106,7 +147,14 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
 
       response =
         JSON.parse(
-          lodge_assessment('123-456', valid_xml, [201]).body,
+          lodge_assessment(
+            '123-456',
+            valid_xml,
+            [201],
+            true,
+            { scheme_ids: [scheme_id] }
+          )
+            .body,
           symbolize_names: true
         )
 
@@ -119,7 +167,14 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
 
       response =
         JSON.parse(
-          lodge_assessment('123-456', valid_xml, [201]).body,
+          lodge_assessment(
+            '123-456',
+            valid_xml,
+            [201],
+            true,
+            { scheme_ids: [scheme_id] }
+          )
+            .body,
           symbolize_names: true
         )
 
@@ -156,7 +211,14 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
 
       response =
         JSON.parse(
-          lodge_assessment('123-456', valid_xml, [201]).body,
+          lodge_assessment(
+            '123-456',
+            valid_xml,
+            [201],
+            true,
+            { scheme_ids: [scheme_id] }
+          )
+            .body,
           symbolize_names: true
         )
 
@@ -181,7 +243,13 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
       end
 
       it 'returns the data that was lodged' do
-        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
+        lodge_assessment(
+          '1234-1234-1234-1234-1234',
+          doc.to_xml,
+          [201],
+          true,
+          { scheme_ids: [scheme_id] }
+        )
 
         expected_response = {
           'addressLine1' => '1 Some Street',
@@ -264,7 +332,13 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         address_line_two.content = '2 test street'
         address_line_one.add_next_sibling address_line_two
 
-        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
+        lodge_assessment(
+          '1234-1234-1234-1234-1234',
+          doc.to_xml,
+          [201],
+          true,
+          { scheme_ids: [scheme_id] }
+        )
 
         expect(response['data']['addressLine2']).to eq('2 test street')
       end
@@ -275,7 +349,13 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         address_line_three.content = '3 test street'
         address_line_one.add_next_sibling address_line_three
 
-        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
+        lodge_assessment(
+          '1234-1234-1234-1234-1234',
+          doc.to_xml,
+          [201],
+          true,
+          { scheme_ids: [scheme_id] }
+        )
 
         expect(response['data']['addressLine3']).to eq('3 test street')
       end
@@ -291,7 +371,13 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         address_line_three.content = '3 test street'
         address_line_two.add_next_sibling address_line_three
 
-        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
+        lodge_assessment(
+          '1234-1234-1234-1234-1234',
+          doc.to_xml,
+          [201],
+          true,
+          { scheme_ids: [scheme_id] }
+        )
 
         expect(response['data']['addressSummary']).to eq(
           '1 Some Street, 2 test street, 3 test street, Post-Town1, A0 0AA'
@@ -299,7 +385,13 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
       end
 
       it 'can return multiple suggested improvements' do
-        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
+        lodge_assessment(
+          '1234-1234-1234-1234-1234',
+          doc.to_xml,
+          [201],
+          true,
+          { scheme_ids: [scheme_id] }
+        )
 
         expect(response['data']['recommendedImprovements'].count).to eq(2)
         expect(response['data']['recommendedImprovements'][1]).to eq(
@@ -319,8 +411,13 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
 
       context 'when missing optional elements' do
         it 'can return an empty string for address lines' do
-          lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
-
+          lodge_assessment(
+            '123-456',
+            doc.to_xml,
+            [201],
+            true,
+            { scheme_ids: [scheme_id] }
+          )
           expect(response['data']['addressLine2']).to eq('')
           expect(response['data']['addressLine3']).to eq('')
           expect(response['data']['addressLine4']).to eq('')
@@ -330,7 +427,13 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
           doc.at('Impact-Of-Loft-Insulation').remove
           doc.at('Impact-Of-Cavity-Insulation').remove
           doc.at('Impact-Of-Solid-Wall-Insulation').remove
-          lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
+          lodge_assessment(
+            '1234-1234-1234-1234-1234',
+            doc.to_xml,
+            [201],
+            true,
+            { scheme_ids: [scheme_id] }
+          )
 
           expect(
             response['data']['heatDemand']['impactOfLoftInsulation']
@@ -344,7 +447,13 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         end
         it 'can return an empty list of suggested improvements' do
           doc.at('Suggested-Improvements').remove
-          lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
+          lodge_assessment(
+            '1234-1234-1234-1234-1234',
+            doc.to_xml,
+            [201],
+            true,
+            { scheme_ids: [scheme_id] }
+          )
 
           expect(response['data']['recommendedImprovements']).to eq([])
         end

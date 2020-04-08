@@ -59,6 +59,8 @@ class Container
         domestic_energy_assessments_gateway,
         assessors_gateway
       )
+    check_assessor_belongs_to_scheme_use_case =
+      UseCase::CheckAssessorBelongsToScheme.new(assessors_gateway)
 
     @objects = {
       schemes_gateway: schemes_gateway,
@@ -79,7 +81,9 @@ class Container
         find_assessments_by_assessment_id_use_case,
       find_assessments_by_street_name_and_town_use_case:
         find_assessments_by_street_name_and_town_use_case,
-      lodge_assessment_use_case: lodge_assessment_use_case
+      lodge_assessment_use_case: lodge_assessment_use_case,
+      check_assessor_belongs_to_scheme_use_case:
+        check_assessor_belongs_to_scheme_use_case
     }
   end
 
