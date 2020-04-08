@@ -2,6 +2,7 @@ require_relative '../helper/toggles'
 require_relative '../container'
 require 'sinatra/cross_origin'
 require 'epb-auth-tools'
+require 'nokogiri'
 
 module Controller
   class BaseController < Sinatra::Base
