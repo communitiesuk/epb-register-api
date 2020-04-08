@@ -20,8 +20,6 @@ module Controller
       required: %w[
         addressSummary
         addressLine1
-        addressLine2
-        addressLine3
         town
         postcode
         dateOfAssessment
