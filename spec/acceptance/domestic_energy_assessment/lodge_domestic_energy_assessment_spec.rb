@@ -497,6 +497,27 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
           response_body['errors'][0]['title']
         ).to include 'This element is not expected.'
       end
+
+      it 'rejects an assessment that violates a business rule' do
+        scheme_id = add_scheme_and_get_id
+        add_assessor(
+          scheme_id,
+          'Membership-Number0',
+          valid_assessor_request_body
+        )
+
+        doc = Nokogiri.XML valid_xml
+        sequence_one = doc.at('Sequence')
+        sequence_one.children = '5'
+
+        lodge_assessment(
+          '123-456',
+          doc.to_xml,
+          [422],
+          true,
+          { scheme_ids: [scheme_id] }
+        )
+      end
     end
   end
 end

@@ -165,6 +165,8 @@ module Controller
         error_response(400, 'IVALID_REQUEST', 'Assessor is not registered.')
       when UseCase::LodgeAssessment::InactiveAssessorException
         error_response(400, 'INVALID_REQUEST', 'Assessor is not active.')
+      when UseCase::LodgeAssessment::AssessmentRuleException
+        error_response(422, 'ASSESSMENT_RULE_VIOLATION', e.message)
       else
         server_error(e)
       end

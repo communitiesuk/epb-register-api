@@ -3,6 +3,7 @@
 module UseCase
   class LodgeAssessment
     class InactiveAssessorException < StandardError; end
+    class AssessmentRuleException < Exception; end
 
     def initialize(domestic_energy_assessments_gateway, assessors_gateway)
       @domestic_energy_assessments_gateway = domestic_energy_assessments_gateway
@@ -57,6 +58,11 @@ module UseCase
           fetch(body, :Impact_Of_Solid_Wall_Insulation),
           create_list_of_suggested_improvements(body)
         )
+
+      validator = Helper::RdsapValidator::ValidateAll.new
+      errors = validator.validate(assessment)
+
+      raise AssessmentRuleException.new(errors.to_json) unless errors.empty?
       @domestic_energy_assessments_gateway.insert_or_update(assessment)
 
       assessment
@@ -82,7 +88,7 @@ module UseCase
         suggested_improvements.map do |i|
           Domain::RecommendedImprovement.new(
             fetch(body, :RRN),
-            fetch(i, :Sequence),
+            fetch(i, :Sequence).to_i,
             fetch(i, :Improvement_Number),
             fetch(i, :Indicative_Cost),
             fetch(i, :Typical_Saving),
