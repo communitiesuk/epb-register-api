@@ -3,7 +3,7 @@
 module UseCase
   class LodgeAssessment
     class InactiveAssessorException < StandardError; end
-    class AssessmentRuleException < Exception; end
+    class AssessmentRuleException < StandardError; end
 
     def initialize(domestic_energy_assessments_gateway, assessors_gateway)
       @domestic_energy_assessments_gateway = domestic_energy_assessments_gateway
