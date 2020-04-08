@@ -106,7 +106,7 @@ module UseCase
         return result if result
       end
 
-      false
+      nil
     end
   end
 end

@@ -318,12 +318,21 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
       end
 
       context 'when missing optional elements' do
-        it 'can return an empty string' do
+        it 'can return an empty string for address lines' do
           lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
 
           expect(response['data']['addressLine2']).to eq('')
           expect(response['data']['addressLine3']).to eq('')
           expect(response['data']['addressLine4']).to eq('')
+        end
+
+        it 'can return nil for heat demand impacts' do
+          doc.at('Impact-Of-Loft-Insulation').remove
+          lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
+
+          expect(
+            response['data']['heatDemand']['impactOfLoftInsulation']
+          ).to be_nil
         end
 
         it 'can return an empty list of suggested improvements' do
