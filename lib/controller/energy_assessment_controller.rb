@@ -187,6 +187,8 @@ module Controller
       case e
       when JSON::Schema::ValidationError
         error_response(422, 'INVALID_REQUEST', e.message)
+      when UseCase::MigrateDomesticEnergyAssessment::AssessmentRuleException
+        error_response(422, 'ASSESSMENT_RULE_VIOLATION', e.message)
       when ArgumentError
         error_response(422, 'INVALID_REQUEST', e.message)
       else

@@ -2,6 +2,8 @@
 
 module UseCase
   class MigrateDomesticEnergyAssessment
+    class AssessmentRuleException < Exception; end
+
     def initialize(domestic_energy_assessments_gateway, assessors_gateway)
       @domestic_energy_assessments_gateway = domestic_energy_assessments_gateway
       @assessors_gateway = assessors_gateway
@@ -51,23 +53,13 @@ module UseCase
           end
         )
 
-      check_improvements(assessment.recommended_improvements)
+      validator = Helper::RdsapValidator::ValidateAll.new
+      errors = validator.validate(assessment)
+
+      raise AssessmentRuleException.new(errors.to_json) unless errors.empty?
 
       @domestic_energy_assessments_gateway.insert_or_update(assessment)
       assessment
-    end
-
-    private
-
-    def check_improvements(improvements)
-      return true if improvements == []
-
-      sequences = improvements.map(&:sequence)
-
-      unless sequences.include?(0) &&
-               sequences.sort.each_cons(2).all? { |x, y| y == x + 1 }
-        raise ArgumentError, 'Sequences must contain 0 and be continuous'
-      end
     end
   end
 end
