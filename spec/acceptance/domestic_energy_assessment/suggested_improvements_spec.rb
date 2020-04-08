@@ -27,7 +27,7 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
         improvementCategory: 'string',
         improvementType: 'string',
         energyPerformanceRatingImprovement: 80,
-        environmentalImpactRating: 'string',
+        environmentalImpactRating: 90,
         greenDealCategoryCode: 'string'
       },
       {
@@ -38,7 +38,7 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
         improvementCategory: 'string',
         improvementType: 'string',
         energyPerformanceRatingImprovement: 78,
-        environmentalImpactRating: 'string',
+        environmentalImpactRating: 90,
         greenDealCategoryCode: 'string'
       }
     ]

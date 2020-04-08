@@ -77,7 +77,7 @@ module Controller
               improvementCategory: { type: 'string' },
               improvementType: { type: 'string' },
               energyPerformanceRatingImprovement: { type: 'integer' },
-              environmentalImpactRating: { type: 'string' },
+              environmentalImpactRating: { type: 'integer' },
               greenDealCategoryCode: { type: 'string' }
             }
           }
