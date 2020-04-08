@@ -26,7 +26,7 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
         typicalSaving: 400.21,
         improvementCategory: 'string',
         improvementType: 'string',
-        energyPerformanceRating: 'C',
+        energyPerformanceRating: 80,
         environmentalImpactRating: 'string',
         greenDealCategoryCode: 'string'
       },
@@ -37,7 +37,7 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
         typicalSaving: 50.21,
         improvementCategory: 'string',
         improvementType: 'string',
-        energyPerformanceRating: 'C',
+        energyPerformanceRating: 78,
         environmentalImpactRating: 'string',
         greenDealCategoryCode: 'string'
       }
