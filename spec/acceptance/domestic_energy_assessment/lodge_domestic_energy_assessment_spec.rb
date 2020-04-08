@@ -218,7 +218,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
           'dwellingType' => 'Dwelling-Type0',
           'heatDemand' => {
             'currentSpaceHeatingDemand' => 30.0,
-            'currentWaterHeatingDemand' => 50.0,
+            'currentWaterHeatingDemand' => 60.0,
             'impactOfCavityInsulation' => 20,
             'impactOfLoftInsulation' => 10,
             'impactOfSolidWallInsulation' => 30

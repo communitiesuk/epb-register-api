@@ -53,7 +53,7 @@ module UseCase
           '',
           address[:Post_Town],
           fetch(body, :Space_Heating_Existing_Dwelling),
-          50,
+          fetch(body, :Water_Heating),
           10,
           20,
           30,
