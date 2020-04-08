@@ -49,7 +49,7 @@ describe 'Searching for assessments' do
           improvementCategory: 'string',
           improvementType: 'string',
           energyPerformanceRatingImprovement: 80,
-          environmentalImpactRating: 90,
+          environmentalImpactRatingImprovement: 90,
           greenDealCategoryCode: 'string'
         }
       ]

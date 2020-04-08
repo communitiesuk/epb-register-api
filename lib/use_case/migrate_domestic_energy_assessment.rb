@@ -47,7 +47,7 @@ module UseCase
               i[:improvement_category],
               i[:improvement_type],
               i[:energy_performance_rating_improvement],
-              i[:environmental_impact_rating],
+              i[:environmental_impact_rating_improvement],
               i[:green_deal_category_code]
             )
           end

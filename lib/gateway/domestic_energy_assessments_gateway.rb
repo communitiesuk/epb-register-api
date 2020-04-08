@@ -63,7 +63,7 @@ module Gateway
         row[:improvement_category],
         row[:improvement_type],
         row[:energy_performance_rating_improvement],
-        row[:environmental_impact_rating],
+        row[:environmental_impact_rating_improvement],
         row[:green_deal_category_code]
       )
     end
