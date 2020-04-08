@@ -152,7 +152,7 @@ module Controller
         )
 
       json_api_response(201, result.to_hash)
-    rescue StandardError => e
+    rescue Exception => e
       case e
       when Helper::InvalidXml
         error_response(400, 'INVALID_REQUEST', e.message)

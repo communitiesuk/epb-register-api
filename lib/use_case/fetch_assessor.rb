@@ -2,7 +2,7 @@ module UseCase
   class FetchAssessor
     class SchemeNotFoundException < Exception; end
 
-    class AssessorNotFoundException < StandardError; end
+    class AssessorNotFoundException < Exception; end
 
     def initialize(assessor_gateway, schemes_gateway)
       @assessor_gateway = assessor_gateway
