@@ -431,6 +431,13 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
           expect(response['data']['addressLine3']).to eq('')
           expect(response['data']['addressLine4']).to eq('')
         end
+
+        it 'can return an empty list of suggested improvements' do
+          doc.at('Suggested-Improvements').remove
+          lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
+
+          expect(response['data']['recommendedImprovements']).to eq([])
+        end
       end
     end
 

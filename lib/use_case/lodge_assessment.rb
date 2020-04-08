@@ -33,6 +33,33 @@ module UseCase
         raise InactiveAssessorException
       end
 
+      suggested_improvements =
+        body.dig(
+          :RdSAP_Report,
+          :Energy_Assessment,
+          :Suggested_Improvements,
+          :Improvement
+        )
+
+      if suggested_improvements.nil?
+        suggested_improvements = []
+      else
+        suggested_improvements = [
+          Domain::RecommendedImprovement.new(
+            fetch(body, :RRN),
+            fetch(suggested_improvements, :Sequence),
+            fetch(suggested_improvements, :Improvement_Number),
+            fetch(suggested_improvements, :Indicative_Cost),
+            fetch(suggested_improvements, :Typical_Saving),
+            fetch(suggested_improvements, :Improvement_Category),
+            fetch(suggested_improvements, :Improvement_Type),
+            fetch(suggested_improvements, :Energy_Performance_Rating),
+            fetch(suggested_improvements, :Environmental_Impact_Rating),
+            fetch(suggested_improvements, :Green_Deal_Category)
+          )
+        ]
+      end
+
       assessment =
         Domain::DomesticEnergyAssessment.new(
           fetch(body, :Inspection_Date),
@@ -57,22 +84,8 @@ module UseCase
           10,
           20,
           30,
-          [
-            Domain::RecommendedImprovement.new(
-              fetch(body, :RRN),
-              fetch(body, :Sequence),
-              fetch(body, :Improvement_Number),
-              fetch(body, :Indicative_Cost),
-              fetch(body, :Typical_Saving),
-              fetch(body, :Improvement_Category),
-              fetch(body, :Improvement_Type),
-              fetch(body, :Energy_Performance_Rating),
-              fetch(body, :Environmental_Impact_Rating),
-              fetch(body, :Green_Deal_Category)
-            )
-          ]
+          suggested_improvements
         )
-
       @domestic_energy_assessments_gateway.insert_or_update(assessment)
 
       assessment
