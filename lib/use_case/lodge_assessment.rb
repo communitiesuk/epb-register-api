@@ -56,7 +56,7 @@ module UseCase
           fetch(body, :Water_Heating),
           fetch(body, :Impact_Of_Loft_Insulation),
           fetch(body, :Impact_Of_Cavity_Insulation),
-          30,
+          fetch(body, :Impact_Of_Solid_Wall_Insulation),
           create_list_of_suggested_improvements(body)
         )
       @domestic_energy_assessments_gateway.insert_or_update(assessment)
