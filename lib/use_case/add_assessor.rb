@@ -1,10 +1,10 @@
 module UseCase
   class AddAssessor
-    class SchemeNotFoundException < Exception; end
+    class SchemeNotFoundException < StandardError; end
 
-    class InvalidAssessorDetailsException < Exception; end
+    class InvalidAssessorDetailsException < StandardError; end
 
-    class AssessorRegisteredOnAnotherScheme < Exception; end
+    class AssessorRegisteredOnAnotherScheme < StandardError; end
 
     def initialize(schemes_gateway, assessors_gateway)
       @schemes_gateway = schemes_gateway

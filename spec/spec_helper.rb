@@ -22,7 +22,7 @@ ENV['JWT_ISSUER'] = 'test.issuer'
 ENV['JWT_SECRET'] = 'test.secret'
 ENV['SILENT_EVENTS'] = 'true'
 
-class UnexpectedApiError < Exception; end
+class UnexpectedApiError < StandardError; end
 
 module RSpecMixin
   def app

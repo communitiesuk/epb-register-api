@@ -105,7 +105,7 @@ module Controller
       end
 
       json_response(200, result)
-    rescue Exception => e
+    rescue StandardError => e
       case e
       when UseCase::FindAssessmentsByStreetNameAndTown::ParameterMissing
         error_response(
@@ -125,7 +125,7 @@ module Controller
         @container.get_object(:fetch_domestic_energy_assessment_use_case)
           .execute(assessment_id)
       json_api_response(200, result)
-    rescue Exception => e
+    rescue StandardError => e
       case e
       when UseCase::FetchDomesticEnergyAssessment::NotFoundException
         not_found_error('Assessment not found')
@@ -157,7 +157,8 @@ module Controller
           'Not authorised to lodge reports as this scheme'
         )
       end
-    rescue Exception => e
+
+    rescue StandardError => e
       case e
       when Helper::InvalidXml
         error_response(400, 'INVALID_REQUEST', e.message)
@@ -185,7 +186,7 @@ module Controller
         params[:assessment_id]
       )
       json_api_response(200, result.to_hash)
-    rescue Exception => e
+    rescue StandardError => e
       case e
       when JSON::Schema::ValidationError
         error_response(422, 'INVALID_REQUEST', e.message)

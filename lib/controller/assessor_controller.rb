@@ -77,7 +77,7 @@ module Controller
           'Must specify either name or postcode & qualification when searching'
         )
       end
-    rescue Exception => e
+    rescue StandardError => e
       case e
       when UseCase::FindAssessorsByPostcode::PostcodeNotRegistered
         not_found_error('The requested postcode is not registered')
@@ -113,7 +113,7 @@ module Controller
           scheme_assessor_id
         )
       json_api_response(200, result.to_hash)
-    rescue Exception => e
+    rescue StandardError => e
       case e
       when UseCase::FetchAssessor::SchemeNotFoundException
         not_found_error('The requested scheme was not found')
@@ -155,7 +155,7 @@ module Controller
         @events.event(:assessor_updated, scheme_assessor_id)
         json_api_response(200, assessor_record.to_hash)
       end
-    rescue Exception => e
+    rescue StandardError => e
       case e
       when UseCase::AddAssessor::SchemeNotFoundException
         not_found_error('The requested scheme was not found')

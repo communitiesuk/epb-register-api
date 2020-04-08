@@ -1,6 +1,6 @@
 module UseCase
   class FindAssessmentsByPostcode
-    class PostcodeNotValid < Exception; end
+    class PostcodeNotValid < StandardError; end
 
     def initialize(assessment_gateway)
       @assessment_gateway = assessment_gateway

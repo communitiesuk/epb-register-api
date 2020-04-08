@@ -1,6 +1,6 @@
 module UseCase
   class FindAssessmentsByAssessmentId
-    class AssessmentIdNotValid < Exception; end
+    class AssessmentIdNotValid < StandardError; end
 
     def initialize(assessment_gateway)
       @assessment_gateway = assessment_gateway
