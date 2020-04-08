@@ -48,7 +48,7 @@ describe 'Searching for assessments' do
           typicalSaving: 400.21,
           improvementCategory: 'string',
           improvementType: 'string',
-          energyPerformanceRating: 80,
+          energyPerformanceRatingImprovement: 80,
           environmentalImpactRating: 'string',
           greenDealCategoryCode: 'string'
         }

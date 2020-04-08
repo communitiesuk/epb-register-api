@@ -46,7 +46,7 @@ module UseCase
               i[:typical_saving] ? i[:typical_saving].round(2) : 0,
               i[:improvement_category],
               i[:improvement_type],
-              i[:energy_performance_rating],
+              i[:energy_performance_rating_improvement],
               i[:environmental_impact_rating],
               i[:green_deal_category_code]
             )

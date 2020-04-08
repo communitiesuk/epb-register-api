@@ -10,7 +10,7 @@ module Domain
       typical_saving,
       improvement_category,
       improvement_type,
-      energy_performance_rating,
+      energy_performance_rating_improvement,
       environmental_impact_rating,
       green_deal_category_code
     )
@@ -21,7 +21,7 @@ module Domain
       @typical_saving = typical_saving
       @improvement_category = improvement_category
       @improvement_type = improvement_type
-      @energy_performance_rating = energy_performance_rating
+      @energy_performance_rating_improvement = energy_performance_rating_improvement
       @environmental_impact_rating = environmental_impact_rating
       @green_deal_category_code = green_deal_category_code
     end
@@ -34,7 +34,7 @@ module Domain
         typical_saving: @typical_saving,
         improvement_category: @improvement_category,
         improvement_type: @improvement_type,
-        energy_performance_rating: @energy_performance_rating,
+        energy_performance_rating_improvement: @energy_performance_rating_improvement,
         environmental_impact_rating: @environmental_impact_rating,
         green_deal_category_code: @green_deal_category_code
       }
@@ -49,7 +49,7 @@ module Domain
         typical_saving: @typical_saving,
         improvement_category: @improvement_category,
         improvement_type: @improvement_type,
-        energy_performance_rating: @energy_performance_rating,
+        energy_performance_rating_improvement: @energy_performance_rating_improvement,
         environmental_impact_rating: @environmental_impact_rating,
         green_deal_category_code: @green_deal_category_code
       }

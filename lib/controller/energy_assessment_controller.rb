@@ -76,7 +76,7 @@ module Controller
               typicalSaving: { type: 'number', format: 'positive-int' },
               improvementCategory: { type: 'string' },
               improvementType: { type: 'string' },
-              energyPerformanceRating: { type: 'integer' },
+              energyPerformanceRatingImprovement: { type: 'integer' },
               environmentalImpactRating: { type: 'string' },
               greenDealCategoryCode: { type: 'string' }
             }
