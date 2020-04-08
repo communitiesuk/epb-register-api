@@ -38,8 +38,8 @@ task :generate_certificate do
   typical_saving = [453.45, 200, 310.49, 999.99, 1000, 550.50]
   improvement_category = ['a', 'b', 'c', 'd', 'e','f']
   improvement_type = ['minor', 'medium', 'major']
-  energy_performance_rating = ['a', 'b', 'c', 'd','e']
-  environmental_impact_rating = ['a', 'b', 'c', 'd','e']
+  energy_performance_rating_improvement = [93, 85, 75, 62, 45]
+  environmental_impact_rating_improvement  = [93, 85, 75, 62, 45]
   green_deal_category_code = ['a', 'b', 'c', 'd','e']
 
   200.times do |number|
@@ -127,8 +127,8 @@ task :generate_certificate do
       internal_typical_saving = typical_saving.sample
       internal_improvement_category = improvement_category.sample
       internal_improvement_type = improvement_type.sample
-      internal_energy_performance_rating = energy_performance_rating.sample
-      internal_environmental_impact_rating = environmental_impact_rating.sample
+      internal_energy_performance_rating_improvement = energy_performance_rating_improvement.sample
+      internal_environmental_impact_rating_improvement = environmental_impact_rating_improvement.sample
       internal_green_deal_category_code = green_deal_category_code.sample
 
       recommended_improvements_query =
@@ -154,8 +154,8 @@ task :generate_certificate do
             '#{internal_typical_saving}',
             '#{internal_improvement_category}',
             '#{internal_improvement_type}',
-            '#{internal_energy_performance_rating}',
-            '#{internal_environmental_impact_rating}',
+            '#{internal_energy_performance_rating_improvement}',
+            '#{internal_environmental_impact_rating_improvement}',
             '#{internal_green_deal_category_code}'
         )"
 
