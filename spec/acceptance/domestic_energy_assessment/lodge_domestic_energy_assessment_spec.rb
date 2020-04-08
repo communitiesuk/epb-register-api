@@ -395,9 +395,20 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
 
         expect(
-            response['data']['recommendedImprovements'][0][
-                'indicativeCost'
-            ]
+          response['data']['recommendedImprovements'][0]['indicativeCost']
+        ).to eq('3')
+      end
+
+      it 'can return the correct green deal category of the improvement' do
+        green_deal_category = doc.at('Green-Deal-Category')
+        green_deal_category.children = '3'
+
+        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
+
+        expect(
+          response['data']['recommendedImprovements'][0][
+            'greenDealCategoryCode'
+          ]
         ).to eq('3')
       end
 

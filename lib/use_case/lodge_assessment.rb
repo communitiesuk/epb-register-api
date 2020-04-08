@@ -68,7 +68,7 @@ module UseCase
               fetch(body, :Improvement_Type),
               fetch(body, :Energy_Performance_Rating),
               fetch(body, :Environmental_Impact_Rating),
-              ''
+              fetch(body, :Green_Deal_Category)
             )
           ]
         )
