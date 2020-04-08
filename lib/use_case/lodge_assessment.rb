@@ -33,33 +33,6 @@ module UseCase
         raise InactiveAssessorException
       end
 
-      suggested_improvements =
-        body.dig(
-          :RdSAP_Report,
-          :Energy_Assessment,
-          :Suggested_Improvements,
-          :Improvement
-        )
-
-      if suggested_improvements.nil?
-        suggested_improvements = []
-      else
-        suggested_improvements = [
-          Domain::RecommendedImprovement.new(
-            fetch(body, :RRN),
-            fetch(suggested_improvements, :Sequence),
-            fetch(suggested_improvements, :Improvement_Number),
-            fetch(suggested_improvements, :Indicative_Cost),
-            fetch(suggested_improvements, :Typical_Saving),
-            fetch(suggested_improvements, :Improvement_Category),
-            fetch(suggested_improvements, :Improvement_Type),
-            fetch(suggested_improvements, :Energy_Performance_Rating),
-            fetch(suggested_improvements, :Environmental_Impact_Rating),
-            fetch(suggested_improvements, :Green_Deal_Category)
-          )
-        ]
-      end
-
       assessment =
         Domain::DomesticEnergyAssessment.new(
           fetch(body, :Inspection_Date),
@@ -84,7 +57,7 @@ module UseCase
           10,
           20,
           30,
-          suggested_improvements
+          create_list_of_suggested_improvements(body)
         )
       @domestic_energy_assessments_gateway.insert_or_update(assessment)
 
@@ -92,6 +65,35 @@ module UseCase
     end
 
     private
+
+    def create_list_of_suggested_improvements(body)
+      suggested_improvements =
+        body.dig(
+          :RdSAP_Report,
+          :Energy_Assessment,
+          :Suggested_Improvements,
+          :Improvement
+        )
+
+      if suggested_improvements.nil?
+        []
+      else
+        [
+          Domain::RecommendedImprovement.new(
+            fetch(body, :RRN),
+            fetch(suggested_improvements, :Sequence),
+            fetch(suggested_improvements, :Improvement_Number),
+            fetch(suggested_improvements, :Indicative_Cost),
+            fetch(suggested_improvements, :Typical_Saving),
+            fetch(suggested_improvements, :Improvement_Category),
+            fetch(suggested_improvements, :Improvement_Type),
+            fetch(suggested_improvements, :Energy_Performance_Rating),
+            fetch(suggested_improvements, :Environmental_Impact_Rating),
+            fetch(suggested_improvements, :Green_Deal_Category)
+          )
+        ]
+      end
+    end
 
     def fetch(hash, key)
       return hash[key] if hash.fetch(key, false)
