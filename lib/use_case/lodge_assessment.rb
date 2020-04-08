@@ -61,7 +61,7 @@ module UseCase
             Domain::RecommendedImprovement.new(
               fetch(body, :RRN),
               fetch(body, :Sequence),
-              1,
+              fetch(body, :Improvement_Number),
               fetch(body, :Indicative_Cost),
               fetch(body, :Typical_Saving),
               fetch(body, :Improvement_Category),

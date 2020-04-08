@@ -412,6 +412,17 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         ).to eq('3')
       end
 
+      it 'can return the correct improvement code of the improvement' do
+        improvement_code = doc.at('Improvement-Number')
+        improvement_code.children = '4'
+
+        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
+
+        expect(
+          response['data']['recommendedImprovements'][0]['improvementCode']
+        ).to eq('4')
+      end
+
       context 'when missing optional elements' do
         it 'can return an empty string' do
           lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
