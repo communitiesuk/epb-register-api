@@ -215,7 +215,11 @@ describe 'Acceptance::DomesticEnergyAssessment' do
       assessment_request_body_with_limited_address.delete :addressLine4
 
       add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
-      migrate_assessment('123-456', assessment_request_body_with_limited_address, [200])
+      migrate_assessment(
+        '123-456',
+        assessment_request_body_with_limited_address,
+        [200]
+      )
     end
 
     it 'returns the assessment that was migrated' do

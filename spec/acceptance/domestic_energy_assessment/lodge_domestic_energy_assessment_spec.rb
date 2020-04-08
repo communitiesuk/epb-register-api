@@ -219,7 +219,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
           'heatDemand' => {
             'currentSpaceHeatingDemand' => 30.0,
             'currentWaterHeatingDemand' => 60.0,
-            'impactOfCavityInsulation' => 20,
+            'impactOfCavityInsulation' => -12,
             'impactOfLoftInsulation' => -8,
             'impactOfSolidWallInsulation' => 30
           },
@@ -328,13 +328,16 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
 
         it 'can return nil for heat demand impacts' do
           doc.at('Impact-Of-Loft-Insulation').remove
+          doc.at('Impact-Of-Cavity-Insulation').remove
           lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
 
           expect(
             response['data']['heatDemand']['impactOfLoftInsulation']
           ).to be_nil
+          expect(
+            response['data']['heatDemand']['impactOfCavityInsulation']
+          ).to be_nil
         end
-
         it 'can return an empty list of suggested improvements' do
           doc.at('Suggested-Improvements').remove
           lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
