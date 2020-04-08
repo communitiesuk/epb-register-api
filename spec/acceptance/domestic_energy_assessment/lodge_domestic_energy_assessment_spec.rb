@@ -423,6 +423,25 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         ).to eq('4')
       end
 
+      it 'can return multiple suggested improvements' do
+        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
+
+        expect(response['data']['recommendedImprovements'].count).to eq(2)
+        expect(response['data']['recommendedImprovements'][1]).to eq(
+          {
+            'energyPerformanceRating' => '60',
+            'environmentalImpactRating' => '64',
+            'greenDealCategoryCode' => '3',
+            'improvementCategory' => '2',
+            'improvementCode' => '1',
+            'improvementType' => 'Z2',
+            'indicativeCost' => '2',
+            'sequence' => 1,
+            'typicalSaving' => '0.1'
+          }
+        )
+      end
+
       context 'when missing optional elements' do
         it 'can return an empty string' do
           lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])

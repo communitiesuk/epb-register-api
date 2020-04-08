@@ -121,6 +121,19 @@
           </Improvement-Details>
           <Green-Deal-Category>1</Green-Deal-Category>
         </Improvement>
+        <Improvement>
+          <Sequence>1</Sequence>
+          <Improvement-Category>2</Improvement-Category>
+          <Improvement-Type>Z2</Improvement-Type>
+          <Typical-Saving>0.1</Typical-Saving>
+          <Energy-Performance-Rating>60</Energy-Performance-Rating>
+          <Environmental-Impact-Rating>64</Environmental-Impact-Rating>
+          <Indicative-Cost>2</Indicative-Cost>
+          <Improvement-Details>
+            <Improvement-Number>1</Improvement-Number>
+          </Improvement-Details>
+          <Green-Deal-Category>3</Green-Deal-Category>
+        </Improvement>
       </Suggested-Improvements>
         <Renewable-Heat-Incentive>
             <Space-Heating-Existing-Dwelling>0</Space-Heating-Existing-Dwelling>

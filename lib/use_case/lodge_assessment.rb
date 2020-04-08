@@ -78,20 +78,23 @@ module UseCase
       if suggested_improvements.nil?
         []
       else
-        [
+        unless suggested_improvements.is_a?(Array)
+          suggested_improvements = [suggested_improvements]
+        end
+        suggested_improvements.map do |i|
           Domain::RecommendedImprovement.new(
             fetch(body, :RRN),
-            fetch(suggested_improvements, :Sequence),
-            fetch(suggested_improvements, :Improvement_Number),
-            fetch(suggested_improvements, :Indicative_Cost),
-            fetch(suggested_improvements, :Typical_Saving),
-            fetch(suggested_improvements, :Improvement_Category),
-            fetch(suggested_improvements, :Improvement_Type),
-            fetch(suggested_improvements, :Energy_Performance_Rating),
-            fetch(suggested_improvements, :Environmental_Impact_Rating),
-            fetch(suggested_improvements, :Green_Deal_Category)
+            fetch(i, :Sequence),
+            fetch(i, :Improvement_Number),
+            fetch(i, :Indicative_Cost),
+            fetch(i, :Typical_Saving),
+            fetch(i, :Improvement_Category),
+            fetch(i, :Improvement_Type),
+            fetch(i, :Energy_Performance_Rating),
+            fetch(i, :Environmental_Impact_Rating),
+            fetch(i, :Green_Deal_Category)
           )
-        ]
+        end
       end
     end
 
