@@ -27,8 +27,6 @@ module UseCase
 
       assessor = @assessors_gateway.fetch scheme_assessor_id
 
-      raise UseCase::FetchAssessor::AssessorNotFoundException unless assessor
-
       unless assessor.domestic_rd_sap_qualification == 'ACTIVE'
         raise InactiveAssessorException
       end
