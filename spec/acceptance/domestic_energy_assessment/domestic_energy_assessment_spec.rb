@@ -210,9 +210,9 @@ describe 'Acceptance::DomesticEnergyAssessment' do
       scheme_id = add_scheme_and_get_id
 
       assessment_request_body_with_limited_address = valid_assessment_body.dup
-      assessment_request_body_with_limited_address.delete :addressLine2
-      assessment_request_body_with_limited_address.delete :addressLine3
-      assessment_request_body_with_limited_address.delete :addressLine4
+      assessment_request_body_with_limited_address[:addressLine2] = nil
+      assessment_request_body_with_limited_address[:addressLine3] = nil
+      assessment_request_body_with_limited_address[:addressLine4] = nil
 
       add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
       migrate_assessment(

@@ -37,9 +37,9 @@ module Controller
       properties: {
         addressSummary: { type: 'string' },
         addressLine1: { type: 'string' },
-        addressLine2: { type: 'string' },
-        addressLine3: { type: 'string' },
-        addressLine4: { type: 'string' },
+        addressLine2: { type: %w[string null] },
+        addressLine3: { type: %w[string null] },
+        addressLine4: { type: %w[string null] },
         town: { type: 'string' },
         postcode: { type: 'string' },
         dateOfAssessment: { type: 'string', format: 'iso-date' },
