@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_08_103550) do
+ActiveRecord::Schema.define(version: 2020_04_08_112947) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(version: 2020_04_08_103550) do
     t.string "improvement_category"
     t.string "improvement_type"
     t.integer "energy_performance_rating_improvement"
-    t.string "environmental_impact_rating"
+    t.integer "environmental_impact_rating"
     t.string "green_deal_category_code"
   end
 
