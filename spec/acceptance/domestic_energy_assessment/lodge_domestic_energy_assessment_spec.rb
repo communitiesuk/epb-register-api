@@ -180,102 +180,82 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         scheme_assessor_id.children = 'TEST123456'
       end
 
-      it 'can return the correct scheme assessor id' do
+      it 'returns the data that was lodged' do
         lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
 
-        expect(response['data']['assessor']['schemeAssessorId']).to eq(
-          'TEST123456'
-        )
-      end
+        expected_response = {
+          'addressLine1' => '1 Some Street',
+          'addressLine2' => '',
+          'addressLine3' => '',
+          'addressLine4' => '',
+          'addressSummary' => '1 Some Street, Post-Town1, A0 0AA',
+          'assessmentId' => '1234-1234-1234-1234-1234',
+          'assessor' => {
+            'contactDetails' => {
+              'email' => 'person@person.com',
+              'telephoneNumber' => '010199991010101'
+            },
+            'dateOfBirth' => '1991-02-25',
+            'firstName' => 'Someone',
+            'lastName' => 'Person',
+            'middleNames' => 'Muddle',
+            'qualifications' => {
+              'domesticRdSap' => 'ACTIVE',
+              'nonDomesticCc4' => 'INACTIVE',
+              'nonDomesticSp3' => 'INACTIVE'
+            },
+            'registeredBy' => {
+              'name' => 'test scheme', 'schemeId' => scheme_id
+            },
+            'schemeAssessorId' => 'TEST123456',
+            'searchResultsComparisonPostcode' => ''
+          },
+          'currentEnergyEfficiencyBand' => 'e',
+          'currentEnergyEfficiencyRating' => 50,
+          'dateOfAssessment' => '2006-05-04',
+          'dateOfExpiry' => '2016-05-04',
+          'dateRegistered' => '2006-05-04',
+          'dwellingType' => 'Dwelling-Type0',
+          'heatDemand' => {
+            'currentSpaceHeatingDemand' => 0.0,
+            'currentWaterHeatingDemand' => 50.0,
+            'impactOfCavityInsulation' => 20,
+            'impactOfLoftInsulation' => 10,
+            'impactOfSolidWallInsulation' => 30
+          },
+          'postcode' => 'A0 0AA',
+          'potentialEnergyEfficiencyBand' => 'e',
+          'potentialEnergyEfficiencyRating' => 50,
+          'recommendedImprovements' => [
+            {
+              'energyPerformanceRating' => '50',
+              'environmentalImpactRating' => '50',
+              'greenDealCategoryCode' => '1',
+              'improvementCategory' => '6',
+              'improvementCode' => '5',
+              'improvementType' => 'Z3',
+              'indicativeCost' => '5',
+              'sequence' => 0,
+              'typicalSaving' => '0.0'
+            },
+            {
+              'energyPerformanceRating' => '60',
+              'environmentalImpactRating' => '64',
+              'greenDealCategoryCode' => '3',
+              'improvementCategory' => '2',
+              'improvementCode' => '1',
+              'improvementType' => 'Z2',
+              'indicativeCost' => '2',
+              'sequence' => 1,
+              'typicalSaving' => '0.1'
+            }
+          ],
+          'totalFloorArea' => 0.0,
+          'town' => 'Post-Town1',
+          'typeOfAssessment' => 'RdSAP'
+        }
 
-      it 'can return the correct dwelling type' do
-        dwelling_type = doc.at('Dwelling-Type')
-        dwelling_type.children = 'valid dwelling type'
-
-        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
-
-        expect(response['data']['dwellingType']).to eq('valid dwelling type')
-      end
-
-      it 'can return the correct current energy efficiency band' do
-        current_energy_efficiency_ratng = doc.at('Energy-Rating-Current')
-        current_energy_efficiency_ratng.children = '80'
-
-        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
-
-        expect(response['data']['currentEnergyEfficiencyBand']).to eq('c')
-      end
-
-      it 'can return the correct potential energy efficiency band' do
-        potential_energy_efficiency_ratng = doc.at('Energy-Rating-Potential')
-        potential_energy_efficiency_ratng.children = '90'
-
-        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
-
-        expect(response['data']['potentialEnergyEfficiencyBand']).to eq('b')
-      end
-
-      it 'can return the correct date of assessment' do
-        date_of_assessment = doc.at('Inspection-Date')
-        date_of_assessment.children = '2006-10-25'
-
-        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
-
-        expect(response['data']['dateOfAssessment']).to eq('2006-10-25')
-      end
-
-      it 'can return the correct registered date' do
-        date_registered = doc.at('Registration-Date')
-        date_registered.children = '2006-10-30'
-
-        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
-
-        expect(response['data']['dateRegistered']).to eq('2006-10-30')
-      end
-
-      it 'can return the correct expiry date' do
-        date_of_assessment = doc.at('Inspection-Date')
-        date_of_assessment.children = '2006-10-25'
-
-        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
-
-        expect(response['data']['dateOfExpiry']).to eq('2016-10-25')
-      end
-
-      it 'can return the correct total floor area' do
-        total_floor_area = doc.at('Total-Floor-Area')
-        total_floor_area.children = '100'
-
-        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
-
-        expect(response['data']['totalFloorArea']).to eq(100.0)
-      end
-
-      it 'can return the correct postcode of the property' do
-        postcode = doc.search('Postcode')[1]
-        postcode.content = 'AB4A 9AA'
-
-        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
-
-        expect(response['data']['postcode']).to eq('AB4A 9AA')
-      end
-
-      it 'can return the correct town of the property' do
-        town = doc.search('Post-Town')[1]
-        town.content = 'London'
-
-        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
-
-        expect(response['data']['town']).to eq('London')
-      end
-
-      it 'can return the correct first address line of the property' do
-        address_line_one = doc.search('Address-Line-1')[1]
-        address_line_one.content = '1 test street'
-
-        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
-
-        expect(response['data']['addressLine1']).to eq('1 test street')
+        expect(response['data']).to eq(expected_response)
       end
 
       it 'can return the correct second address line of the property' do
@@ -318,111 +298,6 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         )
       end
 
-      it 'can return the correct sequence of the improvement' do
-        sequence = doc.at('Sequence')
-        sequence.children = '1'
-
-        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
-
-        expect(
-          response['data']['recommendedImprovements'][0]['sequence']
-        ).to eq(1)
-      end
-
-      it 'can return the correct improvement category of the improvement' do
-        improvement_category = doc.at('Improvement-Category')
-        improvement_category.children = '2'
-
-        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
-
-        expect(
-          response['data']['recommendedImprovements'][0]['improvementCategory']
-        ).to eq('2')
-      end
-
-      it 'can return the correct improvement type of the improvement' do
-        improvement_type = doc.at('Improvement-Type')
-        improvement_type.children = 'A'
-
-        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
-
-        expect(
-          response['data']['recommendedImprovements'][0]['improvementType']
-        ).to eq('A')
-      end
-
-      it 'can return the correct typical saving of the improvement' do
-        typical_saving = doc.at('Typical-Saving')
-        typical_saving.children = '123.456'
-
-        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
-
-        expect(
-          response['data']['recommendedImprovements'][0]['typicalSaving']
-        ).to eq('123.456')
-      end
-
-      it 'can return the correct energy performance rating of the improvement' do
-        energy_performance_rating = doc.at('Energy-Performance-Rating')
-        energy_performance_rating.children = '95'
-
-        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
-
-        expect(
-          response['data']['recommendedImprovements'][0][
-            'energyPerformanceRating'
-          ]
-        ).to eq('95')
-      end
-
-      it 'can return the correct environmental impact rating of the improvement' do
-        environmental_impact_rating = doc.at('Environmental-Impact-Rating')
-        environmental_impact_rating.children = '70'
-
-        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
-
-        expect(
-          response['data']['recommendedImprovements'][0][
-            'environmentalImpactRating'
-          ]
-        ).to eq('70')
-      end
-
-      it 'can return the correct indicative cost of the improvement' do
-        indicative_cost = doc.at('Indicative-Cost')
-        indicative_cost.children = '3'
-
-        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
-
-        expect(
-          response['data']['recommendedImprovements'][0]['indicativeCost']
-        ).to eq('3')
-      end
-
-      it 'can return the correct green deal category of the improvement' do
-        green_deal_category = doc.at('Green-Deal-Category')
-        green_deal_category.children = '3'
-
-        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
-
-        expect(
-          response['data']['recommendedImprovements'][0][
-            'greenDealCategoryCode'
-          ]
-        ).to eq('3')
-      end
-
-      it 'can return the correct improvement code of the improvement' do
-        improvement_code = doc.at('Improvement-Number')
-        improvement_code.children = '4'
-
-        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
-
-        expect(
-          response['data']['recommendedImprovements'][0]['improvementCode']
-        ).to eq('4')
-      end
-
       it 'can return multiple suggested improvements' do
         lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
 
@@ -440,17 +315,6 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
             'typicalSaving' => '0.1'
           }
         )
-      end
-
-      it 'can return the correct space heating demand' do
-        space_heating_demand = doc.at('Space-Heating-Existing-Dwelling')
-        space_heating_demand.children = '20'
-
-        lodge_assessment('1234-1234-1234-1234-1234', doc.to_xml, [201])
-
-        expect(
-          response['data']['heatDemand']['currentSpaceHeatingDemand']
-        ).to eq(20)
       end
 
       context 'when missing optional elements' do
