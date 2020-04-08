@@ -136,7 +136,7 @@
         </Improvement>
       </Suggested-Improvements>
         <Renewable-Heat-Incentive>
-            <Space-Heating-Existing-Dwelling>0</Space-Heating-Existing-Dwelling>
+            <Space-Heating-Existing-Dwelling>30</Space-Heating-Existing-Dwelling>
             <Water-Heating>0</Water-Heating>
         </Renewable-Heat-Incentive>
     </Energy-Assessment>

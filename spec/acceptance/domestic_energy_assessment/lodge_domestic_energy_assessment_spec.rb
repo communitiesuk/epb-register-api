@@ -217,7 +217,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
           'dateRegistered' => '2006-05-04',
           'dwellingType' => 'Dwelling-Type0',
           'heatDemand' => {
-            'currentSpaceHeatingDemand' => 0.0,
+            'currentSpaceHeatingDemand' => 30.0,
             'currentWaterHeatingDemand' => 50.0,
             'impactOfCavityInsulation' => 20,
             'impactOfLoftInsulation' => 10,
