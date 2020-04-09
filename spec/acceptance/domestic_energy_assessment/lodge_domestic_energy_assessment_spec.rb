@@ -296,8 +296,8 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
             'potentialEnergyEfficiencyRating' => 50,
             'recommendedImprovements' => [
                 {
-                    'energyPerformanceRating' => '50',
-                    'environmentalImpactRating' => '50',
+                    'energyPerformanceRatingImprovement' => 50,
+                    'environmentalImpactRatingImprovement' => 50,
                     'greenDealCategoryCode' => '1',
                     'improvementCategory' => '6',
                     'improvementCode' => '5',
@@ -307,8 +307,8 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
                     'typicalSaving' => '0.0'
                 },
                 {
-                    'energyPerformanceRating' => '60',
-                    'environmentalImpactRating' => '64',
+                    'energyPerformanceRatingImprovement' => 60,
+                    'environmentalImpactRatingImprovement' => 64,
                     'greenDealCategoryCode' => '3',
                     'improvementCategory' => '2',
                     'improvementCode' => '1',
@@ -396,8 +396,8 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         expect(response['data']['recommendedImprovements'].count).to eq(2)
         expect(response['data']['recommendedImprovements'][1]).to eq(
                                                                       {
-                                                                          'energyPerformanceRating' => '60',
-                                                                          'environmentalImpactRating' => '64',
+                                                                          'energyPerformanceRatingImprovement' => 60,
+                                                                          'environmentalImpactRatingImprovement' => 64,
                                                                           'greenDealCategoryCode' => '3',
                                                                           'improvementCategory' => '2',
                                                                           'improvementCode' => '1',
