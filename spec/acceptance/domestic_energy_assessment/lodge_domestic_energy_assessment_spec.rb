@@ -38,11 +38,14 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
   context 'when lodging a domestic energy assessment (post)' do
     context 'when an assessor is not registered' do
       it 'returns status 400' do
-        lodge_assessment('123-456', valid_xml, [400])
+        lodge_assessment('0000-0000-0000-0000-0000', valid_xml, [400])
       end
 
       it 'returns status 400 with the correct error response' do
-        response = JSON.parse lodge_assessment('123-456', valid_xml, [400]).body
+        response =
+          JSON.parse(
+            lodge_assessment('0000-0000-0000-0000-0000', valid_xml, [400]).body
+          )
 
         expect(response['errors'][0]['title']).to eq(
           'Assessor is not registered.'
@@ -60,7 +63,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         )
 
         lodge_assessment(
-          '123-456',
+          '0000-0000-0000-0000-0000',
           valid_xml,
           [400],
           true,
@@ -77,25 +80,34 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         )
 
         response =
-          JSON.parse lodge_assessment(
-                       '123-456',
-                       valid_xml,
-                       [400],
-                       true,
-                       scheme_ids: [scheme_id]
-                     )
-                       .body
+          JSON.parse(
+            lodge_assessment(
+              '0000-0000-0000-0000-0000',
+              valid_xml,
+              [400],
+              true,
+              scheme_ids: [scheme_id]
+            )
+              .body
+          )
 
         expect(response['errors'][0]['title']).to eq('Assessor is not active.')
       end
     end
 
     it 'returns 401 with no authentication' do
-      lodge_assessment('123-456', 'body', [401], false)
+      lodge_assessment('0000-0000-0000-0000-0000', 'body', [401], false)
     end
 
     it 'returns 403 with incorrect scopes' do
-      lodge_assessment('123-456', 'body', [403], true, {}, %w[wrong:scope])
+      lodge_assessment(
+        '0000-0000-0000-0000-0000',
+        'body',
+        [403],
+        true,
+        {},
+        %w[wrong:scope]
+      )
     end
 
     it 'returns 403 if it is being lodged by the wrong scheme' do
@@ -117,7 +129,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
       add_assessor(scheme_id, 'Membership-Number0', valid_assessor_request_body)
 
       lodge_assessment(
-        '123-456',
+        '0000-0000-0000-0000-0000',
         valid_xml,
         [201],
         true,
@@ -131,7 +143,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
 
       response =
         lodge_assessment(
-          '123-456',
+          '0000-0000-0000-0000-0000',
           valid_xml,
           [201],
           true,
@@ -148,7 +160,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
       response =
         JSON.parse(
           lodge_assessment(
-            '123-456',
+            '0000-0000-0000-0000-0000',
             valid_xml,
             [201],
             true,
@@ -168,7 +180,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
       response =
         JSON.parse(
           lodge_assessment(
-            '123-456',
+            '0000-0000-0000-0000-0000',
             valid_xml,
             [201],
             true,
@@ -212,7 +224,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
       response =
         JSON.parse(
           lodge_assessment(
-            '123-456',
+            '0000-0000-0000-0000-0000',
             valid_xml,
             [201],
             true,
@@ -229,7 +241,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
       let(:scheme_id) { add_scheme_and_get_id }
       let(:doc) { Nokogiri.XML valid_xml }
       let(:response) do
-        JSON.parse fetch_assessment('1234-1234-1234-1234-1234').body
+        JSON.parse(fetch_assessment('1234-1234-1234-1234-1234').body)
       end
 
       before do
@@ -240,6 +252,18 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
 
         scheme_assessor_id = doc.at('Membership-Number')
         scheme_assessor_id.children = 'TEST123456'
+      end
+
+      context 'when an assessment id does not match' do
+        it 'returns status 422' do
+          lodge_assessment(
+            '123-456',
+            doc.to_xml,
+            [422],
+            true,
+            scheme_ids: [scheme_id]
+          )
+        end
       end
 
       it 'returns the data that was lodged' do
@@ -410,7 +434,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
       context 'when missing optional elements' do
         it 'can return an empty string for address lines' do
           lodge_assessment(
-            '123-456',
+            '1234-1234-1234-1234-1234',
             doc.to_xml,
             [201],
             true,
@@ -472,7 +496,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         scheme_assessor_id = doc.at('Address')
         scheme_assessor_id.children = ''
 
-        lodge_assessment('123-456', doc.to_xml, [400])
+        lodge_assessment('0000-0000-0000-0000-0000', doc.to_xml, [400])
       end
 
       it 'rejects an assessment with an incorrect element' do
@@ -489,7 +513,9 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         scheme_assessor_id.children = '<Postcode>invalid</Postcode>'
 
         response_body =
-          JSON.parse lodge_assessment('123-456', doc.to_xml, [400]).body
+          JSON.parse(
+            lodge_assessment('0000-0000-0000-0000-0000', doc.to_xml, [400]).body
+          )
 
         expect(
           response_body['errors'][0]['title']
@@ -509,7 +535,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         sequence_one.children = '5'
 
         lodge_assessment(
-          '123-456',
+          '0000-0000-0000-0000-0000',
           doc.to_xml,
           [422],
           true,

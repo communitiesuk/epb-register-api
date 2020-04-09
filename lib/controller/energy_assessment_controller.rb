@@ -163,6 +163,12 @@ module Controller
         error_response(400, 'INVALID_REQUEST', e.message)
       when UseCase::CheckAssessorBelongsToScheme::AssessorNotFoundException
         error_response(400, 'IVALID_REQUEST', 'Assessor is not registered.')
+      when UseCase::LodgeAssessment::AssessmentIdMismatch
+        error_response(
+          422,
+          'INVALID_REQUEST',
+          'Assessment ID and RRN in XML does not match.'
+        )
       when UseCase::LodgeAssessment::InactiveAssessorException
         error_response(400, 'INVALID_REQUEST', 'Assessor is not active.')
       when UseCase::LodgeAssessment::AssessmentRuleException

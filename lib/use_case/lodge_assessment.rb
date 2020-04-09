@@ -3,6 +3,7 @@
 module UseCase
   class LodgeAssessment
     class InactiveAssessorException < StandardError; end
+    class AssessmentIdMismatch < StandardError; end
     class AssessmentRuleException < StandardError; end
 
     def initialize(domestic_energy_assessments_gateway, assessors_gateway)
@@ -10,7 +11,9 @@ module UseCase
       @assessors_gateway = assessors_gateway
     end
 
-    def execute(body, _assessment_id, _content_type)
+    def execute(body, assessment_id, _content_type)
+      raise AssessmentIdMismatch unless assessment_id == fetch(body, :RRN)
+
       scheme_assessor_id = fetch(body, :Membership_Number)
       address = body[:RdSAP_Report][:Report_Header][:Property][:Address]
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Helper
   module RdsapValidator
     class SuggestedImprovementSequence
