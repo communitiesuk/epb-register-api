@@ -266,6 +266,26 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         end
       end
 
+      context 'when an assessment already exists with the same assessment id' do
+        it 'returns status 409' do
+          lodge_assessment(
+            '1234-1234-1234-1234-1234',
+            doc.to_xml,
+            [201],
+            true,
+            scheme_ids: [scheme_id]
+          )
+
+          lodge_assessment(
+            '1234-1234-1234-1234-1234',
+            doc.to_xml,
+            [409],
+            true,
+            scheme_ids: [scheme_id]
+          )
+        end
+      end
+
       it 'returns the data that was lodged' do
         lodge_assessment(
           '1234-1234-1234-1234-1234',
