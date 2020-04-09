@@ -62,7 +62,8 @@ module UseCase
       validator = Helper::RdsapValidator::ValidateAll.new
       errors = validator.validate(assessment)
 
-      raise AssessmentRuleException.new(errors.to_json) unless errors.empty?
+      raise AssessmentRuleException, errors.to_json unless errors.empty?
+
       @domestic_energy_assessments_gateway.insert_or_update(assessment)
 
       assessment

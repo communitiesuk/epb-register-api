@@ -157,7 +157,6 @@ module Controller
           'Not authorised to lodge reports as this scheme'
         )
       end
-
     rescue StandardError => e
       case e
       when Helper::InvalidXml
