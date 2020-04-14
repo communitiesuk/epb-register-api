@@ -2,7 +2,6 @@
 
 module Controller
   class EnergyAssessmentController < Controller::BaseController
-    VALID_IMPROVEMENT_CODES = [*'1'..'63'].freeze
     PUT_SCHEMA = {
       type: 'object',
       required: %w[
@@ -58,7 +57,7 @@ module Controller
             properties: {
               sequence: { type: 'integer', format: 'positive-int' },
               improvementCode: {
-                type: 'string', enum: VALID_IMPROVEMENT_CODES
+                type: 'string', enum: [*'1'..'63'].freeze
               },
               indicativeCost: { type: 'string' },
               typicalSaving: { type: 'number', format: 'positive-int' },
