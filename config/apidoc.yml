@@ -452,6 +452,85 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorUnauthenticated'
 
+  /assessments/{assessmentId}:
+    post:
+      tags:
+        - Assessments
+      summary: Lodge a new assessment
+      security:
+        - oauth:
+            - 'assessment:lodge'
+      parameters:
+        - in: path
+          name: assessmentId
+          required: true
+          description: 'The ID of the assessment being added, usually RRN'
+          schema:
+            type: string
+            example: "1234-1234-1234-1234-1234"
+      requestBody:
+        content:
+          application/xml+RdSAP-Schema-19.0: {}
+      responses:
+        '201':
+          description: New assessment lodged
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DomesticEnergyAssessmentWithBand'
+                type: object
+                properties:
+                  addressLine1:
+                    type: string
+                    example: 2 Marsham Street
+                  addressLine2:
+                    type: string
+                    example: ''
+                  addressLine3:
+                    type: string
+                    example: ''
+                  addressLine4:
+                    type: string
+                    example: ''
+                  town:
+                    type: string
+                    example: London
+                  assessor:
+                    $ref: '#/components/schemas/AssessorSummary'
+                  heatDemand:
+                    type: object
+                    properties:
+                      currentSpaceHeatingDemand:
+                        type: integer
+                        example: 4564
+                      currentWaterHeatingDemand:
+                        type: integer
+                        example: 3253
+                      impactOfLoftInsulation:
+                        type: integer
+                        example: -453
+                      impactOfCavityInsulation:
+                        type: integer
+                        example: -84
+                      impactOfSolidWallInsulation:
+                        type: integer
+                        example: -21
+        '400':
+          description: Bad request
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthorised'
+        '409':
+          description: Assessment with that assessmentId already exists
+        '422':
+          description: Assessment rule violation
+        '500':
+          description: Server error
+
 components:
   securitySchemes:
     oauth:
