@@ -270,7 +270,11 @@ paths:
       tags:
         - Search
         - Manage Addresses
-      summary: Search for an address by type and either a postcode or street and town
+      summary: 'Search for an address by (optional) type and
+                EITHER:
+                - a postcode (with optional building name or number)
+                OR
+                - a street AND town'
       security:
         - oauth:
             - 'search:addresses'
@@ -280,6 +284,11 @@ paths:
           description: The postcode of the address being searched for
           schema:
             $ref: '#/components/schemas/AddressPostcode'
+        - in: query
+          name: buildingNameNumber
+          description: The building name or number being searched for
+          schema:
+            type: string
         - in: query
           name: street
           description: The street of the address being searched for
