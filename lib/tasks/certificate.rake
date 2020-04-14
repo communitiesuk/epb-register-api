@@ -33,7 +33,7 @@ task :generate_certificate do
   impact_of_cavity_insulation = [ -21, -764, -836, -13, -94, -35]
   impact_of_solid_wall_insulation = [ -4, -53, -64, -99, -23, -73, -5]
   scheme_assessor_id = 0
-  improvement_code = ['EPC-R1', 'EPC-R2', 'EPC-R3', 'EPC-R4', 'EPC-R5', 'EPC-R6', 'EPC-R7', 'EPC-R8', 'EPC-R9',  'EPC-R10', 'EPC-R11', 'EPC-R12', 'EPC-R13'].shuffle
+  improvement_code = ['1', '2', '3', '4', '5', '6', '7', '8', '9',  '10', '11', '12', '13'].shuffle
   indicative_cost = ['£448 - £463', '£30', '£82765 - £700000', '£485 - £728', '£2000 - £3,500']
   typical_saving = [453.45, 200, 310.49, 999.99, 1000, 550.50]
   improvement_category = ['a', 'b', 'c', 'd', 'e','f']
