@@ -1,20 +1,8 @@
+# frozen_string_literal: true
+
 module Controller
   class EnergyAssessmentController < Controller::BaseController
-    VALID_IMPROVEMENT_CODES = %w[
-      EPC-R1
-      EPC-R2
-      EPC-R3
-      EPC-R4
-      EPC-R5
-      EPC-R6
-      EPC-R7
-      EPC-R8
-      EPC-R9
-      EPC-R10
-      EPC-R11
-      EPC-R12
-      EPC-R13
-    ]
+    VALID_IMPROVEMENT_CODES = [*'1'..'63'].freeze
     PUT_SCHEMA = {
       type: 'object',
       required: %w[
@@ -83,16 +71,16 @@ module Controller
           }
         }
       }
-    }
+    }.freeze
 
     get '/api/assessments/domestic-epc/search',
         jwt_auth: %w[assessment:search] do
-      if params.has_key?(:postcode)
+      if params.key?(:postcode)
         result =
           @container.get_object(:find_assessments_by_postcode_use_case).execute(
             params[:postcode]
           )
-      elsif params.has_key?(:assessment_id)
+      elsif params.key?(:assessment_id)
         result =
           @container.get_object(:find_assessments_by_assessment_id_use_case)
             .execute(params[:assessment_id])

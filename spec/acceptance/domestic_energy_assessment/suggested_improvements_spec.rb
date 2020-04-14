@@ -21,7 +21,7 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
     [
       {
         sequence: 0,
-        improvementCode: 'EPC-R1',
+        improvementCode: '1',
         indicativeCost: '£200 - £4,000',
         typicalSaving: 400.21,
         improvementCategory: 'string',
@@ -32,7 +32,7 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
       },
       {
         sequence: 1,
-        improvementCode: 'EPC-R2',
+        improvementCode: '2',
         indicativeCost: '£430 - £4,000',
         typicalSaving: 50.21,
         improvementCategory: 'string',
