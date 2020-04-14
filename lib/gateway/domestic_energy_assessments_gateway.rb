@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Gateway
   class DomesticEnergyAssessmentsGateway
     class DomesticEnergyAssessment < ActiveRecord::Base
@@ -70,29 +72,29 @@ module Gateway
 
     def fetch(assessment_id)
       energy_assessment_record =
-        DomesticEnergyAssessment.find_by({ assessment_id: assessment_id })
+        DomesticEnergyAssessment.find_by(assessment_id: assessment_id)
 
       improvement_records =
         DomesticEpcEnergyImprovement.where(assessment_id: assessment_id)
       improvements =
         improvement_records.map { |i| row_to_energy_improvement(i).to_hash }
 
-      if energy_assessment_record
-        energy_assessment = energy_assessment_record.to_hash
-        energy_assessment[:recommended_improvements] = improvements
-        energy_assessment
-      else
-        nil
-      end
+      return unless energy_assessment_record
+
+      energy_assessment = energy_assessment_record.to_hash
+      energy_assessment[:recommended_improvements] = improvements
+      energy_assessment
     end
 
     def insert_or_update(assessment)
       unless valid_energy_rating(assessment.current_energy_efficiency_rating)
-        raise ArgumentError.new('Invalid current energy rating')
+        raise ArgumentError, 'Invalid current energy rating'
       end
+
       unless valid_energy_rating(assessment.potential_energy_efficiency_rating)
-        raise ArgumentError.new('Invalid potential energy rating')
+        raise ArgumentError, 'Invalid potential energy rating'
       end
+
       send_to_db(assessment)
     end
 
@@ -115,7 +117,7 @@ module Gateway
       response.each do |row|
         assessment_hash = to_hash(row.symbolize_keys)
 
-        result.push(assessment_hash)
+        result << assessment_hash
       end
 
       result
@@ -141,7 +143,7 @@ module Gateway
       response.each do |row|
         assessment_hash = to_hash(row.symbolize_keys)
 
-        result.push(assessment_hash)
+        result << assessment_hash
       end
 
       result
@@ -171,7 +173,7 @@ module Gateway
       response.each do |row|
         assessment_hash = to_hash(row.symbolize_keys)
 
-        result.push(assessment_hash)
+        result << assessment_hash
       end
 
       result
@@ -197,6 +199,7 @@ module Gateway
       else
         DomesticEnergyAssessment.create(domestic_energy_assessment.to_record)
       end
+
       replace_improvements(domestic_energy_assessment.recommended_improvements)
     end
 
