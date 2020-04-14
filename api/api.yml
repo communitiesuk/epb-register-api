@@ -698,7 +698,7 @@ paths:
         - in: path
           name: planId
           required: true
-          description: 'The ID of the plan being requested'
+          description: 'The ID of the plan being updated'
           schema:
             $ref: '#/components/schemas/GreanDealPlanId'
       requestBody:
@@ -726,6 +726,31 @@ paths:
           description: Green Deal plan with ID planId can not be found
         '409':
           description: Plan is not active or Identifier in request body doesn't match the planId in the URL
+        '500':
+          description: Server error
+    delete:
+      tags:
+        - Green Deal
+      summary: 'Delete an existing Green Deal plan'
+      security:
+        - oauth:
+            - 'greendeal:disclosure:update'
+      parameters:
+        - in: path
+          name: planId
+          required: true
+          description: 'The ID of the plan being deleted'
+          schema:
+            $ref: '#/components/schemas/GreanDealPlanId'
+      responses:
+        '204':
+          description: Green Deal disclosure successfully deleted
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Green Deal plan with ID planId can not be found
         '500':
           description: Server error
 
