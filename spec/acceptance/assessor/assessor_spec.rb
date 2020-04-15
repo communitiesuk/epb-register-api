@@ -16,7 +16,8 @@ describe 'Acceptance::Assessor' do
         domesticRdSap: 'ACTIVE',
         nonDomesticSp3: 'ACTIVE',
         nonDomesticCc4: 'ACTIVE',
-        nonDomesticDec: 'ACTIVE'
+        nonDomesticDec: 'ACTIVE',
+        nonDomesticNos3: 'ACTIVE'
       }
     }
   end
@@ -90,7 +91,8 @@ describe 'Acceptance::Assessor' do
                   domesticRdSap: 'ACTIVE',
                   nonDomesticSp3: 'ACTIVE',
                   nonDomesticCc4: 'ACTIVE',
-                  nonDomesticDec: 'ACTIVE'
+                  nonDomesticDec: 'ACTIVE',
+                  nonDomesticNos3: 'ACTIVE'
                 }
               },
               meta: {}
@@ -215,7 +217,8 @@ describe 'Acceptance::Assessor' do
                 domesticRdSap: 'ACTIVE',
                 nonDomesticSp3: 'ACTIVE',
                 nonDomesticCc4: 'ACTIVE',
-                nonDomesticDec: 'ACTIVE'
+                nonDomesticDec: 'ACTIVE',
+                nonDomesticNos3: 'ACTIVE'
               },
               contactDetails: {
                 email: 'person@person.com', telephoneNumber: '010199991010101'

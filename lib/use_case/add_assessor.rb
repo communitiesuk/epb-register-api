@@ -16,7 +16,9 @@ module UseCase
         @schemes_gateway.all.select do |scheme|
           scheme[:scheme_id].to_s == add_assessor_request.registered_by_id.to_s
         end.first
+
       raise SchemeNotFoundException unless scheme
+
       existing_assessor =
         @assessors_gateway.fetch(add_assessor_request.scheme_assessor_id)
 
@@ -41,14 +43,14 @@ module UseCase
           add_assessor_request.domestic_rd_sap_qualification,
           add_assessor_request.non_domestic_sp3_qualification,
           add_assessor_request.non_domestic_cc4_qualification,
-          add_assessor_request.non_domestic_dec_qualification
+          add_assessor_request.non_domestic_dec_qualification,
+          add_assessor_request.non_domestic_nos3_qualification
         )
 
       @assessors_gateway.update(assessor)
 
       {
-        assessor_was_newly_created: (existing_assessor == nil),
-        assessor: assessor
+        assessor_was_newly_created: (existing_assessor.nil?), assessor: assessor
       }
     end
   end

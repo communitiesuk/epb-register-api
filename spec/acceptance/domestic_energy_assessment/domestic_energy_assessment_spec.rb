@@ -130,7 +130,8 @@ describe 'Acceptance::DomesticEnergyAssessment' do
                 domesticRdSap: 'ACTIVE',
                 nonDomesticSp3: 'INACTIVE',
                 nonDomesticCc4: 'INACTIVE',
-                nonDomesticDec: 'INACTIVE'
+                nonDomesticDec: 'INACTIVE',
+                nonDomesticNos3: 'INACTIVE'
               }
             },
             dateOfAssessment: valid_assessment_body[:dateOfAssessment],
