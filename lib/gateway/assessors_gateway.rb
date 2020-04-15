@@ -62,8 +62,8 @@ module Gateway
     end
 
     def qualification_columns_to_sql(columns)
-      first_selectors = columns[0...-1].map { |c| "#{c} = 'ACTIVE' OR " }
-      last_selector = "#{columns.last} = 'ACTIVE' "
+      first_selectors = columns[0...-1].map { |c| "#{Assessor.connection.quote_column_name(c)} = 'ACTIVE' OR " }
+      last_selector = "#{Assessor.connection.quote_column_name(columns.last)} = 'ACTIVE' "
       query = first_selectors.join
       query + last_selector
     end
@@ -94,40 +94,48 @@ module Gateway
           qualifications.map { |q| qualification_to_column(q) }
         )
 
+      binds = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          'latitude',
+          latitude,
+          ActiveRecord::Type::Float.new
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          'longitude',
+          longitude,
+          ActiveRecord::Type::Float.new
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          'entries',
+          entries,
+          ActiveRecord::Type::Integer.new
+        )
+      ]
+
       response =
-        Assessor.connection.execute(
+        Assessor.connection.exec_query(
           "SELECT
           first_name, last_name, middle_names, date_of_birth, registered_by,
-          scheme_assessor_id, telephone_number, email, c.name AS scheme_name,
-          search_results_comparison_postcode, domestic_rd_sap_qualification,
-          non_domestic_sp3_qualification, non_domestic_cc4_qualification,
-          non_domestic_dec_qualification, non_domestic_nos3_qualification,
-          (
-            sqrt(abs(POWER(69.1 * (a.latitude - #{
-            latitude.to_f
-          } ), 2) +
-            POWER(69.1 * (a.longitude - #{
-            longitude.to_f
-          } ) * cos( #{
-            latitude.to_f
-          } / 57.3), 2)))
-          ) AS distance
-
-        FROM postcode_geolocation a
-        INNER JOIN assessors b ON(b.search_results_comparison_postcode = a.postcode)
-        LEFT JOIN schemes c ON(b.registered_by = c.scheme_id)
-        WHERE
-          #{
-            qualification_selector
-          }
-          AND a.latitude BETWEEN #{(latitude - 1).to_f} AND #{
-            (latitude + 1).to_f
-          }
-          AND a.longitude BETWEEN #{(longitude - 1).to_f} AND #{
-            (longitude + 1).to_f
-          }
-
-        ORDER BY distance LIMIT #{entries}"
+           scheme_assessor_id, telephone_number, email, c.name AS scheme_name,
+           search_results_comparison_postcode, domestic_rd_sap_qualification,
+           non_domestic_sp3_qualification, non_domestic_cc4_qualification,
+           non_domestic_dec_qualification, non_domestic_nos3_qualification,
+            (
+              sqrt(abs(POWER(69.1 * (a.latitude - $1 ), 2) +
+              POWER(69.1 * (a.longitude - $2) * cos( $1 / 57.3), 2)))
+            ) AS distance
+          FROM postcode_geolocation a
+          INNER JOIN assessors b ON(b.search_results_comparison_postcode = a.postcode)
+          LEFT JOIN schemes c ON(b.registered_by = c.scheme_id)
+          WHERE
+            #{
+              qualification_selector
+            }
+            AND a.latitude BETWEEN ($1 - 1) AND ($1 + 1)
+            AND a.longitude BETWEEN ($2 - 1) AND ($2 + 1)
+          ORDER BY distance LIMIT $3",
+          'SQL',
+          binds
         )
 
       result = []
