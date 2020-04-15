@@ -21,7 +21,8 @@ module Controller
           properties: {
             domesticRdSap: { type: 'string', enum: %w[ACTIVE INACTIVE] },
             nonDomesticSp3: { type: 'string', enum: %w[ACTIVE INACTIVE] },
-            nonDomesticCc4: { type: 'string', enum: %w[ACTIVE INACTIVE] }
+            nonDomesticCc4: { type: 'string', enum: %w[ACTIVE INACTIVE] },
+            nonDomesticDec: { type: 'string', enum: %w[ACTIVE INACTIVE] }
           }
         }
       }

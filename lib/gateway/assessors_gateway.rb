@@ -12,6 +12,7 @@ module Gateway
     DOMESTIC_RD_SAP_COLUMN = :domestic_rd_sap_qualification
     NON_DOMESTIC_SP3_COLUMN = :non_domestic_sp3_qualification
     NON_DOMESTIC_CC4_COLUMN = :non_domestic_cc4_qualification
+    NON_DOMESTIC_DEC_COLUMN = :non_domestic_dec_qualification
     REGISTERED_BY_COLUMN = :registered_by
 
     def row_to_assessor_domain(row)
@@ -33,7 +34,8 @@ module Gateway
         row[SEARCH_RESULTS_COMPARISON_POSTCODE_COLUMN.to_s],
         row[DOMESTIC_RD_SAP_COLUMN.to_s],
         row[NON_DOMESTIC_SP3_COLUMN.to_s],
-        row[NON_DOMESTIC_CC4_COLUMN.to_s]
+        row[NON_DOMESTIC_CC4_COLUMN.to_s],
+        row[NON_DOMESTIC_DEC_COLUMN.to_s]
       )
     end
 
@@ -48,6 +50,8 @@ module Gateway
         NON_DOMESTIC_SP3_COLUMN
       when 'nonDomesticCc4'
         NON_DOMESTIC_CC4_COLUMN
+      when 'nonDomesticDec'
+        NON_DOMESTIC_DEC_COLUMN
       else
         raise ArgumentError.new('Unrecognised qualification type')
       end
@@ -93,6 +97,7 @@ module Gateway
           scheme_assessor_id, telephone_number, email, c.name AS scheme_name,
           search_results_comparison_postcode, domestic_rd_sap_qualification,
           non_domestic_sp3_qualification, non_domestic_cc4_qualification,
+          non_domestic_dec_qualification,
           (
             sqrt(abs(POWER(69.1 * (a.latitude - #{
             latitude.to_f
@@ -139,7 +144,8 @@ module Gateway
           first_name, last_name, middle_names, date_of_birth, registered_by,
           scheme_assessor_id, telephone_number, email, b.name AS scheme_name,
           search_results_comparison_postcode, domestic_rd_sap_qualification,
-          non_domestic_sp3_qualification, non_domestic_cc4_qualification
+          non_domestic_sp3_qualification, non_domestic_cc4_qualification,
+          non_domestic_dec_qualification
 
         FROM assessors a
         LEFT JOIN schemes b ON(a.registered_by = b.scheme_id)

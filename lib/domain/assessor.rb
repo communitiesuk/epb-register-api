@@ -17,7 +17,8 @@ module Domain
       search_results_comparison_postcode,
       domestic_rd_sap_qualification,
       non_domestic_sp3_qualification,
-      non_domestic_cc4_qualification
+      non_domestic_cc4_qualification,
+      non_domestic_dec_qualification
     )
       @scheme_assessor_id = scheme_assessor_id
       @first_name = first_name
@@ -32,6 +33,7 @@ module Domain
       @domestic_rd_sap_qualification = domestic_rd_sap_qualification
       @non_domestic_sp3_qualification = non_domestic_sp3_qualification
       @non_domestic_cc4_qualification = non_domestic_cc4_qualification
+      @non_domestic_dec_qualification = non_domestic_dec_qualification
     end
 
     def to_hash
@@ -56,7 +58,9 @@ module Domain
           non_domestic_sp3:
             @non_domestic_sp3_qualification == 'ACTIVE' ? 'ACTIVE' : 'INACTIVE',
           non_domestic_cc4:
-            @non_domestic_cc4_qualification == 'ACTIVE' ? 'ACTIVE' : 'INACTIVE'
+            @non_domestic_cc4_qualification == 'ACTIVE' ? 'ACTIVE' : 'INACTIVE',
+          non_domestic_dec:
+            @non_domestic_dec_qualification == 'ACTIVE' ? 'ACTIVE' : 'INACTIVE'
         }
       }
 
@@ -81,7 +85,8 @@ module Domain
         search_results_comparison_postcode: @search_results_comparison_postcode,
         domestic_rd_sap_qualification: @domestic_rd_sap_qualification,
         non_domestic_sp3_qualification: @non_domestic_sp3_qualification,
-        non_domestic_cc4_qualification: @non_domestic_cc4_qualification
+        non_domestic_cc4_qualification: @non_domestic_cc4_qualification,
+        non_domestic_dec_qualification: @non_domestic_dec_qualification
       }
     end
   end

@@ -314,7 +314,8 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
             'qualifications' => {
               'domesticRdSap' => 'ACTIVE',
               'nonDomesticCc4' => 'INACTIVE',
-              'nonDomesticSp3' => 'INACTIVE'
+              'nonDomesticSp3' => 'INACTIVE',
+              'nonDomesticDec' => 'INACTIVE'
             },
             'registeredBy' => {
               'name' => 'test scheme', 'schemeId' => scheme_id

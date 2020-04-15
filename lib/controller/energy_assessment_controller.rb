@@ -56,9 +56,7 @@ module Controller
             required: %w[sequence improvementCode indicativeCost typicalSaving],
             properties: {
               sequence: { type: 'integer', format: 'positive-int' },
-              improvementCode: {
-                type: 'string', enum: [*'1'..'63'].freeze
-              },
+              improvementCode: { type: 'string', enum: [*'1'..'63'].freeze },
               indicativeCost: { type: 'string' },
               typicalSaving: { type: 'number', format: 'positive-int' },
               improvementCategory: { type: 'string' },

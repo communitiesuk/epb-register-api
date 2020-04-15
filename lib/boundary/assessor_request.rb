@@ -11,7 +11,8 @@ module Boundary
                 :search_results_comparison_postcode,
                 :domestic_rd_sap_qualification,
                 :non_domestic_sp3_qualification,
-                :non_domestic_cc4_qualification
+                :non_domestic_cc4_qualification,
+                :non_domestic_dec_qualification
 
     def initialize(body, scheme_assessor_id, registered_by_id)
       @scheme_assessor_id = scheme_assessor_id
@@ -31,6 +32,8 @@ module Boundary
         body.dig(:qualifications, :non_domestic_sp3)
       @non_domestic_cc4_qualification =
         body.dig(:qualifications, :non_domestic_cc4)
+      @non_domestic_dec_qualification =
+        body.dig(:qualifications, :non_domestic_dec)
     end
   end
 end

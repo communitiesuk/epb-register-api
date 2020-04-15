@@ -13,7 +13,8 @@ describe 'Searching for an assessor by name' do
       qualifications: {
         domesticRdSap: 'ACTIVE',
         nonDomesticSp3: 'ACTIVE',
-        nonDomesticCc4: 'ACTIVE'
+        nonDomesticCc4: 'ACTIVE',
+        nonDomesticDec: 'ACTIVE'
       }
     }
   end

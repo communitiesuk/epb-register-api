@@ -162,7 +162,8 @@ describe 'Acceptance::SearchForAssessor' do
             qualifications: {
               domesticRdSap: 'ACTIVE',
               nonDomesticSp3: 'INACTIVE',
-              nonDomesticCc4: 'INACTIVE'
+              nonDomesticCc4: 'INACTIVE',
+              nonDomesticDec: 'INACTIVE'
             },
             distanceFromPostcodeInMiles: 0.0
           }.to_json
@@ -352,6 +353,35 @@ describe 'Acceptance::SearchForAssessor' do
         expect(
           response_json['data']['assessors'].first['qualifications'][
             'nonDomesticSp3'
+          ]
+        ).to eq('ACTIVE')
+      end
+    end
+
+    context 'for non domestic dec assessors' do
+      it 'returns only the assessors qualified' do
+        add_postcodes('SE1 7EZ', 51.5045, 0.0865)
+        scheme_id = add_scheme_and_get_id
+
+        dec_assessor = valid_assessor_with_contact_request_body.dup
+        dec_assessor[:qualifications][:nonDomesticDec] = 'ACTIVE'
+        dec_assessor[:qualifications][:domesticRdSap] = 'INACTIVE'
+        add_assessor(scheme_id, 'DEC_ASSESSOR', dec_assessor)
+
+        rdsap_assessor = valid_assessor_with_contact_request_body.dup
+        dec_assessor[:qualifications][:nonDomesticDec] = 'INACTIVE'
+        dec_assessor[:qualifications][:domesticRdSap] = 'ACTIVE'
+        add_assessor(scheme_id, 'RDSAP_ASSESSOR', rdsap_assessor)
+
+        response = assessors_search('SE17EZ', 'nonDomesticDec')
+        response_json = JSON.parse(response.body)
+        expect(response_json['data']['assessors'].length).to eq(1)
+        expect(
+          response_json['data']['assessors'].first['schemeAssessorId']
+        ).to eq('DEC_ASSESSOR')
+        expect(
+          response_json['data']['assessors'].first['qualifications'][
+            'nonDomesticDec'
           ]
         ).to eq('ACTIVE')
       end

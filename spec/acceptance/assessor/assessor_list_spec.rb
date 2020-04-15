@@ -110,7 +110,8 @@ describe 'Acceptance::AssessorList' do
             'qualifications' => {
               'domesticRdSap' => 'ACTIVE',
               'nonDomesticSp3' => 'INACTIVE',
-              'nonDomesticCc4' => 'INACTIVE'
+              'nonDomesticCc4' => 'INACTIVE',
+              'nonDomesticDec' => 'INACTIVE'
             }
           }
         ]
@@ -147,7 +148,8 @@ describe 'Acceptance::AssessorList' do
             'qualifications' => {
               'domesticRdSap' => 'ACTIVE',
               'nonDomesticSp3' => 'INACTIVE',
-              'nonDomesticCc4' => 'INACTIVE'
+              'nonDomesticCc4' => 'INACTIVE',
+              'nonDomesticDec' => 'INACTIVE'
             }
           },
           {
@@ -166,7 +168,8 @@ describe 'Acceptance::AssessorList' do
             'qualifications' => {
               'domesticRdSap' => 'ACTIVE',
               'nonDomesticSp3' => 'INACTIVE',
-              'nonDomesticCc4' => 'INACTIVE'
+              'nonDomesticCc4' => 'INACTIVE',
+              'nonDomesticDec' => 'INACTIVE'
             }
           }
         ]

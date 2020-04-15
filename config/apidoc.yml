@@ -627,6 +627,8 @@ components:
           $ref: '#/components/schemas/AssessorQualificationStatus'
         nonDomesticCc4:
           $ref: '#/components/schemas/AssessorQualificationStatus'
+        nonDomesticDec:
+          $ref: '#/components/schemas/AssessorQualificationStatus'
 
 
     AssessorQualificationStatus:
@@ -827,6 +829,7 @@ components:
         - nonDomesticNos5
         - nonDomesticSp3
         - nonDomesticCc4
+        - nonDomesticDec
 
     AssessorSearchResults:
       type: object
