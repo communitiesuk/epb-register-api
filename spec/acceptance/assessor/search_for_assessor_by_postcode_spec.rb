@@ -370,8 +370,8 @@ describe 'Acceptance::SearchForAssessor' do
         add_assessor(scheme_id, 'DEC_ASSESSOR', dec_assessor)
 
         rdsap_assessor = valid_assessor_with_contact_request_body.dup
-        dec_assessor[:qualifications][:nonDomesticDec] = 'INACTIVE'
-        dec_assessor[:qualifications][:domesticRdSap] = 'ACTIVE'
+        rdsap_assessor[:qualifications][:nonDomesticDec] = 'INACTIVE'
+        rdsap_assessor[:qualifications][:domesticRdSap] = 'ACTIVE'
         add_assessor(scheme_id, 'RDSAP_ASSESSOR', rdsap_assessor)
 
         response = assessors_search('SE17EZ', 'nonDomesticDec')
