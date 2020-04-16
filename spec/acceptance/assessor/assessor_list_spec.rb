@@ -113,7 +113,8 @@ describe 'Acceptance::AssessorList' do
               'nonDomesticCc4' => 'INACTIVE',
               'nonDomesticDec' => 'INACTIVE',
               'nonDomesticNos3' => 'INACTIVE',
-              'nonDomesticNos4' => 'INACTIVE'
+              'nonDomesticNos4' => 'INACTIVE',
+              'nonDomesticNos5' => 'INACTIVE'
             }
           }
         ]
@@ -153,7 +154,8 @@ describe 'Acceptance::AssessorList' do
               'nonDomesticCc4' => 'INACTIVE',
               'nonDomesticDec' => 'INACTIVE',
               'nonDomesticNos3' => 'INACTIVE',
-              'nonDomesticNos4' => 'INACTIVE'
+              'nonDomesticNos4' => 'INACTIVE',
+              'nonDomesticNos5' => 'INACTIVE'
             }
           },
           {
@@ -175,7 +177,8 @@ describe 'Acceptance::AssessorList' do
               'nonDomesticCc4' => 'INACTIVE',
               'nonDomesticDec' => 'INACTIVE',
               'nonDomesticNos3' => 'INACTIVE',
-              'nonDomesticNos4' => 'INACTIVE'
+              'nonDomesticNos4' => 'INACTIVE',
+              'nonDomesticNos5' => 'INACTIVE'
             }
           }
         ]

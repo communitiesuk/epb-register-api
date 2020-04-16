@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 2020_04_16_091957) do
     t.string "non_domestic_cc4_qualification"
     t.string "non_domestic_dec_qualification"
     t.string "non_domestic_nos3_qualification"
+    t.string "non_domestic_nos5_qualification"
     t.string "non_domestic_nos4_qualification"
     t.index ["registered_by"], name: "index_assessors_on_registered_by"
     t.index ["search_results_comparison_postcode"], name: "index_assessors_on_search_results_comparison_postcode"

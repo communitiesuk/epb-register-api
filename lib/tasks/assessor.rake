@@ -19,8 +19,8 @@ task :generate_assessor do
 
   ActiveRecord::Base.logger = nil
 
-  first_names = %w(Abul Jaseera Lawrence Kevin Christine Tito Matt Barry Yusuf Andreas Becks Dean Marten Tristan)
-  last_names = %w(Kibria Abubacker Goldstien Keenoy Horrocks Sarrionandia Anderson Anderson Sheikh England Henze Wanless Wetterberg Tonks)
+  first_names = %w[Abul Jaseera Lawrence Kevin Christine Tito Matt Barry Yusuf Andreas Becks Dean Marten Tristan]
+  last_names = %w[Kibria Abubacker Goldstien Keenoy Horrocks Sarrionandia Anderson Anderson Sheikh England Henze Wanless Wetterberg Tonks]
 
   result.each_with_index do |row, index|
     first_name = first_names[rand(first_names.size)]
@@ -28,6 +28,7 @@ task :generate_assessor do
 
     rd_sap = rand(2)
     sp3 = rand(2)
+    nos5 = rand(2)
 
     query =
       "INSERT INTO
@@ -37,7 +38,8 @@ task :generate_assessor do
             scheme_assessor_id, telephone_number, email,
             search_results_comparison_postcode,
             domestic_rd_sap_qualification,
-            non_domestic_sp3_qualification
+            non_domestic_sp3_qualification,
+            non_domestic_nos5_qualification
           )
         VALUES(
           '#{first_name}',
@@ -50,6 +52,7 @@ task :generate_assessor do
           '#{row['postcode']}',
           '#{rd_sap != 0 ? 'ACTIVE' : 'INACTIVE'}',
           '#{sp3 != 0 ? 'ACTIVE' : 'INACTIVE'}'
+          '#{nos5 != 0 ? 'ACTIVE' : 'INACTIVE'}'
         )"
 
     ActiveRecord::Base.connection.execute(query)

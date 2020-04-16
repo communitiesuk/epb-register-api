@@ -24,7 +24,8 @@ module Controller
             nonDomesticCc4: { type: 'string', enum: %w[ACTIVE INACTIVE] },
             nonDomesticDec: { type: 'string', enum: %w[ACTIVE INACTIVE] },
             nonDomesticNos3: { type: 'string', enum: %w[ACTIVE INACTIVE] },
-            nonDomesticNos4: { type: 'string', enum: %w[ACTIVE INACTIVE] }
+            nonDomesticNos4: { type: 'string', enum: %w[ACTIVE INACTIVE] },
+            nonDomesticNos5: { type: 'string', enum: %w[ACTIVE INACTIVE] }
           }
         }
       }

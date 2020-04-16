@@ -20,7 +20,8 @@ module Domain
       non_domestic_cc4_qualification,
       non_domestic_dec_qualification,
       non_domestic_nos3_qualification,
-      non_domestic_nos4_qualification
+      non_domestic_nos4_qualification,
+      non_domestic_nos5_qualification
     )
       @scheme_assessor_id = scheme_assessor_id
       @first_name = first_name
@@ -38,6 +39,7 @@ module Domain
       @non_domestic_dec_qualification = non_domestic_dec_qualification
       @non_domestic_nos3_qualification = non_domestic_nos3_qualification
       @non_domestic_nos4_qualification = non_domestic_nos4_qualification
+      @non_domestic_nos5_qualification = non_domestic_nos5_qualification
     end
 
     def to_hash
@@ -72,7 +74,9 @@ module Domain
               'INACTIVE'
             end,
           non_domestic_nos4:
-            @non_domestic_nos4_qualification == 'ACTIVE' ? 'ACTIVE' : 'INACTIVE'
+            @non_domestic_nos4_qualification == 'ACTIVE' ? 'ACTIVE' : 'INACTIVE',
+          non_domestic_nos5:
+            @non_domestic_nos5_qualification == 'ACTIVE' ? 'ACTIVE' : 'INACTIVE'
         }
       }
 
@@ -100,7 +104,8 @@ module Domain
         non_domestic_cc4_qualification: @non_domestic_cc4_qualification,
         non_domestic_dec_qualification: @non_domestic_dec_qualification,
         non_domestic_nos3_qualification: @non_domestic_nos3_qualification,
-        non_domestic_nos4_qualification: @non_domestic_nos4_qualification
+        non_domestic_nos4_qualification: @non_domestic_nos4_qualification,
+        non_domestic_nos5_qualification: @non_domestic_nos5_qualification
       }
     end
   end

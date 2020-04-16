@@ -16,7 +16,8 @@ describe 'Searching for an assessor by name' do
         nonDomesticCc4: 'ACTIVE',
         nonDomesticDec: 'ACTIVE',
         nonDomesticNos3: 'ACTIVE',
-        nonDomesticNos4: 'ACTIVE'
+        nonDomesticNos4: 'ACTIVE',
+        nonDomesticNos5: 'ACTIVE'
       }
     }
   end

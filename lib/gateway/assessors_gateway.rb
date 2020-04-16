@@ -15,6 +15,7 @@ module Gateway
     NON_DOMESTIC_DEC_COLUMN = :non_domestic_dec_qualification
     NON_DOMESTIC_NOS3_COLUMN = :non_domestic_nos3_qualification
     NON_DOMESTIC_NOS4_COLUMN = :non_domestic_nos4_qualification
+    NON_DOMESTIC_NOS5_COLUMN = :non_domestic_nos5_qualification
     REGISTERED_BY_COLUMN = :registered_by
 
     def row_to_assessor_domain(row)
@@ -39,7 +40,8 @@ module Gateway
         row[NON_DOMESTIC_CC4_COLUMN.to_s],
         row[NON_DOMESTIC_DEC_COLUMN.to_s],
         row[NON_DOMESTIC_NOS3_COLUMN.to_s],
-        row[NON_DOMESTIC_NOS4_COLUMN.to_s]
+        row[NON_DOMESTIC_NOS4_COLUMN.to_s],
+        row[NON_DOMESTIC_NOS5_COLUMN.to_s]
       )
     end
 
@@ -60,6 +62,8 @@ module Gateway
         NON_DOMESTIC_NOS3_COLUMN
       when 'nonDomesticNos4'
         NON_DOMESTIC_NOS4_COLUMN
+      when 'nonDomesticNos5'
+        NON_DOMESTIC_NOS5_COLUMN
       else
         raise ArgumentError, 'Unrecognised qualification type'
       end
@@ -127,7 +131,8 @@ module Gateway
            scheme_assessor_id, telephone_number, email, c.name AS scheme_name,
            search_results_comparison_postcode, domestic_rd_sap_qualification,
            non_domestic_sp3_qualification, non_domestic_cc4_qualification,
-           non_domestic_dec_qualification, non_domestic_nos3_qualification, non_domestic_nos4_qualification,
+           non_domestic_dec_qualification, non_domestic_nos3_qualification,
+           non_domestic_nos4_qualification, non_domestic_nos5_qualification,
             (
               sqrt(abs(POWER(69.1 * (a.latitude - $1 ), 2) +
               POWER(69.1 * (a.longitude - $2) * cos( $1 / 57.3), 2)))
@@ -165,7 +170,8 @@ module Gateway
           scheme_assessor_id, telephone_number, email, b.name AS scheme_name,
           search_results_comparison_postcode, domestic_rd_sap_qualification,
           non_domestic_sp3_qualification, non_domestic_cc4_qualification,
-          non_domestic_dec_qualification, non_domestic_nos3_qualification, non_domestic_nos4_qualification
+          non_domestic_dec_qualification, non_domestic_nos3_qualification,
+          non_domestic_nos4_qualification, non_domestic_nos5_qualification
 
         FROM assessors a
         LEFT JOIN schemes b ON(a.registered_by = b.scheme_id)
