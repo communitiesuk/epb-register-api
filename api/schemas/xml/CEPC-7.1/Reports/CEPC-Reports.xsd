@@ -9,7 +9,15 @@
 		<xs:sequence>
 			<xs:element name="Report-Header" type="Report-Header"/>
 			<xs:element name="Summary-Of-Performance" type="Summary-Of-Performance" minOccurs="0"/>
-			<xs:element name="Formatted-Report" type="xs:base64Binary"/>
+			<xs:element name="Formatted-Report" type="xs:base64Binary" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            DEPRECATED - DO NOT USE
+            This element is allowed for backwards-compatibility but any data sent here will
+            not be read, processed or stored by the register.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
 			<xs:choice>
 				<xs:element name="OR-Operational-Rating" type="OR-Operational-Rating" minOccurs="0"/>
 				<xs:element name="AR-Questions" type="AR-Questions" minOccurs="0"/>
@@ -17,7 +25,7 @@
 					<xs:annotation>
 						<xs:documentation>
 							DEPRECATED - DO NOT USE
-							This element is allowed for backwards-compatibility but any data sent here will 
+							This element is allowed for backwards-compatibility but any data sent here will
 							not be read, processed or stored by the register.
 						</xs:documentation>
 					</xs:annotation>
