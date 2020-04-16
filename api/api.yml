@@ -644,10 +644,14 @@ paths:
                     properties:
                       assessment:
                         $ref: '#/components/schemas/AssessmentRHIDetails'
+        '400':
+          description: The assessmentId parameter is badly formatted
         '403':
           description: Forbidden
         '404':
-          description: Assessment not found
+          description: Assessment witht his ID not found
+        '410':
+          description: Assessment with this ID exists but is marked "Not for issue"
         '500':
           description: Server error
 
