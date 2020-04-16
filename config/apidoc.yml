@@ -621,6 +621,8 @@ components:
     AssessorQualifications:
       type: object
       properties:
+        domesticSap:
+          $ref: '#/components/schemas/AssessorQualificationStatus'
         domesticRdSap:
           $ref: '#/components/schemas/AssessorQualificationStatus'
         nonDomesticSp3:
