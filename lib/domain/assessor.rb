@@ -74,7 +74,11 @@ module Domain
               'INACTIVE'
             end,
           non_domestic_nos4:
-            @non_domestic_nos4_qualification == 'ACTIVE' ? 'ACTIVE' : 'INACTIVE',
+            if @non_domestic_nos4_qualification == 'ACTIVE'
+              'ACTIVE'
+            else
+              'INACTIVE'
+            end,
           non_domestic_nos5:
             @non_domestic_nos5_qualification == 'ACTIVE' ? 'ACTIVE' : 'INACTIVE'
         }
