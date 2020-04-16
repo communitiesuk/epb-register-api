@@ -11,6 +11,7 @@ describe 'Searching for an assessor by name' do
       },
       searchResultsComparisonPostcode: '',
       qualifications: {
+        domesticSap: 'ACTIVE',
         domesticRdSap: 'ACTIVE',
         nonDomesticSp3: 'ACTIVE',
         nonDomesticCc4: 'ACTIVE',

@@ -160,6 +160,7 @@ describe 'Acceptance::SearchForAssessor' do
               telephoneNumber: '010199991010101', email: 'person@person.com'
             },
             qualifications: {
+              domesticSap: 'INACTIVE',
               domesticRdSap: 'ACTIVE',
               nonDomesticSp3: 'INACTIVE',
               nonDomesticCc4: 'INACTIVE',
@@ -333,6 +334,35 @@ describe 'Acceptance::SearchForAssessor' do
   end
 
   context 'when searching by qualification' do
+    context 'for domestic sap assessors' do
+      it 'returns only the assessors qualified' do
+        add_postcodes('SE1 7EZ', 51.5045, 0.0865)
+        scheme_id = add_scheme_and_get_id
+
+        sap_assessor = valid_assessor_with_contact_request_body.dup
+        sap_assessor[:qualifications][:domesticSap] = 'ACTIVE'
+        sap_assessor[:qualifications][:domesticRdSap] = 'INACTIVE'
+        add_assessor(scheme_id, 'SAP_ASSESSOR', sap_assessor)
+
+        rdsap_assessor = valid_assessor_with_contact_request_body.dup
+        rdsap_assessor[:qualifications][:domesticSap] = 'INACTIVE'
+        rdsap_assessor[:qualifications][:domesticRdSap] = 'ACTIVE'
+        add_assessor(scheme_id, 'RDSAP_ASSESSOR', rdsap_assessor)
+
+        response = assessors_search('SE17EZ', 'domesticSap')
+        response_json = JSON.parse(response.body)
+        expect(response_json['data']['assessors'].length).to eq(1)
+        expect(
+            response_json['data']['assessors'].first['schemeAssessorId']
+        ).to eq('SAP_ASSESSOR')
+        expect(
+            response_json['data']['assessors'].first['qualifications'][
+                'domesticSap'
+            ]
+        ).to eq('ACTIVE')
+      end
+    end
+
     context 'for air conditioning level 3 assessors' do
       it 'returns only the assessors qualified' do
         add_postcodes('SE1 7EZ', 51.5045, 0.0865)

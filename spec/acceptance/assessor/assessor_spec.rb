@@ -13,6 +13,7 @@ describe 'Acceptance::Assessor' do
       },
       searchResultsComparisonPostcode: '',
       qualifications: {
+        domesticSap: 'ACTIVE',
         domesticRdSap: 'ACTIVE',
         nonDomesticSp3: 'ACTIVE',
         nonDomesticCc4: 'ACTIVE',
@@ -90,6 +91,7 @@ describe 'Acceptance::Assessor' do
                 contactDetails: valid_assessor_request[:contactDetails],
                 searchResultsComparisonPostcode: '',
                 qualifications: {
+                  domesticSap: 'ACTIVE',
                   domesticRdSap: 'ACTIVE',
                   nonDomesticSp3: 'ACTIVE',
                   nonDomesticCc4: 'ACTIVE',
@@ -218,6 +220,7 @@ describe 'Acceptance::Assessor' do
               searchResultsComparisonPostcode:
                 valid_assessor_request[:searchResultsComparisonPostcode],
               qualifications: {
+                domesticSap: 'ACTIVE',
                 domesticRdSap: 'ACTIVE',
                 nonDomesticSp3: 'ACTIVE',
                 nonDomesticCc4: 'ACTIVE',

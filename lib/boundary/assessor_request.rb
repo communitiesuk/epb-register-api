@@ -9,6 +9,7 @@ module Boundary
                 :email,
                 :telephone_number,
                 :search_results_comparison_postcode,
+                :domestic_sap_qualification,
                 :domestic_rd_sap_qualification,
                 :non_domestic_sp3_qualification,
                 :non_domestic_cc4_qualification,
@@ -29,6 +30,8 @@ module Boundary
       @registered_by_id = registered_by_id
       @search_results_comparison_postcode =
         body[:search_results_comparison_postcode]
+      @domestic_sap_qualification =
+          body.dig(:qualifications, :domestic_sap)
       @domestic_rd_sap_qualification =
         body.dig(:qualifications, :domestic_rd_sap)
       @non_domestic_sp3_qualification =

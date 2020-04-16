@@ -15,6 +15,7 @@ module Domain
       registered_by_id,
       registered_by_name,
       search_results_comparison_postcode,
+      domestic_sap_qualification,
       domestic_rd_sap_qualification,
       non_domestic_sp3_qualification,
       non_domestic_cc4_qualification,
@@ -33,6 +34,7 @@ module Domain
       @registered_by_id = registered_by_id
       @registered_by_name = registered_by_name
       @search_results_comparison_postcode = search_results_comparison_postcode
+      @domestic_sap_qualification = domestic_sap_qualification
       @domestic_rd_sap_qualification = domestic_rd_sap_qualification
       @non_domestic_sp3_qualification = non_domestic_sp3_qualification
       @non_domestic_cc4_qualification = non_domestic_cc4_qualification
@@ -59,6 +61,8 @@ module Domain
         contact_details: {},
         search_results_comparison_postcode: @search_results_comparison_postcode,
         qualifications: {
+          domestic_sap:
+            @domestic_sap_qualification == 'ACTIVE' ? 'ACTIVE' : 'INACTIVE',
           domestic_rd_sap:
             @domestic_rd_sap_qualification == 'ACTIVE' ? 'ACTIVE' : 'INACTIVE',
           non_domestic_sp3:
@@ -103,6 +107,7 @@ module Domain
         telephone_number: @telephone_number,
         registered_by: @registered_by_id,
         search_results_comparison_postcode: @search_results_comparison_postcode,
+        domestic_sap_qualification: @domestic_sap_qualification,
         domestic_rd_sap_qualification: @domestic_rd_sap_qualification,
         non_domestic_sp3_qualification: @non_domestic_sp3_qualification,
         non_domestic_cc4_qualification: @non_domestic_cc4_qualification,

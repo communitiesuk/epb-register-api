@@ -9,6 +9,7 @@ module Gateway
     TELEPHONE_NUMBER_COLUMN = :telephone_number
     SEARCH_RESULTS_COMPARISON_POSTCODE_COLUMN =
       :search_results_comparison_postcode
+    DOMESTIC_SAP_COLUMN = :domestic_sap_qualification
     DOMESTIC_RD_SAP_COLUMN = :domestic_rd_sap_qualification
     NON_DOMESTIC_SP3_COLUMN = :non_domestic_sp3_qualification
     NON_DOMESTIC_CC4_COLUMN = :non_domestic_cc4_qualification
@@ -35,6 +36,7 @@ module Gateway
         row[REGISTERED_BY_COLUMN.to_s],
         scheme_name,
         row[SEARCH_RESULTS_COMPARISON_POSTCODE_COLUMN.to_s],
+        row[DOMESTIC_SAP_COLUMN.to_s],
         row[DOMESTIC_RD_SAP_COLUMN.to_s],
         row[NON_DOMESTIC_SP3_COLUMN.to_s],
         row[NON_DOMESTIC_CC4_COLUMN.to_s],
@@ -50,6 +52,8 @@ module Gateway
 
     def qualification_to_column(qualification)
       case qualification
+      when 'domesticSap'
+        DOMESTIC_SAP_COLUMN
       when 'domesticRdSap'
         DOMESTIC_RD_SAP_COLUMN
       when 'nonDomesticSp3'
@@ -129,10 +133,11 @@ module Gateway
           "SELECT
           first_name, last_name, middle_names, date_of_birth, registered_by,
            scheme_assessor_id, telephone_number, email, c.name AS scheme_name,
-           search_results_comparison_postcode, domestic_rd_sap_qualification,
-           non_domestic_sp3_qualification, non_domestic_cc4_qualification,
-           non_domestic_dec_qualification, non_domestic_nos3_qualification,
-           non_domestic_nos4_qualification, non_domestic_nos5_qualification,
+           search_results_comparison_postcode, domestic_sap_qualification,
+           domestic_rd_sap_qualification, non_domestic_sp3_qualification,
+           non_domestic_cc4_qualification, non_domestic_dec_qualification,
+           non_domestic_nos3_qualification, non_domestic_nos4_qualification,
+           non_domestic_nos5_qualification,
             (
               sqrt(abs(POWER(69.1 * (a.latitude - $1 ), 2) +
               POWER(69.1 * (a.longitude - $2) * cos( $1 / 57.3), 2)))
@@ -168,10 +173,11 @@ module Gateway
         'SELECT
           first_name, last_name, middle_names, date_of_birth, registered_by,
           scheme_assessor_id, telephone_number, email, b.name AS scheme_name,
-          search_results_comparison_postcode, domestic_rd_sap_qualification,
-          non_domestic_sp3_qualification, non_domestic_cc4_qualification,
-          non_domestic_dec_qualification, non_domestic_nos3_qualification,
-          non_domestic_nos4_qualification, non_domestic_nos5_qualification
+          search_results_comparison_postcode, domestic_sap_qualification,
+          domestic_rd_sap_qualification, non_domestic_sp3_qualification,
+          non_domestic_cc4_qualification, non_domestic_dec_qualification,
+          non_domestic_nos3_qualification, non_domestic_nos4_qualification,
+          non_domestic_nos5_qualification
 
         FROM assessors a
         LEFT JOIN schemes b ON(a.registered_by = b.scheme_id)

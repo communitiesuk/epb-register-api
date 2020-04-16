@@ -108,6 +108,7 @@ describe 'Acceptance::AssessorList' do
             },
             'searchResultsComparisonPostcode' => '',
             'qualifications' => {
+              'domesticSap' => 'INACTIVE',
               'domesticRdSap' => 'ACTIVE',
               'nonDomesticSp3' => 'INACTIVE',
               'nonDomesticCc4' => 'INACTIVE',
@@ -149,6 +150,7 @@ describe 'Acceptance::AssessorList' do
             },
             'searchResultsComparisonPostcode' => '',
             'qualifications' => {
+              'domesticSap' => 'INACTIVE',
               'domesticRdSap' => 'ACTIVE',
               'nonDomesticSp3' => 'INACTIVE',
               'nonDomesticCc4' => 'INACTIVE',
@@ -172,6 +174,7 @@ describe 'Acceptance::AssessorList' do
             },
             'searchResultsComparisonPostcode' => '',
             'qualifications' => {
+              'domesticSap' => 'INACTIVE',
               'domesticRdSap' => 'ACTIVE',
               'nonDomesticSp3' => 'INACTIVE',
               'nonDomesticCc4' => 'INACTIVE',

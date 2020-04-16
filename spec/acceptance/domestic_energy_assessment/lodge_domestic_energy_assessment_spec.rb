@@ -312,6 +312,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
             'lastName' => 'Person',
             'middleNames' => 'Muddle',
             'qualifications' => {
+              'domesticSap' => 'INACTIVE',
               'domesticRdSap' => 'ACTIVE',
               'nonDomesticCc4' => 'INACTIVE',
               'nonDomesticSp3' => 'INACTIVE',
