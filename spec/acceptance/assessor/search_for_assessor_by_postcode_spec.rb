@@ -353,12 +353,12 @@ describe 'Acceptance::SearchForAssessor' do
         response_json = JSON.parse(response.body)
         expect(response_json['data']['assessors'].length).to eq(1)
         expect(
-            response_json['data']['assessors'].first['schemeAssessorId']
+          response_json['data']['assessors'].first['schemeAssessorId']
         ).to eq('SAP_ASSESSOR')
         expect(
-            response_json['data']['assessors'].first['qualifications'][
-                'domesticSap'
-            ]
+          response_json['data']['assessors'].first['qualifications'][
+            'domesticSap'
+          ]
         ).to eq('ACTIVE')
       end
     end

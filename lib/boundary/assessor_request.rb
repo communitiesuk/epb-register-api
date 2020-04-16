@@ -30,8 +30,7 @@ module Boundary
       @registered_by_id = registered_by_id
       @search_results_comparison_postcode =
         body[:search_results_comparison_postcode]
-      @domestic_sap_qualification =
-          body.dig(:qualifications, :domestic_sap)
+      @domestic_sap_qualification = body.dig(:qualifications, :domestic_sap)
       @domestic_rd_sap_qualification =
         body.dig(:qualifications, :domestic_rd_sap)
       @non_domestic_sp3_qualification =
