@@ -74,14 +74,11 @@ module Gateway
     end
 
     def qualification_columns_to_sql(columns)
-      first_selectors =
-        columns[0...-1].map do |c|
-          "#{Assessor.connection.quote_column_name(c)} = 'ACTIVE' OR "
+      selectors =
+        columns.map do |c|
+          "#{Assessor.connection.quote_column_name(c)} = 'ACTIVE'"
         end
-      last_selector =
-        "#{Assessor.connection.quote_column_name(columns.last)} = 'ACTIVE' "
-      query = first_selectors.join
-      query + last_selector
+      selectors.join(' OR ')
     end
 
     def fetch(scheme_assessor_id)
