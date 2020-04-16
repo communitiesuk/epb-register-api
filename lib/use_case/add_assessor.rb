@@ -44,14 +44,13 @@ module UseCase
           add_assessor_request.non_domestic_sp3_qualification,
           add_assessor_request.non_domestic_cc4_qualification,
           add_assessor_request.non_domestic_dec_qualification,
-          add_assessor_request.non_domestic_nos3_qualification
+          add_assessor_request.non_domestic_nos3_qualification,
+          add_assessor_request.non_domestic_nos4_qualification
         )
 
       @assessors_gateway.update(assessor)
 
-      {
-        assessor_was_newly_created: (existing_assessor.nil?), assessor: assessor
-      }
+      { assessor_was_newly_created: existing_assessor.nil?, assessor: assessor }
     end
   end
 end

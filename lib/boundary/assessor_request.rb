@@ -13,7 +13,8 @@ module Boundary
                 :non_domestic_sp3_qualification,
                 :non_domestic_cc4_qualification,
                 :non_domestic_dec_qualification,
-                :non_domestic_nos3_qualification
+                :non_domestic_nos3_qualification,
+                :non_domestic_nos4_qualification
 
     def initialize(body, scheme_assessor_id, registered_by_id)
       @scheme_assessor_id = scheme_assessor_id
@@ -37,6 +38,8 @@ module Boundary
         body.dig(:qualifications, :non_domestic_dec)
       @non_domestic_nos3_qualification =
         body.dig(:qualifications, :non_domestic_nos3)
+      @non_domestic_nos4_qualification =
+        body.dig(:qualifications, :non_domestic_nos4)
     end
   end
 end

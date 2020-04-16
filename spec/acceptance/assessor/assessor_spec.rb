@@ -17,7 +17,8 @@ describe 'Acceptance::Assessor' do
         nonDomesticSp3: 'ACTIVE',
         nonDomesticCc4: 'ACTIVE',
         nonDomesticDec: 'ACTIVE',
-        nonDomesticNos3: 'ACTIVE'
+        nonDomesticNos3: 'ACTIVE',
+        nonDomesticNos4: 'ACTIVE'
       }
     }
   end
@@ -92,7 +93,8 @@ describe 'Acceptance::Assessor' do
                   nonDomesticSp3: 'ACTIVE',
                   nonDomesticCc4: 'ACTIVE',
                   nonDomesticDec: 'ACTIVE',
-                  nonDomesticNos3: 'ACTIVE'
+                  nonDomesticNos3: 'ACTIVE',
+                  nonDomesticNos4: 'ACTIVE'
                 }
               },
               meta: {}
@@ -218,7 +220,8 @@ describe 'Acceptance::Assessor' do
                 nonDomesticSp3: 'ACTIVE',
                 nonDomesticCc4: 'ACTIVE',
                 nonDomesticDec: 'ACTIVE',
-                nonDomesticNos3: 'ACTIVE'
+                nonDomesticNos3: 'ACTIVE',
+                nonDomesticNos4: 'ACTIVE'
               },
               contactDetails: {
                 email: 'person@person.com', telephoneNumber: '010199991010101'

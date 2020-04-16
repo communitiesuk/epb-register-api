@@ -14,6 +14,7 @@ module Gateway
     NON_DOMESTIC_CC4_COLUMN = :non_domestic_cc4_qualification
     NON_DOMESTIC_DEC_COLUMN = :non_domestic_dec_qualification
     NON_DOMESTIC_NOS3_COLUMN = :non_domestic_nos3_qualification
+    NON_DOMESTIC_NOS4_COLUMN = :non_domestic_nos4_qualification
     REGISTERED_BY_COLUMN = :registered_by
 
     def row_to_assessor_domain(row)
@@ -37,7 +38,8 @@ module Gateway
         row[NON_DOMESTIC_SP3_COLUMN.to_s],
         row[NON_DOMESTIC_CC4_COLUMN.to_s],
         row[NON_DOMESTIC_DEC_COLUMN.to_s],
-        row[NON_DOMESTIC_NOS3_COLUMN.to_s]
+        row[NON_DOMESTIC_NOS3_COLUMN.to_s],
+        row[NON_DOMESTIC_NOS4_COLUMN.to_s]
       )
     end
 
@@ -56,14 +58,20 @@ module Gateway
         NON_DOMESTIC_DEC_COLUMN
       when 'nonDomesticNos3'
         NON_DOMESTIC_NOS3_COLUMN
+      when 'nonDomesticNos4'
+        NON_DOMESTIC_NOS4_COLUMN
       else
         raise ArgumentError, 'Unrecognised qualification type'
       end
     end
 
     def qualification_columns_to_sql(columns)
-      first_selectors = columns[0...-1].map { |c| "#{Assessor.connection.quote_column_name(c)} = 'ACTIVE' OR " }
-      last_selector = "#{Assessor.connection.quote_column_name(columns.last)} = 'ACTIVE' "
+      first_selectors =
+        columns[0...-1].map do |c|
+          "#{Assessor.connection.quote_column_name(c)} = 'ACTIVE' OR "
+        end
+      last_selector =
+        "#{Assessor.connection.quote_column_name(columns.last)} = 'ACTIVE' "
       query = first_selectors.join
       query + last_selector
     end
@@ -119,7 +127,7 @@ module Gateway
            scheme_assessor_id, telephone_number, email, c.name AS scheme_name,
            search_results_comparison_postcode, domestic_rd_sap_qualification,
            non_domestic_sp3_qualification, non_domestic_cc4_qualification,
-           non_domestic_dec_qualification, non_domestic_nos3_qualification,
+           non_domestic_dec_qualification, non_domestic_nos3_qualification, non_domestic_nos4_qualification,
             (
               sqrt(abs(POWER(69.1 * (a.latitude - $1 ), 2) +
               POWER(69.1 * (a.longitude - $2) * cos( $1 / 57.3), 2)))
@@ -129,8 +137,8 @@ module Gateway
           LEFT JOIN schemes c ON(b.registered_by = c.scheme_id)
           WHERE
             #{
-              qualification_selector
-            }
+            qualification_selector
+          }
             AND a.latitude BETWEEN ($1 - 1) AND ($1 + 1)
             AND a.longitude BETWEEN ($2 - 1) AND ($2 + 1)
           ORDER BY distance LIMIT $3",
@@ -157,7 +165,7 @@ module Gateway
           scheme_assessor_id, telephone_number, email, b.name AS scheme_name,
           search_results_comparison_postcode, domestic_rd_sap_qualification,
           non_domestic_sp3_qualification, non_domestic_cc4_qualification,
-          non_domestic_dec_qualification, non_domestic_nos3_qualification
+          non_domestic_dec_qualification, non_domestic_nos3_qualification, non_domestic_nos4_qualification
 
         FROM assessors a
         LEFT JOIN schemes b ON(a.registered_by = b.scheme_id)
