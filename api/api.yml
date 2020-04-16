@@ -709,7 +709,7 @@ paths:
           required: true
           description: 'The ID of the plan being updated'
           schema:
-            $ref: '#/components/schemas/GreanDealPlanId'
+            $ref: '#/components/schemas/GreenDealPlanId'
       requestBody:
         description: Green Deal disclosure data
         required: true
@@ -750,7 +750,7 @@ paths:
           required: true
           description: 'The ID of the plan being deleted'
           schema:
-            $ref: '#/components/schemas/GreanDealPlanId'
+            $ref: '#/components/schemas/GreenDealPlanId'
       responses:
         '204':
           description: Green Deal disclosure successfully deleted
@@ -1127,7 +1127,7 @@ components:
         environmentalEfficiencyRating:
           type: string
 
-    GreanDealPlanId:
+    GreenDealPlanId:
       type: string
       maxLength: 12
       example: ABC123456DEF
@@ -1135,8 +1135,8 @@ components:
     GreenDealPlan:
       type: object
       properties:
-        GreanDealPlanId:
-          $ref: '#/components/schemas/GreanDealPlanId'
+        GreenDealPlanId:
+          $ref: '#/components/schemas/GreenDealPlanId'
         startDate:
           type: string
           format: date
