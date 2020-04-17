@@ -649,7 +649,7 @@ paths:
         '403':
           description: Forbidden
         '404':
-          description: Assessment witht his ID not found
+          description: Assessment with this ID not found
         '410':
           description: Assessment with this ID exists but is marked "Not for issue"
         '500':
