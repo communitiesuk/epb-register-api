@@ -1295,30 +1295,30 @@ components:
 
     GreenDealSaving:
       type: object
-        properties:
-          sequence:
-            type: integer
-            example: 0
-          fuelCode:
-            description: 'Code which indicates the type of heating fuel'
-            type: string
-            example: 'LPG'
-          fuelSaving:
-            description: 'Total kWh saving for the fuel (negative if increase),
-                          allowing for in-use factors'
-            type: number
-            minimum: -10000000
-            maximum: 10000000
-          standingChargeFraction:
-            description: 'Fraction of standing charge for the fuel applicable to
-                          the saving, negative if standing charge applies after
-                          improvements but not before, positive if standing
-                          charge applies before improvements but not after,
-                          zero otherwise'
-            type: number
-            minimum: -1
-            maximum: 1
-            example: -0.3
+      properties:
+        sequence:
+          type: integer
+          example: 0
+        fuelCode:
+          description: 'Code which indicates the type of heating fuel'
+          type: string
+          example: 'LPG'
+        fuelSaving:
+          description: 'Total kWh saving for the fuel (negative if increase),
+                        allowing for in-use factors'
+          type: number
+          minimum: -10000000
+          maximum: 10000000
+        standingChargeFraction:
+          description: 'Fraction of standing charge for the fuel applicable to
+                        the saving, negative if standing charge applies after
+                        improvements but not before, positive if standing
+                        charge applies before improvements but not after,
+                        zero otherwise'
+          type: number
+          minimum: -1
+          maximum: 1
+          example: -0.3
 
     # Schemes
     Scheme:
