@@ -1089,19 +1089,29 @@ components:
           type: string
           example: 'Owner-occupied'
         totalFloorArea:
-          type: number
-          example: 123.5
-        secondaryHeating:
-          $ref: '#/components/schemas/PropertyFeatureSummary'
+          type: string
+          example: '123.5 square metres'
+        cavityWallInsulation:
+          type: boolean
+          example: false
+        loftInsulation:
+          type: boolean
+          example: true
         spaceHeating:
-          type: number
-          example: 25
+          type: string
+          example: 'Gas-fired central heating'
         waterHeating:
-          type: number
-          example: 30
+          type: string
+          example: 'Electrical immersion heater'
+        secondaryHeating:
+          type: string
+          example: 'Electric bar heater'
         energyEfficiency:
-          type: number
-          example: 3
+          $ref: '#/components/schemas/RHIEnergyEfficiency'
+
+    RHIEnergyEfficiency:
+      type: object
+      properties:
         currentRating:
           type: number
           example: 64
@@ -1114,22 +1124,6 @@ components:
         potentialBand:
           type: string
           example: C
-        cavityWallInsulationRecommendation:
-          type: string
-          example: 'Cavity wall insulation'
-        loftInsulationRecommendation:
-          type: string
-          example: 'Increase loft insulation to 270 mm'
-
-    PropertyFeatureSummary:
-      type: object
-      properties:
-        description:
-          type: string
-        energyEfficiencyRating:
-          type: string
-        environmentalEfficiencyRating:
-          type: string
 
     GreenDealPlanId:
       description: 'Green Deal plan ID - created by the Central Charge Database
