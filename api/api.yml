@@ -1132,6 +1132,8 @@ components:
           type: string
 
     GreenDealPlanId:
+      description: 'Green Deal plan ID - created by the Central Charge Database
+                    (GDCC) when the plan is set up'
       type: string
       maxLength: 12
       example: ABC123456DEF
@@ -1142,23 +1144,41 @@ components:
         GreenDealPlanId:
           $ref: '#/components/schemas/GreenDealPlanId'
         startDate:
+          description: The date the plan went live
           type: string
           format: date
           example: '2020-01-30'
         endDate:
+          description: The date the plan is expected to end
           type: string
           format: date
           example: '2030-02-28'
         providerDetails:
+          description: Details relating to the provider of the plan
           $ref: '#/components/schemas/GreenDealProvider'
         interest:
           $ref: '#/components/schemas/GreenDealInterest'
         chargeUplift:
           $ref: '#/components/schemas/GreenDealChargeUplift'
         ccaRegulated:
+          description: 'Whether the Green Deal plan is regulated under the
+                        Consumer Credit Act'
           type: boolean
           example: true
         structureChanged:
+          description: 'Whether the provider knows or has reasonable cause to
+                        believe that an alteration has been made to the Green
+                        Deal property which, had it existed when the estimated
+                        first year savings were calculated, would have affected
+                        that calculation materially'
+          type: boolean
+          example: false
+        measuresRemoved:
+          description: 'Whether the provider knows or has reasonable cause to
+                        believe that an improvement installed at the Green Deal
+                        property under a green deal plan has been removed from
+                        the property before the end of the improvement-specific
+                        payment period'
           type: boolean
           example: false
         measures:
@@ -1169,27 +1189,46 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/GreenDealCharge'
+        savings:
+          type: array
+          items:
+            $ref: '#/components/schemas/GreenDealSaving'
 
     GreenDealProvider:
       type: object
       properties:
         name:
+          description: 'Name of the provider organisation responsible for the
+                        Green Deal plan'
           type: string
+          maxLength: 400
           example: 'The Bank'
         telephone:
+          description: 'Phone number of the provider organisation responsible
+                        for the Green Deal plan'
           type: string
+          maxLength: 100
           example: '0800 0000000'
         email:
+          description: 'Email address of the provider organisation responsible
+                        for the Green Deal plan'
           type: string
+          maxLength: 100
           example: 'lender@example.com'
 
     GreenDealInterest:
       type: object
       properties:
         rate:
+          description: 'The interest rate (APR) on the Green Deal finance taken
+                        out for the Green Deal plan'
           type: number
+          minimum: 0
+          maximum: 10000
           example: 12.3
         fixed:
+          description: 'Whether the interest rate on the Green Deal plan is
+                        fixed over the lifetime of the plan'
           type: boolean
           example: true
 
@@ -1197,9 +1236,16 @@ components:
       type: object
       properties:
         amount:
+          description: 'The percentage uplift in the Green Deal daily charge,
+                        where applicable, otherwise zero'
           type: number
-          example: 12.3
+          minimum: 0
+          maximum: 1000
+          example: 1.25
         date:
+          description: 'The date when the Green Deal daily charge uplift takes
+                        effect, where an annual interest uplift is included as a
+                        term of the Green Deal plan'
           type: string
           format: date
           example: '2025-03-29'
@@ -1211,12 +1257,18 @@ components:
           type: integer
           example: 0
         measureType:
+          description: 'The measure type of the specific measure installed under
+                        the Green Deal plan'
           type: string
           example: 'Loft insulation'
         product:
+          description: 'The product name of the specific measure installed under
+                        the Green Deal plan'
           type: string
           example: 'WarmHome lagging stuff (TM)'
         repaidDate:
+          description: 'Date the measure will be paid off under the Green Deal
+                        plan payment schedule'
           type: string
           format: date
           example: '2025-03-29'
@@ -1228,16 +1280,51 @@ components:
           type: integer
           example: 0
         startDate:
+          description: 'The start date at which the specified daily charge
+                        starts taking effect'
           type: string
           format: date
           example: '2020-03-29'
         endDate:
+          description: 'The end date at which the specified daily charge stops
+                        taking effect'
           type: string
           format: date
           example: '2030-03-29'
         dailyCharge:
+          description: 'The daily amount the customer will be paying through
+                        their electricity bill'
           type: number
+          minimum: 0
+          maximum: 10000
           example: '0.34'
+
+    GreenDealSaving:
+      type: object
+        properties:
+          sequence:
+            type: integer
+            example: 0
+          fuelCode:
+            description: 'Code which indicates the type of heating fuel'
+            type: string
+            example: 'LPG'
+          fuelSaving:
+            description: 'Total kWh saving for the fuel (negative if increase),
+                          allowing for in-use factors'
+            type: number
+            minimum: -10000000
+            maximum: 10000000
+          standingChargeFraction:
+            description: 'Fraction of standing charge for the fuel applicable to
+                          the saving, negative if standing charge applies after
+                          improvements but not before, positive if standing
+                          charge applies before improvements but not after,
+                          zero otherwise'
+            type: number
+            minimum: -1
+            maximum: 1
+            example: -0.3
 
     # Schemes
     Scheme:
