@@ -274,7 +274,9 @@ paths:
                 EITHER:
                 - a postcode (with optional building name or number)
                 OR
-                - a street AND town'
+                - a street AND town
+                OR
+                - a building reference number (UPRN or RRN)'
       security:
         - oauth:
             - 'search:addresses'
@@ -287,18 +289,27 @@ paths:
         - in: query
           name: buildingNameNumber
           description: The building name or number being searched for
+          example: '47'
           schema:
             type: string
         - in: query
           name: street
           description: The street of the address being searched for
+          example: 'High Road'
           schema:
             type: string
         - in: query
           name: town
           description: The city or town of the address being searched for
+          example: 'Woking'
           schema:
             $ref: '#/components/schemas/AddressTown'
+        - in: query
+          name: buildingReferenceNumber
+          description: A known UPRN or RRN to fetch a single address
+          example: 'UPRN-716375734512'
+          schema:
+            type: string
         - in: query
           name: addressType
           description: Domestic or commercial address
