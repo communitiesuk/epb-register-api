@@ -22,6 +22,9 @@
         <Home-Inspector>
             <Name>Name0</Name>
             <Contact-Address>
+              <Address-Line-1></Address-Line-1>
+              <Address-Line-2></Address-Line-2>
+              <Address-Line-3></Address-Line-3>
                 <Post-Town>Post-Town0</Post-Town>
                 <Postcode>A0 0AA</Postcode>
             </Contact-Address>
@@ -34,9 +37,9 @@
         </Home-Inspector>
         <Property>
             <Address>
-                <Address-Line-1>1 Some Street</CEPC:Address-Line-1>
-                <Post-Town>Post-Town1</CEPC:Post-Town>
-                <Postcode>A0 0AA</CEPC:Postcode>
+                <Address-Line-1>1 Some Street</Address-Line-1>
+                <Post-Town>Post-Town1</Post-Town>
+                <Postcode>A0 0AA</Postcode>
             </Address>
             <UPRN>UPRN-000000000000</UPRN>
         </Property>
