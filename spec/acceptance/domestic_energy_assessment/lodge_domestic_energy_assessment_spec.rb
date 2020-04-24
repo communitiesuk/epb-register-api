@@ -35,6 +35,10 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
     File.read File.join Dir.pwd, 'api/schemas/xml/examples/RdSAP-19.01.xml'
   end
 
+  let(:valid_sap_xml) do
+    File.read File.join Dir.pwd, 'api/schemas/xml/examples/SAP-17.11.xml'
+  end
+
   context 'when lodging a domestic energy assessment (post)' do
     it 'rejects an assessment with a schema that does not exist' do
       lodge_assessment(assessment_id: '0000-0000-0000-0000-0000', assessment_body: valid_rdsap_xml, accepted_responses: [400], schema_name: 'MakeupSAP-19.0')
@@ -487,6 +491,25 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
           )
 
           expect(response['data']['recommendedImprovements']).to eq([])
+        end
+      end
+
+      context 'when lodging with a different schema (SAP)' do
+        it 'returns status 500 as it isnt implemented' do
+          add_assessor(
+            scheme_id,
+            '%2F%2F%2F%2F000000',
+            valid_assessor_request_body
+          )
+
+          sap_doc = Nokogiri.XML valid_sap_xml
+          lodge_assessment(
+            assessment_id: '0000-0000-0000-0000-0000',
+            assessment_body: sap_doc.to_xml,
+            accepted_responses: [500],
+            auth_data: { scheme_ids: [scheme_id] },
+            schema_name: 'SAP-Schema-17.1'
+          )
         end
       end
     end

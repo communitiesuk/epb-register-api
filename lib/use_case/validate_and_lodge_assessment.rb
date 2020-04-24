@@ -60,6 +60,16 @@ module UseCase
             Identification_Number
             Membership_Number
           ]
+        },
+        'SAP-Schema-17.1' => {
+          path: 'api/schemas/xml/SAP-Schema-17.1/SAP/Templates/SAP-Report.xsd',
+          scheme_assessor_id_location: %i[
+            SAP_Report
+            Report_Header
+            Home_Inspector
+            Identification_Number
+            Certificate_Number
+          ]
         }
       }
 
