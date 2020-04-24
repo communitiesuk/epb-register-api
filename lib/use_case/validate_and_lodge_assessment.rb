@@ -26,7 +26,7 @@ module UseCase
 
       hash = xml_to_hash(xml)
 
-      unless validate_assessor_can_lodge(hash, scheme_ids)
+      unless validate_assessor_can_lodge(hash, scheme_ids, schema_details[:scheme_assessor_id_location])
         raise NotAuthorisedToLodgeAsThisScheme
       end
 
@@ -39,20 +39,16 @@ module UseCase
       Hash.from_xml(xml).deep_symbolize_keys
     end
 
-    def validate_assessor_can_lodge(hash, scheme_ids)
-      scheme_assessor_id =
-        hash[:RdSAP_Report][:Report_Header][:Energy_Assessor][
-          :Identification_Number
-        ][
-          :Membership_Number
-        ]
+    def validate_assessor_can_lodge(hash, scheme_ids, assessor_id_location)
+      scheme_assessor_id = hash.dig(*assessor_id_location)
       @check_assessor_belongs_to_scheme.execute(scheme_assessor_id, scheme_ids)
     end
 
     def schema_settings(schema_name)
       schema_list = {
         'RdSAP-Schema-19.0' => {
-          path: 'api/schemas/xml/RdSAP-Schema-19.0/RdSAP/Templates/RdSAP-Report.xsd'
+          path: 'api/schemas/xml/RdSAP-Schema-19.0/RdSAP/Templates/RdSAP-Report.xsd',
+          scheme_assessor_id_location: [:RdSAP_Report, :Report_Header, :Energy_Assessor, :Identification_Number, :Membership_Number]
         }
       }
 
