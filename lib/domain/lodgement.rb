@@ -1,6 +1,6 @@
 module Domain
   class Lodgement
-    @@schemas = {
+    SCHEMAS = {
       'RdSAP-Schema-19.0': {
         schema_path: 'api/schemas/xml/RdSAP-Schema-19.0/RdSAP/Templates/RdSAP-Report.xsd',
         scheme_assessor_id_location: %i[
@@ -10,7 +10,30 @@ module Domain
             Identification_Number
             Membership_Number
           ],
+        data: {
+          address: { path: [:RdSAP_Report, :Report_Header, :Property, :Address] },
+          address_line1: {
+            root: :address,
+            path: [:Address_Line_1]
+          },
+          address_line2: {
+            root: :address,
+            path: [:Address_Line_2]
+          },
+          address_line3: {
+            root: :address,
+            path: [:Address_Line_3]
+          },
+          town: {
+            root: :address,
+            path: [:Post_Town]
+          },
+          postcode: {
+            root: :address,
+            path: [:Postcode]
+          },
 
+        }
       },
       'SAP-Schema-17.1': {
         schema_path: 'api/schemas/xml/SAP-Schema-17.1/SAP/Templates/SAP-Report.xsd',
@@ -23,7 +46,7 @@ module Domain
           ],
 
       }
-    }.freeze
+    }
 
     def initialize(data, schema_name)
       @data = data
@@ -32,7 +55,7 @@ module Domain
     end
 
     def schema_exists
-      @@schemas.has_key?(@schema_name)
+      SCHEMAS.has_key?(@schema_name)
     end
 
     def get_data
@@ -40,11 +63,11 @@ module Domain
     end
 
     def schema_path
-      @@schemas[@schema_name][:schema_path]
+      SCHEMAS[@schema_name][:schema_path]
     end
 
     def scheme_assessor_id
-      @data.dig(*@@schemas[@schema_name][:scheme_assessor_id_location])
+      @data.dig(*SCHEMAS[@schema_name][:scheme_assessor_id_location])
     end
   end
 end
