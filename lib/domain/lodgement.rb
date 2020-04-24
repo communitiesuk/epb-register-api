@@ -59,6 +59,19 @@ module Domain
     end
 
     def get_data
+      data = {}
+
+      SCHEMAS[@schema_name][:data].each do |key, settings|
+        path = settings.key?(:root) ? SCHEMAS[@schema_name][:data][settings[:root]][:path] : []
+        path += settings[:path]
+
+        data[key] = @data.dig(*path)
+      end
+
+      data
+    end
+
+    def get_raw_data
       @data
     end
 

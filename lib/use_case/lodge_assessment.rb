@@ -12,8 +12,10 @@ module UseCase
       @assessors_gateway = assessors_gateway
     end
 
-    def execute(lodgement_domain, assessment_id)
-      body = lodgement_domain.get_data
+    def execute(lodgement, assessment_id)
+      body = lodgement.get_raw_data
+
+      new_body = lodgement.get_data
 
       raise AssessmentIdMismatch unless assessment_id == fetch(body, :RRN)
 
@@ -26,7 +28,7 @@ module UseCase
 
       address_summary =
         [
-          address[:Address_Line_1],
+          new_body[:address_line1],
           address[:Address_Line_2],
           address[:Address_Line_3],
           address[:Post_Town],
