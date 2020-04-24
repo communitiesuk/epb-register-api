@@ -31,24 +31,24 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
     }
   end
 
-  let(:valid_xml) do
+  let(:valid_rdsap_xml) do
     File.read File.join Dir.pwd, 'api/schemas/xml/examples/RdSAP-19.01.xml'
   end
 
   context 'when lodging a domestic energy assessment (post)' do
     it 'rejects an assessment with a schema that does not exist' do
-      lodge_assessment(assessment_id: '0000-0000-0000-0000-0000', assessment_body: valid_xml, accepted_responses: [400], schema_name: 'MakeupSAP-19.0')
+      lodge_assessment(assessment_id: '0000-0000-0000-0000-0000', assessment_body: valid_rdsap_xml, accepted_responses: [400], schema_name: 'MakeupSAP-19.0')
     end
 
     context 'when an assessor is not registered' do
       it 'returns status 400' do
-        lodge_assessment(assessment_id: '0000-0000-0000-0000-0000', assessment_body: valid_xml, accepted_responses: [400])
+        lodge_assessment(assessment_id: '0000-0000-0000-0000-0000', assessment_body: valid_rdsap_xml, accepted_responses: [400])
       end
 
       it 'returns status 400 with the correct error response' do
         response =
           JSON.parse(
-            lodge_assessment(assessment_id: '0000-0000-0000-0000-0000', assessment_body: valid_xml, accepted_responses: [400]).body
+            lodge_assessment(assessment_id: '0000-0000-0000-0000-0000', assessment_body: valid_rdsap_xml, accepted_responses: [400]).body
           )
 
         expect(response['errors'][0]['title']).to eq(
@@ -68,7 +68,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
 
         lodge_assessment(
           assessment_id: '0000-0000-0000-0000-0000',
-          assessment_body: valid_xml,
+          assessment_body: valid_rdsap_xml,
           accepted_responses: [400],
           auth_data: { scheme_ids: [scheme_id] }
         )
@@ -86,7 +86,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
           JSON.parse(
             lodge_assessment(
               assessment_id: '0000-0000-0000-0000-0000',
-              assessment_body: valid_xml,
+              assessment_body: valid_rdsap_xml,
               accepted_responses: [400],
               auth_data: { scheme_ids: [scheme_id] }
             )
@@ -118,7 +118,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
 
       lodge_assessment(
         assessment_id: '123-344',
-        assessment_body: valid_xml,
+        assessment_body: valid_rdsap_xml,
         accepted_responses: [403],
         auth_data: { scheme_ids: [different_scheme_id] }
       )
@@ -130,7 +130,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
 
       lodge_assessment(
         assessment_id: '0000-0000-0000-0000-0000',
-        assessment_body: valid_xml,
+        assessment_body: valid_rdsap_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] }
       )
@@ -143,7 +143,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
       response =
         lodge_assessment(
           assessment_id: '0000-0000-0000-0000-0000',
-          assessment_body: valid_xml,
+          assessment_body: valid_rdsap_xml,
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] }
         )
@@ -159,7 +159,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         JSON.parse(
           lodge_assessment(
             assessment_id: '0000-0000-0000-0000-0000',
-            assessment_body: valid_xml,
+            assessment_body: valid_rdsap_xml,
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] }
           )
@@ -178,7 +178,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         JSON.parse(
           lodge_assessment(
             assessment_id: '0000-0000-0000-0000-0000',
-            assessment_body: valid_xml,
+            assessment_body: valid_rdsap_xml,
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] }
           )
@@ -221,7 +221,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         JSON.parse(
           lodge_assessment(
             assessment_id: '0000-0000-0000-0000-0000',
-            assessment_body: valid_xml,
+            assessment_body: valid_rdsap_xml,
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] }
           )
@@ -234,7 +234,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
 
     context 'when saving an assessment' do
       let(:scheme_id) { add_scheme_and_get_id }
-      let(:doc) { Nokogiri.XML valid_xml }
+      let(:doc) { Nokogiri.XML valid_rdsap_xml }
       let(:response) do
         JSON.parse(fetch_assessment('1234-1234-1234-1234-1234').body)
       end
@@ -500,7 +500,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
           valid_assessor_request_body
         )
 
-        doc = Nokogiri.XML valid_xml
+        doc = Nokogiri.XML valid_rdsap_xml
 
         scheme_assessor_id = doc.at('Address')
         scheme_assessor_id.children = ''
@@ -516,7 +516,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
           valid_assessor_request_body
         )
 
-        doc = Nokogiri.XML valid_xml
+        doc = Nokogiri.XML valid_rdsap_xml
 
         scheme_assessor_id = doc.at('Address')
         scheme_assessor_id.children = '<Postcode>invalid</Postcode>'
@@ -539,7 +539,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
           valid_assessor_request_body
         )
 
-        doc = Nokogiri.XML valid_xml
+        doc = Nokogiri.XML valid_rdsap_xml
         sequence_one = doc.at('Sequence')
         sequence_one.children = '5'
 
