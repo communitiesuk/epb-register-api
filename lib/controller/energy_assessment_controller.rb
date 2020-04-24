@@ -120,34 +120,25 @@ module Controller
     end
 
     post '/api/assessments/:assessment_id', jwt_auth: %w[assessment:lodge] do
-      schema =
-        'api/schemas/xml/RdSAP-Schema-19.0/RdSAP/Templates/RdSAP-Report.xsd'
-      assessment_body = xml_request_body(schema)
-      lodge_assessment = @container.get_object(:lodge_assessment_use_case)
       sup = env[:jwt_auth].supplemental('scheme_ids')
+      validate_and_lodge_assessment = @container.get_object(:validate_and_lodge_assessment_use_case)
 
-      if scheme_is_authorised_to_lodge(sup, assessment_body)
-        result =
-          lodge_assessment.execute(
-            assessment_body,
-            params[:assessment_id],
-            request.env['CONTENT_TYPE']
-          )
+      assessment_id = params[:assessment_id]
+      xml = request.body.read.to_s
+      content_type = request.env['CONTENT_TYPE']
+      scheme_ids = sup
 
-        json_api_response(201, result.to_hash)
-      else
-        error_response(
-          403,
-          'UNAUTHORISED',
-          'Not authorised to lodge reports as this scheme'
-        )
-      end
+      result = validate_and_lodge_assessment.execute(assessment_id, xml, content_type, scheme_ids)
+      json_api_response(201, result.to_hash)
+
     rescue StandardError => e
       case e
-      when Helper::InvalidXml
+      when UseCase::ValidateAssessment::InvalidXml
         error_response(400, 'INVALID_REQUEST', e.message)
       when UseCase::CheckAssessorBelongsToScheme::AssessorNotFoundException
         error_response(400, 'IVALID_REQUEST', 'Assessor is not registered.')
+      when UseCase::ValidateAndLodgeAssessment::NotAuthorisedToLodgeAsThisScheme
+        error_response(403, 'UNAUTHORISED', 'Not authorised to lodge reports as this scheme')
       when UseCase::LodgeAssessment::AssessmentIdMismatch
         error_response(
           422,

@@ -54,13 +54,24 @@ class Container
     fetch_assessor_list_use_case =
       UseCase::FetchAssessorList.new(assessors_gateway, schemes_gateway)
 
+    validate_assessment_use_case =
+      UseCase::ValidateAssessment.new()
+
     lodge_assessment_use_case =
       UseCase::LodgeAssessment.new(
         domestic_energy_assessments_gateway,
         assessors_gateway
       )
+
     check_assessor_belongs_to_scheme_use_case =
       UseCase::CheckAssessorBelongsToScheme.new(assessors_gateway)
+
+    validate_and_lodge_assessment_use_case =
+      UseCase::ValidateAndLodgeAssessment.new(
+        validate_assessment_use_case,
+        lodge_assessment_use_case,
+        check_assessor_belongs_to_scheme_use_case
+      )
 
     @objects = {
       schemes_gateway: schemes_gateway,
@@ -83,7 +94,9 @@ class Container
         find_assessments_by_street_name_and_town_use_case,
       lodge_assessment_use_case: lodge_assessment_use_case,
       check_assessor_belongs_to_scheme_use_case:
-        check_assessor_belongs_to_scheme_use_case
+        check_assessor_belongs_to_scheme_use_case,
+      validate_assessment_use_case: validate_assessment_use_case,
+      validate_and_lodge_assessment_use_case: validate_and_lodge_assessment_use_case
     }
   end
 

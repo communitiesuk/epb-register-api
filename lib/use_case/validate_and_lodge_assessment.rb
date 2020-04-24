@@ -3,6 +3,7 @@ require 'active_support/core_ext/hash/conversions'
 module UseCase
   class ValidateAndLodgeAssessment
     class ValidationError < StandardError; end
+    class NotAuthorisedToLodgeAsThisScheme < StandardError; end
 
     def initialize(validate_lodgement_use_case, lodge_assessment_use_case, check_assessor_belongs_to_scheme)
       @validate_lodgement_use_case = validate_lodgement_use_case
@@ -17,9 +18,9 @@ module UseCase
 
       hash = xml_to_hash(xml)
 
-      validate_assessor_can_lodge(hash, scheme_ids)
+      raise NotAuthorisedToLodgeAsThisScheme unless validate_assessor_can_lodge(hash, scheme_ids)
 
-      @lodge_assessment_use_case.execute(hash, assessment_id)
+      @lodge_assessment_use_case.execute(hash, assessment_id, content_type)
     end
 
     private
