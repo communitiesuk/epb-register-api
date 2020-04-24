@@ -20,7 +20,7 @@ module UseCase
       schema_name = content_type.split('+')[1]
       schema_details = schema_settings(schema_name)
 
-      unless @validate_lodgement_use_case.execute(xml, schema_name)
+      unless @validate_lodgement_use_case.execute(xml, schema_details[:path])
         raise ValidationError
       end
 
@@ -52,7 +52,7 @@ module UseCase
     def schema_settings(schema_name)
       schema_list = {
         'RdSAP-Schema-19.0' => {
-          schema_location: ''
+          path: 'api/schemas/xml/RdSAP-Schema-19.0/RdSAP/Templates/RdSAP-Report.xsd'
         }
       }
 

@@ -9,7 +9,7 @@ describe UseCase::ValidateAssessment do
       valid_xml_response =
         validate_assessment.execute(
           valid_xml,
-          'application/xml+RdSAP-Schema-19.0'
+          'api/schemas/xml/RdSAP-Schema-19.0/RdSAP/Templates/RdSAP-Report.xsd'
         )
 
       expect(valid_xml_response).to eq(true)

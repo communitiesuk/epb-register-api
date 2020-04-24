@@ -2,10 +2,8 @@ module UseCase
   class ValidateAssessment
     class InvalidXml < StandardError; end
 
-    def execute(xml, schema_name)
-      schema =
-        'api/schemas/xml/RdSAP-Schema-19.0/RdSAP/Templates/RdSAP-Report.xsd'
-      assessment_body = validate_xml(xml, schema)
+    def execute(xml, schema_location)
+      assessment_body = validate_xml(xml, schema_location)
     end
 
     private
