@@ -6,7 +6,11 @@ describe UseCase::ValidateAssessment do
 
     it 'will return a boolean true when the XML is valid' do
       validate_assessment = described_class.new
-      valid_xml_response = validate_assessment.execute(valid_xml, 'application/xml+RdSAP-Schema-19.0')
+      valid_xml_response =
+        validate_assessment.execute(
+          valid_xml,
+          'application/xml+RdSAP-Schema-19.0'
+        )
 
       expect(valid_xml_response).to eq(true)
     end

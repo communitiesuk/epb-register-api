@@ -121,16 +121,22 @@ module Controller
 
     post '/api/assessments/:assessment_id', jwt_auth: %w[assessment:lodge] do
       sup = env[:jwt_auth].supplemental('scheme_ids')
-      validate_and_lodge_assessment = @container.get_object(:validate_and_lodge_assessment_use_case)
+      validate_and_lodge_assessment =
+        @container.get_object(:validate_and_lodge_assessment_use_case)
 
       assessment_id = params[:assessment_id]
       xml = request.body.read.to_s
       content_type = request.env['CONTENT_TYPE']
       scheme_ids = sup
 
-      result = validate_and_lodge_assessment.execute(assessment_id, xml, content_type, scheme_ids)
+      result =
+        validate_and_lodge_assessment.execute(
+          assessment_id,
+          xml,
+          content_type,
+          scheme_ids
+        )
       json_api_response(201, result.to_hash)
-
     rescue StandardError => e
       case e
       when UseCase::ValidateAssessment::InvalidXml
@@ -138,7 +144,11 @@ module Controller
       when UseCase::CheckAssessorBelongsToScheme::AssessorNotFoundException
         error_response(400, 'IVALID_REQUEST', 'Assessor is not registered.')
       when UseCase::ValidateAndLodgeAssessment::NotAuthorisedToLodgeAsThisScheme
-        error_response(403, 'UNAUTHORISED', 'Not authorised to lodge reports as this scheme')
+        error_response(
+          403,
+          'UNAUTHORISED',
+          'Not authorised to lodge reports as this scheme'
+        )
       when UseCase::LodgeAssessment::AssessmentIdMismatch
         error_response(
           422,

@@ -39,8 +39,18 @@ describe UseCase::ValidateAndLodgeAssessment do
       lodge_assessment_use_case = FakeLodgeAssessmentUseCase.new
       check_assessor_belongs_to_scheme = FakeCheckAssessorBelongsToScheme.new
 
-      use_case = described_class.new(validate_lodgement_use_case, lodge_assessment_use_case, check_assessor_belongs_to_scheme)
-      use_case.execute("0000-0000-0000-0000-0000", valid_xml, "application/xml+RdSAP-Schema-19.0", "1")
+      use_case =
+        described_class.new(
+          validate_lodgement_use_case,
+          lodge_assessment_use_case,
+          check_assessor_belongs_to_scheme
+        )
+      use_case.execute(
+        '0000-0000-0000-0000-0000',
+        valid_xml,
+        'application/xml+RdSAP-Schema-19.0',
+        '1'
+      )
 
       expect(validate_lodgement_use_case.is_called).to eq(true)
       expect(lodge_assessment_use_case.is_called).to eq(true)

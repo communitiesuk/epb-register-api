@@ -30,7 +30,7 @@ module Controller
           }
         }
       }
-    }
+    }.freeze
 
     def search_by_name(name)
       result =
