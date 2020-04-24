@@ -635,6 +635,8 @@ components:
           $ref: '#/components/schemas/AssessorQualificationStatus'
         nonDomesticNos4:
           $ref: '#/components/schemas/AssessorQualificationStatus'
+        nonDomesticNos5:
+          $ref: '#/components/schemas/AssessorQualificationStatus'
 
 
     AssessorQualificationStatus:
