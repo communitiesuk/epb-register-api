@@ -12,7 +12,9 @@ module UseCase
       @assessors_gateway = assessors_gateway
     end
 
-    def execute(body, assessment_id, _content_type)
+    def execute(lodgement_domain, assessment_id)
+      body = lodgement_domain.get_data
+
       raise AssessmentIdMismatch unless assessment_id == fetch(body, :RRN)
 
       if @domestic_energy_assessments_gateway.fetch assessment_id

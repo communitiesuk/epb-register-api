@@ -48,7 +48,7 @@ describe UseCase::ValidateAndLodgeAssessment do
       use_case.execute(
         '0000-0000-0000-0000-0000',
         valid_xml,
-        'application/xml+RdSAP-Schema-19.0',
+        'RdSAP-Schema-19.0',
         '1'
       )
 

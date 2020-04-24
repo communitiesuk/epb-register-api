@@ -126,7 +126,7 @@ module Controller
 
       assessment_id = params[:assessment_id]
       xml = request.body.read.to_s
-      content_type = request.env['CONTENT_TYPE']
+      content_type = request.env['CONTENT_TYPE'].split('+')[1]
       scheme_ids = sup
 
       result =
