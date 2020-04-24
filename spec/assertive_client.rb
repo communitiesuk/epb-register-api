@@ -145,7 +145,6 @@ def lodge_assessment(
   json: false,
   schema_name: 'RdSAP-Schema-19.0'
 )
-  puts authenticate
   header 'Content-type', 'application/xml+' + schema_name
   assertive_post(
     "api/assessments/#{assessment_id}",
