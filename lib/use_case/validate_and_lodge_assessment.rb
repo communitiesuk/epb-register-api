@@ -4,6 +4,7 @@ module UseCase
   class ValidateAndLodgeAssessment
     class ValidationError < StandardError; end
     class NotAuthorisedToLodgeAsThisScheme < StandardError; end
+    class SchemaNotSupported < StandardError; end
 
     def initialize(
       validate_lodgement_use_case,
@@ -16,7 +17,10 @@ module UseCase
     end
 
     def execute(assessment_id, xml, content_type, scheme_ids)
-      unless @validate_lodgement_use_case.execute(xml, content_type)
+      schema_name = content_type.split('+')[1]
+      schema_details = schema_settings(schema_name)
+
+      unless @validate_lodgement_use_case.execute(xml, schema_name)
         raise ValidationError
       end
 
@@ -43,6 +47,18 @@ module UseCase
           :Membership_Number
         ]
       @check_assessor_belongs_to_scheme.execute(scheme_assessor_id, scheme_ids)
+    end
+
+    def schema_settings(schema_name)
+      schema_list = {
+        'RdSAP-Schema-19.0' => {
+          schema_location: ''
+        }
+      }
+
+      raise SchemaNotSupported unless schema_list.has_key?(schema_name)
+
+      schema_list[schema_name]
     end
   end
 end
