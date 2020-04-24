@@ -38,13 +38,13 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
   context 'when lodging a domestic energy assessment (post)' do
     context 'when an assessor is not registered' do
       it 'returns status 400' do
-        lodge_assessment('0000-0000-0000-0000-0000', valid_xml, [400])
+        lodge_assessment(assessment_id: '0000-0000-0000-0000-0000', assessment_body: valid_xml, accepted_responses: [400])
       end
 
       it 'returns status 400 with the correct error response' do
         response =
           JSON.parse(
-            lodge_assessment('0000-0000-0000-0000-0000', valid_xml, [400]).body
+            lodge_assessment(assessment_id: '0000-0000-0000-0000-0000', assessment_body: valid_xml, accepted_responses: [400]).body
           )
 
         expect(response['errors'][0]['title']).to eq(
@@ -63,11 +63,10 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         )
 
         lodge_assessment(
-          '0000-0000-0000-0000-0000',
-          valid_xml,
-          [400],
-          true,
-          scheme_ids: [scheme_id]
+          assessment_id: '0000-0000-0000-0000-0000',
+          assessment_body: valid_xml,
+          accepted_responses: [400],
+          auth_data: { scheme_ids: [scheme_id] }
         )
       end
 
@@ -82,11 +81,10 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         response =
           JSON.parse(
             lodge_assessment(
-              '0000-0000-0000-0000-0000',
-              valid_xml,
-              [400],
-              true,
-              scheme_ids: [scheme_id]
+              assessment_id: '0000-0000-0000-0000-0000',
+              assessment_body: valid_xml,
+              accepted_responses: [400],
+              auth_data: { scheme_ids: [scheme_id] }
             )
               .body
           )
@@ -96,17 +94,16 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
     end
 
     it 'returns 401 with no authentication' do
-      lodge_assessment('0000-0000-0000-0000-0000', 'body', [401], false)
+      lodge_assessment(assessment_id: '0000-0000-0000-0000-0000', assessment_body: 'body', accepted_responses: [401], authenticate: false)
     end
 
     it 'returns 403 with incorrect scopes' do
       lodge_assessment(
-        '0000-0000-0000-0000-0000',
-        'body',
-        [403],
-        true,
-        {},
-        %w[wrong:scope]
+        assessment_id: '0000-0000-0000-0000-0000',
+        assessment_body: 'body',
+        accepted_responses: [403],
+        auth_data: { scheme_ids: {}},
+        scopes: %w[wrong:scope]
       )
     end
 
@@ -116,11 +113,10 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
       different_scheme_id = add_scheme_and_get_id('BADSCHEME')
 
       lodge_assessment(
-        '123-344',
-        valid_xml,
-        [403],
-        true,
-        scheme_ids: [different_scheme_id]
+        assessment_id: '123-344',
+        assessment_body: valid_xml,
+        accepted_responses: [403],
+        auth_data: { scheme_ids: [different_scheme_id] }
       )
     end
 
@@ -129,11 +125,10 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
       add_assessor(scheme_id, 'Membership-Number0', valid_assessor_request_body)
 
       lodge_assessment(
-        '0000-0000-0000-0000-0000',
-        valid_xml,
-        [201],
-        true,
-        scheme_ids: [scheme_id]
+        assessment_id: '0000-0000-0000-0000-0000',
+        assessment_body: valid_xml,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] }
       )
     end
 
@@ -143,11 +138,10 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
 
       response =
         lodge_assessment(
-          '0000-0000-0000-0000-0000',
-          valid_xml,
-          [201],
-          true,
-          scheme_ids: [scheme_id]
+          assessment_id: '0000-0000-0000-0000-0000',
+          assessment_body: valid_xml,
+          accepted_responses: [201],
+          auth_data: { scheme_ids: [scheme_id] }
         )
 
       expect(response.headers['Content-Type']).to eq('application/json')
@@ -160,11 +154,10 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
       response =
         JSON.parse(
           lodge_assessment(
-            '0000-0000-0000-0000-0000',
-            valid_xml,
-            [201],
-            true,
-            scheme_ids: [scheme_id]
+            assessment_id: '0000-0000-0000-0000-0000',
+            assessment_body: valid_xml,
+            accepted_responses: [201],
+            auth_data: { scheme_ids: [scheme_id] }
           )
             .body,
           symbolize_names: true
@@ -180,11 +173,10 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
       response =
         JSON.parse(
           lodge_assessment(
-            '0000-0000-0000-0000-0000',
-            valid_xml,
-            [201],
-            true,
-            scheme_ids: [scheme_id]
+            assessment_id: '0000-0000-0000-0000-0000',
+            assessment_body: valid_xml,
+            accepted_responses: [201],
+            auth_data: { scheme_ids: [scheme_id] }
           )
             .body,
           symbolize_names: true
@@ -224,11 +216,10 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
       response =
         JSON.parse(
           lodge_assessment(
-            '0000-0000-0000-0000-0000',
-            valid_xml,
-            [201],
-            true,
-            scheme_ids: [scheme_id]
+            assessment_id: '0000-0000-0000-0000-0000',
+            assessment_body: valid_xml,
+            accepted_responses: [201],
+            auth_data: { scheme_ids: [scheme_id] }
           )
             .body,
           symbolize_names: true
@@ -257,11 +248,10 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
       context 'when an assessment id does not match' do
         it 'returns status 422' do
           lodge_assessment(
-            '123-456',
-            doc.to_xml,
-            [422],
-            true,
-            scheme_ids: [scheme_id]
+            assessment_id: '123-456',
+            assessment_body: doc.to_xml,
+            accepted_responses: [422],
+            auth_data: { scheme_ids: [scheme_id] }
           )
         end
       end
@@ -269,30 +259,27 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
       context 'when an assessment already exists with the same assessment id' do
         it 'returns status 409' do
           lodge_assessment(
-            '1234-1234-1234-1234-1234',
-            doc.to_xml,
-            [201],
-            true,
-            scheme_ids: [scheme_id]
+            assessment_id: '1234-1234-1234-1234-1234',
+            assessment_body: doc.to_xml,
+            accepted_responses: [201],
+            auth_data: { scheme_ids: [scheme_id] }
           )
 
           lodge_assessment(
-            '1234-1234-1234-1234-1234',
-            doc.to_xml,
-            [409],
-            true,
-            scheme_ids: [scheme_id]
+            assessment_id: '1234-1234-1234-1234-1234',
+            assessment_body: doc.to_xml,
+            accepted_responses: [409],
+            auth_data: { scheme_ids: [scheme_id] }
           )
         end
       end
 
       it 'returns the data that was lodged' do
         lodge_assessment(
-          '1234-1234-1234-1234-1234',
-          doc.to_xml,
-          [201],
-          true,
-          scheme_ids: [scheme_id]
+          assessment_id: '1234-1234-1234-1234-1234',
+          assessment_body: doc.to_xml,
+          accepted_responses: [201],
+          auth_data: { scheme_ids: [scheme_id] }
         )
 
         expected_response = {
@@ -382,11 +369,10 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         address_line_one.add_next_sibling address_line_two
 
         lodge_assessment(
-          '1234-1234-1234-1234-1234',
-          doc.to_xml,
-          [201],
-          true,
-          scheme_ids: [scheme_id]
+          assessment_id: '1234-1234-1234-1234-1234',
+          assessment_body: doc.to_xml,
+          accepted_responses: [201],
+          auth_data: { scheme_ids: [scheme_id] }
         )
 
         expect(response['data']['addressLine2']).to eq('2 test street')
@@ -399,11 +385,10 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         address_line_one.add_next_sibling address_line_three
 
         lodge_assessment(
-          '1234-1234-1234-1234-1234',
-          doc.to_xml,
-          [201],
-          true,
-          scheme_ids: [scheme_id]
+          assessment_id: '1234-1234-1234-1234-1234',
+          assessment_body: doc.to_xml,
+          accepted_responses: [201],
+          auth_data: { scheme_ids: [scheme_id] }
         )
 
         expect(response['data']['addressLine3']).to eq('3 test street')
@@ -421,11 +406,10 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         address_line_two.add_next_sibling address_line_three
 
         lodge_assessment(
-          '1234-1234-1234-1234-1234',
-          doc.to_xml,
-          [201],
-          true,
-          scheme_ids: [scheme_id]
+          assessment_id: '1234-1234-1234-1234-1234',
+          assessment_body: doc.to_xml,
+          accepted_responses: [201],
+          auth_data: { scheme_ids: [scheme_id] }
         )
 
         expect(response['data']['addressSummary']).to eq(
@@ -435,11 +419,10 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
 
       it 'can return multiple suggested improvements' do
         lodge_assessment(
-          '1234-1234-1234-1234-1234',
-          doc.to_xml,
-          [201],
-          true,
-          scheme_ids: [scheme_id]
+          assessment_id: '1234-1234-1234-1234-1234',
+          assessment_body: doc.to_xml,
+          accepted_responses: [201],
+          auth_data: { scheme_ids: [scheme_id] }
         )
 
         expect(response['data']['recommendedImprovements'].count).to eq(2)
@@ -459,11 +442,10 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
       context 'when missing optional elements' do
         it 'can return an empty string for address lines' do
           lodge_assessment(
-            '1234-1234-1234-1234-1234',
-            doc.to_xml,
-            [201],
-            true,
-            scheme_ids: [scheme_id]
+            assessment_id: '1234-1234-1234-1234-1234',
+            assessment_body: doc.to_xml,
+            accepted_responses: [201],
+            auth_data: { scheme_ids: [scheme_id] }
           )
           expect(response['data']['addressLine2']).to eq('')
           expect(response['data']['addressLine3']).to eq('')
@@ -475,11 +457,10 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
           doc.at('Impact-Of-Cavity-Insulation').remove
           doc.at('Impact-Of-Solid-Wall-Insulation').remove
           lodge_assessment(
-            '1234-1234-1234-1234-1234',
-            doc.to_xml,
-            [201],
-            true,
-            scheme_ids: [scheme_id]
+            assessment_id: '1234-1234-1234-1234-1234',
+            assessment_body: doc.to_xml,
+            accepted_responses: [201],
+            auth_data: { scheme_ids: [scheme_id] }
           )
 
           expect(
@@ -495,11 +476,10 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         it 'can return an empty list of suggested improvements' do
           doc.at('Suggested-Improvements').remove
           lodge_assessment(
-            '1234-1234-1234-1234-1234',
-            doc.to_xml,
-            [201],
-            true,
-            scheme_ids: [scheme_id]
+            assessment_id: '1234-1234-1234-1234-1234',
+            assessment_body: doc.to_xml,
+            accepted_responses: [201],
+            auth_data: { scheme_ids: [scheme_id] }
           )
 
           expect(response['data']['recommendedImprovements']).to eq([])
@@ -521,7 +501,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         scheme_assessor_id = doc.at('Address')
         scheme_assessor_id.children = ''
 
-        lodge_assessment('0000-0000-0000-0000-0000', doc.to_xml, [400])
+        lodge_assessment(assessment_id: '0000-0000-0000-0000-0000', assessment_body: doc.to_xml, accepted_responses: [400])
       end
 
       it 'rejects an assessment with an incorrect element' do
@@ -539,7 +519,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
 
         response_body =
           JSON.parse(
-            lodge_assessment('0000-0000-0000-0000-0000', doc.to_xml, [400]).body
+            lodge_assessment(assessment_id: '0000-0000-0000-0000-0000', assessment_body: doc.to_xml, accepted_responses: [400]).body
           )
 
         expect(
@@ -560,11 +540,10 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         sequence_one.children = '5'
 
         lodge_assessment(
-          '0000-0000-0000-0000-0000',
-          doc.to_xml,
-          [422],
-          true,
-          scheme_ids: [scheme_id]
+          assessment_id: '0000-0000-0000-0000-0000',
+          assessment_body: doc.to_xml,
+          accepted_responses: [422],
+          auth_data: { scheme_ids: [scheme_id] }
         )
       end
     end

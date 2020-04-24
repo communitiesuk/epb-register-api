@@ -136,15 +136,16 @@ def add_scheme(
 end
 
 def lodge_assessment(
-  assessment_id,
-  assessment_body,
-  accepted_responses = [201],
-  authenticate = true,
-  auth_data = nil,
-  scopes = %w[assessment:lodge],
-  json = false,
-  schema_name = 'RdSAP-Schema-19.0'
+  assessment_id: '',
+  assessment_body: '',
+  accepted_responses: [201],
+  authenticate: true,
+  auth_data: nil,
+  scopes: %w[assessment:lodge],
+  json: false,
+  schema_name: 'RdSAP-Schema-19.0'
 )
+  puts authenticate
   header 'Content-type', 'application/xml+' + schema_name
   assertive_post(
     "api/assessments/#{assessment_id}",
