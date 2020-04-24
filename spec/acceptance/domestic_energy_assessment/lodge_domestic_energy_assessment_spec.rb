@@ -36,6 +36,10 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
   end
 
   context 'when lodging a domestic energy assessment (post)' do
+    it 'rejects an assessment with a schema that does not exist' do
+      lodge_assessment(assessment_id: '0000-0000-0000-0000-0000', assessment_body: valid_xml, accepted_responses: [400], schema_name: 'MakeupSAP-19.0')
+    end
+
     context 'when an assessor is not registered' do
       it 'returns status 400' do
         lodge_assessment(assessment_id: '0000-0000-0000-0000-0000', assessment_body: valid_xml, accepted_responses: [400])
