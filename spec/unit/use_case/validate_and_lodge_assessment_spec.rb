@@ -70,13 +70,16 @@ describe UseCase::ValidateAndLodgeAssessment do
           check_assessor_belongs_to_scheme
         )
 
-
-      expect { use_case.execute(
-        '0000-0000-0000-0000-0000',
-        valid_xml,
-        'Non-existent-RdSAP-Schema-19.0',
-        '1'
-      ) }.to raise_exception(UseCase::ValidateAndLodgeAssessment::SchemaNotSupported)
+      expect {
+        use_case.execute(
+          '0000-0000-0000-0000-0000',
+          valid_xml,
+          'Non-existent-RdSAP-Schema-19.0',
+          '1'
+        )
+      }.to raise_exception(
+        UseCase::ValidateAndLodgeAssessment::SchemaNotSupported
+      )
     end
   end
 end
