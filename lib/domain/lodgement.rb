@@ -85,33 +85,51 @@ module Domain
           renewable_heat_incentive: {
             path: %i[SAP_Report Energy_Assessment Renewable_Heat_Incentive]
           },
-          property: {
-            path: %i[SAP_Report Energy_Assessment Property],
-          },
-          address_line_one: { root: :property, path: %i[Address_Line_1] },
-          town: { root: :property, path: %i[Post_Town] },
-          postcode: { root: :property, path: %i[Postcode] },
+          energy_use: { path: %i[SAP_Report Energy_Assessment Energy_Use] },
+          address: { path: %i[SAP_Report Report_Header Property Address] },
+          property: { path: %i[SAP_Report Energy_Assessment Property_Summary] },
+          dwelling_type: { root: :property, path: %i[Dwelling_Type] },
+          address_line_one: { root: :address, path: %i[Address_Line_1] },
+          town: { root: :address, path: %i[Post_Town] },
+          postcode: { root: :address, path: %i[Postcode] },
           inspection_date: { root: :report_header, path: %i[Inspection_Date] },
-          registration_date: { root: :report_header, path: %i[Registration_Date] },
+          registration_date: {
+            root: :report_header, path: %i[Registration_Date]
+          },
           space_heating: {
             root: :renewable_heat_incentive,
-            path: %i[RHI-New-Dwelling Space_Heating]
+            path: %i[RHI_Existing_Dwelling Space_Heating_Existing_Dwelling]
           },
           water_heating: {
             root: :renewable_heat_incentive,
-            path: %i[RHI-New-Dwelling Water_Heating]
+            path: %i[RHI_Existing_Dwelling Water_Heating]
           },
           impact_of_loft_insulation: {
-            root: :renewable_heat_incentive, path: %i[Impact_Of_Loft_Insulation]
+            root: :renewable_heat_incentive,
+            path: %i[RHI_Existing_Dwelling Impact_Of_Loft_Insulation]
           },
           impact_of_cavity_insulation: {
             root: :renewable_heat_incentive,
-            path: %i[Impact_Of_Cavity_Insulation]
+            path: %i[RHI_Existing_Dwelling Impact_Of_Cavity_Insulation]
           },
           impact_of_solid_wall_insulation: {
             root: :renewable_heat_incentive,
-            path: %i[Impact_Of_Solid_Wall_Insulation]
+            path: %i[RHI_Existing_Dwelling Impact_Of_Solid_Wall_Insulation]
           },
+          current_energy_rating: {
+            root: :energy_use, path: %i[Energy_Rating_Current]
+          },
+          potential_energy_rating: {
+            root: :energy_use, path: %i[Energy_Rating_Potential]
+          },
+          improvement: {
+            path: %i[
+              SAP_Report
+              Energy_Assessment
+              Suggested_Improvements
+              Improvement
+            ]
+          }
         }
       }
     }.freeze

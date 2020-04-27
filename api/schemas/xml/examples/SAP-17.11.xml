@@ -104,16 +104,19 @@
                 <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
                 <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
             </Lighting>
+          <Dwelling-Type>Dwelling-Type0</Dwelling-Type>
+          <Total-Floor-Area>10</Total-Floor-Area>
             <Multiple-Glazed-Percentage>50</Multiple-Glazed-Percentage>
+          <Is-Zero-Carbon-Home>true</Is-Zero-Carbon-Home>
         </Property-Summary>
         <Renewable-Heat-Incentive>
-            <RHI-New-Dwelling>
-                <Water-Heating>60</Water-Heating>
-                <Space-Heating>69</Space-Heating>
-            </RHI-New-Dwelling>
-            <Impact-Of-Loft-Insulation>-8</Impact-Of-Loft-Insulation>
-            <Impact-Of-Cavity-Insulation>-12</Impact-Of-Cavity-Insulation>
-            <Impact-Of-Solid-Wall-Insulation>-16</Impact-Of-Solid-Wall-Insulation>
+            <RHI-Existing-Dwelling>
+              <Space-Heating-Existing-Dwelling>30</Space-Heating-Existing-Dwelling>
+              <Water-Heating>60</Water-Heating>
+              <Impact-Of-Cavity-Insulation>-12</Impact-Of-Cavity-Insulation>
+              <Impact-Of-Loft-Insulation>-8</Impact-Of-Loft-Insulation>
+              <Impact-Of-Solid-Wall-Insulation>-16</Impact-Of-Solid-Wall-Insulation>
+            </RHI-Existing-Dwelling>
         </Renewable-Heat-Incentive>
         <Energy-Use>
             <Energy-Rating-Current>50</Energy-Rating-Current>

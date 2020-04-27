@@ -329,30 +329,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
           'postcode' => 'A0 0AA',
           'potentialEnergyEfficiencyBand' => 'e',
           'potentialEnergyEfficiencyRating' => 50,
-          'recommendedImprovements' => [
-            {
-              'energyPerformanceRatingImprovement' => 50,
-              'environmentalImpactRatingImprovement' => 50,
-              'greenDealCategoryCode' => '1',
-              'improvementCategory' => '6',
-              'improvementCode' => '5',
-              'improvementType' => 'Z3',
-              'indicativeCost' => '5',
-              'sequence' => 0,
-              'typicalSaving' => '0.0'
-            },
-            {
-              'energyPerformanceRatingImprovement' => 60,
-              'environmentalImpactRatingImprovement' => 64,
-              'greenDealCategoryCode' => '3',
-              'improvementCategory' => '2',
-              'improvementCode' => '1',
-              'improvementType' => 'Z2',
-              'indicativeCost' => '2',
-              'sequence' => 1,
-              'typicalSaving' => '0.1'
-            }
-          ],
+          'recommendedImprovements' => [],
           'totalFloorArea' => 0.0,
           'town' => 'Post-Town1',
           'typeOfAssessment' => 'RdSAP'
@@ -617,25 +594,6 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
           )
 
           expect(response['data']['recommendedImprovements']).to eq([])
-        end
-      end
-
-      context 'when lodging with a different schema (SAP)' do
-        it 'returns status 500 as it isnt implemented' do
-          add_assessor(
-            scheme_id,
-            '%2F%2F%2F%2F000000',
-            valid_assessor_request_body
-          )
-
-          sap_doc = Nokogiri.XML valid_sap_xml
-          lodge_assessment(
-            assessment_id: '0000-0000-0000-0000-0000',
-            assessment_body: sap_doc.to_xml,
-            accepted_responses: [500],
-            auth_data: { scheme_ids: [scheme_id] },
-            schema_name: 'SAP-Schema-17.1'
-          )
         end
       end
     end
