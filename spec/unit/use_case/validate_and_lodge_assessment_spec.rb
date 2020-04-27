@@ -1,5 +1,5 @@
 describe UseCase::ValidateAndLodgeAssessment do
-  class FakeValidateLodgementUseCase
+  class ValidateLodgementUseCaseSpy
     def execute(*)
       @called = true
     end
@@ -9,7 +9,7 @@ describe UseCase::ValidateAndLodgeAssessment do
     end
   end
 
-  class FakeLodgeAssessmentUseCase
+  class LodgeAssessmentUseCaseSpy
     def execute(*)
       @called = true
     end
@@ -19,7 +19,7 @@ describe UseCase::ValidateAndLodgeAssessment do
     end
   end
 
-  class FakeCheckAssessorBelongsToScheme
+  class CheckAssessorBelongsToSchemeSpy
     def execute(*)
       @called = true
     end
@@ -35,9 +35,9 @@ describe UseCase::ValidateAndLodgeAssessment do
 
   context 'when validating a valid RdSAP assessment' do
     it 'will call the two use cases' do
-      validate_lodgement_use_case = FakeValidateLodgementUseCase.new
-      lodge_assessment_use_case = FakeLodgeAssessmentUseCase.new
-      check_assessor_belongs_to_scheme = FakeCheckAssessorBelongsToScheme.new
+      validate_lodgement_use_case = ValidateLodgementUseCaseSpy.new
+      lodge_assessment_use_case = LodgeAssessmentUseCaseSpy.new
+      check_assessor_belongs_to_scheme = CheckAssessorBelongsToSchemeSpy.new
 
       use_case =
         described_class.new(
@@ -59,9 +59,9 @@ describe UseCase::ValidateAndLodgeAssessment do
 
   context 'when validating an invalid schema name' do
     it 'raises the error SchemaNotAccepted' do
-      validate_lodgement_use_case = FakeValidateLodgementUseCase.new
-      lodge_assessment_use_case = FakeLodgeAssessmentUseCase.new
-      check_assessor_belongs_to_scheme = FakeCheckAssessorBelongsToScheme.new
+      validate_lodgement_use_case = ValidateLodgementUseCaseSpy.new
+      lodge_assessment_use_case = LodgeAssessmentUseCaseSpy.new
+      check_assessor_belongs_to_scheme = CheckAssessorBelongsToSchemeSpy.new
 
       use_case =
         described_class.new(
