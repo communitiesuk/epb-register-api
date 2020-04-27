@@ -120,7 +120,7 @@ module Domain
       if suggested_improvements.nil?
         []
       else
-        unless suggested_improvements.is_a?(Array)
+        unless suggested_improvements.is_a? Array
           suggested_improvements = [suggested_improvements]
         end
 

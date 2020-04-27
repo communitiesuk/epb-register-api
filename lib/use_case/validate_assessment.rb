@@ -3,7 +3,7 @@ module UseCase
     class InvalidXml < StandardError; end
 
     def execute(xml, schema_location)
-      assessment_body = validate_xml(xml, schema_location)
+      validate_xml(xml, schema_location)
     end
 
     private
