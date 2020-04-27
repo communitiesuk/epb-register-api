@@ -255,7 +255,114 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
       expect(response.dig(:data, :schemeAssessorId)).to eq('Membership-Number0')
     end
 
-    context 'when saving an assessment' do
+    context 'when saving a sap assessment' do
+      let(:scheme_id) { add_scheme_and_get_id }
+      let(:doc) { Nokogiri.XML valid_sap_xml }
+      let(:response) do
+        JSON.parse(fetch_assessment('1234-1234-1234-1234-1234').body)
+      end
+
+      before do
+        add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
+
+        assessment_id = doc.at('RRN')
+        assessment_id.children = '1234-1234-1234-1234-1234'
+
+        scheme_assessor_id = doc.at('Certificate-Number')
+        scheme_assessor_id.children = 'TEST123456'
+      end
+
+      it 'returns the data that was lodged' do
+        lodge_assessment(
+          assessment_id: '1234-1234-1234-1234-1234',
+          assessment_body: doc.to_xml,
+          accepted_responses: [201],
+          auth_data: { scheme_ids: [scheme_id] },
+          schema_name: 'SAP-Schema-17.1'
+        )
+
+        expected_response = {
+          'addressLine1' => '1 Some Street',
+          'addressLine2' => '',
+          'addressLine3' => '',
+          'addressLine4' => '',
+          'addressSummary' => '1 Some Street, Post-Town1, A0 0AA',
+          'assessmentId' => '1234-1234-1234-1234-1234',
+          'assessor' => {
+            'contactDetails' => {
+              'email' => 'person@person.com',
+              'telephoneNumber' => '010199991010101'
+            },
+            'dateOfBirth' => '1991-02-25',
+            'firstName' => 'Someone',
+            'lastName' => 'Person',
+            'middleNames' => 'Muddle',
+            'qualifications' => {
+              'domesticSap' => 'INACTIVE',
+              'domesticRdSap' => 'ACTIVE',
+              'nonDomesticCc4' => 'INACTIVE',
+              'nonDomesticSp3' => 'INACTIVE',
+              'nonDomesticDec' => 'INACTIVE',
+              'nonDomesticNos3' => 'INACTIVE',
+              'nonDomesticNos4' => 'INACTIVE',
+              'nonDomesticNos5' => 'INACTIVE'
+            },
+            'registeredBy' => {
+              'name' => 'test scheme', 'schemeId' => scheme_id
+            },
+            'schemeAssessorId' => 'TEST123456',
+            'searchResultsComparisonPostcode' => ''
+          },
+          'currentEnergyEfficiencyBand' => 'e',
+          'currentEnergyEfficiencyRating' => 50,
+          'dateOfAssessment' => '2006-05-04',
+          'dateOfExpiry' => '2016-05-04',
+          'dateRegistered' => '2006-05-04',
+          'dwellingType' => 'Dwelling-Type0',
+          'heatDemand' => {
+            'currentSpaceHeatingDemand' => 30.0,
+            'currentWaterHeatingDemand' => 60.0,
+            'impactOfCavityInsulation' => -12,
+            'impactOfLoftInsulation' => -8,
+            'impactOfSolidWallInsulation' => -16
+          },
+          'postcode' => 'A0 0AA',
+          'potentialEnergyEfficiencyBand' => 'e',
+          'potentialEnergyEfficiencyRating' => 50,
+          'recommendedImprovements' => [
+            {
+              'energyPerformanceRatingImprovement' => 50,
+              'environmentalImpactRatingImprovement' => 50,
+              'greenDealCategoryCode' => '1',
+              'improvementCategory' => '6',
+              'improvementCode' => '5',
+              'improvementType' => 'Z3',
+              'indicativeCost' => '5',
+              'sequence' => 0,
+              'typicalSaving' => '0.0'
+            },
+            {
+              'energyPerformanceRatingImprovement' => 60,
+              'environmentalImpactRatingImprovement' => 64,
+              'greenDealCategoryCode' => '3',
+              'improvementCategory' => '2',
+              'improvementCode' => '1',
+              'improvementType' => 'Z2',
+              'indicativeCost' => '2',
+              'sequence' => 1,
+              'typicalSaving' => '0.1'
+            }
+          ],
+          'totalFloorArea' => 0.0,
+          'town' => 'Post-Town1',
+          'typeOfAssessment' => 'RdSAP'
+        }
+
+        expect(response['data']).to eq(expected_response)
+      end
+    end
+
+    context 'when saving an rdsap assessment' do
       let(:scheme_id) { add_scheme_and_get_id }
       let(:doc) { Nokogiri.XML valid_rdsap_xml }
       let(:response) do

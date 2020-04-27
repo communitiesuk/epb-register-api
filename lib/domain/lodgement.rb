@@ -78,7 +78,41 @@ module Domain
           Home_Inspector
           Identification_Number
           Certificate_Number
-        ]
+        ],
+        data: {
+          report_header: { path: %i[SAP_Report Report_Header] },
+          assessment_id: { path: %i[SAP_Report Report_Header RRN] },
+          renewable_heat_incentive: {
+            path: %i[SAP_Report Energy_Assessment Renewable_Heat_Incentive]
+          },
+          property: {
+            path: %i[SAP_Report Energy_Assessment Property],
+          },
+          address_line_one: { root: :property, path: %i[Address_Line_1] },
+          town: { root: :property, path: %i[Post_Town] },
+          postcode: { root: :property, path: %i[Postcode] },
+          inspection_date: { root: :report_header, path: %i[Inspection_Date] },
+          registration_date: { root: :report_header, path: %i[Registration_Date] },
+          space_heating: {
+            root: :renewable_heat_incentive,
+            path: %i[RHI-New-Dwelling Space_Heating]
+          },
+          water_heating: {
+            root: :renewable_heat_incentive,
+            path: %i[RHI-New-Dwelling Water_Heating]
+          },
+          impact_of_loft_insulation: {
+            root: :renewable_heat_incentive, path: %i[Impact_Of_Loft_Insulation]
+          },
+          impact_of_cavity_insulation: {
+            root: :renewable_heat_incentive,
+            path: %i[Impact_Of_Cavity_Insulation]
+          },
+          impact_of_solid_wall_insulation: {
+            root: :renewable_heat_incentive,
+            path: %i[Impact_Of_Solid_Wall_Insulation]
+          },
+        }
       }
     }.freeze
 
