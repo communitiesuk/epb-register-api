@@ -15,28 +15,27 @@ module UseCase
     def execute(lodgement, assessment_id)
       body = lodgement.fetch_raw_data
 
-      new_body = lodgement.fetch_data
+      data = lodgement.fetch_data
 
-      raise AssessmentIdMismatch unless assessment_id == fetch(body, :RRN)
+      raise AssessmentIdMismatch unless assessment_id == data[:assessment_id]
 
       if @domestic_energy_assessments_gateway.fetch assessment_id
         raise DuplicateAssessmentIdException
       end
 
-      scheme_assessor_id = fetch(body, :Membership_Number)
-      address = body[:RdSAP_Report][:Report_Header][:Property][:Address]
+      scheme_assessor_id = lodgement.scheme_assessor_id
 
       address_summary =
         [
-          new_body[:address_line1],
-          address[:Address_Line_2],
-          address[:Address_Line_3],
-          address[:Post_Town],
-          address[:Postcode]
+          data[:address_line_one],
+          data[:address_line_two],
+          data[:address_line_three],
+          data[:town],
+          data[:postcode]
         ].compact
           .join(', ')
 
-      expiry_date = Date.parse(fetch(body, :Inspection_Date)).next_year(10).to_s
+      expiry_date = Date.parse(data[:inspection_date]).next_year(10).to_s
 
       assessor = @assessors_gateway.fetch scheme_assessor_id
 
@@ -46,28 +45,28 @@ module UseCase
 
       assessment =
         Domain::DomesticEnergyAssessment.new(
-          fetch(body, :Inspection_Date),
-          fetch(body, :Registration_Date),
-          fetch(body, :Dwelling_Type),
+          data[:inspection_date],
+          data[:registration_date],
+          data[:dwelling_type],
           'RdSAP',
-          fetch(body, :Total_Floor_Area),
-          fetch(body, :RRN),
+          data[:total_floor_area],
+          data[:assessment_id],
           assessor,
           address_summary,
-          fetch(body, :Energy_Rating_Current).to_i,
-          fetch(body, :Energy_Rating_Potential).to_i,
-          address[:Postcode],
+          data[:current_energy_rating].to_i,
+          data[:potential_energy_rating].to_i,
+          data[:postcode],
           expiry_date,
-          address[:Address_Line_1],
-          address[:Address_Line_2] || '',
-          address[:Address_Line_3] || '',
+          data[:address_line_one],
+          data[:address_line_two] || '',
+          data[:address_line_three] || '',
           '',
-          address[:Post_Town],
-          fetch(body, :Space_Heating_Existing_Dwelling),
-          fetch(body, :Water_Heating),
-          fetch(body, :Impact_Of_Loft_Insulation),
-          fetch(body, :Impact_Of_Cavity_Insulation),
-          fetch(body, :Impact_Of_Solid_Wall_Insulation),
+          data[:town],
+          data[:space_heating],
+          data[:water_heating],
+          data[:impact_of_loft_insulation],
+          data[:impact_of_cavity_insulation],
+          data[:impact_of_solid_wall_insulation],
           create_list_of_suggested_improvements(body)
         )
 
