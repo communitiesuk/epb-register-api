@@ -142,7 +142,7 @@ module Controller
       when UseCase::ValidateAssessment::InvalidXml
         error_response(400, 'INVALID_REQUEST', e.message)
       when UseCase::ValidateAndLodgeAssessment::SchemaNotSupported
-          error_response(400, 'INVALID_REQUEST', 'Schema not supported.')
+        error_response(400, 'INVALID_REQUEST', 'Schema not supported.')
       when UseCase::CheckAssessorBelongsToScheme::AssessorNotFoundException
         error_response(400, 'IVALID_REQUEST', 'Assessor is not registered.')
       when UseCase::ValidateAndLodgeAssessment::NotAuthorisedToLodgeAsThisScheme

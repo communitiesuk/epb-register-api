@@ -13,9 +13,9 @@ module UseCase
     end
 
     def execute(lodgement, assessment_id)
-      body = lodgement.get_raw_data
+      body = lodgement.fetch_raw_data
 
-      new_body = lodgement.get_data
+      new_body = lodgement.fetch_data
 
       raise AssessmentIdMismatch unless assessment_id == fetch(body, :RRN)
 

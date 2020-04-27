@@ -41,18 +41,32 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
 
   context 'when lodging a domestic energy assessment (post)' do
     it 'rejects an assessment with a schema that does not exist' do
-      lodge_assessment(assessment_id: '0000-0000-0000-0000-0000', assessment_body: valid_rdsap_xml, accepted_responses: [400], schema_name: 'MakeupSAP-19.0')
+      lodge_assessment(
+        assessment_id: '0000-0000-0000-0000-0000',
+        assessment_body: valid_rdsap_xml,
+        accepted_responses: [400],
+        schema_name: 'MakeupSAP-19.0'
+      )
     end
 
     context 'when an assessor is not registered' do
       it 'returns status 400' do
-        lodge_assessment(assessment_id: '0000-0000-0000-0000-0000', assessment_body: valid_rdsap_xml, accepted_responses: [400])
+        lodge_assessment(
+          assessment_id: '0000-0000-0000-0000-0000',
+          assessment_body: valid_rdsap_xml,
+          accepted_responses: [400]
+        )
       end
 
       it 'returns status 400 with the correct error response' do
         response =
           JSON.parse(
-            lodge_assessment(assessment_id: '0000-0000-0000-0000-0000', assessment_body: valid_rdsap_xml, accepted_responses: [400]).body
+            lodge_assessment(
+              assessment_id: '0000-0000-0000-0000-0000',
+              assessment_body: valid_rdsap_xml,
+              accepted_responses: [400]
+            )
+              .body
           )
 
         expect(response['errors'][0]['title']).to eq(
@@ -102,7 +116,12 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
     end
 
     it 'returns 401 with no authentication' do
-      lodge_assessment(assessment_id: '0000-0000-0000-0000-0000', assessment_body: 'body', accepted_responses: [401], authenticate: false)
+      lodge_assessment(
+        assessment_id: '0000-0000-0000-0000-0000',
+        assessment_body: 'body',
+        accepted_responses: [401],
+        authenticate: false
+      )
     end
 
     it 'returns 403 with incorrect scopes' do
@@ -110,7 +129,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         assessment_id: '0000-0000-0000-0000-0000',
         assessment_body: 'body',
         accepted_responses: [403],
-        auth_data: { scheme_ids: {}},
+        auth_data: { scheme_ids: {} },
         scopes: %w[wrong:scope]
       )
     end
@@ -528,7 +547,11 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
         scheme_assessor_id = doc.at('Address')
         scheme_assessor_id.children = ''
 
-        lodge_assessment(assessment_id: '0000-0000-0000-0000-0000', assessment_body: doc.to_xml, accepted_responses: [400])
+        lodge_assessment(
+          assessment_id: '0000-0000-0000-0000-0000',
+          assessment_body: doc.to_xml,
+          accepted_responses: [400]
+        )
       end
 
       it 'rejects an assessment with an incorrect element' do
@@ -546,7 +569,12 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
 
         response_body =
           JSON.parse(
-            lodge_assessment(assessment_id: '0000-0000-0000-0000-0000', assessment_body: doc.to_xml, accepted_responses: [400]).body
+            lodge_assessment(
+              assessment_id: '0000-0000-0000-0000-0000',
+              assessment_body: doc.to_xml,
+              accepted_responses: [400]
+            )
+              .body
           )
 
         expect(

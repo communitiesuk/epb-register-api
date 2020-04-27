@@ -19,7 +19,7 @@ module UseCase
     def execute(assessment_id, xml, schema_name, scheme_ids)
       lodgement = Domain::Lodgement.new(xml_to_hash(xml), schema_name)
 
-      raise SchemaNotSupported unless lodgement.schema_exists
+      raise SchemaNotSupported unless lodgement.schema_exists?
 
       unless @validate_lodgement_use_case.execute(xml, lodgement.schema_path)
         raise ValidationError
