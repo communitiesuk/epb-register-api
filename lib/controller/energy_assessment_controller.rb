@@ -151,7 +151,7 @@ module Controller
           'UNAUTHORISED',
           'Not authorised to lodge reports as this scheme'
         )
-      when UseCase::LodgeAssessment::AssessmentIdMismatch
+      when UseCase::LodgeAssessment::AssessmentIdMismatchException
         error_response(
           422,
           'INVALID_REQUEST',

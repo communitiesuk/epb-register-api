@@ -15,6 +15,7 @@ module Domain
         ],
         data: {
           report_header: { path: %i[RdSAP_Report Report_Header] },
+          assessment_id: { path: %i[RdSAP_Report Report_Header RRN] },
           property: {
             path: %i[RdSAP_Report Energy_Assessment Property_Summary]
           },
@@ -23,7 +24,6 @@ module Domain
             path: %i[RdSAP_Report Energy_Assessment Renewable_Heat_Incentive]
           },
           address: { path: %i[RdSAP_Report Report_Header Property Address] },
-          assessment_id: { root: :report_header, path: %i[RRN] },
           inspection_date: { root: :report_header, path: %i[Inspection_Date] },
           registration_date: {
             root: :report_header, path: %i[Registration_Date]
@@ -58,7 +58,15 @@ module Domain
           address_line_two: { root: :address, path: %i[Address_Line_2] },
           address_line_three: { root: :address, path: %i[Address_Line_3] },
           town: { root: :address, path: %i[Post_Town] },
-          postcode: { root: :address, path: %i[Postcode] }
+          postcode: { root: :address, path: %i[Postcode] },
+          improvement: {
+            path: %i[
+              RdSAP_Report
+              Energy_Assessment
+              Suggested_Improvements
+              Improvement
+            ]
+          }
         }
       },
       'SAP-Schema-17.1': {
@@ -105,12 +113,44 @@ module Domain
       @data
     end
 
+    def suggested_improvements
+      suggested_improvements =
+        @data.dig(*SCHEMAS[@schema_name][:data][:improvement][:path])
+
+      if suggested_improvements.nil?
+        []
+      else
+        unless suggested_improvements.is_a?(Array)
+          suggested_improvements = [suggested_improvements]
+        end
+
+        suggested_improvements.map do |i|
+          Domain::RecommendedImprovement.new(
+            assessment_id,
+            i[:Sequence].to_i,
+            i[:Improvement_Details][:Improvement_Number],
+            i[:Indicative_Cost],
+            i[:Typical_Saving],
+            i[:Improvement_Category],
+            i[:Improvement_Type],
+            i[:Energy_Performance_Rating],
+            i[:Environmental_Impact_Rating],
+            i[:Green_Deal_Category]
+          )
+        end
+      end
+    end
+
     def schema_path
       SCHEMAS[@schema_name][:schema_path]
     end
 
     def scheme_assessor_id
       @data.dig(*SCHEMAS[@schema_name][:scheme_assessor_id_location])
+    end
+
+    def assessment_id
+      @data.dig(*SCHEMAS[@schema_name][:data][:assessment_id][:path])
     end
   end
 end
