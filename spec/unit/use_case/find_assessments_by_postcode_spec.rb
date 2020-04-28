@@ -19,7 +19,8 @@ describe UseCase::FindAssessmentsByPostcode do
               currentEnergyEfficiencyRating: 75,
               potentialEnergyEfficiencyRating: 80,
               postcode: 'SE1 7EZ',
-              dateOfExpiry: '2021-01-02'
+              dateOfExpiry: '2021-01-02',
+              opt_out: false
             },
             {
               assessmentId: '113-987',
@@ -32,7 +33,22 @@ describe UseCase::FindAssessmentsByPostcode do
               currentEnergyEfficiencyRating: 75,
               potentialEnergyEfficiencyRating: 80,
               postcode: 'SE1 7EZ',
-              dateOfExpiry: '2021-01-02'
+              dateOfExpiry: '2021-01-02',
+              opt_out: false
+            },
+            {
+                assessmentId: '647-987',
+                dateOfAssessment: '2020-04-14',
+                dateRegistered: '2020-04-15',
+                totalFloorArea: 2_000,
+                typeOfAssessment: 'RdSAP',
+                dwellingType: 'bungalow',
+                addressSummary: '4 Henderson Drive, Luton, L12 1BD',
+                currentEnergyEfficiencyRating: 65,
+                potentialEnergyEfficiencyRating: 70,
+                postcode: 'SE1 7EZ',
+                dateOfExpiry: '2021-04-14',
+                opt_out: true
             }
           ]
         )
