@@ -195,8 +195,10 @@ module Domain
             typical_saving: i[:Typical_Saving],
             improvement_category: i[:Improvement_Category],
             improvement_type: i[:Improvement_Type],
-            energy_performance_rating_improvement: i[:Energy_Performance_Rating],
-            environmental_impact_rating_improvement: i[:Environmental_Impact_Rating],
+            energy_performance_rating_improvement:
+              i[:Energy_Performance_Rating],
+            environmental_impact_rating_improvement:
+              i[:Environmental_Impact_Rating],
             green_deal_category_code: i[:Green_Deal_Category]
           )
         end
