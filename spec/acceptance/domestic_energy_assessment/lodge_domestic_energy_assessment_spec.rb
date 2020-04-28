@@ -332,7 +332,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
           'recommendedImprovements' => [],
           'totalFloorArea' => 0.0,
           'town' => 'Post-Town1',
-          'typeOfAssessment' => 'RdSAP'
+          'typeOfAssessment' => 'SAP'
         }
 
         expect(response['data']).to eq(expected_response)

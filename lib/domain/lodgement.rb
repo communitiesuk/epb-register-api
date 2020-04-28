@@ -4,6 +4,7 @@ module Domain
   class Lodgement
     SCHEMAS = {
       'RdSAP-Schema-19.0': {
+        report_type: 'RdSAP',
         schema_path:
           'api/schemas/xml/RdSAP-Schema-19.0/RdSAP/Templates/RdSAP-Report.xsd',
         scheme_assessor_id_location: %i[
@@ -70,6 +71,7 @@ module Domain
         }
       },
       'SAP-Schema-17.1': {
+        report_type: 'SAP',
         schema_path:
           'api/schemas/xml/SAP-Schema-17.1/SAP/Templates/SAP-Report.xsd',
         scheme_assessor_id_location: %i[
@@ -203,6 +205,10 @@ module Domain
 
     def assessment_id
       @data.dig(*SCHEMAS[@schema_name][:data][:assessment_id][:path])
+    end
+
+    def type
+      SCHEMAS[@schema_name][:report_type]
     end
   end
 end

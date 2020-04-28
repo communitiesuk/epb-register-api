@@ -48,7 +48,7 @@ module UseCase
           data[:inspection_date],
           data[:registration_date],
           data[:dwelling_type],
-          'RdSAP',
+          lodgement.type,
           data[:total_floor_area],
           data[:assessment_id],
           assessor,
