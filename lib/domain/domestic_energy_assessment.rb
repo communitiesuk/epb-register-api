@@ -6,29 +6,30 @@ module Domain
                 :recommended_improvements
 
     def initialize(
-      date_of_assessment,
-      date_registered,
-      dwelling_type,
-      type_of_assessment,
-      total_floor_area,
-      assessment_id,
-      assessor,
-      address_summary,
-      current_energy_efficiency_rating,
-      potential_energy_efficiency_rating,
-      postcode,
-      date_of_expiry,
-      address_line1,
-      address_line2,
-      address_line3,
-      address_line4,
-      town,
-      current_space_heating_demand,
-      current_water_heating_demand,
-      impact_of_loft_insulation,
-      impact_of_cavity_insulation,
-      impact_of_solid_wall_insulation,
-      recommended_improvements
+      date_of_assessment: nil,
+      date_registered: nil,
+      dwelling_type: nil,
+      type_of_assessment: nil,
+      total_floor_area: nil,
+      assessment_id: nil,
+      assessor: nil,
+      address_summary: nil,
+      current_energy_efficiency_rating: nil,
+      potential_energy_efficiency_rating: nil,
+      opt_out: false,
+      postcode: nil,
+      date_of_expiry: nil,
+      address_line1: nil,
+      address_line2: nil,
+      address_line3: nil,
+      address_line4: nil,
+      town: nil,
+      current_space_heating_demand: nil,
+      current_water_heating_demand: nil,
+      impact_of_loft_insulation: nil,
+      impact_of_cavity_insulation: nil,
+      impact_of_solid_wall_insulation: nil,
+      recommended_improvements: nil
     )
       @date_of_assessment = Date.strptime(date_of_assessment, '%Y-%m-%d')
       @date_registered = Date.strptime(date_registered, '%Y-%m-%d')
@@ -40,6 +41,7 @@ module Domain
       @address_summary = address_summary
       @current_energy_efficiency_rating = current_energy_efficiency_rating
       @potential_energy_efficiency_rating = potential_energy_efficiency_rating
+      @opt_out = opt_out
       @postcode = postcode
       @date_of_expiry = Date.strptime(date_of_expiry, '%Y-%m-%d')
       @address_line1 = address_line1
@@ -86,6 +88,7 @@ module Domain
         address_summary: @address_summary,
         current_energy_efficiency_rating: @current_energy_efficiency_rating,
         potential_energy_efficiency_rating: @potential_energy_efficiency_rating,
+        opt_out: @opt_out,
         postcode: @postcode,
         date_of_expiry: @date_of_expiry.strftime('%Y-%m-%d'),
         address_line1: @address_line1,
@@ -122,6 +125,7 @@ module Domain
           @current_energy_efficiency_rating.to_f,
         potential_energy_efficiency_rating:
           @potential_energy_efficiency_rating.to_f,
+        opt_out: @opt_out,
         postcode: @postcode,
         date_of_expiry: @date_of_expiry,
         address_line1: @address_line1,

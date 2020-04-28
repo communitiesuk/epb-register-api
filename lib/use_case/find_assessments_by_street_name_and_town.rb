@@ -11,8 +11,16 @@ module UseCase
 
       result =
         @assessment_gateway.search_by_street_name_and_town(street_name, town)
+
+      opt_out_filtered_results = []
+
+      result.each do |r|
+        unless r[:optOut] == true
+          opt_out_filtered_results << r
+        end
+      end
       {
-        'data': { 'assessments': result },
+        'data': { 'assessments': opt_out_filtered_results },
         'meta': { 'searchQuery': [street_name, town] }
       }
     end

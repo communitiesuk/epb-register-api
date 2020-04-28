@@ -20,8 +20,15 @@ module UseCase
       end
 
       result = @assessment_gateway.search_by_postcode(postcode)
+      opt_out_filtered_results = []
 
-      { 'data': { 'assessments': result }, 'meta': { 'searchQuery': postcode } }
+      result.each do |r|
+        unless r[:opt_out] == true
+          opt_out_filtered_results << r
+        end
+      end
+
+      { 'data': { 'assessments': opt_out_filtered_results }, 'meta': { 'searchQuery': postcode } }
     end
   end
 end

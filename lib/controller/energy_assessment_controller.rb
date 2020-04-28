@@ -17,6 +17,7 @@ module Controller
         typeOfAssessment
         currentEnergyEfficiencyRating
         potentialEnergyEfficiencyRating
+        optOut
         schemeAssessorId
         heatDemand
         recommendedImprovements
@@ -37,6 +38,7 @@ module Controller
         typeOfAssessment: { type: 'string', enum: %w[SAP RdSAP] },
         currentEnergyEfficiencyRating: { type: 'integer' },
         potentialEnergyEfficiencyRating: { type: 'integer' },
+        optOut: { type: 'boolean' },
         schemeAssessorId: { type: 'string' },
         heatDemand: {
           type: 'object',

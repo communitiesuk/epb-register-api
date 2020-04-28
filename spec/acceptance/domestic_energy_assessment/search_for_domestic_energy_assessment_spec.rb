@@ -26,6 +26,7 @@ describe 'Searching for assessments' do
       addressSummary: '123 Victoria Street, London, SW1A 1BD',
       currentEnergyEfficiencyRating: 75,
       potentialEnergyEfficiencyRating: 80,
+      optOut: false,
       postcode: 'SE1 7EZ',
       dateOfExpiry: '2021-01-01',
       addressLine1: 'Flat 33',
@@ -124,6 +125,7 @@ describe 'Searching for assessments' do
             potentialEnergyEfficiencyRating: 80,
             currentEnergyEfficiencyBand: 'c',
             potentialEnergyEfficiencyBand: 'c',
+            optOut: false,
             postcode: 'SE1 7EZ',
             dateOfExpiry: '2021-01-01',
             town: 'Brighton',
@@ -142,6 +144,20 @@ describe 'Searching for assessments' do
         )
 
       expect(response_json['data']['assessments'][0]).to eq(expected_response)
+    end
+
+    it 'has been opted out' do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
+
+      opted_out_assessment = valid_assessment_body.dup
+      opted_out_assessment[:optOut] = true
+      migrate_assessment('123-987', opted_out_assessment)
+
+      response = assessments_search_by_postcode('SE17EZ')
+      response_json = JSON.parse(response.body)
+
+      expect(response_json['data']['assessments'][0]).to eq(nil)
     end
   end
 
@@ -187,6 +203,7 @@ describe 'Searching for assessments' do
             addressSummary: '123 Victoria Street, London, SW1A 1BD',
             currentEnergyEfficiencyRating: 75,
             potentialEnergyEfficiencyRating: 80,
+            optOut: false,
             currentEnergyEfficiencyBand: 'c',
             potentialEnergyEfficiencyBand: 'c',
             postcode: 'SE1 7EZ',
@@ -315,6 +332,7 @@ describe 'Searching for assessments' do
               potentialEnergyEfficiencyRating: 80,
               currentEnergyEfficiencyBand: 'c',
               potentialEnergyEfficiencyBand: 'c',
+              optOut: false,
               postcode: 'SE1 7EZ',
               dateOfExpiry: '2021-01-01',
               town: 'Brighton',

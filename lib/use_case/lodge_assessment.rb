@@ -51,30 +51,30 @@ module UseCase
 
       assessment =
         Domain::DomesticEnergyAssessment.new(
-          data[:inspection_date],
-          data[:registration_date],
-          data[:dwelling_type],
-          lodgement.type,
-          data[:total_floor_area],
-          data[:assessment_id],
-          assessor,
-          address_summary,
-          data[:current_energy_rating].to_i,
-          data[:potential_energy_rating].to_i,
-          data[:postcode],
-          expiry_date,
-          data[:address_line_one],
-          data[:address_line_two] || '',
-          data[:address_line_three] || '',
-          '',
-          data[:town],
-          data[:space_heating] || data[:new_space_heating],
-          data[:water_heating] || data[:new_water_heating],
-          data[:impact_of_loft_insulation],
-          data[:impact_of_cavity_insulation],
-          data[:impact_of_solid_wall_insulation],
-          lodgement.suggested_improvements
-        )
+          date_of_assessment: data[:inspection_date],
+          date_registered: data[:registration_date],
+          dwelling_type: data[:dwelling_type],
+          type_of_assessment: lodgement.type,
+          total_floor_area: data[:total_floor_area],
+          assessment_id: data[:assessment_id],
+          assessor: assessor,
+          address_summary: address_summary,
+          current_energy_efficiency_rating: data[:current_energy_rating].to_i,
+          potential_energy_efficiency_rating: data[:potential_energy_rating].to_i,
+          postcode: data[:postcode],
+          date_of_expiry: expiry_date,
+          address_line1: data[:address_line_one],
+          address_line2: data[:address_line_two] || '',
+          address_line3: data[:address_line_three] || '',
+          address_line4: '',
+          town: data[:town],
+          current_space_heating_demand: data[:space_heating] || data[:new_space_heating],
+          current_water_heating_demand: data[:water_heating] || data[:new_water_heating],
+          impact_of_loft_insulation: data[:impact_of_loft_insulation],
+          impact_of_cavity_insulation: data[:impact_of_cavity_insulation],
+          impact_of_solid_wall_insulation: data[:impact_of_solid_wall_insulation],
+          recommended_improvements: lodgement.suggested_improvements
+       )
 
       validator = Helper::RdsapValidator::ValidateAll.new
       errors = validator.validate assessment

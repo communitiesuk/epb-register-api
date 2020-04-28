@@ -28,6 +28,7 @@ describe 'Acceptance::DomesticEnergyAssessment' do
       addressSummary: '123 Victoria Street, London, SW1A 1BD',
       currentEnergyEfficiencyRating: 75,
       potentialEnergyEfficiencyRating: 80,
+      optOut: false,
       postcode: 'SE1 7EZ',
       dateOfExpiry: '2021-01-01',
       addressLine1: 'Flat 33',
@@ -150,6 +151,7 @@ describe 'Acceptance::DomesticEnergyAssessment' do
               valid_assessment_body[:potentialEnergyEfficiencyRating],
             currentEnergyEfficiencyBand: 'c',
             potentialEnergyEfficiencyBand: 'c',
+            optOut: false,
             postcode: valid_assessment_body[:postcode],
             dateOfExpiry: valid_assessment_body[:dateOfExpiry],
             town: valid_assessment_body[:town],
@@ -256,6 +258,7 @@ describe 'Acceptance::DomesticEnergyAssessment' do
         schemeAssessorId: valid_assessment_body[:schemeAssessorId],
         potentialEnergyEfficiencyBand: 'c',
         currentEnergyEfficiencyBand: 'c',
+        optOut: false,
         heatDemand: {
           currentSpaceHeatingDemand:
             valid_assessment_body[:heatDemand][:currentSpaceHeatingDemand],

@@ -29,6 +29,7 @@ module Gateway
           assessment[:current_energy_efficiency_rating],
         potential_energy_efficiency_rating:
           assessment[:potential_energy_efficiency_rating],
+        opt_out: assessment[:opt_out],
         postcode: assessment[:postcode],
         date_of_expiry: assessment[:date_of_expiry].strftime('%Y-%m-%d'),
         address_line1: assessment[:address_line1],
@@ -103,7 +104,7 @@ module Gateway
         "SELECT
             scheme_assessor_id, assessment_id, date_of_assessment, date_registered, dwelling_type,
             type_of_assessment, total_floor_area, address_summary, current_energy_efficiency_rating,
-            potential_energy_efficiency_rating, postcode, date_of_expiry,
+            potential_energy_efficiency_rating, opt_out, postcode, date_of_expiry,
             address_line1, address_line2, address_line3, address_line4, town,
             current_space_heating_demand, current_water_heating_demand, impact_of_loft_insulation,
             impact_of_cavity_insulation, impact_of_solid_wall_insulation
@@ -112,14 +113,12 @@ module Gateway
           ActiveRecord::Base.sanitize_sql(postcode)
         }'"
       response = DomesticEnergyAssessment.connection.execute(sql)
-
       result = []
       response.each do |row|
         assessment_hash = to_hash(row.symbolize_keys)
 
         result << assessment_hash
       end
-
       result
     end
 
@@ -128,7 +127,7 @@ module Gateway
         "SELECT
           scheme_assessor_id, assessment_id, date_of_assessment, date_registered, dwelling_type,
           type_of_assessment, total_floor_area, address_summary, current_energy_efficiency_rating,
-          potential_energy_efficiency_rating, postcode, date_of_expiry,
+          potential_energy_efficiency_rating, opt_out, postcode, date_of_expiry,
           address_line1, address_line2, address_line3, address_line4, town,
           current_space_heating_demand, current_water_heating_demand, impact_of_loft_insulation,
           impact_of_cavity_insulation, impact_of_solid_wall_insulation
@@ -154,7 +153,7 @@ module Gateway
         "SELECT
           scheme_assessor_id, assessment_id, date_of_assessment, date_registered, dwelling_type,
           type_of_assessment, total_floor_area, address_summary, current_energy_efficiency_rating,
-          potential_energy_efficiency_rating, postcode, date_of_expiry,
+          potential_energy_efficiency_rating, opt_out, postcode, date_of_expiry,
           address_line1, address_line2, address_line3, address_line4, town,
           current_space_heating_demand, current_water_heating_demand, impact_of_loft_insulation,
           impact_of_cavity_insulation, impact_of_solid_wall_insulation
