@@ -188,16 +188,16 @@ module Domain
 
         suggested_improvements.map do |i|
           Domain::RecommendedImprovement.new(
-            assessment_id,
-            i[:Sequence].to_i,
-            i[:Improvement_Details][:Improvement_Number],
-            i[:Indicative_Cost],
-            i[:Typical_Saving],
-            i[:Improvement_Category],
-            i[:Improvement_Type],
-            i[:Energy_Performance_Rating],
-            i[:Environmental_Impact_Rating],
-            i[:Green_Deal_Category]
+            assessment_id: assessment_id,
+            sequence: i[:Sequence].to_i,
+            improvement_code: i[:Improvement_Details][:Improvement_Number],
+            indicative_cost: i[:Indicative_Cost],
+            typical_saving: i[:Typical_Saving],
+            improvement_category: i[:Improvement_Category],
+            improvement_type: i[:Improvement_Type],
+            energy_performance_rating_improvement: i[:Energy_Performance_Rating],
+            environmental_impact_rating_improvement: i[:Environmental_Impact_Rating],
+            green_deal_category_code: i[:Green_Deal_Category]
           )
         end
       end

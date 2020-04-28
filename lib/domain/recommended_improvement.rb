@@ -3,16 +3,16 @@ module Domain
     attr_reader :sequence
 
     def initialize(
-      assessment_id,
-      sequence,
-      improvement_code,
-      indicative_cost,
-      typical_saving,
-      improvement_category,
-      improvement_type,
-      energy_performance_rating_improvement,
-      environmental_impact_rating_improvement,
-      green_deal_category_code
+      assessment_id: nil,
+      sequence: nil,
+      improvement_code: nil,
+      indicative_cost: nil,
+      typical_saving: nil,
+      improvement_category: nil,
+      improvement_type: nil,
+      energy_performance_rating_improvement: nil,
+      environmental_impact_rating_improvement: nil,
+      green_deal_category_code: nil
     )
       @assessment_id = assessment_id
       @sequence = sequence
