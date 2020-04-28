@@ -360,6 +360,38 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
 
         expect(response['data']).to eq(expected_response)
       end
+
+      context 'when an assessment is for a new build' do
+        it 'returns the heat demand correctly' do
+          doc.at('RHI-Existing-Dwelling').remove
+
+          renewable_heat_incentive = doc.at('Renewable-Heat-Incentive')
+
+          new_dwelling = Nokogiri::XML::Node.new 'RHI-New-Dwelling', doc
+          new_dwelling.parent = renewable_heat_incentive
+
+          space_heating = Nokogiri::XML::Node.new 'Space-Heating', doc
+          space_heating.children = '80'
+          water_heating = Nokogiri::XML::Node.new 'Water-Heating', doc
+          water_heating.children = '90'
+
+          space_heating.parent = new_dwelling
+          space_heating.add_next_sibling water_heating
+
+          lodge_assessment(
+            assessment_id: '1234-1234-1234-1234-1234',
+            assessment_body: doc.to_xml,
+            accepted_responses: [201],
+            auth_data: { scheme_ids: [scheme_id] },
+            schema_name: 'SAP-Schema-17.1'
+          )
+
+          heat_demand = response['data']['heatDemand']
+
+          expect(heat_demand['currentSpaceHeatingDemand']).to eq 80
+          expect(heat_demand['currentWaterHeatingDemand']).to eq 90
+        end
+      end
     end
 
     context 'when saving an rdsap assessment' do

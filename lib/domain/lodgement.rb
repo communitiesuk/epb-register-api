@@ -98,9 +98,17 @@ module Domain
           registration_date: {
             root: :report_header, path: %i[Registration_Date]
           },
+          new_space_heating: {
+            root: :renewable_heat_incentive,
+            path: %i[RHI_New_Dwelling Space_Heating]
+          },
           space_heating: {
             root: :renewable_heat_incentive,
             path: %i[RHI_Existing_Dwelling Space_Heating_Existing_Dwelling]
+          },
+          new_water_heating: {
+            root: :renewable_heat_incentive,
+            path: %i[RHI_New_Dwelling Water_Heating]
           },
           water_heating: {
             root: :renewable_heat_incentive,
