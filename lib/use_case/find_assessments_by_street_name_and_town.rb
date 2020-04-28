@@ -15,7 +15,7 @@ module UseCase
       opt_out_filtered_results = []
 
       result.each do |r|
-        unless r[:optOut] == true
+        unless r[:opt_out] == true
           opt_out_filtered_results << r
         end
       end

@@ -352,6 +352,24 @@ describe 'Searching for assessments' do
 
         expect(response_json['data']['assessments'][0]).to eq(expected_response)
       end
+
+      it 'has been opted out' do
+        scheme_id = add_scheme_and_get_id
+        add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
+
+        opted_out_assessment = valid_assessment_body.dup
+        opted_out_assessment[:optOut] = true
+        migrate_assessment('123-987', opted_out_assessment)
+
+        response =
+            assessments_search_by_street_name_and_town(
+                'Palmtree Road',
+                'Brighton'
+            )
+        response_json = JSON.parse(response.body)
+
+        expect(response_json['data']['assessments'][0]).to eq(nil)
+      end
     end
   end
 end
