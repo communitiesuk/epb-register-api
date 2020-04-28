@@ -469,8 +469,10 @@ paths:
             type: string
             example: "1234-1234-1234-1234-1234"
       requestBody:
-        content:
-          application/xml+RdSAP-Schema-19.0: {}
+        content: {
+          application/xml+RdSAP-Schema-19.0: {},
+          application/xml+SAP-Schema-17.1: {}
+        }
       responses:
         '201':
           description: New assessment lodged
