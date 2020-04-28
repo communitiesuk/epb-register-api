@@ -4,16 +4,16 @@ require 'active_support/core_ext/hash/conversions'
 
 module UseCase
   class ValidateAndLodgeAssessment
-    class ValidationError < StandardError; end
-    class NotAuthorisedToLodgeAsThisScheme < StandardError; end
-    class SchemaNotSupported < StandardError; end
+    class ValidationErrorException < StandardError; end
+    class UnauthorisedToLodgeAsThisSchemeException < StandardError; end
+    class SchemaNotSupportedException < StandardError; end
 
     def initialize(
-      validate_lodgement_use_case,
+      validate_assessment_use_case,
       lodge_assessment_use_case,
       check_assessor_belongs_to_scheme
     )
-      @validate_lodgement_use_case = validate_lodgement_use_case
+      @validate_assessment_use_case = validate_assessment_use_case
       @lodge_assessment_use_case = lodge_assessment_use_case
       @check_assessor_belongs_to_scheme = check_assessor_belongs_to_scheme
     end
@@ -21,17 +21,14 @@ module UseCase
     def execute(assessment_id, xml, schema_name, scheme_ids)
       lodgement = Domain::Lodgement.new(xml_to_hash(xml), schema_name)
 
-      raise SchemaNotSupported unless lodgement.schema_exists?
+      raise SchemaNotSupportedException unless lodgement.schema_exists?
 
-      unless @validate_lodgement_use_case.execute(xml, lodgement.schema_path)
-        raise ValidationError
+      unless @validate_assessment_use_case.execute(xml, lodgement.schema_path)
+        raise ValidationErrorException
       end
 
-      unless validate_assessor_can_lodge(
-               lodgement.scheme_assessor_id,
-               scheme_ids
-             )
-        raise NotAuthorisedToLodgeAsThisScheme
+      unless assessor_can_lodge?(lodgement.scheme_assessor_id, scheme_ids)
+        raise UnauthorisedToLodgeAsThisSchemeException
       end
 
       @lodge_assessment_use_case.execute(lodgement, assessment_id)
@@ -43,7 +40,7 @@ module UseCase
       Hash.from_xml(xml).deep_symbolize_keys
     end
 
-    def validate_assessor_can_lodge(scheme_assessor_id, scheme_ids)
+    def assessor_can_lodge?(scheme_assessor_id, scheme_ids)
       @check_assessor_belongs_to_scheme.execute(scheme_assessor_id, scheme_ids)
     end
   end

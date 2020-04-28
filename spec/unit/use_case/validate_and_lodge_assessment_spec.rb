@@ -78,7 +78,7 @@ describe UseCase::ValidateAndLodgeAssessment do
           '1'
         )
       }.to raise_exception(
-        UseCase::ValidateAndLodgeAssessment::SchemaNotSupported
+        UseCase::ValidateAndLodgeAssessment::SchemaNotSupportedException
       )
     end
   end

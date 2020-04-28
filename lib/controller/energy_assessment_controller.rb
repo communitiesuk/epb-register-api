@@ -141,13 +141,13 @@ module Controller
       json_api_response(201, result.to_hash)
     rescue StandardError => e
       case e
-      when UseCase::ValidateAssessment::InvalidXml
+      when UseCase::ValidateAssessment::InvalidXmlException
         error_response(400, 'INVALID_REQUEST', e.message)
-      when UseCase::ValidateAndLodgeAssessment::SchemaNotSupported
-        error_response(400, 'INVALID_REQUEST', 'Schema not supported.')
+      when UseCase::ValidateAndLodgeAssessment::SchemaNotSupportedException
+        error_response(400, 'INVALID_REQUEST', 'Schema is not supported.')
       when UseCase::CheckAssessorBelongsToScheme::AssessorNotFoundException
         error_response(400, 'IVALID_REQUEST', 'Assessor is not registered.')
-      when UseCase::ValidateAndLodgeAssessment::NotAuthorisedToLodgeAsThisScheme
+      when UseCase::ValidateAndLodgeAssessment::UnauthorisedToLodgeAsThisSchemeException
         error_response(
           403,
           'UNAUTHORISED',

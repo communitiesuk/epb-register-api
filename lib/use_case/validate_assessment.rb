@@ -1,6 +1,6 @@
 module UseCase
   class ValidateAssessment
-    class InvalidXml < StandardError; end
+    class InvalidXmlException < StandardError; end
 
     def execute(xml, schema_location)
       validate_xml(xml, schema_location)
@@ -14,7 +14,7 @@ module UseCase
       file = Nokogiri.XML(xml)
       errors = xsd.validate(file)
 
-      raise InvalidXml, errors.map(&:message).join(', ') if errors.any?
+      raise InvalidXmlException, errors.map(&:message).join(', ') if errors.any?
 
       true
     end
