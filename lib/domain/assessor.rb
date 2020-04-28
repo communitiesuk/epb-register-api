@@ -8,24 +8,24 @@ module Domain
                 :domestic_sap_qualification
 
     def initialize(
-      scheme_assessor_id,
-      first_name,
-      last_name,
-      middle_names,
-      date_of_birth,
-      email,
-      telephone_number,
-      registered_by_id,
-      registered_by_name,
-      search_results_comparison_postcode,
-      domestic_sap_qualification,
-      domestic_rd_sap_qualification,
-      non_domestic_sp3_qualification,
-      non_domestic_cc4_qualification,
-      non_domestic_dec_qualification,
-      non_domestic_nos3_qualification,
-      non_domestic_nos4_qualification,
-      non_domestic_nos5_qualification
+      scheme_assessor_id: nil,
+      first_name: nil,
+      last_name: nil,
+      middle_names: nil,
+      date_of_birth: nil,
+      email: nil,
+      telephone_number: nil,
+      registered_by_id: nil,
+      registered_by_name: nil,
+      search_results_comparison_postcode: nil,
+      domestic_sap_qualification: nil,
+      domestic_rd_sap_qualification: nil,
+      non_domestic_sp3_qualification: nil,
+      non_domestic_cc4_qualification: nil,
+      non_domestic_dec_qualification: nil,
+      non_domestic_nos3_qualification: nil,
+      non_domestic_nos4_qualification: nil,
+      non_domestic_nos5_qualification: nil
     )
       @scheme_assessor_id = scheme_assessor_id
       @first_name = first_name

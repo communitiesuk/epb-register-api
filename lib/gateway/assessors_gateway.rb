@@ -26,24 +26,25 @@ module Gateway
         scheme_name = scheme[:name]
       end
       Domain::Assessor.new(
-        row[SCHEME_ASSESSOR_ID_COLUMN.to_s],
-        row[FIRST_NAME_COLUMN.to_s],
-        row[LAST_NAME_COLUMN.to_s],
-        row[MIDDLE_NAMES_COLUMN.to_s],
-        row[DATE_OF_BIRTH_COLUMN.to_s],
-        row[EMAIL_COLUMN.to_s],
-        row[TELEPHONE_NUMBER_COLUMN.to_s],
-        row[REGISTERED_BY_COLUMN.to_s],
-        scheme_name,
-        row[SEARCH_RESULTS_COMPARISON_POSTCODE_COLUMN.to_s],
-        row[DOMESTIC_SAP_COLUMN.to_s],
-        row[DOMESTIC_RD_SAP_COLUMN.to_s],
-        row[NON_DOMESTIC_SP3_COLUMN.to_s],
-        row[NON_DOMESTIC_CC4_COLUMN.to_s],
-        row[NON_DOMESTIC_DEC_COLUMN.to_s],
-        row[NON_DOMESTIC_NOS3_COLUMN.to_s],
-        row[NON_DOMESTIC_NOS4_COLUMN.to_s],
-        row[NON_DOMESTIC_NOS5_COLUMN.to_s]
+        scheme_assessor_id: row[SCHEME_ASSESSOR_ID_COLUMN.to_s],
+        first_name: row[FIRST_NAME_COLUMN.to_s],
+        last_name: row[LAST_NAME_COLUMN.to_s],
+        middle_names: row[MIDDLE_NAMES_COLUMN.to_s],
+        date_of_birth: row[DATE_OF_BIRTH_COLUMN.to_s],
+        email: row[EMAIL_COLUMN.to_s],
+        telephone_number: row[TELEPHONE_NUMBER_COLUMN.to_s],
+        registered_by_id: row[REGISTERED_BY_COLUMN.to_s],
+        registered_by_name: scheme_name,
+        search_results_comparison_postcode:
+          row[SEARCH_RESULTS_COMPARISON_POSTCODE_COLUMN.to_s],
+        domestic_sap_qualification: row[DOMESTIC_SAP_COLUMN.to_s],
+        domestic_rd_sap_qualification: row[DOMESTIC_RD_SAP_COLUMN.to_s],
+        non_domestic_sp3_qualification: row[NON_DOMESTIC_SP3_COLUMN.to_s],
+        non_domestic_cc4_qualification: row[NON_DOMESTIC_CC4_COLUMN.to_s],
+        non_domestic_dec_qualification: row[NON_DOMESTIC_DEC_COLUMN.to_s],
+        non_domestic_nos3_qualification: row[NON_DOMESTIC_NOS3_COLUMN.to_s],
+        non_domestic_nos4_qualification: row[NON_DOMESTIC_NOS4_COLUMN.to_s],
+        non_domestic_nos5_qualification: row[NON_DOMESTIC_NOS5_COLUMN.to_s]
       )
     end
 
