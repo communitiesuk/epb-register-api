@@ -107,6 +107,27 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
             schema_name: 'SAP-Schema-17.1'
           )
         end
+
+        it 'returns status 400 with the correct error response' do
+          scheme_id = add_scheme_and_get_id
+          add_assessor(scheme_id, 'TEST000000', inactive_assessor_request_body)
+
+          response =
+            JSON.parse(
+              lodge_assessment(
+                assessment_id: '0000-0000-0000-0000-0000',
+                assessment_body: valid_sap_xml,
+                accepted_responses: [400],
+                auth_data: { scheme_ids: [scheme_id] },
+                schema_name: 'SAP-Schema-17.1'
+              )
+                .body
+            )
+
+          expect(response['errors'][0]['title']).to eq(
+            'Assessor is not active.'
+          )
+        end
       end
 
       context 'when unqualified for RdSAP' do
