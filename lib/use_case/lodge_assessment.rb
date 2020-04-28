@@ -60,7 +60,8 @@ module UseCase
           assessor: assessor,
           address_summary: address_summary,
           current_energy_efficiency_rating: data[:current_energy_rating].to_i,
-          potential_energy_efficiency_rating: data[:potential_energy_rating].to_i,
+          potential_energy_efficiency_rating:
+            data[:potential_energy_rating].to_i,
           postcode: data[:postcode],
           date_of_expiry: expiry_date,
           address_line1: data[:address_line_one],
@@ -68,13 +69,16 @@ module UseCase
           address_line3: data[:address_line_three] || '',
           address_line4: '',
           town: data[:town],
-          current_space_heating_demand: data[:space_heating] || data[:new_space_heating],
-          current_water_heating_demand: data[:water_heating] || data[:new_water_heating],
+          current_space_heating_demand:
+            data[:space_heating] || data[:new_space_heating],
+          current_water_heating_demand:
+            data[:water_heating] || data[:new_water_heating],
           impact_of_loft_insulation: data[:impact_of_loft_insulation],
           impact_of_cavity_insulation: data[:impact_of_cavity_insulation],
-          impact_of_solid_wall_insulation: data[:impact_of_solid_wall_insulation],
+          impact_of_solid_wall_insulation:
+            data[:impact_of_solid_wall_insulation],
           recommended_improvements: lodgement.suggested_improvements
-       )
+        )
 
       validator = Helper::RdsapValidator::ValidateAll.new
       errors = validator.validate assessment

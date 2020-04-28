@@ -362,10 +362,10 @@ describe 'Searching for assessments' do
         migrate_assessment('123-987', opted_out_assessment)
 
         response =
-            assessments_search_by_street_name_and_town(
-                'Palmtree Road',
-                'Brighton'
-            )
+          assessments_search_by_street_name_and_town(
+            'Palmtree Road',
+            'Brighton'
+          )
         response_json = JSON.parse(response.body)
 
         expect(response_json['data']['assessments'][0]).to eq(nil)

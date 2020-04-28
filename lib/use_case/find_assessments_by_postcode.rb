@@ -23,12 +23,13 @@ module UseCase
       opt_out_filtered_results = []
 
       result.each do |r|
-        unless r[:opt_out] == true
-          opt_out_filtered_results << r
-        end
+        opt_out_filtered_results << r unless r[:opt_out] == true
       end
 
-      { 'data': { 'assessments': opt_out_filtered_results }, 'meta': { 'searchQuery': postcode } }
+      {
+        'data': { 'assessments': opt_out_filtered_results },
+        'meta': { 'searchQuery': postcode }
+      }
     end
   end
 end
