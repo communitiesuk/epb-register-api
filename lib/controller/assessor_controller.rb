@@ -146,9 +146,9 @@ module Controller
       create_assessor_response =
         @container.get_object(:add_assessor_use_case).execute(
           Boundary::AssessorRequest.new(
-            assessor_details,
-            scheme_assessor_id,
-            scheme_id
+              body: assessor_details,
+              scheme_assessor_id: scheme_assessor_id,
+              registered_by_id: scheme_id
           )
         )
       assessor_record = create_assessor_response[:assessor]

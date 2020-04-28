@@ -18,7 +18,7 @@ module Boundary
                 :non_domestic_nos4_qualification,
                 :non_domestic_nos5_qualification
 
-    def initialize(body, scheme_assessor_id, registered_by_id)
+    def initialize(body: nil, scheme_assessor_id: nil, registered_by_id: nil)
       @scheme_assessor_id = scheme_assessor_id
       @first_name = body[:first_name]
       @last_name = body[:last_name]
