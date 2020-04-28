@@ -392,6 +392,24 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
           expect(heat_demand['currentWaterHeatingDemand']).to eq 90
         end
       end
+
+      context 'when missing optional elements' do
+        it 'can return nil for property elements' do
+          doc.at('Dwelling-Type').remove
+          doc.at('Total-Floor-Area').remove
+
+          lodge_assessment(
+            assessment_id: '1234-1234-1234-1234-1234',
+            assessment_body: doc.to_xml,
+            accepted_responses: [201],
+            auth_data: { scheme_ids: [scheme_id] },
+            schema_name: 'SAP-Schema-17.1'
+          )
+
+          expect(response['data']['dwellingType']).to be_nil
+          expect(response['data']['totalFloorArea']).to be_zero
+        end
+      end
     end
 
     context 'when saving an rdsap assessment' do
