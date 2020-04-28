@@ -329,7 +329,30 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
           'postcode' => 'A0 0AA',
           'potentialEnergyEfficiencyBand' => 'e',
           'potentialEnergyEfficiencyRating' => 50,
-          'recommendedImprovements' => [],
+          'recommendedImprovements' => [
+            {
+              'energyPerformanceRatingImprovement' => 50,
+              'environmentalImpactRatingImprovement' => 50,
+              'greenDealCategoryCode' => '1',
+              'improvementCategory' => '6',
+              'improvementCode' => '5',
+              'improvementType' => 'Z3',
+              'indicativeCost' => '5',
+              'sequence' => 0,
+              'typicalSaving' => '0.0'
+            },
+            {
+              'energyPerformanceRatingImprovement' => 60,
+              'environmentalImpactRatingImprovement' => 64,
+              'greenDealCategoryCode' => '3',
+              'improvementCategory' => '2',
+              'improvementCode' => '1',
+              'improvementType' => 'Z2',
+              'indicativeCost' => '2',
+              'sequence' => 1,
+              'typicalSaving' => '0.1'
+            }
+          ],
           'totalFloorArea' => 0.0,
           'town' => 'Post-Town1',
           'typeOfAssessment' => 'SAP'

@@ -136,6 +136,34 @@
             <Hot-Water-Cost-Current>0</Hot-Water-Cost-Current>
             <Hot-Water-Cost-Potential>0</Hot-Water-Cost-Potential>
         </Energy-Use>
+      <Suggested-Improvements>
+        <Improvement>
+          <Sequence>0</Sequence>
+          <Improvement-Category>6</Improvement-Category>
+          <Improvement-Type>Z3</Improvement-Type>
+          <Typical-Saving>0.0</Typical-Saving>
+          <Energy-Performance-Rating>50</Energy-Performance-Rating>
+          <Environmental-Impact-Rating>50</Environmental-Impact-Rating>
+          <Indicative-Cost>5</Indicative-Cost>
+          <Improvement-Details>
+            <Improvement-Number>5</Improvement-Number>
+          </Improvement-Details>
+          <Green-Deal-Category>1</Green-Deal-Category>
+        </Improvement>
+        <Improvement>
+          <Sequence>1</Sequence>
+          <Improvement-Category>2</Improvement-Category>
+          <Improvement-Type>Z2</Improvement-Type>
+          <Typical-Saving>0.1</Typical-Saving>
+          <Energy-Performance-Rating>60</Energy-Performance-Rating>
+          <Environmental-Impact-Rating>64</Environmental-Impact-Rating>
+          <Indicative-Cost>2</Indicative-Cost>
+          <Improvement-Details>
+            <Improvement-Number>1</Improvement-Number>
+          </Improvement-Details>
+          <Green-Deal-Category>3</Green-Deal-Category>
+        </Improvement>
+      </Suggested-Improvements>
     </Energy-Assessment>
     <SAP2012-Data>
         <Data-Type>1</Data-Type>
