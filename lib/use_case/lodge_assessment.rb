@@ -39,7 +39,13 @@ module UseCase
 
       assessor = @assessors_gateway.fetch scheme_assessor_id
 
-      unless assessor.domestic_rd_sap_qualification == 'ACTIVE'
+      if lodgement.type == 'RdSAP' &&
+           assessor.domestic_rd_sap_qualification == 'INACTIVE'
+        raise InactiveAssessorException
+      end
+
+      if lodgement.type == 'SAP' &&
+           assessor.domestic_sap_qualification == 'INACTIVE'
         raise InactiveAssessorException
       end
 

@@ -17,6 +17,20 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
     }
   end
 
+  let(:sap_valid_assessor_request_body) do
+    {
+      firstName: 'Someone',
+      middleNames: 'Muddle',
+      lastName: 'Person',
+      dateOfBirth: '1991-02-25',
+      searchResultsComparisonPostcode: '',
+      qualifications: { domesticSap: 'ACTIVE' },
+      contactDetails: {
+        telephoneNumber: '010199991010101', email: 'person@person.com'
+      }
+    }
+  end
+
   let(:inactive_assessor_request_body) do
     {
       firstName: 'Someone',
@@ -24,7 +38,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
       lastName: 'Person',
       dateOfBirth: '1991-02-25',
       searchResultsComparisonPostcode: '',
-      qualifications: { domesticRdSap: 'INACTIVE' },
+      qualifications: { domesticSap: 'INACTIVE', domesticRdSap: 'INACTIVE' },
       contactDetails: {
         telephoneNumber: '010199991010101', email: 'person@person.com'
       }
@@ -76,42 +90,65 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
     end
 
     context 'when an assessor is inactive' do
-      it 'returns status 400' do
-        scheme_id = add_scheme_and_get_id
-        add_assessor(
-          scheme_id,
-          'Membership-Number0',
-          inactive_assessor_request_body
-        )
-
-        lodge_assessment(
-          assessment_id: '0000-0000-0000-0000-0000',
-          assessment_body: valid_rdsap_xml,
-          accepted_responses: [400],
-          auth_data: { scheme_ids: [scheme_id] }
-        )
-      end
-
-      it 'returns status 400 with the correct error response' do
-        scheme_id = add_scheme_and_get_id
-        add_assessor(
-          scheme_id,
-          'Membership-Number0',
-          inactive_assessor_request_body
-        )
-
-        response =
-          JSON.parse(
-            lodge_assessment(
-              assessment_id: '0000-0000-0000-0000-0000',
-              assessment_body: valid_rdsap_xml,
-              accepted_responses: [400],
-              auth_data: { scheme_ids: [scheme_id] }
-            )
-              .body
+      context 'when unqualified for SAP' do
+        it 'returns status 400' do
+          scheme_id = add_scheme_and_get_id
+          add_assessor(
+            scheme_id,
+            'Membership-Number0',
+            inactive_assessor_request_body
           )
 
-        expect(response['errors'][0]['title']).to eq('Assessor is not active.')
+          lodge_assessment(
+            assessment_id: '1234-1234-1234-1234-1234',
+            assessment_body: valid_sap_xml,
+            accepted_responses: [400],
+            auth_data: { scheme_ids: [scheme_id] },
+            schema_name: 'SAP-Schema-17.1'
+          )
+        end
+      end
+
+      context 'when unqualified for RdSAP' do
+        it 'returns status 400' do
+          scheme_id = add_scheme_and_get_id
+          add_assessor(
+            scheme_id,
+            'Membership-Number0',
+            inactive_assessor_request_body
+          )
+
+          lodge_assessment(
+            assessment_id: '0000-0000-0000-0000-0000',
+            assessment_body: valid_rdsap_xml,
+            accepted_responses: [400],
+            auth_data: { scheme_ids: [scheme_id] }
+          )
+        end
+
+        it 'returns status 400 with the correct error response' do
+          scheme_id = add_scheme_and_get_id
+          add_assessor(
+            scheme_id,
+            'Membership-Number0',
+            inactive_assessor_request_body
+          )
+
+          response =
+            JSON.parse(
+              lodge_assessment(
+                assessment_id: '0000-0000-0000-0000-0000',
+                assessment_body: valid_rdsap_xml,
+                accepted_responses: [400],
+                auth_data: { scheme_ids: [scheme_id] }
+              )
+                .body
+            )
+
+          expect(response['errors'][0]['title']).to eq(
+            'Assessor is not active.'
+          )
+        end
       end
     end
 
@@ -263,7 +300,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
       end
 
       before do
-        add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
+        add_assessor(scheme_id, 'TEST123456', sap_valid_assessor_request_body)
 
         assessment_id = doc.at('RRN')
         assessment_id.children = '1234-1234-1234-1234-1234'
@@ -298,8 +335,8 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
             'lastName' => 'Person',
             'middleNames' => 'Muddle',
             'qualifications' => {
-              'domesticSap' => 'INACTIVE',
-              'domesticRdSap' => 'ACTIVE',
+              'domesticSap' => 'ACTIVE',
+              'domesticRdSap' => 'INACTIVE',
               'nonDomesticCc4' => 'INACTIVE',
               'nonDomesticSp3' => 'INACTIVE',
               'nonDomesticDec' => 'INACTIVE',
