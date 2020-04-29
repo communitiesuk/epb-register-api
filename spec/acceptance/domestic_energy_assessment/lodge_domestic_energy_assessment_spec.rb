@@ -413,7 +413,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
               'typicalSaving' => '0.1'
             }
           ],
-          'totalFloorArea' => 0.0,
+          'totalFloorArea' => 10.0,
           'town' => 'Post-Town1',
           'typeOfAssessment' => 'SAP'
         }

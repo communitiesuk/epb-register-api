@@ -91,6 +91,7 @@ module Domain
           address: { path: %i[SAP_Report Report_Header Property Address] },
           property: { path: %i[SAP_Report Energy_Assessment Property_Summary] },
           dwelling_type: { root: :property, path: %i[Dwelling_Type] },
+          total_floor_area: { root: :property, path: %i[Total_Floor_Area] },
           address_line_one: { root: :address, path: %i[Address_Line_1] },
           town: { root: :address, path: %i[Post_Town] },
           postcode: { root: :address, path: %i[Postcode] },
