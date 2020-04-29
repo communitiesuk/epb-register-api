@@ -11,7 +11,7 @@ end
 desc 'Import some random certificate data'
 
 task :generate_certificate do
-  unless ENV['STAGE'] == 'staging' || ENV['STAGE'] == 'integration'
+  if ENV['STAGE'] == 'production'
     exit
   end
 
@@ -32,7 +32,6 @@ task :generate_certificate do
   impact_of_loft_insulation = [ -21, -543, -764, -836, -13, -94, -35]
   impact_of_cavity_insulation = [ -21, -764, -836, -13, -94, -35]
   impact_of_solid_wall_insulation = [ -4, -53, -64, -99, -23, -73, -5]
-  scheme_assessor_id = 0
   improvement_code = ['1', '2', '3', '4', '5', '6', '7', '8', '9',  '10', '11', '12', '13'].shuffle
   indicative_cost = ['£448 - £463', '£30', '£82765 - £700000', '£485 - £728', '£2000 - £3,500']
   typical_saving = [453.45, 200, 310.49, 999.99, 1000, 550.50]
@@ -42,10 +41,12 @@ task :generate_certificate do
   environmental_impact_rating_improvement  = [93, 85, 75, 62, 45]
   green_deal_category_code = ['a', 'b', 'c', 'd','e']
 
-  200.times do |number|
+  result = ActiveRecord::Base.connection.execute('SELECT * FROM assessors ORDER BY random() LIMIT 2000')
+
+  result.each_with_index do |assessor, number|
     line_1 = address_line1.sample
     line_2 = address_line2.sample
-    scheme_assessor_id = scheme_assessor_id + 1
+    scheme_assessor_id = assessor['scheme_assessor_id']
     if line_1.empty?
       line_1 = line_2
       line_2 = ''
