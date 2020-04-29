@@ -27,8 +27,8 @@ module UseCase
       end
 
       {
-        'data': { 'assessments': opt_out_filtered_results },
-        'meta': { 'searchQuery': postcode }
+        data: opt_out_filtered_results,
+        searchQuery: postcode
       }
     end
   end

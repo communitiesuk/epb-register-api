@@ -43,8 +43,6 @@ describe UseCase::FindAssessmentsByAssessmentId do
       expect(
         find_assessments_without_stub_data.execute('1234-5678-9101-1121-3141')[
           :data
-        ][
-          :assessments
         ]
       ).to eq([])
     end
@@ -52,7 +50,7 @@ describe UseCase::FindAssessmentsByAssessmentId do
     it 'return assessments where they exist' do
       response =
         find_assessments_with_stub_data.execute('1234-5678-9101-1121-3141')
-      expect(response[:data][:assessments].size).to eq(2)
+      expect(response[:data].size).to eq(2)
     end
   end
 end

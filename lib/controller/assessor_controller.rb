@@ -35,7 +35,8 @@ module Controller
     def search_by_name(name)
       result =
         @container.get_object(:find_assessors_by_name_use_case).execute(name)
-      json_response(200, result)
+
+      json_api_response(code: 200, data: result, burrow_key: :assessors)
     end
 
     def search_by_postcode(postcode, qualifications)
@@ -47,7 +48,8 @@ module Controller
           postcode,
           qualifications.split(',')
         )
-      json_response(200, result)
+
+      json_api_response(code: 200, data: result, burrow_key: :assessors)
     end
 
     get '/api/schemes/:scheme_id/assessors',
@@ -65,7 +67,7 @@ module Controller
       result =
         @container.get_object(:fetch_assessor_list_use_case).execute(scheme_id)
 
-      json_api_response(200, { assessors: result.map(&:to_hash) }, {})
+      json_api_response(code: 200, data: { assessors: result.map(&:to_hash) })
     rescue UseCase::FetchAssessorList::SchemeNotFoundException
       not_found_error('The requested scheme was not found')
     end
@@ -117,7 +119,7 @@ module Controller
           scheme_id,
           scheme_assessor_id
         )
-      json_api_response(200, result.to_hash)
+      json_api_response(code: 200, data: result.to_hash)
     rescue StandardError => e
       case e
       when UseCase::FetchAssessor::SchemeNotFoundException
@@ -155,10 +157,10 @@ module Controller
 
       if create_assessor_response[:assessor_was_newly_created]
         @events.event(:new_assessor_registered, scheme_assessor_id)
-        json_api_response(201, create_assessor_response[:assessor])
+        json_api_response(code: 201, data: create_assessor_response[:assessor])
       else
         @events.event(:assessor_updated, scheme_assessor_id)
-        json_api_response(200, assessor_record.to_hash)
+        json_api_response(code: 200, data: assessor_record.to_hash)
       end
     rescue StandardError => e
       case e

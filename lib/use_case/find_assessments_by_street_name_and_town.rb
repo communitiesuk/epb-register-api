@@ -18,8 +18,8 @@ module UseCase
         opt_out_filtered_results << r unless r[:opt_out] == true
       end
       {
-        'data': { 'assessments': opt_out_filtered_results },
-        'meta': { 'searchQuery': [street_name, town] }
+        data: opt_out_filtered_results,
+        search_query: [street_name, town]
       }
     end
   end

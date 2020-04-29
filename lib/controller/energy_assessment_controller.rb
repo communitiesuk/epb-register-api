@@ -95,7 +95,7 @@ module Controller
             .execute(params[:street_name], params[:town])
       end
 
-      json_response(200, result)
+      json_api_response(code: 200, data: result, burrow_key: :assessments)
     rescue StandardError => e
       case e
       when UseCase::FindAssessmentsByStreetNameAndTown::ParameterMissing
@@ -115,7 +115,7 @@ module Controller
       result =
         @container.get_object(:fetch_domestic_energy_assessment_use_case)
           .execute(assessment_id)
-      json_api_response(200, result)
+      json_api_response(code: 200, data: result)
     rescue StandardError => e
       case e
       when UseCase::FetchDomesticEnergyAssessment::NotFoundException
@@ -142,7 +142,7 @@ module Controller
           content_type,
           scheme_ids
         )
-      json_api_response(201, result.to_hash)
+      json_api_response(code: 201, data: result.to_hash)
     rescue StandardError => e
       case e
       when UseCase::ValidateAssessment::InvalidXmlException
@@ -186,7 +186,7 @@ module Controller
         :domestic_energy_assessment_migrated,
         params[:assessment_id]
       )
-      json_api_response(200, result.to_hash)
+      json_api_response(code: 200, data: result.to_hash)
     rescue StandardError => e
       case e
       when JSON::Schema::ValidationError

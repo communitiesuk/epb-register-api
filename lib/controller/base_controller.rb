@@ -65,6 +65,15 @@ module Controller
       @json_helper.convert_to_json(object)
     end
 
+    def json_api_response(code: 200, data: {}, meta: {}, burrow_key: false, data_key: :data)
+      if burrow_key
+        data,meta = meta,data
+        data[burrow_key] = meta.delete(data_key)
+      end
+
+      json_response(code, {data: data, meta: meta})
+    end
+
     def error_response(response_code = 500, error_code, title)
       json_response(response_code, errors: [{ code: error_code, title: title }])
     end
@@ -81,16 +90,12 @@ module Controller
       error_response(404, 'NOT_FOUND', title)
     end
 
-    def json_api_response(code = 200, data = {}, meta = {})
-      json_response(code, data: data, meta: meta)
-    end
-
     def forbidden(error_code, title, code = 403)
-      content_type :json
-      halt code,
-           @json_helper.convert_to_json(
+      halt json_response(code,
+           {
              errors: [{ code: error_code, title: title }]
-           )
+           }
+      )
     end
   end
 end
