@@ -4,7 +4,6 @@ module Helper
   module RdsapValidator
     class ValidateAll
       ALL_RULES = [
-        Helper::RdsapValidator::SuggestedImprovementSequence.new
       ].freeze
 
       def validate(domestic_energy_assessment)
