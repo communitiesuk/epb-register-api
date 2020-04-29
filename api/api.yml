@@ -447,10 +447,26 @@ paths:
           schema:
             $ref: '#/components/schemas/AssessmentType'
       requestBody:
-        content:
-          application/xml+[RdSAP-Schema-19.0|CEPC-7.1|NI-CEPC-7.1|RdSAP-Schema-NI-19.0|SAP-Schema-17.1|SAP-Schema-NI-17.4]:
+        content: {
+          application/xml+RdSAP-Schema-19.0:
             schema:
-              $ref: '#/components/schemas/Empty'
+              $ref: '#/components/schemas/Empty',
+          application/xml+SAP-Schema-17.1:
+            schema:
+              $ref: '#/components/schemas/Empty',
+          application/xml+RdSAP-Schema-NI-19.0:
+            schema:
+              $ref: '#/components/schemas/Empty',
+          application/xml+SAP-Schema-NI-17.4:
+            schema:
+              $ref: '#/components/schemas/Empty',
+          application/xml+CEPC-7.1:
+            schema:
+              $ref: '#/components/schemas/Empty',
+          application/xml+NI-CEPC-7.1:
+            schema:
+              $ref: '#/components/schemas/Empty',
+        }
       responses:
         '201':
           description: New assessment lodged
