@@ -365,6 +365,49 @@ paths:
           description: Assessment not found
         '500':
           description: Server error
+    post:
+      tags:
+        - Manage Assessments
+      summary: Lodge a new assessment
+      security:
+        - oauth:
+            - 'assessment:lodge'
+      parameters:
+        - in: path
+          name: assessmentId
+          required: true
+          description: 'The ID of the assessment being added, usually RRN'
+          schema:
+            $ref: '#/components/schemas/AssessmentId'
+        - in: path
+          name: assessmentType
+          required: true
+          description: 'The type of the assessment being added'
+          schema:
+            $ref: '#/components/schemas/AssessmentType'
+      requestBody:
+        content:
+          application/xml+[RdSAP-Schema-19.0|CEPC-7.1|NI-CEPC-7.1|RdSAP-Schema-NI-19.0|SAP-Schema-17.1|SAP-Schema-NI-17.4]:
+            schema:
+              $ref: '#/components/schemas/Empty'
+      responses:
+        '201':
+          description: New assessment lodged
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Empty'
+        '400':
+          description: Bad request
+        '409':
+          description: Assessment with that assessmentId already exists
+        '403':
+          description: Forbidden
+        '500':
+          description: Server error
 
   '/assessments/{assessmentType}/{assessmentId}':
     post:
@@ -389,7 +432,7 @@ paths:
             $ref: '#/components/schemas/AssessmentType'
       requestBody:
         content:
-          application/xml+RdSAP-Schema-19.0:
+          application/xml+[RdSAP-Schema-19.0|CEPC-7.1|NI-CEPC-7.1|RdSAP-Schema-NI-19.0|SAP-Schema-17.1|SAP-Schema-NI-17.4]:
             schema:
               $ref: '#/components/schemas/Empty'
       responses:
