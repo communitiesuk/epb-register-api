@@ -27,7 +27,7 @@ module UseCase
         raise ValidationErrorException
       end
 
-      unless assessor_can_lodge?(lodgement.scheme_assessor_id, scheme_ids)
+      unless assessor_can_lodge?(lodgement.fetch_data[:assessor_id], scheme_ids)
         raise UnauthorisedToLodgeAsThisSchemeException
       end
 

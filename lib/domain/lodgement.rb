@@ -7,16 +7,14 @@ module Domain
         report_type: 'RdSAP',
         schema_path:
           'api/schemas/xml/RdSAP-Schema-19.0/RdSAP/Templates/RdSAP-Report.xsd',
-        scheme_assessor_id_location: %i[
-          RdSAP_Report
-          Report_Header
-          Energy_Assessor
-          Identification_Number
-          Membership_Number
-        ],
         data: {
           report_header: { path: %i[RdSAP_Report Report_Header] },
-          assessment_id: { path: %i[RdSAP_Report Report_Header RRN] },
+          assessment_id: { root: :report_header, path: %i[RRN] },
+          assessor_id: { root: :report_header, path: %i[
+            Energy_Assessor
+            Identification_Number
+            Membership_Number
+          ]},
           property: {
             path: %i[RdSAP_Report Energy_Assessment Property_Summary]
           },
@@ -66,13 +64,26 @@ module Domain
           address_line_three: { root: :address, path: %i[Address_Line_3] },
           town: { root: :address, path: %i[Post_Town] },
           postcode: { root: :address, path: %i[Postcode] },
-          improvement: {
+          improvements: {
             path: %i[
               RdSAP_Report
               Energy_Assessment
               Suggested_Improvements
               Improvement
-            ]
+            ],
+            extract: {
+              sequence: {path: [:Sequence]},
+              improvement_code: {path: [:Improvement_Details, :Improvement_Number]},
+              indicative_cost: {path: [:Indicative_Cost]},
+              typical_saving: {path: [:Typical_Saving]},
+              improvement_category: {path: [:Improvement_Category]},
+              improvement_type: {path: [:Improvement_Type]},
+              energy_performance_rating_improvement:
+                {path: [:Energy_Performance_Rating]},
+              environmental_impact_rating_improvement:
+                {path: :Environmental_Impact_Rating},
+              green_deal_category_code: {path: [:Green_Deal_Category]}
+            }
           }
         }
       },
@@ -80,16 +91,14 @@ module Domain
         report_type: 'SAP',
         schema_path:
           'api/schemas/xml/SAP-Schema-17.1/SAP/Templates/SAP-Report.xsd',
-        scheme_assessor_id_location: %i[
-          SAP_Report
-          Report_Header
-          Home_Inspector
-          Identification_Number
-          Certificate_Number
-        ],
         data: {
           report_header: { path: %i[SAP_Report Report_Header] },
-          assessment_id: { path: %i[SAP_Report Report_Header RRN] },
+          assessment_id: { root: :report_header, path: %i[RRN] },
+          assessor_id: { root: :report_header, path: %i[
+            Home_Inspector
+            Identification_Number
+            Certificate_Number
+          ]},
           renewable_heat_incentive: {
             path: %i[SAP_Report Energy_Assessment Renewable_Heat_Incentive]
           },
@@ -145,13 +154,26 @@ module Domain
           potential_carbon_emission: {
             root: :energy_use, path: %i[CO2_Emissions_Potential]
           },
-          improvement: {
+          improvements: {
             path: %i[
               SAP_Report
               Energy_Assessment
               Suggested_Improvements
               Improvement
-            ]
+            ],
+            extract: {
+              sequence: {path: [:Sequence]},
+              improvement_code: {path: [:Improvement_Details, :Improvement_Number]},
+              indicative_cost: {path: [:Indicative_Cost]},
+              typical_saving: {path: [:Typical_Saving]},
+              improvement_category: {path: [:Improvement_Category]},
+              improvement_type: {path: [:Improvement_Type]},
+              energy_performance_rating_improvement:
+                {path: [:Energy_Performance_Rating]},
+              environmental_impact_rating_improvement:
+                {path: [:Environmental_Impact_Rating]},
+              green_deal_category_code: {path: [:Green_Deal_Category]}
+            }
           }
         }
       }
@@ -188,31 +210,27 @@ module Domain
       @data
     end
 
-    def suggested_improvements
-      suggested_improvements =
-        @data.dig(*SCHEMAS[@schema_name][:data][:improvement][:path])
-
-      if suggested_improvements.nil?
+    def extract(data, key = :improvements, target_domain = Domain::RecommendedImprovement)
+      extracter = data[key]
+      if extracter.nil?
         []
       else
-        unless suggested_improvements.is_a? Array
-          suggested_improvements = [suggested_improvements]
+        unless extracter.is_a? Array
+          extracter = [extracter]
         end
 
-        suggested_improvements.map do |i|
-          Domain::RecommendedImprovement.new(
-            assessment_id: assessment_id,
-            sequence: i[:Sequence].to_i,
-            improvement_code: i[:Improvement_Details][:Improvement_Number],
-            indicative_cost: i[:Indicative_Cost],
-            typical_saving: i[:Typical_Saving],
-            improvement_category: i[:Improvement_Category],
-            improvement_type: i[:Improvement_Type],
-            energy_performance_rating_improvement:
-              i[:Energy_Performance_Rating],
-            environmental_impact_rating_improvement:
-              i[:Environmental_Impact_Rating],
-            green_deal_category_code: i[:Green_Deal_Category]
+        extracter.map do |i|
+          SCHEMAS[@schema_name][:data]
+          extractor_inner = {assessment_id: data[:assessment_id]}
+
+          SCHEMAS[@schema_name][:data][key][:extract].each do |key2, value|
+            extractor_inner[key2] = i.dig(*value[:path])
+          end
+
+          extractor_inner[:sequence] = extractor_inner[:sequence].to_i
+
+          target_domain.new(
+            extractor_inner
           )
         end
       end
@@ -220,14 +238,6 @@ module Domain
 
     def schema_path
       SCHEMAS[@schema_name][:schema_path]
-    end
-
-    def scheme_assessor_id
-      @data.dig(*SCHEMAS[@schema_name][:scheme_assessor_id_location])
-    end
-
-    def assessment_id
-      @data.dig(*SCHEMAS[@schema_name][:data][:assessment_id][:path])
     end
 
     def type

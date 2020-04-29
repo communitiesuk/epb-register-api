@@ -15,7 +15,7 @@ module UseCase
     def execute(lodgement, assessment_id)
       data = lodgement.fetch_data
 
-      unless assessment_id == lodgement.assessment_id
+      unless assessment_id == data[:assessment_id]
         raise AssessmentIdMismatchException
       end
 
@@ -23,7 +23,7 @@ module UseCase
         raise DuplicateAssessmentIdException
       end
 
-      scheme_assessor_id = lodgement.scheme_assessor_id
+      scheme_assessor_id = data[:assessor_id]
 
       address_summary =
         [
@@ -79,7 +79,7 @@ module UseCase
           impact_of_cavity_insulation: data[:impact_of_cavity_insulation],
           impact_of_solid_wall_insulation:
             data[:impact_of_solid_wall_insulation],
-          recommended_improvements: lodgement.suggested_improvements
+          recommended_improvements: lodgement.extract(data)
         )
 
       validator = Helper::RdsapValidator::ValidateAll.new
