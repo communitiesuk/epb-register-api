@@ -1135,6 +1135,9 @@ components:
           type: string
           format: date
           example: '2020-02-29'
+        isLatestAssessmentForAddress:
+          type: boolean
+          example: true
         mainFuelType:
           type: string
           example: 'Natural Gas'
