@@ -97,9 +97,9 @@
             <Environmental-Impact-Potential>50</Environmental-Impact-Potential>
             <Energy-Consumption-Current>0</Energy-Consumption-Current>
             <Energy-Consumption-Potential>0</Energy-Consumption-Potential>
-            <CO2-Emissions-Current>0</CO2-Emissions-Current>
+            <CO2-Emissions-Current>2.4</CO2-Emissions-Current>
             <CO2-Emissions-Current-Per-Floor-Area>0</CO2-Emissions-Current-Per-Floor-Area>
-            <CO2-Emissions-Potential>0</CO2-Emissions-Potential>
+            <CO2-Emissions-Potential>1.4</CO2-Emissions-Potential>
             <Lighting-Cost-Current>0</Lighting-Cost-Current>
             <Lighting-Cost-Potential>0</Lighting-Cost-Potential>
             <Heating-Cost-Current>0</Heating-Cost-Current>

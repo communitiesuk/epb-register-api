@@ -37,6 +37,12 @@ module Domain
           potential_energy_rating: {
             root: :energy_use, path: %i[Energy_Rating_Potential]
           },
+          current_carbon_emission: {
+            root: :energy_use, path: %i[CO2_Emissions_Current]
+          },
+          potential_carbon_emission: {
+            root: :energy_use, path: %i[CO2_Emissions_Potential]
+          },
           space_heating: {
             root: :renewable_heat_incentive,
             path: %i[Space_Heating_Existing_Dwelling]
@@ -132,6 +138,12 @@ module Domain
           },
           potential_energy_rating: {
             root: :energy_use, path: %i[Energy_Rating_Potential]
+          },
+          current_carbon_emission: {
+            root: :energy_use, path: %i[CO2_Emissions_Current]
+          },
+          potential_carbon_emission: {
+            root: :energy_use, path: %i[CO2_Emissions_Potential]
           },
           improvement: {
             path: %i[
