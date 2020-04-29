@@ -42,8 +42,8 @@ module UseCase
       end
 
       {
-        'data': { 'assessors': response },
-        'meta': { 'searchName': name, 'looseMatch': loose_match }
+        data: { assessors: response },
+        meta: { search_name: name, loose_match: loose_match }
       }
     end
   end
