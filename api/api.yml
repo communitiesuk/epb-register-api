@@ -386,32 +386,25 @@ paths:
           schema:
             $ref: '#/components/schemas/AssessmentType'
       requestBody:
-        content: {
-          application/xml+RdSAP-Schema-19.0: {
+        content:
+          application/xml+RdSAP-Schema-19.0:
             schema:
               $ref: '#/components/schemas/Empty'
-          },
-          application/xml+SAP-Schema-17.1: {
+          application/xml+SAP-Schema-17.1:
             schema:
               $ref: '#/components/schemas/Empty'
-          },
-          application/xml+RdSAP-Schema-NI-19.0: {
+          application/xml+RdSAP-Schema-NI-19.0:
             schema:
               $ref: '#/components/schemas/Empty'
-          },
-          application/xml+SAP-Schema-NI-17.4: {
+          application/xml+SAP-Schema-NI-17.4:
             schema:
               $ref: '#/components/schemas/Empty'
-          },
-          application/xml+CEPC-7.1: {
+          application/xml+CEPC-7.1:
             schema:
               $ref: '#/components/schemas/Empty'
-          },
-          application/xml+NI-CEPC-7.1: {
+          application/xml+NI-CEPC-7.1:
             schema:
               $ref: '#/components/schemas/Empty'
-          }
-        }
       responses:
         '201':
           description: New assessment lodged
@@ -453,32 +446,25 @@ paths:
           schema:
             $ref: '#/components/schemas/AssessmentType'
       requestBody:
-        content: {
-          application/xml+RdSAP-Schema-19.0: {
+        content:
+          application/xml+RdSAP-Schema-19.0:
             schema:
               $ref: '#/components/schemas/Empty'
-          },
-          application/xml+SAP-Schema-17.1: {
+          application/xml+SAP-Schema-17.1:
             schema:
               $ref: '#/components/schemas/Empty'
-          },
-          application/xml+RdSAP-Schema-NI-19.0: {
+          application/xml+RdSAP-Schema-NI-19.0:
             schema:
               $ref: '#/components/schemas/Empty'
-          },
-          application/xml+SAP-Schema-NI-17.4: {
+          application/xml+SAP-Schema-NI-17.4:
             schema:
               $ref: '#/components/schemas/Empty'
-          },
-          application/xml+CEPC-7.1: {
+          application/xml+CEPC-7.1:
             schema:
               $ref: '#/components/schemas/Empty'
-          },
-          application/xml+NI-CEPC-7.1: {
+          application/xml+NI-CEPC-7.1:
             schema:
               $ref: '#/components/schemas/Empty'
-          }
-        }
       responses:
         '201':
           description: New assessment lodged
