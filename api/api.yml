@@ -365,7 +365,7 @@ paths:
           description: Assessment not found
         '500':
           description: Server error
-    post:
+    put:
       tags:
         - Manage Assessments
       summary: Lodge a new assessment
@@ -387,24 +387,30 @@ paths:
             $ref: '#/components/schemas/AssessmentType'
       requestBody:
         content: {
-          application/xml+RdSAP-Schema-19.0:
+          application/xml+RdSAP-Schema-19.0: {
             schema:
-              $ref: '#/components/schemas/Empty',
-          application/xml+SAP-Schema-17.1:
+              $ref: '#/components/schemas/Empty'
+          },
+          application/xml+SAP-Schema-17.1: {
             schema:
-              $ref: '#/components/schemas/Empty',
-          application/xml+RdSAP-Schema-NI-19.0:
+              $ref: '#/components/schemas/Empty'
+          },
+          application/xml+RdSAP-Schema-NI-19.0: {
             schema:
-              $ref: '#/components/schemas/Empty',
-          application/xml+SAP-Schema-NI-17.4:
+              $ref: '#/components/schemas/Empty'
+          },
+          application/xml+SAP-Schema-NI-17.4: {
             schema:
-              $ref: '#/components/schemas/Empty',
-          application/xml+CEPC-7.1:
+              $ref: '#/components/schemas/Empty'
+          },
+          application/xml+CEPC-7.1: {
             schema:
-              $ref: '#/components/schemas/Empty',
-          application/xml+NI-CEPC-7.1:
+              $ref: '#/components/schemas/Empty'
+          },
+          application/xml+NI-CEPC-7.1: {
             schema:
-              $ref: '#/components/schemas/Empty',
+              $ref: '#/components/schemas/Empty'
+          }
         }
       responses:
         '201':
@@ -426,7 +432,7 @@ paths:
           description: Server error
 
   '/assessments/{assessmentType}/{assessmentId}':
-    post:
+    put:
       tags:
         - Manage Assessments
       summary: Lodge a new assessment
@@ -448,24 +454,30 @@ paths:
             $ref: '#/components/schemas/AssessmentType'
       requestBody:
         content: {
-          application/xml+RdSAP-Schema-19.0:
+          application/xml+RdSAP-Schema-19.0: {
             schema:
-              $ref: '#/components/schemas/Empty',
-          application/xml+SAP-Schema-17.1:
+              $ref: '#/components/schemas/Empty'
+          },
+          application/xml+SAP-Schema-17.1: {
             schema:
-              $ref: '#/components/schemas/Empty',
-          application/xml+RdSAP-Schema-NI-19.0:
+              $ref: '#/components/schemas/Empty'
+          },
+          application/xml+RdSAP-Schema-NI-19.0: {
             schema:
-              $ref: '#/components/schemas/Empty',
-          application/xml+SAP-Schema-NI-17.4:
+              $ref: '#/components/schemas/Empty'
+          },
+          application/xml+SAP-Schema-NI-17.4: {
             schema:
-              $ref: '#/components/schemas/Empty',
-          application/xml+CEPC-7.1:
+              $ref: '#/components/schemas/Empty'
+          },
+          application/xml+CEPC-7.1: {
             schema:
-              $ref: '#/components/schemas/Empty',
-          application/xml+NI-CEPC-7.1:
+              $ref: '#/components/schemas/Empty'
+          },
+          application/xml+NI-CEPC-7.1: {
             schema:
-              $ref: '#/components/schemas/Empty',
+              $ref: '#/components/schemas/Empty'
+          }
         }
       responses:
         '201':
