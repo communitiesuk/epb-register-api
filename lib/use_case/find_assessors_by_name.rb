@@ -41,11 +41,7 @@ module UseCase
         end
       end
 
-      {
-        data: response,
-        search_name: name,
-        loose_match: loose_match
-      }
+      { data: response, search_name: name, loose_match: loose_match }
     end
   end
 end

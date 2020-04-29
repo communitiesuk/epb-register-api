@@ -26,10 +26,7 @@ module UseCase
         opt_out_filtered_results << r unless r[:opt_out] == true
       end
 
-      {
-        data: opt_out_filtered_results,
-        searchQuery: postcode
-      }
+      { data: opt_out_filtered_results, searchQuery: postcode }
     end
   end
 end

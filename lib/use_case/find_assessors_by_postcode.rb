@@ -33,10 +33,7 @@ module UseCase
 
       result = @assessor_gateway.search(latitude, longitude, qualifications)
 
-      {
-        data: result,
-        search_postcode: postcode
-      }
+      { data: result, search_postcode: postcode }
     end
   end
 end
