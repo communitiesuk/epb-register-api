@@ -38,7 +38,7 @@ task :generate_assessor do
       nos4 = rand(2)
       sap = rand(2)
 
-      scheme_assessor_id = (scheme['name'][0..5] + index.to_s.rjust(5, '0')).upcase
+      scheme_assessor_id = (scheme['name'][0..4] + index.to_s.rjust(5, '0')).upcase
 
       query =
         "INSERT INTO
