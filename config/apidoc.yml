@@ -453,42 +453,6 @@ paths:
                 $ref: '#/components/schemas/ErrorUnauthenticated'
 
   /assessments/{assessmentId}:
-    get:
-      tags:
-        - Manage Assessments
-      summary: Get an Energy Performance Assessment
-      security:
-        - oauth:
-            - 'assessment:fetch'
-      parameters:
-        - in: path
-          name: assessmentId
-          required: true
-          description: 'The ID of the assessment being requested, usually RRN'
-          schema:
-            $ref: '#/components/schemas/AssessmentId'
-      responses:
-        '200':
-          description: Energy Performance Assessment
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    $ref: '#/components/schemas/Empty'
-            application/xml:
-              schema:
-                type: object
-                properties:
-                  data:
-                    $ref: '#/components/schemas/Empty'
-        '403':
-          description: Forbidden
-        '404':
-          description: Assessment not found
-        '500':
-          description: Server error
     post:
       tags:
         - Assessments
