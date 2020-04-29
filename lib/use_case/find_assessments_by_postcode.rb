@@ -23,7 +23,7 @@ module UseCase
       opt_out_filtered_results = []
 
       result.each do |r|
-        opt_out_filtered_results << r unless r[:opt_out] == true
+        opt_out_filtered_results << r unless r[:opt_out]
       end
 
       { data: opt_out_filtered_results, searchQuery: postcode }
