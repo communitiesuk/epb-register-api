@@ -40,6 +40,16 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
         energyPerformanceRatingImprovement: 78,
         environmentalImpactRatingImprovement: 90,
         greenDealCategoryCode: 'string'
+      },
+      {
+        sequence: 2,
+        improvementCode: '2',
+        typicalSaving: 50.21,
+        improvementCategory: 'string',
+        improvementType: 'string',
+        energyPerformanceRatingImprovement: 78,
+        environmentalImpactRatingImprovement: 90,
+        greenDealCategoryCode: 'string'
       }
     ]
   end
@@ -119,12 +129,6 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
     it 'rejects improvements that dont contain a improvementCode' do
       recommendations = valid_recommendations
       recommendations[0].delete(:improvementCode)
-      migrate_invalid_recommendations(recommendations)
-    end
-
-    it 'rejects improvements that dont contain a indicativeCost' do
-      recommendations = valid_recommendations
-      recommendations[0].delete(:indicativeCost)
       migrate_invalid_recommendations(recommendations)
     end
 

@@ -59,10 +59,10 @@ module Controller
           type: 'array',
           items: {
             type: 'object',
-            required: %w[sequence improvementCode indicativeCost typicalSaving],
+            required: %w[sequence improvementCode typicalSaving],
             properties: {
               sequence: { type: 'integer', format: 'positive-int' },
-              improvementCode: { type: 'string', enum: [*'1'..'63'].freeze },
+              improvementCode: { type: %w[string null], enum: [*'1'..'63'].freeze },
               indicativeCost: { type: 'string' },
               typicalSaving: { type: 'number', format: 'positive-int' },
               improvementCategory: { type: 'string' },
