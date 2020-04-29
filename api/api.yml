@@ -691,6 +691,8 @@ paths:
                     properties:
                       assessment:
                         $ref: '#/components/schemas/AssessmentGreenDealDetails'
+        '400':
+          description: The assessmentId parameter is badly formatted
         '403':
           description: Forbidden
         '404':
