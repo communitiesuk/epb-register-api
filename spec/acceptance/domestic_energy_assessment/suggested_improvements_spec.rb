@@ -55,6 +55,8 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
       addressSummary: '123 Victoria Street, London, SW1A 1BD',
       currentEnergyEfficiencyRating: 75,
       potentialEnergyEfficiencyRating: 80,
+      currentCarbonEmission: 2.4,
+      potentialCarbonEmission: 1.4,
       optOut: false,
       postcode: 'SE1 7EZ',
       dateOfExpiry: '2021-01-01',

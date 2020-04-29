@@ -279,6 +279,8 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
           addressSummary
           currentEnergyEfficiencyRating
           potentialEnergyEfficiencyRating
+          currentCarbonEmission
+          potentialCarbonEmission
           optOut
           postcode
           dateOfExpiry
@@ -372,6 +374,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
             'schemeAssessorId' => 'TEST123456',
             'searchResultsComparisonPostcode' => ''
           },
+          'currentCarbonEmission' => 0.0,
           'currentEnergyEfficiencyBand' => 'e',
           'currentEnergyEfficiencyRating' => 50,
           'dateOfAssessment' => '2006-05-04',
@@ -387,6 +390,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
           },
           'optOut' => false,
           'postcode' => 'A0 0AA',
+          'potentialCarbonEmission' => 0.0,
           'potentialEnergyEfficiencyBand' => 'e',
           'potentialEnergyEfficiencyRating' => 50,
           'recommendedImprovements' => [
@@ -558,6 +562,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
             'schemeAssessorId' => 'TEST123456',
             'searchResultsComparisonPostcode' => ''
           },
+          'currentCarbonEmission' => 0.0,
           'currentEnergyEfficiencyBand' => 'e',
           'currentEnergyEfficiencyRating' => 50,
           'optOut' => false,
@@ -573,6 +578,7 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
             'impactOfSolidWallInsulation' => -16
           },
           'postcode' => 'A0 0AA',
+          'potentialCarbonEmission' => 0.0,
           'potentialEnergyEfficiencyBand' => 'e',
           'potentialEnergyEfficiencyRating' => 50,
           'recommendedImprovements' => [

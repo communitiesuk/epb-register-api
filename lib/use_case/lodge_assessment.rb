@@ -62,6 +62,8 @@ module UseCase
           current_energy_efficiency_rating: data[:current_energy_rating].to_i,
           potential_energy_efficiency_rating:
             data[:potential_energy_rating].to_i,
+          current_carbon_emission: data[:current_carbon_emission],
+          potential_carbon_emission: data[:potential_carbon_emission],
           postcode: data[:postcode],
           date_of_expiry: expiry_date,
           address_line1: data[:address_line_one],

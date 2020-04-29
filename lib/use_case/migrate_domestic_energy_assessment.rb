@@ -27,6 +27,9 @@ module UseCase
             assessment_data[:current_energy_efficiency_rating],
           potential_energy_efficiency_rating:
             assessment_data[:potential_energy_efficiency_rating],
+          current_carbon_emission: assessment_data[:current_carbon_emission],
+          potential_carbon_emission:
+            assessment_data[:potential_carbon_emission],
           opt_out: assessment_data[:opt_out],
           postcode: assessment_data[:postcode],
           date_of_expiry: assessment_data[:date_of_expiry],

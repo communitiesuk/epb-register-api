@@ -29,6 +29,8 @@ module Gateway
           assessment[:current_energy_efficiency_rating],
         potential_energy_efficiency_rating:
           assessment[:potential_energy_efficiency_rating],
+        current_carbon_emission: assessment[:current_carbon_emission].to_f,
+        potential_carbon_emission: assessment[:potential_carbon_emission].to_f,
         opt_out: assessment[:opt_out],
         postcode: assessment[:postcode],
         date_of_expiry: assessment[:date_of_expiry].strftime('%Y-%m-%d'),
@@ -109,7 +111,8 @@ module Gateway
             potential_energy_efficiency_rating, opt_out, postcode, date_of_expiry,
             address_line1, address_line2, address_line3, address_line4, town,
             current_space_heating_demand, current_water_heating_demand, impact_of_loft_insulation,
-            impact_of_cavity_insulation, impact_of_solid_wall_insulation
+            impact_of_cavity_insulation, impact_of_solid_wall_insulation,
+            current_carbon_emission, potential_carbon_emission
         FROM domestic_energy_assessments
         WHERE postcode = '#{
           ActiveRecord::Base.sanitize_sql(postcode)
@@ -132,7 +135,8 @@ module Gateway
           potential_energy_efficiency_rating, opt_out, postcode, date_of_expiry,
           address_line1, address_line2, address_line3, address_line4, town,
           current_space_heating_demand, current_water_heating_demand, impact_of_loft_insulation,
-          impact_of_cavity_insulation, impact_of_solid_wall_insulation
+          impact_of_cavity_insulation, impact_of_solid_wall_insulation,
+          current_carbon_emission, potential_carbon_emission
           FROM domestic_energy_assessments
         WHERE assessment_id = '#{
           ActiveRecord::Base.sanitize_sql(assessment_id)
@@ -158,7 +162,8 @@ module Gateway
           potential_energy_efficiency_rating, opt_out, postcode, date_of_expiry,
           address_line1, address_line2, address_line3, address_line4, town,
           current_space_heating_demand, current_water_heating_demand, impact_of_loft_insulation,
-          impact_of_cavity_insulation, impact_of_solid_wall_insulation
+          impact_of_cavity_insulation, impact_of_solid_wall_insulation,
+          current_carbon_emission, potential_carbon_emission
         FROM domestic_energy_assessments
         WHERE (address_line1 ILIKE '%#{
           ActiveRecord::Base.sanitize_sql(street_name)
