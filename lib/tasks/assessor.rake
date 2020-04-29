@@ -22,8 +22,8 @@ task :generate_assessor do
 
     ActiveRecord::Base.logger = nil
 
-    first_names = %w[Abul Jaseera Lawrence Kevin Christine Tito Matt Barry Yusuf Andreas Becks Dean Marten Tristan Rebecca]
-    last_names = %w[Kibria Abubacker Goldstien Keenoy Horrocks Sarrionandia Anderson Anderson Sheikh England Henze Wanless Wetterberg Tonks Pye]
+    first_names = %w[Abul Jaseera Lawrence Kevin Christine Tito Matt Barry Yusuf Andreas Becks Dean Marten Tristan Rebecca George]
+    last_names = %w[Kibria Abubacker Goldstien Keenoy Horrocks Sarrionandia Anderson Anderson Sheikh England Henze Wanless Wetterberg Tonks Pye Schena]
 
     result.each_with_index do |row, index|
       first_name = first_names[rand(first_names.size)]
