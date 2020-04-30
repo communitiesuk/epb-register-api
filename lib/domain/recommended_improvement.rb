@@ -10,6 +10,8 @@ module Domain
       typical_saving: nil,
       improvement_category: nil,
       improvement_type: nil,
+      improvement_title: nil,
+      improvement_description: nil,
       energy_performance_rating_improvement: nil,
       environmental_impact_rating_improvement: nil,
       green_deal_category_code: nil
@@ -21,6 +23,8 @@ module Domain
       @typical_saving = typical_saving
       @improvement_category = improvement_category
       @improvement_type = improvement_type
+      @improvement_title = improvement_title
+      @improvement_description = improvement_description
       @energy_performance_rating_improvement =
         energy_performance_rating_improvement
       @environmental_impact_rating_improvement =
@@ -36,6 +40,8 @@ module Domain
         typical_saving: @typical_saving,
         improvement_category: @improvement_category,
         improvement_type: @improvement_type,
+        improvement_title: @improvement_title,
+        improvement_description: @improvement_description,
         energy_performance_rating_improvement:
           @energy_performance_rating_improvement,
         environmental_impact_rating_improvement:
@@ -53,6 +59,8 @@ module Domain
         typical_saving: @typical_saving,
         improvement_category: @improvement_category,
         improvement_type: @improvement_type,
+        improvement_title: @improvement_title,
+        improvement_description: @improvement_description,
         energy_performance_rating_improvement:
           @energy_performance_rating_improvement,
         environmental_impact_rating_improvement:

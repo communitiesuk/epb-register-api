@@ -58,21 +58,41 @@ module Controller
         recommendedImprovements: {
           type: 'array',
           items: {
-            type: 'object',
-            required: %w[sequence improvementCode typicalSaving],
-            properties: {
-              sequence: { type: 'integer', format: 'positive-int' },
-              improvementCode: {
-                type: %w[string null], enum: [*'1'..'63'].freeze
+            anyOf: [
+              {
+                type: 'object',
+                required: %w[sequence improvementCode typicalSaving],
+                properties: {
+                  sequence: { type: 'integer', format: 'positive-int' },
+                  improvementCode: {
+                    type: %w[string], enum: [*'1'..'63'].freeze
+                  },
+                  indicativeCost: { type: %w[string null] },
+                  typicalSaving: { type: 'number', format: 'positive-int' },
+                  improvementCategory: { type: 'string' },
+                  improvementType: { type: 'string' },
+                  energyPerformanceRatingImprovement: { type: 'integer' },
+                  environmentalImpactRatingImprovement: { type: 'integer' },
+                  greenDealCategoryCode: { type: 'string' }
+                }
               },
-              indicativeCost: { type: 'string' },
-              typicalSaving: { type: 'number', format: 'positive-int' },
-              improvementCategory: { type: 'string' },
-              improvementType: { type: 'string' },
-              energyPerformanceRatingImprovement: { type: 'integer' },
-              environmentalImpactRatingImprovement: { type: 'integer' },
-              greenDealCategoryCode: { type: 'string' }
-            }
+              {
+                type: 'object',
+                required: %w[sequence improvementTitle improvementDescription typicalSaving],
+                properties: {
+                  sequence: { type: 'integer', format: 'positive-int' },
+                  indicativeCost: { type: %w[string null] },
+                  typicalSaving: { type: 'number', format: 'positive-int' },
+                  improvementCategory: { type: 'string' },
+                  improvementType: { type: 'string' },
+                  improvementTitle: { type: 'string' },
+                  improvementDescription: { type: 'string' },
+                  energyPerformanceRatingImprovement: { type: 'integer' },
+                  environmentalImpactRatingImprovement: { type: 'integer' },
+                  greenDealCategoryCode: { type: 'string' }
+                }
+              }
+            ]
           }
         }
       }

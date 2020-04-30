@@ -59,6 +59,8 @@ module UseCase
                   i[:typical_saving] ? i[:typical_saving].round(2) : 0,
                 improvement_category: i[:improvement_category],
                 improvement_type: i[:improvement_type],
+                improvement_title: i[:improvement_title],
+                improvement_description: i[:improvement_description],
                 energy_performance_rating_improvement:
                   i[:energy_performance_rating_improvement],
                 environmental_impact_rating_improvement:

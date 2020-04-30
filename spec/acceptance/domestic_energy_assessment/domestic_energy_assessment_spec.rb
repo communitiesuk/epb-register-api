@@ -56,6 +56,18 @@ describe 'Acceptance::DomesticEnergyAssessment' do
           energyPerformanceRatingImprovement: 80,
           environmentalImpactRatingImprovement: 90,
           greenDealCategoryCode: 'string'
+        },
+        {
+          sequence: 1,
+          indicativeCost: '£200 - £4,000',
+          typicalSaving: 400.21,
+          improvementCategory: 'string',
+          improvementType: 'string',
+          improvementTitle: 'Some improvement',
+          improvementDescription: 'Some improvement description',
+          energyPerformanceRatingImprovement: 80,
+          environmentalImpactRatingImprovement: 90,
+          greenDealCategoryCode: 'string'
         }
       ]
     }.freeze
@@ -185,6 +197,21 @@ describe 'Acceptance::DomesticEnergyAssessment' do
                 typicalSaving: '400.21',
                 improvementCategory: 'string',
                 improvementType: 'string',
+                improvementTitle: nil,
+                improvementDescription: nil,
+                energyPerformanceRatingImprovement: 80,
+                environmentalImpactRatingImprovement: 90,
+                greenDealCategoryCode: 'string'
+              },
+              {
+                sequence: 1,
+                improvementCode: nil,
+                indicativeCost: '£200 - £4,000',
+                typicalSaving: '400.21',
+                improvementCategory: 'string',
+                improvementType: 'string',
+                improvementTitle: 'Some improvement',
+                improvementDescription: 'Some improvement description',
                 energyPerformanceRatingImprovement: 80,
                 environmentalImpactRatingImprovement: 90,
                 greenDealCategoryCode: 'string'

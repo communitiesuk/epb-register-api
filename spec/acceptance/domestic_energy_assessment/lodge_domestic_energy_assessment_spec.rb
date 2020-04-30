@@ -401,6 +401,8 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
               'improvementCategory' => '6',
               'improvementCode' => '5',
               'improvementType' => 'Z3',
+              'improvementTitle' => nil,
+              'improvementDescription' => nil,
               'indicativeCost' => '5',
               'sequence' => 0,
               'typicalSaving' => '0.0'
@@ -412,6 +414,8 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
               'improvementCategory' => '2',
               'improvementCode' => '1',
               'improvementType' => 'Z2',
+              'improvementTitle' => nil,
+              'improvementDescription' => nil,
               'indicativeCost' => '2',
               'sequence' => 1,
               'typicalSaving' => '0.1'
@@ -589,6 +593,8 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
               'improvementCategory' => '6',
               'improvementCode' => '5',
               'improvementType' => 'Z3',
+              'improvementTitle' => nil,
+              'improvementDescription' => nil,
               'indicativeCost' => '5',
               'sequence' => 0,
               'typicalSaving' => '0.0'
@@ -600,6 +606,8 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
               'improvementCategory' => '2',
               'improvementCode' => '1',
               'improvementType' => 'Z2',
+              'improvementTitle' => nil,
+              'improvementDescription' => nil,
               'indicativeCost' => '2',
               'sequence' => 1,
               'typicalSaving' => '0.1'
@@ -684,6 +692,8 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
           'improvementCategory' => '2',
           'improvementCode' => '1',
           'improvementType' => 'Z2',
+          'improvementTitle' => nil,
+          'improvementDescription' => nil,
           'indicativeCost' => '2',
           'sequence' => 1,
           'typicalSaving' => '0.1'

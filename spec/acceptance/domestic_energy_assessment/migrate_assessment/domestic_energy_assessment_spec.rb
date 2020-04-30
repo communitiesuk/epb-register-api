@@ -159,6 +159,8 @@ describe 'Acceptance::DomesticEnergyAssessment::MigrateAssessment' do
             typicalSaving: 400.21,
             improvementCategory: 'string',
             improvementType: 'string',
+            improvementTitle: nil,
+            improvementDescription: nil,
             energyPerformanceRatingImprovement: 80,
             environmentalImpactRatingImprovement: 90,
             greenDealCategoryCode: 'string'

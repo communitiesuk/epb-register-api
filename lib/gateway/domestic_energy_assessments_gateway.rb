@@ -67,6 +67,8 @@ module Gateway
         typical_saving: row[:typical_saving],
         improvement_category: row[:improvement_category],
         improvement_type: row[:improvement_type],
+        improvement_title: row[:improvement_title],
+        improvement_description: row[:improvement_description],
         energy_performance_rating_improvement:
           row[:energy_performance_rating_improvement],
         environmental_impact_rating_improvement:

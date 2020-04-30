@@ -50,6 +50,18 @@ describe 'Acceptance::DomesticEnergyAssessment::MigrateAssessment::SuggestedImpr
         energyPerformanceRatingImprovement: 78,
         environmentalImpactRatingImprovement: 90,
         greenDealCategoryCode: 'string'
+      },
+      {
+        sequence: 3,
+        indicativeCost: '£430 - £4,000',
+        typicalSaving: 50.21,
+        improvementCategory: 'string',
+        improvementType: 'string',
+        improvementTitle: 'Some improvement',
+        improvementDescription: 'Some improvement description',
+        energyPerformanceRatingImprovement: 78,
+        environmentalImpactRatingImprovement: 90,
+        greenDealCategoryCode: 'string'
       }
     ]
   end
@@ -172,7 +184,7 @@ describe 'Acceptance::DomesticEnergyAssessment::MigrateAssessment::SuggestedImpr
 
   context 'when migrating an assessment with correctly structured improvements' do
     context 'when all possible recommendation data items present' do
-      it 'returns a 200' do
+      it 'accepts the suggested improvements' do
         assessment = valid_assessment_body.dup
         assessment[:recommendedImprovements] = valid_recommendations
         scheme_id = add_scheme_and_get_id
