@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
+describe 'Acceptance::DomesticEnergyAssessment::MigrateAssessment::SuggestedImprovements' do
   include RSpecAssessorServiceMixin
 
   let(:valid_assessor_request_body) do
@@ -162,34 +162,38 @@ describe 'Acceptance::DomesticEnergyAssessment::SuggestedImprovements' do
       recommendations[1][:sequence] = 0
       migrate_invalid_recommendations(recommendations)
     end
-  end
 
-  it 'rejects typicalSavings that are not decimals' do
-    recommendations = valid_recommendations
-    recommendations[0][:typicalSaving] = 'first'
-    migrate_invalid_recommendations(recommendations)
+    it 'rejects typicalSavings that are not decimals' do
+      recommendations = valid_recommendations
+      recommendations[0][:typicalSaving] = 'first'
+      migrate_invalid_recommendations(recommendations)
+    end
   end
 
   context 'when migrating an assessment with correctly structured improvements' do
-    it 'returns a 200 when all possible recommendation data items present' do
-      assessment = valid_assessment_body.dup
-      assessment[:recommendedImprovements] = valid_recommendations
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
+    context 'when all possible recommendation data items present' do
+      it 'returns a 200' do
+        assessment = valid_assessment_body.dup
+        assessment[:recommendedImprovements] = valid_recommendations
+        scheme_id = add_scheme_and_get_id
+        add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
 
-      migrate_assessment('123-456', assessment, [200])
+        migrate_assessment('123-456', assessment, [200])
+      end
     end
 
-    it 'returns 200 when the optional data items are empty' do
-      recommendations = valid_recommendations
-      recommendations[0][:greenDealCategoryCode] = ''
-      recommendations[1][:improvementType] = ''
-      assessment = valid_assessment_body.dup
-      assessment[:recommendedImprovements] = valid_recommendations
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
+    context 'when the optional data items are empty' do
+      it 'accepts the suggested improvements' do
+        recommendations = valid_recommendations
+        recommendations[0][:greenDealCategoryCode] = ''
+        recommendations[1][:improvementType] = ''
+        assessment = valid_assessment_body.dup
+        assessment[:recommendedImprovements] = valid_recommendations
+        scheme_id = add_scheme_and_get_id
+        add_assessor(scheme_id, 'TEST123456', valid_assessor_request_body)
 
-      migrate_assessment('123-456', assessment, [200])
+        migrate_assessment('123-456', assessment, [200])
+      end
     end
   end
 end
