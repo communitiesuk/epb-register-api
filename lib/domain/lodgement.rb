@@ -212,25 +212,21 @@ module Domain
       data
     end
 
-    def fetch_raw_data
-      @data
-    end
-
     def extract(
       data, key = :improvements, target_domain = Domain::RecommendedImprovement
     )
-      extracter = data[key]
-      if extracter.nil?
+      extractor = data[key]
+      if extractor.nil?
         []
       else
-        extracter = [extracter] unless extracter.is_a? Array
+        extractor = [extractor] unless extractor.is_a? Array
 
-        extracter.map do |i|
+        extractor.map do |i|
           SCHEMAS[@schema_name][:data]
           extractor_inner = { assessment_id: data[:assessment_id] }
 
-          SCHEMAS[@schema_name][:data][key][:extract].each do |key2, value|
-            extractor_inner[key2] = i.dig(*value[:path])
+          SCHEMAS[@schema_name][:data][key][:extract].each do |second_key, value|
+            extractor_inner[second_key] = i.dig(*value[:path])
           end
 
           extractor_inner[:sequence] = extractor_inner[:sequence].to_i

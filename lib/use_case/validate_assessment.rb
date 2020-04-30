@@ -3,12 +3,12 @@ module UseCase
     class InvalidXmlException < StandardError; end
 
     def execute(xml, schema_location)
-      validate_xml(xml, schema_location)
+      validate_xml?(xml, schema_location)
     end
 
     private
 
-    def validate_xml(xml, schema)
+    def validate_xml?(xml, schema)
       xsddoc = Nokogiri.XML(File.read(schema), schema)
       xsd = Nokogiri::XML::Schema.from_document(xsddoc)
       file = Nokogiri.XML(xml)

@@ -11,11 +11,11 @@ module UseCase
     def initialize(
       validate_assessment_use_case,
       lodge_assessment_use_case,
-      check_assessor_belongs_to_scheme
+      check_assessor_belongs_to_scheme_use_case
     )
       @validate_assessment_use_case = validate_assessment_use_case
       @lodge_assessment_use_case = lodge_assessment_use_case
-      @check_assessor_belongs_to_scheme = check_assessor_belongs_to_scheme
+      @check_assessor_belongs_to_scheme_use_case = check_assessor_belongs_to_scheme_use_case
     end
 
     def execute(assessment_id, xml, schema_name, scheme_ids)
@@ -41,7 +41,7 @@ module UseCase
     end
 
     def assessor_can_lodge?(scheme_assessor_id, scheme_ids)
-      @check_assessor_belongs_to_scheme.execute(scheme_assessor_id, scheme_ids)
+      @check_assessor_belongs_to_scheme_use_case.execute(scheme_assessor_id, scheme_ids)
     end
   end
 end
