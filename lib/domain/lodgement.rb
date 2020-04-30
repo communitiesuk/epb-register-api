@@ -225,7 +225,8 @@ module Domain
           SCHEMAS[@schema_name][:data]
           extractor_inner = { assessment_id: data[:assessment_id] }
 
-          SCHEMAS[@schema_name][:data][key][:extract].each do |second_key, value|
+          SCHEMAS[@schema_name][:data][key][:extract]
+            .each do |second_key, value|
             extractor_inner[second_key] = i.dig(*value[:path])
           end
 

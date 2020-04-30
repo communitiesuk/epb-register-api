@@ -3,8 +3,7 @@
 module Helper
   module RdsapValidator
     class ValidateAll
-      ALL_RULES = [
-      ].freeze
+      ALL_RULES = [].freeze
 
       def validate(domestic_energy_assessment)
         errors = []
