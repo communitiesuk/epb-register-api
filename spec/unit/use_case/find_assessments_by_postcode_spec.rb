@@ -56,9 +56,9 @@ describe UseCase::FindAssessmentsByPostcode do
     end
 
     it 'return empty when no assessments are present' do
-      expect(
-        find_assessments_without_stub_data.execute('E2 0SZ')[:data]
-      ).to eq([])
+      expect(find_assessments_without_stub_data.execute('E2 0SZ')[:data]).to eq(
+        []
+      )
     end
 
     it 'return assessments where they exist' do

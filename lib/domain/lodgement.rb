@@ -10,11 +10,10 @@ module Domain
         data: {
           report_header: { path: %i[RdSAP_Report Report_Header] },
           assessment_id: { root: :report_header, path: %i[RRN] },
-          assessor_id: { root: :report_header, path: %i[
-            Energy_Assessor
-            Identification_Number
-            Membership_Number
-          ]},
+          assessor_id: {
+            root: :report_header,
+            path: %i[Energy_Assessor Identification_Number Membership_Number]
+          },
           property: {
             path: %i[RdSAP_Report Energy_Assessment Property_Summary]
           },
@@ -72,17 +71,21 @@ module Domain
               Improvement
             ],
             extract: {
-              sequence: {path: [:Sequence]},
-              improvement_code: {path: [:Improvement_Details, :Improvement_Number]},
-              indicative_cost: {path: [:Indicative_Cost]},
-              typical_saving: {path: [:Typical_Saving]},
-              improvement_category: {path: [:Improvement_Category]},
-              improvement_type: {path: [:Improvement_Type]},
-              energy_performance_rating_improvement:
-                {path: [:Energy_Performance_Rating]},
-              environmental_impact_rating_improvement:
-                {path: :Environmental_Impact_Rating},
-              green_deal_category_code: {path: [:Green_Deal_Category]}
+              sequence: { path: %i[Sequence] },
+              improvement_code: {
+                path: %i[Improvement_Details Improvement_Number]
+              },
+              indicative_cost: { path: %i[Indicative_Cost] },
+              typical_saving: { path: %i[Typical_Saving] },
+              improvement_category: { path: %i[Improvement_Category] },
+              improvement_type: { path: %i[Improvement_Type] },
+              energy_performance_rating_improvement: {
+                path: %i[Energy_Performance_Rating]
+              },
+              environmental_impact_rating_improvement: {
+                path: :Environmental_Impact_Rating
+              },
+              green_deal_category_code: { path: %i[Green_Deal_Category] }
             }
           }
         }
@@ -94,11 +97,10 @@ module Domain
         data: {
           report_header: { path: %i[SAP_Report Report_Header] },
           assessment_id: { root: :report_header, path: %i[RRN] },
-          assessor_id: { root: :report_header, path: %i[
-            Home_Inspector
-            Identification_Number
-            Certificate_Number
-          ]},
+          assessor_id: {
+            root: :report_header,
+            path: %i[Home_Inspector Identification_Number Certificate_Number]
+          },
           renewable_heat_incentive: {
             path: %i[SAP_Report Energy_Assessment Renewable_Heat_Incentive]
           },
@@ -162,17 +164,21 @@ module Domain
               Improvement
             ],
             extract: {
-              sequence: {path: [:Sequence]},
-              improvement_code: {path: [:Improvement_Details, :Improvement_Number]},
-              indicative_cost: {path: [:Indicative_Cost]},
-              typical_saving: {path: [:Typical_Saving]},
-              improvement_category: {path: [:Improvement_Category]},
-              improvement_type: {path: [:Improvement_Type]},
-              energy_performance_rating_improvement:
-                {path: [:Energy_Performance_Rating]},
-              environmental_impact_rating_improvement:
-                {path: [:Environmental_Impact_Rating]},
-              green_deal_category_code: {path: [:Green_Deal_Category]}
+              sequence: { path: %i[Sequence] },
+              improvement_code: {
+                path: %i[Improvement_Details Improvement_Number]
+              },
+              indicative_cost: { path: %i[Indicative_Cost] },
+              typical_saving: { path: %i[Typical_Saving] },
+              improvement_category: { path: %i[Improvement_Category] },
+              improvement_type: { path: %i[Improvement_Type] },
+              energy_performance_rating_improvement: {
+                path: %i[Energy_Performance_Rating]
+              },
+              environmental_impact_rating_improvement: {
+                path: %i[Environmental_Impact_Rating]
+              },
+              green_deal_category_code: { path: %i[Green_Deal_Category] }
             }
           }
         }
@@ -210,18 +216,18 @@ module Domain
       @data
     end
 
-    def extract(data, key = :improvements, target_domain = Domain::RecommendedImprovement)
+    def extract(
+      data, key = :improvements, target_domain = Domain::RecommendedImprovement
+    )
       extracter = data[key]
       if extracter.nil?
         []
       else
-        unless extracter.is_a? Array
-          extracter = [extracter]
-        end
+        extracter = [extracter] unless extracter.is_a? Array
 
         extracter.map do |i|
           SCHEMAS[@schema_name][:data]
-          extractor_inner = {assessment_id: data[:assessment_id]}
+          extractor_inner = { assessment_id: data[:assessment_id] }
 
           SCHEMAS[@schema_name][:data][key][:extract].each do |key2, value|
             extractor_inner[key2] = i.dig(*value[:path])
@@ -229,9 +235,7 @@ module Domain
 
           extractor_inner[:sequence] = extractor_inner[:sequence].to_i
 
-          target_domain.new(
-            extractor_inner
-          )
+          target_domain.new(extractor_inner)
         end
       end
     end

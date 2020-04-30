@@ -65,13 +65,15 @@ module Controller
       @json_helper.convert_to_json(object)
     end
 
-    def json_api_response(code: 200, data: {}, meta: {}, burrow_key: false, data_key: :data)
+    def json_api_response(
+      code: 200, data: {}, meta: {}, burrow_key: false, data_key: :data
+    )
       if burrow_key
-        data,meta = meta,data
+        data, meta = meta, data
         data[burrow_key] = meta.delete(data_key)
       end
 
-      json_response(code, {data: data, meta: meta})
+      json_response(code, { data: data, meta: meta })
     end
 
     def error_response(response_code = 500, error_code, title)
@@ -91,11 +93,7 @@ module Controller
     end
 
     def forbidden(error_code, title, code = 403)
-      halt json_response(code,
-           {
-             errors: [{ code: error_code, title: title }]
-           }
-      )
+      halt json_response(code, { errors: [{ code: error_code, title: title }] })
     end
   end
 end
