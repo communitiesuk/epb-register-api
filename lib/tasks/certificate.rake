@@ -29,8 +29,8 @@ task :generate_certificate do
   town = ['Brighton', 'Bournemouth', 'London', 'Cardiff', 'Newcastle', 'Manchester', 'Bristol']
   current_space_heating_demand  = [1233, 3445, 4546, 6748, 8910, 7483, 8963]
   current_water_heating_demand = [7983, 2321, 454, 648, 8932, 6483, 72363]
-  current_carbon_emission = [2.4, 4.327, 7.8, 3.5, 6.4, 2]
-  potential_carbon_emission = [1.4, 0.5, 6.5, 2.1, 3.624, 1]
+  current_carbon_emission = [5.4, 4.327, 7.8, 4.5, 6.4, 4]
+  potential_carbon_emission = [1.4, 0.5, 3.5, 2.1, 3.624, 1]
   impact_of_loft_insulation = [ -21, -543, -764, -836, -13, -94, -35]
   impact_of_cavity_insulation = [ -21, -764, -836, -13, -94, -35]
   impact_of_solid_wall_insulation = [ -4, -53, -64, -99, -23, -73, -5]
@@ -62,12 +62,8 @@ task :generate_certificate do
     date_of_expiry =  (Date.parse(date_of_assessment) + 10.year).strftime('%Y-%m-%d')
     internal_town = town.sample
     current_energy_efficiency_rating = rand(1..99)
-
-    current_carbon_emission.each_with_index do |index, value|
-      @internal_current_carbon_emission = value
-      @internal_potential_carbon_emission = potential_carbon_emission[index]
-    end
-
+    internal_current_carbon_emission = current_carbon_emission.sample
+    internal_potential_carbon_emission = potential_carbon_emission.sample
     internal_current_space_heating_demand = current_space_heating_demand.sample
     internal_current_water_heating_demand = current_water_heating_demand.sample
     internal_impact_of_loft_insulation = impact_of_loft_insulation.sample
@@ -122,8 +118,8 @@ task :generate_certificate do
           '#{line_3}',
           '#{line_4}',
           '#{internal_town}',
-          '#{@internal_current_carbon_emission}',
-          '#{@internal_potential_carbon_emission}',
+          '#{internal_current_carbon_emission}',
+          '#{internal_potential_carbon_emission}',
           '#{internal_current_space_heating_demand}',
           '#{internal_current_water_heating_demand}',
           '#{internal_impact_of_loft_insulation}',
