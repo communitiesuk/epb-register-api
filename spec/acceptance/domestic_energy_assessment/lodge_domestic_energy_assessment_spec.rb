@@ -786,6 +786,33 @@ describe 'Acceptance::LodgeDomesticEnergyAssessment' do
           response_body['errors'][0]['title']
         ).to include 'This element is not expected.'
       end
+
+      it 'rejects an assessment with invalid XML' do
+        scheme_id = add_scheme_and_get_id
+        add_assessor(
+          scheme_id,
+          'Membership-Number0',
+          valid_assessor_request_body
+        )
+
+        xml = valid_rdsap_xml
+
+        xml = xml.gsub('<Energy-Assessment>', '<Energy-Assessment')
+
+        response_body =
+          JSON.parse(
+            lodge_assessment(
+              assessment_id: '0000-0000-0000-0000-0000',
+              assessment_body: xml,
+              accepted_responses: [400]
+            )
+              .body
+          )
+
+        expect(
+          response_body['errors'][0]['title']
+        ).to include 'Invalid attribute name: <<Property-Summary>'
+      end
     end
   end
 end
