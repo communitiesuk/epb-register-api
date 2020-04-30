@@ -365,7 +365,7 @@ paths:
           description: Assessment not found
         '500':
           description: Server error
-    put:
+    post:
       tags:
         - Manage Assessments
       summary: Lodge a new assessment
@@ -379,12 +379,6 @@ paths:
           description: 'The ID of the assessment being added, usually RRN'
           schema:
             $ref: '#/components/schemas/AssessmentId'
-        - in: path
-          name: assessmentType
-          required: true
-          description: 'The type of the assessment being added'
-          schema:
-            $ref: '#/components/schemas/AssessmentType'
       requestBody:
         content:
           application/xml+RdSAP-Schema-19.0:
@@ -411,10 +405,45 @@ paths:
           content:
             application/json:
               schema:
+                allOf:
+                  - $ref: '#/components/schemas/DomesticEnergyAssessmentWithBand'
                 type: object
                 properties:
-                  data:
-                    $ref: '#/components/schemas/Empty'
+                  addressLine1:
+                    type: string
+                    example: 2 Marsham Street
+                  addressLine2:
+                    type: string
+                    example: ''
+                  addressLine3:
+                    type: string
+                    example: ''
+                  addressLine4:
+                    type: string
+                    example: ''
+                  town:
+                    type: string
+                    example: London
+                  assessor:
+                    $ref: '#/components/schemas/AssessorSummary'
+                  heatDemand:
+                    type: object
+                    properties:
+                      currentSpaceHeatingDemand:
+                        type: integer
+                        example: 4564
+                      currentWaterHeatingDemand:
+                        type: integer
+                        example: 3253
+                      impactOfLoftInsulation:
+                        type: integer
+                        example: -453
+                      impactOfCavityInsulation:
+                        type: integer
+                        example: -84
+                      impactOfSolidWallInsulation:
+                        type: integer
+                        example: -21
         '400':
           description: Bad request
         '409':
@@ -424,65 +453,6 @@ paths:
         '500':
           description: Server error
 
-  '/assessments/{assessmentType}/{assessmentId}':
-    put:
-      tags:
-        - Manage Assessments
-      summary: Lodge a new assessment
-      security:
-        - oauth:
-            - 'assessment:lodge'
-      parameters:
-        - in: path
-          name: assessmentId
-          required: true
-          description: 'The ID of the assessment being added, usually RRN'
-          schema:
-            $ref: '#/components/schemas/AssessmentId'
-        - in: path
-          name: assessmentType
-          required: true
-          description: 'The type of the assessment being added'
-          schema:
-            $ref: '#/components/schemas/AssessmentType'
-      requestBody:
-        content:
-          application/xml+RdSAP-Schema-19.0:
-            schema:
-              $ref: '#/components/schemas/Empty'
-          application/xml+SAP-Schema-17.1:
-            schema:
-              $ref: '#/components/schemas/Empty'
-          application/xml+RdSAP-Schema-NI-19.0:
-            schema:
-              $ref: '#/components/schemas/Empty'
-          application/xml+SAP-Schema-NI-17.4:
-            schema:
-              $ref: '#/components/schemas/Empty'
-          application/xml+CEPC-7.1:
-            schema:
-              $ref: '#/components/schemas/Empty'
-          application/xml+NI-CEPC-7.1:
-            schema:
-              $ref: '#/components/schemas/Empty'
-      responses:
-        '201':
-          description: New assessment lodged
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    $ref: '#/components/schemas/Empty'
-        '400':
-          description: Bad request
-        '409':
-          description: Assessment with that assessmentId already exists
-        '403':
-          description: Forbidden
-        '500':
-          description: Server error
 
   /reports/assessors/status:
     get:
@@ -570,7 +540,7 @@ paths:
         '409':
           description: Assessor already exists on a different scheme
 
-  '/migrations/assessments/{assessmentId}':
+  '/assessments/domectic-epc/{assessmentId}':
     put:
       tags:
         - Migration
@@ -596,19 +566,45 @@ paths:
           content:
             application/json:
               schema:
+                allOf:
+                  - $ref: '#/components/schemas/DomesticEnergyAssessmentWithBand'
                 type: object
                 properties:
-                  data:
-                    $ref: '#/components/schemas/Empty'
-        '201':
-          description: New assessment succesfully registered
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    $ref: '#/components/schemas/Empty'
+                  addressLine1:
+                    type: string
+                    example: 2 Marsham Street
+                  addressLine2:
+                    type: string
+                    example: ''
+                  addressLine3:
+                    type: string
+                    example: ''
+                  addressLine4:
+                    type: string
+                    example: ''
+                  town:
+                    type: string
+                    example: London
+                  assessor:
+                    $ref: '#/components/schemas/AssessorSummary'
+                  heatDemand:
+                    type: object
+                    properties:
+                      currentSpaceHeatingDemand:
+                        type: integer
+                        example: 4564
+                      currentWaterHeatingDemand:
+                        type: integer
+                        example: 3253
+                      impactOfLoftInsulation:
+                        type: integer
+                        example: -453
+                      impactOfCavityInsulation:
+                        type: integer
+                        example: -84
+                      impactOfSolidWallInsulation:
+                        type: integer
+                        example: -21
         '400':
           description: Bad request
         '403':
@@ -1038,6 +1034,22 @@ components:
       type: string
       example: TEST000001
 
+    AssessorSummary:
+      allOf:
+        - $ref: '#/components/schemas/Assessor'
+        - type: object
+          properties:
+            dateOfBirth:
+              type: string
+              format: date
+              example: '1980-01-10'
+            registeredBy:
+              $ref: '#/components/schemas/Scheme'
+            schemeAssessorId:
+              $ref: '#/components/schemas/AssessorSchemeId'
+            searchResultsComparisonPostcode:
+              $ref: '#/components/schemas/AddressPostcode'
+
     AssessorQualifications:
       type: object
       properties:
@@ -1117,6 +1129,153 @@ components:
         - dec-recommendation-report
         - ac-report
         - ac-cert
+
+    DomesticEnergyAssessmentWithBand:
+      allOf:
+        - $ref: '#/components/schemas/EnergyAssessmentBasicInfo'
+      properties:
+        currentEnergyEfficiencyBand:
+          type: string
+          example: 'a'
+          description: The band, from a to g, the current Energy Rating falls within
+        potentialEnergyEfficiencyBand:
+          type: string
+          example: 'a'
+          description: The band, from a to g, the potential Energy Rating falls within
+
+    EnergyAssessmentBasicInfo:
+      type: object
+      properties:
+        dateOfAssessment:
+          type: string
+          format: date
+          description: The date that the assessor carried out the assessment of the property
+        dateRegistered:
+          type: string
+          format: date
+          description: The date that the assessment was submitted to the Register
+        totalFloorArea:
+          type: number
+          example: 120.55
+        typeOfAssessment:
+          type: string
+          enum: [SAP, RdSAP]
+        dwellingType:
+          type: string
+        addressSummary:
+          type: string
+          example: 2 Marsham Street, London, SW1P 4JA
+        currentCarbonEmission:
+          type: number
+          description: The current carbon emission of the property
+          example: 4.736
+        potentialCarbonEmission:
+          type: number
+          description: The potential carbon emission of the propety
+          example: 2.839
+        currentEnergyEfficiencyRating:
+          type: integer
+          minimum: 1
+          maximum: 100
+          description: The current energy rating to be submitted to the Register
+        potentialEnergyEfficiencyRating:
+          type: integer
+          minimum: 1
+          maximum: 100
+          description: The potential energy rating to be submitted, must be equal to or larger than currentEnergyEfficiencyRating
+        postcode:
+          $ref: '#/components/schemas/AddressPostcode'
+        recommendedImprovements:
+          type: array
+          items:
+            anyOf:
+              - $ref: '#/components/schemas/DomesticRecommendationWithoutCode'
+              - $ref: '#/components/schemas/DomesticRecommendationWithCode'
+        dateOfExpiry:
+          type: string
+          format: date
+          description: The date that the certificate expires
+        schemeAssessorId:
+          $ref: '#/components/schemas/AssessorSchemeId'
+        heatDemand:
+          type: object
+          properties:
+            currentSpaceHeatingDemand:
+              type: number
+              example: 456.45
+            currentWaterHeatingDemand:
+              type: number
+              example: 325.33
+            impactOfLoftInsulation:
+              type: integer
+              example: -453
+            impactOfCavityInsulation:
+              type: integer
+              example: -84
+            impactOfSolidWallInsulation:
+              type: integer
+              example: -21
+
+    DomesticRecommendationWithoutCode:
+      type: object
+      properties:
+        sequence:
+          type: number
+          example: 0
+          description: "The order in which this reccomendation should be shown"
+        indicativeCost:
+          type: string
+          example: "£200 - £4,000"
+        typicalSaving:
+          type: number
+          example: 400.21
+        improvementCategory:
+          type: string
+        improvementType:
+          type: string
+        improvementTitle:
+          type: string
+        improvementDescription:
+          type: string
+        energyPerformanceRating:
+          type: string
+          description: "The estimated energy performance rating once the improvement has been carried out"
+          example: "C"
+        environmentalImpactRating:
+          type: string
+          description: "The estimated environmental impact rating once the improvement has been carried out"
+        greenDealCategoryCode:
+          type: string
+
+    DomesticRecommendationWithCode:
+      type: object
+      properties:
+        sequence:
+          type: number
+          example: 1
+          description: "The order in which this reccomendation should be shown"
+        improvementCode:
+          type: string
+          example: "1"
+        indicativeCost:
+          type: string
+          example: "£200 - £4,000"
+        typicalSaving:
+          type: number
+          example: 400.21
+        improvementCategory:
+          type: string
+        improvementType:
+          type: string
+        energyPerformanceRating:
+          type: string
+          description: "The estimated energy performance rating once the improvement has been carried out"
+          example: "C"
+        environmentalImpactRating:
+          type: string
+          description: "The estimated environmental impact rating once the improvement has been carried out"
+        greenDealCategoryCode:
+          type: string
 
     # Green Deal
     AssessmentGreenDealDetails:
