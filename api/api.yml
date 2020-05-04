@@ -454,6 +454,45 @@ paths:
           description: Server error
 
 
+  /assessments/{assessmentId}/status:
+    post:
+      tags:
+        - Manage Assessments
+      summary: Update the status of an assessment
+      security:
+        - oauth:
+            - 'assessment:lodge'
+      parameters:
+        - in: path
+          name: assessmentId
+          required: true
+          description: 'The ID of the assessment being added, usually RRN'
+          schema:
+            $ref: '#/components/schemas/AssessmentId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssessmentStatus'
+      responses:
+        '200':
+          description: Assessment report status updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AssessmentStatus'
+        '400':
+          description: Bad request - assessmentId parameter was badly formatted
+        '403':
+          description: Forbidden - the assessment with that assessmentId does not belong to your scheme
+        '404':
+          description: Assessment with that assessmentId not found
+        '500':
+          description: Server error
+
   /reports/assessors/status:
     get:
       tags:
@@ -1117,6 +1156,15 @@ components:
     AssessmentId:
       type: string
       example: 0000-0000-0000-0000-0000
+
+    AssessmentStatus:
+      type: object
+      properties:
+        status:
+          type: string
+          example: CANCELLED
+          enum:
+            - CANCELLED
 
     AssessmentType:
       type: string
