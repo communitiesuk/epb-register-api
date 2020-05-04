@@ -14,6 +14,7 @@ GEM
       zeitwerk (~> 2.2)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
+    ast (2.4.0)
     backports (3.17.0)
     coderay (1.1.2)
     concurrent-ruby (1.1.6)
@@ -28,6 +29,7 @@ GEM
     geocoder (1.6.2)
     i18n (1.8.2)
       concurrent-ruby (~> 1.0)
+    jaro_winkler (1.5.4)
     json (2.3.0)
     json-schema (2.8.1)
       addressable (>= 2.4)
@@ -52,6 +54,9 @@ GEM
     oj (3.10.5)
     ougai (1.8.3)
       oj (~> 3.10)
+    parallel (1.19.1)
+    parser (2.7.1.2)
+      ast (~> 2.4.0)
     pg (1.2.3)
     prettier (0.16.0)
     pry (0.12.2)
@@ -63,7 +68,9 @@ GEM
       rack
     rack-test (0.8.3)
       rack (>= 1.0, < 3)
+    rainbow (3.0.0)
     rake (13.0.1)
+    rexml (3.2.4)
     rspec (3.9.0)
       rspec-core (~> 3.9.0)
       rspec-expectations (~> 3.9.0)
@@ -77,6 +84,28 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.9.0)
     rspec-support (3.9.2)
+    rubocop (0.82.0)
+      jaro_winkler (~> 1.5.1)
+      parallel (~> 1.10)
+      parser (>= 2.7.0.1)
+      rainbow (>= 2.2.2, < 4.0)
+      rexml
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (>= 1.4.0, < 2.0)
+    rubocop-govuk (3.7.0)
+      rubocop (= 0.82.0)
+      rubocop-rails (~> 2)
+      rubocop-rake (~> 0.5.1)
+      rubocop-rspec (~> 1.28)
+    rubocop-rails (2.5.2)
+      activesupport
+      rack (>= 1.1)
+      rubocop (>= 0.72.0)
+    rubocop-rake (0.5.1)
+      rubocop
+    rubocop-rspec (1.39.0)
+      rubocop (>= 0.68.1)
+    ruby-progressbar (1.10.1)
     ruby2_keywords (0.0.2)
     rubyzip (2.3.0)
     simplecov (0.17.1)
@@ -104,6 +133,7 @@ GEM
     tilt (2.0.10)
     tzinfo (1.2.6)
       thread_safe (~> 0.1)
+    unicode-display_width (1.7.0)
     unleash (0.1.6)
       murmurhash3 (~> 0.1.6)
     zeitwerk (2.2.2)
@@ -124,6 +154,7 @@ DEPENDENCIES
   rack-test (~> 0.8.3)!
   rake!
   rspec (~> 3.0)!
+  rubocop-govuk (~> 3.7)
   rubyzip (~> 2.3.0)!
   simplecov (~> 0.17.1)!
   sinatra (~> 2.0, >= 2.0.7)!

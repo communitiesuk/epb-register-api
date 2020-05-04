@@ -66,7 +66,7 @@ run:
 
 .PHONY: format
 format:
-	@bundle exec rbprettier --write `find . -name '*.rb' -not -path './db/schema.rb'` *.ru Gemfile
+	@bundle exec rubocop --auto-correct --format offenses || true
 
 .PHONY: cf-check-api-db-migration-task
 cf-check-api-db-migration-task: ## Get the status for the last migrate-db task

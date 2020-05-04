@@ -4,7 +4,6 @@ ruby '2.6.5'
 
 source 'https://rubygems.org' do
   group :development do
-    gem 'prettier', '~> 0.16.0'
     gem 'sinatra-contrib'
   end
 
@@ -23,6 +22,7 @@ source 'https://rubygems.org' do
   gem 'ougai', '~> 1.8'
   gem 'pg'
   gem 'rake'
+  gem 'rubocop-govuk', '~> 3.7'
   gem 'rubyzip', '~> 2.3.0'
   gem 'sinatra', '~> 2.0', '>= 2.0.7'
   gem 'sinatra-activerecord', '~> 2.0.14'
