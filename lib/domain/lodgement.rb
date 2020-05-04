@@ -4,22 +4,22 @@ module Domain
   class Lodgement
     SCHEMAS = {
       'RdSAP-Schema-19.0': {
-        report_type: 'RdSAP',
+        report_type: "RdSAP",
         schema_path:
-          'api/schemas/xml/RdSAP-Schema-19.0/RdSAP/Templates/RdSAP-Report.xsd',
+          "api/schemas/xml/RdSAP-Schema-19.0/RdSAP/Templates/RdSAP-Report.xsd",
         data: {
           report_header: { path: %i[RdSAP_Report Report_Header] },
           assessment_id: { root: :report_header, path: %i[RRN] },
           assessor_id: {
             root: :report_header,
-            path: %i[Energy_Assessor Identification_Number Membership_Number]
+            path: %i[Energy_Assessor Identification_Number Membership_Number],
           },
           property: {
-            path: %i[RdSAP_Report Energy_Assessment Property_Summary]
+            path: %i[RdSAP_Report Energy_Assessment Property_Summary],
           },
           energy_use: { path: %i[RdSAP_Report Energy_Assessment Energy_Use] },
           renewable_heat_incentive: {
-            path: %i[RdSAP_Report Energy_Assessment Renewable_Heat_Incentive]
+            path: %i[RdSAP_Report Energy_Assessment Renewable_Heat_Incentive],
           },
           address: { path: %i[RdSAP_Report Report_Header Property Address] },
           inspection_date: { root: :report_header, path: %i[Inspection_Date] },
@@ -42,7 +42,7 @@ module Domain
           },
           space_heating: {
             root: :renewable_heat_incentive,
-            path: %i[Space_Heating_Existing_Dwelling]
+            path: %i[Space_Heating_Existing_Dwelling],
           },
           water_heating: {
             root: :renewable_heat_incentive, path: %i[Water_Heating]
@@ -52,11 +52,11 @@ module Domain
           },
           impact_of_cavity_insulation: {
             root: :renewable_heat_incentive,
-            path: %i[Impact_Of_Cavity_Insulation]
+            path: %i[Impact_Of_Cavity_Insulation],
           },
           impact_of_solid_wall_insulation: {
             root: :renewable_heat_incentive,
-            path: %i[Impact_Of_Solid_Wall_Insulation]
+            path: %i[Impact_Of_Solid_Wall_Insulation],
           },
           address_line_one: { root: :address, path: %i[Address_Line_1] },
           address_line_two: { root: :address, path: %i[Address_Line_2] },
@@ -73,36 +73,36 @@ module Domain
             extract: {
               sequence: { path: %i[Sequence] },
               improvement_code: {
-                path: %i[Improvement_Details Improvement_Number]
+                path: %i[Improvement_Details Improvement_Number],
               },
               indicative_cost: { path: %i[Indicative_Cost] },
               typical_saving: { path: %i[Typical_Saving] },
               improvement_category: { path: %i[Improvement_Category] },
               improvement_type: { path: %i[Improvement_Type] },
               energy_performance_rating_improvement: {
-                path: %i[Energy_Performance_Rating]
+                path: %i[Energy_Performance_Rating],
               },
               environmental_impact_rating_improvement: {
-                path: :Environmental_Impact_Rating
+                path: :Environmental_Impact_Rating,
               },
-              green_deal_category_code: { path: %i[Green_Deal_Category] }
-            }
-          }
-        }
+              green_deal_category_code: { path: %i[Green_Deal_Category] },
+            },
+          },
+        },
       },
       'SAP-Schema-17.1': {
-        report_type: 'SAP',
+        report_type: "SAP",
         schema_path:
-          'api/schemas/xml/SAP-Schema-17.1/SAP/Templates/SAP-Report.xsd',
+          "api/schemas/xml/SAP-Schema-17.1/SAP/Templates/SAP-Report.xsd",
         data: {
           report_header: { path: %i[SAP_Report Report_Header] },
           assessment_id: { root: :report_header, path: %i[RRN] },
           assessor_id: {
             root: :report_header,
-            path: %i[Home_Inspector Identification_Number Certificate_Number]
+            path: %i[Home_Inspector Identification_Number Certificate_Number],
           },
           renewable_heat_incentive: {
-            path: %i[SAP_Report Energy_Assessment Renewable_Heat_Incentive]
+            path: %i[SAP_Report Energy_Assessment Renewable_Heat_Incentive],
           },
           energy_use: { path: %i[SAP_Report Energy_Assessment Energy_Use] },
           address: { path: %i[SAP_Report Report_Header Property Address] },
@@ -118,31 +118,31 @@ module Domain
           },
           new_space_heating: {
             root: :renewable_heat_incentive,
-            path: %i[RHI_New_Dwelling Space_Heating]
+            path: %i[RHI_New_Dwelling Space_Heating],
           },
           space_heating: {
             root: :renewable_heat_incentive,
-            path: %i[RHI_Existing_Dwelling Space_Heating_Existing_Dwelling]
+            path: %i[RHI_Existing_Dwelling Space_Heating_Existing_Dwelling],
           },
           new_water_heating: {
             root: :renewable_heat_incentive,
-            path: %i[RHI_New_Dwelling Water_Heating]
+            path: %i[RHI_New_Dwelling Water_Heating],
           },
           water_heating: {
             root: :renewable_heat_incentive,
-            path: %i[RHI_Existing_Dwelling Water_Heating]
+            path: %i[RHI_Existing_Dwelling Water_Heating],
           },
           impact_of_loft_insulation: {
             root: :renewable_heat_incentive,
-            path: %i[RHI_Existing_Dwelling Impact_Of_Loft_Insulation]
+            path: %i[RHI_Existing_Dwelling Impact_Of_Loft_Insulation],
           },
           impact_of_cavity_insulation: {
             root: :renewable_heat_incentive,
-            path: %i[RHI_Existing_Dwelling Impact_Of_Cavity_Insulation]
+            path: %i[RHI_Existing_Dwelling Impact_Of_Cavity_Insulation],
           },
           impact_of_solid_wall_insulation: {
             root: :renewable_heat_incentive,
-            path: %i[RHI_Existing_Dwelling Impact_Of_Solid_Wall_Insulation]
+            path: %i[RHI_Existing_Dwelling Impact_Of_Solid_Wall_Insulation],
           },
           current_energy_rating: {
             root: :energy_use, path: %i[Energy_Rating_Current]
@@ -166,23 +166,23 @@ module Domain
             extract: {
               sequence: { path: %i[Sequence] },
               improvement_code: {
-                path: %i[Improvement_Details Improvement_Number]
+                path: %i[Improvement_Details Improvement_Number],
               },
               indicative_cost: { path: %i[Indicative_Cost] },
               typical_saving: { path: %i[Typical_Saving] },
               improvement_category: { path: %i[Improvement_Category] },
               improvement_type: { path: %i[Improvement_Type] },
               energy_performance_rating_improvement: {
-                path: %i[Energy_Performance_Rating]
+                path: %i[Energy_Performance_Rating],
               },
               environmental_impact_rating_improvement: {
-                path: %i[Environmental_Impact_Rating]
+                path: %i[Environmental_Impact_Rating],
               },
-              green_deal_category_code: { path: %i[Green_Deal_Category] }
-            }
-          }
-        }
-      }
+              green_deal_category_code: { path: %i[Green_Deal_Category] },
+            },
+          },
+        },
+      },
     }.freeze
 
     def initialize(data, schema_name)

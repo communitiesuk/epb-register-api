@@ -1,4 +1,4 @@
-describe 'Integration::EndpointSecurity' do
+describe "Integration::EndpointSecurity" do
   include RSpecAssessorServiceMixin
 
   controllers_to_ignore = { BaseController: {} }
@@ -8,7 +8,7 @@ describe 'Integration::EndpointSecurity' do
   controllers_to_test =
     Controller.constants.select do |constant|
       Controller.const_get(constant).is_a? Class
-    end.select { |constant| not controllers_to_ignore.include? constant.to_s }
+    end.reject { |constant|  controllers_to_ignore.include? constant.to_s }
 
   @routes_to_test = []
 
@@ -29,14 +29,14 @@ describe 'Integration::EndpointSecurity' do
       path = route[:path]
 
       let(:controller) { method(verb.to_sym) }
-      let(:response) { response = controller.call(path) }
+      let(:response) { controller.call(path) }
 
-      it 'returns a status of 401' do
+      it "returns a status of 401" do
         expect(response.status).to be 401
       end
 
       unless methods_with_no_body.include? verb
-        it "returns #{Auth::Errors::TokenMissing.to_s} in the body" do
+        it "returns #{Auth::Errors::TokenMissing} in the body" do
           expect(response.body).to include Auth::Errors::TokenMissing.to_s
         end
       end

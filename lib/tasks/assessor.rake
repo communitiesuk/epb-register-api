@@ -1,24 +1,24 @@
-desc 'Truncate assessors data'
+desc "Truncate assessors data"
 
 task :truncate_assessor do
-  if ENV['STAGE'] == 'production'
+  if ENV["STAGE"] == "production"
     exit
   end
 
-  ActiveRecord::Base.connection.execute('TRUNCATE TABLE assessors RESTART IDENTITY CASCADE')
+  ActiveRecord::Base.connection.execute("TRUNCATE TABLE assessors RESTART IDENTITY CASCADE")
 end
 
-desc 'Import some random assessors data'
+desc "Import some random assessors data"
 
 task :generate_assessor do
-  if ENV['STAGE'] == 'production'
+  if ENV["STAGE"] == "production"
     exit
   end
 
-  schemes = ActiveRecord::Base.connection.execute('SELECT * FROM schemes')
+  schemes = ActiveRecord::Base.connection.execute("SELECT * FROM schemes")
 
   schemes.each do |scheme|
-    result = ActiveRecord::Base.connection.execute('SELECT * FROM postcode_geolocation ORDER BY random() LIMIT 166')
+    result = ActiveRecord::Base.connection.execute("SELECT * FROM postcode_geolocation ORDER BY random() LIMIT 166")
 
     ActiveRecord::Base.logger = nil
 
@@ -38,7 +38,7 @@ task :generate_assessor do
       nos4 = rand(2)
       sap = rand(2)
 
-      scheme_assessor_id = (scheme['name'][0..3] + index.to_s.rjust(6, '0')).upcase
+      scheme_assessor_id = (scheme["name"][0..3] + index.to_s.rjust(6, "0")).upcase
 
       query =
         "INSERT INTO

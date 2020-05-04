@@ -20,7 +20,7 @@ module Gateway
     REGISTERED_BY_COLUMN = :registered_by
 
     def row_to_assessor_domain(row)
-      scheme_name = row['scheme_name']
+      scheme_name = row["scheme_name"]
       unless scheme_name
         scheme = Scheme.find_by(scheme_id: row[REGISTERED_BY_COLUMN.to_s])
         scheme_name = scheme[:name]
@@ -44,7 +44,7 @@ module Gateway
         non_domestic_dec_qualification: row[NON_DOMESTIC_DEC_COLUMN.to_s],
         non_domestic_nos3_qualification: row[NON_DOMESTIC_NOS3_COLUMN.to_s],
         non_domestic_nos4_qualification: row[NON_DOMESTIC_NOS4_COLUMN.to_s],
-        non_domestic_nos5_qualification: row[NON_DOMESTIC_NOS5_COLUMN.to_s]
+        non_domestic_nos5_qualification: row[NON_DOMESTIC_NOS5_COLUMN.to_s],
       )
     end
 
@@ -53,24 +53,24 @@ module Gateway
 
     def qualification_to_column(qualification)
       case qualification
-      when 'domesticSap'
+      when "domesticSap"
         DOMESTIC_SAP_COLUMN
-      when 'domesticRdSap'
+      when "domesticRdSap"
         DOMESTIC_RD_SAP_COLUMN
-      when 'nonDomesticSp3'
+      when "nonDomesticSp3"
         NON_DOMESTIC_SP3_COLUMN
-      when 'nonDomesticCc4'
+      when "nonDomesticCc4"
         NON_DOMESTIC_CC4_COLUMN
-      when 'nonDomesticDec'
+      when "nonDomesticDec"
         NON_DOMESTIC_DEC_COLUMN
-      when 'nonDomesticNos3'
+      when "nonDomesticNos3"
         NON_DOMESTIC_NOS3_COLUMN
-      when 'nonDomesticNos4'
+      when "nonDomesticNos4"
         NON_DOMESTIC_NOS4_COLUMN
-      when 'nonDomesticNos5'
+      when "nonDomesticNos5"
         NON_DOMESTIC_NOS5_COLUMN
       else
-        raise ArgumentError, 'Unrecognised qualification type'
+        raise ArgumentError, "Unrecognised qualification type"
       end
     end
 
@@ -79,7 +79,7 @@ module Gateway
         columns.map do |c|
           "#{Assessor.connection.quote_column_name(c)} = 'ACTIVE'"
         end
-      selectors.join(' OR ')
+      selectors.join(" OR ")
     end
 
     def fetch(scheme_assessor_id)
@@ -105,25 +105,25 @@ module Gateway
     def search(latitude, longitude, qualifications, entries = 10)
       qualification_selector =
         qualification_columns_to_sql(
-          qualifications.map { |q| qualification_to_column(q) }
+          qualifications.map { |q| qualification_to_column(q) },
         )
 
       binds = [
         ActiveRecord::Relation::QueryAttribute.new(
-          'latitude',
+          "latitude",
           latitude,
-          ActiveRecord::Type::Float.new
+          ActiveRecord::Type::Float.new,
         ),
         ActiveRecord::Relation::QueryAttribute.new(
-          'longitude',
+          "longitude",
           longitude,
-          ActiveRecord::Type::Float.new
+          ActiveRecord::Type::Float.new,
         ),
         ActiveRecord::Relation::QueryAttribute.new(
-          'entries',
+          "entries",
           entries,
-          ActiveRecord::Type::Integer.new
-        )
+          ActiveRecord::Type::Integer.new,
+        ),
       ]
 
       response =
@@ -150,14 +150,14 @@ module Gateway
             AND a.latitude BETWEEN ($1 - 1) AND ($1 + 1)
             AND a.longitude BETWEEN ($2 - 1) AND ($2 + 1)
           ORDER BY distance LIMIT $3",
-          'SQL',
-          binds
+          "SQL",
+          binds,
         )
 
       result = []
       response.each do |row|
         assessor_hash = row_to_assessor_domain(row).to_hash
-        assessor_hash[:distance_from_postcode_in_miles] = row['distance']
+        assessor_hash[:distance_from_postcode_in_miles] = row["distance"]
 
         result.push(assessor_hash)
       end
@@ -165,7 +165,7 @@ module Gateway
     end
 
     def search_by(
-      name: '', max_response_size: 20, loose_match: false, exclude: []
+      name: "", max_response_size: 20, loose_match: false, exclude: []
     )
       sql =
         'SELECT
@@ -188,7 +188,7 @@ module Gateway
       end
 
       if loose_match
-        names = name.split(' ')
+        names = name.split(" ")
 
         sql <<
           " AND((first_name ILIKE '#{
@@ -207,7 +207,7 @@ module Gateway
           " AND CONCAT(first_name, ' ', last_name) ILIKE '#{
             ActiveRecord::Base.sanitize_sql(name)
           }'"
-        sql << 'LIMIT ' + (max_response_size + 1).to_s if max_response_size > 0
+        sql << "LIMIT " + (max_response_size + 1).to_s if max_response_size.positive?
       end
 
       response = Assessor.connection.execute(sql)

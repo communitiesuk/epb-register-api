@@ -1,26 +1,26 @@
-require 'simplecov'
+require "simplecov"
 SimpleCov.start
 
-ENV['RACK_ENV'] = 'test'
-ENV['EPB_UNLEASH_URI'] = 'https://google.com'
+ENV["RACK_ENV"] = "test"
+ENV["EPB_UNLEASH_URI"] = "https://google.com"
 
-require 'rspec'
-require 'sinatra/activerecord'
-require 'rack/test'
-require 'database_cleaner'
-require 'zeitwerk'
-require 'epb-auth-tools'
-require 'assertive_client'
-require 'nokogiri'
+require "rspec"
+require "sinatra/activerecord"
+require "rack/test"
+require "database_cleaner"
+require "zeitwerk"
+require "epb-auth-tools"
+require "assertive_client"
+require "nokogiri"
 
 loader = Zeitwerk::Loader.new
 loader.push_dir("#{__dir__}/../lib/")
 loader.push_dir("#{__dir__}/../spec/test_doubles/")
 loader.setup
 
-ENV['JWT_ISSUER'] = 'test.issuer'
-ENV['JWT_SECRET'] = 'test.secret'
-ENV['SILENT_EVENTS'] = 'true'
+ENV["JWT_ISSUER"] = "test.issuer"
+ENV["JWT_SECRET"] = "test.secret"
+ENV["SILENT_EVENTS"] = "true"
 
 class UnexpectedApiError < StandardError; end
 
@@ -39,17 +39,17 @@ module RSpecAssessorServiceMixin
 end
 
 def authenticate_and(request = nil, scopes = [], supplementary = {}, &block)
-  auth = 'Bearer ' + get_valid_jwt(scopes, supplementary)
+  auth = "Bearer " + get_valid_jwt(scopes, supplementary)
 
   if request.nil?
-    header 'Authorization', auth
+    header "Authorization", auth
   else
-    request['Authorization'] = auth
+    request["Authorization"] = auth
   end
 
   response = block.call
 
-  header 'Authorization', nil
+  header "Authorization", nil
   response
 end
 
@@ -60,12 +60,12 @@ end
 def get_valid_jwt(scopes = [], sup = {})
   token =
     Auth::Token.new iat: Time.now.to_i,
-                    iss: ENV['JWT_ISSUER'],
-                    sub: 'test-subject',
+                    iss: ENV["JWT_ISSUER"],
+                    sub: "test-subject",
                     scopes: scopes,
                     sup: sup
 
-  token.encode ENV['JWT_SECRET']
+  token.encode ENV["JWT_SECRET"]
 end
 
 RSpec.configure do |config|

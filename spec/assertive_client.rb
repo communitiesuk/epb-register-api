@@ -1,31 +1,31 @@
-ALL_SCOPES = %w[scheme:assessor:list scheme:list]
+ALL_SCOPES = %w[scheme:assessor:list scheme:list].freeze
 
 def check_response(response, accepted_responses)
   if accepted_responses.include?(response.status)
     response
   else
     raise UnexpectedApiError.new(
-            {
-              expected_status: accepted_responses,
-              actual_status: response.status,
-              response_body: response.body
-            }
-          )
+      {
+        expected_status: accepted_responses,
+        actual_status: response.status,
+        response_body: response.body,
+      },
+    )
   end
 end
 
 def assertive_request(
   request, accepted_responses, authenticate, auth_data, scopes = []
 )
-  if authenticate
-    if auth_data
-      response = authenticate_with_data(auth_data, scopes) { request.call }
-    else
-      response = authenticate_with_data({}, scopes) { request.call }
-    end
-  else
-    response = request.call
-  end
+  response = if authenticate
+               if auth_data
+                 authenticate_with_data(auth_data, scopes) { request.call }
+               else
+                 authenticate_with_data({}, scopes) { request.call }
+                          end
+             else
+               request.call
+             end
   check_response(response, accepted_responses)
 end
 
@@ -37,7 +37,7 @@ def assertive_put(
     accepted_responses,
     authenticate,
     auth_data,
-    scopes
+    scopes,
   )
 end
 
@@ -47,7 +47,7 @@ def assertive_get(path, accepted_responses, authenticate, auth_data, scopes)
     accepted_responses,
     authenticate,
     auth_data,
-    scopes
+    scopes,
   )
 end
 
@@ -60,7 +60,7 @@ def assertive_post(
     accepted_responses,
     authenticate,
     auth_data,
-    scopes
+    scopes,
   )
 end
 
@@ -76,7 +76,7 @@ def fetch_assessors(
     accepted_responses,
     authenticate,
     auth_data,
-    scopes
+    scopes,
   )
 end
 
@@ -88,13 +88,13 @@ def fetch_assessor(
   auth_data = nil,
   scopes = %w[scheme:assessor:fetch]
 )
-  auth_data = { 'scheme_ids': [scheme_id] } unless auth_data
+  auth_data ||= { 'scheme_ids': [scheme_id] }
   assertive_get(
     "/api/schemes/#{scheme_id}/assessors/#{assessor_id}",
     accepted_responses,
     authenticate,
     auth_data,
-    scopes
+    scopes,
   )
 end
 
@@ -107,45 +107,45 @@ def add_assessor(
   auth_data = nil,
   scopes = %w[scheme:assessor:update]
 )
-  auth_data = { 'scheme_ids': [scheme_id] } unless auth_data
+  auth_data ||= { 'scheme_ids': [scheme_id] }
   assertive_put(
     "/api/schemes/#{scheme_id}/assessors/#{assessor_id}",
     body,
     accepted_responses,
     authenticate,
     auth_data,
-    scopes
+    scopes,
   )
 end
 
 def add_scheme(
-  name = 'test scheme',
+  name = "test scheme",
   accepted_responses = [201],
   authenticate = true,
   auth_data = nil,
   scopes = %w[scheme:create]
 )
   assertive_post(
-    '/api/schemes',
+    "/api/schemes",
     { name: name },
     accepted_responses,
     authenticate,
     auth_data,
-    scopes
+    scopes,
   )
 end
 
 def lodge_assessment(
-  assessment_id: '',
-  assessment_body: '',
+  assessment_id: "",
+  assessment_body: "",
   accepted_responses: [201],
   authenticate: true,
   auth_data: nil,
   scopes: %w[assessment:lodge],
   json: false,
-  schema_name: 'RdSAP-Schema-19.0'
+  schema_name: "RdSAP-Schema-19.0"
 )
-  header 'Content-type', 'application/xml+' + schema_name
+  header "Content-type", "application/xml+" + schema_name
   assertive_post(
     "api/assessments/#{assessment_id}",
     assessment_body,
@@ -153,21 +153,21 @@ def lodge_assessment(
     authenticate,
     auth_data,
     scopes,
-    json
+    json,
   )
 end
 
 def add_scheme_and_get_id(
-  name = 'test scheme', accepted_responses = [201], authenticate = true
+  name = "test scheme", accepted_responses = [201], authenticate = true
 )
-  JSON.parse(add_scheme(name, accepted_responses, authenticate).body)['data'][
-    'schemeId'
+  JSON.parse(add_scheme(name, accepted_responses, authenticate).body)["data"][
+    "schemeId"
   ]
 end
 
 def add_scheme_then_assessor(body, accepted_responses = [200, 201])
   scheme_id = add_scheme_and_get_id
-  response = add_assessor(scheme_id, 'TEST_ASSESSOR', body, accepted_responses)
+  response = add_assessor(scheme_id, "TEST_ASSESSOR", body, accepted_responses)
   response
 end
 
@@ -183,7 +183,7 @@ def fetch_assessment(
     accepted_responses,
     authenticate,
     auth_data,
-    scopes
+    scopes,
   )
 end
 
@@ -201,7 +201,7 @@ def migrate_assessment(
     accepted_responses,
     authenticate,
     auth_data,
-    scopes
+    scopes,
   )
 end
 
@@ -217,7 +217,7 @@ def assessments_search_by_postcode(
     accepted_responses,
     authenticate,
     auth_data,
-    scopes
+    scopes,
   )
 end
 
@@ -233,7 +233,7 @@ def assessments_search_by_assessment_id(
     accepted_responses,
     authenticate,
     auth_data,
-    scopes
+    scopes,
   )
 end
 
@@ -252,7 +252,7 @@ def assessments_search_by_street_name_and_town(
     accepted_responses,
     authenticate,
     auth_data,
-    scopes
+    scopes,
   )
 end
 
@@ -269,7 +269,7 @@ def assessors_search(
     accepted_responses,
     authenticate,
     auth_data,
-    scopes
+    scopes,
   )
 end
 
@@ -285,7 +285,7 @@ def assessors_search_by_name(
     accepted_responses,
     authenticate,
     auth_data,
-    scopes
+    scopes,
   )
 end
 
@@ -296,10 +296,10 @@ def schemes_list(
   scopes = %w[scheme:list]
 )
   assertive_get(
-    '/api/schemes',
+    "/api/schemes",
     accepted_responses,
     authenticate,
     auth_data,
-    scopes
+    scopes,
   )
 end

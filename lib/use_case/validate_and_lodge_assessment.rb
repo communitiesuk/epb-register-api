@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'active_support/core_ext/hash/conversions'
+require "active_support/core_ext/hash/conversions"
 
 module UseCase
   class ValidateAndLodgeAssessment
@@ -35,7 +35,7 @@ module UseCase
       @lodge_assessment_use_case.execute(lodgement, assessment_id)
     end
 
-    private
+  private
 
     def xml_to_hash(xml)
       Hash.from_xml(xml).deep_symbolize_keys
@@ -44,7 +44,7 @@ module UseCase
     def assessor_can_lodge?(scheme_assessor_id, scheme_ids)
       @check_assessor_belongs_to_scheme_use_case.execute(
         scheme_assessor_id,
-        scheme_ids
+        scheme_ids,
       )
     end
   end

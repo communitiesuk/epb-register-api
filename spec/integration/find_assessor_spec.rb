@@ -1,15 +1,15 @@
-describe 'Integration::FilterAndOrderAssessorsByPostcode' do
+describe "Integration::FilterAndOrderAssessorsByPostcode" do
   include RSpecAssessorServiceMixin
 
   def truncate(postcode = nil)
     if postcode ==
-         Regexp.new('^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$', Regexp::IGNORECASE)
+        Regexp.new('^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$', Regexp::IGNORECASE)
       ActiveRecord::Base.connection.execute(
-        'TRUNCATE TABLE postcode_geolocation'
+        "TRUNCATE TABLE postcode_geolocation",
       )
     else
       ActiveRecord::Base.connection.execute(
-        'TRUNCATE TABLE postcode_outcode_geolocations'
+        "TRUNCATE TABLE postcode_outcode_geolocations",
       )
     end
   end
@@ -22,70 +22,68 @@ describe 'Integration::FilterAndOrderAssessorsByPostcode' do
     db.connection.execute(
       "INSERT INTO postcode_geolocation (postcode, latitude, longitude) VALUES('#{
         db.sanitize_sql(postcode)
-      }', #{latitude.to_f}, #{longitude.to_f})"
+      }', #{latitude.to_f}, #{longitude.to_f})",
     )
   end
 
   let(:valid_assessor_request_body) do
     {
-      firstName: 'Someone',
-      middleNames: 'muddle',
-      lastName: 'Person',
-      dateOfBirth: '1991-02-25',
-      searchResultsComparisonPostcode: 'BF1 3AD',
-      qualifications: { domesticRdSap: 'ACTIVE' }
+      firstName: "Someone",
+      middleNames: "muddle",
+      lastName: "Person",
+      dateOfBirth: "1991-02-25",
+      searchResultsComparisonPostcode: "BF1 3AD",
+      qualifications: { domesticRdSap: "ACTIVE" },
     }
   end
 
   def populate_postcode_geolocation
-    postcode_gateway = Gateway::PostcodesGateway.new
-
     truncate
-    add_postcodes('BF1 3AD', 27.7172, -85.3240)
+    add_postcodes("BF1 3AD", 27.7172, -85.3240)
   end
 
-  context 'when searching for a postcode' do
-    context 'and postcode_geolocation table is empty' do
-      it 'returns an empty hash' do
-        response = Gateway::PostcodesGateway.new.fetch('BF1 3AD')
+  context "when searching for a postcode" do
+    context "and postcode_geolocation table is empty" do
+      it "returns an empty hash" do
+        response = Gateway::PostcodesGateway.new.fetch("BF1 3AD")
         expect(response).to eq([])
       end
     end
 
-    context 'and postcode_geolocation table is not empty' do
-      it 'returns a single record' do
+    context "and postcode_geolocation table is not empty" do
+      it "returns a single record" do
         populate_postcode_geolocation
 
-        response = Gateway::PostcodesGateway.new.fetch('BF1 3AD')
+        response = Gateway::PostcodesGateway.new.fetch("BF1 3AD")
 
         expect(response).to eq(
           [
             {
-              'postcode': 'BF1 3AD', 'latitude': 27.7172, 'longitude': -85.3240
-            }
-          ]
+              'postcode': "BF1 3AD", 'latitude': 27.7172, 'longitude': -85.3240
+            },
+          ],
         )
       end
     end
   end
 
-  context 'when ordering and filtering assessors by postcode' do
-    it 'the returned assessor is within 0.0 distance' do
+  context "when ordering and filtering assessors by postcode" do
+    it "the returned assessor is within 0.0 distance" do
       scheme_id = authenticate_and { add_scheme_and_get_id }
 
       authenticate_and do
-        add_assessor(scheme_id, 'SCHEME4233', valid_assessor_request_body)
+        add_assessor(scheme_id, "SCHEME4233", valid_assessor_request_body)
       end
 
       populate_postcode_geolocation
 
-      postcode = Gateway::PostcodesGateway.new.fetch('BF1 3AD').first
+      postcode = Gateway::PostcodesGateway.new.fetch("BF1 3AD").first
 
       assessors =
         Gateway::AssessorsGateway.new.search(
           postcode[:latitude],
           postcode[:longitude],
-          %w[domesticRdSap]
+          %w[domesticRdSap],
         )
 
       expect(assessors.first[:distance_from_postcode_in_miles]).to eq(0.0)

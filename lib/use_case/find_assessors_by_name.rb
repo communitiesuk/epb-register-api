@@ -29,7 +29,7 @@ module UseCase
             name: name,
             max_response_size: 0,
             loose_match: true,
-            exclude: excluded
+            exclude: excluded,
           )
 
         (max_response_size - response.size).times do |index|

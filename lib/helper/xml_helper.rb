@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'active_support/core_ext/hash/conversions'
+require "active_support/core_ext/hash/conversions"
 
 module Helper
   class InvalidXml < StandardError; end
@@ -12,7 +12,7 @@ module Helper
       file = Nokogiri.XML(xml)
       errors = xsd.validate(file)
 
-      raise InvalidXml, errors.map(&:message).join(', ') if errors.any?
+      raise InvalidXml, errors.map(&:message).join(", ") if errors.any?
 
       Hash.from_xml(file.to_s).deep_symbolize_keys if errors.empty?
     end

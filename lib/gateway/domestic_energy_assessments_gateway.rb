@@ -17,8 +17,8 @@ module Gateway
     def to_hash(assessment)
       {
         date_of_assessment:
-          assessment[:date_of_assessment].strftime('%Y-%m-%d'),
-        date_registered: assessment[:date_registered].strftime('%Y-%m-%d'),
+          assessment[:date_of_assessment].strftime("%Y-%m-%d"),
+        date_registered: assessment[:date_registered].strftime("%Y-%m-%d"),
         dwelling_type: assessment[:dwelling_type],
         type_of_assessment: assessment[:type_of_assessment],
         total_floor_area: assessment[:total_floor_area].to_f,
@@ -33,7 +33,7 @@ module Gateway
         potential_carbon_emission: assessment[:potential_carbon_emission].to_f,
         opt_out: assessment[:opt_out],
         postcode: assessment[:postcode],
-        date_of_expiry: assessment[:date_of_expiry].strftime('%Y-%m-%d'),
+        date_of_expiry: assessment[:date_of_expiry].strftime("%Y-%m-%d"),
         address_line1: assessment[:address_line1],
         address_line2: assessment[:address_line2],
         address_line3: assessment[:address_line3],
@@ -47,14 +47,14 @@ module Gateway
           impact_of_loft_insulation: assessment[:impact_of_loft_insulation],
           impact_of_cavity_insulation: assessment[:impact_of_cavity_insulation],
           impact_of_solid_wall_insulation:
-            assessment[:impact_of_solid_wall_insulation]
+            assessment[:impact_of_solid_wall_insulation],
         },
         current_energy_efficiency_band:
           get_energy_rating_band(assessment[:current_energy_efficiency_rating]),
         potential_energy_efficiency_band:
           get_energy_rating_band(
-            assessment[:potential_energy_efficiency_rating]
-          )
+            assessment[:potential_energy_efficiency_rating],
+          ),
       }
     end
 
@@ -73,7 +73,7 @@ module Gateway
           row[:energy_performance_rating_improvement],
         environmental_impact_rating_improvement:
           row[:environmental_impact_rating_improvement],
-        green_deal_category_code: row[:green_deal_category_code]
+        green_deal_category_code: row[:green_deal_category_code],
       )
     end
 
@@ -95,11 +95,11 @@ module Gateway
 
     def insert_or_update(assessment)
       unless valid_energy_rating(assessment.current_energy_efficiency_rating)
-        raise ArgumentError, 'Invalid current energy rating'
+        raise ArgumentError, "Invalid current energy rating"
       end
 
       unless valid_energy_rating(assessment.potential_energy_efficiency_rating)
-        raise ArgumentError, 'Invalid potential energy rating'
+        raise ArgumentError, "Invalid potential energy rating"
       end
 
       send_to_db(assessment)
@@ -187,7 +187,7 @@ module Gateway
       result
     end
 
-    private
+  private
 
     def replace_improvements(improvements)
       improvements = improvements.map(&:to_record)
@@ -199,7 +199,7 @@ module Gateway
     def send_to_db(domestic_energy_assessment)
       existing_assessment =
         DomesticEnergyAssessment.find_by(
-          assessment_id: domestic_energy_assessment.assessment_id
+          assessment_id: domestic_energy_assessment.assessment_id,
         )
 
       if existing_assessment
@@ -214,19 +214,19 @@ module Gateway
     def get_energy_rating_band(number)
       case number
       when 1..20
-        'g'
+        "g"
       when 21..38
-        'f'
+        "f"
       when 39..54
-        'e'
+        "e"
       when 55..68
-        'd'
+        "d"
       when 69..80
-        'c'
+        "c"
       when 81..91
-        'b'
+        "b"
       when 92..100
-        'a'
+        "a"
       end
     end
   end

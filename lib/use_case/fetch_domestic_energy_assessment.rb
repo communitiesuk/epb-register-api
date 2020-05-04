@@ -25,24 +25,24 @@ module UseCase
       assessment
     end
 
-    private
+  private
 
     def get_energy_rating_band(number)
       case number
       when 1..20
-        'g'
+        "g"
       when 21..38
-        'f'
+        "f"
       when 39..54
-        'e'
+        "e"
       when 55..68
-        'd'
+        "d"
       when 69..80
-        'c'
+        "c"
       when 81..91
-        'b'
+        "b"
       when 92..100
-        'a'
+        "a"
       end
     end
   end

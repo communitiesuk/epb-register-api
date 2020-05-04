@@ -6,7 +6,7 @@ module UseCase
       validate_xml?(xml, schema_location)
     end
 
-    private
+  private
 
     def validate_xml?(xml, schema)
       xsddoc = Nokogiri.XML(File.read(schema), schema)
@@ -14,7 +14,7 @@ module UseCase
       file = Nokogiri.XML(xml)
       errors = xsd.validate(file)
 
-      raise InvalidXmlException, errors.map(&:message).join(', ') if errors.any?
+      raise InvalidXmlException, errors.map(&:message).join(", ") if errors.any?
 
       true
     end

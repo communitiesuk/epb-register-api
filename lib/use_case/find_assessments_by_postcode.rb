@@ -9,12 +9,12 @@ module UseCase
     def execute(postcode)
       postcode.upcase!
 
-      postcode = postcode.insert(-4, ' ') if postcode[-4] != ' '
+      postcode = postcode.insert(-4, " ") if postcode[-4] != " "
 
       unless Regexp.new(
-               '^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$',
-               Regexp::IGNORECASE
-             )
+        '^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$',
+        Regexp::IGNORECASE,
+      )
                .match(postcode)
         raise PostcodeNotValid
       end

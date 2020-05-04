@@ -1,4 +1,4 @@
-require 'sinatra/activerecord'
+require "sinatra/activerecord"
 
 class Container
   def initialize
@@ -22,34 +22,34 @@ class Container
     migrate_domestic_energy_assessment_use_case =
       UseCase::MigrateDomesticEnergyAssessment.new(
         domestic_energy_assessments_gateway,
-        assessors_gateway
+        assessors_gateway,
       )
     fetch_domestic_energy_assessment_use_case =
       UseCase::FetchDomesticEnergyAssessment.new(
         domestic_energy_assessments_gateway,
-        assessors_gateway
+        assessors_gateway,
       )
 
     find_assessors_by_postcode_use_case =
       UseCase::FindAssessorsByPostcode.new(
         postcode_gateway,
         assessors_gateway,
-        schemes_gateway
+        schemes_gateway,
       )
     find_assessors_by_name_use_case =
       UseCase::FindAssessorsByName.new(assessors_gateway, schemes_gateway)
 
     find_assessments_by_postcode_use_case =
       UseCase::FindAssessmentsByPostcode.new(
-        domestic_energy_assessments_gateway
+        domestic_energy_assessments_gateway,
       )
     find_assessments_by_assessment_id_use_case =
       UseCase::FindAssessmentsByAssessmentId.new(
-        domestic_energy_assessments_gateway
+        domestic_energy_assessments_gateway,
       )
     find_assessments_by_street_name_and_town_use_case =
       UseCase::FindAssessmentsByStreetNameAndTown.new(
-        domestic_energy_assessments_gateway
+        domestic_energy_assessments_gateway,
       )
     fetch_assessor_list_use_case =
       UseCase::FetchAssessorList.new(assessors_gateway, schemes_gateway)
@@ -59,7 +59,7 @@ class Container
     lodge_assessment_use_case =
       UseCase::LodgeAssessment.new(
         domestic_energy_assessments_gateway,
-        assessors_gateway
+        assessors_gateway,
       )
 
     check_assessor_belongs_to_scheme_use_case =
@@ -69,7 +69,7 @@ class Container
       UseCase::ValidateAndLodgeAssessment.new(
         validate_assessment_use_case,
         lodge_assessment_use_case,
-        check_assessor_belongs_to_scheme_use_case
+        check_assessor_belongs_to_scheme_use_case,
       )
 
     @objects = {
@@ -96,7 +96,7 @@ class Container
         check_assessor_belongs_to_scheme_use_case,
       validate_assessment_use_case: validate_assessment_use_case,
       validate_and_lodge_assessment_use_case:
-        validate_and_lodge_assessment_use_case
+        validate_and_lodge_assessment_use_case,
     }
   end
 

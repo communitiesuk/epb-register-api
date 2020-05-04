@@ -1,41 +1,41 @@
-require 'json-schema'
+require "json-schema"
 
 module Helper
   class JsonHelper
     DATE_FORMAT_PROC = lambda do |value|
-      Date.strptime(value, '%Y-%m-%d')
+      Date.strptime(value, "%Y-%m-%d")
     rescue StandardError
-      raise JSON::Schema::CustomFormatError, 'Must be date in format YYYY-MM-DD'
+      raise JSON::Schema::CustomFormatError, "Must be date in format YYYY-MM-DD"
     end
 
     EMAIL_FORMAT_PROC = lambda do |value|
-      unless value.include?('@')
-        raise JSON::Schema::CustomFormatError, 'Must be a valid email'
+      unless value.include?("@")
+        raise JSON::Schema::CustomFormatError, "Must be a valid email"
       end
     end
 
     TELEPHONE_FORMAT_PROC = lambda do |value|
       if value.size > 256
-        raise JSON::Schema::CustomFormatError, 'Must be less than 257 chars'
+        raise JSON::Schema::CustomFormatError, "Must be less than 257 chars"
       end
     end
 
     POSITIVE_INT_FORMAT_PROC = lambda do |value|
-      if value < 0
-        raise JSON::Schema::CustomFormatError, 'Must be a positive number'
+      if value.negative?
+        raise JSON::Schema::CustomFormatError, "Must be a positive number"
       end
     end
 
     def initialize
-      JSON::Validator.register_format_validator('email', EMAIL_FORMAT_PROC)
-      JSON::Validator.register_format_validator('iso-date', DATE_FORMAT_PROC)
+      JSON::Validator.register_format_validator("email", EMAIL_FORMAT_PROC)
+      JSON::Validator.register_format_validator("iso-date", DATE_FORMAT_PROC)
       JSON::Validator.register_format_validator(
-        'positive-int',
-        POSITIVE_INT_FORMAT_PROC
+        "positive-int",
+        POSITIVE_INT_FORMAT_PROC,
       )
       JSON::Validator.register_format_validator(
-        'telephone',
-        TELEPHONE_FORMAT_PROC
+        "telephone",
+        TELEPHONE_FORMAT_PROC,
       )
     end
 

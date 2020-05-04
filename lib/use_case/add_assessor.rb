@@ -23,8 +23,8 @@ module UseCase
         @assessors_gateway.fetch(add_assessor_request.scheme_assessor_id)
 
       if existing_assessor &&
-           existing_assessor.registered_by_id.to_s !=
-             add_assessor_request.registered_by_id.to_s
+          existing_assessor.registered_by_id.to_s !=
+              add_assessor_request.registered_by_id.to_s
         raise AssessorRegisteredOnAnotherScheme
       end
 
@@ -56,7 +56,7 @@ module UseCase
           non_domestic_nos4_qualification:
             add_assessor_request.non_domestic_nos4_qualification,
           non_domestic_nos5_qualification:
-            add_assessor_request.non_domestic_nos5_qualification
+            add_assessor_request.non_domestic_nos5_qualification,
         )
 
       @assessors_gateway.update(assessor)

@@ -1,8 +1,8 @@
-require_relative '../helper/toggles'
-require_relative '../container'
-require 'sinatra/cross_origin'
-require 'epb-auth-tools'
-require 'nokogiri'
+require_relative "../helper/toggles"
+require_relative "../container"
+require "sinatra/cross_origin"
+require "epb-auth-tools"
+require "nokogiri"
 
 module Controller
   class BaseController < Sinatra::Base
@@ -19,9 +19,9 @@ module Controller
     end
 
     configure :development do
-      require 'sinatra/reloader'
+      require "sinatra/reloader"
       register Sinatra::Reloader
-      also_reload 'lib/**/*.rb'
+      also_reload "lib/**/*.rb"
     end
 
     configure do
@@ -30,9 +30,9 @@ module Controller
     end
 
     before do
-      response.headers['Access-Control-Allow-Origin'] = '*'
-      response.headers['Access-Control-Allow-Headers'] =
-        'Content-Type, Cache-Control, Accept'
+      response.headers["Access-Control-Allow-Origin"] = "*"
+      response.headers["Access-Control-Allow-Headers"] =
+        "Content-Type, Cache-Control, Accept"
     end
 
     set(:jwt_auth) do |*scopes|
@@ -41,8 +41,8 @@ module Controller
         env[:jwt_auth] = token
         unless token.scopes?(scopes)
           forbidden(
-            'UNAUTHORISED',
-            'You are not authorised to perform this request'
+            "UNAUTHORISED",
+            "You are not authorised to perform this request",
           )
         end
       rescue Auth::Errors::Error => e
@@ -85,11 +85,11 @@ module Controller
         exception.methods.include?(:message) ? exception.message : exception
 
       logger.error(message)
-      error_response(500, 'SERVER_ERROR', message)
+      error_response(500, "SERVER_ERROR", message)
     end
 
     def not_found_error(title)
-      error_response(404, 'NOT_FOUND', title)
+      error_response(404, "NOT_FOUND", title)
     end
 
     def forbidden(error_code, title, code = 403)

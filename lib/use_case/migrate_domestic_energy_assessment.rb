@@ -65,9 +65,9 @@ module UseCase
                   i[:energy_performance_rating_improvement],
                 environmental_impact_rating_improvement:
                   i[:environmental_impact_rating_improvement],
-                green_deal_category_code: i[:green_deal_category_code]
+                green_deal_category_code: i[:green_deal_category_code],
               )
-            end
+            end,
         )
 
       validator = Helper::RdsapValidator::ValidateAll.new

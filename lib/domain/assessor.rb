@@ -57,7 +57,7 @@ module Domain
         scheme_assessor_id: @scheme_assessor_id,
         date_of_birth:
           if @date_of_birth.methods.include?(:strftime)
-            @date_of_birth.strftime('%Y-%m-%d')
+            @date_of_birth.strftime("%Y-%m-%d")
           else
             Date.parse(@date_of_birth)
           end,
@@ -65,30 +65,30 @@ module Domain
         search_results_comparison_postcode: @search_results_comparison_postcode,
         qualifications: {
           domestic_sap:
-            @domestic_sap_qualification == 'ACTIVE' ? 'ACTIVE' : 'INACTIVE',
+            @domestic_sap_qualification == "ACTIVE" ? "ACTIVE" : "INACTIVE",
           domestic_rd_sap:
-            @domestic_rd_sap_qualification == 'ACTIVE' ? 'ACTIVE' : 'INACTIVE',
+            @domestic_rd_sap_qualification == "ACTIVE" ? "ACTIVE" : "INACTIVE",
           non_domestic_sp3:
-            @non_domestic_sp3_qualification == 'ACTIVE' ? 'ACTIVE' : 'INACTIVE',
+            @non_domestic_sp3_qualification == "ACTIVE" ? "ACTIVE" : "INACTIVE",
           non_domestic_cc4:
-            @non_domestic_cc4_qualification == 'ACTIVE' ? 'ACTIVE' : 'INACTIVE',
+            @non_domestic_cc4_qualification == "ACTIVE" ? "ACTIVE" : "INACTIVE",
           non_domestic_dec:
-            @non_domestic_dec_qualification == 'ACTIVE' ? 'ACTIVE' : 'INACTIVE',
+            @non_domestic_dec_qualification == "ACTIVE" ? "ACTIVE" : "INACTIVE",
           non_domestic_nos3:
-            if @non_domestic_nos3_qualification == 'ACTIVE'
-              'ACTIVE'
+            if @non_domestic_nos3_qualification == "ACTIVE"
+              "ACTIVE"
             else
-              'INACTIVE'
+              "INACTIVE"
             end,
           non_domestic_nos4:
-            if @non_domestic_nos4_qualification == 'ACTIVE'
-              'ACTIVE'
+            if @non_domestic_nos4_qualification == "ACTIVE"
+              "ACTIVE"
             else
-              'INACTIVE'
+              "INACTIVE"
             end,
           non_domestic_nos5:
-            @non_domestic_nos5_qualification == 'ACTIVE' ? 'ACTIVE' : 'INACTIVE'
-        }
+            @non_domestic_nos5_qualification == "ACTIVE" ? "ACTIVE" : "INACTIVE",
+        },
       }
 
       hash[:contact_details][:email] = @email if @email
@@ -117,7 +117,7 @@ module Domain
         non_domestic_dec_qualification: @non_domestic_dec_qualification,
         non_domestic_nos3_qualification: @non_domestic_nos3_qualification,
         non_domestic_nos4_qualification: @non_domestic_nos4_qualification,
-        non_domestic_nos5_qualification: @non_domestic_nos5_qualification
+        non_domestic_nos5_qualification: @non_domestic_nos5_qualification,
       }
     end
   end

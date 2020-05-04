@@ -30,11 +30,11 @@ describe UseCase::ValidateAndLodgeAssessment do
   end
 
   let(:valid_xml) do
-    File.read File.join Dir.pwd, 'api/schemas/xml/examples/RdSAP-19.01.xml'
+    File.read File.join Dir.pwd, "api/schemas/xml/examples/RdSAP-19.01.xml"
   end
 
-  context 'when validating a valid RdSAP assessment' do
-    it 'will call the two use cases' do
+  context "when validating a valid RdSAP assessment" do
+    it "will call the two use cases" do
       validate_lodgement_use_case = ValidateLodgementUseCaseSpy.new
       lodge_assessment_use_case = LodgeAssessmentUseCaseSpy.new
       check_assessor_belongs_to_scheme = CheckAssessorBelongsToSchemeSpy.new
@@ -43,13 +43,13 @@ describe UseCase::ValidateAndLodgeAssessment do
         described_class.new(
           validate_lodgement_use_case,
           lodge_assessment_use_case,
-          check_assessor_belongs_to_scheme
+          check_assessor_belongs_to_scheme,
         )
       use_case.execute(
-        '0000-0000-0000-0000-0000',
+        "0000-0000-0000-0000-0000",
         valid_xml,
-        'RdSAP-Schema-19.0',
-        '1'
+        "RdSAP-Schema-19.0",
+        "1",
       )
 
       expect(validate_lodgement_use_case.is_called).to eq(true)
@@ -57,8 +57,8 @@ describe UseCase::ValidateAndLodgeAssessment do
     end
   end
 
-  context 'when validating an invalid schema name' do
-    it 'raises the error SchemaNotAccepted' do
+  context "when validating an invalid schema name" do
+    it "raises the error SchemaNotAccepted" do
       validate_lodgement_use_case = ValidateLodgementUseCaseSpy.new
       lodge_assessment_use_case = LodgeAssessmentUseCaseSpy.new
       check_assessor_belongs_to_scheme = CheckAssessorBelongsToSchemeSpy.new
@@ -67,18 +67,18 @@ describe UseCase::ValidateAndLodgeAssessment do
         described_class.new(
           validate_lodgement_use_case,
           lodge_assessment_use_case,
-          check_assessor_belongs_to_scheme
+          check_assessor_belongs_to_scheme,
         )
 
       expect {
         use_case.execute(
-          '0000-0000-0000-0000-0000',
+          "0000-0000-0000-0000-0000",
           valid_xml,
-          'Non-existent-RdSAP-Schema-19.0',
-          '1'
+          "Non-existent-RdSAP-Schema-19.0",
+          "1",
         )
       }.to raise_exception(
-        UseCase::ValidateAndLodgeAssessment::SchemaNotSupportedException
+        UseCase::ValidateAndLodgeAssessment::SchemaNotSupportedException,
       )
     end
   end

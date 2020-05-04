@@ -11,16 +11,16 @@ module UseCase
 
     def execute(postcode, qualifications)
       unless Regexp.new(
-               '^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$',
-               Regexp::IGNORECASE
-             )
+        '^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$',
+        Regexp::IGNORECASE,
+      )
                .match(postcode)
         raise PostcodeNotValid
       end
 
       postcodes_geolocation = @postcodes_gateway.fetch(postcode)
 
-      raise PostcodeNotRegistered if postcodes_geolocation.size < 1
+      raise PostcodeNotRegistered if postcodes_geolocation.empty?
 
       latitude = postcodes_geolocation.first[:latitude]
       longitude = postcodes_geolocation.first[:longitude]

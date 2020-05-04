@@ -31,21 +31,21 @@ module UseCase
           data[:address_line_two],
           data[:address_line_three],
           data[:town],
-          data[:postcode]
+          data[:postcode],
         ].compact
-          .join(', ')
+          .join(", ")
 
       expiry_date = Date.parse(data[:inspection_date]).next_year(10).to_s
 
       assessor = @assessors_gateway.fetch scheme_assessor_id
 
-      if lodgement.type == 'RdSAP' &&
-           assessor.domestic_rd_sap_qualification == 'INACTIVE'
+      if lodgement.type == "RdSAP" &&
+          assessor.domestic_rd_sap_qualification == "INACTIVE"
         raise InactiveAssessorException
       end
 
-      if lodgement.type == 'SAP' &&
-           assessor.domestic_sap_qualification == 'INACTIVE'
+      if lodgement.type == "SAP" &&
+          assessor.domestic_sap_qualification == "INACTIVE"
         raise InactiveAssessorException
       end
 
@@ -67,9 +67,9 @@ module UseCase
           postcode: data[:postcode],
           date_of_expiry: expiry_date,
           address_line1: data[:address_line_one],
-          address_line2: data[:address_line_two] || '',
-          address_line3: data[:address_line_three] || '',
-          address_line4: '',
+          address_line2: data[:address_line_two] || "",
+          address_line3: data[:address_line_three] || "",
+          address_line4: "",
           town: data[:town],
           current_space_heating_demand:
             data[:space_heating] || data[:new_space_heating],
@@ -79,7 +79,7 @@ module UseCase
           impact_of_cavity_insulation: data[:impact_of_cavity_insulation],
           impact_of_solid_wall_insulation:
             data[:impact_of_solid_wall_insulation],
-          recommended_improvements: lodgement.extract(data)
+          recommended_improvements: lodgement.extract(data),
         )
 
       validator = Helper::RdsapValidator::ValidateAll.new

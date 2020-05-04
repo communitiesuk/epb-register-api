@@ -2,6 +2,6 @@ class TogglesStub
   def toggles; end
 
   def state(name)
-    name == 'a'
+    name == "a"
   end
 end

@@ -10,6 +10,6 @@ class CreateDomesticEpcs < ActiveRecord::Migration[6.0]
       t.string :address_summary
     end
 
-    execute('ALTER TABLE domestic_epcs ADD PRIMARY KEY (certificate_id)')
+    execute("ALTER TABLE domestic_epcs ADD PRIMARY KEY (certificate_id)")
   end
 end

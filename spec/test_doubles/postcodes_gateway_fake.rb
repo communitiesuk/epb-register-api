@@ -1,7 +1,7 @@
 class PostcodesGatewayFake
   attr_writer :schemes
 
-  def initialize()
+  def initialize
     @schemes = {}
   end
 

@@ -4,7 +4,7 @@ class AddAssessorIdToAssessmentsTable < ActiveRecord::Migration[6.0]
     change_column_null :domestic_energy_assessments,
                        :scheme_assessor_id,
                        false,
-                       'TESTASSESSOR'
+                       "TESTASSESSOR"
 
     add_foreign_key :domestic_energy_assessments,
                     :assessors,
