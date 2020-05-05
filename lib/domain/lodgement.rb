@@ -23,6 +23,12 @@ module Domain
           "api/schemas/xml/SAP-Schema-17.1/SAP/Templates/SAP-Report.xsd",
         data: schema("api/schemas/data/SAP-Schema-17.1.json"),
       },
+      'SAP-Schema-NI-17.4': {
+          report_type: "SAP",
+          schema_path:
+              "api/schemas/xml/SAP-Schema-NI-17.4/SAP/Templates/SAP-Report.xsd",
+          data: schema("api/schemas/data/SAP-Schema-NI-17.4.json"),
+      },
     }.freeze
 
     def initialize(data, schema_name)

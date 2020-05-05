@@ -53,6 +53,10 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
     File.read File.join Dir.pwd, "api/schemas/xml/examples/SAP-17.11.xml"
   end
 
+  let(:valid_sap_ni_xml) do
+    File.read File.join Dir.pwd, "api/schemas/xml/examples/SAP-NI-17.41.xml"
+  end
+
   context "when lodging a domestic energy assessment (post)" do
     it "rejects an assessment with a schema that does not exist" do
       lodge_assessment(
@@ -316,7 +320,121 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
       expect(response.dig(:data, :schemeAssessorId)).to eq("Membership-Number0")
     end
 
-    context "when saving a sap assessment" do
+    context "when saving a (SAP-NI) assessment" do
+      let(:scheme_id) { add_scheme_and_get_id }
+      let(:doc) { Nokogiri.XML valid_sap_ni_xml }
+      let(:response) do
+        JSON.parse(fetch_assessment("1234-1234-1234-1234-1234").body)
+      end
+
+      before do
+        add_assessor(scheme_id, "TEST123456", sap_valid_assessor_request_body)
+
+        assessment_id = doc.at("RRN")
+        assessment_id.children = "1234-1234-1234-1234-1234"
+
+        scheme_assessor_id = doc.at("Certificate-Number")
+        scheme_assessor_id.children = "TEST123456"
+      end
+
+      it "returns the data that was lodged" do
+        lodge_assessment(
+          assessment_id: "1234-1234-1234-1234-1234",
+          assessment_body: doc.to_xml,
+          accepted_responses: [201],
+          auth_data: { scheme_ids: [scheme_id] },
+          schema_name: "SAP-Schema-NI-17.4",
+        )
+
+        expected_response = {
+          "addressLine1" => "2 Some Street",
+          "addressLine2" => "",
+          "addressLine3" => "",
+          "addressLine4" => "",
+          "addressSummary" => "2 Some Street, Post-Town2, A0 0AA",
+          "assessmentId" => "1234-1234-1234-1234-1234",
+          "assessor" => {
+                "contactDetails" => {
+                    "email" => "person@person.com",
+                    "telephoneNumber" => "010199991010101",
+                },
+                "dateOfBirth" => "1991-02-25",
+                "firstName" => "Someone",
+                "lastName" => "Person",
+                "middleNames" => "Muddle",
+                "qualifications" => {
+                    "domesticSap" => "ACTIVE",
+                    "domesticRdSap" => "INACTIVE",
+                    "nonDomesticCc4" => "INACTIVE",
+                    "nonDomesticSp3" => "INACTIVE",
+                    "nonDomesticDec" => "INACTIVE",
+                    "nonDomesticNos3" => "INACTIVE",
+                    "nonDomesticNos4" => "INACTIVE",
+                    "nonDomesticNos5" => "INACTIVE",
+                },
+                "registeredBy" => {
+                    "name" => "test scheme", "schemeId" => scheme_id
+                },
+                "schemeAssessorId" => "TEST123456",
+                "searchResultsComparisonPostcode" => "",
+            },
+          "currentCarbonEmission" => 2.4,
+          "currentEnergyEfficiencyBand" => "e",
+          "currentEnergyEfficiencyRating" => 50,
+          "dateOfAssessment" => "2006-05-04",
+          "dateOfExpiry" => "2016-05-04",
+          "dateRegistered" => "2006-05-04",
+          "dwellingType" => "Dwelling-Type0",
+          "heatDemand" => {
+                "currentSpaceHeatingDemand" => 30.0,
+                "currentWaterHeatingDemand" => 60.0,
+                "impactOfCavityInsulation" => nil,
+                "impactOfLoftInsulation" => nil,
+                "impactOfSolidWallInsulation" => nil,
+            },
+          "optOut" => false,
+          "postcode" => "A0 0AA",
+          "potentialCarbonEmission" => 1.4,
+          "potentialEnergyEfficiencyBand" => "e",
+          "potentialEnergyEfficiencyRating" => 50,
+          "recommendedImprovements" => [
+                {
+                    "energyPerformanceRatingImprovement" => 50,
+                    "environmentalImpactRatingImprovement" => 50,
+                    "greenDealCategoryCode" => nil,
+                    "improvementCategory" => "1",
+                    "improvementCode" => "5",
+                    "improvementType" => "A",
+                    "improvementTitle" => nil,
+                    "improvementDescription" => nil,
+                    "indicativeCost" => "5",
+                    "sequence" => 0,
+                    "typicalSaving" => "0.0",
+                },
+                {
+                    "energyPerformanceRatingImprovement" => 60,
+                    "environmentalImpactRatingImprovement" => 64,
+                    "greenDealCategoryCode" => nil,
+                    "improvementCategory" => "2",
+                    "improvementCode" => "1",
+                    "improvementType" => "B",
+                    "improvementTitle" => nil,
+                    "improvementDescription" => nil,
+                    "indicativeCost" => "2",
+                    "sequence" => 1,
+                    "typicalSaving" => "0.1",
+                },
+            ],
+          "totalFloorArea" => 10.0,
+          "town" => "Post-Town2",
+          "typeOfAssessment" => "SAP",
+        }
+
+        expect(response["data"]).to eq(expected_response)
+      end
+    end
+
+    context "when saving a (SAP) assessment" do
       let(:scheme_id) { add_scheme_and_get_id }
       let(:doc) { Nokogiri.XML valid_sap_xml }
       let(:response) do
