@@ -344,6 +344,22 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
           schema_name: "unsupported",
         )
       end
+
+      it "returns the correct error message" do
+        response = JSON.parse(
+          lodge_assessment(
+            assessment_id: "1234-1234-1234-1234-1234",
+            assessment_body: doc.to_xml,
+            accepted_responses: [400],
+            auth_data: { scheme_ids: [scheme_id] },
+            schema_name: "unsupported",
+          ).body,
+        )
+
+        expect(response["errors"][0]["title"]).to eq(
+          "Schema is not supported.",
+        )
+      end
     end
 
     context "when saving a (SAP-NI) assessment" do
