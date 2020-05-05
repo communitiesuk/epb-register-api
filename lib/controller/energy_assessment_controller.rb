@@ -71,6 +71,8 @@ module Controller
                   typicalSaving: { type: "number", format: "positive-int" },
                   improvementCategory: { type: "string" },
                   improvementType: { type: "string" },
+                  improvementTitle: { type: "null" },
+                  improvementDescription: { type: "null" },
                   energyPerformanceRatingImprovement: { type: "integer" },
                   environmentalImpactRatingImprovement: { type: "integer" },
                   greenDealCategoryCode: { type: "string" },
@@ -81,6 +83,8 @@ module Controller
                 required: %w[sequence improvementTitle improvementDescription typicalSaving],
                 properties: {
                   sequence: { type: "integer", format: "positive-int" },
+                  sequence: { type: "integer", format: "positive-int" },
+                  improvementCode: { type: "null" },
                   indicativeCost: { type: %w[string null] },
                   typicalSaving: { type: "number", format: "positive-int" },
                   improvementCategory: { type: "string" },
