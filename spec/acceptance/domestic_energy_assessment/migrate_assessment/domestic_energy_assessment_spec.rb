@@ -107,6 +107,34 @@ describe "Acceptance::DomesticEnergyAssessment::MigrateAssessment" do
       )
     end
 
+    it "allows migration of an assessment with a current rating > 100" do
+      scheme_id = add_scheme_and_get_id
+
+      assessment_with_higher_than_100_rating = valid_assessment_body.dup
+      assessment_with_higher_than_100_rating[:currentEnergyEfficiencyRating] = 290
+
+      add_assessor(scheme_id, "TEST123456", valid_assessor_request_body)
+      migrate_assessment(
+        "123-456",
+        assessment_with_higher_than_100_rating,
+        [200],
+      )
+    end
+
+    it "allows migration of an assessment with a potential rating > 100" do
+      scheme_id = add_scheme_and_get_id
+
+      assessment_with_higher_than_100_rating = valid_assessment_body.dup
+      assessment_with_higher_than_100_rating[:potentialEnergyEfficiencyRating] = 290
+
+      add_assessor(scheme_id, "TEST123456", valid_assessor_request_body)
+      migrate_assessment(
+        "123-456",
+        assessment_with_higher_than_100_rating,
+        [200],
+      )
+    end
+
     it "allows migration of an assessment with property summary details" do
       scheme_id = add_scheme_and_get_id
 
@@ -310,14 +338,14 @@ describe "Acceptance::DomesticEnergyAssessment::MigrateAssessment" do
 
     it "rejects an assessment with a invalid current energy efficiency rating" do
       assessment_with_dodgy_current_rating = valid_assessment_body.dup
-      assessment_with_dodgy_current_rating[:currentEnergyEfficiencyRating] = 175
+      assessment_with_dodgy_current_rating[:currentEnergyEfficiencyRating] = -90
       migrate_assessment("123-456", assessment_with_dodgy_current_rating, [422])
     end
 
     it "rejects an assessment with a invalid potential energy efficiency rating" do
       assessment_with_dodgy_potential_rating = valid_assessment_body.dup
       assessment_with_dodgy_potential_rating[:currentEnergyEfficiencyRating] =
-        175
+          -500
       migrate_assessment(
         "123-456",
         assessment_with_dodgy_potential_rating,

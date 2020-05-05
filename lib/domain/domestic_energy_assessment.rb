@@ -77,7 +77,7 @@ module Domain
         "c"
       when 81..91
         "b"
-      when 92..100
+      when number > 92
         "a"
       end
     end

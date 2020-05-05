@@ -11,7 +11,7 @@ module Gateway
     class DomesticEpcEnergyImprovement < ActiveRecord::Base; end
 
     def valid_energy_rating(rating)
-      rating.is_a?(Integer) && rating.between?(1, 100)
+      rating.is_a?(Integer) && rating.positive?
     end
 
     def to_hash(assessment)
