@@ -58,6 +58,7 @@ describe "Acceptance::DomesticEnergyAssessment::MigrateAssessment" do
           greenDealCategoryCode: "string",
         },
       ],
+      propertySummary: []
     }.freeze
   end
 
@@ -104,6 +105,39 @@ describe "Acceptance::DomesticEnergyAssessment::MigrateAssessment" do
         assessment_request_body_with_limited_address,
         [200],
       )
+    end
+
+    it "allows migration of an assessment with property summary details" do
+      scheme_id = add_scheme_and_get_id
+
+      add_assessor(scheme_id, "TEST123456", valid_assessor_request_body)
+
+      assessment_request_body = valid_assessment_body.dup
+      assessment_request_body[:propertySummary] = [
+        {
+          "name": "Wall",
+          "energyEfficiencyRating": 0,
+          "environmentalEfficiencyRating": 0
+        }
+      ]
+
+      response = migrate_assessment(
+        "123-456",
+        assessment_request_body,
+        [200],
+        ).body
+
+      migrated_assessment = JSON.parse(response, symbolize_names: true)
+
+      expected_response = [
+        {
+          name: "Wall",
+          energyEfficiencyRating: 0,
+          environmentalEfficiencyRating: 0
+        }
+      ]
+
+      expect(migrated_assessment[:data][:propertySummary]).to eq(expected_response)
     end
 
     it "returns the assessment that was migrated" do

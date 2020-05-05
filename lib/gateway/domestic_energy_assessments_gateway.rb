@@ -55,6 +55,7 @@ module Gateway
           get_energy_rating_band(
             assessment[:potential_energy_efficiency_rating],
           ),
+        property_summary: assessment[:property_summary]
       }
     end
 
@@ -114,7 +115,7 @@ module Gateway
             address_line1, address_line2, address_line3, address_line4, town,
             current_space_heating_demand, current_water_heating_demand, impact_of_loft_insulation,
             impact_of_cavity_insulation, impact_of_solid_wall_insulation,
-            current_carbon_emission, potential_carbon_emission
+            current_carbon_emission, potential_carbon_emission, property_summary
         FROM domestic_energy_assessments
         WHERE postcode = '#{
           ActiveRecord::Base.sanitize_sql(postcode)
@@ -123,6 +124,8 @@ module Gateway
       result = []
       response.each do |row|
         assessment_hash = to_hash(row.symbolize_keys)
+
+        assessment_hash[:property_summary] = JSON.parse(assessment_hash[:property_summary])
 
         result << assessment_hash
       end
@@ -138,7 +141,7 @@ module Gateway
           address_line1, address_line2, address_line3, address_line4, town,
           current_space_heating_demand, current_water_heating_demand, impact_of_loft_insulation,
           impact_of_cavity_insulation, impact_of_solid_wall_insulation,
-          current_carbon_emission, potential_carbon_emission
+          current_carbon_emission, potential_carbon_emission, property_summary
           FROM domestic_energy_assessments
         WHERE assessment_id = '#{
           ActiveRecord::Base.sanitize_sql(assessment_id)
@@ -149,6 +152,8 @@ module Gateway
       result = []
       response.each do |row|
         assessment_hash = to_hash(row.symbolize_keys)
+
+        assessment_hash[:property_summary] = JSON.parse(assessment_hash[:property_summary])
 
         result << assessment_hash
       end
@@ -165,7 +170,7 @@ module Gateway
           address_line1, address_line2, address_line3, address_line4, town,
           current_space_heating_demand, current_water_heating_demand, impact_of_loft_insulation,
           impact_of_cavity_insulation, impact_of_solid_wall_insulation,
-          current_carbon_emission, potential_carbon_emission
+          current_carbon_emission, potential_carbon_emission, property_summary
         FROM domestic_energy_assessments
         WHERE (address_line1 ILIKE '%#{
           ActiveRecord::Base.sanitize_sql(street_name)
@@ -180,6 +185,8 @@ module Gateway
       result = []
       response.each do |row|
         assessment_hash = to_hash(row.symbolize_keys)
+
+        assessment_hash[:property_summary] = JSON.parse(assessment_hash[:property_summary])
 
         result << assessment_hash
       end

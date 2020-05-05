@@ -96,8 +96,24 @@ module Controller
                 },
               },
             ],
-          },
+          }
         },
+        propertySummary: {
+          type: "array",
+          items: {
+            anyOf: [
+              {
+                type: "object",
+                required: %w[name energyEfficiencyRating environmentalEfficiencyRating],
+                properties: {
+                  name: { type: "string" },
+                  energyEfficiencyRating: { type: "number", format: "positive-int" },
+                  environmentalEfficiencyRating: { type: "number", format: "positive-int" }
+                }
+              }
+            ]
+          }
+        }
       },
     }.freeze
 

@@ -68,6 +68,7 @@ module UseCase
                 green_deal_category_code: i[:green_deal_category_code],
               )
             end,
+          property_summary: assessment_data[:property_summary]
         )
 
       validator = Helper::RdsapValidator::ValidateAll.new
