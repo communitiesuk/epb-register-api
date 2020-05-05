@@ -83,7 +83,6 @@ module Controller
                 required: %w[sequence improvementTitle improvementDescription typicalSaving],
                 properties: {
                   sequence: { type: "integer", format: "positive-int" },
-                  sequence: { type: "integer", format: "positive-int" },
                   improvementCode: { type: "null" },
                   indicativeCost: { type: %w[string null] },
                   typicalSaving: { type: "number", format: "positive-int" },
