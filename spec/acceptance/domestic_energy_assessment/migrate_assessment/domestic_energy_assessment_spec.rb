@@ -166,6 +166,7 @@ describe "Acceptance::DomesticEnergyAssessment::MigrateAssessment" do
             greenDealCategoryCode: "string",
           },
         ],
+        propertySummary: [],
       }
 
       expect(migrated_assessment[:data]).to eq(expected_response)

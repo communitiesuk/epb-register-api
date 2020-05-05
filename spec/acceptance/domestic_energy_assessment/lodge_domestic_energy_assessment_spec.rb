@@ -297,6 +297,7 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
           currentEnergyEfficiencyBand
           potentialEnergyEfficiencyBand
           recommendedImprovements
+          propertySummary
         ],
       )
     end
