@@ -1,0 +1,222 @@
+{
+  "report_header": {
+    "path": [
+      "SAP_Report",
+      "Report_Header"
+    ]
+  },
+  "assessment_id": {
+    "root": "report_header",
+    "path": [
+      "RRN"
+    ]
+  },
+  "assessor_id": {
+    "root": "report_header",
+    "path": [
+      "Home_Inspector",
+      "Identification_Number",
+      "Certificate_Number"
+    ]
+  },
+  "renewable_heat_incentive": {
+    "path": [
+      "SAP_Report",
+      "Energy_Assessment",
+      "Renewable_Heat_Incentive"
+    ]
+  },
+  "energy_use": {
+    "path": [
+      "SAP_Report",
+      "Energy_Assessment",
+      "Energy_Use"
+    ]
+  },
+  "address": {
+    "path": [
+      "SAP_Report",
+      "Report_Header",
+      "Property",
+      "Address"
+    ]
+  },
+  "property": {
+    "path": [
+      "SAP_Report",
+      "Energy_Assessment",
+      "Property_Summary"
+    ]
+  },
+  "dwelling_type": {
+    "root": "property",
+    "path": [
+      "Dwelling_Type"
+    ]
+  },
+  "total_floor_area": {
+    "root": "property",
+    "path": [
+      "Total_Floor_Area"
+    ]
+  },
+  "address_line_one": {
+    "root": "address",
+    "path": [
+      "Address_Line_1"
+    ]
+  },
+  "town": {
+    "root": "address",
+    "path": [
+      "Post_Town"
+    ]
+  },
+  "postcode": {
+    "root": "address",
+    "path": [
+      "Postcode"
+    ]
+  },
+  "inspection_date": {
+    "root": "report_header",
+    "path": [
+      "Inspection_Date"
+    ]
+  },
+  "registration_date": {
+    "root": "report_header",
+    "path": [
+      "Registration_Date"
+    ]
+  },
+  "new_space_heating": {
+    "root": "renewable_heat_incentive",
+    "path": [
+      "RHI_New_Dwelling",
+      "Space_Heating"
+    ]
+  },
+  "space_heating": {
+    "root": "renewable_heat_incentive",
+    "path": [
+      "RHI_Existing_Dwelling",
+      "Space_Heating_Existing_Dwelling"
+    ]
+  },
+  "new_water_heating": {
+    "root": "renewable_heat_incentive",
+    "path": [
+      "RHI_New_Dwelling",
+      "Water_Heating"
+    ]
+  },
+  "water_heating": {
+    "root": "renewable_heat_incentive",
+    "path": [
+      "RHI_Existing_Dwelling",
+      "Water_Heating"
+    ]
+  },
+  "impact_of_loft_insulation": {
+    "root": "renewable_heat_incentive",
+    "path": [
+      "RHI_Existing_Dwelling",
+      "Impact_Of_Loft_Insulation"
+    ]
+  },
+  "impact_of_cavity_insulation": {
+    "root": "renewable_heat_incentive",
+    "path": [
+      "RHI_Existing_Dwelling",
+      "Impact_Of_Cavity_Insulation"
+    ]
+  },
+  "impact_of_solid_wall_insulation": {
+    "root": "renewable_heat_incentive",
+    "path": [
+      "RHI_Existing_Dwelling",
+      "Impact_Of_Solid_Wall_Insulation"
+    ]
+  },
+  "current_energy_rating": {
+    "root": "energy_use",
+    "path": [
+      "Energy_Rating_Current"
+    ]
+  },
+  "potential_energy_rating": {
+    "root": "energy_use",
+    "path": [
+      "Energy_Rating_Potential"
+    ]
+  },
+  "current_carbon_emission": {
+    "root": "energy_use",
+    "path": [
+      "CO2_Emissions_Current"
+    ]
+  },
+  "potential_carbon_emission": {
+    "root": "energy_use",
+    "path": [
+      "CO2_Emissions_Potential"
+    ]
+  },
+  "improvements": {
+    "path": [
+      "SAP_Report",
+      "Energy_Assessment",
+      "Suggested_Improvements",
+      "Improvement"
+    ],
+    "extract": {
+      "sequence": {
+        "path": [
+          "Sequence"
+        ]
+      },
+      "improvement_code": {
+        "path": [
+          "Improvement_Details",
+          "Improvement_Number"
+        ]
+      },
+      "indicative_cost": {
+        "path": [
+          "Indicative_Cost"
+        ]
+      },
+      "typical_saving": {
+        "path": [
+          "Typical_Saving"
+        ]
+      },
+      "improvement_category": {
+        "path": [
+          "Improvement_Category"
+        ]
+      },
+      "improvement_type": {
+        "path": [
+          "Improvement_Type"
+        ]
+      },
+      "energy_performance_rating_improvement": {
+        "path": [
+          "Energy_Performance_Rating"
+        ]
+      },
+      "environmental_impact_rating_improvement": {
+        "path": [
+          "Environmental_Impact_Rating"
+        ]
+      },
+      "green_deal_category_code": {
+        "path": [
+          "Green_Deal_Category"
+        ]
+      }
+    }
+  }
+}
