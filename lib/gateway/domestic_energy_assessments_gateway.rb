@@ -196,13 +196,6 @@ module Gateway
 
   private
 
-    def replace_improvements(improvements)
-      improvements = improvements.map(&:to_record)
-      improvements.each do |improvement|
-        DomesticEpcEnergyImprovement.create(improvement)
-      end
-    end
-
     def send_to_db(domestic_energy_assessment)
       existing_assessment =
         DomesticEnergyAssessment.find_by(
@@ -211,11 +204,19 @@ module Gateway
 
       if existing_assessment
         existing_assessment.update(domestic_energy_assessment.to_record)
+        where_assessment = [
+            "assessment_id = ?",
+            domestic_energy_assessment.assessment_id,
+        ]
+        DomesticEpcEnergyImprovement.where(where_assessment).delete_all
       else
         DomesticEnergyAssessment.create(domestic_energy_assessment.to_record)
       end
 
-      replace_improvements(domestic_energy_assessment.recommended_improvements)
+      improvements = domestic_energy_assessment.recommended_improvements.map(&:to_record)
+      improvements.each do |improvement|
+        DomesticEpcEnergyImprovement.create(improvement)
+      end
     end
 
     def get_energy_rating_band(number)

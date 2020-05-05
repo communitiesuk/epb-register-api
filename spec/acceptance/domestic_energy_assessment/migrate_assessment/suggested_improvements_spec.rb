@@ -193,6 +193,23 @@ describe "Acceptance::DomesticEnergyAssessment::MigrateAssessment::SuggestedImpr
 
         migrate_assessment("123-456", assessment, [200])
       end
+
+      context "when migrating an existing assessment" do
+        it "accepts the suggested improvements" do
+          assessment = valid_assessment_body.dup
+          assessment[:recommendedImprovements] = valid_recommendations
+          scheme_id = add_scheme_and_get_id
+          add_assessor(scheme_id, "TEST123456", valid_assessor_request_body)
+
+          migrate_assessment("123-456", assessment, [200])
+          migrate_assessment("123-456", assessment, [200])
+
+          double_migrated_assessment = JSON.parse(fetch_assessment("123-456").body)
+          number_of_improvements = double_migrated_assessment["data"]["recommendedImprovements"].length
+
+          expect(number_of_improvements).to eq 4
+        end
+      end
     end
 
     context "when the optional data items are empty" do
