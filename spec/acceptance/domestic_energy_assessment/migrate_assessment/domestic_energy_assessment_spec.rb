@@ -144,6 +144,7 @@ describe "Acceptance::DomesticEnergyAssessment::MigrateAssessment" do
       assessment_request_body[:propertySummary] = [
         {
           "name": "Wall",
+          "description": "No wall to neighbour",
           "energyEfficiencyRating": 0,
           "environmentalEfficiencyRating": 0
         }
@@ -160,6 +161,7 @@ describe "Acceptance::DomesticEnergyAssessment::MigrateAssessment" do
       expected_response = [
         {
           name: "Wall",
+          "description": "No wall to neighbour",
           energyEfficiencyRating: 0,
           environmentalEfficiencyRating: 0
         }
