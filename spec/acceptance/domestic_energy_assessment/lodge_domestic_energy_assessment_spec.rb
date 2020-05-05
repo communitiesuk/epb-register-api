@@ -321,6 +321,31 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
       expect(response.dig(:data, :schemeAssessorId)).to eq("Membership-Number0")
     end
 
+    context "when schema is not supported" do
+      let(:scheme_id) { add_scheme_and_get_id }
+      let(:doc) { Nokogiri.XML valid_sap_xml }
+
+      before do
+        add_assessor(scheme_id, "TEST123456", sap_valid_assessor_request_body)
+
+        assessment_id = doc.at("RRN")
+        assessment_id.children = "1234-1234-1234-1234-1234"
+
+        scheme_assessor_id = doc.at("Certificate-Number")
+        scheme_assessor_id.children = "TEST123456"
+      end
+
+      it "returns status 400" do
+        lodge_assessment(
+          assessment_id: "1234-1234-1234-1234-1234",
+          assessment_body: doc.to_xml,
+          accepted_responses: [400],
+          auth_data: { scheme_ids: [scheme_id] },
+          schema_name: "unsupported",
+        )
+      end
+    end
+
     context "when saving a (SAP-NI) assessment" do
       let(:scheme_id) { add_scheme_and_get_id }
       let(:doc) { Nokogiri.XML valid_sap_ni_xml }
