@@ -470,7 +470,7 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
           "totalFloorArea" => 10.0,
           "town" => "Post-Town2",
           "typeOfAssessment" => "SAP",
-          "propertySummary" => []
+          "propertySummary" => [],
         }
 
         expect(response["data"]).to eq(expected_response)
@@ -609,7 +609,7 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
           "totalFloorArea" => 10.0,
           "town" => "Post-Town1",
           "typeOfAssessment" => "SAP",
-          "propertySummary" => []
+          "propertySummary" => [],
         }
 
         expect(response["data"]).to eq(expected_response)
@@ -802,7 +802,7 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
           "totalFloorArea" => 0.0,
           "town" => "Post-Town1",
           "typeOfAssessment" => "RdSAP",
-          "propertySummary" => []
+          "propertySummary" => [],
         }
 
         expect(response["data"]).to eq(expected_response)

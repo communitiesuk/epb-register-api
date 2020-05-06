@@ -96,7 +96,7 @@ module Controller
                 },
               },
             ],
-          }
+          },
         },
         propertySummary: {
           type: "array",
@@ -108,12 +108,12 @@ module Controller
                 properties: {
                   name: { type: "string" },
                   energyEfficiencyRating: { type: "number", format: "positive-int" },
-                  environmentalEfficiencyRating: { type: "number", format: "positive-int" }
-                }
-              }
-            ]
-          }
-        }
+                  environmentalEfficiencyRating: { type: "number", format: "positive-int" },
+                },
+              },
+            ],
+          },
+        },
       },
     }.freeze
 

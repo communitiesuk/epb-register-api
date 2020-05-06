@@ -70,7 +70,7 @@ describe "Acceptance::DomesticEnergyAssessment" do
           greenDealCategoryCode: "string",
         },
       ],
-      propertySummary: []
+      propertySummary: [],
     }.freeze
   end
 
@@ -218,7 +218,7 @@ describe "Acceptance::DomesticEnergyAssessment" do
                 greenDealCategoryCode: "string",
               },
             ],
-            propertySummary: []
+            propertySummary: [],
           }.to_json,
         )
       expect(response["data"]).to eq(expected_response)

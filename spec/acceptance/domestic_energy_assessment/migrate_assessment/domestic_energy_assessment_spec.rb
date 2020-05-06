@@ -58,7 +58,7 @@ describe "Acceptance::DomesticEnergyAssessment::MigrateAssessment" do
           greenDealCategoryCode: "string",
         },
       ],
-      propertySummary: []
+      propertySummary: [],
     }.freeze
   end
 
@@ -146,15 +146,15 @@ describe "Acceptance::DomesticEnergyAssessment::MigrateAssessment" do
           "name": "Wall",
           "description": "No wall to neighbour",
           "energyEfficiencyRating": 0,
-          "environmentalEfficiencyRating": 0
-        }
+          "environmentalEfficiencyRating": 0,
+        },
       ]
 
       response = migrate_assessment(
         "123-456",
         assessment_request_body,
         [200],
-        ).body
+      ).body
 
       migrated_assessment = JSON.parse(response, symbolize_names: true)
 
@@ -163,8 +163,8 @@ describe "Acceptance::DomesticEnergyAssessment::MigrateAssessment" do
           name: "Wall",
           "description": "No wall to neighbour",
           energyEfficiencyRating: 0,
-          environmentalEfficiencyRating: 0
-        }
+          environmentalEfficiencyRating: 0,
+        },
       ]
 
       expect(migrated_assessment[:data][:propertySummary]).to eq(expected_response)
@@ -347,7 +347,7 @@ describe "Acceptance::DomesticEnergyAssessment::MigrateAssessment" do
     it "rejects an assessment with a invalid potential energy efficiency rating" do
       assessment_with_dodgy_potential_rating = valid_assessment_body.dup
       assessment_with_dodgy_potential_rating[:currentEnergyEfficiencyRating] =
-          -500
+        -500
       migrate_assessment(
         "123-456",
         assessment_with_dodgy_potential_rating,

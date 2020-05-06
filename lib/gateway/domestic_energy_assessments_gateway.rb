@@ -55,7 +55,7 @@ module Gateway
           get_energy_rating_band(
             assessment[:potential_energy_efficiency_rating],
           ),
-        property_summary: assessment[:property_summary]
+        property_summary: assessment[:property_summary],
       }
     end
 

@@ -56,7 +56,7 @@ describe "Searching for assessments" do
           greenDealCategoryCode: "string",
         },
       ],
-      propertySummary: []
+      propertySummary: [],
     }.freeze
   end
 
@@ -145,7 +145,7 @@ describe "Searching for assessments" do
               impactOfCavityInsulation: 67,
               impactOfSolidWallInsulation: 69,
             },
-            propertySummary: []
+            propertySummary: [],
           }.to_json,
         )
 
@@ -228,7 +228,7 @@ describe "Searching for assessments" do
               impactOfCavityInsulation: 67,
               impactOfSolidWallInsulation: 69,
             },
-            propertySummary: []
+            propertySummary: [],
           }.to_json,
         )
 
@@ -358,7 +358,7 @@ describe "Searching for assessments" do
                 impactOfCavityInsulation: 67,
                 impactOfSolidWallInsulation: 69,
               },
-              propertySummary: []
+              propertySummary: [],
             }.to_json,
           )
 

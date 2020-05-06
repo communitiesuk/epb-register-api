@@ -95,7 +95,7 @@ describe "Acceptance::DomesticEnergyAssessment::MigrateAssessment::SuggestedImpr
         impactOfSolidWallInsulation: 69,
       },
       recommendedImprovements: valid_recommendations,
-      propertySummary: []
+      propertySummary: [],
     }.freeze
   end
 
