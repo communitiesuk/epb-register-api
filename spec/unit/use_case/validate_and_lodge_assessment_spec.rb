@@ -81,5 +81,29 @@ describe UseCase::ValidateAndLodgeAssessment do
         UseCase::ValidateAndLodgeAssessment::SchemaNotSupportedException,
       )
     end
+
+    it "raises the error SchemaNotDefined" do
+      validate_lodgement_use_case = ValidateLodgementUseCaseSpy.new
+      lodge_assessment_use_case = LodgeAssessmentUseCaseSpy.new
+      check_assessor_belongs_to_scheme = CheckAssessorBelongsToSchemeSpy.new
+
+      use_case =
+        described_class.new(
+          validate_lodgement_use_case,
+          lodge_assessment_use_case,
+          check_assessor_belongs_to_scheme,
+          )
+
+      expect {
+        use_case.execute(
+          "0000-0000-0000-0000-0000",
+          valid_xml,
+          nil,
+          "1",
+          )
+      }.to raise_exception(
+             UseCase::ValidateAndLodgeAssessment::SchemaNotDefined,
+             )
+    end
   end
 end

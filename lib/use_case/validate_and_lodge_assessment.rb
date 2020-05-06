@@ -7,6 +7,7 @@ module UseCase
     class ValidationErrorException < StandardError; end
     class UnauthorisedToLodgeAsThisSchemeException < StandardError; end
     class SchemaNotSupportedException < StandardError; end
+    class SchemaNotDefined < StandardError; end
 
     def initialize(
       validate_assessment_use_case,
@@ -20,6 +21,8 @@ module UseCase
     end
 
     def execute(assessment_id, xml, schema_name, scheme_ids)
+      raise SchemaNotDefined unless schema_name
+
       lodgement = Domain::Lodgement.new(xml_to_hash(xml), schema_name)
 
       raise SchemaNotSupportedException unless lodgement.schema_exists?

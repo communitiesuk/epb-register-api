@@ -188,7 +188,9 @@ module Controller
       when UseCase::ValidateAndLodgeAssessment::SchemaNotSupportedException
         error_response(400, "INVALID_REQUEST", "Schema is not supported.")
       when UseCase::CheckAssessorBelongsToScheme::AssessorNotFoundException
-        error_response(400, "IVALID_REQUEST", "Assessor is not registered.")
+        error_response(400, "INVALID_REQUEST", "Assessor is not registered.")
+      when UseCase::ValidateAndLodgeAssessment::SchemaNotDefined
+        error_response(400, "INVALID_REQUEST", 'Schema is not defined. Set content-type on the request to "application/xml+RdSAP-Schema-19.0" for example.')
       when UseCase::ValidateAndLodgeAssessment::UnauthorisedToLodgeAsThisSchemeException
         error_response(
           403,
