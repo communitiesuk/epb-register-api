@@ -1,9 +1,9 @@
 desc "Truncate all certificate data"
 
 task :truncate_certificate do
-  unless ENV["STAGE"] == "staging" || ENV["STAGE"] == "integration"
-    exit
-  end
+  # unless ENV["STAGE"] == "staging" || ENV["STAGE"] == "integration"
+  #   exit
+  # end
 
   ActiveRecord::Base.connection.execute("TRUNCATE TABLE domestic_energy_assessments RESTART IDENTITY CASCADE")
 end
@@ -42,7 +42,7 @@ task :generate_certificate do
   energy_performance_rating_improvement = [93, 85, 75, 62, 45]
   environmental_impact_rating_improvement = [93, 85, 75, 62, 45]
   green_deal_category_code = %w[a b c d e]
-  related_party_disclosure_number = [1, 2, 3, 4, 5, 6, 7, nil, nil, nil, nil, nil, nil, nil]
+  related_party_disclosure_number = [1, 2, 3, 4, 5, 6, 7, 0, 0, 0, 0, 0, 0]
   related_party_disclosure_text = ["No related party", "Relative of homeowner or of occupier of the property", "Residing at the property",
                                    "Financial interest in the property", "Owner or Director of the organisation dealing with the property transaction",
                                    "Employed by the professional dealing with the property transaction",
@@ -78,7 +78,7 @@ task :generate_certificate do
     internal_related_party_disclosure_number = related_party_disclosure_number.sample
     internal_related_party_disclosure_text = related_party_disclosure_text.sample
 
-    unless internal_related_party_disclosure_number.nil?
+    unless internal_related_party_disclosure_number == 0
       internal_related_party_disclosure_text = nil
     end
 
