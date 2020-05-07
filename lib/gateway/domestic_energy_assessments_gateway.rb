@@ -209,10 +209,11 @@ module Gateway
 
       if existing_assessment
         existing_assessment.update(domestic_energy_assessment.to_record)
-        where_assessment = [
-            "assessment_id = ?",
-            domestic_energy_assessment.assessment_id,
-        ]
+
+        where_assessment = {
+          assessment_id: domestic_energy_assessment.assessment_id,
+        }
+
         DomesticEpcEnergyImprovement.where(where_assessment).delete_all
       else
         DomesticEnergyAssessment.create(domestic_energy_assessment.to_record)
