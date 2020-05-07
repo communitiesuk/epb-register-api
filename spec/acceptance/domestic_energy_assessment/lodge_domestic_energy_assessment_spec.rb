@@ -474,7 +474,7 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
           "typeOfAssessment" => "SAP",
           "propertySummary" => [],
           "relatedPartyDisclosureNumber" => nil,
-          "relatedPartyDisclosureText"=> "Related-Party-Disclosure-Text0"
+          "relatedPartyDisclosureText" => "Related-Party-Disclosure-Text0",
         }
 
         expect(response["data"]).to eq(expected_response)
@@ -665,7 +665,7 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
           "typeOfAssessment" => "SAP",
           "propertySummary" => [],
           "relatedPartyDisclosureNumber" => 1,
-          "relatedPartyDisclosureText" => nil
+          "relatedPartyDisclosureText" => nil,
         }
 
         expect(response["data"]).to eq(expected_response)
@@ -860,7 +860,7 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
           "typeOfAssessment" => "RdSAP",
           "propertySummary" => [],
           "relatedPartyDisclosureNumber" => nil,
-          "relatedPartyDisclosureText" => "Related-Party-Disclosure-Text0"
+          "relatedPartyDisclosureText" => "Related-Party-Disclosure-Text0",
         }
 
         expect(response["data"]).to eq(expected_response)

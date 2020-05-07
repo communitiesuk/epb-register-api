@@ -57,7 +57,7 @@ describe "Searching for assessments" do
         },
       ],
       propertySummary: [],
-      relatedPartyDisclosureText: 'string'
+      relatedPartyDisclosureText: "string",
     }.freeze
   end
 
@@ -148,7 +148,7 @@ describe "Searching for assessments" do
             },
             propertySummary: [],
             relatedPartyDisclosureNumber: nil,
-            relatedPartyDisclosureText: 'string'
+            relatedPartyDisclosureText: "string",
           }.to_json,
         )
 
@@ -233,7 +233,7 @@ describe "Searching for assessments" do
             },
             propertySummary: [],
             relatedPartyDisclosureNumber: nil,
-            relatedPartyDisclosureText: 'string'
+            relatedPartyDisclosureText: "string",
           }.to_json,
         )
 
@@ -365,7 +365,7 @@ describe "Searching for assessments" do
               },
               propertySummary: [],
               relatedPartyDisclosureNumber: nil,
-              relatedPartyDisclosureText: 'string'
+              relatedPartyDisclosureText: "string",
             }.to_json,
           )
 

@@ -59,7 +59,7 @@ describe "Acceptance::DomesticEnergyAssessment::MigrateAssessment" do
         },
       ],
       propertySummary: [],
-      relatedPartyDisclosureText: 'string'
+      relatedPartyDisclosureText: "string",
     }.freeze
   end
 
@@ -233,7 +233,7 @@ describe "Acceptance::DomesticEnergyAssessment::MigrateAssessment" do
         ],
         propertySummary: [],
         relatedPartyDisclosureNumber: nil,
-        relatedPartyDisclosureText: valid_assessment_body[:relatedPartyDisclosureText]
+        relatedPartyDisclosureText: valid_assessment_body[:relatedPartyDisclosureText],
       }
 
       expect(migrated_assessment[:data]).to eq(expected_response)

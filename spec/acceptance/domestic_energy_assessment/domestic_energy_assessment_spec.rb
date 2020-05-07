@@ -222,7 +222,7 @@ describe "Acceptance::DomesticEnergyAssessment" do
             ],
             propertySummary: [],
             relatedPartyDisclosureNumber: valid_assessment_body[:relatedPartyDisclosureNumber],
-            relatedPartyDisclosureText: nil
+            relatedPartyDisclosureText: nil,
           }.to_json,
         )
       expect(response["data"]).to eq(expected_response)
