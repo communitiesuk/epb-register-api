@@ -72,7 +72,64 @@ describe "Acceptance::DomesticEnergyAssessment" do
       ],
       propertySummary: [],
       relatedPartyDisclosureNumber: 1,
+    }.freeze
+  end
 
+  let(:second_valid_assessment_body) do
+    {
+      schemeAssessorId: "TEST000007",
+      dateOfAssessment: "2020-01-13",
+      dateRegistered: "2020-01-13",
+      totalFloorArea: 1_000.45,
+      typeOfAssessment: "RdSAP",
+      dwellingType: "Top floor flat",
+      addressSummary: "123 Victoria Street, London, SW1A 1BD",
+      currentEnergyEfficiencyRating: 75,
+      potentialEnergyEfficiencyRating: 80,
+      currentCarbonEmission: 2.4,
+      potentialCarbonEmission: 1.4,
+      optOut: true,
+      postcode: "SE1 7EZ",
+      dateOfExpiry: "2021-01-01",
+      addressLine1: "Flat 33",
+      addressLine2: "18 Palmtree Road",
+      addressLine3: "",
+      addressLine4: "",
+      town: "Brighton",
+      heatDemand: {
+        currentSpaceHeatingDemand: 222.23,
+        currentWaterHeatingDemand: 321.14,
+        impactOfLoftInsulation: 79,
+        impactOfCavityInsulation: 67,
+        impactOfSolidWallInsulation: 69,
+      },
+      recommendedImprovements: [
+        {
+          sequence: 0,
+          improvementCode: "1",
+          indicativeCost: "£200 - £4,000",
+          typicalSaving: 400.21,
+          improvementCategory: "string",
+          improvementType: "string",
+          energyPerformanceRatingImprovement: 80,
+          environmentalImpactRatingImprovement: 90,
+          greenDealCategoryCode: "string",
+        },
+        {
+          sequence: 1,
+          indicativeCost: "£200 - £4,000",
+          typicalSaving: 400.21,
+          improvementCategory: "string",
+          improvementType: "string",
+          improvementTitle: "Some improvement",
+          improvementDescription: "Some improvement description",
+          energyPerformanceRatingImprovement: 80,
+          environmentalImpactRatingImprovement: 90,
+          greenDealCategoryCode: "string",
+        },
+      ],
+      propertySummary: [],
+      relatedPartyDisclosureNumber: 1,
     }.freeze
   end
 
@@ -226,6 +283,119 @@ describe "Acceptance::DomesticEnergyAssessment" do
           }.to_json,
         )
       expect(response["data"]).to eq(expected_response)
+    end
+
+    context "when updating an existing assessment" do
+      it "returns the assessment details" do
+        scheme_id = add_scheme_and_get_id
+        add_assessor(scheme_id, "TEST123456", valid_assessor_request_body)
+        add_assessor(scheme_id, "TEST000007", valid_assessor_request_body)
+        migrate_assessment("15650-651625-18267167", valid_assessment_body)
+        migrate_assessment("15650-651625-18267167", second_valid_assessment_body)
+
+        response = JSON.parse(fetch_assessment("15650-651625-18267167").body)
+
+        expected_response =
+          JSON.parse(
+            {
+              assessor: {
+                schemeAssessorId: second_valid_assessment_body[:schemeAssessorId],
+                registeredBy: { schemeId: scheme_id, name: "test scheme" },
+                firstName: valid_assessor_request_body[:firstName],
+                middleNames: valid_assessor_request_body[:middleNames],
+                lastName: valid_assessor_request_body[:lastName],
+                dateOfBirth: valid_assessor_request_body[:dateOfBirth],
+                contactDetails: {
+                  telephoneNumber:
+                    valid_assessor_request_body[:contactDetails][
+                      :telephoneNumber
+                    ],
+                  email: valid_assessor_request_body[:contactDetails][:email],
+                },
+                searchResultsComparisonPostcode: "",
+                qualifications: {
+                  domesticSap: "INACTIVE",
+                  domesticRdSap: "ACTIVE",
+                  nonDomesticSp3: "INACTIVE",
+                  nonDomesticCc4: "INACTIVE",
+                  nonDomesticDec: "INACTIVE",
+                  nonDomesticNos3: "INACTIVE",
+                  nonDomesticNos4: "INACTIVE",
+                  nonDomesticNos5: "INACTIVE",
+                },
+              },
+              dateOfAssessment: second_valid_assessment_body[:dateOfAssessment],
+              dateRegistered: second_valid_assessment_body[:dateRegistered],
+              totalFloorArea: second_valid_assessment_body[:totalFloorArea],
+              typeOfAssessment: second_valid_assessment_body[:typeOfAssessment],
+              dwellingType: second_valid_assessment_body[:dwellingType],
+              addressSummary: second_valid_assessment_body[:addressSummary],
+              assessmentId: "15650-651625-18267167",
+              currentEnergyEfficiencyRating:
+                second_valid_assessment_body[:currentEnergyEfficiencyRating],
+              potentialEnergyEfficiencyRating:
+                second_valid_assessment_body[:potentialEnergyEfficiencyRating],
+              currentCarbonEmission:
+                second_valid_assessment_body[:currentCarbonEmission],
+              potentialCarbonEmission:
+                second_valid_assessment_body[:potentialCarbonEmission],
+              currentEnergyEfficiencyBand: "c",
+              potentialEnergyEfficiencyBand: "c",
+              optOut: true,
+              postcode: second_valid_assessment_body[:postcode],
+              dateOfExpiry: second_valid_assessment_body[:dateOfExpiry],
+              town: second_valid_assessment_body[:town],
+              addressLine1: second_valid_assessment_body[:addressLine1],
+              addressLine2: second_valid_assessment_body[:addressLine2],
+              addressLine3: second_valid_assessment_body[:addressLine4],
+              addressLine4: second_valid_assessment_body[:addressLine4],
+              heatDemand: {
+                currentSpaceHeatingDemand:
+                  second_valid_assessment_body[:heatDemand][:currentSpaceHeatingDemand],
+                currentWaterHeatingDemand:
+                  second_valid_assessment_body[:heatDemand][:currentWaterHeatingDemand],
+                impactOfLoftInsulation:
+                  second_valid_assessment_body[:heatDemand][:impactOfLoftInsulation],
+                impactOfCavityInsulation:
+                  second_valid_assessment_body[:heatDemand][:impactOfCavityInsulation],
+                impactOfSolidWallInsulation:
+                  second_valid_assessment_body[:heatDemand][:impactOfSolidWallInsulation],
+              },
+              recommendedImprovements: [
+                {
+                  sequence: 0,
+                  improvementCode: "1",
+                  indicativeCost: "£200 - £4,000",
+                  typicalSaving: "400.21",
+                  improvementCategory: "string",
+                  improvementType: "string",
+                  improvementTitle: nil,
+                  improvementDescription: nil,
+                  energyPerformanceRatingImprovement: 80,
+                  environmentalImpactRatingImprovement: 90,
+                  greenDealCategoryCode: "string",
+                },
+                {
+                  sequence: 1,
+                  improvementCode: nil,
+                  indicativeCost: "£200 - £4,000",
+                  typicalSaving: "400.21",
+                  improvementCategory: "string",
+                  improvementType: "string",
+                  improvementTitle: "Some improvement",
+                  improvementDescription: "Some improvement description",
+                  energyPerformanceRatingImprovement: 80,
+                  environmentalImpactRatingImprovement: 90,
+                  greenDealCategoryCode: "string",
+                },
+              ],
+              propertySummary: [],
+              relatedPartyDisclosureNumber: second_valid_assessment_body[:relatedPartyDisclosureNumber],
+              relatedPartyDisclosureText: nil,
+            }.to_json,
+          )
+        expect(response["data"]).to eq(expected_response)
+      end
     end
   end
 end
