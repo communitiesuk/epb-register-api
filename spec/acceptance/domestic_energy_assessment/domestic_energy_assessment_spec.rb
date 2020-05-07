@@ -71,6 +71,8 @@ describe "Acceptance::DomesticEnergyAssessment" do
         },
       ],
       propertySummary: [],
+      relatedPartyDisclosureNumber: 1,
+
     }.freeze
   end
 
@@ -219,6 +221,8 @@ describe "Acceptance::DomesticEnergyAssessment" do
               },
             ],
             propertySummary: [],
+            relatedPartyDisclosureNumber: valid_assessment_body[:relatedPartyDisclosureNumber],
+            relatedPartyDisclosureText: nil
           }.to_json,
         )
       expect(response["data"]).to eq(expected_response)

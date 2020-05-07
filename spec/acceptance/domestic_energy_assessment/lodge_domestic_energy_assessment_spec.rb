@@ -298,6 +298,8 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
           potentialEnergyEfficiencyBand
           recommendedImprovements
           propertySummary
+          relatedPartyDisclosureNumber
+          relatedPartyDisclosureText
         ],
       )
     end
@@ -471,6 +473,8 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
           "town" => "Post-Town2",
           "typeOfAssessment" => "SAP",
           "propertySummary" => [],
+          "relatedPartyDisclosureNumber" => nil,
+          "relatedPartyDisclosureText"=> "Related-Party-Disclosure-Text0"
         }
 
         expect(response["data"]).to eq(expected_response)
@@ -660,6 +664,8 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
           "town" => "Post-Town1",
           "typeOfAssessment" => "SAP",
           "propertySummary" => [],
+          "relatedPartyDisclosureNumber" => 1,
+          "relatedPartyDisclosureText" => nil
         }
 
         expect(response["data"]).to eq(expected_response)
@@ -853,6 +859,8 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
           "town" => "Post-Town1",
           "typeOfAssessment" => "RdSAP",
           "propertySummary" => [],
+          "relatedPartyDisclosureNumber" => nil,
+          "relatedPartyDisclosureText" => "Related-Party-Disclosure-Text0"
         }
 
         expect(response["data"]).to eq(expected_response)

@@ -57,6 +57,7 @@ describe "Searching for assessments" do
         },
       ],
       propertySummary: [],
+      relatedPartyDisclosureText: 'string'
     }.freeze
   end
 
@@ -146,6 +147,8 @@ describe "Searching for assessments" do
               impactOfSolidWallInsulation: 69,
             },
             propertySummary: [],
+            relatedPartyDisclosureNumber: nil,
+            relatedPartyDisclosureText: 'string'
           }.to_json,
         )
 
@@ -229,6 +232,8 @@ describe "Searching for assessments" do
               impactOfSolidWallInsulation: 69,
             },
             propertySummary: [],
+            relatedPartyDisclosureNumber: nil,
+            relatedPartyDisclosureText: 'string'
           }.to_json,
         )
 
@@ -359,6 +364,8 @@ describe "Searching for assessments" do
                 impactOfSolidWallInsulation: 69,
               },
               propertySummary: [],
+              relatedPartyDisclosureNumber: nil,
+              relatedPartyDisclosureText: 'string'
             }.to_json,
           )
 

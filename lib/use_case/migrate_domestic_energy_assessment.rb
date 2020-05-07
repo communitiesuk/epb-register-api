@@ -69,6 +69,8 @@ module UseCase
               )
             end,
           property_summary: assessment_data[:property_summary],
+          related_party_disclosure_number: assessment_data[:related_party_disclosure_number],
+          related_party_disclosure_text: assessment_data[:related_party_disclosure_text],
         )
 
       validator = Helper::RdsapValidator::ValidateAll.new

@@ -32,7 +32,9 @@ module Domain
       impact_of_cavity_insulation: nil,
       impact_of_solid_wall_insulation: nil,
       recommended_improvements: nil,
-      property_summary: []
+      property_summary: [],
+      related_party_disclosure_number: nil,
+      related_party_disclosure_text: nil
     )
       @date_of_assessment = Date.strptime(date_of_assessment, "%Y-%m-%d")
       @date_registered = Date.strptime(date_registered, "%Y-%m-%d")
@@ -61,6 +63,8 @@ module Domain
       @impact_of_solid_wall_insulation = impact_of_solid_wall_insulation
       @recommended_improvements = recommended_improvements
       @property_summary = property_summary
+      @related_party_disclosure_number = related_party_disclosure_number
+      @related_party_disclosure_text = related_party_disclosure_text
     end
 
     def get_energy_rating_band(number)
@@ -117,6 +121,8 @@ module Domain
           get_energy_rating_band(@potential_energy_efficiency_rating),
         recommended_improvements: @recommended_improvements.map(&:to_hash),
         property_summary: @property_summary,
+        related_party_disclosure_number: @related_party_disclosure_number,
+        related_party_disclosure_text: @related_party_disclosure_text,
       }
     end
 
@@ -150,6 +156,8 @@ module Domain
         impact_of_cavity_insulation: @impact_of_cavity_insulation,
         impact_of_solid_wall_insulation: @impact_of_solid_wall_insulation,
         property_summary: @property_summary,
+        related_party_disclosure_number: @related_party_disclosure_number,
+        related_party_disclosure_text: @related_party_disclosure_text,
       }
     end
   end

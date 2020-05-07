@@ -114,6 +114,8 @@ module Controller
             ],
           },
         },
+        relatedPartyDisclosureNumber: { type: "integer" },
+        relatedPartyDisclosureText: { type: "string" },
       },
     }.freeze
 

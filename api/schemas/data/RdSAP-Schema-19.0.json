@@ -209,5 +209,13 @@
         ]
       }
     }
-  }
+  },
+  "related_party_disclosure_text": {
+    "path": [
+      "RdSAP_Report",
+      "Report_Header",
+      "Related_Party_Disclosure",
+      "Related_Party_Disclosure_Text"
+    ]
+}
 }

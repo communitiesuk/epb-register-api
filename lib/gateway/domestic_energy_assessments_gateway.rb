@@ -56,6 +56,8 @@ module Gateway
             assessment[:potential_energy_efficiency_rating],
           ),
         property_summary: assessment[:property_summary],
+        related_party_disclosure_number: assessment[:related_party_disclosure_number],
+        related_party_disclosure_text: assessment[:related_party_disclosure_text],
       }
     end
 
@@ -115,7 +117,8 @@ module Gateway
             address_line1, address_line2, address_line3, address_line4, town,
             current_space_heating_demand, current_water_heating_demand, impact_of_loft_insulation,
             impact_of_cavity_insulation, impact_of_solid_wall_insulation,
-            current_carbon_emission, potential_carbon_emission, property_summary
+            current_carbon_emission, potential_carbon_emission, property_summary, related_party_disclosure_number,
+            related_party_disclosure_text
         FROM domestic_energy_assessments
         WHERE postcode = '#{
           ActiveRecord::Base.sanitize_sql(postcode)
@@ -141,7 +144,8 @@ module Gateway
           address_line1, address_line2, address_line3, address_line4, town,
           current_space_heating_demand, current_water_heating_demand, impact_of_loft_insulation,
           impact_of_cavity_insulation, impact_of_solid_wall_insulation,
-          current_carbon_emission, potential_carbon_emission, property_summary
+          current_carbon_emission, potential_carbon_emission, property_summary, related_party_disclosure_number,
+           related_party_disclosure_text
           FROM domestic_energy_assessments
         WHERE assessment_id = '#{
           ActiveRecord::Base.sanitize_sql(assessment_id)
@@ -170,7 +174,8 @@ module Gateway
           address_line1, address_line2, address_line3, address_line4, town,
           current_space_heating_demand, current_water_heating_demand, impact_of_loft_insulation,
           impact_of_cavity_insulation, impact_of_solid_wall_insulation,
-          current_carbon_emission, potential_carbon_emission, property_summary
+          current_carbon_emission, potential_carbon_emission, property_summary, related_party_disclosure_number,
+          related_party_disclosure_text
         FROM domestic_energy_assessments
         WHERE (address_line1 ILIKE '%#{
           ActiveRecord::Base.sanitize_sql(street_name)

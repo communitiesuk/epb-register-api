@@ -80,6 +80,8 @@ module UseCase
           impact_of_solid_wall_insulation:
             data[:impact_of_solid_wall_insulation],
           recommended_improvements: lodgement.extract(data),
+          related_party_disclosure_number: data[:related_party_disclosure_number],
+          related_party_disclosure_text: data[:related_party_disclosure_text],
         )
 
       validator = Helper::RdsapValidator::ValidateAll.new
