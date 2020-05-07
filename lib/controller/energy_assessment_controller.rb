@@ -104,9 +104,10 @@ module Controller
             anyOf: [
               {
                 type: "object",
-                required: %w[name energyEfficiencyRating environmentalEfficiencyRating],
+                required: %w[name description energyEfficiencyRating environmentalEfficiencyRating],
                 properties: {
                   name: { type: "string" },
+                  description: { type: "string" },
                   energyEfficiencyRating: { type: "number", format: "positive-int" },
                   environmentalEfficiencyRating: { type: "number", format: "positive-int" },
                 },
