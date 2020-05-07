@@ -6,7 +6,7 @@ info:
   version: "1.0"
 
 servers:
-  - url: https://api.epb-integration.digital.communities.gov.uk
+  - url: https://api.epb-integration.digital.communities.gov.uk/api
     description: Integration server
   - url: https://mhclg-epb-register-api-staging.london.cloudapps.digital/api
     description: Staging server
