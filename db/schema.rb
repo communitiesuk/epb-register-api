@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_30_120438) do
+ActiveRecord::Schema.define(version: 2020_05_06_140733) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,8 @@ ActiveRecord::Schema.define(version: 2020_04_30_120438) do
     t.decimal "current_carbon_emission", default: "0.0", null: false
     t.decimal "potential_carbon_emission", default: "0.0", null: false
     t.jsonb "property_summary", default: "{}", null: false
+    t.integer "related_party_disclosure_number"
+    t.string "related_party_disclosure_text"
   end
 
   create_table "domestic_epc_energy_improvements", id: false, force: :cascade do |t|
