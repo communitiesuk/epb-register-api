@@ -1,9 +1,9 @@
 desc "Truncate all certificate data"
 
 task :truncate_certificate do
-  # unless ENV["STAGE"] == "staging" || ENV["STAGE"] == "integration"
-  #   exit
-  # end
+    unless ENV["STAGE"] == "staging" || ENV["STAGE"] == "integration"
+      exit
+    end
 
   ActiveRecord::Base.connection.execute("TRUNCATE TABLE domestic_energy_assessments RESTART IDENTITY CASCADE")
 end
