@@ -201,7 +201,7 @@
         ]
       },
       "environmental_impact_rating_improvement": {
-        "path": "Environmental_Impact_Rating"
+        "path": ["Environmental_Impact_Rating"]
       },
       "green_deal_category_code": {
         "path": [
