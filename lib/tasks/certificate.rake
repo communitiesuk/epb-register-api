@@ -79,7 +79,7 @@ task :generate_certificate do
     internal_related_party_disclosure_text = related_party_disclosure_text.sample
 
     unless internal_related_party_disclosure_text == nil
-      internal_related_party_disclosure_number = 'NULL'
+      internal_related_party_disclosure_number = "NULL"
     end
 
     query =
