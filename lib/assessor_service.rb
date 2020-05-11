@@ -23,6 +23,7 @@ class AssessorService < Controller::BaseController
   end
 
   use Controller::AssessorController
+  use Controller::AddressController
   use Controller::SchemesController
   use Controller::EnergyAssessmentController
 end
