@@ -1359,6 +1359,13 @@ components:
         isLatestAssessmentForAddress:
           type: boolean
           example: true
+        status:
+          type: string
+          example: CANCELLED
+          enum:
+            - CANCELLED
+            - LATEST
+            - SUPERSEDED
         mainFuelType:
           type: string
           example: 'Natural Gas'
