@@ -1331,6 +1331,9 @@ components:
     AssessmentGreenDealDetails:
       type: object
       properties:
+        typeOfAssessment:
+          type: string
+          enum: [SAP, RdSAP]
         address:
           $ref: '#/components/schemas/Address'
         countryCode:
