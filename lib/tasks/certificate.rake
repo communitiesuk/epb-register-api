@@ -142,10 +142,9 @@ task :generate_certificate do
           '#{internal_related_party_disclosure_text}'
         )"
 
-
+    ActiveRecord::Base.connection.execute("DELETE FROM domestic_epc_energy_improvements WHERE assessment_id = '#{assessment_id}'")
     ActiveRecord::Base.connection.execute("DELETE FROM domestic_energy_assessments WHERE assessment_id = '#{assessment_id}'")
     ActiveRecord::Base.connection.execute(query)
-    ActiveRecord::Base.connection.execute("DELETE FROM domestic_epc_energy_improvements WHERE assessment_id = '#{assessment_id}'")
 
     rand(0..10).times do |sequence|
       internal_improvement_code = improvement_code[sequence]
