@@ -42,11 +42,11 @@ task :generate_certificate do
   energy_performance_rating_improvement = [93, 85, 75, 62, 45]
   environmental_impact_rating_improvement = [93, 85, 75, 62, 45]
   green_deal_category_code = %w[a b c d e]
-  related_party_disclosure_number = [1, 2, 3, 4, 5, 6, 7, 0, 0, 0, 0, 0, 0]
+  related_party_disclosure_number = [1, 2, 3, 4, 5, 6, 7]
   related_party_disclosure_text = ["No related party", "Relative of homeowner or of occupier of the property", "Residing at the property",
                                    "Financial interest in the property", "Owner or Director of the organisation dealing with the property transaction",
                                    "Employed by the professional dealing with the property transaction",
-                                   "Relative of the professional dealing with the property transaction"]
+                                   "Relative of the professional dealing with the property transaction", nil, nil, nil, nil, nil, nil]
 
   result = ActiveRecord::Base.connection.execute("SELECT * FROM assessors ORDER BY random() LIMIT 2000")
 
@@ -78,8 +78,8 @@ task :generate_certificate do
     internal_related_party_disclosure_number = related_party_disclosure_number.sample
     internal_related_party_disclosure_text = related_party_disclosure_text.sample
 
-    unless internal_related_party_disclosure_number == 0
-      internal_related_party_disclosure_text = nil
+    unless internal_related_party_disclosure_text == nil
+      internal_related_party_disclosure_number = 'NULL'
     end
 
     query =
@@ -138,7 +138,7 @@ task :generate_certificate do
           '#{internal_impact_of_cavity_insulation}',
           '#{internal_impact_of_solid_wall_insulation}',
           '#{scheme_assessor_id}',
-          '#{internal_related_party_disclosure_number}',
+          #{internal_related_party_disclosure_number},
           '#{internal_related_party_disclosure_text}'
         )"
 
