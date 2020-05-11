@@ -1,9 +1,9 @@
 desc "Truncate all certificate data"
 
 task :truncate_certificate do
-    unless ENV["STAGE"] == "staging" || ENV["STAGE"] == "integration"
-      exit
-    end
+  unless ENV["STAGE"] == "staging" || ENV["STAGE"] == "integration"
+    exit
+  end
 
   ActiveRecord::Base.connection.execute("TRUNCATE TABLE domestic_energy_assessments RESTART IDENTITY CASCADE")
 end
@@ -142,7 +142,10 @@ task :generate_certificate do
           '#{internal_related_party_disclosure_text}'
         )"
 
+
+    ActiveRecord::Base.connection.execute("DELETE FROM domestic_energy_assessments WHERE assessment_id = '#{assessment_id}'")
     ActiveRecord::Base.connection.execute(query)
+    ActiveRecord::Base.connection.execute("DELETE FROM domestic_epc_energy_improvements WHERE assessment_id = '#{assessment_id}'")
 
     rand(0..10).times do |sequence|
       internal_improvement_code = improvement_code[sequence]
