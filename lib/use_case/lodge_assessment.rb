@@ -49,6 +49,11 @@ module UseCase
         raise InactiveAssessorException
       end
 
+      data[:improvements] = data[:improvements].map do |improvement|
+        improvement[:assessment_id] = assessment_id
+        Domain::RecommendedImprovement.new(improvement)
+      end
+
       assessment =
         Domain::DomesticEnergyAssessment.new(
           date_of_assessment: data[:inspection_date],
@@ -79,7 +84,7 @@ module UseCase
           impact_of_cavity_insulation: data[:impact_of_cavity_insulation],
           impact_of_solid_wall_insulation:
             data[:impact_of_solid_wall_insulation],
-          recommended_improvements: lodgement.extract(data),
+          recommended_improvements: data[:improvements],
           related_party_disclosure_number: data[:related_party_disclosure_number],
           related_party_disclosure_text: data[:related_party_disclosure_text],
         )

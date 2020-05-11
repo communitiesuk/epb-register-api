@@ -40,56 +40,35 @@ module Domain
       SCHEMAS.key?(@schema_name)
     end
 
-    def fetch_data
+    def fetch_data(raw_data = @data, data_settings = SCHEMAS[@schema_name][:data])
       data = {}
 
-      SCHEMAS[@schema_name][:data].each do |key, settings|
-        settings[:path] = settings[:path].map(&:to_sym)
-
+      data_settings.each do |key, settings|
         path =
           if settings.key?(:root)
             root = settings[:root].to_sym
 
-            SCHEMAS[@schema_name][:data][root][:path].map(&:to_sym)
+            data_settings[root][:path].map(&:to_sym)
           else
             []
           end
 
-        path += settings[:path]
+        path += settings[:path].map(&:to_sym)
 
-        data[key] = @data.dig(*path)
+        data[key] = raw_data.dig(*path)
+
+        if settings.key?(:extract)
+          unless data[key]
+            data[key] = []
+          end
+          data[key] = [data[key]] unless data[key].is_a? Array
+          data[key] = data[key].map do |inner_data|
+            fetch_data(inner_data, settings[:extract])
+          end
+        end
       end
 
       data
-    end
-
-    def extract(
-      data,
-      key = :improvements,
-      target_domain = Domain::RecommendedImprovement
-    )
-      extractor = data[key]
-
-      if extractor.nil?
-        []
-      else
-        extractor = [extractor] unless extractor.is_a? Array
-
-        extractor.map do |i|
-          extractor_inner = { assessment_id: data[:assessment_id] }
-
-          SCHEMAS[@schema_name][:data][key][:extract].each do |second_key, value|
-            value[:path] =
-              value[:path].is_a?(Array) ? value[:path].map(&:to_sym) : value[:path].to_sym
-
-            extractor_inner[second_key] = i.dig(*value[:path])
-          end
-
-          extractor_inner[:sequence] = extractor_inner[:sequence].to_i
-
-          target_domain.new(extractor_inner)
-        end
-      end
     end
 
     def schema_path
