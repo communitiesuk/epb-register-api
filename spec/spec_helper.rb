@@ -34,7 +34,7 @@ module RSpecAssessorServiceMixin
   include Rack::Test::Methods
 
   def app
-    AssessorService
+    RegisterApiService
   end
 end
 

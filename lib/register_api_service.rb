@@ -1,4 +1,4 @@
-class AssessorService < Controller::BaseController
+class RegisterApiService < Controller::BaseController
   options "*" do
     response.headers["Allow"] = "HEAD,GET,PUT,DELETE,OPTIONS"
     response.headers["Access-Control-Allow-Methods"] =
