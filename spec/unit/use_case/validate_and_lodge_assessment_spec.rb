@@ -33,7 +33,9 @@ describe UseCase::ValidateAndLodgeAssessment do
     File.read File.join Dir.pwd, "api/schemas/xml/examples/RdSAP-19.01.xml"
   end
 
-  let(:check_assessor_belongs_to_scheme_use_case) { CheckAssessorBelongsToSchemeSpy.new }
+  let(:check_assessor_belongs_to_scheme_use_case) do
+    CheckAssessorBelongsToSchemeSpy.new
+  end
   let(:lodge_assessment_use_case) { LodgeAssessmentUseCaseSpy.new }
   let(:validate_lodgement_use_case) { ValidateLodgementUseCaseSpy.new }
 
@@ -76,12 +78,7 @@ describe UseCase::ValidateAndLodgeAssessment do
 
     it "raises the error SchemaNotDefined" do
       expect {
-        use_case.execute(
-          "0000-0000-0000-0000-0000",
-          valid_xml,
-          nil,
-          "1",
-        )
+        use_case.execute("0000-0000-0000-0000-0000", valid_xml, nil, "1")
       }.to raise_exception(
         UseCase::ValidateAndLodgeAssessment::SchemaNotDefined,
       )

@@ -7,7 +7,10 @@ module Domain
       @schema_name = schema_name.to_sym
     end
 
-    def fetch_data(data = @data, schema = Helper::SchemaListHelper.new(@schema_name).fetch_data_structure)
+    def fetch_data(
+      data = @data,
+      schema = Helper::SchemaListHelper.new(@schema_name).fetch_data_structure
+    )
       Helper::DataExtractorHelper.new.fetch_data(data, schema)
     end
 

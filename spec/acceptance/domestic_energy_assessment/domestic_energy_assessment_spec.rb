@@ -278,7 +278,8 @@ describe "Acceptance::DomesticEnergyAssessment" do
               },
             ],
             propertySummary: [],
-            relatedPartyDisclosureNumber: valid_assessment_body[:relatedPartyDisclosureNumber],
+            relatedPartyDisclosureNumber:
+              valid_assessment_body[:relatedPartyDisclosureNumber],
             relatedPartyDisclosureText: nil,
           }.to_json,
         )
@@ -291,7 +292,10 @@ describe "Acceptance::DomesticEnergyAssessment" do
         add_assessor(scheme_id, "TEST123456", valid_assessor_request_body)
         add_assessor(scheme_id, "TEST000007", valid_assessor_request_body)
         migrate_assessment("15650-651625-18267167", valid_assessment_body)
-        migrate_assessment("15650-651625-18267167", second_valid_assessment_body)
+        migrate_assessment(
+          "15650-651625-18267167",
+          second_valid_assessment_body,
+        )
 
         response = JSON.parse(fetch_assessment("15650-651625-18267167").body)
 
@@ -299,7 +303,8 @@ describe "Acceptance::DomesticEnergyAssessment" do
           JSON.parse(
             {
               assessor: {
-                schemeAssessorId: second_valid_assessment_body[:schemeAssessorId],
+                schemeAssessorId:
+                  second_valid_assessment_body[:schemeAssessorId],
                 registeredBy: { schemeId: scheme_id, name: "test scheme" },
                 firstName: valid_assessor_request_body[:firstName],
                 middleNames: valid_assessor_request_body[:middleNames],
@@ -351,15 +356,25 @@ describe "Acceptance::DomesticEnergyAssessment" do
               addressLine4: second_valid_assessment_body[:addressLine4],
               heatDemand: {
                 currentSpaceHeatingDemand:
-                  second_valid_assessment_body[:heatDemand][:currentSpaceHeatingDemand],
+                  second_valid_assessment_body[:heatDemand][
+                    :currentSpaceHeatingDemand
+                  ],
                 currentWaterHeatingDemand:
-                  second_valid_assessment_body[:heatDemand][:currentWaterHeatingDemand],
+                  second_valid_assessment_body[:heatDemand][
+                    :currentWaterHeatingDemand
+                  ],
                 impactOfLoftInsulation:
-                  second_valid_assessment_body[:heatDemand][:impactOfLoftInsulation],
+                  second_valid_assessment_body[:heatDemand][
+                    :impactOfLoftInsulation
+                  ],
                 impactOfCavityInsulation:
-                  second_valid_assessment_body[:heatDemand][:impactOfCavityInsulation],
+                  second_valid_assessment_body[:heatDemand][
+                    :impactOfCavityInsulation
+                  ],
                 impactOfSolidWallInsulation:
-                  second_valid_assessment_body[:heatDemand][:impactOfSolidWallInsulation],
+                  second_valid_assessment_body[:heatDemand][
+                    :impactOfSolidWallInsulation
+                  ],
               },
               recommendedImprovements: [
                 {
@@ -390,7 +405,8 @@ describe "Acceptance::DomesticEnergyAssessment" do
                 },
               ],
               propertySummary: [],
-              relatedPartyDisclosureNumber: second_valid_assessment_body[:relatedPartyDisclosureNumber],
+              relatedPartyDisclosureNumber:
+                second_valid_assessment_body[:relatedPartyDisclosureNumber],
               relatedPartyDisclosureText: nil,
             }.to_json,
           )

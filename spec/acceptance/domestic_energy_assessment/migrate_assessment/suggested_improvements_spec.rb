@@ -204,8 +204,10 @@ describe "Acceptance::DomesticEnergyAssessment::MigrateAssessment::SuggestedImpr
           migrate_assessment("123-456", assessment, [200])
           migrate_assessment("123-456", assessment, [200])
 
-          double_migrated_assessment = JSON.parse(fetch_assessment("123-456").body)
-          number_of_improvements = double_migrated_assessment["data"]["recommendedImprovements"].length
+          double_migrated_assessment =
+            JSON.parse(fetch_assessment("123-456").body)
+          number_of_improvements =
+            double_migrated_assessment["data"]["recommendedImprovements"].length
 
           expect(number_of_improvements).to eq 4
         end

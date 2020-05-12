@@ -8,7 +8,7 @@ describe "Integration::EndpointSecurity" do
   controllers_to_test =
     Controller.constants.select do |constant|
       Controller.const_get(constant).is_a? Class
-    end.reject { |constant|  controllers_to_ignore.include? constant.to_s }
+    end.reject { |constant| controllers_to_ignore.include? constant.to_s }
 
   @routes_to_test = []
 

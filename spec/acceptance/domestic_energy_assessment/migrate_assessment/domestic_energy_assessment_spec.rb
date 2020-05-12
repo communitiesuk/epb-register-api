@@ -112,7 +112,8 @@ describe "Acceptance::DomesticEnergyAssessment::MigrateAssessment" do
       scheme_id = add_scheme_and_get_id
 
       assessment_with_higher_than_100_rating = valid_assessment_body.dup
-      assessment_with_higher_than_100_rating[:currentEnergyEfficiencyRating] = 290
+      assessment_with_higher_than_100_rating[:currentEnergyEfficiencyRating] =
+        290
 
       add_assessor(scheme_id, "TEST123456", valid_assessor_request_body)
       migrate_assessment(
@@ -126,7 +127,8 @@ describe "Acceptance::DomesticEnergyAssessment::MigrateAssessment" do
       scheme_id = add_scheme_and_get_id
 
       assessment_with_higher_than_100_rating = valid_assessment_body.dup
-      assessment_with_higher_than_100_rating[:potentialEnergyEfficiencyRating] = 290
+      assessment_with_higher_than_100_rating[:potentialEnergyEfficiencyRating] =
+        290
 
       add_assessor(scheme_id, "TEST123456", valid_assessor_request_body)
       migrate_assessment(
@@ -151,11 +153,8 @@ describe "Acceptance::DomesticEnergyAssessment::MigrateAssessment" do
         },
       ]
 
-      response = migrate_assessment(
-        "123-456",
-        assessment_request_body,
-        [200],
-      ).body
+      response =
+        migrate_assessment("123-456", assessment_request_body, [200]).body
 
       migrated_assessment = JSON.parse(response, symbolize_names: true)
 
@@ -168,7 +167,9 @@ describe "Acceptance::DomesticEnergyAssessment::MigrateAssessment" do
         },
       ]
 
-      expect(migrated_assessment[:data][:propertySummary]).to eq(expected_response)
+      expect(migrated_assessment[:data][:propertySummary]).to eq(
+        expected_response,
+      )
     end
 
     it "returns the assessment that was migrated" do
@@ -233,7 +234,8 @@ describe "Acceptance::DomesticEnergyAssessment::MigrateAssessment" do
         ],
         propertySummary: [],
         relatedPartyDisclosureNumber: nil,
-        relatedPartyDisclosureText: valid_assessment_body[:relatedPartyDisclosureText],
+        relatedPartyDisclosureText:
+          valid_assessment_body[:relatedPartyDisclosureText],
       }
 
       expect(migrated_assessment[:data]).to eq(expected_response)

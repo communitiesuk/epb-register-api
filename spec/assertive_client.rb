@@ -17,15 +17,16 @@ end
 def assertive_request(
   request, accepted_responses, authenticate, auth_data, scopes = []
 )
-  response = if authenticate
-               if auth_data
-                 authenticate_with_data(auth_data, scopes) { request.call }
-               else
-                 authenticate_with_data({}, scopes) { request.call }
-                          end
-             else
-               request.call
-             end
+  response =
+    if authenticate
+      if auth_data
+        authenticate_with_data(auth_data, scopes) { request.call }
+      else
+        authenticate_with_data({}, scopes) { request.call }
+      end
+    else
+      request.call
+    end
   check_response(response, accepted_responses)
 end
 

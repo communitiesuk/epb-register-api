@@ -133,11 +133,7 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
 
         it "returns status 400 with the correct error response" do
           scheme_id = add_scheme_and_get_id
-          add_assessor(
-            scheme_id,
-            "TEST000000",
-            inactive_assessor_request_body,
-          )
+          add_assessor(scheme_id, "TEST000000", inactive_assessor_request_body)
 
           response =
             JSON.parse(
@@ -232,7 +228,8 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] },
             schema_name: "SAP-Schema-17.1",
-          ).body,
+          )
+            .body,
           symbolize_names: true,
         )
 
@@ -251,7 +248,8 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] },
             schema_name: "SAP-Schema-17.1",
-          ).body,
+          )
+            .body,
           symbolize_names: true,
         )
 
@@ -300,7 +298,8 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] },
             schema_name: "SAP-Schema-17.1",
-          ).body,
+          )
+            .body,
           symbolize_names: true,
         )
 
@@ -332,19 +331,19 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
       end
 
       it "returns the correct error message" do
-        response = JSON.parse(
-          lodge_assessment(
-            assessment_id: "1234-1234-1234-1234-1234",
-            assessment_body: doc.to_xml,
-            accepted_responses: [400],
-            auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "unsupported",
-          ).body,
-        )
+        response =
+          JSON.parse(
+            lodge_assessment(
+              assessment_id: "1234-1234-1234-1234-1234",
+              assessment_body: doc.to_xml,
+              accepted_responses: [400],
+              auth_data: { scheme_ids: [scheme_id] },
+              schema_name: "unsupported",
+            )
+              .body,
+          )
 
-        expect(response["errors"][0]["title"]).to eq(
-          "Schema is not supported.",
-        )
+        expect(response["errors"][0]["title"]).to eq("Schema is not supported.")
       end
     end
 
@@ -456,7 +455,78 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
           "totalFloorArea" => 10.0,
           "town" => "Post-Town1",
           "typeOfAssessment" => "SAP",
-          "propertySummary" => [{ "energyEfficiencyRating" => "0", "environmentalEfficiencyRating" => "0", "name" => "Walls" }, { "energyEfficiencyRating" => "0", "environmentalEfficiencyRating" => "0", "name" => "Walls" }, { "energyEfficiencyRating" => "0", "environmentalEfficiencyRating" => "0", "name" => "Roof" }, { "energyEfficiencyRating" => "0", "environmentalEfficiencyRating" => "0", "name" => "Roof" }, { "energyEfficiencyRating" => "0", "environmentalEfficiencyRating" => "0", "name" => "Floor" }, { "energyEfficiencyRating" => "0", "environmentalEfficiencyRating" => "0", "name" => "Floor" }, { "energyEfficiencyRating" => "0", "environmentalEfficiencyRating" => "0", "name" => "Windows" }, { "energyEfficiencyRating" => "0", "environmentalEfficiencyRating" => "0", "name" => "Main_Heating" }, { "energyEfficiencyRating" => "0", "environmentalEfficiencyRating" => "0", "name" => "Main_Heating" }, { "energyEfficiencyRating" => "0", "environmentalEfficiencyRating" => "0", "name" => "Main_Heating_Controls" }, { "energyEfficiencyRating" => "0", "environmentalEfficiencyRating" => "0", "name" => "Main_Heating_Controls" }, { "energyEfficiencyRating" => "0", "environmentalEfficiencyRating" => "0", "name" => "Secondary_Heating" }, { "energyEfficiencyRating" => "0", "environmentalEfficiencyRating" => "0", "name" => "Hot_Water" }, { "energyEfficiencyRating" => "0", "environmentalEfficiencyRating" => "0", "name" => "Lighting" }],
+          "propertySummary" => [
+            {
+              "energyEfficiencyRating" => "0",
+              "environmentalEfficiencyRating" => "0",
+              "name" => "Walls",
+            },
+            {
+              "energyEfficiencyRating" => "0",
+              "environmentalEfficiencyRating" => "0",
+              "name" => "Walls",
+            },
+            {
+              "energyEfficiencyRating" => "0",
+              "environmentalEfficiencyRating" => "0",
+              "name" => "Roof",
+            },
+            {
+              "energyEfficiencyRating" => "0",
+              "environmentalEfficiencyRating" => "0",
+              "name" => "Roof",
+            },
+            {
+              "energyEfficiencyRating" => "0",
+              "environmentalEfficiencyRating" => "0",
+              "name" => "Floor",
+            },
+            {
+              "energyEfficiencyRating" => "0",
+              "environmentalEfficiencyRating" => "0",
+              "name" => "Floor",
+            },
+            {
+              "energyEfficiencyRating" => "0",
+              "environmentalEfficiencyRating" => "0",
+              "name" => "Windows",
+            },
+            {
+              "energyEfficiencyRating" => "0",
+              "environmentalEfficiencyRating" => "0",
+              "name" => "Main_Heating",
+            },
+            {
+              "energyEfficiencyRating" => "0",
+              "environmentalEfficiencyRating" => "0",
+              "name" => "Main_Heating",
+            },
+            {
+              "energyEfficiencyRating" => "0",
+              "environmentalEfficiencyRating" => "0",
+              "name" => "Main_Heating_Controls",
+            },
+            {
+              "energyEfficiencyRating" => "0",
+              "environmentalEfficiencyRating" => "0",
+              "name" => "Main_Heating_Controls",
+            },
+            {
+              "energyEfficiencyRating" => "0",
+              "environmentalEfficiencyRating" => "0",
+              "name" => "Secondary_Heating",
+            },
+            {
+              "energyEfficiencyRating" => "0",
+              "environmentalEfficiencyRating" => "0",
+              "name" => "Hot_Water",
+            },
+            {
+              "energyEfficiencyRating" => "0",
+              "environmentalEfficiencyRating" => "0",
+              "name" => "Lighting",
+            },
+          ],
           "relatedPartyDisclosureNumber" => 1,
           "relatedPartyDisclosureText" => nil,
         }
@@ -557,7 +627,8 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
               assessment_body: doc.to_xml,
               accepted_responses: [400],
               schema_name: "SAP-Schema-17.1",
-            ).body,
+            )
+              .body,
           )
 
         expect(
@@ -567,11 +638,7 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
 
       it "rejects an assessment with invalid XML" do
         scheme_id = add_scheme_and_get_id
-        add_assessor(
-          scheme_id,
-          "TEST000000",
-          sap_valid_assessor_request_body,
-        )
+        add_assessor(scheme_id, "TEST000000", sap_valid_assessor_request_body)
 
         xml = valid_sap_xml
 
@@ -584,7 +651,8 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
               assessment_body: xml,
               accepted_responses: [400],
               schema_name: "SAP-Schema-17.1",
-            ).body,
+            )
+              .body,
           )
 
         expect(

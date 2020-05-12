@@ -56,8 +56,10 @@ module Gateway
             assessment[:potential_energy_efficiency_rating],
           ),
         property_summary: assessment[:property_summary],
-        related_party_disclosure_number: assessment[:related_party_disclosure_number],
-        related_party_disclosure_text: assessment[:related_party_disclosure_text],
+        related_party_disclosure_number:
+          assessment[:related_party_disclosure_number],
+        related_party_disclosure_text:
+          assessment[:related_party_disclosure_text],
       }
     end
 
@@ -128,7 +130,8 @@ module Gateway
       response.each do |row|
         assessment_hash = to_hash(row.symbolize_keys)
 
-        assessment_hash[:property_summary] = JSON.parse(assessment_hash[:property_summary])
+        assessment_hash[:property_summary] =
+          JSON.parse(assessment_hash[:property_summary])
 
         result << assessment_hash
       end
@@ -157,7 +160,8 @@ module Gateway
       response.each do |row|
         assessment_hash = to_hash(row.symbolize_keys)
 
-        assessment_hash[:property_summary] = JSON.parse(assessment_hash[:property_summary])
+        assessment_hash[:property_summary] =
+          JSON.parse(assessment_hash[:property_summary])
 
         result << assessment_hash
       end
@@ -191,7 +195,8 @@ module Gateway
       response.each do |row|
         assessment_hash = to_hash(row.symbolize_keys)
 
-        assessment_hash[:property_summary] = JSON.parse(assessment_hash[:property_summary])
+        assessment_hash[:property_summary] =
+          JSON.parse(assessment_hash[:property_summary])
 
         result << assessment_hash
       end
@@ -219,7 +224,8 @@ module Gateway
         Assessment.create(domestic_energy_assessment.to_record)
       end
 
-      improvements = domestic_energy_assessment.recommended_improvements.map(&:to_record)
+      improvements =
+        domestic_energy_assessment.recommended_improvements.map(&:to_record)
       improvements.each do |improvement|
         DomesticEpcEnergyImprovement.create(improvement)
       end

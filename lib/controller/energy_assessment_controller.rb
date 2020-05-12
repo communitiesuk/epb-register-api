@@ -80,7 +80,12 @@ module Controller
               },
               {
                 type: "object",
-                required: %w[sequence improvementTitle improvementDescription typicalSaving],
+                required: %w[
+                  sequence
+                  improvementTitle
+                  improvementDescription
+                  typicalSaving
+                ],
                 properties: {
                   sequence: { type: "integer", format: "positive-int" },
                   improvementCode: { type: "null" },
@@ -104,12 +109,21 @@ module Controller
             anyOf: [
               {
                 type: "object",
-                required: %w[name description energyEfficiencyRating environmentalEfficiencyRating],
+                required: %w[
+                  name
+                  description
+                  energyEfficiencyRating
+                  environmentalEfficiencyRating
+                ],
                 properties: {
                   name: { type: "string" },
                   description: { type: "string" },
-                  energyEfficiencyRating: { type: "number", format: "positive-int" },
-                  environmentalEfficiencyRating: { type: "number", format: "positive-int" },
+                  energyEfficiencyRating: {
+                    type: "number", format: "positive-int"
+                  },
+                  environmentalEfficiencyRating: {
+                    type: "number", format: "positive-int"
+                  },
                 },
               },
             ],
@@ -122,19 +136,20 @@ module Controller
 
     get "/api/assessments/domestic-epc/search",
         jwt_auth: %w[assessment:search] do
-      result = if params.key?(:postcode)
-                 @container.get_object(:find_assessments_by_postcode_use_case).execute(
-                   params[:postcode],
-                 )
-               elsif params.key?(:assessment_id)
-                 @container.get_object(:find_assessments_by_assessment_id_use_case)
-                     .execute(params[:assessment_id])
-               else
-                 @container.get_object(
-                   :find_assessments_by_street_name_and_town_use_case,
-                 )
-                     .execute(params[:street_name], params[:town])
-               end
+      result =
+        if params.key?(:postcode)
+          @container.get_object(:find_assessments_by_postcode_use_case).execute(
+            params[:postcode],
+          )
+        elsif params.key?(:assessment_id)
+          @container.get_object(:find_assessments_by_assessment_id_use_case)
+            .execute(params[:assessment_id])
+        else
+          @container.get_object(
+            :find_assessments_by_street_name_and_town_use_case,
+          )
+            .execute(params[:street_name], params[:town])
+        end
 
       json_api_response(code: 200, data: result, burrow_key: :assessments)
     rescue StandardError => e
@@ -193,7 +208,11 @@ module Controller
       when UseCase::CheckAssessorBelongsToScheme::AssessorNotFoundException
         error_response(400, "INVALID_REQUEST", "Assessor is not registered.")
       when UseCase::ValidateAndLodgeAssessment::SchemaNotDefined
-        error_response(400, "INVALID_REQUEST", 'Schema is not defined. Set content-type on the request to "application/xml+RdSAP-Schema-19.0" for example.')
+        error_response(
+          400,
+          "INVALID_REQUEST",
+          'Schema is not defined. Set content-type on the request to "application/xml+RdSAP-Schema-19.0" for example.',
+        )
       when UseCase::ValidateAndLodgeAssessment::UnauthorisedToLodgeAsThisSchemeException
         error_response(
           403,
