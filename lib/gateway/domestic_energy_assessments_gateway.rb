@@ -2,7 +2,7 @@
 
 module Gateway
   class DomesticEnergyAssessmentsGateway
-    class DomesticEnergyAssessment < ActiveRecord::Base
+    class Assessment < ActiveRecord::Base
       def to_hash
         Gateway::DomesticEnergyAssessmentsGateway.new.to_hash(self)
       end
@@ -82,7 +82,7 @@ module Gateway
 
     def fetch(assessment_id)
       energy_assessment_record =
-        DomesticEnergyAssessment.find_by(assessment_id: assessment_id)
+        Assessment.find_by(assessment_id: assessment_id)
 
       improvement_records =
         DomesticEpcEnergyImprovement.where(assessment_id: assessment_id)
@@ -119,11 +119,11 @@ module Gateway
             impact_of_cavity_insulation, impact_of_solid_wall_insulation,
             current_carbon_emission, potential_carbon_emission, property_summary, related_party_disclosure_number,
             related_party_disclosure_text
-        FROM domestic_energy_assessments
+        FROM assessments
         WHERE postcode = '#{
           ActiveRecord::Base.sanitize_sql(postcode)
         }'"
-      response = DomesticEnergyAssessment.connection.execute(sql)
+      response = Assessment.connection.execute(sql)
       result = []
       response.each do |row|
         assessment_hash = to_hash(row.symbolize_keys)
@@ -146,12 +146,12 @@ module Gateway
           impact_of_cavity_insulation, impact_of_solid_wall_insulation,
           current_carbon_emission, potential_carbon_emission, property_summary, related_party_disclosure_number,
            related_party_disclosure_text
-          FROM domestic_energy_assessments
+          FROM assessments
         WHERE assessment_id = '#{
           ActiveRecord::Base.sanitize_sql(assessment_id)
         }'"
 
-      response = DomesticEnergyAssessment.connection.execute(sql)
+      response = Assessment.connection.execute(sql)
 
       result = []
       response.each do |row|
@@ -176,7 +176,7 @@ module Gateway
           impact_of_cavity_insulation, impact_of_solid_wall_insulation,
           current_carbon_emission, potential_carbon_emission, property_summary, related_party_disclosure_number,
           related_party_disclosure_text
-        FROM domestic_energy_assessments
+        FROM assessments
         WHERE (address_line1 ILIKE '%#{
           ActiveRecord::Base.sanitize_sql(street_name)
         }' OR address_line2 ILIKE '%#{
@@ -185,7 +185,7 @@ module Gateway
           ActiveRecord::Base.sanitize_sql(street_name)
         }') AND (town ILIKE '#{ActiveRecord::Base.sanitize_sql(town)}')"
 
-      response = DomesticEnergyAssessment.connection.execute(sql)
+      response = Assessment.connection.execute(sql)
 
       result = []
       response.each do |row|
@@ -203,7 +203,7 @@ module Gateway
 
     def send_to_db(domestic_energy_assessment)
       existing_assessment =
-        DomesticEnergyAssessment.find_by(
+        Assessment.find_by(
           assessment_id: domestic_energy_assessment.assessment_id,
         )
 
@@ -216,7 +216,7 @@ module Gateway
 
         DomesticEpcEnergyImprovement.where(where_assessment).delete_all
       else
-        DomesticEnergyAssessment.create(domestic_energy_assessment.to_record)
+        Assessment.create(domestic_energy_assessment.to_record)
       end
 
       improvements = domestic_energy_assessment.recommended_improvements.map(&:to_record)

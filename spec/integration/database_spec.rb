@@ -153,7 +153,7 @@ describe "Integration::Database::Activerecord" do
 
     current_energy_efficiency_rating =
       ActiveRecord::Base.connection.execute(
-        "SELECT current_energy_efficiency_rating FROM domestic_energy_assessments",
+        "SELECT current_energy_efficiency_rating FROM assessments",
       )
 
     expect(current_energy_efficiency_rating).not_to be_nil
@@ -166,7 +166,7 @@ describe "Integration::Database::Activerecord" do
 
     potential_energy_efficiency_rating =
       ActiveRecord::Base.connection.execute(
-        "SELECT potential_energy_efficiency_rating FROM domestic_energy_assessments",
+        "SELECT potential_energy_efficiency_rating FROM assessments",
       )
 
     expect(potential_energy_efficiency_rating).not_to be_nil
@@ -179,7 +179,7 @@ describe "Integration::Database::Activerecord" do
 
     domestic_epc_postcode_column =
       ActiveRecord::Base.connection.execute(
-        "SELECT postcode FROM domestic_energy_assessments",
+        "SELECT postcode FROM assessments",
       )
 
     expect(domestic_epc_postcode_column).not_to be_nil
@@ -192,7 +192,7 @@ describe "Integration::Database::Activerecord" do
 
     domestic_epc_date_of_expiry_column =
       ActiveRecord::Base.connection.execute(
-        "SELECT date_of_expiry FROM domestic_energy_assessments",
+        "SELECT date_of_expiry FROM assessments",
       )
 
     expect(domestic_epc_date_of_expiry_column).not_to be_nil

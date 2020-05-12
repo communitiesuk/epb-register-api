@@ -10,33 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_06_140733) do
+ActiveRecord::Schema.define(version: 2020_05_12_134243) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "assessors", primary_key: "scheme_assessor_id", id: :string, force: :cascade do |t|
-    t.string "first_name", null: false
-    t.string "last_name", null: false
-    t.string "middle_names"
-    t.datetime "date_of_birth", null: false
-    t.integer "registered_by", limit: 2, null: false
-    t.string "telephone_number"
-    t.string "email"
-    t.string "search_results_comparison_postcode"
-    t.string "domestic_rd_sap_qualification"
-    t.string "non_domestic_sp3_qualification"
-    t.string "non_domestic_cc4_qualification"
-    t.string "non_domestic_dec_qualification"
-    t.string "non_domestic_nos3_qualification"
-    t.string "non_domestic_nos4_qualification"
-    t.string "non_domestic_nos5_qualification"
-    t.string "domestic_sap_qualification"
-    t.index ["registered_by"], name: "index_assessors_on_registered_by"
-    t.index ["search_results_comparison_postcode"], name: "index_assessors_on_search_results_comparison_postcode"
-  end
-
-  create_table "domestic_energy_assessments", primary_key: "assessment_id", id: :string, force: :cascade do |t|
+  create_table "assessments", primary_key: "assessment_id", id: :string, force: :cascade do |t|
     t.datetime "date_of_assessment"
     t.datetime "date_registered"
     t.string "dwelling_type"
@@ -64,6 +43,27 @@ ActiveRecord::Schema.define(version: 2020_05_06_140733) do
     t.jsonb "property_summary", default: "{}", null: false
     t.integer "related_party_disclosure_number"
     t.string "related_party_disclosure_text"
+  end
+
+  create_table "assessors", primary_key: "scheme_assessor_id", id: :string, force: :cascade do |t|
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.string "middle_names"
+    t.datetime "date_of_birth", null: false
+    t.integer "registered_by", limit: 2, null: false
+    t.string "telephone_number"
+    t.string "email"
+    t.string "search_results_comparison_postcode"
+    t.string "domestic_rd_sap_qualification"
+    t.string "non_domestic_sp3_qualification"
+    t.string "non_domestic_cc4_qualification"
+    t.string "non_domestic_dec_qualification"
+    t.string "non_domestic_nos3_qualification"
+    t.string "non_domestic_nos5_qualification"
+    t.string "non_domestic_nos4_qualification"
+    t.string "domestic_sap_qualification"
+    t.index ["registered_by"], name: "index_assessors_on_registered_by"
+    t.index ["search_results_comparison_postcode"], name: "index_assessors_on_search_results_comparison_postcode"
   end
 
   create_table "domestic_epc_energy_improvements", id: false, force: :cascade do |t|
@@ -98,7 +98,7 @@ ActiveRecord::Schema.define(version: 2020_05_06_140733) do
     t.index ["name"], name: "index_schemes_on_name", unique: true
   end
 
+  add_foreign_key "assessments", "assessors", column: "scheme_assessor_id", primary_key: "scheme_assessor_id"
   add_foreign_key "assessors", "schemes", column: "registered_by", primary_key: "scheme_id"
-  add_foreign_key "domestic_energy_assessments", "assessors", column: "scheme_assessor_id", primary_key: "scheme_assessor_id"
-  add_foreign_key "domestic_epc_energy_improvements", "domestic_energy_assessments", column: "assessment_id", primary_key: "assessment_id"
+  add_foreign_key "domestic_epc_energy_improvements", "assessments", primary_key: "assessment_id"
 end

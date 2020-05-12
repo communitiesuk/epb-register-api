@@ -5,7 +5,7 @@ task :truncate_certificate do
     exit
   end
 
-  ActiveRecord::Base.connection.execute("TRUNCATE TABLE domestic_energy_assessments RESTART IDENTITY CASCADE")
+  ActiveRecord::Base.connection.execute("TRUNCATE TABLE assessments RESTART IDENTITY CASCADE")
 end
 
 desc "Import some random certificate data"
@@ -84,7 +84,7 @@ task :generate_certificate do
 
     query =
       "INSERT INTO
-        domestic_energy_assessments
+        assessments
           (
             assessment_id,
             date_of_assessment,
@@ -143,7 +143,7 @@ task :generate_certificate do
         )"
 
     ActiveRecord::Base.connection.execute("DELETE FROM domestic_epc_energy_improvements WHERE assessment_id = '#{assessment_id}'")
-    ActiveRecord::Base.connection.execute("DELETE FROM domestic_energy_assessments WHERE assessment_id = '#{assessment_id}'")
+    ActiveRecord::Base.connection.execute("DELETE FROM assessments WHERE assessment_id = '#{assessment_id}'")
     ActiveRecord::Base.connection.execute(query)
 
     rand(0..10).times do |sequence|
