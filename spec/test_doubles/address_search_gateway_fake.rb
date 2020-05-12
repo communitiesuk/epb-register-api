@@ -1,5 +1,17 @@
 class AddressSearchGatewayFake
-  def search_by_rrn(_)
-    []
+  def initialize
+    @addresses = []
+  end
+
+  def search_by_rrn(rrn)
+    filtered_results = @addresses.filter do |address|
+      address[:building_reference_number] == rrn
+    end
+
+    filtered_results.map { |address| Domain::Address.new(address) }
+  end
+
+  def add(address)
+    @addresses << address
   end
 end
