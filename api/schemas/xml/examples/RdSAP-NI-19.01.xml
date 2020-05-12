@@ -179,7 +179,7 @@
             <UPRN>UPRN-000000000000</UPRN>
         </Property>
         <Related-Party-Disclosure>
-            <Related-Party-Disclosure-Number>1</Related-Party-Disclosure-Number>
+          <Related-Party-Disclosure-Text>Financial interest</Related-Party-Disclosure-Text>
         </Related-Party-Disclosure>
     </Report-Header>
     <Insurance-Details>

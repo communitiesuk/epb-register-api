@@ -456,7 +456,7 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
           "typeOfAssessment" => "RdSAP",
           "propertySummary" => [],
           "relatedPartyDisclosureNumber" => nil,
-          "relatedPartyDisclosureText" => nil,
+          "relatedPartyDisclosureText" => "Financial interest",
         }
 
         expect(response["data"]).to eq(expected_response)
