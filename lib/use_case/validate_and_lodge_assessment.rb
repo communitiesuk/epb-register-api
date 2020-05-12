@@ -25,9 +25,9 @@ module UseCase
 
       lodgement = Domain::Lodgement.new(xml_to_hash(xml), schema_name)
 
-      raise SchemaNotSupportedException unless lodgement.schema_exists?
+      raise SchemaNotSupportedException unless Helper::SchemaListHelper.new(schema_name).schema_exists?
 
-      unless @validate_assessment_use_case.execute(xml, lodgement.schema_path)
+      unless @validate_assessment_use_case.execute(xml, Helper::SchemaListHelper.new(schema_name).schema_path)
         raise ValidationErrorException
       end
 
