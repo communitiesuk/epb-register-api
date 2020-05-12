@@ -6,6 +6,8 @@ class Container
 
     assessors_gateway = Gateway::AssessorsGateway.new
 
+    address_search_gateway = Gateway::AddressSearchGateway.new
+
     domestic_energy_assessments_gateway =
       Gateway::DomesticEnergyAssessmentsGateway.new
 
@@ -65,6 +67,9 @@ class Container
     check_assessor_belongs_to_scheme_use_case =
       UseCase::CheckAssessorBelongsToScheme.new(assessors_gateway)
 
+    search_addresses_by_building_reference_number_use_case =
+      UseCase::SearchAddressesByBuildingReferenceNumber.new address_search_gateway
+
     validate_and_lodge_assessment_use_case =
       UseCase::ValidateAndLodgeAssessment.new(
         validate_assessment_use_case,
@@ -74,6 +79,7 @@ class Container
 
     @objects = {
       schemes_gateway: schemes_gateway,
+      address_search_gateway: address_search_gateway,
       add_new_scheme_use_case: add_new_scheme_use_case,
       get_all_schemes_use_case: get_all_schemes_use_case,
       add_assessor_use_case: add_assessor_use_case,
@@ -97,6 +103,8 @@ class Container
       validate_assessment_use_case: validate_assessment_use_case,
       validate_and_lodge_assessment_use_case:
         validate_and_lodge_assessment_use_case,
+      search_addresses_by_building_reference_number_use_case:
+        search_addresses_by_building_reference_number_use_case,
     }
   end
 

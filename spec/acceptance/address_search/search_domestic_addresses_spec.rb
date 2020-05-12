@@ -1,6 +1,22 @@
 context "searching for an address" do
   include RSpecAssessorServiceMixin
 
+  context "with a valid combination of parameters that have no matches" do
+    describe "with an valid, not in use buildingReferenceNumber" do
+      it "returns an empty result set" do
+        response = JSON.parse(assertive_get(
+          "/api/address/search?buildingReferenceNumber=RRN-1111-2222-3333-4444-5555",
+          [200],
+          true,
+          nil,
+          %w[address:search],
+        ).body)
+
+        expect(response["data"]["addresses"].length).to eq 0
+      end
+    end
+  end
+
   context "with an invalid combination of parameters" do
     describe "with an invalid buildingReferenceNumber" do
       it "returns a validation error" do
