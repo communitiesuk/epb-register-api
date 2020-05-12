@@ -346,7 +346,7 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
       end
     end
 
-    context "when saving a (SAP-NI) assessment" do
+    context "when saving a (RdSAP-NI) assessment" do
       let(:scheme_id) { add_scheme_and_get_id }
       let(:doc) { Nokogiri.XML valid_rdsap_ni_xml }
       let(:response) do
