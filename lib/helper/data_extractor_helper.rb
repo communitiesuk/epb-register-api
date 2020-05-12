@@ -24,9 +24,7 @@ module Helper
 
           if settings.key?(:bury_key)
             output_data = []
-            data[key] = data[key].map do |inner_data, inner_key|
-              inner_data, inner_key = inner_key, inner_data
-
+            data[key] = data[key].map do |inner_key, inner_data|
               inner_data = [inner_data] unless inner_data.is_a? Array
 
               inner_data.map do |inner_inner_data|
