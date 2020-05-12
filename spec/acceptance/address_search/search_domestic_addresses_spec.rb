@@ -2,10 +2,23 @@ context "searching for an address" do
   include RSpecAssessorServiceMixin
 
   context "with an invalid combination of parameters" do
+    describe "with an invalid buildingReferenceNumber" do
+      it "returns a validation error" do
+        response = assertive_get(
+          "/api/address/search?buildingReferenceNumber=DOESNOTEXIST",
+          [422],
+          true,
+          nil,
+          %w[address:search],
+        ).body
+
+        expect(response).to include "INVALID_REQUEST"
+      end
+    end
+
     describe "no parameters" do
       it "returns a validation error" do
-      response = JSON.parse(
-        assertive_get(
+        response = assertive_get(
           "/api/address/search",
           [422],
           true,
@@ -13,8 +26,7 @@ context "searching for an address" do
           %w[address:search],
         ).body
 
-        expect(response).to include "INVALID_QUERY"
-        expect(response).to include "Must specify either postcode or street and town or buildingReferenceNumber"
+        expect(response).to include "INVALID_REQUEST"
       end
     end
   end

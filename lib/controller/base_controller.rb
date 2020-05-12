@@ -55,6 +55,10 @@ module Controller
       @xml_helper.convert_to_hash(request.body.read.to_s, schema)
     end
 
+    def params_body(schema = false)
+      @json_helper.convert_to_ruby_hash(params.to_json, schema)
+    end
+
     def request_body(schema = false)
       @json_helper.convert_to_ruby_hash(request.body.read.to_s, schema)
     end
