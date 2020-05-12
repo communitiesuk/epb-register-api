@@ -5,6 +5,12 @@
       "api/schemas/xml/RdSAP-Schema-19.0/RdSAP/Templates/RdSAP-Report.xsd",
     "data_path": "api/schemas/data/RdSAP-Schema-19.0.json"
   },
+  "RdSAP-Schema-NI-19.0": {
+    "report_type": "RdSAP",
+    "schema_path":
+    "api/schemas/xml/RdSAP-Schema-NI-19.0/RdSAP/Templates/RdSAP-Report.xsd",
+    "data_path": "api/schemas/data/RdSAP-Schema-NI-19.0.json"
+  },
   "SAP-Schema-17.1": {
     "report_type": "SAP",
     "schema_path":

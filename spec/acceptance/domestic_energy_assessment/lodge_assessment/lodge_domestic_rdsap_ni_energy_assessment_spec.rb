@@ -31,15 +31,15 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
     }
   end
 
-  let(:valid_rdsap_xml) do
-    File.read File.join Dir.pwd, "api/schemas/xml/examples/RdSAP-19.01.xml"
+  let(:valid_rdsap_ni_xml) do
+    File.read File.join Dir.pwd, "api/schemas/xml/examples/RdSAP-NI-19.01.xml"
   end
 
   context "when lodging a domestic energy assessment (post)" do
     it "rejects an assessment with a schema that does not exist" do
       lodge_assessment(
         assessment_id: "0000-0000-0000-0000-0000",
-        assessment_body: valid_rdsap_xml,
+        assessment_body: valid_rdsap_ni_xml,
         accepted_responses: [400],
         schema_name: "MakeupSAP-19.0",
       )
@@ -49,8 +49,9 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
       it "returns status 400" do
         lodge_assessment(
           assessment_id: "0000-0000-0000-0000-0000",
-          assessment_body: valid_rdsap_xml,
+          assessment_body: valid_rdsap_ni_xml,
           accepted_responses: [400],
+          schema_name: "RdSAP-Schema-NI-19.0",
         )
       end
 
@@ -59,10 +60,10 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
           JSON.parse(
             lodge_assessment(
               assessment_id: "0000-0000-0000-0000-0000",
-              assessment_body: valid_rdsap_xml,
+              assessment_body: valid_rdsap_ni_xml,
               accepted_responses: [400],
-            )
-              .body,
+              schema_name: "RdSAP-Schema-NI-19.0",
+            ).body,
           )
 
         expect(response["errors"][0]["title"]).to eq(
@@ -77,29 +78,31 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
           scheme_id = add_scheme_and_get_id
           add_assessor(
             scheme_id,
-            "Membership-Number0",
+            "TEST000000",
             inactive_assessor_request_body,
           )
 
           lodge_assessment(
             assessment_id: "0000-0000-0000-0000-0000",
-            assessment_body: valid_rdsap_xml,
+            assessment_body: valid_rdsap_ni_xml,
             accepted_responses: [400],
             auth_data: { scheme_ids: [scheme_id] },
+            schema_name: "RdSAP-Schema-NI-19.0",
           )
         end
 
         it "returns status 400 with the correct error response" do
           scheme_id = add_scheme_and_get_id
-          add_assessor(scheme_id, "Membership-Number0", inactive_assessor_request_body)
+          add_assessor(scheme_id, "TEST000000", inactive_assessor_request_body)
 
           response =
             JSON.parse(
               lodge_assessment(
                 assessment_id: "0000-0000-0000-0000-0000",
-                assessment_body: valid_rdsap_xml,
+                assessment_body: valid_rdsap_ni_xml,
                 accepted_responses: [400],
                 auth_data: { scheme_ids: [scheme_id] },
+                schema_name: "RdSAP-Schema-NI-19.0",
               ).body,
             )
 
@@ -114,15 +117,16 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
           scheme_id = add_scheme_and_get_id
           add_assessor(
             scheme_id,
-            "Membership-Number0",
+            "TEST000000",
             inactive_assessor_request_body,
           )
 
           lodge_assessment(
             assessment_id: "0000-0000-0000-0000-0000",
-            assessment_body: valid_rdsap_xml,
+            assessment_body: valid_rdsap_ni_xml,
             accepted_responses: [400],
             auth_data: { scheme_ids: [scheme_id] },
+            schema_name: "RdSAP-Schema-NI-19.0",
           )
         end
 
@@ -130,7 +134,7 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
           scheme_id = add_scheme_and_get_id
           add_assessor(
             scheme_id,
-            "Membership-Number0",
+            "TEST000000",
             inactive_assessor_request_body,
           )
 
@@ -138,11 +142,11 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
             JSON.parse(
               lodge_assessment(
                 assessment_id: "0000-0000-0000-0000-0000",
-                assessment_body: valid_rdsap_xml,
+                assessment_body: valid_rdsap_ni_xml,
                 accepted_responses: [400],
                 auth_data: { scheme_ids: [scheme_id] },
-              )
-                .body,
+                schema_name: "RdSAP-Schema-NI-19.0",
+              ).body,
             )
 
           expect(response["errors"][0]["title"]).to eq(
@@ -173,39 +177,42 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
 
     it "returns 403 if it is being lodged by the wrong scheme" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "Membership-Number0", valid_assessor_request_body)
+      add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
       different_scheme_id = add_scheme_and_get_id("BADSCHEME")
 
       lodge_assessment(
         assessment_id: "123-344",
-        assessment_body: valid_rdsap_xml,
+        assessment_body: valid_rdsap_ni_xml,
         accepted_responses: [403],
         auth_data: { scheme_ids: [different_scheme_id] },
+        schema_name: "RdSAP-Schema-NI-19.0",
       )
     end
 
     it "returns status 201" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "Membership-Number0", valid_assessor_request_body)
+      add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
 
       lodge_assessment(
         assessment_id: "0000-0000-0000-0000-0000",
-        assessment_body: valid_rdsap_xml,
+        assessment_body: valid_rdsap_ni_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
+        schema_name: "RdSAP-Schema-NI-19.0",
       )
     end
 
     it "returns json" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "Membership-Number0", valid_assessor_request_body)
+      add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
 
       response =
         lodge_assessment(
           assessment_id: "0000-0000-0000-0000-0000",
-          assessment_body: valid_rdsap_xml,
+          assessment_body: valid_rdsap_ni_xml,
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] },
+          schema_name: "RdSAP-Schema-NI-19.0",
         )
 
       expect(response.headers["Content-Type"]).to eq("application/json")
@@ -213,17 +220,17 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
 
     it "returns the assessment as a hash" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "Membership-Number0", valid_assessor_request_body)
+      add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
 
       response =
         JSON.parse(
           lodge_assessment(
             assessment_id: "0000-0000-0000-0000-0000",
-            assessment_body: valid_rdsap_xml,
+            assessment_body: valid_rdsap_ni_xml,
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] },
-          )
-            .body,
+            schema_name: "RdSAP-Schema-NI-19.0",
+          ).body,
           symbolize_names: true,
         )
 
@@ -232,17 +239,17 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
 
     it "returns the assessment with the correct keys" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "Membership-Number0", valid_assessor_request_body)
+      add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
 
       response =
         JSON.parse(
           lodge_assessment(
             assessment_id: "0000-0000-0000-0000-0000",
-            assessment_body: valid_rdsap_xml,
+            assessment_body: valid_rdsap_ni_xml,
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] },
-          )
-            .body,
+            schema_name: "RdSAP-Schema-NI-19.0",
+          ).body,
           symbolize_names: true,
         )
 
@@ -281,26 +288,26 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
 
     it "returns the correct scheme assessor id" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "Membership-Number0", valid_assessor_request_body)
+      add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
 
       response =
         JSON.parse(
           lodge_assessment(
             assessment_id: "0000-0000-0000-0000-0000",
-            assessment_body: valid_rdsap_xml,
+            assessment_body: valid_rdsap_ni_xml,
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] },
-          )
-            .body,
+            schema_name: "RdSAP-Schema-NI-19.0",
+          ).body,
           symbolize_names: true,
         )
 
-      expect(response.dig(:data, :schemeAssessorId)).to eq("Membership-Number0")
+      expect(response.dig(:data, :schemeAssessorId)).to eq("TEST000000")
     end
 
     context "when schema is not supported" do
       let(:scheme_id) { add_scheme_and_get_id }
-      let(:doc) { Nokogiri.XML valid_rdsap_xml }
+      let(:doc) { Nokogiri.XML valid_rdsap_ni_xml }
 
       before do
         add_assessor(scheme_id, "TEST123456", valid_assessor_request_body)
@@ -308,7 +315,7 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
         assessment_id = doc.at("RRN")
         assessment_id.children = "1234-1234-1234-1234-1234"
 
-        scheme_assessor_id = doc.at("Identification-Number")
+        scheme_assessor_id = doc.at("Certificate-Number")
         scheme_assessor_id.children = "TEST123456"
       end
 
@@ -339,9 +346,9 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
       end
     end
 
-    context "when saving an (RdSAP) assessment" do
+    context "when saving a (SAP-NI) assessment" do
       let(:scheme_id) { add_scheme_and_get_id }
-      let(:doc) { Nokogiri.XML valid_rdsap_xml }
+      let(:doc) { Nokogiri.XML valid_rdsap_ni_xml }
       let(:response) do
         JSON.parse(fetch_assessment("1234-1234-1234-1234-1234").body)
       end
@@ -352,37 +359,8 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
         assessment_id = doc.at("RRN")
         assessment_id.children = "1234-1234-1234-1234-1234"
 
-        scheme_assessor_id = doc.at("Membership-Number")
+        scheme_assessor_id = doc.at("Certificate-Number")
         scheme_assessor_id.children = "TEST123456"
-      end
-
-      context "when an assessment id does not match" do
-        it "returns status 422" do
-          lodge_assessment(
-            assessment_id: "123-456",
-            assessment_body: doc.to_xml,
-            accepted_responses: [422],
-            auth_data: { scheme_ids: [scheme_id] },
-          )
-        end
-      end
-
-      context "when an assessment already exists with the same assessment id" do
-        it "returns status 409" do
-          lodge_assessment(
-            assessment_id: "1234-1234-1234-1234-1234",
-            assessment_body: doc.to_xml,
-            accepted_responses: [201],
-            auth_data: { scheme_ids: [scheme_id] },
-          )
-
-          lodge_assessment(
-            assessment_id: "1234-1234-1234-1234-1234",
-            assessment_body: doc.to_xml,
-            accepted_responses: [409],
-            auth_data: { scheme_ids: [scheme_id] },
-          )
-        end
       end
 
       it "returns the data that was lodged" do
@@ -391,6 +369,7 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
           assessment_body: doc.to_xml,
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] },
+          schema_name: "RdSAP-Schema-NI-19.0",
         )
 
         expected_response = {
@@ -428,7 +407,6 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
           "currentCarbonEmission" => 2.4,
           "currentEnergyEfficiencyBand" => "e",
           "currentEnergyEfficiencyRating" => 50,
-          "optOut" => false,
           "dateOfAssessment" => "2006-05-04",
           "dateOfExpiry" => "2016-05-04",
           "dateRegistered" => "2006-05-04",
@@ -440,6 +418,7 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
             "impactOfLoftInsulation" => -8,
             "impactOfSolidWallInsulation" => -16,
           },
+          "optOut" => false,
           "postcode" => "A0 0AA",
           "potentialCarbonEmission" => 1.4,
           "potentialEnergyEfficiencyBand" => "e",
@@ -472,47 +451,15 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
               "typicalSaving" => "0.1",
             },
           ],
-          "totalFloorArea" => 0.0,
+          "totalFloorArea" => 10.0,
           "town" => "Post-Town1",
           "typeOfAssessment" => "RdSAP",
           "propertySummary" => [],
           "relatedPartyDisclosureNumber" => nil,
-          "relatedPartyDisclosureText" => "Related-Party-Disclosure-Text0",
+          "relatedPartyDisclosureText" => nil,
         }
 
         expect(response["data"]).to eq(expected_response)
-      end
-
-      it "can return the correct second address line of the property" do
-        address_line_one = doc.search("Address-Line-1")[1]
-        address_line_two = Nokogiri::XML::Node.new "Address-Line-2", doc
-        address_line_two.content = "2 test street"
-        address_line_one.add_next_sibling address_line_two
-
-        lodge_assessment(
-          assessment_id: "1234-1234-1234-1234-1234",
-          assessment_body: doc.to_xml,
-          accepted_responses: [201],
-          auth_data: { scheme_ids: [scheme_id] },
-        )
-
-        expect(response["data"]["addressLine2"]).to eq("2 test street")
-      end
-
-      it "can return the correct third address line of the property" do
-        address_line_one = doc.search("Address-Line-1")[1]
-        address_line_three = Nokogiri::XML::Node.new "Address-Line-3", doc
-        address_line_three.content = "3 test street"
-        address_line_one.add_next_sibling address_line_three
-
-        lodge_assessment(
-          assessment_id: "1234-1234-1234-1234-1234",
-          assessment_body: doc.to_xml,
-          accepted_responses: [201],
-          auth_data: { scheme_ids: [scheme_id] },
-        )
-
-        expect(response["data"]["addressLine3"]).to eq("3 test street")
       end
 
       it "can return the correct address summary of the property" do
@@ -531,34 +478,11 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
           assessment_body: doc.to_xml,
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] },
+          schema_name: "RdSAP-Schema-NI-19.0",
         )
 
         expect(response["data"]["addressSummary"]).to eq(
           "1 Some Street, 2 test street, 3 test street, Post-Town1, A0 0AA",
-        )
-      end
-
-      it "can return multiple suggested improvements" do
-        lodge_assessment(
-          assessment_id: "1234-1234-1234-1234-1234",
-          assessment_body: doc.to_xml,
-          accepted_responses: [201],
-          auth_data: { scheme_ids: [scheme_id] },
-        )
-
-        expect(response["data"]["recommendedImprovements"].count).to eq(2)
-        expect(response["data"]["recommendedImprovements"][1]).to eq(
-          "energyPerformanceRatingImprovement" => 60,
-          "environmentalImpactRatingImprovement" => 64,
-          "greenDealCategoryCode" => "3",
-          "improvementCategory" => "2",
-          "improvementCode" => "1",
-          "improvementType" => "Z2",
-          "improvementTitle" => nil,
-          "improvementDescription" => nil,
-          "indicativeCost" => "2",
-          "sequence" => 1,
-          "typicalSaving" => "0.1",
         )
       end
 
@@ -569,7 +493,9 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
             assessment_body: doc.to_xml,
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] },
+            schema_name: "RdSAP-Schema-NI-19.0",
           )
+
           expect(response["data"]["addressLine2"]).to eq("")
           expect(response["data"]["addressLine3"]).to eq("")
           expect(response["data"]["addressLine4"]).to eq("")
@@ -579,11 +505,13 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
           doc.at("Impact-Of-Loft-Insulation").remove
           doc.at("Impact-Of-Cavity-Insulation").remove
           doc.at("Impact-Of-Solid-Wall-Insulation").remove
+
           lodge_assessment(
             assessment_id: "1234-1234-1234-1234-1234",
             assessment_body: doc.to_xml,
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] },
+            schema_name: "RdSAP-Schema-NI-19.0",
           )
 
           expect(
@@ -599,11 +527,13 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
 
         it "can return an empty list of suggested improvements" do
           doc.at("Suggested-Improvements").remove
+
           lodge_assessment(
             assessment_id: "1234-1234-1234-1234-1234",
             assessment_body: doc.to_xml,
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] },
+            schema_name: "RdSAP-Schema-NI-19.0",
           )
 
           expect(response["data"]["recommendedImprovements"]).to eq([])
@@ -616,11 +546,11 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
         scheme_id = add_scheme_and_get_id
         add_assessor(
           scheme_id,
-          "Membership-Number0",
+          "TEST000000",
           valid_assessor_request_body,
         )
 
-        doc = Nokogiri.XML valid_rdsap_xml
+        doc = Nokogiri.XML valid_rdsap_ni_xml
 
         scheme_assessor_id = doc.at("Address")
         scheme_assessor_id.children = ""
@@ -629,6 +559,7 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
           assessment_id: "0000-0000-0000-0000-0000",
           assessment_body: doc.to_xml,
           accepted_responses: [400],
+          schema_name: "RdSAP-Schema-NI-19.0",
         )
       end
 
@@ -636,11 +567,11 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
         scheme_id = add_scheme_and_get_id
         add_assessor(
           scheme_id,
-          "Membership-Number0",
+          "TEST000000",
           valid_assessor_request_body,
         )
 
-        doc = Nokogiri.XML valid_rdsap_xml
+        doc = Nokogiri.XML valid_rdsap_ni_xml
 
         scheme_assessor_id = doc.at("Address")
         scheme_assessor_id.children = "<Postcode>invalid</Postcode>"
@@ -651,8 +582,8 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
               assessment_id: "0000-0000-0000-0000-0000",
               assessment_body: doc.to_xml,
               accepted_responses: [400],
-            )
-              .body,
+              schema_name: "RdSAP-Schema-NI-19.0",
+            ).body,
           )
 
         expect(
@@ -664,11 +595,11 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
         scheme_id = add_scheme_and_get_id
         add_assessor(
           scheme_id,
-          "Membership-Number0",
+          "TEST000000",
           valid_assessor_request_body,
         )
 
-        xml = valid_rdsap_xml
+        xml = valid_rdsap_ni_xml
 
         xml = xml.gsub("<Energy-Assessment>", "<Energy-Assessment")
 
@@ -678,8 +609,8 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
               assessment_id: "0000-0000-0000-0000-0000",
               assessment_body: xml,
               accepted_responses: [400],
-            )
-              .body,
+              schema_name: "RdSAP-Schema-NI-19.0",
+            ).body,
           )
 
         expect(
