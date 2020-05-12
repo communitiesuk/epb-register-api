@@ -475,7 +475,7 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
           "totalFloorArea" => 0.0,
           "town" => "Post-Town1",
           "typeOfAssessment" => "RdSAP",
-          "propertySummary" => [],
+          "propertySummary" => [{ "description" => "Description0", "energyEfficiencyRating" => "0", "environmentalEfficiencyRating" => "0", "name" => "Wall" }, { "description" => "Description1", "energyEfficiencyRating" => "0", "environmentalEfficiencyRating" => "0", "name" => "Wall" }, { "description" => "Description2", "energyEfficiencyRating" => "0", "environmentalEfficiencyRating" => "0", "name" => "Roof" }, { "description" => "Description3", "energyEfficiencyRating" => "0", "environmentalEfficiencyRating" => "0", "name" => "Roof" }, { "description" => "Description4", "energyEfficiencyRating" => "0", "environmentalEfficiencyRating" => "0", "name" => "Floor" }, { "description" => "Description5", "energyEfficiencyRating" => "0", "environmentalEfficiencyRating" => "0", "name" => "Floor" }, { "description" => "Description6", "energyEfficiencyRating" => "0", "environmentalEfficiencyRating" => "0", "name" => "Window" }, { "description" => "Description7", "energyEfficiencyRating" => "0", "environmentalEfficiencyRating" => "0", "name" => "Main_Heating" }, { "description" => "Description8", "energyEfficiencyRating" => "0", "environmentalEfficiencyRating" => "0", "name" => "Main_Heating" }, { "description" => "Description9", "energyEfficiencyRating" => "0", "environmentalEfficiencyRating" => "0", "name" => "Main_Heating_Controls" }, { "description" => "Description10", "energyEfficiencyRating" => "0", "environmentalEfficiencyRating" => "0", "name" => "Main_Heating_Controls" }, { "description" => "Description11", "energyEfficiencyRating" => "0", "environmentalEfficiencyRating" => "0", "name" => "Hot_Water" }, { "description" => "Description12", "energyEfficiencyRating" => "0", "environmentalEfficiencyRating" => "0", "name" => "Lighting" }, { "description" => "Description13", "energyEfficiencyRating" => "0", "environmentalEfficiencyRating" => "0", "name" => "Secondary_Heating" }],
           "relatedPartyDisclosureNumber" => nil,
           "relatedPartyDisclosureText" => "Related-Party-Disclosure-Text0",
         }
@@ -559,6 +559,23 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
           "indicativeCost" => "2",
           "sequence" => 1,
           "typicalSaving" => "0.1",
+        )
+      end
+
+      it "can return multiple property summaries" do
+        lodge_assessment(
+          assessment_id: "1234-1234-1234-1234-1234",
+          assessment_body: doc.to_xml,
+          accepted_responses: [201],
+          auth_data: { scheme_ids: [scheme_id] },
+        )
+
+        expect(response["data"]["propertySummary"].count).to eq(14)
+        expect(response["data"]["propertySummary"][0]).to eq(
+          "name" => "Wall",
+          "description" => "Description0",
+          "energyEfficiencyRating" => "0",
+          "environmentalEfficiencyRating" => "0",
         )
       end
 

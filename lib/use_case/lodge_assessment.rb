@@ -87,6 +87,7 @@ module UseCase
           recommended_improvements: data[:improvements],
           related_party_disclosure_number: data[:related_party_disclosure_number],
           related_party_disclosure_text: data[:related_party_disclosure_text],
+          property_summary: data[:property_summary],
         )
 
       validator = Helper::RdsapValidator::ValidateAll.new

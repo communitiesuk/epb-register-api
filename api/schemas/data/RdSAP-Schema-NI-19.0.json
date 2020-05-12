@@ -225,5 +225,15 @@
       "Related_Party_Disclosure",
       "Related_Party_Disclosure_Text"
     ]
+  },
+  "property_summary": {
+    "root": "property",
+    "path": [],
+    "bury_key": "name",
+    "extract": {
+      "description": {"path": ["Description"]},
+      "energy_efficiency_rating": {"path": ["Energy_Efficiency_Rating"]},
+      "environmental_efficiency_rating": {"path": ["Environmental_Efficiency_Rating"]}
+    }
   }
 }
