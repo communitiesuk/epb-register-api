@@ -5,7 +5,7 @@ context "searching for an address" do
     describe "with an valid, not in use buildingReferenceNumber" do
       it "returns an empty result set" do
         response = JSON.parse(assertive_get(
-          "/api/address/search?buildingReferenceNumber=RRN-1111-2222-3333-4444-5555",
+          "/api/search/addresses?buildingReferenceNumber=RRN-1111-2222-3333-4444-5555",
           [200],
           true,
           nil,
@@ -21,7 +21,7 @@ context "searching for an address" do
     describe "with an invalid buildingReferenceNumber" do
       it "returns a validation error" do
         response = assertive_get(
-          "/api/address/search?buildingReferenceNumber=DOESNOTEXIST",
+          "/api/search/addresses?buildingReferenceNumber=DOESNOTEXIST",
           [422],
           true,
           nil,
@@ -35,7 +35,7 @@ context "searching for an address" do
     describe "no parameters" do
       it "returns a validation error" do
         response = assertive_get(
-          "/api/address/search",
+          "/api/search/addresses",
           [422],
           true,
           nil,
@@ -50,13 +50,13 @@ context "searching for an address" do
   context "with invalid auth details" do
     describe "with no authentication token" do
       it "returns a 401" do
-        assertive_get("/api/address/search", [401], false, nil, nil)
+        assertive_get("/api/search/addresses", [401], false, nil, nil)
       end
     end
 
     describe "without the scope address:search" do
       it "returns a 403" do
-        assertive_get("/api/address/search", [403], true, nil, nil)
+        assertive_get("/api/search/addresses", [403], true, nil, nil)
       end
     end
   end

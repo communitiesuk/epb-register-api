@@ -11,11 +11,11 @@ module Controller
       },
     }.freeze
 
-    get "/api/address/search", jwt_auth: %w[address:search] do
+    get "/api/search/addresses", jwt_auth: %w[address:search] do
       filters = params_body SEARCH_SCHEMA
 
-      results =
-        @container.get_object(:search_addresses_by_building_reference_number_use_case)
+      results = @container
+          .get_object(:search_addresses_by_building_reference_number_use_case)
           .execute(filters)
 
       json_api_response code: 200,
