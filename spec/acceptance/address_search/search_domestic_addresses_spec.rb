@@ -4,13 +4,17 @@ context "searching for an address" do
   context "with an invalid combination of parameters" do
     describe "no parameters" do
       it "returns a validation error" do
+      response = JSON.parse(
         assertive_get(
           "/api/address/search",
           [422],
           true,
           nil,
           %w[address:search],
-        )
+        ).body
+
+        expect(response).to include "INVALID_QUERY"
+        expect(response).to include "Must specify either postcode or street and town or buildingReferenceNumber"
       end
     end
   end
