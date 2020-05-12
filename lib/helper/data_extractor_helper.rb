@@ -21,9 +21,29 @@ module Helper
           unless data[key]
             data[key] = []
           end
-          data[key] = [data[key]] unless data[key].is_a? Array
-          data[key] = data[key].map do |inner_data|
-            fetch_data(inner_data, settings[:extract])
+
+          if settings.key?(:bury_key)
+            output_data = []
+            data[key] = data[key].map do |inner_data, inner_key|
+              inner_data, inner_key = inner_key, inner_data
+
+              inner_data = [inner_data] unless inner_data.is_a? Array
+
+              inner_data.map do |inner_inner_data|
+                inner_inner_data = fetch_data(inner_inner_data, settings[:extract])
+                inner_inner_data[settings[:bury_key]] = inner_key.to_s
+
+                output_data.push(inner_inner_data)
+              end
+            end
+
+            data[key] = output_data
+          else
+            data[key] = [data[key]] unless data[key].is_a? Array
+
+            data[key] = data[key].map do |inner_data, _inner_key|
+              fetch_data(inner_data, settings[:extract])
+            end
           end
         end
       end
