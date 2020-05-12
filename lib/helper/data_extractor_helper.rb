@@ -15,7 +15,7 @@ module Helper
 
         path += settings[:path].map(&:to_sym)
 
-        data[key] = raw_data.dig(*path)
+        data[key] = raw_data.dig(*path) if raw_data.is_a?(Hash) && raw_data.has_key?(path[0])
 
         if settings.key?(:extract)
           unless data[key]
@@ -29,7 +29,10 @@ module Helper
 
               inner_data.map do |inner_inner_data|
                 inner_inner_data = fetch_data(inner_inner_data, settings[:extract])
-                inner_inner_data[settings[:bury_key]] = inner_key.to_s
+
+                next if inner_inner_data == {}
+
+                inner_inner_data[settings[:bury_key].to_sym] = inner_key.to_s
 
                 output_data.push(inner_inner_data)
               end
