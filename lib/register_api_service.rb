@@ -23,7 +23,7 @@ class RegisterApiService < Controller::BaseController
   end
 
   use Controller::AssessorController
-  use Controller::AddressController
+  use Controller::AddressSearchController
   use Controller::SchemesController
   use Controller::EnergyAssessmentController
 end
