@@ -47,6 +47,50 @@ task :generate_certificate do
                                    "Financial interest in the property", "Owner or Director of the organisation dealing with the property transaction",
                                    "Employed by the professional dealing with the property transaction",
                                    "Relative of the professional dealing with the property transaction", nil, nil, nil, nil, nil, nil]
+  property_summary = [
+    [
+      {
+        "name": "Walls",
+        "description": "Brick wall, no insulation",
+        "energy_efficiency_rating": "4",
+        "environmental_efficiency_rating": "0",
+      },
+      {
+        "name": "Secondary heating",
+        "description": "None",
+        "energy_efficiency_rating": "3",
+        "environmental_efficiency_rating": "0",
+      },
+    ].to_json,
+    [
+      {
+        "name": "Main heating",
+        "description": "Room heaters, electric",
+        "energy_efficiency_rating": "3",
+        "environmental_efficiency_rating": "0",
+      },
+      {
+        "name": "Hot water",
+        "description": "Gas Boiler",
+        "energy_efficiency_rating": "1",
+        "environmental_efficiency_rating": "0",
+      },
+    ].to_json,
+    [
+      {
+        "name": "Window",
+        "description": "Fully double glazed",
+        "energy_efficiency_rating": "3",
+        "environmental_efficiency_rating": "0",
+      },
+      {
+        "name": "Floor",
+        "description": "Suspended, no insulation (assumed)",
+        "energy_efficiency_rating": "0",
+        "environmental_efficiency_rating": "0",
+      },
+    ].to_json,
+  ]
 
   result = ActiveRecord::Base.connection.execute("SELECT * FROM assessors ORDER BY random() LIMIT 2000")
 
@@ -77,6 +121,7 @@ task :generate_certificate do
     assessment_id = "4321-8765-0987-7654-" + number.to_s.rjust(4, "0")
     internal_related_party_disclosure_number = related_party_disclosure_number.sample
     internal_related_party_disclosure_text = related_party_disclosure_text.sample
+    internal_property_summary = property_summary.sample
 
     unless internal_related_party_disclosure_text == nil
       internal_related_party_disclosure_number = "NULL"
@@ -111,7 +156,8 @@ task :generate_certificate do
             impact_of_solid_wall_insulation,
             scheme_assessor_id,
             related_party_disclosure_number,
-            related_party_disclosure_text
+            related_party_disclosure_text,
+            property_summary
           )
         VALUES(
           '#{assessment_id}',
@@ -139,7 +185,8 @@ task :generate_certificate do
           '#{internal_impact_of_solid_wall_insulation}',
           '#{scheme_assessor_id}',
           #{internal_related_party_disclosure_number},
-          '#{internal_related_party_disclosure_text}'
+          '#{internal_related_party_disclosure_text}',
+          '#{internal_property_summary}'
         )"
 
     ActiveRecord::Base.connection.execute("DELETE FROM domestic_epc_energy_improvements WHERE assessment_id = '#{assessment_id}'")
