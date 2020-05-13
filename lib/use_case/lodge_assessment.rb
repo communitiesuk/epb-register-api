@@ -7,8 +7,8 @@ module UseCase
     class DuplicateAssessmentIdException < StandardError; end
     class AssessmentRuleException < StandardError; end
 
-    def initialize(domestic_energy_assessments_gateway, assessors_gateway)
-      @domestic_energy_assessments_gateway = domestic_energy_assessments_gateway
+    def initialize(assessments_gateway, assessors_gateway)
+      @assessments_gateway = assessments_gateway
       @assessors_gateway = assessors_gateway
     end
 
@@ -19,7 +19,7 @@ module UseCase
         raise AssessmentIdMismatchException
       end
 
-      if @domestic_energy_assessments_gateway.fetch assessment_id
+      if @assessments_gateway.fetch assessment_id
         raise DuplicateAssessmentIdException
       end
 
@@ -97,7 +97,7 @@ module UseCase
 
       raise AssessmentRuleException, errors.to_json unless errors.empty?
 
-      @domestic_energy_assessments_gateway.insert_or_update assessment
+      @assessments_gateway.insert_or_update assessment
 
       assessment
     end

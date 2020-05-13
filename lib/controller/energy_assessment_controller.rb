@@ -169,12 +169,12 @@ module Controller
         jwt_auth: %w[assessment:fetch] do
       assessment_id = params[:assessment_id]
       result =
-        @container.get_object(:fetch_domestic_energy_assessment_use_case)
+        @container.get_object(:fetch_assessment_use_case)
           .execute(assessment_id)
       json_api_response(code: 200, data: result)
     rescue StandardError => e
       case e
-      when UseCase::FetchDomesticEnergyAssessment::NotFoundException
+      when UseCase::FetchAssessment::NotFoundException
         not_found_error("Assessment not found")
       else
         server_error(e)

@@ -1,4 +1,4 @@
-class DomesticEnergyAssessmentsGatewayStub
+class AssessmentsGatewayStub
   def initialize(result)
     @result = result
   end

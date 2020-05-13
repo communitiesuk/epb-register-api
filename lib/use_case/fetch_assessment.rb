@@ -1,14 +1,14 @@
 module UseCase
-  class FetchDomesticEnergyAssessment
+  class FetchAssessment
     class NotFoundException < StandardError; end
 
-    def initialize(domestic_energy_assessments_gateway, assessors_gateway)
-      @domestic_energy_assessments_gateway = domestic_energy_assessments_gateway
+    def initialize(assessments_gateway, assessors_gateway)
+      @assessments_gateway = assessments_gateway
       @assessors_gateway = assessors_gateway
     end
 
     def execute(assessment_id)
-      assessment = @domestic_energy_assessments_gateway.fetch(assessment_id)
+      assessment = @assessments_gateway.fetch(assessment_id)
 
       raise NotFoundException unless assessment
 

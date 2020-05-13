@@ -1,12 +1,12 @@
 describe UseCase::FindAssessmentsByAssessmentId do
   context "when finding an assessment" do
     let(:find_assessments_without_stub_data) do
-      described_class.new(DomesticEnergyAssessmentsGatewayStub.new([]))
+      described_class.new(AssessmentsGatewayStub.new([]))
     end
 
     let(:find_assessments_with_stub_data) do
       described_class.new(
-        DomesticEnergyAssessmentsGatewayStub.new(
+        AssessmentsGatewayStub.new(
           [
             {
               assessmentId: "123-987",

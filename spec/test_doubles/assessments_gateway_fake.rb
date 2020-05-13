@@ -1,4 +1,4 @@
-class DomesticEnergyAssessmentsGatewayFake
+class AssessmentsGatewayFake
   attr_writer :domestic_energy_assessment
 
   def initialize

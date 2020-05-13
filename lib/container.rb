@@ -26,8 +26,8 @@ class Container
         assessments_gateway,
         assessors_gateway,
       )
-    fetch_domestic_energy_assessment_use_case =
-      UseCase::FetchDomesticEnergyAssessment.new(
+    fetch_assessment_use_case =
+      UseCase::FetchAssessment.new(
         assessments_gateway,
         assessors_gateway,
       )
@@ -86,8 +86,8 @@ class Container
       fetch_assessor_use_case: fetch_assessor_use_case,
       migrate_domestic_energy_assessment_use_case:
         migrate_domestic_energy_assessment_use_case,
-      fetch_domestic_energy_assessment_use_case:
-        fetch_domestic_energy_assessment_use_case,
+      fetch_assessment_use_case:
+        fetch_assessment_use_case,
       find_assessors_by_postcode_use_case: find_assessors_by_postcode_use_case,
       find_assessors_by_name_use_case: find_assessors_by_name_use_case,
       fetch_assessor_list_use_case: fetch_assessor_list_use_case,

@@ -1,4 +1,4 @@
-class DomesticEnergyAssessmentsGatewaySpy
+class AssessmentsGatewaySpy
   attr_reader :assessment_saved, :assessment_id_saved
 
   def insert_or_update(assessment_id, assessment_body)

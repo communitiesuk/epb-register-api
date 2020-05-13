@@ -1,6 +1,6 @@
-describe UseCase::FetchDomesticEnergyAssessment do
+describe UseCase::FetchAssessment do
   let(:domestic_energy_assessment_gateway) do
-    DomesticEnergyAssessmentsGatewayFake.new
+    AssessmentsGatewayFake.new
   end
 
   let(:assessors_gateway) { AssessorGatewayStub.new }
@@ -14,7 +14,7 @@ describe UseCase::FetchDomesticEnergyAssessment do
       expect {
         fetch_domestic_energy_assessment.execute("123-456")
       }.to raise_exception(
-        UseCase::FetchDomesticEnergyAssessment::NotFoundException,
+        described_class::NotFoundException,
       )
     end
   end
