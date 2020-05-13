@@ -41,6 +41,9 @@ describe Helper::DataExtractorHelper do
           bury_key: :key,
           extract: { full_name: { path: %i[name] } },
         },
+        default_value_extraction: {
+          path: %i[something_that_doesnt_exist], default: []
+        },
       }
     end
 
@@ -82,6 +85,10 @@ describe Helper::DataExtractorHelper do
           { key: "cool", full_name: "Barry Darlow" },
         ],
       )
+    end
+
+    it "will extract a key and add a default value if it is missing" do
+      expect(result[:default_value_extraction]).to eq([])
     end
   end
 end
