@@ -14,7 +14,7 @@ module UseCase
       assessor = @assessors_gateway.fetch(assessor_id)
 
       assessment =
-        Domain::DomesticEnergyAssessment.new(
+        Domain::Assessment.new(
           date_of_assessment: assessment_data[:date_of_assessment],
           date_registered: assessment_data[:date_registered],
           dwelling_type: assessment_data[:dwelling_type],

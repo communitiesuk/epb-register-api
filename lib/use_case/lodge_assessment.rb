@@ -56,7 +56,7 @@ module UseCase
         end
 
       assessment =
-        Domain::DomesticEnergyAssessment.new(
+        Domain::Assessment.new(
           date_of_assessment: data[:inspection_date],
           date_registered: data[:registration_date],
           dwelling_type: data[:dwelling_type],
