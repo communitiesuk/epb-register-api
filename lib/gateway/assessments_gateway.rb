@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 module Gateway
-  class DomesticEnergyAssessmentsGateway
+  class AssessmentsGateway
     class Assessment < ActiveRecord::Base
       def to_hash
-        Gateway::DomesticEnergyAssessmentsGateway.new.to_hash(self)
+        Gateway::AssessmentsGateway.new.to_hash(self)
       end
     end
 

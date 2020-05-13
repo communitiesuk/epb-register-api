@@ -8,8 +8,8 @@ class Container
 
     address_search_gateway = Gateway::AddressSearchGateway.new
 
-    domestic_energy_assessments_gateway =
-      Gateway::DomesticEnergyAssessmentsGateway.new
+    assessments_gateway =
+      Gateway::AssessmentsGateway.new
 
     postcode_gateway = Gateway::PostcodesGateway.new
 
@@ -23,12 +23,12 @@ class Container
 
     migrate_domestic_energy_assessment_use_case =
       UseCase::MigrateDomesticEnergyAssessment.new(
-        domestic_energy_assessments_gateway,
+        assessments_gateway,
         assessors_gateway,
       )
     fetch_domestic_energy_assessment_use_case =
       UseCase::FetchDomesticEnergyAssessment.new(
-        domestic_energy_assessments_gateway,
+        assessments_gateway,
         assessors_gateway,
       )
 
@@ -43,15 +43,15 @@ class Container
 
     find_assessments_by_postcode_use_case =
       UseCase::FindAssessmentsByPostcode.new(
-        domestic_energy_assessments_gateway,
+        assessments_gateway,
       )
     find_assessments_by_assessment_id_use_case =
       UseCase::FindAssessmentsByAssessmentId.new(
-        domestic_energy_assessments_gateway,
+        assessments_gateway,
       )
     find_assessments_by_street_name_and_town_use_case =
       UseCase::FindAssessmentsByStreetNameAndTown.new(
-        domestic_energy_assessments_gateway,
+        assessments_gateway,
       )
     fetch_assessor_list_use_case =
       UseCase::FetchAssessorList.new(assessors_gateway, schemes_gateway)
@@ -60,7 +60,7 @@ class Container
 
     lodge_assessment_use_case =
       UseCase::LodgeAssessment.new(
-        domestic_energy_assessments_gateway,
+        assessments_gateway,
         assessors_gateway,
       )
 
