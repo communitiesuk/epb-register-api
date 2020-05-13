@@ -5,7 +5,8 @@ module UseCase
     end
 
     def execute(building_reference_number:)
-      @address_search_gateway.search_by_rrn building_reference_number
+      rrn = building_reference_number[4..-1]
+      @address_search_gateway.search_by_rrn rrn
     end
   end
 end
