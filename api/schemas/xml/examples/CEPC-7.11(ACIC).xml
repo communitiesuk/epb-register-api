@@ -1,34 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Report xmlns:CEPC="EPBR-CEPC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <CEPC:Report-Header>
-        <CEPC:RRN>0000-0000-0000-0000-0000</CEPC:RRN>
-        <CEPC:Issue-Date>2006-05-04</CEPC:Issue-Date>
-        <CEPC:Report-Type>1</CEPC:Report-Type>
-        <CEPC:Valid-Until>2006-05-04</CEPC:Valid-Until>
-        <CEPC:Inspection-Date>2006-05-04</CEPC:Inspection-Date>
-        <CEPC:Registration-Date>2006-05-04</CEPC:Registration-Date>
-        <CEPC:Status>cancelled</CEPC:Status>
-        <CEPC:Language-Code>1</CEPC:Language-Code>
-        <CEPC:Energy-Assessor>
-            <CEPC:Certificate-Number>////000000</CEPC:Certificate-Number>
-            <CEPC:Name>Name1</CEPC:Name>
-            <CEPC:Accreditation-Scheme-Name>Accreditation-Scheme-Name1</CEPC:Accreditation-Scheme-Name>
-        </CEPC:Energy-Assessor>
-        <CEPC:Property-Details>
-            <CEPC:UPRN>UPRN-000000000000</CEPC:UPRN>
-            <CEPC:Property-Address>
-                <CEPC:Address-Line-1>2 Lonely Street</CEPC:Address-Line-1>
-                <CEPC:Post-Town>Post-Town1</CEPC:Post-Town>
-                <CEPC:Postcode>A0 0AA</CEPC:Postcode>
-            </CEPC:Property-Address>
-            <CEPC:Property-Type>Property-Type1</CEPC:Property-Type>
-        </CEPC:Property-Details>
-        <CEPC:Calculation-Details>
-            <CEPC:Calculation-Tool>Calculation-Tool1</CEPC:Calculation-Tool>
-        </CEPC:Calculation-Details>
-    </CEPC:Report-Header>
-    <CEPC:Formatted-Report>ZGVmYXVsdA==</CEPC:Formatted-Report>
-    <CEPC:Air-Conditioning-Inspection-Certificate>
+<Report xmlns="https://epbr.digital.communities.gov.uk/xsd/cepc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/cepc  ../CEPC-7.1/Reports/CEPC-Reports.xsd">
+    <Report-Header>
+        <RRN>0000-0000-0000-0000-0000</RRN>
+        <Issue-Date>2006-05-04</Issue-Date>
+        <Report-Type>1</Report-Type>
+        <Valid-Until>2006-05-04</Valid-Until>
+        <Inspection-Date>2006-05-04</Inspection-Date>
+        <Registration-Date>2006-05-04</Registration-Date>
+        <Status>cancelled</Status>
+        <Language-Code>1</Language-Code>
+        <Energy-Assessor>
+            <Certificate-Number>JASE000000</Certificate-Number>
+            <Name>Name1</Name>
+            <Accreditation-Scheme-Name>Accreditation-Scheme-Name1</Accreditation-Scheme-Name>
+        </Energy-Assessor>
+        <Property-Details>
+            <UPRN>UPRN-000000000000</UPRN>
+            <Property-Address>
+                <Address-Line-1>2 Lonely Street</Address-Line-1>
+                <Post-Town>Post-Town1</Post-Town>
+                <Postcode>A0 0AA</Postcode>
+            </Property-Address>
+            <Property-Type>Property-Type1</Property-Type>
+        </Property-Details>
+        <Calculation-Details>
+            <Calculation-Tool>Calculation-Tool1</Calculation-Tool>
+        </Calculation-Details>
+    </Report-Header>
+    <Formatted-Report>ZGVmYXVsdA==</Formatted-Report>
+    <Air-Conditioning-Inspection-Certificate>
         <Building-Name>Building-Name0</Building-Name>
         <F-Gas-Compliant-Date>00/00/,,00</F-Gas-Compliant-Date>
         <AC-Rated-Output>
@@ -52,5 +53,5 @@
                 <Sub-System-Age>Sub-System-Age1</Sub-System-Age>
             </AC-Sub-System>
         </AC-Sub-Systems>
-    </CEPC:Air-Conditioning-Inspection-Certificate>
+    </Air-Conditioning-Inspection-Certificate>
 </Report>
