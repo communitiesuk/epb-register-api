@@ -1,0 +1,67 @@
+{
+  "header": {
+    "path": ["Report", "Report_Header"]
+  },
+  "assessment_id": {
+    "root": "header",
+    "path": ["RRN"]
+  },
+  "assessor_id": {
+    "root": "header",
+    "path": ["Energy_Assessor", "Certificate_Number"]
+  },
+  "inspection_date": {
+    "root": "header",
+    "path": ["Inspection_Date"]
+  },
+  "date_of_expiry": {
+    "root": "header",
+    "path": ["Valid_Until"]
+  },
+  "registration_date": {
+    "root": "header",
+    "path": ["Registration_Date"]
+  },
+  "date_of_assessment": {
+    "root": "header",
+    "path": ["Issue_Date"]
+  },
+  "property_summary": {
+    "path": ["_"],
+    "default": []
+  },
+  "improvements": {
+    "path": ["_"],
+    "default": []
+  },
+  "type": {
+    "root": "header",
+    "path": ["Report-Type"]
+  },
+
+
+
+
+
+
+  "current_energy_rating": {
+    "path": ["_"],
+    "default": "99"
+  },
+  "potential_energy_rating": {
+    "path": ["_"],
+    "default": "99"
+  },
+  "current_space_heating_demand": {
+    "path": ["_"],
+    "default": "99"
+  },
+  "current_water_heating_demand": {
+    "path": ["_"],
+    "default": "99"
+  },
+  "total_floor_area": {
+    "path": ["_"],
+    "default": "99"
+  }
+}
