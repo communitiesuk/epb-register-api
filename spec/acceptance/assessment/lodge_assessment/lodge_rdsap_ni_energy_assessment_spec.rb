@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-describe "Acceptance::LodgeDomesticEnergyAssessment" do
+describe "Acceptance::LodgeRdSAPNIEnergyAssessment" do
   include RSpecAssessorServiceMixin
 
-  let(:sap_valid_assessor_request_body) do
+  let(:valid_assessor_request_body) do
     {
       firstName: "Someone",
       middleNames: "Muddle",
       lastName: "Person",
       dateOfBirth: "1991-02-25",
       searchResultsComparisonPostcode: "",
-      qualifications: { domesticSap: "ACTIVE" },
+      qualifications: { domesticRdSap: "ACTIVE" },
       contactDetails: {
         telephoneNumber: "010199991010101", email: "person@person.com"
       },
@@ -31,15 +31,15 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
     }
   end
 
-  let(:valid_sap_ni_xml) do
-    File.read File.join Dir.pwd, "api/schemas/xml/examples/SAP-NI-17.41.xml"
+  let(:valid_rdsap_ni_xml) do
+    File.read File.join Dir.pwd, "api/schemas/xml/examples/RdSAP-NI-19.01.xml"
   end
 
   context "when lodging a domestic energy assessment (post)" do
     it "rejects an assessment with a schema that does not exist" do
       lodge_assessment(
         assessment_id: "0000-0000-0000-0000-0000",
-        assessment_body: valid_sap_ni_xml,
+        assessment_body: valid_rdsap_ni_xml,
         accepted_responses: [400],
         schema_name: "MakeupSAP-19.0",
       )
@@ -49,9 +49,9 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
       it "returns status 400" do
         lodge_assessment(
           assessment_id: "0000-0000-0000-0000-0000",
-          assessment_body: valid_sap_ni_xml,
+          assessment_body: valid_rdsap_ni_xml,
           accepted_responses: [400],
-          schema_name: "SAP-Schema-NI-17.4",
+          schema_name: "RdSAP-Schema-NI-19.0",
         )
       end
 
@@ -60,9 +60,9 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
           JSON.parse(
             lodge_assessment(
               assessment_id: "0000-0000-0000-0000-0000",
-              assessment_body: valid_sap_ni_xml,
+              assessment_body: valid_rdsap_ni_xml,
               accepted_responses: [400],
-              schema_name: "SAP-Schema-NI-17.4",
+              schema_name: "RdSAP-Schema-NI-19.0",
             )
               .body,
           )
@@ -81,10 +81,10 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
 
           lodge_assessment(
             assessment_id: "0000-0000-0000-0000-0000",
-            assessment_body: valid_sap_ni_xml,
+            assessment_body: valid_rdsap_ni_xml,
             accepted_responses: [400],
             auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "SAP-Schema-NI-17.4",
+            schema_name: "RdSAP-Schema-NI-19.0",
           )
         end
 
@@ -96,10 +96,10 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
             JSON.parse(
               lodge_assessment(
                 assessment_id: "0000-0000-0000-0000-0000",
-                assessment_body: valid_sap_ni_xml,
+                assessment_body: valid_rdsap_ni_xml,
                 accepted_responses: [400],
                 auth_data: { scheme_ids: [scheme_id] },
-                schema_name: "SAP-Schema-NI-17.4",
+                schema_name: "RdSAP-Schema-NI-19.0",
               )
                 .body,
             )
@@ -117,10 +117,10 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
 
           lodge_assessment(
             assessment_id: "0000-0000-0000-0000-0000",
-            assessment_body: valid_sap_ni_xml,
+            assessment_body: valid_rdsap_ni_xml,
             accepted_responses: [400],
             auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "SAP-Schema-NI-17.4",
+            schema_name: "RdSAP-Schema-NI-19.0",
           )
         end
 
@@ -132,10 +132,10 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
             JSON.parse(
               lodge_assessment(
                 assessment_id: "0000-0000-0000-0000-0000",
-                assessment_body: valid_sap_ni_xml,
+                assessment_body: valid_rdsap_ni_xml,
                 accepted_responses: [400],
                 auth_data: { scheme_ids: [scheme_id] },
-                schema_name: "SAP-Schema-NI-17.4",
+                schema_name: "RdSAP-Schema-NI-19.0",
               )
                 .body,
             )
@@ -168,42 +168,42 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
 
     it "returns 403 if it is being lodged by the wrong scheme" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "TEST000000", sap_valid_assessor_request_body)
+      add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
       different_scheme_id = add_scheme_and_get_id("BADSCHEME")
 
       lodge_assessment(
         assessment_id: "123-344",
-        assessment_body: valid_sap_ni_xml,
+        assessment_body: valid_rdsap_ni_xml,
         accepted_responses: [403],
         auth_data: { scheme_ids: [different_scheme_id] },
-        schema_name: "SAP-Schema-NI-17.4",
+        schema_name: "RdSAP-Schema-NI-19.0",
       )
     end
 
     it "returns status 201" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "TEST000000", sap_valid_assessor_request_body)
+      add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
 
       lodge_assessment(
         assessment_id: "0000-0000-0000-0000-0000",
-        assessment_body: valid_sap_ni_xml,
+        assessment_body: valid_rdsap_ni_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
-        schema_name: "SAP-Schema-NI-17.4",
+        schema_name: "RdSAP-Schema-NI-19.0",
       )
     end
 
     it "returns json" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "TEST000000", sap_valid_assessor_request_body)
+      add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
 
       response =
         lodge_assessment(
           assessment_id: "0000-0000-0000-0000-0000",
-          assessment_body: valid_sap_ni_xml,
+          assessment_body: valid_rdsap_ni_xml,
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] },
-          schema_name: "SAP-Schema-NI-17.4",
+          schema_name: "RdSAP-Schema-NI-19.0",
         )
 
       expect(response.headers["Content-Type"]).to eq("application/json")
@@ -211,16 +211,16 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
 
     it "returns the assessment as a hash" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "TEST000000", sap_valid_assessor_request_body)
+      add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
 
       response =
         JSON.parse(
           lodge_assessment(
             assessment_id: "0000-0000-0000-0000-0000",
-            assessment_body: valid_sap_ni_xml,
+            assessment_body: valid_rdsap_ni_xml,
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "SAP-Schema-NI-17.4",
+            schema_name: "RdSAP-Schema-NI-19.0",
           )
             .body,
           symbolize_names: true,
@@ -231,16 +231,16 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
 
     it "returns the assessment with the correct keys" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "TEST000000", sap_valid_assessor_request_body)
+      add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
 
       response =
         JSON.parse(
           lodge_assessment(
             assessment_id: "0000-0000-0000-0000-0000",
-            assessment_body: valid_sap_ni_xml,
+            assessment_body: valid_rdsap_ni_xml,
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "SAP-Schema-NI-17.4",
+            schema_name: "RdSAP-Schema-NI-19.0",
           )
             .body,
           symbolize_names: true,
@@ -281,16 +281,16 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
 
     it "returns the correct scheme assessor id" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "TEST000000", sap_valid_assessor_request_body)
+      add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
 
       response =
         JSON.parse(
           lodge_assessment(
             assessment_id: "0000-0000-0000-0000-0000",
-            assessment_body: valid_sap_ni_xml,
+            assessment_body: valid_rdsap_ni_xml,
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "SAP-Schema-NI-17.4",
+            schema_name: "RdSAP-Schema-NI-19.0",
           )
             .body,
           symbolize_names: true,
@@ -301,10 +301,10 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
 
     context "when schema is not supported" do
       let(:scheme_id) { add_scheme_and_get_id }
-      let(:doc) { Nokogiri.XML valid_sap_ni_xml }
+      let(:doc) { Nokogiri.XML valid_rdsap_ni_xml }
 
       before do
-        add_assessor(scheme_id, "TEST123456", sap_valid_assessor_request_body)
+        add_assessor(scheme_id, "TEST123456", valid_assessor_request_body)
 
         assessment_id = doc.at("RRN")
         assessment_id.children = "1234-1234-1234-1234-1234"
@@ -340,15 +340,15 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
       end
     end
 
-    context "when saving a (SAP-NI) assessment" do
+    context "when saving a (RdSAP-NI) assessment" do
       let(:scheme_id) { add_scheme_and_get_id }
-      let(:doc) { Nokogiri.XML valid_sap_ni_xml }
+      let(:doc) { Nokogiri.XML valid_rdsap_ni_xml }
       let(:response) do
         JSON.parse(fetch_assessment("1234-1234-1234-1234-1234").body)
       end
 
       before do
-        add_assessor(scheme_id, "TEST123456", sap_valid_assessor_request_body)
+        add_assessor(scheme_id, "TEST123456", valid_assessor_request_body)
 
         assessment_id = doc.at("RRN")
         assessment_id.children = "1234-1234-1234-1234-1234"
@@ -363,15 +363,15 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
           assessment_body: doc.to_xml,
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] },
-          schema_name: "SAP-Schema-NI-17.4",
+          schema_name: "RdSAP-Schema-NI-19.0",
         )
 
         expected_response = {
-          "addressLine1" => "2 Some Street",
+          "addressLine1" => "1 Some Street",
           "addressLine2" => "",
           "addressLine3" => "",
           "addressLine4" => "",
-          "addressSummary" => "2 Some Street, Post-Town2, A0 0AA",
+          "addressSummary" => "1 Some Street, Post-Town1, A0 0AA",
           "assessmentId" => "1234-1234-1234-1234-1234",
           "assessor" => {
             "contactDetails" => {
@@ -383,8 +383,8 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
             "lastName" => "Person",
             "middleNames" => "Muddle",
             "qualifications" => {
-              "domesticSap" => "ACTIVE",
-              "domesticRdSap" => "INACTIVE",
+              "domesticSap" => "INACTIVE",
+              "domesticRdSap" => "ACTIVE",
               "nonDomesticCc4" => "INACTIVE",
               "nonDomesticSp3" => "INACTIVE",
               "nonDomesticDec" => "INACTIVE",
@@ -408,9 +408,9 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
           "heatDemand" => {
             "currentSpaceHeatingDemand" => 30.0,
             "currentWaterHeatingDemand" => 60.0,
-            "impactOfCavityInsulation" => nil,
-            "impactOfLoftInsulation" => nil,
-            "impactOfSolidWallInsulation" => nil,
+            "impactOfCavityInsulation" => -12,
+            "impactOfLoftInsulation" => -8,
+            "impactOfSolidWallInsulation" => -16,
           },
           "optOut" => false,
           "postcode" => "A0 0AA",
@@ -421,10 +421,10 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
             {
               "energyPerformanceRatingImprovement" => 50,
               "environmentalImpactRatingImprovement" => 50,
-              "greenDealCategoryCode" => nil,
-              "improvementCategory" => "1",
+              "greenDealCategoryCode" => "1",
+              "improvementCategory" => "6",
               "improvementCode" => "5",
-              "improvementType" => "A",
+              "improvementType" => "Z3",
               "improvementTitle" => nil,
               "improvementDescription" => nil,
               "indicativeCost" => "5",
@@ -434,10 +434,10 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
             {
               "energyPerformanceRatingImprovement" => 60,
               "environmentalImpactRatingImprovement" => 64,
-              "greenDealCategoryCode" => nil,
+              "greenDealCategoryCode" => "3",
               "improvementCategory" => "2",
               "improvementCode" => "1",
-              "improvementType" => "B",
+              "improvementType" => "Z2",
               "improvementTitle" => nil,
               "improvementDescription" => nil,
               "indicativeCost" => "2",
@@ -446,89 +446,103 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
             },
           ],
           "totalFloorArea" => 10.0,
-          "town" => "Post-Town2",
-          "typeOfAssessment" => "SAP",
+          "town" => "Post-Town1",
+          "typeOfAssessment" => "RdSAP",
           "propertySummary" => [
             {
+              "description" => "Description0",
               "energyEfficiencyRating" => "0",
               "environmentalEfficiencyRating" => "0",
-              "name" => "Walls",
+              "name" => "Wall",
             },
             {
+              "description" => "Description1",
               "energyEfficiencyRating" => "0",
               "environmentalEfficiencyRating" => "0",
-              "name" => "Walls",
+              "name" => "Wall",
             },
             {
+              "description" => "Description2",
               "energyEfficiencyRating" => "0",
               "environmentalEfficiencyRating" => "0",
               "name" => "Roof",
             },
             {
+              "description" => "Description3",
               "energyEfficiencyRating" => "0",
               "environmentalEfficiencyRating" => "0",
               "name" => "Roof",
             },
             {
+              "description" => "Description4",
               "energyEfficiencyRating" => "0",
               "environmentalEfficiencyRating" => "0",
               "name" => "Floor",
             },
             {
+              "description" => "Description5",
               "energyEfficiencyRating" => "0",
               "environmentalEfficiencyRating" => "0",
               "name" => "Floor",
             },
             {
+              "description" => "Description6",
               "energyEfficiencyRating" => "0",
               "environmentalEfficiencyRating" => "0",
-              "name" => "Windows",
+              "name" => "Window",
             },
             {
-              "energyEfficiencyRating" => "0",
-              "environmentalEfficiencyRating" => "0",
-              "name" => "Main_Heating",
-            },
-            {
+              "description" => "Description7",
               "energyEfficiencyRating" => "0",
               "environmentalEfficiencyRating" => "0",
               "name" => "Main_Heating",
             },
             {
+              "description" => "Description8",
+              "energyEfficiencyRating" => "0",
+              "environmentalEfficiencyRating" => "0",
+              "name" => "Main_Heating",
+            },
+            {
+              "description" => "Description9",
               "energyEfficiencyRating" => "0",
               "environmentalEfficiencyRating" => "0",
               "name" => "Main_Heating_Controls",
             },
             {
+              "description" => "Description10",
               "energyEfficiencyRating" => "0",
               "environmentalEfficiencyRating" => "0",
               "name" => "Main_Heating_Controls",
             },
             {
-              "energyEfficiencyRating" => "0",
-              "environmentalEfficiencyRating" => "0",
-              "name" => "Secondary_Heating",
-            },
-            {
+              "description" => "Description11",
               "energyEfficiencyRating" => "0",
               "environmentalEfficiencyRating" => "0",
               "name" => "Hot_Water",
             },
             {
+              "description" => "Description12",
               "energyEfficiencyRating" => "0",
               "environmentalEfficiencyRating" => "0",
               "name" => "Lighting",
             },
+            {
+              "description" => "Description13",
+              "energyEfficiencyRating" => "0",
+              "environmentalEfficiencyRating" => "0",
+              "name" => "Secondary_Heating",
+            },
           ],
           "relatedPartyDisclosureNumber" => nil,
-          "relatedPartyDisclosureText" => "Related-Party-Disclosure-Text0",
+          "relatedPartyDisclosureText" => "Financial interest",
         }
 
         expect(response["data"]).to eq(expected_response)
       end
 
       it "can return the correct address summary of the property" do
-        address_line_one = doc.search("Address-Line-1")[2]
+        address_line_one = doc.search("Address-Line-1")[1]
 
         address_line_two = Nokogiri::XML::Node.new "Address-Line-2", doc
         address_line_two.content = "2 test street"
@@ -543,61 +557,65 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
           assessment_body: doc.to_xml,
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] },
-          schema_name: "SAP-Schema-NI-17.4",
+          schema_name: "RdSAP-Schema-NI-19.0",
         )
 
         expect(response["data"]["addressSummary"]).to eq(
-          "2 Some Street, 2 test street, 3 test street, Post-Town2, A0 0AA",
+          "1 Some Street, 2 test street, 3 test street, Post-Town1, A0 0AA",
         )
       end
 
-      context "when an assessment is for a new build" do
-        it "returns the heat demand correctly" do
-          doc.at("RHI-Existing-Dwelling").remove
-
-          renewable_heat_incentive = doc.at("Renewable-Heat-Incentive")
-
-          new_dwelling = Nokogiri::XML::Node.new "RHI-New-Dwelling", doc
-          new_dwelling.parent = renewable_heat_incentive
-
-          space_heating = Nokogiri::XML::Node.new "Space-Heating", doc
-          space_heating.children = "75"
-          water_heating = Nokogiri::XML::Node.new "Water-Heating", doc
-          water_heating.children = "65"
-
-          space_heating.parent = new_dwelling
-          space_heating.add_next_sibling water_heating
-
-          lodge_assessment(
-            assessment_id: "1234-1234-1234-1234-1234",
-            assessment_body: doc.to_xml,
-            accepted_responses: [201],
-            auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "SAP-Schema-NI-17.4",
-          )
-
-          heat_demand = response["data"]["heatDemand"]
-
-          expect(heat_demand["currentSpaceHeatingDemand"]).to eq 75
-          expect(heat_demand["currentWaterHeatingDemand"]).to eq 65
-        end
-      end
-
       context "when missing optional elements" do
-        it "can return nil for property elements" do
-          doc.at("Dwelling-Type").remove
-          doc.at("Total-Floor-Area").remove
+        it "can return an empty string for address lines" do
+          lodge_assessment(
+            assessment_id: "1234-1234-1234-1234-1234",
+            assessment_body: doc.to_xml,
+            accepted_responses: [201],
+            auth_data: { scheme_ids: [scheme_id] },
+            schema_name: "RdSAP-Schema-NI-19.0",
+          )
+
+          expect(response["data"]["addressLine2"]).to eq("")
+          expect(response["data"]["addressLine3"]).to eq("")
+          expect(response["data"]["addressLine4"]).to eq("")
+        end
+
+        it "can return nil for heat demand impacts" do
+          doc.at("Impact-Of-Loft-Insulation").remove
+          doc.at("Impact-Of-Cavity-Insulation").remove
+          doc.at("Impact-Of-Solid-Wall-Insulation").remove
 
           lodge_assessment(
             assessment_id: "1234-1234-1234-1234-1234",
             assessment_body: doc.to_xml,
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "SAP-Schema-NI-17.4",
+            schema_name: "RdSAP-Schema-NI-19.0",
           )
 
-          expect(response["data"]["dwellingType"]).to be_nil
-          expect(response["data"]["totalFloorArea"]).to be_zero
+          expect(
+            response["data"]["heatDemand"]["impactOfLoftInsulation"],
+          ).to be_nil
+          expect(
+            response["data"]["heatDemand"]["impactOfCavityInsulation"],
+          ).to be_nil
+          expect(
+            response["data"]["heatDemand"]["impactOfSolidWallInsulation"],
+          ).to be_nil
+        end
+
+        it "can return an empty list of suggested improvements" do
+          doc.at("Suggested-Improvements").remove
+
+          lodge_assessment(
+            assessment_id: "1234-1234-1234-1234-1234",
+            assessment_body: doc.to_xml,
+            accepted_responses: [201],
+            auth_data: { scheme_ids: [scheme_id] },
+            schema_name: "RdSAP-Schema-NI-19.0",
+          )
+
+          expect(response["data"]["recommendedImprovements"]).to eq([])
         end
       end
     end
@@ -605,9 +623,9 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
     context "when rejecting an assessment" do
       it "rejects an assessment without an address" do
         scheme_id = add_scheme_and_get_id
-        add_assessor(scheme_id, "TEST000000", sap_valid_assessor_request_body)
+        add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
 
-        doc = Nokogiri.XML valid_sap_ni_xml
+        doc = Nokogiri.XML valid_rdsap_ni_xml
 
         scheme_assessor_id = doc.at("Address")
         scheme_assessor_id.children = ""
@@ -616,15 +634,15 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
           assessment_id: "0000-0000-0000-0000-0000",
           assessment_body: doc.to_xml,
           accepted_responses: [400],
-          schema_name: "SAP-Schema-NI-17.4",
+          schema_name: "RdSAP-Schema-NI-19.0",
         )
       end
 
       it "rejects an assessment with an incorrect element" do
         scheme_id = add_scheme_and_get_id
-        add_assessor(scheme_id, "TEST000000", sap_valid_assessor_request_body)
+        add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
 
-        doc = Nokogiri.XML valid_sap_ni_xml
+        doc = Nokogiri.XML valid_rdsap_ni_xml
 
         scheme_assessor_id = doc.at("Address")
         scheme_assessor_id.children = "<Postcode>invalid</Postcode>"
@@ -635,7 +653,7 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
               assessment_id: "0000-0000-0000-0000-0000",
               assessment_body: doc.to_xml,
               accepted_responses: [400],
-              schema_name: "SAP-Schema-NI-17.4",
+              schema_name: "RdSAP-Schema-NI-19.0",
             )
               .body,
           )
@@ -647,9 +665,9 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
 
       it "rejects an assessment with invalid XML" do
         scheme_id = add_scheme_and_get_id
-        add_assessor(scheme_id, "TEST000000", sap_valid_assessor_request_body)
+        add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
 
-        xml = valid_sap_ni_xml
+        xml = valid_rdsap_ni_xml
 
         xml = xml.gsub("<Energy-Assessment>", "<Energy-Assessment")
 
@@ -659,14 +677,14 @@ describe "Acceptance::LodgeDomesticEnergyAssessment" do
               assessment_id: "0000-0000-0000-0000-0000",
               assessment_body: xml,
               accepted_responses: [400],
-              schema_name: "SAP-Schema-NI-17.4",
+              schema_name: "RdSAP-Schema-NI-19.0",
             )
               .body,
           )
 
         expect(
           response_body["errors"][0]["title"],
-        ).to include "Invalid attribute name: <<Assessment-Date>"
+        ).to include "Invalid attribute name: <<Property-Summary>"
       end
     end
   end

@@ -1,4 +1,4 @@
-describe "Searching for assessments" do
+describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
   include RSpecAssessorServiceMixin
 
   let(:valid_assessor_request_body) do

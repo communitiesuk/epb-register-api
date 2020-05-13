@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe "Acceptance::DomesticEnergyAssessment" do
+describe "Acceptance::Assessment" do
   include RSpecAssessorServiceMixin
 
   let(:valid_assessor_request_body) do
