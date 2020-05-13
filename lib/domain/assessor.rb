@@ -5,7 +5,8 @@ module Domain
     attr_reader :registered_by_id,
                 :scheme_assessor_id,
                 :domestic_rd_sap_qualification,
-                :domestic_sap_qualification
+                :domestic_sap_qualification,
+                :non_domestic_nos3_qualification
 
     def initialize(
       scheme_assessor_id: nil,

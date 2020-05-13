@@ -49,6 +49,11 @@ module UseCase
         raise InactiveAssessorException
       end
 
+      if lodgement.type == "Nos3" &&
+          assessor.non_domestic_nos3_qualification == "INACTIVE"
+        raise InactiveAssessorException
+      end
+
       data[:improvements] =
         data[:improvements].map do |improvement|
           improvement[:assessment_id] = assessment_id
