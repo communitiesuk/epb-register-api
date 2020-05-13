@@ -70,7 +70,92 @@ describe "Acceptance::Assessment" do
           greenDealCategoryCode: "string",
         },
       ],
-      propertySummary: [],
+      propertySummary: [
+        {
+          description: "Description0",
+          energyEfficiencyRating: 0,
+          environmentalEfficiencyRating: 0,
+          name: "Wall",
+        },
+        {
+          description: "Description1",
+          energyEfficiencyRating: 0,
+          environmentalEfficiencyRating: 0,
+          name: "Wall",
+        },
+        {
+          description: "Description2",
+          energyEfficiencyRating: 0,
+          environmentalEfficiencyRating: 0,
+          name: "Roof",
+        },
+        {
+          description: "Description3",
+          energyEfficiencyRating: 0,
+          environmentalEfficiencyRating: 0,
+          name: "Roof",
+        },
+        {
+          description: "Description4",
+          energyEfficiencyRating: 0,
+          environmentalEfficiencyRating: 0,
+          name: "Floor",
+        },
+        {
+          description: "Description5",
+          energyEfficiencyRating: 0,
+          environmentalEfficiencyRating: 0,
+          name: "Floor",
+        },
+        {
+          description: "Description6",
+          energyEfficiencyRating: 0,
+          environmentalEfficiencyRating: 0,
+          name: "Window",
+        },
+        {
+          description: "Description7",
+          energyEfficiencyRating: 0,
+          environmentalEfficiencyRating: 0,
+          name: "Main_Heating",
+        },
+        {
+          description: "Description8",
+          energyEfficiencyRating: 0,
+          environmentalEfficiencyRating: 0,
+          name: "Main_Heating",
+        },
+        {
+          description: "Description9",
+          energyEfficiencyRating: 0,
+          environmentalEfficiencyRating: 0,
+          name: "Main_Heating_Controls",
+        },
+        {
+          description: "Description10",
+          energyEfficiencyRating: 0,
+          environmentalEfficiencyRating: 0,
+          name: "Main_Heating_Controls",
+        },
+        {
+          description: "Description11",
+          energyEfficiencyRating: 0,
+          environmentalEfficiencyRating: 0,
+          name: "Hot_Water",
+        },
+        {
+          description: "Description12",
+          energyEfficiencyRating: 0,
+          environmentalEfficiencyRating: 0,
+          name: "Lighting",
+        },
+        {
+          description: "Description13",
+          energyEfficiencyRating: 0,
+          environmentalEfficiencyRating: 0,
+          name: "Secondary_Heating",
+        },
+      ],
       relatedPartyDisclosureNumber: 1,
     }.freeze
   end
@@ -277,7 +362,7 @@ describe "Acceptance::Assessment" do
                 greenDealCategoryCode: "string",
               },
             ],
-            propertySummary: [],
+            propertySummary: valid_assessment_body[:propertySummary],
             relatedPartyDisclosureNumber:
               valid_assessment_body[:relatedPartyDisclosureNumber],
             relatedPartyDisclosureText: nil,
