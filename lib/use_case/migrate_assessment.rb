@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 module UseCase
-  class MigrateDomesticEnergyAssessment
+  class MigrateAssessment
     class AssessmentRuleException < StandardError; end
 
-    def initialize(domestic_energy_assessments_gateway, assessors_gateway)
-      @domestic_energy_assessments_gateway = domestic_energy_assessments_gateway
+    def initialize(assessments_gateway, assessors_gateway)
+      @assessments_gateway = assessments_gateway
       @assessors_gateway = assessors_gateway
     end
 
@@ -80,7 +80,7 @@ module UseCase
 
       raise AssessmentRuleException, errors.to_json unless errors.empty?
 
-      @domestic_energy_assessments_gateway.insert_or_update(assessment)
+      @assessments_gateway.insert_or_update(assessment)
       assessment
     end
   end

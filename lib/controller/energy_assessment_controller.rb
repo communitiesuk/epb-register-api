@@ -242,7 +242,7 @@ module Controller
         jwt_auth: %w[migrate:assessment] do
       assessment_id = params[:assessment_id]
       migrate_epc =
-        @container.get_object(:migrate_domestic_energy_assessment_use_case)
+        @container.get_object(:migrate_assessment_use_case)
       assessment_body = request_body(PUT_SCHEMA)
       result = migrate_epc.execute(assessment_id, assessment_body)
 
@@ -255,7 +255,7 @@ module Controller
       case e
       when JSON::Schema::ValidationError
         error_response(422, "INVALID_REQUEST", e.message)
-      when UseCase::MigrateDomesticEnergyAssessment::AssessmentRuleException
+      when UseCase::MigrateAssessment::AssessmentRuleException
         error_response(422, "ASSESSMENT_RULE_VIOLATION", e.message)
       when ArgumentError
         error_response(422, "INVALID_REQUEST", e.message)

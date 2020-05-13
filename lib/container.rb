@@ -21,8 +21,8 @@ class Container
     fetch_assessor_use_case =
       UseCase::FetchAssessor.new(assessors_gateway, schemes_gateway)
 
-    migrate_domestic_energy_assessment_use_case =
-      UseCase::MigrateDomesticEnergyAssessment.new(
+    migrate_assessment_use_case =
+      UseCase::MigrateAssessment.new(
         assessments_gateway,
         assessors_gateway,
       )
@@ -84,8 +84,8 @@ class Container
       get_all_schemes_use_case: get_all_schemes_use_case,
       add_assessor_use_case: add_assessor_use_case,
       fetch_assessor_use_case: fetch_assessor_use_case,
-      migrate_domestic_energy_assessment_use_case:
-        migrate_domestic_energy_assessment_use_case,
+      migrate_assessment_use_case:
+        migrate_assessment_use_case,
       fetch_assessment_use_case:
         fetch_assessment_use_case,
       find_assessors_by_postcode_use_case: find_assessors_by_postcode_use_case,
