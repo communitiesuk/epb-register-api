@@ -21,7 +21,7 @@ describe Helper::DataExtractorHelper do
         },
         deep_hash: { another_hash: { treasure: "found me" } },
         not_an_int: "99",
-        not_snake_case: "HowGreatIsThis"
+        not_snake_case: "HowGreatIsThis",
       }
     end
 
