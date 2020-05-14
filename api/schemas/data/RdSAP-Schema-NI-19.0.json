@@ -231,7 +231,7 @@
     "path": [],
     "required": ["description"],
     "extract": {
-      "name": {"path":  [".."]},
+      "name": {"path":  [".."], "cast":  "snake_case"},
       "description": {"path": ["Description"]},
       "energy_efficiency_rating": {"path": ["Energy_Efficiency_Rating"], "cast":  "integer"},
       "environmental_efficiency_rating": {"path": ["Environmental_Efficiency_Rating"], "cast":  "integer"}
