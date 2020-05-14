@@ -206,7 +206,7 @@ def migrate_assessment(
   )
 end
 
-def assessments_search_by_postcode(
+def domestic_assessments_search_by_postcode(
   postcode,
   accepted_responses = [200],
   authenticate = true,
@@ -222,7 +222,7 @@ def assessments_search_by_postcode(
   )
 end
 
-def assessments_search_by_assessment_id(
+def domestic_assessments_search_by_assessment_id(
   assessment_id,
   accepted_responses = [200],
   authenticate = true,
@@ -238,7 +238,7 @@ def assessments_search_by_assessment_id(
   )
 end
 
-def assessments_search_by_street_name_and_town(
+def domestic_assessments_search_by_street_name_and_town(
   street_name,
   town,
   accepted_responses = [200],

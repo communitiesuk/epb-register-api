@@ -63,11 +63,11 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
 
   context "Security" do
     it "rejects a request without authentication" do
-      assessments_search_by_assessment_id("123", [401], false)
+      domestic_assessments_search_by_assessment_id("123", [401], false)
     end
 
     it "rejects a request without the right scope" do
-      assessments_search_by_assessment_id(
+      domestic_assessments_search_by_assessment_id(
         "123",
         [403],
         true,
@@ -79,11 +79,11 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
 
   context "when a search postcode is valid" do
     it "returns status 200 for a get" do
-      assessments_search_by_postcode("SE17EZ", [200])
+      domestic_assessments_search_by_postcode("SE17EZ", [200])
     end
 
     it "looks as it should" do
-      response = assessments_search_by_postcode("SE17EZ")
+      response = domestic_assessments_search_by_postcode("SE17EZ")
 
       response_json = JSON.parse(response.body)
 
@@ -91,7 +91,7 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
     end
 
     it "can handle a lowercase postcode" do
-      response = assessments_search_by_postcode("e20sz")
+      response = domestic_assessments_search_by_postcode("e20sz")
 
       response_json = JSON.parse(response.body)
 
@@ -99,7 +99,7 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
     end
 
     it "has the properties we expect" do
-      response = assessments_search_by_postcode("SE17EZ")
+      response = domestic_assessments_search_by_postcode("SE17EZ")
 
       response_json = JSON.parse(response.body)
 
@@ -111,7 +111,7 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
       add_assessor(scheme_id, "TEST123456", valid_assessor_request_body)
       migrate_assessment("123-987", valid_assessment_body)
 
-      response = assessments_search_by_postcode("SE17EZ")
+      response = domestic_assessments_search_by_postcode("SE17EZ")
       response_json = JSON.parse(response.body)
 
       expected_response =
@@ -163,7 +163,7 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
       opted_out_assessment[:optOut] = true
       migrate_assessment("123-987", opted_out_assessment)
 
-      response = assessments_search_by_postcode("SE17EZ")
+      response = domestic_assessments_search_by_postcode("SE17EZ")
       response_json = JSON.parse(response.body)
 
       expect(response_json["data"]["assessments"][0]).to eq(nil)
@@ -172,11 +172,11 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
 
   context "when a search assessment id is valid" do
     it "returns status 200 for a get" do
-      assessments_search_by_assessment_id("123-987", [200])
+      domestic_assessments_search_by_assessment_id("123-987", [200])
     end
 
     it "looks as it should" do
-      response = assessments_search_by_assessment_id("123-987")
+      response = domestic_assessments_search_by_assessment_id("123-987")
 
       response_json = JSON.parse(response.body)
 
@@ -184,7 +184,7 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
     end
 
     it "has the properties we expect" do
-      response = assessments_search_by_assessment_id("123-987")
+      response = domestic_assessments_search_by_assessment_id("123-987")
 
       response_json = JSON.parse(response.body)
 
@@ -195,7 +195,7 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
       scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, "TEST123456", valid_assessor_request_body)
       migrate_assessment("123-987", valid_assessment_body)
-      response = assessments_search_by_assessment_id("123-987")
+      response = domestic_assessments_search_by_assessment_id("123-987")
 
       response_json = JSON.parse(response.body)
 
@@ -244,12 +244,12 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
   context "when using town and street name" do
     context "and town is missing but street name is present" do
       it "returns status 400 for a get" do
-        assessments_search_by_street_name_and_town("Palmtree Road", "", [400])
+        domestic_assessments_search_by_street_name_and_town("Palmtree Road", "", [400])
       end
 
       it "contains the correct error message" do
         response_body =
-          assessments_search_by_street_name_and_town("Palmtree Road", "", [400])
+          domestic_assessments_search_by_street_name_and_town("Palmtree Road", "", [400])
             .body
         expect(JSON.parse(response_body)).to eq(
           {
@@ -266,12 +266,12 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
 
     context "and street name is missing but town is present" do
       it "returns status 400 for a get" do
-        assessments_search_by_street_name_and_town("", "Brighton", [400])
+        domestic_assessments_search_by_street_name_and_town("", "Brighton", [400])
       end
 
       it "contains the correct error message" do
         response_body =
-          assessments_search_by_street_name_and_town("", "Brighton", [400]).body
+          domestic_assessments_search_by_street_name_and_town("", "Brighton", [400]).body
         expect(JSON.parse(response_body)).to eq(
           {
             "errors" => [
@@ -287,7 +287,7 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
 
     context "and required parameters are present" do
       it "returns status 200 for a get" do
-        assessments_search_by_street_name_and_town(
+        domestic_assessments_search_by_street_name_and_town(
           "Palmtree Road",
           "Brighton",
           [200],
@@ -296,7 +296,7 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
 
       it "looks as it should" do
         response =
-          assessments_search_by_street_name_and_town(
+          domestic_assessments_search_by_street_name_and_town(
             "Palmtree Road",
             "Brighton",
           )
@@ -308,7 +308,7 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
 
       it "has the properties we expect" do
         response =
-          assessments_search_by_street_name_and_town(
+          domestic_assessments_search_by_street_name_and_town(
             "Palmtree Road",
             "Brighton",
           )
@@ -324,7 +324,7 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
 
         migrate_assessment("123-987", valid_assessment_body)
         response =
-          assessments_search_by_street_name_and_town(
+          domestic_assessments_search_by_street_name_and_town(
             "Palmtree Road",
             "Brighton",
           )
@@ -381,13 +381,13 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
         migrate_assessment("123-987", opted_out_assessment)
 
         response =
-          assessments_search_by_street_name_and_town(
+          domestic_assessments_search_by_street_name_and_town(
             "Palmtree Road",
             "Brighton",
           )
         response_json = JSON.parse(response.body)
 
-        expect(response_json["data"]["assessments"][0]).to eq(nil)
+        expect(response_json["data"]["assessments"][0]).to be_nil
       end
     end
   end
