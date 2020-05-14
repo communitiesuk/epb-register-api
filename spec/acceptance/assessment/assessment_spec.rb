@@ -156,7 +156,8 @@ describe "Acceptance::Assessment" do
           name: "Secondary_Heating",
         },
       ],
-      relatedPartyDisclosureNumber: 1,
+      relatedPartyDisclosureNumber: nil,
+      relatedPartyDisclosureText: "married to owner",
     }.freeze
   end
 
@@ -215,6 +216,7 @@ describe "Acceptance::Assessment" do
       ],
       propertySummary: [],
       relatedPartyDisclosureNumber: 1,
+      relatedPartyDisclosureText: nil,
     }.freeze
   end
 
@@ -365,7 +367,8 @@ describe "Acceptance::Assessment" do
             propertySummary: valid_assessment_body[:propertySummary],
             relatedPartyDisclosureNumber:
               valid_assessment_body[:relatedPartyDisclosureNumber],
-            relatedPartyDisclosureText: nil,
+            relatedPartyDisclosureText:
+              valid_assessment_body[:relatedPartyDisclosureText],
           }.to_json,
         )
       expect(response["data"]).to eq(expected_response)

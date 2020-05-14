@@ -129,8 +129,13 @@ module Controller
             ],
           },
         },
-        relatedPartyDisclosureNumber: { type: "integer" },
-        relatedPartyDisclosureText: { type: "string" },
+        oneOf: [{
+            relatedPartyDisclosureNumber: { type: "integer" },
+            relatedPartyDisclosureText: { type: "null" },
+        }, {
+            relatedPartyDisclosureNumber: { type: "null" },
+            relatedPartyDisclosureText: { type: "string" },
+        }],
       },
     }.freeze
 
