@@ -7,15 +7,15 @@ context "searching for an address" do
 
   let(:valid_assessor_request_body) do
     {
-        firstName: "Someone",
-        middleNames: "Muddle",
-        lastName: "Person",
-        dateOfBirth: "1991-02-25",
-        searchResultsComparisonPostcode: "",
-        qualifications: { domesticRdSap: "ACTIVE" },
-        contactDetails: {
-            telephoneNumber: "010199991010101", email: "person@person.com"
-        },
+      firstName: "Someone",
+      middleNames: "Muddle",
+      lastName: "Person",
+      dateOfBirth: "1991-02-25",
+      searchResultsComparisonPostcode: "",
+      qualifications: { domesticRdSap: "ACTIVE" },
+      contactDetails: {
+        telephoneNumber: "010199991010101", email: "person@person.com"
+      },
     }
   end
 
@@ -34,18 +34,22 @@ context "searching for an address" do
 
     describe "searching by buildingReferenceNumber" do
       it "returns the address" do
-        response = JSON.parse(
-          assertive_get(
-            "/api/search/addresses?buildingReferenceNumber=RRN-0000-0000-0000-0000-0000",
-            [200],
-            true,
-            {},
-            %w[address:search],
-          ).body,
-        )
+        response =
+          JSON.parse(
+            assertive_get(
+              "/api/search/addresses?buildingReferenceNumber=RRN-0000-0000-0000-0000-0000",
+              [200],
+              true,
+              {},
+              %w[address:search],
+            )
+              .body,
+          )
 
         expect(response["data"]["addresses"].length).to eq 1
-        expect(response["data"]["addresses"][0]["buildingReferenceNumber"]).to eq "RRN-0000-0000-0000-0000-0000"
+        expect(
+          response["data"]["addresses"][0]["buildingReferenceNumber"],
+        ).to eq "RRN-0000-0000-0000-0000-0000"
         expect(response["data"]["addresses"][0]["line1"]).to eq "1 Some Street"
         expect(response["data"]["addresses"][0]["town"]).to eq "Post-Town1"
         expect(response["data"]["addresses"][0]["postcode"]).to eq "A0 0AA"
@@ -56,13 +60,17 @@ context "searching for an address" do
   context "with a valid combination of parameters that have no matches" do
     describe "with an valid, not in use buildingReferenceNumber" do
       it "returns an empty result set" do
-        response = JSON.parse(assertive_get(
-          "/api/search/addresses?buildingReferenceNumber=RRN-1111-2222-3333-4444-5555",
-          [200],
-          true,
-          nil,
-          %w[address:search],
-        ).body)
+        response =
+          JSON.parse(
+            assertive_get(
+              "/api/search/addresses?buildingReferenceNumber=RRN-1111-2222-3333-4444-5555",
+              [200],
+              true,
+              nil,
+              %w[address:search],
+            )
+              .body,
+          )
 
         expect(response["data"]["addresses"].length).to eq 0
       end
@@ -72,13 +80,15 @@ context "searching for an address" do
   context "with an invalid combination of parameters" do
     describe "with an invalid buildingReferenceNumber" do
       it "returns a validation error" do
-        response = assertive_get(
-          "/api/search/addresses?buildingReferenceNumber=DOESNOTEXIST",
-          [422],
-          true,
-          nil,
-          %w[address:search],
-        ).body
+        response =
+          assertive_get(
+            "/api/search/addresses?buildingReferenceNumber=DOESNOTEXIST",
+            [422],
+            true,
+            nil,
+            %w[address:search],
+          )
+            .body
 
         expect(response).to include "INVALID_REQUEST"
       end
@@ -86,13 +96,15 @@ context "searching for an address" do
 
     describe "no parameters" do
       it "returns a validation error" do
-        response = assertive_get(
-          "/api/search/addresses",
-          [422],
-          true,
-          nil,
-          %w[address:search],
-        ).body
+        response =
+          assertive_get(
+            "/api/search/addresses",
+            [422],
+            true,
+            nil,
+            %w[address:search],
+          )
+            .body
 
         expect(response).to include "INVALID_REQUEST"
       end

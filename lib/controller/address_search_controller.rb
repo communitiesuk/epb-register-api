@@ -5,8 +5,7 @@ module Controller
       required: %w[buildingReferenceNumber],
       properties: {
         buildingReferenceNumber: {
-          type: "string",
-          pattern: "^RRN-(\\d{4}-){4}\\d{4}$",
+          type: "string", pattern: "^RRN-(\\d{4}-){4}\\d{4}$"
         },
       },
     }.freeze
@@ -14,14 +13,15 @@ module Controller
     get "/api/search/addresses", jwt_auth: %w[address:search] do
       filters = params_body SEARCH_SCHEMA
 
-      results = @container
-          .get_object(:search_addresses_by_building_reference_number_use_case)
+      results =
+        @container.get_object(
+          :search_addresses_by_building_reference_number_use_case,
+        )
           .execute(filters)
 
       json_api_response code: 200,
                         data: { addresses: results.map(&:to_hash) },
                         meta: { filters: filters }
-
     rescue StandardError => e
       case e
       when JSON::Schema::ValidationError

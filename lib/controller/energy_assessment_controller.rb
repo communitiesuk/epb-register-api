@@ -129,13 +129,16 @@ module Controller
             ],
           },
         },
-        oneOf: [{
+        oneOf: [
+          {
             relatedPartyDisclosureNumber: { type: "integer" },
             relatedPartyDisclosureText: { type: "null" },
-        }, {
+          },
+          {
             relatedPartyDisclosureNumber: { type: "null" },
             relatedPartyDisclosureText: { type: "string" },
-        }],
+          },
+        ],
       },
     }.freeze
 
@@ -174,8 +177,7 @@ module Controller
         jwt_auth: %w[assessment:fetch] do
       assessment_id = params[:assessment_id]
       result =
-        @container.get_object(:fetch_assessment_use_case)
-          .execute(assessment_id)
+        @container.get_object(:fetch_assessment_use_case).execute(assessment_id)
       json_api_response(code: 200, data: result)
     rescue StandardError => e
       case e
@@ -246,8 +248,7 @@ module Controller
     put "/api/assessments/domestic-epc/:assessment_id",
         jwt_auth: %w[migrate:assessment] do
       assessment_id = params[:assessment_id]
-      migrate_epc =
-        @container.get_object(:migrate_assessment_use_case)
+      migrate_epc = @container.get_object(:migrate_assessment_use_case)
       assessment_body = request_body(PUT_SCHEMA)
       result = migrate_epc.execute(assessment_id, assessment_body)
 

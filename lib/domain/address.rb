@@ -1,15 +1,14 @@
 module Domain
   class Address
-    attr_reader :building_reference_number, :line1,
-                :line2, :line3, :town, :postcode
+    attr_reader :building_reference_number,
+                :line1,
+                :line2,
+                :line3,
+                :town,
+                :postcode
 
     def initialize(
-      building_reference_number:,
-      line1:,
-      line2:,
-      line3:,
-      town:,
-      postcode:
+      building_reference_number:, line1:, line2:, line3:, town:, postcode:
     )
       @building_reference_number = building_reference_number
       @line1 = line1

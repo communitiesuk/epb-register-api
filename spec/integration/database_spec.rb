@@ -178,9 +178,7 @@ describe "Integration::Database::Activerecord" do
     ActiveRecord::Base.establish_connection
 
     domestic_epc_postcode_column =
-      ActiveRecord::Base.connection.execute(
-        "SELECT postcode FROM assessments",
-      )
+      ActiveRecord::Base.connection.execute("SELECT postcode FROM assessments")
 
     expect(domestic_epc_postcode_column).not_to be_nil
   end

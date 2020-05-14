@@ -576,11 +576,7 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
     context "when rejecting an assessment" do
       it "rejects an assessment without an address" do
         scheme_id = add_scheme_and_get_id
-        add_assessor(
-          scheme_id,
-          "JASE000000",
-          valid_assessor_request_body,
-        )
+        add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
 
         doc = Nokogiri.XML valid_cepc_xml
 
@@ -597,11 +593,7 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
 
       it "rejects an assessment with an incorrect element" do
         scheme_id = add_scheme_and_get_id
-        add_assessor(
-          scheme_id,
-          "JASE000000",
-          valid_assessor_request_body,
-        )
+        add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
 
         doc = Nokogiri.XML valid_cepc_xml
 
@@ -626,11 +618,7 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
 
       it "rejects an assessment with invalid XML" do
         scheme_id = add_scheme_and_get_id
-        add_assessor(
-          scheme_id,
-          "JASE000000",
-          valid_assessor_request_body,
-        )
+        add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
 
         xml = valid_cepc_xml
 

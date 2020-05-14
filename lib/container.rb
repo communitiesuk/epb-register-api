@@ -8,8 +8,7 @@ class Container
 
     address_search_gateway = Gateway::AddressSearchGateway.new
 
-    assessments_gateway =
-      Gateway::AssessmentsGateway.new
+    assessments_gateway = Gateway::AssessmentsGateway.new
 
     postcode_gateway = Gateway::PostcodesGateway.new
 
@@ -22,15 +21,9 @@ class Container
       UseCase::FetchAssessor.new(assessors_gateway, schemes_gateway)
 
     migrate_assessment_use_case =
-      UseCase::MigrateAssessment.new(
-        assessments_gateway,
-        assessors_gateway,
-      )
+      UseCase::MigrateAssessment.new(assessments_gateway, assessors_gateway)
     fetch_assessment_use_case =
-      UseCase::FetchAssessment.new(
-        assessments_gateway,
-        assessors_gateway,
-      )
+      UseCase::FetchAssessment.new(assessments_gateway, assessors_gateway)
 
     find_assessors_by_postcode_use_case =
       UseCase::FindAssessorsByPostcode.new(
@@ -42,27 +35,18 @@ class Container
       UseCase::FindAssessorsByName.new(assessors_gateway, schemes_gateway)
 
     find_assessments_by_postcode_use_case =
-      UseCase::FindAssessmentsByPostcode.new(
-        assessments_gateway,
-      )
+      UseCase::FindAssessmentsByPostcode.new(assessments_gateway)
     find_assessments_by_assessment_id_use_case =
-      UseCase::FindAssessmentsByAssessmentId.new(
-        assessments_gateway,
-      )
+      UseCase::FindAssessmentsByAssessmentId.new(assessments_gateway)
     find_assessments_by_street_name_and_town_use_case =
-      UseCase::FindAssessmentsByStreetNameAndTown.new(
-        assessments_gateway,
-      )
+      UseCase::FindAssessmentsByStreetNameAndTown.new(assessments_gateway)
     fetch_assessor_list_use_case =
       UseCase::FetchAssessorList.new(assessors_gateway, schemes_gateway)
 
     validate_assessment_use_case = UseCase::ValidateAssessment.new
 
     lodge_assessment_use_case =
-      UseCase::LodgeAssessment.new(
-        assessments_gateway,
-        assessors_gateway,
-      )
+      UseCase::LodgeAssessment.new(assessments_gateway, assessors_gateway)
 
     check_assessor_belongs_to_scheme_use_case =
       UseCase::CheckAssessorBelongsToScheme.new(assessors_gateway)
@@ -84,10 +68,8 @@ class Container
       get_all_schemes_use_case: get_all_schemes_use_case,
       add_assessor_use_case: add_assessor_use_case,
       fetch_assessor_use_case: fetch_assessor_use_case,
-      migrate_assessment_use_case:
-        migrate_assessment_use_case,
-      fetch_assessment_use_case:
-        fetch_assessment_use_case,
+      migrate_assessment_use_case: migrate_assessment_use_case,
+      fetch_assessment_use_case: fetch_assessment_use_case,
       find_assessors_by_postcode_use_case: find_assessors_by_postcode_use_case,
       find_assessors_by_name_use_case: find_assessors_by_name_use_case,
       fetch_assessor_list_use_case: fetch_assessor_list_use_case,
