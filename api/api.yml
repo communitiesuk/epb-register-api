@@ -1361,11 +1361,10 @@ components:
           example: true
         status:
           type: string
-          example: CANCELLED
+          example: ENTERED
           enum:
-            - CANCELLED
-            - LATEST
-            - SUPERSEDED
+            - ENTERED
+            - NOT FOR ISSUE
         mainFuelType:
           type: string
           example: 'Natural Gas'
