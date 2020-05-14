@@ -50,13 +50,13 @@ task :generate_certificate do
   property_summary = [
     [
       {
-        "name": "Walls",
+        "name": "walls",
         "description": "Brick wall, no insulation",
         "energy_efficiency_rating": "4",
         "environmental_efficiency_rating": "0",
       },
       {
-        "name": "Secondary heating",
+        "name": "secondary_heating",
         "description": "None",
         "energy_efficiency_rating": "3",
         "environmental_efficiency_rating": "0",
@@ -64,13 +64,13 @@ task :generate_certificate do
     ].to_json,
     [
       {
-        "name": "Main heating",
+        "name": "main_heating",
         "description": "Room heaters, electric",
         "energy_efficiency_rating": "3",
         "environmental_efficiency_rating": "0",
       },
       {
-        "name": "Hot water",
+        "name": "hot_water",
         "description": "Gas Boiler",
         "energy_efficiency_rating": "1",
         "environmental_efficiency_rating": "0",
@@ -78,13 +78,13 @@ task :generate_certificate do
     ].to_json,
     [
       {
-        "name": "Window",
+        "name": "window",
         "description": "Fully double glazed",
         "energy_efficiency_rating": "3",
         "environmental_efficiency_rating": "0",
       },
       {
-        "name": "Floor",
+        "name": "floor",
         "description": "Suspended, no insulation (assumed)",
         "energy_efficiency_rating": "0",
         "environmental_efficiency_rating": "0",
