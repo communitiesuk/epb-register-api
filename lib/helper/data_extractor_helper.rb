@@ -25,6 +25,8 @@ module Helper
           case settings[:cast]
           when "integer"
             data[key] = data[key].to_i
+          when "snake_case"
+            data[key] = data[key].underscore
           end
         end
 

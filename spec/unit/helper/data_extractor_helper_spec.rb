@@ -21,6 +21,7 @@ describe Helper::DataExtractorHelper do
         },
         deep_hash: { another_hash: { treasure: "found me" } },
         not_an_int: "99",
+        not_snake_case: "HowGreatIsThis"
       }
     end
 
@@ -46,6 +47,7 @@ describe Helper::DataExtractorHelper do
           path: %i[something_that_doesnt_exist], default: []
         },
         make_an_int: { path: %i[not_an_int], cast: "integer" },
+        make_snake_case: { path: %i[not_snake_case], cast: "snake_case" },
       }
     end
 
@@ -95,6 +97,10 @@ describe Helper::DataExtractorHelper do
 
     it "will extract a key and cast it to an integer" do
       expect(result[:make_an_int]).to eq(99)
+    end
+
+    it "will extract a key and cast it to snake case" do
+      expect(result[:make_snake_case]).to eq("how_great_is_this")
     end
   end
 end
