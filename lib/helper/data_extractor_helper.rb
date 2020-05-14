@@ -1,6 +1,6 @@
 module Helper
   class DataExtractorHelper
-    def fetch_data(raw_data, data_settings)
+    def fetch_data(raw_data, data_settings, kewy = "")
       data = {}
 
       data_settings.each do |key, settings|
@@ -15,7 +15,9 @@ module Helper
 
         path += settings[:path].map(&:to_sym)
 
-        if raw_data.is_a?(Hash) && raw_data.has_key?(path[0])
+        if path.include?(:"..")
+          data[key] = kewy
+        elsif raw_data.is_a?(Hash) && raw_data.has_key?(path[0])
           data[key] = raw_data.dig(*path)
         elsif settings.key?(:default)
           data[key] = settings[:default]
@@ -33,7 +35,7 @@ module Helper
         if settings.key?(:extract)
           data[key] = [] unless data[key]
 
-          if settings.key?(:bury_key)
+          if settings[:extract].any? { |_, item| item[:path].include?("..") }
             output_data = []
             data[key] =
               data[key].map do |inner_key, inner_data|
@@ -41,11 +43,20 @@ module Helper
 
                 inner_data.map do |inner_inner_data|
                   inner_inner_data =
-                    fetch_data(inner_inner_data, settings[:extract])
+                    fetch_data(
+                      inner_inner_data,
+                      settings[:extract],
+                      inner_key.to_s,
+                    )
 
                   next if inner_inner_data == {}
 
-                  inner_inner_data[settings[:bury_key].to_sym] = inner_key.to_s
+                  if settings.key?(:required) &&
+                      settings[:required].any? do |required_key|
+                        !inner_inner_data[required_key.to_sym]
+                      end
+                    next
+                  end
 
                   output_data.push(inner_inner_data)
                 end

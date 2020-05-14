@@ -35,13 +35,12 @@ describe Helper::DataExtractorHelper do
         },
         smart_array_extraction: {
           path: %i[complex_hash],
-          bury_key: :key,
-          extract: { full_name: { path: %i[name] } },
+          extract: { key: { path: %w[..] }, full_name: { path: %i[name] } },
         },
         supersmart_array_extraction: {
+          required: %i[full_name],
           path: %i[complex_broken_hash],
-          bury_key: :key,
-          extract: { full_name: { path: %i[name] } },
+          extract: { key: { path: %w[..] }, full_name: { path: %i[name] } },
         },
         default_value_extraction: {
           path: %i[something_that_doesnt_exist], default: []

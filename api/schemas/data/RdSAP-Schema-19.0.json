@@ -221,8 +221,9 @@
   "property_summary": {
     "root": "property",
     "path": [],
-    "bury_key": "name",
+    "required": ["description"],
     "extract": {
+      "name": {"path":  [".."]},
       "description": {"path": ["Description"]},
       "energy_efficiency_rating": {"path": ["Energy_Efficiency_Rating"], "cast":  "integer"},
       "environmental_efficiency_rating": {"path": ["Environmental_Efficiency_Rating"], "cast":  "integer"}
