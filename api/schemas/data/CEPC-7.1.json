@@ -38,7 +38,44 @@
     "root": "header",
     "path": ["Report-Type"]
   },
-
+  "address": {
+    "path": [
+      "Report",
+      "Report_Header",
+      "Property_Details",
+      "Property_Address"
+    ]
+  },
+  "address_line_one": {
+    "root": "address",
+    "path": [
+      "Address_Line_1"
+    ]
+  },
+  "address_line_two": {
+    "root": "address",
+    "path": [
+      "Address_Line_2"
+    ]
+  },
+  "address_line_three": {
+    "root": "address",
+    "path": [
+      "Address_Line_3"
+    ]
+  },
+  "town": {
+    "root": "address",
+    "path": [
+      "Post_Town"
+    ]
+  },
+  "postcode": {
+    "root": "address",
+    "path": [
+      "Postcode"
+    ]
+  },
 
 
 

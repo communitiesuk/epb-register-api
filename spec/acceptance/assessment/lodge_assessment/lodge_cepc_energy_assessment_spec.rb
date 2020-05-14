@@ -230,5 +230,427 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
         schema_name: "CEPC-7.1",
       )
     end
+
+    it "returns json" do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
+
+      response =
+        lodge_assessment(
+          assessment_id: "0000-0000-0000-0000-0000",
+          assessment_body: valid_cepc_xml,
+          accepted_responses: [201],
+          auth_data: { scheme_ids: [scheme_id] },
+          schema_name: "CEPC-7.1",
+        )
+
+      expect(response.headers["Content-Type"]).to eq("application/json")
+    end
+
+    it "returns the assessment as a hash" do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
+
+      response =
+        JSON.parse(
+          lodge_assessment(
+            assessment_id: "0000-0000-0000-0000-0000",
+            assessment_body: valid_cepc_xml,
+            accepted_responses: [201],
+            auth_data: { scheme_ids: [scheme_id] },
+            schema_name: "CEPC-7.1",
+          )
+            .body,
+          symbolize_names: true,
+        )
+
+      expect(response[:data]).to be_a Hash
+    end
+
+    it "returns the assessment with the correct keys" do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
+
+      response =
+        JSON.parse(
+          lodge_assessment(
+            assessment_id: "0000-0000-0000-0000-0000",
+            assessment_body: valid_cepc_xml,
+            accepted_responses: [201],
+            auth_data: { scheme_ids: [scheme_id] },
+            schema_name: "CEPC-7.1",
+          )
+            .body,
+          symbolize_names: true,
+        )
+
+      expect(response[:data].keys).to match_array(
+        %i[
+          dateOfAssessment
+          dateRegistered
+          dwellingType
+          typeOfAssessment
+          totalFloorArea
+          assessmentId
+          schemeAssessorId
+          addressSummary
+          currentEnergyEfficiencyRating
+          potentialEnergyEfficiencyRating
+          currentCarbonEmission
+          potentialCarbonEmission
+          optOut
+          postcode
+          dateOfExpiry
+          addressLine1
+          addressLine2
+          addressLine3
+          addressLine4
+          town
+          heatDemand
+          currentEnergyEfficiencyBand
+          potentialEnergyEfficiencyBand
+          recommendedImprovements
+          propertySummary
+          relatedPartyDisclosureNumber
+          relatedPartyDisclosureText
+        ],
+      )
+    end
+
+    it "returns the correct scheme assessor id" do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
+
+      response =
+        JSON.parse(
+          lodge_assessment(
+            assessment_id: "0000-0000-0000-0000-0000",
+            assessment_body: valid_cepc_xml,
+            accepted_responses: [201],
+            auth_data: { scheme_ids: [scheme_id] },
+            schema_name: "CEPC-7.1",
+          )
+            .body,
+          symbolize_names: true,
+        )
+
+      expect(response.dig(:data, :schemeAssessorId)).to eq("JASE000000")
+    end
+
+    context "when schema is not supported" do
+      let(:scheme_id) { add_scheme_and_get_id }
+      let(:doc) { Nokogiri.XML valid_cepc_xml }
+
+      before do
+        add_assessor(scheme_id, "TEST123456", valid_assessor_request_body)
+
+        assessment_id = doc.at("RRN")
+        assessment_id.children = "1234-1234-1234-1234-1234"
+
+        scheme_assessor_id = doc.at("Certificate-Number")
+        scheme_assessor_id.children = "JASE000000"
+      end
+
+      it "returns status 400" do
+        lodge_assessment(
+          assessment_id: "1234-1234-1234-1234-1234",
+          assessment_body: doc.to_xml,
+          accepted_responses: [400],
+          auth_data: { scheme_ids: [scheme_id] },
+          schema_name: "unsupported",
+        )
+      end
+
+      it "returns the correct error message" do
+        response =
+          JSON.parse(
+            lodge_assessment(
+              assessment_id: "1234-1234-1234-1234-1234",
+              assessment_body: doc.to_xml,
+              accepted_responses: [400],
+              auth_data: { scheme_ids: [scheme_id] },
+              schema_name: "unsupported",
+            )
+              .body,
+          )
+
+        expect(response["errors"][0]["title"]).to eq("Schema is not supported.")
+      end
+    end
+
+    context "when saving an (CEPC) assessment" do
+      let(:scheme_id) { add_scheme_and_get_id }
+      let(:doc) { Nokogiri.XML valid_cepc_xml }
+      let(:response) do
+        JSON.parse(fetch_assessment("1234-1234-1234-1234-1234").body)
+      end
+
+      before do
+        add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
+
+        assessment_id = doc.at("RRN")
+        assessment_id.children = "1234-1234-1234-1234-1234"
+
+        scheme_assessor_id = doc.at("Certificate-Number")
+        scheme_assessor_id.children = "JASE000000"
+      end
+
+      context "when an assessment id does not match" do
+        it "returns status 422" do
+          lodge_assessment(
+            assessment_id: "123-456",
+            assessment_body: doc.to_xml,
+            accepted_responses: [422],
+            auth_data: { scheme_ids: [scheme_id] },
+            schema_name: "CEPC-7.1",
+          )
+        end
+      end
+
+      context "when an assessment already exists with the same assessment id" do
+        it "returns status 409" do
+          lodge_assessment(
+            assessment_id: "1234-1234-1234-1234-1234",
+            assessment_body: doc.to_xml,
+            accepted_responses: [201],
+            auth_data: { scheme_ids: [scheme_id] },
+            schema_name: "CEPC-7.1",
+          )
+
+          lodge_assessment(
+            assessment_id: "1234-1234-1234-1234-1234",
+            assessment_body: doc.to_xml,
+            accepted_responses: [409],
+            auth_data: { scheme_ids: [scheme_id] },
+            schema_name: "CEPC-7.1",
+          )
+        end
+      end
+
+      it "returns the data that was lodged" do
+        lodge_assessment(
+          assessment_id: "1234-1234-1234-1234-1234",
+          assessment_body: doc.to_xml,
+          accepted_responses: [201],
+          auth_data: { scheme_ids: [scheme_id] },
+          schema_name: "CEPC-7.1",
+        )
+
+        expected_response = {
+          "addressLine1" => "2 Lonely Street",
+          "addressLine2" => "",
+          "addressLine3" => "",
+          "addressLine4" => "",
+          "addressSummary" => "2 Lonely Street, Post-Town1, A0 0AA",
+          "assessmentId" => "1234-1234-1234-1234-1234",
+          "assessor" => {
+            "contactDetails" => {
+              "email" => "person@person.com",
+              "telephoneNumber" => "010199991010101",
+            },
+            "dateOfBirth" => "1991-02-25",
+            "firstName" => "Someone",
+            "lastName" => "Person",
+            "middleNames" => "Muddle",
+            "qualifications" => {
+              "domesticSap" => "INACTIVE",
+              "domesticRdSap" => "INACTIVE",
+              "nonDomesticCc4" => "INACTIVE",
+              "nonDomesticSp3" => "INACTIVE",
+              "nonDomesticDec" => "INACTIVE",
+              "nonDomesticNos3" => "ACTIVE",
+              "nonDomesticNos4" => "INACTIVE",
+              "nonDomesticNos5" => "INACTIVE",
+            },
+            "registeredBy" => {
+              "name" => "test scheme", "schemeId" => scheme_id
+            },
+            "schemeAssessorId" => "JASE000000",
+            "searchResultsComparisonPostcode" => "",
+          },
+          "currentCarbonEmission" => 0.0,
+          "currentEnergyEfficiencyBand" => "a",
+          "currentEnergyEfficiencyRating" => 99,
+          "optOut" => false,
+          "dateOfAssessment" => "2006-05-04",
+          "dateOfExpiry" => "2016-05-04",
+          "dateRegistered" => "2006-05-04",
+          "dwellingType" => nil,
+          "heatDemand" => {
+            "currentSpaceHeatingDemand" => 0.0,
+            "currentWaterHeatingDemand" => 0.0,
+            "impactOfCavityInsulation" => nil,
+            "impactOfLoftInsulation" => nil,
+            "impactOfSolidWallInsulation" => nil,
+          },
+          "postcode" => "A0 0AA",
+          "potentialCarbonEmission" => 0.0,
+          "potentialEnergyEfficiencyBand" => "a",
+          "potentialEnergyEfficiencyRating" => 99,
+          "totalFloorArea" => 99.0,
+          "town" => "Post-Town1",
+          "typeOfAssessment" => "Nos3",
+          "relatedPartyDisclosureNumber" => nil,
+          "relatedPartyDisclosureText" => nil,
+          "recommendedImprovements" => [],
+          "propertySummary" => [],
+        }
+
+        expect(response["data"]).to eq(expected_response)
+      end
+
+      it "can return the correct second address line of the property" do
+        address_line_one = doc.search("Address-Line-1")[0]
+        address_line_two = Nokogiri::XML::Node.new "Address-Line-2", doc
+        address_line_two.content = "2 test street"
+        address_line_one.add_next_sibling address_line_two
+
+        lodge_assessment(
+          assessment_id: "1234-1234-1234-1234-1234",
+          assessment_body: doc.to_xml,
+          accepted_responses: [201],
+          auth_data: { scheme_ids: [scheme_id] },
+          schema_name: "CEPC-7.1",
+        )
+
+        expect(response["data"]["addressLine2"]).to eq("2 test street")
+      end
+
+      it "can return the correct third address line of the property" do
+        address_line_one = doc.search("Address-Line-1")[0]
+        address_line_three = Nokogiri::XML::Node.new "Address-Line-3", doc
+        address_line_three.content = "3 test street"
+        address_line_one.add_next_sibling address_line_three
+
+        lodge_assessment(
+          assessment_id: "1234-1234-1234-1234-1234",
+          assessment_body: doc.to_xml,
+          accepted_responses: [201],
+          auth_data: { scheme_ids: [scheme_id] },
+          schema_name: "CEPC-7.1",
+        )
+
+        expect(response["data"]["addressLine3"]).to eq("3 test street")
+      end
+
+      it "can return the correct address summary of the property" do
+        address_line_one = doc.search("Address-Line-1")[0]
+
+        address_line_two = Nokogiri::XML::Node.new "Address-Line-2", doc
+        address_line_two.content = "2 test street"
+        address_line_one.add_next_sibling address_line_two
+
+        address_line_three = Nokogiri::XML::Node.new "Address-Line-3", doc
+        address_line_three.content = "3 test street"
+        address_line_two.add_next_sibling address_line_three
+
+        lodge_assessment(
+          assessment_id: "1234-1234-1234-1234-1234",
+          assessment_body: doc.to_xml,
+          accepted_responses: [201],
+          auth_data: { scheme_ids: [scheme_id] },
+          schema_name: "CEPC-7.1",
+        )
+
+        expect(response["data"]["addressSummary"]).to eq(
+          "2 Lonely Street, 2 test street, 3 test street, Post-Town1, A0 0AA",
+        )
+      end
+
+      context "when missing optional elements" do
+        it "can return an empty string for address lines" do
+          lodge_assessment(
+            assessment_id: "1234-1234-1234-1234-1234",
+            assessment_body: doc.to_xml,
+            accepted_responses: [201],
+            auth_data: { scheme_ids: [scheme_id] },
+            schema_name: "CEPC-7.1",
+          )
+          expect(response["data"]["addressLine2"]).to eq("")
+          expect(response["data"]["addressLine3"]).to eq("")
+          expect(response["data"]["addressLine4"]).to eq("")
+        end
+      end
+    end
+
+    context "when rejecting an assessment" do
+      it "rejects an assessment without an address" do
+        scheme_id = add_scheme_and_get_id
+        add_assessor(
+          scheme_id,
+          "JASE000000",
+          valid_assessor_request_body,
+        )
+
+        doc = Nokogiri.XML valid_cepc_xml
+
+        scheme_assessor_id = doc.at("Property-Address")
+        scheme_assessor_id.children = ""
+
+        lodge_assessment(
+          assessment_id: "0000-0000-0000-0000-0000",
+          assessment_body: doc.to_xml,
+          accepted_responses: [400],
+          schema_name: "CEPC-7.1",
+        )
+      end
+
+      it "rejects an assessment with an incorrect element" do
+        scheme_id = add_scheme_and_get_id
+        add_assessor(
+          scheme_id,
+          "JASE000000",
+          valid_assessor_request_body,
+        )
+
+        doc = Nokogiri.XML valid_cepc_xml
+
+        address = doc.at("Property-Address")
+        address.children = "<Postcode>invalid</Postcode>"
+
+        response_body =
+          JSON.parse(
+            lodge_assessment(
+              assessment_id: "0000-0000-0000-0000-0000",
+              assessment_body: doc.to_xml,
+              accepted_responses: [400],
+              schema_name: "CEPC-7.1",
+            )
+              .body,
+          )
+
+        expect(
+          response_body["errors"][0]["title"],
+        ).to include "This element is not expected."
+      end
+
+      it "rejects an assessment with invalid XML" do
+        scheme_id = add_scheme_and_get_id
+        add_assessor(
+          scheme_id,
+          "JASE000000",
+          valid_assessor_request_body,
+        )
+
+        xml = valid_cepc_xml
+
+        xml = xml.gsub("<Report-Header>", "<Report-Header")
+
+        response_body =
+          JSON.parse(
+            lodge_assessment(
+              assessment_id: "0000-0000-0000-0000-0000",
+              assessment_body: xml,
+              accepted_responses: [400],
+              schema_name: "CEPC-7.1",
+            )
+              .body,
+          )
+
+        expect(
+          response_body["errors"][0]["title"],
+        ).to include "Invalid attribute name: <<RRN>"
+      end
+    end
   end
 end
