@@ -41,6 +41,22 @@ module UseCase
           registered_by_name: scheme[:name],
           search_results_comparison_postcode:
             add_assessor_request.search_results_comparison_postcode,
+          also_known_as: add_assessor_request.also_known_as,
+          address_line1: add_assessor_request.address_line1,
+          address_line2: add_assessor_request.address_line2,
+          address_line3: add_assessor_request.address_line3,
+          town: add_assessor_request.town,
+          postcode: add_assessor_request.postcode,
+          company_reg_no: add_assessor_request.company_reg_no,
+          company_address_line1: add_assessor_request.company_address_line1,
+          company_address_line2: add_assessor_request.company_address_line2,
+          company_address_line3: add_assessor_request.company_address_line3,
+          company_town: add_assessor_request.company_town,
+          company_postcode: add_assessor_request.company_postcode,
+          company_website: add_assessor_request.company_website,
+          company_telephone_number: add_assessor_request.company_telephone_number,
+          company_email: add_assessor_request.company_email,
+          company_name: add_assessor_request.company_name,
           domestic_sap_qualification:
             add_assessor_request.domestic_sap_qualification,
           domestic_rd_sap_qualification:

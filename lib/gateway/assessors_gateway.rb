@@ -9,6 +9,22 @@ module Gateway
     TELEPHONE_NUMBER_COLUMN = :telephone_number
     SEARCH_RESULTS_COMPARISON_POSTCODE_COLUMN =
       :search_results_comparison_postcode
+    ALSO_KNOWN_AS = :also_known_as
+    ADDRESS_LINE1 = :address_line1
+    ADDRESS_LINE2 = :address_line2
+    ADDRESS_LINE3 = :address_line3
+    TOWN = :town
+    POSTCODE = :postcode
+    COMPANY_REG_NO = :company_reg_no
+    COMPANY_ADDRESS_LINE1 = :company_address_line1
+    COMPANY_ADDRESS_LINE2 = :company_address_line2
+    COMPANY_ADDRESS_LINE3 = :company_address_line3
+    COMPANY_TOWN = :company_town
+    COMPANY_POSTCODE = :company_postcode
+    COMPANY_WEBSITE = :company_website
+    COMPANY_TELEPHONE_NUMBER = :company_telephone_number
+    COMPANY_EMAIL = :company_email
+    COMPANY_NAME = :company_name
     DOMESTIC_SAP_COLUMN = :domestic_sap_qualification
     DOMESTIC_RD_SAP_COLUMN = :domestic_rd_sap_qualification
     NON_DOMESTIC_SP3_COLUMN = :non_domestic_sp3_qualification
@@ -37,6 +53,22 @@ module Gateway
         registered_by_name: scheme_name,
         search_results_comparison_postcode:
           row[SEARCH_RESULTS_COMPARISON_POSTCODE_COLUMN.to_s],
+        also_known_as: row[ALSO_KNOWN_AS.to_s],
+        address_line1: row[ADDRESS_LINE1.to_s],
+        address_line2: row[ADDRESS_LINE2.to_s],
+        address_line3: row[ADDRESS_LINE3.to_s],
+        town: row[TOWN.to_s],
+        postcode: row[POSTCODE.to_s],
+        company_reg_no: row[COMPANY_REG_NO.to_s],
+        company_address_line1: row[COMPANY_ADDRESS_LINE1.to_s],
+        company_address_line2: row[COMPANY_ADDRESS_LINE2.to_s],
+        company_address_line3: row[COMPANY_ADDRESS_LINE3.to_s],
+        company_town: row[COMPANY_TOWN.to_s],
+        company_postcode: row[COMPANY_POSTCODE.to_s],
+        company_website: row[COMPANY_WEBSITE.to_s],
+        company_telephone_number: row[COMPANY_TELEPHONE_NUMBER.to_s],
+        company_email: row[COMPANY_EMAIL.to_s],
+        company_name: row[COMPANY_NAME.to_s],
         domestic_sap_qualification: row[DOMESTIC_SAP_COLUMN.to_s],
         domestic_rd_sap_qualification: row[DOMESTIC_RD_SAP_COLUMN.to_s],
         non_domestic_sp3_qualification: row[NON_DOMESTIC_SP3_COLUMN.to_s],
@@ -171,7 +203,11 @@ module Gateway
         'SELECT
           first_name, last_name, middle_names, date_of_birth, registered_by,
           scheme_assessor_id, telephone_number, email, b.name AS scheme_name,
-          search_results_comparison_postcode, domestic_sap_qualification,
+          search_results_comparison_postcode, also_known_as, address_line1,
+          address_line2, address_line3, town, postcode, company_reg_no,
+          company_address_line1, company_address_line2, company_address_line3,
+          company_town, company_postcode, company_website, company_telephone_number,
+          company_email, company_name, domestic_sap_qualification,
           domestic_rd_sap_qualification, non_domestic_sp3_qualification,
           non_domestic_cc4_qualification, non_domestic_dec_qualification,
           non_domestic_nos3_qualification, non_domestic_nos4_qualification,

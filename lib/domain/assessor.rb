@@ -19,6 +19,22 @@ module Domain
       registered_by_id: nil,
       registered_by_name: nil,
       search_results_comparison_postcode: nil,
+      also_known_as: nil,
+      address_line1: nil,
+      address_line2: nil,
+      address_line3: nil,
+      town: nil,
+      postcode: nil,
+      company_reg_no: nil,
+      company_address_line1: nil,
+      company_address_line2: nil,
+      company_address_line3: nil,
+      company_town: nil,
+      company_postcode: nil,
+      company_website: nil,
+      company_telephone_number: nil,
+      company_email: nil,
+      company_name: nil,
       domestic_sap_qualification: nil,
       domestic_rd_sap_qualification: nil,
       non_domestic_sp3_qualification: nil,
@@ -38,6 +54,22 @@ module Domain
       @registered_by_id = registered_by_id
       @registered_by_name = registered_by_name
       @search_results_comparison_postcode = search_results_comparison_postcode
+      @also_known_as = also_known_as
+      @address_line1 = address_line1
+      @address_line2 = address_line2
+      @address_line3 = address_line3
+      @town = town
+      @postcode = postcode
+      @company_reg_no = company_reg_no
+      @company_address_line1 = company_address_line1
+      @company_address_line2 = company_address_line2
+      @company_address_line3 = company_address_line3
+      @company_town = company_town
+      @company_postcode = company_postcode
+      @company_website = company_website
+      @company_telephone_number = company_telephone_number
+      @company_email = company_email
+      @company_name = company_name
       @domestic_sap_qualification = domestic_sap_qualification
       @domestic_rd_sap_qualification = domestic_rd_sap_qualification
       @non_domestic_sp3_qualification = non_domestic_sp3_qualification
@@ -97,6 +129,22 @@ module Domain
         hash[:contact_details][:telephone_number] = @telephone_number
       end
       hash[:middle_names] = @middle_names if @middle_names
+      hash[:also_known_as] = @also_known_as if @also_known_as
+      hash[:address_line1] = @address_line1 if @address_line1
+      hash[:address_line2] = @address_line2 if @address_line2
+      hash[:address_line3] = @address_line3 if @address_line3
+      hash[:town] = @town if @town
+      hash[:postcode] = @postcode if @postcode
+      hash[:company_reg_no] = @company_reg_no if @company_reg_no
+      hash[:company_address_line1] = @company_address_line1 if @company_address_line1
+      hash[:company_address_line2] = @company_address_line2 if @company_address_line2
+      hash[:company_address_line3] = @company_address_line3 if @company_address_line3
+      hash[:company_town] = @company_town if @company_town
+      hash[:company_postcode] = @company_postcode if @company_postcode
+      hash[:company_website] = @company_website if @company_website
+      hash[:company_telephone_number] = @company_telephone_number if @company_telephone_number
+      hash[:company_email] = @company_email if @company_email
+      hash[:company_name] = @company_name if @company_name
       hash
     end
 
@@ -111,6 +159,22 @@ module Domain
         telephone_number: @telephone_number,
         registered_by: @registered_by_id,
         search_results_comparison_postcode: @search_results_comparison_postcode,
+        also_known_as: @also_known_as,
+        address_line1: @address_line1,
+        address_line2: @address_line2,
+        address_line3: @address_line3,
+        town: @town,
+        postcode: @postcode,
+        company_reg_no: @company_reg_no,
+        company_address_line1: @company_address_line1,
+        company_address_line2: @company_address_line2,
+        company_address_line3: @company_address_line3,
+        company_town: @company_town,
+        company_postcode: @company_postcode,
+        company_website: @company_website,
+        company_telephone_number: @company_telephone_number,
+        company_email: @company_email,
+        company_name: @company_name,
         domestic_sap_qualification: @domestic_sap_qualification,
         domestic_rd_sap_qualification: @domestic_rd_sap_qualification,
         non_domestic_sp3_qualification: @non_domestic_sp3_qualification,
