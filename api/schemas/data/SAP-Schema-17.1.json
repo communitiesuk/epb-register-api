@@ -235,8 +235,8 @@
     "bury_key": "name",
     "extract": {
       "description": {"path": ["Description"]},
-      "energy_efficiency_rating": {"path": ["Energy_Efficiency_Rating"]},
-      "environmental_efficiency_rating": {"path": ["Environmental_Efficiency_Rating"]}
+      "energy_efficiency_rating": {"path": ["Energy_Efficiency_Rating"], "cast":  "integer"},
+      "environmental_efficiency_rating": {"path": ["Environmental_Efficiency_Rating"], "cast":  "integer"}
     }
   }
 }
