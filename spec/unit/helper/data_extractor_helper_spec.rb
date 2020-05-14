@@ -20,6 +20,7 @@ describe Helper::DataExtractorHelper do
           "broken": "I don't comply",
         },
         deep_hash: { another_hash: { treasure: "found me" } },
+        not_an_int: "99",
       }
     end
 
@@ -44,6 +45,7 @@ describe Helper::DataExtractorHelper do
         default_value_extraction: {
           path: %i[something_that_doesnt_exist], default: []
         },
+        make_an_int: { path: %i[not_an_int], cast: "integer" },
       }
     end
 
@@ -89,6 +91,10 @@ describe Helper::DataExtractorHelper do
 
     it "will extract a key and add a default value if it is missing" do
       expect(result[:default_value_extraction]).to eq([])
+    end
+
+    it "will extract a key and cast it to an integer" do
+      expect(result[:make_an_int]).to eq(99)
     end
   end
 end

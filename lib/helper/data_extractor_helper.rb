@@ -21,6 +21,13 @@ module Helper
           data[key] = settings[:default]
         end
 
+        if settings.key?(:cast) && data[key]
+          case settings[:cast]
+          when "integer"
+            data[key] = data[key].to_i
+          end
+        end
+
         if settings.key?(:extract)
           data[key] = [] unless data[key]
 
