@@ -1235,6 +1235,11 @@ components:
           description: The potential energy rating to be submitted, must be equal to or larger than currentEnergyEfficiencyRating
         postcode:
           $ref: '#/components/schemas/AddressPostcode'
+        propertySummary:
+          type: array
+          items:
+            anyOf:
+              - $ref: '#/components/schemas/PropertySummary'
         recommendedImprovements:
           type: array
           items:
@@ -1265,6 +1270,23 @@ components:
             impactOfSolidWallInsulation:
               type: integer
               example: -21
+
+    PropertySummary:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Walls"
+          description: "The name of the feature of the property"
+        description:
+          type: string
+          example: "Solid brick, as built, no insulation (assumed)"
+        energyEfficiencyRating:
+          type: number
+          example: 2
+        environmentalEfficiencyRating:
+          type: number
+          example: 0
 
     DomesticRecommendationWithoutCode:
       type: object
