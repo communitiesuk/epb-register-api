@@ -288,6 +288,8 @@ describe "Acceptance::Assessment" do
                 email: valid_assessor_request_body[:contactDetails][:email],
               },
               searchResultsComparisonPostcode: "",
+              address: {},
+              companyDetails: {},
               qualifications: {
                 domesticSap: "INACTIVE",
                 domesticRdSap: "ACTIVE",
@@ -406,6 +408,8 @@ describe "Acceptance::Assessment" do
                   email: valid_assessor_request_body[:contactDetails][:email],
                 },
                 searchResultsComparisonPostcode: "",
+                address: {},
+                companyDetails: {},
                 qualifications: {
                   domesticSap: "INACTIVE",
                   domesticRdSap: "ACTIVE",

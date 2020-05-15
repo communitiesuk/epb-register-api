@@ -462,6 +462,8 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
               "nonDomesticNos4" => "INACTIVE",
               "nonDomesticNos5" => "INACTIVE",
             },
+            "address" => {},
+            "companyDetails" => {},
             "registeredBy" => {
               "name" => "test scheme", "schemeId" => scheme_id
             },

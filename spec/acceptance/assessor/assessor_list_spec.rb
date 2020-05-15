@@ -107,6 +107,8 @@ describe "Acceptance::AssessorList" do
               "telephoneNumber" => "01234 567", "email" => "someone@energy.gov"
             },
             "searchResultsComparisonPostcode" => "",
+            "address" => {},
+            "companyDetails" => {},
             "qualifications" => {
               "domesticSap" => "INACTIVE",
               "domesticRdSap" => "ACTIVE",
@@ -149,6 +151,8 @@ describe "Acceptance::AssessorList" do
               "telephoneNumber" => "01234 567", "email" => "someone@energy.gov"
             },
             "searchResultsComparisonPostcode" => "",
+            "address" => {},
+            "companyDetails" => {},
             "qualifications" => {
               "domesticSap" => "INACTIVE",
               "domesticRdSap" => "ACTIVE",
@@ -173,6 +177,8 @@ describe "Acceptance::AssessorList" do
               "telephoneNumber" => "01234 567", "email" => "someone@energy.gov"
             },
             "searchResultsComparisonPostcode" => "",
+            "address" => {},
+            "companyDetails" => {},
             "qualifications" => {
               "domesticSap" => "INACTIVE",
               "domesticRdSap" => "ACTIVE",

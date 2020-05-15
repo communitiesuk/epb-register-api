@@ -389,6 +389,8 @@ describe "Acceptance::LodgeSapEnergyAssessment" do
             "firstName" => "Someone",
             "lastName" => "Person",
             "middleNames" => "Muddle",
+            "address" => {},
+            "companyDetails" => {},
             "qualifications" => {
               "domesticSap" => "ACTIVE",
               "domesticRdSap" => "INACTIVE",

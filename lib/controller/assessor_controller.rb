@@ -9,22 +9,32 @@ module Controller
         middleNames: { type: "string" },
         dateOfBirth: { type: "string", format: "iso-date" },
         searchResultsComparisonPostcode: { type: "string" },
-        also_known_as: { type: "string" },
-        address_line1: { type: "string" },
-        address_line2: { type: "string" },
-        address_line3: { type: "string" },
-        town: { type: "string" },
-        postcode: { type: "string" },
-        company_reg_no: { type: "string" },
-        company_address_line1: { type: "string" },
-        company_address_line2: { type: "string" },
-        company_address_line3: { type: "string" },
-        company_town: { type: "string" },
-        company_postcode: { type: "string" },
-        company_website: { type: "string" },
-        company_telephone_number: { type: "string", format: "telephone" },
-        company_email: { type: "string", format: "email" },
-        company_name: { type: "string" },
+        alsoKnownAs: { type: "string" },
+        address: {
+            type: "object",
+            properties: {
+              addressLine1: { type: "string" },
+              addressLine2: { type: "string" },
+              addressLine3: { type: "string" },
+              town: { type: "string" },
+              postcode: { type: "string" },
+            },
+        },
+        companyDetails: {
+            type: "object",
+            properties: {
+              companyRegNo: { type: "string" },
+              companyAddressLine1: { type: "string" },
+              companyAddressLine2: { type: "string" },
+              companyAddressLine3: { type: "string" },
+              companyTown: { type: "string" },
+              companyPostcode: { type: "string" },
+              companyWebsite: { type: "string" },
+              companyTelephoneNumber: { type: "string", format: "telephone" },
+              companyEmail: { type: "string", format: "email" },
+              companyName: { type: "string" },
+            },
+        },
         contactDetails: {
           type: "object",
           properties: {
@@ -52,6 +62,7 @@ module Controller
       result =
         @container.get_object(:find_assessors_by_name_use_case).execute(name)
 
+      result[:data] = assessor_list_results_filter(result)
       json_api_response(code: 200, data: result, burrow_key: :assessors)
     end
 
@@ -65,7 +76,30 @@ module Controller
           qualifications.split(","),
         )
 
+      result[:data] = assessor_list_results_filter(result)
+
       json_api_response(code: 200, data: result, burrow_key: :assessors)
+    end
+
+    def assessor_list_results_filter(unfiltered_results)
+      if unfiltered_results[:data]
+         unfiltered_results[:data].map do |r|
+           r.slice(
+              :registered_by,
+              :scheme_assessor_id,
+              :first_name,
+              :last_name,
+              :middle_names,
+              :date_of_birth,
+              :email,
+              :telephone_number,
+              :search_results_comparison_postcode,
+              :contact_details,
+              :qualifications,
+              :distance_from_postcode_in_miles
+          )
+        end
+      end
     end
 
     get "/api/schemes/:scheme_id/assessors",
@@ -100,6 +134,7 @@ module Controller
           "Must specify either name or postcode & qualification when searching",
         )
       end
+
     rescue StandardError => e
       case e
       when UseCase::FindAssessorsByPostcode::PostcodeNotRegistered
