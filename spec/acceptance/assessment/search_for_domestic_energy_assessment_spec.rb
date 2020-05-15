@@ -244,12 +244,20 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
   context "when using town and street name" do
     context "and town is missing but street name is present" do
       it "returns status 400 for a get" do
-        domestic_assessments_search_by_street_name_and_town("Palmtree Road", "", [400])
+        domestic_assessments_search_by_street_name_and_town(
+          "Palmtree Road",
+          "",
+          [400],
+        )
       end
 
       it "contains the correct error message" do
         response_body =
-          domestic_assessments_search_by_street_name_and_town("Palmtree Road", "", [400])
+          domestic_assessments_search_by_street_name_and_town(
+            "Palmtree Road",
+            "",
+            [400],
+          )
             .body
         expect(JSON.parse(response_body)).to eq(
           {
@@ -266,12 +274,21 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
 
     context "and street name is missing but town is present" do
       it "returns status 400 for a get" do
-        domestic_assessments_search_by_street_name_and_town("", "Brighton", [400])
+        domestic_assessments_search_by_street_name_and_town(
+          "",
+          "Brighton",
+          [400],
+        )
       end
 
       it "contains the correct error message" do
         response_body =
-          domestic_assessments_search_by_street_name_and_town("", "Brighton", [400]).body
+          domestic_assessments_search_by_street_name_and_town(
+            "",
+            "Brighton",
+            [400],
+          )
+            .body
         expect(JSON.parse(response_body)).to eq(
           {
             "errors" => [

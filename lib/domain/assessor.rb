@@ -136,13 +136,21 @@ module Domain
       hash[:town] = @town if @town
       hash[:postcode] = @postcode if @postcode
       hash[:company_reg_no] = @company_reg_no if @company_reg_no
-      hash[:company_address_line1] = @company_address_line1 if @company_address_line1
-      hash[:company_address_line2] = @company_address_line2 if @company_address_line2
-      hash[:company_address_line3] = @company_address_line3 if @company_address_line3
+      if @company_address_line1
+        hash[:company_address_line1] = @company_address_line1
+      end
+      if @company_address_line2
+        hash[:company_address_line2] = @company_address_line2
+      end
+      if @company_address_line3
+        hash[:company_address_line3] = @company_address_line3
+      end
       hash[:company_town] = @company_town if @company_town
       hash[:company_postcode] = @company_postcode if @company_postcode
       hash[:company_website] = @company_website if @company_website
-      hash[:company_telephone_number] = @company_telephone_number if @company_telephone_number
+      if @company_telephone_number
+        hash[:company_telephone_number] = @company_telephone_number
+      end
       hash[:company_email] = @company_email if @company_email
       hash[:company_name] = @company_name if @company_name
       hash

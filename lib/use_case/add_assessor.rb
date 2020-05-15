@@ -54,7 +54,8 @@ module UseCase
           company_town: add_assessor_request.company_town,
           company_postcode: add_assessor_request.company_postcode,
           company_website: add_assessor_request.company_website,
-          company_telephone_number: add_assessor_request.company_telephone_number,
+          company_telephone_number:
+            add_assessor_request.company_telephone_number,
           company_email: add_assessor_request.company_email,
           company_name: add_assessor_request.company_name,
           domestic_sap_qualification:

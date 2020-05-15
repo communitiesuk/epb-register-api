@@ -105,7 +105,8 @@ describe "Acceptance::Assessor" do
                 lastName: valid_assessor_request[:lastName],
                 dateOfBirth: valid_assessor_request[:dateOfBirth],
                 contactDetails: valid_assessor_request[:contactDetails],
-                searchResultsComparisonPostcode: valid_assessor_request[:searchResultsComparisonPostcode],
+                searchResultsComparisonPostcode:
+                  valid_assessor_request[:searchResultsComparisonPostcode],
                 alsoKnownAs: valid_assessor_request[:alsoKnownAs],
                 addressLine1: valid_assessor_request[:addressLine1],
                 addressLine2: valid_assessor_request[:addressLine2],
@@ -113,13 +114,17 @@ describe "Acceptance::Assessor" do
                 town: valid_assessor_request[:town],
                 postcode: valid_assessor_request[:postcode],
                 companyRegNo: valid_assessor_request[:companyRegNo],
-                companyAddressLine1: valid_assessor_request[:companyAddressLine1],
-                companyAddressLine2: valid_assessor_request[:companyAddressLine2],
-                companyAddressLine3: valid_assessor_request[:companyAddressLine3],
+                companyAddressLine1:
+                  valid_assessor_request[:companyAddressLine1],
+                companyAddressLine2:
+                  valid_assessor_request[:companyAddressLine2],
+                companyAddressLine3:
+                  valid_assessor_request[:companyAddressLine3],
                 companyTown: valid_assessor_request[:companyTown],
                 companyPostcode: valid_assessor_request[:companyPostcode],
                 companyWebsite: valid_assessor_request[:companyWebsite],
-                companyTelephoneNumber: valid_assessor_request[:companyTelephoneNumber],
+                companyTelephoneNumber:
+                  valid_assessor_request[:companyTelephoneNumber],
                 companyEmail: valid_assessor_request[:companyEmail],
                 companyName: valid_assessor_request[:companyName],
                 qualifications: {
@@ -264,7 +269,8 @@ describe "Acceptance::Assessor" do
               companyTown: valid_assessor_request[:companyTown],
               companyPostcode: valid_assessor_request[:companyPostcode],
               companyWebsite: valid_assessor_request[:companyWebsite],
-              companyTelephoneNumber: valid_assessor_request[:companyTelephoneNumber],
+              companyTelephoneNumber:
+                valid_assessor_request[:companyTelephoneNumber],
               companyEmail: valid_assessor_request[:companyEmail],
               companyName: valid_assessor_request[:companyName],
               qualifications: {
@@ -337,7 +343,8 @@ describe "Acceptance::Assessor" do
               companyTown: valid_assessor_request[:companyTown],
               companyPostcode: valid_assessor_request[:companyPostcode],
               companyWebsite: valid_assessor_request[:companyWebsite],
-              companyTelephoneNumber: valid_assessor_request[:companyTelephoneNumber],
+              companyTelephoneNumber:
+                valid_assessor_request[:companyTelephoneNumber],
               companyEmail: valid_assessor_request[:companyEmail],
               companyName: valid_assessor_request[:companyName],
               qualifications: valid_assessor_request[:qualifications],
