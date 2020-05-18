@@ -75,7 +75,7 @@ module UseCase
             assessment_data[:related_party_disclosure_text],
         )
 
-      if assessment_data[:type_of_assessment]=='RdSAP'
+      if assessment_data[:type_of_assessment] == "RdSAP"
         validator = Helper::RdsapValidator::ValidateAll.new
         errors = validator.validate(assessment)
 

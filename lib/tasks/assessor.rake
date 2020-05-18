@@ -71,7 +71,6 @@ task :generate_assessor do
       sap = rand(2)
       gda = rand(2)
 
-
       scheme_assessor_id = (scheme["name"][0..3] + index.to_s.rjust(6, "0")).upcase
 
       query =
