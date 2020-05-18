@@ -69,6 +69,8 @@ task :generate_assessor do
       nos3 = rand(2)
       nos4 = rand(2)
       sap = rand(2)
+      gda = rand(2)
+
 
       scheme_assessor_id = (scheme["name"][0..3] + index.to_s.rjust(6, "0")).upcase
 
@@ -107,7 +109,8 @@ task :generate_assessor do
               non_domestic_nos3_qualification,
               non_domestic_nos5_qualification,
               non_domestic_nos4_qualification,
-              domestic_sap_qualification
+              domestic_sap_qualification,
+              gda_qualification
             )
           VALUES(
             '#{first_name}',
@@ -141,7 +144,8 @@ task :generate_assessor do
             '#{nos3 != 0 ? 'ACTIVE' : 'INACTIVE'}',
             '#{nos5 != 0 ? 'ACTIVE' : 'INACTIVE'}',
             '#{nos4 != 0 ? 'ACTIVE' : 'INACTIVE'}',
-            '#{sap != 0 ? 'ACTIVE' : 'INACTIVE'}'
+            '#{sap != 0 ? 'ACTIVE' : 'INACTIVE'}',
+            '#{gda != 0 ? 'ACTIVE' : 'INACTIVE'}'
           )
           ON CONFLICT (scheme_assessor_id) DO UPDATE SET
               first_name	=	'#{first_name}',
@@ -175,7 +179,8 @@ task :generate_assessor do
               non_domestic_nos3_qualification	=	'#{nos3 != 0 ? 'ACTIVE' : 'INACTIVE'}',
               non_domestic_nos5_qualification	=	'#{nos5 != 0 ? 'ACTIVE' : 'INACTIVE'}',
               non_domestic_nos4_qualification	=	'#{nos4 != 0 ? 'ACTIVE' : 'INACTIVE'}',
-              domestic_sap_qualification	=	'#{sap != 0 ? 'ACTIVE' : 'INACTIVE'}'
+              domestic_sap_qualification	=	'#{sap != 0 ? 'ACTIVE' : 'INACTIVE'}',
+              gda_qualification = '#{gda != 0 ? 'ACTIVE' : 'INACTIVE'}'
           "
 
       ActiveRecord::Base.connection.execute(query)
