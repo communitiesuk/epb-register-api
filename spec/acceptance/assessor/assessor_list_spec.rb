@@ -118,6 +118,7 @@ describe "Acceptance::AssessorList" do
               "nonDomesticNos3" => "INACTIVE",
               "nonDomesticNos4" => "INACTIVE",
               "nonDomesticNos5" => "INACTIVE",
+              "gda" => "INACTIVE",
             },
           },
         ],
@@ -162,6 +163,7 @@ describe "Acceptance::AssessorList" do
               "nonDomesticNos3" => "INACTIVE",
               "nonDomesticNos4" => "INACTIVE",
               "nonDomesticNos5" => "INACTIVE",
+              "gda" => "INACTIVE",
             },
           },
           {
@@ -188,6 +190,7 @@ describe "Acceptance::AssessorList" do
               "nonDomesticNos3" => "INACTIVE",
               "nonDomesticNos4" => "INACTIVE",
               "nonDomesticNos5" => "INACTIVE",
+              "gda" => "INACTIVE",
             },
           },
         ],

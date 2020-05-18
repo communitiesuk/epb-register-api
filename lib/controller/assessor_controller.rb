@@ -53,6 +53,7 @@ module Controller
             nonDomesticNos3: { type: "string", enum: %w[ACTIVE INACTIVE] },
             nonDomesticNos4: { type: "string", enum: %w[ACTIVE INACTIVE] },
             nonDomesticNos5: { type: "string", enum: %w[ACTIVE INACTIVE] },
+            gda: { type: "string", enum: %w[ACTIVE INACTIVE] },
           },
         },
       },

@@ -393,6 +393,7 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
               "nonDomesticNos3" => "INACTIVE",
               "nonDomesticNos4" => "INACTIVE",
               "nonDomesticNos5" => "INACTIVE",
+              "gda" => "INACTIVE",
             },
             "registeredBy" => {
               "name" => "test scheme", "schemeId" => scheme_id

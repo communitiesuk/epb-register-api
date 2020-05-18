@@ -41,6 +41,7 @@ describe "Acceptance::Assessor" do
         nonDomesticNos3: "ACTIVE",
         nonDomesticNos4: "ACTIVE",
         nonDomesticNos5: "ACTIVE",
+        gda: "ACTIVE",
       },
     }
   end
@@ -123,6 +124,7 @@ describe "Acceptance::Assessor" do
                   nonDomesticNos3: "ACTIVE",
                   nonDomesticNos4: "ACTIVE",
                   nonDomesticNos5: "ACTIVE",
+                  gda: "ACTIVE",
                 },
               },
               meta: {},
@@ -255,6 +257,7 @@ describe "Acceptance::Assessor" do
                 nonDomesticNos3: "ACTIVE",
                 nonDomesticNos4: "ACTIVE",
                 nonDomesticNos5: "ACTIVE",
+                gda: "ACTIVE",
               },
               contactDetails: {
                 email: "person@person.com", telephoneNumber: "010199991010101"
