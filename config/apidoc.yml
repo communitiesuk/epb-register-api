@@ -599,6 +599,60 @@ components:
               example: j.t.bloggs@example.com
         qualifications:
           $ref: '#/components/schemas/AssessorQualifications'
+        alsoKnownAs:
+          type: string
+          example: Jo
+        address:
+          type: object
+          properties:
+            addressLine1:
+              type: string
+              example: 2 Marsham Street
+            addressLine2:
+              type: string
+              example: ''
+            addressLine3:
+              type: string
+              example: ''
+            addressLine4:
+              type: string
+              example: ''
+            town:
+              type: string
+              example: London
+        companyDetails:
+          type: object
+          properties:
+            companyRegNo:
+              type: string
+              example: ''
+            companyAddressLine1:
+              type: string
+              example: ''
+            companyAddressLine2:
+              type: string
+              example: ''
+            companyAddressLine3:
+              type: string
+              example: ''
+            companyTown:
+              type: string
+              example: ''
+            companyPostcode:
+              type: string
+              example: ''
+            companyWebsite:
+              type: string
+              example: ''
+            companyTelephoneNumber:
+              type: string
+              example: ''
+            companyEmail:
+              type: string
+              example: ''
+            companyName:
+              type: string
+              example: ''
 
     AssessorSummary:
       allOf:
@@ -675,6 +729,62 @@ components:
               format: email
         qualifications:
           $ref: '#/components/schemas/AssessorQualifications'
+        alsoKnownAs:
+          type: string
+          example: Jo
+        address:
+          type: object
+          properties:
+            addressLine1:
+              type: string
+              example: 2 Marsham Street
+            addressLine2:
+              type: string
+              example: ''
+            addressLine3:
+              type: string
+              example: ''
+            addressLine4:
+              type: string
+              example: ''
+            town:
+              type: string
+              example: London
+        companyDetails:
+          type: object
+          properties:
+            companyRegNo:
+              type: string
+              example: ''
+            companyAddressLine1:
+              type: string
+              example: ''
+            companyAddressLine2:
+              type: string
+              example: ''
+            companyAddressLine3:
+              type: string
+              example: ''
+            companyTown:
+              type: string
+              example: ''
+            companyPostcode:
+              type: string
+              example: ''
+            companyWebsite:
+              type: string
+              example: ''
+            companyTelephoneNumber:
+              type: string
+              maxLength: 256
+              example: ''
+            companyEmail:
+              type: string
+              format: email
+              example: ''
+            companyName:
+              type: string
+              example: ''
 
     AssessorSearchResult:
       allOf:
