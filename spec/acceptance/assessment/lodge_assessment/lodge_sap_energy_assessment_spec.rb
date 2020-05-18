@@ -78,12 +78,12 @@ describe "Acceptance::LodgeSapEnergyAssessment" do
           scheme_id = add_scheme_and_get_id
           add_assessor(
             scheme_id,
-            "Membership-Number0",
+            "TEST000000",
             inactive_assessor_request_body,
           )
 
           lodge_assessment(
-            assessment_id: "1234-1234-1234-1234-1234",
+            assessment_id: "0000-0000-0000-0000-0000",
             assessment_body: valid_sap_xml,
             accepted_responses: [400],
             auth_data: { scheme_ids: [scheme_id] },
@@ -118,7 +118,7 @@ describe "Acceptance::LodgeSapEnergyAssessment" do
           scheme_id = add_scheme_and_get_id
           add_assessor(
             scheme_id,
-            "Membership-Number0",
+            "TEST000000",
             inactive_assessor_request_body,
           )
 
@@ -593,7 +593,7 @@ describe "Acceptance::LodgeSapEnergyAssessment" do
         scheme_id = add_scheme_and_get_id
         add_assessor(
           scheme_id,
-          "Membership-Number0",
+          "TEST000000",
           sap_valid_assessor_request_body,
         )
 
@@ -614,7 +614,7 @@ describe "Acceptance::LodgeSapEnergyAssessment" do
         scheme_id = add_scheme_and_get_id
         add_assessor(
           scheme_id,
-          "Membership-Number0",
+          "TEST000000",
           sap_valid_assessor_request_body,
         )
 

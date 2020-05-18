@@ -77,7 +77,7 @@ describe "Acceptance::LodgeRdSapEnergyAssessment" do
           scheme_id = add_scheme_and_get_id
           add_assessor(
             scheme_id,
-            "Membership-Number0",
+            "TEST000000",
             inactive_assessor_request_body,
           )
 
@@ -93,7 +93,7 @@ describe "Acceptance::LodgeRdSapEnergyAssessment" do
           scheme_id = add_scheme_and_get_id
           add_assessor(
             scheme_id,
-            "Membership-Number0",
+            "TEST000000",
             inactive_assessor_request_body,
           )
 
@@ -119,7 +119,7 @@ describe "Acceptance::LodgeRdSapEnergyAssessment" do
           scheme_id = add_scheme_and_get_id
           add_assessor(
             scheme_id,
-            "Membership-Number0",
+            "TEST000000",
             inactive_assessor_request_body,
           )
 
@@ -135,7 +135,7 @@ describe "Acceptance::LodgeRdSapEnergyAssessment" do
           scheme_id = add_scheme_and_get_id
           add_assessor(
             scheme_id,
-            "Membership-Number0",
+            "TEST000000",
             inactive_assessor_request_body,
           )
 
@@ -178,7 +178,7 @@ describe "Acceptance::LodgeRdSapEnergyAssessment" do
 
     it "returns 403 if it is being lodged by the wrong scheme" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "Membership-Number0", valid_assessor_request_body)
+      add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
       different_scheme_id = add_scheme_and_get_id("BADSCHEME")
 
       lodge_assessment(
@@ -191,7 +191,7 @@ describe "Acceptance::LodgeRdSapEnergyAssessment" do
 
     it "returns status 201" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "Membership-Number0", valid_assessor_request_body)
+      add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
 
       lodge_assessment(
         assessment_id: "0000-0000-0000-0000-0000",
@@ -203,7 +203,7 @@ describe "Acceptance::LodgeRdSapEnergyAssessment" do
 
     it "returns json" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "Membership-Number0", valid_assessor_request_body)
+      add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
 
       response =
         lodge_assessment(
@@ -218,7 +218,7 @@ describe "Acceptance::LodgeRdSapEnergyAssessment" do
 
     it "returns the assessment as a hash" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "Membership-Number0", valid_assessor_request_body)
+      add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
 
       response =
         JSON.parse(
@@ -237,7 +237,7 @@ describe "Acceptance::LodgeRdSapEnergyAssessment" do
 
     it "returns the assessment with the correct keys" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "Membership-Number0", valid_assessor_request_body)
+      add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
 
       response =
         JSON.parse(
@@ -286,7 +286,7 @@ describe "Acceptance::LodgeRdSapEnergyAssessment" do
 
     it "returns the correct scheme assessor id" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "Membership-Number0", valid_assessor_request_body)
+      add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
 
       response =
         JSON.parse(
@@ -300,7 +300,7 @@ describe "Acceptance::LodgeRdSapEnergyAssessment" do
           symbolize_names: true,
         )
 
-      expect(response.dig(:data, :schemeAssessorId)).to eq("Membership-Number0")
+      expect(response.dig(:data, :schemeAssessorId)).to eq("TEST000000")
     end
 
     context "when schema is not supported" do
@@ -357,7 +357,7 @@ describe "Acceptance::LodgeRdSapEnergyAssessment" do
         assessment_id = doc.at("RRN")
         assessment_id.children = "1234-1234-1234-1234-1234"
 
-        scheme_assessor_id = doc.at("Membership-Number")
+        scheme_assessor_id = doc.at("Certificate-Number")
         scheme_assessor_id.children = "TEST123456"
       end
 
@@ -726,7 +726,7 @@ describe "Acceptance::LodgeRdSapEnergyAssessment" do
         scheme_id = add_scheme_and_get_id
         add_assessor(
           scheme_id,
-          "Membership-Number0",
+          "TEST000000",
           valid_assessor_request_body,
         )
 
@@ -746,7 +746,7 @@ describe "Acceptance::LodgeRdSapEnergyAssessment" do
         scheme_id = add_scheme_and_get_id
         add_assessor(
           scheme_id,
-          "Membership-Number0",
+          "TEST000000",
           valid_assessor_request_body,
         )
 
@@ -774,7 +774,7 @@ describe "Acceptance::LodgeRdSapEnergyAssessment" do
         scheme_id = add_scheme_and_get_id
         add_assessor(
           scheme_id,
-          "Membership-Number0",
+          "TEST000000",
           valid_assessor_request_body,
         )
 

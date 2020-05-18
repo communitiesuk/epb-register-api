@@ -22,7 +22,7 @@ context "searching for an address" do
   context "an address that has a report lodged" do
     before(:each) do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "Membership-Number0", valid_assessor_request_body)
+      add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
 
       lodge_assessment(
         assessment_id: "0000-0000-0000-0000-0000",
