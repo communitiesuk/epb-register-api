@@ -579,7 +579,7 @@ paths:
         '409':
           description: Assessor already exists on a different scheme
 
-  '/assessments/domectic-epc/{assessmentId}':
+  '/assessments/domestic-epc/{assessmentId}':
     put:
       tags:
         - Migration
