@@ -277,7 +277,7 @@ module Controller
         request_body[:RdSAP_Report][:Report_Header][:Energy_Assessor][
           :Identification_Number
         ][
-          :Membership_Number
+          :Certificate_Number
         ]
       use_case =
         @container.get_object(:check_assessor_belongs_to_scheme_use_case)
