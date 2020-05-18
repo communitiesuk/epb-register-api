@@ -75,10 +75,12 @@ module UseCase
             assessment_data[:related_party_disclosure_text],
         )
 
-      validator = Helper::RdsapValidator::ValidateAll.new
-      errors = validator.validate(assessment)
+      if assessment_data[:type_of_assessment]=='RdSAP'
+        validator = Helper::RdsapValidator::ValidateAll.new
+        errors = validator.validate(assessment)
 
-      raise AssessmentRuleException, errors.to_json unless errors.empty?
+        raise AssessmentRuleException, errors.to_json unless errors.empty?
+      end
 
       @assessments_gateway.insert_or_update(assessment)
       assessment

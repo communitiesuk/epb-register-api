@@ -77,6 +77,22 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
     end
   end
 
+  context "when looking for non-domestic EPCs" do
+    it "doesn't show up when searched for by postcode" do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(scheme_id, "TEST123456", valid_assessor_request_body)
+
+      commercial_assessment = valid_assessment_body.dup
+      commercial_assessment[:typeOfAssessment] = "CEPC"
+      migrate_assessment("123-987", commercial_assessment)
+
+      response = domestic_assessments_search_by_postcode("SE17EZ")
+      response_json = JSON.parse(response.body)
+
+      expect(response_json["data"]["assessments"][0]).to eq(nil)
+    end
+  end
+
   context "when a search postcode is valid" do
     it "returns status 200 for a get" do
       domestic_assessments_search_by_postcode("SE17EZ", [200])

@@ -37,7 +37,7 @@ module Controller
         dateOfExpiry: { type: "string", format: "iso-date" },
         totalFloorArea: { type: "number" },
         dwellingType: { type: "string" },
-        typeOfAssessment: { type: "string", enum: %w[SAP RdSAP] },
+        typeOfAssessment: { type: "string", enum: %w[SAP RdSAP CEPC] },
         currentEnergyEfficiencyRating: { type: "integer" },
         potentialEnergyEfficiencyRating: { type: "integer" },
         currentCarbonEmission: { type: "number" },
