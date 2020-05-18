@@ -168,6 +168,7 @@ describe "Acceptance::SearchForAssessor" do
               nonDomesticNos3: "INACTIVE",
               nonDomesticNos4: "INACTIVE",
               nonDomesticNos5: "INACTIVE",
+              gda: "INACTIVE",
             },
             distanceFromPostcodeInMiles: 0.0,
           }.to_json,

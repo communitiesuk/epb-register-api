@@ -53,6 +53,7 @@ module Controller
             nonDomesticNos3: { type: "string", enum: %w[ACTIVE INACTIVE] },
             nonDomesticNos4: { type: "string", enum: %w[ACTIVE INACTIVE] },
             nonDomesticNos5: { type: "string", enum: %w[ACTIVE INACTIVE] },
+            gda: { type: "string", enum: %w[ACTIVE INACTIVE] },
           },
         },
       },
@@ -83,20 +84,20 @@ module Controller
 
     def assessor_list_results_filter(unfiltered_results)
       if unfiltered_results[:data]
-         unfiltered_results[:data].map do |r|
-           r.slice(
-              :registered_by,
-              :scheme_assessor_id,
-              :first_name,
-              :last_name,
-              :middle_names,
-              :date_of_birth,
-              :email,
-              :telephone_number,
-              :search_results_comparison_postcode,
-              :contact_details,
-              :qualifications,
-              :distance_from_postcode_in_miles
+        unfiltered_results[:data].map do |r|
+          r.slice(
+            :registered_by,
+            :scheme_assessor_id,
+            :first_name,
+            :last_name,
+            :middle_names,
+            :date_of_birth,
+            :email,
+            :telephone_number,
+            :search_results_comparison_postcode,
+            :contact_details,
+            :qualifications,
+            :distance_from_postcode_in_miles,
           )
         end
       end

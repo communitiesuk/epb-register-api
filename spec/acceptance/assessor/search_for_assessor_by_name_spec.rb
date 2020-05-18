@@ -19,6 +19,7 @@ describe "Searching for an assessor by name" do
         nonDomesticNos3: "ACTIVE",
         nonDomesticNos4: "ACTIVE",
         nonDomesticNos5: "ACTIVE",
+        gda: "ACTIVE",
       },
     }
   end

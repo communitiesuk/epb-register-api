@@ -74,6 +74,7 @@ module UseCase
             add_assessor_request.non_domestic_nos4_qualification,
           non_domestic_nos5_qualification:
             add_assessor_request.non_domestic_nos5_qualification,
+          gda_qualification: add_assessor_request.gda_qualification,
         )
 
       @assessors_gateway.update(assessor)
