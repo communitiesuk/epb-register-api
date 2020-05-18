@@ -49,7 +49,7 @@ module UseCase
         raise InactiveAssessorException
       end
 
-      if lodgement.type == "Nos3" &&
+      if lodgement.type == "CEPC" &&
           assessor.non_domestic_nos3_qualification == "INACTIVE"
         raise InactiveAssessorException
       end

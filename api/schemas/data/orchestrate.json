@@ -24,7 +24,7 @@
     "data_path": "api/schemas/data/SAP-Schema-NI-17.4.json"
   },
   "CEPC-7.1": {
-    "report_type": "Nos3",
+    "report_type": "CEPC",
     "schema_path": "api/schemas/xml/CEPC-7.1/Reports/CEPC-Reports.xsd",
     "data_path": "api/schemas/data/CEPC-7.1.json"
   }

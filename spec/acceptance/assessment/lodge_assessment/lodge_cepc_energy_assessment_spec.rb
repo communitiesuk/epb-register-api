@@ -492,7 +492,7 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
           "potentialEnergyEfficiencyRating" => 99,
           "totalFloorArea" => 99.0,
           "town" => "Post-Town1",
-          "typeOfAssessment" => "Nos3",
+          "typeOfAssessment" => "CEPC",
           "relatedPartyDisclosureNumber" => nil,
           "relatedPartyDisclosureText" => nil,
           "recommendedImprovements" => [],
