@@ -11,29 +11,29 @@ module Controller
         searchResultsComparisonPostcode: { type: "string" },
         alsoKnownAs: { type: "string" },
         address: {
-            type: "object",
-            properties: {
-              addressLine1: { type: "string" },
-              addressLine2: { type: "string" },
-              addressLine3: { type: "string" },
-              town: { type: "string" },
-              postcode: { type: "string" },
-            },
+          type: "object",
+          properties: {
+            addressLine1: { type: "string" },
+            addressLine2: { type: "string" },
+            addressLine3: { type: "string" },
+            town: { type: "string" },
+            postcode: { type: "string" },
+          },
         },
         companyDetails: {
-            type: "object",
-            properties: {
-              companyRegNo: { type: "string" },
-              companyAddressLine1: { type: "string" },
-              companyAddressLine2: { type: "string" },
-              companyAddressLine3: { type: "string" },
-              companyTown: { type: "string" },
-              companyPostcode: { type: "string" },
-              companyWebsite: { type: "string" },
-              companyTelephoneNumber: { type: "string", format: "telephone" },
-              companyEmail: { type: "string", format: "email" },
-              companyName: { type: "string" },
-            },
+          type: "object",
+          properties: {
+            companyRegNo: { type: "string" },
+            companyAddressLine1: { type: "string" },
+            companyAddressLine2: { type: "string" },
+            companyAddressLine3: { type: "string" },
+            companyTown: { type: "string" },
+            companyPostcode: { type: "string" },
+            companyWebsite: { type: "string" },
+            companyTelephoneNumber: { type: "string", format: "telephone" },
+            companyEmail: { type: "string", format: "email" },
+            companyName: { type: "string" },
+          },
         },
         contactDetails: {
           type: "object",
@@ -135,7 +135,6 @@ module Controller
           "Must specify either name or postcode & qualification when searching",
         )
       end
-
     rescue StandardError => e
       case e
       when UseCase::FindAssessorsByPostcode::PostcodeNotRegistered

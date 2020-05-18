@@ -112,9 +112,17 @@ module Domain
           non_domestic_dec:
             @non_domestic_dec_qualification == "ACTIVE" ? "ACTIVE" : "INACTIVE",
           non_domestic_nos3:
-            @non_domestic_nos3_qualification == "ACTIVE" ? "ACTIVE" : "INACTIVE",
+            if @non_domestic_nos3_qualification == "ACTIVE"
+              "ACTIVE"
+            else
+              "INACTIVE"
+            end,
           non_domestic_nos4:
-            @non_domestic_nos4_qualification == "ACTIVE" ? "ACTIVE" : "INACTIVE",
+            if @non_domestic_nos4_qualification == "ACTIVE"
+              "ACTIVE"
+            else
+              "INACTIVE"
+            end,
           non_domestic_nos5:
             @non_domestic_nos5_qualification == "ACTIVE" ? "ACTIVE" : "INACTIVE",
           gda:
@@ -123,7 +131,9 @@ module Domain
       }
 
       hash[:contact_details][:email] = @email if @email
-      hash[:contact_details][:telephone_number] = @telephone_number if @telephone_number
+      if @telephone_number
+        hash[:contact_details][:telephone_number] = @telephone_number
+      end
       hash[:middle_names] = @middle_names if @middle_names
       hash[:also_known_as] = @also_known_as if @also_known_as
       hash[:address][:address_line1] = @address_line1 if @address_line1
@@ -131,14 +141,29 @@ module Domain
       hash[:address][:address_line3] = @address_line3 if @address_line3
       hash[:address][:town] = @town if @town
       hash[:address][:postcode] = @postcode if @postcode
-      hash[:company_details][:company_reg_no] = @company_reg_no if @company_reg_no
-      hash[:company_details][:company_address_line1] = @company_address_line1 if @company_address_line1
-      hash[:company_details][:company_address_line2] = @company_address_line2 if @company_address_line2
-      hash[:company_details][:company_address_line3] = @company_address_line3 if @company_address_line3
+      if @company_reg_no
+        hash[:company_details][:company_reg_no] = @company_reg_no
+      end
+      if @company_address_line1
+        hash[:company_details][:company_address_line1] = @company_address_line1
+      end
+      if @company_address_line2
+        hash[:company_details][:company_address_line2] = @company_address_line2
+      end
+      if @company_address_line3
+        hash[:company_details][:company_address_line3] = @company_address_line3
+      end
       hash[:company_details][:company_town] = @company_town if @company_town
-      hash[:company_details][:company_postcode] = @company_postcode if @company_postcode
-      hash[:company_details][:company_website] = @company_website if @company_website
-      hash[:company_details][:company_telephone_number] = @company_telephone_number if @company_telephone_number
+      if @company_postcode
+        hash[:company_details][:company_postcode] = @company_postcode
+      end
+      if @company_website
+        hash[:company_details][:company_website] = @company_website
+      end
+      if @company_telephone_number
+        hash[:company_details][:company_telephone_number] =
+          @company_telephone_number
+      end
       hash[:company_details][:company_email] = @company_email if @company_email
       hash[:company_details][:company_name] = @company_name if @company_name
       hash

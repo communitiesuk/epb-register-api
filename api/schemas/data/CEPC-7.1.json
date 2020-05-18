@@ -76,11 +76,6 @@
       "Postcode"
     ]
   },
-
-
-
-
-
   "current_energy_rating": {
     "path": ["_"],
     "default": "99"

@@ -53,13 +53,17 @@ module Boundary
       @town = body.dig(:address, :town)
       @postcode = body.dig(:address, :postcode)
       @company_reg_no = body.dig(:company_details, :company_reg_no)
-      @company_address_line1 = body.dig(:company_details, :company_address_line1)
-      @company_address_line2 = body.dig(:company_details, :company_address_line2)
-      @company_address_line3 = body.dig(:company_details, :company_address_line3)
+      @company_address_line1 =
+        body.dig(:company_details, :company_address_line1)
+      @company_address_line2 =
+        body.dig(:company_details, :company_address_line2)
+      @company_address_line3 =
+        body.dig(:company_details, :company_address_line3)
       @company_town = body.dig(:company_details, :company_town)
       @company_postcode = body.dig(:company_details, :company_postcode)
       @company_website = body.dig(:company_details, :company_website)
-      @company_telephone_number = body.dig(:company_details, :company_telephone_number)
+      @company_telephone_number =
+        body.dig(:company_details, :company_telephone_number)
       @company_email = body.dig(:company_details, :company_email)
       @company_name = body.dig(:company_details, :company_name)
       @domestic_sap_qualification = body.dig(:qualifications, :domestic_sap)

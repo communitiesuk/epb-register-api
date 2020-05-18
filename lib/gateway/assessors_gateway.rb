@@ -7,7 +7,8 @@ module Gateway
     DATE_OF_BIRTH_COLUMN = :date_of_birth
     EMAIL_COLUMN = :email
     TELEPHONE_NUMBER_COLUMN = :telephone_number
-    SEARCH_RESULTS_COMPARISON_POSTCODE_COLUMN = :search_results_comparison_postcode
+    SEARCH_RESULTS_COMPARISON_POSTCODE_COLUMN =
+      :search_results_comparison_postcode
     ALSO_KNOWN_AS = :also_known_as
     ADDRESS_LINE1 = :address_line1
     ADDRESS_LINE2 = :address_line2

@@ -187,7 +187,9 @@ module Gateway
           ActiveRecord::Base.sanitize_sql(street_name)
         }' OR address_line3 ILIKE '%#{
           ActiveRecord::Base.sanitize_sql(street_name)
-        }') AND (town ILIKE '#{ActiveRecord::Base.sanitize_sql(town)}')
+        }') AND (town ILIKE '#{
+          ActiveRecord::Base.sanitize_sql(town)
+        }')
          AND type_of_assessment IN('RdSAP', 'SAP')"
 
       response = Assessment.connection.execute(sql)
