@@ -60,6 +60,7 @@ end
 def get_valid_jwt(scopes = [], sup = {})
   token =
     Auth::Token.new iat: Time.now.to_i,
+                    exp: Time.now.to_i + (60 * 60),
                     iss: ENV["JWT_ISSUER"],
                     sub: "test-subject",
                     scopes: scopes,

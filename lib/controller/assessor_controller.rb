@@ -30,16 +30,16 @@ module Controller
             companyTown: { type: %w[string null] },
             companyPostcode: { type: %w[string null] },
             companyWebsite: { type: %w[string null] },
-            companyTelephoneNumber: { type: %w[string null], format: "telephone" },
-            companyEmail: { type: %w[string null], format: "email" },
+            companyTelephoneNumber: { type: %w[string null] },
+            companyEmail: { type: %w[string null] },
             companyName: { type: %w[string null] },
           },
         },
         contactDetails: {
           type: "object",
           properties: {
-            telephoneNumber: { type: %w[string null], format: "telephone" },
-            email: { type: %w[string null], format: "email" },
+            telephoneNumber: { type: "string", format: "telephone" },
+            email: { type: "string", format: "email" },
           },
         },
         qualifications: {
