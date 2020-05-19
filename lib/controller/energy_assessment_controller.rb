@@ -269,19 +269,5 @@ module Controller
         server_error(e)
       end
     end
-
-  private
-
-    def scheme_is_authorised_to_lodge(scheme_ids_from_auth, request_body)
-      scheme_assessor_id =
-        request_body[:RdSAP_Report][:Report_Header][:Energy_Assessor][
-          :Identification_Number
-        ][
-          :Certificate_Number
-        ]
-      use_case =
-        @container.get_object(:check_assessor_belongs_to_scheme_use_case)
-      use_case.execute(scheme_assessor_id, scheme_ids_from_auth)
-    end
   end
 end
