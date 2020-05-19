@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_19_131145) do
+ActiveRecord::Schema.define(version: 2020_05_19_132058) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,7 +62,6 @@ ActiveRecord::Schema.define(version: 2020_05_19_131145) do
     t.string "non_domestic_nos5_qualification"
     t.string "non_domestic_nos4_qualification"
     t.string "domestic_sap_qualification"
-    t.string "related_party_disclosure_number"
     t.string "also_known_as"
     t.string "address_line1"
     t.string "address_line2"
