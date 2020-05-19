@@ -58,7 +58,7 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
   end
 
   let(:valid_cepc_xml) do
-    File.read File.join Dir.pwd, "api/schemas/xml/examples/CEPC-7.11(ACIC).xml"
+    File.read File.join Dir.pwd, "api/schemas/xml/examples/CEPC-7.11 (EPC).xml"
   end
 
   context "when lodging a CEPC assessment (post)" do
@@ -318,10 +318,10 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
       before do
         add_assessor(scheme_id, "TEST123456", valid_assessor_request_body)
 
-        assessment_id = doc.at("RRN")
+        assessment_id = doc.at("//CEPC:RRN")
         assessment_id.children = "1234-1234-1234-1234-1234"
 
-        scheme_assessor_id = doc.at("Certificate-Number")
+        scheme_assessor_id = doc.at("//CEPC:Certificate-Number")
         scheme_assessor_id.children = "JASE000000"
       end
 
@@ -362,10 +362,10 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
       before do
         add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
 
-        assessment_id = doc.at("RRN")
+        assessment_id = doc.at("//CEPC:RRN")
         assessment_id.children = "1234-1234-1234-1234-1234"
 
-        scheme_assessor_id = doc.at("Certificate-Number")
+        scheme_assessor_id = doc.at("//CEPC:Certificate-Number")
         scheme_assessor_id.children = "JASE000000"
       end
 
@@ -477,8 +477,8 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
       end
 
       it "can return the correct second address line of the property" do
-        address_line_one = doc.search("Address-Line-1")[0]
-        address_line_two = Nokogiri::XML::Node.new "Address-Line-2", doc
+        address_line_one = doc.search("//CEPC:Address-Line-1")[0]
+        address_line_two = Nokogiri::XML::Node.new "CEPC:Address-Line-2", doc
         address_line_two.content = "2 test street"
         address_line_one.add_next_sibling address_line_two
 
@@ -494,8 +494,8 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
       end
 
       it "can return the correct third address line of the property" do
-        address_line_one = doc.search("Address-Line-1")[0]
-        address_line_three = Nokogiri::XML::Node.new "Address-Line-3", doc
+        address_line_one = doc.search("//CEPC:Address-Line-1")[0]
+        address_line_three = Nokogiri::XML::Node.new "CEPC:Address-Line-3", doc
         address_line_three.content = "3 test street"
         address_line_one.add_next_sibling address_line_three
 
@@ -511,13 +511,13 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
       end
 
       it "can return the correct address summary of the property" do
-        address_line_one = doc.search("Address-Line-1")[0]
+        address_line_one = doc.search("//CEPC:Address-Line-1")[0]
 
-        address_line_two = Nokogiri::XML::Node.new "Address-Line-2", doc
+        address_line_two = Nokogiri::XML::Node.new "CEPC:Address-Line-2", doc
         address_line_two.content = "2 test street"
         address_line_one.add_next_sibling address_line_two
 
-        address_line_three = Nokogiri::XML::Node.new "Address-Line-3", doc
+        address_line_three = Nokogiri::XML::Node.new "CEPC:Address-Line-3", doc
         address_line_three.content = "3 test street"
         address_line_two.add_next_sibling address_line_three
 
@@ -557,7 +557,7 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
 
         doc = Nokogiri.XML valid_cepc_xml
 
-        scheme_assessor_id = doc.at("Property-Address")
+        scheme_assessor_id = doc.at("//CEPC:Property-Address")
         scheme_assessor_id.children = ""
 
         lodge_assessment(
@@ -574,8 +574,8 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
 
         doc = Nokogiri.XML valid_cepc_xml
 
-        address = doc.at("Property-Address")
-        address.children = "<Postcode>invalid</Postcode>"
+        address = doc.at("//CEPC:Property-Address")
+        address.children = "<CEPC:Postcode>invalid</CEPC:Postcode>"
 
         response_body =
           JSON.parse(
@@ -599,7 +599,7 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
 
         xml = valid_cepc_xml
 
-        xml = xml.gsub("<Report-Header>", "<Report-Header")
+        xml = xml.gsub("<CEPC:Report-Header>", "<Report-Header")
 
         response_body =
           JSON.parse(
@@ -614,7 +614,7 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
 
         expect(
           response_body["errors"][0]["title"],
-        ).to include "Invalid attribute name: <<RRN>"
+        ).to include "Invalid attribute name: <<CEPC:RRN>"
       end
     end
   end
