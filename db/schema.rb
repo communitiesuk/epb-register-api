@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_18_123727) do
+ActiveRecord::Schema.define(version: 2020_05_19_131145) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,8 +59,8 @@ ActiveRecord::Schema.define(version: 2020_05_18_123727) do
     t.string "non_domestic_cc4_qualification"
     t.string "non_domestic_dec_qualification"
     t.string "non_domestic_nos3_qualification"
-    t.string "non_domestic_nos4_qualification"
     t.string "non_domestic_nos5_qualification"
+    t.string "non_domestic_nos4_qualification"
     t.string "domestic_sap_qualification"
     t.string "related_party_disclosure_number"
     t.string "also_known_as"
@@ -97,6 +97,16 @@ ActiveRecord::Schema.define(version: 2020_05_18_123727) do
     t.string "green_deal_category_code"
     t.string "improvement_title"
     t.string "improvement_description"
+  end
+
+  create_table "lodgement_attempts", force: :cascade do |t|
+    t.string "url"
+    t.text "request_header"
+    t.text "request_body"
+    t.integer "scheme_id"
+    t.datetime "submitted_at"
+    t.string "failure_reason"
+    t.integer "status", default: 0
   end
 
   create_table "postcode_geolocation", force: :cascade do |t|
