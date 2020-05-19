@@ -49,11 +49,21 @@ module UseCase
         raise InactiveAssessorException
       end
 
-      if lodgement.type == "CEPC" &&
-          assessor.non_domestic_nos3_qualification == "INACTIVE" &&
-          assessor.non_domestic_nos4_qualification == "INACTIVE" &&
-          assessor.non_domestic_nos5_qualification == "INACTIVE"
-        raise InactiveAssessorException
+      if lodgement.type == "CEPC"
+        if data[:building_complexity]
+          level = data[:building_complexity][-1]
+
+          if assessor.send(:"non_domestic_nos#{level}_qualification") ==
+              "INACTIVE"
+            raise InactiveAssessorException
+          end
+        end
+
+        if assessor.non_domestic_nos3_qualification == "INACTIVE" &&
+            assessor.non_domestic_nos4_qualification == "INACTIVE" &&
+            assessor.non_domestic_nos5_qualification == "INACTIVE"
+          raise InactiveAssessorException
+        end
       end
 
       data[:improvements] =

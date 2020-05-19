@@ -26,6 +26,10 @@
     "root": "header",
     "path": ["Issue_Date"]
   },
+  "building_complexity": {
+    "root": "header",
+    "path": ["Building_Complexity"]
+  },
   "property_summary": {
     "path": ["_"],
     "default": []
