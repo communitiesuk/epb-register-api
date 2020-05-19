@@ -10,10 +10,24 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
       lastName: "Person",
       dateOfBirth: "1991-02-25",
       searchResultsComparisonPostcode: "",
-      qualifications: { nonDomesticNos3: "ACTIVE" },
+      qualifications: { nonDomesticNos3: "ACTIVE", nonDomesticNos4: "ACTIVE", nonDomesticNos5: "INACTIVE" },
       contactDetails: {
         telephoneNumber: "010199991010101", email: "person@person.com"
       },
+    }
+  end
+
+  let(:second_valid_assessor_request_body) do
+    {
+        firstName: "Someone",
+        middleNames: "Muddle",
+        lastName: "Person",
+        dateOfBirth: "1991-02-25",
+        searchResultsComparisonPostcode: "",
+        qualifications: { nonDomesticNos3: "INACTIVE", nonDomesticNos4: "INACTIVE", nonDomesticNos5: "ACTIVE" },
+        contactDetails: {
+            telephoneNumber: "010199991010101", email: "person@person.com"
+        },
     }
   end
 
@@ -24,7 +38,7 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
       lastName: "Person",
       dateOfBirth: "1991-02-25",
       searchResultsComparisonPostcode: "",
-      qualifications: { nonDomesticNos3: "INACTIVE" },
+      qualifications: { nonDomesticNos3: "INACTIVE", nonDomesticNos4: "INACTIVE", nonDomesticNos5: "INACTIVE" },
       contactDetails: {
         telephoneNumber: "010199991010101", email: "person@person.com"
       },
@@ -110,7 +124,7 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
         end
       end
 
-      context "when unqualified for Nos3" do
+      context "when unqualified for NOS3, NOS4 and NOS5" do
         it "returns status 400" do
           scheme_id = add_scheme_and_get_id
           add_assessor(scheme_id, "JASE000000", inactive_assessor_request_body)
@@ -145,41 +159,20 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
           )
         end
       end
+    end
 
-      context "when unqualified for Nos3" do
-        it "returns status 400" do
-          scheme_id = add_scheme_and_get_id
-          add_assessor(scheme_id, "JASE000000", inactive_assessor_request_body)
+    context "when qualified for only NOS5" do
+      it "returns status 201" do
+        scheme_id = add_scheme_and_get_id
+        add_assessor(scheme_id, "JASE000000", second_valid_assessor_request_body)
 
-          lodge_assessment(
-            assessment_id: "0000-0000-0000-0000-0000",
-            assessment_body: valid_cepc_xml,
-            accepted_responses: [400],
-            auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "CEPC-7.1",
-          )
-        end
-
-        it "returns status 400 with the correct error response" do
-          scheme_id = add_scheme_and_get_id
-          add_assessor(scheme_id, "JASE000000", inactive_assessor_request_body)
-
-          response =
-            JSON.parse(
-              lodge_assessment(
-                assessment_id: "0000-0000-0000-0000-0000",
-                assessment_body: valid_cepc_xml,
-                accepted_responses: [400],
-                auth_data: { scheme_ids: [scheme_id] },
-                schema_name: "CEPC-7.1",
-              )
-                .body,
-            )
-
-          expect(response["errors"][0]["title"]).to eq(
-            "Assessor is not active.",
-          )
-        end
+        lodge_assessment(
+          assessment_id: "0000-0000-0000-0000-0000",
+          assessment_body: valid_cepc_xml,
+          accepted_responses: [201],
+          auth_data: { scheme_ids: [scheme_id] },
+          schema_name: "CEPC-7.1",
+        )
       end
     end
 
@@ -378,7 +371,7 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
       end
     end
 
-    context "when saving an (CEPC) assessment" do
+    context "when saving a (CEPC) assessment" do
       let(:scheme_id) { add_scheme_and_get_id }
       let(:doc) { Nokogiri.XML valid_cepc_xml }
       let(:response) do
@@ -459,7 +452,7 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
               "nonDomesticSp3" => "INACTIVE",
               "nonDomesticDec" => "INACTIVE",
               "nonDomesticNos3" => "ACTIVE",
-              "nonDomesticNos4" => "INACTIVE",
+              "nonDomesticNos4" => "ACTIVE",
               "nonDomesticNos5" => "INACTIVE",
               "gda" => "INACTIVE",
             },
