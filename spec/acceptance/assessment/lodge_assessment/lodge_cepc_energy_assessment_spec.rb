@@ -72,15 +72,6 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
     end
 
     context "when an assessor is not registered" do
-      it "returns status 400" do
-        lodge_assessment(
-          assessment_id: "0000-0000-0000-0000-0000",
-          assessment_body: valid_cepc_xml,
-          accepted_responses: [400],
-          schema_name: "CEPC-7.1",
-        )
-      end
-
       it "returns status 400 with the correct error response" do
         response =
           JSON.parse(
@@ -101,19 +92,6 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
 
     context "when an assessor is inactive" do
       context "when unqualified for SAP" do
-        it "returns status 400" do
-          scheme_id = add_scheme_and_get_id
-          add_assessor(scheme_id, "JASE000000", inactive_assessor_request_body)
-
-          lodge_assessment(
-            assessment_id: "0000-0000-0000-0000-0000",
-            assessment_body: valid_cepc_xml,
-            accepted_responses: [400],
-            auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "CEPC-7.1",
-          )
-        end
-
         it "returns status 400 with the correct error response" do
           scheme_id = add_scheme_and_get_id
           add_assessor(scheme_id, "JASE000000", inactive_assessor_request_body)
@@ -137,19 +115,6 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
       end
 
       context "when unqualified for NOS3, NOS4 and NOS5" do
-        it "returns status 400" do
-          scheme_id = add_scheme_and_get_id
-          add_assessor(scheme_id, "JASE000000", inactive_assessor_request_body)
-
-          lodge_assessment(
-            assessment_id: "0000-0000-0000-0000-0000",
-            assessment_body: valid_cepc_xml,
-            accepted_responses: [400],
-            auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "CEPC-7.1",
-          )
-        end
-
         it "returns status 400 with the correct error response" do
           scheme_id = add_scheme_and_get_id
           add_assessor(scheme_id, "JASE000000", inactive_assessor_request_body)

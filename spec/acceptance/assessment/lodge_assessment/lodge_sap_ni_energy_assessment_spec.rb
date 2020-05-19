@@ -46,15 +46,6 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
     end
 
     context "when an assessor is not registered" do
-      it "returns status 400" do
-        lodge_assessment(
-          assessment_id: "0000-0000-0000-0000-0000",
-          assessment_body: valid_sap_ni_xml,
-          accepted_responses: [400],
-          schema_name: "SAP-Schema-NI-17.4",
-        )
-      end
-
       it "returns status 400 with the correct error response" do
         response =
           JSON.parse(
@@ -75,19 +66,6 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
 
     context "when an assessor is inactive" do
       context "when unqualified for SAP" do
-        it "returns status 400" do
-          scheme_id = add_scheme_and_get_id
-          add_assessor(scheme_id, "TEST000000", inactive_assessor_request_body)
-
-          lodge_assessment(
-            assessment_id: "0000-0000-0000-0000-0000",
-            assessment_body: valid_sap_ni_xml,
-            accepted_responses: [400],
-            auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "SAP-Schema-NI-17.4",
-          )
-        end
-
         it "returns status 400 with the correct error response" do
           scheme_id = add_scheme_and_get_id
           add_assessor(scheme_id, "TEST000000", inactive_assessor_request_body)
@@ -111,19 +89,6 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
       end
 
       context "when unqualified for RdSAP" do
-        it "returns status 400" do
-          scheme_id = add_scheme_and_get_id
-          add_assessor(scheme_id, "TEST000000", inactive_assessor_request_body)
-
-          lodge_assessment(
-            assessment_id: "0000-0000-0000-0000-0000",
-            assessment_body: valid_sap_ni_xml,
-            accepted_responses: [400],
-            auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "SAP-Schema-NI-17.4",
-          )
-        end
-
         it "returns status 400 with the correct error response" do
           scheme_id = add_scheme_and_get_id
           add_assessor(scheme_id, "TEST000000", inactive_assessor_request_body)
