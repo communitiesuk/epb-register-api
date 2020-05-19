@@ -12,12 +12,13 @@ module UseCase
     def initialize(
       validate_assessment_use_case,
       lodge_assessment_use_case,
-      check_assessor_belongs_to_scheme_use_case
+      check_assessor_belongs_to_scheme_use_case,
+      lodgements_attempts_gateway = lodgements_attempts_gateway
     )
       @validate_assessment_use_case = validate_assessment_use_case
       @lodge_assessment_use_case = lodge_assessment_use_case
-      @check_assessor_belongs_to_scheme_use_case =
-        check_assessor_belongs_to_scheme_use_case
+      @check_assessor_belongs_to_scheme_use_case = check_assessor_belongs_to_scheme_use_case
+      @lodgements_attempts_gateway = lodgements_attempts_gateway
     end
 
     def execute(assessment_id, xml, schema_name, scheme_ids)

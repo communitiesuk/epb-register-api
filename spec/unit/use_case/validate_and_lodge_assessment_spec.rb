@@ -29,6 +29,16 @@ describe UseCase::ValidateAndLodgeAssessment do
     end
   end
 
+  class LodgementAttemptsGatewaySpy
+    def send_to_db
+      @called = true
+    end
+
+    def is_called?
+      @called
+    end
+  end
+
   let(:valid_xml) do
     File.read File.join Dir.pwd, "api/schemas/xml/examples/RdSAP-19.01.xml"
   end
@@ -38,12 +48,14 @@ describe UseCase::ValidateAndLodgeAssessment do
   end
   let(:lodge_assessment_use_case) { LodgeAssessmentUseCaseSpy.new }
   let(:validate_lodgement_use_case) { ValidateLodgementUseCaseSpy.new }
+  let(:lodgements_attempts_gateway) { LodgementAttemptsGatewaySpy.new }
 
   let(:use_case) do
     described_class.new(
       validate_lodgement_use_case,
       lodge_assessment_use_case,
       check_assessor_belongs_to_scheme_use_case,
+      lodgements_attempts_gateway,
     )
   end
 
@@ -82,6 +94,12 @@ describe UseCase::ValidateAndLodgeAssessment do
       }.to raise_exception(
         UseCase::ValidateAndLodgeAssessment::SchemaNotDefined,
       )
+    end
+  end
+
+  context "when failing to lodge an xml request" do
+    it "will call send_to_db" do
+      expect(lodgements_attempts_gateway.send_to_db).to be_truthy
     end
   end
 end

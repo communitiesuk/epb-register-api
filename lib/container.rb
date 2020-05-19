@@ -12,6 +12,8 @@ class Container
 
     postcode_gateway = Gateway::PostcodesGateway.new
 
+    lodgements_attempts_gateway = Gateway::LodgementAttemptsGateway.new
+
     add_new_scheme_use_case = UseCase::AddScheme.new(schemes_gateway)
     get_all_schemes_use_case = UseCase::FetchSchemes.new(schemes_gateway)
 
