@@ -126,9 +126,12 @@ module Domain
               "INACTIVE"
             end,
           non_domestic_nos5:
-            @non_domestic_nos5_qualification == "ACTIVE" ? "ACTIVE" : "INACTIVE",
-          gda:
-              @gda_qualification == "ACTIVE" ? "ACTIVE" : "INACTIVE",
+            if @non_domestic_nos5_qualification == "ACTIVE"
+              "ACTIVE"
+            else
+              "INACTIVE"
+            end,
+          gda: @gda_qualification == "ACTIVE" ? "ACTIVE" : "INACTIVE",
         },
       }
 

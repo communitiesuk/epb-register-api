@@ -10,7 +10,11 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
       lastName: "Person",
       dateOfBirth: "1991-02-25",
       searchResultsComparisonPostcode: "",
-      qualifications: { nonDomesticNos3: "ACTIVE", nonDomesticNos4: "ACTIVE", nonDomesticNos5: "INACTIVE" },
+      qualifications: {
+        nonDomesticNos3: "ACTIVE",
+        nonDomesticNos4: "ACTIVE",
+        nonDomesticNos5: "INACTIVE",
+      },
       contactDetails: {
         telephoneNumber: "010199991010101", email: "person@person.com"
       },
@@ -19,15 +23,19 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
 
   let(:second_valid_assessor_request_body) do
     {
-        firstName: "Someone",
-        middleNames: "Muddle",
-        lastName: "Person",
-        dateOfBirth: "1991-02-25",
-        searchResultsComparisonPostcode: "",
-        qualifications: { nonDomesticNos3: "INACTIVE", nonDomesticNos4: "INACTIVE", nonDomesticNos5: "ACTIVE" },
-        contactDetails: {
-            telephoneNumber: "010199991010101", email: "person@person.com"
-        },
+      firstName: "Someone",
+      middleNames: "Muddle",
+      lastName: "Person",
+      dateOfBirth: "1991-02-25",
+      searchResultsComparisonPostcode: "",
+      qualifications: {
+        nonDomesticNos3: "INACTIVE",
+        nonDomesticNos4: "INACTIVE",
+        nonDomesticNos5: "ACTIVE",
+      },
+      contactDetails: {
+        telephoneNumber: "010199991010101", email: "person@person.com"
+      },
     }
   end
 
@@ -38,7 +46,11 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
       lastName: "Person",
       dateOfBirth: "1991-02-25",
       searchResultsComparisonPostcode: "",
-      qualifications: { nonDomesticNos3: "INACTIVE", nonDomesticNos4: "INACTIVE", nonDomesticNos5: "INACTIVE" },
+      qualifications: {
+        nonDomesticNos3: "INACTIVE",
+        nonDomesticNos4: "INACTIVE",
+        nonDomesticNos5: "INACTIVE",
+      },
       contactDetails: {
         telephoneNumber: "010199991010101", email: "person@person.com"
       },
@@ -164,7 +176,11 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
     context "when qualified for only NOS5" do
       it "returns status 201" do
         scheme_id = add_scheme_and_get_id
-        add_assessor(scheme_id, "JASE000000", second_valid_assessor_request_body)
+        add_assessor(
+          scheme_id,
+          "JASE000000",
+          second_valid_assessor_request_body,
+        )
 
         lodge_assessment(
           assessment_id: "0000-0000-0000-0000-0000",

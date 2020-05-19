@@ -75,11 +75,7 @@ describe "Acceptance::LodgeRdSapEnergyAssessment" do
       context "when unqualified for SAP" do
         it "returns status 400" do
           scheme_id = add_scheme_and_get_id
-          add_assessor(
-            scheme_id,
-            "TEST000000",
-            inactive_assessor_request_body,
-          )
+          add_assessor(scheme_id, "TEST000000", inactive_assessor_request_body)
 
           lodge_assessment(
             assessment_id: "0000-0000-0000-0000-0000",
@@ -91,11 +87,7 @@ describe "Acceptance::LodgeRdSapEnergyAssessment" do
 
         it "returns status 400 with the correct error response" do
           scheme_id = add_scheme_and_get_id
-          add_assessor(
-            scheme_id,
-            "TEST000000",
-            inactive_assessor_request_body,
-          )
+          add_assessor(scheme_id, "TEST000000", inactive_assessor_request_body)
 
           response =
             JSON.parse(
@@ -117,11 +109,7 @@ describe "Acceptance::LodgeRdSapEnergyAssessment" do
       context "when unqualified for RdSAP" do
         it "returns status 400" do
           scheme_id = add_scheme_and_get_id
-          add_assessor(
-            scheme_id,
-            "TEST000000",
-            inactive_assessor_request_body,
-          )
+          add_assessor(scheme_id, "TEST000000", inactive_assessor_request_body)
 
           lodge_assessment(
             assessment_id: "0000-0000-0000-0000-0000",
@@ -133,11 +121,7 @@ describe "Acceptance::LodgeRdSapEnergyAssessment" do
 
         it "returns status 400 with the correct error response" do
           scheme_id = add_scheme_and_get_id
-          add_assessor(
-            scheme_id,
-            "TEST000000",
-            inactive_assessor_request_body,
-          )
+          add_assessor(scheme_id, "TEST000000", inactive_assessor_request_body)
 
           response =
             JSON.parse(
@@ -724,11 +708,7 @@ describe "Acceptance::LodgeRdSapEnergyAssessment" do
     context "when rejecting an assessment" do
       it "rejects an assessment without an address" do
         scheme_id = add_scheme_and_get_id
-        add_assessor(
-          scheme_id,
-          "TEST000000",
-          valid_assessor_request_body,
-        )
+        add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
 
         doc = Nokogiri.XML valid_rdsap_xml
 
@@ -744,11 +724,7 @@ describe "Acceptance::LodgeRdSapEnergyAssessment" do
 
       it "rejects an assessment with an incorrect element" do
         scheme_id = add_scheme_and_get_id
-        add_assessor(
-          scheme_id,
-          "TEST000000",
-          valid_assessor_request_body,
-        )
+        add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
 
         doc = Nokogiri.XML valid_rdsap_xml
 
@@ -772,11 +748,7 @@ describe "Acceptance::LodgeRdSapEnergyAssessment" do
 
       it "rejects an assessment with invalid XML" do
         scheme_id = add_scheme_and_get_id
-        add_assessor(
-          scheme_id,
-          "TEST000000",
-          valid_assessor_request_body,
-        )
+        add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
 
         xml = valid_rdsap_xml
 
