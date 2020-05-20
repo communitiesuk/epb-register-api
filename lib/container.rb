@@ -59,6 +59,9 @@ class Container
     search_addresses_by_postcode_use_case =
       UseCase::SearchAddressesByPostcode.new address_search_gateway
 
+    search_addresses_by_street_and_town_use_case =
+      UseCase::SearchAddressesByStreetAndTown.new address_search_gateway
+
     validate_and_lodge_assessment_use_case =
       UseCase::ValidateAndLodgeAssessment.new(
         validate_assessment_use_case,
@@ -94,6 +97,8 @@ class Container
         search_addresses_by_building_reference_number_use_case,
       search_addresses_by_postcode_use_case:
         search_addresses_by_postcode_use_case,
+      search_addresses_by_street_and_town_use_case:
+        search_addresses_by_street_and_town_use_case,
     }
   end
 
