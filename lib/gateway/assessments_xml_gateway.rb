@@ -1,5 +1,5 @@
 module Gateway
-  class LodgementAttemptsGateway
+  class AssessmentsXmlGateway
     def send_to_db(record); end
   end
 end

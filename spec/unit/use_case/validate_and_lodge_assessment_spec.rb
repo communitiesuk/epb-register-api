@@ -29,7 +29,7 @@ describe UseCase::ValidateAndLodgeAssessment do
     end
   end
 
-  class LodgementAttemptsGatewaySpy
+  class AssessmentsXmlGatewaySpy
     def send_to_db
       @called = true
     end
@@ -48,14 +48,14 @@ describe UseCase::ValidateAndLodgeAssessment do
   end
   let(:lodge_assessment_use_case) { LodgeAssessmentUseCaseSpy.new }
   let(:validate_lodgement_use_case) { ValidateLodgementUseCaseSpy.new }
-  let(:lodgements_attempts_gateway) { LodgementAttemptsGatewaySpy.new }
+  let(:assessments_xml_gateway) { AssessmentsXmlGatewaySpy.new }
 
   let(:use_case) do
     described_class.new(
       validate_lodgement_use_case,
       lodge_assessment_use_case,
       check_assessor_belongs_to_scheme_use_case,
-      lodgements_attempts_gateway,
+      assessments_xml_gateway,
     )
   end
 
@@ -99,7 +99,7 @@ describe UseCase::ValidateAndLodgeAssessment do
 
   context "when failing to lodge an xml request" do
     it "will call send_to_db" do
-      expect(lodgements_attempts_gateway.send_to_db).to be_truthy
+      expect(assessments_xml_gateway.send_to_db).to be_truthy
     end
   end
 end

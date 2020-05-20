@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_19_132058) do
+ActiveRecord::Schema.define(version: 2020_05_20_130527) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,16 @@ ActiveRecord::Schema.define(version: 2020_05_19_132058) do
     t.jsonb "property_summary", default: "[]", null: false
     t.integer "related_party_disclosure_number"
     t.string "related_party_disclosure_text"
+  end
+
+  create_table "assessments_xml", force: :cascade do |t|
+    t.string "url"
+    t.text "request_header"
+    t.text "request_body"
+    t.integer "scheme_id"
+    t.datetime "submitted_at"
+    t.string "failure_reason"
+    t.integer "status", default: 0
   end
 
   create_table "assessors", primary_key: "scheme_assessor_id", id: :string, force: :cascade do |t|
@@ -96,16 +106,6 @@ ActiveRecord::Schema.define(version: 2020_05_19_132058) do
     t.string "green_deal_category_code"
     t.string "improvement_title"
     t.string "improvement_description"
-  end
-
-  create_table "lodgement_attempts", force: :cascade do |t|
-    t.string "url"
-    t.text "request_header"
-    t.text "request_body"
-    t.integer "scheme_id"
-    t.datetime "submitted_at"
-    t.string "failure_reason"
-    t.integer "status", default: 0
   end
 
   create_table "postcode_geolocation", force: :cascade do |t|

@@ -12,7 +12,7 @@ class Container
 
     postcode_gateway = Gateway::PostcodesGateway.new
 
-    lodgements_attempts_gateway = Gateway::LodgementAttemptsGateway.new
+    assessments_xml_gateway = Gateway::AssessmentsXmlGateway.new
 
     add_new_scheme_use_case = UseCase::AddScheme.new(schemes_gateway)
     get_all_schemes_use_case = UseCase::FetchSchemes.new(schemes_gateway)
@@ -67,6 +67,7 @@ class Container
         validate_assessment_use_case,
         lodge_assessment_use_case,
         check_assessor_belongs_to_scheme_use_case,
+        assessments_xml_gateway,
       )
 
     @objects = {
