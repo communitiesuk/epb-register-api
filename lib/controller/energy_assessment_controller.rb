@@ -242,11 +242,6 @@ module Controller
         },
         true,
       )
-      @events.event(
-        false,
-        { event_type: :lodgement_failed, message: e.to_s },
-        true,
-      )
 
       case e
       when UseCase::ValidateAssessment::InvalidXmlException
