@@ -73,35 +73,43 @@ module Gateway
       results.map { |row| record_to_address_domain row }
     end
 
-    def search_by_street_and_town(street, town)
-      results =
-        ActiveRecord::Base.connection.exec_query(
-          'SELECT
-                       assessment_id,
-                       address_line1,
-                       address_line2,
-                       address_line3,
-                       address_line4,
-                       town,
-                       postcode
-                     FROM assessments
-                     WHERE address_line1 LIKE $1
-                      AND town = $2
-                     ORDER BY address_line1',
-          "SQL",
-          [
-            ActiveRecord::Relation::QueryAttribute.new(
-              "street",
-              "%#{street}%",
-              ActiveRecord::Type::String.new,
-            ),
-            ActiveRecord::Relation::QueryAttribute.new(
-              "town",
-              town,
-              ActiveRecord::Type::String.new,
-            ),
-          ],
-        )
+    def search_by_street_and_town(street, town, address_type)
+      sql =
+        'SELECT
+      assessment_id,
+          address_line1,
+          address_line2,
+          address_line3,
+          address_line4,
+          town,
+          postcode
+      FROM assessments
+      WHERE address_line1 LIKE $1
+      AND town = $2'
+
+      binds = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "street",
+          "%#{street}%",
+          ActiveRecord::Type::String.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "town",
+          town,
+          ActiveRecord::Type::String.new,
+        ),
+      ]
+
+      if address_type
+        types = ADDRESS_TYPES[address_type.to_sym].map { |type| "'#{type}'" }
+
+        sql << " AND type_of_assessment IN (#{types.join(', ')})"
+      end
+
+      sql << " ORDER BY address_line1"
+
+      results = ActiveRecord::Base.connection.exec_query sql, "SQL", binds
+
       results.map { |row| record_to_address_domain row }
     end
 

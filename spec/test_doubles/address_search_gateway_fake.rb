@@ -37,11 +37,20 @@ class AddressSearchGatewayFake
     results_to_domain filtered_results
   end
 
-  def search_by_street_and_town(street, town)
+  def search_by_street_and_town(street, town, address_type)
     filtered_results = @addresses.filter { |address| address[:town] == town }
 
     filtered_results =
       filtered_results.filter { |address| address[:line1].include? street }
+
+    if address_type
+      assessment_types = (%w[SAP RdSAP] if address_type == "DOMESTIC")
+
+      filtered_results =
+        filtered_results.filter do |address|
+          assessment_types.include? address[:assessment_type]
+        end
+    end
 
     results_to_domain filtered_results
   end
