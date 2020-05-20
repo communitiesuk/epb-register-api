@@ -189,12 +189,25 @@ module Controller
     end
 
     post "/api/assessments/:assessment_id", jwt_auth: %w[assessment:lodge] do
+      body = request.body.read.to_s
+
+      correlation_id = rand
+
+      @events.event(
+        :lodgement_attempt,
+        {
+          correlation_id: correlation_id,
+          request_body: body,
+          request_headers: headers,
+        }.to_json,
+      )
+
       sup = env[:jwt_auth].supplemental("scheme_ids")
       validate_and_lodge_assessment =
         @container.get_object(:validate_and_lodge_assessment_use_case)
 
       assessment_id = params[:assessment_id]
-      xml = request.body.read.to_s
+      xml = body
       content_type = request.env["CONTENT_TYPE"].split("+")[1]
       scheme_ids = sup
 
