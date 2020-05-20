@@ -1,4 +1,4 @@
-describe "searching for an address by building reference" do
+describe "searching for an address by postcode" do
   include RSpecAssessorServiceMixin
 
   let(:valid_rdsap_xml) do
