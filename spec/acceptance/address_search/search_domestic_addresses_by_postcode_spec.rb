@@ -54,6 +54,30 @@ describe "searching for an address by building reference" do
         expect(response["data"]["addresses"][0]["town"]).to eq "Post-Town1"
         expect(response["data"]["addresses"][0]["postcode"]).to eq "A0 0AA"
       end
+
+      context "when there is no space in the postcode" do
+        it "returns the address" do
+          response =
+            JSON.parse(
+              assertive_get(
+                "/api/search/addresses?postcode=A00AA",
+                [200],
+                true,
+                {},
+                %w[address:search],
+              )
+                .body,
+            )
+
+          expect(response["data"]["addresses"].length).to eq 1
+          expect(
+            response["data"]["addresses"][0]["buildingReferenceNumber"],
+          ).to eq "RRN-0000-0000-0000-0000-0000"
+          expect(response["data"]["addresses"][0]["line1"]).to eq "1 Some Street"
+          expect(response["data"]["addresses"][0]["town"]).to eq "Post-Town1"
+          expect(response["data"]["addresses"][0]["postcode"]).to eq "A0 0AA"
+        end
+      end
     end
   end
 end

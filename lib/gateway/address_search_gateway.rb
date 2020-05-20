@@ -1,9 +1,11 @@
 module Gateway
   class AddressSearchGateway
     def search_by_postcode(postcode)
+      postcode = postcode.delete " "
+
       results =
         ActiveRecord::Base.connection.exec_query(
-          'SELECT
+          "SELECT
            assessment_id,
            address_line1,
            address_line2,
@@ -12,11 +14,11 @@ module Gateway
            town,
            postcode
          FROM assessments
-         WHERE postcode = $1',
+         WHERE REPLACE(postcode, ' ', '') = $1",
           "SQL",
           [
             ActiveRecord::Relation::QueryAttribute.new(
-              "rrn",
+              "postcode",
               postcode,
               ActiveRecord::Type::String.new,
             ),
