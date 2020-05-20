@@ -3,9 +3,16 @@ class AddressSearchGatewayFake
     @addresses = []
   end
 
-  def search_by_postcode(postcode)
+  def search_by_postcode(postcode, building_name_number = nil)
     filtered_results =
       @addresses.filter { |address| address[:postcode] == postcode }
+
+    if building_name_number
+      filtered_results =
+        @addresses.filter do |address|
+          address[:line1].include? building_name_number
+        end
+    end
 
     filtered_results.map { |address| Domain::Address.new(address) }
   end

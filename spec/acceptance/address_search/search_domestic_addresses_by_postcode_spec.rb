@@ -30,6 +30,21 @@ describe "searching for an address by building reference" do
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
       )
+
+      doc = Nokogiri.XML valid_rdsap_xml
+
+      assessment_id = doc.at("RRN")
+      assessment_id.children = "0000-0000-0000-0000-0001"
+
+      address_line_one = doc.search("Address-Line-1")[1]
+      address_line_one.children = "2 Some Street"
+
+      lodge_assessment(
+        assessment_id: "0000-0000-0000-0000-0001",
+        assessment_body: doc.to_xml,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] },
+      )
     end
 
     describe "searching by postcode" do
@@ -46,7 +61,7 @@ describe "searching for an address by building reference" do
               .body,
           )
 
-        expect(response["data"]["addresses"].length).to eq 1
+        expect(response["data"]["addresses"].length).to eq 2
         expect(
           response["data"]["addresses"][0]["buildingReferenceNumber"],
         ).to eq "RRN-0000-0000-0000-0000-0000"
@@ -69,13 +84,43 @@ describe "searching for an address by building reference" do
                 .body,
             )
 
-          expect(response["data"]["addresses"].length).to eq 1
+          expect(response["data"]["addresses"].length).to eq 2
           expect(
             response["data"]["addresses"][0]["buildingReferenceNumber"],
           ).to eq "RRN-0000-0000-0000-0000-0000"
-          expect(response["data"]["addresses"][0]["line1"]).to eq "1 Some Street"
+          expect(
+            response["data"]["addresses"][0]["line1"],
+          ).to eq "1 Some Street"
           expect(response["data"]["addresses"][0]["town"]).to eq "Post-Town1"
           expect(response["data"]["addresses"][0]["postcode"]).to eq "A0 0AA"
+        end
+      end
+
+      context "when building name or number is supplied" do
+        describe "with a building number" do
+          it "returns the address" do
+            response =
+              JSON.parse(
+                assertive_get(
+                  "/api/search/addresses?postcode=A0%200AA&buildingNameNumber=2",
+                  [200],
+                  true,
+                  {},
+                  %w[address:search],
+                )
+                  .body,
+              )
+
+            expect(response["data"]["addresses"].length).to eq 1
+            expect(
+              response["data"]["addresses"][0]["buildingReferenceNumber"],
+            ).to eq "RRN-0000-0000-0000-0000-0001"
+            expect(
+              response["data"]["addresses"][0]["line1"],
+            ).to eq "2 Some Street"
+            expect(response["data"]["addresses"][0]["town"]).to eq "Post-Town1"
+            expect(response["data"]["addresses"][0]["postcode"]).to eq "A0 0AA"
+          end
         end
       end
     end

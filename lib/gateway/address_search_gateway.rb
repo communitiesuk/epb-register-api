@@ -1,29 +1,60 @@
 module Gateway
   class AddressSearchGateway
-    def search_by_postcode(postcode)
+    def search_by_postcode(postcode, building_name_number)
       postcode = postcode.delete " "
 
       results =
-        ActiveRecord::Base.connection.exec_query(
-          "SELECT
-           assessment_id,
-           address_line1,
-           address_line2,
-           address_line3,
-           address_line4,
-           town,
-           postcode
-         FROM assessments
-         WHERE REPLACE(postcode, ' ', '') = $1",
-          "SQL",
-          [
-            ActiveRecord::Relation::QueryAttribute.new(
-              "postcode",
-              postcode,
-              ActiveRecord::Type::String.new,
-            ),
-          ],
-        )
+        if building_name_number.nil?
+          ActiveRecord::Base.connection.exec_query(
+            "SELECT
+                       assessment_id,
+                       address_line1,
+                       address_line2,
+                       address_line3,
+                       address_line4,
+                       town,
+                       postcode
+                     FROM assessments
+                     WHERE REPLACE(postcode, ' ', '') = $1
+                     ORDER BY address_line1",
+            "SQL",
+            [
+              ActiveRecord::Relation::QueryAttribute.new(
+                "postcode",
+                postcode,
+                ActiveRecord::Type::String.new,
+              ),
+            ],
+          )
+        else
+          ActiveRecord::Base.connection.exec_query(
+            "SELECT
+                       assessment_id,
+                       address_line1,
+                       address_line2,
+                       address_line3,
+                       address_line4,
+                       town,
+                       postcode
+                     FROM assessments
+                     WHERE REPLACE(postcode, ' ', '') = $1
+                       AND address_line1 LIKE $2
+                     ORDER BY address_line1",
+            "SQL",
+            [
+              ActiveRecord::Relation::QueryAttribute.new(
+                "postcode",
+                postcode,
+                ActiveRecord::Type::String.new,
+              ),
+              ActiveRecord::Relation::QueryAttribute.new(
+                "building_name_number",
+                building_name_number + "%",
+                ActiveRecord::Type::String.new,
+              ),
+            ],
+          )
+        end
 
       results.map { |row| record_to_address_domain row }
     end

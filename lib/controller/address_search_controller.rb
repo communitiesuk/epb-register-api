@@ -14,7 +14,9 @@ module Controller
         {
           type: "object",
           required: %w[postcode],
-          properties: { postcode: { type: "string" } },
+          properties: {
+            postcode: { type: "string" }, buildingNameNumber: { type: "string" }
+          },
         },
       ],
     }.freeze
@@ -23,7 +25,7 @@ module Controller
       filters = params_body SEARCH_SCHEMA
       results = []
 
-      if filters.key?(:building_reference_number)
+      if filters.key? :building_reference_number
         results =
           @container.get_object(
             :search_addresses_by_building_reference_number_use_case,
