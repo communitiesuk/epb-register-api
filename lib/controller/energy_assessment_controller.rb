@@ -189,17 +189,19 @@ module Controller
     end
 
     post "/api/assessments/:assessment_id", jwt_auth: %w[assessment:lodge] do
-      body = request.body.read.to_s
-
       correlation_id = rand
 
+      body = request.body.read.to_s
+
       @events.event(
+        false,
         {
           event_type: :lodgement_attempt,
           correlation_id: correlation_id,
           request_body: body,
           request_headers: headers,
-        }
+        },
+        true,
       )
 
       sup = env[:jwt_auth].supplemental("scheme_ids")
@@ -218,8 +220,34 @@ module Controller
           content_type,
           scheme_ids,
         )
+
+      @events.event(
+        false,
+        {
+          event_type: :lodgement_successful,
+          correlation_id: correlation_id,
+          assessment_id: result.assessment_id,
+        },
+        true,
+      )
+
       json_api_response(code: 201, data: result.to_hash)
     rescue StandardError => e
+      @events.event(
+        false,
+        {
+          event_type: :lodgement_failed,
+          correlation_id: correlation_id,
+          message: e.to_s,
+        },
+        true,
+      )
+      @events.event(
+        false,
+        { event_type: :lodgement_failed, message: e.to_s },
+        true,
+      )
+
       case e
       when UseCase::ValidateAssessment::InvalidXmlException
         error_response(400, "INVALID_REQUEST", e.message)
