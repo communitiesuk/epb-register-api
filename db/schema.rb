@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 2020_05_20_132641) do
     t.string "related_party_disclosure_text"
   end
 
-  create_table "assessments_xml", primary_key: "assessment_id", id: :string, default: -> { "nextval('assessments_xml_id_seq'::regclass)" }, force: :cascade do |t|
+  create_table "assessments_xml", primary_key: "assessment_id", id: :string, default: "", force: :cascade do |t|
     t.xml "xml"
   end
 

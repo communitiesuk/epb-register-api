@@ -11,7 +11,7 @@ class ReorganiseColumnsForAssessmentsXml < ActiveRecord::Migration[6.0]
     add_column :assessments_xml, :xml, :xml
     rename_column :assessments_xml, :id, :assessment_id
 
-    change_column :assessments_xml, :assessment_id, :string
+    change_column :assessments_xml, :assessment_id, :string, default: ""
     change_column :assessments_xml, :xml, :xml
 
     add_foreign_key :assessments_xml,
