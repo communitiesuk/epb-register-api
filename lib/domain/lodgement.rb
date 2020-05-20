@@ -1,9 +1,15 @@
 # frozen_string_literal: true
 
+require "active_support/core_ext/hash/conversions"
+
 module Domain
   class Lodgement
+    attr_reader :raw_data
+
     def initialize(data, schema_name)
-      @data = data
+      @data = Hash.from_xml(data).deep_symbolize_keys
+
+      @raw_data = data
       @schema_name = schema_name.to_sym
     end
 

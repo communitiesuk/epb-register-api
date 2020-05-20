@@ -25,7 +25,7 @@ module UseCase
     def execute(assessment_id, xml, schema_name, scheme_ids)
       raise SchemaNotDefined unless schema_name
 
-      lodgement = Domain::Lodgement.new(xml_to_hash(xml), schema_name)
+      lodgement = Domain::Lodgement.new(xml, schema_name)
 
       unless Helper::SchemaListHelper.new(schema_name).schema_exists?
         raise SchemaNotSupportedException
@@ -46,10 +46,6 @@ module UseCase
     end
 
   private
-
-    def xml_to_hash(xml)
-      Hash.from_xml(xml).deep_symbolize_keys
-    end
 
     def assessor_can_lodge?(scheme_assessor_id, scheme_ids)
       @check_assessor_belongs_to_scheme_use_case.execute(
