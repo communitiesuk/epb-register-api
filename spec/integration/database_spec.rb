@@ -21,7 +21,11 @@ describe "Integration::Database::Activerecord" do
     table_name = ActiveRecord::SchemaMigration.table_name
 
     query =
-      sprintf("SELECT version FROM %s WHERE version = '%s'", table_name, version)
+      sprintf(
+        "SELECT version FROM %s WHERE version = '%s'",
+        table_name,
+        version,
+      )
     ActiveRecord::Base.connection.execute(query).any?
   end
 

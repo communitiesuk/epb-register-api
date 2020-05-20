@@ -42,7 +42,8 @@ describe "searching for an address by building reference" do
               true,
               {},
               %w[address:search],
-            ).body,
+            )
+              .body,
           )
 
         expect(response["data"]["addresses"].length).to eq 1

@@ -14,9 +14,7 @@ module Controller
         {
           type: "object",
           required: %w[postcode],
-          properties: {
-            postcode: { type: "string" },
-          },
+          properties: { postcode: { type: "string" } },
         },
       ],
     }.freeze
@@ -29,11 +27,13 @@ module Controller
         results =
           @container.get_object(
             :search_addresses_by_building_reference_number_use_case,
-          ).execute(filters)
+          )
+            .execute(filters)
       elsif filters.key? :postcode
         results =
-          @container.get_object(:search_addresses_by_postcode_use_case)
-            .execute(filters)
+          @container.get_object(:search_addresses_by_postcode_use_case).execute(
+            filters,
+          )
       end
 
       json_api_response code: 200,

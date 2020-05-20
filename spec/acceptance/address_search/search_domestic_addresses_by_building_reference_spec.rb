@@ -42,7 +42,8 @@ describe "searching for an address by building reference" do
               true,
               {},
               %w[address:search],
-            ).body,
+            )
+              .body,
           )
 
         expect(response["data"]["addresses"].length).to eq 1
@@ -68,7 +69,7 @@ describe "searching for an address by building reference" do
               nil,
               %w[address:search],
             )
-                  .body,
+              .body,
           )
 
         expect(response["data"]["addresses"].length).to eq 0
@@ -86,7 +87,8 @@ describe "searching for an address by building reference" do
             true,
             nil,
             %w[address:search],
-          ).body
+          )
+            .body
 
         expect(response).to include "INVALID_REQUEST"
       end
