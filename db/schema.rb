@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_20_130527) do
+ActiveRecord::Schema.define(version: 2020_05_20_132641) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,14 +45,8 @@ ActiveRecord::Schema.define(version: 2020_05_20_130527) do
     t.string "related_party_disclosure_text"
   end
 
-  create_table "assessments_xml", force: :cascade do |t|
-    t.string "url"
-    t.text "request_header"
-    t.text "request_body"
-    t.integer "scheme_id"
-    t.datetime "submitted_at"
-    t.string "failure_reason"
-    t.integer "status", default: 0
+  create_table "assessments_xml", primary_key: "assessment_id", id: :string, default: -> { "nextval('assessments_xml_id_seq'::regclass)" }, force: :cascade do |t|
+    t.xml "xml"
   end
 
   create_table "assessors", primary_key: "scheme_assessor_id", id: :string, force: :cascade do |t|
@@ -126,6 +120,7 @@ ActiveRecord::Schema.define(version: 2020_05_20_130527) do
   end
 
   add_foreign_key "assessments", "assessors", column: "scheme_assessor_id", primary_key: "scheme_assessor_id"
+  add_foreign_key "assessments_xml", "assessments", primary_key: "assessment_id"
   add_foreign_key "assessors", "schemes", column: "registered_by", primary_key: "scheme_id"
   add_foreign_key "domestic_epc_energy_improvements", "assessments", primary_key: "assessment_id"
 end
