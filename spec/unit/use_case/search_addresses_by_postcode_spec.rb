@@ -23,6 +23,7 @@ describe UseCase::SearchAddressesByPostcode do
           line3: nil,
           town: "Placeville",
           postcode: "PL4 V11",
+          assessment_type: "CEPC",
         },
       )
 
@@ -34,14 +35,16 @@ describe UseCase::SearchAddressesByPostcode do
           line3: nil,
           town: "Placeville",
           postcode: "PL4 V12",
+          assessment_type: "RdSAP",
         },
       )
 
       gateway
     end
+
     let(:use_case) { described_class.new gateway }
 
-    describe "by RRN" do
+    describe "by postcode" do
       it "returns the expected address" do
         results = use_case.execute postcode: "PL4 V11"
 
@@ -54,6 +57,23 @@ describe UseCase::SearchAddressesByPostcode do
         expect(results[0].line3).to be_nil
         expect(results[0].town).to eq "Placeville"
         expect(results[0].postcode).to eq "PL4 V11"
+      end
+
+      context "with address type" do
+        it "returns the expected address" do
+          results =
+            use_case.execute postcode: "PL4 V12", address_type: "DOMESTIC"
+
+          expect(results.length).to eq 1
+          expect(
+            results[0].building_reference_number,
+          ).to eq "RRN-0000-0000-0000-0000-0001"
+          expect(results[0].line1).to eq "128 Home Road"
+          expect(results[0].line2).to be_nil
+          expect(results[0].line3).to be_nil
+          expect(results[0].town).to eq "Placeville"
+          expect(results[0].postcode).to eq "PL4 V12"
+        end
       end
     end
   end

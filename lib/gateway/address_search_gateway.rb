@@ -1,60 +1,48 @@
 module Gateway
   class AddressSearchGateway
-    def search_by_postcode(postcode, building_name_number)
-      postcode = postcode.delete " "
+    ADDRESS_TYPES = { DOMESTIC: %w[SAP RdSAP] }.freeze
 
-      results =
-        if building_name_number.nil?
-          ActiveRecord::Base.connection.exec_query(
-            "SELECT
-                       assessment_id,
-                       address_line1,
-                       address_line2,
-                       address_line3,
-                       address_line4,
-                       town,
-                       postcode
-                     FROM assessments
-                     WHERE REPLACE(postcode, ' ', '') = $1
-                     ORDER BY address_line1",
-            "SQL",
-            [
-              ActiveRecord::Relation::QueryAttribute.new(
-                "postcode",
-                postcode,
-                ActiveRecord::Type::String.new,
-              ),
-            ],
+    def search_by_postcode(postcode, building_name_number, address_type)
+      postcode = postcode.delete " "
+      sql =
+        "SELECT
+            assessment_id,
+            address_line1,
+            address_line2,
+            address_line3,
+            address_line4,
+            town,
+            postcode
+          FROM assessments
+          WHERE REPLACE(postcode, ' ', '') = $1"
+
+      binds = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "postcode",
+          postcode,
+          ActiveRecord::Type::String.new,
+        ),
+      ]
+
+      if building_name_number
+        sql << " AND address_line1 LIKE $2"
+        binds <<
+          ActiveRecord::Relation::QueryAttribute.new(
+            "building_name_number",
+            building_name_number + "%",
+            ActiveRecord::Type::String.new,
           )
-        else
-          ActiveRecord::Base.connection.exec_query(
-            "SELECT
-                       assessment_id,
-                       address_line1,
-                       address_line2,
-                       address_line3,
-                       address_line4,
-                       town,
-                       postcode
-                     FROM assessments
-                     WHERE REPLACE(postcode, ' ', '') = $1
-                       AND address_line1 LIKE $2
-                     ORDER BY address_line1",
-            "SQL",
-            [
-              ActiveRecord::Relation::QueryAttribute.new(
-                "postcode",
-                postcode,
-                ActiveRecord::Type::String.new,
-              ),
-              ActiveRecord::Relation::QueryAttribute.new(
-                "building_name_number",
-                building_name_number + "%",
-                ActiveRecord::Type::String.new,
-              ),
-            ],
-          )
-        end
+      end
+
+      if address_type
+        types = ADDRESS_TYPES[address_type.to_sym].map { |type| "'#{type}'" }
+
+        sql << " AND type_of_assessment IN (#{types.join(', ')})"
+      end
+
+      sql << " ORDER BY address_line1"
+
+      results = ActiveRecord::Base.connection.exec_query sql, "SQL", binds
 
       results.map { |row| record_to_address_domain row }
     end

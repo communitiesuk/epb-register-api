@@ -15,7 +15,9 @@ module Controller
           type: "object",
           required: %w[postcode],
           properties: {
-            postcode: { type: "string" }, buildingNameNumber: { type: "string" }
+            postcode: { type: "string" },
+            buildingNameNumber: { type: "string" },
+            addressType: { type: "string", enum: %w[DOMESTIC] },
           },
         },
         {
