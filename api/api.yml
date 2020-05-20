@@ -379,6 +379,11 @@ paths:
           description: 'The ID of the assessment being added, usually RRN'
           schema:
             $ref: '#/components/schemas/AssessmentId'
+        - in: query
+          name: override
+          schema:
+            type: boolean
+          description: Only set to true after assessor has manually confirmed desire to override lodgement rules. This action will be logged.
       requestBody:
         content:
           application/xml+RdSAP-Schema-19.0:
@@ -445,7 +450,32 @@ paths:
                         type: integer
                         example: -21
         '400':
-          description: Bad request
+          description: Bad request - assessment violates assessment rules. Follow override link to lodge anyway.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        errorCode:
+                          type: string
+                          example: "TOO_MANY_DOORS"
+                        errorDescription:
+                          type: string
+                          example: "Property has too many doors"
+                  meta:
+                    type: object
+                    properties:
+                      links:
+                        type: object
+                        properties:
+                          override:
+                            type: string
+                            example: "/assessments/123-456?override=true"
         '409':
           description: Assessment with that assessmentId already exists
         '403':
