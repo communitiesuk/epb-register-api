@@ -194,12 +194,12 @@ module Controller
       correlation_id = rand
 
       @events.event(
-        :lodgement_attempt,
         {
+          event_type: :lodgement_attempt,
           correlation_id: correlation_id,
           request_body: body,
           request_headers: headers,
-        }.to_json,
+        }
       )
 
       sup = env[:jwt_auth].supplemental("scheme_ids")

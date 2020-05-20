@@ -7,9 +7,13 @@ module Helper
       @logger = Ougai::Logger.new(STDOUT)
     end
 
-    def event(event_code, message = "No message")
+    def event(event_code, message = "No message", raw = false)
       unless ENV["SILENT_EVENTS"] == "true"
-        @logger.info({ event_type: event_code, msg: message })
+        if raw
+          @logger.info(message)
+        else
+          @logger.info({ event_type: event_code, msg: message })
+        end
       end
     end
   end
