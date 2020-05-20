@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "active_support/core_ext/hash/conversions"
-
 module UseCase
   class ValidateAndLodgeAssessment
     class ValidationErrorException < StandardError; end
@@ -12,14 +10,12 @@ module UseCase
     def initialize(
       validate_assessment_use_case,
       lodge_assessment_use_case,
-      check_assessor_belongs_to_scheme_use_case,
-      assessments_xml_gateway
+      check_assessor_belongs_to_scheme_use_case
     )
       @validate_assessment_use_case = validate_assessment_use_case
       @lodge_assessment_use_case = lodge_assessment_use_case
       @check_assessor_belongs_to_scheme_use_case =
         check_assessor_belongs_to_scheme_use_case
-      @assessments_xml = assessments_xml_gateway
     end
 
     def execute(assessment_id, xml, schema_name, scheme_ids)

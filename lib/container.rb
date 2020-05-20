@@ -48,7 +48,11 @@ class Container
     validate_assessment_use_case = UseCase::ValidateAssessment.new
 
     lodge_assessment_use_case =
-      UseCase::LodgeAssessment.new(assessments_gateway, assessors_gateway)
+      UseCase::LodgeAssessment.new(
+        assessments_gateway,
+        assessors_gateway,
+        assessments_xml_gateway,
+      )
 
     check_assessor_belongs_to_scheme_use_case =
       UseCase::CheckAssessorBelongsToScheme.new(assessors_gateway)
@@ -67,7 +71,6 @@ class Container
         validate_assessment_use_case,
         lodge_assessment_use_case,
         check_assessor_belongs_to_scheme_use_case,
-        assessments_xml_gateway,
       )
 
     @objects = {

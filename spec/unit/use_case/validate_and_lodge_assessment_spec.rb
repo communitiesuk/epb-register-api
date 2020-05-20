@@ -29,16 +29,6 @@ describe UseCase::ValidateAndLodgeAssessment do
     end
   end
 
-  class AssessmentsXmlGatewaySpy
-    def send_to_db
-      @called = true
-    end
-
-    def is_called?
-      @called
-    end
-  end
-
   let(:valid_xml) do
     File.read File.join Dir.pwd, "api/schemas/xml/examples/RdSAP-19.01.xml"
   end
@@ -55,7 +45,6 @@ describe UseCase::ValidateAndLodgeAssessment do
       validate_lodgement_use_case,
       lodge_assessment_use_case,
       check_assessor_belongs_to_scheme_use_case,
-      assessments_xml_gateway,
     )
   end
 
@@ -94,12 +83,6 @@ describe UseCase::ValidateAndLodgeAssessment do
       }.to raise_exception(
         UseCase::ValidateAndLodgeAssessment::SchemaNotDefined,
       )
-    end
-  end
-
-  context "when failing to lodge an xml request" do
-    it "will call send_to_db" do
-      expect(assessments_xml_gateway.send_to_db).to be_truthy
     end
   end
 end
