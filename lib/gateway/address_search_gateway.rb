@@ -1,5 +1,31 @@
 module Gateway
   class AddressSearchGateway
+    def search_by_postcode(postcode)
+      results =
+        ActiveRecord::Base.connection.exec_query(
+          'SELECT
+           assessment_id,
+           address_line1,
+           address_line2,
+           address_line3,
+           address_line4,
+           town,
+           postcode
+         FROM assessments
+         WHERE postcode = $1',
+          "SQL",
+          [
+            ActiveRecord::Relation::QueryAttribute.new(
+              "rrn",
+              postcode,
+              ActiveRecord::Type::String.new,
+            ),
+          ],
+        )
+
+      results.map { |row| record_to_address_domain row }
+    end
+
     def search_by_rrn(rrn)
       results =
         ActiveRecord::Base.connection.exec_query(
