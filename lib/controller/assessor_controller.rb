@@ -124,9 +124,9 @@ module Controller
     end
 
     get "/api/assessors", jwt_auth: %w[assessor:search] do
-      if params.has_key?(:name)
+      if params.key?(:name)
         search_by_name(params[:name])
-      elsif params.has_key?(:postcode) && params.has_key?(:qualification)
+      elsif params.key?(:postcode) && params.key?(:qualification)
         search_by_postcode(params[:postcode], params[:qualification])
       else
         error_response(

@@ -3,6 +3,7 @@ class PropertySummary < ActiveRecord::Migration[6.0]
     add_column :domestic_energy_assessments,
                :property_summary,
                :jsonb,
-               null: false, default: "{}"
+               null: false,
+               default: "{}"
   end
 end

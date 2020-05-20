@@ -6,19 +6,19 @@ describe "Integration::EndpointSecurity" do
   methods_with_no_body = %w[head options]
 
   controllers_to_test =
-    Controller.constants.select do |constant|
+    Controller.constants.select { |constant|
       Controller.const_get(constant).is_a? Class
-    end.reject { |constant| controllers_to_ignore.include? constant.to_s }
+    }.reject { |constant| controllers_to_ignore.include? constant.to_s }
 
   @routes_to_test = []
 
   controllers_to_test.each do |controller|
     routes =
-      Controller.const_get(controller).routes.map do |method, routes|
+      Controller.const_get(controller).routes.map { |method, routes|
         routes.map { |route| route.first.to_s }.map do |route|
           { verb: method.downcase, path: route }
         end
-      end.map(&:first)
+      }.map(&:first)
 
     @routes_to_test |= routes
   end

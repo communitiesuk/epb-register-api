@@ -17,7 +17,7 @@ module Helper
 
         if path.include?(:"..")
           data[key] = kewy
-        elsif raw_data.is_a?(Hash) && raw_data.has_key?(path[0])
+        elsif raw_data.is_a?(Hash) && raw_data.key?(path[0])
           data[key] = raw_data.dig(*path)
         elsif settings.key?(:default)
           data[key] = settings[:default]

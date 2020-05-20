@@ -28,7 +28,7 @@ task :generate_certificate do
   address_line4.push("Westminster")
   town = %w[Brighton Bournemouth London Cardiff Newcastle Manchester Bristol]
   current_space_heating_demand = [1233, 3445, 4546, 6748, 8910, 7483, 8963]
-  current_water_heating_demand = [7983, 2321, 454, 648, 8932, 6483, 72363]
+  current_water_heating_demand = [7983, 2321, 454, 648, 8932, 6483, 72_363]
   current_carbon_emission = [5.4, 4.327, 7.8, 4.5, 6.4, 4]
   potential_carbon_emission = [1.4, 0.5, 3.5, 2.1, 3.624, 1]
   impact_of_loft_insulation = [-21, -543, -764, -836, -13, -94, -35]
@@ -43,10 +43,19 @@ task :generate_certificate do
   environmental_impact_rating_improvement = [93, 85, 75, 62, 45]
   green_deal_category_code = %w[a b c d e]
   related_party_disclosure_number = [1, 2, 3, 4, 5, 6, 7]
-  related_party_disclosure_text = ["No related party", "Relative of homeowner or of occupier of the property", "Residing at the property",
-                                   "Financial interest in the property", "Owner or Director of the organisation dealing with the property transaction",
+  related_party_disclosure_text = ["No related party",
+                                   "Relative of homeowner or of occupier of the property",
+                                   "Residing at the property",
+                                   "Financial interest in the property",
+                                   "Owner or Director of the organisation dealing with the property transaction",
                                    "Employed by the professional dealing with the property transaction",
-                                   "Relative of the professional dealing with the property transaction", nil, nil, nil, nil, nil, nil]
+                                   "Relative of the professional dealing with the property transaction",
+                                   nil,
+                                   nil,
+                                   nil,
+                                   nil,
+                                   nil,
+                                   nil]
   property_summary = [
     [
       {
@@ -123,7 +132,7 @@ task :generate_certificate do
     internal_related_party_disclosure_text = related_party_disclosure_text.sample
     internal_property_summary = property_summary.sample
 
-    unless internal_related_party_disclosure_text == nil
+    unless internal_related_party_disclosure_text.nil?
       internal_related_party_disclosure_number = "NULL"
     end
 

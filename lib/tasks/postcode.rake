@@ -21,7 +21,7 @@ task :import_postcode do
 
     statements.pop
 
-    statements.each_slice(50000) do |batch|
+    statements.each_slice(50_000) do |batch|
       batch = batch.join(", ")
 
       db.execute("INSERT INTO postcode_geolocation (id,postcode,latitude,longitude) VALUES " + batch)
