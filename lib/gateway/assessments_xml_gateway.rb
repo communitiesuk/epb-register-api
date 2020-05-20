@@ -6,6 +6,9 @@ end
 
 module Gateway
   class AssessmentsXmlGateway
-    def send_to_db(record); end
+    class AssessmentsXml < ActiveRecord::Base; end
+    def send_to_db(record)
+      AssessmentsXml.create(record)
+    end
   end
 end

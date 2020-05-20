@@ -507,6 +507,33 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
           expect(response["data"]["addressLine4"]).to eq("")
         end
       end
+
+      context "when assessment xml is stored" do
+        it "is visible when peeking into the assessments_xml table" do
+          lodge_assessment(
+            assessment_id: "1234-1234-1234-1234-1234",
+            assessment_body: doc.to_xml,
+            accepted_responses: [201],
+            auth_data: { scheme_ids: [scheme_id] },
+            schema_name: "CEPC-7.1",
+          )
+
+          results =
+            ActiveRecord::Base.connection.execute(
+              "SELECT xml FROM assessments_xml WHERE assessment_id = '" +
+                ActiveRecord::Base.sanitize_sql("1234-1234-1234-1234-1234") +
+                "'",
+            )
+
+          xml = ""
+          results.each { |row| xml = row["xml"] }
+
+          expect(doc.to_xml).to eq(
+            '<?xml version="1.0" encoding="UTF-8"?>
+' + xml,
+          )
+        end
+      end
     end
 
     context "when rejecting an assessment" do
