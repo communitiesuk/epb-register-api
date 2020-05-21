@@ -25,6 +25,7 @@ describe UseCase::SearchAddressesByBuildingReferenceNumber do
           line3: nil,
           town: "Placeville",
           postcode: "PL4 V11",
+          source: "PREVIOUS_ASSESSMENT",
         },
       )
 
@@ -36,6 +37,7 @@ describe UseCase::SearchAddressesByBuildingReferenceNumber do
           line3: nil,
           town: "Placeville",
           postcode: "PL4 V12",
+          source: "PREVIOUS_ASSESSMENT",
         },
       )
 
@@ -58,6 +60,7 @@ describe UseCase::SearchAddressesByBuildingReferenceNumber do
         expect(results[0].line3).to be_nil
         expect(results[0].town).to eq "Placeville"
         expect(results[0].postcode).to eq "PL4 V11"
+        expect(results[0].source).to eq "PREVIOUS_ASSESSMENT"
       end
     end
   end

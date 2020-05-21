@@ -24,6 +24,7 @@ describe UseCase::SearchAddressesByPostcode do
           town: "Placeville",
           postcode: "PL4 V11",
           assessment_type: "CEPC",
+          source: "PREVIOUS_ASSESSMENT",
         },
       )
 
@@ -36,6 +37,7 @@ describe UseCase::SearchAddressesByPostcode do
           town: "Placeville",
           postcode: "PL4 V12",
           assessment_type: "RdSAP",
+          source: "PREVIOUS_ASSESSMENT",
         },
       )
 
@@ -48,6 +50,7 @@ describe UseCase::SearchAddressesByPostcode do
           town: "Placeville",
           postcode: "PL4 V12",
           assessment_type: "RdSAP",
+          source: "PREVIOUS_ASSESSMENT",
         },
       )
 
@@ -69,6 +72,7 @@ describe UseCase::SearchAddressesByPostcode do
         expect(results[0].line3).to be_nil
         expect(results[0].town).to eq "Placeville"
         expect(results[0].postcode).to eq "PL4 V11"
+        expect(results[0].source).to eq "PREVIOUS_ASSESSMENT"
       end
 
       context "with address type" do
@@ -85,6 +89,7 @@ describe UseCase::SearchAddressesByPostcode do
           expect(results[0].line3).to be_nil
           expect(results[0].town).to eq "Placeville"
           expect(results[0].postcode).to eq "PL4 V12"
+          expect(results[0].source).to eq "PREVIOUS_ASSESSMENT"
         end
       end
 
@@ -102,6 +107,7 @@ describe UseCase::SearchAddressesByPostcode do
           expect(results[0].line3).to be_nil
           expect(results[0].town).to eq "Placeville"
           expect(results[0].postcode).to eq "PL4 V12"
+          expect(results[0].source).to eq "PREVIOUS_ASSESSMENT"
         end
       end
     end

@@ -23,6 +23,7 @@ describe UseCase::SearchAddressesByStreetAndTown do
           line3: nil,
           town: "Placeville",
           postcode: "PL4 V11",
+          source: "PREVIOUS_ASSESSMENT",
         },
       )
 
@@ -34,6 +35,7 @@ describe UseCase::SearchAddressesByStreetAndTown do
           line3: nil,
           town: "Placeville",
           postcode: "PL4 V12",
+          source: "PREVIOUS_ASSESSMENT",
         },
       )
 
@@ -45,6 +47,7 @@ describe UseCase::SearchAddressesByStreetAndTown do
           line3: nil,
           town: "Placeville",
           postcode: "PL4 V13",
+          source: "PREVIOUS_ASSESSMENT",
         },
       )
 
@@ -56,6 +59,7 @@ describe UseCase::SearchAddressesByStreetAndTown do
           line3: nil,
           town: "Countyshire",
           postcode: "PL4 V14",
+          source: "PREVIOUS_ASSESSMENT",
         },
       )
 
@@ -76,6 +80,7 @@ describe UseCase::SearchAddressesByStreetAndTown do
         expect(results[0].line3).to be_nil
         expect(results[0].town).to eq "Placeville"
         expect(results[0].postcode).to eq "PL4 V11"
+        expect(results[0].source).to eq "PREVIOUS_ASSESSMENT"
       end
 
       context "when street is on address line 2" do
@@ -91,6 +96,7 @@ describe UseCase::SearchAddressesByStreetAndTown do
           expect(results[2].line3).to be_nil
           expect(results[2].town).to eq "Placeville"
           expect(results[2].postcode).to eq "PL4 V13"
+          expect(results[2].source).to eq "PREVIOUS_ASSESSMENT"
         end
       end
 
@@ -107,6 +113,7 @@ describe UseCase::SearchAddressesByStreetAndTown do
           expect(results[3].line3).to be_nil
           expect(results[3].town).to eq "Countyshire"
           expect(results[3].postcode).to eq "PL4 V14"
+          expect(results[3].source).to eq "PREVIOUS_ASSESSMENT"
         end
       end
     end

@@ -122,7 +122,8 @@ module Gateway
                           line2: row["address_line2"],
                           line3: row["address_line3"],
                           town: row["town"],
-                          postcode: row["postcode"]
+                          postcode: row["postcode"],
+                          source: "PREVIOUS_ASSESSMENT"
     end
   end
 end

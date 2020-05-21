@@ -131,6 +131,7 @@ describe "searching for an address by street and town" do
         expect(response["data"]["addresses"][0]["line1"]).to eq "1 Some Street"
         expect(response["data"]["addresses"][0]["town"]).to eq "Post-Town1"
         expect(response["data"]["addresses"][0]["postcode"]).to eq "A0 0AA"
+        expect(response["data"]["addresses"][0]["source"]).to eq "PREVIOUS_ASSESSMENT"
       end
 
       context "when an address type is provided" do
@@ -156,6 +157,7 @@ describe "searching for an address by street and town" do
           ).to eq "1 Some Street"
           expect(response["data"]["addresses"][0]["town"]).to eq "Post-Town1"
           expect(response["data"]["addresses"][0]["postcode"]).to eq "A0 0AA"
+          expect(response["data"]["addresses"][0]["source"]).to eq "PREVIOUS_ASSESSMENT"
         end
       end
 
@@ -183,6 +185,7 @@ describe "searching for an address by street and town" do
           ).to eq "123 Test Street"
           expect(response["data"]["addresses"][0]["town"]).to eq "Post-Town1"
           expect(response["data"]["addresses"][0]["postcode"]).to eq "A0 0AA"
+          expect(response["data"]["addresses"][0]["source"]).to eq "PREVIOUS_ASSESSMENT"
         end
       end
 
@@ -210,6 +213,7 @@ describe "searching for an address by street and town" do
           expect(response["data"]["addresses"][0]["line2"]).to eq "Another Town"
           expect(response["data"]["addresses"][0]["town"]).to eq "Some County"
           expect(response["data"]["addresses"][0]["postcode"]).to eq "A0 0AA"
+          expect(response["data"]["addresses"][0]["source"]).to eq "PREVIOUS_ASSESSMENT"
         end
       end
     end

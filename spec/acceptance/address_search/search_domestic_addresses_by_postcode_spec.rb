@@ -107,6 +107,7 @@ describe "searching for an address by postcode" do
         expect(response["data"]["addresses"][0]["line1"]).to eq "1 Some Street"
         expect(response["data"]["addresses"][0]["town"]).to eq "Post-Town1"
         expect(response["data"]["addresses"][0]["postcode"]).to eq "A0 0AA"
+        expect(response["data"]["addresses"][0]["source"]).to eq "PREVIOUS_ASSESSMENT"
       end
 
       context "when there is no space in the postcode" do
@@ -132,6 +133,7 @@ describe "searching for an address by postcode" do
           ).to eq "1 Some Street"
           expect(response["data"]["addresses"][0]["town"]).to eq "Post-Town1"
           expect(response["data"]["addresses"][0]["postcode"]).to eq "A0 0AA"
+          expect(response["data"]["addresses"][0]["source"]).to eq "PREVIOUS_ASSESSMENT"
         end
       end
 
@@ -159,6 +161,7 @@ describe "searching for an address by postcode" do
             ).to eq "2 Some Street"
             expect(response["data"]["addresses"][0]["town"]).to eq "Post-Town1"
             expect(response["data"]["addresses"][0]["postcode"]).to eq "A0 0AA"
+            expect(response["data"]["addresses"][0]["source"]).to eq "PREVIOUS_ASSESSMENT"
           end
         end
 
@@ -186,6 +189,7 @@ describe "searching for an address by postcode" do
             ).to eq "123 Test Street"
             expect(response["data"]["addresses"][0]["town"]).to eq "Post-Town1"
             expect(response["data"]["addresses"][0]["postcode"]).to eq "A0 0AA"
+            expect(response["data"]["addresses"][0]["source"]).to eq "PREVIOUS_ASSESSMENT"
           end
         end
       end
@@ -213,6 +217,7 @@ describe "searching for an address by postcode" do
           ).to eq "1 Some Street"
           expect(response["data"]["addresses"][0]["town"]).to eq "Post-Town1"
           expect(response["data"]["addresses"][0]["postcode"]).to eq "A0 0AA"
+          expect(response["data"]["addresses"][0]["source"]).to eq "PREVIOUS_ASSESSMENT"
         end
       end
     end
