@@ -193,14 +193,15 @@ module Domain
       }
     end
 
-    private
+  private
 
     def filter_qualification(qualification)
-      valid_qualifications = ["ACTIVE", "INACTIVE", "STRUCKOFF", "SUSPENDED"]
+      valid_qualifications = %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED]
 
       unless valid_qualifications.include? qualification
         return "INACTIVE"
       end
+
       qualification
     end
   end
