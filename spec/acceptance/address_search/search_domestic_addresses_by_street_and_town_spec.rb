@@ -36,16 +36,19 @@ describe "searching for an address by street and town" do
       )
 
       doc = Nokogiri.XML valid_rdsap_xml
+      second_assessment = doc.dup
+      third_assessment = doc.dup
+      fourth_assessment = doc.dup
 
-      assessment_id = doc.at("RRN")
+      assessment_id = second_assessment.at("RRN")
       assessment_id.children = "0000-0000-0000-0000-0001"
 
-      address_line_one = doc.search("Address-Line-1")[1]
+      address_line_one = second_assessment.search("Address-Line-1")[1]
       address_line_one.children = "2 Other Street"
 
       lodge_assessment(
         assessment_id: "0000-0000-0000-0000-0001",
-        assessment_body: doc.to_xml,
+        assessment_body: second_assessment.to_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
       )
@@ -69,18 +72,39 @@ describe "searching for an address by street and town" do
         schema_name: "CEPC-7.1",
       )
 
-      third_assessment_id = doc.at("RRN")
+      third_assessment_id = third_assessment.at("RRN")
       third_assessment_id.children = "0000-0000-0000-0000-0003"
 
-      address_line_one = doc.search("Address-Line-1")[1]
-      address_line_one.children = "The House"
-      address_line_two = Nokogiri::XML::Node.new "Address-Line-2", doc
-      address_line_two.content = "123 Test Street"
-      address_line_one.add_next_sibling address_line_two
+      third_address_line_one = third_assessment.search("Address-Line-1")[1]
+      third_address_line_one.children = "The House"
+      third_address_line_two =
+        Nokogiri::XML::Node.new "Address-Line-2", third_assessment
+      third_address_line_two.content = "123 Test Street"
+      third_address_line_one.add_next_sibling third_address_line_two
 
       lodge_assessment(
         assessment_id: "0000-0000-0000-0000-0003",
-        assessment_body: doc.to_xml,
+        assessment_body: third_assessment.to_xml,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] },
+      )
+
+      fourth_assessment_id = fourth_assessment.at("RRN")
+      fourth_assessment_id.children = "0000-0000-0000-0000-0004"
+
+      fourth_address_line_one = fourth_assessment.search("Address-Line-1")[1]
+      fourth_address_line_one.children = "3 Other Street"
+      fourth_address_line_two =
+        Nokogiri::XML::Node.new "Address-Line-2", fourth_assessment
+      fourth_address_line_two.content = "Another Town"
+      fourth_address_line_one.add_next_sibling fourth_address_line_two
+
+      town = fourth_assessment.search("Post-Town")[1]
+      town.children = "Some County"
+
+      lodge_assessment(
+        assessment_id: "0000-0000-0000-0000-0004",
+        assessment_body: fourth_assessment.to_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
       )
@@ -158,6 +182,33 @@ describe "searching for an address by street and town" do
             response["data"]["addresses"][0]["line2"],
           ).to eq "123 Test Street"
           expect(response["data"]["addresses"][0]["town"]).to eq "Post-Town1"
+          expect(response["data"]["addresses"][0]["postcode"]).to eq "A0 0AA"
+        end
+      end
+
+      context "with town on address line 2" do
+        it "returns the address" do
+          response =
+            JSON.parse(
+              assertive_get(
+                "/api/search/addresses?street=Other%20Street&town=Another%20Town",
+                [200],
+                true,
+                {},
+                %w[address:search],
+              )
+                .body,
+            )
+
+          expect(response["data"]["addresses"].length).to eq 1
+          expect(
+            response["data"]["addresses"][0]["buildingReferenceNumber"],
+          ).to eq "RRN-0000-0000-0000-0000-0004"
+          expect(
+            response["data"]["addresses"][0]["line1"],
+          ).to eq "3 Other Street"
+          expect(response["data"]["addresses"][0]["line2"]).to eq "Another Town"
+          expect(response["data"]["addresses"][0]["town"]).to eq "Some County"
           expect(response["data"]["addresses"][0]["postcode"]).to eq "A0 0AA"
         end
       end

@@ -25,7 +25,7 @@ module Gateway
       ]
 
       if building_name_number
-        sql << " AND address_line1 LIKE $2 OR address_line2 LIKE $2"
+        sql << " AND (address_line1 LIKE $2 OR address_line2 LIKE $2)"
         binds <<
           ActiveRecord::Relation::QueryAttribute.new(
             "building_name_number",
@@ -84,8 +84,8 @@ module Gateway
           town,
           postcode
       FROM assessments
-      WHERE address_line1 LIKE $1 OR address_line2 LIKE $1
-      AND town = $2'
+      WHERE (address_line1 LIKE $1 OR address_line2 LIKE $1)
+      AND (town LIKE $2 OR address_line2 LIKE $2)'
 
       binds = [
         ActiveRecord::Relation::QueryAttribute.new(
@@ -95,7 +95,7 @@ module Gateway
         ),
         ActiveRecord::Relation::QueryAttribute.new(
           "town",
-          town,
+          "%#{town}%",
           ActiveRecord::Type::String.new,
         ),
       ]

@@ -42,14 +42,21 @@ class AddressSearchGatewayFake
   end
 
   def search_by_street_and_town(street, town, address_type)
-    filtered_results = @addresses.filter { |address| address[:town] == town }
+    filtered_results =
+      @addresses.filter do |address|
+        if address[:line2] == town
+          true
+        elsif address[:town] == town
+          true
+        end
+      end
 
     filtered_results =
       filtered_results.filter do |address|
-        if address[:line2]
-          address[:line2].include? street
-        else
-          address[:line1].include? street
+        if address[:line2] && address[:line2].include?(street)
+          true
+        elsif address[:line1].include? street
+          true
         end
       end
 

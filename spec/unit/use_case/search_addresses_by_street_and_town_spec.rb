@@ -48,6 +48,17 @@ describe UseCase::SearchAddressesByStreetAndTown do
         },
       )
 
+      gateway.add(
+        {
+          building_reference_number: "RRN-0000-0000-0000-0000-0003",
+          line1: "130 Home Road",
+          line2: "Placeville",
+          line3: nil,
+          town: "Countyshire",
+          postcode: "PL4 V14",
+        },
+      )
+
       gateway
     end
     let(:use_case) { described_class.new gateway }
@@ -56,7 +67,7 @@ describe UseCase::SearchAddressesByStreetAndTown do
       it "returns the expected address" do
         results = use_case.execute street: "Home Road", town: "Placeville"
 
-        expect(results.length).to eq 3
+        expect(results.length).to eq 4
         expect(
           results[0].building_reference_number,
         ).to eq "RRN-0000-0000-0000-0000-0000"
@@ -71,7 +82,7 @@ describe UseCase::SearchAddressesByStreetAndTown do
         it "returns the expected address" do
           results = use_case.execute street: "Home Road", town: "Placeville"
 
-          expect(results.length).to eq 3
+          expect(results.length).to eq 4
           expect(
             results[2].building_reference_number,
           ).to eq "RRN-0000-0000-0000-0000-0002"
@@ -80,6 +91,22 @@ describe UseCase::SearchAddressesByStreetAndTown do
           expect(results[2].line3).to be_nil
           expect(results[2].town).to eq "Placeville"
           expect(results[2].postcode).to eq "PL4 V13"
+        end
+      end
+
+      context "when town is on address line 2" do
+        it "returns the expected address" do
+          results = use_case.execute street: "Home Road", town: "Placeville"
+
+          expect(results.length).to eq 4
+          expect(
+            results[3].building_reference_number,
+          ).to eq "RRN-0000-0000-0000-0000-0003"
+          expect(results[3].line1).to eq "130 Home Road"
+          expect(results[3].line2).to eq "Placeville"
+          expect(results[3].line3).to be_nil
+          expect(results[3].town).to eq "Countyshire"
+          expect(results[3].postcode).to eq "PL4 V14"
         end
       end
     end
