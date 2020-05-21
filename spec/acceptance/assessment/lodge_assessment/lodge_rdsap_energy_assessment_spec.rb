@@ -11,14 +11,14 @@ describe "Acceptance::LodgeRdSapEnergyAssessment" do
       dateOfBirth: "1991-02-25",
       searchResultsComparisonPostcode: "",
       qualifications: { domesticRdSap: "ACTIVE",
-                        domesticSap:"INACTIVE",
+                        domesticSap: "INACTIVE",
                         nonDomesticCc4: "INACTIVE",
                         nonDomesticSp3: "INACTIVE",
                         nonDomesticDec: "STRUCKOFF",
                         nonDomesticNos3: "INACTIVE",
-                        nonDomesticNos4:"INACTIVE",
+                        nonDomesticNos4: "INACTIVE",
                         nonDomesticNos5: "SUSPENDED",
-                        gda: "INACTIVE", },
+                        gda: "INACTIVE" },
       contactDetails: {
         telephoneNumber: "010199991010101", email: "person@person.com"
       },
