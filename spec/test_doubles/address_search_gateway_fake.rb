@@ -12,7 +12,11 @@ class AddressSearchGatewayFake
     if building_name_number
       filtered_results =
         filtered_results.filter do |address|
-          address[:line1].include? building_name_number
+          if address[:line2]
+            address[:line2].include?(building_name_number)
+          else
+            address[:line1].include?(building_name_number)
+          end
         end
     end
 

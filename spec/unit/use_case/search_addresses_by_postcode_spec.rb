@@ -39,6 +39,18 @@ describe UseCase::SearchAddressesByPostcode do
         },
       )
 
+      gateway.add(
+        {
+          building_reference_number: "RRN-0000-0000-0000-0000-0002",
+          line1: "The Name",
+          line2: "129 Home Road",
+          line3: nil,
+          town: "Placeville",
+          postcode: "PL4 V12",
+          assessment_type: "RdSAP",
+        },
+      )
+
       gateway
     end
 
@@ -64,12 +76,29 @@ describe UseCase::SearchAddressesByPostcode do
           results =
             use_case.execute postcode: "PL4 V12", address_type: "DOMESTIC"
 
-          expect(results.length).to eq 1
+          expect(results.length).to eq 2
           expect(
             results[0].building_reference_number,
           ).to eq "RRN-0000-0000-0000-0000-0001"
           expect(results[0].line1).to eq "128 Home Road"
           expect(results[0].line2).to be_nil
+          expect(results[0].line3).to be_nil
+          expect(results[0].town).to eq "Placeville"
+          expect(results[0].postcode).to eq "PL4 V12"
+        end
+      end
+
+      context "with building number on address line two" do
+        it "returns the expected address" do
+          results =
+            use_case.execute postcode: "PL4 V12", building_name_number: "129"
+
+          expect(results.length).to eq 1
+          expect(
+            results[0].building_reference_number,
+          ).to eq "RRN-0000-0000-0000-0000-0002"
+          expect(results[0].line1).to eq "The Name"
+          expect(results[0].line2).to eq "129 Home Road"
           expect(results[0].line3).to be_nil
           expect(results[0].town).to eq "Placeville"
           expect(results[0].postcode).to eq "PL4 V12"

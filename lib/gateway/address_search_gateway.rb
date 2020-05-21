@@ -25,7 +25,7 @@ module Gateway
       ]
 
       if building_name_number
-        sql << " AND address_line1 LIKE $2"
+        sql << " AND address_line1 LIKE $2 OR address_line2 LIKE $2"
         binds <<
           ActiveRecord::Relation::QueryAttribute.new(
             "building_name_number",

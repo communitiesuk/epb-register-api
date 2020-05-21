@@ -68,6 +68,22 @@ describe "searching for an address by postcode" do
         auth_data: { scheme_ids: [scheme_id] },
         schema_name: "CEPC-7.1",
       )
+
+      third_assessment_id = doc.at("RRN")
+      third_assessment_id.children = "0000-0000-0000-0000-0003"
+
+      address_line_one = doc.search("Address-Line-1")[1]
+      address_line_one.children = "The House"
+      address_line_two = Nokogiri::XML::Node.new "Address-Line-2", doc
+      address_line_two.content = "123 Test Street"
+      address_line_one.add_next_sibling address_line_two
+
+      lodge_assessment(
+        assessment_id: "0000-0000-0000-0000-0003",
+        assessment_body: doc.to_xml,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] },
+      )
     end
 
     describe "searching by postcode" do
@@ -84,7 +100,7 @@ describe "searching for an address by postcode" do
               .body,
           )
 
-        expect(response["data"]["addresses"].length).to eq 3
+        expect(response["data"]["addresses"].length).to eq 4
         expect(
           response["data"]["addresses"][0]["buildingReferenceNumber"],
         ).to eq "RRN-0000-0000-0000-0000-0000"
@@ -107,7 +123,7 @@ describe "searching for an address by postcode" do
                 .body,
             )
 
-          expect(response["data"]["addresses"].length).to eq 3
+          expect(response["data"]["addresses"].length).to eq 4
           expect(
             response["data"]["addresses"][0]["buildingReferenceNumber"],
           ).to eq "RRN-0000-0000-0000-0000-0000"
@@ -145,6 +161,33 @@ describe "searching for an address by postcode" do
             expect(response["data"]["addresses"][0]["postcode"]).to eq "A0 0AA"
           end
         end
+
+        describe "with a building number on address line 2" do
+          it "returns the address" do
+            response =
+              JSON.parse(
+                assertive_get(
+                  "/api/search/addresses?postcode=A0%200AA&buildingNameNumber=123",
+                  [200],
+                  true,
+                  {},
+                  %w[address:search],
+                )
+                  .body,
+              )
+
+            expect(response["data"]["addresses"].length).to eq 1
+            expect(
+              response["data"]["addresses"][0]["buildingReferenceNumber"],
+            ).to eq "RRN-0000-0000-0000-0000-0003"
+            expect(response["data"]["addresses"][0]["line1"]).to eq "The House"
+            expect(
+              response["data"]["addresses"][0]["line2"],
+            ).to eq "123 Test Street"
+            expect(response["data"]["addresses"][0]["town"]).to eq "Post-Town1"
+            expect(response["data"]["addresses"][0]["postcode"]).to eq "A0 0AA"
+          end
+        end
       end
 
       context "when an address type is provided" do
@@ -161,7 +204,7 @@ describe "searching for an address by postcode" do
                 .body,
             )
 
-          expect(response["data"]["addresses"].length).to eq 2
+          expect(response["data"]["addresses"].length).to eq 3
           expect(
             response["data"]["addresses"][0]["buildingReferenceNumber"],
           ).to eq "RRN-0000-0000-0000-0000-0000"
