@@ -103,35 +103,15 @@ module Domain
         address: {},
         company_details: {},
         qualifications: {
-          domestic_sap:
-            @domestic_sap_qualification == "ACTIVE" ? "ACTIVE" : "INACTIVE",
-          domestic_rd_sap:
-            @domestic_rd_sap_qualification == "ACTIVE" ? "ACTIVE" : "INACTIVE",
-          non_domestic_sp3:
-            @non_domestic_sp3_qualification == "ACTIVE" ? "ACTIVE" : "INACTIVE",
-          non_domestic_cc4:
-            @non_domestic_cc4_qualification == "ACTIVE" ? "ACTIVE" : "INACTIVE",
-          non_domestic_dec:
-            @non_domestic_dec_qualification == "ACTIVE" ? "ACTIVE" : "INACTIVE",
-          non_domestic_nos3:
-            if @non_domestic_nos3_qualification == "ACTIVE"
-              "ACTIVE"
-            else
-              "INACTIVE"
-            end,
-          non_domestic_nos4:
-            if @non_domestic_nos4_qualification == "ACTIVE"
-              "ACTIVE"
-            else
-              "INACTIVE"
-            end,
-          non_domestic_nos5:
-            if @non_domestic_nos5_qualification == "ACTIVE"
-              "ACTIVE"
-            else
-              "INACTIVE"
-            end,
-          gda: @gda_qualification == "ACTIVE" ? "ACTIVE" : "INACTIVE",
+          domestic_sap: @domestic_sap_qualification,
+          domestic_rd_sap: @domestic_rd_sap_qualification,
+          non_domestic_sp3: @non_domestic_sp3_qualification,
+          non_domestic_cc4: @non_domestic_cc4_qualification,
+          non_domestic_dec: @non_domestic_dec_qualification,
+          non_domestic_nos3: @non_domestic_nos3_qualification,
+          non_domestic_nos4: @non_domestic_nos4_qualification,
+          non_domestic_nos5: @non_domestic_nos5_qualification,
+          gda: @gda_qualification,
         },
       }
 

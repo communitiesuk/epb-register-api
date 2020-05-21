@@ -133,19 +133,6 @@ describe "Acceptance::Assessor" do
         response = JSON.parse(fetch_assessor(scheme_id, "SCHEME4233").body)
         expect(response).to eq(expected_response)
       end
-
-      it "returns EPC domestic qualification as inactive by default" do
-        scheme_id = add_scheme_and_get_id
-        add_assessor(
-          scheme_id,
-          "SCHEME4233",
-          assessor_without_key(:qualifications),
-        )
-        response = JSON.parse(fetch_assessor(scheme_id, "SCHEME4233").body)
-        expect(response["data"]["qualifications"]["domesticRdSap"]).to eq(
-          "INACTIVE",
-        )
-      end
     end
 
     context "security" do

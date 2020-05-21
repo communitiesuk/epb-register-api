@@ -10,7 +10,17 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
       lastName: "Person",
       dateOfBirth: "1991-02-25",
       searchResultsComparisonPostcode: "",
-      qualifications: { domesticSap: "ACTIVE" },
+      qualifications: {
+          domesticSap: "ACTIVE",
+          domesticRdSap: "STRUCKOFF",
+          nonDomesticSp3: "SUSPENDED",
+          nonDomesticCc4: "INACTIVE",
+          nonDomesticDec: "INACTIVE",
+          nonDomesticNos3: "INACTIVE",
+          nonDomesticNos4: "INACTIVE",
+          nonDomesticNos5: "INACTIVE",
+          gda: "INACTIVE",
+      },
       contactDetails: {
         telephoneNumber: "010199991010101", email: "person@person.com"
       },
@@ -351,9 +361,9 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
             "companyDetails" => {},
             "qualifications" => {
               "domesticSap" => "ACTIVE",
-              "domesticRdSap" => "INACTIVE",
+              "domesticRdSap" => "STRUCKOFF",
               "nonDomesticCc4" => "INACTIVE",
-              "nonDomesticSp3" => "INACTIVE",
+              "nonDomesticSp3" => "SUSPENDED",
               "nonDomesticDec" => "INACTIVE",
               "nonDomesticNos3" => "INACTIVE",
               "nonDomesticNos4" => "INACTIVE",

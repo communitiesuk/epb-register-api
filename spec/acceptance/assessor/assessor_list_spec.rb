@@ -10,7 +10,17 @@ describe "Acceptance::AssessorList" do
       lastName: "Person",
       dateOfBirth: "1991-02-25",
       searchResultsComparisonPostcode: "",
-      qualifications: { domesticRdSap: "ACTIVE" },
+      qualifications: {
+          domesticRdSap: "ACTIVE",
+          domesticSap: "INACTIVE",
+          nonDomesticSp3: "INACTIVE",
+          nonDomesticCc4: "INACTIVE",
+          nonDomesticDec: "INACTIVE",
+          nonDomesticNos3: "INACTIVE",
+          nonDomesticNos4: "INACTIVE",
+          nonDomesticNos5: "INACTIVE",
+          gda: "INACTIVE",
+      },
       contact_details: {
         email: "someone@energy.gov", telephone_number: "01234 567"
       },

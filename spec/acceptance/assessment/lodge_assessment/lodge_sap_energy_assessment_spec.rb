@@ -10,7 +10,17 @@ describe "Acceptance::LodgeSapEnergyAssessment" do
       lastName: "Person",
       dateOfBirth: "1991-02-25",
       searchResultsComparisonPostcode: "",
-      qualifications: { domesticSap: "ACTIVE" },
+      qualifications: {
+          domesticSap: "ACTIVE",
+          domesticRdSap: "INACTIVE",
+          nonDomesticSp3: "INACTIVE",
+          nonDomesticCc4: "INACTIVE",
+          nonDomesticDec: "INACTIVE",
+          nonDomesticNos3: "INACTIVE",
+          nonDomesticNos4: "INACTIVE",
+          nonDomesticNos5: "INACTIVE",
+          gda: "INACTIVE",
+      },
       contactDetails: {
         telephoneNumber: "010199991010101", email: "person@person.com"
       },

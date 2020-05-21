@@ -11,7 +11,17 @@ describe "Acceptance::SearchForAssessor" do
         telephoneNumber: "010199991010101", email: "person@person.com"
       },
       searchResultsComparisonPostcode: "SE1 7EZ",
-      qualifications: { domesticRdSap: "ACTIVE" },
+      qualifications: {
+          domesticRdSap: "ACTIVE",
+          domesticSap: "INACTIVE",
+          nonDomesticSp3: "INACTIVE",
+          nonDomesticCc4: "INACTIVE",
+          nonDomesticDec: "INACTIVE",
+          nonDomesticNos3: "INACTIVE",
+          nonDomesticNos4: "INACTIVE",
+          nonDomesticNos5: "INACTIVE",
+          gda: "INACTIVE",
+      },
     }
   end
 

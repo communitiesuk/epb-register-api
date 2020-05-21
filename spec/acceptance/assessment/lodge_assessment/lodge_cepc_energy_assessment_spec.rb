@@ -11,9 +11,15 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
       dateOfBirth: "1991-02-25",
       searchResultsComparisonPostcode: "",
       qualifications: {
+        domesticSap: "INACTIVE",
+        domesticRdSap: "INACTIVE",
+        nonDomesticSp3: "INACTIVE",
+        nonDomesticCc4: "INACTIVE",
+        nonDomesticDec: "INACTIVE",
         nonDomesticNos3: "ACTIVE",
         nonDomesticNos4: "ACTIVE",
         nonDomesticNos5: "INACTIVE",
+        gda: "INACTIVE",
       },
       contactDetails: {
         telephoneNumber: "010199991010101", email: "person@person.com"
