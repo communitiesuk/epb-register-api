@@ -98,10 +98,32 @@ module Domain
           else
             Date.parse(@date_of_birth)
           end,
-        contact_details: {},
+        contact_details:
+          {
+            email: @email, telephone_number: @telephone_number
+          }.reject { |_k, v| v.nil? },
         search_results_comparison_postcode: @search_results_comparison_postcode,
-        address: {},
-        company_details: {},
+        address:
+          {
+            address_line1: @address_line1,
+            address_line2: @address_line2,
+            address_line3: @address_line3,
+            town: @town,
+            postcode: @postcode,
+          }.reject { |_k, v| v.nil? },
+        company_details:
+          {
+            company_reg_no: @company_reg_no,
+            company_address_line1: @company_address_line1,
+            company_address_line2: @company_address_line2,
+            company_address_line3: @company_address_line3,
+            company_town: @company_town,
+            company_postcode: @company_postcode,
+            company_website: @company_website,
+            company_telephone_number: @company_telephone_number,
+            company_email: @company_email,
+            company_name: @company_name,
+          }.reject { |_k, v| v.nil? },
         qualifications: {
           domestic_sap: filter_qualification(@domestic_sap_qualification),
           domestic_rd_sap: filter_qualification(@domestic_rd_sap_qualification),
@@ -121,42 +143,9 @@ module Domain
         },
       }
 
-      hash[:contact_details][:email] = @email if @email
-      if @telephone_number
-        hash[:contact_details][:telephone_number] = @telephone_number
-      end
       hash[:middle_names] = @middle_names if @middle_names
       hash[:also_known_as] = @also_known_as if @also_known_as
-      hash[:address][:address_line1] = @address_line1 if @address_line1
-      hash[:address][:address_line2] = @address_line2 if @address_line2
-      hash[:address][:address_line3] = @address_line3 if @address_line3
-      hash[:address][:town] = @town if @town
-      hash[:address][:postcode] = @postcode if @postcode
-      if @company_reg_no
-        hash[:company_details][:company_reg_no] = @company_reg_no
-      end
-      if @company_address_line1
-        hash[:company_details][:company_address_line1] = @company_address_line1
-      end
-      if @company_address_line2
-        hash[:company_details][:company_address_line2] = @company_address_line2
-      end
-      if @company_address_line3
-        hash[:company_details][:company_address_line3] = @company_address_line3
-      end
-      hash[:company_details][:company_town] = @company_town if @company_town
-      if @company_postcode
-        hash[:company_details][:company_postcode] = @company_postcode
-      end
-      if @company_website
-        hash[:company_details][:company_website] = @company_website
-      end
-      if @company_telephone_number
-        hash[:company_details][:company_telephone_number] =
-          @company_telephone_number
-      end
-      hash[:company_details][:company_email] = @company_email if @company_email
-      hash[:company_details][:company_name] = @company_name if @company_name
+
       hash
     end
 
