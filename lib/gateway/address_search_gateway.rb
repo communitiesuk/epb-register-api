@@ -84,7 +84,7 @@ module Gateway
           town,
           postcode
       FROM assessments
-      WHERE address_line1 LIKE $1
+      WHERE address_line1 LIKE $1 OR address_line2 LIKE $1
       AND town = $2'
 
       binds = [

@@ -37,15 +37,26 @@ describe UseCase::SearchAddressesByStreetAndTown do
         },
       )
 
+      gateway.add(
+        {
+          building_reference_number: "RRN-0000-0000-0000-0000-0002",
+          line1: "The Name",
+          line2: "129 Home Road",
+          line3: nil,
+          town: "Placeville",
+          postcode: "PL4 V13",
+        },
+      )
+
       gateway
     end
     let(:use_case) { described_class.new gateway }
 
-    describe "by RRN" do
+    describe "by street and town" do
       it "returns the expected address" do
         results = use_case.execute street: "Home Road", town: "Placeville"
 
-        expect(results.length).to eq 2
+        expect(results.length).to eq 3
         expect(
           results[0].building_reference_number,
         ).to eq "RRN-0000-0000-0000-0000-0000"
@@ -54,6 +65,22 @@ describe UseCase::SearchAddressesByStreetAndTown do
         expect(results[0].line3).to be_nil
         expect(results[0].town).to eq "Placeville"
         expect(results[0].postcode).to eq "PL4 V11"
+      end
+
+      context "when street is on address line 2" do
+        it "returns the expected address" do
+          results = use_case.execute street: "Home Road", town: "Placeville"
+
+          expect(results.length).to eq 3
+          expect(
+            results[2].building_reference_number,
+          ).to eq "RRN-0000-0000-0000-0000-0002"
+          expect(results[2].line1).to eq "The Name"
+          expect(results[2].line2).to eq "129 Home Road"
+          expect(results[2].line3).to be_nil
+          expect(results[2].town).to eq "Placeville"
+          expect(results[2].postcode).to eq "PL4 V13"
+        end
       end
     end
   end
