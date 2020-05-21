@@ -105,12 +105,18 @@ module Domain
         qualifications: {
           domestic_sap: filter_qualification(@domestic_sap_qualification),
           domestic_rd_sap: filter_qualification(@domestic_rd_sap_qualification),
-          non_domestic_sp3: filter_qualification(@non_domestic_sp3_qualification),
-          non_domestic_cc4: filter_qualification(@non_domestic_cc4_qualification),
-          non_domestic_dec: filter_qualification(@non_domestic_dec_qualification),
-          non_domestic_nos3: filter_qualification(@non_domestic_nos3_qualification),
-          non_domestic_nos4: filter_qualification(@non_domestic_nos4_qualification),
-          non_domestic_nos5: filter_qualification(@non_domestic_nos5_qualification),
+          non_domestic_sp3:
+            filter_qualification(@non_domestic_sp3_qualification),
+          non_domestic_cc4:
+            filter_qualification(@non_domestic_cc4_qualification),
+          non_domestic_dec:
+            filter_qualification(@non_domestic_dec_qualification),
+          non_domestic_nos3:
+            filter_qualification(@non_domestic_nos3_qualification),
+          non_domestic_nos4:
+            filter_qualification(@non_domestic_nos4_qualification),
+          non_domestic_nos5:
+            filter_qualification(@non_domestic_nos5_qualification),
           gda: filter_qualification(@gda_qualification),
         },
       }
@@ -198,9 +204,7 @@ module Domain
     def filter_qualification(qualification)
       valid_qualifications = %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED]
 
-      unless valid_qualifications.include? qualification
-        return "INACTIVE"
-      end
+      return "INACTIVE" unless valid_qualifications.include? qualification
 
       qualification
     end

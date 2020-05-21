@@ -9,7 +9,13 @@ module Domain
                 :source
 
     def initialize(
-      building_reference_number:, line1:, line2:, line3:, town:, postcode:, source:
+      building_reference_number:,
+      line1:,
+      line2:,
+      line3:,
+      town:,
+      postcode:,
+      source:
     )
       @building_reference_number = building_reference_number
       @line1 = line1

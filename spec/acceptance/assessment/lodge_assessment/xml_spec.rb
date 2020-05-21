@@ -53,7 +53,8 @@ describe "Acceptance::LodgeAssessment::XML" do
 
       expect(valid_cepc_xml).to eq(
         '<?xml version="1.0" encoding="UTF-8"?>
-' + get_stored_xml("0000-0000-0000-0000-0000"),
+' +
+          get_stored_xml("0000-0000-0000-0000-0000"),
       )
     end
   end

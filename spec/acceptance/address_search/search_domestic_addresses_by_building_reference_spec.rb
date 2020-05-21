@@ -53,7 +53,9 @@ describe "searching for an address by building reference" do
         expect(response["data"]["addresses"][0]["line1"]).to eq "1 Some Street"
         expect(response["data"]["addresses"][0]["town"]).to eq "Post-Town1"
         expect(response["data"]["addresses"][0]["postcode"]).to eq "A0 0AA"
-        expect(response["data"]["addresses"][0]["source"]).to eq "PREVIOUS_ASSESSMENT"
+        expect(
+          response["data"]["addresses"][0]["source"],
+        ).to eq "PREVIOUS_ASSESSMENT"
       end
     end
   end
