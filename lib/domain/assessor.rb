@@ -103,15 +103,15 @@ module Domain
         address: {},
         company_details: {},
         qualifications: {
-          domestic_sap: @domestic_sap_qualification,
-          domestic_rd_sap: @domestic_rd_sap_qualification,
-          non_domestic_sp3: @non_domestic_sp3_qualification,
-          non_domestic_cc4: @non_domestic_cc4_qualification,
-          non_domestic_dec: @non_domestic_dec_qualification,
-          non_domestic_nos3: @non_domestic_nos3_qualification,
-          non_domestic_nos4: @non_domestic_nos4_qualification,
-          non_domestic_nos5: @non_domestic_nos5_qualification,
-          gda: @gda_qualification,
+          domestic_sap: filter_qualification(@domestic_sap_qualification),
+          domestic_rd_sap: filter_qualification(@domestic_rd_sap_qualification),
+          non_domestic_sp3: filter_qualification(@non_domestic_sp3_qualification),
+          non_domestic_cc4: filter_qualification(@non_domestic_cc4_qualification),
+          non_domestic_dec: filter_qualification(@non_domestic_dec_qualification),
+          non_domestic_nos3: filter_qualification(@non_domestic_nos3_qualification),
+          non_domestic_nos4: filter_qualification(@non_domestic_nos4_qualification),
+          non_domestic_nos5: filter_qualification(@non_domestic_nos5_qualification),
+          gda: filter_qualification(@gda_qualification),
         },
       }
 
@@ -191,6 +191,17 @@ module Domain
         non_domestic_nos5_qualification: @non_domestic_nos5_qualification,
         gda_qualification: @gda_qualification,
       }
+    end
+
+    private
+
+    def filter_qualification(qualification)
+      valid_qualifications = ["ACTIVE", "INACTIVE", "STRUCKOFF", "SUSPENDED"]
+
+      unless valid_qualifications.include? qualification
+        return "INACTIVE"
+      end
+      qualification
     end
   end
 end
