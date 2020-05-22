@@ -193,12 +193,14 @@ module Controller
 
       body = request.body.read.to_s
 
+      sanitized_body = body.sub(/<Formatted-Report>.*<\/Formatted-Report>/, "")
+
       @events.event(
         false,
         {
           event_type: :lodgement_attempt,
           correlation_id: correlation_id,
-          request_body: body,
+          request_body: sanitized_body,
           request_headers: headers,
         },
         true,
@@ -209,7 +211,7 @@ module Controller
         @container.get_object(:validate_and_lodge_assessment_use_case)
 
       assessment_id = params[:assessment_id]
-      xml = body
+      xml = sanitized_body
       content_type = request.env["CONTENT_TYPE"].split("+")[1]
       scheme_ids = sup
 
