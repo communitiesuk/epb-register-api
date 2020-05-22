@@ -774,7 +774,7 @@ paths:
         '404':
           description: Assessment with this ID not found
         '410':
-          description: Assessment with this ID exists but is marked "Not for issue"
+          description: Assessment with this ID exists but has been CANCELLED
         '500':
           description: Server error
 
@@ -917,7 +917,7 @@ components:
             'greendeal:disclosure:update': Submit or update details of a Green Deal Plan
 
   schemas:
-    ## Addresses
+    # Addresses
     Address:
       type: object
       properties:
@@ -956,6 +956,8 @@ components:
                 properties:
                   assessmentId:
                     $ref: '#/components/schemas/AssessmentId'
+                  assessmentStatus:
+                    $ref: '#/components/schemas/AssessmentStatus'
                   assessmentType:
                     $ref: '#/components/schemas/AssessmentType'
 
@@ -1226,6 +1228,8 @@ components:
           type: string
           example: CANCELLED
           enum:
+            - ENTERED
+            - EXPIRED
             - CANCELLED
 
     AssessmentType:
@@ -1442,11 +1446,7 @@ components:
           type: boolean
           example: true
         status:
-          type: string
-          example: ENTERED
-          enum:
-            - ENTERED
-            - NOT FOR ISSUE
+          $ref: '#/components/schemas/AssessmentStatus'
         mainFuelType:
           type: string
           example: 'Natural Gas'
