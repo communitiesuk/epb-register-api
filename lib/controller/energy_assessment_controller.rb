@@ -193,7 +193,7 @@ module Controller
 
       body = request.body.read.to_s
 
-      sanitized_body = body.sub(/<Formatted-Report>.*<\/Formatted-Report>/, "")
+      sanitized_body = Helper::SanitizeXmlHelper.new.sanitize(body)
 
       @events.event(
         false,
