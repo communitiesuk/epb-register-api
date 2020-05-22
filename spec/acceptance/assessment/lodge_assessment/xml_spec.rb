@@ -48,7 +48,7 @@ describe "Acceptance::LodgeAssessment::XML" do
     add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
   end
 
-  context "when storing xml to the " do
+  context "when storing xml to the assessments_xml table" do
     it "will remove the <Formatted-Report> element" do
       lodge_assessment(
         assessment_id: "0000-0000-0000-0000-0000",
