@@ -450,7 +450,7 @@ paths:
                         type: integer
                         example: -21
         '400':
-          description: Bad request - assessment violates assessment rules. Follow override link to lodge anyway.
+          description: Bad request - assessment violates lodgement rules. Follow override link to lodge anyway.
           content:
             application/json:
               schema:
@@ -463,10 +463,10 @@ paths:
                       properties:
                         errorCode:
                           type: string
-                          example: "TOO_MANY_DOORS"
+                          example: "FLOOR_AREA_LESS_THAN_ZERO"
                         errorDescription:
                           type: string
-                          example: "Property has too many doors"
+                          example: "Floor-Area must be greater than zero"
                   meta:
                     type: object
                     properties:
@@ -475,7 +475,7 @@ paths:
                         properties:
                           override:
                             type: string
-                            example: "/assessments/123-456?override=true"
+                            example: "/assessments/1234-5678-9012-3456-7890?override=true"
         '409':
           description: Assessment with that assessmentId already exists
         '403':
