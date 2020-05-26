@@ -64,5 +64,23 @@ describe "Acceptance::LodgeAssessment::XML" do
 ' + database_xml,
       )
     end
+
+    it "will remove the <Unstructured-Data> element" do
+      lodge_assessment(
+        assessment_id: "0000-0000-0000-0000-0000",
+        assessment_body: valid_cepc_xml,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] },
+        schema_name: "CEPC-7.1",
+      )
+
+      database_xml = get_stored_xml("0000-0000-0000-0000-0000")
+
+      expect(valid_cepc_xml).to include("<Unstructured-Data>")
+      expect(cleaned_xml).to eq(
+        '<?xml version="1.0" encoding="UTF-8"?>
+' + database_xml,
+      )
+    end
   end
 end
