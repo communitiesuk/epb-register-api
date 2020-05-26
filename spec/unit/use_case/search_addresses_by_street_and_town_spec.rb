@@ -23,7 +23,13 @@ describe UseCase::SearchAddressesByStreetAndTown do
           line3: nil,
           town: "Placeville",
           postcode: "PL4 V11",
+          assessment_type: "CEPC",
           source: "PREVIOUS_ASSESSMENT",
+          existing_assessments: [
+            {
+              assessment_id: "0000-0000-0000-0000-0000", assessment_type: "CEPC"
+            },
+          ],
         },
       )
 
@@ -35,7 +41,14 @@ describe UseCase::SearchAddressesByStreetAndTown do
           line3: nil,
           town: "Placeville",
           postcode: "PL4 V12",
+          assessment_type: "RdSAP",
           source: "PREVIOUS_ASSESSMENT",
+          existing_assessments: [
+            {
+              assessment_id: "0000-0000-0000-0000-0001",
+              assessment_type: "RdSAP",
+            },
+          ],
         },
       )
 
@@ -47,7 +60,14 @@ describe UseCase::SearchAddressesByStreetAndTown do
           line3: nil,
           town: "Placeville",
           postcode: "PL4 V13",
+          assessment_type: "RdSAP",
           source: "PREVIOUS_ASSESSMENT",
+          existing_assessments: [
+            {
+              assessment_id: "0000-0000-0000-0000-0002",
+              assessment_type: "RdSAP",
+            },
+          ],
         },
       )
 
@@ -59,7 +79,14 @@ describe UseCase::SearchAddressesByStreetAndTown do
           line3: nil,
           town: "Countyshire",
           postcode: "PL4 V14",
+          assessment_type: "RdSAP",
           source: "PREVIOUS_ASSESSMENT",
+          existing_assessments: [
+            {
+              assessment_id: "0000-0000-0000-0000-0003",
+              assessment_type: "RdSAP",
+            },
+          ],
         },
       )
 
@@ -81,6 +108,9 @@ describe UseCase::SearchAddressesByStreetAndTown do
         expect(results[0].town).to eq "Placeville"
         expect(results[0].postcode).to eq "PL4 V11"
         expect(results[0].source).to eq "PREVIOUS_ASSESSMENT"
+        expect(results[0].existing_assessments).to eq [
+          assessment_id: "0000-0000-0000-0000-0000", assessment_type: "CEPC",
+        ]
       end
 
       context "when street is on address line 2" do
@@ -97,6 +127,10 @@ describe UseCase::SearchAddressesByStreetAndTown do
           expect(results[2].town).to eq "Placeville"
           expect(results[2].postcode).to eq "PL4 V13"
           expect(results[2].source).to eq "PREVIOUS_ASSESSMENT"
+          expect(results[2].existing_assessments).to eq [
+            assessment_id: "0000-0000-0000-0000-0002",
+            assessment_type: "RdSAP",
+          ]
         end
       end
 
@@ -114,6 +148,10 @@ describe UseCase::SearchAddressesByStreetAndTown do
           expect(results[3].town).to eq "Countyshire"
           expect(results[3].postcode).to eq "PL4 V14"
           expect(results[3].source).to eq "PREVIOUS_ASSESSMENT"
+          expect(results[3].existing_assessments).to eq [
+            assessment_id: "0000-0000-0000-0000-0003",
+            assessment_type: "RdSAP",
+          ]
         end
       end
     end

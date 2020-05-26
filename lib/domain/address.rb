@@ -6,7 +6,8 @@ module Domain
                 :line3,
                 :town,
                 :postcode,
-                :source
+                :source,
+                :existing_assessments
 
     def initialize(
       building_reference_number:,
@@ -15,7 +16,8 @@ module Domain
       line3:,
       town:,
       postcode:,
-      source:
+      source:,
+      existing_assessments:
     )
       @building_reference_number = building_reference_number
       @line1 = line1
@@ -24,6 +26,7 @@ module Domain
       @town = town
       @postcode = postcode
       @source = source
+      @existing_assessments = existing_assessments
     end
 
     def to_hash
@@ -35,6 +38,7 @@ module Domain
         town: @town,
         postcode: @postcode,
         source: @source,
+        existing_assessments: @existing_assessments,
       }
     end
   end

@@ -25,7 +25,14 @@ describe UseCase::SearchAddressesByBuildingReferenceNumber do
           line3: nil,
           town: "Placeville",
           postcode: "PL4 V11",
+          assessment_type: "RdSAP",
           source: "PREVIOUS_ASSESSMENT",
+          existing_assessments: [
+            {
+              assessment_id: "0000-0000-0000-0000-0000",
+              assessment_type: "RdSAP",
+            },
+          ],
         },
       )
 
@@ -37,7 +44,14 @@ describe UseCase::SearchAddressesByBuildingReferenceNumber do
           line3: nil,
           town: "Placeville",
           postcode: "PL4 V12",
+          assessment_type: "RdSAP",
           source: "PREVIOUS_ASSESSMENT",
+          existing_assessments: [
+            {
+              assessment_id: "0000-0000-0000-0000-0001",
+              assessment_type: "RdSAP",
+            },
+          ],
         },
       )
 
@@ -61,6 +75,9 @@ describe UseCase::SearchAddressesByBuildingReferenceNumber do
         expect(results[0].town).to eq "Placeville"
         expect(results[0].postcode).to eq "PL4 V11"
         expect(results[0].source).to eq "PREVIOUS_ASSESSMENT"
+        expect(results[0].existing_assessments).to eq [
+          assessment_id: "0000-0000-0000-0000-0000", assessment_type: "RdSAP",
+        ]
       end
     end
   end

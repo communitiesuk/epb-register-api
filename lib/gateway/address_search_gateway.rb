@@ -7,6 +7,7 @@ module Gateway
       sql =
         "SELECT
             assessment_id,
+            type_of_assessment,
             address_line1,
             address_line2,
             address_line3,
@@ -52,6 +53,7 @@ module Gateway
         ActiveRecord::Base.connection.exec_query(
           'SELECT
            assessment_id,
+           type_of_assessment,
            address_line1,
            address_line2,
            address_line3,
@@ -76,7 +78,8 @@ module Gateway
     def search_by_street_and_town(street, town, address_type)
       sql =
         'SELECT
-      assessment_id,
+          assessment_id,
+          type_of_assessment,
           address_line1,
           address_line2,
           address_line3,
@@ -123,7 +126,11 @@ module Gateway
                           line3: row["address_line3"],
                           town: row["town"],
                           postcode: row["postcode"],
-                          source: "PREVIOUS_ASSESSMENT"
+                          source: "PREVIOUS_ASSESSMENT",
+                          existing_assessments: [
+                            assessmentId: row["assessment_id"],
+                            assessmentType: row["type_of_assessment"],
+                          ]
     end
   end
 end

@@ -89,6 +89,7 @@ private
           :town,
           :postcode,
           :source,
+          :existing_assessments,
         ),
       )
     end

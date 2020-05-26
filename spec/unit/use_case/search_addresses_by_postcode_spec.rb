@@ -25,6 +25,11 @@ describe UseCase::SearchAddressesByPostcode do
           postcode: "PL4 V11",
           assessment_type: "CEPC",
           source: "PREVIOUS_ASSESSMENT",
+          existing_assessments: [
+            {
+              assessment_id: "0000-0000-0000-0000-0000", assessment_type: "CEPC"
+            },
+          ],
         },
       )
 
@@ -38,6 +43,12 @@ describe UseCase::SearchAddressesByPostcode do
           postcode: "PL4 V12",
           assessment_type: "RdSAP",
           source: "PREVIOUS_ASSESSMENT",
+          existing_assessments: [
+            {
+              assessment_id: "0000-0000-0000-0000-0001",
+              assessment_type: "RdSAP",
+            },
+          ],
         },
       )
 
@@ -51,6 +62,12 @@ describe UseCase::SearchAddressesByPostcode do
           postcode: "PL4 V12",
           assessment_type: "RdSAP",
           source: "PREVIOUS_ASSESSMENT",
+          existing_assessments: [
+            {
+              assessment_id: "0000-0000-0000-0000-0002",
+              assessment_type: "RdSAP",
+            },
+          ],
         },
       )
 
@@ -73,6 +90,9 @@ describe UseCase::SearchAddressesByPostcode do
         expect(results[0].town).to eq "Placeville"
         expect(results[0].postcode).to eq "PL4 V11"
         expect(results[0].source).to eq "PREVIOUS_ASSESSMENT"
+        expect(results[0].existing_assessments).to eq [
+          assessment_id: "0000-0000-0000-0000-0000", assessment_type: "CEPC",
+        ]
       end
 
       context "with address type" do
@@ -90,6 +110,10 @@ describe UseCase::SearchAddressesByPostcode do
           expect(results[0].town).to eq "Placeville"
           expect(results[0].postcode).to eq "PL4 V12"
           expect(results[0].source).to eq "PREVIOUS_ASSESSMENT"
+          expect(results[0].existing_assessments).to eq [
+            assessment_id: "0000-0000-0000-0000-0001",
+            assessment_type: "RdSAP",
+          ]
         end
       end
 
@@ -108,6 +132,10 @@ describe UseCase::SearchAddressesByPostcode do
           expect(results[0].town).to eq "Placeville"
           expect(results[0].postcode).to eq "PL4 V12"
           expect(results[0].source).to eq "PREVIOUS_ASSESSMENT"
+          expect(results[0].existing_assessments).to eq [
+            assessment_id: "0000-0000-0000-0000-0002",
+            assessment_type: "RdSAP",
+          ]
         end
       end
     end

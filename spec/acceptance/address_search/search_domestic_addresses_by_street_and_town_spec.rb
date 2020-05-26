@@ -134,6 +134,10 @@ describe "searching for an address by street and town" do
         expect(
           response["data"]["addresses"][0]["source"],
         ).to eq "PREVIOUS_ASSESSMENT"
+        expect(response["data"]["addresses"][0]["existingAssessments"]).to eq [
+          "assessmentId" => "0000-0000-0000-0000-0000",
+          "assessmentType" => "RdSAP",
+        ]
       end
 
       context "when an address type is provided" do
@@ -162,6 +166,12 @@ describe "searching for an address by street and town" do
           expect(
             response["data"]["addresses"][0]["source"],
           ).to eq "PREVIOUS_ASSESSMENT"
+          expect(
+            response["data"]["addresses"][0]["existingAssessments"],
+          ).to eq [
+            "assessmentId" => "0000-0000-0000-0000-0000",
+            "assessmentType" => "RdSAP",
+          ]
         end
       end
 
@@ -192,6 +202,12 @@ describe "searching for an address by street and town" do
           expect(
             response["data"]["addresses"][0]["source"],
           ).to eq "PREVIOUS_ASSESSMENT"
+          expect(
+            response["data"]["addresses"][0]["existingAssessments"],
+          ).to eq [
+            "assessmentId" => "0000-0000-0000-0000-0003",
+            "assessmentType" => "RdSAP",
+          ]
         end
       end
 
@@ -222,6 +238,12 @@ describe "searching for an address by street and town" do
           expect(
             response["data"]["addresses"][0]["source"],
           ).to eq "PREVIOUS_ASSESSMENT"
+          expect(
+            response["data"]["addresses"][0]["existingAssessments"],
+          ).to eq [
+            "assessmentId" => "0000-0000-0000-0000-0004",
+            "assessmentType" => "RdSAP",
+          ]
         end
       end
     end

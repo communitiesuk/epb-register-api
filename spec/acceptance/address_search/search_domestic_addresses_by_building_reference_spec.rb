@@ -56,6 +56,10 @@ describe "searching for an address by building reference" do
         expect(
           response["data"]["addresses"][0]["source"],
         ).to eq "PREVIOUS_ASSESSMENT"
+        expect(response["data"]["addresses"][0]["existingAssessments"]).to eq [
+          "assessmentId" => "0000-0000-0000-0000-0000",
+          "assessmentType" => "RdSAP",
+        ]
       end
     end
   end

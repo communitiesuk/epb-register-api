@@ -110,6 +110,10 @@ describe "searching for an address by postcode" do
         expect(
           response["data"]["addresses"][0]["source"],
         ).to eq "PREVIOUS_ASSESSMENT"
+        expect(response["data"]["addresses"][0]["existingAssessments"]).to eq [
+          "assessmentId" => "0000-0000-0000-0000-0000",
+          "assessmentType" => "RdSAP",
+        ]
       end
 
       context "when there is no space in the postcode" do
@@ -138,6 +142,12 @@ describe "searching for an address by postcode" do
           expect(
             response["data"]["addresses"][0]["source"],
           ).to eq "PREVIOUS_ASSESSMENT"
+          expect(
+            response["data"]["addresses"][0]["existingAssessments"],
+          ).to eq [
+            "assessmentId" => "0000-0000-0000-0000-0000",
+            "assessmentType" => "RdSAP",
+          ]
         end
       end
 
@@ -168,6 +178,12 @@ describe "searching for an address by postcode" do
             expect(
               response["data"]["addresses"][0]["source"],
             ).to eq "PREVIOUS_ASSESSMENT"
+            expect(
+              response["data"]["addresses"][0]["existingAssessments"],
+            ).to eq [
+              "assessmentId" => "0000-0000-0000-0000-0001",
+              "assessmentType" => "RdSAP",
+            ]
           end
         end
 
@@ -198,6 +214,12 @@ describe "searching for an address by postcode" do
             expect(
               response["data"]["addresses"][0]["source"],
             ).to eq "PREVIOUS_ASSESSMENT"
+            expect(
+              response["data"]["addresses"][0]["existingAssessments"],
+            ).to eq [
+              "assessmentId" => "0000-0000-0000-0000-0003",
+              "assessmentType" => "RdSAP",
+            ]
           end
         end
       end
@@ -228,6 +250,12 @@ describe "searching for an address by postcode" do
           expect(
             response["data"]["addresses"][0]["source"],
           ).to eq "PREVIOUS_ASSESSMENT"
+          expect(
+            response["data"]["addresses"][0]["existingAssessments"],
+          ).to eq [
+            "assessmentId" => "0000-0000-0000-0000-0000",
+            "assessmentType" => "RdSAP",
+          ]
         end
       end
     end
