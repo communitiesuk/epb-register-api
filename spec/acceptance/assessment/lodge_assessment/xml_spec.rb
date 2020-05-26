@@ -44,9 +44,7 @@ describe "Acceptance::LodgeAssessment::XML" do
 
   let(:scheme_id) { add_scheme_and_get_id }
 
-  before do
-    add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
-  end
+  before { add_assessor(scheme_id, "JASE000000", valid_assessor_request_body) }
 
   context "when storing xml to the assessments_xml table" do
     it "will remove the <Formatted-Report> element" do

@@ -157,7 +157,10 @@ describe UseCase::SearchAddressesByStreetAndTown do
 
       context "when address type is provided" do
         it "returns the domestic address" do
-          results = use_case.execute street: "Home Road", town: "Placeville", address_type: "DOMESTIC"
+          results =
+            use_case.execute street: "Home Road",
+                             town: "Placeville",
+                             address_type: "DOMESTIC"
 
           expect(results.length).to eq 3
           expect(
@@ -176,7 +179,10 @@ describe UseCase::SearchAddressesByStreetAndTown do
         end
 
         it "returns the commercial address" do
-          results = use_case.execute street: "Home Road", town: "Placeville", address_type: "COMMERCIAL"
+          results =
+            use_case.execute street: "Home Road",
+                             town: "Placeville",
+                             address_type: "COMMERCIAL"
 
           expect(results.length).to eq 1
           expect(

@@ -21,7 +21,9 @@ class AddressSearchGatewayFake
     end
 
     if address_type
-      assessment_types = (%w[SAP RdSAP] if address_type == "DOMESTIC") || (%w[CEPC] if address_type == "COMMERCIAL")
+      assessment_types =
+        (%w[SAP RdSAP] if address_type == "DOMESTIC") ||
+        (%w[CEPC] if address_type == "COMMERCIAL")
 
       filtered_results =
         filtered_results.filter do |address|
@@ -61,7 +63,9 @@ class AddressSearchGatewayFake
       end
 
     if address_type
-      assessment_types = (%w[SAP RdSAP] if address_type == "DOMESTIC") || (%w[CEPC] if address_type == "COMMERCIAL")
+      assessment_types =
+        (%w[SAP RdSAP] if address_type == "DOMESTIC") ||
+        (%w[CEPC] if address_type == "COMMERCIAL")
 
       filtered_results =
         filtered_results.filter do |address|
