@@ -17,7 +17,8 @@ module UseCase
 
     def execute(lodgement, assessment_id)
       data = lodgement.fetch_data
-      assessment_type = data[:assessment_type] ? data[:assessment_type] : lodgement.type
+      assessment_type =
+        data[:assessment_type] || lodgement.type
 
       unless assessment_id == data[:assessment_id]
         raise AssessmentIdMismatchException

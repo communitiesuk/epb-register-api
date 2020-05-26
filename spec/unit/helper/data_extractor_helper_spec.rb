@@ -48,7 +48,7 @@ describe Helper::DataExtractorHelper do
         },
         make_an_int: { path: %i[not_an_int], cast: "integer" },
         make_snake_case: { path: %i[not_snake_case], cast: "snake_case" },
-        make_map: { path: %i[mapped_entry], cast: "map", map: {"1": "great"}},
+        make_map: { path: %i[mapped_entry], cast: "map", map: { "1": "great" } },
       }
     end
 
