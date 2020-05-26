@@ -16,9 +16,7 @@ module Controller
           required: %w[postcode],
           properties: {
             postcode: {
-              type: "string",
-              pattern:
-                "^((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([AZa-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z]))))\\s?[0-9][A-Za-z]{2})$",
+              type: "string", pattern: Helper::RegexHelper::POSTCODE
             },
             buildingNameNumber: { type: "string" },
             addressType: { type: "string", enum: %w[DOMESTIC COMMERCIAL] },
