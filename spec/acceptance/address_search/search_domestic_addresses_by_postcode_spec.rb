@@ -224,7 +224,19 @@ describe "searching for an address by postcode" do
         end
       end
 
-      context "when an address type is provided" do
+      context "when an invalid address type is provided" do
+        it "returns status 422" do
+          assertive_get(
+            "/api/search/addresses?postcode=A0%200AA&addressType=asdf",
+            [422],
+            true,
+            {},
+            %w[address:search],
+          )
+        end
+      end
+
+      context "when an address type of domestic is provided" do
         it "returns the correct address" do
           response =
             JSON.parse(
@@ -255,6 +267,41 @@ describe "searching for an address by postcode" do
           ).to eq [
             "assessmentId" => "0000-0000-0000-0000-0000",
             "assessmentType" => "RdSAP",
+          ]
+        end
+      end
+
+      context "when an address type of commercial is provided" do
+        it "returns the correct address" do
+          response =
+            JSON.parse(
+              assertive_get(
+                "/api/search/addresses?postcode=A0%200AA&addressType=COMMERCIAL",
+                [200],
+                true,
+                {},
+                %w[address:search],
+              )
+                .body,
+            )
+
+          expect(response["data"]["addresses"].length).to eq 1
+          expect(
+            response["data"]["addresses"][0]["buildingReferenceNumber"],
+          ).to eq "RRN-0000-0000-0000-0000-0002"
+          expect(
+            response["data"]["addresses"][0]["line1"],
+          ).to eq "3 Other Street"
+          expect(response["data"]["addresses"][0]["town"]).to eq "Post-Town1"
+          expect(response["data"]["addresses"][0]["postcode"]).to eq "A0 0AA"
+          expect(
+            response["data"]["addresses"][0]["source"],
+          ).to eq "PREVIOUS_ASSESSMENT"
+          expect(
+            response["data"]["addresses"][0]["existingAssessments"],
+          ).to eq [
+            "assessmentId" => "0000-0000-0000-0000-0002",
+            "assessmentType" => "CEPC",
           ]
         end
       end

@@ -17,13 +17,17 @@ module Controller
           properties: {
             postcode: { type: "string" },
             buildingNameNumber: { type: "string" },
-            addressType: { type: "string", enum: %w[DOMESTIC] },
+            addressType: { type: "string", enum: %w[DOMESTIC COMMERCIAL] },
           },
         },
         {
           type: "object",
           required: %w[street town],
-          properties: { street: { type: "string" }, town: { type: "string" } },
+          properties: {
+            street: { type: "string" },
+            town: { type: "string" },
+            addressType: { type: "string", enum: %w[DOMESTIC COMMERCIAL] },
+          },
         },
       ],
     }.freeze

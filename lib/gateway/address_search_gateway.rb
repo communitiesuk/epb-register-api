@@ -1,6 +1,6 @@
 module Gateway
   class AddressSearchGateway
-    ADDRESS_TYPES = { DOMESTIC: %w[SAP RdSAP] }.freeze
+    ADDRESS_TYPES = { DOMESTIC: %w[SAP RdSAP], COMMERCIAL: %w[CEPC] }.freeze
 
     def search_by_postcode(postcode, building_name_number, address_type)
       postcode = postcode.delete " "

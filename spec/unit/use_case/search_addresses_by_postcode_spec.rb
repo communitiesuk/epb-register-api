@@ -96,7 +96,7 @@ describe UseCase::SearchAddressesByPostcode do
       end
 
       context "with address type" do
-        it "returns the expected address" do
+        it "returns the domestic address" do
           results =
             use_case.execute postcode: "PL4 V12", address_type: "DOMESTIC"
 
@@ -113,6 +113,26 @@ describe UseCase::SearchAddressesByPostcode do
           expect(results[0].existing_assessments).to eq [
             assessment_id: "0000-0000-0000-0000-0001",
             assessment_type: "RdSAP",
+          ]
+        end
+
+        it "returns the commercial address" do
+          results =
+            use_case.execute postcode: "PL4 V11", address_type: "COMMERCIAL"
+
+          expect(results.length).to eq 1
+          expect(
+            results[0].building_reference_number,
+          ).to eq "RRN-0000-0000-0000-0000-0000"
+          expect(results[0].line1).to eq "127 Home Road"
+          expect(results[0].line2).to be_nil
+          expect(results[0].line3).to be_nil
+          expect(results[0].town).to eq "Placeville"
+          expect(results[0].postcode).to eq "PL4 V11"
+          expect(results[0].source).to eq "PREVIOUS_ASSESSMENT"
+          expect(results[0].existing_assessments).to eq [
+            assessment_id: "0000-0000-0000-0000-0000",
+            assessment_type: "CEPC",
           ]
         end
       end
