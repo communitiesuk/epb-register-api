@@ -50,8 +50,7 @@ describe "Acceptance::SearchForAssessor" do
   end
 
   def truncate(postcode)
-    if postcode ==
-        Regexp.new('^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$', Regexp::IGNORECASE)
+    if postcode == Regexp.new(Helper::RegexHelper::POSTCODE, Regexp::IGNORECASE)
       ActiveRecord::Base.connection.execute(
         "TRUNCATE TABLE postcode_geolocation",
       )

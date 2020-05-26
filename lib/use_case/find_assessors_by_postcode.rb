@@ -10,10 +10,7 @@ module UseCase
     end
 
     def execute(postcode, qualifications)
-      unless Regexp.new(
-        '^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$',
-        Regexp::IGNORECASE,
-      )
+      unless Regexp.new(Helper::RegexHelper::POSTCODE, Regexp::IGNORECASE)
                .match(postcode)
         raise PostcodeNotValid
       end
