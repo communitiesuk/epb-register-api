@@ -12,7 +12,7 @@ module UseCase
       postcode = postcode.insert(-4, " ") if postcode[-4] != " "
 
       unless Regexp.new(
-        '^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$',
+        Helper::RegexHelper::POSTCODE,
         Regexp::IGNORECASE,
       )
                .match(postcode)
