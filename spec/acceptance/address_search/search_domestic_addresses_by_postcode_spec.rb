@@ -87,33 +87,51 @@ describe "searching for an address by postcode" do
     end
 
     describe "searching by postcode" do
-      it "returns the address" do
-        response =
-          JSON.parse(
-            assertive_get(
-              "/api/search/addresses?postcode=A0%200AA",
-              [200],
-              true,
-              {},
-              %w[address:search],
-            )
-              .body,
+      context "when an invalid postcode is provided" do
+        it "returns an unprocessable entity response" do
+          assertive_get(
+            "/api/search/addresses?postcode=INVALID_POSTCODE",
+            [422],
+            true,
+            {},
+            %w[address:search],
           )
+        end
+      end
 
-        expect(response["data"]["addresses"].length).to eq 4
-        expect(
-          response["data"]["addresses"][0]["buildingReferenceNumber"],
-        ).to eq "RRN-0000-0000-0000-0000-0000"
-        expect(response["data"]["addresses"][0]["line1"]).to eq "1 Some Street"
-        expect(response["data"]["addresses"][0]["town"]).to eq "Post-Town1"
-        expect(response["data"]["addresses"][0]["postcode"]).to eq "A0 0AA"
-        expect(
-          response["data"]["addresses"][0]["source"],
-        ).to eq "PREVIOUS_ASSESSMENT"
-        expect(response["data"]["addresses"][0]["existingAssessments"]).to eq [
-          "assessmentId" => "0000-0000-0000-0000-0000",
-          "assessmentType" => "RdSAP",
-        ]
+      context "when a valid postcode is provided" do
+        it "returns the address" do
+          response =
+            JSON.parse(
+              assertive_get(
+                "/api/search/addresses?postcode=A0%200AA",
+                [200],
+                true,
+                {},
+                %w[address:search],
+              )
+                .body,
+            )
+
+          expect(response["data"]["addresses"].length).to eq 4
+          expect(
+            response["data"]["addresses"][0]["buildingReferenceNumber"],
+          ).to eq "RRN-0000-0000-0000-0000-0000"
+          expect(
+            response["data"]["addresses"][0]["line1"],
+          ).to eq "1 Some Street"
+          expect(response["data"]["addresses"][0]["town"]).to eq "Post-Town1"
+          expect(response["data"]["addresses"][0]["postcode"]).to eq "A0 0AA"
+          expect(
+            response["data"]["addresses"][0]["source"],
+          ).to eq "PREVIOUS_ASSESSMENT"
+          expect(
+            response["data"]["addresses"][0]["existingAssessments"],
+          ).to eq [
+            "assessmentId" => "0000-0000-0000-0000-0000",
+            "assessmentType" => "RdSAP",
+          ]
+        end
       end
 
       context "when there is no space in the postcode" do
