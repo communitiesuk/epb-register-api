@@ -75,5 +75,39 @@ describe Helper::RegexHelper do
         end
       end
     end
+
+    context "with invalid building reference numbers" do
+      describe "0000-0000-0000-0000-0000" do
+        it "does not validate" do
+          expect(
+            "0000-0000-0000-0000-0000",
+          ).not_to match Regexp.new described_class::BUILDING_REFERENCE_NUMBER
+        end
+      end
+
+      describe "RRN-asdf-asdf-asdf-asdf-asdf" do
+        it "does not validate" do
+          expect(
+            "RRN-asdf-asdf-asdf-asdf-asdf",
+          ).not_to match Regexp.new described_class::BUILDING_REFERENCE_NUMBER
+        end
+      end
+
+      describe "RRN-1234-asdf-1234-asdf-1234" do
+        it "does not validate" do
+          expect(
+            "RRN-1234-asdf-1234-asdf-1234",
+          ).not_to match Regexp.new described_class::BUILDING_REFERENCE_NUMBER
+        end
+      end
+
+      describe "RRN-asdf-1234-asdf-1234-asdf" do
+        it "does not validate" do
+          expect(
+            "RRN-asdf-1234-asdf-1234-asdf",
+          ).not_to match Regexp.new described_class::BUILDING_REFERENCE_NUMBER
+        end
+      end
+    end
   end
 end
