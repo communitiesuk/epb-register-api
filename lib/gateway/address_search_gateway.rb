@@ -122,8 +122,8 @@ module Gateway
       Domain::Address.new building_reference_number:
                             "RRN-#{row['assessment_id']}",
                           line1: row["address_line1"],
-                          line2: row["address_line2"],
-                          line3: row["address_line3"],
+                          line2: row["address_line2"].presence,
+                          line3: row["address_line3"].presence,
                           town: row["town"],
                           postcode: row["postcode"],
                           source: "PREVIOUS_ASSESSMENT",
