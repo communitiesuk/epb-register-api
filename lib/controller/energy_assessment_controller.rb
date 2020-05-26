@@ -191,7 +191,8 @@ module Controller
     post "/api/assessments/:assessment_id", jwt_auth: %w[assessment:lodge] do
       correlation_id = rand
 
-      sanitized_body = Helper::SanitizeXmlHelper.new.sanitize(request.body.read.to_s)
+      sanitized_body =
+        Helper::SanitizeXmlHelper.new.sanitize(request.body.read.to_s)
 
       @events.event(
         false,

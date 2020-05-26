@@ -12,7 +12,7 @@ describe "searching for an address" do
             nil,
             %w[address:search],
           )
-              .body
+            .body
 
         expect(response).to include "INVALID_REQUEST"
       end
@@ -70,7 +70,8 @@ describe "searching for an address" do
           true,
           nil,
           %w[address:search],
-        ).body
+        )
+                     .body
       end
 
       it "has nil for line2" do
