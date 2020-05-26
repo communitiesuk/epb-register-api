@@ -17,6 +17,7 @@ module UseCase
 
     def execute(lodgement, assessment_id)
       data = lodgement.fetch_data
+      assessment_type = data[:assessment_type] ? data[:assessment_type] : lodgement.type
 
       unless assessment_id == data[:assessment_id]
         raise AssessmentIdMismatchException
@@ -42,17 +43,17 @@ module UseCase
 
       assessor = @assessors_gateway.fetch scheme_assessor_id
 
-      if lodgement.type == "RdSAP" &&
+      if assessment_type == "RdSAP" &&
           assessor.domestic_rd_sap_qualification == "INACTIVE"
         raise InactiveAssessorException
       end
 
-      if lodgement.type == "SAP" &&
+      if assessment_type == "SAP" &&
           assessor.domestic_sap_qualification == "INACTIVE"
         raise InactiveAssessorException
       end
 
-      if lodgement.type == "CEPC"
+      if assessment_type == "CEPC" || assessment_type == "CEPC-RR"
         if data[:building_complexity]
           level = data[:building_complexity][-1]
 
@@ -80,7 +81,7 @@ module UseCase
           date_of_assessment: data[:inspection_date],
           date_registered: data[:registration_date],
           dwelling_type: data[:dwelling_type],
-          type_of_assessment: lodgement.type,
+          type_of_assessment: assessment_type,
           total_floor_area: data[:total_floor_area],
           assessment_id: data[:assessment_id],
           assessor: assessor,

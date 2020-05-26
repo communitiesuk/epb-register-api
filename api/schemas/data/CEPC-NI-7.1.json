@@ -6,6 +6,15 @@
     "root": "header",
     "path": ["RRN"]
   },
+  "assessment_type":{
+    "root": "header",
+    "path": ["Report_Type"],
+    "cast": "map",
+    "map": {
+      "1": "CEPC",
+      "4": "CEPC-RR"
+    }
+  },
   "assessor_id": {
     "root": "header",
     "path": ["Energy_Assessor", "Certificate_Number"]

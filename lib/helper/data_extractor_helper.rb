@@ -29,6 +29,8 @@ module Helper
             data[key] = data[key].to_i
           when "snake_case"
             data[key] = data[key].underscore
+          when "map"
+            data[key] = settings[:map][data[key].to_sym]
           end
         end
 

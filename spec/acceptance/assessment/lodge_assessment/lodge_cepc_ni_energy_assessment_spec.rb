@@ -515,6 +515,46 @@ describe "Acceptance::LodgeCEPCENIEnergyAssessment" do
       end
     end
 
+    context "when lodging recommendation reports" do
+
+      let(:valid_cepc_ni_recommended_report_xml) do
+        File.read File.join Dir.pwd,
+                            "api/schemas/xml/examples/NI-CEPC-7.11(RR).xml"
+      end
+      let(:response) do
+        JSON.parse(fetch_assessment("0000-0000-0000-0000-0000").body)
+      end
+
+      it "returns status 201" do
+        scheme_id = add_scheme_and_get_id
+        add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
+
+        lodge_assessment(
+            assessment_id: "0000-0000-0000-0000-0000",
+            assessment_body: valid_cepc_ni_recommended_report_xml,
+            accepted_responses: [201],
+            auth_data: { scheme_ids: [scheme_id] },
+            schema_name: "CEPC-NI-7.1",
+            )
+      end
+
+
+      it "accepts type cepc rr" do
+        scheme_id = add_scheme_and_get_id
+        add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
+
+        lodge_assessment(
+            assessment_id: "0000-0000-0000-0000-0000",
+            assessment_body: valid_cepc_ni_recommended_report_xml,
+            accepted_responses: [201],
+            auth_data: { scheme_ids: [scheme_id] },
+            schema_name: "CEPC-NI-7.1",
+            )
+
+        expect(response["data"]["typeOfAssessment"]).to eq("CEPC-RR")
+      end
+    end
+
     context "when rejecting an assessment" do
       it "rejects an assessment without an address" do
         scheme_id = add_scheme_and_get_id
