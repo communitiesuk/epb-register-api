@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Report xmlns="https://epbr.digital.communities.gov.uk/xsd/cepc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/cepc  ../CEPC-7.1/Reports/CEPC-Reports.xsd">
+<Report xmlns="https://epbr.digital.communities.gov.uk/xsd/cepc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/cepc  ../CEPC-7.1/Reports/CEPC-Reports.xsd">
     <Report-Header>
         <RRN>0000-0000-0000-0000-0000</RRN>
         <Issue-Date>2006-05-04</Issue-Date>
@@ -28,6 +27,7 @@
             <Calculation-Tool>Calculation-Tool1</Calculation-Tool>
         </Calculation-Details>
     </Report-Header>
+    <PDF></PDF>
     <Formatted-Report>ZGVmYXVsdA==</Formatted-Report>
     <Unstructured-Data>
         <Data-Blob></Data-Blob>

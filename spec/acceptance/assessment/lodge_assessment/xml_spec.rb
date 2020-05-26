@@ -44,18 +44,19 @@ describe "Acceptance::LodgeAssessment::XML" do
 
   let(:scheme_id) { add_scheme_and_get_id }
 
-  before { add_assessor(scheme_id, "JASE000000", valid_assessor_request_body) }
+  before do
+    add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
+    lodge_assessment(
+      assessment_id: "0000-0000-0000-0000-0000",
+      assessment_body: valid_cepc_xml,
+      accepted_responses: [201],
+      auth_data: { scheme_ids: [scheme_id] },
+      schema_name: "CEPC-7.1",
+    )
+  end
 
   context "when storing xml to the assessments_xml table" do
     it "will remove the <Formatted-Report> element" do
-      lodge_assessment(
-        assessment_id: "0000-0000-0000-0000-0000",
-        assessment_body: valid_cepc_xml,
-        accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
-        schema_name: "CEPC-7.1",
-      )
-
       database_xml = get_stored_xml("0000-0000-0000-0000-0000")
 
       expect(valid_cepc_xml).to include("<Formatted-Report>")
@@ -66,17 +67,29 @@ describe "Acceptance::LodgeAssessment::XML" do
     end
 
     it "will remove the <Unstructured-Data> element" do
-      lodge_assessment(
-        assessment_id: "0000-0000-0000-0000-0000",
-        assessment_body: valid_cepc_xml,
-        accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
-        schema_name: "CEPC-7.1",
-      )
-
       database_xml = get_stored_xml("0000-0000-0000-0000-0000")
 
       expect(valid_cepc_xml).to include("<Unstructured-Data>")
+      expect(cleaned_xml).to eq(
+        '<?xml version="1.0" encoding="UTF-8"?>
+' + database_xml,
+      )
+    end
+
+    it "will remove the <Data-Blob> element" do
+      database_xml = get_stored_xml("0000-0000-0000-0000-0000")
+
+      expect(valid_cepc_xml).to include("<Data-Blob>")
+      expect(cleaned_xml).to eq(
+        '<?xml version="1.0" encoding="UTF-8"?>
+' + database_xml,
+      )
+    end
+
+    it "will remove the <PDF> element" do
+      database_xml = get_stored_xml("0000-0000-0000-0000-0000")
+
+      expect(valid_cepc_xml).to include("<PDF>")
       expect(cleaned_xml).to eq(
         '<?xml version="1.0" encoding="UTF-8"?>
 ' + database_xml,
