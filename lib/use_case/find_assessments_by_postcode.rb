@@ -11,10 +11,7 @@ module UseCase
 
       postcode = postcode.insert(-4, " ") if postcode[-4] != " "
 
-      unless Regexp.new(
-        Helper::RegexHelper::POSTCODE,
-        Regexp::IGNORECASE,
-      )
+      unless Regexp.new(Helper::RegexHelper::POSTCODE, Regexp::IGNORECASE)
                .match(postcode)
         raise PostcodeNotValid
       end
