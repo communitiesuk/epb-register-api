@@ -64,4 +64,16 @@ describe Helper::RegexHelper do
       end
     end
   end
+
+  describe "validating building reference numbers" do
+    context "with valid RRNs" do
+      describe "RRN-0000-0000-0000-0000-0000" do
+        it "validates" do
+          expect(
+            "RRN-0000-0000-0000-0000-0000",
+          ).to match Regexp.new described_class::BUILDING_REFERENCE_NUMBER
+        end
+      end
+    end
+  end
 end

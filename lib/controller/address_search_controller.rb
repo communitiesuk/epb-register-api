@@ -7,7 +7,8 @@ module Controller
           required: %w[buildingReferenceNumber],
           properties: {
             buildingReferenceNumber: {
-              type: "string", pattern: "^RRN-(\\d{4}-){4}\\d{4}$"
+              type: "string",
+              pattern: Helper::RegexHelper::BUILDING_REFERENCE_NUMBER,
             },
           },
         },
