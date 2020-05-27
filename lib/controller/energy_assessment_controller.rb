@@ -188,7 +188,40 @@ module Controller
       end
     end
 
+    post "/api/assessments/:assessment_id", jwt_auth: %w[assessment:lodge] do
+      do_lodge
+    end
+
     post "/api/assessments", jwt_auth: %w[assessment:lodge] do
+      do_lodge
+    end
+
+    put "/api/assessments/domestic-epc/:assessment_id",
+        jwt_auth: %w[migrate:assessment] do
+      assessment_id = params[:assessment_id]
+      migrate_epc = @container.get_object(:migrate_assessment_use_case)
+      assessment_body = request_body(PUT_SCHEMA)
+      result = migrate_epc.execute(assessment_id, assessment_body)
+
+      @events.event(
+        :domestic_energy_assessment_migrated,
+        params[:assessment_id],
+      )
+      json_api_response(code: 200, data: result.to_hash)
+    rescue StandardError => e
+      case e
+      when JSON::Schema::ValidationError
+        error_response(422, "INVALID_REQUEST", e.message)
+      when UseCase::MigrateAssessment::AssessmentRuleException
+        error_response(422, "ASSESSMENT_RULE_VIOLATION", e.message)
+      when ArgumentError
+        error_response(422, "INVALID_REQUEST", e.message)
+      else
+        server_error(e)
+      end
+    end
+
+    def do_lodge
       correlation_id = rand
 
       sanitized_body =
@@ -214,11 +247,7 @@ module Controller
       scheme_ids = sup
 
       result =
-        validate_and_lodge_assessment.execute(
-          xml,
-          content_type,
-          scheme_ids,
-        )
+        validate_and_lodge_assessment.execute(xml, content_type, scheme_ids)
 
       @events.event(
         false,
@@ -269,31 +298,6 @@ module Controller
         error_response(400, "INVALID_REQUEST", e.message)
       when UseCase::LodgeAssessment::AssessmentRuleException
         error_response(422, "ASSESSMENT_RULE_VIOLATION", e.message)
-      else
-        server_error(e)
-      end
-    end
-
-    put "/api/assessments/domestic-epc/:assessment_id",
-        jwt_auth: %w[migrate:assessment] do
-      assessment_id = params[:assessment_id]
-      migrate_epc = @container.get_object(:migrate_assessment_use_case)
-      assessment_body = request_body(PUT_SCHEMA)
-      result = migrate_epc.execute(assessment_id, assessment_body)
-
-      @events.event(
-        :domestic_energy_assessment_migrated,
-        params[:assessment_id],
-      )
-      json_api_response(code: 200, data: result.to_hash)
-    rescue StandardError => e
-      case e
-      when JSON::Schema::ValidationError
-        error_response(422, "INVALID_REQUEST", e.message)
-      when UseCase::MigrateAssessment::AssessmentRuleException
-        error_response(422, "ASSESSMENT_RULE_VIOLATION", e.message)
-      when ArgumentError
-        error_response(422, "INVALID_REQUEST", e.message)
       else
         server_error(e)
       end
