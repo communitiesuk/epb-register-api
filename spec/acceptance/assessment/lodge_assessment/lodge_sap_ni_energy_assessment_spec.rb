@@ -120,9 +120,7 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
 
     it "returns 401 with no authentication" do
       lodge_assessment(
-        assessment_body: "body",
-        accepted_responses: [401],
-        authenticate: false,
+        assessment_body: "body", accepted_responses: [401], authenticate: false,
       )
     end
 

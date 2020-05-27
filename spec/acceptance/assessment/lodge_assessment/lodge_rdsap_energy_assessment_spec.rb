@@ -57,8 +57,7 @@ describe "Acceptance::LodgeRdSapEnergyAssessment" do
     context "when an assessor is not registered" do
       it "returns status 400" do
         lodge_assessment(
-          assessment_body: valid_rdsap_xml,
-          accepted_responses: [400],
+          assessment_body: valid_rdsap_xml, accepted_responses: [400],
         )
       end
 
@@ -66,8 +65,7 @@ describe "Acceptance::LodgeRdSapEnergyAssessment" do
         response =
           JSON.parse(
             lodge_assessment(
-              assessment_body: valid_rdsap_xml,
-              accepted_responses: [400],
+              assessment_body: valid_rdsap_xml, accepted_responses: [400],
             )
               .body,
           )
@@ -124,9 +122,7 @@ describe "Acceptance::LodgeRdSapEnergyAssessment" do
 
     it "returns 401 with no authentication" do
       lodge_assessment(
-        assessment_body: "body",
-        accepted_responses: [401],
-        authenticate: false,
+        assessment_body: "body", accepted_responses: [401], authenticate: false,
       )
     end
 
@@ -174,8 +170,8 @@ describe "Acceptance::LodgeRdSapEnergyAssessment" do
         true,
         { scheme_ids: [scheme_id] },
         %w[assessment:lodge],
-        false
-        )
+        false,
+      )
     end
 
     it "returns json" do
@@ -680,10 +676,7 @@ describe "Acceptance::LodgeRdSapEnergyAssessment" do
         scheme_assessor_id = doc.at("Address")
         scheme_assessor_id.children = ""
 
-        lodge_assessment(
-          assessment_body: doc.to_xml,
-          accepted_responses: [400],
-        )
+        lodge_assessment(assessment_body: doc.to_xml, accepted_responses: [400])
       end
 
       it "rejects an assessment with an incorrect element" do
@@ -698,8 +691,7 @@ describe "Acceptance::LodgeRdSapEnergyAssessment" do
         response_body =
           JSON.parse(
             lodge_assessment(
-              assessment_body: doc.to_xml,
-              accepted_responses: [400],
+              assessment_body: doc.to_xml, accepted_responses: [400],
             )
               .body,
           )
@@ -719,10 +711,7 @@ describe "Acceptance::LodgeRdSapEnergyAssessment" do
 
         response_body =
           JSON.parse(
-            lodge_assessment(
-              assessment_body: xml,
-              accepted_responses: [400],
-            )
+            lodge_assessment(assessment_body: xml, accepted_responses: [400])
               .body,
           )
 
