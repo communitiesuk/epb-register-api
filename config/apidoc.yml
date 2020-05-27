@@ -471,7 +471,11 @@ paths:
       requestBody:
         content: {
           application/xml+RdSAP-Schema-19.0: {},
-          application/xml+SAP-Schema-17.1: {}
+          application/xml+SAP-Schema-17.1: {},
+          application/xml+RdSAP-Schema-NI-19.0: {},
+          application/xml+SAP-Schema-NI-17.4: {},
+          application/xml+CEPC-7.1: {},
+          application/xml+CEPC-NI-7.1: {}
         }
       responses:
         '201':
