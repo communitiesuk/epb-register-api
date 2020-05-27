@@ -17,7 +17,7 @@ module Helper
     def fetch_data_structure
       data = File.read File.join Dir.pwd, @schema_active[:data_path]
 
-      JSON.parse(data).deep_transform_keys(&:to_sym)
+      JSON.parse(data)
     end
 
     def schema_exists?

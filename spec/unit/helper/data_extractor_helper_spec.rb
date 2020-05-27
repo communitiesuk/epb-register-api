@@ -27,29 +27,52 @@ describe Helper::DataExtractorHelper do
     end
 
     let(:data_settings) do
-      {
-        text: { path: %i[foo] },
-        root_hash: { path: %i[deep_hash another_hash] },
-        treasure: { root: :root_hash, path: %i[treasure] },
-        array_extraction: {
-          path: %i[array], extract: { full_name: { path: %i[name] } }
+      [
+        { "key" => "text", "path" => %w[foo] },
+        { "key" => "root_hash", "path" => %w[deep_hash another_hash] },
+        { "key" => "treasure", "root" => "root_hash", "path" => %w[treasure] },
+        {
+          "key" => "array_extraction",
+          "path" => %w[array],
+          "extract" => [{ "key" => "full_name", "path" => %w[name] }],
         },
-        smart_array_extraction: {
-          path: %i[complex_hash],
-          extract: { key: { path: %w[..] }, full_name: { path: %i[name] } },
+        {
+          "key" => "smart_array_extraction",
+          "path" => %w[complex_hash],
+          "extract" => [
+            { "key" => "key", "path" => %w[..] },
+            { "key" => "full_name", "path" => %w[name] },
+          ],
         },
-        supersmart_array_extraction: {
-          required: %i[full_name],
-          path: %i[complex_broken_hash],
-          extract: { key: { path: %w[..] }, full_name: { path: %i[name] } },
+        {
+          "key" => "supersmart_array_extraction",
+          "required" => %w[full_name],
+          "path" => %w[complex_broken_hash],
+          "extract" => [
+            { "key" => "key", "path" => %w[..] },
+            { "key" => "full_name", "path" => %w[name] },
+          ],
         },
-        default_value_extraction: {
-          path: %i[something_that_doesnt_exist], default: []
+        {
+          "key" => "default_value_extraction",
+          "path" => %w[something_that_doesnt_exist],
+          "default" => [],
         },
-        make_an_int: { path: %i[not_an_int], cast: "integer" },
-        make_snake_case: { path: %i[not_snake_case], cast: "snake_case" },
-        make_map: { path: %i[mapped_entry], cast: "map", map: { "1": "great" } },
-      }
+        {
+          "key" => "make_an_int", "path" => %w[not_an_int], "cast" => "integer"
+        },
+        {
+          "key" => "make_snake_case",
+          "path" => %w[not_snake_case],
+          "cast" => "snake_case",
+        },
+        {
+          "key" => "make_map",
+          "path" => %w[mapped_entry],
+          "cast" => "map",
+          "map" => { "1" => "great" },
+        },
+      ]
     end
 
     let(:result) { helper.fetch_data(raw_data, data_settings) }
