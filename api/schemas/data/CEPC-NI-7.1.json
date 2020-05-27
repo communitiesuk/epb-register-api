@@ -105,8 +105,15 @@
     "path": ["_"],
     "default": "99"
   },
+  "technical_information": {
+    "path": [
+      "Report",
+      "Energy_Performance_Certificate",
+      "Technical_Information"
+    ]
+  },
   "total_floor_area": {
-    "path": ["_"],
-    "default": "99"
+    "root": "technical_information",
+    "path": ["Floor_Area"]
   }
 }

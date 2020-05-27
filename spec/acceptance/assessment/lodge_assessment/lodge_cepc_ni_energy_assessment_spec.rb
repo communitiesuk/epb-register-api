@@ -400,7 +400,7 @@ describe "Acceptance::LodgeCEPCENIEnergyAssessment" do
           "potentialCarbonEmission" => 0.0,
           "potentialEnergyEfficiencyBand" => "a",
           "potentialEnergyEfficiencyRating" => 99,
-          "totalFloorArea" => 99.0,
+          "totalFloorArea" => 101.0,
           "town" => "Post-Town0",
           "typeOfAssessment" => "CEPC",
           "relatedPartyDisclosureNumber" => nil,
@@ -504,6 +504,83 @@ describe "Acceptance::LodgeCEPCENIEnergyAssessment" do
         )
 
         expect(response["data"]["typeOfAssessment"]).to eq("CEPC-RR")
+      end
+
+      it "returns the expected response" do
+        scheme_id = add_scheme_and_get_id
+        add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
+
+        lodge_assessment(
+          assessment_body: valid_cepc_ni_recommendations_report_xml,
+          accepted_responses: [201],
+          auth_data: { scheme_ids: [scheme_id] },
+          schema_name: "CEPC-NI-7.1",
+        )
+
+        expected_response = {
+          "addressLine1" => "1 Lonely Street",
+          "addressLine2" => "",
+          "addressLine3" => "",
+          "addressLine4" => "",
+          "addressSummary" => "1 Lonely Street, Post-Town0, A0 0AA",
+          "assessmentId" => "0000-0000-0000-0000-0000",
+          "assessor" => {
+            "contactDetails" => {
+              "email" => "person@person.com",
+              "telephoneNumber" => "010199991010101",
+            },
+            "dateOfBirth" => "1991-02-25",
+            "firstName" => "Someone",
+            "lastName" => "Person",
+            "middleNames" => "Muddle",
+            "qualifications" => {
+              "domesticSap" => "INACTIVE",
+              "domesticRdSap" => "INACTIVE",
+              "nonDomesticCc4" => "INACTIVE",
+              "nonDomesticSp3" => "INACTIVE",
+              "nonDomesticDec" => "INACTIVE",
+              "nonDomesticNos3" => "ACTIVE",
+              "nonDomesticNos4" => "ACTIVE",
+              "nonDomesticNos5" => "INACTIVE",
+              "gda" => "INACTIVE",
+            },
+            "address" => {},
+            "companyDetails" => {},
+            "registeredBy" => {
+              "name" => "test scheme", "schemeId" => scheme_id
+            },
+            "schemeAssessorId" => "JASE000000",
+            "searchResultsComparisonPostcode" => "",
+          },
+          "currentCarbonEmission" => 0.0,
+          "currentEnergyEfficiencyBand" => "a",
+          "currentEnergyEfficiencyRating" => 99,
+          "optOut" => false,
+          "dateOfAssessment" => "2006-05-04",
+          "dateOfExpiry" => "2006-05-04",
+          "dateRegistered" => "2006-05-04",
+          "dwellingType" => nil,
+          "heatDemand" => {
+            "currentSpaceHeatingDemand" => 0.0,
+            "currentWaterHeatingDemand" => 0.0,
+            "impactOfCavityInsulation" => nil,
+            "impactOfLoftInsulation" => nil,
+            "impactOfSolidWallInsulation" => nil,
+          },
+          "postcode" => "A0 0AA",
+          "potentialCarbonEmission" => 0.0,
+          "potentialEnergyEfficiencyBand" => "a",
+          "potentialEnergyEfficiencyRating" => 99,
+          "totalFloorArea" => 0.0,
+          "town" => "Post-Town0",
+          "typeOfAssessment" => "CEPC-RR",
+          "relatedPartyDisclosureNumber" => nil,
+          "relatedPartyDisclosureText" => nil,
+          "recommendedImprovements" => [],
+          "propertySummary" => [],
+        }
+
+        expect(response["data"]).to eq(expected_response)
       end
     end
 
