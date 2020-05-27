@@ -2,7 +2,7 @@ describe "searching for an address by street and town" do
   include RSpecAssessorServiceMixin
 
   let(:valid_cepc_xml) do
-    File.read File.join Dir.pwd, "api/schemas/xml/examples/CEPC-7.11 (EPC).xml"
+    File.read File.join Dir.pwd, "api/schemas/xml/examples/CEPC-7.11(EPC).xml"
   end
 
   let(:valid_rdsap_xml) do

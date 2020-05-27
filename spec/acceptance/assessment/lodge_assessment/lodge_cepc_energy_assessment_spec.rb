@@ -46,7 +46,7 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
   end
 
   let(:valid_cepc_xml) do
-    File.read File.join Dir.pwd, "api/schemas/xml/examples/CEPC-7.11 (EPC).xml"
+    File.read File.join Dir.pwd, "api/schemas/xml/examples/CEPC-7.11(EPC).xml"
   end
 
   context "when lodging a CEPC assessment (post)" do
