@@ -223,6 +223,7 @@ module Controller
 
     def do_lodge
       correlation_id = rand
+      logit_char_limit = 50_000
 
       sanitized_body =
         Helper::SanitizeXmlHelper.new.sanitize(request.body.read.to_s)
@@ -232,8 +233,9 @@ module Controller
         {
           event_type: :lodgement_attempt,
           correlation_id: correlation_id,
-          request_body: sanitized_body,
+          request_body: sanitized_body.slice(0..logit_char_limit),
           request_headers: headers,
+          request_body_truncated: sanitized_body.length > logit_char_limit,
         },
         true,
       )
