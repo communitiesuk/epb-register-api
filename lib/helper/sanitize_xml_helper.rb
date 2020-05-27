@@ -14,7 +14,7 @@ module Helper
 
     def strip_out_tag(tag_name, xml)
       regex = %r{<#{tag_name}>(.|\n|\r)*<\/#{tag_name}>}
-      xml = xml.sub(regex, "")
+      xml.sub(regex, "")
     end
   end
 end
