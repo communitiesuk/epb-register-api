@@ -266,7 +266,7 @@ module Controller
         {
           event_type: :lodgement_failed,
           correlation_id: correlation_id,
-          message: e.to_s,
+          error_message: e.to_s,
         },
         true,
       )
