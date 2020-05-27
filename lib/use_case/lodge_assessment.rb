@@ -15,13 +15,10 @@ module UseCase
       @assessments_xml_gateway = assessments_xml_gateway
     end
 
-    def execute(lodgement, assessment_id)
+    def execute(lodgement)
       data = lodgement.fetch_data
+      assessment_id = data[:assessment_id]
       assessment_type = data[:assessment_type] || lodgement.type
-
-      unless assessment_id == data[:assessment_id]
-        raise AssessmentIdMismatchException
-      end
 
       if @assessments_gateway.fetch assessment_id
         raise DuplicateAssessmentIdException

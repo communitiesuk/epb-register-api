@@ -18,7 +18,7 @@ module UseCase
         check_assessor_belongs_to_scheme_use_case
     end
 
-    def execute(assessment_id, xml, schema_name, scheme_ids)
+    def execute(xml, schema_name, scheme_ids)
       raise SchemaNotDefined unless schema_name
 
       lodgement = Domain::Lodgement.new(xml, schema_name)
@@ -38,7 +38,7 @@ module UseCase
         raise UnauthorisedToLodgeAsThisSchemeException
       end
 
-      @lodge_assessment_use_case.execute(lodgement, assessment_id)
+      @lodge_assessment_use_case.execute(lodgement)
     end
 
   private

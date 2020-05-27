@@ -331,17 +331,6 @@ describe "Acceptance::LodgeRdSapEnergyAssessment" do
         scheme_assessor_id.children = "TEST123456"
       end
 
-      context "when an assessment id does not match" do
-        it "returns status 422" do
-          lodge_assessment(
-            assessment_id: "123-456",
-            assessment_body: doc.to_xml,
-            accepted_responses: [422],
-            auth_data: { scheme_ids: [scheme_id] },
-          )
-        end
-      end
-
       context "when an assessment already exists with the same assessment id" do
         it "returns status 409" do
           lodge_assessment(

@@ -148,7 +148,7 @@ def lodge_assessment(
 )
   header "Content-type", "application/xml+" + schema_name
   assertive_post(
-    "api/assessments/#{assessment_id}",
+    "api/assessments",
     assessment_body,
     accepted_responses,
     authenticate,

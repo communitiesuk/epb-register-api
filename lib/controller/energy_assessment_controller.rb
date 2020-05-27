@@ -188,7 +188,7 @@ module Controller
       end
     end
 
-    post "/api/assessments/:assessment_id", jwt_auth: %w[assessment:lodge] do
+    post "/api/assessments", jwt_auth: %w[assessment:lodge] do
       correlation_id = rand
 
       sanitized_body =
@@ -209,14 +209,12 @@ module Controller
       validate_and_lodge_assessment =
         @container.get_object(:validate_and_lodge_assessment_use_case)
 
-      assessment_id = params[:assessment_id]
       xml = sanitized_body
       content_type = request.env["CONTENT_TYPE"].split("+")[1]
       scheme_ids = sup
 
       result =
         validate_and_lodge_assessment.execute(
-          assessment_id,
           xml,
           content_type,
           scheme_ids,
@@ -262,12 +260,6 @@ module Controller
           403,
           "UNAUTHORISED",
           "Not authorised to lodge reports as this scheme",
-        )
-      when UseCase::LodgeAssessment::AssessmentIdMismatchException
-        error_response(
-          422,
-          "INVALID_REQUEST",
-          "Assessment ID and RRN in XML does not match.",
         )
       when UseCase::LodgeAssessment::InactiveAssessorException
         error_response(400, "INVALID_REQUEST", "Assessor is not active.")
