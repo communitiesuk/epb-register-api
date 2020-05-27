@@ -47,7 +47,7 @@ describe "Acceptance::LodgeCEPCENIEnergyAssessment" do
 
   let(:valid_cepc_ni_xml) do
     File.read File.join Dir.pwd,
-                        "api/schemas/xml/examples/NI-CEPC-7.11(EPC).xml"
+                        "api/schemas/xml/examples/CEPC-NI-7.11(EPC).xml"
   end
 
   context "when lodging a CEPC assessment (post)" do
@@ -485,7 +485,7 @@ describe "Acceptance::LodgeCEPCENIEnergyAssessment" do
     context "when lodging recommendation reports" do
       let(:valid_cepc_ni_recommended_report_xml) do
         File.read File.join Dir.pwd,
-                            "api/schemas/xml/examples/NI-CEPC-7.11(RR).xml"
+                            "api/schemas/xml/examples/CEPC-NI-7.11(RR).xml"
       end
       let(:response) do
         JSON.parse(fetch_assessment("0000-0000-0000-0000-0000").body)

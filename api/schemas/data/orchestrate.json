@@ -29,7 +29,7 @@
     "data_path": "api/schemas/data/CEPC-7.1.json"
   },
   "CEPC-NI-7.1": {
-    "schema_path": "api/schemas/xml/NI-CEPC-7.1/Reports/CEPC-Reports.xsd",
+    "schema_path": "api/schemas/xml/CEPC-NI-7.1/Reports/CEPC-Reports.xsd",
     "data_path": "api/schemas/data/CEPC-NI-7.1.json"
   }
 }

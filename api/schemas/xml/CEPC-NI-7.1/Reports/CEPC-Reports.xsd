@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns="https://epbr.digital.communities.gov.uk/xsd/cepc-ni" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="https://epbr.digital.communities.gov.uk/xsd/cepc-ni" elementFormDefault="qualified" version="NI-CEPC-7.1">
+<xs:schema xmlns="https://epbr.digital.communities.gov.uk/xsd/cepc-ni" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="https://epbr.digital.communities.gov.uk/xsd/cepc-ni" elementFormDefault="qualified" version="CEPC-NI-7.1">
 	<xs:include schemaLocation="Reported-Data.xsd"/>
 	<xs:include schemaLocation="Performance-Summary.xsd"/>
 	<xs:include schemaLocation="Report-Header.xsd"/>
