@@ -137,7 +137,6 @@ def add_scheme(
 end
 
 def lodge_assessment(
-  assessment_id: "",
   assessment_body: "",
   accepted_responses: [201],
   authenticate: true,

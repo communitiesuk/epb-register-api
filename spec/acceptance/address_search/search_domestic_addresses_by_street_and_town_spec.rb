@@ -29,7 +29,6 @@ describe "searching for an address by street and town" do
       add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
 
       lodge_assessment(
-        assessment_id: "0000-0000-0000-0000-0000",
         assessment_body: valid_rdsap_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
@@ -47,7 +46,6 @@ describe "searching for an address by street and town" do
       address_line_one.children = "2 Other Street"
 
       lodge_assessment(
-        assessment_id: "0000-0000-0000-0000-0001",
         assessment_body: second_assessment.to_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
@@ -65,7 +63,6 @@ describe "searching for an address by street and town" do
       scheme_assessor_id.children = "TEST000000"
 
       lodge_assessment(
-        assessment_id: "0000-0000-0000-0000-0002",
         assessment_body: non_domestic_xml.to_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
@@ -83,7 +80,6 @@ describe "searching for an address by street and town" do
       third_address_line_one.add_next_sibling third_address_line_two
 
       lodge_assessment(
-        assessment_id: "0000-0000-0000-0000-0003",
         assessment_body: third_assessment.to_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
@@ -103,7 +99,6 @@ describe "searching for an address by street and town" do
       town.children = "Some County"
 
       lodge_assessment(
-        assessment_id: "0000-0000-0000-0000-0004",
         assessment_body: fourth_assessment.to_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },

@@ -48,7 +48,6 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
   context "when lodging a domestic energy assessment (post)" do
     it "rejects an assessment with a schema that does not exist" do
       lodge_assessment(
-        assessment_id: "0000-0000-0000-0000-0000",
         assessment_body: valid_sap_ni_xml,
         accepted_responses: [400],
         schema_name: "MakeupSAP-19.0",
@@ -60,7 +59,6 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
         response =
           JSON.parse(
             lodge_assessment(
-              assessment_id: "0000-0000-0000-0000-0000",
               assessment_body: valid_sap_ni_xml,
               accepted_responses: [400],
               schema_name: "SAP-Schema-NI-17.4",
@@ -83,7 +81,6 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
           response =
             JSON.parse(
               lodge_assessment(
-                assessment_id: "0000-0000-0000-0000-0000",
                 assessment_body: valid_sap_ni_xml,
                 accepted_responses: [400],
                 auth_data: { scheme_ids: [scheme_id] },
@@ -106,7 +103,6 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
           response =
             JSON.parse(
               lodge_assessment(
-                assessment_id: "0000-0000-0000-0000-0000",
                 assessment_body: valid_sap_ni_xml,
                 accepted_responses: [400],
                 auth_data: { scheme_ids: [scheme_id] },
@@ -124,7 +120,6 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
 
     it "returns 401 with no authentication" do
       lodge_assessment(
-        assessment_id: "0000-0000-0000-0000-0000",
         assessment_body: "body",
         accepted_responses: [401],
         authenticate: false,
@@ -133,7 +128,6 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
 
     it "returns 403 with incorrect scopes" do
       lodge_assessment(
-        assessment_id: "0000-0000-0000-0000-0000",
         assessment_body: "body",
         accepted_responses: [403],
         auth_data: { scheme_ids: {} },
@@ -147,7 +141,6 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
       different_scheme_id = add_scheme_and_get_id("BADSCHEME")
 
       lodge_assessment(
-        assessment_id: "123-344",
         assessment_body: valid_sap_ni_xml,
         accepted_responses: [403],
         auth_data: { scheme_ids: [different_scheme_id] },
@@ -160,7 +153,6 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
       add_assessor(scheme_id, "TEST000000", sap_valid_assessor_request_body)
 
       lodge_assessment(
-        assessment_id: "0000-0000-0000-0000-0000",
         assessment_body: valid_sap_ni_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
@@ -174,7 +166,6 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
 
       response =
         lodge_assessment(
-          assessment_id: "0000-0000-0000-0000-0000",
           assessment_body: valid_sap_ni_xml,
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] },
@@ -191,7 +182,6 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
       response =
         JSON.parse(
           lodge_assessment(
-            assessment_id: "0000-0000-0000-0000-0000",
             assessment_body: valid_sap_ni_xml,
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] },
@@ -211,7 +201,6 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
       response =
         JSON.parse(
           lodge_assessment(
-            assessment_id: "0000-0000-0000-0000-0000",
             assessment_body: valid_sap_ni_xml,
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] },
@@ -261,7 +250,6 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
       response =
         JSON.parse(
           lodge_assessment(
-            assessment_id: "0000-0000-0000-0000-0000",
             assessment_body: valid_sap_ni_xml,
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] },
@@ -290,7 +278,6 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
 
       it "returns status 400" do
         lodge_assessment(
-          assessment_id: "1234-1234-1234-1234-1234",
           assessment_body: doc.to_xml,
           accepted_responses: [400],
           auth_data: { scheme_ids: [scheme_id] },
@@ -302,7 +289,6 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
         response =
           JSON.parse(
             lodge_assessment(
-              assessment_id: "1234-1234-1234-1234-1234",
               assessment_body: doc.to_xml,
               accepted_responses: [400],
               auth_data: { scheme_ids: [scheme_id] },
@@ -334,7 +320,6 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
 
       it "returns the data that was lodged" do
         lodge_assessment(
-          assessment_id: "1234-1234-1234-1234-1234",
           assessment_body: doc.to_xml,
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] },
@@ -517,7 +502,6 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
         address_line_two.add_next_sibling address_line_three
 
         lodge_assessment(
-          assessment_id: "1234-1234-1234-1234-1234",
           assessment_body: doc.to_xml,
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] },
@@ -547,7 +531,6 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
           space_heating.add_next_sibling water_heating
 
           lodge_assessment(
-            assessment_id: "1234-1234-1234-1234-1234",
             assessment_body: doc.to_xml,
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] },
@@ -567,7 +550,6 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
           doc.at("Total-Floor-Area").remove
 
           lodge_assessment(
-            assessment_id: "1234-1234-1234-1234-1234",
             assessment_body: doc.to_xml,
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] },
@@ -591,7 +573,6 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
         scheme_assessor_id.children = ""
 
         lodge_assessment(
-          assessment_id: "0000-0000-0000-0000-0000",
           assessment_body: doc.to_xml,
           accepted_responses: [400],
           schema_name: "SAP-Schema-NI-17.4",
@@ -610,7 +591,6 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
         response_body =
           JSON.parse(
             lodge_assessment(
-              assessment_id: "0000-0000-0000-0000-0000",
               assessment_body: doc.to_xml,
               accepted_responses: [400],
               schema_name: "SAP-Schema-NI-17.4",
@@ -634,7 +614,6 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
         response_body =
           JSON.parse(
             lodge_assessment(
-              assessment_id: "0000-0000-0000-0000-0000",
               assessment_body: xml,
               accepted_responses: [400],
               schema_name: "SAP-Schema-NI-17.4",

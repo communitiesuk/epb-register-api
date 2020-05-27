@@ -52,7 +52,6 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
   context "when lodging a CEPC assessment (post)" do
     it "rejects an assessment with a schema that does not exist" do
       lodge_assessment(
-        assessment_id: "0000-0000-0000-0000-0000",
         assessment_body: valid_cepc_xml,
         accepted_responses: [400],
         schema_name: "Madeup-schema",
@@ -64,7 +63,6 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
         response =
           JSON.parse(
             lodge_assessment(
-              assessment_id: "0000-0000-0000-0000-0000",
               assessment_body: valid_cepc_xml,
               accepted_responses: [400],
               schema_name: "CEPC-7.1",
@@ -90,7 +88,6 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
           response =
             JSON.parse(
               lodge_assessment(
-                assessment_id: "0000-0000-0000-0000-0000",
                 assessment_body: valid_cepc_xml,
                 accepted_responses: [400],
                 auth_data: { scheme_ids: [scheme_id] },
@@ -112,7 +109,6 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
           doc.at("//CEPC:Building-Complexity").remove
 
           lodge_assessment(
-            assessment_id: "0000-0000-0000-0000-0000",
             assessment_body: doc.to_xml,
             accepted_responses: [400],
             auth_data: { scheme_ids: [scheme_id] },
@@ -124,7 +120,6 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
 
     it "returns 401 with no authentication" do
       lodge_assessment(
-        assessment_id: "0000-0000-0000-0000-0000",
         assessment_body: "body",
         accepted_responses: [401],
         authenticate: false,
@@ -134,7 +129,6 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
 
     it "returns 403 with incorrect scopes" do
       lodge_assessment(
-        assessment_id: "0000-0000-0000-0000-0000",
         assessment_body: "body",
         accepted_responses: [403],
         auth_data: { scheme_ids: {} },
@@ -149,7 +143,6 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
       different_scheme_id = add_scheme_and_get_id("BADSCHEME")
 
       lodge_assessment(
-        assessment_id: "123-344",
         assessment_body: valid_cepc_xml,
         accepted_responses: [403],
         auth_data: { scheme_ids: [different_scheme_id] },
@@ -162,7 +155,6 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
       add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
 
       lodge_assessment(
-        assessment_id: "0000-0000-0000-0000-0000",
         assessment_body: valid_cepc_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
@@ -176,7 +168,6 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
 
       response =
         lodge_assessment(
-          assessment_id: "0000-0000-0000-0000-0000",
           assessment_body: valid_cepc_xml,
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] },
@@ -193,7 +184,6 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
       response =
         JSON.parse(
           lodge_assessment(
-            assessment_id: "0000-0000-0000-0000-0000",
             assessment_body: valid_cepc_xml,
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] },
@@ -213,7 +203,6 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
       response =
         JSON.parse(
           lodge_assessment(
-            assessment_id: "0000-0000-0000-0000-0000",
             assessment_body: valid_cepc_xml,
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] },
@@ -263,7 +252,6 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
       response =
         JSON.parse(
           lodge_assessment(
-            assessment_id: "0000-0000-0000-0000-0000",
             assessment_body: valid_cepc_xml,
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] },
@@ -292,7 +280,6 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
 
       it "returns status 400" do
         lodge_assessment(
-          assessment_id: "1234-1234-1234-1234-1234",
           assessment_body: doc.to_xml,
           accepted_responses: [400],
           auth_data: { scheme_ids: [scheme_id] },
@@ -304,7 +291,6 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
         response =
           JSON.parse(
             lodge_assessment(
-              assessment_id: "1234-1234-1234-1234-1234",
               assessment_body: doc.to_xml,
               accepted_responses: [400],
               auth_data: { scheme_ids: [scheme_id] },
@@ -337,7 +323,6 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
       context "when an assessment already exists with the same assessment id" do
         it "returns status 409" do
           lodge_assessment(
-            assessment_id: "1234-1234-1234-1234-1234",
             assessment_body: doc.to_xml,
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] },
@@ -345,7 +330,6 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
           )
 
           lodge_assessment(
-            assessment_id: "1234-1234-1234-1234-1234",
             assessment_body: doc.to_xml,
             accepted_responses: [409],
             auth_data: { scheme_ids: [scheme_id] },
@@ -356,7 +340,6 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
 
       it "returns the data that was lodged" do
         lodge_assessment(
-          assessment_id: "1234-1234-1234-1234-1234",
           assessment_body: doc.to_xml,
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] },
@@ -436,7 +419,6 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
         address_line_one.add_next_sibling address_line_two
 
         lodge_assessment(
-          assessment_id: "1234-1234-1234-1234-1234",
           assessment_body: doc.to_xml,
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] },
@@ -453,7 +435,6 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
         address_line_one.add_next_sibling address_line_three
 
         lodge_assessment(
-          assessment_id: "1234-1234-1234-1234-1234",
           assessment_body: doc.to_xml,
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] },
@@ -475,7 +456,6 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
         address_line_two.add_next_sibling address_line_three
 
         lodge_assessment(
-          assessment_id: "1234-1234-1234-1234-1234",
           assessment_body: doc.to_xml,
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] },
@@ -490,7 +470,6 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
       context "when missing optional elements" do
         it "can return an empty string for address lines" do
           lodge_assessment(
-            assessment_id: "1234-1234-1234-1234-1234",
             assessment_body: doc.to_xml,
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] },
@@ -514,7 +493,6 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
         scheme_assessor_id.children = ""
 
         lodge_assessment(
-          assessment_id: "0000-0000-0000-0000-0000",
           assessment_body: doc.to_xml,
           accepted_responses: [400],
           schema_name: "CEPC-7.1",
@@ -533,7 +511,6 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
         response_body =
           JSON.parse(
             lodge_assessment(
-              assessment_id: "0000-0000-0000-0000-0000",
               assessment_body: doc.to_xml,
               accepted_responses: [400],
               schema_name: "CEPC-7.1",
@@ -557,7 +534,6 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
         response_body =
           JSON.parse(
             lodge_assessment(
-              assessment_id: "0000-0000-0000-0000-0000",
               assessment_body: xml,
               accepted_responses: [400],
               schema_name: "CEPC-7.1",

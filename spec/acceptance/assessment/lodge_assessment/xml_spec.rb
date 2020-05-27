@@ -47,7 +47,6 @@ describe "Acceptance::LodgeAssessment::XML" do
   before do
     add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
     lodge_assessment(
-      assessment_id: "0000-0000-0000-0000-0000",
       assessment_body: valid_cepc_xml,
       accepted_responses: [201],
       auth_data: { scheme_ids: [scheme_id] },

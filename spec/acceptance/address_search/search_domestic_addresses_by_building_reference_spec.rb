@@ -25,7 +25,6 @@ describe "searching for an address by building reference" do
       add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
 
       lodge_assessment(
-        assessment_id: "0000-0000-0000-0000-0000",
         assessment_body: valid_rdsap_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
