@@ -151,19 +151,19 @@ describe "Acceptance::LodgeDEC(AR)NIEnergyAssessment" do
       context "when unqualified for DEC advisory reports NI" do
         it "returns status 400 with the correct error response" do
           response =
-              JSON.parse(
-                  lodge_assessment(
-                      assessment_body: valid_dec_advisory_report_ni_xml,
-                      accepted_responses: [400],
-                      auth_data: { scheme_ids: [scheme_id] },
-                      schema_name: "CEPC-NI-7.1",
-                      )
-                      .body,
-                  )
+            JSON.parse(
+              lodge_assessment(
+                assessment_body: valid_dec_advisory_report_ni_xml,
+                accepted_responses: [400],
+                auth_data: { scheme_ids: [scheme_id] },
+                schema_name: "CEPC-NI-7.1",
+              )
+                .body,
+            )
 
           expect(response["errors"][0]["title"]).to eq(
-                                                        "Assessor is not active.",
-                                                        )
+            "Assessor is not active.",
+          )
         end
       end
     end
