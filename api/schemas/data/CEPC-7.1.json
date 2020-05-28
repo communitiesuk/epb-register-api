@@ -12,6 +12,7 @@
   "cast": "map",
   "map": {
     "1": "DEC",
+    "2": "DEC-AR",
     "3": "CEPC"
   }
 }, {

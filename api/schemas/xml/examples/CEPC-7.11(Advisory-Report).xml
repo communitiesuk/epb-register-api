@@ -3,14 +3,14 @@
     <Report-Header>
         <RRN>0000-0000-0000-0000-0000</RRN>
         <Issue-Date>2006-05-04</Issue-Date>
-        <Report-Type>1</Report-Type>
+        <Report-Type>2</Report-Type>
         <Valid-Until>2006-05-04</Valid-Until>
         <Inspection-Date>2006-05-04</Inspection-Date>
         <Registration-Date>2006-05-04</Registration-Date>
         <Status>cancelled</Status>
         <Language-Code>1</Language-Code>
         <Energy-Assessor>
-            <Certificate-Number>////000000</Certificate-Number>
+            <Certificate-Number>JASE000000</Certificate-Number>
             <Name>Name0</Name>
             <Accreditation-Scheme-Name>Accreditation-Scheme-Name0</Accreditation-Scheme-Name>
         </Energy-Assessor>
