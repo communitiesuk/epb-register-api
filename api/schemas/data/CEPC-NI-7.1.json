@@ -11,6 +11,7 @@
   "path": ["Report_Type"],
   "cast": "map",
   "map": {
+    "1": "DEC",
     "3": "CEPC",
     "4": "CEPC-RR"
   }
