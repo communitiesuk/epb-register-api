@@ -1,4 +1,4 @@
-describe "searching for an address" do
+describe "Acceptance::AddressSearch" do
   include RSpecAssessorServiceMixin
 
   context "with an invalid combination of parameters" do

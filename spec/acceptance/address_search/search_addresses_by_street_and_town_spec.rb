@@ -1,4 +1,4 @@
-describe "searching for an address by street and town" do
+describe "Acceptance::AddressSearch::ByStreetAndTown" do
   include RSpecAssessorServiceMixin
 
   let(:valid_cepc_xml) do

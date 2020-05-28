@@ -1,4 +1,4 @@
-describe "searching for an address by postcode" do
+describe "Acceptance::AddressSearch::ByPostcode" do
   include RSpecAssessorServiceMixin
 
   let(:valid_cepc_xml) do
