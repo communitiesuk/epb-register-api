@@ -19,9 +19,10 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
     }
   end
 
-  context "an address that has a report lodged" do
+  context "when an address that has a report lodged" do
+    let(:scheme_id) { add_scheme_and_get_id }
+
     before(:each) do
-      scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
 
       lodge_assessment(
@@ -57,9 +58,61 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
         ).to eq "PREVIOUS_ASSESSMENT"
         expect(response["data"]["addresses"][0]["existingAssessments"]).to eq [
           "assessmentId" => "0000-0000-0000-0000-0000",
-          "assessmentStatus" => "ENTERED",
+          "assessmentStatus" => "EXPIRED",
           "assessmentType" => "RdSAP",
         ]
+      end
+
+      context "with an entered assessment" do
+        before do
+          entered_assessment = Nokogiri.XML valid_rdsap_xml
+
+          assessment_id = entered_assessment.at("RRN")
+          assessment_id.children = "0000-0000-0000-0000-0001"
+
+          assessment_date = entered_assessment.at("Inspection-Date")
+          assessment_date.children = Date.today.prev_day.strftime("%Y-%m-%d")
+
+          lodge_assessment(
+            assessment_body: entered_assessment.to_xml,
+            accepted_responses: [201],
+            auth_data: { scheme_ids: [scheme_id] },
+          )
+        end
+
+        it "returns the expected address" do
+          response =
+            JSON.parse(
+              assertive_get(
+                "/api/search/addresses?buildingReferenceNumber=RRN-0000-0000-0000-0000-0001",
+                [200],
+                true,
+                {},
+                %w[address:search],
+              )
+                .body,
+            )
+
+          expect(response["data"]["addresses"].length).to eq 1
+          expect(
+            response["data"]["addresses"][0]["buildingReferenceNumber"],
+          ).to eq "RRN-0000-0000-0000-0000-0001"
+          expect(
+            response["data"]["addresses"][0]["line1"],
+          ).to eq "1 Some Street"
+          expect(response["data"]["addresses"][0]["town"]).to eq "Post-Town1"
+          expect(response["data"]["addresses"][0]["postcode"]).to eq "A0 0AA"
+          expect(
+            response["data"]["addresses"][0]["source"],
+          ).to eq "PREVIOUS_ASSESSMENT"
+          expect(
+            response["data"]["addresses"][0]["existingAssessments"],
+          ).to eq [
+            "assessmentId" => "0000-0000-0000-0000-0001",
+            "assessmentStatus" => "ENTERED",
+            "assessmentType" => "RdSAP",
+          ]
+        end
       end
     end
   end

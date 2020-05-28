@@ -7,6 +7,7 @@ module Gateway
       sql =
         "SELECT
             assessment_id,
+            date_of_expiry,
             type_of_assessment,
             address_line1,
             address_line2,
@@ -53,6 +54,7 @@ module Gateway
         ActiveRecord::Base.connection.exec_query(
           'SELECT
            assessment_id,
+           date_of_expiry,
            type_of_assessment,
            address_line1,
            address_line2,
@@ -79,6 +81,7 @@ module Gateway
       sql =
         'SELECT
           assessment_id,
+          date_of_expiry,
           type_of_assessment,
           address_line1,
           address_line2,
@@ -119,6 +122,9 @@ module Gateway
   private
 
     def record_to_address_domain(row)
+      assessment_status =
+        row["date_of_expiry"] < Time.now ? "EXPIRED" : "ENTERED"
+
       Domain::Address.new building_reference_number:
                             "RRN-#{row['assessment_id']}",
                           line1: row["address_line1"],
@@ -129,7 +135,7 @@ module Gateway
                           source: "PREVIOUS_ASSESSMENT",
                           existing_assessments: [
                             assessmentId: row["assessment_id"],
-                            assessmentStatus: "ENTERED",
+                            assessmentStatus: assessment_status,
                             assessmentType: row["type_of_assessment"],
                           ]
     end

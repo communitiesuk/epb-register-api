@@ -80,6 +80,18 @@ describe "Acceptance::AddressSearch::ByPostcode" do
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
       )
+
+      fourth_assessment_id = doc.at("RRN")
+      fourth_assessment_id.children = "0000-0000-0000-0000-0004"
+
+      assessment_date = doc.at("Inspection-Date")
+      assessment_date.children = Date.today.prev_day.strftime("%Y-%m-%d")
+
+      lodge_assessment(
+        assessment_body: doc.to_xml,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] },
+      )
     end
 
     describe "searching by postcode" do
@@ -96,38 +108,74 @@ describe "Acceptance::AddressSearch::ByPostcode" do
       end
 
       context "when a valid postcode is provided" do
-        it "returns the address" do
-          response =
-            JSON.parse(
-              assertive_get(
-                "/api/search/addresses?postcode=A0%200AA",
-                [200],
-                true,
-                {},
-                %w[address:search],
+        context "with an expired assessment" do
+          it "returns the address" do
+            response =
+              JSON.parse(
+                assertive_get(
+                  "/api/search/addresses?postcode=A0%200AA",
+                  [200],
+                  true,
+                  {},
+                  %w[address:search],
+                )
+                  .body,
               )
-                .body,
-            )
 
-          expect(response["data"]["addresses"].length).to eq 4
-          expect(
-            response["data"]["addresses"][0]["buildingReferenceNumber"],
-          ).to eq "RRN-0000-0000-0000-0000-0000"
-          expect(
-            response["data"]["addresses"][0]["line1"],
-          ).to eq "1 Some Street"
-          expect(response["data"]["addresses"][0]["town"]).to eq "Post-Town1"
-          expect(response["data"]["addresses"][0]["postcode"]).to eq "A0 0AA"
-          expect(
-            response["data"]["addresses"][0]["source"],
-          ).to eq "PREVIOUS_ASSESSMENT"
-          expect(
-            response["data"]["addresses"][0]["existingAssessments"],
-          ).to eq [
-            "assessmentId" => "0000-0000-0000-0000-0000",
-            "assessmentStatus" => "ENTERED",
-            "assessmentType" => "RdSAP",
-          ]
+            expect(response["data"]["addresses"].length).to eq 5
+            expect(
+              response["data"]["addresses"][0]["buildingReferenceNumber"],
+            ).to eq "RRN-0000-0000-0000-0000-0000"
+            expect(
+              response["data"]["addresses"][0]["line1"],
+            ).to eq "1 Some Street"
+            expect(response["data"]["addresses"][0]["town"]).to eq "Post-Town1"
+            expect(response["data"]["addresses"][0]["postcode"]).to eq "A0 0AA"
+            expect(
+              response["data"]["addresses"][0]["source"],
+            ).to eq "PREVIOUS_ASSESSMENT"
+            expect(
+              response["data"]["addresses"][0]["existingAssessments"],
+            ).to eq [
+              "assessmentId" => "0000-0000-0000-0000-0000",
+              "assessmentStatus" => "EXPIRED",
+              "assessmentType" => "RdSAP",
+            ]
+          end
+        end
+
+        context "with an entered assessment" do
+          it "returns the expected address" do
+            response =
+              JSON.parse(
+                assertive_get(
+                  "/api/search/addresses?postcode=A0%200AA",
+                  [200],
+                  true,
+                  {},
+                  %w[address:search],
+                )
+                  .body,
+              )
+
+            expect(response["data"]["addresses"].length).to eq 5
+            expect(
+              response["data"]["addresses"][4]["buildingReferenceNumber"],
+            ).to eq "RRN-0000-0000-0000-0000-0004"
+            expect(response["data"]["addresses"][4]["line1"]).to eq "The House"
+            expect(response["data"]["addresses"][4]["town"]).to eq "Post-Town1"
+            expect(response["data"]["addresses"][4]["postcode"]).to eq "A0 0AA"
+            expect(
+              response["data"]["addresses"][4]["source"],
+            ).to eq "PREVIOUS_ASSESSMENT"
+            expect(
+              response["data"]["addresses"][4]["existingAssessments"],
+            ).to eq [
+              "assessmentId" => "0000-0000-0000-0000-0004",
+              "assessmentStatus" => "ENTERED",
+              "assessmentType" => "RdSAP",
+            ]
+          end
         end
       end
 
@@ -145,7 +193,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
                 .body,
             )
 
-          expect(response["data"]["addresses"].length).to eq 4
+          expect(response["data"]["addresses"].length).to eq 5
           expect(
             response["data"]["addresses"][0]["buildingReferenceNumber"],
           ).to eq "RRN-0000-0000-0000-0000-0000"
@@ -161,7 +209,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
             response["data"]["addresses"][0]["existingAssessments"],
           ).to eq [
             "assessmentId" => "0000-0000-0000-0000-0000",
-            "assessmentStatus" => "ENTERED",
+            "assessmentStatus" => "EXPIRED",
             "assessmentType" => "RdSAP",
           ]
         end
@@ -198,7 +246,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
               response["data"]["addresses"][0]["existingAssessments"],
             ).to eq [
               "assessmentId" => "0000-0000-0000-0000-0001",
-              "assessmentStatus" => "ENTERED",
+              "assessmentStatus" => "EXPIRED",
               "assessmentType" => "RdSAP",
             ]
           end
@@ -218,7 +266,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
                   .body,
               )
 
-            expect(response["data"]["addresses"].length).to eq 1
+            expect(response["data"]["addresses"].length).to eq 2
             expect(
               response["data"]["addresses"][0]["buildingReferenceNumber"],
             ).to eq "RRN-0000-0000-0000-0000-0003"
@@ -235,7 +283,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
               response["data"]["addresses"][0]["existingAssessments"],
             ).to eq [
               "assessmentId" => "0000-0000-0000-0000-0003",
-              "assessmentStatus" => "ENTERED",
+              "assessmentStatus" => "EXPIRED",
               "assessmentType" => "RdSAP",
             ]
           end
@@ -268,7 +316,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
                 .body,
             )
 
-          expect(response["data"]["addresses"].length).to eq 3
+          expect(response["data"]["addresses"].length).to eq 4
           expect(
             response["data"]["addresses"][0]["buildingReferenceNumber"],
           ).to eq "RRN-0000-0000-0000-0000-0000"
@@ -284,7 +332,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
             response["data"]["addresses"][0]["existingAssessments"],
           ).to eq [
             "assessmentId" => "0000-0000-0000-0000-0000",
-            "assessmentStatus" => "ENTERED",
+            "assessmentStatus" => "EXPIRED",
             "assessmentType" => "RdSAP",
           ]
         end
@@ -320,7 +368,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
             response["data"]["addresses"][0]["existingAssessments"],
           ).to eq [
             "assessmentId" => "0000-0000-0000-0000-0002",
-            "assessmentStatus" => "ENTERED",
+            "assessmentStatus" => "EXPIRED",
             "assessmentType" => "CEPC",
           ]
         end
