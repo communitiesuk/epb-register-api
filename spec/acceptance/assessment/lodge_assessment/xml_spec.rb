@@ -65,26 +65,6 @@ describe "Acceptance::LodgeAssessment::XML" do
       )
     end
 
-    it "will remove the <Unstructured-Data> element" do
-      database_xml = get_stored_xml("0000-0000-0000-0000-0000")
-
-      expect(valid_cepc_xml).to include("<Unstructured-Data>")
-      expect(cleaned_xml).to eq(
-        '<?xml version="1.0" encoding="UTF-8"?>
-' + database_xml,
-      )
-    end
-
-    it "will remove the <Data-Blob> element" do
-      database_xml = get_stored_xml("0000-0000-0000-0000-0000")
-
-      expect(valid_cepc_xml).to include("<Data-Blob>")
-      expect(cleaned_xml).to eq(
-        '<?xml version="1.0" encoding="UTF-8"?>
-' + database_xml,
-      )
-    end
-
     it "will remove the <PDF> element" do
       database_xml = get_stored_xml("0000-0000-0000-0000-0000")
 

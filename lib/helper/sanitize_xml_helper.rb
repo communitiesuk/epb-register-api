@@ -3,7 +3,7 @@
 module Helper
   class SanitizeXmlHelper
     def sanitize(xml)
-      %w[Formatted-Report Unstructured-Data Data-Blob PDF].each do |tag_name|
+      %w[Formatted-Report PDF].each do |tag_name|
         xml = strip_out_tag(tag_name, xml)
       end
 
