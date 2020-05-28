@@ -50,32 +50,6 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
   end
 
   context "when lodging a CEPC assessment (post)" do
-    it "rejects an assessment with a schema that does not exist" do
-      lodge_assessment(
-        assessment_body: valid_cepc_xml,
-        accepted_responses: [400],
-        schema_name: "Madeup-schema",
-      )
-    end
-
-    context "when an assessor is not registered" do
-      it "returns status 400 with the correct error response" do
-        response =
-          JSON.parse(
-            lodge_assessment(
-              assessment_body: valid_cepc_xml,
-              accepted_responses: [400],
-              schema_name: "CEPC-7.1",
-            )
-              .body,
-          )
-
-        expect(response["errors"][0]["title"]).to eq(
-          "Assessor is not registered.",
-        )
-      end
-    end
-
     context "when an assessor is inactive" do
       let(:scheme_id) { add_scheme_and_get_id }
 
@@ -118,38 +92,6 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
       end
     end
 
-    it "returns 401 with no authentication" do
-      lodge_assessment(
-        assessment_body: "body",
-        accepted_responses: [401],
-        authenticate: false,
-        schema_name: "CEPC-7.1",
-      )
-    end
-
-    it "returns 403 with incorrect scopes" do
-      lodge_assessment(
-        assessment_body: "body",
-        accepted_responses: [403],
-        auth_data: { scheme_ids: {} },
-        scopes: %w[wrong:scope],
-        schema_name: "CEPC-7.1",
-      )
-    end
-
-    it "returns 403 if it is being lodged by the wrong scheme" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
-      different_scheme_id = add_scheme_and_get_id("BADSCHEME")
-
-      lodge_assessment(
-        assessment_body: valid_cepc_xml,
-        accepted_responses: [403],
-        auth_data: { scheme_ids: [different_scheme_id] },
-        schema_name: "CEPC-7.1",
-      )
-    end
-
     it "returns status 201" do
       scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
@@ -160,147 +102,6 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
         auth_data: { scheme_ids: [scheme_id] },
         schema_name: "CEPC-7.1",
       )
-    end
-
-    it "returns json" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
-
-      response =
-        lodge_assessment(
-          assessment_body: valid_cepc_xml,
-          accepted_responses: [201],
-          auth_data: { scheme_ids: [scheme_id] },
-          schema_name: "CEPC-7.1",
-        )
-
-      expect(response.headers["Content-Type"]).to eq("application/json")
-    end
-
-    it "returns the assessment as a hash" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
-
-      response =
-        JSON.parse(
-          lodge_assessment(
-            assessment_body: valid_cepc_xml,
-            accepted_responses: [201],
-            auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "CEPC-7.1",
-          )
-            .body,
-          symbolize_names: true,
-        )
-
-      expect(response[:data]).to be_a Hash
-    end
-
-    it "returns the assessment with the correct keys" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
-
-      response =
-        JSON.parse(
-          lodge_assessment(
-            assessment_body: valid_cepc_xml,
-            accepted_responses: [201],
-            auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "CEPC-7.1",
-          )
-            .body,
-          symbolize_names: true,
-        )
-
-      expect(response[:data].keys).to match_array(
-        %i[
-          dateOfAssessment
-          dateRegistered
-          dwellingType
-          typeOfAssessment
-          totalFloorArea
-          assessmentId
-          schemeAssessorId
-          addressSummary
-          currentEnergyEfficiencyRating
-          potentialEnergyEfficiencyRating
-          currentCarbonEmission
-          potentialCarbonEmission
-          optOut
-          postcode
-          dateOfExpiry
-          addressLine1
-          addressLine2
-          addressLine3
-          addressLine4
-          town
-          heatDemand
-          currentEnergyEfficiencyBand
-          potentialEnergyEfficiencyBand
-          recommendedImprovements
-          propertySummary
-          relatedPartyDisclosureNumber
-          relatedPartyDisclosureText
-        ],
-      )
-    end
-
-    it "returns the correct scheme assessor id" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
-
-      response =
-        JSON.parse(
-          lodge_assessment(
-            assessment_body: valid_cepc_xml,
-            accepted_responses: [201],
-            auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "CEPC-7.1",
-          )
-            .body,
-          symbolize_names: true,
-        )
-
-      expect(response.dig(:data, :schemeAssessorId)).to eq("JASE000000")
-    end
-
-    context "when schema is not supported" do
-      let(:scheme_id) { add_scheme_and_get_id }
-      let(:doc) { Nokogiri.XML valid_cepc_xml }
-
-      before do
-        add_assessor(scheme_id, "TEST123456", valid_assessor_request_body)
-
-        assessment_id = doc.at("//CEPC:RRN")
-        assessment_id.children = "1234-1234-1234-1234-1234"
-
-        scheme_assessor_id = doc.at("//CEPC:Certificate-Number")
-        scheme_assessor_id.children = "JASE000000"
-      end
-
-      it "returns status 400" do
-        lodge_assessment(
-          assessment_body: doc.to_xml,
-          accepted_responses: [400],
-          auth_data: { scheme_ids: [scheme_id] },
-          schema_name: "unsupported",
-        )
-      end
-
-      it "returns the correct error message" do
-        response =
-          JSON.parse(
-            lodge_assessment(
-              assessment_body: doc.to_xml,
-              accepted_responses: [400],
-              auth_data: { scheme_ids: [scheme_id] },
-              schema_name: "unsupported",
-            )
-              .body,
-          )
-
-        expect(response["errors"][0]["title"]).to eq("Schema is not supported.")
-      end
     end
 
     context "when saving a (CEPC) assessment" do
@@ -318,24 +119,6 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
 
         scheme_assessor_id = doc.at("//CEPC:Certificate-Number")
         scheme_assessor_id.children = "JASE000000"
-      end
-
-      context "when an assessment already exists with the same assessment id" do
-        it "returns status 409" do
-          lodge_assessment(
-            assessment_body: doc.to_xml,
-            accepted_responses: [201],
-            auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "CEPC-7.1",
-          )
-
-          lodge_assessment(
-            assessment_body: doc.to_xml,
-            accepted_responses: [409],
-            auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "CEPC-7.1",
-          )
-        end
       end
 
       it "returns the data that was lodged" do
@@ -497,53 +280,6 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
           accepted_responses: [400],
           schema_name: "CEPC-7.1",
         )
-      end
-
-      it "rejects an assessment with an incorrect element" do
-        scheme_id = add_scheme_and_get_id
-        add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
-
-        doc = Nokogiri.XML valid_cepc_xml
-
-        address = doc.at("//CEPC:Property-Address")
-        address.children = "<CEPC:Postcode>invalid</CEPC:Postcode>"
-
-        response_body =
-          JSON.parse(
-            lodge_assessment(
-              assessment_body: doc.to_xml,
-              accepted_responses: [400],
-              schema_name: "CEPC-7.1",
-            )
-              .body,
-          )
-
-        expect(
-          response_body["errors"][0]["title"],
-        ).to include "This element is not expected."
-      end
-
-      it "rejects an assessment with invalid XML" do
-        scheme_id = add_scheme_and_get_id
-        add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
-
-        xml = valid_cepc_xml
-
-        xml = xml.gsub("<CEPC:Report-Header>", "<Report-Header")
-
-        response_body =
-          JSON.parse(
-            lodge_assessment(
-              assessment_body: xml,
-              accepted_responses: [400],
-              schema_name: "CEPC-7.1",
-            )
-              .body,
-          )
-
-        expect(
-          response_body["errors"][0]["title"],
-        ).to include "Invalid attribute name: <<CEPC:RRN>"
       end
     end
   end
