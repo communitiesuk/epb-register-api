@@ -460,14 +460,6 @@ paths:
       security:
         - oauth:
             - 'assessment:lodge'
-      parameters:
-        - in: path
-          name: assessmentId
-          required: true
-          description: 'The ID of the assessment being added, usually RRN'
-          schema:
-            type: string
-            example: "1234-1234-1234-1234-1234"
       requestBody:
         content: {
           application/xml+RdSAP-Schema-19.0: {},
