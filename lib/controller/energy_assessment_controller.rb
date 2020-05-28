@@ -188,10 +188,6 @@ module Controller
       end
     end
 
-    post "/api/assessments/:assessment_id", jwt_auth: %w[assessment:lodge] do
-      do_lodge
-    end
-
     post "/api/assessments", jwt_auth: %w[assessment:lodge] do
       do_lodge
     end

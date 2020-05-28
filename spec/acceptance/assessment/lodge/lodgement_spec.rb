@@ -98,22 +98,6 @@ describe "Acceptance::Assessment::Lodge" do
       )
     end
 
-    it "returns status 201 when using old lodgement method" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
-
-      header "Content-type", "application/xml+RdSAP-Schema-19.0"
-      assertive_post(
-        "api/assessments/1111-1111-1111-1111-1111",
-        valid_xml,
-        [201],
-        true,
-        { scheme_ids: [scheme_id] },
-        %w[assessment:lodge],
-        false,
-      )
-    end
-
     it "returns json" do
       scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
