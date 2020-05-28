@@ -131,6 +131,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
         ).to eq "PREVIOUS_ASSESSMENT"
         expect(response["data"]["addresses"][0]["existingAssessments"]).to eq [
           "assessmentId" => "0000-0000-0000-0000-0000",
+          "assessmentStatus" => "ENTERED",
           "assessmentType" => "RdSAP",
         ]
       end
@@ -165,6 +166,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
             response["data"]["addresses"][0]["existingAssessments"],
           ).to eq [
             "assessmentId" => "0000-0000-0000-0000-0000",
+            "assessmentStatus" => "ENTERED",
             "assessmentType" => "RdSAP",
           ]
         end
@@ -212,6 +214,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
             response["data"]["addresses"][0]["existingAssessments"],
           ).to eq [
             "assessmentId" => "0000-0000-0000-0000-0002",
+            "assessmentStatus" => "ENTERED",
             "assessmentType" => "CEPC",
           ]
         end
@@ -248,6 +251,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
             response["data"]["addresses"][0]["existingAssessments"],
           ).to eq [
             "assessmentId" => "0000-0000-0000-0000-0003",
+            "assessmentStatus" => "ENTERED",
             "assessmentType" => "RdSAP",
           ]
         end
@@ -284,6 +288,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
             response["data"]["addresses"][0]["existingAssessments"],
           ).to eq [
             "assessmentId" => "0000-0000-0000-0000-0004",
+            "assessmentStatus" => "ENTERED",
             "assessmentType" => "RdSAP",
           ]
         end

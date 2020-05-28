@@ -1,6 +1,24 @@
 describe "Acceptance::AddressSearch" do
   include RSpecAssessorServiceMixin
 
+  let(:valid_rdsap_xml) do
+    File.read File.join Dir.pwd, "api/schemas/xml/examples/RdSAP-19.01.xml"
+  end
+
+  let(:valid_assessor_request_body) do
+    {
+      firstName: "Someone",
+      middleNames: "Muddle",
+      lastName: "Person",
+      dateOfBirth: "1991-02-25",
+      searchResultsComparisonPostcode: "",
+      qualifications: { domesticRdSap: "ACTIVE" },
+      contactDetails: {
+        telephoneNumber: "010199991010101", email: "person@person.com"
+      },
+    }
+  end
+
   context "with an invalid combination of parameters" do
     describe "no parameters" do
       it "returns a validation error" do
@@ -34,24 +52,6 @@ describe "Acceptance::AddressSearch" do
   end
 
   context "with an incomplete address" do
-    let(:valid_rdsap_xml) do
-      File.read File.join Dir.pwd, "api/schemas/xml/examples/RdSAP-19.01.xml"
-    end
-
-    let(:valid_assessor_request_body) do
-      {
-        firstName: "Someone",
-        middleNames: "Muddle",
-        lastName: "Person",
-        dateOfBirth: "1991-02-25",
-        searchResultsComparisonPostcode: "",
-        qualifications: { domesticRdSap: "ACTIVE" },
-        contactDetails: {
-          telephoneNumber: "010199991010101", email: "person@person.com"
-        },
-      }
-    end
-
     describe "an address with only line1, town, and postcode" do
       let(:response) do
         scheme_id = add_scheme_and_get_id

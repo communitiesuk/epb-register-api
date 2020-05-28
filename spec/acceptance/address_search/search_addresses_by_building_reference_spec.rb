@@ -57,6 +57,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
         ).to eq "PREVIOUS_ASSESSMENT"
         expect(response["data"]["addresses"][0]["existingAssessments"]).to eq [
           "assessmentId" => "0000-0000-0000-0000-0000",
+          "assessmentStatus" => "ENTERED",
           "assessmentType" => "RdSAP",
         ]
       end

@@ -27,7 +27,9 @@ describe UseCase::SearchAddressesByPostcode do
           source: "PREVIOUS_ASSESSMENT",
           existing_assessments: [
             {
-              assessment_id: "0000-0000-0000-0000-0000", assessment_type: "CEPC"
+              assessment_id: "0000-0000-0000-0000-0000",
+              assessment_status: "ENTERED",
+              assessment_type: "CEPC",
             },
           ],
         },
@@ -46,6 +48,7 @@ describe UseCase::SearchAddressesByPostcode do
           existing_assessments: [
             {
               assessment_id: "0000-0000-0000-0000-0001",
+              assessment_status: "ENTERED",
               assessment_type: "RdSAP",
             },
           ],
@@ -65,6 +68,7 @@ describe UseCase::SearchAddressesByPostcode do
           existing_assessments: [
             {
               assessment_id: "0000-0000-0000-0000-0002",
+              assessment_status: "ENTERED",
               assessment_type: "RdSAP",
             },
           ],
@@ -91,7 +95,9 @@ describe UseCase::SearchAddressesByPostcode do
         expect(results[0].postcode).to eq "PL4 V11"
         expect(results[0].source).to eq "PREVIOUS_ASSESSMENT"
         expect(results[0].existing_assessments).to eq [
-          assessment_id: "0000-0000-0000-0000-0000", assessment_type: "CEPC",
+          assessment_id: "0000-0000-0000-0000-0000",
+          assessment_status: "ENTERED",
+          assessment_type: "CEPC",
         ]
       end
 
@@ -112,6 +118,7 @@ describe UseCase::SearchAddressesByPostcode do
           expect(results[0].source).to eq "PREVIOUS_ASSESSMENT"
           expect(results[0].existing_assessments).to eq [
             assessment_id: "0000-0000-0000-0000-0001",
+            assessment_status: "ENTERED",
             assessment_type: "RdSAP",
           ]
         end
@@ -132,6 +139,7 @@ describe UseCase::SearchAddressesByPostcode do
           expect(results[0].source).to eq "PREVIOUS_ASSESSMENT"
           expect(results[0].existing_assessments).to eq [
             assessment_id: "0000-0000-0000-0000-0000",
+            assessment_status: "ENTERED",
             assessment_type: "CEPC",
           ]
         end
@@ -154,6 +162,7 @@ describe UseCase::SearchAddressesByPostcode do
           expect(results[0].source).to eq "PREVIOUS_ASSESSMENT"
           expect(results[0].existing_assessments).to eq [
             assessment_id: "0000-0000-0000-0000-0002",
+            assessment_status: "ENTERED",
             assessment_type: "RdSAP",
           ]
         end

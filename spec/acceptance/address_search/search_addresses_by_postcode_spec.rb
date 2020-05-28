@@ -125,6 +125,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
             response["data"]["addresses"][0]["existingAssessments"],
           ).to eq [
             "assessmentId" => "0000-0000-0000-0000-0000",
+            "assessmentStatus" => "ENTERED",
             "assessmentType" => "RdSAP",
           ]
         end
@@ -160,6 +161,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
             response["data"]["addresses"][0]["existingAssessments"],
           ).to eq [
             "assessmentId" => "0000-0000-0000-0000-0000",
+            "assessmentStatus" => "ENTERED",
             "assessmentType" => "RdSAP",
           ]
         end
@@ -196,6 +198,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
               response["data"]["addresses"][0]["existingAssessments"],
             ).to eq [
               "assessmentId" => "0000-0000-0000-0000-0001",
+              "assessmentStatus" => "ENTERED",
               "assessmentType" => "RdSAP",
             ]
           end
@@ -232,6 +235,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
               response["data"]["addresses"][0]["existingAssessments"],
             ).to eq [
               "assessmentId" => "0000-0000-0000-0000-0003",
+              "assessmentStatus" => "ENTERED",
               "assessmentType" => "RdSAP",
             ]
           end
@@ -280,6 +284,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
             response["data"]["addresses"][0]["existingAssessments"],
           ).to eq [
             "assessmentId" => "0000-0000-0000-0000-0000",
+            "assessmentStatus" => "ENTERED",
             "assessmentType" => "RdSAP",
           ]
         end
@@ -315,6 +320,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
             response["data"]["addresses"][0]["existingAssessments"],
           ).to eq [
             "assessmentId" => "0000-0000-0000-0000-0002",
+            "assessmentStatus" => "ENTERED",
             "assessmentType" => "CEPC",
           ]
         end

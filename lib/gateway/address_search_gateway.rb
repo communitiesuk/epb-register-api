@@ -129,6 +129,7 @@ module Gateway
                           source: "PREVIOUS_ASSESSMENT",
                           existing_assessments: [
                             assessmentId: row["assessment_id"],
+                            assessmentStatus: "ENTERED",
                             assessmentType: row["type_of_assessment"],
                           ]
     end
