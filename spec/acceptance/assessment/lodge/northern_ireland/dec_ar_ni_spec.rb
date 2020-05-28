@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe "Acceptance::LodgeDECNIAREnergyAssessment" do
+describe "Acceptance::LodgeDEC(AR)NIEnergyAssessment" do
   include RSpecAssessorServiceMixin
   let(:valid_assessor_request_body) do
     {
@@ -14,7 +14,7 @@ describe "Acceptance::LodgeDECNIAREnergyAssessment" do
         domesticRdSap: "INACTIVE",
         nonDomesticSp3: "INACTIVE",
         nonDomesticCc4: "INACTIVE",
-        nonDomesticDec: "INACTIVE",
+        nonDomesticDec: "ACTIVE",
         nonDomesticNos3: "ACTIVE",
         nonDomesticNos4: "ACTIVE",
         nonDomesticNos5: "INACTIVE",
@@ -33,23 +33,19 @@ describe "Acceptance::LodgeDECNIAREnergyAssessment" do
       lastName: "Person",
       dateOfBirth: "1991-02-25",
       searchResultsComparisonPostcode: "",
-      qualifications: {
-        nonDomesticNos3: "INACTIVE",
-        nonDomesticNos4: "INACTIVE",
-        nonDomesticNos5: "INACTIVE",
-      },
+      qualifications: { nonDomesticDec: "INACTIVE" },
       contactDetails: {
         telephoneNumber: "010199991010101", email: "person@person.com"
       },
     }
   end
 
-  let(:valid_cepc_ni_dec_advisory_report_xml) do
+  let(:valid_dec_advisory_report_ni_xml) do
     File.read File.join Dir.pwd,
                         "api/schemas/xml/examples/CEPC-NI-7.11(Advisory-Report).xml"
   end
 
-  context "when lodging DEC advisory reports" do
+  context "when lodging DEC advisory reports NI" do
     let(:response) do
       JSON.parse(fetch_assessment("0000-0000-0000-0000-0000").body)
     end
@@ -59,7 +55,7 @@ describe "Acceptance::LodgeDECNIAREnergyAssessment" do
       add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
 
       lodge_assessment(
-        assessment_body: valid_cepc_ni_dec_advisory_report_xml,
+        assessment_body: valid_dec_advisory_report_ni_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
         schema_name: "CEPC-NI-7.1",
@@ -73,7 +69,7 @@ describe "Acceptance::LodgeDECNIAREnergyAssessment" do
       add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
 
       lodge_assessment(
-        assessment_body: valid_cepc_ni_dec_advisory_report_xml,
+        assessment_body: valid_dec_advisory_report_ni_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
         schema_name: "CEPC-NI-7.1",
@@ -100,7 +96,7 @@ describe "Acceptance::LodgeDECNIAREnergyAssessment" do
             "domesticRdSap" => "INACTIVE",
             "nonDomesticCc4" => "INACTIVE",
             "nonDomesticSp3" => "INACTIVE",
-            "nonDomesticDec" => "INACTIVE",
+            "nonDomesticDec" => "ACTIVE",
             "nonDomesticNos3" => "ACTIVE",
             "nonDomesticNos4" => "ACTIVE",
             "nonDomesticNos5" => "INACTIVE",
@@ -144,6 +140,33 @@ describe "Acceptance::LodgeDECNIAREnergyAssessment" do
 
       expect(response["data"]).to eq(expected_response)
     end
+
+    context "when an assessor is inactive" do
+      let(:scheme_id) { add_scheme_and_get_id }
+
+      before do
+        add_assessor(scheme_id, "JASE000000", inactive_assessor_request_body)
+      end
+
+      context "when unqualified for DEC advisory reports NI" do
+        it "returns status 400 with the correct error response" do
+          response =
+              JSON.parse(
+                  lodge_assessment(
+                      assessment_body: valid_dec_advisory_report_ni_xml,
+                      accepted_responses: [400],
+                      auth_data: { scheme_ids: [scheme_id] },
+                      schema_name: "CEPC-NI-7.1",
+                      )
+                      .body,
+                  )
+
+          expect(response["errors"][0]["title"]).to eq(
+                                                        "Assessor is not active.",
+                                                        )
+        end
+      end
+    end
   end
 
   context "when rejecting an assessment" do
@@ -151,7 +174,7 @@ describe "Acceptance::LodgeDECNIAREnergyAssessment" do
       scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
 
-      doc = Nokogiri.XML valid_cepc_ni_dec_advisory_report_xml
+      doc = Nokogiri.XML valid_dec_advisory_report_ni_xml
 
       scheme_assessor_id = doc.at("Technical-Information")
       scheme_assessor_id.children = ""
@@ -167,7 +190,7 @@ describe "Acceptance::LodgeDECNIAREnergyAssessment" do
       scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
 
-      xml = valid_cepc_ni_dec_advisory_report_xml
+      xml = valid_dec_advisory_report_ni_xml
 
       xml = xml.gsub("<Report-Header>", "<Report-Header")
 
