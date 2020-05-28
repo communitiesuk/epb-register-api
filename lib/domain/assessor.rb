@@ -8,7 +8,8 @@ module Domain
                 :domestic_sap_qualification,
                 :non_domestic_nos3_qualification,
                 :non_domestic_nos4_qualification,
-                :non_domestic_nos5_qualification
+                :non_domestic_nos5_qualification,
+                :non_domestic_dec_qualification
 
     def initialize(
       scheme_assessor_id: nil,

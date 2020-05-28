@@ -67,6 +67,11 @@ module UseCase
         end
       end
 
+      if assessment_type == "DEC" &&
+          assessor.non_domestic_dec_qualification == "INACTIVE"
+        raise InactiveAssessorException
+      end
+
       data[:improvements] =
         data[:improvements].map do |improvement|
           improvement[:assessment_id] = assessment_id
