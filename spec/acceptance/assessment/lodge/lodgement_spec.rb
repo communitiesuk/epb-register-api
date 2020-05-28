@@ -42,9 +42,7 @@ describe "Acceptance::Assessment::Lodge" do
 
     context "when an assessor is not registered" do
       it "returns status 400" do
-        lodge_assessment(
-          assessment_body: valid_xml, accepted_responses: [400],
-        )
+        lodge_assessment(assessment_body: valid_xml, accepted_responses: [400])
       end
 
       it "returns status 400 with the correct error response" do

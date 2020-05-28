@@ -4,48 +4,49 @@ describe "Acceptance::LodgeDECNIAREnergyAssessment" do
   include RSpecAssessorServiceMixin
   let(:valid_assessor_request_body) do
     {
-        firstName: "Someone",
-        middleNames: "Muddle",
-        lastName: "Person",
-        dateOfBirth: "1991-02-25",
-        searchResultsComparisonPostcode: "",
-        qualifications: {
-            domesticSap: "INACTIVE",
-            domesticRdSap: "INACTIVE",
-            nonDomesticSp3: "INACTIVE",
-            nonDomesticCc4: "INACTIVE",
-            nonDomesticDec: "INACTIVE",
-            nonDomesticNos3: "ACTIVE",
-            nonDomesticNos4: "ACTIVE",
-            nonDomesticNos5: "INACTIVE",
-            gda: "INACTIVE",
-        },
-        contactDetails: {
-            telephoneNumber: "010199991010101", email: "person@person.com"
-        },
+      firstName: "Someone",
+      middleNames: "Muddle",
+      lastName: "Person",
+      dateOfBirth: "1991-02-25",
+      searchResultsComparisonPostcode: "",
+      qualifications: {
+        domesticSap: "INACTIVE",
+        domesticRdSap: "INACTIVE",
+        nonDomesticSp3: "INACTIVE",
+        nonDomesticCc4: "INACTIVE",
+        nonDomesticDec: "INACTIVE",
+        nonDomesticNos3: "ACTIVE",
+        nonDomesticNos4: "ACTIVE",
+        nonDomesticNos5: "INACTIVE",
+        gda: "INACTIVE",
+      },
+      contactDetails: {
+        telephoneNumber: "010199991010101", email: "person@person.com"
+      },
     }
   end
 
   let(:inactive_assessor_request_body) do
     {
-        firstName: "Someone",
-        middleNames: "Muddle",
-        lastName: "Person",
-        dateOfBirth: "1991-02-25",
-        searchResultsComparisonPostcode: "",
-        qualifications: {
-            nonDomesticNos3: "INACTIVE",
-            nonDomesticNos4: "INACTIVE",
-            nonDomesticNos5: "INACTIVE",
-        },
-        contactDetails: {
-            telephoneNumber: "010199991010101", email: "person@person.com"
-        },
+      firstName: "Someone",
+      middleNames: "Muddle",
+      lastName: "Person",
+      dateOfBirth: "1991-02-25",
+      searchResultsComparisonPostcode: "",
+      qualifications: {
+        nonDomesticNos3: "INACTIVE",
+        nonDomesticNos4: "INACTIVE",
+        nonDomesticNos5: "INACTIVE",
+      },
+      contactDetails: {
+        telephoneNumber: "010199991010101", email: "person@person.com"
+      },
     }
   end
 
   let(:valid_cepc_ni_dec_advisory_report_xml) do
-    File.read File.join Dir.pwd, "api/schemas/xml/examples/CEPC-NI-7.11(Advisory-Report).xml"
+    File.read File.join Dir.pwd,
+                        "api/schemas/xml/examples/CEPC-NI-7.11(Advisory-Report).xml"
   end
 
   context "when lodging DEC advisory reports" do
@@ -58,11 +59,11 @@ describe "Acceptance::LodgeDECNIAREnergyAssessment" do
       add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
 
       lodge_assessment(
-          assessment_body: valid_cepc_ni_dec_advisory_report_xml,
-          accepted_responses: [201],
-          auth_data: { scheme_ids: [scheme_id] },
-          schema_name: "CEPC-NI-7.1",
-          )
+        assessment_body: valid_cepc_ni_dec_advisory_report_xml,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] },
+        schema_name: "CEPC-NI-7.1",
+      )
 
       expect(response["data"]["typeOfAssessment"]).to eq("DEC-AR")
     end
@@ -72,73 +73,73 @@ describe "Acceptance::LodgeDECNIAREnergyAssessment" do
       add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
 
       lodge_assessment(
-          assessment_body: valid_cepc_ni_dec_advisory_report_xml,
-          accepted_responses: [201],
-          auth_data: { scheme_ids: [scheme_id] },
-          schema_name: "CEPC-NI-7.1",
-          )
+        assessment_body: valid_cepc_ni_dec_advisory_report_xml,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] },
+        schema_name: "CEPC-NI-7.1",
+      )
 
       expected_response = {
-          "addressLine1" => "1 Lonely Street",
-          "addressLine2" => "",
-          "addressLine3" => "",
-          "addressLine4" => "",
-          "addressSummary" => "1 Lonely Street, Post-Town0, A0 0AA",
-          "assessmentId" => "0000-0000-0000-0000-0000",
-          "assessor" => {
-              "contactDetails" => {
-                  "email" => "person@person.com",
-                  "telephoneNumber" => "010199991010101",
-              },
-              "dateOfBirth" => "1991-02-25",
-              "firstName" => "Someone",
-              "lastName" => "Person",
-              "middleNames" => "Muddle",
-              "qualifications" => {
-                  "domesticSap" => "INACTIVE",
-                  "domesticRdSap" => "INACTIVE",
-                  "nonDomesticCc4" => "INACTIVE",
-                  "nonDomesticSp3" => "INACTIVE",
-                  "nonDomesticDec" => "INACTIVE",
-                  "nonDomesticNos3" => "ACTIVE",
-                  "nonDomesticNos4" => "ACTIVE",
-                  "nonDomesticNos5" => "INACTIVE",
-                  "gda" => "INACTIVE",
-              },
-              "address" => {},
-              "companyDetails" => {},
-              "registeredBy" => {
-                  "name" => "test scheme", "schemeId" => scheme_id
-              },
-              "schemeAssessorId" => "JASE000000",
-              "searchResultsComparisonPostcode" => "",
+        "addressLine1" => "1 Lonely Street",
+        "addressLine2" => "",
+        "addressLine3" => "",
+        "addressLine4" => "",
+        "addressSummary" => "1 Lonely Street, Post-Town0, A0 0AA",
+        "assessmentId" => "0000-0000-0000-0000-0000",
+        "assessor" => {
+          "contactDetails" => {
+            "email" => "person@person.com",
+            "telephoneNumber" => "010199991010101",
           },
-          "currentCarbonEmission" => 0.0,
-          "currentEnergyEfficiencyBand" => "a",
-          "currentEnergyEfficiencyRating" => 99,
-          "optOut" => false,
-          "dateOfAssessment" => "2006-05-04",
-          "dateOfExpiry" => "2006-05-04",
-          "dateRegistered" => "2006-05-04",
-          "dwellingType" => nil,
-          "heatDemand" => {
-              "currentSpaceHeatingDemand" => 0.0,
-              "currentWaterHeatingDemand" => 0.0,
-              "impactOfCavityInsulation" => nil,
-              "impactOfLoftInsulation" => nil,
-              "impactOfSolidWallInsulation" => nil,
+          "dateOfBirth" => "1991-02-25",
+          "firstName" => "Someone",
+          "lastName" => "Person",
+          "middleNames" => "Muddle",
+          "qualifications" => {
+            "domesticSap" => "INACTIVE",
+            "domesticRdSap" => "INACTIVE",
+            "nonDomesticCc4" => "INACTIVE",
+            "nonDomesticSp3" => "INACTIVE",
+            "nonDomesticDec" => "INACTIVE",
+            "nonDomesticNos3" => "ACTIVE",
+            "nonDomesticNos4" => "ACTIVE",
+            "nonDomesticNos5" => "INACTIVE",
+            "gda" => "INACTIVE",
           },
-          "postcode" => "A0 0AA",
-          "potentialCarbonEmission" => 0.0,
-          "potentialEnergyEfficiencyBand" => "a",
-          "potentialEnergyEfficiencyRating" => 99,
-          "totalFloorArea" => 0.0,
-          "town" => "Post-Town0",
-          "typeOfAssessment" => "DEC-AR",
-          "relatedPartyDisclosureNumber" => nil,
-          "relatedPartyDisclosureText" => nil,
-          "recommendedImprovements" => [],
-          "propertySummary" => [],
+          "address" => {},
+          "companyDetails" => {},
+          "registeredBy" => {
+            "name" => "test scheme", "schemeId" => scheme_id
+          },
+          "schemeAssessorId" => "JASE000000",
+          "searchResultsComparisonPostcode" => "",
+        },
+        "currentCarbonEmission" => 0.0,
+        "currentEnergyEfficiencyBand" => "a",
+        "currentEnergyEfficiencyRating" => 99,
+        "optOut" => false,
+        "dateOfAssessment" => "2006-05-04",
+        "dateOfExpiry" => "2006-05-04",
+        "dateRegistered" => "2006-05-04",
+        "dwellingType" => nil,
+        "heatDemand" => {
+          "currentSpaceHeatingDemand" => 0.0,
+          "currentWaterHeatingDemand" => 0.0,
+          "impactOfCavityInsulation" => nil,
+          "impactOfLoftInsulation" => nil,
+          "impactOfSolidWallInsulation" => nil,
+        },
+        "postcode" => "A0 0AA",
+        "potentialCarbonEmission" => 0.0,
+        "potentialEnergyEfficiencyBand" => "a",
+        "potentialEnergyEfficiencyRating" => 99,
+        "totalFloorArea" => 0.0,
+        "town" => "Post-Town0",
+        "typeOfAssessment" => "DEC-AR",
+        "relatedPartyDisclosureNumber" => nil,
+        "relatedPartyDisclosureText" => nil,
+        "recommendedImprovements" => [],
+        "propertySummary" => [],
       }
 
       expect(response["data"]).to eq(expected_response)
@@ -156,10 +157,10 @@ describe "Acceptance::LodgeDECNIAREnergyAssessment" do
       scheme_assessor_id.children = ""
 
       lodge_assessment(
-          assessment_body: doc.to_xml,
-          accepted_responses: [400],
-          schema_name: "CEPC-NI-7.1",
-          )
+        assessment_body: doc.to_xml,
+        accepted_responses: [400],
+        schema_name: "CEPC-NI-7.1",
+      )
     end
 
     it "rejects an assessment with invalid XML" do
@@ -171,18 +172,18 @@ describe "Acceptance::LodgeDECNIAREnergyAssessment" do
       xml = xml.gsub("<Report-Header>", "<Report-Header")
 
       response_body =
-          JSON.parse(
-              lodge_assessment(
-                  assessment_body: xml,
-                  accepted_responses: [400],
-                  schema_name: "CEPC-NI-7.1",
-                  )
-                  .body,
-              )
+        JSON.parse(
+          lodge_assessment(
+            assessment_body: xml,
+            accepted_responses: [400],
+            schema_name: "CEPC-NI-7.1",
+          )
+            .body,
+        )
 
       expect(
-          response_body["errors"][0]["title"],
-          ).to include "Invalid attribute name: <<RRN>"
+        response_body["errors"][0]["title"],
+      ).to include "Invalid attribute name: <<RRN>"
     end
   end
 end
