@@ -40,7 +40,7 @@ describe "Acceptance::LodgeDEC(AR)NIEnergyAssessment" do
     }
   end
 
-  let(:valid_dec_advisory_report_ni_xml) do
+  let(:valid_xml) do
     File.read File.join Dir.pwd,
                         "api/schemas/xml/examples/CEPC-NI-7.11(Advisory-Report).xml"
   end
@@ -55,7 +55,7 @@ describe "Acceptance::LodgeDEC(AR)NIEnergyAssessment" do
       add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
 
       lodge_assessment(
-        assessment_body: valid_dec_advisory_report_ni_xml,
+        assessment_body: valid_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
         schema_name: "CEPC-NI-7.1",
@@ -69,7 +69,7 @@ describe "Acceptance::LodgeDEC(AR)NIEnergyAssessment" do
       add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
 
       lodge_assessment(
-        assessment_body: valid_dec_advisory_report_ni_xml,
+        assessment_body: valid_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
         schema_name: "CEPC-NI-7.1",
@@ -153,7 +153,7 @@ describe "Acceptance::LodgeDEC(AR)NIEnergyAssessment" do
           response =
             JSON.parse(
               lodge_assessment(
-                assessment_body: valid_dec_advisory_report_ni_xml,
+                assessment_body: valid_xml,
                 accepted_responses: [400],
                 auth_data: { scheme_ids: [scheme_id] },
                 schema_name: "CEPC-NI-7.1",
@@ -174,7 +174,7 @@ describe "Acceptance::LodgeDEC(AR)NIEnergyAssessment" do
       scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
 
-      doc = Nokogiri.XML valid_dec_advisory_report_ni_xml
+      doc = Nokogiri.XML valid_xml
 
       scheme_assessor_id = doc.at("Technical-Information")
       scheme_assessor_id.children = ""
@@ -190,9 +190,7 @@ describe "Acceptance::LodgeDEC(AR)NIEnergyAssessment" do
       scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
 
-      xml = valid_dec_advisory_report_ni_xml
-
-      xml = xml.gsub("<Report-Header>", "<Report-Header")
+      xml = valid_xml.gsub("<Report-Header>", "<Report-Header")
 
       response_body =
         JSON.parse(
