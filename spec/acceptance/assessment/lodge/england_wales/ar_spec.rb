@@ -3,7 +3,7 @@
 describe "Acceptance::LodgeAdvisoryReport" do
   include RSpecAssessorServiceMixin
 
-  let(:fetch_assessor_stub) { GetAssessorStub.new }
+  let(:fetch_assessor_stub) { AssessorStub.new }
 
   let(:valid_ar_xml) do
     File.read File.join Dir.pwd,

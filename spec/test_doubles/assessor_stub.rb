@@ -1,4 +1,4 @@
-class GetAssessorStub
+class AssessorStub
   def fetch_request_body(
     nonDomesticNos3: "SUSPENDED",
     nonDomesticNos4: "SUSPENDED",
