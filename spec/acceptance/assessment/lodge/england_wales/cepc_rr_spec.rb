@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe "Acceptance::LodgeRRNIEnergyAssessment" do
+describe "Acceptance::LodgeRREnergyAssessment" do
   include RSpecAssessorServiceMixin
 
   let(:valid_assessor_request_body) do
@@ -46,7 +46,7 @@ describe "Acceptance::LodgeRRNIEnergyAssessment" do
   end
 
   let(:valid_cepc_ni_xml) do
-    File.read File.join Dir.pwd, "api/schemas/xml/examples/CEPC-NI-7.11(RR).xml"
+    File.read File.join Dir.pwd, "api/schemas/xml/examples/CEPC-7.11(RR).xml"
   end
 
   context "when lodging a RR assessment (post)" do
@@ -65,7 +65,7 @@ describe "Acceptance::LodgeRRNIEnergyAssessment" do
                 assessment_body: valid_cepc_ni_xml,
                 accepted_responses: [400],
                 auth_data: { scheme_ids: [scheme_id] },
-                schema_name: "CEPC-NI-7.1",
+                schema_name: "CEPC-7.1",
               )
                 .body,
             )
@@ -85,7 +85,7 @@ describe "Acceptance::LodgeRRNIEnergyAssessment" do
         assessment_body: valid_cepc_ni_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
-        schema_name: "CEPC-NI-7.1",
+        schema_name: "CEPC-7.1",
       )
     end
 
@@ -111,7 +111,7 @@ describe "Acceptance::LodgeRRNIEnergyAssessment" do
           assessment_body: doc.to_xml,
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] },
-          schema_name: "CEPC-NI-7.1",
+          schema_name: "CEPC-7.1",
         )
 
         expected_response = {
@@ -168,7 +168,7 @@ describe "Acceptance::LodgeRRNIEnergyAssessment" do
           "potentialCarbonEmission" => 0.0,
           "potentialEnergyEfficiencyBand" => "a",
           "potentialEnergyEfficiencyRating" => 99,
-          "totalFloorArea" => 0.0,
+          "totalFloorArea" => 99.0,
           "town" => "Post-Town0",
           "typeOfAssessment" => "CEPC-RR",
           "relatedPartyDisclosureNumber" => nil,

@@ -13,7 +13,8 @@
   "map": {
     "1": "DEC",
     "2": "DEC-AR",
-    "3": "CEPC"
+    "3": "CEPC",
+    "4": "CEPC-RR"
   }
 }, {
   "key": "assessor_id",
