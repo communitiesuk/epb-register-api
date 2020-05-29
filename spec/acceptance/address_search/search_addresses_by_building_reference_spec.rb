@@ -22,6 +22,20 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
   context "when an address that has a report lodged" do
     let(:scheme_id) { add_scheme_and_get_id }
 
+    let(:response) do
+      JSON.parse(
+        assertive_get(
+          "/api/search/addresses?buildingReferenceNumber=RRN-0000-0000-0000-0000-0000",
+          [200],
+          true,
+          {},
+          %w[address:search],
+        )
+          .body,
+        symbolize_names: true,
+      )
+    end
+
     before(:each) do
       add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
 
@@ -33,40 +47,49 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
     end
 
     describe "searching by buildingReferenceNumber" do
+      it "returns the expected amount of addresses" do
+        expect(response[:data][:addresses].length).to eq 1
+      end
+
       it "returns the address" do
-        response =
+        expected_response = {
+          buildingReferenceNumber: "RRN-0000-0000-0000-0000-0000",
+          line1: "1 Some Street",
+          line2: nil,
+          line3: nil,
+          town: "Post-Town1",
+          postcode: "A0 0AA",
+          source: "PREVIOUS_ASSESSMENT",
+          existingAssessments: [
+            {
+              assessmentId: "0000-0000-0000-0000-0000",
+              assessmentStatus: "EXPIRED",
+              assessmentType: "RdSAP",
+            },
+          ],
+        }
+
+        expect(response[:data][:addresses][0]).to eq expected_response
+      end
+
+      context "with an entered assessment" do
+        let(:entered_assessment) { Nokogiri.XML valid_rdsap_xml }
+
+        let(:response) do
           JSON.parse(
             assertive_get(
-              "/api/search/addresses?buildingReferenceNumber=RRN-0000-0000-0000-0000-0000",
+              "/api/search/addresses?buildingReferenceNumber=RRN-0000-0000-0000-0000-0001",
               [200],
               true,
               {},
               %w[address:search],
             )
               .body,
+            symbolize_names: true,
           )
+        end
 
-        expect(response["data"]["addresses"].length).to eq 1
-        expect(
-          response["data"]["addresses"][0]["buildingReferenceNumber"],
-        ).to eq "RRN-0000-0000-0000-0000-0000"
-        expect(response["data"]["addresses"][0]["line1"]).to eq "1 Some Street"
-        expect(response["data"]["addresses"][0]["town"]).to eq "Post-Town1"
-        expect(response["data"]["addresses"][0]["postcode"]).to eq "A0 0AA"
-        expect(
-          response["data"]["addresses"][0]["source"],
-        ).to eq "PREVIOUS_ASSESSMENT"
-        expect(response["data"]["addresses"][0]["existingAssessments"]).to eq [
-          "assessmentId" => "0000-0000-0000-0000-0000",
-          "assessmentStatus" => "EXPIRED",
-          "assessmentType" => "RdSAP",
-        ]
-      end
-
-      context "with an entered assessment" do
         before do
-          entered_assessment = Nokogiri.XML valid_rdsap_xml
-
           assessment_id = entered_assessment.at("RRN")
           assessment_id.children = "0000-0000-0000-0000-0001"
 
@@ -80,38 +103,29 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
           )
         end
 
-        it "returns the expected address" do
-          response =
-            JSON.parse(
-              assertive_get(
-                "/api/search/addresses?buildingReferenceNumber=RRN-0000-0000-0000-0000-0001",
-                [200],
-                true,
-                {},
-                %w[address:search],
-              )
-                .body,
-            )
+        it "returns the expected amount of addresses" do
+          expect(response[:data][:addresses].length).to eq 1
+        end
 
-          expect(response["data"]["addresses"].length).to eq 1
-          expect(
-            response["data"]["addresses"][0]["buildingReferenceNumber"],
-          ).to eq "RRN-0000-0000-0000-0000-0001"
-          expect(
-            response["data"]["addresses"][0]["line1"],
-          ).to eq "1 Some Street"
-          expect(response["data"]["addresses"][0]["town"]).to eq "Post-Town1"
-          expect(response["data"]["addresses"][0]["postcode"]).to eq "A0 0AA"
-          expect(
-            response["data"]["addresses"][0]["source"],
-          ).to eq "PREVIOUS_ASSESSMENT"
-          expect(
-            response["data"]["addresses"][0]["existingAssessments"],
-          ).to eq [
-            "assessmentId" => "0000-0000-0000-0000-0001",
-            "assessmentStatus" => "ENTERED",
-            "assessmentType" => "RdSAP",
-          ]
+        it "returns the expected address" do
+          expected_response = {
+            buildingReferenceNumber: "RRN-0000-0000-0000-0000-0001",
+            line1: "1 Some Street",
+            line2: nil,
+            line3: nil,
+            town: "Post-Town1",
+            postcode: "A0 0AA",
+            source: "PREVIOUS_ASSESSMENT",
+            existingAssessments: [
+              {
+                assessmentId: "0000-0000-0000-0000-0001",
+                assessmentStatus: "ENTERED",
+                assessmentType: "RdSAP",
+              },
+            ],
+          }
+
+          expect(response[:data][:addresses][0]).to eq expected_response
         end
       end
     end
@@ -119,37 +133,40 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
 
   context "with a valid combination of parameters that have no matches" do
     describe "with an valid, not in use buildingReferenceNumber" do
-      it "returns an empty result set" do
-        response =
-          JSON.parse(
-            assertive_get(
-              "/api/search/addresses?buildingReferenceNumber=RRN-1111-2222-3333-4444-5555",
-              [200],
-              true,
-              nil,
-              %w[address:search],
-            )
-              .body,
+      let(:response) do
+        JSON.parse(
+          assertive_get(
+            "/api/search/addresses?buildingReferenceNumber=RRN-1111-2222-3333-4444-5555",
+            [200],
+            true,
+            nil,
+            %w[address:search],
           )
+            .body,
+          symbolize_names: true,
+        )
+      end
 
-        expect(response["data"]["addresses"].length).to eq 0
+      it "returns an empty result set" do
+        expect(response[:data][:addresses].length).to eq 0
       end
     end
   end
 
   context "with an invalid combination of parameters" do
     describe "with an invalid buildingReferenceNumber" do
-      it "returns a validation error" do
-        response =
-          assertive_get(
-            "/api/search/addresses?buildingReferenceNumber=DOESNOTEXIST",
-            [422],
-            true,
-            nil,
-            %w[address:search],
-          )
-            .body
+      let(:response) do
+        assertive_get(
+          "/api/search/addresses?buildingReferenceNumber=DOESNOTEXIST",
+          [422],
+          true,
+          nil,
+          %w[address:search],
+        )
+          .body
+      end
 
+      it "returns a validation error" do
         expect(response).to include "INVALID_REQUEST"
       end
     end
