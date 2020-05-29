@@ -3,37 +3,7 @@
 describe "Acceptance::LodgeAdvisoryReport" do
   include RSpecAssessorServiceMixin
 
-  let(:valid_assessor_request_body) do
-    {
-      firstName: "Someone",
-      middleNames: "Muddle",
-      lastName: "Person",
-      dateOfBirth: "1991-02-25",
-      searchResultsComparisonPostcode: "",
-      qualifications: {
-        nonDomesticNos3: "ACTIVE",
-        nonDomesticNos4: "ACTIVE",
-        nonDomesticNos5: "INACTIVE",
-      },
-      contactDetails: {
-        telephoneNumber: "010199991010101", email: "person@person.com"
-      },
-    }
-  end
-
-  let(:inactive_assessor_request_body) do
-    {
-      firstName: "Someone",
-      middleNames: "Muddle",
-      lastName: "Person",
-      dateOfBirth: "1991-02-25",
-      searchResultsComparisonPostcode: "",
-      qualifications: { nonDomesticDec: "INACTIVE" },
-      contactDetails: {
-        telephoneNumber: "010199991010101", email: "person@person.com"
-      },
-    }
-  end
+  let(:fetch_assessor_stub) { GetAssessorStub.new }
 
   let(:valid_ar_xml) do
     File.read File.join Dir.pwd,
@@ -45,7 +15,11 @@ describe "Acceptance::LodgeAdvisoryReport" do
       let(:scheme_id) { add_scheme_and_get_id }
 
       before do
-        add_assessor(scheme_id, "JASE000000", inactive_assessor_request_body)
+        add_assessor(
+          scheme_id,
+          "JASE000000",
+          fetch_assessor_stub.fetch_request_body(nonDomesticDec: "INACTIVE"),
+        )
       end
 
       context "when unqualified for AR" do
@@ -70,8 +44,15 @@ describe "Acceptance::LodgeAdvisoryReport" do
 
     it "returns status 201" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
-
+      add_assessor(
+        scheme_id,
+        "JASE000000",
+        fetch_assessor_stub.fetch_request_body(
+          nonDomesticNos3: "ACTIVE",
+          nonDomesticNos4: "ACTIVE",
+          nonDomesticNos5: "INACTIVE",
+        ),
+      )
       lodge_assessment(
         assessment_body: valid_ar_xml,
         accepted_responses: [201],
@@ -88,7 +69,11 @@ describe "Acceptance::LodgeAdvisoryReport" do
       end
 
       before do
-        add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
+        add_assessor(
+          scheme_id,
+          "JASE000000",
+          fetch_assessor_stub.fetch_request_body(nonDomesticDec: "ACTIVE"),
+        )
 
         assessment_id = doc.at("RRN")
         assessment_id.children = "0000-0000-0000-0000-0000"
@@ -122,15 +107,15 @@ describe "Acceptance::LodgeAdvisoryReport" do
             "lastName" => "Person",
             "middleNames" => "Muddle",
             "qualifications" => {
-              "domesticSap" => "INACTIVE",
-              "domesticRdSap" => "INACTIVE",
-              "nonDomesticCc4" => "INACTIVE",
-              "nonDomesticSp3" => "INACTIVE",
-              "nonDomesticDec" => "INACTIVE",
-              "nonDomesticNos3" => "ACTIVE",
-              "nonDomesticNos4" => "ACTIVE",
-              "nonDomesticNos5" => "INACTIVE",
-              "gda" => "INACTIVE",
+              "domesticSap" => "SUSPENDED",
+              "domesticRdSap" => "SUSPENDED",
+              "nonDomesticCc4" => "SUSPENDED",
+              "nonDomesticSp3" => "SUSPENDED",
+              "nonDomesticDec" => "ACTIVE",
+              "nonDomesticNos3" => "SUSPENDED",
+              "nonDomesticNos4" => "SUSPENDED",
+              "nonDomesticNos5" => "SUSPENDED",
+              "gda" => "SUSPENDED",
             },
             "address" => {},
             "companyDetails" => {},
