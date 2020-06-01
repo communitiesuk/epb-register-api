@@ -3,47 +3,7 @@
 describe "Acceptance::LodgeRREnergyAssessment" do
   include RSpecAssessorServiceMixin
 
-  let(:valid_assessor_request_body) do
-    {
-      firstName: "Someone",
-      middleNames: "Muddle",
-      lastName: "Person",
-      dateOfBirth: "1991-02-25",
-      searchResultsComparisonPostcode: "",
-      qualifications: {
-        domesticSap: "INACTIVE",
-        domesticRdSap: "INACTIVE",
-        nonDomesticSp3: "INACTIVE",
-        nonDomesticCc4: "INACTIVE",
-        nonDomesticDec: "INACTIVE",
-        nonDomesticNos3: "ACTIVE",
-        nonDomesticNos4: "ACTIVE",
-        nonDomesticNos5: "INACTIVE",
-        gda: "INACTIVE",
-      },
-      contactDetails: {
-        telephoneNumber: "010199991010101", email: "person@person.com"
-      },
-    }
-  end
-
-  let(:inactive_assessor_request_body) do
-    {
-      firstName: "Someone",
-      middleNames: "Muddle",
-      lastName: "Person",
-      dateOfBirth: "1991-02-25",
-      searchResultsComparisonPostcode: "",
-      qualifications: {
-        nonDomesticNos3: "INACTIVE",
-        nonDomesticNos4: "INACTIVE",
-        nonDomesticNos5: "INACTIVE",
-      },
-      contactDetails: {
-        telephoneNumber: "010199991010101", email: "person@person.com"
-      },
-    }
-  end
+  let(:fetch_assessor_stub) { AssessorStub.new }
 
   let(:valid_cepc_ni_xml) do
     File.read File.join Dir.pwd, "api/schemas/xml/examples/CEPC-7.11(RR).xml"
@@ -54,7 +14,11 @@ describe "Acceptance::LodgeRREnergyAssessment" do
       let(:scheme_id) { add_scheme_and_get_id }
 
       before do
-        add_assessor(scheme_id, "JASE000000", inactive_assessor_request_body)
+        add_assessor(scheme_id, "JASE000000", fetch_assessor_stub.fetch_request_body(
+          nonDomesticNos3: "INACTIVE",
+          nonDomesticNos4: "INACTIVE",
+          nonDomesticNos5: "INACTIVE")
+        )
       end
 
       context "when unqualified for RR" do
@@ -79,7 +43,10 @@ describe "Acceptance::LodgeRREnergyAssessment" do
 
     it "returns status 201" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
+      add_assessor(scheme_id, "JASE000000", fetch_assessor_stub.fetch_request_body(
+        nonDomesticNos3: "ACTIVE",
+        nonDomesticNos4: "ACTIVE")
+      )
 
       lodge_assessment(
         assessment_body: valid_cepc_ni_xml,
@@ -97,7 +64,7 @@ describe "Acceptance::LodgeRREnergyAssessment" do
       end
 
       before do
-        add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
+        add_assessor(scheme_id, "JASE000000", fetch_assessor_stub.fetch_request_body(nonDomesticNos3: "ACTIVE", nonDomesticNos4: "ACTIVE"))
 
         assessment_id = doc.at("RRN")
         assessment_id.children = "1234-1234-1234-1234-1234"
@@ -131,15 +98,15 @@ describe "Acceptance::LodgeRREnergyAssessment" do
             "lastName" => "Person",
             "middleNames" => "Muddle",
             "qualifications" => {
-              "domesticSap" => "INACTIVE",
-              "domesticRdSap" => "INACTIVE",
-              "nonDomesticCc4" => "INACTIVE",
-              "nonDomesticSp3" => "INACTIVE",
-              "nonDomesticDec" => "INACTIVE",
+              "domesticSap" => "SUSPENDED",
+              "domesticRdSap" => "SUSPENDED",
+              "nonDomesticCc4" => "SUSPENDED",
+              "nonDomesticSp3" => "SUSPENDED",
+              "nonDomesticDec" => "SUSPENDED",
               "nonDomesticNos3" => "ACTIVE",
               "nonDomesticNos4" => "ACTIVE",
-              "nonDomesticNos5" => "INACTIVE",
-              "gda" => "INACTIVE",
+              "nonDomesticNos5" => "SUSPENDED",
+              "gda" => "SUSPENDED",
             },
             "address" => {},
             "companyDetails" => {},
