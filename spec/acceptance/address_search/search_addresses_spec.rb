@@ -36,6 +36,44 @@ describe "Acceptance::AddressSearch" do
         expect(response).to include "INVALID_REQUEST"
       end
     end
+
+    context "with an incorrect combination of parameters" do
+      describe "building reference number and another parameter" do
+        it "returns a validation failure" do
+          assertive_get(
+            "/api/search/addresses?buildingReferenceNumber=RRN-0000-0000-0000-0000-0000&something=test",
+            [422],
+            true,
+            nil,
+            %w[address:search],
+          )
+        end
+      end
+
+      describe "postcode and another parameter" do
+        it "returns a validation failure" do
+          assertive_get(
+            "/api/search/addresses?postcode=A0%200AA&something=test",
+            [422],
+            true,
+            nil,
+            %w[address:search],
+          )
+        end
+      end
+
+      describe "street, town and another parameter" do
+        it "returns a validation failure" do
+          assertive_get(
+            "/api/search/addresses?street=place&town=place&something=test",
+            [422],
+            true,
+            nil,
+            %w[address:search],
+          )
+        end
+      end
+    end
   end
 
   context "with invalid auth details" do

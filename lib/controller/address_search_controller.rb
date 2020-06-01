@@ -40,14 +40,24 @@ module Controller
 
       use_case =
         if filters.key? :building_reference_number
-          :search_addresses_by_building_reference_number_use_case
+          @container.get_object :search_addresses_by_building_reference_number_use_case
         elsif filters.key? :postcode
-          :search_addresses_by_postcode_use_case
+          @container.get_object :search_addresses_by_postcode_use_case
         elsif filters.key? :street
-          :search_addresses_by_street_and_town_use_case
+          @container.get_object :search_addresses_by_street_and_town_use_case
         end
 
-      results = @container.get_object(use_case).execute(filters)
+      needed_args = use_case.method(:execute).parameters.map(&:second)
+
+      filters.each_key do |key|
+        unless needed_args.include? key
+          forbidden "INVALID_REQUEST",
+                    "#{key} is not valid in this context.",
+                    422
+        end
+      end
+
+      results = use_case.execute filters
 
       json_api_response code: 200,
                         data: { addresses: results.map(&:to_hash) },
@@ -55,9 +65,9 @@ module Controller
     rescue StandardError => e
       case e
       when JSON::Schema::ValidationError
-        error_response(422, "INVALID_REQUEST", e.message)
+        error_response 422, "INVALID_REQUEST", e.message
       else
-        server_error(e)
+        server_error e
       end
     end
   end
