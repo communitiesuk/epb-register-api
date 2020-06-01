@@ -14,10 +14,14 @@ describe "Acceptance::LodgeRREnergyAssessment" do
       let(:scheme_id) { add_scheme_and_get_id }
 
       before do
-        add_assessor(scheme_id, "JASE000000", fetch_assessor_stub.fetch_request_body(
-          nonDomesticNos3: "INACTIVE",
-          nonDomesticNos4: "INACTIVE",
-          nonDomesticNos5: "INACTIVE")
+        add_assessor(
+          scheme_id,
+          "JASE000000",
+          fetch_assessor_stub.fetch_request_body(
+            nonDomesticNos3: "INACTIVE",
+            nonDomesticNos4: "INACTIVE",
+            nonDomesticNos5: "INACTIVE",
+          ),
         )
       end
 
@@ -43,9 +47,12 @@ describe "Acceptance::LodgeRREnergyAssessment" do
 
     it "returns status 201" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "JASE000000", fetch_assessor_stub.fetch_request_body(
-        nonDomesticNos3: "ACTIVE",
-        nonDomesticNos4: "ACTIVE")
+      add_assessor(
+        scheme_id,
+        "JASE000000",
+        fetch_assessor_stub.fetch_request_body(
+          nonDomesticNos3: "ACTIVE", nonDomesticNos4: "ACTIVE",
+        ),
       )
 
       lodge_assessment(
@@ -64,7 +71,13 @@ describe "Acceptance::LodgeRREnergyAssessment" do
       end
 
       before do
-        add_assessor(scheme_id, "JASE000000", fetch_assessor_stub.fetch_request_body(nonDomesticNos3: "ACTIVE", nonDomesticNos4: "ACTIVE"))
+        add_assessor(
+          scheme_id,
+          "JASE000000",
+          fetch_assessor_stub.fetch_request_body(
+            nonDomesticNos3: "ACTIVE", nonDomesticNos4: "ACTIVE",
+          ),
+        )
 
         assessment_id = doc.at("RRN")
         assessment_id.children = "1234-1234-1234-1234-1234"
