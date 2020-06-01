@@ -2,43 +2,8 @@
 
 describe "Acceptance::LodgeACIREnergyAssessment" do
   include RSpecAssessorServiceMixin
-  let(:valid_assessor_request_body) do
-    {
-      firstName: "Someone",
-      middleNames: "Muddle",
-      lastName: "Person",
-      dateOfBirth: "1991-02-25",
-      searchResultsComparisonPostcode: "",
-      qualifications: {
-        domesticSap: "INACTIVE",
-        domesticRdSap: "INACTIVE",
-        nonDomesticSp3: "ACTIVE",
-        nonDomesticCc4: "INACTIVE",
-        nonDomesticDec: "INACTIVE",
-        nonDomesticNos3: "INACTIVE",
-        nonDomesticNos4: "INACTIVE",
-        nonDomesticNos5: "INACTIVE",
-        gda: "INACTIVE",
-      },
-      contactDetails: {
-        telephoneNumber: "010199991010101", email: "person@person.com"
-      },
-    }
-  end
 
-  let(:inactive_assessor_request_body) do
-    {
-      firstName: "Someone",
-      middleNames: "Muddle",
-      lastName: "Person",
-      dateOfBirth: "1991-02-25",
-      searchResultsComparisonPostcode: "",
-      qualifications: { nonDomesticSp3: "INACTIVE" },
-      contactDetails: {
-        telephoneNumber: "010199991010101", email: "person@person.com"
-      },
-    }
-  end
+  let(:fetch_assessor_stub) { AssessorStub.new }
 
   let(:valid_xml) do
     File.read File.join Dir.pwd, "api/schemas/xml/examples/CEPC-7.11(ACIR).xml"
@@ -51,7 +16,11 @@ describe "Acceptance::LodgeACIREnergyAssessment" do
 
     it "accepts an assessment with type ACIR" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "MOSE000000", valid_assessor_request_body)
+      add_assessor(
+        scheme_id,
+        "MOSE000000",
+        fetch_assessor_stub.fetch_request_body(nonDomesticSp3: "ACTIVE"),
+      )
 
       lodge_assessment(
         assessment_body: valid_xml,
@@ -65,7 +34,11 @@ describe "Acceptance::LodgeACIREnergyAssessment" do
 
     it "returns the expected response" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "MOSE000000", valid_assessor_request_body)
+      add_assessor(
+        scheme_id,
+        "MOSE000000",
+        fetch_assessor_stub.fetch_request_body(nonDomesticSp3: "ACTIVE"),
+      )
 
       lodge_assessment(
         assessment_body: valid_xml,
@@ -144,7 +117,11 @@ describe "Acceptance::LodgeACIREnergyAssessment" do
       let(:scheme_id) { add_scheme_and_get_id }
 
       before do
-        add_assessor(scheme_id, "MOSE000000", inactive_assessor_request_body)
+        add_assessor(
+          scheme_id,
+          "MOSE000000",
+          fetch_assessor_stub.fetch_request_body(nonDomesticSp3: "INACTIVE"),
+        )
       end
 
       context "when unqualified for ACIR" do
@@ -171,7 +148,11 @@ describe "Acceptance::LodgeACIREnergyAssessment" do
   context "when rejecting an assessment" do
     it "rejects an assessment without a ACI Related-Party-Disclosure" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "MOSE000000", valid_assessor_request_body)
+      add_assessor(
+        scheme_id,
+        "MOSE000000",
+        fetch_assessor_stub.fetch_request_body(nonDomesticSp3: "ACTIVE"),
+      )
 
       doc = Nokogiri.XML valid_xml
 
@@ -183,27 +164,6 @@ describe "Acceptance::LodgeACIREnergyAssessment" do
         accepted_responses: [400],
         schema_name: "CEPC-NI-7.1",
       )
-    end
-
-    it "rejects an assessment with invalid XML" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "MOSE000000", valid_assessor_request_body)
-
-      xml = valid_xml.gsub("<Report-Header>", "<Report-Header")
-
-      response_body =
-        JSON.parse(
-          lodge_assessment(
-            assessment_body: xml,
-            accepted_responses: [400],
-            schema_name: "CEPC-NI-7.1",
-          )
-            .body,
-        )
-
-      expect(
-        response_body["errors"][0]["title"],
-      ).to include "Invalid attribute name: <<RRN>"
     end
   end
 end

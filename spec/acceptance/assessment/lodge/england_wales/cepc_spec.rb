@@ -126,15 +126,15 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
             "lastName" => "Person",
             "middleNames" => "Muddle",
             "qualifications" => {
-              "domesticSap" => "SUSPENDED",
-              "domesticRdSap" => "SUSPENDED",
-              "nonDomesticCc4" => "SUSPENDED",
-              "nonDomesticSp3" => "SUSPENDED",
-              "nonDomesticDec" => "SUSPENDED",
+              "domesticSap" => "INACTIVE",
+              "domesticRdSap" => "INACTIVE",
+              "nonDomesticCc4" => "INACTIVE",
+              "nonDomesticSp3" => "INACTIVE",
+              "nonDomesticDec" => "INACTIVE",
               "nonDomesticNos3" => "ACTIVE",
               "nonDomesticNos4" => "ACTIVE",
-              "nonDomesticNos5" => "SUSPENDED",
-              "gda" => "SUSPENDED",
+              "nonDomesticNos5" => "INACTIVE",
+              "gda" => "INACTIVE",
             },
             "address" => {},
             "companyDetails" => {},
@@ -252,7 +252,9 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
           scheme_id,
           "JASE000000",
           fetch_assessor_stub.fetch_request_body(
-            nonDomesticNos3: "ACTIVE", nonDomesticNos4: "ACTIVE",
+            nonDomesticNos3: "ACTIVE",
+            nonDomesticNos4: "ACTIVE",
+            nonDomesticNos5: "ACTIVE",
           ),
         )
 

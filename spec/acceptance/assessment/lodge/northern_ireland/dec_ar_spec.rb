@@ -2,43 +2,8 @@
 
 describe "Acceptance::LodgeDEC(AR)NIEnergyAssessment" do
   include RSpecAssessorServiceMixin
-  let(:valid_assessor_request_body) do
-    {
-      firstName: "Someone",
-      middleNames: "Muddle",
-      lastName: "Person",
-      dateOfBirth: "1991-02-25",
-      searchResultsComparisonPostcode: "",
-      qualifications: {
-        domesticSap: "INACTIVE",
-        domesticRdSap: "INACTIVE",
-        nonDomesticSp3: "INACTIVE",
-        nonDomesticCc4: "INACTIVE",
-        nonDomesticDec: "ACTIVE",
-        nonDomesticNos3: "ACTIVE",
-        nonDomesticNos4: "ACTIVE",
-        nonDomesticNos5: "INACTIVE",
-        gda: "INACTIVE",
-      },
-      contactDetails: {
-        telephoneNumber: "010199991010101", email: "person@person.com"
-      },
-    }
-  end
 
-  let(:inactive_assessor_request_body) do
-    {
-      firstName: "Someone",
-      middleNames: "Muddle",
-      lastName: "Person",
-      dateOfBirth: "1991-02-25",
-      searchResultsComparisonPostcode: "",
-      qualifications: { nonDomesticDec: "INACTIVE" },
-      contactDetails: {
-        telephoneNumber: "010199991010101", email: "person@person.com"
-      },
-    }
-  end
+  let(:fetch_assessor_stub) { AssessorStub.new }
 
   let(:valid_xml) do
     File.read File.join Dir.pwd,
@@ -52,7 +17,11 @@ describe "Acceptance::LodgeDEC(AR)NIEnergyAssessment" do
 
     it "accepts an assessment with type DEC-AR" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
+      add_assessor(
+        scheme_id,
+        "JASE000000",
+        fetch_assessor_stub.fetch_request_body(nonDomesticDec: "ACTIVE"),
+      )
 
       lodge_assessment(
         assessment_body: valid_xml,
@@ -66,7 +35,11 @@ describe "Acceptance::LodgeDEC(AR)NIEnergyAssessment" do
 
     it "returns the expected response" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
+      add_assessor(
+        scheme_id,
+        "JASE000000",
+        fetch_assessor_stub.fetch_request_body(nonDomesticDec: "ACTIVE"),
+      )
 
       lodge_assessment(
         assessment_body: valid_xml,
@@ -97,8 +70,8 @@ describe "Acceptance::LodgeDEC(AR)NIEnergyAssessment" do
             "nonDomesticCc4" => "INACTIVE",
             "nonDomesticSp3" => "INACTIVE",
             "nonDomesticDec" => "ACTIVE",
-            "nonDomesticNos3" => "ACTIVE",
-            "nonDomesticNos4" => "ACTIVE",
+            "nonDomesticNos3" => "INACTIVE",
+            "nonDomesticNos4" => "INACTIVE",
             "nonDomesticNos5" => "INACTIVE",
             "gda" => "INACTIVE",
           },
@@ -145,7 +118,11 @@ describe "Acceptance::LodgeDEC(AR)NIEnergyAssessment" do
       let(:scheme_id) { add_scheme_and_get_id }
 
       before do
-        add_assessor(scheme_id, "JASE000000", inactive_assessor_request_body)
+        add_assessor(
+          scheme_id,
+          "JASE000000",
+          fetch_assessor_stub.fetch_request_body(nonDomesticDec: "INACTIVE"),
+        )
       end
 
       context "when unqualified for DEC advisory reports NI" do
@@ -172,7 +149,11 @@ describe "Acceptance::LodgeDEC(AR)NIEnergyAssessment" do
   context "when rejecting an assessment" do
     it "rejects an assessment without a technical information" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
+      add_assessor(
+        scheme_id,
+        "JASE000000",
+        fetch_assessor_stub.fetch_request_body(nonDomesticDec: "ACTIVE"),
+      )
 
       doc = Nokogiri.XML valid_xml
 
@@ -184,27 +165,6 @@ describe "Acceptance::LodgeDEC(AR)NIEnergyAssessment" do
         accepted_responses: [400],
         schema_name: "CEPC-NI-7.1",
       )
-    end
-
-    it "rejects an assessment with invalid XML" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
-
-      xml = valid_xml.gsub("<Report-Header>", "<Report-Header")
-
-      response_body =
-        JSON.parse(
-          lodge_assessment(
-            assessment_body: xml,
-            accepted_responses: [400],
-            schema_name: "CEPC-NI-7.1",
-          )
-            .body,
-        )
-
-      expect(
-        response_body["errors"][0]["title"],
-      ).to include "Invalid attribute name: <<RRN>"
     end
   end
 end

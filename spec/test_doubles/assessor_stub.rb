@@ -1,14 +1,14 @@
 class AssessorStub
   def fetch_request_body(
-    nonDomesticNos3: "SUSPENDED",
-    nonDomesticNos4: "SUSPENDED",
-    nonDomesticNos5: "SUSPENDED",
-    nonDomesticDec: "SUSPENDED",
-    domesticRdSap: "SUSPENDED",
-    domesticSap: "SUSPENDED",
-    nonDomesticSp3: "SUSPENDED",
-    nonDomesticCc4: "SUSPENDED",
-    gda: "SUSPENDED"
+    nonDomesticNos3: "INACTIVE",
+    nonDomesticNos4: "INACTIVE",
+    nonDomesticNos5: "INACTIVE",
+    nonDomesticDec: "INACTIVE",
+    domesticRdSap: "INACTIVE",
+    domesticSap: "INACTIVE",
+    nonDomesticSp3: "INACTIVE",
+    nonDomesticCc4: "INACTIVE",
+    gda: "INACTIVE"
   )
     {
       firstName: "Someone",

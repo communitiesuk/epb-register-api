@@ -47,11 +47,7 @@ describe "Acceptance::LodgeAdvisoryReport" do
       add_assessor(
         scheme_id,
         "JASE000000",
-        fetch_assessor_stub.fetch_request_body(
-          nonDomesticNos3: "ACTIVE",
-          nonDomesticNos4: "ACTIVE",
-          nonDomesticNos5: "INACTIVE",
-        ),
+        fetch_assessor_stub.fetch_request_body(nonDomesticDec: "ACTIVE"),
       )
       lodge_assessment(
         assessment_body: valid_ar_xml,
@@ -107,15 +103,15 @@ describe "Acceptance::LodgeAdvisoryReport" do
             "lastName" => "Person",
             "middleNames" => "Muddle",
             "qualifications" => {
-              "domesticSap" => "SUSPENDED",
-              "domesticRdSap" => "SUSPENDED",
-              "nonDomesticCc4" => "SUSPENDED",
-              "nonDomesticSp3" => "SUSPENDED",
+              "domesticSap" => "INACTIVE",
+              "domesticRdSap" => "INACTIVE",
+              "nonDomesticCc4" => "INACTIVE",
+              "nonDomesticSp3" => "INACTIVE",
               "nonDomesticDec" => "ACTIVE",
-              "nonDomesticNos3" => "SUSPENDED",
-              "nonDomesticNos4" => "SUSPENDED",
-              "nonDomesticNos5" => "SUSPENDED",
-              "gda" => "SUSPENDED",
+              "nonDomesticNos3" => "INACTIVE",
+              "nonDomesticNos4" => "INACTIVE",
+              "nonDomesticNos5" => "INACTIVE",
+              "gda" => "INACTIVE",
             },
             "address" => {},
             "companyDetails" => {},

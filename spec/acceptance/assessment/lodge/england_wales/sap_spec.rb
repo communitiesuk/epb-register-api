@@ -3,80 +3,22 @@
 describe "Acceptance::LodgeSapEnergyAssessment" do
   include RSpecAssessorServiceMixin
 
-  let(:sap_valid_assessor_request_body) do
-    {
-      firstName: "Someone",
-      middleNames: "Muddle",
-      lastName: "Person",
-      dateOfBirth: "1991-02-25",
-      searchResultsComparisonPostcode: "",
-      qualifications: {
-        domesticSap: "ACTIVE",
-        domesticRdSap: "INACTIVE",
-        nonDomesticSp3: "INACTIVE",
-        nonDomesticCc4: "INACTIVE",
-        nonDomesticDec: "INACTIVE",
-        nonDomesticNos3: "INACTIVE",
-        nonDomesticNos4: "INACTIVE",
-        nonDomesticNos5: "INACTIVE",
-        gda: "INACTIVE",
-      },
-      contactDetails: {
-        telephoneNumber: "010199991010101", email: "person@person.com"
-      },
-    }
-  end
-
-  let(:inactive_assessor_request_body) do
-    {
-      firstName: "Someone",
-      middleNames: "Muddle",
-      lastName: "Person",
-      dateOfBirth: "1991-02-25",
-      searchResultsComparisonPostcode: "",
-      qualifications: { domesticSap: "INACTIVE", domesticRdSap: "INACTIVE" },
-      contactDetails: {
-        telephoneNumber: "010199991010101", email: "person@person.com"
-      },
-    }
-  end
+  let(:fetch_assessor_stub) { AssessorStub.new }
 
   let(:valid_sap_xml) do
     File.read File.join Dir.pwd, "api/schemas/xml/examples/SAP-17.11.xml"
   end
 
   context "when lodging a domestic energy assessment (post)" do
-    it "rejects an assessment with a schema that does not exist" do
-      lodge_assessment(
-        assessment_body: valid_sap_xml,
-        accepted_responses: [400],
-        schema_name: "MakeupSAP-19.0",
-      )
-    end
-
-    context "when an assessor is not registered" do
-      it "returns status 400 with the correct error response" do
-        response =
-          JSON.parse(
-            lodge_assessment(
-              assessment_body: valid_sap_xml,
-              accepted_responses: [400],
-              schema_name: "SAP-Schema-17.1",
-            )
-              .body,
-          )
-
-        expect(response["errors"][0]["title"]).to eq(
-          "Assessor is not registered.",
-        )
-      end
-    end
-
     context "when an assessor is inactive" do
       context "when unqualified for SAP" do
         it "returns status 400 with the correct error response" do
           scheme_id = add_scheme_and_get_id
-          add_assessor(scheme_id, "TEST000000", inactive_assessor_request_body)
+          add_assessor(
+            scheme_id,
+            "TEST000000",
+            fetch_assessor_stub.fetch_request_body(domesticSap: "INACTIVE"),
+          )
 
           response =
             JSON.parse(
@@ -94,61 +36,15 @@ describe "Acceptance::LodgeSapEnergyAssessment" do
           )
         end
       end
-
-      context "when unqualified for RdSAP" do
-        it "returns status 400 with the correct error response" do
-          scheme_id = add_scheme_and_get_id
-          add_assessor(scheme_id, "TEST000000", inactive_assessor_request_body)
-
-          response =
-            JSON.parse(
-              lodge_assessment(
-                assessment_body: valid_sap_xml,
-                accepted_responses: [400],
-                auth_data: { scheme_ids: [scheme_id] },
-                schema_name: "SAP-Schema-17.1",
-              )
-                .body,
-            )
-
-          expect(response["errors"][0]["title"]).to eq(
-            "Assessor is not active.",
-          )
-        end
-      end
-    end
-
-    it "returns 401 with no authentication" do
-      lodge_assessment(
-        assessment_body: "body", accepted_responses: [401], authenticate: false,
-      )
-    end
-
-    it "returns 403 with incorrect scopes" do
-      lodge_assessment(
-        assessment_body: "body",
-        accepted_responses: [403],
-        auth_data: { scheme_ids: {} },
-        scopes: %w[wrong:scope],
-      )
-    end
-
-    it "returns 403 if it is being lodged by the wrong scheme" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "TEST000000", sap_valid_assessor_request_body)
-      different_scheme_id = add_scheme_and_get_id("BADSCHEME")
-
-      lodge_assessment(
-        assessment_body: valid_sap_xml,
-        accepted_responses: [403],
-        auth_data: { scheme_ids: [different_scheme_id] },
-        schema_name: "SAP-Schema-17.1",
-      )
     end
 
     it "returns status 201" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "TEST000000", sap_valid_assessor_request_body)
+      add_assessor(
+        scheme_id,
+        "TEST000000",
+        fetch_assessor_stub.fetch_request_body(domesticSap: "ACTIVE"),
+      )
 
       lodge_assessment(
         assessment_body: valid_sap_xml,
@@ -156,138 +52,6 @@ describe "Acceptance::LodgeSapEnergyAssessment" do
         auth_data: { scheme_ids: [scheme_id] },
         schema_name: "SAP-Schema-17.1",
       )
-    end
-
-    it "returns json" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "TEST000000", sap_valid_assessor_request_body)
-
-      response =
-        lodge_assessment(
-          assessment_body: valid_sap_xml,
-          accepted_responses: [201],
-          auth_data: { scheme_ids: [scheme_id] },
-          schema_name: "SAP-Schema-17.1",
-        )
-
-      expect(response.headers["Content-Type"]).to eq("application/json")
-    end
-
-    it "returns the assessment as a hash" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "TEST000000", sap_valid_assessor_request_body)
-
-      response =
-        JSON.parse(
-          lodge_assessment(
-            assessment_body: valid_sap_xml,
-            accepted_responses: [201],
-            auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "SAP-Schema-17.1",
-          )
-            .body,
-          symbolize_names: true,
-        )
-
-      expect(response[:data]).to be_a Hash
-    end
-
-    it "returns the assessment with the correct keys" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "TEST000000", sap_valid_assessor_request_body)
-
-      response =
-        JSON.parse(
-          lodge_assessment(
-            assessment_body: valid_sap_xml,
-            accepted_responses: [201],
-            auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "SAP-Schema-17.1",
-          )
-            .body,
-          symbolize_names: true,
-        )
-
-      expect(response[:data].keys).to match_array(
-        %i[
-          dateOfAssessment
-          dateRegistered
-          dwellingType
-          typeOfAssessment
-          totalFloorArea
-          assessmentId
-          schemeAssessorId
-          addressSummary
-          currentEnergyEfficiencyRating
-          potentialEnergyEfficiencyRating
-          currentCarbonEmission
-          potentialCarbonEmission
-          optOut
-          postcode
-          dateOfExpiry
-          addressLine1
-          addressLine2
-          addressLine3
-          addressLine4
-          town
-          heatDemand
-          currentEnergyEfficiencyBand
-          potentialEnergyEfficiencyBand
-          recommendedImprovements
-          propertySummary
-          relatedPartyDisclosureNumber
-          relatedPartyDisclosureText
-        ],
-      )
-    end
-
-    it "returns the correct scheme assessor id" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "TEST000000", sap_valid_assessor_request_body)
-
-      response =
-        JSON.parse(
-          lodge_assessment(
-            assessment_body: valid_sap_xml,
-            accepted_responses: [201],
-            auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "SAP-Schema-17.1",
-          )
-            .body,
-          symbolize_names: true,
-        )
-
-      expect(response.dig(:data, :schemeAssessorId)).to eq("TEST000000")
-    end
-
-    context "when schema is not supported" do
-      let(:scheme_id) { add_scheme_and_get_id }
-      let(:doc) { Nokogiri.XML valid_sap_xml }
-
-      before do
-        add_assessor(scheme_id, "TEST123456", sap_valid_assessor_request_body)
-
-        assessment_id = doc.at("RRN")
-        assessment_id.children = "1234-1234-1234-1234-1234"
-
-        scheme_assessor_id = doc.at("Certificate-Number")
-        scheme_assessor_id.children = "TEST123456"
-      end
-
-      it "returns status 400 and the correct error message" do
-        response =
-          JSON.parse(
-            lodge_assessment(
-              assessment_body: doc.to_xml,
-              accepted_responses: [400],
-              auth_data: { scheme_ids: [scheme_id] },
-              schema_name: "unsupported",
-            )
-              .body,
-          )
-
-        expect(response["errors"][0]["title"]).to eq("Schema is not supported.")
-      end
     end
 
     context "when saving a (SAP) assessment" do
@@ -298,7 +62,11 @@ describe "Acceptance::LodgeSapEnergyAssessment" do
       end
 
       before do
-        add_assessor(scheme_id, "TEST123456", sap_valid_assessor_request_body)
+        add_assessor(
+          scheme_id,
+          "TEST123456",
+          fetch_assessor_stub.fetch_request_body(domesticSap: "ACTIVE"),
+        )
 
         assessment_id = doc.at("RRN")
         assessment_id.children = "1234-1234-1234-1234-1234"
@@ -525,71 +293,6 @@ describe "Acceptance::LodgeSapEnergyAssessment" do
           expect(response["data"]["dwellingType"]).to be_nil
           expect(response["data"]["totalFloorArea"]).to be_zero
         end
-      end
-    end
-
-    context "when rejecting an assessment" do
-      it "rejects an assessment without an address" do
-        scheme_id = add_scheme_and_get_id
-        add_assessor(scheme_id, "TEST000000", sap_valid_assessor_request_body)
-
-        doc = Nokogiri.XML valid_sap_xml
-
-        scheme_assessor_id = doc.at("Address")
-        scheme_assessor_id.children = ""
-
-        lodge_assessment(
-          assessment_body: doc.to_xml,
-          accepted_responses: [400],
-          schema_name: "SAP-Schema-17.1",
-        )
-      end
-
-      it "rejects an assessment with an incorrect element" do
-        scheme_id = add_scheme_and_get_id
-        add_assessor(scheme_id, "TEST000000", sap_valid_assessor_request_body)
-
-        doc = Nokogiri.XML valid_sap_xml
-
-        scheme_assessor_id = doc.at("Address")
-        scheme_assessor_id.children = "<Postcode>invalid</Postcode>"
-
-        response_body =
-          JSON.parse(
-            lodge_assessment(
-              assessment_body: doc.to_xml,
-              accepted_responses: [400],
-              schema_name: "SAP-Schema-17.1",
-            )
-              .body,
-          )
-
-        expect(
-          response_body["errors"][0]["title"],
-        ).to include "This element is not expected."
-      end
-
-      it "rejects an assessment with invalid XML" do
-        scheme_id = add_scheme_and_get_id
-        add_assessor(scheme_id, "TEST000000", sap_valid_assessor_request_body)
-
-        xml = valid_sap_xml
-
-        xml = xml.gsub("<Energy-Assessment>", "<Energy-Assessment")
-
-        response_body =
-          JSON.parse(
-            lodge_assessment(
-              assessment_body: xml,
-              accepted_responses: [400],
-              schema_name: "SAP-Schema-17.1",
-            )
-              .body,
-          )
-
-        expect(
-          response_body["errors"][0]["title"],
-        ).to include "Invalid attribute name: <<Assessment-Date>"
       end
     end
   end
