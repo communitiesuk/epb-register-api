@@ -25,8 +25,16 @@ describe "Acceptance::LodgeAssessment::XML" do
     File.read File.join Dir.pwd, "api/schemas/xml/examples/CEPC-7.11(ACIC).xml"
   end
 
+  let(:valid_sap_xml) do
+    File.read File.join Dir.pwd, "api/schemas/xml/examples/SAP-17.11.xml"
+  end
+
   let(:cleaned_xml) do
     File.read File.join Dir.pwd, "spec/fixtures/CLEANED-CEPC-7.11(ACIC).xml"
+  end
+
+  let(:cleaned_sap_xml) do
+    File.read File.join Dir.pwd, "spec/fixtures/CLEANED-SAP-17.11.xml"
   end
 
   def get_stored_xml(assessment_id)
@@ -68,7 +76,7 @@ describe "Acceptance::LodgeAssessment::XML" do
     it "will remove the <PDF> element" do
       database_xml = get_stored_xml("0000-0000-0000-0000-0000")
 
-      expect(valid_cepc_xml).to include("<PDF>")
+      expect(valid_sap_xml).to include("<PDF>")
       expect(cleaned_xml).to eq(
         '<?xml version="1.0" encoding="UTF-8"?>
 ' + database_xml,
