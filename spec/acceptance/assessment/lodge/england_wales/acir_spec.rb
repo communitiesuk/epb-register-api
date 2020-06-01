@@ -41,8 +41,7 @@ describe "Acceptance::LodgeACIREnergyAssessment" do
   end
 
   let(:valid_xml) do
-    File.read File.join Dir.pwd,
-                        "api/schemas/xml/examples/CEPC-7.11(ACIR).xml"
+    File.read File.join Dir.pwd, "api/schemas/xml/examples/CEPC-7.11(ACIR).xml"
   end
 
   context "when lodging ACIR" do
