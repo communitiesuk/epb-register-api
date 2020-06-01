@@ -65,7 +65,7 @@ describe "Acceptance::LodgeACIREnergyAssessment" do
 
     it "returns the expected response" do
       scheme_id = add_scheme_and_get_id
-      r = add_assessor(scheme_id, "MOSE000000", valid_assessor_request_body)
+      add_assessor(scheme_id, "MOSE000000", valid_assessor_request_body)
 
       lodge_assessment(
         assessment_body: valid_xml,
