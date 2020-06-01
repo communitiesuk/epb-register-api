@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_20_132641) do
+ActiveRecord::Schema.define(version: 2020_06_01_113826) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "fuzzystrmatch"
   enable_extension "plpgsql"
 
   create_table "assessments", primary_key: "assessment_id", id: :string, force: :cascade do |t|
@@ -63,8 +64,8 @@ ActiveRecord::Schema.define(version: 2020_05_20_132641) do
     t.string "non_domestic_cc4_qualification"
     t.string "non_domestic_dec_qualification"
     t.string "non_domestic_nos3_qualification"
-    t.string "non_domestic_nos5_qualification"
     t.string "non_domestic_nos4_qualification"
+    t.string "non_domestic_nos5_qualification"
     t.string "domestic_sap_qualification"
     t.string "also_known_as"
     t.string "address_line1"

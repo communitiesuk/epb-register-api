@@ -120,6 +120,88 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
     end
 
     describe "searching by street and town" do
+      context "when street is slightly misspelled" do
+        let(:response) do
+          JSON.parse(
+            assertive_get(
+              "/api/search/addresses?street=Seom%20Street&town=Post-Town1",
+              [200],
+              true,
+              {},
+              %w[address:search],
+            )
+              .body,
+            symbolize_names: true,
+          )
+        end
+
+        it "returns the expected amount of addresses" do
+          expect(response[:data][:addresses].length).to eq 2
+        end
+
+        it "returns the expected address" do
+          expect(response[:data][:addresses][0]).to eq(
+            {
+              buildingReferenceNumber: "RRN-0000-0000-0000-0000-0000",
+              line1: "1 Some Street",
+              line2: nil,
+              line3: nil,
+              town: "Post-Town1",
+              postcode: "A0 0AA",
+              source: "PREVIOUS_ASSESSMENT",
+              existingAssessments: [
+                {
+                  assessmentId: "0000-0000-0000-0000-0000",
+                  assessmentStatus: "EXPIRED",
+                  assessmentType: "RdSAP",
+                },
+              ],
+            },
+          )
+        end
+      end
+
+      context "when town is slightly misspelled" do
+        let(:response) do
+          JSON.parse(
+            assertive_get(
+              "/api/search/addresses?street=Some%20Street&town=Psot-Town1",
+              [200],
+              true,
+              {},
+              %w[address:search],
+            )
+              .body,
+            symbolize_names: true,
+          )
+        end
+
+        it "returns the expected amount of addresses" do
+          expect(response[:data][:addresses].length).to eq 2
+        end
+
+        it "returns the expected address" do
+          expect(response[:data][:addresses][0]).to eq(
+            {
+              buildingReferenceNumber: "RRN-0000-0000-0000-0000-0000",
+              line1: "1 Some Street",
+              line2: nil,
+              line3: nil,
+              town: "Post-Town1",
+              postcode: "A0 0AA",
+              source: "PREVIOUS_ASSESSMENT",
+              existingAssessments: [
+                {
+                  assessmentId: "0000-0000-0000-0000-0000",
+                  assessmentStatus: "EXPIRED",
+                  assessmentType: "RdSAP",
+                },
+              ],
+            },
+          )
+        end
+      end
+
       context "with an expired assessment" do
         let(:response) do
           JSON.parse(
