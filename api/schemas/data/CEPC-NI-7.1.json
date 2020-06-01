@@ -15,7 +15,8 @@
     "2": "DEC-AR",
     "3": "CEPC",
     "4": "CEPC-RR",
-    "5": "ACIR"
+    "5": "ACIR",
+    "6": "ACIC"
   }
 }, {
   "key": "assessor_id",

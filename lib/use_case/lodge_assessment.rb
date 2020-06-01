@@ -77,6 +77,11 @@ module UseCase
         raise InactiveAssessorException
       end
 
+      if assessment_type == "ACIC" &&
+          assessor.non_domestic_cc4_qualification == "INACTIVE"
+        raise InactiveAssessorException
+      end
+
       data[:improvements] =
         data[:improvements].map do |improvement|
           improvement[:assessment_id] = assessment_id
