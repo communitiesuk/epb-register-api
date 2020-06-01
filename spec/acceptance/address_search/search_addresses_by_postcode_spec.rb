@@ -129,24 +129,24 @@ describe "Acceptance::AddressSearch::ByPostcode" do
           end
 
           it "returns the address" do
-            expected_response = {
-              buildingReferenceNumber: "RRN-0000-0000-0000-0000-0000",
-              line1: "1 Some Street",
-              line2: nil,
-              line3: nil,
-              town: "Post-Town1",
-              postcode: "A0 0AA",
-              source: "PREVIOUS_ASSESSMENT",
-              existingAssessments: [
-                {
-                  assessmentId: "0000-0000-0000-0000-0000",
-                  assessmentStatus: "EXPIRED",
-                  assessmentType: "RdSAP",
-                },
-              ],
-            }
-
-            expect(response[:data][:addresses][0]).to eq expected_response
+            expect(response[:data][:addresses][0]).to eq(
+              {
+                buildingReferenceNumber: "RRN-0000-0000-0000-0000-0000",
+                line1: "1 Some Street",
+                line2: nil,
+                line3: nil,
+                town: "Post-Town1",
+                postcode: "A0 0AA",
+                source: "PREVIOUS_ASSESSMENT",
+                existingAssessments: [
+                  {
+                    assessmentId: "0000-0000-0000-0000-0000",
+                    assessmentStatus: "EXPIRED",
+                    assessmentType: "RdSAP",
+                  },
+                ],
+              },
+            )
           end
         end
 
@@ -170,24 +170,24 @@ describe "Acceptance::AddressSearch::ByPostcode" do
           end
 
           it "returns the expected address" do
-            expected_response = {
-              buildingReferenceNumber: "RRN-0000-0000-0000-0000-0004",
-              line1: "The House",
-              line2: "123 Test Street",
-              line3: nil,
-              town: "Post-Town1",
-              postcode: "A0 0AA",
-              source: "PREVIOUS_ASSESSMENT",
-              existingAssessments: [
-                {
-                  assessmentId: "0000-0000-0000-0000-0004",
-                  assessmentStatus: "ENTERED",
-                  assessmentType: "RdSAP",
-                },
-              ],
-            }
-
-            expect(response[:data][:addresses][4]).to eq expected_response
+            expect(response[:data][:addresses][4]).to eq(
+              {
+                buildingReferenceNumber: "RRN-0000-0000-0000-0000-0004",
+                line1: "The House",
+                line2: "123 Test Street",
+                line3: nil,
+                town: "Post-Town1",
+                postcode: "A0 0AA",
+                source: "PREVIOUS_ASSESSMENT",
+                existingAssessments: [
+                  {
+                    assessmentId: "0000-0000-0000-0000-0004",
+                    assessmentStatus: "ENTERED",
+                    assessmentType: "RdSAP",
+                  },
+                ],
+              },
+            )
           end
         end
       end
@@ -212,24 +212,24 @@ describe "Acceptance::AddressSearch::ByPostcode" do
         end
 
         it "returns the address" do
-          expected_response = {
-            buildingReferenceNumber: "RRN-0000-0000-0000-0000-0000",
-            line1: "1 Some Street",
-            line2: nil,
-            line3: nil,
-            town: "Post-Town1",
-            postcode: "A0 0AA",
-            source: "PREVIOUS_ASSESSMENT",
-            existingAssessments: [
-              {
-                assessmentId: "0000-0000-0000-0000-0000",
-                assessmentStatus: "EXPIRED",
-                assessmentType: "RdSAP",
-              },
-            ],
-          }
-
-          expect(response[:data][:addresses][0]).to eq expected_response
+          expect(response[:data][:addresses][0]).to eq(
+            {
+              buildingReferenceNumber: "RRN-0000-0000-0000-0000-0000",
+              line1: "1 Some Street",
+              line2: nil,
+              line3: nil,
+              town: "Post-Town1",
+              postcode: "A0 0AA",
+              source: "PREVIOUS_ASSESSMENT",
+              existingAssessments: [
+                {
+                  assessmentId: "0000-0000-0000-0000-0000",
+                  assessmentStatus: "EXPIRED",
+                  assessmentType: "RdSAP",
+                },
+              ],
+            },
+          )
         end
       end
 
@@ -254,24 +254,24 @@ describe "Acceptance::AddressSearch::ByPostcode" do
           end
 
           it "returns the expected address" do
-            expected_response = {
-              buildingReferenceNumber: "RRN-0000-0000-0000-0000-0001",
-              line1: "2 Some Street",
-              line2: nil,
-              line3: nil,
-              town: "Post-Town1",
-              postcode: "A0 0AA",
-              source: "PREVIOUS_ASSESSMENT",
-              existingAssessments: [
-                {
-                  assessmentId: "0000-0000-0000-0000-0001",
-                  assessmentStatus: "EXPIRED",
-                  assessmentType: "RdSAP",
-                },
-              ],
-            }
-
-            expect(response[:data][:addresses][0]).to eq expected_response
+            expect(response[:data][:addresses][0]).to eq(
+              {
+                buildingReferenceNumber: "RRN-0000-0000-0000-0000-0001",
+                line1: "2 Some Street",
+                line2: nil,
+                line3: nil,
+                town: "Post-Town1",
+                postcode: "A0 0AA",
+                source: "PREVIOUS_ASSESSMENT",
+                existingAssessments: [
+                  {
+                    assessmentId: "0000-0000-0000-0000-0001",
+                    assessmentStatus: "EXPIRED",
+                    assessmentType: "RdSAP",
+                  },
+                ],
+              },
+            )
           end
         end
 
@@ -295,24 +295,24 @@ describe "Acceptance::AddressSearch::ByPostcode" do
           end
 
           it "returns the expected address" do
-            expected_response = {
-              buildingReferenceNumber: "RRN-0000-0000-0000-0000-0003",
-              line1: "The House",
-              line2: "123 Test Street",
-              line3: nil,
-              town: "Post-Town1",
-              postcode: "A0 0AA",
-              source: "PREVIOUS_ASSESSMENT",
-              existingAssessments: [
-                {
-                  assessmentId: "0000-0000-0000-0000-0003",
-                  assessmentStatus: "EXPIRED",
-                  assessmentType: "RdSAP",
-                },
-              ],
-            }
-
-            expect(response[:data][:addresses][0]).to eq expected_response
+            expect(response[:data][:addresses][0]).to eq(
+              {
+                buildingReferenceNumber: "RRN-0000-0000-0000-0000-0003",
+                line1: "The House",
+                line2: "123 Test Street",
+                line3: nil,
+                town: "Post-Town1",
+                postcode: "A0 0AA",
+                source: "PREVIOUS_ASSESSMENT",
+                existingAssessments: [
+                  {
+                    assessmentId: "0000-0000-0000-0000-0003",
+                    assessmentStatus: "EXPIRED",
+                    assessmentType: "RdSAP",
+                  },
+                ],
+              },
+            )
           end
         end
       end
@@ -349,24 +349,24 @@ describe "Acceptance::AddressSearch::ByPostcode" do
         end
 
         it "returns the expected address" do
-          expected_response = {
-            buildingReferenceNumber: "RRN-0000-0000-0000-0000-0000",
-            line1: "1 Some Street",
-            line2: nil,
-            line3: nil,
-            town: "Post-Town1",
-            postcode: "A0 0AA",
-            source: "PREVIOUS_ASSESSMENT",
-            existingAssessments: [
-              {
-                assessmentId: "0000-0000-0000-0000-0000",
-                assessmentStatus: "EXPIRED",
-                assessmentType: "RdSAP",
-              },
-            ],
-          }
-
-          expect(response[:data][:addresses][0]).to eq expected_response
+          expect(response[:data][:addresses][0]).to eq(
+            {
+              buildingReferenceNumber: "RRN-0000-0000-0000-0000-0000",
+              line1: "1 Some Street",
+              line2: nil,
+              line3: nil,
+              town: "Post-Town1",
+              postcode: "A0 0AA",
+              source: "PREVIOUS_ASSESSMENT",
+              existingAssessments: [
+                {
+                  assessmentId: "0000-0000-0000-0000-0000",
+                  assessmentStatus: "EXPIRED",
+                  assessmentType: "RdSAP",
+                },
+              ],
+            },
+          )
         end
       end
 
@@ -390,24 +390,24 @@ describe "Acceptance::AddressSearch::ByPostcode" do
         end
 
         it "returns the expected address" do
-          expected_response = {
-            buildingReferenceNumber: "RRN-0000-0000-0000-0000-0002",
-            line1: "3 Other Street",
-            line2: nil,
-            line3: nil,
-            town: "Post-Town1",
-            postcode: "A0 0AA",
-            source: "PREVIOUS_ASSESSMENT",
-            existingAssessments: [
-              {
-                assessmentId: "0000-0000-0000-0000-0002",
-                assessmentStatus: "EXPIRED",
-                assessmentType: "CEPC",
-              },
-            ],
-          }
-
-          expect(response[:data][:addresses][0]).to eq expected_response
+          expect(response[:data][:addresses][0]).to eq(
+            {
+              buildingReferenceNumber: "RRN-0000-0000-0000-0000-0002",
+              line1: "3 Other Street",
+              line2: nil,
+              line3: nil,
+              town: "Post-Town1",
+              postcode: "A0 0AA",
+              source: "PREVIOUS_ASSESSMENT",
+              existingAssessments: [
+                {
+                  assessmentId: "0000-0000-0000-0000-0002",
+                  assessmentStatus: "EXPIRED",
+                  assessmentType: "CEPC",
+                },
+              ],
+            },
+          )
         end
       end
     end

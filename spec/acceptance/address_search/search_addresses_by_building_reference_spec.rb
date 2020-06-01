@@ -52,24 +52,24 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
       end
 
       it "returns the address" do
-        expected_response = {
-          buildingReferenceNumber: "RRN-0000-0000-0000-0000-0000",
-          line1: "1 Some Street",
-          line2: nil,
-          line3: nil,
-          town: "Post-Town1",
-          postcode: "A0 0AA",
-          source: "PREVIOUS_ASSESSMENT",
-          existingAssessments: [
-            {
-              assessmentId: "0000-0000-0000-0000-0000",
-              assessmentStatus: "EXPIRED",
-              assessmentType: "RdSAP",
-            },
-          ],
-        }
-
-        expect(response[:data][:addresses][0]).to eq expected_response
+        expect(response[:data][:addresses][0]).to eq(
+          {
+            buildingReferenceNumber: "RRN-0000-0000-0000-0000-0000",
+            line1: "1 Some Street",
+            line2: nil,
+            line3: nil,
+            town: "Post-Town1",
+            postcode: "A0 0AA",
+            source: "PREVIOUS_ASSESSMENT",
+            existingAssessments: [
+              {
+                assessmentId: "0000-0000-0000-0000-0000",
+                assessmentStatus: "EXPIRED",
+                assessmentType: "RdSAP",
+              },
+            ],
+          },
+        )
       end
 
       context "with an entered assessment" do
@@ -108,24 +108,24 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
         end
 
         it "returns the expected address" do
-          expected_response = {
-            buildingReferenceNumber: "RRN-0000-0000-0000-0000-0001",
-            line1: "1 Some Street",
-            line2: nil,
-            line3: nil,
-            town: "Post-Town1",
-            postcode: "A0 0AA",
-            source: "PREVIOUS_ASSESSMENT",
-            existingAssessments: [
-              {
-                assessmentId: "0000-0000-0000-0000-0001",
-                assessmentStatus: "ENTERED",
-                assessmentType: "RdSAP",
-              },
-            ],
-          }
-
-          expect(response[:data][:addresses][0]).to eq expected_response
+          expect(response[:data][:addresses][0]).to eq(
+            {
+              buildingReferenceNumber: "RRN-0000-0000-0000-0000-0001",
+              line1: "1 Some Street",
+              line2: nil,
+              line3: nil,
+              town: "Post-Town1",
+              postcode: "A0 0AA",
+              source: "PREVIOUS_ASSESSMENT",
+              existingAssessments: [
+                {
+                  assessmentId: "0000-0000-0000-0000-0001",
+                  assessmentStatus: "ENTERED",
+                  assessmentType: "RdSAP",
+                },
+              ],
+            },
+          )
         end
       end
     end
