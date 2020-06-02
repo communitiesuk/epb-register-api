@@ -26,23 +26,29 @@ module Gateway
         ),
       ]
 
-      if building_name_number
-        sql << " AND (address_line1 LIKE $2 OR address_line2 LIKE $2)"
-        binds <<
-          ActiveRecord::Relation::QueryAttribute.new(
-            "building_name_number",
-            building_name_number + "%",
-            ActiveRecord::Type::String.new,
-          )
-      end
-
       if address_type
         types = ADDRESS_TYPES[address_type.to_sym].map { |type| "'#{type}'" }
 
         sql << " AND type_of_assessment IN (#{types.join(', ')})"
       end
 
-      sql << " ORDER BY address_line1, assessment_id"
+      sql << " ORDER BY "
+
+      if building_name_number
+        sql <<
+          "#{levenshtein('address_line1', '$2')}, #{
+            levenshtein('address_line2', '$2')
+          }, "
+
+        binds <<
+          ActiveRecord::Relation::QueryAttribute.new(
+            "building_name_number",
+            building_name_number,
+            ActiveRecord::Type::String.new,
+          )
+      end
+
+      sql << "assessment_id"
 
       results = ActiveRecord::Base.connection.exec_query sql, "SQL", binds
 
@@ -91,11 +97,11 @@ module Gateway
           postcode
         FROM assessments
         WHERE (#{
-          levenshtein('address_line1', '$1')
-        } OR #{levenshtein('address_line2', '$1')})
+          levenshtein('address_line1', '$1', '0.5')
+        } OR #{levenshtein('address_line2', '$1', '0.5')})
         AND (#{
-          levenshtein('town', '$2')
-        } OR #{levenshtein('address_line2', '$2')})"
+          levenshtein('town', '$2', '0.5')
+        } OR #{levenshtein('address_line2', '$2', '0.5')})"
 
       binds = [
         ActiveRecord::Relation::QueryAttribute.new(
@@ -125,10 +131,16 @@ module Gateway
 
   private
 
-    def levenshtein(property, bind, match_threshold = "0.5")
-      "LEVENSHTEIN(#{property}, #{bind})::decimal / GREATEST(length(#{
-        property
-      }), length(#{bind})) < #{match_threshold}"
+    def levenshtein(property, bind, match_threshold = nil)
+      if match_threshold
+        "LEVENSHTEIN(#{property}, #{bind})::decimal / GREATEST(length(#{
+          property
+        }), length(#{bind})) < #{match_threshold}"
+      else
+        "LEVENSHTEIN(#{property}, #{bind})::decimal / GREATEST(length(#{
+          property
+        }), length(#{bind}))"
+      end
     end
 
     def record_to_address_domain(row)

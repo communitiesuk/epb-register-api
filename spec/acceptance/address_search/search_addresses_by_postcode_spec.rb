@@ -234,6 +234,47 @@ describe "Acceptance::AddressSearch::ByPostcode" do
       end
 
       context "when building name or number is supplied" do
+        describe "with slightly misspelled building name" do
+          let(:response) do
+            JSON.parse(
+              assertive_get(
+                "/api/search/addresses?postcode=A0%200AA&buildingNameNumber=The%20Huose",
+                [200],
+                true,
+                {},
+                %w[address:search],
+              )
+                .body,
+              symbolize_names: true,
+            )
+          end
+
+          it "returns the expected amount of addresses" do
+            expect(response[:data][:addresses].length).to eq 5
+          end
+
+          it "returns the expected address" do
+            expect(response[:data][:addresses][0]).to eq(
+              {
+                buildingReferenceNumber: "RRN-0000-0000-0000-0000-0003",
+                line1: "The House",
+                line2: "123 Test Street",
+                line3: nil,
+                town: "Post-Town1",
+                postcode: "A0 0AA",
+                source: "PREVIOUS_ASSESSMENT",
+                existingAssessments: [
+                  {
+                    assessmentId: "0000-0000-0000-0000-0003",
+                    assessmentStatus: "EXPIRED",
+                    assessmentType: "RdSAP",
+                  },
+                ],
+              },
+            )
+          end
+        end
+
         describe "with a building number" do
           let(:response) do
             JSON.parse(
@@ -250,7 +291,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
           end
 
           it "returns the expected amount of addresses" do
-            expect(response[:data][:addresses].length).to eq 1
+            expect(response[:data][:addresses].length).to eq 5
           end
 
           it "returns the expected address" do
@@ -291,11 +332,11 @@ describe "Acceptance::AddressSearch::ByPostcode" do
           end
 
           it "returns the expected amount of addresses" do
-            expect(response[:data][:addresses].length).to eq 2
+            expect(response[:data][:addresses].length).to eq 5
           end
 
           it "returns the expected address" do
-            expect(response[:data][:addresses][0]).to eq(
+            expect(response[:data][:addresses][1]).to eq(
               {
                 buildingReferenceNumber: "RRN-0000-0000-0000-0000-0003",
                 line1: "The House",
