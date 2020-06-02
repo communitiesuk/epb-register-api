@@ -1277,6 +1277,7 @@ components:
         - ENTERED
         - EXPIRED
         - CANCELLED
+        - NOT_FOR_ISSUE
 
     AssessmentType:
       type: string
