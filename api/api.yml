@@ -516,7 +516,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AssessmentStatus'
+              type: object
+              properties:
+                status:
+                  $ref: '#/components/schemas/AssessmentStatus'
       responses:
         '200':
           description: Assessment report status updated
@@ -526,7 +529,10 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: '#/components/schemas/AssessmentStatus'
+                    type: object
+                    properties:
+                      status:
+                        $ref: '#/components/schemas/AssessmentStatus'
         '400':
           description: Bad request - assessmentId parameter was badly formatted
         '403':
@@ -1024,7 +1030,7 @@ components:
       type: string
       enum:
         - GAZETTEER
-        - PREVIOUS_CERTIFICATE
+        - PREVIOUS_ASSESSMENT
       example: GAZETTEER
 
     AddressSearchResults:
@@ -1265,15 +1271,12 @@ components:
       example: 0000-0000-0000-0000-0000
 
     AssessmentStatus:
-      type: object
-      properties:
-        status:
-          type: string
-          example: CANCELLED
-          enum:
-            - ENTERED
-            - EXPIRED
-            - CANCELLED
+      type: string
+      example: CANCELLED
+      enum:
+        - ENTERED
+        - EXPIRED
+        - CANCELLED
 
     AssessmentType:
       type: string
