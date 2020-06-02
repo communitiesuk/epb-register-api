@@ -97,21 +97,21 @@ module Gateway
           postcode
         FROM assessments
         WHERE (#{
-          levenshtein('address_line1', '$1', '0.5')
-        } OR #{levenshtein('address_line2', '$1', '0.5')})
+          levenshtein('address_line1', '$1', '0.4')
+        } OR #{levenshtein('address_line2', '$1', '0.4')})
         AND (#{
-          levenshtein('town', '$2', '0.5')
-        } OR #{levenshtein('address_line2', '$2', '0.5')})"
+          levenshtein('town', '$2', '0.4')
+        } OR #{levenshtein('address_line2', '$2', '0.4')})"
 
       binds = [
         ActiveRecord::Relation::QueryAttribute.new(
           "street",
-          "%#{street}%",
+          street,
           ActiveRecord::Type::String.new,
         ),
         ActiveRecord::Relation::QueryAttribute.new(
           "town",
-          "%#{town}%",
+          town,
           ActiveRecord::Type::String.new,
         ),
       ]
