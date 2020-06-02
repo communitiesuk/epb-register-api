@@ -1593,7 +1593,6 @@ components:
           format: date
           example: '2030-02-28'
         providerDetails:
-          description: Details relating to the provider of the plan
           $ref: '#/components/schemas/GreenDealProvider'
         interest:
           $ref: '#/components/schemas/GreenDealInterest'
@@ -1635,6 +1634,7 @@ components:
 
     GreenDealProvider:
       type: object
+      description: Details relating to the provider of the plan
       properties:
         name:
           description: 'Name of the provider organisation responsible for the
