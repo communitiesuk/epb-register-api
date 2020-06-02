@@ -37,7 +37,7 @@ class AddressSearchGatewayFake
   def search_by_rrn(rrn)
     filtered_results =
       @addresses.filter do |address|
-        address[:building_reference_number] == "RRN-#{rrn}"
+        address[:address_id] == "RRN-#{rrn}"
       end
 
     results_to_domain filtered_results
@@ -86,7 +86,7 @@ private
     results.map do |address|
       Domain::Address.new(
         address.slice(
-          :building_reference_number,
+          :address_id,
           :line1,
           :line2,
           :line3,

@@ -41,7 +41,7 @@ describe "Acceptance::AddressSearch" do
       describe "building reference number and another parameter" do
         it "returns a validation failure" do
           assertive_get(
-            "/api/search/addresses?buildingReferenceNumber=RRN-0000-0000-0000-0000-0000&something=test",
+            "/api/search/addresses?addressId=RRN-0000-0000-0000-0000-0000&something=test",
             [422],
             true,
             nil,

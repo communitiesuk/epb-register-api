@@ -1,11 +1,11 @@
 module UseCase
-  class SearchAddressesByBuildingReferenceNumber
+  class SearchAddressesByAddressId
     def initialize(address_search_gateway)
       @address_search_gateway = address_search_gateway
     end
 
-    def execute(building_reference_number:)
-      rrn = building_reference_number[4..-1]
+    def execute(address_id:)
+      rrn = address_id[4..-1]
       @address_search_gateway.search_by_rrn rrn
     end
   end

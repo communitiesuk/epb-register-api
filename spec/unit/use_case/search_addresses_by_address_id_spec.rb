@@ -1,11 +1,11 @@
-describe UseCase::SearchAddressesByBuildingReferenceNumber do
+describe UseCase::SearchAddressesByAddressId do
   context "addresses without a lodged assessment" do
     let(:use_case) { described_class.new AddressSearchGatewayFake.new }
 
     describe "by RRN" do
       it "does not return any results" do
         results =
-          use_case.execute building_reference_number:
+          use_case.execute address_id:
                              "RRN-0000-0000-0000-0000-0000"
 
         expect(results).to eq []
@@ -19,7 +19,7 @@ describe UseCase::SearchAddressesByBuildingReferenceNumber do
 
       gateway.add(
         {
-          building_reference_number: "RRN-0000-0000-0000-0000-0000",
+          address_id: "RRN-0000-0000-0000-0000-0000",
           line1: "127 Home Road",
           line2: nil,
           line3: nil,
@@ -39,7 +39,7 @@ describe UseCase::SearchAddressesByBuildingReferenceNumber do
 
       gateway.add(
         {
-          building_reference_number: "RRN-0000-0000-0000-0000-0001",
+          address_id: "RRN-0000-0000-0000-0000-0001",
           line1: "128 Home Road",
           line2: nil,
           line3: nil,
@@ -63,7 +63,7 @@ describe UseCase::SearchAddressesByBuildingReferenceNumber do
 
     describe "by RRN" do
       let(:results) do
-        use_case.execute building_reference_number:
+        use_case.execute address_id:
                            "RRN-0000-0000-0000-0000-0000"
       end
       it "returns a single address" do
@@ -72,7 +72,7 @@ describe UseCase::SearchAddressesByBuildingReferenceNumber do
 
       it "returns the expected building reference" do
         expect(
-          results[0].building_reference_number,
+          results[0].address_id,
         ).to eq "RRN-0000-0000-0000-0000-0000"
       end
 

@@ -17,7 +17,7 @@ describe UseCase::SearchAddressesByStreetAndTown do
 
       gateway.add(
         {
-          building_reference_number: "RRN-0000-0000-0000-0000-0000",
+          address_id: "RRN-0000-0000-0000-0000-0000",
           line1: "127 Home Road",
           line2: nil,
           line3: nil,
@@ -37,7 +37,7 @@ describe UseCase::SearchAddressesByStreetAndTown do
 
       gateway.add(
         {
-          building_reference_number: "RRN-0000-0000-0000-0000-0001",
+          address_id: "RRN-0000-0000-0000-0000-0001",
           line1: "128 Home Road",
           line2: nil,
           line3: nil,
@@ -57,7 +57,7 @@ describe UseCase::SearchAddressesByStreetAndTown do
 
       gateway.add(
         {
-          building_reference_number: "RRN-0000-0000-0000-0000-0002",
+          address_id: "RRN-0000-0000-0000-0000-0002",
           line1: "The Name",
           line2: "129 Home Road",
           line3: nil,
@@ -77,7 +77,7 @@ describe UseCase::SearchAddressesByStreetAndTown do
 
       gateway.add(
         {
-          building_reference_number: "RRN-0000-0000-0000-0000-0003",
+          address_id: "RRN-0000-0000-0000-0000-0003",
           line1: "130 Home Road",
           line2: "Placeville",
           line3: nil,
@@ -108,7 +108,7 @@ describe UseCase::SearchAddressesByStreetAndTown do
 
       it "returns the expected building reference number" do
         expect(
-          results[0].building_reference_number,
+          results[0].address_id,
         ).to eq "RRN-0000-0000-0000-0000-0000"
       end
 
@@ -170,7 +170,7 @@ describe UseCase::SearchAddressesByStreetAndTown do
 
           it "returns the expected building reference number" do
             expect(
-              results[2].building_reference_number,
+              results[2].address_id,
             ).to eq "RRN-0000-0000-0000-0000-0002"
           end
 
@@ -234,7 +234,7 @@ describe UseCase::SearchAddressesByStreetAndTown do
 
           it "returns the expected building reference number" do
             expect(
-              results[2].building_reference_number,
+              results[2].address_id,
             ).to eq "RRN-0000-0000-0000-0000-0002"
           end
 

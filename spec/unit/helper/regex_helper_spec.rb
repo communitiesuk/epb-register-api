@@ -71,7 +71,7 @@ describe Helper::RegexHelper do
         it "validates" do
           expect(
             "RRN-0000-0000-0000-0000-0000",
-          ).to match Regexp.new described_class::BUILDING_REFERENCE_NUMBER
+          ).to match Regexp.new described_class::ADDRESS_ID
         end
       end
     end
@@ -81,7 +81,7 @@ describe Helper::RegexHelper do
         it "does not validate" do
           expect(
             "0000-0000-0000-0000-0000",
-          ).not_to match Regexp.new described_class::BUILDING_REFERENCE_NUMBER
+          ).not_to match Regexp.new described_class::ADDRESS_ID
         end
       end
 
@@ -89,7 +89,7 @@ describe Helper::RegexHelper do
         it "does not validate" do
           expect(
             "RRN-asdf-asdf-asdf-asdf-asdf",
-          ).not_to match Regexp.new described_class::BUILDING_REFERENCE_NUMBER
+          ).not_to match Regexp.new described_class::ADDRESS_ID
         end
       end
 
@@ -97,7 +97,7 @@ describe Helper::RegexHelper do
         it "does not validate" do
           expect(
             "RRN-1234-asdf-1234-asdf-1234",
-          ).not_to match Regexp.new described_class::BUILDING_REFERENCE_NUMBER
+          ).not_to match Regexp.new described_class::ADDRESS_ID
         end
       end
 
@@ -105,7 +105,7 @@ describe Helper::RegexHelper do
         it "does not validate" do
           expect(
             "RRN-asdf-1234-asdf-1234-asdf",
-          ).not_to match Regexp.new described_class::BUILDING_REFERENCE_NUMBER
+          ).not_to match Regexp.new described_class::ADDRESS_ID
         end
       end
     end

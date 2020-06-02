@@ -25,7 +25,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
     let(:response) do
       JSON.parse(
         assertive_get(
-          "/api/search/addresses?buildingReferenceNumber=RRN-0000-0000-0000-0000-0000",
+          "/api/search/addresses?addressId=RRN-0000-0000-0000-0000-0000",
           [200],
           true,
           {},
@@ -46,7 +46,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
       )
     end
 
-    describe "searching by buildingReferenceNumber" do
+    describe "searching by addressId" do
       it "returns the expected amount of addresses" do
         expect(response[:data][:addresses].length).to eq 1
       end
@@ -54,7 +54,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
       it "returns the address" do
         expect(response[:data][:addresses][0]).to eq(
           {
-            buildingReferenceNumber: "RRN-0000-0000-0000-0000-0000",
+            addressId: "RRN-0000-0000-0000-0000-0000",
             line1: "1 Some Street",
             line2: nil,
             line3: nil,
@@ -78,7 +78,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
         let(:response) do
           JSON.parse(
             assertive_get(
-              "/api/search/addresses?buildingReferenceNumber=RRN-0000-0000-0000-0000-0001",
+              "/api/search/addresses?addressId=RRN-0000-0000-0000-0000-0001",
               [200],
               true,
               {},
@@ -110,7 +110,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
         it "returns the expected address" do
           expect(response[:data][:addresses][0]).to eq(
             {
-              buildingReferenceNumber: "RRN-0000-0000-0000-0000-0001",
+              addressId: "RRN-0000-0000-0000-0000-0001",
               line1: "1 Some Street",
               line2: nil,
               line3: nil,
@@ -132,11 +132,11 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
   end
 
   context "with a valid combination of parameters that have no matches" do
-    describe "with an valid, not in use buildingReferenceNumber" do
+    describe "with an valid, not in use addressId" do
       let(:response) do
         JSON.parse(
           assertive_get(
-            "/api/search/addresses?buildingReferenceNumber=RRN-1111-2222-3333-4444-5555",
+            "/api/search/addresses?addressId=RRN-1111-2222-3333-4444-5555",
             [200],
             true,
             nil,
@@ -154,10 +154,10 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
   end
 
   context "with an invalid combination of parameters" do
-    describe "with an invalid buildingReferenceNumber" do
+    describe "with an invalid addressId" do
       let(:response) do
         assertive_get(
-          "/api/search/addresses?buildingReferenceNumber=DOESNOTEXIST",
+          "/api/search/addresses?addressId=DOESNOTEXIST",
           [422],
           true,
           nil,

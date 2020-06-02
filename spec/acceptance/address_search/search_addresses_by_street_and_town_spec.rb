@@ -142,7 +142,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
         it "returns the expected address" do
           expect(response[:data][:addresses][0]).to eq(
             {
-              buildingReferenceNumber: "RRN-0000-0000-0000-0000-0000",
+              addressId: "RRN-0000-0000-0000-0000-0000",
               line1: "1 Some Street",
               line2: nil,
               line3: nil,
@@ -183,7 +183,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
         it "returns the expected address" do
           expect(response[:data][:addresses][0]).to eq(
             {
-              buildingReferenceNumber: "RRN-0000-0000-0000-0000-0000",
+              addressId: "RRN-0000-0000-0000-0000-0000",
               line1: "1 Some Street",
               line2: nil,
               line3: nil,
@@ -224,7 +224,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
         it "returns the expected address" do
           expect(response[:data][:addresses][0]).to eq(
             {
-              buildingReferenceNumber: "RRN-0000-0000-0000-0000-0000",
+              addressId: "RRN-0000-0000-0000-0000-0000",
               line1: "1 Some Street",
               line2: nil,
               line3: nil,
@@ -265,7 +265,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
         it "returns the expected address" do
           expect(response[:data][:addresses][1]).to eq(
             {
-              buildingReferenceNumber: "RRN-0000-0000-0000-0000-0005",
+              addressId: "RRN-0000-0000-0000-0000-0005",
               line1: "1 Some Street",
               line2: nil,
               line3: nil,
@@ -306,7 +306,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
         it "returns the expected address" do
           expect(response[:data][:addresses][0]).to eq(
             {
-              buildingReferenceNumber: "RRN-0000-0000-0000-0000-0000",
+              addressId: "RRN-0000-0000-0000-0000-0000",
               line1: "1 Some Street",
               line2: nil,
               line3: nil,
@@ -359,7 +359,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
         it "returns the expected address" do
           expect(response[:data][:addresses][0]).to eq(
             {
-              buildingReferenceNumber: "RRN-0000-0000-0000-0000-0002",
+              addressId: "RRN-0000-0000-0000-0000-0002",
               line1: "3 Other Street",
               line2: nil,
               line3: nil,
@@ -400,7 +400,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
         it "returns the expected address" do
           expect(response[:data][:addresses][0]).to eq(
             {
-              buildingReferenceNumber: "RRN-0000-0000-0000-0000-0003",
+              addressId: "RRN-0000-0000-0000-0000-0003",
               line1: "The House",
               line2: "123 Test Street",
               line3: nil,
@@ -441,7 +441,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
         it "returns the expected address" do
           expect(response[:data][:addresses][0]).to eq(
             {
-              buildingReferenceNumber: "RRN-0000-0000-0000-0000-0004",
+              addressId: "RRN-0000-0000-0000-0000-0004",
               line1: "3 Other Street",
               line2: "Another Town",
               line3: nil,

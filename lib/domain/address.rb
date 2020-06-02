@@ -1,6 +1,6 @@
 module Domain
   class Address
-    attr_reader :building_reference_number,
+    attr_reader :address_id,
                 :line1,
                 :line2,
                 :line3,
@@ -10,7 +10,7 @@ module Domain
                 :existing_assessments
 
     def initialize(
-      building_reference_number:,
+      address_id:,
       line1:,
       line2:,
       line3:,
@@ -19,7 +19,7 @@ module Domain
       source:,
       existing_assessments:
     )
-      @building_reference_number = building_reference_number
+      @address_id = address_id
       @line1 = line1
       @line2 = line2
       @line3 = line3
@@ -31,7 +31,7 @@ module Domain
 
     def to_hash
       {
-        building_reference_number: @building_reference_number,
+        address_id: @address_id,
         line1: @line1,
         line2: @line2,
         line3: @line3,

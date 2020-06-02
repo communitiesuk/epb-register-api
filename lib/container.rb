@@ -57,8 +57,8 @@ class Container
     check_assessor_belongs_to_scheme_use_case =
       UseCase::CheckAssessorBelongsToScheme.new(assessors_gateway)
 
-    search_addresses_by_building_reference_number_use_case =
-      UseCase::SearchAddressesByBuildingReferenceNumber.new address_search_gateway
+    search_addresses_by_address_id_use_case =
+      UseCase::SearchAddressesByAddressId.new address_search_gateway
 
     search_addresses_by_postcode_use_case =
       UseCase::SearchAddressesByPostcode.new address_search_gateway
@@ -97,8 +97,8 @@ class Container
       validate_assessment_use_case: validate_assessment_use_case,
       validate_and_lodge_assessment_use_case:
         validate_and_lodge_assessment_use_case,
-      search_addresses_by_building_reference_number_use_case:
-        search_addresses_by_building_reference_number_use_case,
+      search_addresses_by_address_id_use_case:
+        search_addresses_by_address_id_use_case,
       search_addresses_by_postcode_use_case:
         search_addresses_by_postcode_use_case,
       search_addresses_by_street_and_town_use_case:

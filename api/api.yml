@@ -305,7 +305,7 @@ paths:
           schema:
             $ref: '#/components/schemas/AddressTown'
         - in: query
-          name: buildingReferenceNumber
+          name: addressId
           description: A known UPRN or RRN to fetch a single address
           example: 'UPRN-716375734512'
           schema:

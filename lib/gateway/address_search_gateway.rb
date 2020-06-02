@@ -146,7 +146,7 @@ module Gateway
       assessment_status =
         row["date_of_expiry"] < Time.now ? "EXPIRED" : "ENTERED"
 
-      Domain::Address.new building_reference_number:
+      Domain::Address.new address_id:
                             "RRN-#{row['assessment_id']}",
                           line1: row["address_line1"],
                           line2: row["address_line2"].presence,

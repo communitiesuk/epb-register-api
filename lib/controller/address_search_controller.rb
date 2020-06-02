@@ -4,11 +4,11 @@ module Controller
       oneOf: [
         {
           type: "object",
-          required: %w[buildingReferenceNumber],
+          required: %w[addressId],
           properties: {
-            buildingReferenceNumber: {
+            addressId: {
               type: "string",
-              pattern: Helper::RegexHelper::BUILDING_REFERENCE_NUMBER,
+              pattern: Helper::RegexHelper::ADDRESS_ID,
             },
           },
         },
@@ -17,7 +17,8 @@ module Controller
           required: %w[postcode],
           properties: {
             postcode: {
-              type: "string", pattern: Helper::RegexHelper::POSTCODE
+              type: "string",
+              pattern: Helper::RegexHelper::POSTCODE,
             },
             buildingNameNumber: { type: "string" },
             addressType: { type: "string", enum: %w[DOMESTIC COMMERCIAL] },
@@ -39,8 +40,8 @@ module Controller
       filters = params_body SEARCH_SCHEMA
 
       use_case =
-        if filters.key? :building_reference_number
-          @container.get_object :search_addresses_by_building_reference_number_use_case
+        if filters.key? :address_id
+          @container.get_object :search_addresses_by_address_id_use_case
         elsif filters.key? :postcode
           @container.get_object :search_addresses_by_postcode_use_case
         elsif filters.key? :street
