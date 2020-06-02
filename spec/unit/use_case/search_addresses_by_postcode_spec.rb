@@ -21,6 +21,7 @@ describe UseCase::SearchAddressesByPostcode do
           line1: "127 Home Road",
           line2: nil,
           line3: nil,
+          line4: nil,
           town: "Placeville",
           postcode: "PL4 V11",
           assessment_type: "CEPC",
@@ -41,6 +42,7 @@ describe UseCase::SearchAddressesByPostcode do
           line1: "128 Home Road",
           line2: nil,
           line3: nil,
+          line4: nil,
           town: "Placeville",
           postcode: "PL4 V12",
           assessment_type: "RdSAP",
@@ -61,6 +63,7 @@ describe UseCase::SearchAddressesByPostcode do
           line1: "The Name",
           line2: "129 Home Road",
           line3: nil,
+          line4: nil,
           town: "Placeville",
           postcode: "PL4 V12",
           assessment_type: "RdSAP",
@@ -103,6 +106,10 @@ describe UseCase::SearchAddressesByPostcode do
 
       it "returns the expected third line of the address" do
         expect(results[0].line3).to be_nil
+      end
+
+      it "returns an empty fourth line" do
+        expect(results[0].line4).to be_nil
       end
 
       it "returns the expected town" do

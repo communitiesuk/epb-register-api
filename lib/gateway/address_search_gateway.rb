@@ -151,6 +151,7 @@ module Gateway
                           line1: row["address_line1"],
                           line2: row["address_line2"].presence,
                           line3: row["address_line3"].presence,
+                          line4: row["address_line4"].presence,
                           town: row["town"],
                           postcode: row["postcode"],
                           source: "PREVIOUS_ASSESSMENT",
