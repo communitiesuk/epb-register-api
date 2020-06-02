@@ -132,15 +132,14 @@ module Gateway
   private
 
     def levenshtein(property, bind, match_threshold = nil)
-      if match_threshold
-        "LEVENSHTEIN(#{property}, #{bind})::decimal / GREATEST(length(#{
-          property
-        }), length(#{bind})) < #{match_threshold}"
-      else
+      levenshtein =
         "LEVENSHTEIN(#{property}, #{bind})::decimal / GREATEST(length(#{
           property
         }), length(#{bind}))"
-      end
+
+      levenshtein << " < #{match_threshold}" if match_threshold
+
+      levenshtein
     end
 
     def record_to_address_domain(row)
