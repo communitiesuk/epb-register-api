@@ -36,9 +36,7 @@ class AddressSearchGatewayFake
 
   def search_by_rrn(rrn)
     filtered_results =
-      @addresses.filter do |address|
-        address[:address_id] == "RRN-#{rrn}"
-      end
+      @addresses.filter { |address| address[:address_id] == "RRN-#{rrn}" }
 
     results_to_domain filtered_results
   end

@@ -7,8 +7,7 @@ module Controller
           required: %w[addressId],
           properties: {
             addressId: {
-              type: "string",
-              pattern: Helper::RegexHelper::ADDRESS_ID,
+              type: "string", pattern: Helper::RegexHelper::ADDRESS_ID
             },
           },
         },
@@ -17,8 +16,7 @@ module Controller
           required: %w[postcode],
           properties: {
             postcode: {
-              type: "string",
-              pattern: Helper::RegexHelper::POSTCODE,
+              type: "string", pattern: Helper::RegexHelper::POSTCODE
             },
             buildingNameNumber: { type: "string" },
             addressType: { type: "string", enum: %w[DOMESTIC COMMERCIAL] },

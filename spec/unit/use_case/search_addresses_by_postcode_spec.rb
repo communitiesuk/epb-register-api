@@ -91,9 +91,7 @@ describe UseCase::SearchAddressesByPostcode do
       end
 
       it "returns the expected building reference number" do
-        expect(
-          results[0].address_id,
-        ).to eq "RRN-0000-0000-0000-0000-0000"
+        expect(results[0].address_id).to eq "RRN-0000-0000-0000-0000-0000"
       end
 
       it "returns the expected first line of the address" do
@@ -157,9 +155,7 @@ describe UseCase::SearchAddressesByPostcode do
           end
 
           it "returns the expected " do
-            expect(
-              results[0].address_id,
-            ).to eq "RRN-0000-0000-0000-0000-0001"
+            expect(results[0].address_id).to eq "RRN-0000-0000-0000-0000-0001"
           end
 
           it "returns the expected first line of the address" do
@@ -219,9 +215,7 @@ describe UseCase::SearchAddressesByPostcode do
           end
 
           it "returns the expected building reference number" do
-            expect(
-              results[0].address_id,
-            ).to eq "RRN-0000-0000-0000-0000-0000"
+            expect(results[0].address_id).to eq "RRN-0000-0000-0000-0000-0000"
           end
 
           it "returns the expected first line of the address" do
@@ -283,9 +277,7 @@ describe UseCase::SearchAddressesByPostcode do
           end
 
           it "returns the expected building reference number" do
-            expect(
-              results[0].address_id,
-            ).to eq "RRN-0000-0000-0000-0000-0002"
+            expect(results[0].address_id).to eq "RRN-0000-0000-0000-0000-0002"
           end
 
           it "returns the expected first line of the address" do

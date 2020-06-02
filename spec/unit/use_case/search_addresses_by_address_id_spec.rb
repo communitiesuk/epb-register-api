@@ -4,9 +4,7 @@ describe UseCase::SearchAddressesByAddressId do
 
     describe "by RRN" do
       it "does not return any results" do
-        results =
-          use_case.execute address_id:
-                             "RRN-0000-0000-0000-0000-0000"
+        results = use_case.execute address_id: "RRN-0000-0000-0000-0000-0000"
 
         expect(results).to eq []
       end
@@ -65,17 +63,14 @@ describe UseCase::SearchAddressesByAddressId do
 
     describe "by RRN" do
       let(:results) do
-        use_case.execute address_id:
-                           "RRN-0000-0000-0000-0000-0000"
+        use_case.execute address_id: "RRN-0000-0000-0000-0000-0000"
       end
       it "returns a single address" do
         expect(results.length).to eq 1
       end
 
       it "returns the expected building reference" do
-        expect(
-          results[0].address_id,
-        ).to eq "RRN-0000-0000-0000-0000-0000"
+        expect(results[0].address_id).to eq "RRN-0000-0000-0000-0000-0000"
       end
 
       it "returns the correct first line" do
