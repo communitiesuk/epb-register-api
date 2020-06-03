@@ -219,7 +219,7 @@
 	</xs:simpleType>
 	<xs:simpleType name="AssessorQualificationsCode">
 		<xs:annotation>
-			<xs:documentation>The types of qualificatiosn the Energy assessor may have - these indicates the types and complexity of reports the EA may produce.</xs:documentation>
+			<xs:documentation>The types of qualifications the Energy assessor may have - these indicates the types and complexity of reports the EA may produce.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="DEC">
