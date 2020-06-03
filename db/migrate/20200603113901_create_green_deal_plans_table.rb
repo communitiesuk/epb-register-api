@@ -16,6 +16,6 @@ class CreateGreenDealPlansTable < ActiveRecord::Migration[6.0]
       t.boolean :measures_removed
     end
 
-    execute('ALTER TABLE green_deal_plans ADD PRIMARY KEY (green_deal_plan_id)')
+    execute("ALTER TABLE green_deal_plans ADD PRIMARY KEY (green_deal_plan_id)")
   end
 end
