@@ -242,20 +242,24 @@ module Controller
       content_type = request.env["CONTENT_TYPE"].split("+")[1]
       scheme_ids = sup
 
-      result =
+      results =
         validate_and_lodge_assessment.execute(xml, content_type, scheme_ids)
 
-      @events.event(
-        false,
-        {
-          event_type: :lodgement_successful,
-          correlation_id: correlation_id,
-          assessment_id: result.assessment_id,
-        },
-        true,
-      )
+      results.each do |result|
+        @events.event(
+          false,
+          {
+            event_type: :lodgement_successful,
+            correlation_id: correlation_id,
+            assessment_id: result.assessment_id,
+          },
+          true,
+        )
+      end
 
-      json_api_response(code: 201, data: result.to_hash)
+      json_api_response(
+        code: 201, data: (results.size > 1 ? results : results.first),
+      )
     rescue StandardError => e
       @events.event(
         false,
