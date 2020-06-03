@@ -879,7 +879,7 @@ components:
         sequence:
           type: number
           example: 0
-          description: "The order in which this reccomendation should be shown"
+          description: "The order in which this recommendation should be shown"
         improvementCode:
           type: string
           example: "1"

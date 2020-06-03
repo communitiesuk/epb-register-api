@@ -1405,7 +1405,7 @@ components:
         sequence:
           type: number
           example: 0
-          description: "The order in which this reccomendation should be shown"
+          description: "The order in which this recommendation should be shown"
         indicativeCost:
           type: string
           example: "£200 - £4,000"
@@ -1436,7 +1436,7 @@ components:
         sequence:
           type: number
           example: 1
-          description: "The order in which this reccomendation should be shown"
+          description: "The order in which this recommendation should be shown"
         improvementCode:
           type: string
           example: "1"
