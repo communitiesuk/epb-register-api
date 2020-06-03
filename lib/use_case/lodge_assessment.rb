@@ -26,8 +26,7 @@ module UseCase
       @assessments_xml_gateway = assessments_xml_gateway
     end
 
-    def execute(lodgement)
-      data = lodgement.fetch_data
+    def execute(data)
       assessment_id = data[:assessment_id]
       assessment_type = data[:assessment_type]
 
@@ -133,7 +132,7 @@ module UseCase
       @assessments_gateway.insert_or_update assessment
 
       @assessments_xml_gateway.send_to_db(
-        { assessment_id: data[:assessment_id], xml: lodgement.raw_data },
+        { assessment_id: data[:assessment_id], xml: data[:raw_data] },
       )
 
       assessment

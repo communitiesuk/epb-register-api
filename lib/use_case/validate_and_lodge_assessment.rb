@@ -34,11 +34,13 @@ module UseCase
         raise ValidationErrorException
       end
 
-      unless assessor_can_lodge?(lodgement.fetch_data[:assessor_id], scheme_ids)
-        raise UnauthorisedToLodgeAsThisSchemeException
-      end
+      lodgement.fetch_data.each do |lodgement_data|
+        unless assessor_can_lodge?(lodgement_data[:assessor_id], scheme_ids)
+          raise UnauthorisedToLodgeAsThisSchemeException
+        end
 
-      @lodge_assessment_use_case.execute(lodgement)
+        return @lodge_assessment_use_case.execute(lodgement_data)
+      end
     end
 
   private
