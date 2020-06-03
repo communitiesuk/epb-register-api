@@ -375,7 +375,7 @@ paths:
           application/xml+CEPC-7.1:
             schema:
               $ref: '#/components/schemas/Empty'
-          application/xml+NI-CEPC-7.1:
+          application/xml+CEPC-NI-7.1:
             schema:
               $ref: '#/components/schemas/Empty'
       responses:
