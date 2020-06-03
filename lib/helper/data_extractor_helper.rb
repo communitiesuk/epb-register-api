@@ -1,11 +1,9 @@
 module Helper
   class DataExtractorHelper
-    def fetch_data(raw_data, data_settings, kewy = "", dev_root = false)
+    def fetch_data(raw_data, data_settings, kewy = "")
       data = {}
 
       traversed_settings = {}
-
-      raw_data = raw_data[dev_root.to_sym] if dev_root
 
       data_settings.each do |settings|
         key = settings["key"].to_sym

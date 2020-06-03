@@ -16,17 +16,37 @@ module Domain
     def fetch_data
       schema = Helper::SchemaListHelper.new(@schema_name)
 
-      data =
-        Helper::DataExtractorHelper.new.fetch_data(
-          @data,
-          schema.fetch_data_structure,
-          "",
-          schema.fetch_root,
+      data = []
+
+      if schema.fetch_root
+        unless @data.first[1][schema.fetch_root.to_sym].is_a? Array
+          @data.first[1][schema.fetch_root.to_sym] = [
+            @data.first[1][schema.fetch_root.to_sym],
+          ]
+        end
+        @data.first[1][schema.fetch_root.to_sym].each do |inner_data|
+          cad_data =
+            Helper::DataExtractorHelper.new.fetch_data(
+              { schema.fetch_root.to_sym => inner_data },
+              schema.fetch_data_structure,
+              "",
+            )
+
+          cad_data[:raw_data] = @raw_data
+
+          data.push(cad_data)
+        end
+      else
+        data.push(
+          Helper::DataExtractorHelper.new.fetch_data(
+            @data,
+            schema.fetch_data_structure,
+            "",
+          ),
         )
+      end
 
-      data[:raw_data] = @raw_data
-
-      [data]
+      data
     end
   end
 end
