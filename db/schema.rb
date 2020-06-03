@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_02_151358) do
+ActiveRecord::Schema.define(version: 2020_06_03_122933) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -105,6 +105,45 @@ ActiveRecord::Schema.define(version: 2020_06_02_151358) do
     t.string "improvement_description"
   end
 
+  create_table "gdp_charges", id: false, force: :cascade do |t|
+    t.string "green_deal_plan_id"
+    t.integer "sequence"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.decimal "daily_charge"
+    t.string "fuel_code"
+    t.integer "fuel_saving"
+    t.decimal "standing_charge_fraction"
+  end
+
+  create_table "gdp_fuel_savings", id: false, force: :cascade do |t|
+    t.string "green_deal_plan_id"
+    t.integer "sequence"
+  end
+
+  create_table "gdp_measures", id: false, force: :cascade do |t|
+    t.string "green_deal_plan_id"
+    t.integer "sequence"
+    t.string "measure_type"
+    t.string "product"
+    t.datetime "repaid_date"
+  end
+
+  create_table "green_deal_plans", primary_key: "green_deal_plan_id", id: :string, force: :cascade do |t|
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.string "provider_name"
+    t.string "provider_telephone"
+    t.string "provider_email"
+    t.decimal "interest_rate"
+    t.boolean "fixed_interest_rate"
+    t.decimal "charge_uplift_amount"
+    t.datetime "charge_uplift_date"
+    t.boolean "cca_regulated"
+    t.boolean "structure_changed"
+    t.boolean "measures_removed"
+  end
+
   create_table "postcode_geolocation", force: :cascade do |t|
     t.string "postcode"
     t.decimal "latitude"
@@ -126,4 +165,7 @@ ActiveRecord::Schema.define(version: 2020_06_02_151358) do
   add_foreign_key "assessments_xml", "assessments", primary_key: "assessment_id"
   add_foreign_key "assessors", "schemes", column: "registered_by", primary_key: "scheme_id"
   add_foreign_key "domestic_epc_energy_improvements", "assessments", primary_key: "assessment_id"
+  add_foreign_key "gdp_charges", "green_deal_plans", primary_key: "green_deal_plan_id"
+  add_foreign_key "gdp_fuel_savings", "green_deal_plans", primary_key: "green_deal_plan_id"
+  add_foreign_key "gdp_measures", "green_deal_plans", primary_key: "green_deal_plan_id"
 end
