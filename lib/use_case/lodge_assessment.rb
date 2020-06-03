@@ -50,7 +50,7 @@ module UseCase
         raise InactiveAssessorException
       end
 
-      if assessment_type == "CEPC" || assessment_type == "CEPC-RR"
+      if %w[CEPC CEPC-RR].include?(assessment_type)
         if data[:building_complexity]
           level = data[:building_complexity][-1]
 
