@@ -67,7 +67,7 @@ module UseCase
         end
       end
 
-      if (assessment_type == "DEC" || assessment_type == "DEC-AR") &&
+      if %w[DEC DEC-AR].include?(assessment_type) &&
           assessor.non_domestic_dec_qualification == "INACTIVE"
         raise InactiveAssessorException
       end
