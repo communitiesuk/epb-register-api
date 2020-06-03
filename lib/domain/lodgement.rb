@@ -20,8 +20,9 @@ module Domain
       Helper::DataExtractorHelper.new.fetch_data(data, schema)
     end
 
-    def type
-      Helper::SchemaListHelper.new(@schema_name).report_type
+      data[:raw_data] = @raw_data
+
+      [data]
     end
   end
 end

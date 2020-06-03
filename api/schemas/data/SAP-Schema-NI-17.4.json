@@ -6,6 +6,10 @@
   "root": "report_header",
   "path": ["RRN"]
 }, {
+  "key": "assessment_type",
+  "path": ["_"],
+  "default": "SAP"
+}, {
   "key": "assessor_id",
   "root": "report_header",
   "path": ["Home_Inspector", "Identification_Number", "Certificate_Number"]

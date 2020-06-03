@@ -22,11 +22,4 @@ describe Helper::SchemaListHelper do
       )
     end
   end
-
-  context "when getting the report type" do
-    it "will report type from the schema list" do
-      result = described_class.new(valid_schema_name).report_type
-      expect(result).to eq("RdSAP")
-    end
-  end
 end

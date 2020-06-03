@@ -6,6 +6,10 @@
   "root": "report_header",
   "path": ["RRN"]
 }, {
+  "key": "assessment_type",
+  "path": ["_"],
+  "default": "RdSAP"
+}, {
   "key": "assessor_id",
   "root": "report_header",
   "path": ["Energy_Assessor", "Identification_Number", "Certificate_Number"]

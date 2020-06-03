@@ -29,7 +29,7 @@ module UseCase
     def execute(lodgement)
       data = lodgement.fetch_data
       assessment_id = data[:assessment_id]
-      assessment_type = data[:assessment_type] || lodgement.type
+      assessment_type = data[:assessment_type]
 
       if @assessments_gateway.fetch assessment_id
         raise DuplicateAssessmentIdException

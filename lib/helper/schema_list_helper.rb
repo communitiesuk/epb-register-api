@@ -28,8 +28,8 @@ module Helper
       @schema_active[:schema_path]
     end
 
-    def report_type
-      @schema_active[:report_type]
+    def fetch_root
+      @schema_active[:root_tag]
     end
   end
 end
