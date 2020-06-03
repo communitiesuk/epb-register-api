@@ -33,7 +33,6 @@ module UseCase
           total_floor_area: assessment_data[:total_floor_area],
           assessment_id: assessment_id,
           assessor: assessor,
-          address_summary: assessment_data[:address_summary],
           current_energy_efficiency_rating:
             assessment_data[:current_energy_efficiency_rating],
           potential_energy_efficiency_rating:

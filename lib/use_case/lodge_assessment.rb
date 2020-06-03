@@ -37,16 +37,6 @@ module UseCase
 
       scheme_assessor_id = data[:assessor_id]
 
-      address_summary =
-        [
-          data[:address_line_one],
-          data[:address_line_two],
-          data[:address_line_three],
-          data[:town],
-          data[:postcode],
-        ].compact
-          .join(", ")
-
       expiry_date = Date.parse(data[:inspection_date]).next_year(10).to_s
 
       assessor = @assessors_gateway.fetch scheme_assessor_id
@@ -108,7 +98,6 @@ module UseCase
           total_floor_area: data[:total_floor_area],
           assessment_id: data[:assessment_id],
           assessor: assessor,
-          address_summary: address_summary,
           current_energy_efficiency_rating: data[:current_energy_rating].to_i,
           potential_energy_efficiency_rating:
             data[:potential_energy_rating].to_i,

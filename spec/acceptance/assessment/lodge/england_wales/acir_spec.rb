@@ -52,7 +52,6 @@ describe "Acceptance::LodgeACIREnergyAssessment" do
         "addressLine2" => "",
         "addressLine3" => "",
         "addressLine4" => "",
-        "addressSummary" => "2 Lonely Street, Post-Town1, A0 0AA",
         "assessmentId" => "0000-0000-0000-0000-0000",
         "assessor" => {
           "contactDetails" => {

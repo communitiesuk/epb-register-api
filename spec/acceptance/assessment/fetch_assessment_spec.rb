@@ -35,7 +35,6 @@ describe "Acceptance::Assessment" do
       totalFloorArea: 1_000.45,
       typeOfAssessment: "RdSAP",
       dwellingType: "Top floor flat",
-      addressSummary: "123 Victoria Street, London, SW1A 1BD",
       currentEnergyEfficiencyRating: 75,
       potentialEnergyEfficiencyRating: 80,
       currentCarbonEmission: 2.4,
@@ -179,7 +178,6 @@ describe "Acceptance::Assessment" do
       totalFloorArea: 1_000.45,
       typeOfAssessment: "RdSAP",
       dwellingType: "Top floor flat",
-      addressSummary: "123 Victoria Street, London, SW1A 1BD",
       currentEnergyEfficiencyRating: 75,
       potentialEnergyEfficiencyRating: 80,
       currentCarbonEmission: 2.4,
@@ -317,7 +315,6 @@ describe "Acceptance::Assessment" do
             totalFloorArea: valid_assessment_body[:totalFloorArea],
             typeOfAssessment: valid_assessment_body[:typeOfAssessment],
             dwellingType: valid_assessment_body[:dwellingType],
-            addressSummary: valid_assessment_body[:addressSummary],
             assessmentId: "15650-651625-18267167",
             currentEnergyEfficiencyRating:
               valid_assessment_body[:currentEnergyEfficiencyRating],
@@ -438,7 +435,6 @@ describe "Acceptance::Assessment" do
               totalFloorArea: second_valid_assessment_body[:totalFloorArea],
               typeOfAssessment: second_valid_assessment_body[:typeOfAssessment],
               dwellingType: second_valid_assessment_body[:dwellingType],
-              addressSummary: second_valid_assessment_body[:addressSummary],
               assessmentId: "15650-651625-18267167",
               currentEnergyEfficiencyRating:
                 second_valid_assessment_body[:currentEnergyEfficiencyRating],

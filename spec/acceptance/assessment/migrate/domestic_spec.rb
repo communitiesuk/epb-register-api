@@ -74,7 +74,6 @@ describe "Acceptance::Assessment::MigrateAssessment" do
       totalFloorArea: 1_000.45,
       typeOfAssessment: "RdSAP",
       dwellingType: "Top floor flat",
-      addressSummary: "123 Victoria Street, London, SW1A 1BD",
       currentEnergyEfficiencyRating: 75,
       potentialEnergyEfficiencyRating: 80,
       currentCarbonEmission: 2.4,
@@ -249,7 +248,6 @@ describe "Acceptance::Assessment::MigrateAssessment" do
         totalFloorArea: valid_assessment_body[:totalFloorArea],
         typeOfAssessment: valid_assessment_body[:typeOfAssessment],
         dwellingType: valid_assessment_body[:dwellingType],
-        addressSummary: valid_assessment_body[:addressSummary],
         assessmentId: "123-456",
         currentEnergyEfficiencyRating:
           valid_assessment_body[:currentEnergyEfficiencyRating],
@@ -303,16 +301,6 @@ describe "Acceptance::Assessment::MigrateAssessment" do
       }
 
       expect(migrated_assessment[:data]).to eq(expected_response)
-    end
-
-    it "rejects a assessment without an address summary" do
-      migrate_assessment("123-456", assessment_without(:addressSummary), [422])
-    end
-
-    it "rejects a assessment with an address summary that is not a string" do
-      assessment_with_dodgy_address = valid_assessment_body.dup
-      assessment_with_dodgy_address[:addressSummary] = 123_321
-      migrate_assessment("123-456", assessment_with_dodgy_address, [422])
     end
 
     it "rejects a assessment without a date of assessment" do

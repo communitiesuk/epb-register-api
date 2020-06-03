@@ -24,7 +24,6 @@ module Gateway
         total_floor_area: assessment[:total_floor_area].to_f,
         assessment_id: assessment[:assessment_id],
         scheme_assessor_id: assessment[:scheme_assessor_id],
-        address_summary: assessment[:address_summary],
         current_energy_efficiency_rating:
           assessment[:current_energy_efficiency_rating],
         potential_energy_efficiency_rating:
@@ -114,7 +113,7 @@ module Gateway
       sql =
         "SELECT
             scheme_assessor_id, assessment_id, date_of_assessment, date_registered, dwelling_type,
-            type_of_assessment, total_floor_area, address_summary, current_energy_efficiency_rating,
+            type_of_assessment, total_floor_area, current_energy_efficiency_rating,
             potential_energy_efficiency_rating, opt_out, postcode, date_of_expiry,
             address_line1, address_line2, address_line3, address_line4, town,
             current_space_heating_demand, current_water_heating_demand, impact_of_loft_insulation,
@@ -142,7 +141,7 @@ module Gateway
       sql =
         "SELECT
           scheme_assessor_id, assessment_id, date_of_assessment, date_registered, dwelling_type,
-          type_of_assessment, total_floor_area, address_summary, current_energy_efficiency_rating,
+          type_of_assessment, total_floor_area, current_energy_efficiency_rating,
           potential_energy_efficiency_rating, opt_out, postcode, date_of_expiry,
           address_line1, address_line2, address_line3, address_line4, town,
           current_space_heating_demand, current_water_heating_demand, impact_of_loft_insulation,
@@ -173,7 +172,7 @@ module Gateway
       sql =
         "SELECT
           scheme_assessor_id, assessment_id, date_of_assessment, date_registered, dwelling_type,
-          type_of_assessment, total_floor_area, address_summary, current_energy_efficiency_rating,
+          type_of_assessment, total_floor_area, current_energy_efficiency_rating,
           potential_energy_efficiency_rating, opt_out, postcode, date_of_expiry,
           address_line1, address_line2, address_line3, address_line4, town,
           current_space_heating_demand, current_water_heating_demand, impact_of_loft_insulation,

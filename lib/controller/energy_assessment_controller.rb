@@ -5,7 +5,6 @@ module Controller
     PUT_SCHEMA = {
       type: "object",
       required: %w[
-        addressSummary
         addressLine1
         town
         postcode
@@ -25,7 +24,6 @@ module Controller
         recommendedImprovements
       ],
       properties: {
-        addressSummary: { type: "string" },
         addressLine1: { type: "string" },
         addressLine2: { type: %w[string null] },
         addressLine3: { type: %w[string null] },

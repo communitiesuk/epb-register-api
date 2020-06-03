@@ -53,7 +53,6 @@ describe "Acceptance::LodgeDEC(AR)NIEnergyAssessment" do
         "addressLine2" => "",
         "addressLine3" => "",
         "addressLine4" => "",
-        "addressSummary" => "1 Lonely Street, Post-Town0, A0 0AA",
         "assessmentId" => "0000-0000-0000-0000-0000",
         "assessor" => {
           "contactDetails" => {

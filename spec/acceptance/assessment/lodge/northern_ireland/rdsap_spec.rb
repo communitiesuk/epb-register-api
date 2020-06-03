@@ -88,7 +88,6 @@ describe "Acceptance::LodgeRdSAPNIEnergyAssessment" do
           "addressLine2" => "",
           "addressLine3" => "",
           "addressLine4" => "",
-          "addressSummary" => "1 Some Street, Post-Town1, A0 0AA",
           "assessmentId" => "1234-1234-1234-1234-1234",
           "assessor" => {
             "contactDetails" => {
@@ -259,29 +258,6 @@ describe "Acceptance::LodgeRdSAPNIEnergyAssessment" do
         }
 
         expect(response["data"]).to eq(expected_response)
-      end
-
-      it "can return the correct address summary of the property" do
-        address_line_one = doc.search("Address-Line-1")[1]
-
-        address_line_two = Nokogiri::XML::Node.new "Address-Line-2", doc
-        address_line_two.content = "2 test street"
-        address_line_one.add_next_sibling address_line_two
-
-        address_line_three = Nokogiri::XML::Node.new "Address-Line-3", doc
-        address_line_three.content = "3 test street"
-        address_line_two.add_next_sibling address_line_three
-
-        lodge_assessment(
-          assessment_body: doc.to_xml,
-          accepted_responses: [201],
-          auth_data: { scheme_ids: [scheme_id] },
-          schema_name: "RdSAP-Schema-NI-19.0",
-        )
-
-        expect(response["data"]["addressSummary"]).to eq(
-          "1 Some Street, 2 test street, 3 test street, Post-Town1, A0 0AA",
-        )
       end
 
       context "when missing optional elements" do

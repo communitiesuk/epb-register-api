@@ -99,7 +99,6 @@ describe "Acceptance::LodgeRREnergyAssessment" do
           "addressLine2" => "",
           "addressLine3" => "",
           "addressLine4" => "",
-          "addressSummary" => "1 Lonely Street, Post-Town0, A0 0AA",
           "assessmentId" => "1234-1234-1234-1234-1234",
           "assessor" => {
             "contactDetails" => {

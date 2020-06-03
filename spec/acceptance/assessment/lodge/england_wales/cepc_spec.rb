@@ -114,7 +114,6 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
           "addressLine2" => "",
           "addressLine3" => "",
           "addressLine4" => "",
-          "addressSummary" => "2 Lonely Street, Post-Town1, A0 0AA",
           "assessmentId" => "1234-1234-1234-1234-1234",
           "assessor" => {
             "contactDetails" => {
@@ -205,29 +204,6 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
         )
 
         expect(response["data"]["addressLine3"]).to eq("3 test street")
-      end
-
-      it "can return the correct address summary of the property" do
-        address_line_one = doc.search("//CEPC:Address-Line-1")[0]
-
-        address_line_two = Nokogiri::XML::Node.new "CEPC:Address-Line-2", doc
-        address_line_two.content = "2 test street"
-        address_line_one.add_next_sibling address_line_two
-
-        address_line_three = Nokogiri::XML::Node.new "CEPC:Address-Line-3", doc
-        address_line_three.content = "3 test street"
-        address_line_two.add_next_sibling address_line_three
-
-        lodge_assessment(
-          assessment_body: doc.to_xml,
-          accepted_responses: [201],
-          auth_data: { scheme_ids: [scheme_id] },
-          schema_name: "CEPC-7.1",
-        )
-
-        expect(response["data"]["addressSummary"]).to eq(
-          "2 Lonely Street, 2 test street, 3 test street, Post-Town1, A0 0AA",
-        )
       end
 
       context "when missing optional elements" do

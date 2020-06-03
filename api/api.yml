@@ -1323,9 +1323,6 @@ components:
           enum: [SAP, RdSAP]
         dwellingType:
           type: string
-        addressSummary:
-          type: string
-          example: 2 Marsham Street, London, SW1P 4JA
         currentCarbonEmission:
           type: number
           description: The current carbon emission of the property

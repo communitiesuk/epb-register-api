@@ -770,9 +770,6 @@ components:
           enum: [SAP, RdSAP]
         dwellingType:
           type: string
-        addressSummary:
-          type: string
-          example: 2 Marsham Street, London, SW1P 4JA
         currentEnergyEfficiencyRating:
           type: integer
           minimum: 1

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_03_122933) do
+ActiveRecord::Schema.define(version: 2020_06_03_205332) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -22,7 +22,6 @@ ActiveRecord::Schema.define(version: 2020_06_03_122933) do
     t.string "dwelling_type"
     t.string "type_of_assessment"
     t.decimal "total_floor_area"
-    t.string "address_summary"
     t.integer "current_energy_efficiency_rating", limit: 2, default: 1, null: false
     t.integer "potential_energy_efficiency_rating", limit: 2, default: 2, null: false
     t.string "postcode"
@@ -66,8 +65,8 @@ ActiveRecord::Schema.define(version: 2020_06_03_122933) do
     t.string "non_domestic_cc4_qualification"
     t.string "non_domestic_dec_qualification"
     t.string "non_domestic_nos3_qualification"
-    t.string "non_domestic_nos4_qualification"
     t.string "non_domestic_nos5_qualification"
+    t.string "non_domestic_nos4_qualification"
     t.string "domestic_sap_qualification"
     t.string "also_known_as"
     t.string "address_line1"

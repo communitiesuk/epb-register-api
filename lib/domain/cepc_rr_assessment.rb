@@ -13,7 +13,6 @@ module Domain
       total_floor_area: nil,
       assessment_id: nil,
       assessor: nil,
-      address_summary: nil,
       current_energy_efficiency_rating: nil,
       potential_energy_efficiency_rating: nil,
       current_carbon_emission: nil,
@@ -43,7 +42,6 @@ module Domain
       @total_floor_area = total_floor_area.to_f
       @assessment_id = assessment_id
       @assessor = assessor
-      @address_summary = address_summary
       @current_energy_efficiency_rating = current_energy_efficiency_rating
       @potential_energy_efficiency_rating = potential_energy_efficiency_rating
       @current_carbon_emission = current_carbon_emission
@@ -95,7 +93,6 @@ module Domain
         total_floor_area: @total_floor_area.to_f,
         assessment_id: @assessment_id,
         scheme_assessor_id: @assessor.scheme_assessor_id,
-        address_summary: @address_summary,
         current_energy_efficiency_rating: @current_energy_efficiency_rating,
         potential_energy_efficiency_rating: @potential_energy_efficiency_rating,
         current_carbon_emission: @current_carbon_emission.to_f,
@@ -135,7 +132,6 @@ module Domain
         total_floor_area: @total_floor_area.to_f,
         assessment_id: @assessment_id,
         scheme_assessor_id: @assessor.scheme_assessor_id,
-        address_summary: @address_summary,
         current_energy_efficiency_rating:
           @current_energy_efficiency_rating.to_f,
         potential_energy_efficiency_rating:
