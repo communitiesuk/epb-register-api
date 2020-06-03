@@ -1,5 +1,5 @@
 module Domain
-  class Assessment
+  class DecAssessment
     attr_reader :current_energy_efficiency_rating,
                 :potential_energy_efficiency_rating,
                 :assessment_id,
