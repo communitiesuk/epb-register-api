@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Report xmlns="https://epbr.digital.communities.gov.uk/xsd/cepc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/cepc ../CEPC-7.1/Reports/CEPC-Reports.xsd">
-    <Report-Header>
+<Reports xmlns="https://epbr.digital.communities.gov.uk/xsd/cepc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/cepc ../CEPC-7.1/Reports/CEPC-Reports.xsd">
+  <Report>
+  <Report-Header>
         <RRN>0000-0000-0000-0000-0000</RRN>
         <Issue-Date>2006-05-04</Issue-Date>
         <Report-Type>5</Report-Type>
@@ -369,4 +370,5 @@
             </Equipment-Capacity>
         </ACI-System-Control>
     </Air-Conditioning-Inspection-Report>
-</Report>
+  </Report>
+</Reports>
