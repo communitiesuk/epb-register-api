@@ -1,6 +1,8 @@
 module Gateway
   class AddressSearchGateway
     ADDRESS_TYPES = { DOMESTIC: %w[SAP RdSAP], COMMERCIAL: %w[CEPC] }.freeze
+    STREET_PERMISSIVENESS = "0.35".freeze
+    TOWN_PERMISSIVENESS = "0.3".freeze
 
     def search_by_postcode(postcode, building_name_number, address_type)
       postcode = postcode.delete " "
@@ -97,11 +99,11 @@ module Gateway
           postcode
         FROM assessments
         WHERE (#{
-          levenshtein('address_line1', '$1', '0.35')
-        } OR #{levenshtein('address_line2', '$1', '0.35')})
+          levenshtein('address_line1', '$1', STREET_PERMISSIVENESS)
+        } OR #{levenshtein('address_line2', '$1', STREET_PERMISSIVENESS)})
         AND (#{
-          levenshtein('town', '$2', '0.3')
-        } OR #{levenshtein('address_line2', '$2', '0.3')})"
+          levenshtein('town', '$2', TOWN_PERMISSIVENESS)
+        } OR #{levenshtein('address_line2', '$2', TOWN_PERMISSIVENESS)})"
 
       binds = [
         ActiveRecord::Relation::QueryAttribute.new(
