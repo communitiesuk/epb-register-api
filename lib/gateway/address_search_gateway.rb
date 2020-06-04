@@ -140,13 +140,13 @@ module Gateway
 
   private
 
-    def levenshtein(property, bind, match_threshold = nil)
+    def levenshtein(property, bind, permissiveness = nil)
       levenshtein =
         "LEVENSHTEIN(LOWER(#{property}), LOWER(#{
           bind
         }))::decimal / GREATEST(length(#{property}), length(#{bind}))"
 
-      levenshtein << " < #{match_threshold}" if match_threshold
+      levenshtein << " < #{permissiveness}" if permissiveness
 
       levenshtein
     end
