@@ -97,11 +97,11 @@ module Gateway
           postcode
         FROM assessments
         WHERE (#{
-          levenshtein('address_line1', '$1', '0.4')
-        } OR #{levenshtein('address_line2', '$1', '0.4')})
+          levenshtein('address_line1', '$1', '0.35')
+        } OR #{levenshtein('address_line2', '$1', '0.35')})
         AND (#{
-          levenshtein('town', '$2', '0.4')
-        } OR #{levenshtein('address_line2', '$2', '0.4')})"
+          levenshtein('town', '$2', '0.3')
+        } OR #{levenshtein('address_line2', '$2', '0.3')})"
 
       binds = [
         ActiveRecord::Relation::QueryAttribute.new(
@@ -122,7 +122,16 @@ module Gateway
         sql << " AND type_of_assessment IN (#{types.join(', ')})"
       end
 
-      sql << " ORDER BY address_line1, assessment_id"
+      sql <<
+        " ORDER BY
+                #{
+          levenshtein('address_line1', '$1')
+        },
+                #{
+          levenshtein('town', '$2')
+        },
+                address_line1,
+                assessment_id"
 
       results = ActiveRecord::Base.connection.exec_query sql, "SQL", binds
 
@@ -133,9 +142,9 @@ module Gateway
 
     def levenshtein(property, bind, match_threshold = nil)
       levenshtein =
-        "LEVENSHTEIN(#{property}, #{bind})::decimal / GREATEST(length(#{
-          property
-        }), length(#{bind}))"
+        "LEVENSHTEIN(LOWER(#{property}), LOWER(#{
+          bind
+        }))::decimal / GREATEST(length(#{property}), length(#{bind}))"
 
       levenshtein << " < #{match_threshold}" if match_threshold
 
