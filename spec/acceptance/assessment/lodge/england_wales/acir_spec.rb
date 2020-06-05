@@ -150,6 +150,7 @@ describe "Acceptance::LodgeACIREnergyAssessment" do
       lodge_assessment(
         assessment_body: doc.to_xml,
         accepted_responses: [400],
+        auth_data: { scheme_ids: [scheme_id] },
         schema_name: "CEPC-7.1",
       )
     end
