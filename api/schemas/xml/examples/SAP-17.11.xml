@@ -6,7 +6,7 @@
     <Calculation-Software-Name>Calculation-Software-Name0</Calculation-Software-Name>
     <Calculation-Software-Version>Calculation-Software-Version0</Calculation-Software-Version>
     <Report-Header>
-        <RRN>0000-0000-0000-0000-0000</RRN>
+        <RRN>1000-0000-0000-0000-0000</RRN>
         <Inspection-Date>2006-05-04</Inspection-Date>
         <Report-Type>1</Report-Type>
         <Completion-Date>2006-05-04</Completion-Date>
@@ -30,7 +30,7 @@
             <Scheme-Name>Scheme-Name0</Scheme-Name>
             <Scheme-Web-Site>Scheme-Web-Site0</Scheme-Web-Site>
             <Identification-Number>
-                <Certificate-Number>TEST000000</Certificate-Number>
+                <Certificate-Number>JASE000000</Certificate-Number>
             </Identification-Number>
         </Home-Inspector>
         <Property>

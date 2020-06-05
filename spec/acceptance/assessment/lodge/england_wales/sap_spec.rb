@@ -16,7 +16,7 @@ describe "Acceptance::LodgeSapEnergyAssessment" do
           scheme_id = add_scheme_and_get_id
           add_assessor(
             scheme_id,
-            "TEST000000",
+            "JASE000000",
             fetch_assessor_stub.fetch_request_body(domesticSap: "INACTIVE"),
           )
 
@@ -42,7 +42,7 @@ describe "Acceptance::LodgeSapEnergyAssessment" do
       scheme_id = add_scheme_and_get_id
       add_assessor(
         scheme_id,
-        "TEST000000",
+        "JASE000000",
         fetch_assessor_stub.fetch_request_body(domesticSap: "ACTIVE"),
       )
 

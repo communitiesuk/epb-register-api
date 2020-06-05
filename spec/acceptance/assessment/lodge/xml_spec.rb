@@ -14,6 +14,7 @@ describe "Acceptance::LodgeAssessment::XML" do
         nonDomesticNos3: "ACTIVE",
         nonDomesticNos4: "ACTIVE",
         nonDomesticNos5: "INACTIVE",
+        domesticSap: "ACTIVE",
       },
       contactDetails: {
         telephoneNumber: "010199991010101", email: "person@person.com"
@@ -74,10 +75,18 @@ describe "Acceptance::LodgeAssessment::XML" do
     end
 
     it "will remove the <PDF> element" do
-      database_xml = get_stored_xml("0000-0000-0000-0000-0000")
+      add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
+      lodge_assessment(
+        assessment_body: valid_sap_xml,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] },
+        schema_name: "SAP-Schema-17.1",
+      )
+
+      database_xml = get_stored_xml("1000-0000-0000-0000-0000")
 
       expect(valid_sap_xml).to include("<PDF>")
-      expect(cleaned_xml).to eq(
+      expect(cleaned_sap_xml).to eq(
         '<?xml version="1.0" encoding="UTF-8"?>
 ' + database_xml,
       )

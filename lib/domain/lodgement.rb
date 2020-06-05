@@ -37,13 +37,15 @@ module Domain
           data.push(cad_data)
         end
       else
-        data.push(
+        cad_data =
           Helper::DataExtractorHelper.new.fetch_data(
             @data,
             schema.fetch_data_structure,
             "",
-          ),
-        )
+          )
+        cad_data[:raw_data] = @raw_data
+
+        data.push(cad_data)
       end
 
       data
