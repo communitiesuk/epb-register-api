@@ -36,12 +36,14 @@ module UseCase
 
       responses = []
 
-      lodgement.fetch_data.each do |lodgement_data|
-        unless assessor_can_lodge?(lodgement_data[:assessor_id], scheme_ids)
-          raise UnauthorisedToLodgeAsThisSchemeException
-        end
+      ActiveRecord::Base.transaction do
+        lodgement.fetch_data.each do |lodgement_data|
+          unless assessor_can_lodge?(lodgement_data[:assessor_id], scheme_ids)
+            raise UnauthorisedToLodgeAsThisSchemeException
+          end
 
-        responses.push(@lodge_assessment_use_case.execute(lodgement_data))
+          responses.push(@lodge_assessment_use_case.execute(lodgement_data))
+        end
       end
 
       responses

@@ -243,5 +243,32 @@ describe "Acceptance::LodgeACICEnergyAssessment" do
         expect(response_acir["data"]).to eq(expected_acir_response)
       end
     end
+
+    context "when failing so save ACIR as ACIC went through" do
+      let(:scheme_id) { add_scheme_and_get_id }
+
+      before do
+        add_assessor(
+          scheme_id,
+          "JASE000000",
+          fetch_assessor_stub.fetch_request_body(
+            nonDomesticCc4: "ACTIVE", nonDomesticSp3: "INACTIVE",
+          ),
+        )
+      end
+
+      it "does not save any lodgement" do
+        lodge_assessment(
+          assessment_body: valid_cepc_ni_xml,
+          accepted_responses: [400],
+          auth_data: { scheme_ids: [scheme_id] },
+          schema_name: "CEPC-7.1",
+        )
+
+        fetch_assessment("9876-5432-0987-7654-4321", [404])
+
+        fetch_assessment("0250-4986-0585-2040-9030", [404])
+      end
+    end
   end
 end
