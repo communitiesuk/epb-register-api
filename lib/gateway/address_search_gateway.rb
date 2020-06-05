@@ -100,10 +100,12 @@ module Gateway
         FROM assessments
         WHERE (#{
           levenshtein('address_line1', '$1', STREET_PERMISSIVENESS)
-        } OR #{levenshtein('address_line2', '$1', STREET_PERMISSIVENESS)})
-        AND (#{
-          levenshtein('town', '$2', TOWN_PERMISSIVENESS)
-        } OR #{levenshtein('address_line2', '$2', TOWN_PERMISSIVENESS)})"
+        } OR #{
+          levenshtein('address_line2', '$1', STREET_PERMISSIVENESS)
+        })
+        AND (#{levenshtein('town', '$2', TOWN_PERMISSIVENESS)} OR #{
+          levenshtein('address_line2', '$2', TOWN_PERMISSIVENESS)
+        })"
 
       binds = [
         ActiveRecord::Relation::QueryAttribute.new(
