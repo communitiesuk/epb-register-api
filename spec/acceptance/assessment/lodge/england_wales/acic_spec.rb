@@ -5,13 +5,25 @@ describe "Acceptance::LodgeACICEnergyAssessment" do
 
   let(:fetch_assessor_stub) { AssessorStub.new }
 
-  let(:valid_cepc_ni_xml) do
+  let(:valid_cepc_acic_xml) do
     File.read File.join Dir.pwd, "api/schemas/xml/examples/CEPC-7.11(ACIC).xml"
   end
 
   context "when lodging an ACIC assessment (post)" do
     context "when an assessor is inactive" do
       let(:scheme_id) { add_scheme_and_get_id }
+
+      let(:response) do
+        JSON.parse(
+          lodge_assessment(
+            assessment_body: valid_cepc_acic_xml,
+            accepted_responses: [400],
+            auth_data: { scheme_ids: [scheme_id] },
+            schema_name: "CEPC-7.1",
+          )
+            .body,
+        )
+      end
 
       before do
         add_assessor(
@@ -21,45 +33,36 @@ describe "Acceptance::LodgeACICEnergyAssessment" do
         )
       end
 
-      context "when unqualified for ACIC" do
-        it "returns status 400 with the correct error response" do
-          response =
-            JSON.parse(
-              lodge_assessment(
-                assessment_body: valid_cepc_ni_xml,
-                accepted_responses: [400],
-                auth_data: { scheme_ids: [scheme_id] },
-                schema_name: "CEPC-7.1",
-              )
-                .body,
-            )
-
-          expect(response["errors"][0]["title"]).to eq(
-            "Assessor is not active.",
-          )
-        end
+      it "returns status 400 with the correct error response" do
+        expect(response["errors"][0]["title"]).to eq("Assessor is not active.")
       end
     end
 
-    it "returns status 201" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(
-        scheme_id,
-        "JASE000000",
-        fetch_assessor_stub.fetch_request_body(nonDomesticCc4: "ACTIVE"),
-      )
+    context "when an assessor is active" do
+      let(:scheme_id) { add_scheme_and_get_id }
 
-      lodge_assessment(
-        assessment_body: valid_cepc_ni_xml,
-        accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
-        schema_name: "CEPC-7.1",
-      )
+      before do
+        add_assessor(
+          scheme_id,
+          "JASE000000",
+          fetch_assessor_stub.fetch_request_body(nonDomesticCc4: "ACTIVE"),
+        )
+      end
+
+      it "returns status 201" do
+        lodge_assessment(
+          assessment_body: valid_cepc_acic_xml,
+          accepted_responses: [201],
+          auth_data: { scheme_ids: [scheme_id] },
+          schema_name: "CEPC-7.1",
+        )
+      end
     end
 
-    context "when saving a (ACIC) assessment" do
+    context "when saving an (ACIC) assessment" do
       let(:scheme_id) { add_scheme_and_get_id }
-      let(:doc) { Nokogiri.XML valid_cepc_ni_xml }
+      let(:doc) { Nokogiri.XML valid_cepc_acic_xml }
+
       let(:response) do
         JSON.parse(fetch_assessment("1234-1234-1234-1234-1234").body)
       end
@@ -76,16 +79,16 @@ describe "Acceptance::LodgeACICEnergyAssessment" do
 
         scheme_assessor_id = doc.at("Certificate-Number")
         scheme_assessor_id.children = "JASE000000"
-      end
 
-      it "returns the data that was lodged" do
         lodge_assessment(
           assessment_body: doc.to_xml,
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] },
           schema_name: "CEPC-7.1",
         )
+      end
 
+      it "returns the data that was lodged" do
         expected_response = {
           "addressLine1" => "2 Lonely Street",
           "addressLine2" => "",
