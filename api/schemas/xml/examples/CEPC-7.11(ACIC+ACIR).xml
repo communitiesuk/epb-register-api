@@ -6,11 +6,11 @@
 >
   <Report>
     <Report-Header>
-      <RRN>9876-5432-0987-7654-4321</RRN>
+      <RRN>0000-0000-0000-0000</RRN>
       <Issue-Date>2019-06-02</Issue-Date>
       <Report-Type>6</Report-Type>
       <Valid-Until>2020-05-19</Valid-Until>
-      <Related-RRN>0987-7654-4321-9876-5432</Related-RRN>
+      <Related-RRN>0000-0000-0000-0000-0001</Related-RRN>
       <Inspection-Date>2019-05-20</Inspection-Date>
       <Registration-Date>2019-05-20</Registration-Date>
       <Status>entered</Status>
@@ -101,11 +101,11 @@
   </Report>
   <Report>
     <Report-Header>
-      <RRN>0250-4986-0585-2040-9030</RRN>
+      <RRN>0000-0000-0000-0000-0001</RRN>
       <Issue-Date>2019-06-02</Issue-Date>
       <Report-Type>5</Report-Type>
       <Valid-Until>2020-05-19</Valid-Until>
-      <Related-RRN>9423-6045-0858-0900-0621</Related-RRN>
+      <Related-RRN>0000-0000-0000-0000-0000</Related-RRN>
       <Inspection-Date>2019-05-20</Inspection-Date>
       <Registration-Date>2019-05-20</Registration-Date>
       <Status>entered</Status>
