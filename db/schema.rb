@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_03_205332) do
-
+ActiveRecord::Schema.define(version: 2020_06_04_115108) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "plpgsql"
@@ -110,14 +109,14 @@ ActiveRecord::Schema.define(version: 2020_06_03_205332) do
     t.datetime "start_date"
     t.datetime "end_date"
     t.decimal "daily_charge"
-    t.string "fuel_code"
-    t.integer "fuel_saving"
-    t.decimal "standing_charge_fraction"
   end
 
   create_table "gdp_fuel_savings", id: false, force: :cascade do |t|
     t.string "green_deal_plan_id"
     t.integer "sequence"
+    t.string "fuel_code"
+    t.integer "fuel_saving"
+    t.decimal "standing_charge_fraction"
   end
 
   create_table "gdp_measures", id: false, force: :cascade do |t|
