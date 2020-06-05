@@ -182,7 +182,6 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
         end
 
         it "returns the expected address" do
-          pp response
           expect(response[:data][:addresses][0]).to eq(
             {
               addressId: "RRN-0000-0000-0000-0000-0000",
