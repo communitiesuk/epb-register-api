@@ -6,8 +6,7 @@ describe "Acceptance::LodgeAdvisoryReport" do
   let(:fetch_assessor_stub) { AssessorStub.new }
 
   let(:valid_ar_xml) do
-    File.read File.join Dir.pwd,
-                        "api/schemas/xml/examples/CEPC-7.11(Advisory-Report).xml"
+    File.read File.join Dir.pwd, "spec/fixtures/samples/dec-ar.xml"
   end
 
   context "when lodging a AR (post)" do

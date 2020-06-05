@@ -6,7 +6,7 @@ describe "Acceptance::LodgeSapEnergyAssessment" do
   let(:fetch_assessor_stub) { AssessorStub.new }
 
   let(:valid_sap_xml) do
-    File.read File.join Dir.pwd, "api/schemas/xml/examples/SAP-17.11.xml"
+    File.read File.join Dir.pwd, "spec/fixtures/samples/sap.xml"
   end
 
   context "when lodging a domestic energy assessment (post)" do

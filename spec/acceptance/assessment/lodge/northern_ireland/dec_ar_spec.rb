@@ -6,8 +6,7 @@ describe "Acceptance::LodgeDEC(AR)NIEnergyAssessment" do
   let(:fetch_assessor_stub) { AssessorStub.new }
 
   let(:valid_xml) do
-    File.read File.join Dir.pwd,
-                        "api/schemas/xml/examples/CEPC-NI-7.11(Advisory-Report).xml"
+    File.read File.join Dir.pwd, "spec/fixtures/samples/dec-ar-ni.xml"
   end
 
   context "when lodging DEC advisory reports NI" do

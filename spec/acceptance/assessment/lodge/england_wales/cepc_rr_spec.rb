@@ -6,7 +6,7 @@ describe "Acceptance::LodgeRREnergyAssessment" do
   let(:fetch_assessor_stub) { AssessorStub.new }
 
   let(:valid_cepc_ni_xml) do
-    File.read File.join Dir.pwd, "api/schemas/xml/examples/CEPC-7.11(RR).xml"
+    File.read File.join Dir.pwd, "spec/fixtures/samples/cepc-rr.xml"
   end
 
   context "when lodging a RR assessment (post)" do

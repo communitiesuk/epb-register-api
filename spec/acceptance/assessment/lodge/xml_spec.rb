@@ -23,11 +23,11 @@ describe "Acceptance::LodgeAssessment::XML" do
   end
 
   let(:valid_cepc_xml) do
-    File.read File.join Dir.pwd, "api/schemas/xml/examples/CEPC-7.11(ACIC).xml"
+    File.read File.join Dir.pwd, "spec/fixtures/samples/acic.xml"
   end
 
   let(:valid_sap_xml) do
-    File.read File.join Dir.pwd, "api/schemas/xml/examples/SAP-17.11.xml"
+    File.read File.join Dir.pwd, "spec/fixtures/samples/sap.xml"
   end
 
   let(:cleaned_xml) do

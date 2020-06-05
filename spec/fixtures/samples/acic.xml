@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Reports xmlns="https://epbr.digital.communities.gov.uk/xsd/cepc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/cepc  ../CEPC-7.1/Reports/CEPC-Reports.xsd">
+  <Report>
+    <Report-Header>
+      <RRN>0000-0000-0000-0000-0000</RRN>
+      <Issue-Date>2006-05-04</Issue-Date>
+      <Report-Type>6</Report-Type>
+      <Valid-Until>2006-05-04</Valid-Until>
+      <Inspection-Date>2006-05-04</Inspection-Date>
+      <Registration-Date>2006-05-04</Registration-Date>
+      <Status>cancelled</Status>
+      <Language-Code>1</Language-Code>
+      <Energy-Assessor>
+        <Certificate-Number>JASE000000</Certificate-Number>
+        <Name>Name1</Name>
+        <Accreditation-Scheme-Name>Accreditation-Scheme-Name1</Accreditation-Scheme-Name>
+      </Energy-Assessor>
+      <Property-Details>
+        <UPRN>UPRN-000000000000</UPRN>
+        <Property-Address>
+          <Address-Line-1>2 Lonely Street</Address-Line-1>
+          <Post-Town>Post-Town1</Post-Town>
+          <Postcode>A0 0AA</Postcode>
+        </Property-Address>
+        <Property-Type>Property-Type1</Property-Type>
+      </Property-Details>
+      <Calculation-Details>
+        <Calculation-Tool>Calculation-Tool1</Calculation-Tool>
+      </Calculation-Details>
+    </Report-Header>
+    <Formatted-Report>ZGVmYXVsdA==</Formatted-Report>
+    <Unstructured-Data>
+      <Data-Blob></Data-Blob>
+    </Unstructured-Data>
+    <Air-Conditioning-Inspection-Certificate>
+      <Building-Name>Building-Name0</Building-Name>
+      <F-Gas-Compliant-Date>00/00/,,00</F-Gas-Compliant-Date>
+      <AC-Rated-Output>
+        <AC-Rating-Unknown-Flag>false</AC-Rating-Unknown-Flag>
+      </AC-Rated-Output>
+      <Random-Sampling-Flag>Y</Random-Sampling-Flag>
+      <Treated-Floor-Area>50</Treated-Floor-Area>
+      <AC-System-Metered-Flag>0</AC-System-Metered-Flag>
+      <Refrigerant-Charge-Total>50</Refrigerant-Charge-Total>
+      <AC-Sub-Systems>
+        <AC-Sub-System>
+          <Sub-System-Number>Sub-System-Number0</Sub-System-Number>
+          <Sub-System-Description>Sub-System-Description0</Sub-System-Description>
+          <Refrigerant-Type>Refrigerant-Type0</Refrigerant-Type>
+          <Sub-System-Age>Sub-System-Age0</Sub-System-Age>
+        </AC-Sub-System>
+        <AC-Sub-System>
+          <Sub-System-Number>Sub-System-Number1</Sub-System-Number>
+          <Sub-System-Description>Sub-System-Description1</Sub-System-Description>
+          <Refrigerant-Type>Refrigerant-Type1</Refrigerant-Type>
+          <Sub-System-Age>Sub-System-Age1</Sub-System-Age>
+        </AC-Sub-System>
+      </AC-Sub-Systems>
+    </Air-Conditioning-Inspection-Certificate>
+  </Report>
+</Reports>

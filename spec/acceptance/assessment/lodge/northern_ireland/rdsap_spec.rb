@@ -6,7 +6,7 @@ describe "Acceptance::LodgeRdSAPNIEnergyAssessment" do
   let(:fetch_assessor_stub) { AssessorStub.new }
 
   let(:valid_rdsap_ni_xml) do
-    File.read File.join Dir.pwd, "api/schemas/xml/examples/RdSAP-NI-19.01.xml"
+    File.read File.join Dir.pwd, "spec/fixtures/samples/rdsap-ni.xml"
   end
 
   context "when lodging a domestic energy assessment (post)" do

@@ -6,8 +6,7 @@ describe "Acceptance::LodgeACICNIEnergyAssessment" do
   let(:fetch_assessor_stub) { AssessorStub.new }
 
   let(:valid_cepc_ni_xml) do
-    File.read File.join Dir.pwd,
-                        "api/schemas/xml/examples/CEPC-NI-7.11(ACIC).xml"
+    File.read File.join Dir.pwd, "spec/fixtures/samples/acic-ni.xml"
   end
 
   context "when lodging an ACIC assessment (post)" do

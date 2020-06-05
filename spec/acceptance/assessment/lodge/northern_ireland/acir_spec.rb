@@ -6,8 +6,7 @@ describe "Acceptance::LodgeACIRNIEnergyAssessment" do
   let(:fetch_assessor_stub) { AssessorStub.new }
 
   let(:valid_cepc_acir_ni_xml) do
-    File.read File.join Dir.pwd,
-                        "api/schemas/xml/examples/CEPC-NI-7.11(ACIR).xml"
+    File.read File.join Dir.pwd, "spec/fixtures/samples/acir-ni.xml"
   end
 
   context "when lodging an ACIR-NI assessment" do
@@ -16,14 +15,14 @@ describe "Acceptance::LodgeACIRNIEnergyAssessment" do
 
       let(:response) do
         JSON.parse(
-            lodge_assessment(
-                assessment_body: valid_cepc_acir_ni_xml,
-                accepted_responses: [400],
-                auth_data: { scheme_ids: [scheme_id] },
-                schema_name: "CEPC-NI-7.1",
-                )
-                .body,
-            )
+          lodge_assessment(
+            assessment_body: valid_cepc_acir_ni_xml,
+            accepted_responses: [400],
+            auth_data: { scheme_ids: [scheme_id] },
+            schema_name: "CEPC-NI-7.1",
+          )
+            .body,
+        )
       end
 
       before do
@@ -35,13 +34,11 @@ describe "Acceptance::LodgeACIRNIEnergyAssessment" do
       end
 
       it "returns status 400 with the correct error response" do
-        expect(response["errors"][0]["title"]).to eq(
-          "Assessor is not active.",
-        )
+        expect(response["errors"][0]["title"]).to eq("Assessor is not active.")
       end
     end
 
-    context 'when an assessor is active' do
+    context "when an assessor is active" do
       let(:scheme_id) { add_scheme_and_get_id }
 
       let(:response) do
@@ -50,24 +47,23 @@ describe "Acceptance::LodgeACIRNIEnergyAssessment" do
 
       before do
         add_assessor(
-            scheme_id,
-            "JASE000000",
-            fetch_assessor_stub.fetch_request_body(nonDomesticSp3: "ACTIVE"),
-            )
+          scheme_id,
+          "JASE000000",
+          fetch_assessor_stub.fetch_request_body(nonDomesticSp3: "ACTIVE"),
+        )
 
         lodge_assessment(
-            assessment_body: valid_cepc_acir_ni_xml,
-            accepted_responses: [201],
-            auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "CEPC-NI-7.1",
-            )
+          assessment_body: valid_cepc_acir_ni_xml,
+          accepted_responses: [201],
+          auth_data: { scheme_ids: [scheme_id] },
+          schema_name: "CEPC-NI-7.1",
+        )
       end
 
       it "accepts an assessment with type ACIR" do
         expect(response["data"]["typeOfAssessment"]).to eq("ACIR")
       end
     end
-
 
     context "when saving a (ACIR-NI) assessment" do
       let(:scheme_id) { add_scheme_and_get_id }
@@ -88,15 +84,14 @@ describe "Acceptance::LodgeACIRNIEnergyAssessment" do
         assessment_id.children = "1234-1234-1234-1234-1234"
 
         lodge_assessment(
-            assessment_body: doc.to_xml,
-            accepted_responses: [201],
-            auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "CEPC-NI-7.1",
-            )
+          assessment_body: doc.to_xml,
+          accepted_responses: [201],
+          auth_data: { scheme_ids: [scheme_id] },
+          schema_name: "CEPC-NI-7.1",
+        )
       end
 
       it "returns the data that was lodged" do
-
         expected_response = {
           "addressLine1" => "2 Lonely Street",
           "addressLine2" => "",
@@ -170,21 +165,21 @@ describe "Acceptance::LodgeACIRNIEnergyAssessment" do
 
     before do
       add_assessor(
-          scheme_id,
-          "JASE000000",
-          fetch_assessor_stub.fetch_request_body(nonDomesticSp3: "ACTIVE"),
-          )
+        scheme_id,
+        "JASE000000",
+        fetch_assessor_stub.fetch_request_body(nonDomesticSp3: "ACTIVE"),
+      )
 
       doc.at("ACI-Related-Party-Disclosure").remove
     end
 
     it "rejects an assessment without an ACI Related-Party-Disclosure" do
       lodge_assessment(
-          assessment_body: doc.to_xml,
-          accepted_responses: [400],
-          auth_data: { scheme_ids: [scheme_id] },
-          schema_name: "CEPC-NI-7.1",
-          )
+        assessment_body: doc.to_xml,
+        accepted_responses: [400],
+        auth_data: { scheme_ids: [scheme_id] },
+        schema_name: "CEPC-NI-7.1",
+      )
     end
   end
 end
