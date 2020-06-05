@@ -3,24 +3,7 @@
 describe "Acceptance::LodgeAssessment::XML" do
   include RSpecAssessorServiceMixin
 
-  let(:valid_assessor_request_body) do
-    {
-      firstName: "Someone",
-      middleNames: "Muddle",
-      lastName: "Person",
-      dateOfBirth: "1991-02-25",
-      searchResultsComparisonPostcode: "",
-      qualifications: {
-        nonDomesticNos3: "ACTIVE",
-        nonDomesticNos4: "ACTIVE",
-        nonDomesticNos5: "INACTIVE",
-        domesticSap: "ACTIVE",
-      },
-      contactDetails: {
-        telephoneNumber: "010199991010101", email: "person@person.com"
-      },
-    }
-  end
+  let(:fetch_assessor_stub) { AssessorStub.new }
 
   let(:valid_cepc_xml) do
     File.read File.join Dir.pwd, "spec/fixtures/samples/acic.xml"
@@ -54,7 +37,11 @@ describe "Acceptance::LodgeAssessment::XML" do
   let(:scheme_id) { add_scheme_and_get_id }
 
   before do
-    add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
+    add_assessor(
+      scheme_id,
+      "JASE000000",
+      fetch_assessor_stub.fetch_request_body(nonDomesticCc4: "ACTIVE"),
+    )
     lodge_assessment(
       assessment_body: valid_cepc_xml,
       accepted_responses: [201],
@@ -75,7 +62,11 @@ describe "Acceptance::LodgeAssessment::XML" do
     end
 
     it "will remove the <PDF> element" do
-      add_assessor(scheme_id, "JASE000000", valid_assessor_request_body)
+      add_assessor(
+        scheme_id,
+        "JASE000000",
+        fetch_assessor_stub.fetch_request_body(domesticSap: "ACTIVE"),
+      )
       lodge_assessment(
         assessment_body: valid_sap_xml,
         accepted_responses: [201],
