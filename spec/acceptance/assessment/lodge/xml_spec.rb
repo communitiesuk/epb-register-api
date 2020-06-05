@@ -42,13 +42,13 @@ describe "Acceptance::LodgeAssessment::XML" do
         scheme_id,
         "SPEC000000",
         fetch_assessor_stub.fetch_request_body(nonDomesticCc4: "ACTIVE"),
-        )
+      )
       lodge_assessment(
         assessment_body: valid_cepc_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
         schema_name: "CEPC-7.1",
-        )
+      )
 
       database_xml = get_stored_xml("0000-0000-0000-0000-0000")
 
