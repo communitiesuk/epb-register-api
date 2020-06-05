@@ -2,7 +2,7 @@
 <Reports
   xmlns="https://epbr.digital.communities.gov.uk/xsd/cepc"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/cepc  ../CEPC-7.1/Reports/CEPC-Reports.xsd"
+  xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/cepc  ../../../api/schemas/xml/CEPC-7.1/Reports/CEPC-Reports.xsd"
 >
   <Report>
     <Report-Header>
@@ -16,7 +16,7 @@
       <Status>entered</Status>
       <Language-Code>1</Language-Code>
       <Energy-Assessor>
-        <Certificate-Number>JASE000000</Certificate-Number>
+        <Certificate-Number>SPEC000000</Certificate-Number>
         <Name>Name1</Name>
         <Accreditation-Scheme-Name>Information not available</Accreditation-Scheme-Name>
         <Accreditation-Scheme-Website>Information not available</Accreditation-Scheme-Website>

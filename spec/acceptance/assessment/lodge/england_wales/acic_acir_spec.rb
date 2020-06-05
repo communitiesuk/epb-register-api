@@ -17,7 +17,7 @@ describe "Acceptance::LodgeACICEnergyAssessment" do
         it "returns status 400 with the correct error response" do
           add_assessor(
             scheme_id,
-            "JASE000000",
+            "SPEC000000",
             fetch_assessor_stub.fetch_request_body(
               nonDomesticCc4: "INACTIVE", nonDomesticSp3: "ACTIVE",
             ),
@@ -44,7 +44,7 @@ describe "Acceptance::LodgeACICEnergyAssessment" do
         it "returns status 400 with the correct error response" do
           add_assessor(
             scheme_id,
-            "JASE000000",
+            "SPEC000000",
             fetch_assessor_stub.fetch_request_body(
               nonDomesticCc4: "ACTIVE", nonDomesticSp3: "INACTIVE",
             ),
@@ -71,7 +71,7 @@ describe "Acceptance::LodgeACICEnergyAssessment" do
       scheme_id = add_scheme_and_get_id
       add_assessor(
         scheme_id,
-        "JASE000000",
+        "SPEC000000",
         fetch_assessor_stub.fetch_request_body(
           nonDomesticCc4: "ACTIVE", nonDomesticSp3: "ACTIVE",
         ),
@@ -89,16 +89,16 @@ describe "Acceptance::LodgeACICEnergyAssessment" do
       let(:scheme_id) { add_scheme_and_get_id }
       let(:doc) { Nokogiri.XML valid_cepc_ni_xml }
       let(:response_acic) do
-        JSON.parse(fetch_assessment("9876-5432-0987-7654-4321").body)
+        JSON.parse(fetch_assessment("0000-0000-0000-0000-0000").body)
       end
       let(:response_acir) do
-        JSON.parse(fetch_assessment("0250-4986-0585-2040-9030").body)
+        JSON.parse(fetch_assessment("0000-0000-0000-0000-0001").body)
       end
 
       before do
         add_assessor(
           scheme_id,
-          "JASE000000",
+          "SPEC000000",
           fetch_assessor_stub.fetch_request_body(
             nonDomesticCc4: "ACTIVE", nonDomesticSp3: "ACTIVE",
           ),
@@ -118,7 +118,7 @@ describe "Acceptance::LodgeACICEnergyAssessment" do
           "addressLine2" => "The High Street",
           "addressLine3" => "",
           "addressLine4" => "",
-          "assessmentId" => "9876-5432-0987-7654-4321",
+          "assessmentId" => "0000-0000-0000-0000-0000",
           "assessor" => {
             "contactDetails" => {
               "email" => "person@person.com",
@@ -144,7 +144,7 @@ describe "Acceptance::LodgeACICEnergyAssessment" do
             "registeredBy" => {
               "name" => "test scheme", "schemeId" => scheme_id
             },
-            "schemeAssessorId" => "JASE000000",
+            "schemeAssessorId" => "SPEC000000",
             "searchResultsComparisonPostcode" => "",
           },
           "currentCarbonEmission" => 0.0,
@@ -182,7 +182,7 @@ describe "Acceptance::LodgeACICEnergyAssessment" do
           "addressLine2" => "The High Street",
           "addressLine3" => "",
           "addressLine4" => "",
-          "assessmentId" => "0250-4986-0585-2040-9030",
+          "assessmentId" => "0000-0000-0000-0000-0001",
           "assessor" => {
             "contactDetails" => {
               "email" => "person@person.com",
@@ -208,7 +208,7 @@ describe "Acceptance::LodgeACICEnergyAssessment" do
             "registeredBy" => {
               "name" => "test scheme", "schemeId" => scheme_id
             },
-            "schemeAssessorId" => "JASE000000",
+            "schemeAssessorId" => "SPEC000000",
             "searchResultsComparisonPostcode" => "",
           },
           "currentCarbonEmission" => 0.0,
@@ -249,7 +249,7 @@ describe "Acceptance::LodgeACICEnergyAssessment" do
       before do
         add_assessor(
           scheme_id,
-          "JASE000000",
+          "SPEC000000",
           fetch_assessor_stub.fetch_request_body(
             nonDomesticCc4: "ACTIVE", nonDomesticSp3: "INACTIVE",
           ),
@@ -264,9 +264,9 @@ describe "Acceptance::LodgeACICEnergyAssessment" do
           schema_name: "CEPC-7.1",
         )
 
-        fetch_assessment("9876-5432-0987-7654-4321", [404])
+        fetch_assessment("0000-0000-0000-0000-0000", [404])
 
-        fetch_assessment("0250-4986-0585-2040-9030", [404])
+        fetch_assessment("0000-0000-0000-0000-0001", [404])
       end
     end
   end

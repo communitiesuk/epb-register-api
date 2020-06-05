@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Report xmlns="https://epbr.digital.communities.gov.uk/xsd/cepc-ni" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/cepc-ni ../CEPC-NI-7.1/Reports/CEPC-Reports.xsd">
+<Report xmlns="https://epbr.digital.communities.gov.uk/xsd/cepc-ni" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/cepc-ni ../../../api/schemas/xml/CEPC-NI-7.1/Reports/CEPC-Reports.xsd">
     <Report-Header>
         <RRN>0000-0000-0000-0000-0000</RRN>
         <Issue-Date>2006-05-04</Issue-Date>
@@ -10,7 +10,7 @@
         <Status>cancelled</Status>
         <Language-Code>1</Language-Code>
         <Energy-Assessor>
-            <Certificate-Number>JASE000000</Certificate-Number>
+            <Certificate-Number>SPEC000000</Certificate-Number>
             <Name>Name1</Name>
             <Accreditation-Scheme-Name>Accreditation-Scheme-Name1</Accreditation-Scheme-Name>
         </Energy-Assessor>

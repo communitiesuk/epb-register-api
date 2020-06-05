@@ -16,7 +16,7 @@ describe "Acceptance::LodgeSapEnergyAssessment" do
           scheme_id = add_scheme_and_get_id
           add_assessor(
             scheme_id,
-            "JASE000000",
+            "SPEC000000",
             fetch_assessor_stub.fetch_request_body(domesticSap: "INACTIVE"),
           )
 
@@ -42,7 +42,7 @@ describe "Acceptance::LodgeSapEnergyAssessment" do
       scheme_id = add_scheme_and_get_id
       add_assessor(
         scheme_id,
-        "JASE000000",
+        "SPEC000000",
         fetch_assessor_stub.fetch_request_body(domesticSap: "ACTIVE"),
       )
 
@@ -58,21 +58,15 @@ describe "Acceptance::LodgeSapEnergyAssessment" do
       let(:scheme_id) { add_scheme_and_get_id }
       let(:doc) { Nokogiri.XML valid_sap_xml }
       let(:response) do
-        JSON.parse(fetch_assessment("1234-1234-1234-1234-1234").body)
+        JSON.parse(fetch_assessment("0000-0000-0000-0000-0000").body)
       end
 
       before do
         add_assessor(
           scheme_id,
-          "TEST123456",
+          "SPEC000000",
           fetch_assessor_stub.fetch_request_body(domesticSap: "ACTIVE"),
         )
-
-        assessment_id = doc.at("RRN")
-        assessment_id.children = "1234-1234-1234-1234-1234"
-
-        scheme_assessor_id = doc.at("Certificate-Number")
-        scheme_assessor_id.children = "TEST123456"
       end
 
       it "returns the data that was lodged" do
@@ -88,7 +82,7 @@ describe "Acceptance::LodgeSapEnergyAssessment" do
           "addressLine2" => "",
           "addressLine3" => "",
           "addressLine4" => "",
-          "assessmentId" => "1234-1234-1234-1234-1234",
+          "assessmentId" => "0000-0000-0000-0000-0000",
           "assessor" => {
             "contactDetails" => {
               "email" => "person@person.com",
@@ -114,7 +108,7 @@ describe "Acceptance::LodgeSapEnergyAssessment" do
             "registeredBy" => {
               "name" => "test scheme", "schemeId" => scheme_id
             },
-            "schemeAssessorId" => "TEST123456",
+            "schemeAssessorId" => "SPEC000000",
             "searchResultsComparisonPostcode" => "",
           },
           "currentCarbonEmission" => 2.4,

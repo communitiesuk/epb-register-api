@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SAP-Report xmlns="https://epbr.digital.communities.gov.uk/xsd/sap" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/sap ../SAP-Schema-17.1/SAP/Templates/SAP-Report.xsd">
+<SAP-Report xmlns="https://epbr.digital.communities.gov.uk/xsd/sap" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/sap ../../../api/schemas/xml/SAP-Schema-17.1/SAP/Templates/SAP-Report.xsd">
     <Schema-Version-Original>Schema-Version-Original0</Schema-Version-Original>
     <SAP-Version>9.80</SAP-Version>
     <SAP-Data-Version>9.80</SAP-Data-Version>
     <Calculation-Software-Name>Calculation-Software-Name0</Calculation-Software-Name>
     <Calculation-Software-Version>Calculation-Software-Version0</Calculation-Software-Version>
     <Report-Header>
-        <RRN>1000-0000-0000-0000-0000</RRN>
+        <RRN>0000-0000-0000-0000-0000</RRN>
         <Inspection-Date>2006-05-04</Inspection-Date>
         <Report-Type>1</Report-Type>
         <Completion-Date>2006-05-04</Completion-Date>
@@ -30,7 +30,7 @@
             <Scheme-Name>Scheme-Name0</Scheme-Name>
             <Scheme-Web-Site>Scheme-Web-Site0</Scheme-Web-Site>
             <Identification-Number>
-                <Certificate-Number>JASE000000</Certificate-Number>
+                <Certificate-Number>SPEC000000</Certificate-Number>
             </Identification-Number>
         </Home-Inspector>
         <Property>

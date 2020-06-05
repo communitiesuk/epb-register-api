@@ -28,7 +28,7 @@ describe "Acceptance::LodgeACIRNIEnergyAssessment" do
       before do
         add_assessor(
           scheme_id,
-          "JASE000000",
+          "SPEC000000",
           fetch_assessor_stub.fetch_request_body(nonDomesticSp3: "INACTIVE"),
         )
       end
@@ -48,7 +48,7 @@ describe "Acceptance::LodgeACIRNIEnergyAssessment" do
       before do
         add_assessor(
           scheme_id,
-          "JASE000000",
+          "SPEC000000",
           fetch_assessor_stub.fetch_request_body(nonDomesticSp3: "ACTIVE"),
         )
 
@@ -70,18 +70,15 @@ describe "Acceptance::LodgeACIRNIEnergyAssessment" do
       let(:doc) { Nokogiri.XML valid_cepc_acir_ni_xml }
 
       let(:response) do
-        JSON.parse(fetch_assessment("1234-1234-1234-1234-1234").body)
+        JSON.parse(fetch_assessment("0000-0000-0000-0000-0000").body)
       end
 
       before do
         add_assessor(
           scheme_id,
-          "JASE000000",
+          "SPEC000000",
           fetch_assessor_stub.fetch_request_body(nonDomesticSp3: "ACTIVE"),
         )
-
-        assessment_id = doc.at("RRN")
-        assessment_id.children = "1234-1234-1234-1234-1234"
 
         lodge_assessment(
           assessment_body: doc.to_xml,
@@ -97,7 +94,7 @@ describe "Acceptance::LodgeACIRNIEnergyAssessment" do
           "addressLine2" => "",
           "addressLine3" => "",
           "addressLine4" => "",
-          "assessmentId" => "1234-1234-1234-1234-1234",
+          "assessmentId" => "0000-0000-0000-0000-0000",
           "assessor" => {
             "contactDetails" => {
               "email" => "person@person.com",
@@ -123,7 +120,7 @@ describe "Acceptance::LodgeACIRNIEnergyAssessment" do
             "registeredBy" => {
               "name" => "test scheme", "schemeId" => scheme_id
             },
-            "schemeAssessorId" => "JASE000000",
+            "schemeAssessorId" => "SPEC000000",
             "searchResultsComparisonPostcode" => "",
           },
           "currentCarbonEmission" => 0.0,
@@ -166,7 +163,7 @@ describe "Acceptance::LodgeACIRNIEnergyAssessment" do
     before do
       add_assessor(
         scheme_id,
-        "JASE000000",
+        "SPEC000000",
         fetch_assessor_stub.fetch_request_body(nonDomesticSp3: "ACTIVE"),
       )
 

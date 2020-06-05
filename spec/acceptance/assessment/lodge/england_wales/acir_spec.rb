@@ -20,7 +20,7 @@ describe "Acceptance::LodgeACIREnergyAssessment" do
       before do
         add_assessor(
           scheme_id,
-          "MOSE000000",
+          "SPEC000000",
           fetch_assessor_stub.fetch_request_body(nonDomesticSp3: "ACTIVE"),
         )
 
@@ -68,7 +68,7 @@ describe "Acceptance::LodgeACIREnergyAssessment" do
             "registeredBy" => {
               "name" => "test scheme", "schemeId" => scheme_id
             },
-            "schemeAssessorId" => "MOSE000000",
+            "schemeAssessorId" => "SPEC000000",
             "searchResultsComparisonPostcode" => "",
           },
           "currentCarbonEmission" => 0.0,
@@ -121,7 +121,7 @@ describe "Acceptance::LodgeACIREnergyAssessment" do
       before do
         add_assessor(
           scheme_id,
-          "MOSE000000",
+          "SPEC000000",
           fetch_assessor_stub.fetch_request_body(nonDomesticSp3: "INACTIVE"),
         )
       end
@@ -139,7 +139,7 @@ describe "Acceptance::LodgeACIREnergyAssessment" do
     before do
       add_assessor(
         scheme_id,
-        "MOSE000000",
+        "SPEC000000",
         fetch_assessor_stub.fetch_request_body(nonDomesticSp3: "ACTIVE"),
       )
 

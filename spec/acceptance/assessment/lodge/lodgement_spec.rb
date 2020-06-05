@@ -28,7 +28,7 @@ describe "Acceptance::Assessment::Lodge" do
   end
 
   let(:valid_xml) do
-    File.read File.join Dir.pwd, "api/schemas/xml/examples/RdSAP-19.01.xml"
+    File.read File.join Dir.pwd, "spec/fixtures/samples/rdsap.xml"
   end
 
   context "when lodging an energy assessment (post)" do
@@ -77,7 +77,7 @@ describe "Acceptance::Assessment::Lodge" do
 
     it "returns 403 if it is being lodged by the wrong scheme" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
       different_scheme_id = add_scheme_and_get_id("BADSCHEME")
 
       lodge_assessment(
@@ -89,7 +89,7 @@ describe "Acceptance::Assessment::Lodge" do
 
     it "returns status 201" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
 
       lodge_assessment(
         assessment_body: valid_xml,
@@ -100,7 +100,7 @@ describe "Acceptance::Assessment::Lodge" do
 
     it "returns json" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
 
       response =
         lodge_assessment(
@@ -114,7 +114,7 @@ describe "Acceptance::Assessment::Lodge" do
 
     it "returns the assessment as a hash" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
 
       response =
         JSON.parse(
@@ -132,7 +132,7 @@ describe "Acceptance::Assessment::Lodge" do
 
     it "returns the correct scheme assessor id" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
 
       response =
         JSON.parse(
@@ -145,7 +145,7 @@ describe "Acceptance::Assessment::Lodge" do
           symbolize_names: true,
         )
 
-      expect(response.dig(:data, :schemeAssessorId)).to eq("TEST000000")
+      expect(response.dig(:data, :schemeAssessorId)).to eq("SPEC000000")
     end
 
     context "when schema is not supported" do
@@ -153,13 +153,7 @@ describe "Acceptance::Assessment::Lodge" do
       let(:doc) { Nokogiri.XML valid_xml }
 
       before do
-        add_assessor(scheme_id, "TEST123456", valid_assessor_request_body)
-
-        assessment_id = doc.at("RRN")
-        assessment_id.children = "1234-1234-1234-1234-1234"
-
-        scheme_assessor_id = doc.at("Identification-Number")
-        scheme_assessor_id.children = "TEST123456"
+        add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
       end
 
       it "returns status 400" do
@@ -191,17 +185,11 @@ describe "Acceptance::Assessment::Lodge" do
       let(:scheme_id) { add_scheme_and_get_id }
       let(:doc) { Nokogiri.XML valid_xml }
       let(:response) do
-        JSON.parse(fetch_assessment("1234-1234-1234-1234-1234").body)
+        JSON.parse(fetch_assessment("0000-0000-0000-0000-0000").body)
       end
 
       before do
-        add_assessor(scheme_id, "TEST123456", valid_assessor_request_body)
-
-        assessment_id = doc.at("RRN")
-        assessment_id.children = "1234-1234-1234-1234-1234"
-
-        scheme_assessor_id = doc.at("Certificate-Number")
-        scheme_assessor_id.children = "TEST123456"
+        add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
       end
 
       context "when an assessment already exists with the same assessment id" do
@@ -224,7 +212,7 @@ describe "Acceptance::Assessment::Lodge" do
     context "when rejecting an assessment" do
       it "rejects an assessment with an incorrect element" do
         scheme_id = add_scheme_and_get_id
-        add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
+        add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
 
         doc = Nokogiri.XML valid_xml
 
@@ -246,7 +234,7 @@ describe "Acceptance::Assessment::Lodge" do
 
       it "rejects an assessment with invalid XML" do
         scheme_id = add_scheme_and_get_id
-        add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
+        add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
 
         xml = valid_xml
 

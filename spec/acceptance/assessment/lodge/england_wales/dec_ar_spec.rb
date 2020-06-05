@@ -16,7 +16,7 @@ describe "Acceptance::LodgeAdvisoryReport" do
       before do
         add_assessor(
           scheme_id,
-          "JASE000000",
+          "SPEC000000",
           fetch_assessor_stub.fetch_request_body(nonDomesticDec: "INACTIVE"),
         )
       end
@@ -45,7 +45,7 @@ describe "Acceptance::LodgeAdvisoryReport" do
       scheme_id = add_scheme_and_get_id
       add_assessor(
         scheme_id,
-        "JASE000000",
+        "SPEC000000",
         fetch_assessor_stub.fetch_request_body(nonDomesticDec: "ACTIVE"),
       )
       lodge_assessment(
@@ -66,15 +66,9 @@ describe "Acceptance::LodgeAdvisoryReport" do
       before do
         add_assessor(
           scheme_id,
-          "JASE000000",
+          "SPEC000000",
           fetch_assessor_stub.fetch_request_body(nonDomesticDec: "ACTIVE"),
         )
-
-        assessment_id = doc.at("RRN")
-        assessment_id.children = "0000-0000-0000-0000-0000"
-
-        scheme_assessor_id = doc.at("Certificate-Number")
-        scheme_assessor_id.children = "JASE000000"
       end
 
       it "returns the data that was lodged" do
@@ -116,7 +110,7 @@ describe "Acceptance::LodgeAdvisoryReport" do
             "registeredBy" => {
               "name" => "test scheme", "schemeId" => scheme_id
             },
-            "schemeAssessorId" => "JASE000000",
+            "schemeAssessorId" => "SPEC000000",
             "searchResultsComparisonPostcode" => "",
           },
           "currentCarbonEmission" => 0.0,

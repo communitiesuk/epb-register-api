@@ -14,11 +14,11 @@ describe "Acceptance::LodgeAssessment::XML" do
   end
 
   let(:cleaned_xml) do
-    File.read File.join Dir.pwd, "spec/fixtures/CLEANED-CEPC-7.11(ACIC).xml"
+    File.read File.join Dir.pwd, "spec/fixtures/sanitised/acic.xml"
   end
 
   let(:cleaned_sap_xml) do
-    File.read File.join Dir.pwd, "spec/fixtures/CLEANED-SAP-17.11.xml"
+    File.read File.join Dir.pwd, "spec/fixtures/sanitised/sap.xml"
   end
 
   def get_stored_xml(assessment_id)
@@ -36,22 +36,20 @@ describe "Acceptance::LodgeAssessment::XML" do
 
   let(:scheme_id) { add_scheme_and_get_id }
 
-  before do
-    add_assessor(
-      scheme_id,
-      "JASE000000",
-      fetch_assessor_stub.fetch_request_body(nonDomesticCc4: "ACTIVE"),
-    )
-    lodge_assessment(
-      assessment_body: valid_cepc_xml,
-      accepted_responses: [201],
-      auth_data: { scheme_ids: [scheme_id] },
-      schema_name: "CEPC-7.1",
-    )
-  end
-
   context "when storing xml to the assessments_xml table" do
     it "will remove the <Formatted-Report> element" do
+      add_assessor(
+        scheme_id,
+        "SPEC000000",
+        fetch_assessor_stub.fetch_request_body(nonDomesticCc4: "ACTIVE"),
+        )
+      lodge_assessment(
+        assessment_body: valid_cepc_xml,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] },
+        schema_name: "CEPC-7.1",
+        )
+
       database_xml = get_stored_xml("0000-0000-0000-0000-0000")
 
       expect(valid_cepc_xml).to include("<Formatted-Report>")
@@ -64,7 +62,7 @@ describe "Acceptance::LodgeAssessment::XML" do
     it "will remove the <PDF> element" do
       add_assessor(
         scheme_id,
-        "JASE000000",
+        "SPEC000000",
         fetch_assessor_stub.fetch_request_body(domesticSap: "ACTIVE"),
       )
       lodge_assessment(
@@ -74,7 +72,7 @@ describe "Acceptance::LodgeAssessment::XML" do
         schema_name: "SAP-Schema-17.1",
       )
 
-      database_xml = get_stored_xml("1000-0000-0000-0000-0000")
+      database_xml = get_stored_xml("0000-0000-0000-0000-0000")
 
       expect(valid_sap_xml).to include("<PDF>")
       expect(cleaned_sap_xml).to eq(

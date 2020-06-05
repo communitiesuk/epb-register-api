@@ -18,7 +18,7 @@ describe "Acceptance::LodgeDEC(AR)NIEnergyAssessment" do
       scheme_id = add_scheme_and_get_id
       add_assessor(
         scheme_id,
-        "JASE000000",
+        "SPEC000000",
         fetch_assessor_stub.fetch_request_body(nonDomesticDec: "ACTIVE"),
       )
 
@@ -36,7 +36,7 @@ describe "Acceptance::LodgeDEC(AR)NIEnergyAssessment" do
       scheme_id = add_scheme_and_get_id
       add_assessor(
         scheme_id,
-        "JASE000000",
+        "SPEC000000",
         fetch_assessor_stub.fetch_request_body(nonDomesticDec: "ACTIVE"),
       )
 
@@ -78,7 +78,7 @@ describe "Acceptance::LodgeDEC(AR)NIEnergyAssessment" do
           "registeredBy" => {
             "name" => "test scheme", "schemeId" => scheme_id
           },
-          "schemeAssessorId" => "JASE000000",
+          "schemeAssessorId" => "SPEC000000",
           "searchResultsComparisonPostcode" => "",
         },
         "currentCarbonEmission" => 0.0,
@@ -118,7 +118,7 @@ describe "Acceptance::LodgeDEC(AR)NIEnergyAssessment" do
       before do
         add_assessor(
           scheme_id,
-          "JASE000000",
+          "SPEC000000",
           fetch_assessor_stub.fetch_request_body(nonDomesticDec: "INACTIVE"),
         )
       end
@@ -149,7 +149,7 @@ describe "Acceptance::LodgeDEC(AR)NIEnergyAssessment" do
       scheme_id = add_scheme_and_get_id
       add_assessor(
         scheme_id,
-        "JASE000000",
+        "SPEC000000",
         fetch_assessor_stub.fetch_request_body(nonDomesticDec: "ACTIVE"),
       )
 
