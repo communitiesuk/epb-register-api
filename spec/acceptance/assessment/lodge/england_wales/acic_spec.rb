@@ -41,21 +41,27 @@ describe "Acceptance::LodgeACICEnergyAssessment" do
     context "when an assessor is active" do
       let(:scheme_id) { add_scheme_and_get_id }
 
+      let(:response) do
+        JSON.parse(fetch_assessment("0000-0000-0000-0000-0000").body)
+      end
+
       before do
         add_assessor(
           scheme_id,
           "JASE000000",
           fetch_assessor_stub.fetch_request_body(nonDomesticCc4: "ACTIVE"),
         )
-      end
 
-      it "returns status 201" do
         lodge_assessment(
           assessment_body: valid_cepc_acic_xml,
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] },
           schema_name: "CEPC-7.1",
         )
+      end
+
+      it "accepts an assessment with type ACIC" do
+        expect(response["data"]["typeOfAssessment"]).to eq("ACIC")
       end
     end
 
@@ -153,6 +159,29 @@ describe "Acceptance::LodgeACICEnergyAssessment" do
 
         expect(response["data"]).to eq(expected_response)
       end
+    end
+  end
+
+  context "when rejecting an assessment" do
+    let(:scheme_id) { add_scheme_and_get_id }
+    let(:doc) { Nokogiri.XML valid_cepc_acic_xml }
+
+    before do
+      add_assessor(
+        scheme_id,
+        "JASE000000",
+        fetch_assessor_stub.fetch_request_body(nonDomesticCc4: "ACTIVE"),
+      )
+
+      doc.at("AC-Rated-Output").remove
+    end
+
+    it "rejects an assessment without an AC Rated Output" do
+      lodge_assessment(
+        assessment_body: doc.to_xml,
+        accepted_responses: [400],
+        schema_name: "CEPC-NI-7.1",
+      )
     end
   end
 end
