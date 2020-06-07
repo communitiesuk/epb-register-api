@@ -2,11 +2,11 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
   include RSpecAssessorServiceMixin
 
   let(:valid_cepc_xml) do
-    File.read File.join Dir.pwd, "api/schemas/xml/examples/CEPC-7.11(EPC).xml"
+    File.read File.join Dir.pwd, "spec/fixtures/samples/cepc.xml"
   end
 
   let(:valid_rdsap_xml) do
-    File.read File.join Dir.pwd, "api/schemas/xml/examples/RdSAP-19.01.xml"
+    File.read File.join Dir.pwd, "spec/fixtures/samples/rdsap.xml"
   end
 
   let(:valid_assessor_request_body) do
@@ -27,7 +27,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
     let(:scheme_id) { add_scheme_and_get_id }
 
     before(:each) do
-      add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
 
       lodge_assessment(
         assessment_body: valid_rdsap_xml,
@@ -60,9 +60,6 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
 
       address_line_one = non_domestic_xml.at("//CEPC:Address-Line-1")
       address_line_one.children = "3 Other Street"
-
-      scheme_assessor_id = non_domestic_xml.at("//CEPC:Certificate-Number")
-      scheme_assessor_id.children = "TEST000000"
 
       lodge_assessment(
         assessment_body: non_domestic_xml.to_xml,

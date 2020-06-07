@@ -2,7 +2,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
   include RSpecAssessorServiceMixin
 
   let(:valid_rdsap_xml) do
-    File.read File.join Dir.pwd, "api/schemas/xml/examples/RdSAP-19.01.xml"
+    File.read File.join Dir.pwd, "spec/fixtures/samples/rdsap.xml"
   end
 
   let(:valid_assessor_request_body) do
@@ -37,7 +37,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
     end
 
     before(:each) do
-      add_assessor(scheme_id, "TEST000000", valid_assessor_request_body)
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
 
       lodge_assessment(
         assessment_body: valid_rdsap_xml,
