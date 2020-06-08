@@ -99,6 +99,27 @@ describe UseCase::SearchAddressesByStreetAndTown do
         },
       )
 
+      gateway.add(
+        {
+          address_id: "RRN-0000-0000-0000-0000-0004",
+          line1: "130 Home Road",
+          line2: "Placeville",
+          line3: nil,
+          line4: nil,
+          town: "Countyshire",
+          postcode: "PL4 V14",
+          assessment_type: "RdSAP",
+          source: "PREVIOUS_ASSESSMENT",
+          existing_assessments: [
+            {
+              assessment_id: "0000-0000-0000-0000-0004",
+              assessment_status: "ENTERED",
+              assessment_type: "RdSAP",
+            },
+          ],
+        },
+      )
+
       gateway
     end
     let(:use_case) { described_class.new gateway }
