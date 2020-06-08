@@ -29,9 +29,7 @@ module Helper
     end
 
     def fetch_root
-      if @schema_active[:root_tag]
-          @schema_active[:root_tag].to_sym
-      end
+      @schema_active[:root_tag].to_sym if @schema_active[:root_tag]
     end
   end
 end

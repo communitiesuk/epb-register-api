@@ -14,8 +14,7 @@ describe "Acceptance::LodgeExamples" do
     File.read File.join Dir.pwd, "api/schemas/xml/examples/CEPC-7.11(ACIR).xml"
   end
   let(:ar_xml) do
-    File.read File.join Dir.pwd,
-                        "api/schemas/xml/examples/CEPC-7.11(AR).xml"
+    File.read File.join Dir.pwd, "api/schemas/xml/examples/CEPC-7.11(AR).xml"
   end
   let(:dec_xml) do
     File.read File.join Dir.pwd, "api/schemas/xml/examples/CEPC-7.11(DEC).xml"
@@ -35,8 +34,7 @@ describe "Acceptance::LodgeExamples" do
                         "api/schemas/xml/examples/CEPC-NI-7.11(ACIR).xml"
   end
   let(:ar_ni_xml) do
-    File.read File.join Dir.pwd,
-                        "api/schemas/xml/examples/CEPC-NI-7.11(AR).xml"
+    File.read File.join Dir.pwd, "api/schemas/xml/examples/CEPC-NI-7.11(AR).xml"
   end
   let(:dec_ni_xml) do
     File.read File.join Dir.pwd,
@@ -62,7 +60,8 @@ describe "Acceptance::LodgeExamples" do
     File.read File.join Dir.pwd, "api/schemas/xml/examples/SAP-NI-17.41.xml"
   end
   let(:dec_ar_xml) do
-    File.read File.join Dir.pwd, "api/schemas/xml/examples/CEPC-7.11(DEC+AR).xml"
+    File.read File.join Dir.pwd,
+                        "api/schemas/xml/examples/CEPC-7.11(DEC+AR).xml"
   end
   let(:scheme_id) { add_scheme_and_get_id }
 
@@ -234,7 +233,7 @@ describe "Acceptance::LodgeExamples" do
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
         schema_name: "SAP-Schema-NI-17.4",
-        )
+      )
     end
 
     it "can lodge the example DEC+AR" do
@@ -243,7 +242,7 @@ describe "Acceptance::LodgeExamples" do
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
         schema_name: "CEPC-7.1",
-        )
+      )
     end
   end
 end
