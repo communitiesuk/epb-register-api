@@ -246,7 +246,7 @@ describe "Acceptance::LodgeExamples" do
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
         schema_name: "CEPC-7.1",
-        )
+      )
     end
 
     it "can lodge the example CEPC+RR" do
@@ -255,7 +255,7 @@ describe "Acceptance::LodgeExamples" do
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
         schema_name: "CEPC-7.1",
-        )
+      )
     end
   end
 end
