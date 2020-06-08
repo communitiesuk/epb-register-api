@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_08_125912) do
+ActiveRecord::Schema.define(version: 2020_06_08_133739) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -117,6 +117,9 @@ ActiveRecord::Schema.define(version: 2020_06_08_125912) do
     t.boolean "cca_regulated"
     t.boolean "structure_changed"
     t.boolean "measures_removed"
+    t.jsonb "measures", default: "{}", null: false
+    t.jsonb "charges", default: "{}", null: false
+    t.jsonb "savings", default: "{}", null: false
   end
 
   create_table "postcode_geolocation", force: :cascade do |t|
