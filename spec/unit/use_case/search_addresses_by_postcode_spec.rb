@@ -78,6 +78,27 @@ describe UseCase::SearchAddressesByPostcode do
         },
       )
 
+      gateway.add(
+        {
+          address_id: "RRN-0000-0000-0000-0000-0003",
+          line1: "The Name",
+          line2: "129 Home Road",
+          line3: nil,
+          line4: nil,
+          town: "Placeville",
+          postcode: "PL4 V12",
+          assessment_type: "RdSAP",
+          source: "PREVIOUS_ASSESSMENT",
+          existing_assessments: [
+            {
+              assessment_id: "0000-0000-0000-0000-0003",
+              assessment_status: "ENTERED",
+              assessment_type: "RdSAP",
+            },
+          ],
+        },
+      )
+
       gateway
     end
 
@@ -277,7 +298,7 @@ describe UseCase::SearchAddressesByPostcode do
           end
 
           it "returns the expected building reference number" do
-            expect(results[0].address_id).to eq "RRN-0000-0000-0000-0000-0002"
+            expect(results[0].address_id).to eq "RRN-0000-0000-0000-0000-0003"
           end
 
           it "returns the expected first line of the address" do
@@ -311,7 +332,7 @@ describe UseCase::SearchAddressesByPostcode do
           it "returns an existing assessment with the expected RRN" do
             expect(
               results[0].existing_assessments[0][:assessment_id],
-            ).to eq "0000-0000-0000-0000-0002"
+            ).to eq "0000-0000-0000-0000-0003"
           end
 
           it "returns an existing assessment with the expected status" do

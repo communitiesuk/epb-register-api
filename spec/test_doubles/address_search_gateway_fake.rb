@@ -31,6 +31,9 @@ class AddressSearchGatewayFake
         end
     end
 
+    filtered_results =
+      filtered_results.reverse.uniq { |e| e[:line1] && e[:line2] }.reverse
+
     results_to_domain filtered_results
   end
 
