@@ -2,7 +2,7 @@
 <CEPC:Reports
   xmlns:CEPC="https://epbr.digital.communities.gov.uk/xsd/cepc"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/cepc  ../CEPC-7.1/Reports/CEPC-Reports.xsd"
+  xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/cepc  ../../../api/schemas/xml/CEPC-7.1/Reports/CEPC-Reports.xsd"
 >
   <CEPC:Report>
     <CEPC:Report-Header>
