@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_04_115108) do
+ActiveRecord::Schema.define(version: 2020_06_08_125912) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -104,30 +104,6 @@ ActiveRecord::Schema.define(version: 2020_06_04_115108) do
     t.string "improvement_description"
   end
 
-  create_table "gdp_charges", id: false, force: :cascade do |t|
-    t.string "green_deal_plan_id"
-    t.integer "sequence"
-    t.datetime "start_date"
-    t.datetime "end_date"
-    t.decimal "daily_charge"
-  end
-
-  create_table "gdp_fuel_savings", id: false, force: :cascade do |t|
-    t.string "green_deal_plan_id"
-    t.integer "sequence"
-    t.string "fuel_code"
-    t.integer "fuel_saving"
-    t.decimal "standing_charge_fraction"
-  end
-
-  create_table "gdp_measures", id: false, force: :cascade do |t|
-    t.string "green_deal_plan_id"
-    t.integer "sequence"
-    t.string "measure_type"
-    t.string "product"
-    t.datetime "repaid_date"
-  end
-
   create_table "green_deal_plans", primary_key: "green_deal_plan_id", id: :string, force: :cascade do |t|
     t.datetime "start_date"
     t.datetime "end_date"
@@ -164,7 +140,4 @@ ActiveRecord::Schema.define(version: 2020_06_04_115108) do
   add_foreign_key "assessments_xml", "assessments", primary_key: "assessment_id"
   add_foreign_key "assessors", "schemes", column: "registered_by", primary_key: "scheme_id"
   add_foreign_key "domestic_epc_energy_improvements", "assessments", primary_key: "assessment_id"
-  add_foreign_key "gdp_charges", "green_deal_plans", primary_key: "green_deal_plan_id"
-  add_foreign_key "gdp_fuel_savings", "green_deal_plans", primary_key: "green_deal_plan_id"
-  add_foreign_key "gdp_measures", "green_deal_plans", primary_key: "green_deal_plan_id"
 end
