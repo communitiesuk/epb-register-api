@@ -67,6 +67,18 @@ describe "Acceptance::LodgeExamples" do
     File.read File.join Dir.pwd,
                         "api/schemas/xml/examples/CEPC-7.11(EPC+RR).xml"
   end
+  let(:acic_acir_ni_xml) do
+    File.read File.join Dir.pwd,
+                        "api/schemas/xml/examples/CEPC-NI-7.11(ACIC+ACIR).xml"
+  end
+  let(:dec_ar_ni_xml) do
+    File.read File.join Dir.pwd,
+                        "api/schemas/xml/examples/CEPC-NI-7.11(DEC+AR).xml"
+  end
+  let(:cepc_rr_ni_xml) do
+    File.read File.join Dir.pwd,
+                        "api/schemas/xml/examples/CEPC-NI-7.11(EPC+RR).xml"
+  end
   let(:scheme_id) { add_scheme_and_get_id }
 
   describe "when trying to lodge an example XML" do
@@ -255,6 +267,33 @@ describe "Acceptance::LodgeExamples" do
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
         schema_name: "CEPC-7.1",
+      )
+    end
+
+    it "can lodge the example ACIC+ACIR NI" do
+      lodge_assessment(
+        assessment_body: acic_acir_ni_xml,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] },
+        schema_name: "CEPC-NI-7.1",
+      )
+    end
+
+    it "can lodge the example DEC+AR NI" do
+      lodge_assessment(
+        assessment_body: dec_ar_ni_xml,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] },
+        schema_name: "CEPC-NI-7.1",
+      )
+    end
+
+    it "can lodge the example CEPC+RR NI" do
+      lodge_assessment(
+        assessment_body: cepc_rr_ni_xml,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] },
+        schema_name: "CEPC-NI-7.1",
       )
     end
   end
