@@ -1,37 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Report xmlns="https://epbr.digital.communities.gov.uk/xsd/cepc-ni" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/cepc-ni ../../../api/schemas/xml/CEPC-NI-7.1/Reports/CEPC-Reports.xsd">
-  <Report-Header>
-    <RRN>0000-0000-0000-0000-0000</RRN>
-    <Issue-Date>2006-05-04</Issue-Date>
-    <Report-Type>4</Report-Type>
-    <Valid-Until>2006-05-04</Valid-Until>
-    <Inspection-Date>2006-05-04</Inspection-Date>
-    <Registration-Date>2006-05-04</Registration-Date>
-    <Status>cancelled</Status>
-    <Language-Code>1</Language-Code>
-    <Energy-Assessor>
-      <Certificate-Number>SPEC000000</Certificate-Number>
-      <Name>Name0</Name>
-      <Accreditation-Scheme-Name>Accreditation-Scheme-Name0</Accreditation-Scheme-Name>
-    </Energy-Assessor>
-    <Property-Details>
-      <UPRN>UPRN-000000000000</UPRN>
-      <Property-Address>
-        <Address-Line-1>1 Lonely Street</Address-Line-1>
-        <Post-Town>Post-Town0</Post-Town>
-        <Postcode>A0 0AA</Postcode>
-      </Property-Address>
-      <Property-Type>Property-Type0</Property-Type>
-    </Property-Details>
-    <Calculation-Details>
-      <Calculation-Tool>Calculation-Tool0</Calculation-Tool>
-    </Calculation-Details>
-  </Report-Header>
-  <Formatted-Report>ZGVmYXVsdA==</Formatted-Report>
-  <Recommendations-Report>
-    <Technical-Information>
-      <Floor-Area>10</Floor-Area>
-      <Building-Environment>Natural Ventilation Only</Building-Environment>
-    </Technical-Information>
-  </Recommendations-Report>
-</Report>
+<Reports xmlns="https://epbr.digital.communities.gov.uk/xsd/cepc-ni"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/cepc-ni ../../../api/schemas/xml/CEPC-NI-7.1/Reports/CEPC-Reports.xsd">
+  <Report>
+    <Report-Header>
+      <RRN>0000-0000-0000-0000-0000</RRN>
+      <Issue-Date>2006-05-04</Issue-Date>
+      <Report-Type>4</Report-Type>
+      <Valid-Until>2006-05-04</Valid-Until>
+      <Inspection-Date>2006-05-04</Inspection-Date>
+      <Registration-Date>2006-05-04</Registration-Date>
+      <Status>cancelled</Status>
+      <Language-Code>1</Language-Code>
+      <Energy-Assessor>
+        <Certificate-Number>SPEC000000</Certificate-Number>
+        <Name>Name0</Name>
+        <Accreditation-Scheme-Name>Accreditation-Scheme-Name0</Accreditation-Scheme-Name>
+      </Energy-Assessor>
+      <Property-Details>
+        <UPRN>UPRN-000000000000</UPRN>
+        <Property-Address>
+          <Address-Line-1>1 Lonely Street</Address-Line-1>
+          <Post-Town>Post-Town0</Post-Town>
+          <Postcode>A0 0AA</Postcode>
+        </Property-Address>
+        <Property-Type>Property-Type0</Property-Type>
+      </Property-Details>
+      <Calculation-Details>
+        <Calculation-Tool>Calculation-Tool0</Calculation-Tool>
+      </Calculation-Details>
+    </Report-Header>
+    <Formatted-Report>ZGVmYXVsdA==</Formatted-Report>
+    <Recommendations-Report>
+      <Technical-Information>
+        <Floor-Area>10</Floor-Area>
+        <Building-Environment>Natural Ventilation Only</Building-Environment>
+      </Technical-Information>
+    </Recommendations-Report>
+  </Report>
+</Reports>
