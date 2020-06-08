@@ -19,15 +19,15 @@ module Domain
       data = []
 
       if schema.fetch_root
-        unless @data.first[1][schema.fetch_root.to_sym].is_a? Array
-          @data.first[1][schema.fetch_root.to_sym] = [
-            @data.first[1][schema.fetch_root.to_sym],
+        unless @data.first[1][schema.fetch_root].is_a? Array
+          @data.first[1][schema.fetch_root] = [
+            @data.first[1][schema.fetch_root],
           ]
         end
-        @data.first[1][schema.fetch_root.to_sym].each do |inner_data|
+        @data.first[1][schema.fetch_root].each do |inner_data|
           cad_data =
             Helper::DataExtractorHelper.new.fetch_data(
-              { schema.fetch_root.to_sym => inner_data },
+              { schema.fetch_root => inner_data },
               schema.fetch_data_structure,
               "",
             )
