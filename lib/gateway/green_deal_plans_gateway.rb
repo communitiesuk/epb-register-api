@@ -3,7 +3,7 @@ module Gateway
     class GreenDealPlans < ActiveRecord::Base; end
 
     def fetch(assessment_id)
-      GreenDealPlans.find_by(green_deal_plan_id: assessment_id)
+      GreenDealPlans.find_by(assessment_id: assessment_id)
     end
   end
 end
