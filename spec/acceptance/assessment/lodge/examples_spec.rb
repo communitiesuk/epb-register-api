@@ -15,7 +15,7 @@ describe "Acceptance::LodgeExamples" do
   end
   let(:dec_ar_xml) do
     File.read File.join Dir.pwd,
-                        "api/schemas/xml/examples/CEPC-7.11(Advisory-Report).xml"
+                        "api/schemas/xml/examples/CEPC-7.11(AR).xml"
   end
   let(:dec_xml) do
     File.read File.join Dir.pwd, "api/schemas/xml/examples/CEPC-7.11(DEC).xml"
@@ -36,7 +36,7 @@ describe "Acceptance::LodgeExamples" do
   end
   let(:dec_ar_ni_xml) do
     File.read File.join Dir.pwd,
-                        "api/schemas/xml/examples/CEPC-NI-7.11(Advisory-Report).xml"
+                        "api/schemas/xml/examples/CEPC-NI-7.11(AR).xml"
   end
   let(:dec_ni_xml) do
     File.read File.join Dir.pwd,
