@@ -13,7 +13,7 @@ describe "Acceptance::LodgeExamples" do
   let(:acir_xml) do
     File.read File.join Dir.pwd, "api/schemas/xml/examples/CEPC-7.11(ACIR).xml"
   end
-  let(:dec_ar_xml) do
+  let(:ar_xml) do
     File.read File.join Dir.pwd,
                         "api/schemas/xml/examples/CEPC-7.11(AR).xml"
   end
@@ -23,7 +23,7 @@ describe "Acceptance::LodgeExamples" do
   let(:cepc_xml) do
     File.read File.join Dir.pwd, "api/schemas/xml/examples/CEPC-7.11(EPC).xml"
   end
-  let(:cepc_rr_xml) do
+  let(:rr_xml) do
     File.read File.join Dir.pwd, "api/schemas/xml/examples/CEPC-7.11(RR).xml"
   end
   let(:acic_ni_xml) do
@@ -34,7 +34,7 @@ describe "Acceptance::LodgeExamples" do
     File.read File.join Dir.pwd,
                         "api/schemas/xml/examples/CEPC-NI-7.11(ACIR).xml"
   end
-  let(:dec_ar_ni_xml) do
+  let(:ar_ni_xml) do
     File.read File.join Dir.pwd,
                         "api/schemas/xml/examples/CEPC-NI-7.11(AR).xml"
   end
@@ -46,7 +46,7 @@ describe "Acceptance::LodgeExamples" do
     File.read File.join Dir.pwd,
                         "api/schemas/xml/examples/CEPC-NI-7.11(EPC).xml"
   end
-  let(:cepc_rr_ni_xml) do
+  let(:rr_ni_xml) do
     File.read File.join Dir.pwd, "api/schemas/xml/examples/CEPC-NI-7.11(RR).xml"
   end
   let(:rdsap_xml) do
@@ -110,7 +110,7 @@ describe "Acceptance::LodgeExamples" do
 
     it "can lodge the example DEC Advisory Report" do
       lodge_assessment(
-        assessment_body: dec_ar_xml,
+        assessment_body: ar_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
         schema_name: "CEPC-7.1",
@@ -137,7 +137,7 @@ describe "Acceptance::LodgeExamples" do
 
     it "can lodge the example CEPC Recommendation Report" do
       lodge_assessment(
-        assessment_body: cepc_rr_xml,
+        assessment_body: rr_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
         schema_name: "CEPC-7.1",
@@ -164,7 +164,7 @@ describe "Acceptance::LodgeExamples" do
 
     it "can lodge the example DEC Advisory Report NI" do
       lodge_assessment(
-        assessment_body: dec_ar_ni_xml,
+        assessment_body: ar_ni_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
         schema_name: "CEPC-NI-7.1",
@@ -191,7 +191,7 @@ describe "Acceptance::LodgeExamples" do
 
     it "can lodge the example CEPC Recommendation Report" do
       lodge_assessment(
-        assessment_body: cepc_rr_ni_xml,
+        assessment_body: rr_ni_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
         schema_name: "CEPC-NI-7.1",
