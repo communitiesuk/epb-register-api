@@ -2,9 +2,12 @@ module UseCase
   class FetchAssessment
     class NotFoundException < StandardError; end
 
-    def initialize(assessments_gateway, assessors_gateway)
+    def initialize(
+      assessments_gateway, assessors_gateway, green_deal_plans_gateway
+    )
       @assessments_gateway = assessments_gateway
       @assessors_gateway = assessors_gateway
+      @green_deal_plans_gateway = green_deal_plans_gateway
     end
 
     def execute(assessment_id)
@@ -21,6 +24,13 @@ module UseCase
 
       assessment.delete(:scheme_assessor_id)
       assessment[:assessor] = assessor.to_hash
+
+      green_deal_data = @green_deal_plans_gateway.fetch(assessment_id)
+
+      unless green_deal_data.nil?
+        assessment[:green_deal_plan]
+        return assessment.merge(green_deal_plan: green_deal_data)
+      end
 
       assessment
     end

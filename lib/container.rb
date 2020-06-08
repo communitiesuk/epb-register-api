@@ -6,6 +6,8 @@ class Container
 
     assessors_gateway = Gateway::AssessorsGateway.new
 
+    green_deal_plans_gateway = Gateway::GreenDealPlansGateway.new
+
     address_search_gateway = Gateway::AddressSearchGateway.new
 
     assessments_gateway = Gateway::AssessmentsGateway.new
@@ -25,7 +27,11 @@ class Container
     migrate_assessment_use_case =
       UseCase::MigrateAssessment.new(assessments_gateway, assessors_gateway)
     fetch_assessment_use_case =
-      UseCase::FetchAssessment.new(assessments_gateway, assessors_gateway)
+      UseCase::FetchAssessment.new(
+        assessments_gateway,
+        assessors_gateway,
+        green_deal_plans_gateway,
+      )
 
     find_assessors_by_postcode_use_case =
       UseCase::FindAssessorsByPostcode.new(
