@@ -214,6 +214,31 @@ module Controller
       end
     end
 
+    put "/api/assessments/:assessment_id",
+        jwt_auth: %w[migrate:assessment] do
+      assessment_id = params[:assessment_id]
+      migrate_epc = @container.get_object(:migrate_assessment_use_case)
+      assessment_body = request_body(PUT_SCHEMA)
+      result = migrate_epc.execute(assessment_id, assessment_body)
+
+      @events.event(
+        :domestic_energy_assessment_migrated,
+        params[:assessment_id],
+      )
+      json_api_response(code: 200, data: result.to_hash)
+    rescue StandardError => e
+      case e
+      when JSON::Schema::ValidationError
+        error_response(422, "INVALID_REQUEST", e.message)
+      when UseCase::MigrateAssessment::AssessmentRuleException
+        error_response(422, "ASSESSMENT_RULE_VIOLATION", e.message)
+      when ArgumentError
+        error_response(422, "INVALID_REQUEST", e.message)
+      else
+        server_error(e)
+      end
+    end
+
     def do_lodge
       correlation_id = rand
       logit_char_limit = 50_000

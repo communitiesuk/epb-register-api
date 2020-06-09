@@ -196,7 +196,7 @@ def migrate_assessment(
   scopes = %w[migrate:assessment]
 )
   assertive_put(
-    "api/assessments/domestic-epc/#{assessment_id}",
+    "api/assessments/#{assessment_id}",
     assessment_body,
     accepted_responses,
     authenticate,
