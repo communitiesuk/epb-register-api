@@ -140,8 +140,7 @@ module Controller
       },
     }.freeze
 
-    get "/api/assessments/search",
-        jwt_auth: %w[assessment:search] do
+    get "/api/assessments/search", jwt_auth: %w[assessment:search] do
       result =
         if params.key?(:postcode)
           @container.get_object(:find_assessments_by_postcode_use_case).execute(
@@ -149,12 +148,12 @@ module Controller
           )
         elsif params.key?(:assessment_id)
           @container.get_object(:find_assessments_by_assessment_id_use_case)
-              .execute(params[:assessment_id])
+            .execute(params[:assessment_id])
         else
           @container.get_object(
             :find_assessments_by_street_name_and_town_use_case,
           )
-              .execute(params[:street_name], params[:town])
+            .execute(params[:street_name], params[:town])
         end
 
       json_api_response(code: 200, data: result, burrow_key: :assessments)
@@ -189,8 +188,7 @@ module Controller
       end
     end
 
-    put "/api/assessments/:assessment_id",
-        jwt_auth: %w[migrate:assessment] do
+    put "/api/assessments/:assessment_id", jwt_auth: %w[migrate:assessment] do
       assessment_id = params[:assessment_id]
       migrate_epc = @container.get_object(:migrate_assessment_use_case)
       assessment_body = request_body(PUT_SCHEMA)

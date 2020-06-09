@@ -246,9 +246,7 @@ def domestic_assessments_search_by_street_name_and_town(
   scopes = %w[assessment:search]
 )
   assertive_get(
-    "/api/assessments/search?street_name=#{street_name}&town=#{
-      town
-    }",
+    "/api/assessments/search?street_name=#{street_name}&town=#{town}",
     accepted_responses,
     authenticate,
     auth_data,
