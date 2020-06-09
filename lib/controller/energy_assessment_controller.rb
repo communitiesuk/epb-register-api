@@ -206,8 +206,7 @@ module Controller
       do_lodge
     end
 
-    get "/api/assessments/:assessment_id",
-        jwt_auth: %w[assessment:fetch] do
+    get "/api/assessments/:assessment_id", jwt_auth: %w[assessment:fetch] do
       assessment_id = params[:assessment_id]
       result =
         @container.get_object(:fetch_assessment_use_case).execute(assessment_id)
