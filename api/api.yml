@@ -613,7 +613,7 @@ paths:
         '409':
           description: Assessor already exists on a different scheme
 
-  '/assessments/domestic-epc/{assessmentId}':
+  '/assessments/{assessmentId}':
     put:
       tags:
         - Migration
