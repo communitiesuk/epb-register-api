@@ -234,6 +234,7 @@ module Gateway
         )
 
       address.existing_assessments = []
+      address.address_id = "RRN-#{results[0]['assessment_id']}"
 
       results.each do |result|
         address.existing_assessments <<
