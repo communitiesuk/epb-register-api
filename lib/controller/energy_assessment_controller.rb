@@ -143,29 +143,60 @@ module Controller
     get "/api/assessments/domestic-epc/search",
         jwt_auth: %w[assessment:search] do
       result =
-        if params.key?(:postcode)
-          @container.get_object(:find_assessments_by_postcode_use_case).execute(
-            params[:postcode],
-          )
-        elsif params.key?(:assessment_id)
-          @container.get_object(:find_assessments_by_assessment_id_use_case)
-            .execute(params[:assessment_id])
-        else
-          @container.get_object(
-            :find_assessments_by_street_name_and_town_use_case,
-          )
-            .execute(params[:street_name], params[:town])
-        end
+          if params.key?(:postcode)
+            @container.get_object(:find_assessments_by_postcode_use_case).execute(
+                params[:postcode],
+                )
+          elsif params.key?(:assessment_id)
+            @container.get_object(:find_assessments_by_assessment_id_use_case)
+                .execute(params[:assessment_id])
+          else
+            @container.get_object(
+                :find_assessments_by_street_name_and_town_use_case,
+                )
+                .execute(params[:street_name], params[:town])
+          end
 
       json_api_response(code: 200, data: result, burrow_key: :assessments)
     rescue StandardError => e
       case e
       when UseCase::FindAssessmentsByStreetNameAndTown::ParameterMissing
         error_response(
-          400,
-          "MALFORMED_REQUEST",
-          "Required query params missing",
-        )
+            400,
+            "MALFORMED_REQUEST",
+            "Required query params missing",
+            )
+      else
+        server_error(e.message)
+      end
+    end
+
+    get "/api/assessments/search",
+        jwt_auth: %w[assessment:search] do
+      result =
+          if params.key?(:postcode)
+            @container.get_object(:find_assessments_by_postcode_use_case).execute(
+                params[:postcode],
+                )
+          elsif params.key?(:assessment_id)
+            @container.get_object(:find_assessments_by_assessment_id_use_case)
+                .execute(params[:assessment_id])
+          else
+            @container.get_object(
+                :find_assessments_by_street_name_and_town_use_case,
+                )
+                .execute(params[:street_name], params[:town])
+          end
+
+      json_api_response(code: 200, data: result, burrow_key: :assessments)
+    rescue StandardError => e
+      case e
+      when UseCase::FindAssessmentsByStreetNameAndTown::ParameterMissing
+        error_response(
+            400,
+            "MALFORMED_REQUEST",
+            "Required query params missing",
+            )
       else
         server_error(e.message)
       end
