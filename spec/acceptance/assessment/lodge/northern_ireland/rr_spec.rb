@@ -93,6 +93,7 @@ describe "Acceptance::LodgeRRNIEnergyAssessment" do
         )
 
         expected_response = {
+          "addressId" => "UPRN-000000000000",
           "addressLine1" => "1 Lonely Street",
           "addressLine2" => "",
           "addressLine3" => "",

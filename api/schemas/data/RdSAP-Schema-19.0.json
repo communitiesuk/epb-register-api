@@ -23,6 +23,9 @@
   "key": "renewable_heat_incentive",
   "path": ["RdSAP_Report", "Energy_Assessment", "Renewable_Heat_Incentive"]
 }, {
+  "key": "address_id",
+  "path": ["RdSAP_Report", "Report_Header", "Property", "UPRN"]
+}, {
   "key": "address",
   "path": ["RdSAP_Report", "Report_Header", "Property", "Address"]
 }, {

@@ -48,6 +48,7 @@ describe "Acceptance::LodgeDEC(AR)NIEnergyAssessment" do
       )
 
       expected_response = {
+        "addressId" => "RRN-0000-0000-0000-0000-0000",
         "addressLine1" => "1 Lonely Street",
         "addressLine2" => "",
         "addressLine3" => "",

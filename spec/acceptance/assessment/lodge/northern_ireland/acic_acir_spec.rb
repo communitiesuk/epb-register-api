@@ -114,6 +114,7 @@ describe "Acceptance::LodgeACIC+ACIRNIEnergyAssessment" do
         )
 
         expected_acic_response = {
+          "addressId" => "UPRN-432167890000",
           "addressLine1" => "A. Shop",
           "addressLine2" => "The High Street",
           "addressLine3" => "",
@@ -178,6 +179,7 @@ describe "Acceptance::LodgeACIC+ACIRNIEnergyAssessment" do
         expect(response_acic["data"]).to eq(expected_acic_response)
 
         expected_acir_response = {
+          "addressId" => "UPRN-432167890000",
           "addressLine1" => "A. Shop",
           "addressLine2" => "The High Street",
           "addressLine3" => "",

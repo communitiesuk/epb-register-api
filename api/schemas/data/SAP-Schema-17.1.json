@@ -20,6 +20,9 @@
   "key": "energy_use",
   "path": ["SAP_Report", "Energy_Assessment", "Energy_Use"]
 }, {
+  "key": "address_id",
+  "path": ["SAP_Report", "Report_Header", "Property", "UPRN"]
+}, {
   "key": "address",
   "path": ["SAP_Report", "Report_Header", "Property", "Address"]
 }, {

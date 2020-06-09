@@ -33,6 +33,7 @@ module Gateway
         opt_out: assessment[:opt_out],
         postcode: assessment[:postcode],
         date_of_expiry: assessment[:date_of_expiry].strftime("%Y-%m-%d"),
+        address_id: assessment[:address_id],
         address_line1: assessment[:address_line1],
         address_line2: assessment[:address_line2],
         address_line3: assessment[:address_line3],

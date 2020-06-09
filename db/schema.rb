@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_08_140759) do
+ActiveRecord::Schema.define(version: 2020_06_08_151350) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 2020_06_08_140759) do
     t.jsonb "property_summary", default: "[]", null: false
     t.integer "related_party_disclosure_number"
     t.string "related_party_disclosure_text"
+    t.string "address_id"
     t.index ["postcode"], name: "index_assessments_on_postcode"
     t.index ["town"], name: "index_assessments_on_town"
   end

@@ -82,6 +82,7 @@ describe "Acceptance::LodgeCEPC+RREnergyAssessment" do
         )
 
         expected_cepc_response = {
+          "addressId" => "UPRN-000000000001",
           "addressLine1" => "2 Lonely Street",
           "addressLine2" => "",
           "addressLine3" => "",
@@ -146,6 +147,7 @@ describe "Acceptance::LodgeCEPC+RREnergyAssessment" do
         expect(response_cepc["data"]).to eq(expected_cepc_response)
 
         expected_rr_response = {
+          "addressId" => "UPRN-000000000000",
           "addressLine1" => "1 Lonely Street",
           "addressLine2" => "",
           "addressLine3" => "",

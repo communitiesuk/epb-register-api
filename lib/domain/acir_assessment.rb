@@ -20,6 +20,7 @@ module Domain
       opt_out: false,
       postcode: nil,
       date_of_expiry: nil,
+      address_id: nil,
       address_line1: nil,
       address_line2: nil,
       address_line3: nil,
@@ -49,6 +50,7 @@ module Domain
       @opt_out = opt_out
       @postcode = postcode
       @date_of_expiry = Date.strptime(date_of_expiry, "%Y-%m-%d")
+      @address_id = address_id
       @address_line1 = address_line1
       @address_line2 = address_line2
       @address_line3 = address_line3
@@ -100,6 +102,7 @@ module Domain
         opt_out: @opt_out,
         postcode: @postcode,
         date_of_expiry: @date_of_expiry.strftime("%Y-%m-%d"),
+        address_id: @address_id,
         address_line1: @address_line1,
         address_line2: @address_line2,
         address_line3: @address_line3,
@@ -141,6 +144,7 @@ module Domain
         opt_out: @opt_out,
         postcode: @postcode,
         date_of_expiry: @date_of_expiry,
+        address_id: @address_id,
         address_line1: @address_line1,
         address_line2: @address_line2,
         address_line3: @address_line3,

@@ -78,6 +78,7 @@ describe "Acceptance::LodgeDEC+ARNIEnergyAssessment" do
         )
 
         expected_dec_response = {
+          "addressId" => "UPRN-000000000001",
           "addressLine1" => "2 Lonely Street",
           "addressLine2" => "",
           "addressLine3" => "",
@@ -142,6 +143,7 @@ describe "Acceptance::LodgeDEC+ARNIEnergyAssessment" do
         expect(response_dec["data"]).to eq(expected_dec_response)
 
         expected_ar_response = {
+          "addressId" => "RRN-0000-0000-0000-0000-0000",
           "addressLine1" => "1 Lonely Street",
           "addressLine2" => "",
           "addressLine3" => "",

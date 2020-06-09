@@ -90,6 +90,7 @@ describe "Acceptance::LodgeACIRNIEnergyAssessment" do
 
       it "returns the data that was lodged" do
         expected_response = {
+          "addressId" => "RRN-0000-0000-0000-0000-0000",
           "addressLine1" => "2 Lonely Street",
           "addressLine2" => "",
           "addressLine3" => "",

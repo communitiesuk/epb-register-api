@@ -104,6 +104,7 @@ module UseCase
           potential_carbon_emission: data[:potential_carbon_emission],
           postcode: data[:postcode],
           date_of_expiry: data[:date_of_expiry] || expiry_date,
+          address_id: data[:address_id] || nil,
           address_line1: data[:address_line_one],
           address_line2: data[:address_line_two] || "",
           address_line3: data[:address_line_three] || "",

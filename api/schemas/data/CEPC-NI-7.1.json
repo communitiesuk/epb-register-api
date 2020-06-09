@@ -55,6 +55,9 @@
   "root": "header",
   "path": ["Report-Type"]
 }, {
+  "key": "address_id",
+  "path": ["Report", "Report_Header", "Property_Details", "UPRN"]
+}, {
   "key": "address",
   "path": ["Report", "Report_Header", "Property_Details", "Property_Address"]
 }, {
