@@ -90,7 +90,9 @@ module Gateway
           ],
         )
 
-      results.map { |row| record_to_address_domain row }
+      results.map do |row|
+        populate_existing_assessments record_to_address_domain row
+      end
     end
 
     def search_by_street_and_town(street, town, address_type)
@@ -171,6 +173,78 @@ module Gateway
       levenshtein << " < #{permissiveness}" if permissiveness
 
       levenshtein
+    end
+
+    def populate_existing_assessments(address)
+      unless address.is_a? Domain::Address
+        raise StandardError, "must be an address domain object"
+      end
+
+      sql =
+        "
+         SELECT all_assessments.assessment_id,
+                 all_assessments.assessment_type,
+                 CASE WHEN all_assessments.date_of_expiry < CURRENT_DATE THEN 'EXPIRED'
+                      ELSE 'ENTERED'
+                     END AS assessment_status
+          FROM (
+              SELECT a.assessment_id,
+                 a.type_of_assessment AS assessment_type,
+                 a.date_of_expiry
+              FROM (
+                  WITH RECURSIVE
+                  forwards AS (
+                    SELECT a.assessment_id, a.address_id FROM assessments a WHERE a.address_id = $1
+                    UNION
+                    SELECT a_forwards.assessment_id, a_forwards.address_id FROM assessments a_forwards
+                    INNER JOIN forwards f ON REPLACE(a_forwards.address_id, 'RRN-', '') = f.assessment_id
+                  ),
+                  backwards AS (
+                    SELECT a.assessment_id, a.address_id FROM assessments a WHERE a.address_id = $1
+                    UNION
+                    SELECT a_backwards.assessment_id, a_backwards.address_id FROM assessments a_backwards
+                    INNER JOIN backwards b ON REPLACE(b.address_id, 'RRN-', '') = a_backwards.assessment_id
+                  )
+                  SELECT forwards.assessment_id FROM forwards
+                  UNION
+                  SELECT backwards.assessment_id FROM backwards
+              ) existing_assessments
+              INNER JOIN assessments a ON existing_assessments.assessment_id = a.assessment_id
+              WHERE existing_assessments.assessment_id != REPLACE($1, 'RRN-', '')
+              UNION
+              SELECT this_assessment.assessment_id,
+                     this_assessment.type_of_assessment AS assessment_type,
+                     this_assessment.date_of_expiry
+              FROM assessments this_assessment
+              WHERE this_assessment.assessment_id = REPLACE($1, 'RRN-', '')
+          ) as all_assessments
+          ORDER BY date_of_expiry DESC"
+
+      results =
+        ActiveRecord::Base.connection.exec_query(
+          sql,
+          "SQL",
+          [
+            ActiveRecord::Relation::QueryAttribute.new(
+              "address_id",
+              address.address_id,
+              ActiveRecord::Type::String.new,
+            ),
+          ],
+        )
+
+      address.existing_assessments = []
+
+      results.each do |result|
+        address.existing_assessments <<
+          {
+            assessmentId: result["assessment_id"],
+            assessmentStatus: result["assessment_status"],
+            assessmentType: result["assessment_type"],
+          }
+      end
+
+      address
     end
 
     def record_to_address_domain(row)

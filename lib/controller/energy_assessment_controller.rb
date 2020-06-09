@@ -210,7 +210,7 @@ module Controller
         jwt_auth: %w[assessment:fetch] do
       assessment_id = params[:assessment_id]
       result =
-          @container.get_object(:fetch_assessment_use_case).execute(assessment_id)
+        @container.get_object(:fetch_assessment_use_case).execute(assessment_id)
       json_api_response(code: 200, data: result)
     rescue StandardError => e
       case e

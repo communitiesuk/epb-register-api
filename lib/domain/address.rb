@@ -1,5 +1,6 @@
 module Domain
   class Address
+    attr_accessor :existing_assessments
     attr_reader :address_id,
                 :line1,
                 :line2,
@@ -7,8 +8,7 @@ module Domain
                 :line4,
                 :town,
                 :postcode,
-                :source,
-                :existing_assessments
+                :source
 
     def initialize(
       address_id:,
