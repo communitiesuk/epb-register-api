@@ -26,27 +26,16 @@ class GreenDealPlansGatewayStub
       measuresRemoved: false,
       measures: [
         {
-          sequence: 0,
           measureType: "Loft insulation",
           product: "WarmHome lagging stuff (TM)",
           repaidDate: "2025-03-29",
         },
       ],
       charges: [
-        {
-          sequence: 0,
-          startDate: "2020-03-29",
-          endDate: "2030-03-29",
-          dailyCharge: "0.34",
-        },
+        { startDate: "2020-03-29", endDate: "2030-03-29", dailyCharge: "0.34" },
       ],
       savings: [
-        {
-          sequence: 0,
-          fuelCode: "LPG",
-          fuelSaving: 0,
-          standingChargeFraction: -0.3,
-        },
+        { fuelCode: "LPG", fuelSaving: 0, standingChargeFraction: -0.3 },
       ],
     }
   end

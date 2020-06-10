@@ -106,7 +106,7 @@ ActiveRecord::Schema.define(version: 2020_06_10_102916) do
     t.string "improvement_description"
   end
 
-  create_table "green_deal_plans", primary_key: "green_deal_plan_id", id: :string, force: :cascade do |t|
+  create_table "green_deal_plans", id: false, force: :cascade do |t|
     t.datetime "start_date"
     t.datetime "end_date"
     t.string "provider_name"
@@ -123,6 +123,7 @@ ActiveRecord::Schema.define(version: 2020_06_10_102916) do
     t.jsonb "charges", default: "[]", null: false
     t.jsonb "savings", default: "[]", null: false
     t.string "assessment_id"
+    t.string "green_deal_plan_id"
   end
 
   create_table "postcode_geolocation", force: :cascade do |t|

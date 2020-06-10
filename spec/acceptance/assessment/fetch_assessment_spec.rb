@@ -2,6 +2,7 @@
 
 describe "Acceptance::Assessment" do
   include RSpecAssessorServiceMixin
+  class GreenDealPlans < ActiveRecord::Base; end
 
   let(:valid_assessor_request_body) do
     {
@@ -385,6 +386,164 @@ describe "Acceptance::Assessment" do
       expect(response["data"]).to eq(expected_response)
     end
 
+    context "when a domestic assessment has a green deal plan" do
+      it "returns the assessment details with the green deal plan" do
+        scheme_id = add_scheme_and_get_id
+        add_assessor(scheme_id, "TEST123456", valid_assessor_request_body)
+        migrate_assessment("15650-651625-18267167", valid_assessment_body)
+        create_green_deal_plan("15650-651625-18267167")
+
+        response = JSON.parse(fetch_assessment("15650-651625-18267167").body)
+
+        expected_response =
+          JSON.parse(
+            {
+              assessor: {
+                schemeAssessorId: valid_assessment_body[:schemeAssessorId],
+                registeredBy: { schemeId: scheme_id, name: "test scheme" },
+                firstName: valid_assessor_request_body[:firstName],
+                middleNames: valid_assessor_request_body[:middleNames],
+                lastName: valid_assessor_request_body[:lastName],
+                dateOfBirth: valid_assessor_request_body[:dateOfBirth],
+                contactDetails: {
+                  telephoneNumber:
+                    valid_assessor_request_body[:contactDetails][
+                      :telephoneNumber
+                    ],
+                  email: valid_assessor_request_body[:contactDetails][:email],
+                },
+                searchResultsComparisonPostcode: "",
+                address: {},
+                companyDetails: {},
+                qualifications: {
+                  domesticSap: "INACTIVE",
+                  domesticRdSap: "ACTIVE",
+                  nonDomesticSp3: "INACTIVE",
+                  nonDomesticCc4: "INACTIVE",
+                  nonDomesticDec: "INACTIVE",
+                  nonDomesticNos3: "INACTIVE",
+                  nonDomesticNos4: "STRUCKOFF",
+                  nonDomesticNos5: "SUSPENDED",
+                  gda: "INACTIVE",
+                },
+              },
+              dateOfAssessment: valid_assessment_body[:dateOfAssessment],
+              dateRegistered: valid_assessment_body[:dateRegistered],
+              totalFloorArea: valid_assessment_body[:totalFloorArea],
+              typeOfAssessment: valid_assessment_body[:typeOfAssessment],
+              dwellingType: valid_assessment_body[:dwellingType],
+              assessmentId: "15650-651625-18267167",
+              currentEnergyEfficiencyRating:
+                valid_assessment_body[:currentEnergyEfficiencyRating],
+              potentialEnergyEfficiencyRating:
+                valid_assessment_body[:potentialEnergyEfficiencyRating],
+              currentCarbonEmission:
+                valid_assessment_body[:currentCarbonEmission],
+              potentialCarbonEmission:
+                valid_assessment_body[:potentialCarbonEmission],
+              currentEnergyEfficiencyBand: "c",
+              potentialEnergyEfficiencyBand: "c",
+              optOut: false,
+              postcode: valid_assessment_body[:postcode],
+              dateOfExpiry: valid_assessment_body[:dateOfExpiry],
+              town: valid_assessment_body[:town],
+              addressId: nil,
+              addressLine1: valid_assessment_body[:addressLine1],
+              addressLine2: valid_assessment_body[:addressLine2],
+              addressLine3: valid_assessment_body[:addressLine4],
+              addressLine4: valid_assessment_body[:addressLine4],
+              heatDemand: {
+                currentSpaceHeatingDemand:
+                  valid_assessment_body[:heatDemand][
+                    :currentSpaceHeatingDemand
+                  ],
+                currentWaterHeatingDemand:
+                  valid_assessment_body[:heatDemand][
+                    :currentWaterHeatingDemand
+                  ],
+                impactOfLoftInsulation:
+                  valid_assessment_body[:heatDemand][:impactOfLoftInsulation],
+                impactOfCavityInsulation:
+                  valid_assessment_body[:heatDemand][:impactOfCavityInsulation],
+                impactOfSolidWallInsulation:
+                  valid_assessment_body[:heatDemand][
+                    :impactOfSolidWallInsulation
+                  ],
+              },
+              recommendedImprovements: [
+                {
+                  sequence: 0,
+                  improvementCode: "1",
+                  indicativeCost: "£200 - £4,000",
+                  typicalSaving: "400.21",
+                  improvementCategory: "string",
+                  improvementType: "string",
+                  improvementTitle: nil,
+                  improvementDescription: nil,
+                  energyPerformanceRatingImprovement: 80,
+                  environmentalImpactRatingImprovement: 90,
+                  greenDealCategoryCode: "string",
+                },
+                {
+                  sequence: 1,
+                  improvementCode: nil,
+                  indicativeCost: "£200 - £4,000",
+                  typicalSaving: "400.21",
+                  improvementCategory: "string",
+                  improvementType: "string",
+                  improvementTitle: "Some improvement",
+                  improvementDescription: "Some improvement description",
+                  energyPerformanceRatingImprovement: 80,
+                  environmentalImpactRatingImprovement: 90,
+                  greenDealCategoryCode: "string",
+                },
+              ],
+              propertySummary: valid_assessment_body[:propertySummary],
+              relatedPartyDisclosureNumber:
+                valid_assessment_body[:relatedPartyDisclosureNumber],
+              relatedPartyDisclosureText:
+                valid_assessment_body[:relatedPartyDisclosureText],
+              greenDealPlan: {
+                greenDealPlanId: "ABC123456DEF",
+                assessmentId: "15650-651625-18267167",
+                startDate: "2020-01-30",
+                endDate: "2030-02-28",
+                providerDetails: {
+                  name: "The Bank",
+                  telephone: "0800 0000000",
+                  email: "lender@example.com",
+                },
+                interest: { rate: nil, fixed: nil },
+                chargeUplift: { amount: nil, date: nil },
+                ccaRegulated: nil,
+                structureChanged: nil,
+                measuresRemoved: nil,
+                measures: [
+                  {
+                    measureType: "Loft insulation",
+                    product: "WarmHome lagging stuff (TM)",
+                    repaidDate: "2025-03-29",
+                  },
+                ],
+                charges: [
+                  {
+                    startDate: "2020-03-29",
+                    endDate: "2030-03-29",
+                    dailyCharge: "0.34",
+                  },
+                ],
+                savings: [
+                  {
+                    fuelCode: "LPG", fuelSaving: 0, standingChargeFraction: -0.3
+                  },
+                ],
+              },
+            }.to_json,
+          )
+        expect(response["data"]).to eq(expected_response)
+      end
+    end
+
     context "when updating an existing assessment" do
       it "returns the assessment details" do
         scheme_id = add_scheme_and_get_id
@@ -515,5 +674,26 @@ describe "Acceptance::Assessment" do
         expect(response["data"]).to eq(expected_response)
       end
     end
+  end
+
+  def create_green_deal_plan(_assessment_id)
+    GreenDealPlans.create(
+      assessment_id: "15650-651625-18267167",
+      green_deal_plan_id: "ABC123456DEF",
+      start_date: "2020-01-30",
+      end_date: "2030-02-28",
+      provider_name: "The Bank",
+      provider_telephone: "0800 0000000",
+      provider_email: "lender@example.com",
+      measures: {
+        measureType: "Loft insulation",
+        product: "WarmHome lagging stuff (TM)",
+        repaidDate: "2025-03-29",
+      },
+      charges: {
+        startDate: "2020-03-29", endDate: "2030-03-29", dailyCharge: "0.34"
+      },
+      savings: { fuelCode: "LPG", fuelSaving: 0, standingChargeFraction: -0.3 },
+    )
   end
 end
