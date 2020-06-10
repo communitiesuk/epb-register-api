@@ -481,6 +481,76 @@ paths:
         '500':
           description: Server error
 
+    put:
+      tags:
+        - Migration
+      summary: Migrate an existing Energy Performance Assessment to the register
+      security:
+        - oauth:
+            - 'migrate:assessment'
+      parameters:
+        - in: path
+          name: assessmentId
+          required: true
+          description: The ID of the assessment being added
+          schema:
+            $ref: '#/components/schemas/AssessmentId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Empty'
+      responses:
+        '200':
+          description: Assessment added / replaced
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DomesticEnergyAssessmentWithBand'
+                type: object
+                properties:
+                  addressLine1:
+                    type: string
+                    example: 2 Marsham Street
+                  addressLine2:
+                    type: string
+                    example: ''
+                  addressLine3:
+                    type: string
+                    example: ''
+                  addressLine4:
+                    type: string
+                    example: ''
+                  town:
+                    type: string
+                    example: London
+                  assessor:
+                    $ref: '#/components/schemas/AssessorSummary'
+                  heatDemand:
+                    type: object
+                    properties:
+                      currentSpaceHeatingDemand:
+                        type: integer
+                        example: 4564
+                      currentWaterHeatingDemand:
+                        type: integer
+                        example: 3253
+                      impactOfLoftInsulation:
+                        type: integer
+                        example: -453
+                      impactOfCavityInsulation:
+                        type: integer
+                        example: -84
+                      impactOfSolidWallInsulation:
+                        type: integer
+                        example: -21
+        '400':
+          description: Bad request
+        '403':
+          description: Forbidden
+        '500':
+          description: Server error
 
   /assessments/{assessmentId}/status:
     post:
@@ -612,78 +682,6 @@ paths:
           description: Forbidden
         '409':
           description: Assessor already exists on a different scheme
-
-  '/assessments/{assessmentId}':
-    put:
-      tags:
-        - Migration
-      summary: Migrate an existing Energy Performance Assessment to the register
-      security:
-        - oauth:
-            - 'migrate:assessment'
-      parameters:
-        - in: path
-          name: assessmentId
-          required: true
-          description: The ID of the assessment being added
-          schema:
-            $ref: '#/components/schemas/AssessmentId'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Empty'
-      responses:
-        '200':
-          description: Assessment added / replaced
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: '#/components/schemas/DomesticEnergyAssessmentWithBand'
-                type: object
-                properties:
-                  addressLine1:
-                    type: string
-                    example: 2 Marsham Street
-                  addressLine2:
-                    type: string
-                    example: ''
-                  addressLine3:
-                    type: string
-                    example: ''
-                  addressLine4:
-                    type: string
-                    example: ''
-                  town:
-                    type: string
-                    example: London
-                  assessor:
-                    $ref: '#/components/schemas/AssessorSummary'
-                  heatDemand:
-                    type: object
-                    properties:
-                      currentSpaceHeatingDemand:
-                        type: integer
-                        example: 4564
-                      currentWaterHeatingDemand:
-                        type: integer
-                        example: 3253
-                      impactOfLoftInsulation:
-                        type: integer
-                        example: -453
-                      impactOfCavityInsulation:
-                        type: integer
-                        example: -84
-                      impactOfSolidWallInsulation:
-                        type: integer
-                        example: -21
-        '400':
-          description: Bad request
-        '403':
-          description: Forbidden
-        '500':
-          description: Server error
 
   '/migrations/addresses/{addressId}':
     put:
