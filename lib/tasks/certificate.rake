@@ -1,8 +1,8 @@
 desc "Truncate all certificate data"
 
 task :truncate_certificate do
-  unless ENV["STAGE"] == "staging" || ENV["STAGE"] == "integration"
-    exit
+  if ENV["STAGE"] == "production"
+    raise StandardError, "I will not truncate the production db"
   end
 
   ActiveRecord::Base.connection.execute("TRUNCATE TABLE assessments RESTART IDENTITY CASCADE")
@@ -12,21 +12,26 @@ desc "Import some random certificate data"
 
 task :generate_certificate do
   if ENV["STAGE"] == "production"
-    exit
+    raise StandardError, "I will not seed the production db"
   end
 
   ActiveRecord::Base.logger = nil
 
+  addresses = [
+    { id: "", line1: "Flat 32", line2: "11 Makup Street", line3: "", line4: "", town: "London", postcode: "E2 0SZ" },
+    { id: "", line1: "Flat 34", line2: "11 Makup Street", line3: "", line4: "", town: "London", postcode: "E2 0SZ" },
+    { id: "", line1: "Flat 68", line2: "11 Makup Street", line3: "", line4: "", town: "London", postcode: "E2 0SX" },
+    { id: "", line1: "The Dormers", line2: "Milton Mews", line3: "", line4: "", town: "London", postcode: "NW3 2UU" },
+    { id: "", line1: "8 Spooky Avenue", line2: "", line3: "", line4: "", town: "London", postcode: "SW1A 2AA" },
+    { id: "", line1: "11 Makup Street", line2: "", line3: "", line4: "", town: "London", postcode: "SW1A 2AA" },
+    { id: "", line1: "11 Mornington Crescent", line2: "", line3: "", line4: "", town: "London", postcode: "SE1 1TE" },
+    { id: "", line1: "15", line2: "Thomas Lane", line3: "", line4: "", town: "London", postcode: "SW1X 7XL" },
+    { id: "", line1: "First floor flat", line2: "7a Parkhill Road", line3: "", line4: "", town: "London", postcode: "W1B 5BT" },
+    { id: "", line1: "1 Hamlet Building", line2: "", line3: "", line4: "", town: "Bournemouth", postcode: "BH2 5BH" },
+  ]
+
   dwelling_type = ["end-terrace house", "terrace house", "flat", "bungalow", "mansion", "castle"]
   type_of_assessment = %w[RdSAP SAP]
-  postcode = ["E2 0SZ", "NW3 2UU", "SW1A 2AA", "SE1 1TE", "SW1X 7XL", "W1B 5BT", "BH2 5BH", "CF10 2EQ", "TR19 7AA", "M4 6WX"]
-  address_line1 = ["Flat 32", "Milton Mews", "Flat 22", "First floor flat", "2D", "Flat 99", "33 Caliban Tower", "1 Hamlet Building", "9 Peter Pan Building", "", "", "", ""]
-  address_line2 = ["7a Parkhill Road", "Spooky Avenue", "9 Priti Patel Street", "11 Makup Street", "11 Mornington Crescent", "Spooky Street", "Thomas Lane"]
-  address_line3 = Array.new(20, "")
-  address_line3.push("The Dormers")
-  address_line4 = Array.new(100, "")
-  address_line4.push("Westminster")
-  town = %w[Brighton Bournemouth London Cardiff Newcastle Manchester Bristol]
   current_space_heating_demand = [1233, 3445, 4546, 6748, 8910, 7483, 8963]
   current_water_heating_demand = [7983, 2321, 454, 648, 8932, 6483, 72_363]
   current_carbon_emission = [5.4, 4.327, 7.8, 4.5, 6.4, 4]
@@ -104,21 +109,19 @@ task :generate_certificate do
   result = ActiveRecord::Base.connection.execute("SELECT * FROM assessors ORDER BY random() LIMIT 2000")
 
   result.each_with_index do |assessor, number|
-    line_1 = address_line1.sample
-    line_2 = address_line2.sample
-    scheme_assessor_id = assessor["scheme_assessor_id"]
-    if line_1.empty?
-      line_1 = line_2
-      line_2 = ""
+    address = addresses.sample
+
+    assessments_at_address = ActiveRecord::Base.connection.execute("SELECT assessment_id FROM assessments WHERE address_line1 = '#{address[:line1]}' AND postcode = '#{address[:postcode]}' ORDER BY date_of_expiry DESC LIMIT 1")
+
+    unless assessments_at_address.entries.empty?
+      address[:id] = "RRN-#{assessments_at_address[0]['assessment_id']}"
     end
 
-    line_3 = address_line3.sample
-    line_4 = address_line4.sample
-    internal_postcode = postcode.sample
+    scheme_assessor_id = assessor["scheme_assessor_id"]
+
     date_of_assessment = "20" + rand(6..19).to_s.rjust(2, "0") + rand(1..12).to_s.rjust(2, "0") + rand(1..28).to_s.rjust(2, "0")
     date_registered = (Date.parse(date_of_assessment) + rand(1..5).day).strftime("%Y-%m-%d")
-    date_of_expiry =  (Date.parse(date_of_assessment) + 10.year).strftime("%Y-%m-%d")
-    internal_town = town.sample
+    date_of_expiry = (Date.parse(date_of_assessment) + 10.year).strftime("%Y-%m-%d")
     current_energy_efficiency_rating = rand(1..99)
     internal_current_carbon_emission = current_carbon_emission.sample
     internal_potential_carbon_emission = potential_carbon_emission.sample
@@ -155,6 +158,7 @@ task :generate_certificate do
             address_line3,
             address_line4,
             town,
+            address_id,
             current_carbon_emission,
             potential_carbon_emission,
             current_space_heating_demand,
@@ -176,13 +180,14 @@ task :generate_certificate do
           '#{rand(20..200)}',
           '#{current_energy_efficiency_rating}',
           '#{[current_energy_efficiency_rating + rand(1..20), 99].min}',
-          '#{internal_postcode}',
+          '#{address[:postcode]}',
           '#{date_of_expiry}',
-          '#{ActiveRecord::Base.sanitize_sql(line_1)}',
-          '#{ActiveRecord::Base.sanitize_sql(line_2)}',
-          '#{line_3}',
-          '#{line_4}',
-          '#{internal_town}',
+          '#{address[:line1]}',
+          '#{address[:line2]}',
+          '#{address[:line3]}',
+          '#{address[:line4]}',
+          '#{address[:town]}',
+          '#{address[:id]}',
           '#{internal_current_carbon_emission}',
           '#{internal_potential_carbon_emission}',
           '#{internal_current_space_heating_demand}',
