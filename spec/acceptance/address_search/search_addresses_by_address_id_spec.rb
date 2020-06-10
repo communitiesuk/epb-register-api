@@ -22,6 +22,8 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
   context "when an address has a report lodged" do
     let(:scheme_id) { add_scheme_and_get_id }
 
+    let(:expired_assessment) { Nokogiri.XML valid_rdsap_xml }
+
     let(:response) do
       JSON.parse(
         assertive_get(
@@ -39,11 +41,10 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
     before(:each) do
       add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
 
-      entered_assessment = Nokogiri.XML valid_rdsap_xml
-      entered_assessment.at("UPRN").remove
+      expired_assessment.at("UPRN").remove
 
       lodge_assessment(
-        assessment_body: entered_assessment.to_xml,
+        assessment_body: expired_assessment.to_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
       )
@@ -78,7 +79,10 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
     end
 
     context "with another assessment at the same address" do
-      let(:entered_assessment) { Nokogiri.XML valid_rdsap_xml }
+      let(:assessment) { Nokogiri.XML valid_rdsap_xml }
+      let(:address_id) { assessment.at("UPRN") }
+      let(:assessment_id) { assessment.at("RRN") }
+      let(:assessment_date) { assessment.at("Inspection-Date") }
 
       let(:response) do
         JSON.parse(
@@ -95,44 +99,32 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
       end
 
       before do
-        assessment_id = entered_assessment.at("RRN")
         assessment_id.children = "0000-0000-0000-0000-0001"
-        assessment_id = entered_assessment.at("UPRN")
-        assessment_id.children = "RRN-0000-0000-0000-0000-0000"
-
-        assessment_date = entered_assessment.at("Inspection-Date")
+        address_id.children = "RRN-0000-0000-0000-0000-0000"
         assessment_date.children = Date.today.prev_day(1).strftime("%Y-%m-%d")
 
         lodge_assessment(
-          assessment_body: entered_assessment.to_xml,
+          assessment_body: assessment.to_xml,
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] },
         )
 
-        assessment_id = entered_assessment.at("RRN")
         assessment_id.children = "0000-0000-0000-0000-0002"
-        assessment_id = entered_assessment.at("UPRN")
-        assessment_id.children = "RRN-0000-0000-0000-0000-0001"
-
-        assessment_date = entered_assessment.at("Inspection-Date")
+        address_id.children = "RRN-0000-0000-0000-0000-0001"
         assessment_date.children = Date.today.prev_day(6).strftime("%Y-%m-%d")
 
         lodge_assessment(
-          assessment_body: entered_assessment.to_xml,
+          assessment_body: assessment.to_xml,
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] },
         )
 
-        assessment_id = entered_assessment.at("RRN")
         assessment_id.children = "0000-0000-0000-0000-0003"
-        assessment_id = entered_assessment.at("UPRN")
-        assessment_id.children = "RRN-0000-0000-0000-0000-0002"
-
-        assessment_date = entered_assessment.at("Inspection-Date")
+        address_id.children = "RRN-0000-0000-0000-0000-0002"
         assessment_date.children = Date.today.prev_day(11).strftime("%Y-%m-%d")
 
         lodge_assessment(
-          assessment_body: entered_assessment.to_xml,
+          assessment_body: assessment.to_xml,
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] },
         )
