@@ -26,44 +26,43 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
   context "an address that has a report lodged" do
     let(:scheme_id) { add_scheme_and_get_id }
 
+    let(:assessment) { Nokogiri.XML valid_rdsap_xml }
+    let(:expired_assessment) { Nokogiri.XML valid_rdsap_xml }
+    let(:address_id) { assessment.at("UPRN") }
+    let(:assessment_id) { assessment.at("RRN") }
+    let(:assessment_date) { assessment.at("Inspection-Date") }
+    let(:address_line_one) { assessment.search("Address-Line-1")[1] }
+    let(:address_line_two) do
+      Nokogiri::XML::Node.new "Address-Line-2", assessment
+    end
+    let(:town) { assessment.search("Post-Town")[1] }
+
+    let(:non_domestic_xml) { Nokogiri.XML valid_cepc_xml }
+    let(:cepc_assessment_id) { non_domestic_xml.at("//CEPC:RRN") }
+    let(:cepc_address_line_one) { non_domestic_xml.at("//CEPC:Address-Line-1") }
+
     before(:each) do
       add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
 
-      entered_assessment = Nokogiri.XML valid_rdsap_xml
-      entered_assessment.at("UPRN").remove
+      expired_assessment.at("UPRN").remove
 
       lodge_assessment(
-        assessment_body: entered_assessment.to_xml,
+        assessment_body: expired_assessment.to_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
       )
 
-      doc = Nokogiri.XML valid_rdsap_xml
-      second_assessment = doc.dup
-      third_assessment = doc.dup
-      fourth_assessment = doc.dup
-      fifth_assessment = doc.dup
-
-      assessment_id = second_assessment.at("RRN")
       assessment_id.children = "0000-0000-0000-0000-0001"
-      second_assessment.at("UPRN").remove
-
-      address_line_one = second_assessment.search("Address-Line-1")[1]
       address_line_one.children = "2 Other Street"
 
       lodge_assessment(
-        assessment_body: second_assessment.to_xml,
+        assessment_body: assessment.to_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
       )
 
-      non_domestic_xml = Nokogiri.XML valid_cepc_xml
-
-      assessment_id = non_domestic_xml.at("//CEPC:RRN")
-      assessment_id.children = "0000-0000-0000-0000-0002"
-
-      address_line_one = non_domestic_xml.at("//CEPC:Address-Line-1")
-      address_line_one.children = "3 Other Street"
+      cepc_assessment_id.children = "0000-0000-0000-0000-0002"
+      cepc_address_line_one.children = "3 Other Street"
 
       lodge_assessment(
         assessment_body: non_domestic_xml.to_xml,
@@ -72,52 +71,37 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
         schema_name: "CEPC-7.1",
       )
 
-      third_assessment_id = third_assessment.at("RRN")
-      third_assessment_id.children = "0000-0000-0000-0000-0003"
-
-      third_address_line_one = third_assessment.search("Address-Line-1")[1]
-      third_address_line_one.children = "The House"
-      third_address_line_two =
-        Nokogiri::XML::Node.new "Address-Line-2", third_assessment
-      third_address_line_two.content = "123 Test Street"
-      third_address_line_one.add_next_sibling third_address_line_two
+      assessment_id.children = "0000-0000-0000-0000-0003"
+      address_line_one.children = "The House"
+      address_line_two.content = "123 Test Street"
+      address_line_one.add_next_sibling address_line_two
 
       lodge_assessment(
-        assessment_body: third_assessment.to_xml,
+        assessment_body: assessment.to_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
       )
 
-      fourth_assessment_id = fourth_assessment.at("RRN")
-      fourth_assessment_id.children = "0000-0000-0000-0000-0004"
-
-      fourth_address_line_one = fourth_assessment.search("Address-Line-1")[1]
-      fourth_address_line_one.children = "3 Other Street"
-      fourth_address_line_two =
-        Nokogiri::XML::Node.new "Address-Line-2", fourth_assessment
-      fourth_address_line_two.content = "Another Town"
-      fourth_address_line_one.add_next_sibling fourth_address_line_two
-
-      town = fourth_assessment.search("Post-Town")[1]
+      assessment_id.children = "0000-0000-0000-0000-0004"
+      address_line_one.children = "3 Other Street"
+      address_line_two.content = "Another Town"
+      address_line_one.add_next_sibling address_line_two
       town.children = "Some County"
 
       lodge_assessment(
-        assessment_body: fourth_assessment.to_xml,
+        assessment_body: assessment.to_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
       )
 
-      fifth_assessment_id = fifth_assessment.at("RRN")
-      fifth_assessment_id.children = "0000-0000-0000-0000-0005"
-
-      fifth_address_id = fifth_assessment.at("UPRN")
-      fifth_address_id.children = "RRN-0000-0000-0000-0000-0000"
-
-      assessment_date = fifth_assessment.at("Inspection-Date")
+      assessment_id.children = "0000-0000-0000-0000-0005"
+      address_id.children = "RRN-0000-0000-0000-0000-0000"
+      address_line_two.content = nil
+      address_line_one.add_next_sibling address_line_two
       assessment_date.children = Date.today.prev_day.strftime("%Y-%m-%d")
 
       lodge_assessment(
-        assessment_body: fifth_assessment.to_xml,
+        assessment_body: assessment.to_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
       )
