@@ -15,6 +15,25 @@ task :import_gdp_plans do
     })
   end
 
+  measures = {}
+  plans["MEASURES"].map do |measures_row|
+    measures[measures_row["PLAN_ID"]] = [] unless measures[measures_row["PLAN_ID"]]
+    measures[measures_row["PLAN_ID"]].push({
+      product: measures_row["PRODUCT"].gsub("'", "\\'"),
+      repaid_date: measures_row["REPAID_DATE"],
+    })
+  end
+
+  savings = {}
+  plans["SAVINGS"].map do |savings_row|
+    savings[savings_row["PLAN_ID"]] = [] unless savings[savings_row["PLAN_ID"]]
+    savings[savings_row["PLAN_ID"]].push({
+      fuel_code: savings_row["OA_FUEL_CODE"],
+      fuel_saving: savings_row["FUEL_SAVING"],
+      standing_charge_fraction: savings_row["STANDING_CHARGE_FRACTION"],
+    })
+  end
+
   plans["GREEN_DEAL_PLANS"].each do |row|
     query = "INSERT INTO
               green_deal_plans
@@ -32,7 +51,9 @@ task :import_gdp_plans do
                 cca_regulated,
                 structure_changed,
                 measures_removed,
-                measures
+                charges,
+                measures,
+                savings
               )
               VALUES
               (
@@ -49,7 +70,9 @@ task :import_gdp_plans do
                 '#{ActiveRecord::Base.sanitize_sql(row['CCA_IND'])}',
                 '#{ActiveRecord::Base.sanitize_sql(row['STRUCTURE_CHANGED_IND'])}',
                 '#{ActiveRecord::Base.sanitize_sql(row['MEASURES_REMOVED_IND'])}',
-                '#{ActiveRecord::Base.sanitize_sql(charges[row['PLAN_ID']].to_json)}'
+                '#{ActiveRecord::Base.sanitize_sql(charges[row['PLAN_ID']].to_json)}',
+                '#{ActiveRecord::Base.sanitize_sql(measures[row['PLAN_ID']].to_json)}',
+                '#{ActiveRecord::Base.sanitize_sql(savings[row['PLAN_ID']].to_json)}'
               )"
 
     ActiveRecord::Base.connection.execute(query)
