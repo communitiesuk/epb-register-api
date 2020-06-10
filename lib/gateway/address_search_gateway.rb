@@ -241,9 +241,6 @@ module Gateway
     end
 
     def record_to_address_domain(row)
-      assessment_status =
-        row["date_of_expiry"] < Time.now ? "EXPIRED" : "ENTERED"
-
       Domain::Address.new address_id: "RRN-#{row['assessment_id']}",
                           line1: row["address_line1"],
                           line2: row["address_line2"].presence,
@@ -254,8 +251,8 @@ module Gateway
                           source: "PREVIOUS_ASSESSMENT",
                           existing_assessments: [
                             assessmentId: row["assessment_id"],
-                            assessmentStatus: assessment_status,
-                            assessmentType: row["type_of_assessment"],
+                            assessmentStatus: row["assessment_status"],
+                            assessmentType: row["assessment_type"],
                           ]
     end
   end
