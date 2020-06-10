@@ -20,14 +20,6 @@ module Gateway
           FROM assessments
           WHERE REPLACE(postcode, ' ', '') = $1"
 
-      sql <<
-        ' AND date_of_expiry = (
-            SELECT max(date_of_expiry)
-            FROM assessments AS reports
-            WHERE assessments.address_line1 = reports.address_line1
-               OR assessments.address_line2 = reports.address_line2
-          )'
-
       binds = [
         ActiveRecord::Relation::QueryAttribute.new(
           "postcode",
@@ -58,11 +50,16 @@ module Gateway
           )
       end
 
-      sql << "assessment_id, date_of_expiry DESC"
+      sql << "assessment_id"
 
       results = ActiveRecord::Base.connection.exec_query sql, "SQL", binds
 
-      results.map { |row| record_to_address_domain row }
+      result =
+        results.map do |row|
+          populate_existing_assessments record_to_address_domain row
+        end
+
+      result.uniq(&:address_id)
     end
 
     def search_by_rrn(rrn)

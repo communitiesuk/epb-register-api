@@ -29,8 +29,11 @@ describe "Acceptance::AddressSearch::ByPostcode" do
     before(:each) do
       add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
 
+      entered_assessment = Nokogiri.XML valid_rdsap_xml
+      entered_assessment.at("UPRN").remove
+
       lodge_assessment(
-        assessment_body: valid_rdsap_xml,
+        assessment_body: entered_assessment.to_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
       )
@@ -39,6 +42,8 @@ describe "Acceptance::AddressSearch::ByPostcode" do
 
       assessment_id = doc.at("RRN")
       assessment_id.children = "0000-0000-0000-0000-0001"
+      address_id = doc.at("UPRN")
+      address_id.children = "RRN-0000-0000-0000-0000-0000"
 
       address_line_one = doc.search("Address-Line-1")[1]
       address_line_one.children = "2 Some Street"
@@ -69,6 +74,8 @@ describe "Acceptance::AddressSearch::ByPostcode" do
 
       third_assessment_id = doc.at("RRN")
       third_assessment_id.children = "0000-0000-0000-0000-0003"
+      third_address_id = doc.at("UPRN")
+      third_address_id.children = "RRN-0000-0000-0000-0000-0003"
 
       address_line_one = doc.search("Address-Line-1")[1]
       address_line_one.children = "The House"
@@ -84,6 +91,8 @@ describe "Acceptance::AddressSearch::ByPostcode" do
 
       fourth_assessment_id = doc.at("RRN")
       fourth_assessment_id.children = "0000-0000-0000-0000-0004"
+      fourth_address_id = doc.at("UPRN")
+      fourth_address_id.children = "RRN-0000-0000-0000-0000-0003"
 
       assessment_date = doc.at("Inspection-Date")
       assessment_date.children = Date.today.prev_day.strftime("%Y-%m-%d")
@@ -125,13 +134,13 @@ describe "Acceptance::AddressSearch::ByPostcode" do
           end
 
           it "returns the expected amount of addresses" do
-            expect(response[:data][:addresses].length).to eq 4
+            expect(response[:data][:addresses].length).to eq 3
           end
 
           it "returns the address" do
             expect(response[:data][:addresses][0]).to eq(
               {
-                addressId: "RRN-0000-0000-0000-0000-0000",
+                addressId: "RRN-0000-0000-0000-0000-0001",
                 line1: "1 Some Street",
                 line2: nil,
                 line3: nil,
@@ -140,6 +149,11 @@ describe "Acceptance::AddressSearch::ByPostcode" do
                 postcode: "A0 0AA",
                 source: "PREVIOUS_ASSESSMENT",
                 existingAssessments: [
+                  {
+                    assessmentId: "0000-0000-0000-0000-0001",
+                    assessmentStatus: "EXPIRED",
+                    assessmentType: "RdSAP",
+                  },
                   {
                     assessmentId: "0000-0000-0000-0000-0000",
                     assessmentStatus: "EXPIRED",
@@ -167,11 +181,11 @@ describe "Acceptance::AddressSearch::ByPostcode" do
           end
 
           it "returns the expected amount of addresses" do
-            expect(response[:data][:addresses].length).to eq 4
+            expect(response[:data][:addresses].length).to eq 3
           end
 
           it "returns the expected address" do
-            expect(response[:data][:addresses][3]).to eq(
+            expect(response[:data][:addresses][2]).to eq(
               {
                 addressId: "RRN-0000-0000-0000-0000-0004",
                 line1: "The House",
@@ -185,6 +199,11 @@ describe "Acceptance::AddressSearch::ByPostcode" do
                   {
                     assessmentId: "0000-0000-0000-0000-0004",
                     assessmentStatus: "ENTERED",
+                    assessmentType: "RdSAP",
+                  },
+                  {
+                    assessmentId: "0000-0000-0000-0000-0003",
+                    assessmentStatus: "EXPIRED",
                     assessmentType: "RdSAP",
                   },
                 ],
@@ -210,13 +229,13 @@ describe "Acceptance::AddressSearch::ByPostcode" do
         end
 
         it "returns the expected amount of addresses" do
-          expect(response[:data][:addresses].length).to eq 4
+          expect(response[:data][:addresses].length).to eq 3
         end
 
         it "returns the address" do
           expect(response[:data][:addresses][0]).to eq(
             {
-              addressId: "RRN-0000-0000-0000-0000-0000",
+              addressId: "RRN-0000-0000-0000-0000-0001",
               line1: "1 Some Street",
               line2: nil,
               line3: nil,
@@ -225,6 +244,11 @@ describe "Acceptance::AddressSearch::ByPostcode" do
               postcode: "A0 0AA",
               source: "PREVIOUS_ASSESSMENT",
               existingAssessments: [
+                {
+                  assessmentId: "0000-0000-0000-0000-0001",
+                  assessmentStatus: "EXPIRED",
+                  assessmentType: "RdSAP",
+                },
                 {
                   assessmentId: "0000-0000-0000-0000-0000",
                   assessmentStatus: "EXPIRED",
@@ -253,7 +277,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
           end
 
           it "returns the expected amount of addresses" do
-            expect(response[:data][:addresses].length).to eq 4
+            expect(response[:data][:addresses].length).to eq 3
           end
 
           it "returns the expected address" do
@@ -271,6 +295,11 @@ describe "Acceptance::AddressSearch::ByPostcode" do
                   {
                     assessmentId: "0000-0000-0000-0000-0004",
                     assessmentStatus: "ENTERED",
+                    assessmentType: "RdSAP",
+                  },
+                  {
+                    assessmentId: "0000-0000-0000-0000-0003",
+                    assessmentStatus: "EXPIRED",
                     assessmentType: "RdSAP",
                   },
                 ],
@@ -295,7 +324,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
           end
 
           it "returns the expected amount of addresses" do
-            expect(response[:data][:addresses].length).to eq 4
+            expect(response[:data][:addresses].length).to eq 3
           end
 
           it "returns the expected address" do
@@ -337,7 +366,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
           end
 
           it "returns the expected amount of addresses" do
-            expect(response[:data][:addresses].length).to eq 4
+            expect(response[:data][:addresses].length).to eq 3
           end
 
           it "returns the expected address" do
@@ -355,6 +384,11 @@ describe "Acceptance::AddressSearch::ByPostcode" do
                   {
                     assessmentId: "0000-0000-0000-0000-0004",
                     assessmentStatus: "ENTERED",
+                    assessmentType: "RdSAP",
+                  },
+                  {
+                    assessmentId: "0000-0000-0000-0000-0003",
+                    assessmentStatus: "EXPIRED",
                     assessmentType: "RdSAP",
                   },
                 ],
@@ -392,13 +426,13 @@ describe "Acceptance::AddressSearch::ByPostcode" do
         end
 
         it "returns the expected amount of addresses" do
-          expect(response[:data][:addresses].length).to eq 3
+          expect(response[:data][:addresses].length).to eq 2
         end
 
         it "returns the expected address" do
           expect(response[:data][:addresses][0]).to eq(
             {
-              addressId: "RRN-0000-0000-0000-0000-0000",
+              addressId: "RRN-0000-0000-0000-0000-0001",
               line1: "1 Some Street",
               line2: nil,
               line3: nil,
@@ -407,6 +441,11 @@ describe "Acceptance::AddressSearch::ByPostcode" do
               postcode: "A0 0AA",
               source: "PREVIOUS_ASSESSMENT",
               existingAssessments: [
+                {
+                  assessmentId: "0000-0000-0000-0000-0001",
+                  assessmentStatus: "EXPIRED",
+                  assessmentType: "RdSAP",
+                },
                 {
                   assessmentId: "0000-0000-0000-0000-0000",
                   assessmentStatus: "EXPIRED",
