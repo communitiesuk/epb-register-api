@@ -26,26 +26,34 @@ describe "Acceptance::AddressSearch::ByPostcode" do
   context "an address that has a report lodged" do
     let(:scheme_id) { add_scheme_and_get_id }
 
+    let(:doc) { Nokogiri.XML valid_rdsap_xml }
+    let(:expired_assessment) { Nokogiri.XML valid_rdsap_xml }
+    let(:address_id) { doc.at("UPRN") }
+    let(:assessment_id) { doc.at("RRN") }
+    let(:assessment_date) { doc.at("Inspection-Date") }
+    let(:address_line_one) { doc.search("Address-Line-1")[1] }
+    let(:address_line_two) { Nokogiri::XML::Node.new "Address-Line-2", doc }
+
+    let(:non_domestic_xml) { Nokogiri.XML valid_cepc_xml }
+    let(:cepc_scheme_assessor_id) do
+      non_domestic_xml.at("//CEPC:Certificate-Number")
+    end
+    let(:cepc_assessment_id) { non_domestic_xml.at("//CEPC:RRN") }
+    let(:cepc_address_line_one) { non_domestic_xml.at("//CEPC:Address-Line-1") }
+
     before(:each) do
       add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
 
-      entered_assessment = Nokogiri.XML valid_rdsap_xml
-      entered_assessment.at("UPRN").remove
+      expired_assessment.at("UPRN").remove
 
       lodge_assessment(
-        assessment_body: entered_assessment.to_xml,
+        assessment_body: expired_assessment.to_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
       )
 
-      doc = Nokogiri.XML valid_rdsap_xml
-
-      assessment_id = doc.at("RRN")
       assessment_id.children = "0000-0000-0000-0000-0001"
-      address_id = doc.at("UPRN")
       address_id.children = "RRN-0000-0000-0000-0000-0000"
-
-      address_line_one = doc.search("Address-Line-1")[1]
       address_line_one.children = "2 Some Street"
 
       lodge_assessment(
@@ -54,16 +62,9 @@ describe "Acceptance::AddressSearch::ByPostcode" do
         auth_data: { scheme_ids: [scheme_id] },
       )
 
-      non_domestic_xml = Nokogiri.XML valid_cepc_xml
-
-      assessment_id = non_domestic_xml.at("//CEPC:RRN")
-      assessment_id.children = "0000-0000-0000-0000-0002"
-
-      address_line_one = non_domestic_xml.at("//CEPC:Address-Line-1")
-      address_line_one.children = "3 Other Street"
-
-      scheme_assessor_id = non_domestic_xml.at("//CEPC:Certificate-Number")
-      scheme_assessor_id.children = "SPEC000000"
+      cepc_assessment_id.children = "0000-0000-0000-0000-0002"
+      cepc_address_line_one.children = "3 Other Street"
+      cepc_scheme_assessor_id.children = "SPEC000000"
 
       lodge_assessment(
         assessment_body: non_domestic_xml.to_xml,
@@ -72,14 +73,9 @@ describe "Acceptance::AddressSearch::ByPostcode" do
         schema_name: "CEPC-7.1",
       )
 
-      third_assessment_id = doc.at("RRN")
-      third_assessment_id.children = "0000-0000-0000-0000-0003"
-      third_address_id = doc.at("UPRN")
-      third_address_id.children = "RRN-0000-0000-0000-0000-0003"
-
-      address_line_one = doc.search("Address-Line-1")[1]
+      assessment_id.children = "0000-0000-0000-0000-0003"
+      address_id.children = "RRN-0000-0000-0000-0000-0003"
       address_line_one.children = "The House"
-      address_line_two = Nokogiri::XML::Node.new "Address-Line-2", doc
       address_line_two.content = "123 Test Street"
       address_line_one.add_next_sibling address_line_two
 
@@ -89,12 +85,8 @@ describe "Acceptance::AddressSearch::ByPostcode" do
         auth_data: { scheme_ids: [scheme_id] },
       )
 
-      fourth_assessment_id = doc.at("RRN")
-      fourth_assessment_id.children = "0000-0000-0000-0000-0004"
-      fourth_address_id = doc.at("UPRN")
-      fourth_address_id.children = "RRN-0000-0000-0000-0000-0003"
-
-      assessment_date = doc.at("Inspection-Date")
+      assessment_id.children = "0000-0000-0000-0000-0004"
+      address_id.children = "RRN-0000-0000-0000-0000-0003"
       assessment_date.children = Date.today.prev_day.strftime("%Y-%m-%d")
 
       lodge_assessment(
