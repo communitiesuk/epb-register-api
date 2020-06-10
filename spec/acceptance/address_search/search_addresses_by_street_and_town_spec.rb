@@ -29,8 +29,11 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
     before(:each) do
       add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
 
+      entered_assessment = Nokogiri.XML valid_rdsap_xml
+      entered_assessment.at("UPRN").remove
+
       lodge_assessment(
-        assessment_body: valid_rdsap_xml,
+        assessment_body: entered_assessment.to_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
       )
@@ -43,6 +46,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
 
       assessment_id = second_assessment.at("RRN")
       assessment_id.children = "0000-0000-0000-0000-0001"
+      second_assessment.at("UPRN").remove
 
       address_line_one = second_assessment.search("Address-Line-1")[1]
       address_line_one.children = "2 Other Street"
@@ -106,6 +110,9 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
       fifth_assessment_id = fifth_assessment.at("RRN")
       fifth_assessment_id.children = "0000-0000-0000-0000-0005"
 
+      fifth_address_id = fifth_assessment.at("UPRN")
+      fifth_address_id.children = "RRN-0000-0000-0000-0000-0000"
+
       assessment_date = fifth_assessment.at("Inspection-Date")
       assessment_date.children = Date.today.prev_day.strftime("%Y-%m-%d")
 
@@ -153,6 +160,11 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
                   assessmentStatus: "ENTERED",
                   assessmentType: "RdSAP",
                 },
+                {
+                  assessmentId: "0000-0000-0000-0000-0000",
+                  assessmentStatus: "EXPIRED",
+                  assessmentType: "RdSAP",
+                },
               ],
             },
           )
@@ -193,6 +205,11 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
                 {
                   assessmentId: "0000-0000-0000-0000-0005",
                   assessmentStatus: "ENTERED",
+                  assessmentType: "RdSAP",
+                },
+                {
+                  assessmentId: "0000-0000-0000-0000-0000",
+                  assessmentStatus: "EXPIRED",
                   assessmentType: "RdSAP",
                 },
               ],
@@ -237,6 +254,11 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
                   assessmentStatus: "ENTERED",
                   assessmentType: "RdSAP",
                 },
+                {
+                  assessmentId: "0000-0000-0000-0000-0000",
+                  assessmentStatus: "EXPIRED",
+                  assessmentType: "RdSAP",
+                },
               ],
             },
           )
@@ -277,6 +299,11 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
                 {
                   assessmentId: "0000-0000-0000-0000-0005",
                   assessmentStatus: "ENTERED",
+                  assessmentType: "RdSAP",
+                },
+                {
+                  assessmentId: "0000-0000-0000-0000-0000",
+                  assessmentStatus: "EXPIRED",
                   assessmentType: "RdSAP",
                 },
               ],
@@ -320,6 +347,11 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
                     assessmentStatus: "ENTERED",
                     assessmentType: "RdSAP",
                   },
+                  {
+                    assessmentId: "0000-0000-0000-0000-0000",
+                    assessmentStatus: "EXPIRED",
+                    assessmentType: "RdSAP",
+                  },
                 ],
               },
             )
@@ -361,6 +393,11 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
                 {
                   assessmentId: "0000-0000-0000-0000-0005",
                   assessmentStatus: "ENTERED",
+                  assessmentType: "RdSAP",
+                },
+                {
+                  assessmentId: "0000-0000-0000-0000-0000",
+                  assessmentStatus: "EXPIRED",
                   assessmentType: "RdSAP",
                 },
               ],

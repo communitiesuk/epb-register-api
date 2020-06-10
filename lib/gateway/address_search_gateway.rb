@@ -114,15 +114,6 @@ module Gateway
           levenshtein('address_line2', '$2', TOWN_PERMISSIVENESS)
         })"
 
-      sql <<
-        ' AND date_of_expiry = (
-          SELECT max(date_of_expiry)
-          FROM assessments AS reports
-          WHERE (assessments.address_line1 = reports.address_line1
-             OR assessments.address_line2 = reports.address_line2)
-             AND assessments.type_of_assessment = reports.type_of_assessment
-        )'
-
       binds = [
         ActiveRecord::Relation::QueryAttribute.new(
           "street",
@@ -151,12 +142,16 @@ module Gateway
           levenshtein('town', '$2')
         },
                 address_line1,
-                assessment_id,
-                date_of_expiry DESC"
+                assessment_id"
 
       results = ActiveRecord::Base.connection.exec_query sql, "SQL", binds
 
-      results.map { |row| record_to_address_domain row }
+      result =
+        results.map do |row|
+          populate_existing_assessments record_to_address_domain row
+        end
+
+      result.uniq(&:address_id)
     end
 
   private
