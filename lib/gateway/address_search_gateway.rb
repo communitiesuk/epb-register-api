@@ -1,6 +1,9 @@
 module Gateway
   class AddressSearchGateway
-    ADDRESS_TYPES = { DOMESTIC: %w[SAP RdSAP], COMMERCIAL: %w[CEPC] }.freeze
+    ADDRESS_TYPES = {
+      DOMESTIC: %w[SAP RdSAP],
+      COMMERCIAL: %w[DEC DEC-AR CEPC CEPC-RR ACIR ACIC],
+    }.freeze
     STREET_PERMISSIVENESS = "0.35".freeze
     TOWN_PERMISSIVENESS = "0.3".freeze
 
