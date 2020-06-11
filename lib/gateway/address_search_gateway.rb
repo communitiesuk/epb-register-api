@@ -52,20 +52,12 @@ module Gateway
 
       sql << "assessment_id"
 
-      results = ActiveRecord::Base.connection.exec_query sql, "SQL", binds
-
-      result =
-        results.map do |row|
-          populate_existing_assessments record_to_address_domain row
-        end
-
-      result.uniq(&:address_id)
+      parse_results ActiveRecord::Base.connection.exec_query sql, "SQL", binds
     end
 
     def search_by_rrn(rrn)
-      results =
-        ActiveRecord::Base.connection.exec_query(
-          'SELECT
+      parse_results ActiveRecord::Base.connection.exec_query(
+        'SELECT
            assessment_id,
            date_of_expiry,
            type_of_assessment,
@@ -77,19 +69,15 @@ module Gateway
            postcode
          FROM assessments
          WHERE assessment_id = $1',
-          "SQL",
-          [
-            ActiveRecord::Relation::QueryAttribute.new(
-              "rrn",
-              rrn,
-              ActiveRecord::Type::String.new,
-            ),
-          ],
-        )
-
-      results.map do |row|
-        populate_existing_assessments record_to_address_domain row
-      end
+        "SQL",
+        [
+          ActiveRecord::Relation::QueryAttribute.new(
+            "rrn",
+            rrn,
+            ActiveRecord::Type::String.new,
+          ),
+        ],
+      )
     end
 
     def search_by_street_and_town(street, town, address_type)
@@ -144,17 +132,37 @@ module Gateway
                 address_line1,
                 assessment_id"
 
-      results = ActiveRecord::Base.connection.exec_query sql, "SQL", binds
-
-      result =
-        results.map do |row|
-          populate_existing_assessments record_to_address_domain row
-        end
-
-      result.uniq(&:address_id)
+      parse_results ActiveRecord::Base.connection.exec_query sql, "SQL", binds
     end
 
   private
+
+    def parse_results(results)
+      results = results.map { |row| record_to_address_domain row }
+
+      results =
+        results.each_with_object([]) do |address, output|
+          address_in_output =
+            output.map(&:address_id).include? address.address_id
+
+          unless address_in_output
+            output.dup.each do |stored_address|
+              existing_assessments =
+                stored_address.existing_assessments.map { |a| a[:assessmentId] }
+
+              if existing_assessments.include? address.address_id.remove "RRN-"
+                address_in_output = true
+              end
+            end
+          end
+
+          unless address_in_output
+            output << populate_existing_assessments(address)
+          end
+        end
+
+      results.uniq(&:address_id)
+    end
 
     def levenshtein(property, bind, permissiveness = nil)
       levenshtein =
@@ -174,7 +182,7 @@ module Gateway
 
       sql =
         "
-         SELECT all_assessments.assessment_id,
+          SELECT all_assessments.assessment_id,
                  all_assessments.assessment_type,
                  CASE WHEN all_assessments.date_of_expiry < CURRENT_DATE THEN 'EXPIRED'
                       ELSE 'ENTERED'
