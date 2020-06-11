@@ -1026,6 +1026,14 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/AddressDetail'
+        meta:
+          type: object
+          properties:
+            filters:
+              type: object
+              description: >-
+                The filters object will contain the search parameters provided
+                in the initial request.
 
     # Assessors
     Assessor:
