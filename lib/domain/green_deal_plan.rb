@@ -51,7 +51,8 @@ module Domain
         },
         interest: { rate: @interest_rate, fixed: @fixed_interest_rate },
         charge_uplift: {
-          amount: @charge_uplift_amount, date: @charge_uplift_date
+          amount: @charge_uplift_amount,
+          date: @charge_uplift_date.strftime("%Y-%m-%d"),
         },
         cca_regulated: @cca_regulated,
         structure_changed: @structure_changed,

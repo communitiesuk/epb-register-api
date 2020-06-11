@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "date"
+
 describe "Acceptance::Assessment" do
   include RSpecAssessorServiceMixin
   class GreenDealPlans < ActiveRecord::Base; end
@@ -513,8 +515,8 @@ describe "Acceptance::Assessment" do
                   telephone: "0800 0000000",
                   email: "lender@example.com",
                 },
-                interest: { rate: nil, fixed: nil },
-                chargeUplift: { amount: nil, date: nil },
+                interest: { rate: nil, fixed: true },
+                chargeUplift: { amount: nil, date: "2030-02-28" },
                 ccaRegulated: nil,
                 structureChanged: nil,
                 measuresRemoved: nil,
@@ -676,15 +678,17 @@ describe "Acceptance::Assessment" do
     end
   end
 
-  def create_green_deal_plan(_assessment_id)
+  def create_green_deal_plan(assessment_id)
     GreenDealPlans.create(
-      assessment_id: "15650-651625-18267167",
+      assessment_id: assessment_id,
       green_deal_plan_id: "ABC123456DEF",
-      start_date: "2020-01-30",
-      end_date: "2030-02-28",
+      start_date: DateTime.new(2_020, 1, 30),
+      end_date: DateTime.new(2_030, 2, 28),
       provider_name: "The Bank",
       provider_telephone: "0800 0000000",
       provider_email: "lender@example.com",
+      fixed_interest_rate: true,
+      charge_uplift_date: DateTime.new(2_030, 2, 28),
       measures: {
         measureType: "Loft insulation",
         product: "WarmHome lagging stuff (TM)",
