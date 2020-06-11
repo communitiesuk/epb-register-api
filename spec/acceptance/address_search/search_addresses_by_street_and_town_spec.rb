@@ -35,6 +35,12 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
     let(:address_line_two) do
       Nokogiri::XML::Node.new "Address-Line-2", assessment
     end
+    let(:address_line_three) do
+      Nokogiri::XML::Node.new "Address-Line-3", assessment
+    end
+    let(:address_line_four) do
+      Nokogiri::XML::Node.new "Address-Line-3", assessment
+    end
     let(:town) { assessment.search("Post-Town")[1] }
 
     let(:non_domestic_xml) { Nokogiri.XML valid_cepc_xml }
@@ -84,8 +90,10 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
 
       assessment_id.children = "0000-0000-0000-0000-0004"
       address_line_one.children = "3 Other Street"
-      address_line_two.content = "Another Town"
+      address_line_two.content = nil
       address_line_one.add_next_sibling address_line_two
+      address_line_three.content = "Another Town"
+      address_line_two.add_next_sibling address_line_three
       town.children = "Some County"
 
       lodge_assessment(
@@ -486,7 +494,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
         end
       end
 
-      context "with town on address line 2" do
+      context "with town on address line 3" do
         let(:response) do
           JSON.parse(
             assertive_get(
@@ -502,28 +510,47 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
         end
 
         it "returns the expected amount of addresses" do
-          expect(response[:data][:addresses].length).to eq 1
+          expect(response[:data][:addresses].length).to eq 2
         end
 
-        it "returns the expected address" do
-          expect(response[:data][:addresses][0]).to eq(
-            {
-              addressId: "RRN-0000-0000-0000-0000-0004",
-              line1: "3 Other Street",
-              line2: "Another Town",
-              line3: nil,
-              line4: nil,
-              town: "Some County",
-              postcode: "A0 0AA",
-              source: "PREVIOUS_ASSESSMENT",
-              existingAssessments: [
-                {
-                  assessmentId: "0000-0000-0000-0000-0004",
-                  assessmentStatus: "EXPIRED",
-                  assessmentType: "RdSAP",
-                },
-              ],
-            },
+        it "returns the expected addresses" do
+          expect(response[:data][:addresses]).to eq(
+            [
+              {
+                addressId: "RRN-0000-0000-0000-0000-0004",
+                line1: "3 Other Street",
+                line2: nil,
+                line3: "Another Town",
+                line4: nil,
+                town: "Some County",
+                postcode: "A0 0AA",
+                source: "PREVIOUS_ASSESSMENT",
+                existingAssessments: [
+                  {
+                    assessmentId: "0000-0000-0000-0000-0004",
+                    assessmentStatus: "EXPIRED",
+                    assessmentType: "RdSAP",
+                  },
+                ],
+              },
+              {
+                addressId: "RRN-0000-0000-0000-0000-0005",
+                line1: "3 Other Street",
+                line2: nil,
+                line3: "Another Town",
+                line4: nil,
+                town: "Some County",
+                postcode: "A0 0AA",
+                source: "PREVIOUS_ASSESSMENT",
+                existingAssessments: [
+                  {
+                    assessmentId: "0000-0000-0000-0000-0005",
+                    assessmentStatus: "ENTERED",
+                    assessmentType: "RdSAP",
+                  },
+                ],
+              },
+            ],
           )
         end
       end

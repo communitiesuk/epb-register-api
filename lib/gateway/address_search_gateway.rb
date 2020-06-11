@@ -1,8 +1,7 @@
 module Gateway
   class AddressSearchGateway
     ADDRESS_TYPES = {
-      DOMESTIC: %w[SAP RdSAP],
-      COMMERCIAL: %w[DEC DEC-AR CEPC CEPC-RR ACIR ACIC],
+      DOMESTIC: %w[SAP RdSAP], COMMERCIAL: %w[DEC DEC-AR CEPC CEPC-RR ACIR ACIC]
     }.freeze
     STREET_PERMISSIVENESS = "0.35".freeze
     TOWN_PERMISSIVENESS = "0.3".freeze
@@ -98,11 +97,13 @@ module Gateway
         FROM assessments
         WHERE (#{
           levenshtein('address_line1', '$1', STREET_PERMISSIVENESS)
-        } OR #{
-          levenshtein('address_line2', '$1', STREET_PERMISSIVENESS)
+        } OR #{levenshtein('address_line2', '$1', STREET_PERMISSIVENESS)} OR #{
+          levenshtein('address_line3', '$1', STREET_PERMISSIVENESS)
         })
         AND (#{levenshtein('town', '$2', TOWN_PERMISSIVENESS)} OR #{
           levenshtein('address_line2', '$2', TOWN_PERMISSIVENESS)
+        } OR #{levenshtein('address_line3', '$2', TOWN_PERMISSIVENESS)} OR #{
+          levenshtein('address_line4', '$2', TOWN_PERMISSIVENESS)
         })"
 
       binds = [
