@@ -125,7 +125,7 @@ module Domain
         recommended_improvements: @recommended_improvements.map(&:to_hash),
         property_summary: @property_summary,
         related_party_disclosure_number: @related_party_disclosure_number,
-        related_party_disclosure_text: @related_party_disclosure_text
+        related_party_disclosure_text: @related_party_disclosure_text,
       }
     end
 

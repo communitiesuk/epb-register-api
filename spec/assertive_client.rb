@@ -148,9 +148,7 @@ def lodge_assessment(
 )
   header "Content-type", "application/xml+" + schema_name
 
-  headers.each do|key, value|
-    header key.to_s, value.to_s
-  end
+  headers.each { |key, value| header key.to_s, value.to_s }
 
   assertive_post(
     "api/assessments",

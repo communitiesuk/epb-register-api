@@ -88,16 +88,16 @@ describe "Acceptance::LodgeAssessment::XML" do
         scheme_id,
         "SPEC000000",
         fetch_assessor_stub.fetch_request_body(domesticSap: "ACTIVE"),
+      )
+      response_xml =
+        lodge_assessment(
+          assessment_body: valid_sap_xml,
+          accepted_responses: [201],
+          auth_data: { scheme_ids: [scheme_id] },
+          schema_name: "SAP-Schema-17.1",
+          headers: { "Accept": "application/xml" },
         )
-      response_xml = lodge_assessment(
-        assessment_body: valid_sap_xml,
-        accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
-        schema_name: "SAP-Schema-17.1",
-        headers: {
-          "Accept": "application/xml"
-        }
-        ).body
+          .body
 
       expect(cleaned_sap_xml).to eq(response_xml)
     end
