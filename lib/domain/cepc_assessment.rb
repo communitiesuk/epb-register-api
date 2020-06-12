@@ -3,7 +3,8 @@ module Domain
     attr_reader :current_energy_efficiency_rating,
                 :potential_energy_efficiency_rating,
                 :assessment_id,
-                :recommended_improvements
+                :recommended_improvements,
+                :xml
 
     def initialize(
       date_of_assessment: nil,
@@ -34,7 +35,8 @@ module Domain
       recommended_improvements: nil,
       property_summary: [],
       related_party_disclosure_number: nil,
-      related_party_disclosure_text: nil
+      related_party_disclosure_text: nil,
+      xml: nil
     )
       @date_of_assessment = Date.strptime(date_of_assessment, "%Y-%m-%d")
       @date_registered = Date.strptime(date_registered, "%Y-%m-%d")
@@ -65,6 +67,7 @@ module Domain
       @property_summary = property_summary
       @related_party_disclosure_number = related_party_disclosure_number
       @related_party_disclosure_text = related_party_disclosure_text
+      @xml = xml
     end
 
     def get_energy_rating_band(number)
@@ -122,7 +125,7 @@ module Domain
         recommended_improvements: @recommended_improvements.map(&:to_hash),
         property_summary: @property_summary,
         related_party_disclosure_number: @related_party_disclosure_number,
-        related_party_disclosure_text: @related_party_disclosure_text,
+        related_party_disclosure_text: @related_party_disclosure_text
       }
     end
 
