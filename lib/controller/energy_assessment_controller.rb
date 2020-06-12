@@ -268,9 +268,16 @@ module Controller
       if request.env["HTTP_ACCEPT"] == "application/xml"
         xml_response(201, results.first.xml)
       else
-        json_api_response(
-          code: 201, data: (results.size > 1 ? results : results.first),
-        )
+        json_api_response code: 201,
+                          data: { assessments: results.map(&:assessment_id) },
+                          meta: {
+                            links: {
+                              assessments:
+                                results.map do |id|
+                                  "/api/assessments/" + id.assessment_id
+                                end,
+                            },
+                          }
       end
     rescue StandardError => e
       @events.event(

@@ -31,6 +31,10 @@ describe "Acceptance::Assessment::Lodge" do
     File.read File.join Dir.pwd, "spec/fixtures/samples/rdsap.xml"
   end
 
+  let(:valid_cepc_rr_xml) do
+    File.read File.join Dir.pwd, "spec/fixtures/samples/cepc+rr.xml"
+  end
+
   context "when lodging an energy assessment (post)" do
     it "rejects an assessment with a schema that does not exist" do
       lodge_assessment(
@@ -130,7 +134,7 @@ describe "Acceptance::Assessment::Lodge" do
       expect(response[:data]).to be_a Hash
     end
 
-    it "returns the correct scheme assessor id" do
+    it "returns the correct response" do
       scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
 
@@ -145,7 +149,16 @@ describe "Acceptance::Assessment::Lodge" do
           symbolize_names: true,
         )
 
-      expect(response.dig(:data, :schemeAssessorId)).to eq("SPEC000000")
+      expect(response).to eq(
+        {
+          data: { assessments: %w[0000-0000-0000-0000-0000] },
+          meta: {
+            links: {
+              assessments: %w[/api/assessments/0000-0000-0000-0000-0000],
+            },
+          },
+        },
+      )
     end
 
     context "when schema is not supported" do
@@ -250,6 +263,49 @@ describe "Acceptance::Assessment::Lodge" do
           response_body["errors"][0]["title"],
         ).to include "Invalid attribute name: <<Property-Summary>"
       end
+    end
+  end
+
+  context "when lodging two energy assessments" do
+    let(:scheme_id) { add_scheme_and_get_id }
+
+    let(:response) do
+      JSON.parse(
+        lodge_assessment(
+          assessment_body: valid_cepc_rr_xml,
+          accepted_responses: [201],
+          auth_data: { scheme_ids: [scheme_id] },
+          schema_name: "CEPC-7.1",
+        )
+          .body,
+        symbolize_names: true,
+      )
+    end
+
+    before do
+      add_assessor scheme_id,
+                   "SPEC000000",
+                   AssessorStub.new.fetch_request_body(
+                     nonDomesticNos3: "ACTIVE",
+                   )
+    end
+
+    it "returns the correct response" do
+      expect(response).to eq(
+        {
+          data: {
+            assessments: %w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001],
+          },
+          meta: {
+            links: {
+              assessments: %w[
+                /api/assessments/0000-0000-0000-0000-0000
+                /api/assessments/0000-0000-0000-0000-0001
+              ],
+            },
+          },
+        },
+      )
     end
   end
 end
