@@ -80,6 +80,12 @@ module Controller
       json_response(code, { data: data, meta: meta })
     end
 
+    def xml_response(code = 200, xml)
+      content_type :xml
+      status code
+      body xml
+    end
+
     def error_response(response_code = 500, error_code, title)
       json_response(response_code, errors: [{ code: error_code, title: title }])
     end

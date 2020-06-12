@@ -254,9 +254,13 @@ module Controller
         )
       end
 
-      json_api_response(
-        code: 201, data: (results.size > 1 ? results : results.first),
-      )
+      if request.env["HTTP_ACCEPT"] == "application/xml"
+        xml_response(201, results.first.xml)
+      else
+        json_api_response(
+          code: 201, data: (results.size > 1 ? results : results.first),
+        )
+      end
     rescue StandardError => e
       @events.event(
         false,

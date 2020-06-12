@@ -123,6 +123,7 @@ module UseCase
             data[:related_party_disclosure_number],
           related_party_disclosure_text: data[:related_party_disclosure_text],
           property_summary: data[:property_summary],
+          xml: data[:raw_data]
         )
 
       validator = Helper::RdsapValidator::ValidateAll.new
