@@ -182,8 +182,11 @@ def fetch_assessment(
   accepted_responses = [200],
   authenticate = true,
   auth_data = nil,
-  scopes = %w[assessment:fetch]
+  scopes = %w[assessment:fetch],
+  headers: {}
 )
+  headers.each { |key, value| header key.to_s, value.to_s }
+
   assertive_get(
     "api/assessments/#{assessment_id}",
     accepted_responses,
