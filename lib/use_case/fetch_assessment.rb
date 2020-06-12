@@ -3,14 +3,18 @@ module UseCase
     class NotFoundException < StandardError; end
 
     def initialize(
-      assessments_gateway, assessors_gateway, green_deal_plans_gateway
+      assessments_gateway,
+      assessors_gateway,
+      green_deal_plans_gateway,
+      assessments_xml_gateway = false
     )
       @assessments_gateway = assessments_gateway
       @assessors_gateway = assessors_gateway
       @green_deal_plans_gateway = green_deal_plans_gateway
+      @assessments_xml_gateway = assessments_xml_gateway
     end
 
-    def execute(assessment_id)
+    def execute(assessment_id, xml = false)
       assessment = @assessments_gateway.fetch(assessment_id)
 
       raise NotFoundException unless assessment
@@ -34,7 +38,7 @@ module UseCase
         return assessment.merge(green_deal_plan: green_deal_domain)
       end
 
-      assessment
+      xml ? @assessments_xml_gateway.fetch(assessment_id) : assessment
     end
 
   private

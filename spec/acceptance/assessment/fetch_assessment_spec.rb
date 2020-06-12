@@ -6,6 +6,12 @@ describe "Acceptance::Assessment" do
   include RSpecAssessorServiceMixin
   class GreenDealPlans < ActiveRecord::Base; end
 
+  let(:fetch_assessor_stub) { AssessorStub.new }
+
+  let(:valid_sap_xml) do
+    File.read File.join Dir.pwd, "spec/fixtures/samples/sap.xml"
+  end
+
   let(:valid_assessor_request_body) do
     {
       firstName: "Someone",
@@ -543,6 +549,38 @@ describe "Acceptance::Assessment" do
             }.to_json,
           )
         expect(response["data"]).to eq(expected_response)
+      end
+    end
+
+    context "when requesting an assessments XML" do
+      it "returns the XML as expected" do
+        scheme_id = add_scheme_and_get_id
+        add_assessor(
+          scheme_id,
+          "SPEC000000",
+          fetch_assessor_stub.fetch_request_body(domesticSap: "ACTIVE"),
+        )
+
+        cleaned_xml =
+          lodge_assessment(
+            assessment_body: valid_sap_xml,
+            accepted_responses: [201],
+            auth_data: { scheme_ids: [scheme_id] },
+            schema_name: "SAP-Schema-17.1",
+            headers: { "Accept": "application/xml" },
+          )
+            .body
+
+        returned_xml =
+          fetch_assessment(
+            "0000-0000-0000-0000-0000",
+            headers: { "Accept": "application/xml" },
+          )
+            .body
+
+        expect(
+          "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + returned_xml,
+        ).to eq(cleaned_xml)
       end
     end
 

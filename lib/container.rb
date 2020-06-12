@@ -31,6 +31,7 @@ class Container
         assessments_gateway,
         assessors_gateway,
         green_deal_plans_gateway,
+        assessments_xml_gateway,
       )
 
     find_assessors_by_postcode_use_case =

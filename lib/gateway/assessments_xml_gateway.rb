@@ -10,5 +10,10 @@ module Gateway
     def send_to_db(record)
       AssessmentsXml.create(record)
     end
+
+    def fetch(assessment_id)
+      result = AssessmentsXml.find_by(assessment_id: assessment_id)
+      result["xml"]
+    end
   end
 end
