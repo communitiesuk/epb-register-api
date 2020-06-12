@@ -143,9 +143,15 @@ def lodge_assessment(
   auth_data: nil,
   scopes: %w[assessment:lodge],
   json: false,
-  schema_name: "RdSAP-Schema-19.0"
+  schema_name: "RdSAP-Schema-19.0",
+  headers: {}
 )
   header "Content-type", "application/xml+" + schema_name
+
+  headers.each do|key, value|
+    header key.to_s, value.to_s
+  end
+
   assertive_post(
     "api/assessments",
     assessment_body,
