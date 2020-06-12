@@ -4,30 +4,10 @@ describe "Acceptance::Assessment::Lodge" do
   include RSpecAssessorServiceMixin
 
   let(:valid_assessor_request_body) do
-    {
-      firstName: "Someone",
-      middleNames: "Muddle",
-      lastName: "Person",
-      dateOfBirth: "1991-02-25",
-      searchResultsComparisonPostcode: "",
-      qualifications: {
-        domesticRdSap: "ACTIVE",
-        domesticSap: "INACTIVE",
-        nonDomesticCc4: "INACTIVE",
-        nonDomesticSp3: "INACTIVE",
-        nonDomesticDec: "STRUCKOFF",
-        nonDomesticNos3: "INACTIVE",
-        nonDomesticNos4: "INACTIVE",
-        nonDomesticNos5: "SUSPENDED",
-        gda: "INACTIVE",
-      },
-      contactDetails: {
-        telephoneNumber: "010199991010101", email: "person@person.com"
-      },
-    }
+    AssessorStub.new.fetch_request_body(domesticRdSap: "ACTIVE")
   end
 
-  let(:valid_xml) do
+  let(:valid_rdsap_xml) do
     File.read File.join Dir.pwd, "spec/fixtures/samples/rdsap.xml"
   end
 
@@ -38,7 +18,7 @@ describe "Acceptance::Assessment::Lodge" do
   context "when lodging an energy assessment (post)" do
     it "rejects an assessment with a schema that does not exist" do
       lodge_assessment(
-        assessment_body: valid_xml,
+        assessment_body: valid_rdsap_xml,
         accepted_responses: [400],
         schema_name: "MakeupSAP-19.0",
       )
@@ -46,14 +26,16 @@ describe "Acceptance::Assessment::Lodge" do
 
     context "when an assessor is not registered" do
       it "returns status 400" do
-        lodge_assessment(assessment_body: valid_xml, accepted_responses: [400])
+        lodge_assessment(
+          assessment_body: valid_rdsap_xml, accepted_responses: [400],
+        )
       end
 
       it "returns status 400 with the correct error response" do
         response =
           JSON.parse(
             lodge_assessment(
-              assessment_body: valid_xml, accepted_responses: [400],
+              assessment_body: valid_rdsap_xml, accepted_responses: [400],
             )
               .body,
           )
@@ -85,7 +67,7 @@ describe "Acceptance::Assessment::Lodge" do
       different_scheme_id = add_scheme_and_get_id("BADSCHEME")
 
       lodge_assessment(
-        assessment_body: valid_xml,
+        assessment_body: valid_rdsap_xml,
         accepted_responses: [403],
         auth_data: { scheme_ids: [different_scheme_id] },
       )
@@ -96,7 +78,7 @@ describe "Acceptance::Assessment::Lodge" do
       add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
 
       lodge_assessment(
-        assessment_body: valid_xml,
+        assessment_body: valid_rdsap_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
       )
@@ -108,7 +90,7 @@ describe "Acceptance::Assessment::Lodge" do
 
       response =
         lodge_assessment(
-          assessment_body: valid_xml,
+          assessment_body: valid_rdsap_xml,
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] },
         )
@@ -123,7 +105,7 @@ describe "Acceptance::Assessment::Lodge" do
       response =
         JSON.parse(
           lodge_assessment(
-            assessment_body: valid_xml,
+            assessment_body: valid_rdsap_xml,
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] },
           )
@@ -141,7 +123,7 @@ describe "Acceptance::Assessment::Lodge" do
       response =
         JSON.parse(
           lodge_assessment(
-            assessment_body: valid_xml,
+            assessment_body: valid_rdsap_xml,
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] },
           )
@@ -163,7 +145,7 @@ describe "Acceptance::Assessment::Lodge" do
 
     context "when schema is not supported" do
       let(:scheme_id) { add_scheme_and_get_id }
-      let(:doc) { Nokogiri.XML valid_xml }
+      let(:doc) { Nokogiri.XML valid_rdsap_xml }
 
       before do
         add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
@@ -196,7 +178,7 @@ describe "Acceptance::Assessment::Lodge" do
 
     context "when saving an assessment" do
       let(:scheme_id) { add_scheme_and_get_id }
-      let(:doc) { Nokogiri.XML valid_xml }
+      let(:doc) { Nokogiri.XML valid_rdsap_xml }
       let(:response) do
         JSON.parse(fetch_assessment("0000-0000-0000-0000-0000").body)
       end
@@ -227,7 +209,7 @@ describe "Acceptance::Assessment::Lodge" do
         scheme_id = add_scheme_and_get_id
         add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
 
-        doc = Nokogiri.XML valid_xml
+        doc = Nokogiri.XML valid_rdsap_xml
 
         scheme_assessor_id = doc.at("Address")
         scheme_assessor_id.children = "<Postcode>invalid</Postcode>"
@@ -246,10 +228,7 @@ describe "Acceptance::Assessment::Lodge" do
       end
 
       it "rejects an assessment with invalid XML" do
-        scheme_id = add_scheme_and_get_id
-        add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
-
-        xml = valid_xml
+        xml = valid_rdsap_xml
 
         xml = xml.gsub("<Energy-Assessment>", "<Energy-Assessment")
 
