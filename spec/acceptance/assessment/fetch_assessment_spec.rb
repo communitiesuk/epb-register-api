@@ -724,15 +724,19 @@ describe "Acceptance::Assessment" do
       provider_email: "lender@example.com",
       fixed_interest_rate: true,
       charge_uplift_date: DateTime.new(2_030, 2, 28),
-      measures: {
-        measureType: "Loft insulation",
-        product: "WarmHome lagging stuff (TM)",
-        repaidDate: "2025-03-29",
-      },
-      charges: {
-        startDate: "2020-03-29", endDate: "2030-03-29", dailyCharge: "0.34"
-      },
-      savings: { fuelCode: "LPG", fuelSaving: 0, standingChargeFraction: -0.3 },
+      measures: [
+        {
+          measureType: "Loft insulation",
+          product: "WarmHome lagging stuff (TM)",
+          repaidDate: "2025-03-29",
+        },
+      ],
+      charges: [
+        { startDate: "2020-03-29", endDate: "2030-03-29", dailyCharge: "0.34" },
+      ],
+      savings: [
+        { fuelCode: "LPG", fuelSaving: 0, standingChargeFraction: -0.3 },
+      ],
     )
   end
 end

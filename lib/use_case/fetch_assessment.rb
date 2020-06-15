@@ -60,9 +60,9 @@ module UseCase
         cca_regulated: green_deal_data[:cca_regulated],
         structure_changed: green_deal_data[:structure_changed],
         measures_removed: green_deal_data[:measures_removed],
-        measures: [green_deal_data[:measures]],
-        charges: [green_deal_data[:charges]],
-        savings: [green_deal_data[:savings]],
+        measures: green_deal_data[:measures],
+        charges: green_deal_data[:charges],
+        savings: green_deal_data[:savings],
       )
         .to_hash
     end
