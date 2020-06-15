@@ -518,15 +518,15 @@ describe "Acceptance::Assessment" do
               greenDealPlan: {
                 greenDealPlanId: "ABC123456DEF",
                 assessmentId: "15650-651625-18267167",
-                startDate: "2020-01-30",
-                endDate: "2030-02-28",
+                startDate: "30 January 2020",
+                endDate: "28 February 2030",
                 providerDetails: {
                   name: "The Bank",
                   telephone: "0800 0000000",
                   email: "lender@example.com",
                 },
                 interest: { rate: nil, fixed: true },
-                chargeUplift: { amount: nil, date: "2030-02-28" },
+                chargeUplift: { amount: nil, date: "28 February 2030" },
                 ccaRegulated: nil,
                 structureChanged: nil,
                 measuresRemoved: nil,
