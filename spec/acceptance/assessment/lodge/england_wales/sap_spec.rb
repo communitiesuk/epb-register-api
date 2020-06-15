@@ -245,17 +245,21 @@ describe "Acceptance::LodgeSapEnergyAssessment" do
         it "returns the data that was lodged" do
           related_party_number_xml = doc.dup
 
-          related_party_number_xml.at("Related-Party-Disclosure-Number")
-              .replace "<Related-Party-Disclosure-Text>test</Related-Party-Disclosure-Text>"
+          related_party_number_xml.at(
+            "Related-Party-Disclosure-Number",
+          ).replace "<Related-Party-Disclosure-Text>test</Related-Party-Disclosure-Text>"
 
           lodge_assessment assessment_body: related_party_number_xml.to_xml,
                            accepted_responses: [201],
                            auth_data: { scheme_ids: [scheme_id] },
                            schema_name: "SAP-Schema-17.1"
 
-          parsed_response = JSON.parse JSON.generate(response), symbolize_names: true
+          parsed_response =
+            JSON.parse JSON.generate(response), symbolize_names: true
 
-          expect(parsed_response.dig(:data, :relatedPartyDisclosureText)).to eq "test"
+          expect(
+            parsed_response.dig(:data, :relatedPartyDisclosureText),
+          ).to eq "test"
         end
       end
 
