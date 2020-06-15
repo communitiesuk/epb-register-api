@@ -145,19 +145,20 @@ describe "Acceptance::LodgeAssessment::XML" do
 
       it "returns the correct response" do
         data_assessment_ids =
-          response.at_css("response data assessments").xpath("string()")
+          response.css("response data assessments assessment").map(&:text)
 
-        expect(data_assessment_ids).to include("0000-0000-0000-0000-0000")
-        expect(data_assessment_ids).to include("0000-0000-0000-0000-0001")
+        expect(data_assessment_ids).to eq(
+          %w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001],
+        )
 
         data_assessment_links =
-          response.at_css("response meta links assessments").xpath("string()")
+          response.css("response meta links assessments assessment").map(&:text)
 
-        expect(data_assessment_links).to include(
-          "/api/assessments/0000-0000-0000-0000-0000",
-        )
-        expect(data_assessment_links).to include(
-          "/api/assessments/0000-0000-0000-0000-0001",
+        expect(data_assessment_links).to eq(
+          %w[
+            /api/assessments/0000-0000-0000-0000-0000
+            /api/assessments/0000-0000-0000-0000-0001
+          ],
         )
       end
     end
