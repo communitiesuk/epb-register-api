@@ -34,8 +34,7 @@ module UseCase
       unless green_deal_data.nil?
         green_deal_domain = structure_green_deal_data(green_deal_data)
 
-        assessment[:green_deal_plan]
-        return assessment.merge(green_deal_plan: green_deal_domain)
+        assessment = assessment.merge(green_deal_plan: green_deal_domain)
       end
 
       xml ? @assessments_xml_gateway.fetch(assessment_id) : assessment
