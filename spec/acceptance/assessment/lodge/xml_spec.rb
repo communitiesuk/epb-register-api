@@ -13,6 +13,10 @@ describe "Acceptance::LodgeAssessment::XML" do
     File.read File.join Dir.pwd, "spec/fixtures/samples/sap.xml"
   end
 
+  let(:valid_cepc_rr_xml) do
+    File.read File.join Dir.pwd, "spec/fixtures/samples/cepc+rr.xml"
+  end
+
   let(:cleaned_xml) do
     File.read File.join Dir.pwd, "spec/fixtures/sanitised/acic.xml"
   end
@@ -115,6 +119,47 @@ describe "Acceptance::LodgeAssessment::XML" do
       expect(data_assessment_link).to eq(
         "/api/assessments/0000-0000-0000-0000-0000",
       )
+    end
+
+    context "when lodging two energy assessments" do
+      let(:scheme_id) { add_scheme_and_get_id }
+
+      let(:response) do
+        Nokogiri.XML lodge_assessment(
+          assessment_body: valid_cepc_rr_xml,
+          accepted_responses: [201],
+          auth_data: { scheme_ids: [scheme_id] },
+          schema_name: "CEPC-7.1",
+          headers: { "Accept": "application/xml" },
+        )
+                       .body
+      end
+
+      before do
+        add_assessor scheme_id,
+                     "SPEC000000",
+                     AssessorStub.new.fetch_request_body(
+                       nonDomesticNos3: "ACTIVE",
+                     )
+      end
+
+      it "returns the correct response" do
+        data_assessment_ids =
+          response.at_css("response data assessments").xpath("string()")
+
+        expect(data_assessment_ids).to include("0000-0000-0000-0000-0000")
+        expect(data_assessment_ids).to include("0000-0000-0000-0000-0001")
+
+        data_assessment_links =
+          response.at_css("response meta links assessments").xpath("string()")
+
+        expect(data_assessment_links).to include(
+          "/api/assessments/0000-0000-0000-0000-0000",
+        )
+        expect(data_assessment_links).to include(
+          "/api/assessments/0000-0000-0000-0000-0001",
+        )
+      end
     end
   end
 end
