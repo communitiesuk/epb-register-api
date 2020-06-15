@@ -241,6 +241,24 @@ describe "Acceptance::LodgeSapEnergyAssessment" do
         expect(response["data"]).to eq(expected_response)
       end
 
+      context "when the assessment has related party disclosure text" do
+        it "returns the data that was lodged" do
+          related_party_number_xml = doc.dup
+
+          related_party_number_xml.at("Related-Party-Disclosure-Number")
+              .replace "<Related-Party-Disclosure-Text>test</Related-Party-Disclosure-Text>"
+
+          lodge_assessment assessment_body: related_party_number_xml.to_xml,
+                           accepted_responses: [201],
+                           auth_data: { scheme_ids: [scheme_id] },
+                           schema_name: "SAP-Schema-17.1"
+
+          parsed_response = JSON.parse JSON.generate(response), symbolize_names: true
+
+          expect(parsed_response.dig(:data, :relatedPartyDisclosureText)).to eq "test"
+        end
+      end
+
       context "when an assessment is for a new build" do
         it "returns the heat demand correctly" do
           doc.at("RHI-Existing-Dwelling").remove

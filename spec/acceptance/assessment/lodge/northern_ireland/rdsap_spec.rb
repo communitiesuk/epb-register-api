@@ -255,6 +255,24 @@ describe "Acceptance::LodgeRdSAPNIEnergyAssessment" do
         expect(response["data"]).to eq(expected_response)
       end
 
+      context "when the assessment has a related party disclosure number" do
+        it "returns the data that was lodged" do
+          related_party_number_xml = doc.dup
+
+          related_party_number_xml.at("Related-Party-Disclosure-Text")
+              .replace "<Related-Party-Disclosure-Number>4</Related-Party-Disclosure-Number>"
+
+          lodge_assessment assessment_body: related_party_number_xml.to_xml,
+                           accepted_responses: [201],
+                           auth_data: { scheme_ids: [scheme_id] },
+                           schema_name: "RdSAP-Schema-NI-19.0"
+
+          parsed_response = JSON.parse JSON.generate(response), symbolize_names: true
+
+          expect(parsed_response.dig(:data, :relatedPartyDisclosureNumber)).to eq 4
+        end
+      end
+
       context "when missing optional elements" do
         it "can return an empty string for address lines" do
           lodge_assessment(
