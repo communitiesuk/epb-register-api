@@ -15,9 +15,9 @@ module Domain
       cca_regulated: nil,
       structure_changed: nil,
       measures_removed: nil,
-      measures: [],
-      charges: [],
-      savings: []
+      measures: nil,
+      charges: nil,
+      savings: nil
     )
       @green_deal_plan_id = green_deal_plan_id
       @assessment_id = assessment_id
