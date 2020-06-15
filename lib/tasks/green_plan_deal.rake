@@ -1,9 +1,24 @@
+require "openssl"
+
 task :import_gdp_plans do
   ActiveRecord::Base.connection.execute("TRUNCATE TABLE green_deal_plans RESTART IDENTITY CASCADE")
   ActiveRecord::Base.logger = nil
 
-  raw_plans = File.read File.join Dir.pwd, "lib/json/HCR_GREEN_DEAL_PLANS.json"
-  plans = JSON.parse(raw_plans)
+  uri = URI(ENV["url"])
+
+  raw_plans = Net::HTTP.start(
+    uri.host,
+    uri.port,
+    use_ssl: uri.scheme == "https",
+    verify_mode: OpenSSL::SSL::VERIFY_NONE,
+  ) do |http|
+    request = Net::HTTP::Get.new uri.request_uri
+    request.basic_auth ENV["username"], ENV["password"]
+
+    http.request request
+  end
+
+  plans = JSON.parse(raw_plans.body)
 
   charges = {}
   plans["CHARGES"].map do |charges_row|
@@ -34,6 +49,12 @@ task :import_gdp_plans do
     })
   end
 
+  assessment_ids = []
+  plans["RRNS"].each do |rrn_row|
+    assessment_ids[rrn_row["PLAN_KEY"]] = [] unless assessment_ids[rrn_row["PLAN_KEY"]]
+    assessment_ids[rrn_row["PLAN_KEY"]].push(rrn_row["REPORT_REFERENCE_ID"])
+  end
+
   plans["GREEN_DEAL_PLANS"].each do |row|
     query = "INSERT INTO
               green_deal_plans
@@ -53,7 +74,8 @@ task :import_gdp_plans do
                 measures_removed,
                 charges,
                 measures,
-                savings
+                savings,
+                assessment_id
               )
               VALUES
               (
@@ -72,7 +94,8 @@ task :import_gdp_plans do
                 '#{ActiveRecord::Base.sanitize_sql(row['MEASURES_REMOVED_IND'])}',
                 '#{ActiveRecord::Base.sanitize_sql(charges[row['PLAN_ID']].to_json)}',
                 '#{ActiveRecord::Base.sanitize_sql(measures[row['PLAN_ID']].to_json)}',
-                '#{ActiveRecord::Base.sanitize_sql(savings[row['PLAN_ID']].to_json)}'
+                '#{ActiveRecord::Base.sanitize_sql(savings[row['PLAN_ID']].to_json)}',
+                '#{ActiveRecord::Base.sanitize_sql(assessment_ids[row['PLAN_KEY']])}'
               )"
 
     ActiveRecord::Base.connection.execute(query)
