@@ -1,7 +1,14 @@
 require "openssl"
 
-task :import_gdp_plans do
+desc "Truncate green deal plans data"
+
+task :truncate_green_deal_plans do
   ActiveRecord::Base.connection.execute("TRUNCATE TABLE green_deal_plans RESTART IDENTITY CASCADE")
+end
+
+desc "Import green deal plans data"
+
+task :import_green_deal_plans do
   ActiveRecord::Base.logger = nil
 
   uri = URI(ENV["url"])
