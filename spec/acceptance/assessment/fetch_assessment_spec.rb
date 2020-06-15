@@ -7,6 +7,7 @@ describe "Acceptance::Assessment" do
   class GreenDealPlans < ActiveRecord::Base; end
 
   let(:fetch_assessor_stub) { AssessorStub.new }
+  let(:green_deal_plan_stub) { GreenDealPlansGatewayStub.new }
 
   let(:valid_sap_xml) do
     File.read File.join Dir.pwd, "spec/fixtures/samples/sap.xml"
@@ -403,7 +404,7 @@ describe "Acceptance::Assessment" do
         scheme_id = add_scheme_and_get_id
         add_assessor(scheme_id, "TEST123456", valid_assessor_request_body)
         migrate_assessment("15650-651625-18267167", valid_assessment_body)
-        create_green_deal_plan("15650-651625-18267167")
+        green_deal_plan_stub.create_green_deal_plan("15650-651625-18267167")
 
         response = JSON.parse(fetch_assessment("15650-651625-18267167").body)
 
@@ -711,32 +712,5 @@ describe "Acceptance::Assessment" do
         expect(response["data"]).to eq(expected_response)
       end
     end
-  end
-
-  def create_green_deal_plan(assessment_id)
-    GreenDealPlans.create(
-      assessment_id: assessment_id,
-      green_deal_plan_id: "ABC123456DEF",
-      start_date: DateTime.new(2_020, 1, 30),
-      end_date: DateTime.new(2_030, 2, 28),
-      provider_name: "The Bank",
-      provider_telephone: "0800 0000000",
-      provider_email: "lender@example.com",
-      fixed_interest_rate: true,
-      charge_uplift_date: DateTime.new(2_030, 2, 28),
-      measures: [
-        {
-          measureType: "Loft insulation",
-          product: "WarmHome lagging stuff (TM)",
-          repaidDate: "2025-03-29",
-        },
-      ],
-      charges: [
-        { startDate: "2020-03-29", endDate: "2030-03-29", dailyCharge: "0.34" },
-      ],
-      savings: [
-        { fuelCode: "LPG", fuelSaving: 0, standingChargeFraction: -0.3 },
-      ],
-    )
   end
 end
