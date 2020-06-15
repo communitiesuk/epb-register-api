@@ -34,87 +34,88 @@ describe "Acceptance::LodgeAssessment::XML" do
       )
 
     xml = ""
+
     results.each { |row| xml = row["xml"] }
+
     xml
   end
 
   let(:scheme_id) { add_scheme_and_get_id }
 
   context "when storing xml to the assessments_xml table" do
-    it "will remove the <Formatted-Report> element" do
-      add_assessor(
-        scheme_id,
-        "SPEC000000",
-        fetch_assessor_stub.fetch_request_body(nonDomesticCc4: "ACTIVE"),
-      )
-      lodge_assessment(
-        assessment_body: valid_cepc_xml,
-        accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
-        schema_name: "CEPC-7.1",
-      )
+    let(:database_xml) { get_stored_xml "0000-0000-0000-0000-0000" }
 
-      database_xml = get_stored_xml("0000-0000-0000-0000-0000")
-
-      expect(valid_cepc_xml).to include("<Formatted-Report>")
-      expect(cleaned_xml).to eq(
-        '<?xml version="1.0" encoding="UTF-8"?>
-' + database_xml,
-      )
+    before do
+      add_assessor scheme_id,
+                   "SPEC000000",
+                   fetch_assessor_stub.fetch_request_body(
+                     nonDomesticCc4: "ACTIVE", domesticSap: "ACTIVE",
+                   )
     end
 
-    it "will remove the <PDF> element" do
-      add_assessor(
-        scheme_id,
-        "SPEC000000",
-        fetch_assessor_stub.fetch_request_body(domesticSap: "ACTIVE"),
-      )
-      lodge_assessment(
-        assessment_body: valid_sap_xml,
-        accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
-        schema_name: "SAP-Schema-17.1",
-      )
+    context "with a CEPC assessment" do
+      before do
+        lodge_assessment assessment_body: valid_cepc_xml,
+                         accepted_responses: [201],
+                         auth_data: { scheme_ids: [scheme_id] },
+                         schema_name: "CEPC-7.1"
+      end
 
-      database_xml = get_stored_xml("0000-0000-0000-0000-0000")
+      it "will remove the <Formatted-Report> element" do
+        expect(valid_cepc_xml).to include("<Formatted-Report>")
+        expect(cleaned_xml).to eq(
+          '<?xml version="1.0" encoding="UTF-8"?>' + "\n" + database_xml,
+        )
+      end
+    end
 
-      expect(valid_sap_xml).to include("<PDF>")
-      expect(cleaned_sap_xml).to eq(
-        '<?xml version="1.0" encoding="UTF-8"?>
-' + database_xml,
-      )
+    context "with a SAP assessment" do
+      before do
+        lodge_assessment assessment_body: valid_sap_xml,
+                         accepted_responses: [201],
+                         auth_data: { scheme_ids: [scheme_id] },
+                         schema_name: "SAP-Schema-17.1"
+      end
+
+      it "will remove the <PDF> element" do
+        expect(valid_sap_xml).to include("<PDF>")
+        expect(cleaned_sap_xml).to eq(
+          '<?xml version="1.0" encoding="UTF-8"?>' + "\n" + database_xml,
+        )
+      end
     end
   end
 
   context "when lodging XML" do
-    it "returns an XML response" do
-      add_assessor(
-        scheme_id,
-        "SPEC000000",
-        fetch_assessor_stub.fetch_request_body(domesticSap: "ACTIVE"),
+    let(:response) do
+      Nokogiri.XML lodge_assessment(
+        assessment_body: valid_sap_xml,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] },
+        schema_name: "SAP-Schema-17.1",
+        headers: { "Accept": "application/xml" },
       )
-      response_xml =
-        lodge_assessment(
-          assessment_body: valid_sap_xml,
-          accepted_responses: [201],
-          auth_data: { scheme_ids: [scheme_id] },
-          schema_name: "SAP-Schema-17.1",
-          headers: { "Accept": "application/xml" },
-        )
-          .body
+                     .body
+    end
 
-      parsed_response = Nokogiri.XML response_xml
+    before do
+      add_assessor scheme_id,
+                   "SPEC000000",
+                   fetch_assessor_stub.fetch_request_body(domesticSap: "ACTIVE")
+    end
 
+    it "returns an XML response" do
       data_assessment_id =
-        parsed_response.at_css("response data assessments assessment").xpath(
+        response.at_css("response data assessments assessment").xpath(
           "string()",
         )
 
       expect(data_assessment_id).to eq("0000-0000-0000-0000-0000")
 
       data_assessment_link =
-        parsed_response.at_css("response meta links assessments assessment")
-          .xpath("string()")
+        response.at_css("response meta links assessments assessment").xpath(
+          "string()",
+        )
 
       expect(data_assessment_link).to eq(
         "/api/assessments/0000-0000-0000-0000-0000",
