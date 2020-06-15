@@ -19,6 +19,8 @@ module UseCase
 
       raise NotFoundException unless assessment
 
+      return @assessments_xml_gateway.fetch(assessment_id) if xml
+
       assessment[:current_energy_efficiency_band] =
         get_energy_rating_band(assessment[:current_energy_efficiency_rating])
       assessment[:potential_energy_efficiency_band] =
@@ -37,7 +39,7 @@ module UseCase
         assessment = assessment.merge(green_deal_plan: green_deal_domain)
       end
 
-      xml ? @assessments_xml_gateway.fetch(assessment_id) : assessment
+      assessment
     end
 
   private
