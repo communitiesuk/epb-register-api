@@ -82,7 +82,7 @@ describe "Acceptance::LodgeAssessment::XML" do
     end
   end
 
-  context "when lodging and requesting XML" do
+  context "when lodging XML" do
     it "returns an XML response" do
       add_assessor(
         scheme_id,
@@ -99,7 +99,22 @@ describe "Acceptance::LodgeAssessment::XML" do
         )
           .body
 
-      expect(cleaned_sap_xml).to eq(response_xml)
+      parsed_response = Nokogiri.XML response_xml
+
+      data_assessment_id =
+        parsed_response.at_css("response data assessments assessment").xpath(
+          "string()",
+        )
+
+      expect(data_assessment_id).to eq("0000-0000-0000-0000-0000")
+
+      data_assessment_link =
+        parsed_response.at_css("response meta links assessments assessment")
+          .xpath("string()")
+
+      expect(data_assessment_link).to eq(
+        "/api/assessments/0000-0000-0000-0000-0000",
+      )
     end
   end
 end

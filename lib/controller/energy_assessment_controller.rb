@@ -266,7 +266,30 @@ module Controller
       end
 
       if request.env["HTTP_ACCEPT"] == "application/xml"
-        xml_response(201, results.first.xml)
+        builder =
+          Nokogiri::XML::Builder.new do |document|
+            document.response do
+              document.data do
+                document.assessments do
+                  results.map do |result|
+                    document.assessment result.assessment_id
+                  end
+                end
+              end
+              document.meta do
+                document.links do
+                  document.assessments do
+                    results.map do |result|
+                      document.assessment "/api/assessments/" +
+                        result.assessment_id
+                    end
+                  end
+                end
+              end
+            end
+          end
+
+        xml_response(201, builder.to_xml)
       else
         json_api_response code: 201,
                           data: { assessments: results.map(&:assessment_id) },

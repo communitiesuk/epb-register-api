@@ -12,6 +12,10 @@ describe "Acceptance::Assessment" do
     File.read File.join Dir.pwd, "spec/fixtures/samples/sap.xml"
   end
 
+  let(:sanitised_sap_xml) do
+    File.read File.join Dir.pwd, "spec/fixtures/sanitised/sap.xml"
+  end
+
   let(:valid_assessor_request_body) do
     {
       firstName: "Someone",
@@ -561,26 +565,19 @@ describe "Acceptance::Assessment" do
           fetch_assessor_stub.fetch_request_body(domesticSap: "ACTIVE"),
         )
 
-        cleaned_xml =
-          lodge_assessment(
-            assessment_body: valid_sap_xml,
-            accepted_responses: [201],
-            auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "SAP-Schema-17.1",
-            headers: { "Accept": "application/xml" },
-          )
-            .body
+        lodge_assessment assessment_body: valid_sap_xml,
+                         accepted_responses: [201],
+                         auth_data: { scheme_ids: [scheme_id] },
+                         schema_name: "SAP-Schema-17.1",
+                         headers: { "Accept": "application/xml" }
 
-        returned_xml =
-          fetch_assessment(
-            "0000-0000-0000-0000-0000",
-            headers: { "Accept": "application/xml" },
-          )
-            .body
+        response =
+          fetch_assessment "0000-0000-0000-0000-0000",
+                           headers: { "Accept": "application/xml" }
 
         expect(
-          "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + returned_xml,
-        ).to eq(cleaned_xml)
+          "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + response.body,
+        ).to eq(sanitised_sap_xml)
       end
     end
 
