@@ -144,14 +144,16 @@ def lodge_assessment(
   scopes: %w[assessment:lodge],
   json: false,
   schema_name: "RdSAP-Schema-19.0",
-  headers: {}
+  headers: {},
+  migrated: nil
 )
+  path = migrated == true ? "api/assessments?migrated" : "api/assessments"
   header "Content-type", "application/xml+" + schema_name
 
   headers.each { |key, value| header key.to_s, value.to_s }
 
   assertive_post(
-    "api/assessments",
+    path,
     assessment_body,
     accepted_responses,
     authenticate,
