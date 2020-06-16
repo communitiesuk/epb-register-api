@@ -163,6 +163,28 @@ def lodge_assessment(
   )
 end
 
+def update_assessment_status(
+  assessment_id: "",
+  assessment_status_body: "",
+  accepted_responses: [201],
+  authenticate: true,
+  auth_data: nil,
+  scopes: %w[assessment:lodge]
+)
+  path = "api/assessments/" + assessment_id + "/status"
+  header "Content-type", "application/json"
+
+  assertive_post(
+    path,
+    assessment_status_body,
+    accepted_responses,
+    authenticate,
+    auth_data,
+    scopes,
+    true,
+  )
+end
+
 def add_scheme_and_get_id(
   name = "test scheme", accepted_responses = [201], authenticate = true
 )
