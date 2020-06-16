@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_12_092930) do
+ActiveRecord::Schema.define(version: 2020_06_16_104452) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 2020_06_12_092930) do
     t.integer "related_party_disclosure_number"
     t.string "related_party_disclosure_text"
     t.string "address_id"
+    t.boolean "migrated", default: false
     t.index ["address_id"], name: "index_assessments_on_address_id"
     t.index ["postcode"], name: "index_assessments_on_postcode"
     t.index ["town"], name: "index_assessments_on_town"

@@ -7,6 +7,7 @@ module Domain
                 :xml
 
     def initialize(
+      migrated: nil,
       date_of_assessment: nil,
       date_registered: nil,
       dwelling_type: nil,
@@ -38,6 +39,7 @@ module Domain
       related_party_disclosure_text: nil,
       xml: nil
     )
+      @migrated = migrated
       @date_of_assessment = Date.strptime(date_of_assessment, "%Y-%m-%d")
       @date_registered = Date.strptime(date_registered, "%Y-%m-%d")
       @dwelling_type = dwelling_type
@@ -131,6 +133,7 @@ module Domain
 
     def to_record
       {
+        migrated: @migrated,
         date_of_assessment: @date_of_assessment,
         date_registered: @date_registered,
         dwelling_type: @dwelling_type,

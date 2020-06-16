@@ -171,7 +171,11 @@ module Controller
     end
 
     post "/api/assessments", jwt_auth: %w[assessment:lodge] do
-      do_lodge
+      if params.key?("migrated")
+        do_lodge(true)
+      else
+        do_lodge(false)
+      end
     end
 
     get "/api/assessments/:assessment_id", jwt_auth: %w[assessment:fetch] do
@@ -223,7 +227,7 @@ module Controller
       end
     end
 
-    def do_lodge
+    def do_lodge(migrated)
       correlation_id = rand
       logit_char_limit = 50_000
 
@@ -251,7 +255,7 @@ module Controller
       scheme_ids = sup
 
       results =
-        validate_and_lodge_assessment.execute(xml, content_type, scheme_ids)
+          validate_and_lodge_assessment.execute(xml, content_type, scheme_ids, migrated)
 
       results.each do |result|
         @events.event(

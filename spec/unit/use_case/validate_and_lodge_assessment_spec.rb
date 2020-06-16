@@ -50,7 +50,7 @@ describe UseCase::ValidateAndLodgeAssessment do
 
   context "when validating a valid RdSAP assessment" do
     it "will call the three use cases" do
-      use_case.execute(valid_xml, "RdSAP-Schema-19.0", "1")
+      use_case.execute(valid_xml, "RdSAP-Schema-19.0", "1", false)
 
       expect(validate_lodgement_use_case.is_called?).to be_truthy
       expect(lodge_assessment_use_case.is_called?).to be_truthy
@@ -61,14 +61,14 @@ describe UseCase::ValidateAndLodgeAssessment do
   context "when validating an invalid schema name" do
     it "raises the error SchemaNotAccepted" do
       expect {
-        use_case.execute(valid_xml, "Non-existent-RdSAP-Schema-19.0", "1")
+        use_case.execute(valid_xml, "Non-existent-RdSAP-Schema-19.0", "1", false)
       }.to raise_exception(
         UseCase::ValidateAndLodgeAssessment::SchemaNotSupportedException,
       )
     end
 
     it "raises the error SchemaNotDefined" do
-      expect { use_case.execute(valid_xml, nil, "1") }.to raise_exception(
+      expect { use_case.execute(valid_xml, nil, "1", false) }.to raise_exception(
         UseCase::ValidateAndLodgeAssessment::SchemaNotDefined,
       )
     end

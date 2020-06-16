@@ -245,26 +245,26 @@ describe "Acceptance::Assessment::Lodge" do
     end
   end
 
-  # context "when an assessment is lodged as a migration from LandMark XML" do
-  #   it 'should be true in migrated column' do
-  #     scheme_id = add_scheme_and_get_id
-  #     add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
-  #
-  #     lodge_assessment(
-  #         assessment_body: valid_rdsap_xml,
-  #         accepted_responses: [201],
-  #         auth_data: { scheme_ids: [scheme_id] },
-  #         migrated: true,
-  #         )
-  #
-  #     migrated_column =
-  #         ActiveRecord::Base.connection.execute(
-  #             "SELECT * FROM assessments WHERE assessment_id = '0000-0000-0000-0000-0000'",
-  #             )
-  #
-  #     expect(migrated_column.entries.first['migrated']).to be_truthy
-  #   end
-  # end
+  context "when an assessment is lodged as a migration from LandMark XML" do
+    it 'should be true in migrated column' do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
+
+      lodge_assessment(
+          assessment_body: valid_rdsap_xml,
+          accepted_responses: [201],
+          auth_data: { scheme_ids: [scheme_id] },
+          migrated: true,
+          )
+
+      migrated_column =
+          ActiveRecord::Base.connection.execute(
+              "SELECT * FROM assessments WHERE assessment_id = '0000-0000-0000-0000-0000'",
+              )
+
+      expect(migrated_column.entries.first['migrated']).to be_truthy
+    end
+  end
 
   context "when an assessment is lodged as a lodgement from a scheme" do
     it 'should be false in migrated column' do

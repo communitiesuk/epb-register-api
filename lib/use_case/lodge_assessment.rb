@@ -26,7 +26,7 @@ module UseCase
       @assessments_xml_gateway = assessments_xml_gateway
     end
 
-    def execute(data)
+    def execute(data, migrated)
       assessment_id = data[:assessment_id]
       assessment_type = data[:assessment_type]
 
@@ -90,6 +90,7 @@ module UseCase
 
       assessment =
         TYPE2LODGEMENT[assessment_type.to_sym].new(
+          migrated: migrated,
           date_of_assessment: data[:inspection_date],
           date_registered: data[:registration_date],
           dwelling_type: data[:dwelling_type],
