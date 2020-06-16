@@ -27,4 +27,5 @@ class RegisterApiService < Controller::BaseController
   use Controller::SchemesController
   use Controller::EnergyAssessmentController
   use Controller::GreenDealPlanController
+  use Controller::AssessmentStatusController
 end

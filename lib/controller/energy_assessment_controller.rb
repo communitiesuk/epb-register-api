@@ -347,11 +347,6 @@ module Controller
       end
     end
 
-    post "/api/assessments/:assessment_id/status",
-         jwt_auth: %w[assessment:lodge] do
-      json_api_response(code: 200, data: { "status": "CANCELLED" })
-    end
-
   private
 
     def do_lodge(migrated)
