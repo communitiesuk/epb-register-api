@@ -42,7 +42,9 @@ module UseCase
             raise UnauthorisedToLodgeAsThisSchemeException
           end
 
-          responses.push(@lodge_assessment_use_case.execute(lodgement_data, migrated))
+          responses.push(
+            @lodge_assessment_use_case.execute(lodgement_data, migrated),
+          )
         end
       end
 

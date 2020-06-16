@@ -171,96 +171,100 @@ module Controller
     end
 
     post "/api/assessments", jwt_auth: %w[assessment:lodge] do
-      
-      migrated = params.key?("migrated") ? true :false
+      migrated = params.key?("migrated") ? true : false
       correlation_id = rand
       logit_char_limit = 50_000
 
       sanitized_body =
-          Helper::SanitizeXmlHelper.new.sanitize(request.body.read.to_s)
+        Helper::SanitizeXmlHelper.new.sanitize(request.body.read.to_s)
 
       @events.event(
-          false,
-          {
-              event_type: :lodgement_attempt,
-              correlation_id: correlation_id,
-              request_body: sanitized_body.slice(0..logit_char_limit),
-              request_headers: headers,
-              request_body_truncated: sanitized_body.length > logit_char_limit,
-          },
-          true,
-          )
+        false,
+        {
+          event_type: :lodgement_attempt,
+          correlation_id: correlation_id,
+          request_body: sanitized_body.slice(0..logit_char_limit),
+          request_headers: headers,
+          request_body_truncated: sanitized_body.length > logit_char_limit,
+        },
+        true,
+      )
 
       sup = env[:jwt_auth].supplemental("scheme_ids")
       validate_and_lodge_assessment =
-          @container.get_object(:validate_and_lodge_assessment_use_case)
+        @container.get_object(:validate_and_lodge_assessment_use_case)
 
       xml = sanitized_body
       content_type = request.env["CONTENT_TYPE"].split("+")[1]
       scheme_ids = sup
 
       results =
-          validate_and_lodge_assessment.execute(xml, content_type, scheme_ids, migrated)
+        validate_and_lodge_assessment.execute(
+          xml,
+          content_type,
+          scheme_ids,
+          migrated,
+        )
 
       results.each do |result|
         @events.event(
-            false,
-            {
-                event_type: :lodgement_successful,
-                correlation_id: correlation_id,
-                assessment_id: result.assessment_id,
-            },
-            true,
-            )
+          false,
+          {
+            event_type: :lodgement_successful,
+            correlation_id: correlation_id,
+            assessment_id: result.assessment_id,
+          },
+          true,
+        )
       end
 
       if request.env["HTTP_ACCEPT"] == "application/xml"
         builder =
-            Nokogiri::XML::Builder.new do |document|
-              document.response do
-                document.data do
-                  document.assessments do
-                    results.map do |result|
-                      document.assessment result.assessment_id
-                    end
+          Nokogiri::XML::Builder.new do |document|
+            document.response do
+              document.data do
+                document.assessments do
+                  results.map do |result|
+                    document.assessment result.assessment_id
                   end
                 end
-                document.meta do
-                  document.links do
-                    document.assessments do
-                      results.map do |result|
-                        document.assessment "/api/assessments/" +
-                                                result.assessment_id
-                      end
+              end
+              document.meta do
+                document.links do
+                  document.assessments do
+                    results.map do |result|
+                      document.assessment "/api/assessments/" +
+                        result.assessment_id
                     end
                   end
                 end
               end
             end
+          end
 
         xml_response(201, builder.to_xml)
       else
         json_api_response code: 201,
                           data: { assessments: results.map(&:assessment_id) },
                           meta: {
-                              links: {
-                                  assessments:
-                                      results.map do |id|
-                                        "/api/assessments/" + id.assessment_id
-                                      end,
-                              },
+                            links: {
+                              assessments:
+                                results.map do |id|
+                                  "/api/assessments/" + id.assessment_id
+                                end,
+                            },
                           }
       end
     rescue StandardError => e
       @events.event(
-          false,
-          {
-              event_type: :lodgement_failed,
-              correlation_id: correlation_id,
-              error_message: e.to_s,
-          },
-          true,
-          )
+        false,
+        {
+          event_type: :lodgement_failed,
+          correlation_id: correlation_id,
+          error_message: e.to_s,
+        },
+        true,
+      )
 
       case e
       when UseCase::ValidateAssessment::InvalidXmlException
@@ -271,16 +275,16 @@ module Controller
         error_response(400, "INVALID_REQUEST", "Assessor is not registered.")
       when UseCase::ValidateAndLodgeAssessment::SchemaNotDefined
         error_response(
-            400,
-            "INVALID_REQUEST",
-            'Schema is not defined. Set content-type on the request to "application/xml+RdSAP-Schema-19.0" for example.',
-            )
+          400,
+          "INVALID_REQUEST",
+          'Schema is not defined. Set content-type on the request to "application/xml+RdSAP-Schema-19.0" for example.',
+        )
       when UseCase::ValidateAndLodgeAssessment::UnauthorisedToLodgeAsThisSchemeException
         error_response(
-            403,
-            "UNAUTHORISED",
-            "Not authorised to lodge reports as this scheme",
-            )
+          403,
+          "UNAUTHORISED",
+          "Not authorised to lodge reports as this scheme",
+        )
       when UseCase::LodgeAssessment::InactiveAssessorException
         error_response(400, "INVALID_REQUEST", "Assessor is not active.")
       when UseCase::LodgeAssessment::DuplicateAssessmentIdException
@@ -292,8 +296,6 @@ module Controller
       else
         server_error(e)
       end
-
-
     end
 
     get "/api/assessments/:assessment_id", jwt_auth: %w[assessment:fetch] do
@@ -373,7 +375,12 @@ module Controller
       scheme_ids = sup
 
       results =
-          validate_and_lodge_assessment.execute(xml, content_type, scheme_ids, migrated)
+        validate_and_lodge_assessment.execute(
+          xml,
+          content_type,
+          scheme_ids,
+          migrated,
+        )
 
       results.each do |result|
         @events.event(
