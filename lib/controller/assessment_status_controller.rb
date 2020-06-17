@@ -18,9 +18,17 @@ module Controller
       @container.get_object(:update_assessments_status_use_case).execute(
         assessment_id,
         assessment_body[:status],
+        env[:jwt_auth].supplemental("scheme_ids"),
       )
 
       json_api_response(code: 200, data: { "status": assessment_body[:status] })
+    rescue StandardError => e
+      case e
+      when UseCase::UpdateAssessmentStatus::AssessmentNotLodgedByScheme
+        error_response(403, "NOT_ALLOWED", e.message)
+      else
+        server_error(e.message)
+      end
     end
   end
 end

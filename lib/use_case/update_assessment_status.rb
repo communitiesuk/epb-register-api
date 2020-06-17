@@ -2,11 +2,22 @@
 
 module UseCase
   class UpdateAssessmentStatus
-    def initialize(assessments_gateway)
+    class AssessmentNotLodgedByScheme < StandardError; end
+
+    def initialize(assessments_gateway, assessors_gateway)
       @assessments_gateway = assessments_gateway
+      @assessors_gateway = assessors_gateway
     end
 
-    def execute(assessment_id, status)
+    def execute(assessment_id, status, scheme_ids)
+      assessment = @assessments_gateway.fetch(assessment_id)
+
+      assessor = @assessors_gateway.fetch(assessment.scheme_assessor_id)
+
+      unless scheme_ids.include?(assessor.registered_by_id)
+        raise AssessmentNotLodgedByScheme
+      end
+
       if status == "CANCELLED"
         @assessments_gateway.update_field(
           assessment_id,
