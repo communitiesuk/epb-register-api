@@ -2,8 +2,8 @@ module UseCase
   class FindAssessmentsByPostcode
     class PostcodeNotValid < StandardError; end
 
-    def initialize(assessment_gateway)
-      @assessment_gateway = assessment_gateway
+    def initialize(assessments_gateway)
+      @assessments_gateway = assessments_gateway
     end
 
     def execute(postcode)
@@ -16,10 +16,10 @@ module UseCase
         raise PostcodeNotValid
       end
 
-      result = @assessment_gateway.search_by_postcode(postcode)
+      result = @assessments_gateway.search_by_postcode(postcode)
       opt_out_filtered_results = []
 
-      result.each { |r| opt_out_filtered_results << r unless r[:opt_out] }
+      result.each { |r| opt_out_filtered_results << r.to_hash unless r.opt_out }
 
       { data: opt_out_filtered_results, searchQuery: postcode }
     end

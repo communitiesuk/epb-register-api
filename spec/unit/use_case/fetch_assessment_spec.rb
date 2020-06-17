@@ -23,12 +23,31 @@ describe UseCase::FetchAssessment do
 
   context "when there is an energy assessment" do
     it "gives the existing energy assessment" do
-      domestic_energy_assessment_gateway.domestic_energy_assessment = {
-        current_energy_efficiency_rating: 75,
-        potential_energy_efficiency_rating: 80,
-      }
+      class AssessmentsDomainFake
+        attr_writer :assessor
+        def initialize(data)
+          @data = data
+          @data[:potential_energy_efficiency_band] = "c"
+          @data[:current_energy_efficiency_band] = "c"
+          @data.delete(:scheme_assessor_id)
+          @data[:assessor] = {}
+        end
+
+        def scheme_assessor_id; end
+
+        def to_hash
+          @data
+        end
+      end
+
+      domestic_energy_assessment_gateway.domestic_energy_assessment =
+        AssessmentsDomainFake.new(
+          current_energy_efficiency_rating: 75,
+          potential_energy_efficiency_rating: 80,
+          scheme_assessor_id: 0,
+        )
       result = fetch_domestic_energy_assessment.execute("123-456")
-      expect(result).to eq(
+      expect(result.to_hash).to eq(
         {
           assessor: assessors_gateway.assessor,
           current_energy_efficiency_band: "c",

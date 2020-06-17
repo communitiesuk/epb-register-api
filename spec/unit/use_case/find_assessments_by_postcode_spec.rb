@@ -1,5 +1,19 @@
 describe UseCase::FindAssessmentsByPostcode do
   context "when finding an assessment" do
+    class AssessmentsDomainFake
+      def initialize(data)
+        @data = data
+      end
+
+      def to_hash
+        @data
+      end
+
+      def opt_out
+        @data[:opt_out]
+      end
+    end
+
     let(:find_assessments_without_stub_data) do
       described_class.new(AssessmentsGatewayStub.new([]))
     end
@@ -8,7 +22,7 @@ describe UseCase::FindAssessmentsByPostcode do
       described_class.new(
         AssessmentsGatewayStub.new(
           [
-            {
+            AssessmentsDomainFake.new(
               assessment_id: "123-987",
               date_of_assessment: "2020-01-13",
               date_registered: "2020-01-13",
@@ -20,8 +34,8 @@ describe UseCase::FindAssessmentsByPostcode do
               postcode: "SE1 7EZ",
               date_of_expiry: "2021-01-02",
               opt_out: false,
-            },
-            {
+            ),
+            AssessmentsDomainFake.new(
               assessment_id: "123-987",
               date_of_assessment: "2020-01-13",
               date_registered: "2020-01-13",
@@ -33,8 +47,8 @@ describe UseCase::FindAssessmentsByPostcode do
               postcode: "SE1 7EZ",
               date_of_expiry: "2021-01-02",
               opt_out: false,
-            },
-            {
+            ),
+            AssessmentsDomainFake.new(
               assessment_id: "647-987",
               date_of_assessment: "2020-04-14",
               date_registered: "2020-04-15",
@@ -46,7 +60,7 @@ describe UseCase::FindAssessmentsByPostcode do
               postcode: "SE1 7EZ",
               date_of_expiry: "2021-04-14",
               opt_out: true,
-            },
+            ),
           ],
         ),
       )

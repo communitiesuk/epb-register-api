@@ -2,65 +2,22 @@
 
 module Gateway
   class AssessmentsGateway
-    class Assessment < ActiveRecord::Base
-      def to_hash
-        Gateway::AssessmentsGateway.new.to_hash(self)
-      end
-    end
-
+    class Assessment < ActiveRecord::Base; end
     class DomesticEpcEnergyImprovement < ActiveRecord::Base; end
+
+    TYPE2LODGEMENT = {
+      "CEPC": Domain::CepcAssessment,
+      "SAP": Domain::SapAssessment,
+      "RdSAP": Domain::RdsapAssessment,
+      "DEC-AR": Domain::DecArAssessment,
+      "DEC": Domain::DecAssessment,
+      "CEPC-RR": Domain::CepcRrAssessment,
+      "ACIC": Domain::AcicAssessment,
+      "ACIR": Domain::AcirAssessment,
+    }.freeze
 
     def valid_energy_rating(rating)
       rating.is_a?(Integer) && rating.positive?
-    end
-
-    def to_hash(assessment)
-      {
-        date_of_assessment:
-          assessment[:date_of_assessment].strftime("%Y-%m-%d"),
-        date_registered: assessment[:date_registered].strftime("%Y-%m-%d"),
-        dwelling_type: assessment[:dwelling_type],
-        type_of_assessment: assessment[:type_of_assessment],
-        total_floor_area: assessment[:total_floor_area].to_f,
-        assessment_id: assessment[:assessment_id],
-        scheme_assessor_id: assessment[:scheme_assessor_id],
-        current_energy_efficiency_rating:
-          assessment[:current_energy_efficiency_rating],
-        potential_energy_efficiency_rating:
-          assessment[:potential_energy_efficiency_rating],
-        current_carbon_emission: assessment[:current_carbon_emission].to_f,
-        potential_carbon_emission: assessment[:potential_carbon_emission].to_f,
-        opt_out: assessment[:opt_out],
-        postcode: assessment[:postcode],
-        date_of_expiry: assessment[:date_of_expiry].strftime("%Y-%m-%d"),
-        address_id: assessment[:address_id],
-        address_line1: assessment[:address_line1],
-        address_line2: assessment[:address_line2],
-        address_line3: assessment[:address_line3],
-        address_line4: assessment[:address_line4],
-        town: assessment[:town],
-        heat_demand: {
-          current_space_heating_demand:
-            assessment[:current_space_heating_demand].to_f,
-          current_water_heating_demand:
-            assessment[:current_water_heating_demand].to_f,
-          impact_of_loft_insulation: assessment[:impact_of_loft_insulation],
-          impact_of_cavity_insulation: assessment[:impact_of_cavity_insulation],
-          impact_of_solid_wall_insulation:
-            assessment[:impact_of_solid_wall_insulation],
-        },
-        current_energy_efficiency_band:
-          get_energy_rating_band(assessment[:current_energy_efficiency_rating]),
-        potential_energy_efficiency_band:
-          get_energy_rating_band(
-            assessment[:potential_energy_efficiency_rating],
-          ),
-        property_summary: assessment[:property_summary],
-        related_party_disclosure_number:
-          assessment[:related_party_disclosure_number],
-        related_party_disclosure_text:
-          assessment[:related_party_disclosure_text],
-      }
     end
 
     def row_to_energy_improvement(row)
@@ -93,8 +50,13 @@ module Gateway
 
       return unless energy_assessment_record
 
-      energy_assessment = energy_assessment_record.to_hash
-      energy_assessment[:recommended_improvements] = improvements
+      rec = energy_assessment_record.attributes.symbolize_keys!
+      rec[:recommended_improvements] = improvements
+
+      energy_assessment =
+        TYPE2LODGEMENT[energy_assessment_record[:type_of_assessment].to_sym]
+          .new(rec)
+
       energy_assessment
     end
 
@@ -120,21 +82,23 @@ module Gateway
             current_space_heating_demand, current_water_heating_demand, impact_of_loft_insulation,
             impact_of_cavity_insulation, impact_of_solid_wall_insulation,
             current_carbon_emission, potential_carbon_emission, property_summary, related_party_disclosure_number,
-            related_party_disclosure_text
+            related_party_disclosure_text, cancelled_at, not_for_issue_at
         FROM assessments
         WHERE postcode = '#{
           ActiveRecord::Base.sanitize_sql(postcode)
         }' AND type_of_assessment IN('RdSAP', 'SAP')"
       response = Assessment.connection.execute(sql)
       result = []
+
       response.each do |row|
-        assessment_hash = to_hash(row.symbolize_keys)
+        row.symbolize_keys!
+        row[:property_summary] = JSON.parse(row[:property_summary])
+        assessment_domain =
+          TYPE2LODGEMENT[row[:type_of_assessment].to_sym].new(row)
 
-        assessment_hash[:property_summary] =
-          JSON.parse(assessment_hash[:property_summary])
-
-        result << assessment_hash
+        result << assessment_domain
       end
+
       result
     end
 
@@ -148,7 +112,7 @@ module Gateway
           current_space_heating_demand, current_water_heating_demand, impact_of_loft_insulation,
           impact_of_cavity_insulation, impact_of_solid_wall_insulation,
           current_carbon_emission, potential_carbon_emission, property_summary, related_party_disclosure_number,
-           related_party_disclosure_text
+           related_party_disclosure_text, cancelled_at, not_for_issue_at
           FROM assessments
         WHERE assessment_id = '#{
           ActiveRecord::Base.sanitize_sql(assessment_id)
@@ -158,12 +122,12 @@ module Gateway
 
       result = []
       response.each do |row|
-        assessment_hash = to_hash(row.symbolize_keys)
+        row.symbolize_keys!
+        row[:property_summary] = JSON.parse(row[:property_summary])
+        assessment_domain =
+          TYPE2LODGEMENT[row[:type_of_assessment].to_sym].new(row)
 
-        assessment_hash[:property_summary] =
-          JSON.parse(assessment_hash[:property_summary])
-
-        result << assessment_hash
+        result << assessment_domain
       end
 
       result
@@ -179,7 +143,7 @@ module Gateway
           current_space_heating_demand, current_water_heating_demand, impact_of_loft_insulation,
           impact_of_cavity_insulation, impact_of_solid_wall_insulation,
           current_carbon_emission, potential_carbon_emission, property_summary, related_party_disclosure_number,
-          related_party_disclosure_text
+          related_party_disclosure_text, cancelled_at, not_for_issue_at
         FROM assessments
         WHERE (address_line1 ILIKE '%#{
           ActiveRecord::Base.sanitize_sql(street_name)
@@ -196,12 +160,12 @@ module Gateway
 
       result = []
       response.each do |row|
-        assessment_hash = to_hash(row.symbolize_keys)
+        row.symbolize_keys!
+        row[:property_summary] = JSON.parse(row[:property_summary])
+        assessment_domain =
+          TYPE2LODGEMENT[row[:type_of_assessment].to_sym].new(row)
 
-        assessment_hash[:property_summary] =
-          JSON.parse(assessment_hash[:property_summary])
-
-        result << assessment_hash
+        result << assessment_domain
       end
 
       result

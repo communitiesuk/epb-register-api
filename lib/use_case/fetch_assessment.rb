@@ -21,22 +21,16 @@ module UseCase
 
       return @assessments_xml_gateway.fetch(assessment_id) if xml
 
-      assessment[:current_energy_efficiency_band] =
-        get_energy_rating_band(assessment[:current_energy_efficiency_rating])
-      assessment[:potential_energy_efficiency_band] =
-        get_energy_rating_band(assessment[:potential_energy_efficiency_rating])
+      assessor = @assessors_gateway.fetch(assessment.scheme_assessor_id)
 
-      assessor = @assessors_gateway.fetch(assessment[:scheme_assessor_id])
-
-      assessment.delete(:scheme_assessor_id)
-      assessment[:assessor] = assessor.to_hash
+      assessment.assessor = assessor
 
       green_deal_data = @green_deal_plans_gateway.fetch(assessment_id)
 
       unless green_deal_data.nil?
         green_deal_domain = structure_green_deal_data(green_deal_data)
 
-        assessment = assessment.merge(green_deal_plan: green_deal_domain)
+        assessment.green_deal_plan = green_deal_domain
       end
 
       assessment
@@ -65,25 +59,6 @@ module UseCase
         savings: green_deal_data[:savings],
       )
         .to_hash
-    end
-
-    def get_energy_rating_band(number)
-      case number
-      when 1..20
-        "g"
-      when 21..38
-        "f"
-      when 39..54
-        "e"
-      when 55..68
-        "d"
-      when 69..80
-        "c"
-      when 81..91
-        "b"
-      when 92..100
-        "a"
-      end
     end
   end
 end

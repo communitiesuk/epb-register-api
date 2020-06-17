@@ -4,7 +4,11 @@ module Domain
                 :potential_energy_efficiency_rating,
                 :assessment_id,
                 :recommended_improvements,
-                :xml
+                :xml,
+                :scheme_assessor_id,
+                :opt_out
+
+    attr_writer :assessor, :green_deal_plan
 
     def initialize(
       migrated: nil,
@@ -37,11 +41,24 @@ module Domain
       property_summary: [],
       related_party_disclosure_number: nil,
       related_party_disclosure_text: nil,
+      cancelled_at: nil,
+      not_for_issue_at: nil,
+      scheme_assessor_id: nil,
       xml: nil
     )
       @migrated = migrated
-      @date_of_assessment = Date.strptime(date_of_assessment, "%Y-%m-%d")
-      @date_registered = Date.strptime(date_registered, "%Y-%m-%d")
+      @date_of_assessment =
+        if !date_of_assessment.nil?
+          Date.strptime(date_of_assessment.to_s, "%Y-%m-%d")
+        else
+          ""
+        end
+      @date_registered =
+        if !date_registered.nil?
+          Date.strptime(date_registered.to_s, "%Y-%m-%d")
+        else
+          ""
+        end
       @dwelling_type = dwelling_type
       @type_of_assessment = type_of_assessment
       @total_floor_area = total_floor_area.to_f
@@ -53,7 +70,12 @@ module Domain
       @potential_carbon_emission = potential_carbon_emission
       @opt_out = opt_out
       @postcode = postcode
-      @date_of_expiry = Date.strptime(date_of_expiry, "%Y-%m-%d")
+      @date_of_expiry =
+        if !date_of_expiry.nil?
+          Date.strptime(date_of_expiry.to_s, "%Y-%m-%d")
+        else
+          ""
+        end
       @address_id = address_id
       @address_line1 = address_line1
       @address_line2 = address_line2
@@ -69,11 +91,20 @@ module Domain
       @property_summary = property_summary
       @related_party_disclosure_number = related_party_disclosure_number
       @related_party_disclosure_text = related_party_disclosure_text
+      @cancelled_at =
+        !cancelled_at.nil? ? Date.strptime(cancelled_at.to_s, "%Y-%m-%d") : ""
+      @not_for_issue_at =
+        if !not_for_issue_at.nil?
+          Date.strptime(not_for_issue_at.to_s, "%Y-%m-%d")
+        else
+          ""
+        end
+      @scheme_assessor_id = scheme_assessor_id
       @xml = xml
     end
 
     def get_energy_rating_band(number)
-      case number
+      case number.to_i
       when 1..20
         "g"
       when 21..38
@@ -86,7 +117,7 @@ module Domain
         "c"
       when 81..91
         "b"
-      when number > 92
+      when 92..1_000
         "a"
       end
     end
@@ -99,7 +130,7 @@ module Domain
         type_of_assessment: @type_of_assessment,
         total_floor_area: @total_floor_area.to_f,
         assessment_id: @assessment_id,
-        scheme_assessor_id: @assessor.scheme_assessor_id,
+        assessor: @assessor,
         current_energy_efficiency_rating: @current_energy_efficiency_rating,
         potential_energy_efficiency_rating: @potential_energy_efficiency_rating,
         current_carbon_emission: @current_carbon_emission.to_f,

@@ -4,8 +4,7 @@ require "date"
 
 describe "Acceptance::Assessment" do
   include RSpecAssessorServiceMixin
-  class GreenDealPlans < ActiveRecord::Base
-  end
+  class GreenDealPlans < ActiveRecord::Base; end
 
   let(:fetch_assessor_stub) { AssessorStub.new }
   let(:green_deal_plan_stub) { GreenDealPlansGatewayStub.new }
@@ -28,9 +27,7 @@ describe "Acceptance::Assessment" do
         lastName: "Person",
         dateOfBirth: "1991-02-25",
         contactDetails: {
-          telephoneNumber:
-                "010199991010101",
-          email: "person@person.com",
+          telephoneNumber: "010199991010101", email: "person@person.com"
         },
         searchResultsComparisonPostcode: "",
         address: {},
@@ -53,14 +50,10 @@ describe "Acceptance::Assessment" do
       typeOfAssessment: "SAP",
       dwellingType: "Dwelling-Type0",
       assessmentId: "0000-0000-0000-0000-0000",
-      currentEnergyEfficiencyRating:
-            50,
-      potentialEnergyEfficiencyRating:
-            50,
-      currentCarbonEmission:
-            2.4,
-      potentialCarbonEmission:
-            1.4,
+      currentEnergyEfficiencyRating: 50,
+      potentialEnergyEfficiencyRating: 50,
+      currentCarbonEmission: 2.4,
+      potentialCarbonEmission: 1.4,
       currentEnergyEfficiencyBand: "e",
       potentialEnergyEfficiencyBand: "e",
       optOut: false,
@@ -73,16 +66,11 @@ describe "Acceptance::Assessment" do
       addressLine3: "",
       addressLine4: "",
       heatDemand: {
-        currentSpaceHeatingDemand:
-            30.0,
-        currentWaterHeatingDemand:
-                60.0,
-        impactOfLoftInsulation:
-                -8,
-        impactOfCavityInsulation:
-                -12,
-        impactOfSolidWallInsulation:
-                -16,
+        currentSpaceHeatingDemand: 30.0,
+        currentWaterHeatingDemand: 60.0,
+        impactOfLoftInsulation: -8,
+        impactOfCavityInsulation: -12,
+        impactOfSolidWallInsulation: -16,
       },
       propertySummary: [
         {
@@ -156,39 +144,36 @@ describe "Acceptance::Assessment" do
           name: "lighting",
         },
       ],
-      recommendedImprovements:
-            [
-              {
-                energyPerformanceRatingImprovement: 50,
-                environmentalImpactRatingImprovement: 50,
-                greenDealCategoryCode: "1",
-                improvementCategory: "6",
-                improvementCode: "5",
-                improvementDescription: nil,
-                improvementTitle: nil,
-                improvementType: "Z3",
-                indicativeCost: "5",
-                sequence: 0,
-                typicalSaving: "0.0",
-              },
-              {
-                energyPerformanceRatingImprovement: 60,
-                environmentalImpactRatingImprovement: 64,
-                greenDealCategoryCode: "3",
-                improvementCategory: "2",
-                improvementCode: "1",
-                improvementDescription: nil,
-                improvementTitle: nil,
-                improvementType: "Z2",
-                indicativeCost: "2",
-                sequence: 1,
-                typicalSaving: "0.1",
-              },
-            ],
-      relatedPartyDisclosureNumber:
-            1,
-      relatedPartyDisclosureText:
-            nil,
+      recommendedImprovements: [
+        {
+          energyPerformanceRatingImprovement: 50,
+          environmentalImpactRatingImprovement: 50,
+          greenDealCategoryCode: "1",
+          improvementCategory: "6",
+          improvementCode: "5",
+          improvementDescription: nil,
+          improvementTitle: nil,
+          improvementType: "Z3",
+          indicativeCost: "5",
+          sequence: 0,
+          typicalSaving: "0.0",
+        },
+        {
+          energyPerformanceRatingImprovement: 60,
+          environmentalImpactRatingImprovement: 64,
+          greenDealCategoryCode: "3",
+          improvementCategory: "2",
+          improvementCode: "1",
+          improvementDescription: nil,
+          improvementTitle: nil,
+          improvementType: "Z2",
+          indicativeCost: "2",
+          sequence: 1,
+          typicalSaving: "0.1",
+        },
+      ],
+      relatedPartyDisclosureNumber: 1,
+      relatedPartyDisclosureText: nil,
     }
   end
 
@@ -253,10 +238,7 @@ describe "Acceptance::Assessment" do
 
       response = JSON.parse(fetch_assessment("0000-0000-0000-0000-0000").body)
 
-      expected_response =
-        JSON.parse(
-          expected_sap_response(scheme_id).to_json,
-        )
+      expected_response = JSON.parse(expected_sap_response(scheme_id).to_json)
       expect(response["data"]).to eq(expected_response)
     end
 
@@ -308,15 +290,14 @@ describe "Acceptance::Assessment" do
             },
           ],
           savings: [
-            {
-              fuelCode: "LPG", fuelSaving: 0, standingChargeFraction: -0.3
-            },
+            { fuelCode: "LPG", fuelSaving: 0, standingChargeFraction: -0.3 },
           ],
         }
 
         sap_response = expected_sap_response(scheme_id)
 
-        expected_response = JSON.parse(sap_response.merge(greenDealPlan: green_deal_plan).to_json)
+        expected_response =
+          JSON.parse(sap_response.merge(greenDealPlan: green_deal_plan).to_json)
         expect(response["data"]).to eq(expected_response)
       end
     end

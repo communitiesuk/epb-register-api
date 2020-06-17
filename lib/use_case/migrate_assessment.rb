@@ -93,6 +93,7 @@ module UseCase
       end
 
       @assessments_gateway.insert_or_update(assessment)
+
       assessment
     end
   end
