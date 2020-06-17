@@ -397,6 +397,7 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
             recommendedImprovements: [],
             relatedPartyDisclosureNumber: nil,
             relatedPartyDisclosureText: "Related-Party-Disclosure-Text0",
+            status: "EXPIRED"
           }.to_json,
         )
 
@@ -577,6 +578,7 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
             recommendedImprovements: [],
             relatedPartyDisclosureNumber: nil,
             relatedPartyDisclosureText: "Related-Party-Disclosure-Text0",
+            status: "EXPIRED"
           }.to_json,
         )
 
@@ -817,6 +819,7 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
               recommendedImprovements: [],
               relatedPartyDisclosureNumber: nil,
               relatedPartyDisclosureText: "Related-Party-Disclosure-Text0",
+              status: "EXPIRED"
             }.to_json,
           )
 

@@ -236,6 +236,7 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
           ],
           "relatedPartyDisclosureNumber" => nil,
           "relatedPartyDisclosureText" => "Related-Party-Disclosure-Text0",
+          "status" => "EXPIRED"
         }
 
         expect(response["data"]).to eq(expected_response)
