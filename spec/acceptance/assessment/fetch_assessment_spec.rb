@@ -174,6 +174,7 @@ describe "Acceptance::Assessment" do
       ],
       relatedPartyDisclosureNumber: 1,
       relatedPartyDisclosureText: nil,
+      status: "EXPIRED",
     }
   end
 

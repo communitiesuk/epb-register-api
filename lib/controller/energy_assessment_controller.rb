@@ -172,7 +172,7 @@ module Controller
 
     post "/api/assessments", jwt_auth: %w[assessment:lodge] do
       migrated = params.key?("migrated") ? true : false
-      if migrated && !env[:jwt_auth].scopes?(["migrate:assessment"])
+      if migrated && !env[:jwt_auth].scopes?(%w[migrate:assessment])
         forbidden(
           "UNAUTHORISED",
           "You are not authorised to perform this request",

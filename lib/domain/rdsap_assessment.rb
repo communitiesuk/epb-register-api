@@ -94,10 +94,8 @@ module Domain
       @cancelled_at =
         !cancelled_at.nil? ? Date.strptime(cancelled_at.to_s, "%Y-%m-%d") : nil
       @not_for_issue_at =
-        if !not_for_issue_at.nil?
+        unless not_for_issue_at.nil?
           Date.strptime(not_for_issue_at.to_s, "%Y-%m-%d")
-        else
-          nil
         end
       @scheme_assessor_id = scheme_assessor_id
       @xml = xml
@@ -168,15 +166,15 @@ module Domain
 
       data[:green_deal_plan] = @green_deal_plan if @green_deal_plan
 
-      if ! @cancelled_at.nil?
-        data[:status] = "CANCELLED"
-      elsif ! @not_for_issue_at.nil?
-        data[:status] = "NOT_FOR_ISSUE"
-      elsif @date_of_expiry < Time.now
-        data[:status] = "EXPIRED"
-      else
-        data[:status] = "ENTERED"
-      end
+      data[:status] = if !@cancelled_at.nil?
+                        "CANCELLED"
+                      elsif !@not_for_issue_at.nil?
+                        "NOT_FOR_ISSUE"
+                      elsif @date_of_expiry < Time.now
+                        "EXPIRED"
+                      else
+                        "ENTERED"
+                      end
 
       data
     end
