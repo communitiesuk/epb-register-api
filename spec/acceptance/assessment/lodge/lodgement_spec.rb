@@ -253,6 +253,7 @@ describe "Acceptance::Assessment::Lodge" do
       lodge_assessment(
         assessment_body: valid_rdsap_xml,
         accepted_responses: [201],
+        scopes: %w[assessment:lodge migrate:assessment],
         auth_data: { scheme_ids: [scheme_id] },
         migrated: true,
       )
@@ -263,6 +264,30 @@ describe "Acceptance::Assessment::Lodge" do
         )
 
       expect(migrated_column.entries.first["migrated"]).to be_truthy
+    end
+  end
+
+  context "when making an unauthenticated request to lodged as a migration from LandMark XML" do
+    it "should throw an error" do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
+
+      response = lodge_assessment(
+        assessment_body: valid_rdsap_xml,
+        accepted_responses: [403],
+        auth_data: { scheme_ids: [scheme_id] },
+        migrated: true,
+      )
+
+      body = JSON.parse(
+        response.body,
+        symbolize_names: true,
+      )
+
+      expect(response.status).to eq(403)
+      expect(body).to eq({
+        errors: [{ code: "UNAUTHORISED", title: "You are not authorised to perform this request" }],
+      })
     end
   end
 

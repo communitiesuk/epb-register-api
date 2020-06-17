@@ -172,6 +172,12 @@ module Controller
 
     post "/api/assessments", jwt_auth: %w[assessment:lodge] do
       migrated = params.key?("migrated") ? true : false
+      if migrated && !env[:jwt_auth].scopes?(["migrate:assessment"])
+        forbidden(
+          "UNAUTHORISED",
+          "You are not authorised to perform this request",
+        )
+      end
       correlation_id = rand
       logit_char_limit = 50_000
 
