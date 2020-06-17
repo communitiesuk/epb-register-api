@@ -166,15 +166,16 @@ module Domain
 
       data[:green_deal_plan] = @green_deal_plan if @green_deal_plan
 
-      data[:status] = if !@cancelled_at.nil?
-                        "CANCELLED"
-                      elsif !@not_for_issue_at.nil?
-                        "NOT_FOR_ISSUE"
-                      elsif @date_of_expiry < Time.now
-                        "EXPIRED"
-                      else
-                        "ENTERED"
-                      end
+      data[:status] =
+        if !@cancelled_at.nil?
+          "CANCELLED"
+        elsif !@not_for_issue_at.nil?
+          "NOT_FOR_ISSUE"
+        elsif @date_of_expiry < Time.now
+          "EXPIRED"
+        else
+          "ENTERED"
+        end
 
       data
     end
