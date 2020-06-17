@@ -1,16 +1,18 @@
 describe "Integration::EndpointSecurity" do
   include RSpecAssessorServiceMixin
 
+  methods_with_no_body = %w[head options]
   controllers_to_ignore = { BaseController: {} }
 
-  methods_with_no_body = %w[head options]
+  controllers_to_test = Controller.constants.select do |constant|
+    Controller.const_get(constant).is_a? Class
+  end
 
-  controllers_to_test =
-    Controller.constants.select { |constant|
-      Controller.const_get(constant).is_a? Class
-    }.reject { |constant| controllers_to_ignore.include? constant.to_s }
+  controllers_to_test = controllers_to_test.reject do |constant|
+    controllers_to_ignore.include? constant.to_s
+  end
 
-  @routes_to_test = []
+  routes_to_test = []
 
   controllers_to_test.each do |controller|
     routes =
@@ -20,10 +22,16 @@ describe "Integration::EndpointSecurity" do
         end
       }.map(&:first)
 
-    @routes_to_test |= routes
+    routes_to_test |= routes
   end
 
-  @routes_to_test.each do |route|
+  total_route_definitions = 15
+
+  it "has a total of #{total_route_definitions} route definitions to test" do
+    expect(routes_to_test.length).to eq total_route_definitions
+  end
+
+  routes_to_test.each do |route|
     context "an unauthenticated call to #{route[:verb]} #{route[:path]}" do
       verb = route[:verb]
       path = route[:path]
