@@ -282,13 +282,17 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
 
     it "has been opted out" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "TEST123456", valid_assessor_request_body)
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body_dom)
 
-      opted_out_assessment = valid_assessment_body.dup
-      opted_out_assessment[:optOut] = true
-      migrate_assessment("123-987", opted_out_assessment)
+      lodge_assessment(
+        assessment_body: valid_rdsap_xml,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] },
+      )
 
-      response = domestic_assessments_search_by_postcode("SE17EZ")
+      opt_out_assessment("0000-0000-0000-0000-0000")
+
+      response = domestic_assessments_search_by_postcode("SA0 0AA")
       response_json = JSON.parse(response.body)
 
       expect(response_json["data"]["assessments"][0]).to eq(nil)
@@ -450,20 +454,24 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
 
       it "has been opted out" do
         scheme_id = add_scheme_and_get_id
-        add_assessor(scheme_id, "TEST123456", valid_assessor_request_body)
+        add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body_dom)
 
-        opted_out_assessment = valid_assessment_body.dup
-        opted_out_assessment[:optOut] = true
-        migrate_assessment("123-987", opted_out_assessment)
+        lodge_assessment(
+          assessment_body: valid_rdsap_xml,
+          accepted_responses: [201],
+          auth_data: { scheme_ids: [scheme_id] },
+        )
+
+        opt_out_assessment("0000-0000-0000-0000-0000")
 
         response =
           domestic_assessments_search_by_street_name_and_town(
-            "Palmtree Road",
-            "Brighton",
+            "1 Some Street",
+            "Post-Town1",
           )
         response_json = JSON.parse(response.body)
 
-        expect(response_json["data"]["assessments"][0]).to be_nil
+        expect(response_json["data"]["assessments"].length).to eq(0)
       end
     end
   end

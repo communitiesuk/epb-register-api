@@ -4,7 +4,8 @@ require "date"
 
 describe "Acceptance::Assessment" do
   include RSpecAssessorServiceMixin
-  class GreenDealPlans < ActiveRecord::Base; end
+  class GreenDealPlans < ActiveRecord::Base
+  end
 
   let(:fetch_assessor_stub) { AssessorStub.new }
   let(:green_deal_plan_stub) { GreenDealPlansGatewayStub.new }
@@ -17,235 +18,178 @@ describe "Acceptance::Assessment" do
     File.read File.join Dir.pwd, "spec/fixtures/sanitised/sap.xml"
   end
 
-  let(:valid_assessor_request_body) do
+  def expected_sap_response(scheme_id)
     {
-      firstName: "Someone",
-      middleNames: "Muddle",
-      lastName: "Person",
-      dateOfBirth: "1991-02-25",
-      searchResultsComparisonPostcode: "",
-      qualifications: {
-        domesticRdSap: "ACTIVE",
-        domesticSap: "INACTIVE",
-        nonDomesticSp3: "INACTIVE",
-        nonDomesticCc4: "INACTIVE",
-        nonDomesticDec: "INACTIVE",
-        nonDomesticNos3: "INACTIVE",
-        nonDomesticNos4: "STRUCKOFF",
-        nonDomesticNos5: "SUSPENDED",
-        gda: "INACTIVE",
+      assessor: {
+        schemeAssessorId: "SPEC000000",
+        registeredBy: { schemeId: scheme_id, name: "test scheme" },
+        firstName: "Someone",
+        middleNames: "Muddle",
+        lastName: "Person",
+        dateOfBirth: "1991-02-25",
+        contactDetails: {
+          telephoneNumber:
+                "010199991010101",
+          email: "person@person.com",
+        },
+        searchResultsComparisonPostcode: "",
+        address: {},
+        companyDetails: {},
+        qualifications: {
+          domesticRdSap: "INACTIVE",
+          domesticSap: "ACTIVE",
+          nonDomesticSp3: "INACTIVE",
+          nonDomesticCc4: "INACTIVE",
+          nonDomesticDec: "INACTIVE",
+          nonDomesticNos3: "INACTIVE",
+          nonDomesticNos4: "INACTIVE",
+          nonDomesticNos5: "INACTIVE",
+          gda: "INACTIVE",
+        },
       },
-      contactDetails: {
-        telephoneNumber: "010199991010101", email: "person@person.com"
-      },
-    }
-  end
-
-  let(:valid_assessment_body) do
-    {
-      schemeAssessorId: "TEST123456",
-      dateOfAssessment: "2020-01-13",
-      dateRegistered: "2020-01-13",
-      totalFloorArea: 1_000.45,
-      typeOfAssessment: "RdSAP",
-      dwellingType: "Top floor flat",
-      currentEnergyEfficiencyRating: 75,
-      potentialEnergyEfficiencyRating: 80,
-      currentCarbonEmission: 2.4,
-      potentialCarbonEmission: 1.4,
+      dateOfAssessment: "2006-05-04",
+      dateRegistered: "2006-05-04",
+      totalFloorArea: 10.0,
+      typeOfAssessment: "SAP",
+      dwellingType: "Dwelling-Type0",
+      assessmentId: "0000-0000-0000-0000-0000",
+      currentEnergyEfficiencyRating:
+            50,
+      potentialEnergyEfficiencyRating:
+            50,
+      currentCarbonEmission:
+            2.4,
+      potentialCarbonEmission:
+            1.4,
+      currentEnergyEfficiencyBand: "e",
+      potentialEnergyEfficiencyBand: "e",
       optOut: false,
-      postcode: "SE1 7EZ",
-      dateOfExpiry: "2021-01-01",
-      addressLine1: "Flat 33",
-      addressLine2: "18 Palmtree Road",
+      postcode: "A0 0AA",
+      dateOfExpiry: "2016-05-04",
+      town: "Post-Town1",
+      addressId: "UPRN-000000000000",
+      addressLine1: "1 Some Street",
+      addressLine2: "",
       addressLine3: "",
       addressLine4: "",
-      town: "Brighton",
       heatDemand: {
-        currentSpaceHeatingDemand: 222.23,
-        currentWaterHeatingDemand: 321.14,
-        impactOfLoftInsulation: 79,
-        impactOfCavityInsulation: 67,
-        impactOfSolidWallInsulation: 69,
+        currentSpaceHeatingDemand:
+            30.0,
+        currentWaterHeatingDemand:
+                60.0,
+        impactOfLoftInsulation:
+                -8,
+        impactOfCavityInsulation:
+                -12,
+        impactOfSolidWallInsulation:
+                -16,
       },
-      recommendedImprovements: [
-        {
-          sequence: 0,
-          improvementCode: "1",
-          indicativeCost: "£200 - £4,000",
-          typicalSaving: 400.21,
-          improvementCategory: "string",
-          improvementType: "string",
-          energyPerformanceRatingImprovement: 80,
-          environmentalImpactRatingImprovement: 90,
-          greenDealCategoryCode: "string",
-        },
-        {
-          sequence: 1,
-          indicativeCost: "£200 - £4,000",
-          typicalSaving: 400.21,
-          improvementCategory: "string",
-          improvementType: "string",
-          improvementTitle: "Some improvement",
-          improvementDescription: "Some improvement description",
-          energyPerformanceRatingImprovement: 80,
-          environmentalImpactRatingImprovement: 90,
-          greenDealCategoryCode: "string",
-        },
-      ],
       propertySummary: [
         {
-          description: "Description0",
           energyEfficiencyRating: 0,
           environmentalEfficiencyRating: 0,
-          name: "Wall",
+          name: "walls",
         },
         {
-          description: "Description1",
           energyEfficiencyRating: 0,
           environmentalEfficiencyRating: 0,
-          name: "Wall",
+          name: "walls",
         },
         {
-          description: "Description2",
           energyEfficiencyRating: 0,
           environmentalEfficiencyRating: 0,
-          name: "Roof",
+          name: "roof",
         },
         {
-          description: "Description3",
           energyEfficiencyRating: 0,
           environmentalEfficiencyRating: 0,
-          name: "Roof",
+          name: "roof",
         },
         {
-          description: "Description4",
           energyEfficiencyRating: 0,
           environmentalEfficiencyRating: 0,
-          name: "Floor",
+          name: "floor",
         },
         {
-          description: "Description5",
           energyEfficiencyRating: 0,
           environmentalEfficiencyRating: 0,
-          name: "Floor",
+          name: "floor",
         },
         {
-          description: "Description6",
           energyEfficiencyRating: 0,
           environmentalEfficiencyRating: 0,
-          name: "Window",
+          name: "windows",
         },
         {
-          description: "Description7",
           energyEfficiencyRating: 0,
           environmentalEfficiencyRating: 0,
-          name: "Main_Heating",
+          name: "main_heating",
         },
         {
-          description: "Description8",
           energyEfficiencyRating: 0,
           environmentalEfficiencyRating: 0,
-          name: "Main_Heating",
+          name: "main_heating",
         },
         {
-          description: "Description9",
           energyEfficiencyRating: 0,
           environmentalEfficiencyRating: 0,
-          name: "Main_Heating_Controls",
+          name: "main_heating_controls",
         },
         {
-          description: "Description10",
           energyEfficiencyRating: 0,
           environmentalEfficiencyRating: 0,
-          name: "Main_Heating_Controls",
+          name: "main_heating_controls",
         },
         {
-          description: "Description11",
           energyEfficiencyRating: 0,
           environmentalEfficiencyRating: 0,
-          name: "Hot_Water",
+          name: "secondary_heating",
         },
         {
-          description: "Description12",
           energyEfficiencyRating: 0,
           environmentalEfficiencyRating: 0,
-          name: "Lighting",
+          name: "hot_water",
         },
         {
-          description: "Description13",
           energyEfficiencyRating: 0,
           environmentalEfficiencyRating: 0,
-          name: "Secondary_Heating",
+          name: "lighting",
         },
       ],
-      relatedPartyDisclosureNumber: nil,
-      relatedPartyDisclosureText: "married to owner",
-    }.freeze
-  end
-
-  let(:second_valid_assessment_body) do
-    {
-      schemeAssessorId: "TEST000007",
-      dateOfAssessment: "2020-01-13",
-      dateRegistered: "2020-01-13",
-      totalFloorArea: 1_000.45,
-      typeOfAssessment: "RdSAP",
-      dwellingType: "Top floor flat",
-      currentEnergyEfficiencyRating: 75,
-      potentialEnergyEfficiencyRating: 80,
-      currentCarbonEmission: 2.4,
-      potentialCarbonEmission: 1.4,
-      optOut: true,
-      postcode: "SE1 7EZ",
-      dateOfExpiry: "2021-01-01",
-      addressLine1: "Flat 33",
-      addressLine2: "18 Palmtree Road",
-      addressLine3: "",
-      addressLine4: "",
-      town: "Brighton",
-      heatDemand: {
-        currentSpaceHeatingDemand: 222.23,
-        currentWaterHeatingDemand: 321.14,
-        impactOfLoftInsulation: 79,
-        impactOfCavityInsulation: 67,
-        impactOfSolidWallInsulation: 69,
-      },
-      recommendedImprovements: [
-        {
-          sequence: 0,
-          improvementCode: "1",
-          indicativeCost: "£200 - £4,000",
-          typicalSaving: 400.21,
-          improvementCategory: "string",
-          improvementType: "string",
-          energyPerformanceRatingImprovement: 80,
-          environmentalImpactRatingImprovement: 90,
-          greenDealCategoryCode: "string",
-        },
-        {
-          sequence: 1,
-          indicativeCost: "£200 - £4,000",
-          typicalSaving: 400.21,
-          improvementCategory: "string",
-          improvementType: "string",
-          improvementTitle: "Some improvement",
-          improvementDescription: "Some improvement description",
-          energyPerformanceRatingImprovement: 80,
-          environmentalImpactRatingImprovement: 90,
-          greenDealCategoryCode: "string",
-        },
-      ],
-      propertySummary: [],
-      relatedPartyDisclosureNumber: 1,
-      relatedPartyDisclosureText: nil,
-    }.freeze
-  end
-
-  def assessment_without(key)
-    assessment = valid_assessment_body.dup
-    assessment.delete(key)
-    assessment
+      recommendedImprovements:
+            [
+              {
+                energyPerformanceRatingImprovement: 50,
+                environmentalImpactRatingImprovement: 50,
+                greenDealCategoryCode: "1",
+                improvementCategory: "6",
+                improvementCode: "5",
+                improvementDescription: nil,
+                improvementTitle: nil,
+                improvementType: "Z3",
+                indicativeCost: "5",
+                sequence: 0,
+                typicalSaving: "0.0",
+              },
+              {
+                energyPerformanceRatingImprovement: 60,
+                environmentalImpactRatingImprovement: 64,
+                greenDealCategoryCode: "3",
+                improvementCategory: "2",
+                improvementCode: "1",
+                improvementDescription: nil,
+                improvementTitle: nil,
+                improvementType: "Z2",
+                indicativeCost: "2",
+                sequence: 1,
+                typicalSaving: "0.1",
+              },
+            ],
+      relatedPartyDisclosureNumber:
+            1,
+      relatedPartyDisclosureText:
+            nil,
+    }
   end
 
   context "security" do
@@ -296,114 +240,22 @@ describe "Acceptance::Assessment" do
 
     it "returns the assessment details" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "TEST123456", valid_assessor_request_body)
-      migrate_assessment("15650-651625-18267167", valid_assessment_body)
+      add_assessor(
+        scheme_id,
+        "SPEC000000",
+        fetch_assessor_stub.fetch_request_body(domesticSap: "ACTIVE"),
+      )
 
-      response = JSON.parse(fetch_assessment("15650-651625-18267167").body)
+      lodge_assessment assessment_body: valid_sap_xml,
+                       accepted_responses: [201],
+                       auth_data: { scheme_ids: [scheme_id] },
+                       schema_name: "SAP-Schema-17.1"
+
+      response = JSON.parse(fetch_assessment("0000-0000-0000-0000-0000").body)
 
       expected_response =
         JSON.parse(
-          {
-            assessor: {
-              schemeAssessorId: valid_assessment_body[:schemeAssessorId],
-              registeredBy: { schemeId: scheme_id, name: "test scheme" },
-              firstName: valid_assessor_request_body[:firstName],
-              middleNames: valid_assessor_request_body[:middleNames],
-              lastName: valid_assessor_request_body[:lastName],
-              dateOfBirth: valid_assessor_request_body[:dateOfBirth],
-              contactDetails: {
-                telephoneNumber:
-                  valid_assessor_request_body[:contactDetails][
-                    :telephoneNumber
-                  ],
-                email: valid_assessor_request_body[:contactDetails][:email],
-              },
-              searchResultsComparisonPostcode: "",
-              address: {},
-              companyDetails: {},
-              qualifications: {
-                domesticSap: "INACTIVE",
-                domesticRdSap: "ACTIVE",
-                nonDomesticSp3: "INACTIVE",
-                nonDomesticCc4: "INACTIVE",
-                nonDomesticDec: "INACTIVE",
-                nonDomesticNos3: "INACTIVE",
-                nonDomesticNos4: "STRUCKOFF",
-                nonDomesticNos5: "SUSPENDED",
-                gda: "INACTIVE",
-              },
-            },
-            dateOfAssessment: valid_assessment_body[:dateOfAssessment],
-            dateRegistered: valid_assessment_body[:dateRegistered],
-            totalFloorArea: valid_assessment_body[:totalFloorArea],
-            typeOfAssessment: valid_assessment_body[:typeOfAssessment],
-            dwellingType: valid_assessment_body[:dwellingType],
-            assessmentId: "15650-651625-18267167",
-            currentEnergyEfficiencyRating:
-              valid_assessment_body[:currentEnergyEfficiencyRating],
-            potentialEnergyEfficiencyRating:
-              valid_assessment_body[:potentialEnergyEfficiencyRating],
-            currentCarbonEmission:
-              valid_assessment_body[:currentCarbonEmission],
-            potentialCarbonEmission:
-              valid_assessment_body[:potentialCarbonEmission],
-            currentEnergyEfficiencyBand: "c",
-            potentialEnergyEfficiencyBand: "c",
-            optOut: false,
-            postcode: valid_assessment_body[:postcode],
-            dateOfExpiry: valid_assessment_body[:dateOfExpiry],
-            town: valid_assessment_body[:town],
-            addressId: nil,
-            addressLine1: valid_assessment_body[:addressLine1],
-            addressLine2: valid_assessment_body[:addressLine2],
-            addressLine3: valid_assessment_body[:addressLine4],
-            addressLine4: valid_assessment_body[:addressLine4],
-            heatDemand: {
-              currentSpaceHeatingDemand:
-                valid_assessment_body[:heatDemand][:currentSpaceHeatingDemand],
-              currentWaterHeatingDemand:
-                valid_assessment_body[:heatDemand][:currentWaterHeatingDemand],
-              impactOfLoftInsulation:
-                valid_assessment_body[:heatDemand][:impactOfLoftInsulation],
-              impactOfCavityInsulation:
-                valid_assessment_body[:heatDemand][:impactOfCavityInsulation],
-              impactOfSolidWallInsulation:
-                valid_assessment_body[:heatDemand][:impactOfSolidWallInsulation],
-            },
-            recommendedImprovements: [
-              {
-                sequence: 0,
-                improvementCode: "1",
-                indicativeCost: "£200 - £4,000",
-                typicalSaving: "400.21",
-                improvementCategory: "string",
-                improvementType: "string",
-                improvementTitle: nil,
-                improvementDescription: nil,
-                energyPerformanceRatingImprovement: 80,
-                environmentalImpactRatingImprovement: 90,
-                greenDealCategoryCode: "string",
-              },
-              {
-                sequence: 1,
-                improvementCode: nil,
-                indicativeCost: "£200 - £4,000",
-                typicalSaving: "400.21",
-                improvementCategory: "string",
-                improvementType: "string",
-                improvementTitle: "Some improvement",
-                improvementDescription: "Some improvement description",
-                energyPerformanceRatingImprovement: 80,
-                environmentalImpactRatingImprovement: 90,
-                greenDealCategoryCode: "string",
-              },
-            ],
-            propertySummary: valid_assessment_body[:propertySummary],
-            relatedPartyDisclosureNumber:
-              valid_assessment_body[:relatedPartyDisclosureNumber],
-            relatedPartyDisclosureText:
-              valid_assessment_body[:relatedPartyDisclosureText],
-          }.to_json,
+          expected_sap_response(scheme_id).to_json,
         )
       expect(response["data"]).to eq(expected_response)
     end
@@ -411,157 +263,60 @@ describe "Acceptance::Assessment" do
     context "when a domestic assessment has a green deal plan" do
       it "returns the assessment details with the green deal plan" do
         scheme_id = add_scheme_and_get_id
-        add_assessor(scheme_id, "TEST123456", valid_assessor_request_body)
-        migrate_assessment("15650-651625-18267167", valid_assessment_body)
-        green_deal_plan_stub.create_green_deal_plan("15650-651625-18267167")
+        add_assessor(
+          scheme_id,
+          "SPEC000000",
+          fetch_assessor_stub.fetch_request_body(domesticSap: "ACTIVE"),
+        )
 
-        response = JSON.parse(fetch_assessment("15650-651625-18267167").body)
+        lodge_assessment assessment_body: valid_sap_xml,
+                         accepted_responses: [201],
+                         auth_data: { scheme_ids: [scheme_id] },
+                         schema_name: "SAP-Schema-17.1"
 
-        expected_response =
-          JSON.parse(
+        green_deal_plan_stub.create_green_deal_plan("0000-0000-0000-0000-0000")
+
+        response = JSON.parse(fetch_assessment("0000-0000-0000-0000-0000").body)
+
+        green_deal_plan = {
+          greenDealPlanId: "ABC123456DEF",
+          assessmentId: "0000-0000-0000-0000-0000",
+          startDate: "30 January 2020",
+          endDate: "28 February 2030",
+          providerDetails: {
+            name: "The Bank",
+            telephone: "0800 0000000",
+            email: "lender@example.com",
+          },
+          interest: { rate: nil, fixed: true },
+          chargeUplift: { amount: nil, date: "28 February 2030" },
+          ccaRegulated: nil,
+          structureChanged: nil,
+          measuresRemoved: nil,
+          measures: [
             {
-              assessor: {
-                schemeAssessorId: valid_assessment_body[:schemeAssessorId],
-                registeredBy: { schemeId: scheme_id, name: "test scheme" },
-                firstName: valid_assessor_request_body[:firstName],
-                middleNames: valid_assessor_request_body[:middleNames],
-                lastName: valid_assessor_request_body[:lastName],
-                dateOfBirth: valid_assessor_request_body[:dateOfBirth],
-                contactDetails: {
-                  telephoneNumber:
-                    valid_assessor_request_body[:contactDetails][
-                      :telephoneNumber
-                    ],
-                  email: valid_assessor_request_body[:contactDetails][:email],
-                },
-                searchResultsComparisonPostcode: "",
-                address: {},
-                companyDetails: {},
-                qualifications: {
-                  domesticSap: "INACTIVE",
-                  domesticRdSap: "ACTIVE",
-                  nonDomesticSp3: "INACTIVE",
-                  nonDomesticCc4: "INACTIVE",
-                  nonDomesticDec: "INACTIVE",
-                  nonDomesticNos3: "INACTIVE",
-                  nonDomesticNos4: "STRUCKOFF",
-                  nonDomesticNos5: "SUSPENDED",
-                  gda: "INACTIVE",
-                },
-              },
-              dateOfAssessment: valid_assessment_body[:dateOfAssessment],
-              dateRegistered: valid_assessment_body[:dateRegistered],
-              totalFloorArea: valid_assessment_body[:totalFloorArea],
-              typeOfAssessment: valid_assessment_body[:typeOfAssessment],
-              dwellingType: valid_assessment_body[:dwellingType],
-              assessmentId: "15650-651625-18267167",
-              currentEnergyEfficiencyRating:
-                valid_assessment_body[:currentEnergyEfficiencyRating],
-              potentialEnergyEfficiencyRating:
-                valid_assessment_body[:potentialEnergyEfficiencyRating],
-              currentCarbonEmission:
-                valid_assessment_body[:currentCarbonEmission],
-              potentialCarbonEmission:
-                valid_assessment_body[:potentialCarbonEmission],
-              currentEnergyEfficiencyBand: "c",
-              potentialEnergyEfficiencyBand: "c",
-              optOut: false,
-              postcode: valid_assessment_body[:postcode],
-              dateOfExpiry: valid_assessment_body[:dateOfExpiry],
-              town: valid_assessment_body[:town],
-              addressId: nil,
-              addressLine1: valid_assessment_body[:addressLine1],
-              addressLine2: valid_assessment_body[:addressLine2],
-              addressLine3: valid_assessment_body[:addressLine4],
-              addressLine4: valid_assessment_body[:addressLine4],
-              heatDemand: {
-                currentSpaceHeatingDemand:
-                  valid_assessment_body[:heatDemand][
-                    :currentSpaceHeatingDemand
-                  ],
-                currentWaterHeatingDemand:
-                  valid_assessment_body[:heatDemand][
-                    :currentWaterHeatingDemand
-                  ],
-                impactOfLoftInsulation:
-                  valid_assessment_body[:heatDemand][:impactOfLoftInsulation],
-                impactOfCavityInsulation:
-                  valid_assessment_body[:heatDemand][:impactOfCavityInsulation],
-                impactOfSolidWallInsulation:
-                  valid_assessment_body[:heatDemand][
-                    :impactOfSolidWallInsulation
-                  ],
-              },
-              recommendedImprovements: [
-                {
-                  sequence: 0,
-                  improvementCode: "1",
-                  indicativeCost: "£200 - £4,000",
-                  typicalSaving: "400.21",
-                  improvementCategory: "string",
-                  improvementType: "string",
-                  improvementTitle: nil,
-                  improvementDescription: nil,
-                  energyPerformanceRatingImprovement: 80,
-                  environmentalImpactRatingImprovement: 90,
-                  greenDealCategoryCode: "string",
-                },
-                {
-                  sequence: 1,
-                  improvementCode: nil,
-                  indicativeCost: "£200 - £4,000",
-                  typicalSaving: "400.21",
-                  improvementCategory: "string",
-                  improvementType: "string",
-                  improvementTitle: "Some improvement",
-                  improvementDescription: "Some improvement description",
-                  energyPerformanceRatingImprovement: 80,
-                  environmentalImpactRatingImprovement: 90,
-                  greenDealCategoryCode: "string",
-                },
-              ],
-              propertySummary: valid_assessment_body[:propertySummary],
-              relatedPartyDisclosureNumber:
-                valid_assessment_body[:relatedPartyDisclosureNumber],
-              relatedPartyDisclosureText:
-                valid_assessment_body[:relatedPartyDisclosureText],
-              greenDealPlan: {
-                greenDealPlanId: "ABC123456DEF",
-                assessmentId: "15650-651625-18267167",
-                startDate: "30 January 2020",
-                endDate: "28 February 2030",
-                providerDetails: {
-                  name: "The Bank",
-                  telephone: "0800 0000000",
-                  email: "lender@example.com",
-                },
-                interest: { rate: nil, fixed: true },
-                chargeUplift: { amount: nil, date: "28 February 2030" },
-                ccaRegulated: nil,
-                structureChanged: nil,
-                measuresRemoved: nil,
-                measures: [
-                  {
-                    measureType: "Loft insulation",
-                    product: "WarmHome lagging stuff (TM)",
-                    repaidDate: "2025-03-29",
-                  },
-                ],
-                charges: [
-                  {
-                    startDate: "2020-03-29",
-                    endDate: "2030-03-29",
-                    dailyCharge: "0.34",
-                  },
-                ],
-                savings: [
-                  {
-                    fuelCode: "LPG", fuelSaving: 0, standingChargeFraction: -0.3
-                  },
-                ],
-              },
-            }.to_json,
-          )
+              measureType: "Loft insulation",
+              product: "WarmHome lagging stuff (TM)",
+              repaidDate: "2025-03-29",
+            },
+          ],
+          charges: [
+            {
+              startDate: "2020-03-29",
+              endDate: "2030-03-29",
+              dailyCharge: "0.34",
+            },
+          ],
+          savings: [
+            {
+              fuelCode: "LPG", fuelSaving: 0, standingChargeFraction: -0.3
+            },
+          ],
+        }
+
+        sap_response = expected_sap_response(scheme_id)
+
+        expected_response = JSON.parse(sap_response.merge(greenDealPlan: green_deal_plan).to_json)
         expect(response["data"]).to eq(expected_response)
       end
     end
@@ -588,137 +343,6 @@ describe "Acceptance::Assessment" do
         expect(
           "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + response.body,
         ).to eq(sanitised_sap_xml)
-      end
-    end
-
-    context "when updating an existing assessment" do
-      it "returns the assessment details" do
-        scheme_id = add_scheme_and_get_id
-        add_assessor(scheme_id, "TEST123456", valid_assessor_request_body)
-        add_assessor(scheme_id, "TEST000007", valid_assessor_request_body)
-        migrate_assessment("15650-651625-18267167", valid_assessment_body)
-        migrate_assessment(
-          "15650-651625-18267167",
-          second_valid_assessment_body,
-        )
-
-        response = JSON.parse(fetch_assessment("15650-651625-18267167").body)
-
-        expected_response =
-          JSON.parse(
-            {
-              assessor: {
-                schemeAssessorId:
-                  second_valid_assessment_body[:schemeAssessorId],
-                registeredBy: { schemeId: scheme_id, name: "test scheme" },
-                firstName: valid_assessor_request_body[:firstName],
-                middleNames: valid_assessor_request_body[:middleNames],
-                lastName: valid_assessor_request_body[:lastName],
-                dateOfBirth: valid_assessor_request_body[:dateOfBirth],
-                contactDetails: {
-                  telephoneNumber:
-                    valid_assessor_request_body[:contactDetails][
-                      :telephoneNumber
-                    ],
-                  email: valid_assessor_request_body[:contactDetails][:email],
-                },
-                searchResultsComparisonPostcode: "",
-                address: {},
-                companyDetails: {},
-                qualifications: {
-                  domesticSap: "INACTIVE",
-                  domesticRdSap: "ACTIVE",
-                  nonDomesticSp3: "INACTIVE",
-                  nonDomesticCc4: "INACTIVE",
-                  nonDomesticDec: "INACTIVE",
-                  nonDomesticNos3: "INACTIVE",
-                  nonDomesticNos4: "STRUCKOFF",
-                  nonDomesticNos5: "SUSPENDED",
-                  gda: "INACTIVE",
-                },
-              },
-              dateOfAssessment: second_valid_assessment_body[:dateOfAssessment],
-              dateRegistered: second_valid_assessment_body[:dateRegistered],
-              totalFloorArea: second_valid_assessment_body[:totalFloorArea],
-              typeOfAssessment: second_valid_assessment_body[:typeOfAssessment],
-              dwellingType: second_valid_assessment_body[:dwellingType],
-              assessmentId: "15650-651625-18267167",
-              currentEnergyEfficiencyRating:
-                second_valid_assessment_body[:currentEnergyEfficiencyRating],
-              potentialEnergyEfficiencyRating:
-                second_valid_assessment_body[:potentialEnergyEfficiencyRating],
-              currentCarbonEmission:
-                second_valid_assessment_body[:currentCarbonEmission],
-              potentialCarbonEmission:
-                second_valid_assessment_body[:potentialCarbonEmission],
-              currentEnergyEfficiencyBand: "c",
-              potentialEnergyEfficiencyBand: "c",
-              optOut: true,
-              postcode: second_valid_assessment_body[:postcode],
-              dateOfExpiry: second_valid_assessment_body[:dateOfExpiry],
-              town: second_valid_assessment_body[:town],
-              addressId: nil,
-              addressLine1: second_valid_assessment_body[:addressLine1],
-              addressLine2: second_valid_assessment_body[:addressLine2],
-              addressLine3: second_valid_assessment_body[:addressLine4],
-              addressLine4: second_valid_assessment_body[:addressLine4],
-              heatDemand: {
-                currentSpaceHeatingDemand:
-                  second_valid_assessment_body[:heatDemand][
-                    :currentSpaceHeatingDemand
-                  ],
-                currentWaterHeatingDemand:
-                  second_valid_assessment_body[:heatDemand][
-                    :currentWaterHeatingDemand
-                  ],
-                impactOfLoftInsulation:
-                  second_valid_assessment_body[:heatDemand][
-                    :impactOfLoftInsulation
-                  ],
-                impactOfCavityInsulation:
-                  second_valid_assessment_body[:heatDemand][
-                    :impactOfCavityInsulation
-                  ],
-                impactOfSolidWallInsulation:
-                  second_valid_assessment_body[:heatDemand][
-                    :impactOfSolidWallInsulation
-                  ],
-              },
-              recommendedImprovements: [
-                {
-                  sequence: 0,
-                  improvementCode: "1",
-                  indicativeCost: "£200 - £4,000",
-                  typicalSaving: "400.21",
-                  improvementCategory: "string",
-                  improvementType: "string",
-                  improvementTitle: nil,
-                  improvementDescription: nil,
-                  energyPerformanceRatingImprovement: 80,
-                  environmentalImpactRatingImprovement: 90,
-                  greenDealCategoryCode: "string",
-                },
-                {
-                  sequence: 1,
-                  improvementCode: nil,
-                  indicativeCost: "£200 - £4,000",
-                  typicalSaving: "400.21",
-                  improvementCategory: "string",
-                  improvementType: "string",
-                  improvementTitle: "Some improvement",
-                  improvementDescription: "Some improvement description",
-                  energyPerformanceRatingImprovement: 80,
-                  environmentalImpactRatingImprovement: 90,
-                  greenDealCategoryCode: "string",
-                },
-              ],
-              propertySummary: [],
-              relatedPartyDisclosureNumber:
-                second_valid_assessment_body[:relatedPartyDisclosureNumber],
-              relatedPartyDisclosureText: nil,
-            }.to_json,
-          )
-        expect(response["data"]).to eq(expected_response)
       end
     end
   end
