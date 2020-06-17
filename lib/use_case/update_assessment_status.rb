@@ -14,6 +14,14 @@ module UseCase
           Time.now.to_s,
         )
       end
+
+      if status == "NOT_FOR_ISSUE"
+        @assessments_gateway.update_field(
+          assessment_id,
+          "not_for_issue_at",
+          Time.now.to_s,
+        )
+      end
     end
   end
 end
