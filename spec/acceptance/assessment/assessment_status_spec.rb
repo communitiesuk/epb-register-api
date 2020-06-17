@@ -58,7 +58,13 @@ describe "Acceptance::AssessmentStatus" do
         auth_data: { scheme_ids: [scheme_id] },
       )
 
-      assessment = fetch_assessment("0000-0000-0000-0000-0000")
+      assessment =
+        JSON.parse(
+          fetch_assessment("0000-0000-0000-0000-0000").body,
+          symbolize_names: true,
+        )
+
+      expect(assessment[:data][:status]).to eq("CANCELLED")
     end
   end
 

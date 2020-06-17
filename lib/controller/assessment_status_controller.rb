@@ -15,6 +15,11 @@ module Controller
       assessment_id = params[:assessment_id]
       assessment_body = request_body(POST_SCHEMA)
 
+      @container.get_object(:update_assessments_status_use_case).execute(
+        assessment_id,
+        assessment_body[:status],
+      )
+
       json_api_response(code: 200, data: { "status": assessment_body[:status] })
     end
   end
