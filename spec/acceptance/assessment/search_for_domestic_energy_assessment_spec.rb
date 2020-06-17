@@ -60,6 +60,146 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
     }.freeze
   end
 
+  let(:expected_response) do
+    JSON.parse(
+      {
+        schemeAssessorId: "SPEC000000",
+        assessmentId: "0000-0000-0000-0000-0000",
+        dateOfAssessment: "2006-05-04",
+        dateRegistered: "2006-05-04",
+        totalFloorArea: 0.0,
+        typeOfAssessment: "RdSAP",
+        dwellingType: "Dwelling-Type0",
+        currentEnergyEfficiencyRating: 50,
+        potentialEnergyEfficiencyRating: 50,
+        currentCarbonEmission: 2.4,
+        potentialCarbonEmission: 1.4,
+        currentEnergyEfficiencyBand: "e",
+        potentialEnergyEfficiencyBand: "e",
+        optOut: false,
+        postcode: "A0 0AA",
+        dateOfExpiry: "2016-05-04",
+        town: "Post-Town1",
+        addressId: nil,
+        addressLine1: "1 Some Street",
+        addressLine2: "",
+        addressLine3: "",
+        addressLine4: "",
+        heatDemand: {
+          currentSpaceHeatingDemand: 30.0,
+          currentWaterHeatingDemand: 60.0,
+          impactOfLoftInsulation: -8,
+          impactOfCavityInsulation: -12,
+          impactOfSolidWallInsulation: -16,
+        },
+        propertySummary: [
+          {
+            "description" => "Description0",
+            "energyEfficiencyRating" => 0,
+            "environmentalEfficiencyRating" => 0,
+            "name" => "wall",
+          },
+          {
+            "description" => "Description1",
+            "energyEfficiencyRating" => 0,
+            "environmentalEfficiencyRating" => 0,
+            "name" => "wall",
+          },
+          {
+            "description" => "Description2",
+            "energyEfficiencyRating" => 0,
+            "environmentalEfficiencyRating" => 0,
+            "name" => "roof",
+          },
+          {
+            "description" => "Description3",
+            "energyEfficiencyRating" => 0,
+            "environmentalEfficiencyRating" => 0,
+            "name" => "roof",
+          },
+          {
+            "description" => "Description4",
+            "energyEfficiencyRating" => 0,
+            "environmentalEfficiencyRating" => 0,
+            "name" => "floor",
+          },
+          {
+            "description" => "Description5",
+            "energyEfficiencyRating" => 0,
+            "environmentalEfficiencyRating" => 0,
+            "name" => "floor",
+          },
+          {
+            "description" => "Description6",
+            "energyEfficiencyRating" => 0,
+            "environmentalEfficiencyRating" => 0,
+            "name" => "window",
+          },
+          {
+            "description" => "Description7",
+            "energyEfficiencyRating" => 0,
+            "environmentalEfficiencyRating" => 0,
+            "name" => "main_heating",
+          },
+          {
+            "description" => "Description8",
+            "energyEfficiencyRating" => 0,
+            "environmentalEfficiencyRating" => 0,
+            "name" => "main_heating",
+          },
+          {
+            "description" => "Description9",
+            "energyEfficiencyRating" => 0,
+            "environmentalEfficiencyRating" => 0,
+            "name" => "main_heating_controls",
+          },
+          {
+            "description" => "Description10",
+            "energyEfficiencyRating" => 0,
+            "environmentalEfficiencyRating" => 0,
+            "name" => "main_heating_controls",
+          },
+          {
+            "description" => "Description11",
+            "energyEfficiencyRating" => 0,
+            "environmentalEfficiencyRating" => 0,
+            "name" => "hot_water",
+          },
+          {
+            "description" => "Description12",
+            "energyEfficiencyRating" => 0,
+            "environmentalEfficiencyRating" => 0,
+            "name" => "lighting",
+          },
+          {
+            "description" => "Description13",
+            "energyEfficiencyRating" => 0,
+            "environmentalEfficiencyRating" => 0,
+            "name" => "secondary_heating",
+          },
+        ],
+        relatedPartyDisclosureNumber: nil,
+        relatedPartyDisclosureText: "Related-Party-Disclosure-Text0",
+      }.to_json,
+    )
+  end
+
+  let(:valid_assessor_request_body_dom) do
+    AssessorStub.new.fetch_request_body(domesticRdSap: "ACTIVE")
+  end
+
+  let(:valid_assessor_request_body_non_dom) do
+    AssessorStub.new.fetch_request_body(nonDomesticNos3: "ACTIVE")
+  end
+
+  let(:valid_rdsap_xml) do
+    File.read File.join Dir.pwd, "spec/fixtures/samples/rdsap.xml"
+  end
+
+  let(:valid_cepc_rr_xml) do
+    File.read File.join Dir.pwd, "spec/fixtures/samples/cepc+rr.xml"
+  end
+
   context "Security" do
     it "rejects a request without authentication" do
       domestic_assessments_search_by_assessment_id("123", [401], false)
@@ -79,13 +219,16 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
   context "when looking for non-domestic EPCs" do
     it "doesn't show up when searched for by postcode" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "TEST123456", valid_assessor_request_body)
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body_non_dom)
 
-      commercial_assessment = valid_assessment_body.dup
-      commercial_assessment[:typeOfAssessment] = "CEPC"
-      migrate_assessment("123-987", commercial_assessment)
+      lodge_assessment(
+        assessment_body: valid_cepc_rr_xml,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] },
+        schema_name: "CEPC-7.1",
+      )
 
-      response = domestic_assessments_search_by_postcode("SE17EZ")
+      response = domestic_assessments_search_by_postcode("A0 0AA")
       response_json = JSON.parse(response.body)
 
       expect(response_json["data"]["assessments"][0]).to eq(nil)
@@ -123,49 +266,16 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
 
     it "has the over all hash of the shape we expect" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "TEST123456", valid_assessor_request_body)
-      migrate_assessment("123-987", valid_assessment_body)
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body_dom)
 
-      response = domestic_assessments_search_by_postcode("SE17EZ")
+      lodge_assessment(
+        assessment_body: valid_rdsap_xml,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] },
+      )
+
+      response = domestic_assessments_search_by_postcode("A0 0AA")
       response_json = JSON.parse(response.body)
-
-      expected_response =
-        JSON.parse(
-          {
-            schemeAssessorId: "TEST123456",
-            assessmentId: "123-987",
-            dateOfAssessment: "2020-01-13",
-            dateRegistered: "2020-01-13",
-            totalFloorArea: 1_000.0,
-            typeOfAssessment: "RdSAP",
-            dwellingType: "Top floor flat",
-            currentEnergyEfficiencyRating: 75,
-            potentialEnergyEfficiencyRating: 80,
-            currentCarbonEmission: 2.4,
-            potentialCarbonEmission: 1.4,
-            currentEnergyEfficiencyBand: "c",
-            potentialEnergyEfficiencyBand: "c",
-            optOut: false,
-            postcode: "SE1 7EZ",
-            dateOfExpiry: "2021-01-01",
-            town: "Brighton",
-            addressId: nil,
-            addressLine1: "Flat 33",
-            addressLine2: "18 Palmtree Road",
-            addressLine3: "",
-            addressLine4: "",
-            heatDemand: {
-              currentSpaceHeatingDemand: 222.0,
-              currentWaterHeatingDemand: 321.0,
-              impactOfLoftInsulation: 79,
-              impactOfCavityInsulation: 67,
-              impactOfSolidWallInsulation: 69,
-            },
-            propertySummary: [],
-            relatedPartyDisclosureNumber: nil,
-            relatedPartyDisclosureText: "string",
-          }.to_json,
-        )
 
       expect(response_json["data"]["assessments"][0]).to eq(expected_response)
     end
@@ -208,49 +318,16 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
 
     it "has the over all hash of the shape we expect" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "TEST123456", valid_assessor_request_body)
-      migrate_assessment("123-987", valid_assessment_body)
-      response = domestic_assessments_search_by_assessment_id("123-987")
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body_dom)
 
+      lodge_assessment(
+        assessment_body: valid_rdsap_xml,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] },
+      )
+
+      response = domestic_assessments_search_by_assessment_id("0000-0000-0000-0000-0000")
       response_json = JSON.parse(response.body)
-
-      expected_response =
-        JSON.parse(
-          {
-            schemeAssessorId: "TEST123456",
-            assessmentId: "123-987",
-            dateOfAssessment: "2020-01-13",
-            dateRegistered: "2020-01-13",
-            totalFloorArea: 1_000.0,
-            typeOfAssessment: "RdSAP",
-            dwellingType: "Top floor flat",
-            currentEnergyEfficiencyRating: 75,
-            potentialEnergyEfficiencyRating: 80,
-            currentCarbonEmission: 2.4,
-            potentialCarbonEmission: 1.4,
-            optOut: false,
-            currentEnergyEfficiencyBand: "c",
-            potentialEnergyEfficiencyBand: "c",
-            postcode: "SE1 7EZ",
-            dateOfExpiry: "2021-01-01",
-            town: "Brighton",
-            addressId: nil,
-            addressLine1: "Flat 33",
-            addressLine2: "18 Palmtree Road",
-            addressLine3: "",
-            addressLine4: "",
-            heatDemand: {
-              currentSpaceHeatingDemand: 222.0,
-              currentWaterHeatingDemand: 321.0,
-              impactOfLoftInsulation: 79,
-              impactOfCavityInsulation: 67,
-              impactOfSolidWallInsulation: 69,
-            },
-            propertySummary: [],
-            relatedPartyDisclosureNumber: nil,
-            relatedPartyDisclosureText: "string",
-          }.to_json,
-        )
 
       expect(response_json["data"]["assessments"][0]).to eq(expected_response)
     end
@@ -352,54 +429,21 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
 
       it "has the over all hash of the shape we expect" do
         scheme_id = add_scheme_and_get_id
-        add_assessor(scheme_id, "TEST123456", valid_assessor_request_body)
+        add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body_dom)
 
-        migrate_assessment("123-987", valid_assessment_body)
+        lodge_assessment(
+          assessment_body: valid_rdsap_xml,
+          accepted_responses: [201],
+          auth_data: { scheme_ids: [scheme_id] },
+        )
+
         response =
           domestic_assessments_search_by_street_name_and_town(
-            "Palmtree Road",
-            "Brighton",
+            "1 Some Street",
+            "Post-Town1",
           )
 
         response_json = JSON.parse(response.body)
-
-        expected_response =
-          JSON.parse(
-            {
-              schemeAssessorId: "TEST123456",
-              assessmentId: "123-987",
-              dateOfAssessment: "2020-01-13",
-              dateRegistered: "2020-01-13",
-              totalFloorArea: 1_000.0,
-              typeOfAssessment: "RdSAP",
-              dwellingType: "Top floor flat",
-              currentEnergyEfficiencyRating: 75,
-              potentialEnergyEfficiencyRating: 80,
-              currentCarbonEmission: 2.4,
-              potentialCarbonEmission: 1.4,
-              currentEnergyEfficiencyBand: "c",
-              potentialEnergyEfficiencyBand: "c",
-              optOut: false,
-              postcode: "SE1 7EZ",
-              dateOfExpiry: "2021-01-01",
-              town: "Brighton",
-              addressId: nil,
-              addressLine1: "Flat 33",
-              addressLine2: "18 Palmtree Road",
-              addressLine3: "",
-              addressLine4: "",
-              heatDemand: {
-                currentSpaceHeatingDemand: 222.0,
-                currentWaterHeatingDemand: 321.0,
-                impactOfLoftInsulation: 79,
-                impactOfCavityInsulation: 67,
-                impactOfSolidWallInsulation: 69,
-              },
-              propertySummary: [],
-              relatedPartyDisclosureNumber: nil,
-              relatedPartyDisclosureText: "string",
-            }.to_json,
-          )
 
         expect(response_json["data"]["assessments"][0]).to eq(expected_response)
       end

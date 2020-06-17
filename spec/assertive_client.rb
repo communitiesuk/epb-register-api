@@ -185,6 +185,24 @@ def update_assessment_status(
   )
 end
 
+def migrate_assessment(
+  assessment_id,
+  assessment_body,
+  accepted_responses = [200],
+  authenticate = true,
+  auth_data = nil,
+  scopes = %w[migrate:assessment]
+)
+  assertive_put(
+    "api/assessments/#{assessment_id}",
+    assessment_body,
+    accepted_responses,
+    authenticate,
+    auth_data,
+    scopes,
+  )
+end
+
 def add_scheme_and_get_id(
   name = "test scheme", accepted_responses = [201], authenticate = true
 )
@@ -211,24 +229,6 @@ def fetch_assessment(
 
   assertive_get(
     "api/assessments/#{assessment_id}",
-    accepted_responses,
-    authenticate,
-    auth_data,
-    scopes,
-  )
-end
-
-def migrate_assessment(
-  assessment_id,
-  assessment_body,
-  accepted_responses = [200],
-  authenticate = true,
-  auth_data = nil,
-  scopes = %w[migrate:assessment]
-)
-  assertive_put(
-    "api/assessments/#{assessment_id}",
-    assessment_body,
     accepted_responses,
     authenticate,
     auth_data,

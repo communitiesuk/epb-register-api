@@ -278,10 +278,19 @@ describe "Acceptance::Assessment" do
   context "when a domestic assessment exists" do
     it "returns a 200" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "TEST123456", valid_assessor_request_body)
-      migrate_assessment("15650-651625-18267167", valid_assessment_body, [200])
+      add_assessor(
+        scheme_id,
+        "SPEC000000",
+        fetch_assessor_stub.fetch_request_body(domesticSap: "ACTIVE"),
+      )
 
-      response = fetch_assessment("15650-651625-18267167")
+      lodge_assessment assessment_body: valid_sap_xml,
+                       accepted_responses: [201],
+                       auth_data: { scheme_ids: [scheme_id] },
+                       schema_name: "SAP-Schema-17.1",
+                       headers: { "Accept": "application/xml" }
+
+      response = fetch_assessment("0000-0000-0000-0000-0000")
       expect(response.status).to eq(200)
     end
 
