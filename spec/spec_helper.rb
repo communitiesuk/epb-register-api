@@ -71,7 +71,9 @@ end
 
 def opt_out_assessment(assessment_id)
   ActiveRecord::Base.connection.execute(
-    "UPDATE assessments SET opt_out = true WHERE assessment_id = '#{assessment_id}'",
+    "UPDATE assessments SET opt_out = true WHERE assessment_id = '#{
+      assessment_id
+    }'",
   )
 end
 

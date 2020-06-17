@@ -4,13 +4,15 @@ describe "Integration::EndpointSecurity" do
   methods_with_no_body = %w[head options]
   controllers_to_ignore = { BaseController: {} }
 
-  controllers_to_test = Controller.constants.select do |constant|
-    Controller.const_get(constant).is_a? Class
-  end
+  controllers_to_test =
+    Controller.constants.select do |constant|
+      Controller.const_get(constant).is_a? Class
+    end
 
-  controllers_to_test = controllers_to_test.reject do |constant|
-    controllers_to_ignore.include? constant.to_s
-  end
+  controllers_to_test =
+    controllers_to_test.reject do |constant|
+      controllers_to_ignore.include? constant.to_s
+    end
 
   routes_to_test = []
 
