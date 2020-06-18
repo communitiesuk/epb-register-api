@@ -2,7 +2,6 @@ module Domain
   class GreenDealPlan
     def initialize(
       green_deal_plan_id: nil,
-      assessment_id: nil,
       start_date: nil,
       end_date: nil,
       provider_name: nil,
@@ -20,7 +19,6 @@ module Domain
       savings: []
     )
       @green_deal_plan_id = green_deal_plan_id
-      @assessment_id = assessment_id
       @start_date = start_date
       @end_date = end_date
       @provider_name = provider_name
@@ -41,7 +39,6 @@ module Domain
     def to_hash
       {
         green_deal_plan_id: @green_deal_plan_id,
-        assessment_id: @assessment_id,
         start_date: @start_date.nil? ? nil : @start_date.strftime("%d %B %Y"),
         end_date: @end_date.nil? ? nil : @end_date.strftime("%d %B %Y"),
         provider_details: {

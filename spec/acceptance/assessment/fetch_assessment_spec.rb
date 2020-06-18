@@ -260,10 +260,8 @@ describe "Acceptance::Assessment" do
         green_deal_plan_stub.create_green_deal_plan("0000-0000-0000-0000-0000")
 
         response = JSON.parse(fetch_assessment("0000-0000-0000-0000-0000").body)
-
         green_deal_plan = {
           greenDealPlanId: "ABC123456DEF",
-          assessmentId: "0000-0000-0000-0000-0000",
           startDate: "30 January 2020",
           endDate: "28 February 2030",
           providerDetails: {

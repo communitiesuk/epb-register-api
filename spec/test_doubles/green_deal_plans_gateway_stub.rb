@@ -12,8 +12,22 @@ class GreenDealPlansGatewayStub
   end
 
   def create_green_deal_plan(assessment_id)
+    sql =
+      "INSERT INTO
+              green_deal_assessments
+              (
+                green_deal_plan_id,
+                assessment_id
+              )
+              VALUES (
+                  'ABC123456DEF',
+                  '#{
+        assessment_id
+      }'
+              )"
+    ActiveRecord::Base.connection.execute(sql)
+
     GreenDealPlans.create(
-      assessment_id: assessment_id,
       green_deal_plan_id: "ABC123456DEF",
       start_date: DateTime.new(2_020, 1, 30),
       end_date: DateTime.new(2_030, 2, 28),
