@@ -153,7 +153,12 @@ module Domain
           get_energy_rating_band(@current_energy_efficiency_rating),
         potential_energy_efficiency_band:
           get_energy_rating_band(@potential_energy_efficiency_rating),
-        recommended_improvements: @recommended_improvements.map(&:to_hash),
+        recommended_improvements:
+          if @recommended_improvements
+            @recommended_improvements.map(&:to_hash)
+          else
+            []
+          end,
         property_summary: @property_summary,
         related_party_disclosure_number: @related_party_disclosure_number,
         related_party_disclosure_text: @related_party_disclosure_text,
