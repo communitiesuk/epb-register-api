@@ -217,6 +217,25 @@ def add_scheme_then_assessor(body, accepted_responses = [200, 201])
   response
 end
 
+def fetch_renewable_heat_incentive(
+  assessment_id,
+  accepted_responses = [200],
+  authenticate = true,
+  auth_data = nil,
+  scopes = %w[greendeal:assessment:fetch],
+  headers: {}
+)
+  headers.each { |key, value| header key.to_s, value.to_s }
+
+  assertive_get(
+    "api/greendeal/rhi/assessments/#{assessment_id}/latest",
+    accepted_responses,
+    authenticate,
+    auth_data,
+    scopes,
+  )
+end
+
 def fetch_assessment(
   assessment_id,
   accepted_responses = [200],

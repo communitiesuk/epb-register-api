@@ -8,6 +8,9 @@ class Container
 
     green_deal_plans_gateway = Gateway::GreenDealPlansGateway.new
 
+    renewable_heat_incentive_gateway =
+      Gateway::RenewableHeatIncentiveGateway.new
+
     address_search_gateway = Gateway::AddressSearchGateway.new
 
     assessments_gateway = Gateway::AssessmentsGateway.new
@@ -33,6 +36,9 @@ class Container
         green_deal_plans_gateway,
         assessments_xml_gateway,
       )
+
+    fetch_renewable_heat_incentive_use_case =
+      UseCase::FetchRenewableHeatIncentive.new(renewable_heat_incentive_gateway)
 
     find_assessors_by_postcode_use_case =
       UseCase::FindAssessorsByPostcode.new(
@@ -92,6 +98,8 @@ class Container
       fetch_assessor_use_case: fetch_assessor_use_case,
       migrate_assessment_use_case: migrate_assessment_use_case,
       fetch_assessment_use_case: fetch_assessment_use_case,
+      fetch_renewable_heat_incentive_use_case:
+        fetch_renewable_heat_incentive_use_case,
       find_assessors_by_postcode_use_case: find_assessors_by_postcode_use_case,
       find_assessors_by_name_use_case: find_assessors_by_name_use_case,
       fetch_assessor_list_use_case: fetch_assessor_list_use_case,
