@@ -51,6 +51,8 @@ describe "Acceptance::AssessmentStatus" do
         auth_data: { scheme_ids: [scheme_id] },
       )
 
+      fetch_assessment("0000-0000-0000-0000-0000", [200])
+
       update_assessment_status(
         assessment_id: "0000-0000-0000-0000-0000",
         assessment_status_body: { "status": "CANCELLED" },
@@ -58,13 +60,7 @@ describe "Acceptance::AssessmentStatus" do
         auth_data: { scheme_ids: [scheme_id] },
       )
 
-      assessment =
-        JSON.parse(
-          fetch_assessment("0000-0000-0000-0000-0000").body,
-          symbolize_names: true,
-        )
-
-      expect(assessment[:data][:status]).to eq("CANCELLED")
+      fetch_assessment("0000-0000-0000-0000-0000", [404])
     end
   end
 
@@ -112,6 +108,8 @@ describe "Acceptance::AssessmentStatus" do
         auth_data: { scheme_ids: [scheme_id] },
       )
 
+      fetch_assessment("0000-0000-0000-0000-0000", [200])
+
       update_assessment_status(
         assessment_id: "0000-0000-0000-0000-0000",
         assessment_status_body: { "status": "NOT_FOR_ISSUE" },
@@ -119,13 +117,7 @@ describe "Acceptance::AssessmentStatus" do
         auth_data: { scheme_ids: [scheme_id] },
       )
 
-      assessment =
-        JSON.parse(
-          fetch_assessment("0000-0000-0000-0000-0000").body,
-          symbolize_names: true,
-        )
-
-      expect(assessment[:data][:status]).to eq("NOT_FOR_ISSUE")
+      fetch_assessment("0000-0000-0000-0000-0000", [404])
     end
   end
 

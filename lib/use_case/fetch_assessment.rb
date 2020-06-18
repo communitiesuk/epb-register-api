@@ -15,7 +15,8 @@ module UseCase
     end
 
     def execute(assessment_id, xml = false)
-      assessment = @assessments_gateway.fetch(assessment_id)
+      assessments = @assessments_gateway.search_by_assessment_id(assessment_id)
+      assessment = assessments.first
 
       raise NotFoundException unless assessment
 

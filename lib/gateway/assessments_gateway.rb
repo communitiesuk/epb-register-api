@@ -28,23 +28,6 @@ module Gateway
       )
     end
 
-    def fetch(assessment_id)
-      energy_assessment_record =
-        Assessment.find_by(assessment_id: assessment_id)
-
-      improvement_records =
-        DomesticEpcEnergyImprovement.where(assessment_id: assessment_id)
-      improvements =
-        improvement_records.map { |i| row_to_energy_improvement(i).to_hash }
-
-      return unless energy_assessment_record
-
-      rec = energy_assessment_record.attributes.symbolize_keys!
-      rec[:recommended_improvements] = improvements
-
-      Domain::Assessment.new(rec)
-    end
-
     def insert_or_update(assessment)
       unless valid_energy_rating(
         assessment.get(:current_energy_efficiency_rating),
@@ -92,7 +75,9 @@ module Gateway
       result
     end
 
-    def search_by_assessment_id(assessment_id)
+    def search_by_assessment_id(
+      assessment_id, restrictive = true, assessment_type = []
+    )
       sql =
         "SELECT
           scheme_assessor_id, assessment_id, date_of_assessment, date_registered, dwelling_type,
@@ -102,17 +87,38 @@ module Gateway
           current_space_heating_demand, current_water_heating_demand, impact_of_loft_insulation,
           impact_of_cavity_insulation, impact_of_solid_wall_insulation,
           current_carbon_emission, potential_carbon_emission, property_summary, related_party_disclosure_number,
-           related_party_disclosure_text, cancelled_at, not_for_issue_at
+           related_party_disclosure_text, cancelled_at, not_for_issue_at, address_id
           FROM assessments
         WHERE assessment_id = '#{
           ActiveRecord::Base.sanitize_sql(assessment_id)
-        }' AND type_of_assessment IN('RdSAP', 'SAP')"
+        }'"
+
+      if restrictive
+        sql += " AND cancelled_at IS NULL"
+        sql += " AND not_for_issue_at IS NULL"
+      end
+
+      unless assessment_type.empty?
+        ins = []
+        assessment_type.each do |type|
+          ins.push("'" + ActiveRecord::Base.sanitize_sql(type) + "'")
+        end
+        sql += " AND type_of_assessment IN(" + ins.join(", ") + ")"
+      end
 
       response = Assessment.connection.execute(sql)
 
       result = []
       response.each do |row|
         row.symbolize_keys!
+
+        improvement_records =
+          DomesticEpcEnergyImprovement.where(assessment_id: assessment_id)
+        improvements =
+          improvement_records.map { |i| row_to_energy_improvement(i).to_hash }
+
+        row[:recommended_improvements] = improvements
+
         row[:property_summary] = JSON.parse(row[:property_summary])
         assessment_domain = Domain::Assessment.new(row)
 

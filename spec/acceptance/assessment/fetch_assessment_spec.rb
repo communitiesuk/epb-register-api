@@ -243,6 +243,31 @@ describe "Acceptance::Assessment" do
       expect(response["data"]).to eq(expected_response)
     end
 
+    it "doesn't show up when it's cancelled" do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(
+        scheme_id,
+        "SPEC000000",
+        fetch_assessor_stub.fetch_request_body(domesticSap: "ACTIVE"),
+      )
+
+      lodge_assessment assessment_body: valid_sap_xml,
+                       accepted_responses: [201],
+                       auth_data: { scheme_ids: [scheme_id] },
+                       schema_name: "SAP-Schema-17.1"
+
+      fetch_assessment("0000-0000-0000-0000-0000", [200])
+
+      update_assessment_status(
+        assessment_id: "0000-0000-0000-0000-0000",
+        assessment_status_body: { "status": "CANCELLED" },
+        accepted_responses: [200],
+        auth_data: { scheme_ids: [scheme_id] },
+      )
+
+      fetch_assessment("0000-0000-0000-0000-0000", [404])
+    end
+
     context "when a domestic assessment has a green deal plan" do
       it "returns the assessment details with the green deal plan" do
         scheme_id = add_scheme_and_get_id

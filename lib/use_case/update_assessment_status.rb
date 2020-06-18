@@ -10,7 +10,8 @@ module UseCase
     end
 
     def execute(assessment_id, status, scheme_ids)
-      assessment = @assessments_gateway.fetch(assessment_id)
+      assessment =
+        @assessments_gateway.search_by_assessment_id(assessment_id).first
 
       assessor = @assessors_gateway.fetch(assessment.get(:scheme_assessor_id))
 

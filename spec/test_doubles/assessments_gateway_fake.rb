@@ -5,7 +5,7 @@ class AssessmentsGatewayFake
     @domestic_energy_assessment = nil
   end
 
-  def fetch(*)
-    @domestic_energy_assessment
+  def search_by_assessment_id(*)
+    [@domestic_energy_assessment]
   end
 end
