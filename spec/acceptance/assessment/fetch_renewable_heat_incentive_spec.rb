@@ -35,7 +35,6 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
     }
   end
 
-
   context "security" do
     it "rejects a request that is not authenticated" do
       fetch_renewable_heat_incentive("123", [401], false)
@@ -53,6 +52,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
 
     it "returns an error message structure" do
       response_body = fetch_renewable_heat_incentive("DOESNT-EXIST", [404]).body
+
       expect(JSON.parse(response_body)).to eq(
         {
           "errors" => [
@@ -104,29 +104,29 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
         JSON.parse(
           {
             epcRrn: "0000-0000-0000-0000-0000",
-            assessorName: "SPEC000000",
-            reportType: "Energy Performance Certificate",
-            inspectionDate: "2020-01-30",
-            lodgementDate: "2020-02-29",
-            dwellingType: "Top-floor flat",
-            postcode: "SW1P 4JA",
-            propertyAgeBand: "D",
-            tenure: "Owner-occupied",
-            totalFloorArea: "123.5 square metres",
-            cavityWallInsulation: false,
-            loftInsulation: true,
-            spaceHeating: "Gas-fired central heating",
-            waterHeating: "Electrical immersion heater",
-            secondaryHeating: "Electric bar heater",
+            assessorName: nil,
+            reportType: "SAP",
+            inspectionDate: "2006-05-04",
+            lodgementDate: "2006-05-04",
+            dwellingType: "Dwelling-Type0",
+            postcode: "A0 0AA",
+            propertyAgeBand: nil,
+            tenure: nil,
+            totalFloorArea: 10.0,
+            cavityWallInsulation: nil,
+            loftInsulation: nil,
+            spaceHeating: 30,
+            waterHeating: 60,
+            secondaryHeating: nil,
             energyEfficiency: {
-              currentRating: 64,
-              currentBand: "d",
-              potentialRating: 75,
-              potentialBand: "c",
+              currentRating: 50,
+              currentBand: nil,
+              potentialRating: 50,
+              potentialBand: nil,
             },
           }.to_json,
         )
-      expect(response["data"]).to eq(expected_response)
+      expect(response["data"][0]).to eq(expected_response)
     end
   end
 end

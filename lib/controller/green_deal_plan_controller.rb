@@ -20,13 +20,12 @@ module Controller
     get "/api/greendeal/rhi/assessments/:assessment_id/latest",
         jwt_auth: %w[greendeal:assessment:fetch] do
       assessment_id = params[:assessment_id]
-      result =
+      results =
         @container.get_object(:fetch_renewable_heat_incentive_use_case).execute(
           assessment_id,
         )
 
-        pp result
-      json_api_response(code: 200, data: result)
+      json_api_response(code: 200, data: results.map(&:to_hash))
     rescue StandardError => e
       case e
       when UseCase::FetchRenewableHeatIncentive::NotFoundException

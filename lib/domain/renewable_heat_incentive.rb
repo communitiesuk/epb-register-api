@@ -1,70 +1,59 @@
 module Domain
   class RenewableHeatIncentive
     def initialize(
-      epcRrn: nil,
-      assessorName: nil,
-      reportType: nil,
-      inspectionDate: nil,
-      lodgementDate: nil,
-      dwellingType: nil,
-      postcode: nil,
-      propertyAgeBand: nil,
-      tenure: nil,
-      totalFloorArea: nil,
-      cavityWallInsulation: nil,
-      loftInsulation: nil,
-      spaceHeating: nil,
-      waterHeating: nil,
-      secondaryHeating: nil,
-      currentRating: nil,
-      currentBand: nil,
-      potentialRating: nil,
-      potentialBand: nil
+      epc_rrn:,
+      assessor_name:,
+      report_type:,
+      inspection_date:,
+      lodgement_date:,
+      dwelling_type:,
+      postcode:,
+      property_age_band:,
+      tenure:,
+      total_floor_area:,
+      cavity_wall_insulation:,
+      loft_insulation:,
+      space_heating:,
+      water_heating:,
+      secondary_heating:,
+      energy_efficiency:
     )
-      @epcRrn = epcRrn,
-      @assessorName = assessorName,
-      @reportType = reportType,
-      @inspectionDate = inspectionDate,
-      @lodgementDate = lodgementDate,
-      @dwellingType = dwellingType,
-      @postcode = postcode,
-      @propertyAgeBand = propertyAgeBand,
-      @tenure = tenure,
-      @totalFloorArea = totalFloorArea,
-      @cavityWallInsulation = cavityWallInsulation,
-      @loftInsulation = loftInsulation,
-      @spaceHeating = spaceHeating,
-      @waterHeating = waterHeating,
-      @secondaryHeating = secondaryHeating,
-      @currentRating = currentRating,
-      @currentBand = currentBand,
-      @potentialRating = potentialRating,
-      @potentialBand = potentialBand
+      @epc_rrn = epc_rrn
+      @assessor_name = assessor_name
+      @report_type = report_type
+      @inspection_date = inspection_date
+      @lodgement_date = lodgement_date
+      @dwelling_type = dwelling_type
+      @postcode = postcode
+      @property_age_band = property_age_band
+      @tenure = tenure
+      @total_floor_area = total_floor_area
+      @cavity_wall_insulation = cavity_wall_insulation
+      @loft_insulation = loft_insulation
+      @space_heating = space_heating
+      @water_heating = water_heating
+      @secondary_heating = secondary_heating
+      @energy_efficiency = energy_efficiency
     end
 
     def to_hash
       {
-        epcRrn: @epcRrn.first,
-        assessorName: @assessorName,
-        reportType: @reportType,
-        inspectionDate: @inspectionDate.strftime("%Y-%m-%d"),
-        lodgementDate: @lodgementDate.strftime("%Y-%m-%d"),
-        dwellingType: @dwellingType,
+        epc_rrn: @epc_rrn,
+        assessor_name: @assessor_name,
+        report_type: @report_type,
+        inspection_date: @inspection_date.strftime("%Y-%m-%d"),
+        lodgement_date: @lodgement_date.strftime("%Y-%m-%d"),
+        dwelling_type: @dwelling_type,
         postcode: @postcode,
-        propertyAgeBand: @propertyAgeBand,
+        property_age_band: @property_age_band,
         tenure: @tenure,
-        totalFloorArea: @totalFloorArea.to_f,
-        cavityWallInsulation: @cavityWallInsulation,
-        loftInsulation: @loftInsulation,
-        spaceHeating: @spaceHeating.to_s,
-        waterHeating: @waterHeating.to_s,
-        secondaryHeating: @secondaryHeating,
-        energyEfficiency: {
-          currentRating: @currentRating,
-          currentBand: get_energy_rating_band(@currentBand),
-          potentialRating: @potentialRating,
-          potentialBand: get_energy_rating_band(@potentialBand),
-        },
+        total_floor_area: @total_floor_area.to_f,
+        cavity_wall_insulation: @cavity_wall_insulation,
+        loft_insulation: @loft_insulation,
+        space_heating: @space_heating.to_i,
+        water_heating: @water_heating.to_i,
+        secondary_heating: @secondary_heating,
+        energy_efficiency: @energy_efficiency,
       }
     end
 
