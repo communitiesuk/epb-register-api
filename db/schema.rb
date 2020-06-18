@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_16_125947) do
+ActiveRecord::Schema.define(version: 2020_06_17_142535) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -109,7 +109,12 @@ ActiveRecord::Schema.define(version: 2020_06_16_125947) do
     t.string "improvement_description"
   end
 
-  create_table "green_deal_plans", id: false, force: :cascade do |t|
+  create_table "green_deal_assessments", id: false, force: :cascade do |t|
+    t.string "green_deal_plan_id"
+    t.string "assessment_id"
+  end
+
+  create_table "green_deal_plans", primary_key: "green_deal_plan_id", id: :string, force: :cascade do |t|
     t.datetime "start_date"
     t.datetime "end_date"
     t.string "provider_name"
@@ -125,8 +130,6 @@ ActiveRecord::Schema.define(version: 2020_06_16_125947) do
     t.jsonb "measures", default: "[]", null: false
     t.jsonb "charges", default: "[]", null: false
     t.jsonb "savings", default: "[]", null: false
-    t.string "assessment_id"
-    t.string "green_deal_plan_id"
   end
 
   create_table "postcode_geolocation", force: :cascade do |t|
