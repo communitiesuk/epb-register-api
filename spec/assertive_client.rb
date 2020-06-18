@@ -213,8 +213,7 @@ end
 
 def add_scheme_then_assessor(body, accepted_responses = [200, 201])
   scheme_id = add_scheme_and_get_id
-  response = add_assessor(scheme_id, "TEST_ASSESSOR", body, accepted_responses)
-  response
+  add_assessor(scheme_id, "TEST_ASSESSOR", body, accepted_responses)
 end
 
 def fetch_renewable_heat_incentive(
