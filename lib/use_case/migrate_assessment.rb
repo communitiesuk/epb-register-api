@@ -4,17 +4,6 @@ module UseCase
   class MigrateAssessment
     class AssessmentRuleException < StandardError; end
 
-    TYPE2LODGEMENT = {
-      "CEPC": Domain::CepcAssessment,
-      "SAP": Domain::SapAssessment,
-      "RdSAP": Domain::RdsapAssessment,
-      "DEC-AR": Domain::DecArAssessment,
-      "DEC": Domain::DecAssessment,
-      "CEPC-RR": Domain::CepcRrAssessment,
-      "ACIC": Domain::AcicAssessment,
-      "ACIR": Domain::AcirAssessment,
-    }.freeze
-
     def initialize(assessments_gateway, assessors_gateway)
       @assessments_gateway = assessments_gateway
       @assessors_gateway = assessors_gateway
@@ -25,7 +14,7 @@ module UseCase
       assessor = @assessors_gateway.fetch(assessor_id)
 
       assessment =
-        TYPE2LODGEMENT[assessment_data[:type_of_assessment].to_sym].new(
+        Domain::Assessment.new(
           date_of_assessment: assessment_data[:date_of_assessment],
           date_registered: assessment_data[:date_registered],
           dwelling_type: assessment_data[:dwelling_type],

@@ -5,17 +5,6 @@ module Gateway
     class Assessment < ActiveRecord::Base; end
     class DomesticEpcEnergyImprovement < ActiveRecord::Base; end
 
-    TYPE2LODGEMENT = {
-      "CEPC": Domain::CepcAssessment,
-      "SAP": Domain::SapAssessment,
-      "RdSAP": Domain::RdsapAssessment,
-      "DEC-AR": Domain::DecArAssessment,
-      "DEC": Domain::DecAssessment,
-      "CEPC-RR": Domain::CepcRrAssessment,
-      "ACIC": Domain::AcicAssessment,
-      "ACIR": Domain::AcirAssessment,
-    }.freeze
-
     def valid_energy_rating(rating)
       rating.is_a?(Integer) && rating.positive?
     end
