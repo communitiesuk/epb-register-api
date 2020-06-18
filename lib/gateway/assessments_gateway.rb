@@ -122,7 +122,7 @@ module Gateway
       result
     end
 
-    def search_by_street_name_and_town(street_name, town)
+    def search_by_street_name_and_town(street_name, town, restrictive = true)
       sql =
         "SELECT
           scheme_assessor_id, assessment_id, date_of_assessment, date_registered, dwelling_type,
@@ -144,6 +144,12 @@ module Gateway
           ActiveRecord::Base.sanitize_sql(town)
         }')
          AND type_of_assessment IN('RdSAP', 'SAP')"
+
+      if restrictive
+        sql += " AND cancelled_at IS NULL"
+        sql += " AND not_for_issue_at IS NULL"
+        sql += " AND opt_out = false"
+      end
 
       response = Assessment.connection.execute(sql)
 
