@@ -12,7 +12,7 @@ module UseCase
     def execute(assessment_id, status, scheme_ids)
       assessment = @assessments_gateway.fetch(assessment_id)
 
-      assessor = @assessors_gateway.fetch(assessment.scheme_assessor_id)
+      assessor = @assessors_gateway.fetch(assessment.get(:scheme_assessor_id))
 
       unless scheme_ids.include?(assessor.registered_by_id)
         raise AssessmentNotLodgedByScheme

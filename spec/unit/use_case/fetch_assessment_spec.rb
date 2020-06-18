@@ -24,7 +24,6 @@ describe UseCase::FetchAssessment do
   context "when there is an energy assessment" do
     it "gives the existing energy assessment" do
       class AssessmentsDomainFake
-        attr_writer :assessor
         def initialize(data)
           @data = data
           @data[:potential_energy_efficiency_band] = "c"
@@ -37,6 +36,14 @@ describe UseCase::FetchAssessment do
 
         def to_hash
           @data
+        end
+
+        def set(key, value)
+          instance_variable_set "@#{key}", value
+        end
+
+        def get(key)
+          instance_variable_get "@#{key}"
         end
       end
 

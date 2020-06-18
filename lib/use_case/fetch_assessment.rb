@@ -21,16 +21,16 @@ module UseCase
 
       return @assessments_xml_gateway.fetch(assessment_id) if xml
 
-      assessor = @assessors_gateway.fetch(assessment.scheme_assessor_id)
+      assessor = @assessors_gateway.fetch(assessment.get(:scheme_assessor_id))
 
-      assessment.assessor = assessor
+      assessment.set(:assessor, assessor)
 
       green_deal_data = @green_deal_plans_gateway.fetch(assessment_id)
 
       unless green_deal_data.nil?
         green_deal_domain = structure_green_deal_data(green_deal_data)
 
-        assessment.green_deal_plan = green_deal_domain
+        assessment.set(:green_deal_plan, green_deal_domain)
       end
 
       assessment

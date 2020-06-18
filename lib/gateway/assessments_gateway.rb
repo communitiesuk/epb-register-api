@@ -53,11 +53,7 @@ module Gateway
       rec = energy_assessment_record.attributes.symbolize_keys!
       rec[:recommended_improvements] = improvements
 
-      energy_assessment =
-        TYPE2LODGEMENT[energy_assessment_record[:type_of_assessment].to_sym]
-          .new(rec)
-
-      energy_assessment
+      Domain::Assessment.new(rec)
     end
 
     def insert_or_update(assessment)
