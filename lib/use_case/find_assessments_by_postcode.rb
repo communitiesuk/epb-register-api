@@ -17,11 +17,8 @@ module UseCase
       end
 
       result = @assessments_gateway.search_by_postcode(postcode)
-      opt_out_filtered_results = []
 
-      result.each { |r| opt_out_filtered_results << r.to_hash unless r.opt_out }
-
-      { data: opt_out_filtered_results, searchQuery: postcode }
+      { data: result.map(&:to_hash), searchQuery: postcode }
     end
   end
 end

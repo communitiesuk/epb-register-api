@@ -86,7 +86,9 @@ module Gateway
         FROM assessments
         WHERE postcode = '#{
           ActiveRecord::Base.sanitize_sql(postcode)
-        }' AND type_of_assessment IN('RdSAP', 'SAP')"
+        }' AND type_of_assessment IN('RdSAP', 'SAP')
+          AND cancelled_at IS NULL
+          AND opt_out = false"
       response = Assessment.connection.execute(sql)
       result = []
 

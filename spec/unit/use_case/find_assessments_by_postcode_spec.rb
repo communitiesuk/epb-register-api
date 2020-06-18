@@ -74,7 +74,7 @@ describe UseCase::FindAssessmentsByPostcode do
 
     it "return assessments where they exist" do
       response = find_assessments_with_stub_data.execute("E2 0SZ")
-      expect(response[:data].size).to eq(2)
+      expect(response[:data].size).to eq(3)
     end
   end
 end
