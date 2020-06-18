@@ -13,7 +13,9 @@ module UseCase
         @assessment_gateway.search_by_street_name_and_town(street_name, town)
       opt_out_filtered_results = []
 
-      result.each { |r| opt_out_filtered_results << r.to_hash unless r.opt_out }
+      result.each do |r|
+        opt_out_filtered_results << r.to_hash unless r.get(:opt_out)
+      end
 
       { data: opt_out_filtered_results, search_query: [street_name, town] }
     end

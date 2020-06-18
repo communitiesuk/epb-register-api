@@ -95,8 +95,7 @@ module Gateway
       response.each do |row|
         row.symbolize_keys!
         row[:property_summary] = JSON.parse(row[:property_summary])
-        assessment_domain =
-          TYPE2LODGEMENT[row[:type_of_assessment].to_sym].new(row)
+        assessment_domain = Domain::Assessment.new(row)
 
         result << assessment_domain
       end
@@ -126,8 +125,7 @@ module Gateway
       response.each do |row|
         row.symbolize_keys!
         row[:property_summary] = JSON.parse(row[:property_summary])
-        assessment_domain =
-          TYPE2LODGEMENT[row[:type_of_assessment].to_sym].new(row)
+        assessment_domain = Domain::Assessment.new(row)
 
         result << assessment_domain
       end
@@ -164,8 +162,7 @@ module Gateway
       response.each do |row|
         row.symbolize_keys!
         row[:property_summary] = JSON.parse(row[:property_summary])
-        assessment_domain =
-          TYPE2LODGEMENT[row[:type_of_assessment].to_sym].new(row)
+        assessment_domain = Domain::Assessment.new(row)
 
         result << assessment_domain
       end
