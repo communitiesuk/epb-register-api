@@ -414,17 +414,23 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
         auth_data: { scheme_ids: [scheme_id] },
       )
 
-      response = domestic_assessments_search_by_postcode("A0 0AA")
-      response_json = JSON.parse(response.body)
+      before_assessments =
+        JSON.parse(
+          domestic_assessments_search_by_postcode("A0 0AA").body,
+          symbolize_names: true,
+        )
 
-      expect(response_json["data"]["assessments"][0]).not_to eq(nil)
+      expect(before_assessments[:data][:assessments][0]).not_to eq(nil)
 
       opt_out_assessment("0000-0000-0000-0000-0000")
 
-      response = domestic_assessments_search_by_postcode("A0 0AA")
-      response_json = JSON.parse(response.body)
+      after_assessments =
+        JSON.parse(
+          domestic_assessments_search_by_postcode("A0 0AA").body,
+          symbolize_names: true,
+        )
 
-      expect(response_json["data"]["assessments"][0]).to eq(nil)
+      expect(after_assessments[:data][:assessments][0]).to eq(nil)
     end
 
     it "doesn't show cancelled assessments" do
@@ -437,23 +443,28 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
         auth_data: { scheme_ids: [scheme_id] },
       )
 
-      response = domestic_assessments_search_by_postcode("A0 0AA")
-      response_json = JSON.parse(response.body)
-
-      expect(response_json["data"]["assessments"][0]).not_to eq(nil)
-
-      response =
-        update_assessment_status(
-          assessment_id: "0000-0000-0000-0000-0000",
-          assessment_status_body: { "status": "CANCELLED" },
-          accepted_responses: [200],
-          auth_data: { scheme_ids: [scheme_id] },
+      before_assessments =
+        JSON.parse(
+          domestic_assessments_search_by_postcode("A0 0AA").body,
+          symbolize_names: true,
         )
 
-      response = domestic_assessments_search_by_postcode("A0 0AA")
-      response_json = JSON.parse(response.body)
+      expect(before_assessments[:data][:assessments][0]).not_to eq(nil)
 
-      expect(response_json["data"]["assessments"][0]).to eq(nil)
+      update_assessment_status(
+        assessment_id: "0000-0000-0000-0000-0000",
+        assessment_status_body: { "status": "CANCELLED" },
+        accepted_responses: [200],
+        auth_data: { scheme_ids: [scheme_id] },
+      )
+
+      after_assessments =
+        JSON.parse(
+          domestic_assessments_search_by_postcode("A0 0AA").body,
+          symbolize_names: true,
+        )
+
+      expect(after_assessments[:data][:assessments][0]).to eq(nil)
     end
   end
 
