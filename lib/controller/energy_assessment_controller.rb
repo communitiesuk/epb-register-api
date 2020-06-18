@@ -218,7 +218,7 @@ module Controller
           {
             event_type: :lodgement_successful,
             correlation_id: correlation_id,
-            assessment_id: result.assessment_id,
+            assessment_id: result.get(:assessment_id),
           },
           true,
         )
@@ -231,7 +231,7 @@ module Controller
               document.data do
                 document.assessments do
                   results.map do |result|
-                    document.assessment result.assessment_id
+                    document.assessment result.get(:assessment_id)
                   end
                 end
               end
@@ -240,7 +240,7 @@ module Controller
                   document.assessments do
                     results.map do |result|
                       document.assessment "/api/assessments/" +
-                        result.assessment_id
+                        result.get(:assessment_id)
                     end
                   end
                 end
@@ -251,12 +251,15 @@ module Controller
         xml_response(201, builder.to_xml)
       else
         json_api_response code: 201,
-                          data: { assessments: results.map(&:assessment_id) },
+                          data: {
+                            assessments:
+                              results.map { |id| id.get(:assessment_id) },
+                          },
                           meta: {
                             links: {
                               assessments:
                                 results.map do |id|
-                                  "/api/assessments/" + id.assessment_id
+                                  "/api/assessments/" + id.get(:assessment_id)
                                 end,
                             },
                           }

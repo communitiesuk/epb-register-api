@@ -57,11 +57,15 @@ module Gateway
     end
 
     def insert_or_update(assessment)
-      unless valid_energy_rating(assessment.current_energy_efficiency_rating)
+      unless valid_energy_rating(
+        assessment.get(:current_energy_efficiency_rating),
+      )
         raise ArgumentError, "Invalid current energy rating"
       end
 
-      unless valid_energy_rating(assessment.potential_energy_efficiency_rating)
+      unless valid_energy_rating(
+        assessment.get(:potential_energy_efficiency_rating),
+      )
         raise ArgumentError, "Invalid potential energy rating"
       end
 
@@ -187,14 +191,14 @@ module Gateway
     def send_to_db(domestic_energy_assessment)
       existing_assessment =
         Assessment.find_by(
-          assessment_id: domestic_energy_assessment.assessment_id,
+          assessment_id: domestic_energy_assessment.get(:assessment_id),
         )
 
       if existing_assessment
         existing_assessment.update(domestic_energy_assessment.to_record)
 
         where_assessment = {
-          assessment_id: domestic_energy_assessment.assessment_id,
+          assessment_id: domestic_energy_assessment.get(:assessment_id),
         }
 
         DomesticEpcEnergyImprovement.where(where_assessment).delete_all
@@ -203,7 +207,9 @@ module Gateway
       end
 
       improvements =
-        domestic_energy_assessment.recommended_improvements.map(&:to_record)
+        domestic_energy_assessment.get(:recommended_improvements).map(
+          &:to_record
+        )
       improvements.each do |improvement|
         DomesticEpcEnergyImprovement.create(improvement)
       end

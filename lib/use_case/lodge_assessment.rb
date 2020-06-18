@@ -7,17 +7,6 @@ module UseCase
     class DuplicateAssessmentIdException < StandardError; end
     class AssessmentRuleException < StandardError; end
 
-    TYPE2LODGEMENT = {
-      "CEPC": Domain::CepcAssessment,
-      "SAP": Domain::SapAssessment,
-      "RdSAP": Domain::RdsapAssessment,
-      "DEC-AR": Domain::DecArAssessment,
-      "DEC": Domain::DecAssessment,
-      "CEPC-RR": Domain::CepcRrAssessment,
-      "ACIC": Domain::AcicAssessment,
-      "ACIR": Domain::AcirAssessment,
-    }.freeze
-
     def initialize(
       assessments_gateway, assessors_gateway, assessments_xml_gateway
     )
@@ -89,7 +78,7 @@ module UseCase
         end
 
       assessment =
-        TYPE2LODGEMENT[assessment_type.to_sym].new(
+        Domain::Assessment.new(
           migrated: migrated,
           date_of_assessment: data[:inspection_date],
           date_registered: data[:registration_date],
