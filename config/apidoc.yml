@@ -330,6 +330,69 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorUnauthenticated'
 
+  /search/addresses:
+    get:
+      tags:
+        - Search
+        - Manage Addresses
+      summary: 'Search for an address by (optional) type and
+                EITHER:
+                - a postcode (with optional building name or number)
+                OR
+                - a street AND town
+                OR
+                - a building reference number (UPRN or RRN)'
+      security:
+        - oauth:
+            - 'search:addresses'
+      parameters:
+        - in: query
+          name: postcode
+          description: The postcode of the address being searched for
+          schema:
+            $ref: '#/components/schemas/AddressPostcode'
+        - in: query
+          name: buildingNameNumber
+          description: The building name or number being searched for
+          example: '47'
+          schema:
+            type: string
+        - in: query
+          name: street
+          description: The street of the address being searched for
+          example: 'High Road'
+          schema:
+            type: string
+        - in: query
+          name: town
+          description: The city or town of the address being searched for
+          example: 'Woking'
+          schema:
+            $ref: '#/components/schemas/AddressTown'
+        - in: query
+          name: addressId
+          description: A known UPRN or RRN to fetch a single address
+          example: 'RRN-7163-7573-4512-0000-0001'
+          schema:
+            type: string
+        - in: query
+          name: addressType
+          description: Domestic or commercial address
+          schema:
+            type: string
+            enum:
+              - DOMESTIC
+              - COMMERCIAL
+      responses:
+        '403':
+          description: Forbidden
+        '200':
+          description: Address search results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddressSearchResults'
+
   /assessments/{assessmentId}:
     get:
       tags:
@@ -554,6 +617,122 @@ components:
             'report:assessor:status': Get a report of changes to assessors status for a given date
 
   schemas:
+    # Addresses
+    Address:
+      type: object
+      properties:
+        source:
+          $ref: '#/components/schemas/AddressSource'
+        line1:
+          $ref: '#/components/schemas/AddressLine1'
+        line2:
+          type: string
+          example: ''
+        line3:
+          type: string
+          example: ''
+        line4:
+          type: string
+          example: ''
+        town:
+          $ref: '#/components/schemas/AddressTown'
+        postcode:
+          $ref: '#/components/schemas/AddressPostcode'
+
+    AddressBody:
+      $ref: '#/components/schemas/Address'
+
+    AddressDetail:
+      allOf:
+        - $ref: '#/components/schemas/Address'
+        - type: object
+          properties:
+            addressId:
+              $ref: '#/components/schemas/AddressId'
+            existingAssessments:
+              type: array
+              items:
+                type: object
+                properties:
+                  assessmentId:
+                    $ref: '#/components/schemas/AssessmentId'
+                  assessmentStatus:
+                    $ref: '#/components/schemas/AssessmentStatus'
+                  assessmentType:
+                    $ref: '#/components/schemas/AssessmentType'
+
+    AddressId:
+      type: string
+      description: 'An identifier for an address, which is one of:
+                    * An OS gazetteer UPRN (prefixed UPRN-)
+                    * The reference number of the report this address appears on (prefixed RRN-)'
+      example: 'RRN-7163-7573-4512-0000-0001'
+
+    AddressLine1:
+      type: string
+      example: 2 Marsham Street
+
+    AddressTown:
+      type: string
+      example: London
+
+    AddressPostcode:
+      type: string
+      example: SW1P 4JA
+
+    AddressSource:
+      type: string
+      enum:
+        - GAZETTEER
+        - PREVIOUS_ASSESSMENT
+      example: PREVIOUS_ASSESSMENT
+
+    AddressSearchResults:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            addresses:
+              type: array
+              items:
+                $ref: '#/components/schemas/AddressDetail'
+        meta:
+          type: object
+          properties:
+            filters:
+              type: object
+              description: >-
+                The filters object will contain the search parameters provided
+                in the initial request.
+
+    # Assessments
+    AssessmentId:
+      type: string
+      example: 0000-0000-0000-0000-0000
+
+    AssessmentStatus:
+      type: string
+      example: CANCELLED
+      enum:
+        - ENTERED
+        - EXPIRED
+        - CANCELLED
+        - NOT_FOR_ISSUE
+
+    AssessmentType:
+      type: string
+      example: domestic-epc
+      enum:
+        - domestic-epc
+        - non-domestic-epc
+        - recommendation-report
+        - dec
+        - dec-recommendation-report
+        - ac-report
+        - ac-cert
+
+
     Scheme:
       allOf:
         - $ref: '#/components/schemas/SchemeBody'
@@ -704,10 +883,6 @@ components:
           type: string
           example: 'a'
           description: The band, from a to g, the potential Energy Rating falls within
-
-    AddressPostcode:
-      type: string
-      example: SW1P 4JA
 
     ErrorNotFound:
       type: object
