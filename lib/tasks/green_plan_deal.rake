@@ -6,6 +6,10 @@ task :truncate_green_deal_plans do
   ActiveRecord::Base.connection.execute("TRUNCATE TABLE green_deal_plans RESTART IDENTITY CASCADE")
 end
 
+task :truncate_green_deal_assessments do
+  ActiveRecord::Base.connection.execute("TRUNCATE TABLE green_deal_assessments RESTART IDENTITY CASCADE")
+end
+
 desc "Import green deal plans data"
 
 task :import_green_deal_plans do
@@ -61,9 +65,23 @@ task :import_green_deal_plans do
     assessment_ids[rrn_row["PLAN_KEY"]] = [] unless assessment_ids[rrn_row["PLAN_KEY"]]
     assessment_ids[rrn_row["PLAN_KEY"]].push(rrn_row["REPORT_REFERENCE_ID"])
   end
+  ActiveRecord::Base.transaction do
+    plans["GREEN_DEAL_PLANS"].each do |row|
+      assessment_ids[row["PLAN_KEY"]].each do |assessment_id|
+        green_deal_assessments_query = "INSERT INTO
+              green_deal_assessments
+              (
+                green_deal_plan_id,
+                assessment_id
+              )
+              VALUES (
+                  '#{ActiveRecord::Base.sanitize_sql(row['PLAN_ID'])}',
+                  '#{ActiveRecord::Base.sanitize_sql(assessment_id)}'
+              )"
+        ActiveRecord::Base.connection.execute(green_deal_assessments_query)
+      end
 
-  plans["GREEN_DEAL_PLANS"].each do |row|
-    query = "INSERT INTO
+      query = "INSERT INTO
               green_deal_plans
               (
                 green_deal_plan_id,
@@ -81,8 +99,7 @@ task :import_green_deal_plans do
                 measures_removed,
                 charges,
                 measures,
-                savings,
-                assessment_id
+                savings
               )
               VALUES
               (
@@ -101,10 +118,10 @@ task :import_green_deal_plans do
                 '#{ActiveRecord::Base.sanitize_sql(row['MEASURES_REMOVED_IND'])}',
                 '#{ActiveRecord::Base.sanitize_sql(charges[row['PLAN_ID']].to_json)}',
                 '#{ActiveRecord::Base.sanitize_sql(measures[row['PLAN_ID']].to_json)}',
-                '#{ActiveRecord::Base.sanitize_sql(savings[row['PLAN_ID']].to_json)}',
-                '#{ActiveRecord::Base.sanitize_sql(assessment_ids[row['PLAN_KEY']])}'
+                '#{ActiveRecord::Base.sanitize_sql(savings[row['PLAN_ID']].to_json)}'
               )"
 
-    ActiveRecord::Base.connection.execute(query)
+      ActiveRecord::Base.connection.execute(query)
+    end
   end
 end
