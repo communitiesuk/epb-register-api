@@ -50,7 +50,7 @@ module Domain
         total_floor_area: @total_floor_area.to_f,
         cavity_wall_insulation: @cavity_wall_insulation,
         loft_insulation: @loft_insulation,
-        space_heating: @space_heating.to_i,
+        space_heating: @space_heating,
         water_heating: @water_heating,
         secondary_heating: @secondary_heating,
         energy_efficiency: @energy_efficiency,

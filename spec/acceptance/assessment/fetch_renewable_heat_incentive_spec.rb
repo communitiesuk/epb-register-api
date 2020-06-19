@@ -116,7 +116,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
             totalFloorArea: 10.0,
             cavityWallInsulation: nil,
             loftInsulation: nil,
-            spaceHeating: 30,
+            spaceHeating: "Gas-fired central heating",
             waterHeating: "Electrical immersion heater",
             secondaryHeating: "Electric bar heater",
             energyEfficiency: {
@@ -139,9 +139,14 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
     secondary_heating_description.content = "Electric bar heater"
     secondary_heating.add_next_sibling secondary_heating_description
 
-    main_heating = doc.at("Hot-Water/Energy-Efficiency-Rating")
+    hot_water = doc.at("Hot-Water/Energy-Efficiency-Rating")
+    hot_water_description = Nokogiri::XML::Node.new "Description", doc
+    hot_water_description.content = "Electrical immersion heater"
+    hot_water.add_next_sibling hot_water_description
+
+    main_heating = doc.at("Main-Heating/Energy-Efficiency-Rating")
     main_heating_description = Nokogiri::XML::Node.new "Description", doc
-    main_heating_description.content = "Electrical immersion heater"
+    main_heating_description.content = "Gas-fired central heating"
     main_heating.add_next_sibling main_heating_description
 
     doc.to_xml
