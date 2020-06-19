@@ -89,15 +89,8 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
         AssessorStub.new.fetch_request_body({ domesticSap: "ACTIVE" }),
       )
 
-      doc = Nokogiri.XML valid_sap_xml
-
-      rating = doc.at("Secondary-Heating/Energy-Efficiency-Rating")
-      description = Nokogiri::XML::Node.new "Description", doc
-      description.content = "Electric bar heater"
-      rating.add_next_sibling description
-
       lodge_assessment(
-        assessment_body: doc.to_xml,
+        assessment_body: xml_with_property_summary_descriptions,
         accepted_responses: [201],
         schema_name: "SAP-Schema-17.1",
         auth_data: { scheme_ids: [scheme_id] },
@@ -124,7 +117,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
             cavityWallInsulation: nil,
             loftInsulation: nil,
             spaceHeating: 30,
-            waterHeating: 60,
+            waterHeating: "Electrical immersion heater",
             secondaryHeating: "Electric bar heater",
             energyEfficiency: {
               currentRating: 50,
@@ -136,5 +129,21 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
         )
       expect(response["data"][0]).to eq(expected_response)
     end
+  end
+
+  def xml_with_property_summary_descriptions
+    doc = Nokogiri.XML valid_sap_xml
+
+    secondary_heating = doc.at("Secondary-Heating/Energy-Efficiency-Rating")
+    secondary_heating_description = Nokogiri::XML::Node.new "Description", doc
+    secondary_heating_description.content = "Electric bar heater"
+    secondary_heating.add_next_sibling secondary_heating_description
+
+    main_heating = doc.at("Main-Heating/Energy-Efficiency-Rating")
+    main_heating_description = Nokogiri::XML::Node.new "Description", doc
+    main_heating_description.content = "Electrical immersion heater"
+    main_heating.add_next_sibling main_heating_description
+
+    doc.to_xml
   end
 end

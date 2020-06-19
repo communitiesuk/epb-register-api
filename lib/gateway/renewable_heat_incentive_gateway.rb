@@ -46,7 +46,8 @@ module Gateway
         cavity_wall_insulation: nil,
         loft_insulation: nil,
         space_heating: row["current_space_heating_demand"],
-        water_heating: row["current_water_heating_demand"],
+        water_heating:
+          fetch_property_description(row["property_summary"], "main_heating"),
         secondary_heating:
           fetch_property_description(
             row["property_summary"],
