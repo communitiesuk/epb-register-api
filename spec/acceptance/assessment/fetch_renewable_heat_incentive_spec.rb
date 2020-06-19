@@ -139,7 +139,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
     secondary_heating_description.content = "Electric bar heater"
     secondary_heating.add_next_sibling secondary_heating_description
 
-    main_heating = doc.at("Main-Heating/Energy-Efficiency-Rating")
+    main_heating = doc.at("Hot-Water/Energy-Efficiency-Rating")
     main_heating_description = Nokogiri::XML::Node.new "Description", doc
     main_heating_description.content = "Electrical immersion heater"
     main_heating.add_next_sibling main_heating_description
