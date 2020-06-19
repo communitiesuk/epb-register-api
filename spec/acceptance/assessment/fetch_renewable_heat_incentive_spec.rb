@@ -120,9 +120,9 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
             secondaryHeating: nil,
             energyEfficiency: {
               currentRating: 50,
-              currentBand: nil,
+              currentBand: "e",
               potentialRating: 50,
-              potentialBand: nil,
+              potentialBand: "e",
             },
           }.to_json,
         )

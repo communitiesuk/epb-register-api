@@ -50,11 +50,32 @@ module Gateway
         secondary_heating: nil,
         energy_efficiency: {
           current_rating: row["current_energy_efficiency_rating"],
-          current_band: row["current_band"],
+          current_band:
+            get_energy_rating_band(row["current_energy_efficiency_rating"]),
           potential_rating: row["potential_energy_efficiency_rating"],
-          potential_band: row["potential_band"],
+          potential_band:
+            get_energy_rating_band(row["potential_energy_efficiency_rating"]),
         },
       )
+    end
+
+    def get_energy_rating_band(number)
+      case number
+      when 1..20
+        "g"
+      when 21..38
+        "f"
+      when 39..54
+        "e"
+      when 55..68
+        "d"
+      when 69..80
+        "c"
+      when 81..91
+        "b"
+      when 92..1_000
+        "a"
+      end
     end
   end
 end
