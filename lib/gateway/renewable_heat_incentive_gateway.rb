@@ -10,7 +10,7 @@ module Gateway
           type_of_assessment, total_floor_area, current_energy_efficiency_rating,
           potential_energy_efficiency_rating, postcode, current_space_heating_demand,
           current_water_heating_demand, impact_of_loft_insulation,
-          impact_of_cavity_insulation, impact_of_solid_wall_insulation
+          impact_of_cavity_insulation, impact_of_solid_wall_insulation, property_summary
           FROM assessments
         WHERE assessment_id = $1 AND type_of_assessment IN('RdSAP', 'SAP')"
 
@@ -47,7 +47,11 @@ module Gateway
         loft_insulation: nil,
         space_heating: row["current_space_heating_demand"],
         water_heating: row["current_water_heating_demand"],
-        secondary_heating: nil,
+        secondary_heating:
+          fetch_property_description(
+            row["property_summary"],
+            "secondary_heating",
+          ),
         energy_efficiency: {
           current_rating: row["current_energy_efficiency_rating"],
           current_band:
@@ -57,6 +61,16 @@ module Gateway
             get_energy_rating_band(row["potential_energy_efficiency_rating"]),
         },
       )
+    end
+
+    def fetch_property_description(property, name)
+      summary = JSON.parse property
+
+      summary.each do |property|
+        return property["description"] if property["name"] == name
+      end
+
+      nil
     end
 
     def get_energy_rating_band(number)

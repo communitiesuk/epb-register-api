@@ -88,8 +88,16 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
         "SPEC000000",
         AssessorStub.new.fetch_request_body({ domesticSap: "ACTIVE" }),
       )
+
+      doc = Nokogiri.XML valid_sap_xml
+
+      rating = doc.at("Secondary-Heating/Energy-Efficiency-Rating")
+      description = Nokogiri::XML::Node.new "Description", doc
+      description.content = "Electric bar heater"
+      rating.add_next_sibling description
+
       lodge_assessment(
-        assessment_body: valid_sap_xml,
+        assessment_body: doc.to_xml,
         accepted_responses: [201],
         schema_name: "SAP-Schema-17.1",
         auth_data: { scheme_ids: [scheme_id] },
@@ -117,7 +125,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
             loftInsulation: nil,
             spaceHeating: 30,
             waterHeating: 60,
-            secondaryHeating: nil,
+            secondaryHeating: "Electric bar heater",
             energyEfficiency: {
               currentRating: 50,
               currentBand: "e",
