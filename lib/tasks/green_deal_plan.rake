@@ -6,6 +6,8 @@ task :truncate_green_deal_plans do
   ActiveRecord::Base.connection.execute("TRUNCATE TABLE green_deal_plans RESTART IDENTITY CASCADE")
 end
 
+desc "Truncate green deal assessments data"
+
 task :truncate_green_deal_assessments do
   ActiveRecord::Base.connection.execute("TRUNCATE TABLE green_deal_assessments RESTART IDENTITY CASCADE")
 end
@@ -63,6 +65,7 @@ task :import_green_deal_plans do
   assessment_ids = []
   plans["RRNS"].each do |rrn_row|
     assessment_ids[rrn_row["PLAN_KEY"]] = [] unless assessment_ids[rrn_row["PLAN_KEY"]]
+
     assessment_ids[rrn_row["PLAN_KEY"]].push(rrn_row["REPORT_REFERENCE_ID"])
   end
   ActiveRecord::Base.transaction do
