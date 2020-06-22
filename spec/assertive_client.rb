@@ -227,7 +227,7 @@ def fetch_renewable_heat_incentive(
   headers.each { |key, value| header key.to_s, value.to_s }
 
   assertive_get(
-    "api/greendeal/rhi/assessments/#{assessment_id}",
+    "api/greendeal/rhi/assessments/#{assessment_id}/latest",
     accepted_responses,
     authenticate,
     auth_data,
