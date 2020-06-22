@@ -52,7 +52,7 @@ module Gateway
             potential_energy_efficiency_rating, opt_out, postcode, date_of_expiry,
             address_line1, address_line2, address_line3, address_line4, town,
             current_space_heating_demand, current_water_heating_demand, impact_of_loft_insulation,
-            impact_of_cavity_insulation, impact_of_solid_wall_insulation, tenure,
+            impact_of_cavity_insulation, impact_of_solid_wall_insulation, tenure, property_age_band,
             current_carbon_emission, potential_carbon_emission, property_summary, related_party_disclosure_number,
             related_party_disclosure_text, cancelled_at, not_for_issue_at
         FROM assessments
@@ -85,7 +85,7 @@ module Gateway
           potential_energy_efficiency_rating, opt_out, postcode, date_of_expiry,
           address_line1, address_line2, address_line3, address_line4, town,
           current_space_heating_demand, current_water_heating_demand, impact_of_loft_insulation,
-          impact_of_cavity_insulation, impact_of_solid_wall_insulation, tenure,
+          impact_of_cavity_insulation, impact_of_solid_wall_insulation, tenure, property_age_band,
           current_carbon_emission, potential_carbon_emission, property_summary, related_party_disclosure_number,
            related_party_disclosure_text, cancelled_at, not_for_issue_at, address_id
           FROM assessments
@@ -136,7 +136,7 @@ module Gateway
           potential_energy_efficiency_rating, opt_out, postcode, date_of_expiry,
           address_line1, address_line2, address_line3, address_line4, town,
           current_space_heating_demand, current_water_heating_demand, impact_of_loft_insulation,
-          impact_of_cavity_insulation, impact_of_solid_wall_insulation, tenure,
+          impact_of_cavity_insulation, impact_of_solid_wall_insulation, tenure, property_age_band,
           current_carbon_emission, potential_carbon_emission, property_summary, related_party_disclosure_number,
           related_party_disclosure_text, cancelled_at, not_for_issue_at
         FROM assessments

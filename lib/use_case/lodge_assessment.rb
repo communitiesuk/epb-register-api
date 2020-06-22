@@ -77,6 +77,14 @@ module UseCase
           Domain::RecommendedImprovement.new(improvement)
         end
 
+      if data[:property_details].is_a? Array
+        data[:property_details].each do |building|
+          if building[:building_part_number] == 1
+            data[:property_age_band] = building[:construction_age_band]
+          end
+        end
+      end
+
       assessment =
         Domain::Assessment.new(
           migrated: migrated,
@@ -114,6 +122,7 @@ module UseCase
             data[:related_party_disclosure_number],
           related_party_disclosure_text: data[:related_party_disclosure_text],
           property_summary: data[:property_summary],
+          property_age_band: data[:property_age_band],
           xml: data[:raw_data],
         )
 

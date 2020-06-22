@@ -40,6 +40,7 @@ module Domain
       impact_of_solid_wall_insulation: nil,
       recommended_improvements: nil,
       property_summary: [],
+      property_age_band: nil,
       related_party_disclosure_number: nil,
       related_party_disclosure_text: nil,
       cancelled_at: nil,

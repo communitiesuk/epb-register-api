@@ -145,6 +145,7 @@ describe "Acceptance::Assessment" do
           name: "lighting",
         },
       ],
+      propertyAgeBand: "K",
       recommendedImprovements: [
         {
           energyPerformanceRatingImprovement: 50,

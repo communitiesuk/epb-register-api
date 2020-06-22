@@ -169,4 +169,18 @@
       "cast": "integer"
     }
   ]
+}, {
+  "key": "property_details",
+  "path": ["SAP_Report", "SAP2012_Data", "SAP_Property_Details", "SAP_Building_Parts", "SAP_Building_Part"],
+  "extract": [
+    {
+      "key": "building_part_number",
+      "path": ["Building_Part_Number"],
+      "cast": "integer"
+    },
+    {
+      "key": "construction_age_band",
+      "path": ["Construction_Age_Band"]
+    }
+  ]
 }]

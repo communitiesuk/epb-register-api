@@ -249,6 +249,7 @@ describe "Acceptance::LodgeRdSAPNIEnergyAssessment" do
               "name" => "secondary_heating",
             },
           ],
+          "propertyAgeBand" => "K",
           "relatedPartyDisclosureNumber" => nil,
           "relatedPartyDisclosureText" => "Financial interest",
           "status" => "EXPIRED",

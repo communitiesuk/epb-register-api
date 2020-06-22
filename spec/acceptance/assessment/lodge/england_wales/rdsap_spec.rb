@@ -246,6 +246,7 @@ describe "Acceptance::LodgeRdSapEnergyAssessment" do
               "name" => "secondary_heating",
             },
           ],
+          "propertyAgeBand" => "K",
           "relatedPartyDisclosureNumber" => nil,
           "relatedPartyDisclosureText" => "Related-Party-Disclosure-Text0",
           "status" => "EXPIRED",

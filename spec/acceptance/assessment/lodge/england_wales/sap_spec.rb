@@ -235,6 +235,7 @@ describe "Acceptance::LodgeSapEnergyAssessment" do
               "name" => "lighting",
             },
           ],
+          "propertyAgeBand" => "K",
           "relatedPartyDisclosureNumber" => 1,
           "relatedPartyDisclosureText" => nil,
           "status" => "EXPIRED",

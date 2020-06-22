@@ -197,11 +197,13 @@
             </SAP-Heating>
             <SAP-Building-Parts>
                 <SAP-Building-Part>
-                    <Building-Part-Number>50</Building-Part-Number>
+                    <Building-Part-Number>1</Building-Part-Number>
+                    <Construction-Age-Band>K</Construction-Age-Band>
                     <Overshading>1</Overshading>
                 </SAP-Building-Part>
                 <SAP-Building-Part>
                     <Building-Part-Number>50</Building-Part-Number>
+                    <Construction-Age-Band>A</Construction-Age-Band>
                     <Overshading>1</Overshading>
                 </SAP-Building-Part>
             </SAP-Building-Parts>
