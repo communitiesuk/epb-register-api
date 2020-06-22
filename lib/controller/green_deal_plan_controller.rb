@@ -17,7 +17,7 @@ module Controller
       end
     end
 
-    get "/api/greendeal/rhi/assessments/:assessment_id/latest",
+    get "/api/greendeal/rhi/assessments/:assessment_id",
         jwt_auth: %w[greendeal:assessment:fetch] do
       assessment_id = params[:assessment_id]
       results =
