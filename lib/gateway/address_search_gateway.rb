@@ -20,7 +20,10 @@ module Gateway
             town,
             postcode
           FROM assessments
-          WHERE REPLACE(postcode, ' ', '') = $1"
+          WHERE
+            cancelled_at IS NULL
+          AND not_for_issue_at IS NULL
+          AND REPLACE(postcode, ' ', '') = $1"
 
       binds = [
         ActiveRecord::Relation::QueryAttribute.new(
@@ -70,7 +73,10 @@ module Gateway
            town,
            postcode
          FROM assessments
-         WHERE assessment_id = $1',
+         WHERE
+           cancelled_at IS NULL
+         AND not_for_issue_at IS NULL
+         AND assessment_id = $1',
         "SQL",
         [
           ActiveRecord::Relation::QueryAttribute.new(
@@ -97,8 +103,7 @@ module Gateway
         FROM assessments
         WHERE
           cancelled_at IS NULL
-        AND
-          not_for_issue_at IS NULL
+        AND not_for_issue_at IS NULL
         AND (#{
           levenshtein('address_line1', '$1', STREET_PERMISSIVENESS)
         } OR #{levenshtein('address_line2', '$1', STREET_PERMISSIVENESS)} OR #{
