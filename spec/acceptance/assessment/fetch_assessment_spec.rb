@@ -46,6 +46,7 @@ describe "Acceptance::Assessment" do
       },
       dateOfAssessment: "2006-05-04",
       dateRegistered: "2006-05-04",
+      tenure: "1",
       totalFloorArea: 10.0,
       typeOfAssessment: "SAP",
       dwellingType: "Dwelling-Type0",

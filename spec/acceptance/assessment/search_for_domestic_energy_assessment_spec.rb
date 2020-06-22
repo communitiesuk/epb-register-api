@@ -283,6 +283,7 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
             assessor: nil,
             dateOfAssessment: "2006-05-04",
             dateRegistered: "2006-05-04",
+            tenure: "1",
             totalFloorArea: 0.0,
             typeOfAssessment: "RdSAP",
             dwellingType: "Dwelling-Type0",
@@ -509,6 +510,7 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
             assessmentId: "0000-0000-0000-0000-0000",
             dateOfAssessment: "2006-05-04",
             dateRegistered: "2006-05-04",
+            tenure: "1",
             totalFloorArea: 0.0,
             typeOfAssessment: "RdSAP",
             dwellingType: "Dwelling-Type0",
@@ -892,6 +894,7 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
               relatedPartyDisclosureNumber: nil,
               relatedPartyDisclosureText: "Related-Party-Disclosure-Text0",
               status: "EXPIRED",
+              tenure: "1",
             }.to_json,
           )
 

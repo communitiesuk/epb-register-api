@@ -6,6 +6,10 @@
   "root": "report_header",
   "path": ["RRN"]
 }, {
+  "key": "tenure",
+  "root": "report_header",
+  "path": ["Tenure"]
+}, {
   "key": "assessment_type",
   "path": ["_"],
   "default": "RdSAP"

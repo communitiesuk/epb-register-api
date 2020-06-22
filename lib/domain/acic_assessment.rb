@@ -14,6 +14,7 @@ module Domain
       migrated: nil,
       date_of_assessment: nil,
       date_registered: nil,
+      tenure: nil,
       dwelling_type: nil,
       type_of_assessment: nil,
       total_floor_area: nil,

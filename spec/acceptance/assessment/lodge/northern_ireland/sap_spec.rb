@@ -83,6 +83,7 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
           "addressLine2" => "",
           "addressLine3" => "",
           "addressLine4" => "",
+          "tenure" => "1",
           "assessmentId" => "0000-0000-0000-0000-0000",
           "assessor" => {
             "contactDetails" => {

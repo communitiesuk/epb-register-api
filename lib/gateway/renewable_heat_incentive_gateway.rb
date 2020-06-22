@@ -8,7 +8,7 @@ module Gateway
           scheme_assessor_id, assessment_id, date_of_assessment, date_registered, dwelling_type,
           type_of_assessment, total_floor_area, current_energy_efficiency_rating,
           potential_energy_efficiency_rating, postcode, current_space_heating_demand,
-          current_water_heating_demand, impact_of_loft_insulation,
+          current_water_heating_demand, impact_of_loft_insulation, tenure,
           impact_of_cavity_insulation, property_summary
           FROM assessments
         WHERE assessment_id = $1 AND type_of_assessment IN('RdSAP', 'SAP')"
@@ -40,7 +40,7 @@ module Gateway
         dwelling_type: row["dwelling_type"],
         postcode: row["postcode"],
         property_age_band: nil,
-        tenure: nil,
+        tenure: row["tenure"],
         total_floor_area: row["total_floor_area"],
         cavity_wall_insulation:
           row["impact_of_cavity_insulation"] ? true : false,

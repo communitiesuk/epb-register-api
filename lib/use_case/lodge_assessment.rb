@@ -82,6 +82,7 @@ module UseCase
           migrated: migrated,
           date_of_assessment: data[:inspection_date],
           date_registered: data[:registration_date],
+          tenure: data[:tenure],
           dwelling_type: data[:dwelling_type],
           type_of_assessment: assessment_type,
           total_floor_area: data[:total_floor_area],
