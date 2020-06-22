@@ -95,7 +95,11 @@ module Gateway
           town,
           postcode
         FROM assessments
-        WHERE (#{
+        WHERE
+          cancelled_at IS NULL
+        AND
+          not_for_issue_at IS NULL
+        AND (#{
           levenshtein('address_line1', '$1', STREET_PERMISSIVENESS)
         } OR #{levenshtein('address_line2', '$1', STREET_PERMISSIVENESS)} OR #{
           levenshtein('address_line3', '$1', STREET_PERMISSIVENESS)
