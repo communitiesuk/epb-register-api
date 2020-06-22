@@ -1,5 +1,12 @@
 module Gateway
   class RenewableHeatIncentiveGateway
+    TENURE = {
+      "1" => "Owner-occupied",
+      "2" => "Rented (social)",
+      "3" => "Rented (private)",
+      "ND" => "Unknown",
+    }.freeze
+
     class Assessor < ActiveRecord::Base; end
 
     def fetch(assessment_id)
@@ -40,7 +47,7 @@ module Gateway
         dwelling_type: row["dwelling_type"],
         postcode: row["postcode"],
         property_age_band: nil,
-        tenure: row["tenure"],
+        tenure: TENURE[row["tenure"]],
         total_floor_area: row["total_floor_area"],
         cavity_wall_insulation:
           row["impact_of_cavity_insulation"] ? true : false,

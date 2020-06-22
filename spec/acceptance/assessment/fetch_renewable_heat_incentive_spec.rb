@@ -112,7 +112,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
             dwellingType: "Dwelling-Type0",
             postcode: "A0 0AA",
             propertyAgeBand: nil,
-            tenure: "1",
+            tenure: "Owner-occupied",
             totalFloorArea: 10.0,
             cavityWallInsulation: true,
             loftInsulation: true,
