@@ -105,7 +105,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
         JSON.parse(
           {
             epcRrn: "0000-0000-0000-0000-0000",
-            assessorName: nil,
+            assessorName: "Someone Muddle Person",
             reportType: "SAP",
             inspectionDate: "2006-05-04",
             lodgementDate: "2006-05-04",

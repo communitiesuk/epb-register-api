@@ -34,14 +34,14 @@ module Gateway
     def record_to_rhi_domain(row)
       Domain::RenewableHeatIncentive.new(
         epc_rrn: row["assessment_id"],
-        assessor_name: nil,
+        assessor_name: fetch_assessor_name(row["scheme_assessor_id"]),
         report_type: row["type_of_assessment"],
         inspection_date: row["date_registered"],
         lodgement_date: row["date_of_assessment"],
         dwelling_type: row["dwelling_type"],
         postcode: row["postcode"],
-        property_age_band: row["property_age_band"],
-        tenure: row["tenure"],
+        property_age_band: nil,
+        tenure: nil,
         total_floor_area: row["total_floor_area"],
         cavity_wall_insulation: nil,
         loft_insulation: nil,
@@ -63,6 +63,15 @@ module Gateway
             get_energy_rating_band(row["potential_energy_efficiency_rating"]),
         },
       )
+    end
+
+    def fetch_assessor_name(scheme_assessor_id)
+      assessor = Assessor.find_by(scheme_assessor_id: scheme_assessor_id)
+      assessor_full_name =
+        "#{assessor['first_name']} #{assessor['middle_names']} #{
+          assessor['last_name']
+        }"
+      assessor_full_name
     end
 
     def fetch_property_description(property, name)
