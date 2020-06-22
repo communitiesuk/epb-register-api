@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "date"
-
 describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
   include RSpecAssessorServiceMixin
 
@@ -58,6 +56,30 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
     end
 
     context "with property summary descriptions" do
+      let(:assessment) { Nokogiri.XML valid_sap_xml }
+
+      let(:secondary_heating) do
+        assessment.at("Secondary-Heating/Energy-Efficiency-Rating")
+      end
+
+      let(:secondary_heating_description) do
+        Nokogiri::XML::Node.new "Description", assessment
+      end
+
+      let(:hot_water) { assessment.at("Hot-Water/Energy-Efficiency-Rating") }
+
+      let(:hot_water_description) do
+        Nokogiri::XML::Node.new "Description", assessment
+      end
+
+      let(:main_heating) do
+        assessment.at("Main-Heating/Energy-Efficiency-Rating")
+      end
+
+      let(:main_heating_description) do
+        Nokogiri::XML::Node.new "Description", assessment
+      end
+
       let(:response) do
         JSON.parse fetch_renewable_heat_incentive("0000-0000-0000-0000-0000")
                      .body,
@@ -65,8 +87,16 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
       end
 
       before do
-        lodge_assessment assessment_body:
-                           xml_with_property_summary_descriptions,
+        main_heating_description.content = "Gas-fired central heating"
+        main_heating.add_next_sibling main_heating_description
+
+        secondary_heating_description.content = "Electric bar heater"
+        secondary_heating.add_next_sibling secondary_heating_description
+
+        hot_water_description.content = "Electrical immersion heater"
+        hot_water.add_next_sibling hot_water_description
+
+        lodge_assessment assessment_body: assessment.to_xml,
                          accepted_responses: [201],
                          schema_name: "SAP-Schema-17.1",
                          auth_data: { scheme_ids: [scheme_id] }
@@ -100,26 +130,5 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
         )
       end
     end
-  end
-
-  def xml_with_property_summary_descriptions
-    doc = Nokogiri.XML valid_sap_xml
-
-    secondary_heating = doc.at("Secondary-Heating/Energy-Efficiency-Rating")
-    secondary_heating_description = Nokogiri::XML::Node.new "Description", doc
-    secondary_heating_description.content = "Electric bar heater"
-    secondary_heating.add_next_sibling secondary_heating_description
-
-    hot_water = doc.at("Hot-Water/Energy-Efficiency-Rating")
-    hot_water_description = Nokogiri::XML::Node.new "Description", doc
-    hot_water_description.content = "Electrical immersion heater"
-    hot_water.add_next_sibling hot_water_description
-
-    main_heating = doc.at("Main-Heating/Energy-Efficiency-Rating")
-    main_heating_description = Nokogiri::XML::Node.new "Description", doc
-    main_heating_description.content = "Gas-fired central heating"
-    main_heating.add_next_sibling main_heating_description
-
-    doc.to_xml
   end
 end
