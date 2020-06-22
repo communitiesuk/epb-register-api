@@ -1,6 +1,5 @@
 module Gateway
   class RenewableHeatIncentiveGateway
-    class Assessment < ActiveRecord::Base; end
     class Assessor < ActiveRecord::Base; end
 
     def fetch(assessment_id)
@@ -10,7 +9,7 @@ module Gateway
           type_of_assessment, total_floor_area, current_energy_efficiency_rating,
           potential_energy_efficiency_rating, postcode, current_space_heating_demand,
           current_water_heating_demand, impact_of_loft_insulation,
-          impact_of_cavity_insulation, impact_of_solid_wall_insulation, property_summary
+          impact_of_cavity_insulation, property_summary
           FROM assessments
         WHERE assessment_id = $1 AND type_of_assessment IN('RdSAP', 'SAP')"
 
@@ -43,8 +42,9 @@ module Gateway
         property_age_band: nil,
         tenure: nil,
         total_floor_area: row["total_floor_area"],
-        cavity_wall_insulation: nil,
-        loft_insulation: nil,
+        cavity_wall_insulation:
+          row["impact_of_cavity_insulation"] ? true : false,
+        loft_insulation: row["impact_of_loft_insulation"] ? true : false,
         space_heating:
           fetch_property_description(row["property_summary"], "main_heating"),
         water_heating:
