@@ -5,104 +5,75 @@ require "date"
 describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
   include RSpecAssessorServiceMixin
 
-  let(:fetch_assessor_stub) { AssessorStub.new }
-
   let(:valid_sap_xml) do
     File.read File.join Dir.pwd, "spec/fixtures/samples/sap.xml"
   end
 
-  let(:valid_assessor_request_body) do
-    {
-      firstName: "Someone",
-      middleNames: "Muddle",
-      lastName: "Person",
-      dateOfBirth: "1991-02-25",
-      searchResultsComparisonPostcode: "",
-      qualifications: {
-        domesticRdSap: "ACTIVE",
-        domesticSap: "INACTIVE",
-        nonDomesticSp3: "INACTIVE",
-        nonDomesticCc4: "INACTIVE",
-        nonDomesticDec: "INACTIVE",
-        nonDomesticNos3: "INACTIVE",
-        nonDomesticNos4: "STRUCKOFF",
-        nonDomesticNos5: "SUSPENDED",
-        gda: "INACTIVE",
-      },
-      contactDetails: {
-        telephoneNumber: "010199991010101", email: "person@person.com"
-      },
-    }
-  end
-
   context "security" do
     it "rejects a request that is not authenticated" do
-      fetch_renewable_heat_incentive("123", [401], false)
+      fetch_renewable_heat_incentive "123", [401], false
     end
 
     it "rejects a request with the wrong scopes" do
-      fetch_renewable_heat_incentive("124", [403], true, {}, %w[wrong:scope])
+      fetch_renewable_heat_incentive "124", [403], true, {}, %w[wrong:scope]
     end
   end
 
   context "when a domestic assessment doesnt exist" do
+    let(:response) do
+      JSON.parse fetch_renewable_heat_incentive("DOESNT-EXIST", [404]).body,
+                 symbolize_names: true
+    end
+
     it "returns status 404 for a get" do
-      fetch_renewable_heat_incentive("DOESNT-EXIST", [404])
+      fetch_renewable_heat_incentive "DOESNT-EXIST", [404]
     end
 
     it "returns an error message structure" do
-      response_body = fetch_renewable_heat_incentive("DOESNT-EXIST", [404]).body
-
-      expect(JSON.parse(response_body)).to eq(
-        {
-          "errors" => [
-            { "code" => "NOT_FOUND", "title" => "Assessment not found" },
-          ],
-        },
+      expect(response).to eq(
+        { errors: [{ code: "NOT_FOUND", title: "Assessment not found" }] },
       )
     end
   end
 
-  context "when fetching a domestic assessment exists" do
-    it "returns status 200" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(
-        scheme_id,
-        "SPEC000000",
-        fetch_assessor_stub.fetch_request_body(domesticSap: "ACTIVE"),
-      )
+  context "when fetching a domestic assessment" do
+    let(:scheme_id) { add_scheme_and_get_id }
+    let(:response) do
+      fetch_renewable_heat_incentive("0000-0000-0000-0000-0000")
+    end
 
+    before do
+      add_assessor scheme_id,
+                   "SPEC000000",
+                   AssessorStub.new.fetch_request_body(domesticSap: "ACTIVE")
+    end
+
+    it "returns status 200" do
       lodge_assessment assessment_body: valid_sap_xml,
                        accepted_responses: [201],
                        auth_data: { scheme_ids: [scheme_id] },
                        schema_name: "SAP-Schema-17.1"
 
-      response = fetch_renewable_heat_incentive("0000-0000-0000-0000-0000")
       expect(response.status).to eq(200)
     end
 
-    it "returns the assessment details" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(
-        scheme_id,
-        "SPEC000000",
-        AssessorStub.new.fetch_request_body({ domesticSap: "ACTIVE" }),
-      )
+    context "with property summary descriptions" do
+      let(:response) do
+        JSON.parse fetch_renewable_heat_incentive("0000-0000-0000-0000-0000")
+                     .body,
+                   symbolize_names: true
+      end
 
-      lodge_assessment(
-        assessment_body: xml_with_property_summary_descriptions,
-        accepted_responses: [201],
-        schema_name: "SAP-Schema-17.1",
-        auth_data: { scheme_ids: [scheme_id] },
-      )
+      before do
+        lodge_assessment assessment_body:
+                           xml_with_property_summary_descriptions,
+                         accepted_responses: [201],
+                         schema_name: "SAP-Schema-17.1",
+                         auth_data: { scheme_ids: [scheme_id] }
+      end
 
-      response =
-        JSON.parse(
-          fetch_renewable_heat_incentive("0000-0000-0000-0000-0000").body,
-        )
-
-      expected_response =
-        JSON.parse(
+      it "returns the assessment details" do
+        expect(response[:data][0]).to eq(
           {
             epcRrn: "0000-0000-0000-0000-0000",
             assessorName: "Someone Muddle Person",
@@ -125,9 +96,9 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
               potentialRating: 50,
               potentialBand: "e",
             },
-          }.to_json,
+          },
         )
-      expect(response["data"][0]).to eq(expected_response)
+      end
     end
   end
 
