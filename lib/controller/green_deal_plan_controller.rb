@@ -2,7 +2,6 @@
 
 module Controller
   class GreenDealPlanController < Controller::BaseController
-
     get "/api/greendeal/rhi/assessments/:assessment_id/latest",
         jwt_auth: %w[greendeal:assessment:fetch] do
       assessment_id = params[:assessment_id]
