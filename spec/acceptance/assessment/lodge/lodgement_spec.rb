@@ -267,23 +267,26 @@ describe "Acceptance::Assessment::Lodge" do
     end
   end
 
-  context "when making an unauthenticated request to lodged as a migration from LandMark XML" do
-    it "should throw an error" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
+  context "when an unauthenticated migration request is made" do
+    let(:scheme_id) { add_scheme_and_get_id }
 
-      response =
+    let(:response) do
+      JSON.parse(
         lodge_assessment(
           assessment_body: valid_rdsap_xml,
           accepted_responses: [403],
           auth_data: { scheme_ids: [scheme_id] },
           migrated: true,
         )
+          .body,
+        symbolize_names: true,
+      )
+    end
 
-      body = JSON.parse(response.body, symbolize_names: true)
+    before { add_assessor scheme_id, "SPEC000000", valid_assessor_request_body }
 
-      expect(response.status).to eq(403)
-      expect(body).to eq(
+    it "shows the correct error response" do
+      expect(response).to eq(
         {
           errors: [
             {
@@ -297,21 +300,23 @@ describe "Acceptance::Assessment::Lodge" do
   end
 
   context "when an assessment is lodged as a lodgement from a scheme" do
-    it "should be false in migrated column" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
+    let(:scheme_id) { add_scheme_and_get_id }
 
-      lodge_assessment(
-        assessment_body: valid_rdsap_xml,
-        accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+    let(:migrated_column) do
+      ActiveRecord::Base.connection.execute(
+        "SELECT migrated FROM assessments WHERE assessment_id = '0000-0000-0000-0000-0000'",
       )
+    end
 
-      migrated_column =
-        ActiveRecord::Base.connection.execute(
-          "SELECT * FROM assessments WHERE assessment_id = '0000-0000-0000-0000-0000'",
-        )
+    before do
+      add_assessor scheme_id, "SPEC000000", valid_assessor_request_body
 
+      lodge_assessment assessment_body: valid_rdsap_xml,
+                       accepted_responses: [201],
+                       auth_data: { scheme_ids: [scheme_id] }
+    end
+
+    it "shows false in the migrated column" do
       expect(migrated_column.entries.first["migrated"]).to be_falsey
     end
   end
