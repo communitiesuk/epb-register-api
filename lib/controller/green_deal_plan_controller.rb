@@ -9,8 +9,7 @@ module Controller
         @container.get_object(:fetch_renewable_heat_incentive_use_case).execute(
           assessment_id,
         )
-      p results
-      json_api_response(code: 200, data: results.map(&:to_hash))
+      json_api_response(code: 200, data: results)
     rescue StandardError => e
       case e
       when UseCase::FetchRenewableHeatIncentive::NotFoundException

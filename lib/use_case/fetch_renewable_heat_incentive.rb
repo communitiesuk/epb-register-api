@@ -12,7 +12,6 @@ module UseCase
 
       raise NotFoundException unless renewable_heat_incentive
 
-      # p renewable_heat_incentive
       renewable_heat_incentive
     end
   end
