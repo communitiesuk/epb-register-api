@@ -8,7 +8,7 @@ module UseCase
 
     def execute(assessment_id)
       renewable_heat_incentive =
-        @renewable_heat_incentive_gateway.fetch(assessment_id)
+        @renewable_heat_incentive_gateway.fetch assessment_id
 
       raise NotFoundException unless renewable_heat_incentive
 
