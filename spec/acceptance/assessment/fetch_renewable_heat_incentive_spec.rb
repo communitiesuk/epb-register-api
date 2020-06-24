@@ -103,7 +103,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
       end
 
       it "returns the assessment details" do
-        expect(response[:data][0]).to eq(
+        expect(response[:data]).to eq(
           {
             assessment: {
               epcRrn: "0000-0000-0000-0000-0000",
