@@ -537,6 +537,53 @@ describe "Acceptance::AddressSearch::ByPostcode" do
           )
         end
       end
+
+      context "with a not for issue assessment" do
+        let(:response) do
+          JSON.parse(
+            assertive_get(
+              "/api/search/addresses?postcode=A0%200AA",
+              [200],
+              true,
+              {},
+              %w[address:search],
+            )
+              .body,
+            symbolize_names: true,
+          )
+        end
+
+        before do
+          update_assessment_status(
+            assessment_id: "0000-0000-0000-0000-0001",
+            assessment_status_body: { status: "NOT_FOR_ISSUE" },
+            auth_data: { scheme_ids: [scheme_id] },
+            accepted_responses: [200],
+          )
+        end
+
+        it "returns the expected address" do
+          expect(response[:data][:addresses][0]).to eq(
+            {
+              addressId: "RRN-0000-0000-0000-0000-0000",
+              line1: "1 Some Street",
+              line2: nil,
+              line3: nil,
+              line4: nil,
+              town: "Post-Town1",
+              postcode: "A0 0AA",
+              source: "PREVIOUS_ASSESSMENT",
+              existingAssessments: [
+                {
+                  assessmentId: "0000-0000-0000-0000-0000",
+                  assessmentStatus: "EXPIRED",
+                  assessmentType: "RdSAP",
+                },
+              ],
+            },
+          )
+        end
+      end
     end
   end
 end
