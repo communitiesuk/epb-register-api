@@ -15,7 +15,7 @@ task :generate_certificate do
     raise StandardError, "I will not seed the production db"
   end
 
-  ActiveRecord::Base.logger = nil
+  puts "creating assessments"
 
   addresses = [
     { id: "", line1: "Flat 32", line2: "11 Makup Street", line3: "", line4: "", town: "London", postcode: "E2 0SZ" },
@@ -341,17 +341,6 @@ task :generate_certificate do
     ]
 
     if rand(21) == 20
-      green_deal_assessments_query = "INSERT INTO
-              green_deal_assessments
-              (
-                green_deal_plan_id,
-                assessment_id
-              )
-              VALUES (
-                  '#{green_deal_plan_id}',
-                  '#{assessment_id}'
-              )"
-      ActiveRecord::Base.connection.execute(green_deal_assessments_query)
       green_deal_query = "INSERT INTO
               green_deal_plans
               (
@@ -394,6 +383,17 @@ task :generate_certificate do
 
       ActiveRecord::Base.connection.execute(green_deal_query)
 
+      green_deal_assessments_query = "INSERT INTO
+              green_deal_assessments
+              (
+                green_deal_plan_id,
+                assessment_id
+              )
+              VALUES (
+                  '#{green_deal_plan_id}',
+                  '#{assessment_id}'
+              )"
+      ActiveRecord::Base.connection.execute(green_deal_assessments_query)
     end
   end
 end
