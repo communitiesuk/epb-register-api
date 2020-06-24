@@ -224,6 +224,7 @@ module Gateway
               ) existing_assessments
               INNER JOIN assessments a ON existing_assessments.assessment_id = a.assessment_id
               WHERE existing_assessments.assessment_id != REPLACE($1, 'RRN-', '')
+                AND a.cancelled_at IS NULL
               UNION
               SELECT this_assessment.assessment_id,
                      this_assessment.type_of_assessment AS assessment_type,
@@ -245,7 +246,6 @@ module Gateway
             ),
           ],
         )
-
       address.existing_assessments = []
       address.address_id = "RRN-#{results[0]['assessment_id']}"
 
