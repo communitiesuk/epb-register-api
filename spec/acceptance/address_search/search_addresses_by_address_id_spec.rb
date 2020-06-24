@@ -171,6 +171,49 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
         )
       end
 
+      context "with a cancelled assessment" do
+        before do
+          update_assessment_status(
+            assessment_id: "0000-0000-0000-0000-0000",
+            assessment_status_body: { status: "CANCELLED" },
+            auth_data: { scheme_ids: [scheme_id] },
+            accepted_responses: [200],
+          )
+        end
+
+        it "returns the expected list of existing assessments" do
+          expect(response[:data][:addresses][0]).to eq(
+            {
+              addressId: "RRN-0000-0000-0000-0000-0001",
+              line1: "1 Some Street",
+              line2: nil,
+              line3: nil,
+              line4: nil,
+              town: "Post-Town1",
+              postcode: "A0 0AA",
+              source: "PREVIOUS_ASSESSMENT",
+              existingAssessments: [
+                {
+                  assessmentId: "0000-0000-0000-0000-0001",
+                  assessmentStatus: "ENTERED",
+                  assessmentType: "RdSAP",
+                },
+                {
+                  assessmentId: "0000-0000-0000-0000-0002",
+                  assessmentStatus: "ENTERED",
+                  assessmentType: "RdSAP",
+                },
+                {
+                  assessmentId: "0000-0000-0000-0000-0003",
+                  assessmentStatus: "ENTERED",
+                  assessmentType: "RdSAP",
+                },
+              ],
+            },
+          )
+        end
+      end
+
       describe "searching using an older address id" do
         let(:response) do
           JSON.parse(
