@@ -31,7 +31,7 @@ task :generate_certificate do
   ]
 
   dwelling_type = ["end-terrace house", "terrace house", "flat", "bungalow", "mansion", "castle"]
-  type_of_assessment = %w[RdSAP SAP]
+  type_of_assessment = %w[RdSAP SAP CEPC]
   current_space_heating_demand = [1233, 3445, 4546, 6748, 8910, 7483, 8963]
   current_water_heating_demand = [7983, 2321, 454, 648, 8932, 6483, 72_363]
   current_carbon_emission = [5.4, 4.327, 7.8, 4.5, 6.4, 4]
