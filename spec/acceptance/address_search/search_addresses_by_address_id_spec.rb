@@ -181,35 +181,30 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
           )
         end
 
-        it "returns the expected list of existing assessments" do
-          expect(response[:data][:addresses][0]).to eq(
-            {
-              addressId: "RRN-0000-0000-0000-0000-0001",
-              line1: "1 Some Street",
-              line2: nil,
-              line3: nil,
-              line4: nil,
-              town: "Post-Town1",
-              postcode: "A0 0AA",
-              source: "PREVIOUS_ASSESSMENT",
-              existingAssessments: [
-                {
-                  assessmentId: "0000-0000-0000-0000-0001",
-                  assessmentStatus: "ENTERED",
-                  assessmentType: "RdSAP",
-                },
-                {
-                  assessmentId: "0000-0000-0000-0000-0002",
-                  assessmentStatus: "ENTERED",
-                  assessmentType: "RdSAP",
-                },
-                {
-                  assessmentId: "0000-0000-0000-0000-0003",
-                  assessmentStatus: "ENTERED",
-                  assessmentType: "RdSAP",
-                },
-              ],
-            },
+        it "returns the cancelled assessment in existing assessments" do
+          expect(response[:data][:addresses][0][:existingAssessments]).to eq(
+            [
+              {
+                assessmentId: "0000-0000-0000-0000-0001",
+                assessmentStatus: "ENTERED",
+                assessmentType: "RdSAP",
+              },
+              {
+                assessmentId: "0000-0000-0000-0000-0002",
+                assessmentStatus: "ENTERED",
+                assessmentType: "RdSAP",
+              },
+              {
+                assessmentId: "0000-0000-0000-0000-0003",
+                assessmentStatus: "ENTERED",
+                assessmentType: "RdSAP",
+              },
+              {
+                assessmentId: "0000-0000-0000-0000-0000",
+                assessmentStatus: "CANCELLED",
+                assessmentType: "RdSAP",
+              },
+            ],
           )
         end
       end
@@ -224,35 +219,30 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
           )
         end
 
-        it "returns the expected list of existing assessments" do
-          expect(response[:data][:addresses][0]).to eq(
-            {
-              addressId: "RRN-0000-0000-0000-0000-0001",
-              line1: "1 Some Street",
-              line2: nil,
-              line3: nil,
-              line4: nil,
-              town: "Post-Town1",
-              postcode: "A0 0AA",
-              source: "PREVIOUS_ASSESSMENT",
-              existingAssessments: [
-                {
-                  assessmentId: "0000-0000-0000-0000-0001",
-                  assessmentStatus: "ENTERED",
-                  assessmentType: "RdSAP",
-                },
-                {
-                  assessmentId: "0000-0000-0000-0000-0002",
-                  assessmentStatus: "ENTERED",
-                  assessmentType: "RdSAP",
-                },
-                {
-                  assessmentId: "0000-0000-0000-0000-0000",
-                  assessmentStatus: "EXPIRED",
-                  assessmentType: "RdSAP",
-                },
-              ],
-            },
+        it "returns the not for issue assessment in existing assessments" do
+          expect(response[:data][:addresses][0][:existingAssessments]).to eq(
+            [
+              {
+                assessmentId: "0000-0000-0000-0000-0001",
+                assessmentStatus: "ENTERED",
+                assessmentType: "RdSAP",
+              },
+              {
+                assessmentId: "0000-0000-0000-0000-0002",
+                assessmentStatus: "ENTERED",
+                assessmentType: "RdSAP",
+              },
+              {
+                assessmentId: "0000-0000-0000-0000-0003",
+                assessmentStatus: "NOT_FOR_ISSUE",
+                assessmentType: "RdSAP",
+              },
+              {
+                assessmentId: "0000-0000-0000-0000-0000",
+                assessmentStatus: "EXPIRED",
+                assessmentType: "RdSAP",
+              },
+            ],
           )
         end
       end
