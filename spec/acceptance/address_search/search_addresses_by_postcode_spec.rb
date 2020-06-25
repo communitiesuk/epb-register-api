@@ -252,6 +252,53 @@ describe "Acceptance::AddressSearch::ByPostcode" do
         end
       end
 
+      context "when the input postcode is not in the same case as the recorded postcode" do
+        let(:response) do
+          JSON.parse(
+            assertive_get(
+              "/api/search/addresses?postcode=a00aa",
+              [200],
+              true,
+              {},
+              %w[address:search],
+            )
+              .body,
+            symbolize_names: true,
+          )
+        end
+
+        it "returns the expected amount of addresses" do
+          expect(response[:data][:addresses].length).to eq 3
+        end
+
+        it "returns the address" do
+          expect(response[:data][:addresses][0]).to eq(
+            {
+              addressId: "RRN-0000-0000-0000-0000-0000",
+              line1: "1 Some Street",
+              line2: nil,
+              line3: nil,
+              line4: nil,
+              town: "Post-Town1",
+              postcode: "A0 0AA",
+              source: "PREVIOUS_ASSESSMENT",
+              existingAssessments: [
+                {
+                  assessmentId: "0000-0000-0000-0000-0000",
+                  assessmentStatus: "EXPIRED",
+                  assessmentType: "RdSAP",
+                },
+                {
+                  assessmentId: "0000-0000-0000-0000-0001",
+                  assessmentStatus: "EXPIRED",
+                  assessmentType: "RdSAP",
+                },
+              ],
+            },
+          )
+        end
+      end
+
       context "when building name or number is supplied" do
         describe "with slightly misspelled building name" do
           let(:response) do

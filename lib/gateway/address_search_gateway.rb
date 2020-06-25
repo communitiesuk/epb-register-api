@@ -23,12 +23,12 @@ module Gateway
           WHERE
             cancelled_at IS NULL
           AND not_for_issue_at IS NULL
-          AND REPLACE(postcode, ' ', '') = $1"
+          AND LOWER(REPLACE(postcode, ' ', '')) = $1"
 
       binds = [
         ActiveRecord::Relation::QueryAttribute.new(
           "postcode",
-          postcode,
+          postcode.downcase,
           ActiveRecord::Type::String.new,
         ),
       ]
