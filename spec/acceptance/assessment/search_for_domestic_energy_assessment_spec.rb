@@ -285,6 +285,40 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
 
       expect(after_assessments[:data][:assessments][0]).to eq(nil)
     end
+
+    it "doesn't show not for issue assessments" do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body_dom)
+
+      lodge_assessment(
+        assessment_body: valid_rdsap_xml,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] },
+      )
+
+      before_assessments =
+        JSON.parse(
+          domestic_assessments_search_by_postcode("A0 0AA").body,
+          symbolize_names: true,
+        )
+
+      expect(before_assessments[:data][:assessments][0]).not_to eq(nil)
+
+      update_assessment_status(
+        assessment_id: "0000-0000-0000-0000-0000",
+        assessment_status_body: { "status": "NOT_FOR_ISSUE" },
+        accepted_responses: [200],
+        auth_data: { scheme_ids: [scheme_id] },
+      )
+
+      after_assessments =
+        JSON.parse(
+          domestic_assessments_search_by_postcode("A0 0AA").body,
+          symbolize_names: true,
+        )
+
+      expect(after_assessments[:data][:assessments][0]).to eq(nil)
+    end
   end
 
   context "when a search assessment id is valid" do

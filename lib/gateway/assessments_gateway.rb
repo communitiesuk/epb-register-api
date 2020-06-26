@@ -60,6 +60,7 @@ module Gateway
           ActiveRecord::Base.sanitize_sql(postcode)
         }' AND type_of_assessment IN('RdSAP', 'SAP')
           AND cancelled_at IS NULL
+          AND not_for_issue_at IS NULL
           AND opt_out = false"
       response = Assessment.connection.execute(sql)
       result = []

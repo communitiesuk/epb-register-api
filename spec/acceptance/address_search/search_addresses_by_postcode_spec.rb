@@ -67,7 +67,8 @@ describe "Acceptance::AddressSearch::ByPostcode" do
       cepc_assessment_id.children = "0000-0000-0000-0000-0002"
       cepc_address_line_one.children = "3 Other Street"
       cepc_scheme_assessor_id.children = "SPEC000000"
-      cepc_assessment_date.children = Date.today.prev_day(2).strftime("%Y-%m-%d")
+      cepc_assessment_date.children =
+        Date.today.prev_day(2).strftime("%Y-%m-%d")
 
       lodge_assessment(
         assessment_body: non_domestic_xml.to_xml,
