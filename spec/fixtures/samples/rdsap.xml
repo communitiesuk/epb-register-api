@@ -100,12 +100,12 @@
             <CO2-Emissions-Current>2.4</CO2-Emissions-Current>
             <CO2-Emissions-Current-Per-Floor-Area>0</CO2-Emissions-Current-Per-Floor-Area>
             <CO2-Emissions-Potential>1.4</CO2-Emissions-Potential>
-            <Lighting-Cost-Current>0</Lighting-Cost-Current>
-            <Lighting-Cost-Potential>0</Lighting-Cost-Potential>
-            <Heating-Cost-Current>0</Heating-Cost-Current>
-            <Heating-Cost-Potential>0</Heating-Cost-Potential>
-            <Hot-Water-Cost-Current>0</Hot-Water-Cost-Current>
-            <Hot-Water-Cost-Potential>0</Hot-Water-Cost-Potential>
+            <Lighting-Cost-Current>123.45</Lighting-Cost-Current>
+            <Lighting-Cost-Potential>84.23</Lighting-Cost-Potential>
+            <Heating-Cost-Current>365.98</Heating-Cost-Current>
+            <Heating-Cost-Potential>250.34</Heating-Cost-Potential>
+            <Hot-Water-Cost-Current>200.4</Hot-Water-Cost-Current>
+            <Hot-Water-Cost-Potential>180.43</Hot-Water-Cost-Potential>
         </Energy-Use>
       <Suggested-Improvements>
         <Improvement>

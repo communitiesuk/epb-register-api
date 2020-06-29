@@ -54,7 +54,8 @@ module Gateway
             current_space_heating_demand, current_water_heating_demand, impact_of_loft_insulation,
             impact_of_cavity_insulation, impact_of_solid_wall_insulation, tenure, property_age_band,
             current_carbon_emission, potential_carbon_emission, property_summary, related_party_disclosure_number,
-            related_party_disclosure_text, cancelled_at, not_for_issue_at
+            related_party_disclosure_text, cancelled_at, not_for_issue_at, lighting_cost_current,
+          heating_cost_current, hot_water_cost_current, lighting_cost_potential, heating_cost_potential, hot_water_cost_potential
         FROM assessments
         WHERE postcode = '#{
           ActiveRecord::Base.sanitize_sql(postcode)
@@ -66,11 +67,7 @@ module Gateway
       result = []
 
       response.each do |row|
-        row.symbolize_keys!
-        row[:property_summary] = JSON.parse(row[:property_summary])
-        assessment_domain = Domain::Assessment.new(row)
-
-        result << assessment_domain
+        result << row_to_domain(row)
       end
 
       result
@@ -88,7 +85,8 @@ module Gateway
           current_space_heating_demand, current_water_heating_demand, impact_of_loft_insulation,
           impact_of_cavity_insulation, impact_of_solid_wall_insulation, tenure, property_age_band,
           current_carbon_emission, potential_carbon_emission, property_summary, related_party_disclosure_number,
-           related_party_disclosure_text, cancelled_at, not_for_issue_at, address_id
+           related_party_disclosure_text, cancelled_at, not_for_issue_at, address_id, lighting_cost_current,
+          heating_cost_current, hot_water_cost_current, lighting_cost_potential, heating_cost_potential, hot_water_cost_potential
           FROM assessments
         WHERE assessment_id = '#{
           ActiveRecord::Base.sanitize_sql(assessment_id)
@@ -111,17 +109,14 @@ module Gateway
 
       result = []
       response.each do |row|
-        row.symbolize_keys!
+        assessment_domain = row_to_domain(row)
 
         improvement_records =
           DomesticEpcEnergyImprovement.where(assessment_id: assessment_id)
         improvements =
           improvement_records.map { |i| row_to_energy_improvement(i).to_hash }
 
-        row[:recommended_improvements] = improvements
-
-        row[:property_summary] = JSON.parse(row[:property_summary])
-        assessment_domain = Domain::Assessment.new(row)
+        assessment_domain.set(:recommended_improvements, improvements)
 
         result << assessment_domain
       end
@@ -139,7 +134,8 @@ module Gateway
           current_space_heating_demand, current_water_heating_demand, impact_of_loft_insulation,
           impact_of_cavity_insulation, impact_of_solid_wall_insulation, tenure, property_age_band,
           current_carbon_emission, potential_carbon_emission, property_summary, related_party_disclosure_number,
-          related_party_disclosure_text, cancelled_at, not_for_issue_at
+          related_party_disclosure_text, cancelled_at, not_for_issue_at, lighting_cost_current,
+          heating_cost_current, hot_water_cost_current, lighting_cost_potential, heating_cost_potential, hot_water_cost_potential
         FROM assessments
         WHERE (address_line1 ILIKE '%#{
           ActiveRecord::Base.sanitize_sql(street_name)
@@ -162,11 +158,7 @@ module Gateway
 
       result = []
       response.each do |row|
-        row.symbolize_keys!
-        row[:property_summary] = JSON.parse(row[:property_summary])
-        assessment_domain = Domain::Assessment.new(row)
-
-        result << assessment_domain
+        result << row_to_domain(row)
       end
 
       result
@@ -212,6 +204,28 @@ module Gateway
       improvements.each do |improvement|
         DomesticEpcEnergyImprovement.create(improvement)
       end
+    end
+
+    def row_to_domain(row)
+      row.symbolize_keys!
+      row[:property_summary] = JSON.parse(row[:property_summary])
+      lighting_cost_current = row.delete(:lighting_cost_current)
+      heating_cost_current = row.delete(:heating_cost_current)
+      hot_water_cost_current = row.delete(:hot_water_cost_current)
+      lighting_cost_potential = row.delete(:lighting_cost_potential)
+      heating_cost_potential = row.delete(:heating_cost_potential)
+      hot_water_cost_potential = row.delete(:hot_water_cost_potential)
+      domain = Domain::Assessment.new(row)
+
+      if domain.is_type?(Domain::RdsapAssessment) || domain.is_type?(Domain::SapAssessment)
+        domain.set(:lighting_cost_current, lighting_cost_current)
+        domain.set(:heating_cost_current, heating_cost_current)
+        domain.set(:hot_water_cost_current, hot_water_cost_current)
+        domain.set(:lighting_cost_potential, lighting_cost_potential)
+        domain.set(:heating_cost_potential, heating_cost_potential)
+        domain.set(:hot_water_cost_potential, hot_water_cost_potential)
+      end
+      domain
     end
 
     def get_energy_rating_band(number)

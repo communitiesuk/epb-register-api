@@ -33,6 +33,12 @@ module Domain
       address_line3: nil,
       address_line4: nil,
       town: nil,
+      lighting_cost_current: nil,
+      heating_cost_current: nil,
+      hot_water_cost_current: nil,
+      lighting_cost_potential: nil,
+      heating_cost_potential: nil,
+      hot_water_cost_potential: nil,
       current_space_heating_demand: nil,
       current_water_heating_demand: nil,
       impact_of_loft_insulation: nil,
@@ -86,6 +92,12 @@ module Domain
       @address_line3 = address_line3
       @address_line4 = address_line4
       @town = town
+      @lighting_cost_current = lighting_cost_current
+      @heating_cost_current = heating_cost_current
+      @hot_water_cost_current = hot_water_cost_current
+      @lighting_cost_potential = lighting_cost_potential
+      @heating_cost_potential = heating_cost_potential
+      @hot_water_cost_potential = hot_water_cost_potential
       @current_space_heating_demand = current_space_heating_demand.to_f
       @current_water_heating_demand = current_water_heating_demand.to_f
       @impact_of_loft_insulation = impact_of_loft_insulation
@@ -149,6 +161,12 @@ module Domain
         address_line3: @address_line3,
         address_line4: @address_line4,
         town: @town,
+        lighting_cost_current: @lighting_cost_current.to_f,
+        heating_cost_current: @heating_cost_current.to_f,
+        hot_water_cost_current: @hot_water_cost_current.to_f,
+        lighting_cost_potential: @lighting_cost_potential.to_f,
+        heating_cost_potential: @heating_cost_potential.to_f,
+        hot_water_cost_potential: @hot_water_cost_potential.to_f,
         heat_demand: {
           current_space_heating_demand: @current_space_heating_demand.to_f,
           current_water_heating_demand: @current_water_heating_demand.to_f,
@@ -215,6 +233,12 @@ module Domain
         address_line3: @address_line3,
         address_line4: @address_line4,
         town: @town,
+        lighting_cost_current: @lighting_cost_current.to_f,
+        heating_cost_current: @heating_cost_current.to_f,
+        hot_water_cost_current: @hot_water_cost_current.to_f,
+        lighting_cost_potential: @lighting_cost_potential.to_f,
+        heating_cost_potential: @heating_cost_potential.to_f,
+        hot_water_cost_potential: @hot_water_cost_potential.to_f,
         current_space_heating_demand: @current_space_heating_demand,
         current_water_heating_demand: @current_water_heating_demand,
         impact_of_loft_insulation: @impact_of_loft_insulation,

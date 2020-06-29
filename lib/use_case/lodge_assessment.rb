@@ -109,6 +109,12 @@ module UseCase
           address_line3: data[:address_line_three] || "",
           address_line4: "",
           town: data[:town],
+          # lighting_cost_current: data[:lighting_cost_current],
+          # heating_cost_current: data[:heating_cost_current],
+          # hot_water_cost_current: data[:hot_water_cost_current],
+          # lighting_cost_potential: data[:lighting_cost_potential],
+          # heating_cost_potential: data[:heating_cost_potential],
+          # hot_water_cost_potential: data[:hot_water_cost_potential],
           current_space_heating_demand:
             data[:space_heating] || data[:new_space_heating],
           current_water_heating_demand:
@@ -125,6 +131,15 @@ module UseCase
           property_age_band: data[:property_age_band],
           xml: data[:raw_data],
         )
+
+      if assessment.is_type?(Domain::RdsapAssessment) || assessment.is_type?(Domain::SapAssessment)
+        assessment.set(:lighting_cost_current, data[:lighting_cost_current])
+        assessment.set(:heating_cost_current, data[:heating_cost_current])
+        assessment.set(:hot_water_cost_current, data[:hot_water_cost_current])
+        assessment.set(:lighting_cost_potential, data[:lighting_cost_potential])
+        assessment.set(:heating_cost_potential, data[:heating_cost_potential])
+        assessment.set(:hot_water_cost_potential, data[:hot_water_cost_potential])
+      end
 
       validator = Helper::RdsapValidator::ValidateAll.new
       errors = validator.validate assessment

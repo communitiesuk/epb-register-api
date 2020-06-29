@@ -30,5 +30,9 @@ module Domain
     def get(key)
       @assessment.get(key)
     end
+
+    def is_type?(expected_class)
+      @assessment.is_a?(expected_class)
+    end
   end
 end

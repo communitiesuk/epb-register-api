@@ -66,6 +66,12 @@ describe "Acceptance::Assessment" do
       addressLine2: "",
       addressLine3: "",
       addressLine4: "",
+      lightingCostCurrent: 123.45,
+      heatingCostCurrent: 365.98,
+      hotWaterCostCurrent: 200.40,
+      lightingCostPotential: 84.23,
+      heatingCostPotential: 250.34,
+      hotWaterCostPotential: 180.43,
       heatDemand: {
         currentSpaceHeatingDemand: 30.0,
         currentWaterHeatingDemand: 60.0,

@@ -100,6 +100,30 @@
   "key": "potential_carbon_emission",
   "root": "energy_use",
   "path": ["CO2_Emissions_Potential"]
+},{
+  "key": "lighting_cost_current",
+  "root": "energy_use",
+  "path": ["Lighting_Cost_Current"]
+}, {
+  "key": "heating_cost_current",
+  "root": "energy_use",
+  "path": ["Heating_Cost_Current"]
+}, {
+  "key": "hot_water_cost_current",
+  "root": "energy_use",
+  "path": ["Hot_Water_Cost_Current"]
+}, {
+  "key": "lighting_cost_potential",
+  "root": "energy_use",
+  "path": ["Lighting_Cost_Potential"]
+}, {
+  "key": "heating_cost_potential",
+  "root": "energy_use",
+  "path": ["Heating_Cost_Potential"]
+}, {
+  "key": "hot_water_cost_potential",
+  "root": "energy_use",
+  "path": ["Hot_Water_Cost_Potential"]
 }, {
   "key": "improvements",
   "path": ["SAP_Report", "Energy_Assessment", "Suggested_Improvements", "Improvement"],

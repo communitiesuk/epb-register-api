@@ -42,6 +42,12 @@ module Controller
         potentialCarbonEmission: { type: "number" },
         optOut: { type: "boolean" },
         schemeAssessorId: { type: "string" },
+        lightingCostCurrent: { type: "number" },
+        heatingCostCurrent: { type: "number" },
+        hotWaterCostCurrent: { type: "number" },
+        lightingCostPotential: { type: "number" },
+        heatingCostPotential: { type: "number" },
+        hotWaterCostPotential: { type: "number" },
         heatDemand: {
           type: "object",
           required: %w[currentSpaceHeatingDemand currentWaterHeatingDemand],

@@ -59,6 +59,12 @@ describe "Acceptance::LodgeRdSapEnergyAssessment" do
         JSON.parse(fetch_assessment("0000-0000-0000-0000-0000").body)
       end
 
+      let(:lighting_cost_current) do
+        ActiveRecord::Base.connection.execute(
+            "SELECT lighting_cost_current FROM assessments WHERE assessment_id = '0000-0000-0000-0000-0000'",
+            )
+      end
+
       before do
         add_assessor(
           scheme_id,
@@ -118,6 +124,12 @@ describe "Acceptance::LodgeRdSapEnergyAssessment" do
           "dateOfExpiry" => "2016-05-04",
           "dateRegistered" => "2006-05-04",
           "dwellingType" => "Dwelling-Type0",
+          "lightingCostCurrent" => 123.45,
+          "heatingCostCurrent" => 365.98,
+          "hotWaterCostCurrent" => 200.40,
+          "lightingCostPotential" => 84.23,
+          "heatingCostPotential" => 250.34,
+          "hotWaterCostPotential" => 180.43,
           "heatDemand" => {
             "currentSpaceHeatingDemand" => 30.0,
             "currentWaterHeatingDemand" => 60.0,
