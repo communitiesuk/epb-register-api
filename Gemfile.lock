@@ -65,7 +65,7 @@ GEM
     rack (2.2.3)
     rack-protection (2.0.8.1)
       rack
-    rack-test (0.8.3)
+    rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rainbow (3.0.0)
     rake (13.0.1)
@@ -154,7 +154,7 @@ DEPENDENCIES
   pg!
   prettier (~> 0.18.2)!
   pry (~> 0.13.1)!
-  rack-test (~> 0.8.3)!
+  rack-test (~> 1.1.0)!
   rake!
   rspec (~> 3.0)!
   rubocop-govuk (~> 3.7)!
