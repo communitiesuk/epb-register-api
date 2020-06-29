@@ -5,11 +5,14 @@ describe UseCase::FetchAssessment do
 
   let(:green_deal_plans_gateway) { GreenDealPlansGatewayStub.new }
 
+  let(:related_assessments_gateway) { RelatedAssessmentsGatewayStub.new }
+
   let(:fetch_domestic_energy_assessment) do
     described_class.new(
       domestic_energy_assessment_gateway,
       assessors_gateway,
       green_deal_plans_gateway,
+      related_assessments_gateway,
     )
   end
 

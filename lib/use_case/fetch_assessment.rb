@@ -6,11 +6,13 @@ module UseCase
       assessments_gateway,
       assessors_gateway,
       green_deal_plans_gateway,
+      related_assessments_gateway,
       assessments_xml_gateway = false
     )
       @assessments_gateway = assessments_gateway
       @assessors_gateway = assessors_gateway
       @green_deal_plans_gateway = green_deal_plans_gateway
+      @related_assessments_gateway = related_assessments_gateway
       @assessments_xml_gateway = assessments_xml_gateway
     end
 
@@ -25,6 +27,13 @@ module UseCase
       assessor = @assessors_gateway.fetch(assessment.get(:scheme_assessor_id))
 
       assessment.set(:assessor, assessor)
+
+      related_assessments =
+        @related_assessments_gateway.fetch_related_assessments(
+          assessment.get(:address_id),
+        )
+
+      assessment.set(:related_assessments, related_assessments)
 
       green_deal_data = @green_deal_plans_gateway.fetch(assessment_id)
 

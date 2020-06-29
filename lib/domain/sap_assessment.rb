@@ -46,7 +46,8 @@ module Domain
       cancelled_at: nil,
       not_for_issue_at: nil,
       scheme_assessor_id: nil,
-      xml: nil
+      xml: nil,
+      related_assessments: nil
     )
       @migrated = migrated
       @date_of_assessment =
@@ -103,6 +104,7 @@ module Domain
         end
       @scheme_assessor_id = scheme_assessor_id
       @xml = xml
+      @related_assessments = related_assessments
     end
 
     def get_energy_rating_band(number)
@@ -168,6 +170,7 @@ module Domain
         property_age_band: @property_age_band,
         related_party_disclosure_number: @related_party_disclosure_number,
         related_party_disclosure_text: @related_party_disclosure_text,
+        related_assessments: @related_assessments,
       }
 
       data[:green_deal_plan] = @green_deal_plan if @green_deal_plan

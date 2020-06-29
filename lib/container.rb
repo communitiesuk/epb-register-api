@@ -13,6 +13,8 @@ class Container
 
     address_search_gateway = Gateway::AddressSearchGateway.new
 
+    related_assessments_gateway = Gateway::RelatedAssessmentsGateway.new
+
     assessments_gateway = Gateway::AssessmentsGateway.new
 
     postcode_gateway = Gateway::PostcodesGateway.new
@@ -34,6 +36,7 @@ class Container
         assessments_gateway,
         assessors_gateway,
         green_deal_plans_gateway,
+        related_assessments_gateway,
         assessments_xml_gateway,
       )
 
@@ -95,6 +98,7 @@ class Container
     @objects = {
       schemes_gateway: schemes_gateway,
       address_search_gateway: address_search_gateway,
+      related_assessments_gateway: related_assessments_gateway,
       add_new_scheme_use_case: add_new_scheme_use_case,
       get_all_schemes_use_case: get_all_schemes_use_case,
       add_assessor_use_case: add_assessor_use_case,

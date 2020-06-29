@@ -236,6 +236,13 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
             },
           ],
           "propertyAgeBand" => nil,
+          "relatedAssessments" => [
+            {
+              "assessmentId" => "0000-0000-0000-0000-0000",
+              "assessmentStatus" => "EXPIRED",
+              "assessmentType" => "SAP",
+            },
+          ],
           "relatedPartyDisclosureNumber" => nil,
           "relatedPartyDisclosureText" => "Related-Party-Disclosure-Text0",
           "status" => "EXPIRED",

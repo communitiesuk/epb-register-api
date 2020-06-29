@@ -177,6 +177,13 @@ describe "Acceptance::Assessment" do
       relatedPartyDisclosureNumber: 1,
       relatedPartyDisclosureText: nil,
       status: "EXPIRED",
+      relatedAssessments: [
+        {
+          assessmentId: "0000-0000-0000-0000-0000",
+          assessmentStatus: "EXPIRED",
+          assessmentType: "SAP",
+        },
+      ],
     }
   end
 
@@ -350,6 +357,58 @@ describe "Acceptance::Assessment" do
         expect(
           "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + response.body,
         ).to eq(sanitised_sap_xml)
+      end
+    end
+
+    context "when a certificate has related certificates" do
+      let(:expired_assessment) { Nokogiri.XML valid_sap_xml }
+
+      let(:entered_assessment) { Nokogiri.XML valid_sap_xml }
+
+      let(:response) { fetch_assessment("0000-0000-0000-0000-0000") }
+
+      it "returns all the related certificates" do
+        scheme_id = add_scheme_and_get_id
+        add_assessor(
+          scheme_id,
+          "SPEC000000",
+          AssessorStub.new.fetch_request_body(domesticSap: "ACTIVE"),
+        )
+
+        lodge_assessment assessment_body: expired_assessment.to_xml,
+                         accepted_responses: [201],
+                         auth_data: { scheme_ids: [scheme_id] },
+                         schema_name: "SAP-Schema-17.1"
+
+        address_id = entered_assessment.at("UPRN")
+        address_id.children = "RRN-0000-0000-0000-0000-0000"
+        assessment_id = entered_assessment.at("RRN")
+        assessment_id.children = "1234-3453-6245-2473-5623"
+        assessment_date = entered_assessment.at("Inspection-Date")
+        assessment_date.children = "2010-05-05"
+
+        lodge_assessment assessment_body: entered_assessment.to_xml,
+                         accepted_responses: [201],
+                         auth_data: { scheme_ids: [scheme_id] },
+                         schema_name: "SAP-Schema-17.1"
+
+        response = JSON.parse(fetch_assessment("0000-0000-0000-0000-0000").body)
+
+        expected_response = JSON.parse(expected_sap_response(scheme_id).to_json)
+        expected_response["relatedAssessments"] = [
+          {
+            "assessmentId" => "1234-3453-6245-2473-5623",
+            "assessmentStatus" => "EXPIRED",
+            "assessmentType" => "SAP",
+          },
+          {
+            "assessmentId" => "0000-0000-0000-0000-0000",
+            "assessmentStatus" => "EXPIRED",
+            "assessmentType" => "SAP",
+          },
+        ]
+
+        expect(response["data"]).to eq(expected_response)
       end
     end
   end

@@ -236,6 +236,13 @@ describe "Acceptance::LodgeSapEnergyAssessment" do
             },
           ],
           "propertyAgeBand" => "K",
+          "relatedAssessments" => [
+            {
+              "assessmentId" => "0000-0000-0000-0000-0000",
+              "assessmentStatus" => "EXPIRED",
+              "assessmentType" => "SAP",
+            },
+          ],
           "relatedPartyDisclosureNumber" => 1,
           "relatedPartyDisclosureText" => nil,
           "status" => "EXPIRED",
