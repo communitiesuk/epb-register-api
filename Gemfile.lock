@@ -137,7 +137,7 @@ GEM
     tzinfo (1.2.7)
       thread_safe (~> 0.1)
     unicode-display_width (1.7.0)
-    unleash (0.1.6)
+    unleash (3.2.1)
       murmurhash3 (~> 0.1.6)
     zeitwerk (2.3.1)
 
@@ -164,7 +164,7 @@ DEPENDENCIES
   sinatra-activerecord (~> 2.0.14)!
   sinatra-contrib!
   sinatra-cross_origin (~> 0.4.0)!
-  unleash (~> 0.1.6)!
+  unleash (~> 3.2.1)!
   zeitwerk (~> 2.3.1)!
 
 RUBY VERSION
