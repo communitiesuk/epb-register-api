@@ -62,6 +62,22 @@ describe "Acceptance::AssessmentStatus" do
 
       fetch_assessment("0000-0000-0000-0000-0000", [404])
     end
+
+    context "security" do
+      it "rejects a request that is not authenticated" do
+        update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
+                                 assessment_status_body: { "status": "CANCELLED" },
+                                 accepted_responses: [401],
+                                 authenticate: false
+      end
+
+      it "rejects a request with the wrong scopes" do
+        update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
+                                 assessment_status_body: { "status": "CANCELLED" },
+                                 accepted_responses: [403],
+                                 scopes: %w[wrong:scope]
+      end
+    end
   end
 
   context "when making an assessment not for issue" do
@@ -118,6 +134,24 @@ describe "Acceptance::AssessmentStatus" do
       )
 
       fetch_assessment("0000-0000-0000-0000-0000", [404])
+    end
+
+    context "security" do
+      it "rejects a request that is not authenticated" do
+        update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
+                                 assessment_status_body: { "status": "NOT_FOR_ISSUE" },
+                                 accepted_responses: [401],
+                                 authenticate: false
+
+        fetch_assessment("123", [401], false)
+      end
+
+      it "rejects a request with the wrong scopes" do
+        update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
+                                 assessment_status_body: { "status": "NOT_FOR_ISSUE" },
+                                 accepted_responses: [403],
+                                 scopes: %w[wrong:scope]
+      end
     end
   end
 
