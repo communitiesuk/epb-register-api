@@ -11,7 +11,7 @@ source "https://rubygems.org" do
   group :test do
     gem "database_cleaner"
     gem "pry", "~> 0.13.1"
-    gem "rack-test", "~> 0.8.3"
+    gem "rack-test", "~> 1.1.0"
     gem "rspec", "~>3.0"
     gem "simplecov", "~> 0.17.1"
   end
