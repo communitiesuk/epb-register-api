@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RdSAP-Report xmlns="https://epbr.digital.communities.gov.uk/xsd/rdsap"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/rdsap ../RdSAP-Schema-19.0/RdSAP/Templates/RdSAP-Report.xsd">
+  <Calculation-Software-Name>RdSAP 4 U</Calculation-Software-Name>
+  <Calculation-Software-Version>2.0</Calculation-Software-Version>
+  <User-Interface-Name>RdSAPwize</User-Interface-Name>
+  <User-Interface-Version>1.3.60</User-Interface-Version>
+  <Schema-Version-Original>19.01</Schema-Version-Original>
+  <SAP-Version>9.80</SAP-Version>
+  <PCDF-Revision-Number>PCDF-Revision-Number0</PCDF-Revision-Number>
+  <Previous-EPC-Check>
+    <Previous-EPC-Checked>Y</Previous-EPC-Checked>
+    <Previous-EPC-Exists>Y</Previous-EPC-Exists>
+  </Previous-EPC-Check>
+  <Energy-Assessment>
+    <Property-Summary>
+      <Wall>
+        <Description>Bricks</Description>
+        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+      </Wall>
+      <Wall>
+        <Description>Cavity</Description>
+        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+      </Wall>
+      <Roof>
+        <Description>Tiled</Description>
+        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+      </Roof>
+      <Roof>
+        <Description>Flat</Description>
+        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+      </Roof>
+      <Floor>
+        <Description>Suspended wood</Description>
+        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+      </Floor>
+      <Floor>
+        <Description>Concrete</Description>
+        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+      </Floor>
+      <Window>
+        <Description>Double glazed sash window</Description>
+        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+      </Window>
+      <Main-Heating>
+        <Description>Gas fired central heating</Description>
+        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+      </Main-Heating>
+      <Main-Heating>
+        <Description>Coal fire</Description>
+        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+      </Main-Heating>
+      <Main-Heating-Controls>
+        <Description>Thermostat</Description>
+        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+      </Main-Heating-Controls>
+      <Main-Heating-Controls>
+        <Description>Coal bucket</Description>
+        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+      </Main-Heating-Controls>
+      <Hot-Water>
+        <Description>Immersion heater</Description>
+        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+      </Hot-Water>
+      <Lighting>
+        <Description>Low-energy LED bulbs</Description>
+        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+      </Lighting>
+      <Secondary-Heating>
+        <Description>Room heaters, electric</Description>
+        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+      </Secondary-Heating>
+      <Dwelling-Type>Detached house</Dwelling-Type>
+      <Total-Floor-Area>80</Total-Floor-Area>
+      <Multiple-Glazed-Proportion-NR>NR</Multiple-Glazed-Proportion-NR>
+    </Property-Summary>
+    <Energy-Use>
+      <Energy-Rating-Current>70</Energy-Rating-Current>
+      <Energy-Rating-Potential>82</Energy-Rating-Potential>
+      <Energy-Rating-Average>50</Energy-Rating-Average>
+      <Environmental-Impact-Current>50</Environmental-Impact-Current>
+      <Environmental-Impact-Potential>50</Environmental-Impact-Potential>
+      <Energy-Consumption-Current>0</Energy-Consumption-Current>
+      <Energy-Consumption-Potential>0</Energy-Consumption-Potential>
+      <CO2-Emissions-Current>2.4</CO2-Emissions-Current>
+      <CO2-Emissions-Current-Per-Floor-Area>0</CO2-Emissions-Current-Per-Floor-Area>
+      <CO2-Emissions-Potential>1.4</CO2-Emissions-Potential>
+      <Lighting-Cost-Current>0</Lighting-Cost-Current>
+      <Lighting-Cost-Potential>0</Lighting-Cost-Potential>
+      <Heating-Cost-Current>0</Heating-Cost-Current>
+      <Heating-Cost-Potential>0</Heating-Cost-Potential>
+      <Hot-Water-Cost-Current>0</Hot-Water-Cost-Current>
+      <Hot-Water-Cost-Potential>0</Hot-Water-Cost-Potential>
+    </Energy-Use>
+    <Suggested-Improvements>
+      <Improvement>
+        <Sequence>0</Sequence>
+        <Improvement-Category>6</Improvement-Category>
+        <Improvement-Type>Z3</Improvement-Type>
+        <Typical-Saving>0.0</Typical-Saving>
+        <Energy-Performance-Rating>50</Energy-Performance-Rating>
+        <Environmental-Impact-Rating>50</Environmental-Impact-Rating>
+        <Indicative-Cost>5</Indicative-Cost>
+        <Improvement-Details>
+          <Improvement-Number>5</Improvement-Number>
+        </Improvement-Details>
+        <Green-Deal-Category>1</Green-Deal-Category>
+      </Improvement>
+      <Improvement>
+        <Sequence>1</Sequence>
+        <Improvement-Category>2</Improvement-Category>
+        <Improvement-Type>Z2</Improvement-Type>
+        <Typical-Saving>0.1</Typical-Saving>
+        <Energy-Performance-Rating>60</Energy-Performance-Rating>
+        <Environmental-Impact-Rating>64</Environmental-Impact-Rating>
+        <Indicative-Cost>2</Indicative-Cost>
+        <Improvement-Details>
+          <Improvement-Number>1</Improvement-Number>
+        </Improvement-Details>
+        <Green-Deal-Category>3</Green-Deal-Category>
+      </Improvement>
+    </Suggested-Improvements>
+    <Renewable-Heat-Incentive>
+      <Space-Heating-Existing-Dwelling>9901</Space-Heating-Existing-Dwelling>
+      <Water-Heating>2256</Water-Heating>
+      <Impact-Of-Cavity-Insulation>-12</Impact-Of-Cavity-Insulation>
+      <Impact-Of-Solid-Wall-Insulation>-16</Impact-Of-Solid-Wall-Insulation>
+    </Renewable-Heat-Incentive>
+  </Energy-Assessment>
+  <Report-Header>
+    <RRN>1238-1238-1238-1238-1238</RRN>
+    <Inspection-Date>2020-02-02</Inspection-Date>
+    <Report-Type>2</Report-Type>
+    <Completion-Date>2020-02-03</Completion-Date>
+    <Registration-Date>2020-02-03</Registration-Date>
+    <Status>entered</Status>
+    <Language-Code>1</Language-Code>
+    <Property-Type>0</Property-Type>
+    <Region-Code>1</Region-Code>
+    <Country-Code>EAW</Country-Code>
+    <Transaction-Type>1</Transaction-Type>
+    <Tenure>2</Tenure>
+    <Energy-Assessor>
+      <Name>Matt McTest</Name>
+      <Contact-Address>
+        <Address-Line-1>10 Some Street</Address-Line-1>
+        <Address-Line-2></Address-Line-2>
+        <Address-Line-3></Address-Line-3>
+        <Post-Town>Sometown</Post-Town>
+        <Postcode>AB1C 2DE</Postcode>
+      </Contact-Address>
+      <Company-Name>Assessments 4 U</Company-Name>
+      <Scheme-Name>ECMK</Scheme-Name>
+      <Scheme-Web-Site>www.example.com</Scheme-Web-Site>
+      <Identification-Number>
+        <Certificate-Number>ECMK000002</Certificate-Number>
+      </Identification-Number>
+    </Energy-Assessor>
+    <Property>
+      <Address>
+        <Address-Line-1>1 Some Street</Address-Line-1>
+        <Post-Town>Exeter</Post-Town>
+        <Postcode>EX1 1AA</Postcode>
+      </Address>
+      <UPRN>UPRN-000000000000</UPRN>
+    </Property>
+    <Related-Party-Disclosure>
+      <Related-Party-Disclosure-Text>Related-Party-Disclosure-Text0</Related-Party-Disclosure-Text>
+    </Related-Party-Disclosure>
+  </Report-Header>
+  <Insurance-Details>
+    <Insurer>Insurer0</Insurer>
+    <Policy-No>Policy-No0</Policy-No>
+    <Effective-Date>2019-05-04</Effective-Date>
+    <Expiry-Date>2025-05-04</Expiry-Date>
+    <PI-Limit>0</PI-Limit>
+  </Insurance-Details>
+  <ExternalDefinitions-Revision-Number>ExternalDefinitions-Revision-Number0</ExternalDefinitions-Revision-Number>
+</RdSAP-Report>
