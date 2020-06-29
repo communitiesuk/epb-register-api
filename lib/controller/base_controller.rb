@@ -93,7 +93,7 @@ module Controller
     def server_error(exception)
       message =
         exception.methods.include?(:message) ? exception.message : exception
-      raise(exception)
+
       logger.error(message)
       error_response(500, "SERVER_ERROR", message)
     end
