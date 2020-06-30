@@ -148,6 +148,14 @@ describe "Acceptance::LodgeDECEnergyAssessment" do
           "relatedPartyDisclosureText" => nil,
           "recommendedImprovements" => [],
           "propertySummary" => [],
+          "relatedAssessments" => [
+            {
+              "assessmentExpiryDate" => "2016-05-04",
+              "assessmentId" => "0000-0000-0000-0000-0000",
+              "assessmentStatus" => "EXPIRED",
+              "assessmentType" => "DEC",
+            },
+          ],
         }
 
         expect(response["data"]).to eq(expected_response)
