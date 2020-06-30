@@ -237,6 +237,20 @@ describe "Acceptance::LodgeACIC+ACIRNIEnergyAssessment" do
           "relatedPartyDisclosureText" => nil,
           "recommendedImprovements" => [],
           "propertySummary" => [],
+          "relatedAssessments" => [
+            {
+              "assessmentExpiryDate" => "2020-05-19",
+              "assessmentId" => "0000-0000-0000-0000-0001",
+              "assessmentStatus" => "EXPIRED",
+              "assessmentType" => "ACIR",
+            },
+            {
+              "assessmentExpiryDate" => "2020-05-19",
+              "assessmentId" => "0000-0000-0000-0000-0000",
+              "assessmentStatus" => "EXPIRED",
+              "assessmentType" => "ACIC",
+            },
+          ],
         }
 
         expect(response_acir["data"]).to eq(expected_acir_response)
