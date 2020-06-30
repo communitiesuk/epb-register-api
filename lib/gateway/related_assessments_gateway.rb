@@ -65,22 +65,19 @@ module Gateway
 
       assessment_id = address_id.sub "RRN-", ""
 
-      related_assessments =
-        Domain::RelatedAssessment.new related_assessments: []
+      output =
+        results.map do |result|
+          next if result["assessment_id"] == assessment_id
 
-      results.each do |result|
-        next if result["assessment_id"] == assessment_id
+          Domain::RelatedAssessment.new(
+            assessment_id: result["assessment_id"],
+            assessment_status: result["assessment_status"],
+            assessment_type: result["assessment_type"],
+            assessment_expiry_date: result["date_of_expiry"],
+          )
+        end
 
-        related_assessments.related_assessments <<
-          {
-            assessmentId: result["assessment_id"],
-            assessmentStatus: result["assessment_status"],
-            assessmentType: result["assessment_type"],
-            assessmentExpiryDate: result["date_of_expiry"].strftime("%Y-%m-%d"),
-          }
-      end
-
-      related_assessments.related_assessments
+      output.any?(&:nil?) ? output.compact : output
     end
   end
 end
