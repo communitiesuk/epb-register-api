@@ -125,6 +125,8 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
             lightingCostPotential: 84.23,
             heatingCostPotential: 250.34,
             hotWaterCostPotential: 180.43,
+            estimatedCostForThreeYears: 689.83,
+            potentialSavingForThreeYears: 174.83,
             heatDemand: {
               currentSpaceHeatingDemand: 30.0,
               currentWaterHeatingDemand: 60.0,
@@ -394,6 +396,8 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
             lightingCostPotential: 84.23,
             heatingCostPotential: 250.34,
             hotWaterCostPotential: 180.43,
+            estimatedCostForThreeYears: 689.83,
+            potentialSavingForThreeYears: 174.83,
             heatDemand: {
               currentSpaceHeatingDemand: 30.0,
               currentWaterHeatingDemand: 60.0,
@@ -668,6 +672,8 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
               lightingCostPotential: 84.23,
               heatingCostPotential: 250.34,
               hotWaterCostPotential: 180.43,
+              estimatedCostForThreeYears: 689.83,
+              potentialSavingForThreeYears: 174.83,
               heatDemand: {
                 currentSpaceHeatingDemand: 30.0,
                 currentWaterHeatingDemand: 60.0,

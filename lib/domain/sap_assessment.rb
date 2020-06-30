@@ -119,6 +119,28 @@ module Domain
       @related_assessments = related_assessments
     end
 
+    def get_estimated_cost_for_three_years(
+      lighting_cost_current, heating_cost_current, hot_water_cost_current
+    )
+      @estimated_cost = [
+        lighting_cost_current,
+        heating_cost_current,
+        hot_water_cost_current,
+      ].compact.sum
+      @estimated_cost
+    end
+
+    def get_potential_saving_for_three_years(
+      lighting_cost_potential, heating_cost_potential, hot_water_cost_potential
+    )
+      potential_saving_sum = [
+        lighting_cost_potential,
+        heating_cost_potential,
+        hot_water_cost_potential,
+      ].compact.sum
+      @estimated_cost - potential_saving_sum
+    end
+
     def get_energy_rating_band(number)
       case number
       when 1..20
@@ -167,6 +189,18 @@ module Domain
         lighting_cost_potential: @lighting_cost_potential.to_f,
         heating_cost_potential: @heating_cost_potential.to_f,
         hot_water_cost_potential: @hot_water_cost_potential.to_f,
+        estimated_cost_for_three_years:
+          get_estimated_cost_for_three_years(
+            @lighting_cost_current.to_f,
+            @heating_cost_current.to_f,
+            @hot_water_cost_current.to_f,
+          ),
+        potential_saving_for_three_years:
+          get_potential_saving_for_three_years(
+            @lighting_cost_potential.to_f,
+            @heating_cost_potential.to_f,
+            @hot_water_cost_potential.to_f,
+          ).round(2),
         heat_demand: {
           current_space_heating_demand: @current_space_heating_demand.to_f,
           current_water_heating_demand: @current_water_heating_demand.to_f,
