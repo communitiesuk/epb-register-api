@@ -31,12 +31,9 @@ describe "Acceptance::AssessmentStatus::RdSAP" do
       JSON.parse assessment_status.body, symbolize_names: true
     end
 
-    it "then receives a response with of the cancelled status" do
+    it "cancels the assessment" do
       expect(response[:data][:status]).to eq("CANCELLED")
-    end
-
-    it "then updates the database accordingly" do
-      fetch_assessment("0000-0000-0000-0000-0000", [404])
+      fetch_assessment("0000-0000-0000-0000-0000", [410])
     end
   end
 
@@ -64,12 +61,9 @@ describe "Acceptance::AssessmentStatus::RdSAP" do
       JSON.parse assessment_status.body, symbolize_names: true
     end
 
-    it "then receives a response with of the not for issue status" do
+    it "marks the assessment not for issue" do
       expect(response[:data][:status]).to eq("NOT_FOR_ISSUE")
-    end
-
-    it "then updates the database accordingly" do
-      fetch_assessment("0000-0000-0000-0000-0000", [404])
+      fetch_assessment("0000-0000-0000-0000-0000", [410])
     end
   end
 end

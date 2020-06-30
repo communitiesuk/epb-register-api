@@ -1,6 +1,7 @@
 module UseCase
   class FetchAssessment
     class NotFoundException < StandardError; end
+    class AssessmentGone < StandardError; end
 
     def initialize(
       assessments_gateway,
@@ -17,10 +18,16 @@ module UseCase
     end
 
     def execute(assessment_id, xml = false)
-      assessments = @assessments_gateway.search_by_assessment_id(assessment_id)
+      assessments = @assessments_gateway.search_by_assessment_id assessment_id,
+                                                                 false
+
       assessment = assessments.first
 
       raise NotFoundException unless assessment
+
+      if %w[CANCELLED NOT_FOR_ISSUE].include? assessment.to_hash[:status]
+        raise AssessmentGone
+      end
 
       return @assessments_xml_gateway.fetch(assessment_id) if xml
 
