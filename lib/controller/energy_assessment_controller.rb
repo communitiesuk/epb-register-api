@@ -333,7 +333,7 @@ module Controller
       when UseCase::FetchAssessment::NotFoundException
         not_found_error("Assessment not found")
       when UseCase::FetchAssessment::AssessmentGone
-        error_response(410, "GONE", "Assessment is no longer available")
+        gone_error("Assessment not for issue")
       else
         server_error(e)
       end

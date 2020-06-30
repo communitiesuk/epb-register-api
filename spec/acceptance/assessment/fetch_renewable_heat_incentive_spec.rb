@@ -34,6 +34,55 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
     end
   end
 
+  context "when a domestic assessment has been cancelled" do
+    let(:fetch_assessor_stub) { AssessorStub.new }
+
+    let(:valid_rdsap_xml) do
+      File.read File.join Dir.pwd, "spec/fixtures/samples/rdsap.xml"
+    end
+
+    let(:scheme_id) { add_scheme_and_get_id }
+
+    before do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(
+        scheme_id,
+        "SPEC000000",
+        fetch_assessor_stub.fetch_request_body(domesticRdSap: "ACTIVE"),
+      )
+
+      lodge_assessment(
+        assessment_body: valid_rdsap_xml,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] },
+      )
+
+      update_assessment_status(
+        assessment_id: "0000-0000-0000-0000-0000",
+        assessment_status_body: { "status": "CANCELLED" },
+        accepted_responses: [200],
+        auth_data: { scheme_ids: [scheme_id] },
+      )
+    end
+
+    it "returns status 410 for a get" do
+      fetch_renewable_heat_incentive "0000-0000-0000-0000-0000", [410]
+    end
+
+    it "returns an error message structure" do
+      response_body =
+        JSON.parse fetch_renewable_heat_incentive(
+          "0000-0000-0000-0000-0000",
+          [410],
+        )
+                     .body,
+                   symbolize_names: true
+      expect(response_body).to eq(
+        { errors: [{ code: "GONE", title: "Assessment not for issue" }] },
+      )
+    end
+  end
+
   context "when fetching a domestic assessment" do
     let(:scheme_id) { add_scheme_and_get_id }
     let(:response) do

@@ -2,6 +2,7 @@ module Domain
   class RenewableHeatIncentive
     def initialize(
       epc_rrn:,
+      is_cancelled:,
       assessor_name:,
       report_type:,
       inspection_date:,
@@ -19,6 +20,7 @@ module Domain
       energy_efficiency:
     )
       @epc_rrn = epc_rrn
+      @is_cancelled = is_cancelled
       @assessor_name = assessor_name
       @report_type = report_type
       @inspection_date = inspection_date
@@ -39,6 +41,7 @@ module Domain
     def to_hash
       {
         epc_rrn: @epc_rrn,
+        is_cancelled: @is_cancelled,
         assessor_name: @assessor_name,
         report_type: @report_type,
         inspection_date: @inspection_date.strftime("%Y-%m-%d"),

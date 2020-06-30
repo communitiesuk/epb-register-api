@@ -16,7 +16,7 @@ module Gateway
           type_of_assessment, total_floor_area, current_energy_efficiency_rating,
           potential_energy_efficiency_rating, postcode, current_space_heating_demand,
           current_water_heating_demand, impact_of_loft_insulation, tenure, property_age_band,
-          impact_of_cavity_insulation, property_summary
+          impact_of_cavity_insulation, property_summary, cancelled_at, not_for_issue_at
           FROM assessments
         WHERE assessment_id = $1 AND type_of_assessment IN('RdSAP', 'SAP')"
 
@@ -40,6 +40,8 @@ module Gateway
     def record_to_rhi_domain(row)
       Domain::RenewableHeatIncentive.new(
         epc_rrn: row["assessment_id"],
+        is_cancelled:
+          row["cancelled_at"] || row["not_for_issue_at"] ? true : false,
         assessor_name: fetch_assessor_name(row["scheme_assessor_id"]),
         report_type: row["type_of_assessment"],
         inspection_date: row["date_registered"],

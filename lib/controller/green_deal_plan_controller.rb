@@ -16,6 +16,8 @@ module Controller
       case e
       when UseCase::FetchRenewableHeatIncentive::NotFoundException
         not_found_error("Assessment not found")
+      when UseCase::FetchRenewableHeatIncentive::AssessmentGone
+        gone_error("Assessment not for issue")
       else
         server_error(e)
       end

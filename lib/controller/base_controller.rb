@@ -98,8 +98,12 @@ module Controller
       error_response(500, "SERVER_ERROR", message)
     end
 
-    def not_found_error(title)
-      error_response(404, "NOT_FOUND", title)
+    def not_found_error(message)
+      error_response(404, "NOT_FOUND", message)
+    end
+
+    def gone_error(message)
+      error_response(410, "GONE", message)
     end
 
     def forbidden(error_code, title, code = 403)
