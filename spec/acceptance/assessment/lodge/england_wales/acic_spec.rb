@@ -149,6 +149,14 @@ describe "Acceptance::LodgeACICEnergyAssessment" do
           "relatedPartyDisclosureText" => nil,
           "recommendedImprovements" => [],
           "propertySummary" => [],
+          "relatedAssessments" => [
+            {
+              "assessmentExpiryDate" => "2006-05-04",
+              "assessmentId" => "0000-0000-0000-0000-0000",
+              "assessmentStatus" => "EXPIRED",
+              "assessmentType" => "ACIC",
+            },
+          ],
         }
 
         expect(response["data"]).to eq(expected_response)
