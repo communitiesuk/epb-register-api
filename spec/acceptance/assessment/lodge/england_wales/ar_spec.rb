@@ -139,6 +139,7 @@ describe "Acceptance::LodgeAdvisoryReport" do
           "relatedPartyDisclosureText" => nil,
           "recommendedImprovements" => [],
           "propertySummary" => [],
+          "relatedAssessments" => [],
         }
 
         expect(response["data"]).to eq(expected_response)

@@ -216,6 +216,14 @@ describe "Acceptance::LodgeDEC+ARNIEnergyAssessment" do
           "relatedPartyDisclosureText" => nil,
           "recommendedImprovements" => [],
           "propertySummary" => [],
+          "relatedAssessments" => [
+            {
+              "assessmentExpiryDate" => "2006-05-04",
+              "assessmentId" => "0000-0000-0000-0000-0001",
+              "assessmentStatus" => "EXPIRED",
+              "assessmentType" => "DEC-AR",
+            },
+          ],
         }
 
         expect(response_ar["data"]).to eq(expected_ar_response)
