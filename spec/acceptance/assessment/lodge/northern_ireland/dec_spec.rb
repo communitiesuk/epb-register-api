@@ -148,6 +148,7 @@ describe "Acceptance::LodgeDECNIEnergyAssessment" do
               "assessmentType" => "DEC",
             },
           ],
+          "status" => "EXPIRED",
         }
 
         expect(response["data"]).to eq(expected_response)
