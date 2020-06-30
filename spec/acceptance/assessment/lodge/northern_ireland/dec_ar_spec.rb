@@ -225,6 +225,7 @@ describe "Acceptance::LodgeDEC+ARNIEnergyAssessment" do
               "assessmentType" => "DEC-AR",
             },
           ],
+          "status" => "EXPIRED",
         }
 
         expect(response_ar["data"]).to eq(expected_ar_response)
