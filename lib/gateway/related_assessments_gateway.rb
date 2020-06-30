@@ -47,7 +47,7 @@ module Gateway
             FROM assessments this_assessment
             WHERE this_assessment.assessment_id = REPLACE($1, 'RRN-', '')
         ) as all_assessments
-        ORDER BY date_of_expiry DESC
+        ORDER BY date_of_expiry DESC, assessment_id DESC
       SQL
 
       results =
