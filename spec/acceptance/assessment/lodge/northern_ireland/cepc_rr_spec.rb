@@ -219,6 +219,7 @@ describe "Acceptance::LodgeCEPC+RRNIEnergyAssessment" do
               "assessmentType" => "CEPC-RR",
             },
           ],
+          "status" => "EXPIRED",
         }
 
         expect(response_rr["data"]).to eq(expected_rr_response)

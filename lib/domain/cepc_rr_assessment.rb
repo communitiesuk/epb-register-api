@@ -95,12 +95,10 @@ module Domain
       @related_party_disclosure_number = related_party_disclosure_number
       @related_party_disclosure_text = related_party_disclosure_text
       @cancelled_at =
-        !cancelled_at.nil? ? Date.strptime(cancelled_at.to_s, "%Y-%m-%d") : ""
+        (Date.strptime(cancelled_at.to_s, "%Y-%m-%d") unless cancelled_at.nil?)
       @not_for_issue_at =
-        if !not_for_issue_at.nil?
+        unless not_for_issue_at.nil?
           Date.strptime(not_for_issue_at.to_s, "%Y-%m-%d")
-        else
-          ""
         end
       @scheme_assessor_id = scheme_assessor_id
       @xml = xml
@@ -164,6 +162,16 @@ module Domain
         related_party_disclosure_number: @related_party_disclosure_number,
         related_party_disclosure_text: @related_party_disclosure_text,
         related_assessments: @related_assessments,
+        status:
+          if !@cancelled_at.nil?
+            "CANCELLED"
+          elsif !@not_for_issue_at.nil?
+            "NOT_FOR_ISSUE"
+          elsif @date_of_expiry < Time.now
+            "EXPIRED"
+          else
+            "ENTERED"
+          end,
       }
     end
 
