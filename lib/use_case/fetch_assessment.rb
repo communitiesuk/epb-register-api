@@ -28,10 +28,12 @@ module UseCase
 
       assessment.set(:assessor, assessor)
 
-      related_assessments =
-        @related_assessments_gateway.fetch_related_assessments(
-          assessment.get(:address_id),
-        )
+      unless assessment.get(:address_id).nil?
+        related_assessments =
+          @related_assessments_gateway.fetch_related_assessments(
+            assessment.get(:address_id),
+          )
+      end
 
       assessment.set(:related_assessments, related_assessments)
 
