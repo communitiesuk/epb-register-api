@@ -185,6 +185,7 @@ describe "Acceptance::Assessment" do
       status: "EXPIRED",
       relatedAssessments: [
         {
+          assessmentExpiryDate: "2016-05-04",
           assessmentId: "0000-0000-0000-0000-0000",
           assessmentStatus: "EXPIRED",
           assessmentType: "SAP",
@@ -403,11 +404,13 @@ describe "Acceptance::Assessment" do
         expected_response = JSON.parse(expected_sap_response(scheme_id).to_json)
         expected_response["relatedAssessments"] = [
           {
+            "assessmentExpiryDate" => "2020-05-05",
             "assessmentId" => "1234-3453-6245-2473-5623",
             "assessmentStatus" => "EXPIRED",
             "assessmentType" => "SAP",
           },
           {
+            "assessmentExpiryDate" => "2016-05-04",
             "assessmentId" => "0000-0000-0000-0000-0000",
             "assessmentStatus" => "EXPIRED",
             "assessmentType" => "SAP",

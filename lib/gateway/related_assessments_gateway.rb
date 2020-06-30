@@ -6,6 +6,7 @@ module Gateway
       sql = <<-SQL
         SELECT all_assessments.assessment_id,
                all_assessments.assessment_type,
+               all_assessments.date_of_expiry,
                CASE WHEN all_assessments.cancelled_at IS NOT NULL THEN 'CANCELLED'
                     WHEN all_assessments.not_for_issue_at IS NOT NULL THEN 'NOT_FOR_ISSUE'
                     WHEN all_assessments.date_of_expiry < CURRENT_DATE THEN 'EXPIRED'
@@ -62,19 +63,25 @@ module Gateway
           ],
         )
 
-      assessment_id = address_id.sub("RRN-", "")
+      assessment_id = address_id.sub "RRN-", ""
+
+      related_assessments =
+        Domain::RelatedAssessment.new related_assessments: []
 
       results.each do |result|
         unless result["assessment_id"] == assessment_id
-          Domain::RelatedAssessment.new(
-            related_assessments: {
+          related_assessments.related_assessments <<
+            {
               assessmentId: result["assessment_id"],
               assessmentStatus: result["assessment_status"],
               assessmentType: result["assessment_type"],
-            },
-          )
+              assessmentExpiryDate:
+                result["date_of_expiry"].strftime("%Y-%m-%d"),
+            }
         end
       end
+
+      related_assessments.related_assessments
     end
   end
 end

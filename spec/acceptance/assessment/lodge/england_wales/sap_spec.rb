@@ -244,6 +244,7 @@ describe "Acceptance::LodgeSapEnergyAssessment" do
           "propertyAgeBand" => "K",
           "relatedAssessments" => [
             {
+              "assessmentExpiryDate" => "2016-05-04",
               "assessmentId" => "0000-0000-0000-0000-0000",
               "assessmentStatus" => "EXPIRED",
               "assessmentType" => "SAP",
