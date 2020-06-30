@@ -160,6 +160,7 @@ describe "Acceptance::LodgeCEPCENIEnergyAssessment" do
               "assessmentType" => "CEPC",
             },
           ],
+          "status" => "EXPIRED",
         }
 
         expect(response["data"]).to eq(expected_response)
