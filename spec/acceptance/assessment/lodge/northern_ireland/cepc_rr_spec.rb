@@ -202,6 +202,14 @@ describe "Acceptance::LodgeCEPC+RRNIEnergyAssessment" do
           "relatedPartyDisclosureText" => nil,
           "recommendedImprovements" => [],
           "propertySummary" => [],
+          "relatedAssessments" => [
+            {
+              "assessmentExpiryDate" => "2006-05-04",
+              "assessmentId" => "0000-0000-0000-0000-0001",
+              "assessmentStatus" => "EXPIRED",
+              "assessmentType" => "CEPC-RR",
+            },
+          ],
         }
 
         expect(response_rr["data"]).to eq(expected_rr_response)
