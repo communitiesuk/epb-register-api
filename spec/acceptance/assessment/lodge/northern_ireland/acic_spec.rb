@@ -148,6 +148,7 @@ describe "Acceptance::LodgeACICNIEnergyAssessment" do
               "assessmentType" => "ACIC",
             },
           ],
+          "status" => "EXPIRED",
         }
 
         expect(response["data"]).to eq(expected_response)

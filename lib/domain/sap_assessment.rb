@@ -109,7 +109,7 @@ module Domain
       @related_party_disclosure_number = related_party_disclosure_number
       @related_party_disclosure_text = related_party_disclosure_text
       @cancelled_at =
-        !cancelled_at.nil? ? Date.strptime(cancelled_at.to_s, "%Y-%m-%d") : nil
+        (Date.strptime(cancelled_at.to_s, "%Y-%m-%d") unless cancelled_at.nil?)
       @not_for_issue_at =
         unless not_for_issue_at.nil?
           Date.strptime(not_for_issue_at.to_s, "%Y-%m-%d")
@@ -189,20 +189,19 @@ module Domain
         related_party_disclosure_number: @related_party_disclosure_number,
         related_party_disclosure_text: @related_party_disclosure_text,
         related_assessments: @related_assessments,
+        status:
+          if !@cancelled_at.nil?
+            "CANCELLED"
+          elsif !@not_for_issue_at.nil?
+            "NOT_FOR_ISSUE"
+          elsif @date_of_expiry < Time.now
+            "EXPIRED"
+          else
+            "ENTERED"
+          end,
       }
 
       data[:green_deal_plan] = @green_deal_plan if @green_deal_plan
-
-      data[:status] =
-        if !@cancelled_at.nil?
-          "CANCELLED"
-        elsif !@not_for_issue_at.nil?
-          "NOT_FOR_ISSUE"
-        elsif @date_of_expiry < Time.now
-          "EXPIRED"
-        else
-          "ENTERED"
-        end
 
       data
     end

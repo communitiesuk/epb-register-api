@@ -18,8 +18,8 @@ module UseCase
     end
 
     def execute(assessment_id, xml = false)
-      assessments = @assessments_gateway.search_by_assessment_id assessment_id,
-                                                                 false
+      assessments =
+        @assessments_gateway.search_by_assessment_id assessment_id, false
 
       assessment = assessments.first
 
