@@ -77,7 +77,7 @@ module Gateway
           )
         end
 
-      output.any?(&:nil?) ? output.compact : output
+      output.compact
     end
   end
 end
