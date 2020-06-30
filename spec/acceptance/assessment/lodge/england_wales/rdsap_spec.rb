@@ -261,6 +261,14 @@ describe "Acceptance::LodgeRdSapEnergyAssessment" do
           "relatedPartyDisclosureNumber" => nil,
           "relatedPartyDisclosureText" => "Related-Party-Disclosure-Text0",
           "status" => "EXPIRED",
+          "relatedAssessments" => [
+            {
+              "assessmentExpiryDate" => "2016-05-04",
+              "assessmentId" => "0000-0000-0000-0000-0000",
+              "assessmentStatus" => "EXPIRED",
+              "assessmentType" => "RdSAP",
+            },
+          ],
         }
 
         expect(response["data"]).to eq(expected_response)
