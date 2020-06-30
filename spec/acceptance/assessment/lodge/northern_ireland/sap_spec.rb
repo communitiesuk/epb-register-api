@@ -27,8 +27,7 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
                 accepted_responses: [400],
                 auth_data: { scheme_ids: [scheme_id] },
                 schema_name: "SAP-Schema-NI-17.4",
-              )
-                .body,
+              ).body,
             )
 
           expect(response["errors"][0]["title"]).to eq(

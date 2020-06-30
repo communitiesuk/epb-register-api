@@ -30,8 +30,7 @@ describe "Acceptance::LodgeACICEnergyAssessment" do
                 accepted_responses: [400],
                 auth_data: { scheme_ids: [scheme_id] },
                 schema_name: "CEPC-7.1",
-              )
-                .body,
+              ).body,
             )
 
           expect(response["errors"][0]["title"]).to eq(
@@ -56,8 +55,7 @@ describe "Acceptance::LodgeACICEnergyAssessment" do
                 accepted_responses: [400],
                 auth_data: { scheme_ids: [scheme_id] },
                 schema_name: "CEPC-7.1",
-              )
-                .body,
+              ).body,
             )
 
           expect(response["errors"][0]["title"]).to eq(

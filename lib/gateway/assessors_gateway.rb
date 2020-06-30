@@ -180,9 +180,7 @@ module Gateway
           INNER JOIN assessors b ON(b.search_results_comparison_postcode = a.postcode)
           LEFT JOIN schemes c ON(b.registered_by = c.scheme_id)
           WHERE
-            #{
-            qualification_selector
-          }
+            #{qualification_selector}
             AND a.latitude BETWEEN ($1 - 1) AND ($1 + 1)
             AND a.longitude BETWEEN ($2 - 1) AND ($2 + 1)
           ORDER BY distance LIMIT $3",

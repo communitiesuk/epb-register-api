@@ -27,8 +27,7 @@ describe "Acceptance::LodgeDEC+ARNIEnergyAssessment" do
               accepted_responses: [400],
               auth_data: { scheme_ids: [scheme_id] },
               schema_name: "CEPC-NI-7.1",
-            )
-              .body,
+            ).body,
           )
 
         expect(response["errors"][0]["title"]).to eq("Assessor is not active.")

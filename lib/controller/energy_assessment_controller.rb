@@ -158,8 +158,7 @@ module Controller
         else
           @container.get_object(
             :find_assessments_by_street_name_and_town_use_case,
-          )
-            .execute(params[:street_name], params[:town])
+          ).execute(params[:street_name], params[:town])
         end
 
       json_api_response(code: 200, data: result, burrow_key: :assessments)

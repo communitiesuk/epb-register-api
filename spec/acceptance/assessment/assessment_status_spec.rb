@@ -29,8 +29,7 @@ describe "Acceptance::AssessmentStatus" do
             assessment_status_body: { "status": "CANCELLED" },
             accepted_responses: [200],
             auth_data: { scheme_ids: [scheme_id] },
-          )
-            .body,
+          ).body,
           symbolize_names: true,
         )
 
@@ -66,14 +65,18 @@ describe "Acceptance::AssessmentStatus" do
     context "security" do
       it "rejects a request that is not authenticated" do
         update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
-                                 assessment_status_body: { "status": "CANCELLED" },
+                                 assessment_status_body: {
+                                   "status": "CANCELLED",
+                                 },
                                  accepted_responses: [401],
                                  authenticate: false
       end
 
       it "rejects a request with the wrong scopes" do
         update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
-                                 assessment_status_body: { "status": "CANCELLED" },
+                                 assessment_status_body: {
+                                   "status": "CANCELLED",
+                                 },
                                  accepted_responses: [403],
                                  scopes: %w[wrong:scope]
       end
@@ -102,8 +105,7 @@ describe "Acceptance::AssessmentStatus" do
             assessment_status_body: { "status": "NOT_FOR_ISSUE" },
             accepted_responses: [200],
             auth_data: { scheme_ids: [scheme_id] },
-          )
-            .body,
+          ).body,
           symbolize_names: true,
         )
 
@@ -139,7 +141,9 @@ describe "Acceptance::AssessmentStatus" do
     context "security" do
       it "rejects a request that is not authenticated" do
         update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
-                                 assessment_status_body: { "status": "NOT_FOR_ISSUE" },
+                                 assessment_status_body: {
+                                   "status": "NOT_FOR_ISSUE",
+                                 },
                                  accepted_responses: [401],
                                  authenticate: false
 
@@ -148,7 +152,9 @@ describe "Acceptance::AssessmentStatus" do
 
       it "rejects a request with the wrong scopes" do
         update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
-                                 assessment_status_body: { "status": "NOT_FOR_ISSUE" },
+                                 assessment_status_body: {
+                                   "status": "NOT_FOR_ISSUE",
+                                 },
                                  accepted_responses: [403],
                                  scopes: %w[wrong:scope]
       end
@@ -177,8 +183,7 @@ describe "Acceptance::AssessmentStatus" do
             assessment_status_body: { "status": "NOT_FOR_ISSUE" },
             accepted_responses: [403],
             auth_data: { scheme_ids: [scheme_id + 1] },
-          )
-            .body,
+          ).body,
           symbolize_names: true,
         )
 

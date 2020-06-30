@@ -69,16 +69,15 @@ module Gateway
         Domain::RelatedAssessment.new related_assessments: []
 
       results.each do |result|
-        unless result["assessment_id"] == assessment_id
-          related_assessments.related_assessments <<
-            {
-              assessmentId: result["assessment_id"],
-              assessmentStatus: result["assessment_status"],
-              assessmentType: result["assessment_type"],
-              assessmentExpiryDate:
-                result["date_of_expiry"].strftime("%Y-%m-%d"),
-            }
-        end
+        next if result["assessment_id"] == assessment_id
+
+        related_assessments.related_assessments <<
+          {
+            assessmentId: result["assessment_id"],
+            assessmentStatus: result["assessment_status"],
+            assessmentType: result["assessment_type"],
+            assessmentExpiryDate: result["date_of_expiry"].strftime("%Y-%m-%d"),
+          }
       end
 
       related_assessments.related_assessments

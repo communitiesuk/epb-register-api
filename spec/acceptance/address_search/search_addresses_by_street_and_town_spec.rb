@@ -125,8 +125,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
               true,
               {},
               %w[address:search],
-            )
-              .body,
+            ).body,
             symbolize_names: true,
           )
         end
@@ -172,8 +171,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
               true,
               {},
               %w[address:search],
-            )
-              .body,
+            ).body,
             symbolize_names: true,
           )
         end
@@ -219,8 +217,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
               true,
               {},
               %w[address:search],
-            )
-              .body,
+            ).body,
             symbolize_names: true,
           )
         end
@@ -267,8 +264,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
                 true,
                 {},
                 %w[address:search],
-              )
-                .body,
+              ).body,
               symbolize_names: true,
             )
 
@@ -289,8 +285,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
                 true,
                 {},
                 %w[address:search],
-              )
-                .body,
+              ).body,
               symbolize_names: true,
             )
           expect(response[:data][:addresses].length).to eq 0
@@ -307,8 +302,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
                 true,
                 {},
                 %w[address:search],
-              )
-                .body,
+              ).body,
               symbolize_names: true,
             )
 
@@ -329,8 +323,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
                 true,
                 {},
                 %w[address:search],
-              )
-                .body,
+              ).body,
               symbolize_names: true,
             )
           expect(response[:data][:addresses].length).to eq 0
@@ -346,8 +339,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
               true,
               {},
               %w[address:search],
-            )
-              .body,
+            ).body,
             symbolize_names: true,
           )
         end
@@ -392,8 +384,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
                 true,
                 {},
                 %w[address:search],
-              )
-                .body,
+              ).body,
               symbolize_names: true,
             )
           end
@@ -440,8 +431,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
               true,
               {},
               %w[address:search],
-            )
-              .body,
+            ).body,
             symbolize_names: true,
           )
         end
@@ -499,8 +489,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
               true,
               {},
               %w[address:search],
-            )
-              .body,
+            ).body,
             symbolize_names: true,
           )
         end
@@ -541,8 +530,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
               true,
               {},
               %w[address:search],
-            )
-              .body,
+            ).body,
             symbolize_names: true,
           )
         end
@@ -583,8 +571,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
               true,
               {},
               %w[address:search],
-            )
-              .body,
+            ).body,
             symbolize_names: true,
           )
         end

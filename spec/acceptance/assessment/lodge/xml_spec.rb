@@ -29,8 +29,7 @@ describe "Acceptance::LodgeAssessment::XML" do
     results =
       ActiveRecord::Base.connection.execute(
         "SELECT xml FROM assessments_xml WHERE assessment_id = '" +
-          ActiveRecord::Base.sanitize_sql(assessment_id) +
-          "'",
+          ActiveRecord::Base.sanitize_sql(assessment_id) + "'",
       )
 
     xml = ""
@@ -94,8 +93,7 @@ describe "Acceptance::LodgeAssessment::XML" do
         auth_data: { scheme_ids: [scheme_id] },
         schema_name: "SAP-Schema-17.1",
         headers: { "Accept": "application/xml" },
-      )
-                     .body
+      ).body
     end
 
     before do
@@ -132,8 +130,7 @@ describe "Acceptance::LodgeAssessment::XML" do
           auth_data: { scheme_ids: [scheme_id] },
           schema_name: "CEPC-7.1",
           headers: { "Accept": "application/xml" },
-        )
-                       .body
+        ).body
       end
 
       before do

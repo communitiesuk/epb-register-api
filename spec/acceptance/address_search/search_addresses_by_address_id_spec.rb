@@ -32,8 +32,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
           true,
           {},
           %w[address:search],
-        )
-          .body,
+        ).body,
         symbolize_names: true,
       )
     end
@@ -92,8 +91,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
             true,
             {},
             %w[address:search],
-          )
-            .body,
+          ).body,
           symbolize_names: true,
         )
       end
@@ -256,8 +254,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
               true,
               {},
               %w[address:search],
-            )
-              .body,
+            ).body,
             symbolize_names: true,
           )
         end
@@ -316,8 +313,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
             true,
             nil,
             %w[address:search],
-          )
-            .body,
+          ).body,
           symbolize_names: true,
         )
       end
@@ -337,8 +333,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
           true,
           nil,
           %w[address:search],
-        )
-          .body
+        ).body
       end
 
       it "returns a validation error" do

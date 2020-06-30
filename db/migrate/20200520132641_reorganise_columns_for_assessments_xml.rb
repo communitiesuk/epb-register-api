@@ -16,7 +16,6 @@ class ReorganiseColumnsForAssessmentsXml < ActiveRecord::Migration[6.0]
 
     add_foreign_key :assessments_xml,
                     :assessments,
-                    column: :assessment_id,
-                    primary_key: :assessment_id
+                    column: :assessment_id, primary_key: :assessment_id
   end
 end

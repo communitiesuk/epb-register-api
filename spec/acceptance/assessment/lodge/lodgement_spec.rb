@@ -36,8 +36,7 @@ describe "Acceptance::Assessment::Lodge" do
           JSON.parse(
             lodge_assessment(
               assessment_body: valid_rdsap_xml, accepted_responses: [400],
-            )
-              .body,
+            ).body,
           )
 
         expect(response["errors"][0]["title"]).to eq(
@@ -108,8 +107,7 @@ describe "Acceptance::Assessment::Lodge" do
             assessment_body: valid_rdsap_xml,
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] },
-          )
-            .body,
+          ).body,
           symbolize_names: true,
         )
 
@@ -126,8 +124,7 @@ describe "Acceptance::Assessment::Lodge" do
             assessment_body: valid_rdsap_xml,
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] },
-          )
-            .body,
+          ).body,
           symbolize_names: true,
         )
 
@@ -168,8 +165,7 @@ describe "Acceptance::Assessment::Lodge" do
               accepted_responses: [400],
               auth_data: { scheme_ids: [scheme_id] },
               schema_name: "unsupported",
-            )
-              .body,
+            ).body,
           )
 
         expect(response["errors"][0]["title"]).to eq("Schema is not supported.")
@@ -218,8 +214,7 @@ describe "Acceptance::Assessment::Lodge" do
           JSON.parse(
             lodge_assessment(
               assessment_body: doc.to_xml, accepted_responses: [400],
-            )
-              .body,
+            ).body,
           )
 
         expect(
@@ -255,8 +250,7 @@ describe "Acceptance::Assessment::Lodge" do
           accepted_responses: [403],
           auth_data: { scheme_ids: [scheme_id] },
           migrated: true,
-        )
-          .body,
+        ).body,
         symbolize_names: true,
       )
     end
@@ -325,8 +319,7 @@ describe "Acceptance::Assessment::Lodge" do
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] },
           schema_name: "CEPC-7.1",
-        )
-          .body,
+        ).body,
         symbolize_names: true,
       )
     end

@@ -340,60 +340,60 @@ task :generate_certificate do
       ].to_json,
     ]
 
-    if rand(21) == 20
-      green_deal_query = "INSERT INTO
-              green_deal_plans
-              (
-                green_deal_plan_id,
-                start_date,
-                end_date,
-                provider_name,
-                provider_telephone,
-                provider_email,
-                interest_rate,
-                fixed_interest_rate,
-                charge_uplift_amount,
-                charge_uplift_date,
-                cca_regulated,
-                structure_changed,
-                measures_removed,
-                charges,
-                measures,
-                savings
-              )
-              VALUES
-              (
+    next unless rand(21) == 20
+
+    green_deal_query = "INSERT INTO
+            green_deal_plans
+            (
+              green_deal_plan_id,
+              start_date,
+              end_date,
+              provider_name,
+              provider_telephone,
+              provider_email,
+              interest_rate,
+              fixed_interest_rate,
+              charge_uplift_amount,
+              charge_uplift_date,
+              cca_regulated,
+              structure_changed,
+              measures_removed,
+              charges,
+              measures,
+              savings
+            )
+            VALUES
+            (
+              '#{green_deal_plan_id}',
+              '#{start_date}',
+              '#{end_date}',
+              '#{provider_name}',
+              '#{provider_telephone}',
+              '#{provider_email}',
+              '#{interest_rate}',
+              '#{fixed_interest_rate}',
+              '#{charge_uplift_amount}',
+              '#{charge_uplift_date}',
+              '#{cca_regulated}',
+              '#{structure_changed}',
+              '#{measures_removed}',
+              '#{charges.sample}',
+              '#{measures.sample}',
+              '#{savings.sample}'
+            )"
+
+    ActiveRecord::Base.connection.execute(green_deal_query)
+
+    green_deal_assessments_query = "INSERT INTO
+            green_deal_assessments
+            (
+              green_deal_plan_id,
+              assessment_id
+            )
+            VALUES (
                 '#{green_deal_plan_id}',
-                '#{start_date}',
-                '#{end_date}',
-                '#{provider_name}',
-                '#{provider_telephone}',
-                '#{provider_email}',
-                '#{interest_rate}',
-                '#{fixed_interest_rate}',
-                '#{charge_uplift_amount}',
-                '#{charge_uplift_date}',
-                '#{cca_regulated}',
-                '#{structure_changed}',
-                '#{measures_removed}',
-                '#{charges.sample}',
-                '#{measures.sample}',
-                '#{savings.sample}'
-              )"
-
-      ActiveRecord::Base.connection.execute(green_deal_query)
-
-      green_deal_assessments_query = "INSERT INTO
-              green_deal_assessments
-              (
-                green_deal_plan_id,
-                assessment_id
-              )
-              VALUES (
-                  '#{green_deal_plan_id}',
-                  '#{assessment_id}'
-              )"
-      ActiveRecord::Base.connection.execute(green_deal_assessments_query)
-    end
+                '#{assessment_id}'
+            )"
+    ActiveRecord::Base.connection.execute(green_deal_assessments_query)
   end
 end

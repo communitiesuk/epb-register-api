@@ -124,8 +124,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
                 true,
                 {},
                 %w[address:search],
-              )
-                .body,
+              ).body,
               symbolize_names: true,
             )
           end
@@ -171,8 +170,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
                 true,
                 {},
                 %w[address:search],
-              )
-                .body,
+              ).body,
               symbolize_names: true,
             )
           end
@@ -219,8 +217,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
               true,
               {},
               %w[address:search],
-            )
-              .body,
+            ).body,
             symbolize_names: true,
           )
         end
@@ -266,8 +263,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
               true,
               {},
               %w[address:search],
-            )
-              .body,
+            ).body,
             symbolize_names: true,
           )
         end
@@ -314,8 +310,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
                 true,
                 {},
                 %w[address:search],
-              )
-                .body,
+              ).body,
               symbolize_names: true,
             )
           end
@@ -361,8 +356,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
                 true,
                 {},
                 %w[address:search],
-              )
-                .body,
+              ).body,
               symbolize_names: true,
             )
           end
@@ -403,8 +397,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
                 true,
                 {},
                 %w[address:search],
-              )
-                .body,
+              ).body,
               symbolize_names: true,
             )
           end
@@ -463,8 +456,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
               true,
               {},
               %w[address:search],
-            )
-              .body,
+            ).body,
             symbolize_names: true,
           )
         end
@@ -510,8 +502,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
               true,
               {},
               %w[address:search],
-            )
-              .body,
+            ).body,
             symbolize_names: true,
           )
         end
@@ -552,8 +543,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
               true,
               {},
               %w[address:search],
-            )
-              .body,
+            ).body,
             symbolize_names: true,
           )
         end
@@ -604,8 +594,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
               true,
               {},
               %w[address:search],
-            )
-              .body,
+            ).body,
             symbolize_names: true,
           )
         end

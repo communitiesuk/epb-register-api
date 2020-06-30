@@ -66,9 +66,7 @@ module Gateway
       response = Assessment.connection.execute(sql)
       result = []
 
-      response.each do |row|
-        result << row_to_domain(row)
-      end
+      response.each { |row| result << row_to_domain(row) }
 
       result
     end
@@ -143,9 +141,7 @@ module Gateway
           ActiveRecord::Base.sanitize_sql(street_name)
         }' OR address_line3 ILIKE '%#{
           ActiveRecord::Base.sanitize_sql(street_name)
-        }') AND (town ILIKE '#{
-          ActiveRecord::Base.sanitize_sql(town)
-        }')
+        }') AND (town ILIKE '#{ActiveRecord::Base.sanitize_sql(town)}')
          AND type_of_assessment IN('RdSAP', 'SAP')"
 
       if restrictive
@@ -157,9 +153,7 @@ module Gateway
       response = Assessment.connection.execute(sql)
 
       result = []
-      response.each do |row|
-        result << row_to_domain(row)
-      end
+      response.each { |row| result << row_to_domain(row) }
 
       result
     end
@@ -167,12 +161,9 @@ module Gateway
     def update_field(assessment_id, field, value)
       sql =
         "UPDATE assessments SET " +
-        ActiveRecord::Base.connection.quote_column_name(field) +
-        " = '" +
-        ActiveRecord::Base.sanitize_sql(value) +
-        "' WHERE assessment_id = '" +
-        ActiveRecord::Base.sanitize_sql(assessment_id) +
-        "'"
+        ActiveRecord::Base.connection.quote_column_name(field) + " = '" +
+        ActiveRecord::Base.sanitize_sql(value) + "' WHERE assessment_id = '" +
+        ActiveRecord::Base.sanitize_sql(assessment_id) + "'"
 
       Assessment.connection.execute(sql)
     end
@@ -217,7 +208,8 @@ module Gateway
       hot_water_cost_potential = row.delete(:hot_water_cost_potential)
       domain = Domain::Assessment.new(row)
 
-      if domain.is_type?(Domain::RdsapAssessment) || domain.is_type?(Domain::SapAssessment)
+      if domain.is_type?(Domain::RdsapAssessment) ||
+          domain.is_type?(Domain::SapAssessment)
         domain.set(:lighting_cost_current, lighting_cost_current)
         domain.set(:heating_cost_current, heating_cost_current)
         domain.set(:hot_water_cost_current, hot_water_cost_current)

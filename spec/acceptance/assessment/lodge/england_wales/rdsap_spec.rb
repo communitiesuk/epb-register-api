@@ -26,8 +26,7 @@ describe "Acceptance::LodgeRdSapEnergyAssessment" do
                 assessment_body: valid_rdsap_xml,
                 accepted_responses: [400],
                 auth_data: { scheme_ids: [scheme_id] },
-              )
-                .body,
+              ).body,
             )
 
           expect(response["errors"][0]["title"]).to eq(
@@ -61,8 +60,8 @@ describe "Acceptance::LodgeRdSapEnergyAssessment" do
 
       let(:lighting_cost_current) do
         ActiveRecord::Base.connection.execute(
-            "SELECT lighting_cost_current FROM assessments WHERE assessment_id = '0000-0000-0000-0000-0000'",
-            )
+          "SELECT lighting_cost_current FROM assessments WHERE assessment_id = '0000-0000-0000-0000-0000'",
+        )
       end
 
       before do

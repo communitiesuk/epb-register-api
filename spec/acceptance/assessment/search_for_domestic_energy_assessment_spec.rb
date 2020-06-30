@@ -541,8 +541,7 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
             "Palmtree Road",
             "",
             [400],
-          )
-            .body
+          ).body
         expect(JSON.parse(response_body)).to eq(
           {
             "errors" => [
@@ -571,8 +570,7 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
             "",
             "Brighton",
             [400],
-          )
-            .body
+          ).body
         expect(JSON.parse(response_body)).to eq(
           {
             "errors" => [

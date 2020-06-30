@@ -290,8 +290,7 @@ describe "Acceptance::Assessor" do
               scheme_id,
               "SCHE55443",
               assessor_without_key(:middleNames),
-            )
-              .body,
+            ).body,
           )[
             "data"
           ]

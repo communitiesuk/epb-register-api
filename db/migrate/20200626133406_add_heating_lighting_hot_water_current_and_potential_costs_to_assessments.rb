@@ -1,4 +1,6 @@
-class AddHeatingLightingHotWaterCurrentAndPotentialCostsToAssessments < ActiveRecord::Migration[6.0]
+class AddHeatingLightingHotWaterCurrentAndPotentialCostsToAssessments < ActiveRecord::Migration[
+  6.0
+]
   def change
     add_column :assessments, :lighting_cost_current, :decimal
     add_column :assessments, :heating_cost_current, :decimal

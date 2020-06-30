@@ -45,9 +45,7 @@ class GreenDealPlansGatewayStub
               )
               VALUES (
                   'ABC123456DEF',
-                  '#{
-        assessment_id
-      }'
+                  '#{assessment_id}'
               )"
     ActiveRecord::Base.connection.execute(sql)
   end

@@ -49,11 +49,9 @@ module Controller
       needed_args = use_case.method(:execute).parameters.map(&:second)
 
       filters.each_key do |key|
-        unless needed_args.include? key
-          forbidden "INVALID_REQUEST",
-                    "#{key} is not valid in this context.",
-                    422
-        end
+        next if needed_args.include? key
+
+        forbidden "INVALID_REQUEST", "#{key} is not valid in this context.", 422
       end
 
       results = use_case.execute filters
