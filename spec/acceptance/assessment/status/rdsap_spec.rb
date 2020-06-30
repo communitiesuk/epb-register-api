@@ -21,12 +21,13 @@ describe "Acceptance::AssessmentStatus::RdSAP" do
                        accepted_responses: [201],
                        auth_data: { scheme_ids: [scheme_id] }
 
-      assessment_status = update_assessment_status(
-        assessment_id: "0000-0000-0000-0000-0000",
-        assessment_status_body: { "status": "CANCELLED" },
-        accepted_responses: [200],
-        auth_data: { scheme_ids: [scheme_id] },
-      )
+      assessment_status =
+        update_assessment_status(
+          assessment_id: "0000-0000-0000-0000-0000",
+          assessment_status_body: { "status": "CANCELLED" },
+          accepted_responses: [200],
+          auth_data: { scheme_ids: [scheme_id] },
+        )
 
       JSON.parse assessment_status.body, symbolize_names: true
     end
@@ -51,12 +52,13 @@ describe "Acceptance::AssessmentStatus::RdSAP" do
                        accepted_responses: [201],
                        auth_data: { scheme_ids: [scheme_id] }
 
-      assessment_status = update_assessment_status(
-        assessment_id: "0000-0000-0000-0000-0000",
-        assessment_status_body: { "status": "NOT_FOR_ISSUE" },
-        accepted_responses: [200],
-        auth_data: { scheme_ids: [scheme_id] },
-      )
+      assessment_status =
+        update_assessment_status(
+          assessment_id: "0000-0000-0000-0000-0000",
+          assessment_status_body: { "status": "NOT_FOR_ISSUE" },
+          accepted_responses: [200],
+          auth_data: { scheme_ids: [scheme_id] },
+        )
 
       JSON.parse assessment_status.body, symbolize_names: true
     end

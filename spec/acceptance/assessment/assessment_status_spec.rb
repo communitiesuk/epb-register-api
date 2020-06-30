@@ -11,14 +11,18 @@ describe "Acceptance::AssessmentStatus" do
     context "when cancelling an assessment" do
       it "rejects a request that is not authenticated" do
         update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
-                                 assessment_status_body: {status: "CANCELLED"},
+                                 assessment_status_body: {
+                                   status: "CANCELLED",
+                                 },
                                  accepted_responses: [401],
                                  authenticate: false
       end
 
       it "rejects a request with the wrong scopes" do
         update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
-                                 assessment_status_body: {status: "CANCELLED"},
+                                 assessment_status_body: {
+                                   status: "CANCELLED",
+                                 },
                                  accepted_responses: [403],
                                  scopes: %w[wrong:scope]
       end
@@ -27,7 +31,9 @@ describe "Acceptance::AssessmentStatus" do
     context "when making an assessment not for issue" do
       it "rejects a request that is not authenticated" do
         update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
-                                 assessment_status_body: {status: "NOT_FOR_ISSUE"},
+                                 assessment_status_body: {
+                                   status: "NOT_FOR_ISSUE",
+                                 },
                                  accepted_responses: [401],
                                  authenticate: false
 
@@ -36,7 +42,9 @@ describe "Acceptance::AssessmentStatus" do
 
       it "rejects a request with the wrong scopes" do
         update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
-                                 assessment_status_body: {status: "NOT_FOR_ISSUE"},
+                                 assessment_status_body: {
+                                   status: "NOT_FOR_ISSUE",
+                                 },
                                  accepted_responses: [403],
                                  scopes: %w[wrong:scope]
       end
@@ -46,30 +54,31 @@ describe "Acceptance::AssessmentStatus" do
       it "then gives error 403 and the correct error message" do
         scheme_id = add_scheme_and_get_id
         add_assessor(
-            scheme_id,
-            "SPEC000000",
-            fetch_assessor_stub.fetch_request_body(domesticRdSap: "ACTIVE"),
+          scheme_id,
+          "SPEC000000",
+          fetch_assessor_stub.fetch_request_body(domesticRdSap: "ACTIVE"),
         )
 
         lodge_assessment(
-            assessment_body: valid_rdsap_xml,
-            accepted_responses: [201],
-            auth_data: {scheme_ids: [scheme_id]},
+          assessment_body: valid_rdsap_xml,
+          accepted_responses: [201],
+          auth_data: { scheme_ids: [scheme_id] },
         )
 
         assessment_update_response =
-            JSON.parse(
-                update_assessment_status(
-                    assessment_id: "0000-0000-0000-0000-0000",
-                    assessment_status_body: {"status": "NOT_FOR_ISSUE"},
-                    accepted_responses: [403],
-                    auth_data: {scheme_ids: [scheme_id + 1]},
-                )
-                    .body,
-                symbolize_names: true,
-            )
+          JSON.parse(
+            update_assessment_status(
+              assessment_id: "0000-0000-0000-0000-0000",
+              assessment_status_body: { "status": "NOT_FOR_ISSUE" },
+              accepted_responses: [403],
+              auth_data: { scheme_ids: [scheme_id + 1] },
+            ).body,
+            symbolize_names: true,
+          )
 
-        expect(assessment_update_response[:errors][0][:code]).to eq("NOT_ALLOWED")
+        expect(assessment_update_response[:errors][0][:code]).to eq(
+          "NOT_ALLOWED",
+        )
       end
     end
   end
