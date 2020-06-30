@@ -124,19 +124,23 @@ module Domain
     def get_estimated_cost_for_three_years(
       lighting_cost_current, heating_cost_current, hot_water_cost_current
     )
-      @estimated_cost =
-        lighting_cost_current + heating_cost_current + hot_water_cost_current
+      @estimated_cost = [
+        lighting_cost_current,
+        heating_cost_current,
+        hot_water_cost_current,
+      ].compact.sum
       @estimated_cost
     end
 
     def get_potential_saving_for_three_years(
       lighting_cost_potential, heating_cost_potential, hot_water_cost_potential
     )
-      @estimated_cost -
-        (
-          lighting_cost_potential + heating_cost_potential +
-            hot_water_cost_potential
-        )
+      potential_saving_sum = [
+        lighting_cost_potential,
+        heating_cost_potential,
+        hot_water_cost_potential,
+      ].compact.sum
+      @estimated_cost - potential_saving_sum
     end
 
     def get_energy_rating_band(number)
