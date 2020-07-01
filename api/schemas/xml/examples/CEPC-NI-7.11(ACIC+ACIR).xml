@@ -9,7 +9,7 @@
       <RRN>0000-0000-0000-0000-0000</RRN>
       <Issue-Date>2019-06-02</Issue-Date>
       <Report-Type>6</Report-Type>
-      <Valid-Until>2020-05-19</Valid-Until>
+      <Valid-Until>2029-05-19</Valid-Until>
       <Related-RRN>0000-0000-0000-0000-0001</Related-RRN>
       <Inspection-Date>2019-05-20</Inspection-Date>
       <Registration-Date>2019-05-20</Registration-Date>
@@ -49,8 +49,8 @@
     <Insurance-Details>
       <Insurer>Assessor Underwriting Limited</Insurer>
       <Policy-No>AB1234567CD</Policy-No>
-      <Effective-Date>2023-02-01</Effective-Date>
-      <Expiry-Date>2018-01-31</Expiry-Date>
+      <Effective-Date>2018-02-01</Effective-Date>
+      <Expiry-Date>2023-01-31</Expiry-Date>
       <PI-Limit>2000000</PI-Limit>
     </Insurance-Details>
     <Air-Conditioning-Inspection-Certificate>
@@ -104,7 +104,7 @@
       <RRN>0000-0000-0000-0000-0001</RRN>
       <Issue-Date>2019-06-02</Issue-Date>
       <Report-Type>5</Report-Type>
-      <Valid-Until>2020-05-19</Valid-Until>
+      <Valid-Until>2029-05-19</Valid-Until>
       <Related-RRN>0000-0000-0000-0000-0000</Related-RRN>
       <Inspection-Date>2019-05-20</Inspection-Date>
       <Registration-Date>2019-05-20</Registration-Date>

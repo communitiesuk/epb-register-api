@@ -7,10 +7,10 @@
     <Calculation-Software-Version>Calculation-Software-Version0</Calculation-Software-Version>
     <Report-Header>
         <RRN>0000-0000-0000-0000-0000</RRN>
-        <Inspection-Date>2006-05-04</Inspection-Date>
+        <Inspection-Date>2020-05-04</Inspection-Date>
         <Report-Type>1</Report-Type>
-        <Completion-Date>2006-05-04</Completion-Date>
-        <Registration-Date>2006-05-04</Registration-Date>
+        <Completion-Date>2020-05-04</Completion-Date>
+        <Registration-Date>2020-05-04</Registration-Date>
         <Status>cancelled</Status>
         <Language-Code>1</Language-Code>
         <Tenure>1</Tenure>
@@ -46,7 +46,7 @@
         </Related-Party-Disclosure>
     </Report-Header>
     <Energy-Assessment>
-        <Assessment-Date>2006-05-04</Assessment-Date>
+        <Assessment-Date>2020-05-04</Assessment-Date>
         <Property-Summary>
             <Walls>
                 <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
