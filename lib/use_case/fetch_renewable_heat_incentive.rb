@@ -15,9 +15,7 @@ module UseCase
 
       renewable_heat_incentive = renewable_heat_incentive.to_hash
 
-      if renewable_heat_incentive.delete :is_cancelled
-        raise AssessmentGone
-      end
+      raise AssessmentGone if renewable_heat_incentive.delete :is_cancelled
 
       renewable_heat_incentive
     end

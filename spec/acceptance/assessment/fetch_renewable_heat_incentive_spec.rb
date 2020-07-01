@@ -74,8 +74,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
         JSON.parse fetch_renewable_heat_incentive(
           "0000-0000-0000-0000-0000",
           [410],
-        )
-                     .body,
+        ).body,
                    symbolize_names: true
       expect(response_body).to eq(
         { errors: [{ code: "GONE", title: "Assessment not for issue" }] },
