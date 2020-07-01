@@ -41,8 +41,6 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
       File.read File.join Dir.pwd, "spec/fixtures/samples/rdsap.xml"
     end
 
-    let(:scheme_id) { add_scheme_and_get_id }
-
     before do
       scheme_id = add_scheme_and_get_id
       add_assessor(
