@@ -203,7 +203,7 @@ def fetch_renewable_heat_incentive(
   accepted_responses = [200],
   authenticate = true,
   auth_data = nil,
-  scopes = %w[greendeal:assessment:fetch],
+  scopes = %w[greendeal:plans],
   headers: {}
 )
   headers.each { |key, value| header key.to_s, value.to_s }

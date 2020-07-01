@@ -788,7 +788,7 @@ paths:
                 {assessmentId}'
       security:
         - oauth:
-            - 'greendeal:assessment:fetch'
+            - 'greendeal:plans'
       parameters:
         - in: path
           name: assessmentId
