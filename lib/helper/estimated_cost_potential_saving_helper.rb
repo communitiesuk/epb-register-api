@@ -16,15 +16,14 @@ module Helper
       lighting_cost_potential,
       heating_cost_potential,
       hot_water_cost_potential,
-      estimated_cost = 0
+      estimated_cost = BigDecimal(0)
     )
       potential_saving_sum = [
         lighting_cost_potential,
         heating_cost_potential,
         hot_water_cost_potential,
       ].compact.sum
-      total_potential_saving = estimated_cost - potential_saving_sum
-      total_potential_saving.round(2)
+      estimated_cost - potential_saving_sum
     end
   end
 end
