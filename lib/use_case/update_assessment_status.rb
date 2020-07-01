@@ -2,6 +2,8 @@
 
 module UseCase
   class UpdateAssessmentStatus
+    class AssessmentNotFound < StandardError; end
+    class AssessmentAlreadyCancelled < StandardError; end
     class AssessmentNotLodgedByScheme < StandardError; end
 
     def initialize(assessments_gateway, assessors_gateway)
@@ -11,7 +13,13 @@ module UseCase
 
     def execute(assessment_id, status, scheme_ids)
       assessment =
-        @assessments_gateway.search_by_assessment_id(assessment_id).first
+        @assessments_gateway.search_by_assessment_id(assessment_id, false).first
+
+      raise AssessmentNotFound unless assessment
+
+      if %w[CANCELLED NOT_FOR_ISSUE].include? assessment.to_hash[:status]
+        raise AssessmentAlreadyCancelled
+      end
 
       assessor = @assessors_gateway.fetch(assessment.get(:scheme_assessor_id))
 

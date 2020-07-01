@@ -2,9 +2,89 @@ describe "Acceptance::AssessmentStatus" do
   include RSpecAssessorServiceMixin
 
   let(:fetch_assessor_stub) { AssessorStub.new }
+  let(:scheme_id) do
+    scheme_id = add_scheme_and_get_id
+    add_assessor(
+      scheme_id,
+      "SPEC000000",
+      fetch_assessor_stub.fetch_request_body(domesticRdSap: "ACTIVE"),
+    )
+
+    scheme_id
+  end
 
   let(:valid_rdsap_xml) do
     File.read File.join Dir.pwd, "spec/fixtures/samples/rdsap.xml"
+  end
+
+  context "an assessment that does not exist" do
+    describe "cancelling an assessment" do
+      it "responds that the assessment cannot be found" do
+        update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
+                                 assessment_status_body: {
+                                   status: "CANCELLED",
+                                 },
+                                 accepted_responses: [404],
+                                 auth_data: { scheme_ids: [scheme_id] }
+      end
+    end
+
+    describe "marking an assessment not for issue" do
+      it "responds that the assessment cannot be found" do
+        update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
+                                 assessment_status_body: {
+                                   status: "NOT_FOR_ISSUE",
+                                 },
+                                 accepted_responses: [404],
+                                 auth_data: { scheme_ids: [scheme_id] }
+      end
+    end
+  end
+
+  context "an assessment that has already been cancelled" do
+    describe "cancelling an assessment" do
+      it "responds that the assessment has already been cancelled" do
+        lodge_assessment assessment_body: valid_rdsap_xml,
+                         accepted_responses: [201],
+                         auth_data: { scheme_ids: [scheme_id] }
+
+        update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
+                                 assessment_status_body: {
+                                   "status": "CANCELLED",
+                                 },
+                                 accepted_responses: [200],
+                                 auth_data: { scheme_ids: [scheme_id] }
+
+        update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
+                                 assessment_status_body: {
+                                   status: "CANCELLED",
+                                 },
+                                 accepted_responses: [410],
+                                 auth_data: { scheme_ids: [scheme_id] }
+      end
+    end
+
+    describe "marking an assessment not for issue" do
+      it "responds that the assessment has already been marked not for issue" do
+        lodge_assessment assessment_body: valid_rdsap_xml,
+                         accepted_responses: [201],
+                         auth_data: { scheme_ids: [scheme_id] }
+
+        update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
+                                 assessment_status_body: {
+                                   "status": "NOT_FOR_ISSUE",
+                                 },
+                                 accepted_responses: [200],
+                                 auth_data: { scheme_ids: [scheme_id] }
+
+        update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
+                                 assessment_status_body: {
+                                   status: "NOT_FOR_ISSUE",
+                                 },
+                                 accepted_responses: [410],
+                                 auth_data: { scheme_ids: [scheme_id] }
+      end
+    end
   end
 
   context "security" do

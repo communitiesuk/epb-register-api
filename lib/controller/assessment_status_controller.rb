@@ -26,6 +26,10 @@ module Controller
       case e
       when UseCase::UpdateAssessmentStatus::AssessmentNotLodgedByScheme
         error_response(403, "NOT_ALLOWED", e.message)
+      when UseCase::UpdateAssessmentStatus::AssessmentAlreadyCancelled
+        gone_error("Assessment has already been cancelled")
+      when UseCase::UpdateAssessmentStatus::AssessmentNotFound
+        not_found_error("Assessment not found")
       else
         server_error(e.message)
       end
