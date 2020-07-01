@@ -32,6 +32,12 @@ task :generate_certificate do
 
   dwelling_type = ["end-terrace house", "terrace house", "flat", "bungalow", "mansion", "castle"]
   type_of_assessment = %w[RdSAP SAP CEPC]
+  lighting_cost_current = [1233, 3445, 4546, 6748, 8910, 7483, 8963]
+  heating_cost_current = [7983, 2321, 4524, 6478, 8932, 6483, 32363]
+  hot_water_cost_current = [2333, 3445, 4546, 6748, 8910, 7483, 8963]
+  lighting_cost_potential = [233, 445, 546, 748, 910, 483, 963]
+  heating_cost_potential = [233, 445, 546, 748, 910, 483, 963]
+  hot_water_cost_potential = [783, 231, 424, 648, 932, 643, 1293]
   current_space_heating_demand = [1233, 3445, 4546, 6748, 8910, 7483, 8963]
   current_water_heating_demand = [7983, 2321, 454, 648, 8932, 6483, 72_363]
   current_carbon_emission = [5.4, 4.327, 7.8, 4.5, 6.4, 4]
@@ -125,6 +131,12 @@ task :generate_certificate do
     current_energy_efficiency_rating = rand(1..99)
     internal_current_carbon_emission = current_carbon_emission.sample
     internal_potential_carbon_emission = potential_carbon_emission.sample
+    internal_lighting_cost_current = lighting_cost_current.sample
+    internal_heating_cost_current = heating_cost_current.sample
+    internal_hot_water_cost_current = hot_water_cost_current.sample
+    internal_lighting_cost_potential = lighting_cost_potential.sample
+    internal_heating_cost_potential = heating_cost_potential.sample
+    internal_hot_water_cost_potential = hot_water_cost_potential.sample
     internal_current_space_heating_demand = current_space_heating_demand.sample
     internal_current_water_heating_demand = current_water_heating_demand.sample
     internal_impact_of_loft_insulation = impact_of_loft_insulation.sample
@@ -169,7 +181,13 @@ task :generate_certificate do
             scheme_assessor_id,
             related_party_disclosure_number,
             related_party_disclosure_text,
-            property_summary
+            property_summary,
+            lighting_cost_current,
+            heating_cost_current,
+            hot_water_cost_current,
+            lighting_cost_potential,
+            heating_cost_potential,
+            hot_water_cost_potential
           )
         VALUES(
           '#{assessment_id}',
@@ -198,9 +216,18 @@ task :generate_certificate do
           '#{scheme_assessor_id}',
           #{internal_related_party_disclosure_number},
           '#{internal_related_party_disclosure_text}',
-          '#{internal_property_summary}'
+          '#{internal_property_summary}',
+          '#{internal_lighting_cost_current}',
+          '#{internal_heating_cost_current}',
+          '#{internal_hot_water_cost_current}',
+          '#{internal_lighting_cost_potential}',
+          '#{internal_heating_cost_potential}',
+          '#{internal_hot_water_cost_potential}'
         )"
 
+    green_deal_plan_id = ActiveRecord::Base.connection.execute("SELECT green_deal_plan_id FROM green_deal_assessments WHERE assessment_id = '#{assessment_id}'")
+    ActiveRecord::Base.connection.execute("DELETE FROM green_deal_assessments WHERE green_deal_plan_id = '#{green_deal_plan_id.values.flatten.first}'")
+    ActiveRecord::Base.connection.execute("DELETE FROM green_deal_plans WHERE green_deal_plan_id = '#{green_deal_plan_id.values.flatten.first}'")
     ActiveRecord::Base.connection.execute("DELETE FROM domestic_epc_energy_improvements WHERE assessment_id = '#{assessment_id}'")
     ActiveRecord::Base.connection.execute("DELETE FROM assessments WHERE assessment_id = '#{assessment_id}'")
     ActiveRecord::Base.connection.execute(query)
