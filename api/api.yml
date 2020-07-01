@@ -595,9 +595,15 @@ paths:
         '400':
           description: Bad request - assessmentId parameter was badly formatted
         '403':
-          description: Forbidden - the assessment with that assessmentId does not belong to your scheme
+          description: >-
+            Forbidden - the assessment with that assessmentId does not
+            belong to your scheme
         '404':
           description: Assessment with that assessmentId not found
+        '410':
+          description: >-
+            Assessment with that assessmentId has already been
+            cancelled or marked not for issue
         '500':
           description: Server error
 
