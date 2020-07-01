@@ -151,9 +151,9 @@ module Domain
         )
       potential_saving_for_three_years =
         @estimated_cost_potential_saving_helper.potential_saving(
-          @lighting_cost_potential.to_f,
-          @heating_cost_potential.to_f,
-          @hot_water_cost_potential.to_f,
+          BigDecimal(@lighting_cost_potential),
+          BigDecimal(@heating_cost_potential),
+          BigDecimal(@hot_water_cost_potential),
           estimated_cost_for_three_years,
         )
       data = {
