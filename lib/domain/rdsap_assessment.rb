@@ -57,6 +57,8 @@ module Domain
       xml: nil,
       related_assessments: nil
     )
+      @estimated_cost_potential_saving_helper =
+        Helper::EstimatedCostPotentialSavingHelper.new
       @migrated = migrated
       @date_of_assessment =
         if !date_of_assessment.nil?
@@ -94,12 +96,12 @@ module Domain
       @address_line3 = address_line3
       @address_line4 = address_line4
       @town = town
-      @lighting_cost_current = lighting_cost_current.to_f
-      @heating_cost_current = heating_cost_current.to_f
-      @hot_water_cost_current = hot_water_cost_current.to_f
-      @lighting_cost_potential = lighting_cost_potential.to_f
-      @heating_cost_potential = heating_cost_potential.to_f
-      @hot_water_cost_potential = hot_water_cost_potential.to_f
+      @lighting_cost_current = lighting_cost_current
+      @heating_cost_current = heating_cost_current
+      @hot_water_cost_current = hot_water_cost_current
+      @lighting_cost_potential = lighting_cost_potential
+      @heating_cost_potential = heating_cost_potential
+      @hot_water_cost_potential = hot_water_cost_potential
       @current_space_heating_demand = current_space_heating_demand.to_f
       @current_water_heating_demand = current_water_heating_demand.to_f
       @impact_of_loft_insulation = impact_of_loft_insulation
@@ -119,28 +121,6 @@ module Domain
       @scheme_assessor_id = scheme_assessor_id
       @xml = xml
       @related_assessments = related_assessments
-    end
-
-    def get_estimated_cost_for_three_years(
-      lighting_cost_current, heating_cost_current, hot_water_cost_current
-    )
-      @estimated_cost = [
-        lighting_cost_current,
-        heating_cost_current,
-        hot_water_cost_current,
-      ].compact.sum
-      @estimated_cost
-    end
-
-    def get_potential_saving_for_three_years(
-      lighting_cost_potential, heating_cost_potential, hot_water_cost_potential
-    )
-      potential_saving_sum = [
-        lighting_cost_potential,
-        heating_cost_potential,
-        hot_water_cost_potential,
-      ].compact.sum
-      @estimated_cost - potential_saving_sum
     end
 
     def get_energy_rating_band(number)
@@ -163,6 +143,19 @@ module Domain
     end
 
     def to_hash
+      estimated_cost_for_three_years =
+        @estimated_cost_potential_saving_helper.estimated_cost(
+          @lighting_cost_current.to_f,
+          @heating_cost_current.to_f,
+          @hot_water_cost_current.to_f,
+        )
+      potential_saving_for_three_years =
+        @estimated_cost_potential_saving_helper.potential_saving(
+          @lighting_cost_potential.to_f,
+          @heating_cost_potential.to_f,
+          @hot_water_cost_potential.to_f,
+          estimated_cost_for_three_years,
+        )
       data = {
         date_of_assessment: @date_of_assessment.strftime("%Y-%m-%d"),
         date_registered: @date_registered.strftime("%Y-%m-%d"),
@@ -191,18 +184,8 @@ module Domain
         lighting_cost_potential: @lighting_cost_potential.to_f,
         heating_cost_potential: @heating_cost_potential.to_f,
         hot_water_cost_potential: @hot_water_cost_potential.to_f,
-        estimated_cost_for_three_years:
-          get_estimated_cost_for_three_years(
-            @lighting_cost_current.to_f,
-            @heating_cost_current.to_f,
-            @hot_water_cost_current.to_f,
-          ),
-        potential_saving_for_three_years:
-          get_potential_saving_for_three_years(
-            @lighting_cost_potential.to_f,
-            @heating_cost_potential.to_f,
-            @hot_water_cost_potential.to_f,
-          ).round(2),
+        estimated_cost_for_three_years: estimated_cost_for_three_years,
+        potential_saving_for_three_years: potential_saving_for_three_years,
         heat_demand: {
           current_space_heating_demand: @current_space_heating_demand.to_f,
           current_water_heating_demand: @current_water_heating_demand.to_f,
