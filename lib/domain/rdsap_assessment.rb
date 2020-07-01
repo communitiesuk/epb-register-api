@@ -145,9 +145,9 @@ module Domain
     def to_hash
       estimated_cost_for_three_years =
         @estimated_cost_potential_saving_helper.estimated_cost(
-          @lighting_cost_current.to_f,
-          @heating_cost_current.to_f,
-          @hot_water_cost_current.to_f,
+          BigDecimal(@lighting_cost_current),
+          BigDecimal(@heating_cost_current),
+          BigDecimal(@hot_water_cost_current),
         )
       potential_saving_for_three_years =
         @estimated_cost_potential_saving_helper.potential_saving(

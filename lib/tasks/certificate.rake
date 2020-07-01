@@ -33,7 +33,7 @@ task :generate_certificate do
   dwelling_type = ["end-terrace house", "terrace house", "flat", "bungalow", "mansion", "castle"]
   type_of_assessment = %w[RdSAP SAP CEPC]
   lighting_cost_current = [1233, 3445, 4546, 6748, 8910, 7483, 8963]
-  heating_cost_current = [7983, 2321, 4524, 6478, 8932, 6483, 32363]
+  heating_cost_current = [7983, 2321, 4524, 6478, 8932, 6483, 32_363]
   hot_water_cost_current = [2333, 3445, 4546, 6748, 8910, 7483, 8963]
   lighting_cost_potential = [233, 445, 546, 748, 910, 483, 963]
   heating_cost_potential = [233, 445, 546, 748, 910, 483, 963]
