@@ -5,12 +5,11 @@ module Helper
     def estimated_cost(
       lighting_cost_current, heating_cost_current, hot_water_cost_current
     )
-      estimated_cost = [
+      [
         lighting_cost_current,
         heating_cost_current,
         hot_water_cost_current,
       ].compact.sum
-      estimated_cost
     end
 
     def potential_saving(
