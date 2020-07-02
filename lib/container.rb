@@ -2,8 +2,6 @@ require "sinatra/activerecord"
 
 class Container
   def initialize
-    find_assessors_by_name_use_case = UseCase::FindAssessorsByName.new
-
     find_assessments_by_postcode_use_case =
       UseCase::FindAssessmentsByPostcode.new
     find_assessments_by_assessment_id_use_case =
@@ -38,7 +36,6 @@ class Container
       )
 
     @objects = {
-      find_assessors_by_name_use_case: find_assessors_by_name_use_case,
       fetch_assessor_list_use_case: fetch_assessor_list_use_case,
       find_assessments_by_postcode_use_case:
         find_assessments_by_postcode_use_case,

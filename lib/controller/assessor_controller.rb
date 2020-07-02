@@ -78,8 +78,7 @@ module Controller
     }.freeze
 
     def search_by_name(name)
-      result =
-        @container.get_object(:find_assessors_by_name_use_case).execute(name)
+      result = UseCase::FindAssessorsByName.new.execute(name)
 
       result[:data] = assessor_list_results_filter(result)
       json_api_response(code: 200, data: result, burrow_key: :assessors)
