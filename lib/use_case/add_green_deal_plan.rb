@@ -9,8 +9,7 @@ module UseCase
 
     def execute(assessment_id)
       assessments =
-        @assessments_gateway.search_by_assessment_id assessment_id,
-                                                     false
+        @assessments_gateway.search_by_assessment_id assessment_id, false
 
       assessment = assessments.first
 

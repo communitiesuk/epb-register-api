@@ -137,12 +137,12 @@ def add_scheme(
 end
 
 def add_green_deal_plan(
-  assessment_id,
-  body,
-  accepted_responses = [201],
-  authenticate = true,
-  auth_data = nil,
-  scopes = %w[greendeal:plans]
+  assessment_id:,
+  body: nil,
+  accepted_responses: [201],
+  authenticate: true,
+  auth_data: nil,
+  scopes: %w[greendeal:plans]
 )
   assertive_post(
     "/api/greendeal/disclosure/assessments/#{assessment_id}/plans",

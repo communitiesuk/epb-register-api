@@ -10,19 +10,24 @@ describe "Acceptance::Assessment::GreenDealPlans" do
   describe "creating a green deal plan" do
     context "when unauthenticated" do
       it "returns status 401" do
-        add_green_deal_plan "123-456", "body", [401], false
+        add_green_deal_plan assessment_id: "1234-1234-1234-1234-1234",
+                            accepted_responses: [401],
+                            authenticate: false
       end
     end
 
     context "when unauthorised" do
       it "returns status 401" do
-        add_green_deal_plan "123-456", "body", [403], true, nil, %w[wrong:scope]
+        add_green_deal_plan assessment_id: "1234-1234-1234-1234-1234",
+                            accepted_responses: [403],
+                            scopes: %w[wrong:scope]
       end
     end
 
     context "when an assessment does not exist" do
       it "returns status 404" do
-        add_green_deal_plan "123-456", "body", [404]
+        add_green_deal_plan assessment_id: "1234-1234-1234-1234-1234",
+                            accepted_responses: [404]
       end
     end
 
@@ -52,7 +57,8 @@ describe "Acceptance::Assessment::GreenDealPlans" do
         end
 
         it "returns status 410" do
-          add_green_deal_plan "0000-0000-0000-0000-0000", "body", [410]
+          add_green_deal_plan assessment_id: "0000-0000-0000-0000-0000",
+                              accepted_responses: [410]
         end
       end
 
@@ -67,7 +73,8 @@ describe "Acceptance::Assessment::GreenDealPlans" do
         end
 
         it "returns status 410" do
-          add_green_deal_plan "0000-0000-0000-0000-0000", "body", [410]
+          add_green_deal_plan assessment_id: "0000-0000-0000-0000-0000",
+                              accepted_responses: [410]
         end
       end
     end
