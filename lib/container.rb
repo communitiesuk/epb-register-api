@@ -2,8 +2,6 @@ require "sinatra/activerecord"
 
 class Container
   def initialize
-    assessments_gateway = Gateway::AssessmentsGateway.new
-
     postcode_gateway = Gateway::PostcodesGateway.new
 
     assessments_xml_gateway = Gateway::AssessmentsXmlGateway.new
