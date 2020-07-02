@@ -55,7 +55,6 @@ class Container
     update_assessments_status_use_case =
       UseCase::UpdateAssessmentStatus.new(
         assessments_gateway,
-        assessors_gateway,
       )
 
     validate_assessment_use_case = UseCase::ValidateAssessment.new

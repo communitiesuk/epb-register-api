@@ -6,9 +6,9 @@ module UseCase
     class AssessmentAlreadyCancelled < StandardError; end
     class AssessmentNotLodgedByScheme < StandardError; end
 
-    def initialize(assessments_gateway, assessors_gateway)
+    def initialize(assessments_gateway)
       @assessments_gateway = assessments_gateway
-      @assessors_gateway = assessors_gateway
+      @assessors_gateway = Gateway::AssessorsGateway.new
     end
 
     def execute(assessment_id, status, scheme_ids)
