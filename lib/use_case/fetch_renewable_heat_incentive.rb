@@ -3,8 +3,8 @@ module UseCase
     class NotFoundException < StandardError; end
     class AssessmentGone < StandardError; end
 
-    def initialize(renewable_heat_incentive_gateway)
-      @renewable_heat_incentive_gateway = renewable_heat_incentive_gateway
+    def initialize
+      @renewable_heat_incentive_gateway = Gateway::RenewableHeatIncentiveGateway.new
     end
 
     def execute(assessment_id)
