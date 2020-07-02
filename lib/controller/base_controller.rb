@@ -1,8 +1,8 @@
 require_relative "../helper/toggles"
-require_relative "../container"
 require "sinatra/cross_origin"
 require "epb-auth-tools"
 require "nokogiri"
+require "sinatra/activerecord"
 
 module Controller
   class BaseController < Sinatra::Base
@@ -13,7 +13,6 @@ module Controller
       @xml_helper = Helper::XmlHelper.new
       @json_helper = Helper::JsonHelper.new
       @toggles = toggles || Toggles.new
-      @container = Container.new
       @logger = Logger.new(STDOUT)
       @events = Helper::LogHelper.new
     end
