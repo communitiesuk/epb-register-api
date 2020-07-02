@@ -62,7 +62,7 @@ class Container
       UseCase::SearchAddressesByAddressId.new
 
     search_addresses_by_postcode_use_case =
-      UseCase::SearchAddressesByPostcode.new address_search_gateway
+        UseCase::SearchAddressesByPostcode.new
 
     search_addresses_by_street_and_town_use_case =
       UseCase::SearchAddressesByStreetAndTown.new address_search_gateway
