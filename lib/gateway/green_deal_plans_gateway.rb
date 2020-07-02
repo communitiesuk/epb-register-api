@@ -2,8 +2,30 @@ module Gateway
   class GreenDealPlansGateway
     class GreenDealPlan < ActiveRecord::Base; end
 
-    def add(green_deal_plan)
-      GreenDealPlan.create(green_deal_plan.to_record)
+    def add(green_deal_plan, assessment_id)
+      GreenDealPlan.create green_deal_plan.to_record
+
+      sql = <<-SQL
+        INSERT INTO green_deal_assessments (green_deal_plan_id, assessment_id)
+        VALUES ($1, $2)
+      SQL
+
+      ActiveRecord::Base.connection.exec_query(
+        sql,
+        "SQL",
+        [
+          ActiveRecord::Relation::QueryAttribute.new(
+            "green_deal_plan_id",
+            green_deal_plan.green_deal_plan_id,
+            ActiveRecord::Type::String.new,
+          ),
+          ActiveRecord::Relation::QueryAttribute.new(
+            "assessment_id",
+            assessment_id,
+            ActiveRecord::Type::String.new,
+          ),
+        ],
+      )
     end
 
     def fetch(assessment_id)

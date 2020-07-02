@@ -145,6 +145,28 @@ describe "Acceptance::Assessment::GreenDealPlans" do
         )
       end
 
+      context "with a Green Deal Plan" do
+        let(:green_deal_plan_id_column) do
+          ActiveRecord::Base.connection.execute <<-SQL
+            SELECT green_deal_plan_id
+            FROM green_deal_assessments
+            WHERE assessment_id = '0000-0000-0000-0000-0000'
+          SQL
+        end
+
+        before do
+          add_green_deal_plan assessment_id: "0000-0000-0000-0000-0000",
+                              body: valid_green_deal_plan_request_body,
+                              accepted_responses: [201]
+        end
+
+        it "returns the expected Green Deal Plan ID from Green Deal assessments table" do
+          expect(
+            green_deal_plan_id_column.entries.first["green_deal_plan_id"],
+          ).to eq "ABC123456DEF"
+        end
+      end
+
       context "with a cancelled assessment" do
         before do
           update_assessment_status assessment_id: "0000-0000-0000-0000-0000",

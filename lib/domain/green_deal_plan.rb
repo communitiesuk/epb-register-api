@@ -1,5 +1,7 @@
 module Domain
   class GreenDealPlan
+    attr_reader :green_deal_plan_id
+
     def initialize(
       green_deal_plan_id: nil,
       start_date: nil,

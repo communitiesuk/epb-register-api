@@ -45,7 +45,7 @@ module UseCase
           savings: data[:savings],
         )
 
-      @green_deal_plans_gateway.add green_deal_plan
+      @green_deal_plans_gateway.add green_deal_plan, assessment_id
 
       green_deal_plan
     end
