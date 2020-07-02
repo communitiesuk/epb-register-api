@@ -2,9 +2,6 @@ require "sinatra/activerecord"
 
 class Container
   def initialize
-    check_assessor_belongs_to_scheme_use_case =
-      UseCase::CheckAssessorBelongsToScheme.new
-
     search_addresses_by_address_id_use_case =
       UseCase::SearchAddressesByAddressId.new
 
@@ -15,13 +12,9 @@ class Container
       UseCase::SearchAddressesByStreetAndTown.new
 
     validate_and_lodge_assessment_use_case =
-      UseCase::ValidateAndLodgeAssessment.new(
-        check_assessor_belongs_to_scheme_use_case,
-      )
+      UseCase::ValidateAndLodgeAssessment.new
 
     @objects = {
-      check_assessor_belongs_to_scheme_use_case:
-        check_assessor_belongs_to_scheme_use_case,
       validate_and_lodge_assessment_use_case:
         validate_and_lodge_assessment_use_case,
       search_addresses_by_address_id_use_case:

@@ -7,13 +7,11 @@ module UseCase
     class SchemaNotSupportedException < StandardError; end
     class SchemaNotDefined < StandardError; end
 
-    def initialize(
-      check_assessor_belongs_to_scheme_use_case
-    )
+    def initialize
       @validate_assessment_use_case = UseCase::ValidateAssessment.new
       @lodge_assessment_use_case = UseCase::LodgeAssessment.new
       @check_assessor_belongs_to_scheme_use_case =
-        check_assessor_belongs_to_scheme_use_case
+          UseCase::CheckAssessorBelongsToScheme.new
     end
 
     def execute(xml, schema_name, scheme_ids, migrated)

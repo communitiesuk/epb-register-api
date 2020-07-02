@@ -41,9 +41,7 @@ describe UseCase::ValidateAndLodgeAssessment do
   let(:assessments_xml_gateway) { AssessmentsXmlGatewaySpy.new }
 
   let(:use_case) do
-    described_class.new(
-      validate_lodgement_use_case,
-    )
+    described_class.new
   end
 
   context "when validating an invalid schema name" do
