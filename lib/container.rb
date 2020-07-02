@@ -40,7 +40,7 @@ class Container
     validate_assessment_use_case = UseCase::ValidateAssessment.new
 
     lodge_assessment_use_case =
-      UseCase::LodgeAssessment.new(assessments_gateway, assessments_xml_gateway)
+      UseCase::LodgeAssessment.new(assessments_xml_gateway)
 
     check_assessor_belongs_to_scheme_use_case =
       UseCase::CheckAssessorBelongsToScheme.new
