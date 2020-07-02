@@ -8,10 +8,10 @@ module UseCase
     class AssessmentRuleException < StandardError; end
 
     def initialize(
-      assessments_gateway, assessors_gateway, assessments_xml_gateway
+      assessments_gateway, assessments_xml_gateway
     )
       @assessments_gateway = assessments_gateway
-      @assessors_gateway = assessors_gateway
+      @assessors_gateway = Gateway::AssessorsGateway.new
       @assessments_xml_gateway = assessments_xml_gateway
     end
 

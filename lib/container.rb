@@ -61,7 +61,6 @@ class Container
     lodge_assessment_use_case =
       UseCase::LodgeAssessment.new(
         assessments_gateway,
-        assessors_gateway,
         assessments_xml_gateway,
       )
 
