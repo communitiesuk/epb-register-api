@@ -40,9 +40,7 @@ describe UseCase::ValidateAndLodgeAssessment do
   let(:validate_lodgement_use_case) { ValidateLodgementUseCaseSpy.new }
   let(:assessments_xml_gateway) { AssessmentsXmlGatewaySpy.new }
 
-  let(:use_case) do
-    described_class.new
-  end
+  let(:use_case) { described_class.new }
 
   context "when validating an invalid schema name" do
     it "raises the error SchemaNotAccepted" do
