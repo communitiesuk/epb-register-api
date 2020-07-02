@@ -15,7 +15,7 @@ module Controller
       assessment_id = params[:assessment_id]
       assessment_body = request_body(POST_SCHEMA)
 
-      @container.get_object(:update_assessments_status_use_case).execute(
+      UseCase::UpdateAssessmentStatus.new.execute(
         assessment_id,
         assessment_body[:status],
         env[:jwt_auth].supplemental("scheme_ids"),

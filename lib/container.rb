@@ -2,8 +2,6 @@ require "sinatra/activerecord"
 
 class Container
   def initialize
-    update_assessments_status_use_case = UseCase::UpdateAssessmentStatus.new
-
     validate_assessment_use_case = UseCase::ValidateAssessment.new
 
     lodge_assessment_use_case = UseCase::LodgeAssessment.new
@@ -40,7 +38,6 @@ class Container
         search_addresses_by_postcode_use_case,
       search_addresses_by_street_and_town_use_case:
         search_addresses_by_street_and_town_use_case,
-      update_assessments_status_use_case: update_assessments_status_use_case,
     }
   end
 
