@@ -42,8 +42,7 @@ class Container
 
     find_assessors_by_postcode_use_case =
       UseCase::FindAssessorsByPostcode.new(postcode_gateway)
-    find_assessors_by_name_use_case =
-      UseCase::FindAssessorsByName.new(assessors_gateway)
+    find_assessors_by_name_use_case = UseCase::FindAssessorsByName.new
 
     find_assessments_by_postcode_use_case =
       UseCase::FindAssessmentsByPostcode.new(assessments_gateway)
