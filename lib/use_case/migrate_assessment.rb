@@ -4,9 +4,9 @@ module UseCase
   class MigrateAssessment
     class AssessmentRuleException < StandardError; end
 
-    def initialize(assessments_gateway, assessors_gateway)
+    def initialize(assessments_gateway)
       @assessments_gateway = assessments_gateway
-      @assessors_gateway = assessors_gateway
+      @assessors_gateway = Gateway::AssessorsGateway.new
     end
 
     def execute(assessment_id, assessment_data)
