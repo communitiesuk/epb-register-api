@@ -11,4 +11,15 @@ describe "Acceptance::Assessment::GreenDealPlans" do
                           false
     end
   end
+
+  context "when unauthorised" do
+    it "returns status 401" do
+      add_green_deal_plan "123-456",
+                          "body",
+                          [403],
+                          true,
+                          nil,
+                          %w[wrong:scope]
+    end
+  end
 end
