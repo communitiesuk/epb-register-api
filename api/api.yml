@@ -747,7 +747,7 @@ paths:
                 {assessmentId}'
       security:
         - oauth:
-            - 'greendeal:assessment:fetch'
+            - 'greendeal:plans'
       parameters:
         - in: path
           name: assessmentId
@@ -828,7 +828,7 @@ paths:
                 {assessmentId}'
       security:
         - oauth:
-            - 'greendeal:disclosure:update'
+            - 'greendeal:plans'
       parameters:
         - in: path
           name: assessmentId
@@ -871,7 +871,7 @@ paths:
       summary: 'Update an existing Green Deal plan'
       security:
         - oauth:
-            - 'greendeal:disclosure:update'
+            - 'greendeal:plans'
       parameters:
         - in: path
           name: planId
@@ -912,7 +912,7 @@ paths:
       summary: 'Delete an existing Green Deal plan'
       security:
         - oauth:
-            - 'greendeal:disclosure:update'
+            - 'greendeal:plans'
       parameters:
         - in: path
           name: planId
@@ -955,8 +955,7 @@ components:
             'migrate:assessor': Migrate an assessor to the register
             'migrate:address': Migrate an address to the register
             'report:assessor:status': Get a report of changes to assessors status for a given date
-            'greendeal:assessment:fetch': Get limited details (RHI required fields) of an individual assessment
-            'greendeal:disclosure:update': Submit or update details of a Green Deal Plan
+            'greendeal:plans': Access all services necessary for the Green Deal register integration
 
   schemas:
     # Addresses
