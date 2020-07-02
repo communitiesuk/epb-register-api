@@ -2,6 +2,12 @@
 
 module Controller
   class GreenDealPlanController < Controller::BaseController
+    post "/api/greendeal/disclosure/assessments/:assessment_id/plans",
+         jwt_auth: [] do
+
+      json_api_response code: 201
+    end
+
     get "/api/greendeal/rhi/assessments/:assessment_id/latest",
         jwt_auth: %w[greendeal:plans] do
       assessment_id = params[:assessment_id]

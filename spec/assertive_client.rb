@@ -136,6 +136,24 @@ def add_scheme(
   )
 end
 
+def add_green_deal_plan(
+  assessment_id,
+  body,
+  accepted_responses = [201],
+  authenticate = true,
+  auth_data = nil,
+  scopes = %w[greendeal:plans]
+)
+  assertive_post(
+    "/api/greendeal/disclosure/assessments/#{assessment_id}/plans",
+    body,
+    accepted_responses,
+    authenticate,
+    auth_data,
+    scopes,
+  )
+end
+
 def lodge_assessment(
   assessment_body: "",
   accepted_responses: [201],
