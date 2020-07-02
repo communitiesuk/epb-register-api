@@ -138,7 +138,7 @@ end
 
 def add_green_deal_plan(
   assessment_id:,
-  body: nil,
+  body: {},
   accepted_responses: [201],
   authenticate: true,
   auth_data: nil,

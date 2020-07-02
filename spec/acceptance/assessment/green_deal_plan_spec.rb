@@ -3,6 +3,46 @@
 describe "Acceptance::Assessment::GreenDealPlans" do
   include RSpecAssessorServiceMixin
 
+  let(:valid_green_deal_plan_request_body) do
+    {
+      greenDealPlanId: "ABC123456DEF",
+      startDate: "2020-01-30",
+      endDate: "2030-02-28",
+      providerDetails: {
+        name: "The Bank", telephone: "0800 0000000", email: "lender@example.com"
+      },
+      interest: { rate: 12.3, fixed: true },
+      chargeUplift: { amount: 1.25, date: "2025-03-29" },
+      ccaRegulated: true,
+      structureChanged: false,
+      measuresRemoved: false,
+      measures: [
+        {
+          sequence: 0,
+          measureType: "Loft insulation",
+          product: "WarmHome lagging stuff (TM)",
+          repaidDate: "2025-03-29",
+        },
+      ],
+      charges: [
+        {
+          sequence: 0,
+          startDate: "2020-03-29",
+          endDate: "2030-03-29",
+          dailyCharge: "0.34",
+        },
+      ],
+      savings: [
+        {
+          sequence: 0,
+          fuelCode: "LPG",
+          fuelSaving: 0,
+          standingChargeFraction: -0.3,
+        },
+      ],
+    }
+  end
+
   let(:valid_rdsap_xml) do
     File.read File.join Dir.pwd, "spec/fixtures/samples/rdsap.xml"
   end
@@ -31,12 +71,23 @@ describe "Acceptance::Assessment::GreenDealPlans" do
     context "when an assessment does not exist" do
       it "returns status 404" do
         add_green_deal_plan assessment_id: "1234-1234-1234-1234-1234",
+                            body: valid_green_deal_plan_request_body,
                             accepted_responses: [404]
       end
     end
 
     context "when an assessment does exist" do
       let(:scheme_id) { add_scheme_and_get_id }
+
+      let(:response) do
+        JSON.parse(
+          add_green_deal_plan(
+            assessment_id: "0000-0000-0000-0000-0000",
+            body: valid_green_deal_plan_request_body,
+          ).body,
+          symbolize_names: true,
+        )
+      end
 
       before do
         add_assessor scheme_id,
@@ -48,6 +99,50 @@ describe "Acceptance::Assessment::GreenDealPlans" do
         lodge_assessment assessment_body: valid_rdsap_xml,
                          accepted_responses: [201],
                          auth_data: { scheme_ids: [scheme_id] }
+      end
+
+      it "returns the expected response" do
+        expect(response[:data]).to eq(
+          {
+            greenDealPlanId: "ABC123456DEF",
+            startDate: "30 January 2020",
+            endDate: "28 February 2030",
+            providerDetails: {
+              name: "The Bank",
+              telephone: "0800 0000000",
+              email: "lender@example.com",
+            },
+            interest: { rate: 12.3, fixed: true },
+            chargeUplift: { amount: 1.25, date: "29 March 2025" },
+            ccaRegulated: true,
+            structureChanged: false,
+            measuresRemoved: false,
+            measures: [
+              {
+                sequence: 0,
+                measureType: "Loft insulation",
+                product: "WarmHome lagging stuff (TM)",
+                repaidDate: "2025-03-29",
+              },
+            ],
+            charges: [
+              {
+                sequence: 0,
+                startDate: "2020-03-29",
+                endDate: "2030-03-29",
+                dailyCharge: "0.34",
+              },
+            ],
+            savings: [
+              {
+                sequence: 0,
+                fuelCode: "LPG",
+                fuelSaving: 0,
+                standingChargeFraction: -0.3,
+              },
+            ],
+          },
+        )
       end
 
       context "with a cancelled assessment" do
@@ -62,6 +157,7 @@ describe "Acceptance::Assessment::GreenDealPlans" do
 
         it "returns status 410" do
           add_green_deal_plan assessment_id: "0000-0000-0000-0000-0000",
+                              body: valid_green_deal_plan_request_body,
                               accepted_responses: [410]
         end
       end
@@ -78,6 +174,7 @@ describe "Acceptance::Assessment::GreenDealPlans" do
 
         it "returns status 410" do
           add_green_deal_plan assessment_id: "0000-0000-0000-0000-0000",
+                              body: valid_green_deal_plan_request_body,
                               accepted_responses: [410]
         end
       end
@@ -103,6 +200,7 @@ describe "Acceptance::Assessment::GreenDealPlans" do
 
         it "returns status 400" do
           add_green_deal_plan assessment_id: "0000-0000-0000-0000-0001",
+                              body: valid_green_deal_plan_request_body,
                               accepted_responses: [400]
         end
       end

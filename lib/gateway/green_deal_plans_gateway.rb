@@ -2,6 +2,10 @@ module Gateway
   class GreenDealPlansGateway
     class GreenDealPlan < ActiveRecord::Base; end
 
+    def add(green_deal_plan)
+      GreenDealPlan.create(green_deal_plan.to_record)
+    end
+
     def fetch(assessment_id)
       sql =
         "SELECT b.green_deal_plan_id, b.start_date, b.end_date,
