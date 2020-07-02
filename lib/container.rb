@@ -23,8 +23,7 @@ class Container
     add_new_scheme_use_case = UseCase::AddScheme.new
     get_all_schemes_use_case = UseCase::FetchSchemes.new
 
-    add_assessor_use_case =
-      UseCase::AddAssessor.new(assessors_gateway)
+    add_assessor_use_case = UseCase::AddAssessor.new
     fetch_assessor_use_case =
       UseCase::FetchAssessor.new(assessors_gateway)
 
