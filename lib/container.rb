@@ -35,8 +35,7 @@ class Container
       UseCase::FindAssessmentsByStreetNameAndTown.new
     fetch_assessor_list_use_case = UseCase::FetchAssessorList.new
 
-    update_assessments_status_use_case =
-      UseCase::UpdateAssessmentStatus.new(assessments_gateway)
+    update_assessments_status_use_case = UseCase::UpdateAssessmentStatus.new
 
     validate_assessment_use_case = UseCase::ValidateAssessment.new
 
