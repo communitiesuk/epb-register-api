@@ -317,11 +317,7 @@ module Controller
 
       xml = (request.env["HTTP_ACCEPT"] == "application/xml")
 
-      result =
-        @container.get_object(:fetch_assessment_use_case).execute(
-          assessment_id,
-          xml,
-        )
+      result = UseCase::FetchAssessment.new.execute(assessment_id, xml)
 
       if xml
         xml_response(200, result)

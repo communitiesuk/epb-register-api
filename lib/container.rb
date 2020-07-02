@@ -2,8 +2,6 @@ require "sinatra/activerecord"
 
 class Container
   def initialize
-    fetch_assessment_use_case = UseCase::FetchAssessment.new
-
     add_green_deal_plan_use_case = UseCase::AddGreenDealPlan.new
 
     fetch_renewable_heat_incentive_use_case =
@@ -13,9 +11,9 @@ class Container
     find_assessors_by_name_use_case = UseCase::FindAssessorsByName.new
 
     find_assessments_by_postcode_use_case =
-        UseCase::FindAssessmentsByPostcode.new
+      UseCase::FindAssessmentsByPostcode.new
     find_assessments_by_assessment_id_use_case =
-        UseCase::FindAssessmentsByAssessmentId.new
+      UseCase::FindAssessmentsByAssessmentId.new
     find_assessments_by_street_name_and_town_use_case =
       UseCase::FindAssessmentsByStreetNameAndTown.new
     fetch_assessor_list_use_case = UseCase::FetchAssessorList.new
@@ -47,7 +45,6 @@ class Container
 
     @objects = {
       add_green_deal_plan_use_case: add_green_deal_plan_use_case,
-      fetch_assessment_use_case: fetch_assessment_use_case,
       fetch_renewable_heat_incentive_use_case:
         fetch_renewable_heat_incentive_use_case,
       find_assessors_by_postcode_use_case: find_assessors_by_postcode_use_case,
