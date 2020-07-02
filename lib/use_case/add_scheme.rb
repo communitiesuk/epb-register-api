@@ -1,7 +1,7 @@
 module UseCase
   class AddScheme
-    def initialize(gateway)
-      @gateway = gateway
+    def initialize()
+      @gateway = Gateway::SchemesGateway.new
     end
 
     def execute(name)
