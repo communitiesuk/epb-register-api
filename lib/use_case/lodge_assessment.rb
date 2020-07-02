@@ -7,10 +7,10 @@ module UseCase
     class DuplicateAssessmentIdException < StandardError; end
     class AssessmentRuleException < StandardError; end
 
-    def initialize(assessments_xml_gateway)
+    def initialize
       @assessments_gateway = Gateway::AssessmentsGateway.new
       @assessors_gateway = Gateway::AssessorsGateway.new
-      @assessments_xml_gateway = assessments_xml_gateway
+      @assessments_xml_gateway = Gateway::AssessmentsXmlGateway.new
     end
 
     def execute(data, migrated)
