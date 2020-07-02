@@ -9,7 +9,7 @@ module Controller
     }.freeze
 
     get "/api/schemes", jwt_auth: %w[scheme:list] do
-      all_schemes = @container.get_object(:get_all_schemes_use_case).execute
+      all_schemes = UseCase::FetchSchemes.new.execute
       json_api_response(code: 200, data: all_schemes)
     end
 

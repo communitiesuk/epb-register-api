@@ -2,8 +2,6 @@ require "sinatra/activerecord"
 
 class Container
   def initialize
-    get_all_schemes_use_case = UseCase::FetchSchemes.new
-
     add_assessor_use_case = UseCase::AddAssessor.new
     fetch_assessor_use_case = UseCase::FetchAssessor.new
 
@@ -53,7 +51,6 @@ class Container
 
     @objects = {
       add_green_deal_plan_use_case: add_green_deal_plan_use_case,
-      get_all_schemes_use_case: get_all_schemes_use_case,
       add_assessor_use_case: add_assessor_use_case,
       fetch_assessor_use_case: fetch_assessor_use_case,
       migrate_assessment_use_case: migrate_assessment_use_case,
