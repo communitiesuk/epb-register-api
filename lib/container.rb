@@ -2,8 +2,6 @@ require "sinatra/activerecord"
 
 class Container
   def initialize
-    address_search_gateway = Gateway::AddressSearchGateway.new
-
     related_assessments_gateway = Gateway::RelatedAssessmentsGateway.new
 
     assessments_gateway = Gateway::AssessmentsGateway.new
@@ -65,7 +63,7 @@ class Container
         UseCase::SearchAddressesByPostcode.new
 
     search_addresses_by_street_and_town_use_case =
-      UseCase::SearchAddressesByStreetAndTown.new address_search_gateway
+        UseCase::SearchAddressesByStreetAndTown.new
 
     validate_and_lodge_assessment_use_case =
       UseCase::ValidateAndLodgeAssessment.new(
@@ -75,7 +73,6 @@ class Container
       )
 
     @objects = {
-      address_search_gateway: address_search_gateway,
       related_assessments_gateway: related_assessments_gateway,
       add_new_scheme_use_case: add_new_scheme_use_case,
       get_all_schemes_use_case: get_all_schemes_use_case,
