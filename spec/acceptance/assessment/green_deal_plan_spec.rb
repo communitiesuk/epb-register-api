@@ -55,6 +55,21 @@ describe "Acceptance::Assessment::GreenDealPlans" do
           add_green_deal_plan "0000-0000-0000-0000-0000", "body", [410]
         end
       end
+
+      context "with a not for issue assessment" do
+        before do
+          update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
+                                   assessment_status_body: {
+                                     "status": "NOT_FOR_ISSUE",
+                                   },
+                                   accepted_responses: [200],
+                                   auth_data: { scheme_ids: [scheme_id] }
+        end
+
+        it "returns status 410" do
+          add_green_deal_plan "0000-0000-0000-0000-0000", "body", [410]
+        end
+      end
     end
   end
 end

@@ -16,7 +16,7 @@ module UseCase
 
       raise NotFoundException unless assessment
 
-      if %w[CANCELLED].include? assessment.to_hash[:status]
+      if %w[CANCELLED NOT_FOR_ISSUE].include? assessment.to_hash[:status]
         raise AssessmentGoneException
       end
     end
