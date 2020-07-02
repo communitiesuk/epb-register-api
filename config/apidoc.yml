@@ -1,0 +1,1076 @@
+openapi: 3.0.0
+
+info:
+  title: Energy Performance of Buildings Register API
+  description: API for all EPBR services (Energy Performance Assessment, DEC, ACIR), maintained by the EPBR Service Team at MHCLG.
+  version: "1.0"
+
+servers:
+  - url: https://api.epb-integration.digital.communities.gov.uk/api
+    description: Integration server
+  - url: https://mhclg-epb-register-api-staging.london.cloudapps.digital/api
+    description: Staging server
+
+tags:
+  - name: Manage schemes
+    description: Operations for managing schemes in the register
+  - name: Individually manage assessors
+    description: Managing assessors in a RESTful web services paradigm
+  - name: Assessments
+    description: Manage Energy Assessments
+  - name: Manage Assessors
+    description: Manage assessors for a given scheme
+
+paths:
+  /schemes:
+    get:
+      tags:
+        - Manage schemes
+      summary: Get a list of all energy assessment schemes in the register
+      security:
+        - oauth:
+            - 'scheme:list'
+      responses:
+        200:
+          description: List of all schemes
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  schemes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Scheme'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthorised'
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthenticated'
+
+    post:
+      tags:
+        - Manage schemes
+      summary: Add a new energy assessment scheme to the register
+      security:
+        - oauth:
+            - 'scheme:create'
+      requestBody:
+        description: The scheme to be added
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SchemeBody'
+      responses:
+        201:
+          description: Scheme succesfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Scheme'
+        400:
+          description: Scheme already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                          example: "SCHEME_ALREADY_EXISTS"
+                        title:
+                          type: string
+                          example: "A scheme with this name already exists in the register"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthorised'
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthenticated'
+
+  '/schemes/{schemeId}/assessors':
+    get:
+      tags:
+        - Manage Assessors
+      summary: List a summary of assessors belonging to a scheme
+      security:
+        - oauth:
+            - 'scheme:assessor:list'
+      parameters:
+        - in: path
+          required: true
+          name: schemeId
+          description: ID of the scheme
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: List of assessors for a scheme
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      assessors:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/AssessorSummary'
+                  meta:
+                    type: object
+        404:
+          description: Scheme not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorNotFound'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthorised'
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthenticated'
+
+  /schemes/{schemeId}/assessors/{schemeAssessorId}:
+    get:
+      tags:
+        - Individually manage assessors
+      summary: Get all details for an individual assessor registration
+      security:
+        - oauth:
+            - 'scheme:assessor:fetch'
+      parameters:
+        - in: path
+          required: true
+          name: schemeId
+          description: ID of the scheme
+          schema:
+            type: integer
+        - in: path
+          required: true
+          name: schemeAssessorId
+          description: The Assessor ID assigned by the scheme
+          schema:
+            $ref: '#/components/schemas/AssessorSchemeId'
+      responses:
+        404:
+          description: Assessor not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorNotFound'
+        200:
+          description: Assessor found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicAssessorDetails'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthorised'
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthenticated'
+
+    put:
+      tags:
+        - Individually manage assessors
+      summary: Register a new assessor to associate them with your scheme
+      security:
+        - oauth:
+            - 'scheme:assessor:update'
+      parameters:
+        - in: path
+          name: schemeId
+          required: true
+          description: ID of the registering scheme
+          schema:
+            type: integer
+        - in: path
+          name: schemeAssessorId
+          required: true
+          description: Assessor ID assigned by the registering scheme
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                middleNames:
+                  type: string
+                dateOfBirth:
+                  type: string
+                  format: date
+                contactDetails:
+                  type: object
+                  properties:
+                    telephoneNumber:
+                      type: string
+                      maxLength: 256
+                    email:
+                      type: string
+                      format: email
+      responses:
+        201:
+          description: Assessor succesfully registered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicAssessorDetails'
+        200:
+          description: Existing assessor updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BasicAssessorDetails'
+        400:
+          description: Problem with assessor registration record
+        409:
+          description: Assessor already exists on a different scheme
+        422:
+          description: Assessor does not pass validation
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthorised'
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthenticated'
+
+  /assessors:
+    get:
+      tags:
+        - Search
+        - Manage Assessors
+      summary: Search for an assessor by postcode or name
+      security:
+        - oauth:
+            - 'assessor:search'
+      parameters:
+        - in: query
+          name: postcode
+          description: A postcode to search from for an assessor
+          schema:
+            $ref: '#/components/schemas/AddressPostcode'
+        - in: query
+          name: name
+          description: The name of the assessor
+          schema:
+            $ref: '#/components/schemas/AssessorFullName'
+        - in: query
+          name: qualification
+          description: Only show assessors who have this qualification
+          schema:
+            $ref: '#/components/schemas/AssessorQualificationSearchOptions'
+      responses:
+        '200':
+          description: List of assessors matching the search criteria
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/AssessorSearchResults'
+                  - $ref: '#/components/schemas/AssessorSearchByPostcodeResults'
+        400:
+          description: Invalid query
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthorised'
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthenticated'
+
+  /search/addresses:
+    get:
+      tags:
+        - Search
+        - Manage Addresses
+      summary: 'Search for an address by (optional) type and
+                EITHER:
+                - a postcode (with optional building name or number)
+                OR
+                - a street AND town
+                OR
+                - a building reference number (UPRN or RRN)'
+      security:
+        - oauth:
+            - 'search:addresses'
+      parameters:
+        - in: query
+          name: postcode
+          description: The postcode of the address being searched for
+          schema:
+            $ref: '#/components/schemas/AddressPostcode'
+        - in: query
+          name: buildingNameNumber
+          description: The building name or number being searched for
+          example: '47'
+          schema:
+            type: string
+        - in: query
+          name: street
+          description: The street of the address being searched for
+          example: 'High Road'
+          schema:
+            type: string
+        - in: query
+          name: town
+          description: The city or town of the address being searched for
+          example: 'Woking'
+          schema:
+            $ref: '#/components/schemas/AddressTown'
+        - in: query
+          name: addressId
+          description: A known UPRN or RRN to fetch a single address
+          example: 'RRN-7163-7573-4512-0000-0001'
+          schema:
+            type: string
+        - in: query
+          name: addressType
+          description: Domestic or commercial address
+          schema:
+            type: string
+            enum:
+              - DOMESTIC
+              - COMMERCIAL
+      responses:
+        '403':
+          description: Forbidden
+        '200':
+          description: Address search results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddressSearchResults'
+
+  /assessments/{assessmentId}:
+    get:
+      tags:
+        - Assessments
+      summary: Get a domestic Energy Performance Assessment
+      security:
+        - oauth:
+            - 'assessment:fetch'
+      parameters:
+        - in: path
+          name: assessmentId
+          required: true
+          description: The ID of the assessment being requested
+          schema:
+            type: string
+            example: "145fv-1644-njs11"
+      responses:
+        200:
+          description: Energy Performance Assessment
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DomesticEnergyAssessmentWithBand'
+                type: object
+                properties:
+                  addressLine1:
+                    type: string
+                    example: 2 Marsham Street
+                  addressLine2:
+                    type: string
+                    example: ''
+                  addressLine3:
+                    type: string
+                    example: ''
+                  addressLine4:
+                    type: string
+                    example: ''
+                  town:
+                    type: string
+                    example: London
+                  assessor:
+                    $ref: '#/components/schemas/AssessorSummary'
+                  heatDemand:
+                    type: object
+                    properties:
+                      currentSpaceHeatingDemand:
+                        type: integer
+                        example: 4564
+                      currentWaterHeatingDemand:
+                        type: integer
+                        example: 3253
+                      impactOfLoftInsulation:
+                        type: integer
+                        example: -453
+                      impactOfCavityInsulation:
+                        type: integer
+                        example: -84
+                      impactOfSolidWallInsulation:
+                        type: integer
+                        example: -21
+        404:
+          description: Assessment not found
+        500:
+          description: Server error
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthorised'
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthenticated'
+
+    put:
+      tags:
+        - Assessments
+      summary: Migrate an existing Energy Performance Assessment to the register
+      security:
+        - oauth:
+            - 'migrate:assessment'
+      parameters:
+        - in: path
+          name: assessmentId
+          required: true
+          description: The ID of the assessment being added
+          schema:
+            type: string
+            example: "145fv-1644-njs11"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MigrateDomesticEnergyAssessment'
+      responses:
+        200:
+          description: Assessment added / replaced
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DomesticEnergyAssessment'
+        400:
+          description: Bad request
+        500:
+          description: Server error
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthorised'
+        401:
+          description: Unauthenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthenticated'
+
+  /assessments:
+    post:
+      tags:
+        - Assessments
+      summary: Lodge a new assessment
+      security:
+        - oauth:
+            - 'assessment:lodge'
+      requestBody:
+        content: {
+          application/xml+RdSAP-Schema-19.0: {},
+          application/xml+SAP-Schema-17.1: {},
+          application/xml+RdSAP-Schema-NI-19.0: {},
+          application/xml+SAP-Schema-NI-17.4: {},
+          application/xml+CEPC-7.1: {},
+          application/xml+CEPC-NI-7.1: {}
+        }
+      responses:
+        '201':
+          description: New assessment lodged
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/DomesticEnergyAssessmentWithBand'
+                type: object
+                properties:
+                  addressLine1:
+                    type: string
+                    example: 2 Marsham Street
+                  addressLine2:
+                    type: string
+                    example: ''
+                  addressLine3:
+                    type: string
+                    example: ''
+                  addressLine4:
+                    type: string
+                    example: ''
+                  town:
+                    type: string
+                    example: London
+                  assessor:
+                    $ref: '#/components/schemas/AssessorSummary'
+                  heatDemand:
+                    type: object
+                    properties:
+                      currentSpaceHeatingDemand:
+                        type: integer
+                        example: 4564
+                      currentWaterHeatingDemand:
+                        type: integer
+                        example: 3253
+                      impactOfLoftInsulation:
+                        type: integer
+                        example: -453
+                      impactOfCavityInsulation:
+                        type: integer
+                        example: -84
+                      impactOfSolidWallInsulation:
+                        type: integer
+                        example: -21
+        '400':
+          description: Bad request
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthorised'
+        '409':
+          description: Assessment with that assessmentId already exists
+        '422':
+          description: Assessment rule violation
+        '500':
+          description: Server error
+
+components:
+  securitySchemes:
+    oauth:
+      type: oauth2
+      description: This API uses OAuth 2 with the client credentials grant flow
+      flows:
+        clientCredentials:
+          tokenUrl: "/auth/oauth/token"
+          scopes:
+            'scheme:create': Create a new scheme on the register
+            'scheme:list': List schemes on the register
+            'scheme:assessor:list': List assessors
+            'scheme:assessor:update': Add or Update assessors
+            'scheme:assessor:fetch': Get full details of an individual assessor
+            'assessment:fetch': Get full details of an individual assessment
+            'assessment:lodge': Lodge a new assessment with the register
+            'assessment:search': Search the register for an assessment
+            'assessor:search': Search the register for an assessor
+            'address:search': List addresses that match a given search criteria, along with existing assessments
+            'migrate:assessment': Migrate an assessment to the register
+            'migrate:assessor': Migrate an assessor to the register
+            'migrate:address': Migrate an address to the register
+            'report:assessor:status': Get a report of changes to assessors status for a given date
+
+  schemas:
+    # Addresses
+    Address:
+      type: object
+      properties:
+        source:
+          $ref: '#/components/schemas/AddressSource'
+        line1:
+          $ref: '#/components/schemas/AddressLine1'
+        line2:
+          type: string
+          example: ''
+        line3:
+          type: string
+          example: ''
+        line4:
+          type: string
+          example: ''
+        town:
+          $ref: '#/components/schemas/AddressTown'
+        postcode:
+          $ref: '#/components/schemas/AddressPostcode'
+
+    AddressBody:
+      $ref: '#/components/schemas/Address'
+
+    AddressDetail:
+      allOf:
+        - $ref: '#/components/schemas/Address'
+        - type: object
+          properties:
+            addressId:
+              $ref: '#/components/schemas/AddressId'
+            existingAssessments:
+              type: array
+              items:
+                type: object
+                properties:
+                  assessmentId:
+                    $ref: '#/components/schemas/AssessmentId'
+                  assessmentStatus:
+                    $ref: '#/components/schemas/AssessmentStatus'
+                  assessmentType:
+                    $ref: '#/components/schemas/AssessmentType'
+
+    AddressId:
+      type: string
+      description: 'An identifier for an address, which is one of:
+                    * An OS gazetteer UPRN (prefixed UPRN-)
+                    * The reference number of the report this address appears on (prefixed RRN-)'
+      example: 'RRN-7163-7573-4512-0000-0001'
+
+    AddressLine1:
+      type: string
+      example: 2 Marsham Street
+
+    AddressTown:
+      type: string
+      example: London
+
+    AddressPostcode:
+      type: string
+      example: SW1P 4JA
+
+    AddressSource:
+      type: string
+      enum:
+        - GAZETTEER
+        - PREVIOUS_ASSESSMENT
+      example: PREVIOUS_ASSESSMENT
+
+    AddressSearchResults:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            addresses:
+              type: array
+              items:
+                $ref: '#/components/schemas/AddressDetail'
+        meta:
+          type: object
+          properties:
+            filters:
+              type: object
+              description: >-
+                The filters object will contain the search parameters provided
+                in the initial request.
+
+    # Assessments
+    AssessmentId:
+      type: string
+      example: 0000-0000-0000-0000-0000
+
+    AssessmentStatus:
+      type: string
+      example: CANCELLED
+      enum:
+        - ENTERED
+        - EXPIRED
+        - CANCELLED
+        - NOT_FOR_ISSUE
+
+    AssessmentType:
+      type: string
+      example: domestic-epc
+      enum:
+        - domestic-epc
+        - non-domestic-epc
+        - recommendation-report
+        - dec
+        - dec-recommendation-report
+        - ac-report
+        - ac-cert
+
+
+    Scheme:
+      allOf:
+        - $ref: '#/components/schemas/SchemeBody'
+        - type: object
+          properties:
+            schemeId:
+              type: string
+              example: 432
+
+    SchemeBody:
+      type: object
+      properties:
+        name:
+          type: string
+          example: EPCs 4 U
+
+    Assessor:
+      type: object
+      properties:
+        firstName:
+          type: string
+          example: Jo
+        lastName:
+          type: string
+          example: Bloggs
+        middleNames:
+          type: string
+          example: T
+        contactDetails:
+          type: object
+          properties:
+            telephoneNumber:
+              type: string
+              maxLength: 256
+              example: 01632 960375
+            email:
+              type: string
+              format: email
+              example: j.t.bloggs@example.com
+        qualifications:
+          $ref: '#/components/schemas/AssessorQualifications'
+
+    AssessorSummary:
+      allOf:
+        - $ref: '#/components/schemas/Assessor'
+        - type: object
+          properties:
+            dateOfBirth:
+              type: string
+              format: date
+              example: '1980-01-10'
+            registeredBy:
+              $ref: '#/components/schemas/Scheme'
+            schemeAssessorId:
+              $ref: '#/components/schemas/AssessorSchemeId'
+            searchResultsComparisonPostcode:
+              $ref: '#/components/schemas/AddressPostcode'
+
+    AssessorSchemeId:
+      type: string
+      example: TEST000001
+
+    AssessorQualifications:
+      type: object
+      properties:
+        domesticRdSap:
+          $ref: '#/components/schemas/AssessorQualificationStatus'
+        nonDomesticSp3:
+          $ref: '#/components/schemas/AssessorQualificationStatus'
+        nonDomesticCc4:
+          $ref: '#/components/schemas/AssessorQualificationStatus'
+        nonDomesticDec:
+          $ref: '#/components/schemas/AssessorQualificationStatus'
+        nonDomesticNos3:
+          $ref: '#/components/schemas/AssessorQualificationStatus'
+        nonDomesticNos4:
+          $ref: '#/components/schemas/AssessorQualificationStatus'
+        nonDomesticNos5:
+          $ref: '#/components/schemas/AssessorQualificationStatus'
+
+
+    AssessorQualificationStatus:
+      type: string
+      enum:
+        - ACTIVE
+        - INACTIVE
+        - STRUCKOFF
+        - SUSPENDED
+      example: ACTIVE
+
+    BasicAssessorDetails:
+      type: object
+      properties:
+        registeredBy:
+          $ref: '#/components/schemas/Scheme'
+        schemeAssessorId:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        middleNames:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date
+        contactDetails:
+          type: object
+          properties:
+            telephoneNumber:
+              type: string
+              maxLength: 256
+            email:
+              type: string
+              format: email
+        qualifications:
+          $ref: '#/components/schemas/AssessorQualifications'
+
+    AssessorSearchResult:
+      allOf:
+        - $ref: '#/components/schemas/BasicAssessorDetails'
+        - type: object
+          properties:
+            distanceFromPostcodeInMiles:
+              type: number
+              example: "0.2"
+            registeredBy:
+              $ref: '#/components/schemas/Scheme'
+
+    DomesticEnergyAssessment:
+      allOf:
+        - $ref: '#/components/schemas/EnergyAssessmentBasicInfo'
+        - type: object
+          properties:
+            assessmentId:
+              type: string
+              example: "154d-616-nn177"
+
+    DomesticEnergyAssessmentWithBand:
+      allOf:
+        - $ref: '#/components/schemas/EnergyAssessmentBasicInfo'
+      properties:
+        currentEnergyEfficiencyBand:
+          type: string
+          example: 'a'
+          description: The band, from a to g, the current Energy Rating falls within
+        potentialEnergyEfficiencyBand:
+          type: string
+          example: 'a'
+          description: The band, from a to g, the potential Energy Rating falls within
+
+    ErrorNotFound:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: "NOT_FOUND"
+              title:
+                type: string
+                example: "The requested scheme was not found"
+
+    ErrorUnauthorised:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: "UNAUTHORISED"
+              title:
+                type: string
+                example: "You are not authorised to perform this request"
+
+    ErrorUnauthenticated:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: "Auth::Errors::TokenMissing"
+
+    EnergyAssessmentBasicInfo:
+      type: object
+      properties:
+        dateOfAssessment:
+          type: string
+          format: date
+          description: The date that the assessor carried out the assessment of the property
+        dateRegistered:
+          type: string
+          format: date
+          description: The date that the assessment was submitted to the Register
+        totalFloorArea:
+          type: number
+          example: 120.55
+        typeOfAssessment:
+          type: string
+          enum: [SAP, RdSAP]
+        dwellingType:
+          type: string
+        currentEnergyEfficiencyRating:
+          type: integer
+          minimum: 1
+          maximum: 100
+          description: The current energy rating to be submitted to the Register
+        potentialEnergyEfficiencyRating:
+          type: integer
+          minimum: 1
+          maximum: 100
+          description: The potential energy rating to be submitted, must be equal to or larger than currentEnergyEfficiencyRating
+        postcode:
+          $ref: '#/components/schemas/AddressPostcode'
+        recommendedImprovements:
+          type: array
+          items:
+            $ref: '#/components/schemas/DomesticRecommendation'
+        dateOfExpiry:
+          type: string
+          format: date
+          description: The date that the certificate expires
+        schemeAssessorId:
+          $ref: '#/components/schemas/AssessorSchemeId'
+        heatDemand:
+          type: object
+          properties:
+            currentSpaceHeatingDemand:
+              type: number
+              example: 456.45
+            currentWaterHeatingDemand:
+              type: number
+              example: 325.33
+            impactOfLoftInsulation:
+              type: integer
+              example: -453
+            impactOfCavityInsulation:
+              type: integer
+              example: -84
+            impactOfSolidWallInsulation:
+              type: integer
+              example: -21
+
+    MigrateDomesticEnergyAssessment:
+      allOf:
+        - $ref: '#/components/schemas/EnergyAssessmentBasicInfo'
+
+    AssessorFullName:
+      type: string
+      example: Jo Bloggs
+
+    AssessorQualificationSearchOptions:
+      type: string
+      enum:
+        - domesticRdSap
+        - domesticSap
+        - nonDomesticDec
+        - nonDomesticNos3
+        - nonDomesticNos4
+        - nonDomesticNos5
+        - nonDomesticSp3
+        - nonDomesticCc4
+
+    AssessorSearchResults:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            assessors:
+              type: array
+              items:
+                allOf:
+                  - $ref: '#/components/schemas/AssessorDetail'
+
+    AssessorSearchByPostcodeResults:
+      allOf:
+        - $ref: '#/components/schemas/AssessorSearchResults'
+        - type: object
+          properties:
+            data:
+              type: object
+              properties:
+                assessors:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      distanceFromPostcodeInMiles:
+                        type: number
+                        example: 0.2
+
+    AssessorDetail:
+      allOf:
+        - $ref: '#/components/schemas/Assessor'
+        - type: object
+          properties:
+            assessorSchemeId:
+              $ref: '#/components/schemas/AssessorSchemeId'
+            registeredBy:
+              $ref: '#/components/schemas/Scheme'
+
+    DomesticRecommendation:
+      type: object
+      properties:
+        sequence:
+          type: number
+          example: 0
+          description: "The order in which this recommendation should be shown"
+        improvementCode:
+          type: string
+          example: "1"
+        indicativeCost:
+          type: string
+          example: "£200 - £4,000"
+        typicalSaving:
+          type: number
+          example: 400.21
+        improvementCategory:
+          type: string
+        improvementType:
+          type: string
+        energyPerformanceRating:
+          type: string
+          description: "The estimated energy performance rating once the improvement has been carried out"
+          example: "C"
+        environmentalImpactRating:
+          type: string
+          description: "The estimated environmental impact rating once the improvement has been carried out"
+        greenDealCategoryCode:
+          type: string
