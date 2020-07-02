@@ -2,8 +2,6 @@ require "sinatra/activerecord"
 
 class Container
   def initialize
-    assessments_xml_gateway = Gateway::AssessmentsXmlGateway.new
-
     add_new_scheme_use_case = UseCase::AddScheme.new
     get_all_schemes_use_case = UseCase::FetchSchemes.new
 
