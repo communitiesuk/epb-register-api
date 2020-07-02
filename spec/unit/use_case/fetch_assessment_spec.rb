@@ -12,7 +12,6 @@ describe UseCase::FetchAssessment do
       domestic_energy_assessment_gateway,
       assessors_gateway,
       green_deal_plans_gateway,
-      related_assessments_gateway,
     )
   end
 
