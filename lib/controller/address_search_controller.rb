@@ -39,11 +39,11 @@ module Controller
 
       use_case =
         if filters.key? :address_id
-          @container.get_object :search_addresses_by_address_id_use_case
+          UseCase::SearchAddressesByAddressId.new
         elsif filters.key? :postcode
-          @container.get_object :search_addresses_by_postcode_use_case
+          UseCase::SearchAddressesByPostcode.new
         elsif filters.key? :street
-          @container.get_object :search_addresses_by_street_and_town_use_case
+          UseCase::SearchAddressesByStreetAndTown.new
         end
 
       needed_args = use_case.method(:execute).parameters.map(&:second)
