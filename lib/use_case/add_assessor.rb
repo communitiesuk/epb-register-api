@@ -6,8 +6,8 @@ module UseCase
 
     class AssessorRegisteredOnAnotherScheme < StandardError; end
 
-    def initialize(schemes_gateway, assessors_gateway)
-      @schemes_gateway = schemes_gateway
+    def initialize(assessors_gateway)
+      @schemes_gateway = Gateway::SchemesGateway.new
       @assessors_gateway = assessors_gateway
     end
 
