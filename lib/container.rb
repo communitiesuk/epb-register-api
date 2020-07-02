@@ -16,10 +16,7 @@ class Container
 
     migrate_assessment_use_case = UseCase::MigrateAssessment.new
     fetch_assessment_use_case =
-      UseCase::FetchAssessment.new(
-        assessments_gateway,
-        assessments_xml_gateway,
-      )
+      UseCase::FetchAssessment.new(assessments_xml_gateway)
 
     fetch_renewable_heat_incentive_use_case =
         UseCase::FetchRenewableHeatIncentive.new
