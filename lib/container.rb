@@ -11,8 +11,7 @@ class Container
     fetch_assessor_use_case = UseCase::FetchAssessor.new
 
     migrate_assessment_use_case = UseCase::MigrateAssessment.new
-    fetch_assessment_use_case =
-      UseCase::FetchAssessment.new(assessments_xml_gateway)
+    fetch_assessment_use_case = UseCase::FetchAssessment.new
 
     add_green_deal_plan_use_case = UseCase::AddGreenDealPlan.new
 
