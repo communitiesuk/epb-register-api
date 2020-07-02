@@ -49,7 +49,7 @@ class Container
         assessors_gateway,
       )
     find_assessors_by_name_use_case =
-      UseCase::FindAssessorsByName.new(assessors_gateway, schemes_gateway)
+      UseCase::FindAssessorsByName.new(assessors_gateway)
 
     find_assessments_by_postcode_use_case =
       UseCase::FindAssessmentsByPostcode.new(assessments_gateway)

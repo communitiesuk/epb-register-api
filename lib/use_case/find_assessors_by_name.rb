@@ -2,9 +2,9 @@ module UseCase
   class FindAssessorsByName
     class TooManyResults < StandardError; end
 
-    def initialize(assessor_gateway, schemes_gateway)
+    def initialize(assessor_gateway)
       @assessor_gateway = assessor_gateway
-      @schemes_gateway = schemes_gateway
+      @schemes_gateway = Gateway::SchemesGateway.new
     end
 
     def execute(name, max_response_size = 20)
