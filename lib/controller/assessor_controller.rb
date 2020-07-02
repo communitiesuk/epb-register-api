@@ -89,7 +89,7 @@ module Controller
       postcode = postcode.insert(-4, " ") if postcode[-4] != " "
 
       result =
-          UseCase::FindAssessorsByPostcode.new.execute(
+        UseCase::FindAssessorsByPostcode.new.execute(
           postcode,
           qualifications.split(","),
         )

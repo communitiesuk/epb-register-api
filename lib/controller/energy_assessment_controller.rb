@@ -149,15 +149,16 @@ module Controller
     get "/api/assessments/search", jwt_auth: %w[assessment:search] do
       result =
         if params.key?(:postcode)
-          UseCase::FindAssessmentsByPostcode.new.execute(
-            params[:postcode],
-          )
+          UseCase::FindAssessmentsByPostcode.new.execute(params[:postcode])
         elsif params.key?(:assessment_id)
-          UseCase::FindAssessmentsByAssessmentId.new
-            .execute(params[:assessment_id])
+          UseCase::FindAssessmentsByAssessmentId.new.execute(
+            params[:assessment_id],
+          )
         else
-          UseCase::FindAssessmentsByStreetNameAndTown.new
-              .execute(params[:street_name], params[:town])
+          UseCase::FindAssessmentsByStreetNameAndTown.new.execute(
+            params[:street_name],
+            params[:town],
+          )
         end
 
       json_api_response(code: 200, data: result, burrow_key: :assessments)
