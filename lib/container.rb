@@ -2,9 +2,6 @@ require "sinatra/activerecord"
 
 class Container
   def initialize
-
-    assessors_gateway = Gateway::AssessorsGateway.new
-
     green_deal_plans_gateway = Gateway::GreenDealPlansGateway.new
 
     renewable_heat_incentive_gateway =
