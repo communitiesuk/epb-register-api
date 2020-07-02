@@ -41,10 +41,7 @@ class Container
       UseCase::FetchRenewableHeatIncentive.new(renewable_heat_incentive_gateway)
 
     find_assessors_by_postcode_use_case =
-      UseCase::FindAssessorsByPostcode.new(
-        postcode_gateway,
-        assessors_gateway,
-      )
+      UseCase::FindAssessorsByPostcode.new(postcode_gateway)
     find_assessors_by_name_use_case =
       UseCase::FindAssessorsByName.new(assessors_gateway)
 
