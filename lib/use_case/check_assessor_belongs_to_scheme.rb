@@ -4,8 +4,8 @@ module UseCase
   class CheckAssessorBelongsToScheme
     class AssessorNotFoundException < StandardError; end
 
-    def initialize(assessor_gateway)
-      @assessor_gateway = assessor_gateway
+    def initialize
+      @assessor_gateway = Gateway::AssessorsGateway.new
     end
 
     def execute(scheme_assessor_id, scheme_ids)

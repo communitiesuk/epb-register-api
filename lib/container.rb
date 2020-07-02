@@ -65,7 +65,7 @@ class Container
       )
 
     check_assessor_belongs_to_scheme_use_case =
-      UseCase::CheckAssessorBelongsToScheme.new(assessors_gateway)
+        UseCase::CheckAssessorBelongsToScheme.new
 
     search_addresses_by_address_id_use_case =
       UseCase::SearchAddressesByAddressId.new address_search_gateway
