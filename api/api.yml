@@ -1475,7 +1475,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AddressId'
-          example: ['UPRN-716375734512', 'LPRN-1234567890', 'RRN-1234-1234-1234-1234-1234']
+          example: ["UPRN-716375734512", "LPRN-1234567890", "RRN-1234-1234-1234-1234-1234"]
         countryCode:
           type: string
           example: 'EAW'
