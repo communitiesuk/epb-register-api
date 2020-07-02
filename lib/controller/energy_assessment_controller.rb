@@ -203,7 +203,7 @@ module Controller
 
       sup = env[:jwt_auth].supplemental("scheme_ids")
       validate_and_lodge_assessment =
-        @container.get_object(:validate_and_lodge_assessment_use_case)
+          UseCase::ValidateAndLodgeAssessment.new
 
       xml = sanitized_body
       content_type = request.env["CONTENT_TYPE"].split("+")[1]
