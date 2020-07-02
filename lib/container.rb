@@ -19,7 +19,7 @@ class Container
       UseCase::FetchAssessment.new(assessments_xml_gateway)
 
     fetch_renewable_heat_incentive_use_case =
-        UseCase::FetchRenewableHeatIncentive.new
+      UseCase::FetchRenewableHeatIncentive.new
 
     find_assessors_by_postcode_use_case =
       UseCase::FindAssessorsByPostcode.new(postcode_gateway)
@@ -34,29 +34,24 @@ class Container
     fetch_assessor_list_use_case = UseCase::FetchAssessorList.new
 
     update_assessments_status_use_case =
-      UseCase::UpdateAssessmentStatus.new(
-        assessments_gateway,
-      )
+      UseCase::UpdateAssessmentStatus.new(assessments_gateway)
 
     validate_assessment_use_case = UseCase::ValidateAssessment.new
 
     lodge_assessment_use_case =
-      UseCase::LodgeAssessment.new(
-        assessments_gateway,
-        assessments_xml_gateway,
-      )
+      UseCase::LodgeAssessment.new(assessments_gateway, assessments_xml_gateway)
 
     check_assessor_belongs_to_scheme_use_case =
-        UseCase::CheckAssessorBelongsToScheme.new
+      UseCase::CheckAssessorBelongsToScheme.new
 
     search_addresses_by_address_id_use_case =
       UseCase::SearchAddressesByAddressId.new
 
     search_addresses_by_postcode_use_case =
-        UseCase::SearchAddressesByPostcode.new
+      UseCase::SearchAddressesByPostcode.new
 
     search_addresses_by_street_and_town_use_case =
-        UseCase::SearchAddressesByStreetAndTown.new
+      UseCase::SearchAddressesByStreetAndTown.new
 
     validate_and_lodge_assessment_use_case =
       UseCase::ValidateAndLodgeAssessment.new(

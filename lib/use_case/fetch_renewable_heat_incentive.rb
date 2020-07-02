@@ -4,7 +4,8 @@ module UseCase
     class AssessmentGone < StandardError; end
 
     def initialize
-      @renewable_heat_incentive_gateway = Gateway::RenewableHeatIncentiveGateway.new
+      @renewable_heat_incentive_gateway =
+        Gateway::RenewableHeatIncentiveGateway.new
     end
 
     def execute(assessment_id)

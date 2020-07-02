@@ -3,9 +3,7 @@ module UseCase
     class NotFoundException < StandardError; end
     class AssessmentGone < StandardError; end
 
-    def initialize(
-      assessments_xml_gateway = false
-    )
+    def initialize(assessments_xml_gateway = false)
       @assessments_gateway = Gateway::AssessmentsGateway.new
       @assessors_gateway = Gateway::AssessorsGateway.new
       @green_deal_plans_gateway = Gateway::GreenDealPlansGateway.new

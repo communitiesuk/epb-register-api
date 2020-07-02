@@ -4,7 +4,6 @@ module Controller
   class GreenDealPlanController < Controller::BaseController
     post "/api/greendeal/disclosure/assessments/:assessment_id/plans",
          jwt_auth: %w[greendeal:plans] do
-
       json_api_response code: 201
     end
 
