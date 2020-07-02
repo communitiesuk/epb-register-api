@@ -215,7 +215,7 @@ module Controller
       assessor_details = request_body(PUT_SCHEMA)
 
       create_assessor_response =
-        @container.get_object(:add_assessor_use_case).execute(
+          UseCase::AddAssessor.new.execute(
           Boundary::AssessorRequest.new(
             body: assessor_details,
             scheme_assessor_id: scheme_assessor_id,
