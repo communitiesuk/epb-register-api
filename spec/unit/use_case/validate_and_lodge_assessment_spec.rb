@@ -44,18 +44,7 @@ describe UseCase::ValidateAndLodgeAssessment do
     described_class.new(
       validate_lodgement_use_case,
       lodge_assessment_use_case,
-      check_assessor_belongs_to_scheme_use_case,
     )
-  end
-
-  context "when validating a valid RdSAP assessment" do
-    it "will call the three use cases" do
-      use_case.execute(valid_xml, "RdSAP-Schema-19.0", "1", false)
-
-      expect(validate_lodgement_use_case.is_called?).to be_truthy
-      expect(lodge_assessment_use_case.is_called?).to be_truthy
-      expect(check_assessor_belongs_to_scheme_use_case.is_called?).to be_truthy
-    end
   end
 
   context "when validating an invalid schema name" do

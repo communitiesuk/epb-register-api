@@ -8,11 +8,10 @@ module UseCase
     class SchemaNotDefined < StandardError; end
 
     def initialize(
-      validate_assessment_use_case,
       lodge_assessment_use_case,
       check_assessor_belongs_to_scheme_use_case
     )
-      @validate_assessment_use_case = validate_assessment_use_case
+      @validate_assessment_use_case = UseCase::ValidateAssessment.new
       @lodge_assessment_use_case = lodge_assessment_use_case
       @check_assessor_belongs_to_scheme_use_case =
         check_assessor_belongs_to_scheme_use_case
