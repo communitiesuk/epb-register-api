@@ -5,8 +5,7 @@ module Controller
     post "/api/greendeal/disclosure/assessments/:assessment_id/plans",
          jwt_auth: %w[greendeal:plans] do
       assessment_id = params[:assessment_id]
-
-      @container.get_object(:add_green_deal_plan_use_case).execute assessment_id
+      UseCase::AddGreenDealPlan.new.execute assessment_id
 
       json_api_response code: 201
     rescue StandardError => e

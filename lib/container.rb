@@ -2,8 +2,6 @@ require "sinatra/activerecord"
 
 class Container
   def initialize
-    add_green_deal_plan_use_case = UseCase::AddGreenDealPlan.new
-
     fetch_renewable_heat_incentive_use_case =
       UseCase::FetchRenewableHeatIncentive.new
 
@@ -44,7 +42,6 @@ class Container
       )
 
     @objects = {
-      add_green_deal_plan_use_case: add_green_deal_plan_use_case,
       fetch_renewable_heat_incentive_use_case:
         fetch_renewable_heat_incentive_use_case,
       find_assessors_by_postcode_use_case: find_assessors_by_postcode_use_case,
