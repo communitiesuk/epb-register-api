@@ -183,10 +183,9 @@ module Controller
         )
       end
 
-      result =
-        @container.get_object(:fetch_assessor_use_case).execute(
-          scheme_id,
-          scheme_assessor_id,
+      result = UseCase::FetchAssessor.new.execute(
+        scheme_id,
+        scheme_assessor_id,
         )
       json_api_response(code: 200, data: result.to_hash)
     rescue StandardError => e
@@ -216,11 +215,11 @@ module Controller
 
       create_assessor_response =
           UseCase::AddAssessor.new.execute(
-          Boundary::AssessorRequest.new(
-            body: assessor_details,
-            scheme_assessor_id: scheme_assessor_id,
-            registered_by_id: scheme_id,
-          ),
+            Boundary::AssessorRequest.new(
+              body: assessor_details,
+              scheme_assessor_id: scheme_assessor_id,
+              registered_by_id: scheme_id,
+            ),
         )
       assessor_record = create_assessor_response[:assessor]
 
