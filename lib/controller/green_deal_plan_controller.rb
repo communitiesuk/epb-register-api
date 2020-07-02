@@ -13,6 +13,8 @@ module Controller
       case e
       when UseCase::AddGreenDealPlan::NotFoundException
         not_found_error("Assessment not found")
+      when UseCase::AddGreenDealPlan::AssessmentGoneException
+        gone_error("Assessment not for issue")
       else
         server_error(e)
       end
