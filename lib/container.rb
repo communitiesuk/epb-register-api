@@ -30,7 +30,7 @@ class Container
     find_assessments_by_postcode_use_case =
         UseCase::FindAssessmentsByPostcode.new
     find_assessments_by_assessment_id_use_case =
-      UseCase::FindAssessmentsByAssessmentId.new(assessments_gateway)
+        UseCase::FindAssessmentsByAssessmentId.new
     find_assessments_by_street_name_and_town_use_case =
       UseCase::FindAssessmentsByStreetNameAndTown.new(assessments_gateway)
     fetch_assessor_list_use_case = UseCase::FetchAssessorList.new
