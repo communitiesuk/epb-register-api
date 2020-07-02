@@ -2,8 +2,6 @@ require "sinatra/activerecord"
 
 class Container
   def initialize
-    lodge_assessment_use_case = UseCase::LodgeAssessment.new
-
     check_assessor_belongs_to_scheme_use_case =
       UseCase::CheckAssessorBelongsToScheme.new
 
@@ -18,12 +16,10 @@ class Container
 
     validate_and_lodge_assessment_use_case =
       UseCase::ValidateAndLodgeAssessment.new(
-        lodge_assessment_use_case,
         check_assessor_belongs_to_scheme_use_case,
       )
 
     @objects = {
-      lodge_assessment_use_case: lodge_assessment_use_case,
       check_assessor_belongs_to_scheme_use_case:
         check_assessor_belongs_to_scheme_use_case,
       validate_and_lodge_assessment_use_case:

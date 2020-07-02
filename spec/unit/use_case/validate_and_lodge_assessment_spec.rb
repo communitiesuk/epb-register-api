@@ -43,7 +43,6 @@ describe UseCase::ValidateAndLodgeAssessment do
   let(:use_case) do
     described_class.new(
       validate_lodgement_use_case,
-      lodge_assessment_use_case,
     )
   end
 
