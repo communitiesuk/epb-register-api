@@ -2,6 +2,7 @@ module UseCase
   class AddGreenDealPlan
     class NotFoundException < StandardError; end
     class AssessmentGoneException < StandardError; end
+    class InvalidTypeException < StandardError; end
 
     def initialize
       @assessments_gateway = Gateway::AssessmentsGateway.new
@@ -17,6 +18,10 @@ module UseCase
 
       if %w[CANCELLED NOT_FOR_ISSUE].include? assessment.to_hash[:status]
         raise AssessmentGoneException
+      end
+
+      unless %w[RdSAP].include? assessment.to_hash[:type_of_assessment]
+        raise InvalidTypeException
       end
     end
   end

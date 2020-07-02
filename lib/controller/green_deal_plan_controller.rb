@@ -12,11 +12,13 @@ module Controller
     rescue StandardError => e
       case e
       when UseCase::AddGreenDealPlan::NotFoundException
-        not_found_error("Assessment not found")
+        not_found_error "Assessment not found"
       when UseCase::AddGreenDealPlan::AssessmentGoneException
-        gone_error("Assessment not for issue")
+        gone_error "Assessment not for issue"
+      when UseCase::AddGreenDealPlan::InvalidTypeException
+        error_response 400, "INVALID_REQUEST", "Assessment type is not RdSAP"
       else
-        server_error(e)
+        server_error e
       end
     end
 
