@@ -153,12 +153,11 @@ module Controller
             params[:postcode],
           )
         elsif params.key?(:assessment_id)
-          @container.get_object(:find_assessments_by_assessment_id_use_case)
+          UseCase::FindAssessmentsByAssessmentId.new
             .execute(params[:assessment_id])
         else
-          @container.get_object(
-            :find_assessments_by_street_name_and_town_use_case,
-          ).execute(params[:street_name], params[:town])
+          UseCase::FindAssessmentsByStreetNameAndTown.new
+              .execute(params[:street_name], params[:town])
         end
 
       json_api_response(code: 200, data: result, burrow_key: :assessments)
