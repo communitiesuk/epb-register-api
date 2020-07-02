@@ -2,8 +2,8 @@ module UseCase
   class FindAssessmentsByPostcode
     class PostcodeNotValid < StandardError; end
 
-    def initialize(assessments_gateway)
-      @assessments_gateway = assessments_gateway
+    def initialize
+      @assessments_gateway = Gateway::AssessmentsGateway.new
     end
 
     def execute(postcode)
