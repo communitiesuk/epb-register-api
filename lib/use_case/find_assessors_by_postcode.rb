@@ -3,8 +3,8 @@ module UseCase
     class PostcodeNotValid < StandardError; end
     class PostcodeNotRegistered < StandardError; end
 
-    def initialize(postcodes_gateway)
-      @postcodes_gateway = postcodes_gateway
+    def initialize
+      @postcodes_gateway = Gateway::PostcodesGateway.new
       @assessor_gateway = Gateway::AssessorsGateway.new
       @schemes_gateway = Gateway::SchemesGateway.new
     end

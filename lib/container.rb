@@ -2,8 +2,6 @@ require "sinatra/activerecord"
 
 class Container
   def initialize
-    postcode_gateway = Gateway::PostcodesGateway.new
-
     assessments_xml_gateway = Gateway::AssessmentsXmlGateway.new
 
     add_new_scheme_use_case = UseCase::AddScheme.new
@@ -21,8 +19,7 @@ class Container
     fetch_renewable_heat_incentive_use_case =
       UseCase::FetchRenewableHeatIncentive.new
 
-    find_assessors_by_postcode_use_case =
-      UseCase::FindAssessorsByPostcode.new(postcode_gateway)
+    find_assessors_by_postcode_use_case = UseCase::FindAssessorsByPostcode.new
     find_assessors_by_name_use_case = UseCase::FindAssessorsByName.new
 
     find_assessments_by_postcode_use_case =
