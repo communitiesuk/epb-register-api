@@ -1,7 +1,7 @@
 module UseCase
   class SearchAddressesByAddressId
-    def initialize(address_search_gateway)
-      @address_search_gateway = address_search_gateway
+    def initialize
+      @address_search_gateway = Gateway::AddressSearchGateway.new
     end
 
     def execute(address_id:)

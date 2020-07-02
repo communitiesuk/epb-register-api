@@ -59,7 +59,7 @@ class Container
         UseCase::CheckAssessorBelongsToScheme.new
 
     search_addresses_by_address_id_use_case =
-      UseCase::SearchAddressesByAddressId.new address_search_gateway
+      UseCase::SearchAddressesByAddressId.new
 
     search_addresses_by_postcode_use_case =
       UseCase::SearchAddressesByPostcode.new address_search_gateway
