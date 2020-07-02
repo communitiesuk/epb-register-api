@@ -4,9 +4,9 @@ module UseCase
 
     class AssessorNotFoundException < StandardError; end
 
-    def initialize(assessor_gateway, schemes_gateway)
+    def initialize(assessor_gateway)
       @assessor_gateway = assessor_gateway
-      @schemes_gateway = schemes_gateway
+      @schemes_gateway = Gateway::SchemesGateway.new
     end
 
     def execute(scheme_id, scheme_assessor_id)
