@@ -779,6 +779,62 @@ paths:
         '500':
           description: Server error
 
+  '/greendeal/assessments/{assessmentId}/xml':
+    get:
+      tags:
+        - Green Deal
+      summary: 'Get the redacted RdSAP XML for the assessment with reference
+                {assessmentId}. The response will consist of redacted EPC XML
+                that consists of the XML document as originally lodged, with the
+                exception of the following redacted elements and their children:
+                <Identification>
+                <Configuration>
+                <Calculation-Software-Name>
+                <Calculation-Software-Version>
+                <Inspection-Date>
+                <Completion-Date>
+                <Registration-Date>
+                <Status>
+                <Restricted-Access>
+                <Transaction-Type>
+                <Seller-Commission-Report>
+                <Energy-Assessor>
+                <Address>
+                <Related-Party-Disclosure>
+                <Insurance-Details>'
+      security:
+        - oauth:
+            - 'greendeal:plans'
+      parameters:
+        - in: path
+          name: assessmentId
+          required: true
+          description: 'The ID of the assessment being requested, usually RRN'
+          schema:
+            $ref: '#/components/schemas/AssessmentId'
+      responses:
+        '200':
+          description: Green Deal redacted EPC XML data
+          content:
+            application/xml:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Empty'
+        '400':
+          description: 'The assessmentId parameter is badly formatted, or does
+                        not relate to an RdSAP assessment'
+        '403':
+          description: Forbidden
+        '404':
+          description: 'Assessment not found'
+        '410':
+          description: 'Gone - Assessment with ID assessmentId exists but has
+                        been cancelled/marked not for issue'
+        '500':
+          description: Server error
+
   '/greendeal/rhi/assessments/{assessmentId}/latest':
     get:
       tags:
