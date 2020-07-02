@@ -14,8 +14,7 @@ class Container
     add_assessor_use_case = UseCase::AddAssessor.new
     fetch_assessor_use_case = UseCase::FetchAssessor.new
 
-    migrate_assessment_use_case =
-      UseCase::MigrateAssessment.new(assessments_gateway)
+    migrate_assessment_use_case = UseCase::MigrateAssessment.new
     fetch_assessment_use_case =
       UseCase::FetchAssessment.new(
         assessments_gateway,
