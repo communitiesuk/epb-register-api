@@ -2,8 +2,6 @@ require "sinatra/activerecord"
 
 class Container
   def initialize
-    related_assessments_gateway = Gateway::RelatedAssessmentsGateway.new
-
     assessments_gateway = Gateway::AssessmentsGateway.new
 
     postcode_gateway = Gateway::PostcodesGateway.new
@@ -72,7 +70,6 @@ class Container
       )
 
     @objects = {
-      related_assessments_gateway: related_assessments_gateway,
       add_new_scheme_use_case: add_new_scheme_use_case,
       get_all_schemes_use_case: get_all_schemes_use_case,
       add_assessor_use_case: add_assessor_use_case,
