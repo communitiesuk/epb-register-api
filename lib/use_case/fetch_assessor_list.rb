@@ -2,9 +2,9 @@ module UseCase
   class FetchAssessorList
     class SchemeNotFoundException < StandardError; end
 
-    def initialize(assessors_gateway, schemes_gateway)
+    def initialize(assessors_gateway)
       @assessors_gateway = assessors_gateway
-      @schemes_gateway = schemes_gateway
+      @schemes_gateway = Gateway::SchemesGateway.new
     end
 
     def execute(scheme_id)
