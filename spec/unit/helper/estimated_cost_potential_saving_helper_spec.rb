@@ -17,7 +17,7 @@ describe Helper::EstimatedCostPotentialSavingHelper do
           heating_cost_current,
           hot_water_cost_current,
         )
-      expect(result).to eq(2627.06)
+      expect(result).to eq("2627.06")
     end
 
     it "returns the potential saving" do
@@ -28,7 +28,7 @@ describe Helper::EstimatedCostPotentialSavingHelper do
           hot_water_cost_potential,
           2625,
         )
-      expect(result).to eq(1521.44)
+      expect(result).to eq("1521.44")
     end
   end
 end

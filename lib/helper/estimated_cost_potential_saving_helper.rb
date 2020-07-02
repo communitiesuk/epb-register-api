@@ -5,11 +5,12 @@ module Helper
     def estimated_cost(
       lighting_cost_current, heating_cost_current, hot_water_cost_current
     )
-      [
+      estimated_cost = [
         lighting_cost_current,
         heating_cost_current,
         hot_water_cost_current,
       ].compact.sum
+      "%.2f" % estimated_cost
     end
 
     def potential_saving(
@@ -23,7 +24,9 @@ module Helper
         heating_cost_potential,
         hot_water_cost_potential,
       ].compact.sum
-      estimated_cost - potential_saving_sum
+      potential_saving = BigDecimal(estimated_cost) - potential_saving_sum
+
+      "%.2f" % potential_saving
     end
   end
 end

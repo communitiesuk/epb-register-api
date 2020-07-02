@@ -141,11 +141,11 @@
             <CO2-Emissions-Current-Per-Floor-Area>0</CO2-Emissions-Current-Per-Floor-Area>
             <CO2-Emissions-Potential>1.4</CO2-Emissions-Potential>
             <Lighting-Cost-Current>123.45</Lighting-Cost-Current>
-            <Lighting-Cost-Potential>84.23</Lighting-Cost-Potential>
-            <Heating-Cost-Current>365.98</Heating-Cost-Current>
-            <Heating-Cost-Potential>250.34</Heating-Cost-Potential>
-            <Hot-Water-Cost-Current>200.40</Hot-Water-Cost-Current>
-            <Hot-Water-Cost-Potential>180.43</Hot-Water-Cost-Potential>
+            <Lighting-Cost-Potential>84.25</Lighting-Cost-Potential>
+            <Heating-Cost-Current>365.95</Heating-Cost-Current>
+            <Heating-Cost-Potential>250.35</Heating-Cost-Potential>
+            <Hot-Water-Cost-Current>200.45</Hot-Water-Cost-Current>
+            <Hot-Water-Cost-Potential>180.45</Hot-Water-Cost-Potential>
         </Energy-Use>
       <Renewable-Heat-Incentive>
         <RHI-Existing-Dwelling>
