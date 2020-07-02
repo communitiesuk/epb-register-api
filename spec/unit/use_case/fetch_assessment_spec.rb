@@ -11,7 +11,6 @@ describe UseCase::FetchAssessment do
     described_class.new(
       domestic_energy_assessment_gateway,
       assessors_gateway,
-      green_deal_plans_gateway,
     )
   end
 

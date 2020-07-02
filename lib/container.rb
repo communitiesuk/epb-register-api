@@ -21,7 +21,6 @@ class Container
     fetch_assessment_use_case =
       UseCase::FetchAssessment.new(
         assessments_gateway,
-        related_assessments_gateway,
         assessments_xml_gateway,
       )
 

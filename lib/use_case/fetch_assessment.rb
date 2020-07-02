@@ -5,13 +5,12 @@ module UseCase
 
     def initialize(
       assessments_gateway,
-      related_assessments_gateway,
       assessments_xml_gateway = false
     )
       @assessments_gateway = assessments_gateway
       @assessors_gateway = Gateway::AssessorsGateway.new
       @green_deal_plans_gateway = Gateway::GreenDealPlansGateway.new
-      @related_assessments_gateway = related_assessments_gateway
+      @related_assessments_gateway = Gateway::RelatedAssessmentsGateway.new
       @assessments_xml_gateway = assessments_xml_gateway
     end
 
