@@ -15,10 +15,7 @@ module Controller
 
     post "/api/schemes", jwt_auth: %w[scheme:create] do
       new_scheme_details = request_body(POST_SCHEMA)
-      result =
-        @container.get_object(:add_new_scheme_use_case).execute(
-          new_scheme_details[:name],
-        )
+      result = UseCase::AddScheme.new.execute(new_scheme_details[:name])
       json_api_response(code: 201, data: result)
     rescue StandardError => e
       case e
