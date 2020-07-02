@@ -2,8 +2,6 @@ require "sinatra/activerecord"
 
 class Container
   def initialize
-    fetch_assessor_list_use_case = UseCase::FetchAssessorList.new
-
     update_assessments_status_use_case = UseCase::UpdateAssessmentStatus.new
 
     validate_assessment_use_case = UseCase::ValidateAssessment.new
@@ -30,7 +28,6 @@ class Container
       )
 
     @objects = {
-      fetch_assessor_list_use_case: fetch_assessor_list_use_case,
       lodge_assessment_use_case: lodge_assessment_use_case,
       check_assessor_belongs_to_scheme_use_case:
         check_assessor_belongs_to_scheme_use_case,

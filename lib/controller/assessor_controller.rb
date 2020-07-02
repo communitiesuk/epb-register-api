@@ -132,8 +132,7 @@ module Controller
         )
       end
 
-      result =
-        @container.get_object(:fetch_assessor_list_use_case).execute(scheme_id)
+      result = UseCase::FetchAssessorList.new.execute(scheme_id)
 
       json_api_response(code: 200, data: { assessors: result.map(&:to_hash) })
     rescue UseCase::FetchAssessorList::SchemeNotFoundException
