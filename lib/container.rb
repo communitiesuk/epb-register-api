@@ -18,6 +18,8 @@ class Container
     fetch_assessment_use_case =
       UseCase::FetchAssessment.new(assessments_xml_gateway)
 
+    add_green_deal_plan_use_case = UseCase::AddGreenDealPlan.new
+
     fetch_renewable_heat_incentive_use_case =
       UseCase::FetchRenewableHeatIncentive.new
 
@@ -62,6 +64,7 @@ class Container
 
     @objects = {
       add_new_scheme_use_case: add_new_scheme_use_case,
+      add_green_deal_plan_use_case: add_green_deal_plan_use_case,
       get_all_schemes_use_case: get_all_schemes_use_case,
       add_assessor_use_case: add_assessor_use_case,
       fetch_assessor_use_case: fetch_assessor_use_case,

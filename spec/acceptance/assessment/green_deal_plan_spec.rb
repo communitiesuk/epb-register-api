@@ -14,4 +14,10 @@ describe "Acceptance::Assessment::GreenDealPlans" do
       add_green_deal_plan "123-456", "body", [403], true, nil, %w[wrong:scope]
     end
   end
+
+  context "when an assessment does not exist" do
+    it "returns status 404" do
+      add_green_deal_plan "123-456", "body", [404]
+    end
+  end
 end
