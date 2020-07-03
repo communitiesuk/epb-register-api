@@ -226,6 +226,50 @@ describe "Acceptance::Assessment::GreenDealPlans" do
                               accepted_responses: [400]
         end
       end
+
+      context "when missing required fields" do
+        let(:assessment) { Nokogiri.XML valid_rdsap_xml }
+        let(:assessment_id) { assessment.at "RRN" }
+
+        let(:response) do
+          JSON.parse(
+            add_green_deal_plan(
+              assessment_id: "0000-0000-0000-0000-0001",
+              body: valid_green_deal_plan_request_body,
+              accepted_responses: [422],
+            ).body,
+            symbolize_names: true,
+          )
+        end
+
+        before do
+          add_assessor scheme_id,
+                       "SPEC000000",
+                       AssessorStub.new.fetch_request_body(
+                         domesticRdSap: "ACTIVE",
+                       )
+
+          assessment_id.children = "0000-0000-0000-0000-0001"
+
+          lodge_assessment assessment_body: assessment.to_xml,
+                           accepted_responses: [201],
+                           auth_data: { scheme_ids: [scheme_id] }
+        end
+
+        context "with missing Green Deal Plan ID" do
+          before do
+            valid_green_deal_plan_request_body.tap do |field|
+              field.delete(:greenDealPlanId)
+            end
+          end
+
+          it "returns status 400" do
+            expect(
+              response[:errors][0][:title],
+            ).to eq "The property '#/' did not contain a required property of 'greenDealPlanId'"
+          end
+        end
+      end
     end
   end
 end

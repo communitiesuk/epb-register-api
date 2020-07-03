@@ -77,6 +77,8 @@ module Controller
         gone_error "Assessment not for issue"
       when UseCase::AddGreenDealPlan::InvalidTypeException
         error_response 400, "INVALID_REQUEST", "Assessment type is not RdSAP"
+      when JSON::Schema::ValidationError
+        error_response(422, "INVALID_REQUEST", e.message)
       else
         server_error e
       end
