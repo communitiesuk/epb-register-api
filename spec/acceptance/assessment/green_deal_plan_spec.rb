@@ -283,6 +283,20 @@ describe "Acceptance::Assessment::GreenDealPlans" do
             ).to eq "The property '#/' did not contain a required property of 'providerDetails'"
           end
         end
+
+        context "with missing measuresRemoved" do
+          before do
+            valid_green_deal_plan_request_body.tap do |field|
+              field.delete(:measuresRemoved)
+            end
+          end
+
+          it "returns the expected error response" do
+            expect(
+              response[:errors][0][:title],
+            ).to eq "The property '#/' did not contain a required property of 'measuresRemoved'"
+          end
+        end
       end
     end
   end
