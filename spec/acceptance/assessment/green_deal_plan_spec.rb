@@ -263,7 +263,7 @@ describe "Acceptance::Assessment::GreenDealPlans" do
             end
           end
 
-          it "returns status 400" do
+          it "returns the expected error response" do
             expect(
               response[:errors][0][:title],
             ).to eq "The property '#/' did not contain a required property of 'greenDealPlanId'"
@@ -277,7 +277,7 @@ describe "Acceptance::Assessment::GreenDealPlans" do
             end
           end
 
-          it "returns status 400" do
+          it "returns the expected error response" do
             expect(
               response[:errors][0][:title],
             ).to eq "The property '#/' did not contain a required property of 'providerDetails'"
