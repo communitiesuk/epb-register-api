@@ -269,6 +269,20 @@ describe "Acceptance::Assessment::GreenDealPlans" do
             ).to eq "The property '#/' did not contain a required property of 'greenDealPlanId'"
           end
         end
+
+        context "with missing provider details" do
+          before do
+            valid_green_deal_plan_request_body.tap do |field|
+              field.delete(:providerDetails)
+            end
+          end
+
+          it "returns status 400" do
+            expect(
+              response[:errors][0][:title],
+            ).to eq "The property '#/' did not contain a required property of 'providerDetails'"
+          end
+        end
       end
     end
   end

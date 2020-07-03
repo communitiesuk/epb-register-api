@@ -4,7 +4,7 @@ module Controller
   class GreenDealPlanController < Controller::BaseController
     POST_SCHEMA = {
       type: "object",
-      required: %w[greenDealPlanId],
+      required: %w[greenDealPlanId providerDetails],
       properties: {
         greenDealPlanId: { type: "string" },
         startDate: { type: "string", format: "iso-date" },
