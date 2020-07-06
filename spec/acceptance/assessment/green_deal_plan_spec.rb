@@ -3,7 +3,10 @@
 describe "Acceptance::Assessment::GreenDealPlans" do
   include RSpecAssessorServiceMixin
 
-  FIELDS = Controller::GreenDealPlanController::POST_SCHEMA[:required]
+  POST_SCHEMA = Controller::GreenDealPlanController::POST_SCHEMA
+  FIELDS = POST_SCHEMA[:required]
+  PROVIDER_DETAILS_FIELDS =
+    POST_SCHEMA[:properties][:providerDetails][:required]
 
   let(:valid_green_deal_plan_request_body) do
     {
@@ -53,7 +56,11 @@ describe "Acceptance::Assessment::GreenDealPlans" do
     File.read File.join Dir.pwd, "spec/fixtures/samples/sap.xml"
   end
 
-  def green_deal_plan_without(key)
+  def green_deal_plan_without(key, root = nil)
+    if root
+      valid_green_deal_plan_request_body[root].tap { |field| field.delete(key) }
+    end
+
     valid_green_deal_plan_request_body.tap { |field| field.delete(key) }
   end
 
@@ -294,6 +301,20 @@ describe "Acceptance::Assessment::GreenDealPlans" do
             it "returns the expected error response" do
               expect(response[:errors][0][:title]).to eq(
                 "The property '#/' did not contain a required property of '#{
+                  field
+                }'",
+              )
+            end
+          end
+        end
+
+        PROVIDER_DETAILS_FIELDS.each do |field|
+          context "with missing provider detail #{field}" do
+            before { green_deal_plan_without field.to_sym, :providerDetails }
+
+            it "returns the expected error response" do
+              expect(response[:errors][0][:title]).to eq(
+                "The property '#/providerDetails' did not contain a required property of '#{
                   field
                 }'",
               )
