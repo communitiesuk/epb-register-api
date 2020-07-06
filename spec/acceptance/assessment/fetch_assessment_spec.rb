@@ -280,15 +280,15 @@ describe "Acceptance::Assessment" do
         response = JSON.parse(fetch_assessment("0000-0000-0000-0000-0000").body)
         green_deal_plan = {
           greenDealPlanId: "ABC123456DEF",
-          startDate: "30 January 2020",
-          endDate: "28 February 2030",
+          startDate: "2020-01-30",
+          endDate: "2030-02-28",
           providerDetails: {
             name: "The Bank",
             telephone: "0800 0000000",
             email: "lender@example.com",
           },
           interest: { rate: nil, fixed: true },
-          chargeUplift: { amount: nil, date: "28 February 2030" },
+          chargeUplift: { amount: nil, date: "2030-02-28" },
           ccaRegulated: nil,
           structureChanged: nil,
           measuresRemoved: nil,

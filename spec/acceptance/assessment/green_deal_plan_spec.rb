@@ -127,15 +127,15 @@ describe "Acceptance::Assessment::GreenDealPlans" do
         expect(response[:data]).to eq(
           {
             greenDealPlanId: "ABC123456DEF",
-            startDate: "30 January 2020",
-            endDate: "28 February 2030",
+            startDate: "2020-01-30",
+            endDate: "2030-02-28",
             providerDetails: {
               name: "The Bank",
               telephone: "0800 0000000",
               email: "lender@example.com",
             },
             interest: { rate: 12.3, fixed: true },
-            chargeUplift: { amount: 1.25, date: "29 March 2025" },
+            chargeUplift: { amount: 1.25, date: "2025-03-29" },
             ccaRegulated: true,
             structureChanged: false,
             measuresRemoved: false,

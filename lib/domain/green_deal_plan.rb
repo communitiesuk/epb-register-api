@@ -42,8 +42,8 @@ module Domain
     def to_hash
       {
         green_deal_plan_id: @green_deal_plan_id,
-        start_date: @start_date.nil? ? nil : @start_date.strftime("%d %B %Y"),
-        end_date: @end_date.nil? ? nil : @end_date.strftime("%d %B %Y"),
+        start_date: @start_date.nil? ? nil : @start_date.strftime("%Y-%m-%d"),
+        end_date: @end_date.nil? ? nil : @end_date.strftime("%Y-%m-%d"),
         provider_details: {
           name: @provider_name,
           telephone: @provider_telephone,
@@ -56,7 +56,7 @@ module Domain
             if @charge_uplift_date.nil?
               nil
             else
-              @charge_uplift_date.strftime("%d %B %Y")
+              @charge_uplift_date.strftime("%Y-%m-%d")
             end,
         },
         cca_regulated: @cca_regulated,
