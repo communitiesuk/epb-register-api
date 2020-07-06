@@ -1573,7 +1573,7 @@
     <Addendum-Text language="1">The dwelling has a special energy saving feature which is recognised in the assessment, but its impact on the savings shown for improvement measures is ignored.</Addendum-Text>
     <Addendum-Text language="2">[Welsh translation of the above]</Addendum-Text>
   </Addendum>
-<Tenure>
+  <Tenure>
     <Tenure-Code>1</Tenure-Code>
     <Tenure-Text>Owner-occupied</Tenure-Text>
   </Tenure>

@@ -7,6 +7,12 @@
   attributeFormDefault="unqualified"
   version="NI-20.0.0"
 >
+  <xs:simpleType name="Percentage">
+    <xs:restriction base="xs:integer">
+      <xs:maxInclusive value="100"/>
+      <xs:minInclusive value="0"/>
+    </xs:restriction>
+  </xs:simpleType>
 	<xs:simpleType name="VentilationTypeCode">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="0">
@@ -1752,12 +1758,6 @@ Northern Ireland: 2014 onwards</xs:documentation>
 					<xs:documentation>PV powered</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:simpleType name="Percentage">
-		<xs:restriction base="xs:integer">
-			<xs:maxInclusive value="100"/>
-			<xs:minInclusive value="0"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:element name="Money" type="Money"/>

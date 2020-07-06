@@ -7,12 +7,12 @@
   attributeFormDefault="unqualified"
   version="20.0.0"
 >
-	<xs:simpleType name="Percentage">
-		<xs:restriction base="xs:integer">
-			<xs:maxInclusive value="100"/>
-			<xs:minInclusive value="0"/>
-		</xs:restriction>
-	</xs:simpleType>
+  <xs:simpleType name="Percentage">
+    <xs:restriction base="xs:integer">
+      <xs:maxInclusive value="100"/>
+      <xs:minInclusive value="0"/>
+    </xs:restriction>
+  </xs:simpleType>
 	<xs:simpleType name="VentilationTypeCode">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="0">

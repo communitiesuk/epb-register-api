@@ -4,6 +4,7 @@
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   targetNamespace="https://epbr.digital.communities.gov.uk/xsd/sap"
   elementFormDefault="qualified"
+  attributeFormDefault="unqualified"
   version="NI-18.0.0"
 >
 	<xs:element name="Property" type="Property"/>

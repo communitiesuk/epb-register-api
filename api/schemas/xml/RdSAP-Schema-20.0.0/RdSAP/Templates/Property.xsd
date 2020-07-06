@@ -2,7 +2,7 @@
 <xs:schema
   xmlns="https://epbr.digital.communities.gov.uk/xsd/rdsap"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	targetNamespace="https://epbr.digital.communities.gov.uk/xsd/rdsap"
+  targetNamespace="https://epbr.digital.communities.gov.uk/xsd/rdsap"
   elementFormDefault="qualified"
 	version="20.0.0"
 >

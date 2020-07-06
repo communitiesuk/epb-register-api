@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema
-  xmlns="https://epbr.digital.communities.gov.uk/xsd/rdsap"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns="https://epbr.digital.communities.gov.uk/xsd/rdsap"
   targetNamespace="https://epbr.digital.communities.gov.uk/xsd/rdsap"
   elementFormDefault="qualified"
   attributeFormDefault="unqualified"
@@ -110,7 +110,7 @@ A Home Inspector may use any or all of these methods to providing Professional I
 		<xs:all>
 			<xs:element name="RRN" type="RRNType">
 				<xs:annotation>
-					<xs:documentation>The type of assessment that was carried out.</xs:documentation>
+					<xs:documentation>Report Reference Number is the unique report Identifier shown on the EPC.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Inspection-Date" type="xs:date">

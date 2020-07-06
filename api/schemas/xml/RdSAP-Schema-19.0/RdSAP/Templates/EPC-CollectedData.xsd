@@ -48,7 +48,7 @@ Together with the Property Type, the Build Form produces a structured descriptio
 			</xs:element>
 			<xs:element name="Habitable-Room-Count" type="Count">
 				<xs:annotation>
-					<xs:documentation>Count of the number of habitable rooms within the property. 
+					<xs:documentation>Count of the number of habitable rooms within the property.
 
 This is the number of Reception Rooms (including Living Rooms, Sitting Rooms, Dining Rooms), Bedrooms, Study and similar rooms but excludes hall, stairs, kitchen, utility rooms, bathrooms, cloakrooms, en-suites and similar rooms.</xs:documentation>
 				</xs:annotation>
@@ -449,7 +449,7 @@ For the purpose of calculating the overall Energy Assessment for the property de
 			<xs:element name="Storage-WWHRS" type="Storage-WWHRS" minOccurs="0"/>
 			<xs:element name="Community-DHW-Network-Index-Number" type="xs:positiveInteger" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>index number of heat network, if applicable, community water heating oniy.</xs:documentation>
+					<xs:documentation>index number of heat network, if applicable, community water heating only.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:all>

@@ -6,8 +6,8 @@
   elementFormDefault="qualified"
   version="20.0.0"
 >
-	<xs:include schemaLocation="Property.xsd"/>
-	<xs:include schemaLocation="../UDT/SAP-Domains.xsd"/>
+  <xs:include schemaLocation="Property.xsd"/>
+  <xs:include schemaLocation="../UDT/SAP-Domains.xsd"/>
 	<!--
 	<xs:include schemaLocation="../Templates/Property.xsd"/>
 -->

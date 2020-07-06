@@ -2,9 +2,9 @@
 <xs:schema
   xmlns="https://epbr.digital.communities.gov.uk/xsd/sap"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	targetNamespace="https://epbr.digital.communities.gov.uk/xsd/sap"
+  targetNamespace="https://epbr.digital.communities.gov.uk/xsd/sap"
   elementFormDefault="qualified"
-	attributeFormDefault="unqualified"
+  attributeFormDefault="unqualified"
   version="18.0.0"
 >
 	<xs:element name="Property" type="Property"/>

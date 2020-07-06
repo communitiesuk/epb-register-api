@@ -456,7 +456,7 @@ For the purpose of calculating the overall Energy Assessment for the property de
 			<xs:element name="Storage-WWHRS" type="Storage-WWHRS" minOccurs="0"/>
 			<xs:element name="Community-DHW-Network-Index-Number" type="xs:positiveInteger" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>index number of heat network, if applicable, community water heating oniy.</xs:documentation>
+					<xs:documentation>index number of heat network, if applicable, community water heating only.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:all>
