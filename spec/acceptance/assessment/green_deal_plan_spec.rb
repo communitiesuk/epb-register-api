@@ -51,6 +51,10 @@ describe "Acceptance::Assessment::GreenDealPlans" do
     File.read File.join Dir.pwd, "spec/fixtures/samples/sap.xml"
   end
 
+  def green_deal_plan_without(key)
+    valid_green_deal_plan_request_body.tap { |field| field.delete(key) }
+  end
+
   describe "creating a green deal plan" do
     context "when unauthenticated" do
       it "returns status 401" do
@@ -282,11 +286,7 @@ describe "Acceptance::Assessment::GreenDealPlans" do
         end
 
         context "with missing Green Deal Plan ID" do
-          before do
-            valid_green_deal_plan_request_body.tap do |field|
-              field.delete(:greenDealPlanId)
-            end
-          end
+          before { green_deal_plan_without :greenDealPlanId }
 
           it "returns the expected error response" do
             expect(
@@ -296,11 +296,7 @@ describe "Acceptance::Assessment::GreenDealPlans" do
         end
 
         context "with missing provider details" do
-          before do
-            valid_green_deal_plan_request_body.tap do |field|
-              field.delete(:providerDetails)
-            end
-          end
+          before { green_deal_plan_without :providerDetails }
 
           it "returns the expected error response" do
             expect(
@@ -310,11 +306,7 @@ describe "Acceptance::Assessment::GreenDealPlans" do
         end
 
         context "with missing measuresRemoved" do
-          before do
-            valid_green_deal_plan_request_body.tap do |field|
-              field.delete(:measuresRemoved)
-            end
-          end
+          before { green_deal_plan_without :measuresRemoved }
 
           it "returns the expected error response" do
             expect(
