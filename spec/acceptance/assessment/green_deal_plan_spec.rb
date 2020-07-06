@@ -314,6 +314,16 @@ describe "Acceptance::Assessment::GreenDealPlans" do
             ).to eq "The property '#/' did not contain a required property of 'measuresRemoved'"
           end
         end
+
+        context "with missing startDate" do
+          before { green_deal_plan_without :startDate }
+
+          it "returns the expected error response" do
+            expect(
+              response[:errors][0][:title],
+            ).to eq "The property '#/' did not contain a required property of 'startDate'"
+          end
+        end
       end
     end
   end
