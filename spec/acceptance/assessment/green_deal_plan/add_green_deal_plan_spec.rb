@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe "Acceptance::Assessment::GreenDealPlans" do
+describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan" do
   include RSpecAssessorServiceMixin
 
   POST_SCHEMA = Controller::GreenDealPlanController::POST_SCHEMA
