@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Reports
-  xmlns="https://epbr.digital.communities.gov.uk/xsd/cepc"
+  xmlns="https://epbr.digital.communities.gov.uk/xsd/cepc-ni"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/cepc  ../CEPC-7.1/Reports/CEPC-Reports.xsd"
+  xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/cepc-ni  ../CEPC-NI-8.0.0/Reports/CEPC-Reports.xsd"
 >
   <Report>
     <Report-Header>
@@ -10,7 +10,7 @@
       <Issue-Date>2020-05-14</Issue-Date>
       <Report-Type>1</Report-Type>
       <Valid-Until>2030-05-03</Valid-Until>
-      <Related-RRN>4192-1535-8427-8844-6702</Related-RRN>
+      <Related-RRN>0000-0000-0000-0000-0001</Related-RRN>
       <Inspection-Date>2020-05-04</Inspection-Date>
       <Registration-Date>2020-05-04</Registration-Date>
       <Status>entered</Status>
@@ -283,5 +283,56 @@
         <Heating-CO2>0</Heating-CO2>
       </Year2-Assessment>
     </Display-Certificate>
+  </Report>
+  <Report>
+    <Report-Header>
+      <RRN>0000-0000-0000-0000-0001</RRN>
+      <Issue-Date>2020-05-04</Issue-Date>
+      <Report-Type>2</Report-Type>
+      <Valid-Until>2030-05-03</Valid-Until>
+      <Related-RRN>0000-0000-0000-0000-0000</Related-RRN>
+      <Inspection-Date>2020-05-04</Inspection-Date>
+      <Registration-Date>2020-05-04</Registration-Date>
+      <Status>cancelled</Status>
+      <Language-Code>1</Language-Code>
+      <Energy-Assessor>
+        <Certificate-Number>JASE000000</Certificate-Number>
+        <Name>Name0</Name>
+        <Accreditation-Scheme-Name>Accreditation-Scheme-Name0</Accreditation-Scheme-Name>
+      </Energy-Assessor>
+      <Property-Details>
+        <UPRN>RRN-0000-0000-0000-0000-0000</UPRN>
+        <Property-Address>
+          <Address-Line-1>1 Lonely Street</Address-Line-1>
+          <Post-Town>Post-Town0</Post-Town>
+          <Postcode>A0 0AA</Postcode>
+        </Property-Address>
+        <Property-Type>Property-Type0</Property-Type>
+      </Property-Details>
+      <Calculation-Details>
+        <Calculation-Tool>Calculation-Tool0</Calculation-Tool>
+      </Calculation-Details>
+    </Report-Header>
+    <Formatted-Report>ZGVmYXVsdA==</Formatted-Report>
+    <Advisory-Report>
+      <Technical-Information>
+        <Building-Environment>Air Conditioning</Building-Environment>
+        <Floor-Area>0</Floor-Area>
+      </Technical-Information>
+      <Site-Services>
+        <Service-1>
+          <Description>Description0</Description>
+          <Quantity>0</Quantity>
+        </Service-1>
+        <Service-2>
+          <Description>Description1</Description>
+          <Quantity>0</Quantity>
+        </Service-2>
+        <Service-3>
+          <Description>Description2</Description>
+          <Quantity>0</Quantity>
+        </Service-3>
+      </Site-Services>
+    </Advisory-Report>
   </Report>
 </Reports>

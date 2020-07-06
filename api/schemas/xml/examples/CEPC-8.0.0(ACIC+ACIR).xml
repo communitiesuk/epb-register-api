@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Reports
-  xmlns="https://epbr.digital.communities.gov.uk/xsd/cepc-ni"
+  xmlns="https://epbr.digital.communities.gov.uk/xsd/cepc"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/cepc-ni  ../CEPC-NI-7.1/Reports/CEPC-Reports.xsd"
+  xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/cepc  ../CEPC-8.0.0/Reports/CEPC-Reports.xsd"
 >
   <Report>
     <Report-Header>
@@ -49,8 +49,8 @@
     <Insurance-Details>
       <Insurer>Assessor Underwriting Limited</Insurer>
       <Policy-No>AB1234567CD</Policy-No>
-      <Effective-Date>2018-02-01</Effective-Date>
-      <Expiry-Date>2023-01-31</Expiry-Date>
+      <Effective-Date>2023-02-01</Effective-Date>
+      <Expiry-Date>2018-01-31</Expiry-Date>
       <PI-Limit>2000000</PI-Limit>
     </Insurance-Details>
     <Air-Conditioning-Inspection-Certificate>

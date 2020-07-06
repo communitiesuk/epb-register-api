@@ -5,40 +5,40 @@ describe "Acceptance::LodgeExamples" do
 
   let(:acic_acir_xml) do
     File.read File.join Dir.pwd,
-                        "api/schemas/xml/examples/CEPC-7.11(ACIC+ACIR).xml"
+                        "api/schemas/xml/examples/CEPC-8.0.0(ACIC+ACIR).xml"
   end
   let(:acic_acir_ni_xml) do
     File.read File.join Dir.pwd,
-                        "api/schemas/xml/examples/CEPC-NI-7.11(ACIC+ACIR).xml"
+                        "api/schemas/xml/examples/CEPC-NI-8.0.0(ACIC+ACIR).xml"
   end
   let(:cepc_rr_xml) do
     File.read File.join Dir.pwd,
-                        "api/schemas/xml/examples/CEPC-7.11(EPC+RR).xml"
+                        "api/schemas/xml/examples/CEPC-8.0.0(EPC+RR).xml"
   end
   let(:cepc_rr_ni_xml) do
     File.read File.join Dir.pwd,
-                        "api/schemas/xml/examples/CEPC-NI-7.11(EPC+RR).xml"
+                        "api/schemas/xml/examples/CEPC-NI-8.0.0(EPC+RR).xml"
   end
   let(:dec_xml) do
-    File.read File.join Dir.pwd, "api/schemas/xml/examples/CEPC-7.11(DEC).xml"
+    File.read File.join Dir.pwd, "api/schemas/xml/examples/CEPC-8.0.0(DEC).xml"
   end
   let(:ar_xml) do
-    File.read File.join Dir.pwd, "api/schemas/xml/examples/CEPC-7.11(AR).xml"
+    File.read File.join Dir.pwd, "api/schemas/xml/examples/CEPC-8.0.0.xml"
   end
   let(:dec_ar_xml) do
     File.read File.join Dir.pwd,
-                        "api/schemas/xml/examples/CEPC-7.11(DEC+AR).xml"
+                        "api/schemas/xml/examples/CEPC-8.0.0(DEC+AR).xml"
   end
   let(:dec_ni_xml) do
     File.read File.join Dir.pwd,
-                        "api/schemas/xml/examples/CEPC-NI-7.11(DEC).xml"
+                        "api/schemas/xml/examples/CEPC-NI-8.0.0(DEC).xml"
   end
   let(:ar_ni_xml) do
-    File.read File.join Dir.pwd, "api/schemas/xml/examples/CEPC-NI-7.11(AR).xml"
+    File.read File.join Dir.pwd, "api/schemas/xml/examples/CEPC-NI-8.0.0(AR).xml"
   end
   let(:dec_ar_ni_xml) do
     File.read File.join Dir.pwd,
-                        "api/schemas/xml/examples/CEPC-NI-7.11(DEC+AR).xml"
+                        "api/schemas/xml/examples/CEPC-NI-8.0.0(DEC+AR).xml"
   end
   let(:rdsap_xml) do
     File.read File.join Dir.pwd, "api/schemas/xml/examples/RdSAP-19.01.xml"
