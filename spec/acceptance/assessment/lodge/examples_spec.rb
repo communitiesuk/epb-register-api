@@ -50,7 +50,7 @@ describe "Acceptance::LodgeExamples" do
     File.read File.join Dir.pwd, "api/schemas/xml/examples/SAP-18.0.0.xml"
   end
   let(:sap_ni_xml) do
-    File.read File.join Dir.pwd, "api/schemas/xml/examples/SAP-NI-17.41.xml"
+    File.read File.join Dir.pwd, "api/schemas/xml/examples/SAP-NI-18.0.0.xml"
   end
   let(:scheme_id) { add_scheme_and_get_id }
 
