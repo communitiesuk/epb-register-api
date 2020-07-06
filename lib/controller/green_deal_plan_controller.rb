@@ -64,6 +64,7 @@ module Controller
           type: "array",
           items: {
             type: "object",
+            required: %w[startDate endDate dailyCharge],
             properties: {
               sequence: { type: "integer" },
               startDate: { type: "string", format: "iso-date" },

@@ -8,6 +8,7 @@ describe "Acceptance::Assessment::GreenDealPlans" do
   PROVIDER_DETAILS_FIELDS =
     POST_SCHEMA[:properties][:providerDetails][:required]
   INTEREST_FIELDS = POST_SCHEMA[:properties][:interest][:required]
+  CHARGES_FIELDS = POST_SCHEMA[:properties][:charges][:items][:required]
 
   let(:valid_green_deal_plan_request_body) do
     {
@@ -61,7 +62,7 @@ describe "Acceptance::Assessment::GreenDealPlans" do
     if root
       if valid_green_deal_plan_request_body[root].is_a? Array
         valid_green_deal_plan_request_body[root].each do |hashes|
-          hashes.tap { |field| field.delete key }
+          return hashes.tap { |hash| hash.delete key }
         end
       end
 
@@ -360,6 +361,20 @@ describe "Acceptance::Assessment::GreenDealPlans" do
             expect(response[:errors][0][:title]).to eq(
               "The property '#/measures/0' did not contain a required property of 'product'",
             )
+          end
+        end
+
+        CHARGES_FIELDS.each do |field|
+          context "with missing interest #{field}" do
+            before { green_deal_plan_without field.to_sym, :charges }
+
+            it "returns the expected error response" do
+              expect(response[:errors][0][:title]).to eq(
+                "The property '#/charges/0' did not contain a required property of '#{
+                  field
+                }'",
+              )
+            end
           end
         end
       end
