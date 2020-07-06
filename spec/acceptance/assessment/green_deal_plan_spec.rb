@@ -394,6 +394,16 @@ describe "Acceptance::Assessment::GreenDealPlans" do
             ).to eq "The property '#/' did not contain a required property of 'charges'"
           end
         end
+
+        context "with missing savings" do
+          before { green_deal_plan_without :savings }
+
+          it "returns the expected error response" do
+            expect(
+              response[:errors][0][:title],
+            ).to eq "The property '#/' did not contain a required property of 'savings'"
+          end
+        end
       end
     end
   end

@@ -16,6 +16,7 @@ module Controller
         measuresRemoved
         measures
         charges
+        savings
       ],
       properties: {
         greenDealPlanId: { type: "string" },
