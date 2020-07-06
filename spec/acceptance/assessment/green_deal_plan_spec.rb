@@ -167,6 +167,31 @@ describe "Acceptance::Assessment::GreenDealPlans" do
         end
       end
 
+      context "with the same Green Deal Plan ID" do
+        let(:response) do
+          JSON.parse(
+            add_green_deal_plan(
+              assessment_id: "0000-0000-0000-0000-0000",
+              body: valid_green_deal_plan_request_body,
+              accepted_responses: [409],
+            ).body,
+            symbolize_names: true,
+          )
+        end
+
+        before do
+          add_green_deal_plan assessment_id: "0000-0000-0000-0000-0000",
+                              body: valid_green_deal_plan_request_body,
+                              accepted_responses: [201]
+        end
+
+        it "returns the expected error response" do
+          expect(
+            response[:errors][0][:title],
+          ).to eq "Green Deal Plan ID already exists"
+        end
+      end
+
       context "with a cancelled assessment" do
         before do
           update_assessment_status assessment_id: "0000-0000-0000-0000-0000",

@@ -1,8 +1,9 @@
 module UseCase
   class AddGreenDealPlan
-    class NotFoundException < StandardError; end
     class AssessmentGoneException < StandardError; end
+    class DuplicateException < StandardError; end
     class InvalidTypeException < StandardError; end
+    class NotFoundException < StandardError; end
 
     def initialize
       @assessments_gateway = Gateway::AssessmentsGateway.new
@@ -10,6 +11,10 @@ module UseCase
     end
 
     def execute(assessment_id, data)
+      if @green_deal_plans_gateway.exists? data[:green_deal_plan_id]
+        raise DuplicateException
+      end
+
       assessments =
         @assessments_gateway.search_by_assessment_id assessment_id, false
 

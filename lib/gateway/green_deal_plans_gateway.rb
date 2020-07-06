@@ -2,6 +2,31 @@ module Gateway
   class GreenDealPlansGateway
     class GreenDealPlan < ActiveRecord::Base; end
 
+    def exists?(green_deal_plan_id)
+      sql = <<-SQL
+        SELECT EXISTS (
+          SELECT *
+          FROM green_deal_assessments
+          WHERE green_deal_plan_id = $1
+        )
+      SQL
+
+      results =
+        ActiveRecord::Base.connection.exec_query(
+          sql,
+          "SQL",
+          [
+            ActiveRecord::Relation::QueryAttribute.new(
+              "green_deal_plan_id",
+              green_deal_plan_id,
+              ActiveRecord::Type::String.new,
+            ),
+          ],
+        )
+
+      results.map { |result| result["exists"] }.reduce
+    end
+
     def add(green_deal_plan, assessment_id)
       GreenDealPlan.create green_deal_plan.to_record
 
