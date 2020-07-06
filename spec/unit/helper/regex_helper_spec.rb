@@ -121,5 +121,39 @@ describe Helper::RegexHelper do
         end
       end
     end
+
+    context "with invalid Green Deal Plan IDs" do
+      describe "AB" do
+        it "does not validate" do
+          expect(
+            "AB",
+          ).not_to match Regexp.new described_class::GREEN_DEAL_PLAN_ID
+        end
+      end
+
+      describe "AB0000000!12" do
+        it "does not validate" do
+          expect(
+            "AB0000000!12",
+          ).not_to match Regexp.new described_class::GREEN_DEAL_PLAN_ID
+        end
+      end
+
+      describe "AB0000000 12" do
+        it "does not validate" do
+          expect(
+            "AB0000000 12",
+          ).not_to match Regexp.new described_class::GREEN_DEAL_PLAN_ID
+        end
+      end
+
+      describe "AB_0000000012" do
+        it "does not validate" do
+          expect(
+            "AB_000000012",
+          ).not_to match Regexp.new described_class::GREEN_DEAL_PLAN_ID
+        end
+      end
+    end
   end
 end
