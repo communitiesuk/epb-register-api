@@ -3,6 +3,8 @@
 describe "Acceptance::Assessment::GreenDealPlans" do
   include RSpecAssessorServiceMixin
 
+  FIELDS = Controller::GreenDealPlanController::POST_SCHEMA[:required]
+
   let(:valid_green_deal_plan_request_body) do
     {
       greenDealPlanId: "ABC123456DEF",
@@ -285,123 +287,17 @@ describe "Acceptance::Assessment::GreenDealPlans" do
                            auth_data: { scheme_ids: [scheme_id] }
         end
 
-        context "with missing Green Deal Plan ID" do
-          before { green_deal_plan_without :greenDealPlanId }
+        FIELDS.each do |field|
+          context "with missing #{field}" do
+            before { green_deal_plan_without field.to_sym }
 
-          it "returns the expected error response" do
-            expect(
-              response[:errors][0][:title],
-            ).to eq "The property '#/' did not contain a required property of 'greenDealPlanId'"
-          end
-        end
-
-        context "with missing provider details" do
-          before { green_deal_plan_without :providerDetails }
-
-          it "returns the expected error response" do
-            expect(
-              response[:errors][0][:title],
-            ).to eq "The property '#/' did not contain a required property of 'providerDetails'"
-          end
-        end
-
-        context "with missing measuresRemoved" do
-          before { green_deal_plan_without :measuresRemoved }
-
-          it "returns the expected error response" do
-            expect(
-              response[:errors][0][:title],
-            ).to eq "The property '#/' did not contain a required property of 'measuresRemoved'"
-          end
-        end
-
-        context "with missing startDate" do
-          before { green_deal_plan_without :startDate }
-
-          it "returns the expected error response" do
-            expect(
-              response[:errors][0][:title],
-            ).to eq "The property '#/' did not contain a required property of 'startDate'"
-          end
-        end
-
-        context "with missing endDate" do
-          before { green_deal_plan_without :endDate }
-
-          it "returns the expected error response" do
-            expect(
-              response[:errors][0][:title],
-            ).to eq "The property '#/' did not contain a required property of 'endDate'"
-          end
-        end
-
-        context "with missing interest" do
-          before { green_deal_plan_without :interest }
-
-          it "returns the expected error response" do
-            expect(
-              response[:errors][0][:title],
-            ).to eq "The property '#/' did not contain a required property of 'interest'"
-          end
-        end
-
-        context "with missing chargeUplift" do
-          before { green_deal_plan_without :chargeUplift }
-
-          it "returns the expected error response" do
-            expect(
-              response[:errors][0][:title],
-            ).to eq "The property '#/' did not contain a required property of 'chargeUplift'"
-          end
-        end
-
-        context "with missing ccaRegulated" do
-          before { green_deal_plan_without :ccaRegulated }
-
-          it "returns the expected error response" do
-            expect(
-              response[:errors][0][:title],
-            ).to eq "The property '#/' did not contain a required property of 'ccaRegulated'"
-          end
-        end
-
-        context "with missing structureChanged" do
-          before { green_deal_plan_without :structureChanged }
-
-          it "returns the expected error response" do
-            expect(
-              response[:errors][0][:title],
-            ).to eq "The property '#/' did not contain a required property of 'structureChanged'"
-          end
-        end
-
-        context "with missing measures" do
-          before { green_deal_plan_without :measures }
-
-          it "returns the expected error response" do
-            expect(
-              response[:errors][0][:title],
-            ).to eq "The property '#/' did not contain a required property of 'measures'"
-          end
-        end
-
-        context "with missing charges" do
-          before { green_deal_plan_without :charges }
-
-          it "returns the expected error response" do
-            expect(
-              response[:errors][0][:title],
-            ).to eq "The property '#/' did not contain a required property of 'charges'"
-          end
-        end
-
-        context "with missing savings" do
-          before { green_deal_plan_without :savings }
-
-          it "returns the expected error response" do
-            expect(
-              response[:errors][0][:title],
-            ).to eq "The property '#/' did not contain a required property of 'savings'"
+            it "returns the expected error response" do
+              expect(response[:errors][0][:title]).to eq(
+                "The property '#/' did not contain a required property of '#{
+                  field
+                }'",
+              )
+            end
           end
         end
       end
