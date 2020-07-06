@@ -30,7 +30,7 @@ describe UseCase::ValidateAndLodgeAssessment do
   end
 
   let(:valid_xml) do
-    File.read File.join Dir.pwd, "api/schemas/xml/examples/RdSAP-19.01.xml"
+    File.read File.join Dir.pwd, "api/schemas/xml/examples/RdSAP-20.0.0.xml"
   end
 
   let(:check_assessor_belongs_to_scheme_use_case) do

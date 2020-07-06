@@ -41,10 +41,10 @@ describe "Acceptance::LodgeExamples" do
                         "api/schemas/xml/examples/CEPC-NI-8.0.0(DEC+AR).xml"
   end
   let(:rdsap_xml) do
-    File.read File.join Dir.pwd, "api/schemas/xml/examples/RdSAP-19.01.xml"
+    File.read File.join Dir.pwd, "api/schemas/xml/examples/RdSAP-20.0.0.xml"
   end
   let(:rdsap_ni_xml) do
-    File.read File.join Dir.pwd, "api/schemas/xml/examples/RdSAP-NI-19.01.xml"
+    File.read File.join Dir.pwd, "api/schemas/xml/examples/RdSAP-NI-20.0.0.xml"
   end
   let(:sap_xml) do
     File.read File.join Dir.pwd, "api/schemas/xml/examples/SAP-17.11.xml"
