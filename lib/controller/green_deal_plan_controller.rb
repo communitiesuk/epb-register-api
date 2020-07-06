@@ -81,7 +81,7 @@ module Controller
             properties: {
               sequence: { type: "integer" },
               fuelCode: { type: "string" },
-              fuelSaving: { type: "integer" },
+              fuelSaving: { type: "number" },
               standingChargeFraction: { type: "number" },
             },
           },

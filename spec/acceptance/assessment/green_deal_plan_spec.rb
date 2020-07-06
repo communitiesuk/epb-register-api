@@ -44,7 +44,7 @@ describe "Acceptance::Assessment::GreenDealPlans" do
         {
           sequence: 0,
           fuelCode: "LPG",
-          fuelSaving: 0,
+          fuelSaving: 9000.1,
           standingChargeFraction: -0.3,
         },
       ],
@@ -159,7 +159,7 @@ describe "Acceptance::Assessment::GreenDealPlans" do
               {
                 sequence: 0,
                 fuelCode: "LPG",
-                fuelSaving: 0,
+                fuelSaving: 9000.1,
                 standingChargeFraction: -0.3,
               },
             ],
