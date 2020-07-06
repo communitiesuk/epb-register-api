@@ -51,6 +51,7 @@ module Controller
           type: "array",
           items: {
             type: "object",
+            required: %w[product],
             properties: {
               sequence: { type: "integer" },
               measureType: { type: "string" },

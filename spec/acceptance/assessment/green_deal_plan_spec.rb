@@ -59,10 +59,16 @@ describe "Acceptance::Assessment::GreenDealPlans" do
 
   def green_deal_plan_without(key, root = nil)
     if root
-      valid_green_deal_plan_request_body[root].tap { |field| field.delete(key) }
+      if valid_green_deal_plan_request_body[root].is_a? Array
+        valid_green_deal_plan_request_body[root].each do |hashes|
+          hashes.tap { |field| field.delete key }
+        end
+      end
+
+      valid_green_deal_plan_request_body[root].tap { |field| field.delete key }
     end
 
-    valid_green_deal_plan_request_body.tap { |field| field.delete(key) }
+    valid_green_deal_plan_request_body.tap { |field| field.delete key }
   end
 
   describe "creating a green deal plan" do
@@ -343,6 +349,16 @@ describe "Acceptance::Assessment::GreenDealPlans" do
           it "returns the expected error response" do
             expect(response[:errors][0][:title]).to eq(
               "The property '#/chargeUplift' did not contain a required property of 'amount'",
+            )
+          end
+        end
+
+        context "with missing measures product" do
+          before { green_deal_plan_without :product, :measures }
+
+          it "returns the expected error response" do
+            expect(response[:errors][0][:title]).to eq(
+              "The property '#/measures/0' did not contain a required property of 'product'",
             )
           end
         end
