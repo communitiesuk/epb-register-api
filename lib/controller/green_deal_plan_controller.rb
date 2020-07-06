@@ -12,6 +12,7 @@ module Controller
         interest
         chargeUplift
         ccaRegulated
+        structureChanged
         measuresRemoved
       ],
       properties: {
