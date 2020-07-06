@@ -110,4 +110,16 @@ describe Helper::RegexHelper do
       end
     end
   end
+
+  describe "validating Green Deal Plan IDs" do
+    context "with valid Green Deal Plan IDs" do
+      describe "AB0000000012" do
+        it "validates" do
+          expect(
+            "AB0000000012",
+          ).to match Regexp.new described_class::GREEN_DEAL_PLAN_ID
+        end
+      end
+    end
+  end
 end
