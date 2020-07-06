@@ -49,29 +49,38 @@ module Controller
         measuresRemoved: { type: "boolean" },
         measures: {
           type: "array",
-          properties: {
-            sequence: { type: "integer" },
-            measureType: { type: "string" },
-            product: { type: "string" },
-            repaidDate: { type: "string", format: "iso-date" },
+          items: {
+            type: "object",
+            properties: {
+              sequence: { type: "integer" },
+              measureType: { type: "string" },
+              product: { type: "string" },
+              repaidDate: { type: "string", format: "iso-date" },
+            },
           },
         },
         charges: {
           type: "array",
-          properties: {
-            sequence: { type: "integer" },
-            startDate: { type: "string", format: "iso-date" },
-            endDate: { type: "string", format: "iso-date" },
-            dailyCharge: { type: "number" },
+          items: {
+            type: "object",
+            properties: {
+              sequence: { type: "integer" },
+              startDate: { type: "string", format: "iso-date" },
+              endDate: { type: "string", format: "iso-date" },
+              dailyCharge: { type: "number" },
+            },
           },
         },
         savings: {
           type: "array",
-          properties: {
-            sequence: { type: "integer" },
-            fuelCode: { type: "string" },
-            fuelSaving: { type: "integer" },
-            standingChargeFraction: { type: "number" },
+          items: {
+            type: "object",
+            properties: {
+              sequence: { type: "integer" },
+              fuelCode: { type: "string" },
+              fuelSaving: { type: "integer" },
+              standingChargeFraction: { type: "number" },
+            },
           },
         },
       },

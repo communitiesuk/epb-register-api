@@ -35,7 +35,7 @@ describe "Acceptance::Assessment::GreenDealPlans" do
           sequence: 0,
           startDate: "2020-03-29",
           endDate: "2030-03-29",
-          dailyCharge: "0.34",
+          dailyCharge: 0.34,
         },
       ],
       savings: [
@@ -144,7 +144,7 @@ describe "Acceptance::Assessment::GreenDealPlans" do
                 sequence: 0,
                 startDate: "2020-03-29",
                 endDate: "2030-03-29",
-                dailyCharge: "0.34",
+                dailyCharge: 0.34,
               },
             ],
             savings: [
