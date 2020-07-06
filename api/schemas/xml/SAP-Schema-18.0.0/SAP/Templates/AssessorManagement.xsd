@@ -8,9 +8,6 @@
 >
 	<xs:include schemaLocation="../UDT/SAP-Domains.xsd"/>
 	<xs:include schemaLocation="Property.xsd"/>
-	<!--
-	<xs:include schemaLocation="../Templates/Property.xsd"/>
--->
 	<xs:element name="Home-Inspector" type="Home-Inspector"/>
 	<xs:complexType name="Home-Inspector">
 		<xs:annotation>
