@@ -354,6 +354,16 @@ describe "Acceptance::Assessment::GreenDealPlans" do
             ).to eq "The property '#/' did not contain a required property of 'chargeUplift'"
           end
         end
+
+        context "with missing ccaRegulated" do
+          before { green_deal_plan_without :ccaRegulated }
+
+          it "returns the expected error response" do
+            expect(
+              response[:errors][0][:title],
+            ).to eq "The property '#/' did not contain a required property of 'ccaRegulated'"
+          end
+        end
       end
     end
   end
