@@ -917,6 +917,10 @@ paths:
           description: Energy assessment with RRN assessmentId can not be found
         '409':
           description: Plan with the submitted ID already exists
+        '410':
+          description: Assessment has been cancelled or not for issue
+        '422':
+          description: Invalid request
         '500':
           description: Server error
 
@@ -1633,7 +1637,7 @@ components:
     GreenDealPlan:
       type: object
       properties:
-        GreenDealPlanId:
+        greenDealPlanId:
           $ref: '#/components/schemas/GreenDealPlanId'
         startDate:
           description: The date the plan went live
