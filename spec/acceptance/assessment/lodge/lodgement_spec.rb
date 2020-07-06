@@ -350,4 +350,58 @@ describe "Acceptance::Assessment::Lodge" do
       )
     end
   end
+
+  context "when lodging an assessment with current and potential costs of more than 2 dp" do
+    let(:response) do
+      JSON.parse(fetch_assessment("0000-0000-0000-0000-0000").body)
+    end
+
+    let(:lighting_cost_current) do
+      ActiveRecord::Base.connection.execute(
+          "SELECT lighting_cost_current FROM assessments WHERE assessment_id = '0000-0000-0000-0000-0000'",
+          )
+    end
+
+    before() do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
+
+      doc = Nokogiri.XML valid_rdsap_xml
+
+      scheme_assessor_id = doc.at("Energy-Use")
+      scheme_assessor_id.children = '<Energy-Rating-Average>60</Energy-Rating-Average>
+      <Energy-Rating-Current>66</Energy-Rating-Current>
+      <Energy-Rating-Potential>80</Energy-Rating-Potential>
+      <Environmental-Impact-Current>61</Environmental-Impact-Current>
+      <Environmental-Impact-Potential>75</Environmental-Impact-Potential>
+      <Energy-Consumption-Current>231</Energy-Consumption-Current>
+      <Energy-Consumption-Potential>141</Energy-Consumption-Potential>
+      <CO2-Emissions-Current>4.2</CO2-Emissions-Current>
+      <CO2-Emissions-Potential>2.6</CO2-Emissions-Potential>
+      <CO2-Emissions-Current-Per-Floor-Area>41</CO2-Emissions-Current-Per-Floor-Area>
+      <Lighting-Cost-Current currency="GBP">173.76829628</Lighting-Cost-Current>
+      <Lighting-Cost-Potential currency="GBP">64</Lighting-Cost-Potential>
+      <Heating-Cost-Current currency="GBP">745</Heating-Cost-Current>
+      <Heating-Cost-Potential currency="GBP">681</Heating-Cost-Potential>
+      <Hot-Water-Cost-Current currency="GBP">113</Hot-Water-Cost-Current>
+      <Hot-Water-Cost-Potential currency="GBP">77</Hot-Water-Cost-Potential>'
+
+      JSON.parse(
+          lodge_assessment(
+              assessment_body: doc.to_xml,
+              accepted_responses: [201],
+              auth_data: { scheme_ids: [scheme_id] },
+              ).body,
+          symbolize_names: true,
+          )
+    end
+
+    it "is stored in the database with 2 dp" do
+      expect(response["data"]["lightingCostCurrent"]).to include "173.77"
+    end
+
+    it "returns a fetched response with 2 dp" do
+      expect(lighting_cost_current.entries.first["lighting_cost_current"]).to include "173.77"
+    end
+  end
 end
