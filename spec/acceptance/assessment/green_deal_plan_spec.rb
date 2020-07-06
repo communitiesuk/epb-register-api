@@ -189,6 +189,29 @@ describe "Acceptance::Assessment::GreenDealPlans" do
         end
       end
 
+      context "with an invalid Green Deal Plan ID" do
+        let(:response) do
+          JSON.parse(
+            add_green_deal_plan(
+              assessment_id: "0000-0000-0000-0000-0000",
+              body: valid_green_deal_plan_request_body,
+              accepted_responses: [422],
+            ).body,
+            symbolize_names: true,
+          )
+        end
+
+        before do
+          valid_green_deal_plan_request_body[:greenDealPlanId] = "AB_000000012"
+        end
+
+        it "returns the expected error response" do
+          expect(
+            response[:errors][0][:title],
+          ).to eq "The property '#/greenDealPlanId' value \"AB_000000012\" did not match the regex '^[a-zA-Z0-9]{12}$'"
+        end
+      end
+
       context "with the same Green Deal Plan ID" do
         let(:response) do
           JSON.parse(

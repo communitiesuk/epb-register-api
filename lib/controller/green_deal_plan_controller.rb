@@ -19,7 +19,9 @@ module Controller
         savings
       ],
       properties: {
-        greenDealPlanId: { type: "string" },
+        greenDealPlanId: {
+          type: "string", pattern: Helper::RegexHelper::GREEN_DEAL_PLAN_ID
+        },
         startDate: { type: "string", format: "iso-date" },
         endDate: { type: "string", format: "iso-date" },
         providerDetails: {
