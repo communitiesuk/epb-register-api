@@ -325,7 +325,7 @@ describe "Acceptance::Assessment::GreenDealPlans" do
           end
         end
 
-        context "with missing startDate" do
+        context "with missing endDate" do
           before { green_deal_plan_without :endDate }
 
           it "returns the expected error response" do
@@ -335,7 +335,7 @@ describe "Acceptance::Assessment::GreenDealPlans" do
           end
         end
 
-        context "with missing startDate" do
+        context "with missing interest" do
           before { green_deal_plan_without :interest }
 
           it "returns the expected error response" do
