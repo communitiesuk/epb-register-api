@@ -15,6 +15,7 @@ module Controller
         structureChanged
         measuresRemoved
         measures
+        charges
       ],
       properties: {
         greenDealPlanId: { type: "string" },

@@ -384,6 +384,16 @@ describe "Acceptance::Assessment::GreenDealPlans" do
             ).to eq "The property '#/' did not contain a required property of 'measures'"
           end
         end
+
+        context "with missing charges" do
+          before { green_deal_plan_without :charges }
+
+          it "returns the expected error response" do
+            expect(
+              response[:errors][0][:title],
+            ).to eq "The property '#/' did not contain a required property of 'charges'"
+          end
+        end
       end
     end
   end
