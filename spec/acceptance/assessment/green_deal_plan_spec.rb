@@ -344,6 +344,16 @@ describe "Acceptance::Assessment::GreenDealPlans" do
             ).to eq "The property '#/' did not contain a required property of 'interest'"
           end
         end
+
+        context "with missing chargeUplift" do
+          before { green_deal_plan_without :chargeUplift }
+
+          it "returns the expected error response" do
+            expect(
+              response[:errors][0][:title],
+            ).to eq "The property '#/' did not contain a required property of 'chargeUplift'"
+          end
+        end
       end
     end
   end

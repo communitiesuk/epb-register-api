@@ -10,6 +10,7 @@ module Controller
         endDate
         providerDetails
         interest
+        chargeUplift
         measuresRemoved
       ],
       properties: {
