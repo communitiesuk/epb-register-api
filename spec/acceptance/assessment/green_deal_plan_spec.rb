@@ -334,6 +334,16 @@ describe "Acceptance::Assessment::GreenDealPlans" do
             ).to eq "The property '#/' did not contain a required property of 'endDate'"
           end
         end
+
+        context "with missing startDate" do
+          before { green_deal_plan_without :interest }
+
+          it "returns the expected error response" do
+            expect(
+              response[:errors][0][:title],
+            ).to eq "The property '#/' did not contain a required property of 'interest'"
+          end
+        end
       end
     end
   end
