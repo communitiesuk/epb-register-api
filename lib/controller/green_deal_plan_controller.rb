@@ -38,6 +38,7 @@ module Controller
         },
         chargeUplift: {
           type: "object",
+          required: %w[amount],
           properties: {
             amount: { type: "number" },
             date: { type: "string", format: "iso-date" },

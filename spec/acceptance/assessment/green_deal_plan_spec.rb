@@ -336,6 +336,16 @@ describe "Acceptance::Assessment::GreenDealPlans" do
             end
           end
         end
+
+        context "with missing chargeUplift amount" do
+          before { green_deal_plan_without :amount, :chargeUplift }
+
+          it "returns the expected error response" do
+            expect(response[:errors][0][:title]).to eq(
+              "The property '#/chargeUplift' did not contain a required property of 'amount'",
+            )
+          end
+        end
       end
     end
   end
