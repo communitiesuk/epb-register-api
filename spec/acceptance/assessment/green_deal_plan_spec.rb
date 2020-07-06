@@ -374,6 +374,16 @@ describe "Acceptance::Assessment::GreenDealPlans" do
             ).to eq "The property '#/' did not contain a required property of 'structureChanged'"
           end
         end
+
+        context "with missing measures" do
+          before { green_deal_plan_without :measures }
+
+          it "returns the expected error response" do
+            expect(
+              response[:errors][0][:title],
+            ).to eq "The property '#/' did not contain a required property of 'measures'"
+          end
+        end
       end
     end
   end

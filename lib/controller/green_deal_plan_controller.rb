@@ -14,6 +14,7 @@ module Controller
         ccaRegulated
         structureChanged
         measuresRemoved
+        measures
       ],
       properties: {
         greenDealPlanId: { type: "string" },
