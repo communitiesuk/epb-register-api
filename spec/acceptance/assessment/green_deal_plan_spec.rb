@@ -7,6 +7,7 @@ describe "Acceptance::Assessment::GreenDealPlans" do
   FIELDS = POST_SCHEMA[:required]
   PROVIDER_DETAILS_FIELDS =
     POST_SCHEMA[:properties][:providerDetails][:required]
+  INTEREST_FIELDS = POST_SCHEMA[:properties][:interest][:required]
 
   let(:valid_green_deal_plan_request_body) do
     {
@@ -315,6 +316,20 @@ describe "Acceptance::Assessment::GreenDealPlans" do
             it "returns the expected error response" do
               expect(response[:errors][0][:title]).to eq(
                 "The property '#/providerDetails' did not contain a required property of '#{
+                  field
+                }'",
+              )
+            end
+          end
+        end
+
+        INTEREST_FIELDS.each do |field|
+          context "with missing interest #{field}" do
+            before { green_deal_plan_without field.to_sym, :interest }
+
+            it "returns the expected error response" do
+              expect(response[:errors][0][:title]).to eq(
+                "The property '#/interest' did not contain a required property of '#{
                   field
                 }'",
               )

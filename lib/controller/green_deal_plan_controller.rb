@@ -33,6 +33,7 @@ module Controller
         },
         interest: {
           type: "object",
+          required: %w[rate fixed],
           properties: { rate: { type: "number" }, fixed: { type: "boolean" } },
         },
         chargeUplift: {
