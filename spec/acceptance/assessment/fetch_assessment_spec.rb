@@ -207,13 +207,14 @@ describe "Acceptance::Assessment" do
   end
 
   context "when a domestic assessment doesnt exist" do
+    let(:response) { JSON.parse fetch_assessment("DOESNT-EXIST", [404]).body }
+
     it "returns status 404 for a get" do
       fetch_assessment("DOESNT-EXIST", [404])
     end
 
     it "returns an error message structure" do
-      response_body = fetch_assessment("DOESNT-EXIST", [404]).body
-      expect(JSON.parse(response_body)).to eq(
+      expect(response).to eq(
         {
           "errors" => [
             { "code" => "NOT_FOUND", "title" => "Assessment not found" },
@@ -224,60 +225,36 @@ describe "Acceptance::Assessment" do
   end
 
   context "when a domestic assessment exists" do
-    it "returns a 200" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(
-        scheme_id,
-        "SPEC000000",
-        fetch_assessor_stub.fetch_request_body(domesticSap: "ACTIVE"),
-      )
-
-      lodge_assessment assessment_body: valid_sap_xml,
-                       accepted_responses: [201],
-                       auth_data: { scheme_ids: [scheme_id] },
-                       schema_name: "SAP-Schema-17.1",
-                       headers: { "Accept": "application/xml" }
-
-      response = fetch_assessment("0000-0000-0000-0000-0000")
-      expect(response.status).to eq(200)
+    let(:scheme_id) { add_scheme_and_get_id }
+    let(:response) do
+      JSON.parse fetch_assessment("0000-0000-0000-0000-0000").body
     end
 
-    it "returns the assessment details" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(
-        scheme_id,
-        "SPEC000000",
-        fetch_assessor_stub.fetch_request_body(domesticSap: "ACTIVE"),
-      )
+    before do
+      add_assessor scheme_id,
+                   "SPEC000000",
+                   fetch_assessor_stub.fetch_request_body(domesticSap: "ACTIVE")
 
       lodge_assessment assessment_body: valid_sap_xml,
                        accepted_responses: [201],
                        auth_data: { scheme_ids: [scheme_id] },
                        schema_name: "SAP-Schema-17.1"
+    end
 
-      response = JSON.parse(fetch_assessment("0000-0000-0000-0000-0000").body)
-
-      expected_response = JSON.parse(expected_sap_response(scheme_id).to_json)
-      expect(response["data"]).to eq(expected_response)
+    it "returns the assessment details" do
+      expect(response["data"]).to eq(
+        JSON.parse(expected_sap_response(scheme_id).to_json),
+      )
     end
 
     context "when a domestic assessment has a green deal plan" do
+      let(:response) do
+        JSON.parse fetch_assessment("0000-0000-0000-0000-0000").body
+      end
+
       it "returns the assessment details with the green deal plan" do
-        scheme_id = add_scheme_and_get_id
-        add_assessor(
-          scheme_id,
-          "SPEC000000",
-          fetch_assessor_stub.fetch_request_body(domesticSap: "ACTIVE"),
-        )
-
-        lodge_assessment assessment_body: valid_sap_xml,
-                         accepted_responses: [201],
-                         auth_data: { scheme_ids: [scheme_id] },
-                         schema_name: "SAP-Schema-17.1"
-
         green_deal_plan_stub.create_green_deal_plan("0000-0000-0000-0000-0000")
 
-        response = JSON.parse(fetch_assessment("0000-0000-0000-0000-0000").body)
         green_deal_plan = {
           greenDealPlanId: "ABC123456DEF",
           startDate: "2020-01-30",
@@ -320,24 +297,12 @@ describe "Acceptance::Assessment" do
     end
 
     context "when requesting an assessments XML" do
-      it "returns the XML as expected" do
-        scheme_id = add_scheme_and_get_id
-        add_assessor(
-          scheme_id,
-          "SPEC000000",
-          fetch_assessor_stub.fetch_request_body(domesticSap: "ACTIVE"),
-        )
-
-        lodge_assessment assessment_body: valid_sap_xml,
-                         accepted_responses: [201],
-                         auth_data: { scheme_ids: [scheme_id] },
-                         schema_name: "SAP-Schema-17.1",
+      let(:response) do
+        fetch_assessment "0000-0000-0000-0000-0000",
                          headers: { "Accept": "application/xml" }
+      end
 
-        response =
-          fetch_assessment "0000-0000-0000-0000-0000",
-                           headers: { "Accept": "application/xml" }
-
+      it "returns the XML as expected" do
         expect(
           "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + response.body,
         ).to eq(sanitised_sap_xml)
@@ -345,40 +310,29 @@ describe "Acceptance::Assessment" do
     end
 
     context "when a certificate has related certificates" do
-      let(:expired_assessment) { Nokogiri.XML valid_sap_xml }
+      let(:assessment) { Nokogiri.XML valid_sap_xml }
+      let(:address_id) { assessment.at "UPRN" }
+      let(:assessment_id) { assessment.at "RRN" }
+      let(:assessment_date) { assessment.at "Inspection-Date" }
 
-      let(:entered_assessment) { Nokogiri.XML valid_sap_xml }
+      let(:response) do
+        JSON.parse fetch_assessment("0000-0000-0000-0000-0000").body
+      end
 
-      let(:response) { fetch_assessment("0000-0000-0000-0000-0000") }
+      let(:expected_response) do
+        JSON.parse expected_sap_response(scheme_id).to_json
+      end
 
-      it "returns all the related certificates" do
-        scheme_id = add_scheme_and_get_id
-        add_assessor(
-          scheme_id,
-          "SPEC000000",
-          AssessorStub.new.fetch_request_body(domesticSap: "ACTIVE"),
-        )
-
-        lodge_assessment assessment_body: expired_assessment.to_xml,
-                         accepted_responses: [201],
-                         auth_data: { scheme_ids: [scheme_id] },
-                         schema_name: "SAP-Schema-17.1"
-
-        address_id = entered_assessment.at("UPRN")
+      before do
         address_id.children = "RRN-0000-0000-0000-0000-0000"
-        assessment_id = entered_assessment.at("RRN")
         assessment_id.children = "1234-3453-6245-2473-5623"
-        assessment_date = entered_assessment.at("Inspection-Date")
         assessment_date.children = "2010-05-05"
 
-        lodge_assessment assessment_body: entered_assessment.to_xml,
+        lodge_assessment assessment_body: assessment.to_xml,
                          accepted_responses: [201],
                          auth_data: { scheme_ids: [scheme_id] },
                          schema_name: "SAP-Schema-17.1"
 
-        response = JSON.parse(fetch_assessment("0000-0000-0000-0000-0000").body)
-
-        expected_response = JSON.parse(expected_sap_response(scheme_id).to_json)
         expected_response["relatedAssessments"] = [
           {
             "assessmentExpiryDate" => "2020-05-05",
@@ -393,7 +347,9 @@ describe "Acceptance::Assessment" do
             "assessmentType" => "SAP",
           },
         ]
+      end
 
+      it "returns all the related certificates" do
         expect(response["data"]).to eq(expected_response)
       end
     end
