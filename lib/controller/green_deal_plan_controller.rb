@@ -77,6 +77,7 @@ module Controller
           type: "array",
           items: {
             type: "object",
+            required: %w[fuelCode fuelSaving standingChargeFraction],
             properties: {
               sequence: { type: "integer" },
               fuelCode: { type: "string" },
