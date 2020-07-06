@@ -1,5 +1,5 @@
 class RelatedAssessmentsGatewayStub
-  def fetch_related_assessments(*)
+  def by_address_id(*)
     [
       {
         "assessmentExpiryDate" => "2016-05-04",

@@ -2,7 +2,7 @@ module Gateway
   class RelatedAssessmentsGateway
     class Assessment < ActiveRecord::Base; end
 
-    def fetch_related_assessments(address_id)
+    def by_address_id(address_id)
       sql = <<-SQL
         SELECT all_assessments.assessment_id,
                all_assessments.assessment_type,
@@ -38,14 +38,6 @@ module Gateway
             ) existing_assessments
             INNER JOIN assessments a ON existing_assessments.assessment_id = a.assessment_id
             WHERE existing_assessments.assessment_id != REPLACE($1, 'RRN-', '')
-            UNION
-            SELECT this_assessment.assessment_id,
-                   this_assessment.type_of_assessment AS assessment_type,
-                   this_assessment.date_of_expiry,
-                   this_assessment.cancelled_at,
-                   this_assessment.not_for_issue_at
-            FROM assessments this_assessment
-            WHERE this_assessment.assessment_id = REPLACE($1, 'RRN-', '')
         ) as all_assessments
         ORDER BY date_of_expiry DESC, assessment_id DESC
       SQL
@@ -67,8 +59,6 @@ module Gateway
 
       output =
         results.map do |result|
-          next if result["assessment_id"] == assessment_id
-
           Domain::RelatedAssessment.new(
             assessment_id: result["assessment_id"],
             assessment_status: result["assessment_status"],

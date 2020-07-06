@@ -31,7 +31,7 @@ module UseCase
 
       unless assessment.get(:address_id).nil?
         related_assessments =
-          @related_assessments_gateway.fetch_related_assessments(
+          @related_assessments_gateway.by_address_id(
             assessment.get(:address_id),
           )
       end
