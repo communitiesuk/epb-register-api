@@ -364,8 +364,8 @@ describe "Acceptance::Assessment::Lodge" do
 
     let(:lighting_cost_potential) do
       ActiveRecord::Base.connection.execute(
-          "SELECT lighting_cost_potential FROM assessments WHERE assessment_id = '0000-0000-0000-0000-0000'",
-          )
+        "SELECT lighting_cost_potential FROM assessments WHERE assessment_id = '0000-0000-0000-0000-0000'",
+      )
     end
 
     before do
@@ -409,8 +409,8 @@ describe "Acceptance::Assessment::Lodge" do
 
     it "returns a fetched response with 2 dp" do
       expect(
-          lighting_cost_current.entries.first["lighting_cost_current"],
-          ).to include "173.77"
+        lighting_cost_current.entries.first["lighting_cost_current"],
+      ).to include "173.77"
     end
 
     it "is stored in the database with 0" do
@@ -419,8 +419,8 @@ describe "Acceptance::Assessment::Lodge" do
 
     it "returns a fetched response with 2 dp" do
       expect(
-          lighting_cost_potential.entries.first["lighting_cost_potential"],
-          ).to eq "0.00"
+        lighting_cost_potential.entries.first["lighting_cost_potential"],
+      ).to eq "0.00"
     end
   end
 end

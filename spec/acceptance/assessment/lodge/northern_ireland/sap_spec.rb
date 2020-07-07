@@ -125,7 +125,7 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
           "lightingCostPotential" => "84.25",
           "heatingCostPotential" => "250.35",
           "hotWaterCostPotential" => "180.45",
-          "estimatedEnergyCost"  => "689.85",
+          "estimatedEnergyCost" => "689.85",
           "potentialEnergySaving" => "174.80",
           "heatDemand" => {
             "currentSpaceHeatingDemand" => 30.0,
