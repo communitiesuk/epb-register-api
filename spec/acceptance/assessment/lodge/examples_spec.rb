@@ -167,7 +167,7 @@ describe "Acceptance::LodgeExamples" do
         assessment_body: rdsap_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
-        schema_name: "RdSAP-Schema-19.0",
+        schema_name: "RdSAP-Schema-20.0.0",
       )
     end
 
@@ -176,7 +176,7 @@ describe "Acceptance::LodgeExamples" do
         assessment_body: rdsap_ni_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
-        schema_name: "RdSAP-Schema-NI-19.0",
+        schema_name: "RdSAP-Schema-NI-20.0.0",
       )
     end
 

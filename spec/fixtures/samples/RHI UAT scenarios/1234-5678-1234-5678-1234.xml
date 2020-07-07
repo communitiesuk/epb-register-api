@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RdSAP-Report xmlns="https://epbr.digital.communities.gov.uk/xsd/rdsap"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-              xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/rdsap ../RdSAP-Schema-19.0/RdSAP/Templates/RdSAP-Report.xsd">
+              xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/rdsap ../RdSAP-Schema-20.0.0/RdSAP/Templates/RdSAP-Report.xsd">
   <Calculation-Software-Name>RdSAP 4 U</Calculation-Software-Name>
   <Calculation-Software-Version>2.0</Calculation-Software-Version>
   <User-Interface-Name>RdSAPwize</User-Interface-Name>
   <User-Interface-Version>1.3.60</User-Interface-Version>
-  <Schema-Version-Original>19.01</Schema-Version-Original>
+  <Schema-Version-Original>20.0.0</Schema-Version-Original>
   <SAP-Version>9.80</SAP-Version>
   <PCDF-Revision-Number>PCDF-Revision-Number0</PCDF-Revision-Number>
   <Previous-EPC-Check>

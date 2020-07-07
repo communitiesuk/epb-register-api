@@ -47,7 +47,7 @@ describe UseCase::ValidateAndLodgeAssessment do
       expect {
         use_case.execute(
           valid_xml,
-          "Non-existent-RdSAP-Schema-19.0",
+          "Non-existent-RdSAP-Schema-20.0.0",
           "1",
           false,
         )

@@ -1,5 +1,5 @@
 describe Helper::SchemaListHelper do
-  let(:valid_schema_name) { "RdSAP-Schema-19.0" }
+  let(:valid_schema_name) { "RdSAP-Schema-20.0.0" }
 
   context "when checking a schema exists" do
     it "will return true if it exisits under our schema list" do
@@ -18,7 +18,7 @@ describe Helper::SchemaListHelper do
     it "will return the schema path if its in our schema list" do
       result = described_class.new(valid_schema_name).schema_path
       expect(result).to eq(
-        "api/schemas/xml/RdSAP-Schema-19.0/RdSAP/Templates/RdSAP-Report.xsd",
+        "api/schemas/xml/RdSAP-Schema-20.0.0/RdSAP/Templates/RdSAP-Report.xsd",
       )
     end
   end

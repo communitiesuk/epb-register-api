@@ -161,7 +161,7 @@ def lodge_assessment(
   auth_data: nil,
   scopes: %w[assessment:lodge],
   json: false,
-  schema_name: "RdSAP-Schema-19.0",
+  schema_name: "RdSAP-Schema-20.0.0",
   headers: {},
   migrated: nil
 )

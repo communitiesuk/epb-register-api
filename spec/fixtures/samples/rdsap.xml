@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RdSAP-Report xmlns="https://epbr.digital.communities.gov.uk/xsd/rdsap"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/rdsap ../../../api/schemas/xml/RdSAP-Schema-19.0/RdSAP/Templates/RdSAP-Report.xsd">
+ xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/rdsap ../../../api/schemas/xml/RdSAP-Schema-20.0.0/RdSAP/Templates/RdSAP-Report.xsd">
     <Calculation-Software-Name>Calculation-Software-Name0</Calculation-Software-Name>
     <Calculation-Software-Version>Calculation-Software-Version0</Calculation-Software-Version>
     <User-Interface-Name>User-Interface-Name0</User-Interface-Name>

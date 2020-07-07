@@ -26,7 +26,7 @@ describe "Acceptance::LodgeRdSAPNIEnergyAssessment" do
                 assessment_body: valid_rdsap_ni_xml,
                 accepted_responses: [400],
                 auth_data: { scheme_ids: [scheme_id] },
-                schema_name: "RdSAP-Schema-NI-19.0",
+                schema_name: "RdSAP-Schema-NI-20.0.0",
               ).body,
             )
 
@@ -49,7 +49,7 @@ describe "Acceptance::LodgeRdSAPNIEnergyAssessment" do
         assessment_body: valid_rdsap_ni_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
-        schema_name: "RdSAP-Schema-NI-19.0",
+        schema_name: "RdSAP-Schema-NI-20.0.0",
       )
     end
 
@@ -73,7 +73,7 @@ describe "Acceptance::LodgeRdSAPNIEnergyAssessment" do
           assessment_body: doc.to_xml,
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] },
-          schema_name: "RdSAP-Schema-NI-19.0",
+          schema_name: "RdSAP-Schema-NI-20.0.0",
         )
 
         expected_response = {
@@ -284,7 +284,7 @@ describe "Acceptance::LodgeRdSAPNIEnergyAssessment" do
           lodge_assessment assessment_body: related_party_number_xml.to_xml,
                            accepted_responses: [201],
                            auth_data: { scheme_ids: [scheme_id] },
-                           schema_name: "RdSAP-Schema-NI-19.0"
+                           schema_name: "RdSAP-Schema-NI-20.0.0"
 
           parsed_response =
             JSON.parse JSON.generate(response), symbolize_names: true
@@ -301,7 +301,7 @@ describe "Acceptance::LodgeRdSAPNIEnergyAssessment" do
             assessment_body: doc.to_xml,
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "RdSAP-Schema-NI-19.0",
+            schema_name: "RdSAP-Schema-NI-20.0.0",
           )
 
           expect(response["data"]["addressLine2"]).to eq("")
@@ -318,7 +318,7 @@ describe "Acceptance::LodgeRdSAPNIEnergyAssessment" do
             assessment_body: doc.to_xml,
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "RdSAP-Schema-NI-19.0",
+            schema_name: "RdSAP-Schema-NI-20.0.0",
           )
 
           expect(
@@ -339,7 +339,7 @@ describe "Acceptance::LodgeRdSAPNIEnergyAssessment" do
             assessment_body: doc.to_xml,
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "RdSAP-Schema-NI-19.0",
+            schema_name: "RdSAP-Schema-NI-20.0.0",
           )
 
           expect(response["data"]["recommendedImprovements"]).to eq([])

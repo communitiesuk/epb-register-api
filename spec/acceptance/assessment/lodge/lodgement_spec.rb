@@ -20,7 +20,7 @@ describe "Acceptance::Assessment::Lodge" do
       lodge_assessment(
         assessment_body: valid_rdsap_xml,
         accepted_responses: [400],
-        schema_name: "MakeupSAP-19.0",
+        schema_name: "MakeupSAP-20.0.0",
       )
     end
 
