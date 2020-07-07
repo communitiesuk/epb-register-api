@@ -919,8 +919,6 @@ paths:
           description: Plan with the submitted ID already exists
         '410':
           description: Assessment has been cancelled or not for issue
-        '422':
-          description: Invalid request
         '500':
           description: Server error
 
