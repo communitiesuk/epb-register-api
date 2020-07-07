@@ -131,7 +131,7 @@ module Controller
       when UseCase::UpdateGreenDealPlan::NotFoundException
         not_found_error "Green Deal Plan not found"
       when UseCase::UpdateGreenDealPlan::PlanIdMismatchException
-        error_response 400,
+        error_response 409,
                        "INVALID_REQUEST",
                        "Green Deal Plan ID does not match"
       when JSON::Schema::ValidationError
