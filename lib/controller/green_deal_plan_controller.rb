@@ -123,8 +123,11 @@ module Controller
     put "/api/greendeal/disclosure/plans/:plan_id",
         jwt_auth: %w[greendeal:plans] do
       plan_id = params[:plan_id]
+      green_deal_plan = request_body POST_SCHEMA
 
-      UseCase::UpdateGreenDealPlan.new.execute plan_id
+      result = UseCase::UpdateGreenDealPlan.new.execute plan_id, green_deal_plan
+
+      json_api_response code: 200, data: result.to_hash
     rescue StandardError => e
       case e
       when UseCase::UpdateGreenDealPlan::NotFoundException

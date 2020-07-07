@@ -53,6 +53,12 @@ module Gateway
       )
     end
 
+    def update(green_deal_plan, plan_id)
+      plan = GreenDealPlan.find_by green_deal_plan_id: plan_id
+
+      plan.update green_deal_plan.to_record
+    end
+
     def fetch(assessment_id)
       sql =
         "SELECT b.green_deal_plan_id, b.start_date, b.end_date,
