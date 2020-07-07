@@ -132,6 +132,10 @@ module Controller
       case e
       when UseCase::UpdateGreenDealPlan::NotFoundException
         not_found_error "Green Deal Plan not found"
+      when UseCase::UpdateGreenDealPlan::PlanIdMismatchException
+        error_response 400,
+                       "INVALID_REQUEST",
+                       "Green Deal Plan ID does not match"
       else
         server_error e
       end

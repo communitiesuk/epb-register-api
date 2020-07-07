@@ -181,6 +181,30 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan" do
           },
         )
       end
+
+      context "with a different plan ID" do
+        let(:response) do
+          JSON.parse(
+            update_green_deal_plan(
+              plan_id: "ABC123456DEF",
+              body: updated_green_deal_plan_request_body,
+              accepted_responses: [400],
+            ).body,
+            symbolize_names: true,
+          )
+        end
+
+        before do
+          updated_green_deal_plan_request_body[:greenDealPlanId] =
+            "ABMISMATCH12"
+        end
+
+        it "returns the expected error response" do
+          expect(
+            response[:errors][0][:title],
+          ).to eq "Green Deal Plan ID does not match"
+        end
+      end
     end
   end
 end

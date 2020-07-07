@@ -1,6 +1,7 @@
 module UseCase
   class UpdateGreenDealPlan
     class NotFoundException < StandardError; end
+    class PlanIdMismatchException < StandardError; end
 
     def initialize
       @green_deal_plan_gateway = Gateway::GreenDealPlansGateway.new
@@ -8,6 +9,8 @@ module UseCase
 
     def execute(plan_id, data)
       raise NotFoundException unless @green_deal_plan_gateway.exists? plan_id
+
+      raise PlanIdMismatchException unless plan_id == data[:green_deal_plan_id]
 
       green_deal_plan =
         Domain::GreenDealPlan.new(
