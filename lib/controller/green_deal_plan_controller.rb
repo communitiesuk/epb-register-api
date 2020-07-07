@@ -120,6 +120,9 @@ module Controller
       end
     end
 
+    put "/api/greendeal/disclosure/plans/:plan_id", jwt_auth: [] do
+    end
+
     get "/api/greendeal/rhi/assessments/:assessment_id/latest",
         jwt_auth: %w[greendeal:plans] do
       assessment_id = params[:assessment_id]

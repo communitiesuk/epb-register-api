@@ -154,6 +154,24 @@ def add_green_deal_plan(
   )
 end
 
+def update_green_deal_plan(
+  plan_id:,
+  body: {},
+  accepted_responses: [200],
+  authenticate: true,
+  auth_data: nil,
+  scopes: %w[greendeal:plans]
+)
+  assertive_put(
+    "/api/greendeal/disclosure/plans/#{plan_id}",
+    body,
+    accepted_responses,
+    authenticate,
+    auth_data,
+    scopes,
+  )
+end
+
 def lodge_assessment(
   assessment_body: "",
   accepted_responses: [201],
