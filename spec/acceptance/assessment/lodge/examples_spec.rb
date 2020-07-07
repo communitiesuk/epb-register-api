@@ -185,7 +185,7 @@ describe "Acceptance::LodgeExamples" do
         assessment_body: sap_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
-        schema_name: "SAP-Schema-17.1",
+        schema_name: "SAP-Schema-18.0.0",
       )
     end
 
@@ -194,7 +194,7 @@ describe "Acceptance::LodgeExamples" do
         assessment_body: sap_ni_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
-        schema_name: "SAP-Schema-NI-17.4",
+        schema_name: "SAP-Schema-NI-18.0.0",
       )
     end
   end

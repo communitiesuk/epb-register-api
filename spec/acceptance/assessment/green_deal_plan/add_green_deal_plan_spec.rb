@@ -287,7 +287,7 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan" do
           lodge_assessment assessment_body: sap_assessment.to_xml,
                            accepted_responses: [201],
                            auth_data: { scheme_ids: [scheme_id] },
-                           schema_name: "SAP-Schema-17.1"
+                           schema_name: "SAP-Schema-18.0.0"
         end
 
         it "returns status 400" do

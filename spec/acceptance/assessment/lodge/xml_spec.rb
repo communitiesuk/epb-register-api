@@ -73,7 +73,7 @@ describe "Acceptance::LodgeAssessment::XML" do
         lodge_assessment assessment_body: valid_sap_xml,
                          accepted_responses: [201],
                          auth_data: { scheme_ids: [scheme_id] },
-                         schema_name: "SAP-Schema-17.1"
+                         schema_name: "SAP-Schema-18.0.0"
       end
 
       it "will remove the <PDF> element" do
@@ -91,7 +91,7 @@ describe "Acceptance::LodgeAssessment::XML" do
         assessment_body: valid_sap_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
-        schema_name: "SAP-Schema-17.1",
+        schema_name: "SAP-Schema-18.0.0",
         headers: { "Accept": "application/xml" },
       ).body
     end

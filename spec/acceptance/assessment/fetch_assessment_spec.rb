@@ -238,7 +238,7 @@ describe "Acceptance::Assessment" do
       lodge_assessment assessment_body: valid_sap_xml,
                        accepted_responses: [201],
                        auth_data: { scheme_ids: [scheme_id] },
-                       schema_name: "SAP-Schema-17.1"
+                       schema_name: "SAP-Schema-18.0.0"
     end
 
     it "returns the assessment details" do
@@ -331,7 +331,7 @@ describe "Acceptance::Assessment" do
         lodge_assessment assessment_body: assessment.to_xml,
                          accepted_responses: [201],
                          auth_data: { scheme_ids: [scheme_id] },
-                         schema_name: "SAP-Schema-17.1"
+                         schema_name: "SAP-Schema-18.0.0"
 
         expected_response["relatedAssessments"] = [
           {

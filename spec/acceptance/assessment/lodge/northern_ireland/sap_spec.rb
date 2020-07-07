@@ -26,7 +26,7 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
                 assessment_body: valid_sap_ni_xml,
                 accepted_responses: [400],
                 auth_data: { scheme_ids: [scheme_id] },
-                schema_name: "SAP-Schema-NI-17.4",
+                schema_name: "SAP-Schema-NI-18.0.0",
               ).body,
             )
 
@@ -49,7 +49,7 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
         assessment_body: valid_sap_ni_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
-        schema_name: "SAP-Schema-NI-17.4",
+        schema_name: "SAP-Schema-NI-18.0.0",
       )
     end
 
@@ -73,7 +73,7 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
           assessment_body: doc.to_xml,
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] },
-          schema_name: "SAP-Schema-NI-17.4",
+          schema_name: "SAP-Schema-NI-18.0.0",
         )
 
         expected_response = {
@@ -270,7 +270,7 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
           lodge_assessment assessment_body: related_party_number_xml.to_xml,
                            accepted_responses: [201],
                            auth_data: { scheme_ids: [scheme_id] },
-                           schema_name: "SAP-Schema-NI-17.4"
+                           schema_name: "SAP-Schema-NI-18.0.0"
 
           parsed_response =
             JSON.parse JSON.generate(response), symbolize_names: true
@@ -302,7 +302,7 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
             assessment_body: doc.to_xml,
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "SAP-Schema-NI-17.4",
+            schema_name: "SAP-Schema-NI-18.0.0",
           )
 
           heat_demand = response["data"]["heatDemand"]
@@ -321,7 +321,7 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
             assessment_body: doc.to_xml,
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "SAP-Schema-NI-17.4",
+            schema_name: "SAP-Schema-NI-18.0.0",
           )
 
           expect(response["data"]["dwellingType"]).to be_nil
