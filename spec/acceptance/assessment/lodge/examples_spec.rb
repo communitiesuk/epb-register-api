@@ -34,7 +34,8 @@ describe "Acceptance::LodgeExamples" do
                         "api/schemas/xml/examples/CEPC-NI-8.0.0(DEC).xml"
   end
   let(:ar_ni_xml) do
-    File.read File.join Dir.pwd, "api/schemas/xml/examples/CEPC-NI-8.0.0(AR).xml"
+    File.read File.join Dir.pwd,
+                        "api/schemas/xml/examples/CEPC-NI-8.0.0(AR).xml"
   end
   let(:dec_ar_ni_xml) do
     File.read File.join Dir.pwd,
