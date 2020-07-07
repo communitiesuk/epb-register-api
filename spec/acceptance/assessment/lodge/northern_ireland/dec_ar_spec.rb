@@ -26,7 +26,7 @@ describe "Acceptance::LodgeDEC+ARNIEnergyAssessment" do
               assessment_body: valid_xml,
               accepted_responses: [400],
               auth_data: { scheme_ids: [scheme_id] },
-              schema_name: "CEPC-NI-7.1",
+              schema_name: "CEPC-NI-8.0.0",
             ).body,
           )
 
@@ -46,7 +46,7 @@ describe "Acceptance::LodgeDEC+ARNIEnergyAssessment" do
         assessment_body: valid_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
-        schema_name: "CEPC-NI-7.1",
+        schema_name: "CEPC-NI-8.0.0",
       )
     end
 
@@ -73,7 +73,7 @@ describe "Acceptance::LodgeDEC+ARNIEnergyAssessment" do
           assessment_body: doc.to_xml,
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] },
-          schema_name: "CEPC-NI-7.1",
+          schema_name: "CEPC-NI-8.0.0",
         )
 
         expected_dec_response = {
@@ -251,7 +251,7 @@ describe "Acceptance::LodgeDEC+ARNIEnergyAssessment" do
           assessment_body: invalid_xml,
           accepted_responses: [409],
           auth_data: { scheme_ids: [scheme_id] },
-          schema_name: "CEPC-NI-7.1",
+          schema_name: "CEPC-NI-8.0.0",
         )
 
         fetch_assessment("0000-0000-0000-0000-0000", [404])

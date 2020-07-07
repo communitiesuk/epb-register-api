@@ -29,7 +29,7 @@ describe "Acceptance::LodgeACIC+ACIRNIEnergyAssessment" do
                 assessment_body: valid_xml,
                 accepted_responses: [400],
                 auth_data: { scheme_ids: [scheme_id] },
-                schema_name: "CEPC-NI-7.1",
+                schema_name: "CEPC-NI-8.0.0",
               ).body,
             )
 
@@ -54,7 +54,7 @@ describe "Acceptance::LodgeACIC+ACIRNIEnergyAssessment" do
                 assessment_body: valid_xml,
                 accepted_responses: [400],
                 auth_data: { scheme_ids: [scheme_id] },
-                schema_name: "CEPC-NI-7.1",
+                schema_name: "CEPC-NI-8.0.0",
               ).body,
             )
 
@@ -79,7 +79,7 @@ describe "Acceptance::LodgeACIC+ACIRNIEnergyAssessment" do
         assessment_body: valid_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
-        schema_name: "CEPC-NI-7.1",
+        schema_name: "CEPC-NI-8.0.0",
       )
     end
 
@@ -108,7 +108,7 @@ describe "Acceptance::LodgeACIC+ACIRNIEnergyAssessment" do
           assessment_body: doc.to_xml,
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] },
-          schema_name: "CEPC-NI-7.1",
+          schema_name: "CEPC-NI-8.0.0",
         )
 
         expected_acic_response = {
@@ -291,7 +291,7 @@ describe "Acceptance::LodgeACIC+ACIRNIEnergyAssessment" do
           assessment_body: valid_xml,
           accepted_responses: [400],
           auth_data: { scheme_ids: [scheme_id] },
-          schema_name: "CEPC-NI-7.1",
+          schema_name: "CEPC-NI-8.0.0",
         )
 
         fetch_assessment("0000-0000-0000-0000-0000", [404])

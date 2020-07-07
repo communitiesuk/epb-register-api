@@ -22,7 +22,7 @@ describe "Acceptance::AssessmentStatus::ACIC" do
       lodge_assessment assessment_body: valid_acic_xml,
                        accepted_responses: [201],
                        auth_data: { scheme_ids: [scheme_id] },
-                       schema_name: "CEPC-7.1"
+                       schema_name: "CEPC-8.0.0"
 
       assessment_status =
         update_assessment_status(
@@ -56,7 +56,7 @@ describe "Acceptance::AssessmentStatus::ACIC" do
       lodge_assessment assessment_body: valid_acic_xml,
                        accepted_responses: [201],
                        auth_data: { scheme_ids: [scheme_id] },
-                       schema_name: "CEPC-7.1"
+                       schema_name: "CEPC-8.0.0"
 
       assessment_status =
         update_assessment_status(

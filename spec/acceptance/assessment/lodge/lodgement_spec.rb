@@ -318,7 +318,7 @@ describe "Acceptance::Assessment::Lodge" do
           assessment_body: valid_cepc_rr_xml,
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] },
-          schema_name: "CEPC-7.1",
+          schema_name: "CEPC-8.0.0",
         ).body,
         symbolize_names: true,
       )

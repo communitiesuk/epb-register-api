@@ -29,7 +29,7 @@ describe "Acceptance::LodgeDECNIEnergyAssessment" do
                 assessment_body: valid_dec_ni_xml,
                 accepted_responses: [400],
                 auth_data: { scheme_ids: [scheme_id] },
-                schema_name: "CEPC-NI-7.1",
+                schema_name: "CEPC-NI-8.0.0",
               ).body,
             )
 
@@ -52,7 +52,7 @@ describe "Acceptance::LodgeDECNIEnergyAssessment" do
         assessment_body: valid_dec_ni_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
-        schema_name: "CEPC-NI-7.1",
+        schema_name: "CEPC-NI-8.0.0",
       )
     end
 
@@ -76,7 +76,7 @@ describe "Acceptance::LodgeDECNIEnergyAssessment" do
           assessment_body: doc.to_xml,
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] },
-          schema_name: "CEPC-NI-7.1",
+          schema_name: "CEPC-NI-8.0.0",
         )
 
         expected_response = {

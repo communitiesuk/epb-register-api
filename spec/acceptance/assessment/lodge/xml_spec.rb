@@ -57,7 +57,7 @@ describe "Acceptance::LodgeAssessment::XML" do
         lodge_assessment assessment_body: valid_cepc_xml,
                          accepted_responses: [201],
                          auth_data: { scheme_ids: [scheme_id] },
-                         schema_name: "CEPC-7.1"
+                         schema_name: "CEPC-8.0.0"
       end
 
       it "will remove the <Formatted-Report> element" do
@@ -128,7 +128,7 @@ describe "Acceptance::LodgeAssessment::XML" do
           assessment_body: valid_cepc_rr_xml,
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] },
-          schema_name: "CEPC-7.1",
+          schema_name: "CEPC-8.0.0",
           headers: { "Accept": "application/xml" },
         ).body
       end

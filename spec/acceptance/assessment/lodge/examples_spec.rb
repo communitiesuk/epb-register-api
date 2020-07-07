@@ -78,7 +78,7 @@ describe "Acceptance::LodgeExamples" do
         assessment_body: acic_acir_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
-        schema_name: "CEPC-7.1",
+        schema_name: "CEPC-8.0.0",
       )
     end
 
@@ -87,7 +87,7 @@ describe "Acceptance::LodgeExamples" do
         assessment_body: cepc_rr_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
-        schema_name: "CEPC-7.1",
+        schema_name: "CEPC-8.0.0",
       )
     end
 
@@ -96,7 +96,7 @@ describe "Acceptance::LodgeExamples" do
         assessment_body: dec_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
-        schema_name: "CEPC-7.1",
+        schema_name: "CEPC-8.0.0",
       )
     end
     it "can lodge the example DEC Advisory Report" do
@@ -104,7 +104,7 @@ describe "Acceptance::LodgeExamples" do
         assessment_body: ar_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
-        schema_name: "CEPC-7.1",
+        schema_name: "CEPC-8.0.0",
       )
     end
 
@@ -113,7 +113,7 @@ describe "Acceptance::LodgeExamples" do
         assessment_body: dec_ar_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
-        schema_name: "CEPC-7.1",
+        schema_name: "CEPC-8.0.0",
       )
     end
 
@@ -122,7 +122,7 @@ describe "Acceptance::LodgeExamples" do
         assessment_body: acic_acir_ni_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
-        schema_name: "CEPC-NI-7.1",
+        schema_name: "CEPC-NI-8.0.0",
       )
     end
 
@@ -131,7 +131,7 @@ describe "Acceptance::LodgeExamples" do
         assessment_body: cepc_rr_ni_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
-        schema_name: "CEPC-NI-7.1",
+        schema_name: "CEPC-NI-8.0.0",
       )
     end
 
@@ -140,7 +140,7 @@ describe "Acceptance::LodgeExamples" do
         assessment_body: dec_ni_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
-        schema_name: "CEPC-NI-7.1",
+        schema_name: "CEPC-NI-8.0.0",
       )
     end
 
@@ -149,7 +149,7 @@ describe "Acceptance::LodgeExamples" do
         assessment_body: ar_ni_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
-        schema_name: "CEPC-NI-7.1",
+        schema_name: "CEPC-NI-8.0.0",
       )
     end
 
@@ -158,7 +158,7 @@ describe "Acceptance::LodgeExamples" do
         assessment_body: dec_ar_ni_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
-        schema_name: "CEPC-NI-7.1",
+        schema_name: "CEPC-NI-8.0.0",
       )
     end
 

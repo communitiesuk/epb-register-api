@@ -33,7 +33,7 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
                 assessment_body: valid_cepc_xml,
                 accepted_responses: [400],
                 auth_data: { scheme_ids: [scheme_id] },
-                schema_name: "CEPC-7.1",
+                schema_name: "CEPC-8.0.0",
               ).body,
             )
 
@@ -53,7 +53,7 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
             assessment_body: doc.to_xml,
             accepted_responses: [400],
             auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "CEPC-7.1",
+            schema_name: "CEPC-8.0.0",
           )
         end
       end
@@ -73,7 +73,7 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
         assessment_body: valid_cepc_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
-        schema_name: "CEPC-7.1",
+        schema_name: "CEPC-8.0.0",
       )
     end
 
@@ -99,7 +99,7 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
           assessment_body: doc.to_xml,
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] },
-          schema_name: "CEPC-7.1",
+          schema_name: "CEPC-8.0.0",
         )
 
         expected_response = {
@@ -187,7 +187,7 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
           assessment_body: doc.to_xml,
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] },
-          schema_name: "CEPC-7.1",
+          schema_name: "CEPC-8.0.0",
         )
 
         expect(response["data"]["addressLine2"]).to eq("2 test street")
@@ -203,7 +203,7 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
           assessment_body: doc.to_xml,
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] },
-          schema_name: "CEPC-7.1",
+          schema_name: "CEPC-8.0.0",
         )
 
         expect(response["data"]["addressLine3"]).to eq("3 test street")
@@ -215,7 +215,7 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
             assessment_body: doc.to_xml,
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "CEPC-7.1",
+            schema_name: "CEPC-8.0.0",
           )
           expect(response["data"]["addressLine2"]).to eq("")
           expect(response["data"]["addressLine3"]).to eq("")
@@ -245,7 +245,7 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
         lodge_assessment(
           assessment_body: doc.to_xml,
           accepted_responses: [400],
-          schema_name: "CEPC-7.1",
+          schema_name: "CEPC-8.0.0",
         )
       end
     end

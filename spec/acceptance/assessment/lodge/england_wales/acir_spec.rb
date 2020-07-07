@@ -28,7 +28,7 @@ describe "Acceptance::LodgeACIREnergyAssessment" do
           assessment_body: valid_xml,
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] },
-          schema_name: "CEPC-7.1",
+          schema_name: "CEPC-8.0.0",
         )
       end
 
@@ -115,7 +115,7 @@ describe "Acceptance::LodgeACIREnergyAssessment" do
             assessment_body: valid_xml,
             accepted_responses: [400],
             auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "CEPC-7.1",
+            schema_name: "CEPC-8.0.0",
           ).body,
         )
       end
@@ -153,7 +153,7 @@ describe "Acceptance::LodgeACIREnergyAssessment" do
         assessment_body: doc.to_xml,
         accepted_responses: [400],
         auth_data: { scheme_ids: [scheme_id] },
-        schema_name: "CEPC-7.1",
+        schema_name: "CEPC-8.0.0",
       )
     end
   end

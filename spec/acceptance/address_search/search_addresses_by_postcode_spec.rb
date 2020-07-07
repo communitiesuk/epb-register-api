@@ -74,7 +74,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
         assessment_body: non_domestic_xml.to_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
-        schema_name: "CEPC-7.1",
+        schema_name: "CEPC-8.0.0",
       )
 
       assessment_id.children = "0000-0000-0000-0000-0003"
