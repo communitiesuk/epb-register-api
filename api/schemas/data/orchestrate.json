@@ -42,7 +42,7 @@
   "SAP-Schema-18.0.0": {
     "schema_path":
     "api/schemas/xml/SAP-Schema-18.0.0/SAP/Templates/SAP-Report.xsd",
-    "data_path": "api/schemas/data/SAP-Schema-18.0.0SAP-Schema-NI-18.0.0.json"
+    "data_path": "api/schemas/data/SAP-Schema-18.0.0.json"
   },
   "SAP-Schema-NI-18.0.0": {
     "schema_path":
