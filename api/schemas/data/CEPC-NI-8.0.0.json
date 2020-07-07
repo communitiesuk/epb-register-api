@@ -1,0 +1,106 @@
+[{
+  "key": "header",
+  "path": ["Report", "Report_Header"]
+}, {
+  "key": "assessment_id",
+  "root": "header",
+  "path": ["RRN"]
+}, {
+  "key": "assessment_type",
+  "root": "header",
+  "path": ["Report_Type"],
+  "cast": "map",
+  "map": {
+    "1": "DEC",
+    "2": "DEC-AR",
+    "3": "CEPC",
+    "4": "CEPC-RR",
+    "5": "ACIR",
+    "6": "ACIC"
+  }
+}, {
+  "key": "assessor_id",
+  "root": "header",
+  "path": ["Energy_Assessor", "Certificate_Number"]
+}, {
+  "key": "inspection_date",
+  "root": "header",
+  "path": ["Inspection_Date"]
+}, {
+  "key": "date_of_expiry",
+  "root": "header",
+  "path": ["Valid_Until"]
+}, {
+  "key": "registration_date",
+  "root": "header",
+  "path": ["Registration_Date"]
+}, {
+  "key": "date_of_assessment",
+  "root": "header",
+  "path": ["Issue_Date"]
+}, {
+  "key": "property_summary",
+  "path": ["_"],
+  "default": []
+}, {
+  "key": "building_complexity",
+  "root": "header",
+  "path": ["Building_Complexity"]
+}, {
+  "key": "improvements",
+  "path": ["_"],
+  "default": []
+}, {
+  "key": "type",
+  "root": "header",
+  "path": ["Report-Type"]
+}, {
+  "key": "address_id",
+  "path": ["Report", "Report_Header", "Property_Details", "UPRN"]
+}, {
+  "key": "address",
+  "path": ["Report", "Report_Header", "Property_Details", "Property_Address"]
+}, {
+  "key": "address_line_one",
+  "root": "address",
+  "path": ["Address_Line_1"]
+}, {
+  "key": "address_line_two",
+  "root": "address",
+  "path": ["Address_Line_2"]
+}, {
+  "key": "address_line_three",
+  "root": "address",
+  "path": ["Address_Line_3"]
+}, {
+  "key": "town",
+  "root": "address",
+  "path": ["Post_Town"]
+}, {
+  "key": "postcode",
+  "root": "address",
+  "path": ["Postcode"]
+}, {
+  "key": "current_energy_rating",
+  "path": ["_"],
+  "default": "99"
+}, {
+  "key": "potential_energy_rating",
+  "path": ["_"],
+  "default": "99"
+}, {
+  "key": "current_space_heating_demand",
+  "path": ["_"],
+  "default": "99"
+}, {
+  "key": "current_water_heating_demand",
+  "path": ["_"],
+  "default": "99"
+}, {
+  "key": "technical_information",
+  "path": ["Report", "Energy_Performance_Certificate", "Technical_Information"]
+}, {
+  "key": "total_floor_area",
+  "root": "technical_information",
+  "path": ["Floor_Area"]
+}]

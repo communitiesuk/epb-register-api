@@ -1,0 +1,218 @@
+[{
+  "key": "report_header",
+  "path": ["SAP_Report", "Report_Header"]
+}, {
+  "key": "assessment_id",
+  "root": "report_header",
+  "path": ["RRN"]
+}, {
+  "key": "tenure",
+  "root": "report_header",
+  "path": ["Tenure"]
+}, {
+  "key": "assessment_type",
+  "path": ["_"],
+  "default": "SAP"
+}, {
+  "key": "assessor_id",
+  "root": "report_header",
+  "path": ["Home_Inspector", "Identification_Number", "Certificate_Number"]
+}, {
+  "key": "renewable_heat_incentive",
+  "path": ["SAP_Report", "Energy_Assessment", "Renewable_Heat_Incentive"]
+}, {
+  "key": "energy_use",
+  "path": ["SAP_Report", "Energy_Assessment", "Energy_Use"]
+}, {
+  "key": "address_id",
+  "path": ["SAP_Report", "Report_Header", "Property", "UPRN"]
+}, {
+  "key": "address",
+  "path": ["SAP_Report", "Report_Header", "Property", "Address"]
+}, {
+  "key": "property",
+  "path": ["SAP_Report", "Energy_Assessment", "Property_Summary"]
+}, {
+  "key": "dwelling_type",
+  "root": "property",
+  "path": ["Dwelling_Type"]
+}, {
+  "key": "total_floor_area",
+  "root": "property",
+  "path": ["Total_Floor_Area"]
+}, {
+  "key": "address_line_one",
+  "root": "address",
+  "path": ["Address_Line_1"]
+}, {
+  "key": "town",
+  "root": "address",
+  "path": ["Post_Town"]
+}, {
+  "key": "postcode",
+  "root": "address",
+  "path": ["Postcode"]
+}, {
+  "key": "inspection_date",
+  "root": "report_header",
+  "path": ["Inspection_Date"]
+}, {
+  "key": "registration_date",
+  "root": "report_header",
+  "path": ["Registration_Date"]
+}, {
+  "key": "new_space_heating",
+  "root": "renewable_heat_incentive",
+  "path": ["RHI_New_Dwelling", "Space_Heating"]
+}, {
+  "key": "space_heating",
+  "root": "renewable_heat_incentive",
+  "path": ["RHI_Existing_Dwelling", "Space_Heating_Existing_Dwelling"]
+}, {
+  "key": "new_water_heating",
+  "root": "renewable_heat_incentive",
+  "path": ["RHI_New_Dwelling", "Water_Heating"]
+}, {
+  "key": "water_heating",
+  "root": "renewable_heat_incentive",
+  "path": ["RHI_Existing_Dwelling", "Water_Heating"]
+}, {
+  "key": "impact_of_loft_insulation",
+  "root": "renewable_heat_incentive",
+  "path": ["RHI_Existing_Dwelling", "Impact_Of_Loft_Insulation"]
+}, {
+  "key": "impact_of_cavity_insulation",
+  "root": "renewable_heat_incentive",
+  "path": ["RHI_Existing_Dwelling", "Impact_Of_Cavity_Insulation"]
+}, {
+  "key": "impact_of_solid_wall_insulation",
+  "root": "renewable_heat_incentive",
+  "path": ["RHI_Existing_Dwelling", "Impact_Of_Solid_Wall_Insulation"]
+}, {
+  "key": "current_energy_rating",
+  "root": "energy_use",
+  "path": ["Energy_Rating_Current"]
+}, {
+  "key": "potential_energy_rating",
+  "root": "energy_use",
+  "path": ["Energy_Rating_Potential"]
+}, {
+  "key": "current_carbon_emission",
+  "root": "energy_use",
+  "path": ["CO2_Emissions_Current"]
+}, {
+  "key": "potential_carbon_emission",
+  "root": "energy_use",
+  "path": ["CO2_Emissions_Potential"]
+},{
+  "key": "lighting_cost_current",
+  "root": "energy_use",
+  "path": ["Lighting_Cost_Current"]
+}, {
+  "key": "heating_cost_current",
+  "root": "energy_use",
+  "path": ["Heating_Cost_Current"]
+}, {
+  "key": "hot_water_cost_current",
+  "root": "energy_use",
+  "path": ["Hot_Water_Cost_Current"]
+}, {
+  "key": "lighting_cost_potential",
+  "root": "energy_use",
+  "path": ["Lighting_Cost_Potential"]
+}, {
+  "key": "heating_cost_potential",
+  "root": "energy_use",
+  "path": ["Heating_Cost_Potential"]
+}, {
+  "key": "hot_water_cost_potential",
+  "root": "energy_use",
+  "path": ["Hot_Water_Cost_Potential"]
+}, {
+  "key": "improvements",
+  "path": ["SAP_Report", "Energy_Assessment", "Suggested_Improvements", "Improvement"],
+  "extract": [
+    {
+      "key": "sequence",
+      "path": ["Sequence"]
+    },
+    {
+      "key": "improvement_code",
+      "path": ["Improvement_Details", "Improvement_Number"]
+    },
+    {
+      "key": "indicative_cost",
+      "path": ["Indicative_Cost"]
+    },
+    {
+      "key": "typical_saving",
+      "path": ["Typical_Saving"]
+    },
+    {
+      "key": "improvement_category",
+      "path": ["Improvement_Category"]
+    },
+    {
+      "key": "improvement_type",
+      "path": ["Improvement_Type"]
+    },
+    {
+      "key": "energy_performance_rating_improvement",
+      "path": ["Energy_Performance_Rating"]
+    },
+    {
+      "key": "environmental_impact_rating_improvement",
+      "path": ["Environmental_Impact_Rating"]
+    },
+    {
+      "key": "green_deal_category_code",
+      "path": ["Green_Deal_Category"]
+    }
+  ]
+}, {
+  "key": "related_party_disclosure_text",
+  "path": ["SAP_Report", "Report_Header", "Related_Party_Disclosure", "Related_Party_Disclosure_Text"]
+}, {
+  "key": "related_party_disclosure_number",
+  "path": ["SAP_Report", "Report_Header", "Related_Party_Disclosure", "Related_Party_Disclosure_Number"]
+}, {
+  "key": "property_summary",
+  "root": "property",
+  "path": [],
+  "required": ["energy_efficiency_rating"],
+  "extract": [
+    {
+      "key": "name",
+      "path": [".."],
+      "cast": "snake_case"
+    },
+    {
+      "key": "description",
+      "path": ["Description"]
+    },
+    {
+      "key": "energy_efficiency_rating",
+      "path": ["Energy_Efficiency_Rating"],
+      "cast": "integer"
+    },
+    {
+      "key": "environmental_efficiency_rating",
+      "path": ["Environmental_Efficiency_Rating"],
+      "cast": "integer"
+    }
+  ]
+}, {
+  "key": "property_details",
+  "path": ["SAP_Report", "SAP2012_Data", "SAP_Property_Details", "SAP_Building_Parts", "SAP_Building_Part"],
+  "extract": [
+    {
+      "key": "building_part_number",
+      "path": ["Building_Part_Number"],
+      "cast": "integer"
+    },
+    {
+      "key": "construction_age_band",
+      "path": ["Construction_Age_Band"]
+    }
+  ]
+}]
