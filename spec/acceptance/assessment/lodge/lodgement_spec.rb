@@ -362,6 +362,12 @@ describe "Acceptance::Assessment::Lodge" do
       )
     end
 
+    let(:lighting_cost_potential) do
+      ActiveRecord::Base.connection.execute(
+          "SELECT lighting_cost_potential FROM assessments WHERE assessment_id = '0000-0000-0000-0000-0000'",
+          )
+    end
+
     before do
       scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
@@ -381,7 +387,7 @@ describe "Acceptance::Assessment::Lodge" do
       <CO2-Emissions-Potential>2.6</CO2-Emissions-Potential>
       <CO2-Emissions-Current-Per-Floor-Area>41</CO2-Emissions-Current-Per-Floor-Area>
       <Lighting-Cost-Current currency="GBP">173.76829628</Lighting-Cost-Current>
-      <Lighting-Cost-Potential currency="GBP">64</Lighting-Cost-Potential>
+      <Lighting-Cost-Potential currency="GBP">0</Lighting-Cost-Potential>
       <Heating-Cost-Current currency="GBP">745</Heating-Cost-Current>
       <Heating-Cost-Potential currency="GBP">681</Heating-Cost-Potential>
       <Hot-Water-Cost-Current currency="GBP">113</Hot-Water-Cost-Current>
@@ -403,8 +409,18 @@ describe "Acceptance::Assessment::Lodge" do
 
     it "returns a fetched response with 2 dp" do
       expect(
-        lighting_cost_current.entries.first["lighting_cost_current"],
-      ).to include "173.77"
+          lighting_cost_current.entries.first["lighting_cost_current"],
+          ).to include "173.77"
+    end
+
+    it "is stored in the database with 0" do
+      expect(response["data"]["lightingCostPotential"]).to include "0"
+    end
+
+    it "returns a fetched response with 2 dp" do
+      expect(
+          lighting_cost_potential.entries.first["lighting_cost_potential"],
+          ).to eq "0.00"
     end
   end
 end

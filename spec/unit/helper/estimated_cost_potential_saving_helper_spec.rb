@@ -2,12 +2,12 @@
 
 describe Helper::EstimatedCostPotentialSavingHelper do
   let(:helper) { described_class.new }
-  let(:lighting_cost_current) { 875.84 }
-  let(:heating_cost_current) { 875.27 }
-  let(:hot_water_cost_current) { 875.95 }
-  let(:lighting_cost_potential) { 575.02 }
-  let(:heating_cost_potential) { 234.75 }
-  let(:hot_water_cost_potential) { 293.79 }
+  let(:lighting_cost_current) { "875.84" }
+  let(:heating_cost_current) { "875.27" }
+  let(:hot_water_cost_current) { "875.95" }
+  let(:lighting_cost_potential) { "575.02" }
+  let(:heating_cost_potential) { "234.75" }
+  let(:hot_water_cost_potential) { "293.79" }
 
   context "when given the lighting, heating and hot water costs current and potential" do
     it "returns the estimated energy cost" do

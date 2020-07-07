@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_26_133406) do
+ActiveRecord::Schema.define(version: 2020_07_07_110950) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -49,12 +49,12 @@ ActiveRecord::Schema.define(version: 2020_06_26_133406) do
     t.datetime "not_for_issue_at"
     t.string "tenure"
     t.string "property_age_band"
-    t.decimal "lighting_cost_current"
-    t.decimal "heating_cost_current"
-    t.decimal "hot_water_cost_current"
-    t.decimal "lighting_cost_potential"
-    t.decimal "heating_cost_potential"
-    t.decimal "hot_water_cost_potential"
+    t.decimal "lighting_cost_current", precision: 10, scale: 2
+    t.decimal "heating_cost_current", precision: 10, scale: 2
+    t.decimal "hot_water_cost_current", precision: 10, scale: 2
+    t.decimal "lighting_cost_potential", precision: 10, scale: 2
+    t.decimal "heating_cost_potential", precision: 10, scale: 2
+    t.decimal "hot_water_cost_potential", precision: 10, scale: 2
     t.index ["address_id"], name: "index_assessments_on_address_id"
     t.index ["postcode"], name: "index_assessments_on_postcode"
     t.index ["town"], name: "index_assessments_on_town"

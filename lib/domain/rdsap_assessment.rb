@@ -35,12 +35,12 @@ module Domain
       address_line3: nil,
       address_line4: nil,
       town: nil,
-      lighting_cost_current: "0",
-      heating_cost_current: "0",
-      hot_water_cost_current: "0",
-      lighting_cost_potential: "0",
-      heating_cost_potential: "0",
-      hot_water_cost_potential: "0",
+      lighting_cost_current: nil,
+      heating_cost_current: nil,
+      hot_water_cost_current: nil,
+      lighting_cost_potential: nil,
+      heating_cost_potential: nil,
+      hot_water_cost_potential: nil,
       current_space_heating_demand: nil,
       current_water_heating_demand: nil,
       impact_of_loft_insulation: nil,
@@ -145,15 +145,15 @@ module Domain
     def to_hash
       estimated_cost_for_three_years =
         @estimated_cost_potential_saving_helper.estimated_cost(
-          BigDecimal(@lighting_cost_current),
-          BigDecimal(@heating_cost_current),
-          BigDecimal(@hot_water_cost_current),
+          @lighting_cost_current,
+          @heating_cost_current,
+          @hot_water_cost_current,
         )
       potential_saving_for_three_years =
         @estimated_cost_potential_saving_helper.potential_saving(
-          BigDecimal(@lighting_cost_potential),
-          BigDecimal(@heating_cost_potential),
-          BigDecimal(@hot_water_cost_potential),
+          @lighting_cost_potential,
+          @heating_cost_potential,
+          @hot_water_cost_potential,
           estimated_cost_for_three_years,
         )
       data = {
@@ -178,13 +178,19 @@ module Domain
         address_line3: @address_line3,
         address_line4: @address_line4,
         town: @town,
-        lighting_cost_current: "%.2f" % BigDecimal(@lighting_cost_current),
-        heating_cost_current: "%.2f" % BigDecimal(@heating_cost_current),
-        hot_water_cost_current: "%.2f" % BigDecimal(@hot_water_cost_current),
-        lighting_cost_potential: "%.2f" % BigDecimal(@lighting_cost_potential),
-        heating_cost_potential: "%.2f" % BigDecimal(@heating_cost_potential),
+        lighting_cost_current:
+            @lighting_cost_current,
+        heating_cost_current:
+            @heating_cost_current,
+        hot_water_cost_current:
+            @hot_water_cost_current,
+        lighting_cost_potential:
+            @lighting_cost_potential,
+        heating_cost_potential:
+            @heating_cost_potential,
         hot_water_cost_potential:
-          "%.2f" % BigDecimal(@hot_water_cost_potential),
+
+           @hot_water_cost_potential,
         estimated_cost_for_three_years: estimated_cost_for_three_years,
         potential_saving_for_three_years: potential_saving_for_three_years,
         heat_demand: {
@@ -252,13 +258,13 @@ module Domain
         address_line3: @address_line3,
         address_line4: @address_line4,
         town: @town,
-        lighting_cost_current: "%.2f" % BigDecimal(@lighting_cost_current),
-        heating_cost_current: "%.2f" % BigDecimal(@heating_cost_current),
-        hot_water_cost_current: "%.2f" % BigDecimal(@hot_water_cost_current),
-        lighting_cost_potential: "%.2f" % BigDecimal(@lighting_cost_potential),
-        heating_cost_potential: "%.2f" % BigDecimal(@heating_cost_potential),
+        lighting_cost_current:  @lighting_cost_current,
+        heating_cost_current:  @heating_cost_current,
+        hot_water_cost_current:  @hot_water_cost_current,
+        lighting_cost_potential:  @lighting_cost_potential,
+        heating_cost_potential:  @heating_cost_potential,
         hot_water_cost_potential:
-          "%.2f" % BigDecimal(@hot_water_cost_potential),
+           @hot_water_cost_potential,
         current_space_heating_demand: @current_space_heating_demand,
         current_water_heating_demand: @current_water_heating_demand,
         impact_of_loft_insulation: @impact_of_loft_insulation,
