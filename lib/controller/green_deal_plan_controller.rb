@@ -135,7 +135,7 @@ module Controller
                        "INVALID_REQUEST",
                        "Green Deal Plan ID does not match"
       when JSON::Schema::ValidationError
-        error_response 422, "INVALID_REQUEST", e.message
+        error_response 400, "INVALID_REQUEST", e.message
       else
         server_error e
       end

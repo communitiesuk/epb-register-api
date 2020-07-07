@@ -231,7 +231,7 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan" do
             update_green_deal_plan(
               plan_id: "ABC123456DEF",
               body: updated_green_deal_plan_request_body,
-              accepted_responses: [422],
+              accepted_responses: [400],
             ).body,
             symbolize_names: true,
           )
