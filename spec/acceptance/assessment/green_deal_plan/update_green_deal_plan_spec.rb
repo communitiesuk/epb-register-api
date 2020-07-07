@@ -19,5 +19,12 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan" do
                                scopes: %w[wrong:scope]
       end
     end
+
+    context "when plan does not exist" do
+      it "returns status 404" do
+        update_green_deal_plan plan_id: "AD0000002312",
+                               accepted_responses: [404]
+      end
+    end
   end
 end

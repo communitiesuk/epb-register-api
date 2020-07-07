@@ -122,6 +122,16 @@ module Controller
 
     put "/api/greendeal/disclosure/plans/:plan_id",
         jwt_auth: %w[greendeal:plans] do
+      plan_id = params[:plan_id]
+
+      UseCase::UpdateGreenDealPlan.new.execute plan_id
+    rescue StandardError => e
+      case e
+      when UseCase::UpdateGreenDealPlan::NotFoundException
+        not_found_error "Green Deal Plan not found"
+      else
+        server_error e
+      end
     end
 
     get "/api/greendeal/rhi/assessments/:assessment_id/latest",
