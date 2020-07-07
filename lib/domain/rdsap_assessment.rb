@@ -143,79 +143,79 @@ module Domain
     end
 
     def to_hash
-      estimated_cost_for_three_years =
+      estimated_energy_cost =
         @estimated_cost_potential_saving_helper.estimated_cost(
           @lighting_cost_current,
           @heating_cost_current,
           @hot_water_cost_current,
         )
-      potential_saving_for_three_years =
+      potential_energy_saving =
         @estimated_cost_potential_saving_helper.potential_saving(
           @lighting_cost_potential,
           @heating_cost_potential,
           @hot_water_cost_potential,
-          estimated_cost_for_three_years,
+          estimated_energy_cost,
         )
       data = {
-        date_of_assessment: @date_of_assessment.strftime("%Y-%m-%d"),
-        date_registered: @date_registered.strftime("%Y-%m-%d"),
-        dwelling_type: @dwelling_type,
-        tenure: @tenure,
-        type_of_assessment: @type_of_assessment,
-        total_floor_area: @total_floor_area.to_f,
-        assessment_id: @assessment_id,
-        assessor: @assessor,
-        current_energy_efficiency_rating: @current_energy_efficiency_rating,
-        potential_energy_efficiency_rating: @potential_energy_efficiency_rating,
-        current_carbon_emission: @current_carbon_emission.to_f,
-        potential_carbon_emission: @potential_carbon_emission.to_f,
-        opt_out: @opt_out,
-        postcode: @postcode,
-        date_of_expiry: @date_of_expiry.strftime("%Y-%m-%d"),
-        address_id: @address_id,
-        address_line1: @address_line1,
-        address_line2: @address_line2,
-        address_line3: @address_line3,
-        address_line4: @address_line4,
-        town: @town,
-        lighting_cost_current:
+          date_of_assessment: @date_of_assessment.strftime("%Y-%m-%d"),
+          date_registered: @date_registered.strftime("%Y-%m-%d"),
+          dwelling_type: @dwelling_type,
+          tenure: @tenure,
+          type_of_assessment: @type_of_assessment,
+          total_floor_area: @total_floor_area.to_f,
+          assessment_id: @assessment_id,
+          assessor: @assessor,
+          current_energy_efficiency_rating: @current_energy_efficiency_rating,
+          potential_energy_efficiency_rating: @potential_energy_efficiency_rating,
+          current_carbon_emission: @current_carbon_emission.to_f,
+          potential_carbon_emission: @potential_carbon_emission.to_f,
+          opt_out: @opt_out,
+          postcode: @postcode,
+          date_of_expiry: @date_of_expiry.strftime("%Y-%m-%d"),
+          address_id: @address_id,
+          address_line1: @address_line1,
+          address_line2: @address_line2,
+          address_line3: @address_line3,
+          address_line4: @address_line4,
+          town: @town,
+          lighting_cost_current:
             @lighting_cost_current,
-        heating_cost_current:
+          heating_cost_current:
             @heating_cost_current,
-        hot_water_cost_current:
+          hot_water_cost_current:
             @hot_water_cost_current,
-        lighting_cost_potential:
+          lighting_cost_potential:
             @lighting_cost_potential,
-        heating_cost_potential:
+          heating_cost_potential:
             @heating_cost_potential,
-        hot_water_cost_potential:
+          hot_water_cost_potential:
 
            @hot_water_cost_potential,
-        estimated_cost_for_three_years: estimated_cost_for_three_years,
-        potential_saving_for_three_years: potential_saving_for_three_years,
-        heat_demand: {
+          estimated_energy_cost: estimated_energy_cost,
+          potential_energy_saving: potential_energy_saving,
+          heat_demand: {
           current_space_heating_demand: @current_space_heating_demand.to_f,
           current_water_heating_demand: @current_water_heating_demand.to_f,
           impact_of_loft_insulation: @impact_of_loft_insulation,
           impact_of_cavity_insulation: @impact_of_cavity_insulation,
           impact_of_solid_wall_insulation: @impact_of_solid_wall_insulation,
         },
-        current_energy_efficiency_band:
+          current_energy_efficiency_band:
           get_energy_rating_band(@current_energy_efficiency_rating),
-        potential_energy_efficiency_band:
+          potential_energy_efficiency_band:
           get_energy_rating_band(@potential_energy_efficiency_rating),
-        recommended_improvements:
+          recommended_improvements:
           if @recommended_improvements
             @recommended_improvements.map(&:to_hash)
           else
             []
           end,
-        property_summary: @property_summary,
-        property_age_band: @property_age_band,
-        related_party_disclosure_number: @related_party_disclosure_number,
-        related_party_disclosure_text: @related_party_disclosure_text,
-        related_assessments: @related_assessments,
-        status:
+          property_summary: @property_summary,
+          property_age_band: @property_age_band,
+          related_party_disclosure_number: @related_party_disclosure_number,
+          related_party_disclosure_text: @related_party_disclosure_text,
+          related_assessments: @related_assessments,
+          status:
           if !@cancelled_at.nil?
             "CANCELLED"
           elsif !@not_for_issue_at.nil?
