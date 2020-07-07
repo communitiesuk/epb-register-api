@@ -187,7 +187,7 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan" do
             add_green_deal_plan(
               assessment_id: "0000-0000-0000-0000-0000",
               body: valid_green_deal_plan_request_body,
-              accepted_responses: [422],
+              accepted_responses: [400],
             ).body,
             symbolize_names: true,
           )
@@ -298,7 +298,7 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan" do
             add_green_deal_plan(
               assessment_id: "0000-0000-0000-0000-0001",
               body: valid_green_deal_plan_request_body,
-              accepted_responses: [422],
+              accepted_responses: [400],
             ).body,
             symbolize_names: true,
           )
