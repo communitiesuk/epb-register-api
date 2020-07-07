@@ -2,7 +2,7 @@
 
 module Controller
   class GreenDealPlanController < Controller::BaseController
-    POST_SCHEMA = {
+    SCHEMA = {
       type: "object",
       required: %w[
         greenDealPlanId
@@ -94,7 +94,7 @@ module Controller
     post "/api/greendeal/disclosure/assessments/:assessment_id/plans",
          jwt_auth: %w[greendeal:plans] do
       assessment_id = params[:assessment_id]
-      plan = request_body POST_SCHEMA
+      plan = request_body SCHEMA
 
       results = UseCase::AddGreenDealPlan.new.execute assessment_id, plan
 
@@ -123,7 +123,7 @@ module Controller
     put "/api/greendeal/disclosure/plans/:plan_id",
         jwt_auth: %w[greendeal:plans] do
       plan_id = params[:plan_id]
-      green_deal_plan = request_body POST_SCHEMA
+      green_deal_plan = request_body SCHEMA
 
       result = UseCase::UpdateGreenDealPlan.new.execute plan_id, green_deal_plan
 

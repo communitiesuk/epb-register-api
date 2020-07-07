@@ -3,7 +3,7 @@
 describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan" do
   include RSpecAssessorServiceMixin
 
-  POST_SCHEMA = Controller::GreenDealPlanController::POST_SCHEMA
+  POST_SCHEMA = Controller::GreenDealPlanController::SCHEMA
   FIELDS = POST_SCHEMA[:required]
   PROVIDER_DETAILS_FIELDS =
     POST_SCHEMA[:properties][:providerDetails][:required]
