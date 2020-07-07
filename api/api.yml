@@ -963,7 +963,7 @@ paths:
         '404':
           description: Green Deal plan with ID planId can not be found
         '409':
-          description: Plan is not active or Identifier in request body doesn't match the planId in the URL
+          description: Identifier in request body doesn't match the planId in the URL
         '500':
           description: Server error
     delete:
