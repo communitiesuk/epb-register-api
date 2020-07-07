@@ -162,8 +162,8 @@ Some members of the public have a moral / religious objection to money lending a
 However anyone with access to the Report Reference Number (RRN) can retrieve the PDF version of the Home Condition Report via the public access mechanism which cannot be restricted in this way.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-      <xs:element name="Tenure" type="TenureCode"/>
-      <xs:element name="Transaction-Type" type="TransactionType"/>
+			<xs:element name="Transaction-Type" type="TransactionType"/>
+			<xs:element name="Tenure" type="TenureCode"/>
 			<xs:element name="Seller-Commission-Report" type="Flag">
 				<xs:annotation>
 					<xs:documentation>Indicates that the HCR was commissioned by the Seller of the Property or their Agent. This is required in order to differentiate these reports from Buyer commisioned reports  which are not eligible for inclusion in a Home Information Pack</xs:documentation>
