@@ -92,16 +92,18 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan" do
 
   def green_deal_plan_without(key, root = nil)
     if root
-      if valid_green_deal_plan_request_body[root].is_a? Array
-        valid_green_deal_plan_request_body[root].each do |hashes|
+      if updated_green_deal_plan_request_body[root].is_a? Array
+        updated_green_deal_plan_request_body[root].each do |hashes|
           return hashes.tap { |hash| hash.delete key }
         end
       end
 
-      valid_green_deal_plan_request_body[root].tap { |field| field.delete key }
+      updated_green_deal_plan_request_body[root].tap do |field|
+        field.delete key
+      end
     end
 
-    valid_green_deal_plan_request_body.tap { |field| field.delete key }
+    updated_green_deal_plan_request_body.tap { |field| field.delete key }
   end
 
   let(:valid_rdsap_xml) do
@@ -235,7 +237,7 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan" do
           JSON.parse(
             update_green_deal_plan(
               plan_id: "ABC123456DEF",
-              body: valid_green_deal_plan_request_body,
+              body: updated_green_deal_plan_request_body,
               accepted_responses: [422],
             ).body,
             symbolize_names: true,
@@ -269,6 +271,7 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan" do
             end
           end
         end
+
         PROVIDER_DETAILS_FIELDS.each do |field|
           context "with missing provider detail #{field}" do
             before { green_deal_plan_without field.to_sym, :providerDetails }

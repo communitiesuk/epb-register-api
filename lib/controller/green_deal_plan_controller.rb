@@ -108,13 +108,11 @@ module Controller
       when UseCase::AddGreenDealPlan::InvalidTypeException
         error_response 400, "INVALID_REQUEST", "Assessment type is not RdSAP"
       when UseCase::AddGreenDealPlan::DuplicateException
-        error_response(
-          409,
-          "INVALID_REQUEST",
-          "Green Deal Plan ID already exists",
-        )
+        error_response 409,
+                       "INVALID_REQUEST",
+                       "Green Deal Plan ID already exists"
       when JSON::Schema::ValidationError
-        error_response(422, "INVALID_REQUEST", e.message)
+        error_response 422, "INVALID_REQUEST", e.message
       else
         server_error e
       end
@@ -137,7 +135,7 @@ module Controller
                        "INVALID_REQUEST",
                        "Green Deal Plan ID does not match"
       when JSON::Schema::ValidationError
-        error_response(422, "INVALID_REQUEST", e.message)
+        error_response 422, "INVALID_REQUEST", e.message
       else
         server_error e
       end
