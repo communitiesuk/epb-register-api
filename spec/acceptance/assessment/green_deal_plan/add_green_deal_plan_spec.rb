@@ -3,14 +3,6 @@
 describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan" do
   include RSpecAssessorServiceMixin
 
-  POST_SCHEMA = Controller::GreenDealPlanController::SCHEMA
-  FIELDS = POST_SCHEMA[:required]
-  PROVIDER_DETAILS_FIELDS =
-    POST_SCHEMA[:properties][:providerDetails][:required]
-  INTEREST_FIELDS = POST_SCHEMA[:properties][:interest][:required]
-  CHARGES_FIELDS = POST_SCHEMA[:properties][:charges][:items][:required]
-  SAVINGS_FIELDS = POST_SCHEMA[:properties][:savings][:items][:required]
-
   let(:valid_green_deal_plan_request_body) do
     {
       greenDealPlanId: "ABC123456DEF",
@@ -326,7 +318,7 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan" do
                            auth_data: { scheme_ids: [scheme_id] }
         end
 
-        FIELDS.each do |field|
+        GREEN_DEAL_PLAN_SCHEMA[:required].each do |field|
           context "with missing #{field}" do
             before { green_deal_plan_without field.to_sym }
 
@@ -340,7 +332,8 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan" do
           end
         end
 
-        PROVIDER_DETAILS_FIELDS.each do |field|
+        GREEN_DEAL_PLAN_SCHEMA[:properties][:providerDetails][:required]
+          .each do |field|
           context "with missing provider detail #{field}" do
             before { green_deal_plan_without field.to_sym, :providerDetails }
 
@@ -354,7 +347,8 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan" do
           end
         end
 
-        INTEREST_FIELDS.each do |field|
+        GREEN_DEAL_PLAN_SCHEMA[:properties][:interest][:required]
+          .each do |field|
           context "with missing interest #{field}" do
             before { green_deal_plan_without field.to_sym, :interest }
 
@@ -388,7 +382,8 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan" do
           end
         end
 
-        CHARGES_FIELDS.each do |field|
+        GREEN_DEAL_PLAN_SCHEMA[:properties][:charges][:items][:required]
+          .each do |field|
           context "with missing interest #{field}" do
             before { green_deal_plan_without field.to_sym, :charges }
 
@@ -402,7 +397,8 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan" do
           end
         end
 
-        SAVINGS_FIELDS.each do |field|
+        GREEN_DEAL_PLAN_SCHEMA[:properties][:savings][:items][:required]
+          .each do |field|
           context "with missing interest #{field}" do
             before { green_deal_plan_without field.to_sym, :savings }
 

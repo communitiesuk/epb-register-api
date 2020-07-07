@@ -22,6 +22,8 @@ ENV["JWT_ISSUER"] = "test.issuer"
 ENV["JWT_SECRET"] = "test.secret"
 ENV["SILENT_EVENTS"] = "true"
 
+GREEN_DEAL_PLAN_SCHEMA = Controller::GreenDealPlanController::SCHEMA
+
 class UnexpectedApiError < StandardError; end
 
 module RSpecMixin
