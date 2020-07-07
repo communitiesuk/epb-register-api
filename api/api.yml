@@ -360,22 +360,22 @@ paths:
                         logged.'
       requestBody:
         content:
-          application/xml+RdSAP-Schema-19.0:
+          application/xml+RdSAP-Schema-20.0.0:
             schema:
               $ref: '#/components/schemas/Empty'
-          application/xml+SAP-Schema-17.1:
+          application/xml+SAP-Schema-18.0.0:
             schema:
               $ref: '#/components/schemas/Empty'
-          application/xml+RdSAP-Schema-NI-19.0:
+          application/xml+RdSAP-Schema-NI-20.0.0:
             schema:
               $ref: '#/components/schemas/Empty'
-          application/xml+SAP-Schema-NI-17.4:
+          application/xml+SAP-Schema-NI-18.0.0:
             schema:
               $ref: '#/components/schemas/Empty'
-          application/xml+CEPC-7.1:
+          application/xml+CEPC-8.0.0:
             schema:
               $ref: '#/components/schemas/Empty'
-          application/xml+CEPC-NI-7.1:
+          application/xml+CEPC-NI-8.0.0:
             schema:
               $ref: '#/components/schemas/Empty'
       responses:
