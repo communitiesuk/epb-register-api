@@ -3,6 +3,13 @@
 describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan" do
   include RSpecAssessorServiceMixin
 
+  PUT_SCHEMA = Controller::GreenDealPlanController::SCHEMA
+  FIELDS = PUT_SCHEMA[:required]
+  PROVIDER_DETAILS_FIELDS = PUT_SCHEMA[:properties][:providerDetails][:required]
+  INTEREST_FIELDS = PUT_SCHEMA[:properties][:interest][:required]
+  CHARGES_FIELDS = PUT_SCHEMA[:properties][:charges][:items][:required]
+  SAVINGS_FIELDS = PUT_SCHEMA[:properties][:savings][:items][:required]
+
   let(:valid_green_deal_plan_request_body) do
     {
       greenDealPlanId: "ABC123456DEF",
@@ -81,6 +88,20 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan" do
         },
       ],
     }
+  end
+
+  def green_deal_plan_without(key, root = nil)
+    if root
+      if valid_green_deal_plan_request_body[root].is_a? Array
+        valid_green_deal_plan_request_body[root].each do |hashes|
+          return hashes.tap { |hash| hash.delete key }
+        end
+      end
+
+      valid_green_deal_plan_request_body[root].tap { |field| field.delete key }
+    end
+
+    valid_green_deal_plan_request_body.tap { |field| field.delete key }
   end
 
   let(:valid_rdsap_xml) do
@@ -203,6 +224,125 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan" do
           expect(
             response[:errors][0][:title],
           ).to eq "Green Deal Plan ID does not match"
+        end
+      end
+
+      context "when missing required fields" do
+        let(:assessment) { Nokogiri.XML valid_rdsap_xml }
+        let(:assessment_id) { assessment.at "RRN" }
+
+        let(:response) do
+          JSON.parse(
+            update_green_deal_plan(
+              plan_id: "ABC123456DEF",
+              body: valid_green_deal_plan_request_body,
+              accepted_responses: [422],
+            ).body,
+            symbolize_names: true,
+          )
+        end
+
+        before do
+          add_assessor scheme_id,
+                       "SPEC000000",
+                       AssessorStub.new.fetch_request_body(
+                         domesticRdSap: "ACTIVE",
+                       )
+
+          assessment_id.children = "0000-0000-0000-0000-0001"
+
+          lodge_assessment assessment_body: assessment.to_xml,
+                           accepted_responses: [201],
+                           auth_data: { scheme_ids: [scheme_id] }
+        end
+
+        FIELDS.each do |field|
+          context "with missing #{field}" do
+            before { green_deal_plan_without field.to_sym }
+
+            it "returns the expected error response" do
+              expect(response[:errors][0][:title]).to eq(
+                "The property '#/' did not contain a required property of '#{
+                  field
+                }'",
+              )
+            end
+          end
+        end
+        PROVIDER_DETAILS_FIELDS.each do |field|
+          context "with missing provider detail #{field}" do
+            before { green_deal_plan_without field.to_sym, :providerDetails }
+
+            it "returns the expected error response" do
+              expect(response[:errors][0][:title]).to eq(
+                "The property '#/providerDetails' did not contain a required property of '#{
+                  field
+                }'",
+              )
+            end
+          end
+        end
+
+        INTEREST_FIELDS.each do |field|
+          context "with missing interest #{field}" do
+            before { green_deal_plan_without field.to_sym, :interest }
+
+            it "returns the expected error response" do
+              expect(response[:errors][0][:title]).to eq(
+                "The property '#/interest' did not contain a required property of '#{
+                  field
+                }'",
+              )
+            end
+          end
+        end
+
+        context "with missing chargeUplift amount" do
+          before { green_deal_plan_without :amount, :chargeUplift }
+
+          it "returns the expected error response" do
+            expect(response[:errors][0][:title]).to eq(
+              "The property '#/chargeUplift' did not contain a required property of 'amount'",
+            )
+          end
+        end
+
+        context "with missing measures product" do
+          before { green_deal_plan_without :product, :measures }
+
+          it "returns the expected error response" do
+            expect(response[:errors][0][:title]).to eq(
+              "The property '#/measures/0' did not contain a required property of 'product'",
+            )
+          end
+        end
+
+        CHARGES_FIELDS.each do |field|
+          context "with missing interest #{field}" do
+            before { green_deal_plan_without field.to_sym, :charges }
+
+            it "returns the expected error response" do
+              expect(response[:errors][0][:title]).to eq(
+                "The property '#/charges/0' did not contain a required property of '#{
+                  field
+                }'",
+              )
+            end
+          end
+        end
+
+        SAVINGS_FIELDS.each do |field|
+          context "with missing interest #{field}" do
+            before { green_deal_plan_without field.to_sym, :savings }
+
+            it "returns the expected error response" do
+              expect(response[:errors][0][:title]).to eq(
+                "The property '#/savings/0' did not contain a required property of '#{
+                  field
+                }'",
+              )
+            end
+          end
         end
       end
     end
