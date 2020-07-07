@@ -11,5 +11,13 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan" do
                                authenticate: false
       end
     end
+
+    context "when unauthorised" do
+      it "returns status 403" do
+        update_green_deal_plan plan_id: "AD0000002312",
+                               accepted_responses: [403],
+                               scopes: %w[wrong:scope]
+      end
+    end
   end
 end
