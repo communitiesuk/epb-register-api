@@ -1,5 +1,5 @@
 describe "Acceptance::Responses" do
-  include RSpecAssessorServiceMixin
+  include RSpecRegisterApiServiceMixin
 
   context "responses from /healthcheck" do
     let(:response) { get "/healthcheck" }

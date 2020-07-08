@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe "Acceptance::Assessor" do
-  include RSpecAssessorServiceMixin
+  include RSpecRegisterApiServiceMixin
   let(:valid_assessor_request) do
     {
       firstName: "Some",

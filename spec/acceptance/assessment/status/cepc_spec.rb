@@ -1,5 +1,5 @@
 describe "Acceptance::AssessmentStatus::CEPC" do
-  include RSpecAssessorServiceMixin
+  include RSpecRegisterApiServiceMixin
 
   let(:fetch_assessor_stub) { AssessorStub.new }
 

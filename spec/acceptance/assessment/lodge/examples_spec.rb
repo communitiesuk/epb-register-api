@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe "Acceptance::LodgeExamples" do
-  include RSpecAssessorServiceMixin
+  include RSpecRegisterApiServiceMixin
 
   let(:acic_acir_xml) do
     File.read File.join Dir.pwd,

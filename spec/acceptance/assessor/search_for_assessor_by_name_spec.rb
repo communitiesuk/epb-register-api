@@ -1,5 +1,5 @@
 describe "Searching for an assessor by name" do
-  include RSpecAssessorServiceMixin
+  include RSpecRegisterApiServiceMixin
   let(:valid_assessor_request) do
     {
       firstName: "Some",

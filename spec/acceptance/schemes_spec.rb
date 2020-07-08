@@ -1,5 +1,5 @@
 describe "Acceptance::Schemes" do
-  include RSpecAssessorServiceMixin
+  include RSpecRegisterApiServiceMixin
 
   context "getting a list of schemes security" do
     it "returns status 401 with no authentication" do

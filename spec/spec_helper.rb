@@ -26,7 +26,7 @@ GREEN_DEAL_PLAN_SCHEMA = Controller::GreenDealPlanController::SCHEMA
 
 class UnexpectedApiError < StandardError; end
 
-module RSpecAssessorServiceMixin
+module RSpecRegisterApiServiceMixin
   include Rack::Test::Methods
 
   def app

@@ -1,5 +1,5 @@
 describe "Acceptance::AddressSearch::ByStreetAndTown" do
-  include RSpecAssessorServiceMixin
+  include RSpecRegisterApiServiceMixin
 
   let(:valid_cepc_xml) do
     File.read File.join Dir.pwd, "spec/fixtures/samples/cepc.xml"

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
-  include RSpecAssessorServiceMixin
+  include RSpecRegisterApiServiceMixin
 
   let(:valid_sap_xml) do
     File.read File.join Dir.pwd, "spec/fixtures/samples/sap.xml"

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe "Acceptance::LodgeCEPCEnergyAssessment" do
-  include RSpecAssessorServiceMixin
+  include RSpecRegisterApiServiceMixin
 
   let(:fetch_assessor_stub) { AssessorStub.new }
 

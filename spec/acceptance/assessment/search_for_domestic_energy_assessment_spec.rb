@@ -1,5 +1,5 @@
 describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
-  include RSpecAssessorServiceMixin
+  include RSpecRegisterApiServiceMixin
 
   let(:valid_assessor_request_body_dom) do
     AssessorStub.new.fetch_request_body(domesticRdSap: "ACTIVE")

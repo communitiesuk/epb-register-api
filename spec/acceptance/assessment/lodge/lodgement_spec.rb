@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe "Acceptance::Assessment::Lodge" do
-  include RSpecAssessorServiceMixin
+  include RSpecRegisterApiServiceMixin
 
   let(:valid_assessor_request_body) do
     AssessorStub.new.fetch_request_body(domesticRdSap: "ACTIVE")

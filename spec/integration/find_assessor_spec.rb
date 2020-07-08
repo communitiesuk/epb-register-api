@@ -1,5 +1,5 @@
 describe "Integration::FilterAndOrderAssessorsByPostcode" do
-  include RSpecAssessorServiceMixin
+  include RSpecRegisterApiServiceMixin
 
   def truncate(postcode = nil)
     if postcode == Regexp.new(Helper::RegexHelper::POSTCODE, Regexp::IGNORECASE)

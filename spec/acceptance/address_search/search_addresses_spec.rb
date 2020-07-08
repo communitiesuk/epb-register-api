@@ -1,5 +1,5 @@
 describe "Acceptance::AddressSearch" do
-  include RSpecAssessorServiceMixin
+  include RSpecRegisterApiServiceMixin
 
   let(:valid_rdsap_xml) do
     File.read File.join Dir.pwd, "spec/fixtures/samples/rdsap.xml"

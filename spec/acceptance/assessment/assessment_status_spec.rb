@@ -1,5 +1,5 @@
 describe "Acceptance::AssessmentStatus" do
-  include RSpecAssessorServiceMixin
+  include RSpecRegisterApiServiceMixin
 
   let(:fetch_assessor_stub) { AssessorStub.new }
   let(:scheme_id) do

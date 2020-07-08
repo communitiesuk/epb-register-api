@@ -3,7 +3,7 @@
 require "date"
 
 describe "Acceptance::Assessment" do
-  include RSpecAssessorServiceMixin
+  include RSpecRegisterApiServiceMixin
   class GreenDealPlans < ActiveRecord::Base; end
 
   let(:fetch_assessor_stub) { AssessorStub.new }

@@ -1,5 +1,5 @@
 describe "Integration::EndpointSecurity" do
-  include RSpecAssessorServiceMixin
+  include RSpecRegisterApiServiceMixin
 
   methods_with_no_body = %w[head options]
   controllers_to_ignore = { BaseController: {} }

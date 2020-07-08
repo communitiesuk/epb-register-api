@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan" do
-  include RSpecAssessorServiceMixin
+  include RSpecRegisterApiServiceMixin
 
   let(:valid_green_deal_plan_request_body) do
     {
