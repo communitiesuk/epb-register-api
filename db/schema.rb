@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_07_110950) do
+ActiveRecord::Schema.define(version: 2020_07_08_110248) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -162,5 +162,5 @@ ActiveRecord::Schema.define(version: 2020_07_07_110950) do
   add_foreign_key "assessors", "schemes", column: "registered_by", primary_key: "scheme_id"
   add_foreign_key "domestic_epc_energy_improvements", "assessments", primary_key: "assessment_id"
   add_foreign_key "green_deal_assessments", "assessments", primary_key: "assessment_id", name: "fk_assessment_id_assessments"
-  add_foreign_key "green_deal_assessments", "green_deal_plans", primary_key: "green_deal_plan_id", name: "fk_green_deal_plan_id_green_deal_plans"
+  add_foreign_key "green_deal_assessments", "green_deal_plans", primary_key: "green_deal_plan_id", name: "fk_green_deal_plan_id_green_deal_plans", on_delete: :cascade
 end

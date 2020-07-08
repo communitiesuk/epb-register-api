@@ -157,5 +157,21 @@ module Controller
         server_error(e)
       end
     end
+
+    delete "/api/greendeal/disclosure/plans/:plan_id",
+           jwt_auth: %w[greendeal:plans] do
+      plan_id = params[:plan_id]
+
+      result = UseCase::DeleteGreenDealPlan.new.execute(plan_id)
+
+      json_api_response code: 204, data: result.to_hash
+    rescue StandardError => e
+      case e
+      when UseCase::DeleteGreenDealPlan::NotFoundException
+        not_found_error("Green Deal plan ID can not be found")
+      else
+        server_error e
+      end
+    end
   end
 end

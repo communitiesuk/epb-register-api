@@ -42,6 +42,16 @@ def assertive_put(
   )
 end
 
+def assertive_delete(path, accepted_responses, authenticate, auth_data, scopes)
+  assertive_request(
+    -> { delete(path) },
+    accepted_responses,
+    authenticate,
+    auth_data,
+    scopes,
+  )
+end
+
 def assertive_get(path, accepted_responses, authenticate, auth_data, scopes)
   assertive_request(
     -> { get(path) },
@@ -165,6 +175,22 @@ def update_green_deal_plan(
   assertive_put(
     "/api/greendeal/disclosure/plans/#{plan_id}",
     body,
+    accepted_responses,
+    authenticate,
+    auth_data,
+    scopes,
+  )
+end
+
+def delete_green_deal_plan(
+  plan_id:,
+  accepted_responses: [204],
+  authenticate: true,
+  auth_data: nil,
+  scopes: %w[greendeal:plans]
+)
+  assertive_delete(
+    "/api/greendeal/disclosure/plans/#{plan_id}",
     accepted_responses,
     authenticate,
     auth_data,
