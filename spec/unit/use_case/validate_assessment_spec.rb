@@ -1,7 +1,7 @@
 describe UseCase::ValidateAssessment do
   context "given an existing RdSAP schema name" do
     let(:valid_xml) do
-      File.read File.join Dir.pwd, "api/schemas/xml/examples/RdSAP-20.0.0.xml"
+      File.read File.join Dir.pwd, "spec/fixtures/samples/rdsap.xml"
     end
 
     it "will return a boolean true when the XML is valid" do
