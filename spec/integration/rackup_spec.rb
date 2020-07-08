@@ -1,6 +1,8 @@
 require "net/http"
 
 describe "Integration::Rackup" do
+  include RSpecAssessorServiceMixin
+
   before(:all) do
     process = IO.popen(["rackup", "-p 9191", err: %i[child out]])
     @process_id = process.pid

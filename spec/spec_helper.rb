@@ -26,12 +26,6 @@ GREEN_DEAL_PLAN_SCHEMA = Controller::GreenDealPlanController::SCHEMA
 
 class UnexpectedApiError < StandardError; end
 
-module RSpecMixin
-  def app
-    described_class
-  end
-end
-
 module RSpecAssessorServiceMixin
   include Rack::Test::Methods
 
@@ -80,7 +74,6 @@ def opt_out_assessment(assessment_id)
 end
 
 RSpec.configure do |config|
-  config.include RSpecMixin
   config.include Rack::Test::Methods
   config.order = :random
 
