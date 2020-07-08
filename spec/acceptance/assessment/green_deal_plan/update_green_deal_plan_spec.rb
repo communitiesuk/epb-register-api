@@ -133,9 +133,7 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan" do
 
       let(:response) do
         JSON.parse(
-          update_green_deal_plan(
-            plan_id: "ABC123456DEF", body: updated_green_deal_plan_request_body,
-          ).body,
+          fetch_assessment("0000-0000-0000-0000-0000").body,
           symbolize_names: true,
         )
       end
@@ -152,10 +150,14 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan" do
 
         add_green_deal_plan assessment_id: "0000-0000-0000-0000-0000",
                             body: valid_green_deal_plan_request_body
+
+        update_green_deal_plan(
+          plan_id: "ABC123456DEF", body: updated_green_deal_plan_request_body,
+        )
       end
 
       it "returns the expected response" do
-        expect(response[:data]).to eq(
+        expect(response[:data][:greenDealPlan]).to eq(
           {
             greenDealPlanId: "ABC123456DEF",
             startDate: "2020-02-28",
@@ -165,8 +167,8 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan" do
               telephone: "0800 0000000",
               email: "lender@example.com",
             },
-            interest: { rate: 12.3, fixed: true },
-            chargeUplift: { amount: 1.25, date: "2025-03-29" },
+            interest: { rate: "12.3", fixed: true },
+            chargeUplift: { amount: "1.25", date: "2025-03-29" },
             ccaRegulated: true,
             structureChanged: false,
             measuresRemoved: false,
