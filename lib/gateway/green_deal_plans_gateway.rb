@@ -1,7 +1,6 @@
 module Gateway
   class GreenDealPlansGateway
     class GreenDealPlan < ActiveRecord::Base; end
-    class GreenDealAssessment < ActiveRecord::Base; end
 
     def exists?(green_deal_plan_id)
       sql = <<-SQL
@@ -92,11 +91,11 @@ module Gateway
 
     def delete(plan_id)
       sql =
-        "DELETE FROM green_deal_assessments WHERE green_deal_plan_id = '#{
+        "DELETE FROM green_deal_plans WHERE green_deal_plan_id = '#{
           ActiveRecord::Base.sanitize_sql(plan_id)
         }'"
 
-      GreenDealAssessment.connection.execute(sql)
+        GreenDealPlan.connection.execute(sql)
     end
   end
 end
