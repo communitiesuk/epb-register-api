@@ -95,7 +95,7 @@ module Gateway
           ActiveRecord::Base.sanitize_sql(plan_id)
         }'"
 
-        GreenDealPlan.connection.execute(sql)
+      GreenDealPlan.connection.execute(sql)
     end
   end
 end
