@@ -1,7 +1,7 @@
 module Gateway
   class GreenDealPlansGateway
     class GreenDealPlan < ActiveRecord::Base; end
-    class GreenDealAsssessment < ActiveRecord::Base; end
+    class GreenDealAssessment < ActiveRecord::Base; end
 
     def exists?(green_deal_plan_id)
       sql = <<-SQL
@@ -96,7 +96,7 @@ module Gateway
           ActiveRecord::Base.sanitize_sql(plan_id)
         }'"
 
-      GreenDealAsssessment.connection.execute(sql)
+      GreenDealAssessment.connection.execute(sql)
     end
   end
 end
