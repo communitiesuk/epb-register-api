@@ -1791,7 +1791,7 @@ components:
           type: number
           minimum: 0
           maximum: 10000
-          example: '0.34'
+          example: 0.34
 
     GreenDealSaving:
       type: object
