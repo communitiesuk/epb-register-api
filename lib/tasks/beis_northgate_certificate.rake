@@ -132,7 +132,7 @@ task :generate_beis_northgate_certificate do
     assessments_at_address = ActiveRecord::Base.connection.execute("SELECT assessment_id FROM assessments WHERE address_line1 = '#{address[:line1]}' AND postcode = '#{address[:postcode]}' ORDER BY date_of_expiry DESC LIMIT 1")
 
     unless assessments_at_address.entries.empty?
-      address[:id] = [nil, nil, nil, nil, "RRN-#{assessments_at_address[0]['assessment_id']}"].sample
+      address[:id] = "RRN-#{assessments_at_address[0]['assessment_id']}"
     end
 
     scheme_assessor_id = assessor["scheme_assessor_id"]
