@@ -150,9 +150,9 @@ describe "Acceptance::LodgeACICEnergyAssessment" do
           "currentEnergyEfficiencyBand" => "a",
           "currentEnergyEfficiencyRating" => 99,
           "optOut" => false,
-          "dateOfAssessment" => "2019-05-20",
-          "dateOfExpiry" => "2020-05-19",
-          "dateRegistered" => "2019-05-20",
+          "dateOfAssessment" => "2020-05-20",
+          "dateOfExpiry" => "2022-05-19",
+          "dateRegistered" => "2020-05-20",
           "dwellingType" => nil,
           "heatDemand" => {
             "currentSpaceHeatingDemand" => 0.0,
@@ -174,19 +174,19 @@ describe "Acceptance::LodgeACICEnergyAssessment" do
           "propertySummary" => [],
           "relatedAssessments" => [
             {
-              "assessmentExpiryDate" => "2020-05-19",
+              "assessmentExpiryDate" => "2022-05-19",
               "assessmentId" => "0000-0000-0000-0000-0001",
-              "assessmentStatus" => "EXPIRED",
+              "assessmentStatus" => "ENTERED",
               "assessmentType" => "ACIR",
             },
             {
-              "assessmentExpiryDate" => "2020-05-19",
+              "assessmentExpiryDate" => "2022-05-19",
               "assessmentId" => "0000-0000-0000-0000-0000",
-              "assessmentStatus" => "EXPIRED",
+              "assessmentStatus" => "ENTERED",
               "assessmentType" => "ACIC",
             },
           ],
-          "status" => "EXPIRED",
+          "status" => "ENTERED",
         }
 
         expect(response_acic["data"]).to eq(expected_acic_response)
@@ -230,9 +230,9 @@ describe "Acceptance::LodgeACICEnergyAssessment" do
           "currentEnergyEfficiencyBand" => "a",
           "currentEnergyEfficiencyRating" => 99,
           "optOut" => false,
-          "dateOfAssessment" => "2019-05-20",
-          "dateOfExpiry" => "2020-05-19",
-          "dateRegistered" => "2019-05-20",
+          "dateOfAssessment" => "2020-05-20",
+          "dateOfExpiry" => "2022-05-19",
+          "dateRegistered" => "2020-05-20",
           "dwellingType" => nil,
           "heatDemand" => {
             "currentSpaceHeatingDemand" => 0.0,
@@ -254,19 +254,19 @@ describe "Acceptance::LodgeACICEnergyAssessment" do
           "propertySummary" => [],
           "relatedAssessments" => [
             {
-              "assessmentExpiryDate" => "2020-05-19",
+              "assessmentExpiryDate" => "2022-05-19",
               "assessmentId" => "0000-0000-0000-0000-0001",
-              "assessmentStatus" => "EXPIRED",
+              "assessmentStatus" => "ENTERED",
               "assessmentType" => "ACIR",
             },
             {
-              "assessmentExpiryDate" => "2020-05-19",
+              "assessmentExpiryDate" => "2022-05-19",
               "assessmentId" => "0000-0000-0000-0000-0000",
-              "assessmentStatus" => "EXPIRED",
+              "assessmentStatus" => "ENTERED",
               "assessmentType" => "ACIC",
             },
           ],
-          "status" => "EXPIRED",
+          "status" => "ENTERED",
         }
 
         expect(response_acir["data"]).to eq(expected_acir_response)

@@ -118,9 +118,9 @@ describe "Acceptance::LodgeDECNIEnergyAssessment" do
           "currentEnergyEfficiencyBand" => "a",
           "currentEnergyEfficiencyRating" => 99,
           "optOut" => false,
-          "dateOfAssessment" => "2006-05-04",
-          "dateOfExpiry" => "2016-05-04",
-          "dateRegistered" => "2006-05-04",
+          "dateOfAssessment" => "2018-05-04",
+          "dateOfExpiry" => "2028-05-04",
+          "dateRegistered" => "2018-05-05",
           "dwellingType" => nil,
           "heatDemand" => {
             "currentSpaceHeatingDemand" => 0.0,
@@ -142,13 +142,13 @@ describe "Acceptance::LodgeDECNIEnergyAssessment" do
           "propertySummary" => [],
           "relatedAssessments" => [
             {
-              "assessmentExpiryDate" => "2016-05-04",
+              "assessmentExpiryDate" => "2028-05-04",
               "assessmentId" => "0000-0000-0000-0000-0000",
-              "assessmentStatus" => "EXPIRED",
+              "assessmentStatus" => "ENTERED",
               "assessmentType" => "DEC",
             },
           ],
-          "status" => "EXPIRED",
+          "status" => "ENTERED",
         }
 
         expect(response["data"]).to eq(expected_response)

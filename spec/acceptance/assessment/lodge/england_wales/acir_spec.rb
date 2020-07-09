@@ -76,9 +76,9 @@ describe "Acceptance::LodgeACIREnergyAssessment" do
           "currentEnergyEfficiencyBand" => "a",
           "currentEnergyEfficiencyRating" => 99,
           "optOut" => false,
-          "dateOfAssessment" => "2006-05-04",
-          "dateOfExpiry" => "2006-05-04",
-          "dateRegistered" => "2006-05-04",
+          "dateOfAssessment" => "2020-05-04",
+          "dateOfExpiry" => "2030-05-04",
+          "dateRegistered" => "2020-05-04",
           "dwellingType" => nil,
           "heatDemand" => {
             "currentSpaceHeatingDemand" => 0.0,
@@ -99,7 +99,7 @@ describe "Acceptance::LodgeACIREnergyAssessment" do
           "recommendedImprovements" => [],
           "propertySummary" => [],
           "relatedAssessments" => [],
-          "status" => "EXPIRED",
+          "status" => "ENTERED",
         }
 
         expect(response["data"]).to eq(expected_response)

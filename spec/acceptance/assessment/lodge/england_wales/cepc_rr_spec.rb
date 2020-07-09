@@ -119,9 +119,9 @@ describe "Acceptance::LodgeCEPC+RREnergyAssessment" do
           "currentEnergyEfficiencyBand" => "a",
           "currentEnergyEfficiencyRating" => 99,
           "optOut" => false,
-          "dateOfAssessment" => "2006-05-04",
-          "dateOfExpiry" => "2016-05-04",
-          "dateRegistered" => "2006-05-04",
+          "dateOfAssessment" => "2020-05-04",
+          "dateOfExpiry" => "2026-05-04",
+          "dateRegistered" => "2020-05-05",
           "dwellingType" => nil,
           "heatDemand" => {
             "currentSpaceHeatingDemand" => 0.0,
@@ -143,13 +143,13 @@ describe "Acceptance::LodgeCEPC+RREnergyAssessment" do
           "propertySummary" => [],
           "relatedAssessments" => [
             {
-              "assessmentExpiryDate" => "2016-05-04",
+              "assessmentExpiryDate" => "2026-05-04",
               "assessmentId" => "0000-0000-0000-0000-0000",
-              "assessmentStatus" => "EXPIRED",
+              "assessmentStatus" => "ENTERED",
               "assessmentType" => "CEPC",
             },
           ],
-          "status" => "EXPIRED",
+          "status" => "ENTERED",
         }
 
         expect(response_cepc["data"]).to eq(expected_cepc_response)
@@ -193,9 +193,9 @@ describe "Acceptance::LodgeCEPC+RREnergyAssessment" do
           "currentEnergyEfficiencyBand" => "a",
           "currentEnergyEfficiencyRating" => 99,
           "optOut" => false,
-          "dateOfAssessment" => "2006-05-04",
-          "dateOfExpiry" => "2006-05-04",
-          "dateRegistered" => "2006-05-04",
+          "dateOfAssessment" => "2020-05-04",
+          "dateOfExpiry" => "2026-05-04",
+          "dateRegistered" => "2020-05-05",
           "dwellingType" => nil,
           "heatDemand" => {
             "currentSpaceHeatingDemand" => 0.0,
@@ -217,13 +217,13 @@ describe "Acceptance::LodgeCEPC+RREnergyAssessment" do
           "propertySummary" => [],
           "relatedAssessments" => [
             {
-              "assessmentExpiryDate" => "2006-05-04",
+              "assessmentExpiryDate" => "2026-05-04",
               "assessmentId" => "0000-0000-0000-0000-0001",
-              "assessmentStatus" => "EXPIRED",
+              "assessmentStatus" => "ENTERED",
               "assessmentType" => "CEPC-RR",
             },
           ],
-          "status" => "EXPIRED",
+          "status" => "ENTERED",
         }
 
         expect(response_rr["data"]).to eq(expected_rr_response)

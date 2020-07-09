@@ -251,10 +251,10 @@
     </SAP-Data>
     <Report-Header>
         <RRN>0000-0000-0000-0000-0000</RRN>
-        <Inspection-Date>2006-05-04</Inspection-Date>
+        <Inspection-Date>2020-05-04</Inspection-Date>
         <Report-Type>2</Report-Type>
-        <Completion-Date>2006-05-04</Completion-Date>
-        <Registration-Date>2006-05-04</Registration-Date>
+        <Completion-Date>2020-05-04</Completion-Date>
+        <Registration-Date>2020-05-04</Registration-Date>
         <Status>entered</Status>
         <Language-Code>1</Language-Code>
         <Property-Type>0</Property-Type>
@@ -293,8 +293,8 @@
     <Insurance-Details>
         <Insurer>Insurer0</Insurer>
         <Policy-No>Policy-No0</Policy-No>
-        <Effective-Date>2006-05-04</Effective-Date>
-        <Expiry-Date>2006-05-04</Expiry-Date>
+        <Effective-Date>2020-05-04</Effective-Date>
+        <Expiry-Date>2020-05-04</Expiry-Date>
         <PI-Limit>0</PI-Limit>
     </Insurance-Details>
     <ExternalDefinitions-Revision-Number>ExternalDefinitions-Revision-Number0</ExternalDefinitions-Revision-Number>

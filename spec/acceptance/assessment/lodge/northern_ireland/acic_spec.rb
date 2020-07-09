@@ -118,9 +118,9 @@ describe "Acceptance::LodgeACICNIEnergyAssessment" do
           "currentEnergyEfficiencyBand" => "a",
           "currentEnergyEfficiencyRating" => 99,
           "optOut" => false,
-          "dateOfAssessment" => "2006-05-04",
-          "dateOfExpiry" => "2006-05-04",
-          "dateRegistered" => "2006-05-04",
+          "dateOfAssessment" => "2020-05-04",
+          "dateOfExpiry" => "2030-05-04",
+          "dateRegistered" => "2020-05-04",
           "dwellingType" => nil,
           "heatDemand" => {
             "currentSpaceHeatingDemand" => 0.0,
@@ -142,13 +142,13 @@ describe "Acceptance::LodgeACICNIEnergyAssessment" do
           "propertySummary" => [],
           "relatedAssessments" => [
             {
-              "assessmentExpiryDate" => "2006-05-04",
+              "assessmentExpiryDate" => "2030-05-04",
               "assessmentId" => "0000-0000-0000-0000-0000",
-              "assessmentStatus" => "EXPIRED",
+              "assessmentStatus" => "ENTERED",
               "assessmentType" => "ACIC",
             },
           ],
-          "status" => "EXPIRED",
+          "status" => "ENTERED",
         }
 
         expect(response["data"]).to eq(expected_response)

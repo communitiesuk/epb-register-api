@@ -68,7 +68,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
             existingAssessments: [
               {
                 assessmentId: "0000-0000-0000-0000-0000",
-                assessmentStatus: "EXPIRED",
+                assessmentStatus: "ENTERED",
                 assessmentType: "RdSAP",
               },
             ],
@@ -161,7 +161,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
               },
               {
                 assessmentId: "0000-0000-0000-0000-0000",
-                assessmentStatus: "EXPIRED",
+                assessmentStatus: "ENTERED",
                 assessmentType: "RdSAP",
               },
             ],
@@ -237,7 +237,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
               },
               {
                 assessmentId: "0000-0000-0000-0000-0000",
-                assessmentStatus: "EXPIRED",
+                assessmentStatus: "ENTERED",
                 assessmentType: "RdSAP",
               },
             ],
@@ -292,7 +292,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
                 },
                 {
                   assessmentId: "0000-0000-0000-0000-0000",
-                  assessmentStatus: "EXPIRED",
+                  assessmentStatus: "ENTERED",
                   assessmentType: "RdSAP",
                 },
               ],

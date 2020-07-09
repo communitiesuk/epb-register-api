@@ -151,7 +151,7 @@ describe "Acceptance::LodgeACIC+ACIRNIEnergyAssessment" do
           "currentEnergyEfficiencyRating" => 99,
           "optOut" => false,
           "dateOfAssessment" => "2019-05-20",
-          "dateOfExpiry" => "2020-05-19",
+          "dateOfExpiry" => "2030-05-19",
           "dateRegistered" => "2019-05-20",
           "dwellingType" => nil,
           "heatDemand" => {
@@ -174,19 +174,19 @@ describe "Acceptance::LodgeACIC+ACIRNIEnergyAssessment" do
           "propertySummary" => [],
           "relatedAssessments" => [
             {
-              "assessmentExpiryDate" => "2020-05-19",
+              "assessmentExpiryDate" => "2030-05-19",
               "assessmentId" => "0000-0000-0000-0000-0001",
-              "assessmentStatus" => "EXPIRED",
+              "assessmentStatus" => "ENTERED",
               "assessmentType" => "ACIR",
             },
             {
-              "assessmentExpiryDate" => "2020-05-19",
+              "assessmentExpiryDate" => "2030-05-19",
               "assessmentId" => "0000-0000-0000-0000-0000",
-              "assessmentStatus" => "EXPIRED",
+              "assessmentStatus" => "ENTERED",
               "assessmentType" => "ACIC",
             },
           ],
-          "status" => "EXPIRED",
+          "status" => "ENTERED",
         }
 
         expect(response_acic["data"]).to eq(expected_acic_response)
@@ -231,7 +231,7 @@ describe "Acceptance::LodgeACIC+ACIRNIEnergyAssessment" do
           "currentEnergyEfficiencyRating" => 99,
           "optOut" => false,
           "dateOfAssessment" => "2019-05-20",
-          "dateOfExpiry" => "2020-05-19",
+          "dateOfExpiry" => "2030-05-19",
           "dateRegistered" => "2019-05-20",
           "dwellingType" => nil,
           "heatDemand" => {
@@ -254,19 +254,19 @@ describe "Acceptance::LodgeACIC+ACIRNIEnergyAssessment" do
           "propertySummary" => [],
           "relatedAssessments" => [
             {
-              "assessmentExpiryDate" => "2020-05-19",
+              "assessmentExpiryDate" => "2030-05-19",
               "assessmentId" => "0000-0000-0000-0000-0001",
-              "assessmentStatus" => "EXPIRED",
+              "assessmentStatus" => "ENTERED",
               "assessmentType" => "ACIR",
             },
             {
-              "assessmentExpiryDate" => "2020-05-19",
+              "assessmentExpiryDate" => "2030-05-19",
               "assessmentId" => "0000-0000-0000-0000-0000",
-              "assessmentStatus" => "EXPIRED",
+              "assessmentStatus" => "ENTERED",
               "assessmentType" => "ACIC",
             },
           ],
-          "status" => "EXPIRED",
+          "status" => "ENTERED",
         }
 
         expect(response_acir["data"]).to eq(expected_acir_response)

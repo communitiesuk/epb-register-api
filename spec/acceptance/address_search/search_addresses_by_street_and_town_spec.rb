@@ -153,7 +153,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
                 },
                 {
                   assessmentId: "0000-0000-0000-0000-0000",
-                  assessmentStatus: "EXPIRED",
+                  assessmentStatus: "ENTERED",
                   assessmentType: "RdSAP",
                 },
               ],
@@ -199,7 +199,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
                 },
                 {
                   assessmentId: "0000-0000-0000-0000-0000",
-                  assessmentStatus: "EXPIRED",
+                  assessmentStatus: "ENTERED",
                   assessmentType: "RdSAP",
                 },
               ],
@@ -245,7 +245,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
                 },
                 {
                   assessmentId: "0000-0000-0000-0000-0000",
-                  assessmentStatus: "EXPIRED",
+                  assessmentStatus: "ENTERED",
                   assessmentType: "RdSAP",
                 },
               ],
@@ -367,7 +367,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
                 },
                 {
                   assessmentId: "0000-0000-0000-0000-0000",
-                  assessmentStatus: "EXPIRED",
+                  assessmentStatus: "ENTERED",
                   assessmentType: "RdSAP",
                 },
               ],
@@ -412,7 +412,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
                   },
                   {
                     assessmentId: "0000-0000-0000-0000-0000",
-                    assessmentStatus: "EXPIRED",
+                    assessmentStatus: "ENTERED",
                     assessmentType: "RdSAP",
                   },
                 ],
@@ -459,7 +459,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
                 },
                 {
                   assessmentId: "0000-0000-0000-0000-0000",
-                  assessmentStatus: "EXPIRED",
+                  assessmentStatus: "ENTERED",
                   assessmentType: "RdSAP",
                 },
               ],
@@ -512,7 +512,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
               existingAssessments: [
                 {
                   assessmentId: "0000-0000-0000-0000-0002",
-                  assessmentStatus: "EXPIRED",
+                  assessmentStatus: "ENTERED",
                   assessmentType: "CEPC",
                 },
               ],
@@ -553,7 +553,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
               existingAssessments: [
                 {
                   assessmentId: "0000-0000-0000-0000-0003",
-                  assessmentStatus: "EXPIRED",
+                  assessmentStatus: "ENTERED",
                   assessmentType: "RdSAP",
                 },
               ],
@@ -595,7 +595,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
                 existingAssessments: [
                   {
                     assessmentId: "0000-0000-0000-0000-0004",
-                    assessmentStatus: "EXPIRED",
+                    assessmentStatus: "ENTERED",
                     assessmentType: "RdSAP",
                   },
                 ],

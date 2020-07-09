@@ -9,10 +9,10 @@
       <CEPC:RRN>0000-0000-0000-0000-0000</CEPC:RRN>
       <CEPC:Issue-Date>2020-05-14</CEPC:Issue-Date>
       <CEPC:Report-Type>3</CEPC:Report-Type>
-      <CEPC:Valid-Until>2016-05-04</CEPC:Valid-Until>
+      <CEPC:Valid-Until>2026-05-04</CEPC:Valid-Until>
       <CEPC:Related-RRN>0000-0000-0000-0000-0001</CEPC:Related-RRN>
-      <CEPC:Inspection-Date>2006-05-04</CEPC:Inspection-Date>
-      <CEPC:Registration-Date>2006-05-04</CEPC:Registration-Date>
+      <CEPC:Inspection-Date>2020-05-04</CEPC:Inspection-Date>
+      <CEPC:Registration-Date>2020-05-04</CEPC:Registration-Date>
       <CEPC:Status>entered</CEPC:Status>
       <CEPC:Language-Code>1</CEPC:Language-Code>
       <CEPC:Energy-Assessor>
@@ -237,8 +237,8 @@
     <CEPC:Insurance-Details>
       <CEPC:Insurer>Insurance</CEPC:Insurer>
       <CEPC:Policy-No>0001</CEPC:Policy-No>
-      <CEPC:Effective-Date>2010-08-01</CEPC:Effective-Date>
-      <CEPC:Expiry-Date>2011-07-31</CEPC:Expiry-Date>
+      <CEPC:Effective-Date>2020-08-01</CEPC:Effective-Date>
+      <CEPC:Expiry-Date>2021-07-31</CEPC:Expiry-Date>
       <CEPC:PI-Limit>500000</CEPC:PI-Limit>
     </CEPC:Insurance-Details>
     <CEPC:Energy-Performance-Certificate>
@@ -290,12 +290,12 @@
   <CEPC:Report>
     <CEPC:Report-Header>
       <CEPC:RRN>0000-0000-0000-0000-0001</CEPC:RRN>
-      <CEPC:Issue-Date>2006-05-04</CEPC:Issue-Date>
+      <CEPC:Issue-Date>2020-05-04</CEPC:Issue-Date>
       <CEPC:Report-Type>4</CEPC:Report-Type>
-      <CEPC:Valid-Until>2006-05-04</CEPC:Valid-Until>
+      <CEPC:Valid-Until>2026-05-04</CEPC:Valid-Until>
       <CEPC:Related-RRN>0000-0000-0000-0000-0000</CEPC:Related-RRN>
-      <CEPC:Inspection-Date>2006-05-04</CEPC:Inspection-Date>
-      <CEPC:Registration-Date>2006-05-04</CEPC:Registration-Date>
+      <CEPC:Inspection-Date>2020-05-04</CEPC:Inspection-Date>
+      <CEPC:Registration-Date>2020-05-04</CEPC:Registration-Date>
       <CEPC:Status>cancelled</CEPC:Status>
       <CEPC:Language-Code>1</CEPC:Language-Code>
       <CEPC:Energy-Assessor>

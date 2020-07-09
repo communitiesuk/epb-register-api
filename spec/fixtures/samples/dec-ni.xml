@@ -9,10 +9,10 @@
       <RRN>0000-0000-0000-0000-0000</RRN>
       <Issue-Date>2020-05-14</Issue-Date>
       <Report-Type>1</Report-Type>
-      <Valid-Until>2016-05-04</Valid-Until>
+      <Valid-Until>2028-05-04</Valid-Until>
       <Related-RRN>4192-1535-8427-8844-6702</Related-RRN>
-      <Inspection-Date>2006-05-04</Inspection-Date>
-      <Registration-Date>2006-05-04</Registration-Date>
+      <Inspection-Date>2018-05-04</Inspection-Date>
+      <Registration-Date>2018-05-05</Registration-Date>
       <Status>entered</Status>
       <Language-Code>1</Language-Code>
       <Energy-Assessor>
@@ -237,8 +237,8 @@
     <Insurance-Details>
       <Insurer>Insurance</Insurer>
       <Policy-No>0001</Policy-No>
-      <Effective-Date>2010-08-01</Effective-Date>
-      <Expiry-Date>2011-07-31</Expiry-Date>
+      <Effective-Date>2020-08-01</Effective-Date>
+      <Expiry-Date>2021-07-31</Expiry-Date>
       <PI-Limit>500000</PI-Limit>
     </Insurance-Details>
     <Display-Certificate>
@@ -265,19 +265,19 @@
         <AC-Inspection-Commissioned>1</AC-Inspection-Commissioned>
       </AC-Questionnaire>
       <This-Assessment>
-        <Nominated-Date>2010-01-01</Nominated-Date>
+        <Nominated-Date>2020-01-01</Nominated-Date>
         <Energy-Rating>1</Energy-Rating>
         <Electricity-CO2>1</Electricity-CO2>
         <Heating-CO2>1</Heating-CO2>
       </This-Assessment>
       <Year1-Assessment>
-        <Nominated-Date>2009-01-01</Nominated-Date>
+        <Nominated-Date>2019-01-01</Nominated-Date>
         <Energy-Rating>0</Energy-Rating>
         <Electricity-CO2>0</Electricity-CO2>
         <Heating-CO2>0</Heating-CO2>
       </Year1-Assessment>
       <Year2-Assessment>
-        <Nominated-Date>2008-01-01</Nominated-Date>
+        <Nominated-Date>2018-01-01</Nominated-Date>
         <Energy-Rating>0</Energy-Rating>
         <Electricity-CO2>0</Electricity-CO2>
         <Heating-CO2>0</Heating-CO2>

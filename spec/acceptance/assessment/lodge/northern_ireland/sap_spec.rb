@@ -115,9 +115,9 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
           "currentCarbonEmission" => 2.4,
           "currentEnergyEfficiencyBand" => "e",
           "currentEnergyEfficiencyRating" => 50,
-          "dateOfAssessment" => "2006-05-04",
-          "dateOfExpiry" => "2016-05-04",
-          "dateRegistered" => "2006-05-04",
+          "dateOfAssessment" => "2019-05-04",
+          "dateOfExpiry" => "2029-05-04",
+          "dateRegistered" => "2019-05-04",
           "dwellingType" => "Dwelling-Type0",
           "lightingCostCurrent" => "123.45",
           "heatingCostCurrent" => "365.95",
@@ -245,15 +245,15 @@ describe "Acceptance::LodgeSapNIEnergyAssessment" do
           "propertyAgeBand" => nil,
           "relatedAssessments" => [
             {
-              "assessmentExpiryDate" => "2016-05-04",
+              "assessmentExpiryDate" => "2029-05-04",
               "assessmentId" => "0000-0000-0000-0000-0000",
-              "assessmentStatus" => "EXPIRED",
+              "assessmentStatus" => "ENTERED",
               "assessmentType" => "SAP",
             },
           ],
           "relatedPartyDisclosureNumber" => nil,
           "relatedPartyDisclosureText" => "Related-Party-Disclosure-Text0",
-          "status" => "EXPIRED",
+          "status" => "ENTERED",
         }
 
         expect(response["data"]).to eq(expected_response)

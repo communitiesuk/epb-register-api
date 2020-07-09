@@ -245,7 +245,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
                 },
                 {
                   assessmentId: "0000-0000-0000-0000-0000",
-                  assessmentStatus: "EXPIRED",
+                  assessmentStatus: "ENTERED",
                   assessmentType: "RdSAP",
                 },
               ],
@@ -291,7 +291,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
                 },
                 {
                   assessmentId: "0000-0000-0000-0000-0000",
-                  assessmentStatus: "EXPIRED",
+                  assessmentStatus: "ENTERED",
                   assessmentType: "RdSAP",
                 },
               ],
@@ -484,7 +484,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
                 },
                 {
                   assessmentId: "0000-0000-0000-0000-0000",
-                  assessmentStatus: "EXPIRED",
+                  assessmentStatus: "ENTERED",
                   assessmentType: "RdSAP",
                 },
               ],
@@ -525,7 +525,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
               existingAssessments: [
                 {
                   assessmentId: "0000-0000-0000-0000-0002",
-                  assessmentStatus: "EXPIRED",
+                  assessmentStatus: "ENTERED",
                   assessmentType: "CEPC",
                 },
               ],
@@ -576,7 +576,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
                 },
                 {
                   assessmentId: "0000-0000-0000-0000-0000",
-                  assessmentStatus: "EXPIRED",
+                  assessmentStatus: "ENTERED",
                   assessmentType: "RdSAP",
                 },
               ],
@@ -627,7 +627,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
                 },
                 {
                   assessmentId: "0000-0000-0000-0000-0000",
-                  assessmentStatus: "EXPIRED",
+                  assessmentStatus: "ENTERED",
                   assessmentType: "RdSAP",
                 },
               ],

@@ -117,9 +117,9 @@ describe "Acceptance::LodgeAdvisoryReport" do
           "currentEnergyEfficiencyBand" => "a",
           "currentEnergyEfficiencyRating" => 99,
           "optOut" => false,
-          "dateOfAssessment" => "2006-05-04",
-          "dateOfExpiry" => "2006-05-04",
-          "dateRegistered" => "2006-05-04",
+          "dateOfAssessment" => "2020-05-04",
+          "dateOfExpiry" => "2028-05-03",
+          "dateRegistered" => "2020-05-05",
           "dwellingType" => nil,
           "heatDemand" => {
             "currentSpaceHeatingDemand" => 0.0,
@@ -140,7 +140,7 @@ describe "Acceptance::LodgeAdvisoryReport" do
           "recommendedImprovements" => [],
           "propertySummary" => [],
           "relatedAssessments" => [],
-          "status" => "EXPIRED",
+          "status" => "ENTERED",
         }
 
         expect(response["data"]).to eq(expected_response)
