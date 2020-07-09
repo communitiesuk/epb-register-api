@@ -1,3 +1,13 @@
+desc "Delete all beis certificates"
+
+task :truncate_certificate do
+  if ENV["STAGE"] == "production"
+    raise StandardError, "I will not delete the production data"
+  end
+  ActiveRecord::Base.connection.execute("DELETE FROM domestic_epc_energy_improvements WHERE assessment_id LIKE '%1111-2222%'")
+  ActiveRecord::Base.connection.execute("DELETE FROM assessments WHERE assessment_id LIKE '%1111-2222%'")
+end
+
 desc "Import some random certificate data"
 
 task :beis_northgate_generate_certificate do
