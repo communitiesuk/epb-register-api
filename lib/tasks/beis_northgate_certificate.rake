@@ -4,6 +4,7 @@ task :delete_beis_northgate_certificate do
   if ENV["STAGE"] == "production"
     raise StandardError, "I will not delete the production data"
   end
+
   ActiveRecord::Base.connection.execute("DELETE FROM domestic_epc_energy_improvements WHERE assessment_id LIKE '%1111-2222%'")
   ActiveRecord::Base.connection.execute("DELETE FROM assessments WHERE assessment_id LIKE '%1111-2222%'")
 end
@@ -149,9 +150,11 @@ task :generate_beis_northgate_certificate do
 
     assessments_at_address = ActiveRecord::Base.connection.execute("SELECT assessment_id FROM assessments WHERE address_line1 = '#{address[:line1]}' AND postcode = '#{address[:postcode]}' ORDER BY date_of_expiry DESC LIMIT 1")
 
-    unless assessments_at_address.entries.empty?
-      address[:id] = "RRN-#{assessments_at_address[0]['assessment_id']}"
-    end
+    address[:id] = if assessments_at_address.entries.empty?
+                     "RRN-1111-2222-3333-4444-0002"
+                   else
+                     "RRN-#{assessments_at_address[0]['assessment_id']}"
+                   end
 
     scheme_assessor_id = assessor["scheme_assessor_id"]
 
