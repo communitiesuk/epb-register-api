@@ -124,7 +124,7 @@ task :generate_beis_northgate_certificate do
     ].to_json,
   ]
 
-  result = ActiveRecord::Base.connection.execute("SELECT * FROM assessors ORDER BY random() LIMIT 1000")
+  result = ActiveRecord::Base.connection.execute("SELECT * FROM assessors ORDER BY random() LIMIT 100")
 
   result.each_with_index do |assessor, number|
     address = addresses.sample
