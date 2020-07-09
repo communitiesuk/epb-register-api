@@ -1,6 +1,6 @@
 desc "Delete all beis certificates"
 
-task :truncate_certificate do
+task :delete_beis_northgate_certificate do
   if ENV["STAGE"] == "production"
     raise StandardError, "I will not delete the production data"
   end
@@ -10,7 +10,7 @@ end
 
 desc "Import some random certificate data"
 
-task :beis_northgate_generate_certificate do
+task :generate_beis_northgate_certificate do
   if ENV["STAGE"] == "production"
     raise StandardError, "I will not seed the production db"
   end
@@ -29,6 +29,17 @@ task :beis_northgate_generate_certificate do
     { id: "", line1: "First floor flat", line2: "7a Parkhill Road", line3: "", line4: "", town: "London", postcode: "W1B 5BT" },
     { id: "", line1: "1 Hamlet Building", line2: "", line3: "", line4: "", town: "Bournemouth", postcode: "BH2 5BH" },
     { id: "", line1: "Unit 23", line2: "Roweland Industrial Estate", line3: "Coast Road", line4: "", town: "Newcastle", postcode: "NE23 8WD" },
+    { id: "", line1: "Flat 2", line2: "1 Alpha Road", line3: "", line4: "", town: "London", postcode: "E2 0SI" },
+    { id: "", line1: "Flat 4", line2: "1 Alpha Road", line3: "", line4: "", town: "London", postcode: "E2 0SI" },
+    { id: "", line1: "Flat 8", line2: "1 Alpha Road", line3: "", line4: "", town: "London", postcode: "E2 0ST" },
+    { id: "", line1: "The Grove", line2: "Smithfield", line3: "", line4: "", town: "London", postcode: "N3 2UU" },
+    { id: "", line1: "10 Chillder Avenue", line2: "", line3: "", line4: "", town: "Newcastle", postcode: "NE3 2AA" },
+    { id: "", line1: "9 Batey Street", line2: "", line3: "", line4: "", town: "London", postcode: "SW1A 2AA" },
+    { id: "", line1: "9a Violet Crescent", line2: "", line3: "", line4: "", town: "London", postcode: "SE1 1TE" },
+    { id: "", line1: "47", line2: "Sara Lane", line3: "", line4: "", town: "London", postcode: "SE1X 7PE" },
+    { id: "", line1: "Second floor flat", line2: "Jumphill Road", line3: "", line4: "", town: "London", postcode: "W1B 5BT" },
+    { id: "", line1: "8 Hamlet Building", line2: "", line3: "", line4: "", town: "Bournemouth", postcode: "BH2 5BH" },
+    { id: "", line1: "Unit 93", line2: "Roweland Industrial Estate", line3: "Coast Road", line4: "", town: "Newcastle", postcode: "NE23 8WD" },
   ]
 
   dwelling_type = ["end-terrace house", "terrace house", "flat", "bungalow", "mansion", "castle"]
@@ -121,7 +132,7 @@ task :beis_northgate_generate_certificate do
     assessments_at_address = ActiveRecord::Base.connection.execute("SELECT assessment_id FROM assessments WHERE address_line1 = '#{address[:line1]}' AND postcode = '#{address[:postcode]}' ORDER BY date_of_expiry DESC LIMIT 1")
 
     unless assessments_at_address.entries.empty?
-      address[:id] = "RRN-#{assessments_at_address[0]['assessment_id']}"
+      address[:id] = [nil, nil, nil, nil, "RRN-#{assessments_at_address[0]['assessment_id']}"].sample
     end
 
     scheme_assessor_id = assessor["scheme_assessor_id"]
