@@ -142,11 +142,46 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan" do
         )
       end
 
-      let(:assessment) do
-        JSON.parse(
-          fetch_assessment("0000-0000-0000-0000-0000").body,
-          symbolize_names: true,
-        )
+      let(:expected_response) do
+        {
+          greenDealPlanId: "ABC123456DEF",
+          startDate: "2020-02-28",
+          endDate: "2030-03-30",
+          providerDetails: {
+            name: "The New Bank",
+            telephone: "0900 0000000",
+            email: "lender@example.io",
+          },
+          interest: { rate: 12.5, fixed: false },
+          chargeUplift: { amount: 0.25, date: "2025-04-29" },
+          ccaRegulated: false,
+          structureChanged: true,
+          measuresRemoved: true,
+          measures: [
+            {
+              sequence: 0,
+              measureType: "Cavity Wall",
+              product: "ColdHome lagging stuff (TM)",
+              repaidDate: "2025-04-29",
+            },
+          ],
+          charges: [
+            {
+              sequence: 0,
+              startDate: "2020-04-29",
+              endDate: "2030-04-29",
+              dailyCharge: 0.35,
+            },
+          ],
+          savings: [
+            {
+              sequence: 0,
+              fuelCode: "SOLAR",
+              fuelSaving: 9000.2,
+              standingChargeFraction: -0.4,
+            },
+          ],
+        }
       end
 
       before do
@@ -164,97 +199,27 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan" do
       end
 
       it "returns the expected response" do
-        expect(response[:data]).to eq(
-          {
-            greenDealPlanId: "ABC123456DEF",
-            startDate: "2020-02-28",
-            endDate: "2030-03-30",
-            providerDetails: {
-              name: "The New Bank",
-              telephone: "0900 0000000",
-              email: "lender@example.io",
-            },
-            interest: { rate: 12.5, fixed: false },
-            chargeUplift: { amount: 0.25, date: "2025-04-29" },
-            ccaRegulated: false,
-            structureChanged: true,
-            measuresRemoved: true,
-            measures: [
-              {
-                sequence: 0,
-                measureType: "Cavity Wall",
-                product: "ColdHome lagging stuff (TM)",
-                repaidDate: "2025-04-29",
-              },
-            ],
-            charges: [
-              {
-                sequence: 0,
-                startDate: "2020-04-29",
-                endDate: "2030-04-29",
-                dailyCharge: 0.35,
-              },
-            ],
-            savings: [
-              {
-                sequence: 0,
-                fuelCode: "SOLAR",
-                fuelSaving: 9000.2,
-                standingChargeFraction: -0.4,
-              },
-            ],
-          },
-        )
+        expect(response[:data]).to eq expected_response
       end
 
       context "when updating a Green Deal Plan" do
+        let(:response) do
+          JSON.parse(
+            fetch_assessment("0000-0000-0000-0000-0000").body,
+            symbolize_names: true,
+          )
+        end
+
         before do
           update_green_deal_plan plan_id: "ABC123456DEF",
                                  body: updated_green_deal_plan_request_body
         end
 
-        it "updates the to the entry to the expected response" do
-          expect(assessment[:data][:greenDealPlan]).to eq(
-            {
-              greenDealPlanId: "ABC123456DEF",
-              startDate: "2020-02-28",
-              endDate: "2030-03-30",
-              providerDetails: {
-                name: "The New Bank",
-                telephone: "0900 0000000",
-                email: "lender@example.io",
-              },
-              interest: { rate: "12.5", fixed: false },
-              chargeUplift: { amount: "0.25", date: "2025-04-29" },
-              ccaRegulated: false,
-              structureChanged: true,
-              measuresRemoved: true,
-              measures: [
-                {
-                  sequence: 0,
-                  measureType: "Cavity Wall",
-                  product: "ColdHome lagging stuff (TM)",
-                  repaidDate: "2025-04-29",
-                },
-              ],
-              charges: [
-                {
-                  sequence: 0,
-                  startDate: "2020-04-29",
-                  endDate: "2030-04-29",
-                  dailyCharge: 0.35,
-                },
-              ],
-              savings: [
-                {
-                  sequence: 0,
-                  fuelCode: "SOLAR",
-                  fuelSaving: 9000.2,
-                  standingChargeFraction: -0.4,
-                },
-              ],
-            },
-          )
+        it "returns the expected Green Deal Plan from assessment" do
+          expected_response[:interest][:rate] = "12.5"
+          expected_response[:chargeUplift][:amount] = "0.25"
+
+          expect(response[:data][:greenDealPlan]).to eq expected_response
         end
       end
 
