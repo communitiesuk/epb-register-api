@@ -413,5 +413,36 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan" do
         end
       end
     end
+
+    context "when a Green Deal Plan is added to an expired RdSAP assessment" do
+      let(:scheme_id) { add_scheme_and_get_id }
+      let(:doc) { Nokogiri.XML valid_rdsap_xml }
+      let(:assessment_date) { doc.at("Inspection-Date") }
+
+      before do
+        add_assessor scheme_id,
+                     "SPEC000000",
+                     AssessorStub.new.fetch_request_body(
+                       domesticRdSap: "ACTIVE",
+                     )
+        assessment_date.children = Date.today.prev_year(11).strftime("%Y-%m-%d")
+        lodge_assessment assessment_body: doc.to_xml,
+                         accepted_responses: [201],
+                         auth_data: { scheme_ids: [scheme_id] }
+      end
+
+      it "returns status 410 with the correct error message" do
+        response =
+          JSON.parse(
+            add_green_deal_plan(
+              assessment_id: "0000-0000-0000-0000-0000",
+              body: valid_green_deal_plan_request_body,
+              accepted_responses: [410],
+            ).body,
+          )
+
+        expect(response["errors"][0]["title"]).to eq("Assessment has expired")
+      end
+    end
   end
 end

@@ -1,6 +1,7 @@
 module UseCase
   class AddGreenDealPlan
     class AssessmentGoneException < StandardError; end
+    class AssessmentExpiredException < StandardError; end
     class DuplicateException < StandardError; end
     class InvalidTypeException < StandardError; end
     class NotFoundException < StandardError; end
@@ -22,11 +23,15 @@ module UseCase
 
       raise NotFoundException unless assessment
 
-      if %w[CANCELLED NOT_FOR_ISSUE].include? assessment.to_hash[:status]
+      assessment = assessment.to_hash
+
+      if %w[CANCELLED NOT_FOR_ISSUE].include? assessment[:status]
         raise AssessmentGoneException
       end
 
-      unless %w[RdSAP].include? assessment.to_hash[:type_of_assessment]
+      raise AssessmentExpiredException if assessment[:date_of_expiry] < Time.now
+
+      unless %w[RdSAP].include? assessment[:type_of_assessment]
         raise InvalidTypeException
       end
 

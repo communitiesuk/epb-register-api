@@ -105,6 +105,8 @@ module Controller
         not_found_error "Assessment not found"
       when UseCase::AddGreenDealPlan::AssessmentGoneException
         gone_error "Assessment not for issue"
+      when UseCase::AddGreenDealPlan::AssessmentExpiredException
+        gone_error "Assessment has expired"
       when UseCase::AddGreenDealPlan::InvalidTypeException
         error_response 400, "INVALID_REQUEST", "Assessment type is not RdSAP"
       when UseCase::AddGreenDealPlan::DuplicateException
