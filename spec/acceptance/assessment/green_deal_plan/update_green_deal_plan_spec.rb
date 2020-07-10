@@ -133,7 +133,16 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan" do
     context "when a plan does exist" do
       let(:scheme_id) { add_scheme_and_get_id }
 
-      let(:fetch_response) do
+      let(:response) do
+        JSON.parse(
+          update_green_deal_plan(
+            plan_id: "ABC123456DEF", body: updated_green_deal_plan_request_body,
+          ).body,
+          symbolize_names: true,
+        )
+      end
+
+      let(:assessment) do
         JSON.parse(
           fetch_assessment("0000-0000-0000-0000-0000").body,
           symbolize_names: true,
@@ -155,15 +164,6 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan" do
       end
 
       it "returns the expected response" do
-        response =
-          JSON.parse(
-            update_green_deal_plan(
-              plan_id: "ABC123456DEF",
-              body: updated_green_deal_plan_request_body,
-            ).body,
-            symbolize_names: true,
-          )
-
         expect(response[:data]).to eq(
           {
             greenDealPlanId: "ABC123456DEF",
@@ -207,52 +207,55 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan" do
         )
       end
 
-      it "updates the to the entry to the expected response" do
-        update_green_deal_plan(
-          plan_id: "ABC123456DEF", body: updated_green_deal_plan_request_body,
-        )
+      context "when updating a Green Deal Plan" do
+        before do
+          update_green_deal_plan plan_id: "ABC123456DEF",
+                                 body: updated_green_deal_plan_request_body
+        end
 
-        expect(fetch_response[:data][:greenDealPlan]).to eq(
-          {
-            greenDealPlanId: "ABC123456DEF",
-            startDate: "2020-02-28",
-            endDate: "2030-03-30",
-            providerDetails: {
-              name: "The New Bank",
-              telephone: "0900 0000000",
-              email: "lender@example.io",
+        it "updates the to the entry to the expected response" do
+          expect(assessment[:data][:greenDealPlan]).to eq(
+            {
+              greenDealPlanId: "ABC123456DEF",
+              startDate: "2020-02-28",
+              endDate: "2030-03-30",
+              providerDetails: {
+                name: "The New Bank",
+                telephone: "0900 0000000",
+                email: "lender@example.io",
+              },
+              interest: { rate: "12.5", fixed: false },
+              chargeUplift: { amount: "0.25", date: "2025-04-29" },
+              ccaRegulated: false,
+              structureChanged: true,
+              measuresRemoved: true,
+              measures: [
+                {
+                  sequence: 0,
+                  measureType: "Cavity Wall",
+                  product: "ColdHome lagging stuff (TM)",
+                  repaidDate: "2025-04-29",
+                },
+              ],
+              charges: [
+                {
+                  sequence: 0,
+                  startDate: "2020-04-29",
+                  endDate: "2030-04-29",
+                  dailyCharge: 0.35,
+                },
+              ],
+              savings: [
+                {
+                  sequence: 0,
+                  fuelCode: "SOLAR",
+                  fuelSaving: 9000.2,
+                  standingChargeFraction: -0.4,
+                },
+              ],
             },
-            interest: { rate: "12.5", fixed: false },
-            chargeUplift: { amount: "0.25", date: "2025-04-29" },
-            ccaRegulated: false,
-            structureChanged: true,
-            measuresRemoved: true,
-            measures: [
-              {
-                sequence: 0,
-                measureType: "Cavity Wall",
-                product: "ColdHome lagging stuff (TM)",
-                repaidDate: "2025-04-29",
-              },
-            ],
-            charges: [
-              {
-                sequence: 0,
-                startDate: "2020-04-29",
-                endDate: "2030-04-29",
-                dailyCharge: 0.35,
-              },
-            ],
-            savings: [
-              {
-                sequence: 0,
-                fuelCode: "SOLAR",
-                fuelSaving: 9000.2,
-                standingChargeFraction: -0.4,
-              },
-            ],
-          },
-        )
+          )
+        end
       end
 
       context "with a different plan ID" do
