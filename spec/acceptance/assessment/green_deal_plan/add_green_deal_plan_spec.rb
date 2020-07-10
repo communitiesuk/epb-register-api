@@ -103,6 +103,48 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan" do
         )
       end
 
+      let(:expected_response) do
+        {
+          greenDealPlanId: "ABC123456DEF",
+          startDate: "2020-01-30",
+          endDate: "2030-02-28",
+          providerDetails: {
+            name: "The Bank",
+            telephone: "0800 0000000",
+            email: "lender@example.com",
+          },
+          interest: { rate: 12.3, fixed: true },
+          chargeUplift: { amount: 1.25, date: "2025-03-29" },
+          ccaRegulated: true,
+          structureChanged: false,
+          measuresRemoved: false,
+          measures: [
+            {
+              sequence: 0,
+              measureType: "Loft insulation",
+              product: "WarmHome lagging stuff (TM)",
+              repaidDate: "2025-03-29",
+            },
+          ],
+          charges: [
+            {
+              sequence: 0,
+              startDate: "2020-03-29",
+              endDate: "2030-03-29",
+              dailyCharge: 0.34,
+            },
+          ],
+          savings: [
+            {
+              sequence: 0,
+              fuelCode: "LPG",
+              fuelSaving: 9000.1,
+              standingChargeFraction: -0.3,
+            },
+          ],
+        }
+      end
+
       before do
         add_assessor scheme_id,
                      "SPEC000000",
@@ -116,47 +158,7 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan" do
       end
 
       it "returns the expected response" do
-        expect(response[:data]).to eq(
-          {
-            greenDealPlanId: "ABC123456DEF",
-            startDate: "2020-01-30",
-            endDate: "2030-02-28",
-            providerDetails: {
-              name: "The Bank",
-              telephone: "0800 0000000",
-              email: "lender@example.com",
-            },
-            interest: { rate: 12.3, fixed: true },
-            chargeUplift: { amount: 1.25, date: "2025-03-29" },
-            ccaRegulated: true,
-            structureChanged: false,
-            measuresRemoved: false,
-            measures: [
-              {
-                sequence: 0,
-                measureType: "Loft insulation",
-                product: "WarmHome lagging stuff (TM)",
-                repaidDate: "2025-03-29",
-              },
-            ],
-            charges: [
-              {
-                sequence: 0,
-                startDate: "2020-03-29",
-                endDate: "2030-03-29",
-                dailyCharge: 0.34,
-              },
-            ],
-            savings: [
-              {
-                sequence: 0,
-                fuelCode: "LPG",
-                fuelSaving: 9000.1,
-                standingChargeFraction: -0.3,
-              },
-            ],
-          },
-        )
+        expect(response[:data]).to eq expected_response
       end
 
       context "with a Green Deal Plan" do
@@ -188,47 +190,10 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan" do
         end
 
         it "returns the expected Green Deal Plan from assessment" do
-          expect(response[:data][:greenDealPlan]).to eq(
-            {
-              greenDealPlanId: "ABC123456DEF",
-              startDate: "2020-01-30",
-              endDate: "2030-02-28",
-              providerDetails: {
-                name: "The Bank",
-                telephone: "0800 0000000",
-                email: "lender@example.com",
-              },
-              interest: { rate: "12.3", fixed: true },
-              chargeUplift: { amount: "1.25", date: "2025-03-29" },
-              ccaRegulated: true,
-              structureChanged: false,
-              measuresRemoved: false,
-              measures: [
-                {
-                  sequence: 0,
-                  measureType: "Loft insulation",
-                  product: "WarmHome lagging stuff (TM)",
-                  repaidDate: "2025-03-29",
-                },
-              ],
-              charges: [
-                {
-                  sequence: 0,
-                  startDate: "2020-03-29",
-                  endDate: "2030-03-29",
-                  dailyCharge: 0.34,
-                },
-              ],
-              savings: [
-                {
-                  sequence: 0,
-                  fuelCode: "LPG",
-                  fuelSaving: 9000.1,
-                  standingChargeFraction: -0.3,
-                },
-              ],
-            },
-          )
+          expected_response[:interest][:rate] = "12.3"
+          expected_response[:chargeUplift][:amount] = "1.25"
+
+          expect(response[:data][:greenDealPlan]).to eq expected_response
         end
       end
 
