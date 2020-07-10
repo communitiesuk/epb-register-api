@@ -90,7 +90,7 @@ describe "Acceptance::Assessment::GreenDealPlan:DeleteGreenDealPlan" do
                             body: valid_green_deal_plan_request_body
       end
 
-      let(:response) do
+      def response
         JSON.parse(fetch_assessment("0000-0000-0000-0000-0000").body)
       end
 
@@ -100,6 +100,8 @@ describe "Acceptance::Assessment::GreenDealPlan:DeleteGreenDealPlan" do
       end
 
       it "deletes the green deal plan" do
+        expect(response["data"]["greenDealPlan"]).not_to be_nil
+
         delete_green_deal_plan plan_id: "ABC123456DEF",
                                accepted_responses: [204]
 
