@@ -55,7 +55,7 @@ migrate-db-and-wait-for-success:
 
 .PHONY: test
 test:
-	@STAGE=test EPB_UNLEASH_URI=https://google.com bundle exec rake spec
+	@STAGE=test bundle exec rake spec
 
 .PHONY: run
 run:
