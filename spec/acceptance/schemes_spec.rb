@@ -75,12 +75,17 @@ describe "Acceptance::Schemes" do
       end
     end
     it "returns 404 for a scheme that doesnt exist" do
-      update_scheme(123, {}, [404])
+      update_scheme(123, { name: "name", active: true }, [404])
     end
 
     it "returns 204 for a scheme that does exist" do
       scheme_id = add_scheme_and_get_id("My old scheme name")
-      update_scheme(scheme_id, {})
+      update_scheme(scheme_id, { name: "My new scheme name", active: false })
+    end
+
+    it "rejects a message without the required keys" do
+      scheme_id = add_scheme_and_get_id("My old scheme name")
+      update_scheme(scheme_id, {}, [401])
     end
   end
 end
