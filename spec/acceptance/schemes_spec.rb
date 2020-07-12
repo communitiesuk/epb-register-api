@@ -77,5 +77,10 @@ describe "Acceptance::Schemes" do
     it "returns 404 for a scheme that doesnt exist" do
       update_scheme(123, {}, [404])
     end
+
+    it "returns 204 for a scheme that does exist" do
+      scheme_id = add_scheme_and_get_id("My old scheme name")
+      update_scheme(scheme_id, {})
+    end
   end
 end

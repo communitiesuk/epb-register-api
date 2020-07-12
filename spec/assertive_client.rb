@@ -147,13 +147,13 @@ def add_scheme(
 end
 
 def update_scheme(
-    scheme_id,
-    scheme_body = {},
-    accepted_responses = [204],
-    authenticate = true,
-    auth_data = nil,
-    scopes = %w[scheme:update]
-    )
+  scheme_id,
+  scheme_body = {},
+  accepted_responses = [204],
+  authenticate = true,
+  auth_data = nil,
+  scopes = %w[scheme:update]
+)
 
   assertive_put("/api/schemes/#{scheme_id}",
                 scheme_body,
@@ -161,7 +161,6 @@ def update_scheme(
                 authenticate,
                 auth_data,
                 scopes)
-
 end
 
 def add_green_deal_plan(

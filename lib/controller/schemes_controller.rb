@@ -33,7 +33,16 @@ module Controller
     end
 
     put "/api/schemes/:scheme_id", jwt_auth: %w[scheme:update] do
-      not_found_error("Scheme not found")
+      UseCase::UpdateScheme.new.execute(params[:scheme_id])
+      status 204
+
+    rescue StandardError => e
+      case e
+      when UseCase::UpdateScheme::SchemeNotFound
+        not_found_error("Scheme not found")
+      else
+        server_error(e.message)
+      end
     end
   end
 end
