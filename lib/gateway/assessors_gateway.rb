@@ -183,6 +183,7 @@ module Gateway
             #{qualification_selector}
             AND a.latitude BETWEEN ($1 - 1) AND ($1 + 1)
             AND a.longitude BETWEEN ($2 - 1) AND ($2 + 1)
+            AND c.active = true
           ORDER BY distance LIMIT $3",
           "SQL",
           binds,

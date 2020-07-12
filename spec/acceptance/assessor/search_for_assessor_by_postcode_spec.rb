@@ -542,6 +542,23 @@ describe "Acceptance::SearchForAssessor" do
       end
     end
   end
+
+  context "when assessors are on an inactive scheme" do
+    it "does not return them" do
+      add_postcodes("SE1 7EZ")
+      scheme_id = add_scheme_and_get_id
+      add_assessor(
+          scheme_id,
+          "ASSESSOR999",
+          valid_assessor_with_contact_request_body,
+          )
+      update_scheme(scheme_id, {name: "Old scheme", active: false})
+      response = assessors_search("SE1 7EZ", "domesticRdSap")
+      response_json = JSON.parse(response.body)
+      expect(response_json["data"]["assessors"].size).to eq(0)
+    end
+  end
+
   context "security" do
     it "returns a 401 when not authenticated" do
       assessors_search("SE1 7EZ", "domesticRdSap", [401], false)
