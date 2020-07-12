@@ -52,6 +52,13 @@ describe "Acceptance::Schemes" do
       expect(get_response["data"]["schemes"][0]["name"]).to eq("XYMZALERO")
     end
 
+    it "is set to active by default" do
+      add_scheme("XYMZALERO")
+      response = schemes_list
+      get_response = JSON.parse(response.body)
+      expect(get_response["data"]["schemes"][0]["active"]).to be_truthy
+    end
+
     it "cannot have the same name twice" do
       add_scheme("XYMZALERO", [201])
       add_scheme("XYMZALERO", [400])

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_08_110248) do
+ActiveRecord::Schema.define(version: 2020_07_12_150211) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -154,6 +154,7 @@ ActiveRecord::Schema.define(version: 2020_07_08_110248) do
 
   create_table "schemes", primary_key: "scheme_id", force: :cascade do |t|
     t.string "name"
+    t.boolean "active", default: true
     t.index ["name"], name: "index_schemes_on_name", unique: true
   end
 

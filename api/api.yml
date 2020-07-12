@@ -1829,6 +1829,10 @@ components:
             schemeId:
               type: string
               example: 432
+            active:
+              type: boolean
+              example: true
+              description: 'Whether or not the scheme is currently active'
 
     SchemeBody:
       type: object
