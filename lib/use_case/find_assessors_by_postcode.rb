@@ -6,7 +6,6 @@ module UseCase
     def initialize
       @postcodes_gateway = Gateway::PostcodesGateway.new
       @assessor_gateway = Gateway::AssessorsGateway.new
-      @schemes_gateway = Gateway::SchemesGateway.new
     end
 
     def execute(postcode, qualifications)
@@ -21,12 +20,6 @@ module UseCase
 
       latitude = postcodes_geolocation.first[:latitude]
       longitude = postcodes_geolocation.first[:longitude]
-
-      schemes = []
-
-      @schemes_gateway.all.each do |scheme|
-        schemes[scheme[:scheme_id]] = scheme
-      end
 
       result = @assessor_gateway.search(latitude, longitude, qualifications)
 
