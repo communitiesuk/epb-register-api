@@ -16,8 +16,8 @@ module Gateway
       Scheme.exists?(scheme_id)
     end
 
-    def add(name)
-      Scheme.create(name: name)
+    def add(scheme_body)
+      Scheme.create(name: scheme_body[:name], active: scheme_body[:active])
     rescue StandardError => e
       case e
       when PG::UniqueViolation, ActiveRecord::RecordNotUnique

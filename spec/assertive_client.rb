@@ -138,7 +138,7 @@ def add_scheme(
 )
   assertive_post(
     "/api/schemes",
-    { name: name },
+    { name: name, active: true },
     accepted_responses,
     authenticate,
     auth_data,

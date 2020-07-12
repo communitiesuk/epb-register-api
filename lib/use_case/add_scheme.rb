@@ -4,8 +4,8 @@ module UseCase
       @gateway = Gateway::SchemesGateway.new
     end
 
-    def execute(name)
-      @gateway.add(name)
+    def execute(scheme_body)
+      @gateway.add(scheme_body)
     end
   end
 end
