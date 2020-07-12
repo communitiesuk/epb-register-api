@@ -66,6 +66,14 @@ describe "Acceptance::Schemes" do
   end
 
   context "updating a scheme" do
+    context "security" do
+      it "returns status 401 with no authentication" do
+        update_scheme(123, {}, [401], false)
+      end
+      it "returns status 403 without the right scope" do
+        update_scheme(123, {}, [403], true, {}, %w[wrong:scope])
+      end
+    end
     it "returns 404 for a scheme that doesnt exist" do
       update_scheme(123, {}, [404])
     end

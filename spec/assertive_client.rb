@@ -152,7 +152,7 @@ def update_scheme(
     accepted_responses = [204],
     authenticate = true,
     auth_data = nil,
-    scopes = []
+    scopes = %w[scheme:update]
     )
 
   assertive_put("/api/schemes/#{scheme_id}",

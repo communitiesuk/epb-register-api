@@ -31,5 +31,9 @@ module Controller
         server_error(e.message)
       end
     end
+
+    put "/api/schemes/:scheme_id", jwt_auth: %w[scheme:update] do
+      not_found_error("Scheme not found")
+    end
   end
 end
