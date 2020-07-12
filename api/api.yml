@@ -103,6 +103,29 @@ paths:
                             A scheme with this name already exists in the
                             register
 
+
+  /schemes/{schemeId}:
+    put:
+      tags:
+        - Manage Schemes
+      description: Update a scheme
+      responses:
+        204:
+          description: Update successful
+        404:
+          description: Scheme not found
+      parameters:
+        - in: path
+          name: schemeId
+          required: true
+          description: The ID of the scheme being updated
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SchemeBody'
+
   '/schemes/{schemeId}/assessors':
     get:
       tags:
@@ -1829,10 +1852,6 @@ components:
             schemeId:
               type: string
               example: 432
-            active:
-              type: boolean
-              example: true
-              description: 'Whether or not the scheme is currently active'
 
     SchemeBody:
       type: object
@@ -1840,6 +1859,10 @@ components:
         name:
           type: string
           example: EPCs 4 U
+        active:
+          type: boolean
+          example: true
+          description: 'Whether or not the scheme is currently active'
 
     Empty:
       type: object
