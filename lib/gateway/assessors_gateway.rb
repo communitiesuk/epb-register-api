@@ -167,6 +167,7 @@ module Gateway
           "SELECT
           first_name, last_name, middle_names, date_of_birth, registered_by,
            scheme_assessor_id, telephone_number, email, c.name AS scheme_name,
+           c.active AS active,
            search_results_comparison_postcode, domestic_sap_qualification,
            domestic_rd_sap_qualification, non_domestic_sp3_qualification,
            non_domestic_cc4_qualification, non_domestic_dec_qualification,
