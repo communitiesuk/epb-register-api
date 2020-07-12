@@ -64,4 +64,10 @@ describe "Acceptance::Schemes" do
       add_scheme("XYMZALERO", [400])
     end
   end
+
+  context "updating a scheme" do
+    it "returns 404 for a scheme that doesnt exist" do
+      update_scheme(123, {}, [404])
+    end
+  end
 end
