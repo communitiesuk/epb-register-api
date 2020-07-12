@@ -1,6 +1,3 @@
-require "simplecov"
-SimpleCov.start
-
 ENV["RACK_ENV"] = "test"
 ENV["EPB_UNLEASH_URI"] = "https://google.com"
 
