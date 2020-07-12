@@ -40,7 +40,10 @@ module Controller
 
     put "/api/schemes/:scheme_id", jwt_auth: %w[scheme:update] do
       updated_scheme_details = request_body(PUT_SCHEMA)
-      UseCase::UpdateScheme.new.execute(params[:scheme_id])
+      UseCase::UpdateScheme.new.execute(
+        params[:scheme_id],
+        updated_scheme_details,
+      )
       status 204
     rescue StandardError => e
       case e

@@ -26,5 +26,10 @@ module Gateway
         raise
       end
     end
+
+    def update(id, scheme_body)
+      scheme = Scheme.find_by(scheme_id: id)
+      scheme.update(name: scheme_body[:name], active: scheme_body[:active])
+    end
   end
 end

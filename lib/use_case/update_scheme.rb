@@ -6,8 +6,10 @@ module UseCase
       @gateway = Gateway::SchemesGateway.new
     end
 
-    def execute(scheme_id)
+    def execute(scheme_id, scheme_body)
       raise SchemeNotFound unless @gateway.exists?(scheme_id)
+
+      @gateway.update(scheme_id, scheme_body)
     end
   end
 end
