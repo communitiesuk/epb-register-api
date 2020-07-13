@@ -60,7 +60,7 @@ module Gateway
         total_floor_area: row["total_floor_area"],
         cavity_wall_insulation:
           row["improvement_type"].include?("B") ? true : false,
-        loft_insulation: row["improvement_type"].include?("A") ? true : false,
+        loft_insulation: insulation?("A", row),
         space_heating:
           fetch_property_description(row["property_summary"], "main_heating"),
         water_heating:
@@ -79,6 +79,14 @@ module Gateway
             get_energy_rating_band(row["potential_energy_efficiency_rating"]),
         },
       )
+    end
+
+    def insulation?(type, row)
+      unless row["type_of_assessment"] == "SAP"
+        return row["improvement_type"].include?(type) ? true : false
+      end
+
+      false
     end
 
     def fetch_assessor_name(scheme_assessor_id)
