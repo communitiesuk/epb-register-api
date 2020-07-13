@@ -76,7 +76,7 @@ describe "Searching for an assessor by name" do
     it "doesn't return assessors from inactive schemes" do
       scheme_id = add_scheme_and_get_id("My scheme")
       add_assessor(scheme_id, "SCHE55443", valid_assessor_request)
-      update_scheme(scheme_id, {name: "My new scheme", active: false})
+      update_scheme(scheme_id, { name: "My new scheme", active: false })
       search_response = assessors_search_by_name("Per%20Some")
       response = JSON.parse(search_response.body)
       expect(response["data"]["assessors"].size).to eq(0)

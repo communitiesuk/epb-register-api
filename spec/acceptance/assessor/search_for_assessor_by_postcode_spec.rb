@@ -548,11 +548,11 @@ describe "Acceptance::SearchForAssessor" do
       add_postcodes("SE1 7EZ")
       scheme_id = add_scheme_and_get_id
       add_assessor(
-          scheme_id,
-          "ASSESSOR999",
-          valid_assessor_with_contact_request_body,
-          )
-      update_scheme(scheme_id, {name: "Old scheme", active: false})
+        scheme_id,
+        "ASSESSOR999",
+        valid_assessor_with_contact_request_body,
+      )
+      update_scheme(scheme_id, { name: "Old scheme", active: false })
       response = assessors_search("SE1 7EZ", "domesticRdSap")
       response_json = JSON.parse(response.body)
       expect(response_json["data"]["assessors"].size).to eq(0)
