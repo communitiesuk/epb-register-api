@@ -40,7 +40,6 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
 
   context "when a domestic assessment has been cancelled" do
     let(:scheme_id) { add_scheme_and_get_id }
-    let(:fetch_assessor_stub) { AssessorStub.new }
 
     let(:response) do
       JSON.parse(
@@ -52,7 +51,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
     before do
       add_assessor scheme_id,
                    "SPEC000000",
-                   fetch_assessor_stub.fetch_request_body(
+                   AssessorStub.new.fetch_request_body(
                      domesticRdSap: "ACTIVE",
                    )
 
