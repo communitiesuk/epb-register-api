@@ -89,7 +89,7 @@ module Gateway
     end
 
     def fetch_assessor_name(scheme_assessor_id)
-      assessor = Assessor.find_by(scheme_assessor_id: scheme_assessor_id)
+      assessor = Assessor.find_by scheme_assessor_id: scheme_assessor_id
 
       [
         assessor["first_name"],

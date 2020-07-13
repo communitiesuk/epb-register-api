@@ -51,9 +51,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
     before do
       add_assessor scheme_id,
                    "SPEC000000",
-                   AssessorStub.new.fetch_request_body(
-                     domesticRdSap: "ACTIVE",
-                   )
+                   AssessorStub.new.fetch_request_body(domesticRdSap: "ACTIVE")
 
       lodge_assessment assessment_body: valid_rdsap_xml,
                        accepted_responses: [201],
