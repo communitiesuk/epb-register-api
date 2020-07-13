@@ -17,7 +17,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
     end
   end
 
-  context "when a domestic assessment doesnt exist" do
+  context "when a domestic assessment does not exist" do
     let(:response) do
       JSON.parse fetch_renewable_heat_incentive("DOESNT-EXIST", [404]).body,
                  symbolize_names: true
@@ -35,14 +35,21 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
   end
 
   context "when a domestic assessment has been cancelled" do
+    let(:scheme_id) { add_scheme_and_get_id }
     let(:fetch_assessor_stub) { AssessorStub.new }
 
     let(:valid_rdsap_xml) do
       File.read File.join Dir.pwd, "spec/fixtures/samples/rdsap.xml"
     end
 
+    let(:response) do
+      JSON.parse(
+        fetch_renewable_heat_incentive("0000-0000-0000-0000-0000", [410]).body,
+        symbolize_names: true,
+      )
+    end
+
     before do
-      scheme_id = add_scheme_and_get_id
       add_assessor(
         scheme_id,
         "SPEC000000",
@@ -67,21 +74,14 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
       fetch_renewable_heat_incentive "0000-0000-0000-0000-0000", [410]
     end
 
-    it "returns an error message structure" do
-      response_body =
-        JSON.parse fetch_renewable_heat_incentive(
-          "0000-0000-0000-0000-0000",
-          [410],
-        ).body,
-                   symbolize_names: true
-      expect(response_body).to eq(
-        { errors: [{ code: "GONE", title: "Assessment not for issue" }] },
-      )
+    it "returns the expected error response" do
+      expect(response[:errors][0][:title]).to eq "Assessment not for issue"
     end
   end
 
   context "when fetching a domestic assessment" do
     let(:scheme_id) { add_scheme_and_get_id }
+
     let(:response) do
       fetch_renewable_heat_incentive("0000-0000-0000-0000-0000")
     end
@@ -90,36 +90,37 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
       add_assessor scheme_id,
                    "SPEC000000",
                    AssessorStub.new.fetch_request_body(domesticSap: "ACTIVE")
-    end
 
-    it "returns status 200" do
       lodge_assessment assessment_body: valid_sap_xml,
                        accepted_responses: [201],
                        auth_data: { scheme_ids: [scheme_id] },
                        schema_name: "SAP-Schema-18.0.0"
+    end
 
-      expect(response.status).to eq(200)
+    it "returns status 200" do
+      expect(response.status).to eq 200
     end
 
     context "with property summary descriptions" do
       let(:assessment) { Nokogiri.XML valid_sap_xml }
+      let(:assessment_id) { assessment.at "RRN" }
 
       let(:secondary_heating) do
-        assessment.at("Secondary-Heating/Energy-Efficiency-Rating")
+        assessment.at "Secondary-Heating/Energy-Efficiency-Rating"
       end
 
       let(:secondary_heating_description) do
         Nokogiri::XML::Node.new "Description", assessment
       end
 
-      let(:hot_water) { assessment.at("Hot-Water/Energy-Efficiency-Rating") }
+      let(:hot_water) { assessment.at "Hot-Water/Energy-Efficiency-Rating" }
 
       let(:hot_water_description) do
         Nokogiri::XML::Node.new "Description", assessment
       end
 
       let(:main_heating) do
-        assessment.at("Main-Heating/Energy-Efficiency-Rating")
+        assessment.at "Main-Heating/Energy-Efficiency-Rating"
       end
 
       let(:main_heating_description) do
@@ -127,12 +128,15 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
       end
 
       let(:response) do
-        JSON.parse fetch_renewable_heat_incentive("0000-0000-0000-0000-0000")
-                     .body,
-                   symbolize_names: true
+        JSON.parse(
+          fetch_renewable_heat_incentive("0000-0000-0000-0000-0001").body,
+          symbolize_names: true,
+        )
       end
 
       before do
+        assessment_id.children = "0000-0000-0000-0000-0001"
+
         main_heating_description.content = "Gas-fired central heating"
         main_heating.add_next_sibling main_heating_description
 
@@ -150,7 +154,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
 
       it "returns the assessment details" do
         expect(response[:data][:assessment]).to eq(
-          epcRrn: "0000-0000-0000-0000-0000",
+          epcRrn: "0000-0000-0000-0000-0001",
           assessorName: "Someone Muddle Person",
           reportType: "SAP",
           inspectionDate: "2020-05-04",
