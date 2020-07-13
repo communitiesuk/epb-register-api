@@ -157,6 +157,32 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
           expect(response[:data][:assessment][:loftInsulation]).to eq true
         end
       end
+
+      context "with improvement type B" do
+        let(:assessment) { Nokogiri.XML valid_rdsap_xml }
+        let(:assessment_id) { assessment.at "RRN" }
+        let(:improvement_type) { assessment.search("Improvement-Type")[1] }
+
+        let(:response) do
+          JSON.parse(
+            fetch_renewable_heat_incentive("1000-0000-0000-0000-0001").body,
+            symbolize_names: true,
+          )
+        end
+
+        before do
+          assessment_id.children = "1000-0000-0000-0000-0001"
+          improvement_type.children = "B"
+
+          lodge_assessment assessment_body: assessment.to_xml,
+                           accepted_responses: [201],
+                           auth_data: { scheme_ids: [scheme_id] }
+        end
+
+        it "returns true for cavityWallInsulation" do
+          expect(response[:data][:assessment][:cavityWallInsulation]).to eq true
+        end
+      end
     end
 
     context "with property summary descriptions" do

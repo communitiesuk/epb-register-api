@@ -58,7 +58,8 @@ module Gateway
         property_age_band: row["property_age_band"],
         tenure: TENURE[row["tenure"]],
         total_floor_area: row["total_floor_area"],
-        cavity_wall_insulation: false,
+        cavity_wall_insulation:
+          row["improvement_type"].include?("B") ? true : false,
         loft_insulation: row["improvement_type"].include?("A") ? true : false,
         space_heating:
           fetch_property_description(row["property_summary"], "main_heating"),
