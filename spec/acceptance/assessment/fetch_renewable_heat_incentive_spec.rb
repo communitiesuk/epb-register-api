@@ -185,6 +185,53 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
       end
     end
 
+    context "with a SAP assessment type" do
+      let(:assessment) { Nokogiri.XML valid_sap_xml }
+      let(:assessment_id) { assessment.at "RRN" }
+
+      let(:response) do
+        JSON.parse(
+          fetch_renewable_heat_incentive("2000-0000-0000-0000-0000").body,
+          symbolize_names: true,
+        )
+      end
+
+      before do
+        assessment_id.children = "2000-0000-0000-0000-0000"
+
+        lodge_assessment assessment_body: assessment.to_xml,
+                         accepted_responses: [201],
+                         schema_name: "SAP-Schema-18.0.0",
+                         auth_data: { scheme_ids: [scheme_id] }
+      end
+
+      it "returns the expected response" do
+        expect(response[:data][:assessment]).to eq(
+          epcRrn: "2000-0000-0000-0000-0000",
+          assessorName: "Someone Muddle Person",
+          reportType: "SAP",
+          inspectionDate: "2020-05-04",
+          lodgementDate: "2020-05-04",
+          dwellingType: "Dwelling-Type0",
+          postcode: "A0 0AA",
+          propertyAgeBand: "K",
+          tenure: "Owner-occupied",
+          totalFloorArea: 10.0,
+          cavityWallInsulation: false,
+          loftInsulation: false,
+          spaceHeating: nil,
+          waterHeating: nil,
+          secondaryHeating: nil,
+          energyEfficiency: {
+            currentRating: 50,
+            currentBand: "e",
+            potentialRating: 50,
+            potentialBand: "e",
+          },
+        )
+      end
+    end
+
     context "with property summary descriptions" do
       let(:assessment) { Nokogiri.XML valid_sap_xml }
       let(:assessment_id) { assessment.at "RRN" }
