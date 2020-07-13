@@ -220,7 +220,7 @@ module Gateway
         FROM assessors a
         LEFT JOIN schemes b ON(a.registered_by = b.scheme_id)
         WHERE
-          1=1
+          b.active = true
       '
 
       unless exclude.empty?
