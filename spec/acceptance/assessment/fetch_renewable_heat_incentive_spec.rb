@@ -389,6 +389,10 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
       it "returns false for loftInsulation" do
         expect(response[:data][:assessment][:loftInsulation]).to eq false
       end
+
+      it "returns false for cavityWallInsulation" do
+        expect(response[:data][:assessment][:cavityWallInsulation]).to eq false
+      end
     end
   end
 end
