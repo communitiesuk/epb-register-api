@@ -12,15 +12,19 @@ module Gateway
     def fetch(assessment_id)
       sql = <<-SQL
         SELECT
-          assessment_id, scheme_assessor_id, date_of_assessment,
+          assessments.assessment_id, scheme_assessor_id, date_of_assessment,
           date_registered, dwelling_type, type_of_assessment, total_floor_area,
           current_energy_efficiency_rating, potential_energy_efficiency_rating,
           postcode, current_space_heating_demand, current_water_heating_demand,
           impact_of_loft_insulation, tenure, property_age_band, cancelled_at,
-          impact_of_cavity_insulation, property_summary, not_for_issue_at
+          impact_of_cavity_insulation, property_summary, not_for_issue_at,
+          string_agg(improvement_type, ', ') AS improvement_type
         FROM assessments
-        WHERE assessment_id = $1
+        INNER JOIN domestic_epc_energy_improvements deei
+          ON assessments.assessment_id = deei.assessment_id
+        WHERE assessments.assessment_id = $1
           AND type_of_assessment IN('RdSAP', 'SAP')
+        GROUP BY 1
       SQL
 
       binds = [
@@ -55,7 +59,7 @@ module Gateway
         tenure: TENURE[row["tenure"]],
         total_floor_area: row["total_floor_area"],
         cavity_wall_insulation: false,
-        loft_insulation: false,
+        loft_insulation: row["improvement_type"].include?("A") ? true : false,
         space_heating:
           fetch_property_description(row["property_summary"], "main_heating"),
         water_heating:
