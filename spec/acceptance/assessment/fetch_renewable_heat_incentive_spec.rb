@@ -3,6 +3,10 @@
 describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
   include RSpecRegisterApiServiceMixin
 
+  let(:valid_rdsap_xml) do
+    File.read File.join Dir.pwd, "spec/fixtures/samples/rdsap.xml"
+  end
+
   let(:valid_sap_xml) do
     File.read File.join Dir.pwd, "spec/fixtures/samples/sap.xml"
   end
@@ -38,10 +42,6 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
     let(:scheme_id) { add_scheme_and_get_id }
     let(:fetch_assessor_stub) { AssessorStub.new }
 
-    let(:valid_rdsap_xml) do
-      File.read File.join Dir.pwd, "spec/fixtures/samples/rdsap.xml"
-    end
-
     let(:response) do
       JSON.parse(
         fetch_renewable_heat_incentive("0000-0000-0000-0000-0000", [410]).body,
@@ -50,24 +50,22 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
     end
 
     before do
-      add_assessor(
-        scheme_id,
-        "SPEC000000",
-        fetch_assessor_stub.fetch_request_body(domesticRdSap: "ACTIVE"),
-      )
+      add_assessor scheme_id,
+                   "SPEC000000",
+                   fetch_assessor_stub.fetch_request_body(
+                     domesticRdSap: "ACTIVE",
+                   )
 
-      lodge_assessment(
-        assessment_body: valid_rdsap_xml,
-        accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
-      )
+      lodge_assessment assessment_body: valid_rdsap_xml,
+                       accepted_responses: [201],
+                       auth_data: { scheme_ids: [scheme_id] }
 
-      update_assessment_status(
-        assessment_id: "0000-0000-0000-0000-0000",
-        assessment_status_body: { "status": "CANCELLED" },
-        accepted_responses: [200],
-        auth_data: { scheme_ids: [scheme_id] },
-      )
+      update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
+                               assessment_status_body: {
+                                 "status": "CANCELLED",
+                               },
+                               accepted_responses: [200],
+                               auth_data: { scheme_ids: [scheme_id] }
     end
 
     it "returns status 410 for a get" do
@@ -79,22 +77,21 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
     end
   end
 
-  context "when fetching a domestic assessment" do
+  context "when fetching a Renewable Heat Incentive" do
     let(:scheme_id) { add_scheme_and_get_id }
 
-    let(:response) do
-      fetch_renewable_heat_incentive("0000-0000-0000-0000-0000")
-    end
+    let(:response) { fetch_renewable_heat_incentive "0000-0000-0000-0000-0000" }
 
     before do
       add_assessor scheme_id,
                    "SPEC000000",
-                   AssessorStub.new.fetch_request_body(domesticSap: "ACTIVE")
+                   AssessorStub.new.fetch_request_body(
+                     domesticRdSap: "ACTIVE", domesticSap: "ACTIVE",
+                   )
 
-      lodge_assessment assessment_body: valid_sap_xml,
+      lodge_assessment assessment_body: valid_rdsap_xml,
                        accepted_responses: [201],
-                       auth_data: { scheme_ids: [scheme_id] },
-                       schema_name: "SAP-Schema-18.0.0"
+                       auth_data: { scheme_ids: [scheme_id] }
     end
 
     it "returns status 200" do
