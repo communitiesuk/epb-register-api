@@ -98,6 +98,41 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
       expect(response.status).to eq 200
     end
 
+    context "with an RdSAP assessment type" do
+      let(:response) do
+        JSON.parse(
+          fetch_renewable_heat_incentive("0000-0000-0000-0000-0000").body,
+          symbolize_names: true,
+        )
+      end
+
+      it "returns the expected response" do
+        expect(response[:data][:assessment]).to eq(
+          epcRrn: "0000-0000-0000-0000-0000",
+          assessorName: "Someone Muddle Person",
+          reportType: "RdSAP",
+          inspectionDate: "2020-05-04",
+          lodgementDate: "2020-05-04",
+          dwellingType: "Dwelling-Type0",
+          postcode: "A0 0AA",
+          propertyAgeBand: "K",
+          tenure: "Owner-occupied",
+          totalFloorArea: 0.0,
+          cavityWallInsulation: false,
+          loftInsulation: false,
+          spaceHeating: "Description7",
+          waterHeating: "Description11",
+          secondaryHeating: "Description13",
+          energyEfficiency: {
+            currentRating: 50,
+            currentBand: "e",
+            potentialRating: 50,
+            potentialBand: "e",
+          },
+        )
+      end
+    end
+
     context "with property summary descriptions" do
       let(:assessment) { Nokogiri.XML valid_sap_xml }
       let(:assessment_id) { assessment.at "RRN" }
@@ -161,8 +196,8 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
           propertyAgeBand: "K",
           tenure: "Owner-occupied",
           totalFloorArea: 10.0,
-          cavityWallInsulation: true,
-          loftInsulation: true,
+          cavityWallInsulation: false,
+          loftInsulation: false,
           spaceHeating: "Gas-fired central heating",
           waterHeating: "Electrical immersion heater",
           secondaryHeating: "Electric bar heater",
