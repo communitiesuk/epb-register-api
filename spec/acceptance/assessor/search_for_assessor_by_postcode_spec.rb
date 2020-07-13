@@ -62,30 +62,30 @@ describe "Acceptance::SearchForAssessor" do
   end
 
   context "when a search postcode is invalid" do
-    it "returns status 409 for a get" do
-      assessors_search("73334", "domesticRdSap", [409])
+    it "returns status 400 for a get" do
+      assessors_search("73334", "domesticRdSap", [400])
     end
   end
 
   context "when searching without the right params" do
-    it "returns status 409 for postcode search without qualification" do
+    it "returns status 400 for postcode search without qualification" do
       add_postcodes("SE1 7EZ")
       assertive_get(
         "/api/assessors?postcode=SE17EZ",
-        [409],
+        [400],
         true,
         {},
         %w[assessor:search],
       )
     end
-    it "returns status 409 for no parameters" do
+    it "returns status 400 for no parameters" do
       add_postcodes("SE1 7EZ")
-      assertive_get("/api/assessors", [409], true, {}, %w[assessor:search])
+      assertive_get("/api/assessors", [400], true, {}, %w[assessor:search])
     end
 
     it "rejects a request which searches for a bad qualification" do
       add_postcodes("SA70 7BD")
-      assessors_search("SA707BD", "doubleGlazingFitter", [422])
+      assessors_search("SA707BD", "doubleGlazingFitter", [400])
     end
   end
 

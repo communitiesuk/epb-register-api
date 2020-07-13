@@ -146,7 +146,7 @@ module Controller
         search_by_postcode(params[:postcode], params[:qualification])
       else
         error_response(
-          409,
+          400,
           "INVALID_QUERY",
           "Must specify either name or postcode & qualification when searching",
         )
@@ -157,12 +157,12 @@ module Controller
         not_found_error("The requested postcode is not registered")
       when UseCase::FindAssessorsByPostcode::PostcodeNotValid
         error_response(
-          409,
+          400,
           "INVALID_REQUEST",
           "The requested postcode is not valid",
         )
       when ArgumentError
-        error_response(422, "INVALID_QUERY", e.message)
+        error_response(400, "INVALID_QUERY", e.message)
       else
         server_error(e.message)
       end
