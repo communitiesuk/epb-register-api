@@ -90,11 +90,12 @@ module Gateway
 
     def fetch_assessor_name(scheme_assessor_id)
       assessor = Assessor.find_by(scheme_assessor_id: scheme_assessor_id)
-      assessor_full_name =
-        "#{assessor['first_name']} #{assessor['middle_names']} #{
-          assessor['last_name']
-        }"
-      assessor_full_name
+
+      [
+        assessor["first_name"],
+        assessor["middle_names"],
+        assessor["last_name"],
+      ].compact.join(" ")
     end
 
     def fetch_property_description(property, name)
