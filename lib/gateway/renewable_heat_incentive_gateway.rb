@@ -101,8 +101,8 @@ module Gateway
     def fetch_property_description(property, name)
       summary = JSON.parse property
 
-      summary.each do |property|
-        return property["description"] if property["name"] == name
+      summary.each do |field|
+        return field["description"] if field["name"] == name
       end
 
       nil
