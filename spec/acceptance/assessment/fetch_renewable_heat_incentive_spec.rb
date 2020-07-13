@@ -365,5 +365,30 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
         )
       end
     end
+
+    context "without suggested improvements" do
+      let(:assessment) { Nokogiri.XML valid_rdsap_xml }
+      let(:assessment_id) { assessment.at "RRN" }
+
+      let(:response) do
+        JSON.parse(
+          fetch_renewable_heat_incentive("3000-0000-0000-0000-0000").body,
+          symbolize_names: true,
+        )
+      end
+
+      before do
+        assessment_id.children = "3000-0000-0000-0000-0000"
+        assessment.at("Suggested-Improvements").remove
+
+        lodge_assessment assessment_body: assessment.to_xml,
+                         accepted_responses: [201],
+                         auth_data: { scheme_ids: [scheme_id] }
+      end
+
+      it "returns false for loftInsulation" do
+        expect(response[:data][:assessment][:loftInsulation]).to eq false
+      end
+    end
   end
 end

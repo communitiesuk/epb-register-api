@@ -20,7 +20,7 @@ module Gateway
           impact_of_cavity_insulation, property_summary, not_for_issue_at,
           string_agg(improvement_type, ', ') AS improvement_type
         FROM assessments
-        INNER JOIN domestic_epc_energy_improvements deei
+        LEFT JOIN domestic_epc_energy_improvements deei
           ON assessments.assessment_id = deei.assessment_id
         WHERE assessments.assessment_id = $1
           AND type_of_assessment IN('RdSAP', 'SAP')
@@ -81,7 +81,7 @@ module Gateway
     end
 
     def insulation?(type, row)
-      unless row["type_of_assessment"] == "SAP"
+      unless row["type_of_assessment"] == "SAP" || row["improvement_type"].nil?
         return row["improvement_type"].include?(type) ? true : false
       end
 
