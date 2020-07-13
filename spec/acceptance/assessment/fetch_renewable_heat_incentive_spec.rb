@@ -23,18 +23,18 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
 
   context "when a domestic assessment does not exist" do
     let(:response) do
-      JSON.parse fetch_renewable_heat_incentive("DOESNT-EXIST", [404]).body,
-                 symbolize_names: true
+      JSON.parse(
+        fetch_renewable_heat_incentive("DOESNT-EXIST", [404]).body,
+        symbolize_names: true,
+      )
     end
 
     it "returns status 404 for a get" do
       fetch_renewable_heat_incentive "DOESNT-EXIST", [404]
     end
 
-    it "returns an error message structure" do
-      expect(response).to eq(
-        { errors: [{ code: "NOT_FOUND", title: "Assessment not found" }] },
-      )
+    it "returns the expected error response" do
+      expect(response[:errors][0][:title]).to eq "Assessment not found"
     end
   end
 
