@@ -321,15 +321,17 @@ def domestic_assessments_search_by_postcode(
   accepted_responses = [200],
   authenticate = true,
   auth_data = nil,
-  scopes = %w[assessment:search]
+  scopes = %w[assessment:search],
+  assessment_types: %w[RdSAP SAP]
 )
-  assertive_get(
-    "/api/assessments/search?postcode=#{postcode}",
-    accepted_responses,
-    authenticate,
-    auth_data,
-    scopes,
-  )
+  path = "/api/assessments/search?postcode=#{postcode}"
+
+  assessment_types.each do |assessment_type|
+    path <<
+      (path.include?("?") ? "&" : "?") + "assessment_type[]=" + assessment_type
+  end
+
+  assertive_get(path, accepted_responses, authenticate, auth_data, scopes)
 end
 
 def domestic_assessments_search_by_assessment_id(

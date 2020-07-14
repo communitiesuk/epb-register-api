@@ -44,7 +44,12 @@ module Gateway
       send_to_db(assessment)
     end
 
-    def search_by_postcode(postcode)
+    def search_by_postcode(postcode, assessment_types = [])
+      sanitized_assessment_types =
+        assessment_types.map do |assessment_type|
+          ActiveRecord::Base.sanitize_sql(assessment_type)
+        end
+
       sql =
         "SELECT
             scheme_assessor_id, assessment_id, date_of_assessment, date_registered, dwelling_type,
@@ -59,10 +64,12 @@ module Gateway
         FROM assessments
         WHERE postcode = '#{
           ActiveRecord::Base.sanitize_sql(postcode)
-        }' AND type_of_assessment IN('RdSAP', 'SAP')
-          AND cancelled_at IS NULL
-          AND not_for_issue_at IS NULL
-          AND opt_out = false"
+        }' AND type_of_assessment IN('" +
+        sanitized_assessment_types.join("', '") +
+        "')
+      AND cancelled_at IS NULL
+      AND not_for_issue_at IS NULL
+      AND opt_out = false"
       response = Assessment.connection.execute(sql)
       result = []
 

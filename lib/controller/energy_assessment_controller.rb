@@ -5,7 +5,10 @@ module Controller
     get "/api/assessments/search", jwt_auth: %w[assessment:search] do
       result =
         if params.key?(:postcode)
-          UseCase::FindAssessmentsByPostcode.new.execute(params[:postcode])
+          UseCase::FindAssessmentsByPostcode.new.execute(
+            params[:postcode],
+            params[:assessment_type],
+          )
         elsif params.key?(:assessment_id)
           UseCase::FindAssessmentsByAssessmentId.new.execute(
             params[:assessment_id],

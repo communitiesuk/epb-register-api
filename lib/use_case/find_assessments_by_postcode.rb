@@ -6,7 +6,7 @@ module UseCase
       @assessments_gateway = Gateway::AssessmentsGateway.new
     end
 
-    def execute(postcode)
+    def execute(postcode, assessment_types = [])
       postcode.upcase!
 
       postcode = postcode.insert(-4, " ") if postcode[-4] != " "
@@ -16,7 +16,10 @@ module UseCase
         raise PostcodeNotValid
       end
 
-      result = @assessments_gateway.search_by_postcode(postcode)
+      assessment_types = %w[SAP RdSAP] unless assessment_types.length
+
+      result =
+        @assessments_gateway.search_by_postcode(postcode, assessment_types)
 
       { data: result.map(&:to_hash), searchQuery: postcode }
     end
