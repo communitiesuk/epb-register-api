@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_12_150211) do
+ActiveRecord::Schema.define(version: 2020_07_14_113545) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -120,6 +120,12 @@ ActiveRecord::Schema.define(version: 2020_07_12_150211) do
   create_table "green_deal_assessments", id: false, force: :cascade do |t|
     t.string "green_deal_plan_id"
     t.string "assessment_id"
+  end
+
+  create_table "green_deal_fuel_code_map", id: false, force: :cascade do |t|
+    t.integer "fuel_code"
+    t.integer "fuel_category"
+    t.integer "fuel_heat_source"
   end
 
   create_table "green_deal_plans", primary_key: "green_deal_plan_id", id: :string, force: :cascade do |t|
