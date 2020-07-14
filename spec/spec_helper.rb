@@ -1,14 +1,16 @@
 ENV["RACK_ENV"] = "test"
 ENV["EPB_UNLEASH_URI"] = "https://google.com"
 
+require "assertive_client"
+require "database_cleaner"
+require "epb-auth-tools"
+require "nokogiri"
+require "rack/test"
+require "rake"
 require "rspec"
 require "sinatra/activerecord"
-require "rack/test"
-require "database_cleaner"
+require "webmock"
 require "zeitwerk"
-require "epb-auth-tools"
-require "assertive_client"
-require "nokogiri"
 
 loader = Zeitwerk::Loader.new
 loader.push_dir("#{__dir__}/../lib/")
@@ -18,6 +20,10 @@ loader.setup
 ENV["JWT_ISSUER"] = "test.issuer"
 ENV["JWT_SECRET"] = "test.secret"
 ENV["SILENT_EVENTS"] = "true"
+
+rake = Rake::Application.new
+Rake.application = rake
+rake.load_rakefile
 
 GREEN_DEAL_PLAN_SCHEMA = Controller::GreenDealPlanController::SCHEMA
 
