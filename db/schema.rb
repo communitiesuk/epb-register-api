@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_14_113545) do
+ActiveRecord::Schema.define(version: 2020_07_14_115002) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -126,6 +126,12 @@ ActiveRecord::Schema.define(version: 2020_07_14_113545) do
     t.integer "fuel_code"
     t.integer "fuel_category"
     t.integer "fuel_heat_source"
+  end
+
+  create_table "green_deal_fuel_price_data", id: false, force: :cascade do |t|
+    t.integer "fuel_heat_source"
+    t.decimal "standing_charge", precision: 5, scale: 2
+    t.decimal "fuel_price", precision: 10, scale: 2
   end
 
   create_table "green_deal_plans", primary_key: "green_deal_plan_id", id: :string, force: :cascade do |t|
