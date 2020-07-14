@@ -322,7 +322,7 @@ def domestic_assessments_search_by_postcode(
   authenticate = true,
   auth_data = nil,
   scopes = %w[assessment:search],
-  assessment_types: %w[RdSAP SAP]
+  assessment_types = %w[RdSAP SAP]
 )
   path = "/api/assessments/search?postcode=#{postcode}"
 

@@ -38,7 +38,7 @@ module Domain
       impact_of_loft_insulation: nil,
       impact_of_cavity_insulation: nil,
       impact_of_solid_wall_insulation: nil,
-      recommended_improvements: nil,
+      recommended_improvements: [],
       property_summary: [],
       property_age_band: nil,
       related_party_disclosure_number: nil,
