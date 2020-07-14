@@ -67,9 +67,9 @@ module Gateway
         }' AND type_of_assessment IN('" +
         sanitized_assessment_types.join("', '") +
         "')
-      AND cancelled_at IS NULL
-      AND not_for_issue_at IS NULL
-      AND opt_out = false"
+    AND cancelled_at IS NULL
+    AND not_for_issue_at IS NULL
+    AND opt_out = false"
       response = Assessment.connection.execute(sql)
       result = []
 
