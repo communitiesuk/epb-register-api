@@ -47,8 +47,7 @@ module Gateway
     def record_to_rhi_domain(row)
       Domain::RenewableHeatIncentive.new(
         epc_rrn: row["assessment_id"],
-        is_cancelled:
-          row["cancelled_at"] || row["not_for_issue_at"],
+        is_cancelled: row["cancelled_at"] || row["not_for_issue_at"],
         assessor_name: fetch_assessor_name(row["scheme_assessor_id"]),
         report_type: row["type_of_assessment"],
         inspection_date: row["date_registered"],
