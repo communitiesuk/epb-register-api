@@ -16,8 +16,6 @@ module UseCase
         raise PostcodeNotValid
       end
 
-      assessment_types = %w[SAP RdSAP] unless assessment_types.length
-
       result =
         @assessments_gateway.search_by_postcode(postcode, assessment_types)
 
