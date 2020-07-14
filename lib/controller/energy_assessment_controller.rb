@@ -32,7 +32,7 @@ module Controller
     end
 
     post "/api/assessments", jwt_auth: %w[assessment:lodge] do
-      migrated = params.key?("migrated") ? true : false
+      migrated = params.key?("migrated")
       if migrated && !env[:jwt_auth].scopes?(%w[migrate:assessment])
         forbidden(
           "UNAUTHORISED",
