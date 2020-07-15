@@ -39,7 +39,7 @@ describe "Acceptance::Schemes" do
 
       it "returns status 400 if supplied data doesn't match schema" do
         # Integer value for scheme name is invalid - should be a string
-        add_scheme(123456, [400])
+        add_scheme(123_456, [400])
       end
 
       it "returns status 201" do
