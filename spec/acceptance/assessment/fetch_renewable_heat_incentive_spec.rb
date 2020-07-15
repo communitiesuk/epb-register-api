@@ -283,6 +283,38 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
           ).to eq false
         end
       end
+
+      context "with construction age band" do
+        let(:assessment) { Nokogiri.XML valid_sap_xml }
+        let(:assessment_id) { assessment.at "RRN" }
+        let(:construction_year) { assessment.at("Construction-Year") }
+
+        let(:construction_age_band) do
+          Nokogiri::XML::Node.new "Construction-Age-Band", assessment
+        end
+
+        let(:response) do
+          JSON.parse(
+            fetch_renewable_heat_incentive("2000-0000-0000-0000-0003").body,
+            symbolize_names: true,
+          )
+        end
+
+        before do
+          assessment_id.children = "2000-0000-0000-0000-0003"
+          construction_age_band.content = "K"
+          construction_year.add_next_sibling construction_age_band
+
+          lodge_assessment assessment_body: assessment.to_xml,
+                           accepted_responses: [201],
+                           schema_name: "SAP-Schema-18.0.0",
+                           auth_data: { scheme_ids: [scheme_id] }
+        end
+
+        it "returns false for loftInsulation" do
+          expect(response[:data][:assessment][:propertyAgeBand]).to eq "1750"
+        end
+      end
     end
 
     context "with property summary descriptions" do
