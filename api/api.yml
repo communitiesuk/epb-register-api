@@ -38,13 +38,8 @@ paths:
       security:
         - oauth:
             - 'scheme:list'
+      parameters: []
       responses:
-        403:
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
         200:
           description: List of all schemes
           content:
@@ -59,7 +54,12 @@ paths:
                         type: array
                         items:
                           $ref: '#/components/schemas/Scheme'
-      parameters: []
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
     post:
       tags:
         - Manage Schemes
@@ -176,14 +176,14 @@ paths:
                         type: array
                         items:
                           $ref: '#/components/schemas/AssessorBody'
-        404:
-          description: Scheme not found
+        403:
+          description: Forbidden
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        403:
-          description: Forbidden
+        404:
+          description: Scheme not found
           content:
             application/json:
               schema:
@@ -220,18 +220,19 @@ paths:
                 properties:
                   data:
                     $ref: '#/components/schemas/AssessorBody'
-        404:
-          description: Assessor not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
         403:
           description: Forbidden
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: Assessor not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
     put:
       tags:
         - Manage Assessors
@@ -400,18 +401,18 @@ paths:
               - DOMESTIC
               - COMMERCIAL
       responses:
-        403:
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
         200:
           description: Address search results
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/AddressSearchResults'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
 
   /assessments:
@@ -530,14 +531,14 @@ paths:
                           override:
                             type: string
                             example: "/assessments?override=true"
-        409:
-          description: Assessment with that assessmentId already exists - retry with different RRN
+        403:
+          description: Forbidden
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        403:
-          description: Forbidden
+        409:
+          description: Assessment with that assessmentId already exists - retry with different RRN
           content:
             application/json:
               schema:
