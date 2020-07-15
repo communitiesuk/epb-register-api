@@ -66,7 +66,7 @@ describe "Acceptance::Assessment::GreenDealPlan:DeleteGreenDealPlan" do
           savings: [
             {
               sequence: 0,
-              fuelCode: "LPG",
+              fuelCode: "3",
               fuelSaving: 9000.1,
               standingChargeFraction: -0.3,
             },
