@@ -19,7 +19,7 @@ tags:
   - name: Manage Assessors
     description: Manage assessors for a given Scheme
   - name: Manage Assessments
-    description: 'Manage EPCs, DECs, RRs and ACIRs'
+    description: Manage EPCs, DECs, RRs and ACIRs
   - name: Manage Addresses
     description: Manage addresses in the register
   - name: Manage Schemes
@@ -39,9 +39,13 @@ paths:
         - oauth:
             - 'scheme:list'
       responses:
-        '403':
+        403:
           description: Forbidden
-        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        200:
           description: List of all schemes
           content:
             application/json:
@@ -71,7 +75,7 @@ paths:
             schema:
               $ref: '#/components/schemas/SchemeBody'
       responses:
-        '201':
+        201:
           description: Scheme succesfully created
           content:
             application/json:
@@ -80,9 +84,19 @@ paths:
                 properties:
                   data:
                     $ref: '#/components/schemas/Scheme'
-        '403':
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
           description: Forbidden
-        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        409:
           description: Scheme already exists
           content:
             application/json:
@@ -114,11 +128,17 @@ paths:
           description: Update successful
         404:
           description: Scheme not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
       parameters:
         - in: path
           name: schemeId
           required: true
           description: The ID of the scheme being updated
+          schema:
+            type: integer
       requestBody:
         required: true
         content:
@@ -126,7 +146,7 @@ paths:
             schema:
               $ref: '#/components/schemas/SchemeBody'
 
-  '/schemes/{schemeId}/assessors':
+  /schemes/{schemeId}/assessors:
     get:
       tags:
         - Manage Assessors
@@ -136,13 +156,13 @@ paths:
             - 'scheme:assessor:list'
       parameters:
         - in: path
-          required: true
           name: schemeId
+          required: true
           description: ID of the scheme
           schema:
             type: integer
       responses:
-        '200':
+        200:
           description: List of assessors for a scheme
           content:
             application/json:
@@ -156,12 +176,20 @@ paths:
                         type: array
                         items:
                           $ref: '#/components/schemas/AssessorBody'
-        '404':
+        404:
           description: Scheme not found
-        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
-  '/schemes/{schemeId}/assessors/{schemeAssessorId}':
+  /schemes/{schemeId}/assessors/{schemeAssessorId}:
     get:
       tags:
         - Manage Assessors
@@ -171,19 +199,19 @@ paths:
             - 'scheme:assessor:fetch'
       parameters:
         - in: path
-          required: true
           name: schemeId
-          description: ID of the scheme
+          required: true
+          description: ID of the registering scheme
           schema:
             type: integer
         - in: path
-          required: true
           name: schemeAssessorId
-          description: The Assessor ID assigned by the scheme
+          required: true
+          description: The Assessor ID assigned by the registering scheme
           schema:
             $ref: '#/components/schemas/AssessorSchemeId'
       responses:
-        '200':
+        200:
           description: Assessor found
           content:
             application/json:
@@ -192,10 +220,18 @@ paths:
                 properties:
                   data:
                     $ref: '#/components/schemas/AssessorBody'
-        '404':
+        404:
           description: Assessor not found
-        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
     put:
       tags:
         - Manage Assessors
@@ -215,16 +251,16 @@ paths:
         - in: path
           name: schemeAssessorId
           required: true
-          description: Assessor ID assigned by the registering scheme
+          description: The Assessor ID assigned by the registering scheme
           schema:
-            type: string
+            $ref: '#/components/schemas/AssessorSchemeId'
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/AssessorBody'
       responses:
-        '200':
+        200:
           description: Existing assessor updated
           content:
             application/json:
@@ -233,7 +269,7 @@ paths:
                 properties:
                   data:
                     $ref: '#/components/schemas/AssessorBody'
-        '201':
+        201:
           description: New assessor succesfully registered
           content:
             application/json:
@@ -242,12 +278,25 @@ paths:
                 properties:
                   data:
                     $ref: '#/components/schemas/AssessorBody'
-        '400':
+        400:
           description: Problem with assessor registration record
-        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
           description: Forbidden
-        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        409:
           description: Assessor already exists on a different scheme
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
 
   /assessors:
     get:
@@ -275,7 +324,7 @@ paths:
           schema:
             $ref: '#/components/schemas/AssessorQualificationSearchOptions'
       responses:
-        '200':
+        200:
           description: List of assessors matching the search criteria
           content:
             application/json:
@@ -283,10 +332,19 @@ paths:
                 oneOf:
                   - $ref: '#/components/schemas/AssessorSearchResults'
                   - $ref: '#/components/schemas/AssessorSearchByPostcodeResults'
-        '400':
+        400:
           description: Invalid query
-        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
 
   /search/addresses:
     get:
@@ -312,27 +370,27 @@ paths:
         - in: query
           name: buildingNameNumber
           description: The building name or number being searched for
-          example: '47'
           schema:
             type: string
+          example: '47'
         - in: query
           name: street
           description: The street of the address being searched for
-          example: 'High Road'
           schema:
             type: string
+          example: 'High Road'
         - in: query
           name: town
           description: The city or town of the address being searched for
-          example: 'Woking'
           schema:
             $ref: '#/components/schemas/AddressTown'
+          example: 'Woking'
         - in: query
           name: addressId
           description: A known UPRN or RRN to fetch a single address
-          example: 'UPRN-716375734512'
           schema:
             type: string
+          example: 'UPRN-716375734512'
         - in: query
           name: addressType
           description: Domestic or commercial address
@@ -342,9 +400,13 @@ paths:
               - DOMESTIC
               - COMMERCIAL
       responses:
-        '403':
+        403:
           description: Forbidden
-        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        200:
           description: Address search results
           content:
             application/json:
@@ -356,7 +418,8 @@ paths:
     post:
       tags:
         - Manage Assessments
-      summary: Lodge a new assessment
+        - Migration
+      summary: Lodge or migrate a new assessment
       description: 'Single endpoint for POSTing all new lodgements.
                     It will accept as XML payload:
                     * A single <Report> for a domestic RdSAP assessment
@@ -372,15 +435,24 @@ paths:
       security:
         - oauth:
             - 'assessment:lodge'
+            - 'migrate:assessment'
       parameters:
         - in: query
           name: override
-          schema:
-            type: boolean
-          example: true
           description: 'Only set to true after assessor has manually confirmed
                         desire to override lodgement rules. This action will be
                         logged.'
+          schema:
+            type: boolean
+          example: true
+        - in: query
+          name: migrated
+          description: 'For use by EPB register only. Set to true if migrating a
+                        previous lodgement.
+                        Requires migrate:assessment scope in client credentials.'
+          schema:
+            type: boolean
+          example: true
       requestBody:
         content:
           application/xml+RdSAP-Schema-20.0.0:
@@ -402,7 +474,7 @@ paths:
             schema:
               $ref: '#/components/schemas/Empty'
       responses:
-        '201':
+        201:
           description: New assessment(s) successfully lodged
           content:
             application/json:
@@ -431,7 +503,7 @@ paths:
                             items:
                               type: string
                             example: ["/api/assessments/9876-9876-9876-9876-9876", "/api/assessments/8765-8765-8765-8765-8765"]
-        '400':
+        400:
           description: Bad request - assessment violates lodgement rules. Re-POST to the override link to lodge anyway.
           content:
             application/json:
@@ -458,15 +530,23 @@ paths:
                           override:
                             type: string
                             example: "/assessments?override=true"
-        '409':
+        409:
           description: Assessment with that assessmentId already exists - retry with different RRN
-        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
           description: Forbidden
-        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
           description: Server error
 
 
-  '/assessments/{assessmentId}':
+  /assessments/{assessmentId}:
     get:
       tags:
         - Manage Assessments
@@ -482,7 +562,7 @@ paths:
           schema:
             $ref: '#/components/schemas/AssessmentId'
       responses:
-        '200':
+        200:
           description: Energy Performance Assessment
           content:
             application/json:
@@ -497,87 +577,29 @@ paths:
                 properties:
                   data:
                     $ref: '#/components/schemas/Empty'
-        '403':
+        403:
           description: Forbidden
-        '404':
-          description: Assessment not found
-        '410':
-          description: >-
-            Assessment no long accessible
-            (could have been cancelled or marked not for issue)
-        '500':
-          description: Server error
-
-    put:
-      tags:
-        - Migration
-      summary: Migrate an existing Energy Performance Assessment to the register
-      security:
-        - oauth:
-            - 'migrate:assessment'
-      parameters:
-        - in: path
-          name: assessmentId
-          required: true
-          description: The ID of the assessment being added
-          schema:
-            $ref: '#/components/schemas/AssessmentId'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Empty'
-      responses:
-        '200':
-          description: Assessment added / replaced
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: '#/components/schemas/DomesticEnergyAssessmentWithBand'
-                type: object
-                properties:
-                  addressLine1:
-                    type: string
-                    example: 2 Marsham Street
-                  addressLine2:
-                    type: string
-                    example: ''
-                  addressLine3:
-                    type: string
-                    example: ''
-                  addressLine4:
-                    type: string
-                    example: ''
-                  town:
-                    type: string
-                    example: London
-                  assessor:
-                    $ref: '#/components/schemas/AssessorSummary'
-                  heatDemand:
-                    type: object
-                    properties:
-                      currentSpaceHeatingDemand:
-                        type: integer
-                        example: 4564
-                      currentWaterHeatingDemand:
-                        type: integer
-                        example: 3253
-                      impactOfLoftInsulation:
-                        type: integer
-                        example: -453
-                      impactOfCavityInsulation:
-                        type: integer
-                        example: -84
-                      impactOfSolidWallInsulation:
-                        type: integer
-                        example: -21
-        '400':
-          description: Bad request
-        '403':
-          description: Forbidden
-        '500':
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: Assessment not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        410:
+          description: >-
+            Assessment no long accessible
+            (could have been cancelled or marked not for issue)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
           description: Server error
+
 
   /assessments/{assessmentId}/status:
     post:
@@ -603,7 +625,7 @@ paths:
                 status:
                   $ref: '#/components/schemas/AssessmentStatus'
       responses:
-        '200':
+        200:
           description: Assessment report status updated
           content:
             application/json:
@@ -615,20 +637,37 @@ paths:
                     properties:
                       status:
                         $ref: '#/components/schemas/AssessmentStatus'
-        '400':
+        400:
           description: Bad request - assessmentId parameter was badly formatted
-        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
           description: >-
             Forbidden - the assessment with that assessmentId does not
             belong to your scheme
-        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
           description: Assessment with that assessmentId not found
-        '410':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        410:
           description: >-
             Assessment with that assessmentId has already been
             cancelled or marked not for issue
-        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
           description: Server error
+
 
   /reports/assessors/status:
     get:
@@ -651,7 +690,7 @@ paths:
             format: date
             example: '2020-01-30'
       responses:
-        '200':
+        200:
           description: Report returned succesfully
           content:
             application/json:
@@ -665,12 +704,21 @@ paths:
                         type: array
                         items:
                           $ref: '#/components/schemas/AssessorQualificationChangeEvent'
-        '404':
-          description: 'Report not found, likely because the date is in the future'
-        '403':
+        403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: Report not found, likely because the date is in the future
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
-  '/migrations/assessors/{schemeAssessorId}':
+
+  /migrations/assessors/{schemeAssessorId}:
     put:
       tags:
         - Migration
@@ -691,7 +739,7 @@ paths:
             schema:
               $ref: '#/components/schemas/AssessorBody'
       responses:
-        '200':
+        200:
           description: Existing assessor updated
           content:
             application/json:
@@ -700,7 +748,7 @@ paths:
                 properties:
                   data:
                     $ref: '#/components/schemas/AssessorBody'
-        '201':
+        201:
           description: New assessor succesfully registered
           content:
             application/json:
@@ -709,14 +757,26 @@ paths:
                 properties:
                   data:
                     $ref: '#/components/schemas/AssessorBody'
-        '400':
+        400:
           description: Problem with assessor registration record
-        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
           description: Forbidden
-        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        409:
           description: Assessor already exists on a different scheme
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
-  '/migrations/addresses/{addressId}':
+  /migrations/addresses/{addressId}:
     put:
       tags:
         - Migration
@@ -737,7 +797,7 @@ paths:
             schema:
               $ref: '#/components/schemas/AddressBody'
       responses:
-        '200':
+        200:
           description: Address updated
           content:
             application/json:
@@ -746,7 +806,7 @@ paths:
                 properties:
                   data:
                     $ref: '#/components/schemas/AddressBody'
-        '201':
+        201:
           description: Address added
           content:
             application/json:
@@ -755,14 +815,22 @@ paths:
                 properties:
                   data:
                     $ref: '#/components/schemas/AddressBody'
-        '400':
+        400:
           description: Bad request
-        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
           description: Forbidden
-        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
           description: Server error
 
-  '/greendeal/assessments/{assessmentId}':
+  /greendeal/assessments/{assessmentId}:
     get:
       tags:
         - Green Deal
@@ -779,7 +847,7 @@ paths:
           schema:
             $ref: '#/components/schemas/AssessmentId'
       responses:
-        '200':
+        200:
           description: Green Deal Energy Performance data
           content:
             application/json:
@@ -791,18 +859,34 @@ paths:
                     properties:
                       assessment:
                         $ref: '#/components/schemas/AssessmentGreenDealDetails'
-        '400':
+        400:
           description: The assessmentId parameter is badly formatted
-        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
           description: Forbidden
-        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
           description: Assessment not found
-        '410':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        410:
           description: Gone - Assessment with ID assessmentId exists but has been cancelled/marked not for issue
-        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
           description: Server error
 
-  '/greendeal/assessments/{assessmentId}/xml':
+  /greendeal/assessments/{assessmentId}/xml:
     get:
       tags:
         - Green Deal
@@ -836,7 +920,7 @@ paths:
           schema:
             $ref: '#/components/schemas/AssessmentId'
       responses:
-        '200':
+        200:
           description: Green Deal redacted EPC XML data
           content:
             application/xml:
@@ -845,20 +929,36 @@ paths:
                 properties:
                   data:
                     $ref: '#/components/schemas/Empty'
-        '400':
+        400:
           description: 'The assessmentId parameter is badly formatted, or does
                         not relate to an RdSAP assessment'
-        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
           description: Forbidden
-        '404':
-          description: 'Assessment not found'
-        '410':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: Assessment not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        410:
           description: 'Gone - Assessment with ID assessmentId exists but has
                         been cancelled/marked not for issue'
-        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
           description: Server error
 
-  '/greendeal/rhi/assessments/{assessmentId}/latest':
+  /greendeal/rhi/assessments/{assessmentId}/latest:
     get:
       tags:
         - Green Deal
@@ -876,7 +976,7 @@ paths:
           schema:
             $ref: '#/components/schemas/AssessmentId'
       responses:
-        '200':
+        200:
           description: RHI Energy Performance data
           content:
             application/json:
@@ -888,18 +988,34 @@ paths:
                     properties:
                       assessment:
                         $ref: '#/components/schemas/AssessmentRHIDetails'
-        '400':
+        400:
           description: The assessmentId parameter is badly formatted
-        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
           description: Forbidden
-        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
           description: Assessment with this ID not found
-        '410':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        410:
           description: Assessment with this ID exists but has been CANCELLED
-        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
           description: Server error
 
-  '/greendeal/disclosure/assessments/{assessmentId}/plans':
+  /greendeal/disclosure/assessments/{assessmentId}/plans:
     post:
       tags:
         - Green Deal
@@ -923,7 +1039,7 @@ paths:
             schema:
               $ref: '#/components/schemas/GreenDealPlan'
       responses:
-        '201':
+        201:
           description: Green Deal disclosure successfully added
           content:
             application/json:
@@ -932,20 +1048,40 @@ paths:
                 properties:
                   data:
                     $ref: '#/components/schemas/GreenDealPlan'
-        '400':
+        400:
           description: Problem with Green Deal record request
-        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
           description: Forbidden
-        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
           description: Energy assessment with RRN assessmentId can not be found
-        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        409:
           description: Plan with the submitted ID already exists
-        '410':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        410:
           description: Assessment has been cancelled or not for issue
-        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
           description: Server error
 
-  '/greendeal/disclosure/plans/{planId}':
+  /greendeal/disclosure/plans/{planId}:
     put:
       tags:
         - Green Deal
@@ -968,7 +1104,7 @@ paths:
             schema:
               $ref: '#/components/schemas/GreenDealPlan'
       responses:
-        '200':
+        200:
           description: Green Deal disclosure successfully updated
           content:
             application/json:
@@ -977,15 +1113,31 @@ paths:
                 properties:
                   data:
                     $ref: '#/components/schemas/GreenDealPlan'
-        '400':
+        400:
           description: Problem with Green Deal record request
-        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
           description: Forbidden
-        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
           description: Green Deal plan with ID planId can not be found
-        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        409:
           description: Identifier in request body doesn't match the planId in the URL
-        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
           description: Server error
     delete:
       tags:
@@ -1002,15 +1154,21 @@ paths:
           schema:
             $ref: '#/components/schemas/GreenDealPlanId'
       responses:
-        '204':
+        204:
           description: Green Deal disclosure successfully deleted
-        '401':
-          description: Unauthorized
-        '403':
+        403:
           description: Forbidden
-        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
           description: Green Deal plan with ID planId can not be found
-        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
           description: Server error
 
 components:
@@ -1085,26 +1243,29 @@ components:
 
     AddressId:
       type: string
+      description: 'An identifier for an address, which is one of:
+                    * An OS gazetteer UPRN (prefixed UPRN-)
+                    * The reference number of the report this address appears on (prefixed RRN-)'
       example: 'UPRN-716375734512'
 
     AddressLine1:
       type: string
-      example: 2 Marsham Street
+      example: '2 Marsham Street'
 
     AddressTown:
       type: string
-      example: London
+      example: 'London'
 
     AddressPostcode:
       type: string
-      example: SW1P 4JA
+      example: 'SW1P 4JA'
 
     AddressSource:
       type: string
       enum:
         - GAZETTEER
         - PREVIOUS_ASSESSMENT
-      example: GAZETTEER
+      example: 'GAZETTEER'
 
     AddressSearchResults:
       type: object
@@ -1131,29 +1292,29 @@ components:
       properties:
         firstName:
           type: string
-          example: Jo
+          example: 'Joe'
         lastName:
           type: string
-          example: Bloggs
+          example: 'Bloggs'
         middleNames:
           type: string
-          example: T
+          example: 'T'
         contactDetails:
           type: object
           properties:
             telephoneNumber:
               type: string
               maxLength: 256
-              example: 01632 960375
+              example: '01632 960375'
             email:
               type: string
               format: email
-              example: j.t.bloggs@example.com
+              example: 'j.t.bloggs@example.com'
         qualifications:
           $ref: '#/components/schemas/AssessorQualifications'
         alsoKnownAs:
           type: string
-          example: Jo
+          example: 'Joey'
 
     AssessorBody:
       allOf:
@@ -1212,7 +1373,7 @@ components:
 
     AssessorSchemeId:
       type: string
-      example: TEST000001
+      example: 'TEST000001'
 
     AssessorSummary:
       allOf:
@@ -1322,7 +1483,7 @@ components:
         - INACTIVE
         - STRUCKOFF
         - SUSPENDED
-      example: ACTIVE
+      example: 'ACTIVE'
 
     AssessorQualificationChangeEvent:
       type: object
@@ -1344,12 +1505,12 @@ components:
 
     AssessorFullName:
       type: string
-      example: Jo Bloggs
+      example: 'Joe Bloggs'
 
     # Assessments
     AssessmentId:
       type: string
-      example: 0000-0000-0000-0000-0000
+      example: '0000-0000-0000-0000-0000'
 
     AssessmentStatus:
       type: string
@@ -1362,7 +1523,7 @@ components:
 
     AssessmentType:
       type: string
-      example: domestic-epc
+      example: 'domestic-epc'
       enum:
         - domestic-epc
         - non-domestic-epc
@@ -1640,20 +1801,20 @@ components:
           example: 64
         currentBand:
           type: string
-          example: D
+          example: 'D'
         potentialRating:
           type: number
           example: 75
         potentialBand:
           type: string
-          example: C
+          example: 'C'
 
     GreenDealPlanId:
       description: 'Green Deal plan ID - created by the Central Charge Database
                     (GDCC) when the plan is set up'
       type: string
       maxLength: 12
-      example: ABC123456DEF
+      example: 'ABC123456DEF'
 
     GreenDealPlan:
       type: object
@@ -1851,21 +2012,37 @@ components:
           properties:
             schemeId:
               type: string
-              example: 432
+              example: '432'
 
     SchemeBody:
       type: object
       properties:
         name:
           type: string
-          example: EPCs 4 U
+          example: 'EPCs 4 U'
         active:
           type: boolean
           example: true
           description: 'Whether or not the scheme is currently active'
 
+    # General
     Empty:
       type: object
+
+    ErrorResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+                example: "NOT_FOUND"
+              title:
+                type: string
+                example: "The requested scheme was not found"
 
   links: {}
   callbacks: {}
