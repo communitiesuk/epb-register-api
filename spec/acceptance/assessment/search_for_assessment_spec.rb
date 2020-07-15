@@ -37,7 +37,11 @@ describe "Acceptance::Assessment::SearchForAssessments" do
     context "and doing so by postcode" do
       it "doesn't show up because defaults are domestic results only" do
         scheme_id = add_scheme_and_get_id
-        add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body_non_dom)
+        add_assessor(
+          scheme_id,
+          "SPEC000000",
+          valid_assessor_request_body_non_dom,
+        )
 
         lodge_assessment(
           assessment_body: valid_cepc_rr_xml,
@@ -54,7 +58,11 @@ describe "Acceptance::Assessment::SearchForAssessments" do
 
       it "does show up when explicitly stated in query params" do
         scheme_id = add_scheme_and_get_id
-        add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body_non_dom)
+        add_assessor(
+          scheme_id,
+          "SPEC000000",
+          valid_assessor_request_body_non_dom,
+        )
 
         lodge_assessment(
           assessment_body: valid_cepc_rr_xml,

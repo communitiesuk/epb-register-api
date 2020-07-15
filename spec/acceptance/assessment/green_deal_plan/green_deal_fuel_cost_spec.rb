@@ -23,19 +23,13 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateFuelCostData" do
 
         expect(hashed_entries).to eq [
           {
-            fuel_heat_source: 1,
-            standing_charge: "91.00",
-            fuel_price: "3.95",
+            fuel_heat_source: 1, standing_charge: "91.00", fuel_price: "3.95"
           },
           {
-            fuel_heat_source: 4,
-            standing_charge: "0.00",
-            fuel_price: "4.61",
+            fuel_heat_source: 4, standing_charge: "0.00", fuel_price: "4.61"
           },
           {
-            fuel_heat_source: 21,
-            standing_charge: "0.00",
-            fuel_price: "3.57",
+            fuel_heat_source: 21, standing_charge: "0.00", fuel_price: "3.57"
           },
           {
             fuel_heat_source: 40,
