@@ -29,5 +29,5 @@ source "https://rubygems.org" do
   gem "sinatra-activerecord", "~> 2.0.14"
   gem "sinatra-cross_origin", "~> 0.4.0"
   gem "unleash", "~> 3.2.1"
-  gem "zeitwerk", "~> 2.3.1"
+  gem "zeitwerk", "~> 2.4.0"
 end
