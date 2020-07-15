@@ -316,7 +316,7 @@ def fetch_assessment(
   )
 end
 
-def domestic_assessments_search_by_postcode(
+def assessments_search_by_postcode(
   postcode,
   accepted_responses = [200],
   authenticate = true,

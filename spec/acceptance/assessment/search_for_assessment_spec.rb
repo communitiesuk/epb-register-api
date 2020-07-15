@@ -1,4 +1,4 @@
-describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
+describe "Acceptance::Assessment::SearchForAssessments" do
   include RSpecRegisterApiServiceMixin
 
   let(:valid_assessor_request_body_dom) do
@@ -46,7 +46,7 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
           schema_name: "CEPC-8.0.0",
         )
 
-        response = domestic_assessments_search_by_postcode("A0 0AA")
+        response = assessments_search_by_postcode("A0 0AA")
         response_json = JSON.parse(response.body)
 
         expect(response_json["data"]["assessments"][0]).to eq(nil)
@@ -64,7 +64,7 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
         )
 
         response =
-          domestic_assessments_search_by_postcode(
+          assessments_search_by_postcode(
             "A0 0AA",
             [200],
             true,
@@ -119,11 +119,11 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
 
   context "when a search postcode is valid" do
     it "returns status 200 for a get" do
-      domestic_assessments_search_by_postcode("SE17EZ", [200])
+      assessments_search_by_postcode("SE17EZ", [200])
     end
 
     it "looks as it should" do
-      response = domestic_assessments_search_by_postcode("SE17EZ")
+      response = assessments_search_by_postcode("SE17EZ")
 
       response_json = JSON.parse(response.body)
 
@@ -131,7 +131,7 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
     end
 
     it "can handle a lowercase postcode" do
-      response = domestic_assessments_search_by_postcode("e20sz")
+      response = assessments_search_by_postcode("e20sz")
 
       response_json = JSON.parse(response.body)
 
@@ -139,7 +139,7 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
     end
 
     it "has the properties we expect" do
-      response = domestic_assessments_search_by_postcode("SE17EZ")
+      response = assessments_search_by_postcode("SE17EZ")
 
       response_json = JSON.parse(response.body)
 
@@ -156,7 +156,7 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
         auth_data: { scheme_ids: [scheme_id] },
       )
 
-      response = domestic_assessments_search_by_postcode("A0 0AA")
+      response = assessments_search_by_postcode("A0 0AA")
       response_json = JSON.parse(response.body)
       expected_response =
         JSON.parse(
@@ -309,7 +309,7 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
 
       before_assessments =
         JSON.parse(
-          domestic_assessments_search_by_postcode("A0 0AA").body,
+          assessments_search_by_postcode("A0 0AA").body,
           symbolize_names: true,
         )
 
@@ -319,7 +319,7 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
 
       after_assessments =
         JSON.parse(
-          domestic_assessments_search_by_postcode("A0 0AA").body,
+          assessments_search_by_postcode("A0 0AA").body,
           symbolize_names: true,
         )
 
@@ -338,7 +338,7 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
 
       before_assessments =
         JSON.parse(
-          domestic_assessments_search_by_postcode("A0 0AA").body,
+          assessments_search_by_postcode("A0 0AA").body,
           symbolize_names: true,
         )
 
@@ -353,7 +353,7 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
 
       after_assessments =
         JSON.parse(
-          domestic_assessments_search_by_postcode("A0 0AA").body,
+          assessments_search_by_postcode("A0 0AA").body,
           symbolize_names: true,
         )
 
@@ -372,7 +372,7 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
 
       before_assessments =
         JSON.parse(
-          domestic_assessments_search_by_postcode("A0 0AA").body,
+          assessments_search_by_postcode("A0 0AA").body,
           symbolize_names: true,
         )
 
@@ -387,7 +387,7 @@ describe "Acceptance::Assessment::SearchForDomesticEnergyAssessments" do
 
       after_assessments =
         JSON.parse(
-          domestic_assessments_search_by_postcode("A0 0AA").body,
+          assessments_search_by_postcode("A0 0AA").body,
           symbolize_names: true,
         )
 
