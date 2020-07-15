@@ -20,7 +20,7 @@ module Controller
     rescue StandardError => e
       case e
       when JSON::Schema::ValidationError, JSON::ParserError
-        error_response(401, "INVALID_REQUEST", e.message)
+        error_response(400, "INVALID_REQUEST", e.message)
       when Gateway::SchemesGateway::DuplicateSchemeException
         error_response(
           400,
@@ -44,7 +44,7 @@ module Controller
       when UseCase::UpdateScheme::SchemeNotFound
         not_found_error("Scheme not found")
       when JSON::Schema::ValidationError, JSON::ParserError
-        error_response(401, "INVALID_REQUEST", e.message)
+        error_response(400, "INVALID_REQUEST", e.message)
       else
         server_error(e.message)
       end

@@ -37,6 +37,11 @@ describe "Acceptance::Schemes" do
         end
       end
 
+      it "returns status 400 if supplied data doesn't match schema" do
+        # Integer value for scheme name is invalid - should be a string
+        add_scheme(123456, [400])
+      end
+
       it "returns status 201" do
         add_scheme("XYMZALERO", [201])
       end
@@ -82,7 +87,7 @@ describe "Acceptance::Schemes" do
 
     it "rejects a message without the required keys" do
       scheme_id = add_scheme_and_get_id("My old scheme name")
-      update_scheme(scheme_id, {}, [401])
+      update_scheme(scheme_id, {}, [400])
     end
 
     it "changes all of the details of an existing scheme" do
