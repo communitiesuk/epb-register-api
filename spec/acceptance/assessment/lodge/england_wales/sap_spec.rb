@@ -242,7 +242,7 @@ describe "Acceptance::LodgeSapEnergyAssessment" do
               "name" => "lighting",
             },
           ],
-          "propertyAgeBand" => "K",
+          "propertyAgeBand" => "1750",
           "relatedAssessments" => [
             {
               "assessmentExpiryDate" => "2030-05-04",

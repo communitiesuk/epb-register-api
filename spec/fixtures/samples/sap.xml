@@ -198,7 +198,7 @@
             <SAP-Building-Parts>
                 <SAP-Building-Part>
                     <Building-Part-Number>1</Building-Part-Number>
-                    <Construction-Age-Band>K</Construction-Age-Band>
+                    <Construction-Year>1750</Construction-Year>
                     <Overshading>1</Overshading>
                 </SAP-Building-Part>
                 <SAP-Building-Part>

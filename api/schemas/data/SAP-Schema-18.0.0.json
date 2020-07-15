@@ -213,6 +213,10 @@
     {
       "key": "construction_age_band",
       "path": ["Construction_Age_Band"]
+    },
+    {
+      "key": "construction_year",
+      "path": ["Construction_Year"]
     }
   ]
 }]

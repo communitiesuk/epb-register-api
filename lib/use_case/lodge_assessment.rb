@@ -78,7 +78,8 @@ module UseCase
       if data[:property_details].is_a? Array
         data[:property_details].each do |building|
           if building[:building_part_number] == 1
-            data[:property_age_band] = building[:construction_age_band]
+            data[:property_age_band] =
+              building[:construction_age_band] || building[:construction_year]
           end
         end
       end
