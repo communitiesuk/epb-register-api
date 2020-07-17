@@ -1,8 +1,10 @@
-require "zeitwerk"
+unless defined? Zeitwerk
+  require "zeitwerk"
 
-loader = Zeitwerk::Loader.new
-loader.push_dir("#{__dir__}/../lib/")
-loader.setup
+  loader = Zeitwerk::Loader.new
+  loader.push_dir("#{__dir__}/../lib/")
+  loader.setup
+end
 
 fuel_code_map = [
   { fuel_code: 26, fuel_category: 1, fuel_heat_source: 1 },
@@ -35,7 +37,11 @@ fuel_code_map = [
 ]
 
 sql = <<~SQL
-  INSERT INTO green_deal_fuel_code_map (fuel_code, fuel_category,fuel_heat_source ) VALUES
+  INSERT INTO green_deal_fuel_code_map (
+    fuel_code,
+    fuel_category,
+    fuel_heat_source
+  ) VALUES
 SQL
 
 fuel_code_map.each do |mapping|
