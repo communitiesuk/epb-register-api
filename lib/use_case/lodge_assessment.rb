@@ -17,8 +17,10 @@ module UseCase
       assessment_id = data[:assessment_id]
       assessment_type = data[:assessment_type]
 
-      if @assessments_gateway.search_by_assessment_id(assessment_id).first
-        raise DuplicateAssessmentIdException
+      unless migrated
+        if @assessments_gateway.search_by_assessment_id(assessment_id).first
+          raise DuplicateAssessmentIdException
+        end
       end
 
       scheme_assessor_id = data[:assessor_id]

@@ -294,6 +294,20 @@ describe "Acceptance::Assessment::Lodge" do
       it "should be true in migrated column" do
         expect(migrated_column.entries.first["migrated"]).to be_truthy
       end
+
+      context "when migrating the same assessment ID" do
+        before do
+          lodge_assessment assessment_body: valid_rdsap_xml,
+                           accepted_responses: [201],
+                           scopes: %w[assessment:lodge migrate:assessment],
+                           auth_data: { scheme_ids: [scheme_id] },
+                           migrated: true
+        end
+
+        it "should be true in migrated column" do
+          expect(migrated_column.entries.first["migrated"]).to be_truthy
+        end
+      end
     end
 
     context "without migrated parameter" do

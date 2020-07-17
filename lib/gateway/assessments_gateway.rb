@@ -184,6 +184,20 @@ AND opt_out = false"
         )
 
       if existing_assessment
+        sql = <<-SQL
+          DELETE FROM assessments_xml WHERE assessment_id = $1
+        SQL
+
+        binds = [
+          ActiveRecord::Relation::QueryAttribute.new(
+            "id",
+            domestic_energy_assessment.get(:assessment_id),
+            ActiveRecord::Type::String.new,
+          ),
+        ]
+
+        ActiveRecord::Base.connection.exec_query sql, "SQL", binds
+
         existing_assessment.update(domestic_energy_assessment.to_record)
 
         where_assessment = {
