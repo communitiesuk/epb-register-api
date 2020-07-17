@@ -180,9 +180,7 @@ AND opt_out = false"
     def send_to_db(assessment)
       ActiveRecord::Base.transaction do
         existing_assessment =
-          Assessment.find_by(
-            assessment_id: assessment.get(:assessment_id),
-          )
+          Assessment.find_by assessment_id: assessment.get(:assessment_id)
 
         if existing_assessment
           delete_assessment = <<-SQL
@@ -219,9 +217,7 @@ AND opt_out = false"
         Assessment.create assessment.to_record
 
         improvements =
-          assessment.get(:recommended_improvements).map(
-            &:to_record
-          )
+          assessment.get(:recommended_improvements).map(&:to_record)
 
         improvements.each do |improvement|
           DomesticEpcEnergyImprovement.create improvement
