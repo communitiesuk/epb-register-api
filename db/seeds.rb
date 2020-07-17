@@ -1,4 +1,4 @@
-unless defined? Zeitwerk
+unless defined?(Zeitwerk)
   require "zeitwerk"
 
   loader = Zeitwerk::Loader.new
