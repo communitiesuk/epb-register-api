@@ -59,8 +59,7 @@ module Gateway
         total_floor_area: row["total_floor_area"],
         cavity_wall_insulation: insulation?("B", row),
         loft_insulation: insulation?("A", row),
-        space_heating:
-          fetch_property_description(row["property_summary"], "main_heating"),
+        space_heating: row["current_space_heating_demand"],
         water_heating:
           fetch_property_description(row["property_summary"], "hot_water"),
         secondary_heating:
