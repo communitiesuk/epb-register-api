@@ -207,7 +207,9 @@ AND opt_out = false"
           }
 
           DomesticEpcEnergyImprovement.where(where_assessment).delete_all
-          ActiveRecord::Base.connection.exec_query delete_assessment, "SQL", binds
+          ActiveRecord::Base.connection.exec_query delete_assessment,
+                                                   "SQL",
+                                                   binds
         end
 
         Assessment.create(domestic_energy_assessment.to_record)
