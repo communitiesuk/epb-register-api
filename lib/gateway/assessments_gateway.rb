@@ -178,43 +178,47 @@ AND opt_out = false"
   private
 
     def send_to_db(domestic_energy_assessment)
-      existing_assessment =
-        Assessment.find_by(
-          assessment_id: domestic_energy_assessment.get(:assessment_id),
-        )
+      ActiveRecord::Base.transaction do
+        existing_assessment =
+          Assessment.find_by(
+            assessment_id: domestic_energy_assessment.get(:assessment_id),
+          )
 
-      if existing_assessment
-        sql = <<-SQL
-          DELETE FROM assessments_xml WHERE assessment_id = $1
-        SQL
+        if existing_assessment
+          delete_assessment = <<-SQL
+            DELETE FROM assessments WHERE assessment_id = $1
+          SQL
 
-        binds = [
-          ActiveRecord::Relation::QueryAttribute.new(
-            "id",
-            domestic_energy_assessment.get(:assessment_id),
-            ActiveRecord::Type::String.new,
-          ),
-        ]
+          delete_xml = <<-SQL
+            DELETE FROM assessments_xml WHERE assessment_id = $1
+          SQL
 
-        ActiveRecord::Base.connection.exec_query sql, "SQL", binds
+          binds = [
+            ActiveRecord::Relation::QueryAttribute.new(
+              "id",
+              domestic_energy_assessment.get(:assessment_id),
+              ActiveRecord::Type::String.new,
+            ),
+          ]
 
-        existing_assessment.update(domestic_energy_assessment.to_record)
+          ActiveRecord::Base.connection.exec_query delete_xml, "SQL", binds
+          where_assessment = {
+            assessment_id: domestic_energy_assessment.get(:assessment_id),
+          }
 
-        where_assessment = {
-          assessment_id: domestic_energy_assessment.get(:assessment_id),
-        }
+          DomesticEpcEnergyImprovement.where(where_assessment).delete_all
+          ActiveRecord::Base.connection.exec_query delete_assessment, "SQL", binds
+        end
 
-        DomesticEpcEnergyImprovement.where(where_assessment).delete_all
-      else
         Assessment.create(domestic_energy_assessment.to_record)
-      end
 
-      improvements =
-        domestic_energy_assessment.get(:recommended_improvements).map(
-          &:to_record
-        )
-      improvements.each do |improvement|
-        DomesticEpcEnergyImprovement.create(improvement)
+        improvements =
+          domestic_energy_assessment.get(:recommended_improvements).map(
+            &:to_record
+          )
+        improvements.each do |improvement|
+          DomesticEpcEnergyImprovement.create(improvement)
+        end
       end
     end
 
