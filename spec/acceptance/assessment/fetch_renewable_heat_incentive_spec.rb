@@ -118,7 +118,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
           cavityWallInsulation: false,
           loftInsulation: false,
           spaceHeating: 30.0,
-          waterHeating: "Description11",
+          waterHeating: 60.0,
           secondaryHeating: "Description13",
           energyEfficiency: {
             currentRating: 50,
@@ -217,7 +217,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
           cavityWallInsulation: false,
           loftInsulation: false,
           spaceHeating: 30.0,
-          waterHeating: nil,
+          waterHeating: 60.0,
           secondaryHeating: nil,
           energyEfficiency: {
             currentRating: 50,
@@ -383,7 +383,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
           cavityWallInsulation: false,
           loftInsulation: false,
           spaceHeating: 30.0,
-          waterHeating: "Electrical immersion heater",
+          waterHeating: 60.0,
           secondaryHeating: "Electric bar heater",
           energyEfficiency: {
             currentRating: 50,

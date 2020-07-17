@@ -54,7 +54,7 @@ module Domain
         cavity_wall_insulation: @cavity_wall_insulation,
         loft_insulation: @loft_insulation,
         space_heating: @space_heating.to_f,
-        water_heating: @water_heating,
+        water_heating: @water_heating.to_f,
         secondary_heating: @secondary_heating,
         energy_efficiency: @energy_efficiency,
       }

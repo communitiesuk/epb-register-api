@@ -60,8 +60,7 @@ module Gateway
         cavity_wall_insulation: insulation?("B", row),
         loft_insulation: insulation?("A", row),
         space_heating: row["current_space_heating_demand"],
-        water_heating:
-          fetch_property_description(row["property_summary"], "hot_water"),
+        water_heating: row["current_water_heating_demand"],
         secondary_heating:
           fetch_property_description(
             row["property_summary"],
