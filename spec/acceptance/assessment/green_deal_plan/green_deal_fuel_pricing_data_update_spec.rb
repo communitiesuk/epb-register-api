@@ -23,34 +23,34 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateFuelCostData" do
 
         expect(hashed_entries).to eq [
           {
-            fuel_heat_source: 1, fuel_price: "3.93", standing_charge: "88.00"
+            fuel_heat_source: 1, fuel_price: "3.97", standing_charge: "90.00"
           },
           {
-            fuel_heat_source: 9, fuel_price: "3.93", standing_charge: "88.00"
+            fuel_heat_source: 9, fuel_price: "3.97", standing_charge: "90.00"
           },
           {
-            fuel_heat_source: 2, fuel_price: "6.59", standing_charge: "58.00"
+            fuel_heat_source: 2, fuel_price: "6.74", standing_charge: "59.00"
           },
           {
-            fuel_heat_source: 3, fuel_price: "10.71", standing_charge: "0.00"
+            fuel_heat_source: 3, fuel_price: "10.86", standing_charge: "0.00"
           },
           {
-            fuel_heat_source: 7, fuel_price: "6.59", standing_charge: "58.00"
+            fuel_heat_source: 7, fuel_price: "6.74", standing_charge: "59.00"
           },
           {
-            fuel_heat_source: 4, fuel_price: "4.35", standing_charge: "0.00"
+            fuel_heat_source: 4, fuel_price: "4.60", standing_charge: "0.00"
           },
           {
-            fuel_heat_source: 74, fuel_price: "4.35", standing_charge: "0.00"
+            fuel_heat_source: 74, fuel_price: "4.60", standing_charge: "0.00"
           },
           {
-            fuel_heat_source: 75, fuel_price: "4.88", standing_charge: "0.00"
+            fuel_heat_source: 75, fuel_price: "5.16", standing_charge: "0.00"
           },
           {
-            fuel_heat_source: 71, fuel_price: "6.11", standing_charge: "0.00"
+            fuel_heat_source: 71, fuel_price: "6.46", standing_charge: "0.00"
           },
           {
-            fuel_heat_source: 73, fuel_price: "6.11", standing_charge: "0.00"
+            fuel_heat_source: 73, fuel_price: "6.46", standing_charge: "0.00"
           },
           {
             fuel_heat_source: 76,
@@ -58,13 +58,13 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateFuelCostData" do
             standing_charge: "0.00",
           },
           {
-            fuel_heat_source: 11, fuel_price: "4.18", standing_charge: "0.00"
+            fuel_heat_source: 11, fuel_price: "4.22", standing_charge: "0.00"
           },
           {
-            fuel_heat_source: 15, fuel_price: "4.14", standing_charge: "0.00"
+            fuel_heat_source: 15, fuel_price: "4.13", standing_charge: "0.00"
           },
           {
-            fuel_heat_source: 12, fuel_price: "5.17", standing_charge: "0.00"
+            fuel_heat_source: 12, fuel_price: "5.14", standing_charge: "0.00"
           },
           {
             fuel_heat_source: 20, fuel_price: "4.65", standing_charge: "0.00"
@@ -79,58 +79,58 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateFuelCostData" do
             fuel_heat_source: 21, fuel_price: "3.48", standing_charge: "0.00"
           },
           {
-            fuel_heat_source: 10, fuel_price: "4.53", standing_charge: "0.00"
+            fuel_heat_source: 10, fuel_price: "4.56", standing_charge: "0.00"
           },
           {
             fuel_heat_source: 30,
-            fuel_price: "17.56",
-            standing_charge: "80.00",
+            fuel_price: "18.27",
+            standing_charge: "84.00",
           },
           {
             fuel_heat_source: 32,
-            fuel_price: "20.72",
-            standing_charge: "11.00",
+            fuel_price: "21.54",
+            standing_charge: "6.00",
           },
           {
-            fuel_heat_source: 31, fuel_price: "8.13", standing_charge: "0.00"
+            fuel_heat_source: 31, fuel_price: "8.44", standing_charge: "0.00"
           },
           {
             fuel_heat_source: 34,
-            fuel_price: "18.71",
-            standing_charge: "8.00",
+            fuel_price: "19.08",
+            standing_charge: "4.00",
           },
           {
             fuel_heat_source: 33,
-            fuel_price: "10.68",
+            fuel_price: "10.89",
             standing_charge: "0.00",
           },
           {
             fuel_heat_source: 38,
-            fuel_price: "15.73",
-            standing_charge: "32.00",
+            fuel_price: "16.11",
+            standing_charge: "27.00",
           },
           {
             fuel_heat_source: 40,
-            fuel_price: "10.66",
+            fuel_price: "10.93",
             standing_charge: "0.00",
           },
           {
             fuel_heat_source: 35,
-            fuel_price: "10.38",
-            standing_charge: "21.00",
+            fuel_price: "10.75",
+            standing_charge: "17.00",
           },
           {
             fuel_heat_source: 36,
-            fuel_price: "17.56",
+            fuel_price: "18.27",
             standing_charge: "0.00",
           },
           {
             fuel_heat_source: 47,
-            fuel_price: "4.79",
-            standing_charge: "88.00",
+            fuel_price: "4.84",
+            standing_charge: "90.00",
           },
           {
-            fuel_heat_source: 48, fuel_price: "3.35", standing_charge: "0.00"
+            fuel_heat_source: 48, fuel_price: "3.39", standing_charge: "0.00"
           },
         ]
       end
