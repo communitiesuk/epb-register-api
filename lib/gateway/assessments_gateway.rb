@@ -193,6 +193,10 @@ AND opt_out = false"
             DELETE FROM assessments_xml WHERE assessment_id = $1
           SQL
 
+          delete_improvements = <<-SQL
+            DELETE FROM domestic_epc_energy_improvements WHERE assessment_id = $1
+          SQL
+
           binds = [
             ActiveRecord::Relation::QueryAttribute.new(
               "id",
@@ -202,24 +206,25 @@ AND opt_out = false"
           ]
 
           ActiveRecord::Base.connection.exec_query delete_xml, "SQL", binds
-          where_assessment = {
-            assessment_id: domestic_energy_assessment.get(:assessment_id),
-          }
 
-          DomesticEpcEnergyImprovement.where(where_assessment).delete_all
+          ActiveRecord::Base.connection.exec_query delete_improvements,
+                                                   "SQL",
+                                                   binds
+
           ActiveRecord::Base.connection.exec_query delete_assessment,
                                                    "SQL",
                                                    binds
         end
 
-        Assessment.create(domestic_energy_assessment.to_record)
+        Assessment.create domestic_energy_assessment.to_record
 
         improvements =
           domestic_energy_assessment.get(:recommended_improvements).map(
             &:to_record
           )
+
         improvements.each do |improvement|
-          DomesticEpcEnergyImprovement.create(improvement)
+          DomesticEpcEnergyImprovement.create improvement
         end
       end
     end
