@@ -177,11 +177,11 @@ AND opt_out = false"
 
   private
 
-    def send_to_db(domestic_energy_assessment)
+    def send_to_db(assessment)
       ActiveRecord::Base.transaction do
         existing_assessment =
           Assessment.find_by(
-            assessment_id: domestic_energy_assessment.get(:assessment_id),
+            assessment_id: assessment.get(:assessment_id),
           )
 
         if existing_assessment
@@ -200,7 +200,7 @@ AND opt_out = false"
           binds = [
             ActiveRecord::Relation::QueryAttribute.new(
               "id",
-              domestic_energy_assessment.get(:assessment_id),
+              assessment.get(:assessment_id),
               ActiveRecord::Type::String.new,
             ),
           ]
@@ -216,10 +216,10 @@ AND opt_out = false"
                                                    binds
         end
 
-        Assessment.create domestic_energy_assessment.to_record
+        Assessment.create assessment.to_record
 
         improvements =
-          domestic_energy_assessment.get(:recommended_improvements).map(
+          assessment.get(:recommended_improvements).map(
             &:to_record
           )
 
