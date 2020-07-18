@@ -10,5 +10,7 @@ VALID_ASSESSOR_REQUEST_BODY =     {
     },
 }.freeze
 
+VALID_RDSAP_XML = File.read File.join Dir.pwd, "spec/fixtures/samples/rdsap.xml"
+
 
 

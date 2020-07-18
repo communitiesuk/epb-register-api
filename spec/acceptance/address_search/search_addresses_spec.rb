@@ -1,10 +1,6 @@
 describe "Acceptance::AddressSearch" do
   include RSpecRegisterApiServiceMixin
 
-  let(:valid_rdsap_xml) do
-    File.read File.join Dir.pwd, "spec/fixtures/samples/rdsap.xml"
-  end
-
   context "with an invalid combination of parameters" do
     describe "no parameters" do
       let(:response) do
@@ -96,7 +92,7 @@ describe "Acceptance::AddressSearch" do
         add_assessor(scheme_id, "SPEC000000", VALID_ASSESSOR_REQUEST_BODY)
 
         lodge_assessment(
-          assessment_body: valid_rdsap_xml,
+          assessment_body: VALID_RDSAP_XML,
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] },
         )

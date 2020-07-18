@@ -5,15 +5,11 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
     File.read File.join Dir.pwd, "spec/fixtures/samples/cepc.xml"
   end
 
-  let(:valid_rdsap_xml) do
-    File.read File.join Dir.pwd, "spec/fixtures/samples/rdsap.xml"
-  end
-
   context "an address that has a report lodged" do
     let(:scheme_id) { add_scheme_and_get_id }
 
-    let(:assessment) { Nokogiri.XML valid_rdsap_xml }
-    let(:expired_assessment) { Nokogiri.XML valid_rdsap_xml }
+    let(:assessment) { Nokogiri.XML VALID_RDSAP_XML }
+    let(:expired_assessment) { Nokogiri.XML VALID_RDSAP_XML }
     let(:address_id) { assessment.at("UPRN") }
     let(:assessment_id) { assessment.at("RRN") }
     let(:assessment_date) { assessment.at("Inspection-Date") }

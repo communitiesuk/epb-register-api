@@ -1,14 +1,10 @@
 describe "Acceptance::AddressSearch::ByBuildingReference" do
   include RSpecRegisterApiServiceMixin
 
-  let(:valid_rdsap_xml) do
-    File.read File.join Dir.pwd, "spec/fixtures/samples/rdsap.xml"
-  end
-
   context "when an address has a report lodged" do
     let(:scheme_id) { add_scheme_and_get_id }
 
-    let(:expired_assessment) { Nokogiri.XML valid_rdsap_xml }
+    let(:expired_assessment) { Nokogiri.XML VALID_RDSAP_XML }
 
     let(:response) do
       JSON.parse(
@@ -64,7 +60,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
     end
 
     context "with another assessment at the same address" do
-      let(:assessment) { Nokogiri.XML valid_rdsap_xml }
+      let(:assessment) { Nokogiri.XML VALID_RDSAP_XML }
       let(:address_id) { assessment.at("UPRN") }
       let(:assessment_id) { assessment.at("RRN") }
       let(:assessment_date) { assessment.at("Inspection-Date") }
