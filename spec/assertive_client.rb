@@ -416,17 +416,17 @@ def schemes_list(
 end
 
 def address_search_by_id(
-    address_id,
-    accepted_responses = [200],
-    authenticate = true,
-    auth_data = {},
-    scopes = %w[address:search]
+  address_id,
+  accepted_responses = [200],
+  authenticate = true,
+  auth_data = {},
+  scopes = %w[address:search]
 )
   assertive_get(
-      "/api/search/addresses?addressId=#{address_id}",
-      accepted_responses,
-      authenticate,
-      auth_data,
-      scopes,
-      )
+    "/api/search/addresses?addressId=#{address_id}",
+    accepted_responses,
+    authenticate,
+    auth_data,
+    scopes,
+  )
 end
