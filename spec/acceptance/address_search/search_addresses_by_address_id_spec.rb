@@ -110,41 +110,41 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
         )
       end
 
-      it "returns the expected amount of addresses" do
-        expect(response[:data][:addresses].length).to eq 1
-      end
-
       it "returns the expected address" do
-        expect(response[:data][:addresses][0]).to eq(
+        expect(response[:data]).to eq(
           {
-            addressId: "RRN-0000-0000-0000-0000-0001",
-            line1: "1 Some Street",
-            line2: nil,
-            line3: nil,
-            line4: nil,
-            town: "Post-Town1",
-            postcode: "A0 0AA",
-            source: "PREVIOUS_ASSESSMENT",
-            existingAssessments: [
+            addresses: [
               {
-                assessmentId: "0000-0000-0000-0000-0001",
-                assessmentStatus: "ENTERED",
-                assessmentType: "RdSAP",
-              },
-              {
-                assessmentId: "0000-0000-0000-0000-0002",
-                assessmentStatus: "ENTERED",
-                assessmentType: "RdSAP",
-              },
-              {
-                assessmentId: "0000-0000-0000-0000-0003",
-                assessmentStatus: "ENTERED",
-                assessmentType: "RdSAP",
-              },
-              {
-                assessmentId: "0000-0000-0000-0000-0000",
-                assessmentStatus: "ENTERED",
-                assessmentType: "RdSAP",
+                addressId: "RRN-0000-0000-0000-0000-0001",
+                line1: "1 Some Street",
+                line2: nil,
+                line3: nil,
+                line4: nil,
+                town: "Post-Town1",
+                postcode: "A0 0AA",
+                source: "PREVIOUS_ASSESSMENT",
+                existingAssessments: [
+                  {
+                    assessmentId: "0000-0000-0000-0000-0001",
+                    assessmentStatus: "ENTERED",
+                    assessmentType: "RdSAP",
+                  },
+                  {
+                    assessmentId: "0000-0000-0000-0000-0002",
+                    assessmentStatus: "ENTERED",
+                    assessmentType: "RdSAP",
+                  },
+                  {
+                    assessmentId: "0000-0000-0000-0000-0003",
+                    assessmentStatus: "ENTERED",
+                    assessmentType: "RdSAP",
+                  },
+                  {
+                    assessmentId: "0000-0000-0000-0000-0000",
+                    assessmentStatus: "ENTERED",
+                    assessmentType: "RdSAP",
+                  },
+                ],
               },
             ],
           },
