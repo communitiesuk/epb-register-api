@@ -151,11 +151,17 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
         )
       end
 
-      context "with a cancelled assessment" do
+      context "with multiple assessment statuses" do
         before do
           update_assessment_status(
             assessment_id: "0000-0000-0000-0000-0000",
             assessment_status_body: { status: "CANCELLED" },
+            auth_data: { scheme_ids: [scheme_id] },
+            accepted_responses: [200],
+          )
+          update_assessment_status(
+            assessment_id: "0000-0000-0000-0000-0003",
+            assessment_status_body: { status: "NOT_FOR_ISSUE" },
             auth_data: { scheme_ids: [scheme_id] },
             accepted_responses: [200],
           )
@@ -176,50 +182,12 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
               },
               {
                 assessmentId: "0000-0000-0000-0000-0003",
-                assessmentStatus: "ENTERED",
-                assessmentType: "RdSAP",
-              },
-              {
-                assessmentId: "0000-0000-0000-0000-0000",
-                assessmentStatus: "CANCELLED",
-                assessmentType: "RdSAP",
-              },
-            ],
-          )
-        end
-      end
-
-      context "with a not for issue assessment" do
-        before do
-          update_assessment_status(
-            assessment_id: "0000-0000-0000-0000-0003",
-            assessment_status_body: { status: "NOT_FOR_ISSUE" },
-            auth_data: { scheme_ids: [scheme_id] },
-            accepted_responses: [200],
-          )
-        end
-
-        it "returns the not for issue assessment in existing assessments" do
-          expect(response[:data][:addresses][0][:existingAssessments]).to eq(
-            [
-              {
-                assessmentId: "0000-0000-0000-0000-0001",
-                assessmentStatus: "ENTERED",
-                assessmentType: "RdSAP",
-              },
-              {
-                assessmentId: "0000-0000-0000-0000-0002",
-                assessmentStatus: "ENTERED",
-                assessmentType: "RdSAP",
-              },
-              {
-                assessmentId: "0000-0000-0000-0000-0003",
                 assessmentStatus: "NOT_FOR_ISSUE",
                 assessmentType: "RdSAP",
               },
               {
                 assessmentId: "0000-0000-0000-0000-0000",
-                assessmentStatus: "ENTERED",
+                assessmentStatus: "CANCELLED",
                 assessmentType: "RdSAP",
               },
             ],
