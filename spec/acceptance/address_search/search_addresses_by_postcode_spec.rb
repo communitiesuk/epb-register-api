@@ -9,20 +9,6 @@ describe "Acceptance::AddressSearch::ByPostcode" do
     File.read File.join Dir.pwd, "spec/fixtures/samples/rdsap.xml"
   end
 
-  let(:valid_assessor_request_body) do
-    {
-      firstName: "Someone",
-      middleNames: "Muddle",
-      lastName: "Person",
-      dateOfBirth: "1991-02-25",
-      searchResultsComparisonPostcode: "",
-      qualifications: { domesticRdSap: "ACTIVE" },
-      contactDetails: {
-        telephoneNumber: "010199991010101", email: "person@person.com"
-      },
-    }
-  end
-
   context "an address that has a report lodged" do
     let(:scheme_id) { add_scheme_and_get_id }
 
@@ -43,7 +29,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
     let(:cepc_address_line_one) { non_domestic_xml.at("//CEPC:Address-Line-1") }
 
     before(:each) do
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
+      add_assessor(scheme_id, "SPEC000000", VALID_ASSESSOR_REQUEST_BODY)
 
       expired_assessment.at("UPRN").remove
 

@@ -5,20 +5,6 @@ describe "Acceptance::AddressSearch" do
     File.read File.join Dir.pwd, "spec/fixtures/samples/rdsap.xml"
   end
 
-  let(:valid_assessor_request_body) do
-    {
-      firstName: "Someone",
-      middleNames: "Muddle",
-      lastName: "Person",
-      dateOfBirth: "1991-02-25",
-      searchResultsComparisonPostcode: "",
-      qualifications: { domesticRdSap: "ACTIVE" },
-      contactDetails: {
-        telephoneNumber: "010199991010101", email: "person@person.com"
-      },
-    }
-  end
-
   context "with an invalid combination of parameters" do
     describe "no parameters" do
       let(:response) do
@@ -107,7 +93,7 @@ describe "Acceptance::AddressSearch" do
       end
 
       before do
-        add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
+        add_assessor(scheme_id, "SPEC000000", VALID_ASSESSOR_REQUEST_BODY)
 
         lodge_assessment(
           assessment_body: valid_rdsap_xml,

@@ -96,7 +96,7 @@ describe "Acceptance::Assessment::Lodge" do
 
       expect(response.headers["Content-Type"]).to eq("application/json")
     end
-    
+
     it "returns the correct response" do
       scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)

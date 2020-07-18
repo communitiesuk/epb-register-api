@@ -2,6 +2,7 @@ ENV["RACK_ENV"] = "test"
 ENV["EPB_UNLEASH_URI"] = "https://google.com"
 
 require "assertive_client"
+require 'samples'
 require "database_cleaner"
 require "epb-auth-tools"
 require "nokogiri"
