@@ -32,11 +32,8 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
     end
 
     describe "searching by addressId" do
-      it "returns the expected amount of addresses" do
-        expect(response[:data][:addresses].length).to eq 1
-      end
-
       it "returns the address" do
+        expect(response[:data][:addresses].length).to eq 1
         expect(response[:data][:addresses][0]).to eq(
           {
             addressId: "RRN-0000-0000-0000-0000-0000",
