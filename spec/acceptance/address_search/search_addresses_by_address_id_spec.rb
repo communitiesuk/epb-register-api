@@ -33,22 +33,25 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
 
     describe "searching by addressId" do
       it "returns the address" do
-        expect(response[:data][:addresses].length).to eq 1
-        expect(response[:data][:addresses][0]).to eq(
+        expect(response[:data]).to eq(
           {
-            addressId: "RRN-0000-0000-0000-0000-0000",
-            line1: "1 Some Street",
-            line2: nil,
-            line3: nil,
-            line4: nil,
-            town: "Post-Town1",
-            postcode: "A0 0AA",
-            source: "PREVIOUS_ASSESSMENT",
-            existingAssessments: [
+            addresses: [
               {
-                assessmentId: "0000-0000-0000-0000-0000",
-                assessmentStatus: "ENTERED",
-                assessmentType: "RdSAP",
+                addressId: "RRN-0000-0000-0000-0000-0000",
+                line1: "1 Some Street",
+                line2: nil,
+                line3: nil,
+                line4: nil,
+                town: "Post-Town1",
+                postcode: "A0 0AA",
+                source: "PREVIOUS_ASSESSMENT",
+                existingAssessments: [
+                  {
+                    assessmentId: "0000-0000-0000-0000-0000",
+                    assessmentStatus: "ENTERED",
+                    assessmentType: "RdSAP",
+                  },
+                ],
               },
             ],
           },
