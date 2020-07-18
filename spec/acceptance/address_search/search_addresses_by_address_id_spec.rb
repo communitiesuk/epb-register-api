@@ -146,14 +146,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
 
     describe "searching using an older address id" do
       let(:response) do
-        JSON.parse(
-          assertive_get(
-            "/api/search/addresses?addressId=RRN-0000-0000-0000-0000-0000",
-            [200],
-            true,
-            {},
-            %w[address:search],
-          ).body,
+        JSON.parse(address_search_by_id("RRN-0000-0000-0000-0000-0000").body,
           symbolize_names: true,
         )
       end
