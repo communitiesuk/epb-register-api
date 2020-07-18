@@ -96,24 +96,7 @@ describe "Acceptance::Assessment::Lodge" do
 
       expect(response.headers["Content-Type"]).to eq("application/json")
     end
-
-    it "returns the assessment as a hash" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
-
-      response =
-        JSON.parse(
-          lodge_assessment(
-            assessment_body: valid_rdsap_xml,
-            accepted_responses: [201],
-            auth_data: { scheme_ids: [scheme_id] },
-          ).body,
-          symbolize_names: true,
-        )
-
-      expect(response[:data]).to be_a Hash
-    end
-
+    
     it "returns the correct response" do
       scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
