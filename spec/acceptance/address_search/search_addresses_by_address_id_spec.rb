@@ -1,6 +1,23 @@
 describe "Acceptance::AddressSearch::ByBuildingReference" do
   include RSpecRegisterApiServiceMixin
 
+  def lodge_placeholder_assessment(scheme_id, assessment_id, address_id, date)
+    assessment = Nokogiri.XML VALID_RDSAP_XML
+    address_id_node = assessment.at("UPRN")
+    assessment_id_node = assessment.at("RRN")
+    assessment_date_node = assessment.at("Inspection-Date")
+
+    assessment_id_node.children = assessment_id
+    address_id_node.children = address_id
+    assessment_date_node.children = date
+
+    lodge_assessment(
+      assessment_body: assessment.to_xml,
+      accepted_responses: [201],
+      auth_data: { scheme_ids: [scheme_id] },
+    )
+  end
+
   context "when an address has reports lodged" do
     let(:scheme_id) { add_scheme_and_get_id }
 
@@ -13,45 +30,32 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
 
     before(:each) do
       add_assessor(scheme_id, "SPEC000000", VALID_ASSESSOR_REQUEST_BODY)
-      assessment = Nokogiri.XML VALID_RDSAP_XML
-      address_id = assessment.at("UPRN")
-      assessment_id = assessment.at("RRN")
-      assessment_date = assessment.at("Inspection-Date")
-
-      lodge_assessment(
-        assessment_body: assessment.to_xml,
-        accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+      lodge_placeholder_assessment(
+        scheme_id,
+        "0000-0000-0000-0000-0000",
+        "RRN-0000-0000-0000-0000-0000",
+        Date.today.prev_day(50).strftime("%Y-%m-%d"),
       )
 
-      assessment_id.children = "0000-0000-0000-0000-0001"
-      address_id.children = "RRN-0000-0000-0000-0000-0000"
-      assessment_date.children = Date.today.prev_day(1).strftime("%Y-%m-%d")
-
-      lodge_assessment(
-        assessment_body: assessment.to_xml,
-        accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+      lodge_placeholder_assessment(
+        scheme_id,
+        "0000-0000-0000-0000-0001",
+        "RRN-0000-0000-0000-0000-0000",
+        Date.today.prev_day(1).strftime("%Y-%m-%d"),
       )
 
-      assessment_id.children = "0000-0000-0000-0000-0002"
-      address_id.children = "RRN-0000-0000-0000-0000-0001"
-      assessment_date.children = Date.today.prev_day(6).strftime("%Y-%m-%d")
-
-      lodge_assessment(
-        assessment_body: assessment.to_xml,
-        accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+      lodge_placeholder_assessment(
+        scheme_id,
+        "0000-0000-0000-0000-0002",
+        "RRN-0000-0000-0000-0000-0001",
+        Date.today.prev_day(6).strftime("%Y-%m-%d"),
       )
 
-      assessment_id.children = "0000-0000-0000-0000-0003"
-      address_id.children = "RRN-0000-0000-0000-0000-0002"
-      assessment_date.children = Date.today.prev_day(11).strftime("%Y-%m-%d")
-
-      lodge_assessment(
-        assessment_body: assessment.to_xml,
-        accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+      lodge_placeholder_assessment(
+        scheme_id,
+        "0000-0000-0000-0000-0003",
+        "RRN-0000-0000-0000-0000-0002",
+        Date.today.prev_day(11).strftime("%Y-%m-%d"),
       )
     end
 
