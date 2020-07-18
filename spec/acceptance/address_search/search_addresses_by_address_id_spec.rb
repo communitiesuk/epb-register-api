@@ -246,25 +246,17 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
     end
   end
 
-  context "with a valid combination of parameters that have no matches" do
-    describe "with an valid, not in use addressId" do
-      let(:response) do
-        JSON.parse(address_search_by_id("RRN-1111-2222-3333-4444-5555").body,
-          symbolize_names: true,
-        )
-      end
-
+  context "when there are no matching addresses for the ID" do
       it "returns an empty result set" do
+        response = JSON.parse(address_search_by_id("RRN-1111-2222-3333-4444-5555").body,
+                   symbolize_names: true)
         expect(response[:data][:addresses].length).to eq 0
       end
-    end
   end
 
-  context "with an invalid combination of parameters" do
-    describe "with an invalid addressId" do
+  context "when the address ID is in an invalid format" do
       it "returns a validation error" do
         address_search_by_id(address_id="DOESNTEXIST", accepted_responses=[422])
       end
-    end
   end
 end
