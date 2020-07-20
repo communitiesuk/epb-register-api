@@ -115,7 +115,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
     end
   end
 
-  context "when a search postcode is valid" do
+  context "searching by postcode" do
     it "returns status 200 for a get" do
       assessments_search_by_postcode("SE17EZ", [200])
     end
@@ -851,4 +851,6 @@ describe "Acceptance::Assessment::SearchForAssessments" do
       end
     end
   end
+
+
 end
