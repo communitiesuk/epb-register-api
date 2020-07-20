@@ -350,7 +350,7 @@ def domestic_assessments_search_by_assessment_id(
   )
 end
 
-def domestic_assessments_search_by_street_name_and_town(
+def assessments_search_by_street_name_and_town(
   street_name,
   town,
   accepted_responses = [200],

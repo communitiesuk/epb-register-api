@@ -607,7 +607,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
   context "when using town and street name" do
     context "and town is missing but street name is present" do
       it "returns status 400 for a get" do
-        domestic_assessments_search_by_street_name_and_town(
+        assessments_search_by_street_name_and_town(
           "Palmtree Road",
           "",
           [400],
@@ -616,7 +616,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
 
       it "contains the correct error message" do
         response_body =
-          domestic_assessments_search_by_street_name_and_town(
+          assessments_search_by_street_name_and_town(
             "Palmtree Road",
             "",
             [400],
@@ -636,7 +636,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
 
     context "and street name is missing but town is present" do
       it "returns status 400 for a get" do
-        domestic_assessments_search_by_street_name_and_town(
+        assessments_search_by_street_name_and_town(
           "",
           "Brighton",
           [400],
@@ -645,7 +645,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
 
       it "contains the correct error message" do
         response_body =
-          domestic_assessments_search_by_street_name_and_town(
+          assessments_search_by_street_name_and_town(
             "",
             "Brighton",
             [400],
@@ -665,7 +665,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
 
     context "and required parameters are present" do
       it "returns status 200 for a get" do
-        domestic_assessments_search_by_street_name_and_town(
+        assessments_search_by_street_name_and_town(
           "Palmtree Road",
           "Brighton",
           [200],
@@ -674,7 +674,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
 
       it "looks as it should" do
         response =
-          domestic_assessments_search_by_street_name_and_town(
+          assessments_search_by_street_name_and_town(
             "Palmtree Road",
             "Brighton",
           )
@@ -686,7 +686,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
 
       it "has the properties we expect" do
         response =
-          domestic_assessments_search_by_street_name_and_town(
+          assessments_search_by_street_name_and_town(
             "Palmtree Road",
             "Brighton",
           )
@@ -707,7 +707,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
         )
 
         response =
-          domestic_assessments_search_by_street_name_and_town(
+          assessments_search_by_street_name_and_town(
             "1 Some Street",
             "Post-Town1",
           )
@@ -866,7 +866,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
         opt_out_assessment("0000-0000-0000-0000-0000")
 
         response =
-          domestic_assessments_search_by_street_name_and_town(
+          assessments_search_by_street_name_and_town(
             "1 Some Street",
             "Post-Town1",
           )
