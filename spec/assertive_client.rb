@@ -354,16 +354,23 @@ def assessments_search_by_street_name_and_town(
   street_name,
   town,
   accepted_responses = [200],
+  assessment_types = %w[RdSAP SAP],
   authenticate = true,
   auth_data = nil,
   scopes = %w[assessment:search]
 )
+  path = "/api/assessments/search?street_name=#{street_name}&town=#{town}"
+  assessment_types.each do |assessment_type|
+    path <<
+        (path.include?("?") ? "&" : "?") + "assessment_type[]=" + assessment_type
+  end
+
   assertive_get(
-    "/api/assessments/search?street_name=#{street_name}&town=#{town}",
-    accepted_responses,
-    authenticate,
-    auth_data,
-    scopes,
+      path,
+      accepted_responses,
+      authenticate,
+      auth_data,
+      scopes,
   )
 end
 
