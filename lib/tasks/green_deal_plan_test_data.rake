@@ -62,26 +62,26 @@ task :seed_test_green_deal_plans do
   savings = [
     [
       {
-        "fuel_code": "26",
+        "fuel_code": "34",
         "fuel_saving": 0,
         "standing_charge_fraction": -0.3,
       },
     ].to_json,
     [
       {
-        "fuel_code": "12",
+        "fuel_code": "33",
         "fuel_saving": 1,
         "standing_charge_fraction": 0,
       },
     ].to_json,
     [
       {
-        "fuel_code": "22",
+        "fuel_code": "39",
         "fuel_saving": 10,
         "standing_charge_fraction": -0.1,
       },
       {
-        "fuel_code": "34",
+        "fuel_code": "41",
         "fuel_saving": 12,
         "standing_charge_fraction": -0.2,
       },
