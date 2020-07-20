@@ -2,6 +2,7 @@ module UseCase
   class UpdateGreenDealPlan
     class NotFoundException < StandardError; end
     class PlanIdMismatchException < StandardError; end
+    class InvalidFuelCode < StandardError; end
 
     def initialize
       @green_deal_plan_gateway = Gateway::GreenDealPlansGateway.new
@@ -11,6 +12,13 @@ module UseCase
       raise NotFoundException unless @green_deal_plan_gateway.exists? plan_id
 
       raise PlanIdMismatchException unless plan_id == data[:green_deal_plan_id]
+
+      fuel_codes = data[:savings].map { |saving| saving[:fuel_code] }
+
+      unless @green_deal_plan_gateway.validate_fuel_codes?(fuel_codes)
+        raise InvalidFuelCode,
+              "One of [#{fuel_codes.join(', ')}] is not a valid fuel code"
+      end
 
       green_deal_plan =
         Domain::GreenDealPlan.new(

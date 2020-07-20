@@ -362,6 +362,25 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan" do
           end
         end
       end
+
+      context "when the fuel codes in the savings are invalid" do
+        it "returns the expected error response" do
+          incorrect_fuel_codes = valid_green_deal_plan_request_body.dup
+          incorrect_fuel_codes[:savings] = [
+            { fuelCode: "LPG", fuelSaving: 23_253, standingChargeFraction: 0 },
+            { fuelCode: "SOLAR", fuelSaving: 23_253, standingChargeFraction: 0 },
+          ]
+
+          response =
+            update_green_deal_plan plan_id: "ABC123456DEF",
+                                   body: incorrect_fuel_codes,
+                                   accepted_responses: [400]
+
+          expect(
+            response.body,
+          ).to include "One of [LPG, SOLAR] is not a valid fuel code"
+        end
+      end
     end
   end
 end
