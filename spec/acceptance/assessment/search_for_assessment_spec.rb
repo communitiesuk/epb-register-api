@@ -373,7 +373,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
     end
   end
 
-  context "when a search assessment id is valid" do
+  context "searching by ID" do
     it "returns status 200 for a get" do
       domestic_assessments_search_by_assessment_id("123-987", [200])
     end
