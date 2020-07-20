@@ -554,7 +554,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
     end
   end
 
-  context "when using town and street name" do
+  context "searching by town and street name" do
     context "and town is missing but street name is present" do
       it "returns status 400 for a get" do
         assessments_search_by_street_name_and_town("Palmtree Road", "", [400])
