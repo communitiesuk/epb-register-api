@@ -17,6 +17,7 @@ module Controller
           UseCase::FindAssessmentsByStreetNameAndTown.new.execute(
             params[:street_name],
             params[:town],
+            params[:assessment_type],
           )
         end
 

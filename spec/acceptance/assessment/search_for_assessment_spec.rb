@@ -673,5 +673,13 @@ describe "Acceptance::Assessment::SearchForAssessments" do
 
       expect(response_json["data"]["assessments"].length).to eq(0)
     end
+
+    it "can filter for commercial assessments" do
+      setup_scheme_and_lodge(true)
+      response = assessments_search_by_street_name_and_town("2 Lonely Street", "Post-Town1", [200], %w[CEPC])
+      response_json = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response_json[:data][:assessments][0][:assessmentId]).to eq("0000-0000-0000-0000-0000")
+    end
   end
 end

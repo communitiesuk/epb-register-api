@@ -129,7 +129,7 @@ AND opt_out = false"
       result
     end
 
-    def search_by_street_name_and_town(street_name, town, restrictive = true)
+    def search_by_street_name_and_town(street_name, town, assessment_type, restrictive = true)
       sql =
         "SELECT
           scheme_assessor_id, assessment_id, date_of_assessment, date_registered, dwelling_type,
@@ -148,8 +148,15 @@ AND opt_out = false"
           ActiveRecord::Base.sanitize_sql(street_name)
         }' OR address_line3 ILIKE '%#{
           ActiveRecord::Base.sanitize_sql(street_name)
-        }') AND (town ILIKE '#{ActiveRecord::Base.sanitize_sql(town)}')
-         AND type_of_assessment IN('RdSAP', 'SAP')"
+        }') AND (town ILIKE '#{ActiveRecord::Base.sanitize_sql(town)}')"
+
+      unless assessment_type.empty?
+        ins = []
+        assessment_type.each do |type|
+          ins.push("'" + ActiveRecord::Base.sanitize_sql(type) + "'")
+        end
+        sql += " AND type_of_assessment IN(" + ins.join(", ") + ")"
+      end
 
       if restrictive
         sql += " AND cancelled_at IS NULL"
