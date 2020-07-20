@@ -1,15 +1,24 @@
 describe "Acceptance::Assessment::SearchForAssessments" do
   include RSpecRegisterApiServiceMixin
 
-  def setup_scheme_and_lodge
+  def setup_scheme_and_lodge(non_domestic = false)
     scheme_id = add_scheme_and_get_id
     add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
 
-    lodge_assessment(
-      assessment_body: valid_rdsap_xml,
-      accepted_responses: [201],
-      auth_data: { scheme_ids: [scheme_id] },
-    )
+    rdsap = File.read File.join Dir.pwd, "spec/fixtures/samples/rdsap.xml"
+    cepc = File.read File.join Dir.pwd, "spec/fixtures/samples/cepc+rr.xml"
+    non_domestic ?
+        lodge_assessment(
+            assessment_body: cepc,
+            accepted_responses: [201],
+            auth_data: { scheme_ids: [scheme_id] },
+            schema_name: "CEPC-8.0.0"
+            ) :
+        lodge_assessment(
+          assessment_body: rdsap,
+          accepted_responses: [201],
+          auth_data: { scheme_ids: [scheme_id] },
+        )
     scheme_id
   end
 
@@ -17,14 +26,6 @@ describe "Acceptance::Assessment::SearchForAssessments" do
     AssessorStub.new.fetch_request_body(
       domesticRdSap: "ACTIVE", nonDomesticNos3: "ACTIVE",
     )
-  end
-
-  let(:valid_rdsap_xml) do
-    File.read File.join Dir.pwd, "spec/fixtures/samples/rdsap.xml"
-  end
-
-  let(:valid_cepc_rr_xml) do
-    File.read File.join Dir.pwd, "spec/fixtures/samples/cepc+rr.xml"
   end
 
   context "Security" do
@@ -277,15 +278,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
     end
 
     it "can filter for commercial results" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
-
-      lodge_assessment(
-        assessment_body: valid_cepc_rr_xml,
-        accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
-        schema_name: "CEPC-8.0.0",
-      )
+      setup_scheme_and_lodge(true)
 
       response =
         assessments_search_by_postcode(
@@ -340,15 +333,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
     end
 
     it "can filter for domestic results" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
-
-      lodge_assessment(
-        assessment_body: valid_cepc_rr_xml,
-        accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
-        schema_name: "CEPC-8.0.0",
-      )
+      setup_scheme_and_lodge(true)
 
       response = assessments_search_by_postcode("A0 0AA")
       response_json = JSON.parse(response.body)
