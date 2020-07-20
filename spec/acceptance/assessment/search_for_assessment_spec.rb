@@ -275,7 +275,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
       expect(response_json["data"]["assessments"][0]).to eq(expected_response)
     end
 
-    it "has been opted out" do
+    it "does not return opted out addresses" do
       scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body_dom)
 
