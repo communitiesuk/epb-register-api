@@ -3,29 +3,31 @@ describe "Acceptance::Assessment::SearchForAssessments" do
 
   def setup_scheme_and_lodge(non_domestic = false)
     scheme_id = add_scheme_and_get_id
-    add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
+    add_assessor(
+      scheme_id,
+      "SPEC000000",
+      AssessorStub.new.fetch_request_body(
+        domesticRdSap: "ACTIVE", nonDomesticNos3: "ACTIVE",
+      ),
+    )
 
     rdsap = File.read File.join Dir.pwd, "spec/fixtures/samples/rdsap.xml"
     cepc = File.read File.join Dir.pwd, "spec/fixtures/samples/cepc+rr.xml"
-    non_domestic ?
-        lodge_assessment(
-            assessment_body: cepc,
-            accepted_responses: [201],
-            auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "CEPC-8.0.0"
-            ) :
-        lodge_assessment(
-          assessment_body: rdsap,
-          accepted_responses: [201],
-          auth_data: { scheme_ids: [scheme_id] },
-        )
+    if non_domestic
+      lodge_assessment(
+        assessment_body: cepc,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] },
+        schema_name: "CEPC-8.0.0",
+      )
+    else
+      lodge_assessment(
+        assessment_body: rdsap,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] },
+      )
+    end
     scheme_id
-  end
-
-  let(:valid_assessor_request_body) do
-    AssessorStub.new.fetch_request_body(
-      domesticRdSap: "ACTIVE", nonDomesticNos3: "ACTIVE",
-    )
   end
 
   context "Security" do
@@ -291,7 +293,9 @@ describe "Acceptance::Assessment::SearchForAssessments" do
         )
       response_json = JSON.parse(response.body, symbolize_names: true)
 
-      expect(response_json[:data][:assessments][0][:assessmentId]).to eq("0000-0000-0000-0000-0000")
+      expect(response_json[:data][:assessments][0][:assessmentId]).to eq(
+        "0000-0000-0000-0000-0000",
+      )
     end
 
     it "can filter for domestic results" do
