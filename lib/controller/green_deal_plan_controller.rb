@@ -115,6 +115,8 @@ module Controller
                        "Green Deal Plan ID already exists"
       when JSON::Schema::ValidationError
         error_response 400, "INVALID_REQUEST", e.message
+      when UseCase::AddGreenDealPlan::InvalidFuelCode
+        error_response 400, "INVALID_REQUEST", e.message
       else
         server_error e
       end

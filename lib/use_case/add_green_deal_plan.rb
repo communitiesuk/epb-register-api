@@ -5,6 +5,7 @@ module UseCase
     class DuplicateException < StandardError; end
     class InvalidTypeException < StandardError; end
     class NotFoundException < StandardError; end
+    class InvalidFuelCode < StandardError; end
 
     def initialize
       @assessments_gateway = Gateway::AssessmentsGateway.new
@@ -33,6 +34,13 @@ module UseCase
 
       unless %w[RdSAP].include? assessment[:type_of_assessment]
         raise InvalidTypeException
+      end
+
+      fuel_codes = data[:savings].map { |saving| saving[:fuel_code] }
+
+      unless @green_deal_plans_gateway.validate_fuel_codes?(fuel_codes)
+        raise InvalidFuelCode,
+              "One of [#{fuel_codes.join(', ')}] is not a valid fuel code"
       end
 
       green_deal_plan =

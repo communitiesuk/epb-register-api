@@ -104,6 +104,24 @@ module Gateway
       GreenDealPlan.connection.execute(sql)
     end
 
+    def validate_fuel_codes?(fuel_codes)
+      stored_codes =
+        GreenDealPlan.connection.execute <<-SQL
+        SELECT fuel_code FROM green_deal_fuel_code_map
+        SQL
+
+      stored_codes =
+        stored_codes.map(&:symbolize_keys!).map { |row| row[:fuel_code] }
+
+      valid = true
+
+      fuel_codes.each do |code|
+        valid = false unless stored_codes.include? code.to_i
+      end
+
+      valid
+    end
+
   private
 
     def calculate_estimated_savings(savings)
