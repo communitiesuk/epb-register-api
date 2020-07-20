@@ -183,16 +183,16 @@ AND opt_out = false"
           Assessment.find_by assessment_id: assessment.get(:assessment_id)
 
         if existing_assessment
-          delete_assessment = <<-SQL
-            DELETE FROM assessments WHERE assessment_id = $1
-          SQL
-
           delete_xml = <<-SQL
             DELETE FROM assessments_xml WHERE assessment_id = $1
           SQL
 
           delete_improvements = <<-SQL
             DELETE FROM domestic_epc_energy_improvements WHERE assessment_id = $1
+          SQL
+
+          delete_assessment = <<-SQL
+            DELETE FROM assessments WHERE assessment_id = $1
           SQL
 
           binds = [
