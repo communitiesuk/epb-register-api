@@ -7,7 +7,7 @@ module UseCase
     end
 
     def execute(postcode, assessment_types = [])
-      postcode.upcase!
+      postcode&.strip!&.upcase!
 
       postcode = postcode.insert(-4, " ") if postcode[-4] != " "
 

@@ -38,6 +38,14 @@ describe "Acceptance::Assessment::SearchForAssessments" do
       expect(response_json["data"]["assessments"]).to be_an(Array)
     end
 
+    it "can handle a postcode with excessive whitespace" do
+      response = assessments_search_by_postcode("  SE1 7EZ    ", [200])
+
+      response_json = JSON.parse(response.body)
+
+      expect(response_json["data"]["assessments"]).to be_an(Array)
+    end
+
     it "returns matching assessments" do
       scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
