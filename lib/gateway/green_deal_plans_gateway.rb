@@ -57,6 +57,10 @@ module Gateway
       plan = GreenDealPlan.find_by green_deal_plan_id: plan_id
 
       plan.update green_deal_plan.to_record
+
+      green_deal_plan.estimated_savings = calculate_estimated_savings plan.savings
+
+      green_deal_plan
     end
 
     def fetch(assessment_id)
@@ -80,6 +84,7 @@ module Gateway
         row[:charges] = JSON.parse(row[:charges], symbolize_names: true)
         row[:measures] = JSON.parse(row[:measures], symbolize_names: true)
         row[:savings] = JSON.parse(row[:savings], symbolize_names: true)
+        row[:estimated_savings] = calculate_estimated_savings row[:savings]
 
         green_deal_hash = Domain::GreenDealPlan.new(row)
 
@@ -96,6 +101,33 @@ module Gateway
         }'"
 
       GreenDealPlan.connection.execute(sql)
+    end
+
+  private
+
+    def calculate_estimated_savings(savings)
+      sql = <<-SQL
+        SELECT gdfcm.fuel_code, gdfpd.fuel_heat_source, gdfpd.fuel_price, gdfpd.standing_charge
+        FROM green_deal_fuel_code_map gdfcm
+        INNER JOIN green_deal_fuel_price_data gdfpd
+            ON gdfcm.fuel_heat_source = gdfpd.fuel_heat_source
+      SQL
+      fuel_pricing_data = GreenDealPlan.connection.execute(sql).entries
+      fuel_pricing_data = fuel_pricing_data.map(&:symbolize_keys!)
+
+      fuel_savings_data = []
+
+      savings.map(&:symbolize_keys!).each do |saving|
+        pricing =
+          fuel_pricing_data.detect do |datum|
+            datum[:fuel_code] == saving[:fuel_code].to_i
+          end
+
+        fuel_savings_data <<
+          saving.slice(:fuel_saving, :standing_charge_fraction).merge(pricing)
+      end
+
+      Helper::GreenDealSavingsCalculator.calculate fuel_savings_data
     end
   end
 end

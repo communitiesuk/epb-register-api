@@ -284,8 +284,11 @@ describe "Acceptance::Assessment" do
             },
           ],
           savings: [
-            { fuelCode: "LPG", fuelSaving: 0, standingChargeFraction: -0.3 },
+            { fuelCode: "39", fuelSaving: 23_253, standingChargeFraction: 0 },
+            { fuelCode: "40", fuelSaving: -6331, standingChargeFraction: -0.9 },
+            { fuelCode: "41", fuelSaving: -15_561, standingChargeFraction: 0 },
           ],
+          estimatedSavings: 1566,
         }
 
         sap_response = expected_sap_response(scheme_id)

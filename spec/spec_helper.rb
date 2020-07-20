@@ -94,6 +94,10 @@ RSpec.configure do |config|
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
     Rake::Task["db:seed"].invoke
+
+    fuel_price_mock = GreenDealFuelDataMock.new
+    Rake::Task["green_deal_update_fuel_data"].invoke
+    fuel_price_mock.disable
   end
 
   config.before(:each) { DatabaseCleaner.strategy = :transaction }

@@ -32,7 +32,9 @@ class GreenDealPlansGatewayStub
         { startDate: "2020-03-29", endDate: "2030-03-29", dailyCharge: "0.34" },
       ],
       savings: [
-        { fuelCode: "LPG", fuelSaving: 0, standingChargeFraction: -0.3 },
+        { fuel_code: "39", fuel_saving: 23_253, standing_charge_fraction: 0 },
+        { fuel_code: "40", fuel_saving: -6331, standing_charge_fraction: -0.9 },
+        { fuel_code: "41", fuel_saving: -15_561, standing_charge_fraction: 0 },
       ],
     )
 

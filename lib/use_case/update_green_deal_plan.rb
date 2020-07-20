@@ -33,8 +33,6 @@ module UseCase
         )
 
       @green_deal_plan_gateway.update green_deal_plan, plan_id
-
-      green_deal_plan
     end
   end
 end

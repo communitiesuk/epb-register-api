@@ -1,6 +1,7 @@
 module Domain
   class GreenDealPlan
-    attr_reader :green_deal_plan_id
+    attr_reader :green_deal_plan_id, :savings
+    attr_writer :estimated_savings
 
     def initialize(
       green_deal_plan_id: nil,
@@ -18,7 +19,8 @@ module Domain
       measures_removed: nil,
       measures: [],
       charges: [],
-      savings: []
+      savings: [],
+      estimated_savings: nil
     )
       @green_deal_plan_id = green_deal_plan_id
       @start_date = Date.parse start_date.to_s unless start_date.nil?
@@ -37,6 +39,7 @@ module Domain
       @measures = measures
       @charges = charges
       @savings = savings
+      @estimated_savings = estimated_savings
     end
 
     def to_hash
@@ -65,6 +68,7 @@ module Domain
         measures: @measures,
         charges: @charges,
         savings: @savings,
+        estimated_savings: @estimated_savings,
       }
     end
 

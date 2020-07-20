@@ -57,7 +57,7 @@ module UseCase
 
       @green_deal_plans_gateway.add green_deal_plan, assessment_id
 
-      green_deal_plan
+      @green_deal_plans_gateway.fetch assessment_id
     end
   end
 end

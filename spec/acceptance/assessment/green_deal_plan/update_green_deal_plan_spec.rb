@@ -33,12 +33,9 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan" do
         },
       ],
       savings: [
-        {
-          sequence: 0,
-          fuelCode: "3",
-          fuelSaving: 9000.1,
-          standingChargeFraction: -0.3,
-        },
+        { fuelCode: "39", fuelSaving: 23_253, standingChargeFraction: 0 },
+        { fuelCode: "40", fuelSaving: -6331, standingChargeFraction: -0.9 },
+        { fuelCode: "41", fuelSaving: -15_561, standingChargeFraction: 0 },
       ],
     }
   end
@@ -75,12 +72,9 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan" do
         },
       ],
       savings: [
-        {
-          sequence: 0,
-          fuelCode: "SOLAR",
-          fuelSaving: 9000.2,
-          standingChargeFraction: -0.4,
-        },
+        { fuelCode: "39", fuelSaving: 23_253, standingChargeFraction: 0 },
+        { fuelCode: "40", fuelSaving: -6331, standingChargeFraction: -0.9 },
+        { fuelCode: "41", fuelSaving: -15_561, standingChargeFraction: 0 },
       ],
     }
   end
@@ -174,13 +168,11 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan" do
             },
           ],
           savings: [
-            {
-              sequence: 0,
-              fuelCode: "SOLAR",
-              fuelSaving: 9000.2,
-              standingChargeFraction: -0.4,
-            },
+            { fuelCode: "39", fuelSaving: 23_253, standingChargeFraction: 0 },
+            { fuelCode: "40", fuelSaving: -6331, standingChargeFraction: -0.9 },
+            { fuelCode: "41", fuelSaving: -15_561, standingChargeFraction: 0 },
           ],
+          estimatedSavings: 1566,
         }
       end
 
