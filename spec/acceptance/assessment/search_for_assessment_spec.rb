@@ -1,12 +1,8 @@
 describe "Acceptance::Assessment::SearchForAssessments" do
   include RSpecRegisterApiServiceMixin
 
-  let(:valid_assessor_request_body_dom) do
-    AssessorStub.new.fetch_request_body(domesticRdSap: "ACTIVE")
-  end
-
-  let(:valid_assessor_request_body_non_dom) do
-    AssessorStub.new.fetch_request_body(nonDomesticNos3: "ACTIVE")
+  let (:valid_assessor_request_body) do
+    AssessorStub.new.fetch_request_body(domesticRdSap: "ACTIVE", nonDomesticNos3: "ACTIVE")
   end
 
   let(:valid_rdsap_xml) do
@@ -44,7 +40,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
 
     it "returns matching assessments" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body_dom)
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
 
       lodge_assessment(
         assessment_body: valid_rdsap_xml,
@@ -195,7 +191,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
 
     it "does not return opted out addresses" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body_dom)
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
 
       lodge_assessment(
         assessment_body: valid_rdsap_xml,
@@ -224,7 +220,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
 
     it "doesn't show cancelled assessments" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body_dom)
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
 
       lodge_assessment(
         assessment_body: valid_rdsap_xml,
@@ -258,7 +254,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
 
     it "doesn't show not for issue assessments" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body_dom)
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
 
       lodge_assessment(
         assessment_body: valid_rdsap_xml,
@@ -292,7 +288,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
 
     it "can filter for commercial results" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body_non_dom)
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
 
       lodge_assessment(
         assessment_body: valid_cepc_rr_xml,
@@ -355,7 +351,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
 
     it "can filter for domestic results" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body_non_dom)
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
 
       lodge_assessment(
         assessment_body: valid_cepc_rr_xml,
@@ -374,7 +370,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
   context "searching by ID" do
     it "returns the matching assessment" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body_dom)
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
 
       lodge_assessment(
         assessment_body: valid_rdsap_xml,
@@ -584,7 +580,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
 
     it "returns matching assessments" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body_dom)
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
 
       lodge_assessment(
         assessment_body: valid_rdsap_xml,
@@ -741,7 +737,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
 
     it "does not return opted out assessments" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body_dom)
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
 
       lodge_assessment(
         assessment_body: valid_rdsap_xml,
