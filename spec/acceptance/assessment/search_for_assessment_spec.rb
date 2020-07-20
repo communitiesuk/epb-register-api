@@ -374,26 +374,6 @@ describe "Acceptance::Assessment::SearchForAssessments" do
   end
 
   context "searching by ID" do
-    it "returns status 200 for a get" do
-      domestic_assessments_search_by_assessment_id("123-987", [200])
-    end
-
-    it "looks as it should" do
-      response = domestic_assessments_search_by_assessment_id("123-987")
-
-      response_json = JSON.parse(response.body)
-
-      expect(response_json["data"]["assessments"]).to be_an(Array)
-    end
-
-    it "has the properties we expect" do
-      response = domestic_assessments_search_by_assessment_id("123-987")
-
-      response_json = JSON.parse(response.body)
-
-      expect(response_json).to include("data", "meta")
-    end
-
     it "has the over all hash of the shape we expect" do
       scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body_dom)
