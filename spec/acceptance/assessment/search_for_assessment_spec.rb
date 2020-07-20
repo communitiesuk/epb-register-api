@@ -582,217 +582,183 @@ describe "Acceptance::Assessment::SearchForAssessments" do
       )
     end
 
-    context "and required parameters are present" do
-      it "returns status 200 for a get" do
+    it "returns matching assessments" do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body_dom)
+
+      lodge_assessment(
+        assessment_body: valid_rdsap_xml,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] },
+      )
+
+      response =
         assessments_search_by_street_name_and_town(
-          "Palmtree Road",
-          "Brighton",
-          [200],
-        )
-      end
-
-      it "looks as it should" do
-        response =
-          assessments_search_by_street_name_and_town(
-            "Palmtree Road",
-            "Brighton",
-          )
-
-        response_json = JSON.parse(response.body)
-
-        expect(response_json["data"]["assessments"]).to be_an(Array)
-      end
-
-      it "has the properties we expect" do
-        response =
-          assessments_search_by_street_name_and_town(
-            "Palmtree Road",
-            "Brighton",
-          )
-
-        response_json = JSON.parse(response.body)
-
-        expect(response_json).to include("data", "meta")
-      end
-
-      it "has the over all hash of the shape we expect" do
-        scheme_id = add_scheme_and_get_id
-        add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body_dom)
-
-        lodge_assessment(
-          assessment_body: valid_rdsap_xml,
-          accepted_responses: [201],
-          auth_data: { scheme_ids: [scheme_id] },
+          "1 Some Street",
+          "Post-Town1",
         )
 
-        response =
-          assessments_search_by_street_name_and_town(
-            "1 Some Street",
-            "Post-Town1",
-          )
+      response_json = JSON.parse(response.body)
 
-        response_json = JSON.parse(response.body)
-
-        expected_response =
-          JSON.parse(
-            {
-              assessor: nil,
-              assessmentId: "0000-0000-0000-0000-0000",
-              dateOfAssessment: "2020-05-04",
-              dateRegistered: "2020-05-04",
-              totalFloorArea: 0.0,
-              typeOfAssessment: "RdSAP",
-              dwellingType: "Dwelling-Type0",
-              currentEnergyEfficiencyRating: 50,
-              potentialEnergyEfficiencyRating: 50,
-              currentCarbonEmission: 2.4,
-              potentialCarbonEmission: 1.4,
-              currentEnergyEfficiencyBand: "e",
-              potentialEnergyEfficiencyBand: "e",
-              optOut: false,
-              postcode: "A0 0AA",
-              dateOfExpiry: "2030-05-04",
-              town: "Post-Town1",
-              addressId: nil,
-              addressLine1: "1 Some Street",
-              addressLine2: "",
-              addressLine3: "",
-              addressLine4: "",
-              lightingCostCurrent: "123.45",
-              heatingCostCurrent: "365.98",
-              hotWaterCostCurrent: "200.40",
-              lightingCostPotential: "84.23",
-              heatingCostPotential: "250.34",
-              hotWaterCostPotential: "180.43",
-              estimatedEnergyCost: "689.83",
-              potentialEnergySaving: "174.83",
-              heatDemand: {
-                currentSpaceHeatingDemand: 30.0,
-                currentWaterHeatingDemand: 60.0,
-                impactOfLoftInsulation: -8,
-                impactOfCavityInsulation: -12,
-                impactOfSolidWallInsulation: -16,
+      expected_response =
+        JSON.parse(
+          {
+            assessor: nil,
+            assessmentId: "0000-0000-0000-0000-0000",
+            dateOfAssessment: "2020-05-04",
+            dateRegistered: "2020-05-04",
+            totalFloorArea: 0.0,
+            typeOfAssessment: "RdSAP",
+            dwellingType: "Dwelling-Type0",
+            currentEnergyEfficiencyRating: 50,
+            potentialEnergyEfficiencyRating: 50,
+            currentCarbonEmission: 2.4,
+            potentialCarbonEmission: 1.4,
+            currentEnergyEfficiencyBand: "e",
+            potentialEnergyEfficiencyBand: "e",
+            optOut: false,
+            postcode: "A0 0AA",
+            dateOfExpiry: "2030-05-04",
+            town: "Post-Town1",
+            addressId: nil,
+            addressLine1: "1 Some Street",
+            addressLine2: "",
+            addressLine3: "",
+            addressLine4: "",
+            lightingCostCurrent: "123.45",
+            heatingCostCurrent: "365.98",
+            hotWaterCostCurrent: "200.40",
+            lightingCostPotential: "84.23",
+            heatingCostPotential: "250.34",
+            hotWaterCostPotential: "180.43",
+            estimatedEnergyCost: "689.83",
+            potentialEnergySaving: "174.83",
+            heatDemand: {
+              currentSpaceHeatingDemand: 30.0,
+              currentWaterHeatingDemand: 60.0,
+              impactOfLoftInsulation: -8,
+              impactOfCavityInsulation: -12,
+              impactOfSolidWallInsulation: -16,
+            },
+            propertySummary: [
+              {
+                "description" => "Description0",
+                "energyEfficiencyRating" => 0,
+                "environmentalEfficiencyRating" => 0,
+                "name" => "wall",
               },
-              propertySummary: [
-                {
-                  "description" => "Description0",
-                  "energyEfficiencyRating" => 0,
-                  "environmentalEfficiencyRating" => 0,
-                  "name" => "wall",
-                },
-                {
-                  "description" => "Description1",
-                  "energyEfficiencyRating" => 0,
-                  "environmentalEfficiencyRating" => 0,
-                  "name" => "wall",
-                },
-                {
-                  "description" => "Description2",
-                  "energyEfficiencyRating" => 0,
-                  "environmentalEfficiencyRating" => 0,
-                  "name" => "roof",
-                },
-                {
-                  "description" => "Description3",
-                  "energyEfficiencyRating" => 0,
-                  "environmentalEfficiencyRating" => 0,
-                  "name" => "roof",
-                },
-                {
-                  "description" => "Description4",
-                  "energyEfficiencyRating" => 0,
-                  "environmentalEfficiencyRating" => 0,
-                  "name" => "floor",
-                },
-                {
-                  "description" => "Description5",
-                  "energyEfficiencyRating" => 0,
-                  "environmentalEfficiencyRating" => 0,
-                  "name" => "floor",
-                },
-                {
-                  "description" => "Description6",
-                  "energyEfficiencyRating" => 0,
-                  "environmentalEfficiencyRating" => 0,
-                  "name" => "window",
-                },
-                {
-                  "description" => "Description7",
-                  "energyEfficiencyRating" => 0,
-                  "environmentalEfficiencyRating" => 0,
-                  "name" => "main_heating",
-                },
-                {
-                  "description" => "Description8",
-                  "energyEfficiencyRating" => 0,
-                  "environmentalEfficiencyRating" => 0,
-                  "name" => "main_heating",
-                },
-                {
-                  "description" => "Description9",
-                  "energyEfficiencyRating" => 0,
-                  "environmentalEfficiencyRating" => 0,
-                  "name" => "main_heating_controls",
-                },
-                {
-                  "description" => "Description10",
-                  "energyEfficiencyRating" => 0,
-                  "environmentalEfficiencyRating" => 0,
-                  "name" => "main_heating_controls",
-                },
-                {
-                  "description" => "Description11",
-                  "energyEfficiencyRating" => 0,
-                  "environmentalEfficiencyRating" => 0,
-                  "name" => "hot_water",
-                },
-                {
-                  "description" => "Description12",
-                  "energyEfficiencyRating" => 0,
-                  "environmentalEfficiencyRating" => 0,
-                  "name" => "lighting",
-                },
-                {
-                  "description" => "Description13",
-                  "energyEfficiencyRating" => 0,
-                  "environmentalEfficiencyRating" => 0,
-                  "name" => "secondary_heating",
-                },
-              ],
-              propertyAgeBand: "K",
-              recommendedImprovements: [],
-              relatedPartyDisclosureNumber: nil,
-              relatedPartyDisclosureText: "Related-Party-Disclosure-Text0",
-              status: "ENTERED",
-              tenure: "1",
-              relatedAssessments: nil,
-            }.to_json,
-          )
-
-        expect(response_json["data"]["assessments"][0]).to eq(expected_response)
-      end
-
-      it "has been opted out" do
-        scheme_id = add_scheme_and_get_id
-        add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body_dom)
-
-        lodge_assessment(
-          assessment_body: valid_rdsap_xml,
-          accepted_responses: [201],
-          auth_data: { scheme_ids: [scheme_id] },
+              {
+                "description" => "Description1",
+                "energyEfficiencyRating" => 0,
+                "environmentalEfficiencyRating" => 0,
+                "name" => "wall",
+              },
+              {
+                "description" => "Description2",
+                "energyEfficiencyRating" => 0,
+                "environmentalEfficiencyRating" => 0,
+                "name" => "roof",
+              },
+              {
+                "description" => "Description3",
+                "energyEfficiencyRating" => 0,
+                "environmentalEfficiencyRating" => 0,
+                "name" => "roof",
+              },
+              {
+                "description" => "Description4",
+                "energyEfficiencyRating" => 0,
+                "environmentalEfficiencyRating" => 0,
+                "name" => "floor",
+              },
+              {
+                "description" => "Description5",
+                "energyEfficiencyRating" => 0,
+                "environmentalEfficiencyRating" => 0,
+                "name" => "floor",
+              },
+              {
+                "description" => "Description6",
+                "energyEfficiencyRating" => 0,
+                "environmentalEfficiencyRating" => 0,
+                "name" => "window",
+              },
+              {
+                "description" => "Description7",
+                "energyEfficiencyRating" => 0,
+                "environmentalEfficiencyRating" => 0,
+                "name" => "main_heating",
+              },
+              {
+                "description" => "Description8",
+                "energyEfficiencyRating" => 0,
+                "environmentalEfficiencyRating" => 0,
+                "name" => "main_heating",
+              },
+              {
+                "description" => "Description9",
+                "energyEfficiencyRating" => 0,
+                "environmentalEfficiencyRating" => 0,
+                "name" => "main_heating_controls",
+              },
+              {
+                "description" => "Description10",
+                "energyEfficiencyRating" => 0,
+                "environmentalEfficiencyRating" => 0,
+                "name" => "main_heating_controls",
+              },
+              {
+                "description" => "Description11",
+                "energyEfficiencyRating" => 0,
+                "environmentalEfficiencyRating" => 0,
+                "name" => "hot_water",
+              },
+              {
+                "description" => "Description12",
+                "energyEfficiencyRating" => 0,
+                "environmentalEfficiencyRating" => 0,
+                "name" => "lighting",
+              },
+              {
+                "description" => "Description13",
+                "energyEfficiencyRating" => 0,
+                "environmentalEfficiencyRating" => 0,
+                "name" => "secondary_heating",
+              },
+            ],
+            propertyAgeBand: "K",
+            recommendedImprovements: [],
+            relatedPartyDisclosureNumber: nil,
+            relatedPartyDisclosureText: "Related-Party-Disclosure-Text0",
+            status: "ENTERED",
+            tenure: "1",
+            relatedAssessments: nil,
+          }.to_json,
         )
 
-        opt_out_assessment("0000-0000-0000-0000-0000")
+      expect(response_json["data"]["assessments"][0]).to eq(expected_response)
+    end
 
-        response =
-          assessments_search_by_street_name_and_town(
-            "1 Some Street",
-            "Post-Town1",
-          )
-        response_json = JSON.parse(response.body)
+    it "does not return opted out assessments" do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body_dom)
 
-        expect(response_json["data"]["assessments"].length).to eq(0)
-      end
+      lodge_assessment(
+        assessment_body: valid_rdsap_xml,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] },
+      )
+
+      opt_out_assessment("0000-0000-0000-0000-0000")
+
+      response =
+        assessments_search_by_street_name_and_town(
+          "1 Some Street",
+          "Post-Town1",
+        )
+      response_json = JSON.parse(response.body)
+
+      expect(response_json["data"]["assessments"].length).to eq(0)
     end
   end
 end
