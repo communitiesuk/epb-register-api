@@ -374,7 +374,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
   end
 
   context "searching by ID" do
-    it "has the over all hash of the shape we expect" do
+    it "returns the matching assessment" do
       scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body_dom)
 
