@@ -90,9 +90,14 @@ describe "Acceptance::SearchForAssessor" do
   end
 
   context "when a search postcode is valid" do
-    it "returns status 200 for a get" do
+    it "returns status 200 for a normal looking postcode" do
       add_postcodes("SE1 7EZ")
       assessors_search("SE17EZ", "domesticRdSap", [200])
+    end
+
+    it "returns status 200 for a postcode with excessive spaces" do
+      add_postcodes("SE1 7EZ")
+      assessors_search("  SE1 7EZ   ", "domesticRdSap", [200])
     end
 
     it "looks as it should" do
