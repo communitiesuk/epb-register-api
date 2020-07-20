@@ -146,7 +146,8 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
 
     describe "searching using an older address id" do
       let(:response) do
-        JSON.parse(address_search_by_id("RRN-0000-0000-0000-0000-0000").body,
+        JSON.parse(
+          address_search_by_id("RRN-0000-0000-0000-0000-0000").body,
           symbolize_names: true,
         )
       end

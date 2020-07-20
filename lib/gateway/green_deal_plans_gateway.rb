@@ -58,7 +58,8 @@ module Gateway
 
       plan.update green_deal_plan.to_record
 
-      green_deal_plan.estimated_savings = calculate_estimated_savings plan.savings
+      green_deal_plan.estimated_savings =
+        calculate_estimated_savings plan.savings
 
       green_deal_plan
     end
