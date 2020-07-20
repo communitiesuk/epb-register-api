@@ -6,15 +6,17 @@ describe "Acceptance::Assessment::SearchForAssessments" do
     add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
 
     lodge_assessment(
-        assessment_body: valid_rdsap_xml,
-        accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
-        )
+      assessment_body: valid_rdsap_xml,
+      accepted_responses: [201],
+      auth_data: { scheme_ids: [scheme_id] },
+    )
     scheme_id
   end
 
-  let (:valid_assessor_request_body) do
-    AssessorStub.new.fetch_request_body(domesticRdSap: "ACTIVE", nonDomesticNos3: "ACTIVE")
+  let(:valid_assessor_request_body) do
+    AssessorStub.new.fetch_request_body(
+      domesticRdSap: "ACTIVE", nonDomesticNos3: "ACTIVE",
+    )
   end
 
   let(:valid_rdsap_xml) do
