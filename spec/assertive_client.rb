@@ -362,16 +362,10 @@ def assessments_search_by_street_name_and_town(
   path = "/api/assessments/search?street_name=#{street_name}&town=#{town}"
   assessment_types.each do |assessment_type|
     path <<
-        (path.include?("?") ? "&" : "?") + "assessment_type[]=" + assessment_type
+      (path.include?("?") ? "&" : "?") + "assessment_type[]=" + assessment_type
   end
 
-  assertive_get(
-      path,
-      accepted_responses,
-      authenticate,
-      auth_data,
-      scopes,
-  )
+  assertive_get(path, accepted_responses, authenticate, auth_data, scopes)
 end
 
 def assessors_search(

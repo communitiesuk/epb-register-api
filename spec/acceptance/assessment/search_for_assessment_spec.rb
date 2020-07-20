@@ -33,95 +33,85 @@ describe "Acceptance::Assessment::SearchForAssessments" do
     end
   end
 
-  context "when looking for non-domestic EPCs (CEPC)" do
-    context "and doing so by postcode" do
-      it "doesn't show up because defaults are domestic results only" do
-        scheme_id = add_scheme_and_get_id
-        add_assessor(
-          scheme_id,
-          "SPEC000000",
-          valid_assessor_request_body_non_dom,
+  context "when looking for non-domestic EPCs (CEPC) by postcode" do
+    it "doesn't show up because defaults are domestic results only" do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body_non_dom)
+
+      lodge_assessment(
+        assessment_body: valid_cepc_rr_xml,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] },
+        schema_name: "CEPC-8.0.0",
+      )
+
+      response = assessments_search_by_postcode("A0 0AA")
+      response_json = JSON.parse(response.body)
+
+      expect(response_json["data"]["assessments"][0]).to eq(nil)
+    end
+
+    it "does show up when explicitly stated in query params" do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body_non_dom)
+
+      lodge_assessment(
+        assessment_body: valid_cepc_rr_xml,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] },
+        schema_name: "CEPC-8.0.0",
+      )
+
+      response =
+        assessments_search_by_postcode(
+          "A0 0AA",
+          [200],
+          true,
+          nil,
+          %w[assessment:search],
+          %w[CEPC],
         )
+      response_json = JSON.parse(response.body, symbolize_names: true)
 
-        lodge_assessment(
-          assessment_body: valid_cepc_rr_xml,
-          accepted_responses: [201],
-          auth_data: { scheme_ids: [scheme_id] },
-          schema_name: "CEPC-8.0.0",
-        )
-
-        response = assessments_search_by_postcode("A0 0AA")
-        response_json = JSON.parse(response.body)
-
-        expect(response_json["data"]["assessments"][0]).to eq(nil)
-      end
-
-      it "does show up when explicitly stated in query params" do
-        scheme_id = add_scheme_and_get_id
-        add_assessor(
-          scheme_id,
-          "SPEC000000",
-          valid_assessor_request_body_non_dom,
-        )
-
-        lodge_assessment(
-          assessment_body: valid_cepc_rr_xml,
-          accepted_responses: [201],
-          auth_data: { scheme_ids: [scheme_id] },
-          schema_name: "CEPC-8.0.0",
-        )
-
-        response =
-          assessments_search_by_postcode(
-            "A0 0AA",
-            [200],
-            true,
-            nil,
-            %w[assessment:search],
-            %w[CEPC],
-          )
-        response_json = JSON.parse(response.body, symbolize_names: true)
-
-        expect(response_json[:data][:assessments][0]).to eq(
-          {
-            dateOfAssessment: "2020-05-04",
-            dateRegistered: "2020-05-05",
-            dwellingType: nil,
-            typeOfAssessment: "CEPC",
-            totalFloorArea: 99.0,
-            assessmentId: "0000-0000-0000-0000-0000",
-            assessor: nil,
-            currentEnergyEfficiencyRating: 99,
-            potentialEnergyEfficiencyRating: 99,
-            currentCarbonEmission: 0.0,
-            potentialCarbonEmission: 0.0,
-            optOut: false,
-            postcode: "A0 0AA",
-            dateOfExpiry: "2026-05-04",
-            addressId: nil,
-            addressLine1: "2 Lonely Street",
-            addressLine2: "",
-            addressLine3: "",
-            addressLine4: "",
-            town: "Post-Town1",
-            heatDemand: {
-              currentSpaceHeatingDemand: 0.0,
-              currentWaterHeatingDemand: 0.0,
-              impactOfLoftInsulation: nil,
-              impactOfCavityInsulation: nil,
-              impactOfSolidWallInsulation: nil,
-            },
-            currentEnergyEfficiencyBand: "a",
-            potentialEnergyEfficiencyBand: "a",
-            recommendedImprovements: [],
-            propertySummary: [],
-            relatedPartyDisclosureNumber: nil,
-            relatedPartyDisclosureText: nil,
-            relatedAssessments: nil,
-            status: "ENTERED",
+      expect(response_json[:data][:assessments][0]).to eq(
+        {
+          dateOfAssessment: "2020-05-04",
+          dateRegistered: "2020-05-05",
+          dwellingType: nil,
+          typeOfAssessment: "CEPC",
+          totalFloorArea: 99.0,
+          assessmentId: "0000-0000-0000-0000-0000",
+          assessor: nil,
+          currentEnergyEfficiencyRating: 99,
+          potentialEnergyEfficiencyRating: 99,
+          currentCarbonEmission: 0.0,
+          potentialCarbonEmission: 0.0,
+          optOut: false,
+          postcode: "A0 0AA",
+          dateOfExpiry: "2026-05-04",
+          addressId: nil,
+          addressLine1: "2 Lonely Street",
+          addressLine2: "",
+          addressLine3: "",
+          addressLine4: "",
+          town: "Post-Town1",
+          heatDemand: {
+            currentSpaceHeatingDemand: 0.0,
+            currentWaterHeatingDemand: 0.0,
+            impactOfLoftInsulation: nil,
+            impactOfCavityInsulation: nil,
+            impactOfSolidWallInsulation: nil,
           },
-        )
-      end
+          currentEnergyEfficiencyBand: "a",
+          potentialEnergyEfficiencyBand: "a",
+          recommendedImprovements: [],
+          propertySummary: [],
+          relatedPartyDisclosureNumber: nil,
+          relatedPartyDisclosureText: nil,
+          relatedAssessments: nil,
+          status: "ENTERED",
+        },
+      )
     end
   end
 
@@ -607,20 +597,13 @@ describe "Acceptance::Assessment::SearchForAssessments" do
   context "when using town and street name" do
     context "and town is missing but street name is present" do
       it "returns status 400 for a get" do
-        assessments_search_by_street_name_and_town(
-          "Palmtree Road",
-          "",
-          [400],
-        )
+        assessments_search_by_street_name_and_town("Palmtree Road", "", [400])
       end
 
       it "contains the correct error message" do
         response_body =
-          assessments_search_by_street_name_and_town(
-            "Palmtree Road",
-            "",
-            [400],
-          ).body
+          assessments_search_by_street_name_and_town("Palmtree Road", "", [400])
+            .body
         expect(JSON.parse(response_body)).to eq(
           {
             "errors" => [
@@ -636,20 +619,12 @@ describe "Acceptance::Assessment::SearchForAssessments" do
 
     context "and street name is missing but town is present" do
       it "returns status 400 for a get" do
-        assessments_search_by_street_name_and_town(
-          "",
-          "Brighton",
-          [400],
-        )
+        assessments_search_by_street_name_and_town("", "Brighton", [400])
       end
 
       it "contains the correct error message" do
         response_body =
-          assessments_search_by_street_name_and_town(
-            "",
-            "Brighton",
-            [400],
-          ).body
+          assessments_search_by_street_name_and_town("", "Brighton", [400]).body
         expect(JSON.parse(response_body)).to eq(
           {
             "errors" => [
