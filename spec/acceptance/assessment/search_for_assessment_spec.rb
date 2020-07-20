@@ -291,45 +291,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
         )
       response_json = JSON.parse(response.body, symbolize_names: true)
 
-      expect(response_json[:data][:assessments][0]).to eq(
-        {
-          dateOfAssessment: "2020-05-04",
-          dateRegistered: "2020-05-05",
-          dwellingType: nil,
-          typeOfAssessment: "CEPC",
-          totalFloorArea: 99.0,
-          assessmentId: "0000-0000-0000-0000-0000",
-          assessor: nil,
-          currentEnergyEfficiencyRating: 99,
-          potentialEnergyEfficiencyRating: 99,
-          currentCarbonEmission: 0.0,
-          potentialCarbonEmission: 0.0,
-          optOut: false,
-          postcode: "A0 0AA",
-          dateOfExpiry: "2026-05-04",
-          addressId: nil,
-          addressLine1: "2 Lonely Street",
-          addressLine2: "",
-          addressLine3: "",
-          addressLine4: "",
-          town: "Post-Town1",
-          heatDemand: {
-            currentSpaceHeatingDemand: 0.0,
-            currentWaterHeatingDemand: 0.0,
-            impactOfLoftInsulation: nil,
-            impactOfCavityInsulation: nil,
-            impactOfSolidWallInsulation: nil,
-          },
-          currentEnergyEfficiencyBand: "a",
-          potentialEnergyEfficiencyBand: "a",
-          recommendedImprovements: [],
-          propertySummary: [],
-          relatedPartyDisclosureNumber: nil,
-          relatedPartyDisclosureText: nil,
-          relatedAssessments: nil,
-          status: "ENTERED",
-        },
-      )
+      expect(response_json[:data][:assessments][0][:assessmentId]).to eq("0000-0000-0000-0000-0000")
     end
 
     it "can filter for domestic results" do
