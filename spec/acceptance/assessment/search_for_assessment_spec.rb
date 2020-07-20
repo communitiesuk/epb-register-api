@@ -1,6 +1,18 @@
 describe "Acceptance::Assessment::SearchForAssessments" do
   include RSpecRegisterApiServiceMixin
 
+  def setup_scheme_and_lodge
+    scheme_id = add_scheme_and_get_id
+    add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
+
+    lodge_assessment(
+        assessment_body: valid_rdsap_xml,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] },
+        )
+    scheme_id
+  end
+
   let (:valid_assessor_request_body) do
     AssessorStub.new.fetch_request_body(domesticRdSap: "ACTIVE", nonDomesticNos3: "ACTIVE")
   end
@@ -47,15 +59,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
     end
 
     it "returns matching assessments" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
-
-      lodge_assessment(
-        assessment_body: valid_rdsap_xml,
-        accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
-      )
-
+      setup_scheme_and_lodge
       response = assessments_search_by_postcode("A0 0AA")
       response_json = JSON.parse(response.body)
       expected_response =
@@ -198,15 +202,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
     end
 
     it "does not return opted out addresses" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
-
-      lodge_assessment(
-        assessment_body: valid_rdsap_xml,
-        accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
-      )
-
+      setup_scheme_and_lodge
       before_assessments =
         JSON.parse(
           assessments_search_by_postcode("A0 0AA").body,
@@ -227,15 +223,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
     end
 
     it "doesn't show cancelled assessments" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
-
-      lodge_assessment(
-        assessment_body: valid_rdsap_xml,
-        accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
-      )
-
+      scheme_id = setup_scheme_and_lodge
       before_assessments =
         JSON.parse(
           assessments_search_by_postcode("A0 0AA").body,
@@ -261,15 +249,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
     end
 
     it "doesn't show not for issue assessments" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
-
-      lodge_assessment(
-        assessment_body: valid_rdsap_xml,
-        accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
-      )
-
+      scheme_id = setup_scheme_and_lodge
       before_assessments =
         JSON.parse(
           assessments_search_by_postcode("A0 0AA").body,
@@ -377,15 +357,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
 
   context "searching by ID" do
     it "returns the matching assessment" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
-
-      lodge_assessment(
-        assessment_body: valid_rdsap_xml,
-        accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
-      )
-
+      setup_scheme_and_lodge
       response =
         domestic_assessments_search_by_assessment_id("0000-0000-0000-0000-0000")
       response_json = JSON.parse(response.body)
@@ -587,15 +559,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
     end
 
     it "returns matching assessments" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
-
-      lodge_assessment(
-        assessment_body: valid_rdsap_xml,
-        accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
-      )
-
+      setup_scheme_and_lodge
       response =
         assessments_search_by_street_name_and_town(
           "1 Some Street",
@@ -744,15 +708,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
     end
 
     it "does not return opted out assessments" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
-
-      lodge_assessment(
-        assessment_body: valid_rdsap_xml,
-        accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
-      )
-
+      setup_scheme_and_lodge
       opt_out_assessment("0000-0000-0000-0000-0000")
 
       response =
