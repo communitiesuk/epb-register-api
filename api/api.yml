@@ -1783,11 +1783,11 @@ components:
           type: boolean
           example: true
         spaceHeating:
-          type: string
-          example: 'Gas-fired central heating'
+          type: number
+          example: 9901.00
         waterHeating:
-          type: string
-          example: 'Electrical immersion heater'
+          type: number
+          example: 2654.00
         secondaryHeating:
           type: string
           example: 'Electric bar heater'
