@@ -1,6 +1,7 @@
 module UseCase
   class FindAssessmentsByPostcode
     class PostcodeNotValid < StandardError; end
+    class ParameterMissing < StandardError; end
 
     def initialize
       @assessments_gateway = Gateway::AssessmentsGateway.new
@@ -8,6 +9,8 @@ module UseCase
 
     def execute(postcode, assessment_types = [])
       postcode&.strip!&.upcase!
+
+      raise ParameterMissing if postcode.blank?
 
       postcode = postcode.insert(-4, " ") if postcode[-4] != " "
 

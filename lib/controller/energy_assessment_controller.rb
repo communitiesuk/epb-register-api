@@ -25,11 +25,13 @@ module Controller
     rescue StandardError => e
       case e
       when UseCase::FindAssessmentsByStreetNameAndTown::ParameterMissing
-        error_response(
-          400,
-          "MALFORMED_REQUEST",
-          "Required query params missing",
-        )
+        error_response 400,
+                       "MALFORMED_REQUEST",
+                       "Required query params missing"
+      when UseCase::FindAssessmentsByPostcode::ParameterMissing
+        error_response 400,
+                       "MALFORMED_REQUEST",
+                       "Required query params missing"
       else
         server_error(e.message)
       end

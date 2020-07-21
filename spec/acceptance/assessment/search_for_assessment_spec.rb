@@ -306,6 +306,20 @@ describe "Acceptance::Assessment::SearchForAssessments" do
 
       expect(response_json["data"]["assessments"][0]).to eq(nil)
     end
+
+    it "rejects a missing postcode" do
+      response_body = assessments_search_by_postcode("", [400]).body
+
+      expect(JSON.parse(response_body, symbolize_names: true)).to eq(
+        {
+          errors: [
+            {
+              code: "MALFORMED_REQUEST", title: "Required query params missing"
+            },
+          ],
+        },
+      )
+    end
   end
 
   context "searching by ID" do
