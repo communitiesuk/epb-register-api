@@ -58,11 +58,19 @@ module Gateway
             related_party_disclosure_text, cancelled_at, not_for_issue_at, lighting_cost_current,
           heating_cost_current, hot_water_cost_current, lighting_cost_potential, heating_cost_potential, hot_water_cost_potential
         FROM assessments
-        WHERE postcode = '#{ActiveRecord::Base.sanitize_sql(postcode)}'
+        WHERE postcode = $1
         AND cancelled_at IS NULL
         AND not_for_issue_at IS NULL
         AND opt_out = false
       SQL
+
+      binds = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "postcode",
+          postcode,
+          ActiveRecord::Type::String.new,
+        ),
+      ]
 
       unless assessment_types.nil? || assessment_types.empty?
         sanitized_assessment_types =
@@ -75,7 +83,8 @@ module Gateway
           sanitized_assessment_types.join("', '") + "')"
       end
 
-      response = Assessment.connection.execute(sql)
+      response = Assessment.connection.exec_query sql, "SQL", binds
+
       result = []
 
       response.each { |row| result << row_to_domain(row) }
