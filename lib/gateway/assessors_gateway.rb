@@ -203,8 +203,8 @@ module Gateway
     def search_by(
       name: "", max_response_size: 20, loose_match: false, exclude: []
     )
-      sql =
-        'SELECT
+      sql = <<-SQL
+        SELECT
           first_name, last_name, middle_names, date_of_birth, registered_by,
           scheme_assessor_id, telephone_number, email, b.name AS scheme_name,
           search_results_comparison_postcode, also_known_as, address_line1,
@@ -221,38 +221,55 @@ module Gateway
         LEFT JOIN schemes b ON(a.registered_by = b.scheme_id)
         WHERE
           b.active = true
-      '
+      SQL
 
       unless exclude.empty?
         sql << "AND scheme_assessor_id NOT IN('" + exclude.join("', '") + "')"
       end
 
+      binds = []
+
       if loose_match
         names = name.split(" ")
 
+        binds.concat [
+          ActiveRecord::Relation::QueryAttribute.new(
+            "first_name",
+            names[0] + "%",
+            ActiveRecord::Type::String.new,
+          ),
+          ActiveRecord::Relation::QueryAttribute.new(
+            "last_name",
+            names[1] + "%",
+            ActiveRecord::Type::String.new,
+          ),
+        ]
+
         sql <<
-          " AND((first_name ILIKE '#{
-            ActiveRecord::Base.sanitize_sql(names[0])
-          }%' AND last_name ILIKE '#{
-            ActiveRecord::Base.sanitize_sql(names[1])
-          }%')"
-        sql <<
-          " OR (first_name ILIKE '#{
-            ActiveRecord::Base.sanitize_sql(names[1])
-          }%' AND last_name ILIKE '#{
-            ActiveRecord::Base.sanitize_sql(names[0])
-          }%'))"
+          <<-SQL
+          AND((first_name ILIKE $1 AND last_name ILIKE $2)
+          OR (first_name ILIKE $2 AND last_name ILIKE $1))
+        SQL
       else
+        binds.concat [
+          ActiveRecord::Relation::QueryAttribute.new(
+            "first_name",
+            name,
+            ActiveRecord::Type::String.new,
+          ),
+        ]
+
         sql <<
-          " AND CONCAT(first_name, ' ', last_name) ILIKE '#{
-            ActiveRecord::Base.sanitize_sql(name)
-          }'"
+          <<-SQL
+          AND CONCAT(first_name, ' ', last_name) ILIKE $1
+        SQL
+
         if max_response_size.positive?
           sql << "LIMIT " + (max_response_size + 1).to_s
         end
       end
 
-      response = Assessor.connection.execute(sql)
+      response = Assessor.connection.exec_query sql, "SQL", binds
 
       result = []
       response.each { |row| result.push(row_to_assessor_domain(row).to_hash) }
