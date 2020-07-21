@@ -414,6 +414,74 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
+  /assessments/search:
+    get:
+      tags:
+        - Search
+        - Manage Assessments
+      summary: Search for assessments
+      description: 'Search for an assessment by
+                    EITHER:
+                     - a postcode AND assessment type
+                    OR
+                     - a street AND town AND assessment type
+                    OR
+                     - an assessment reference number (RRN)'
+      security:
+        - oauth:
+            - 'assessment:search'
+      parameters:
+        - in: query
+          name: postcode
+          description: The postcode of the address being searched for
+          schema:
+            $ref: '#/components/schemas/AddressPostcode'
+          example: 'SW1A 2AA'
+        - in: query
+          name: assessment_type[]
+          description: The type(s) of assessment being searched for
+          schema:
+            $ref: '#/components/schemas/AssessmentType'
+          example: 'RdSAP'
+        - in: query
+          name: street_name
+          description: The street of the assesssment being searched for
+          schema:
+            type: string
+          example: 'High Road'
+        - in: query
+          name: town
+          description: The city or town of the assesssment being searched for
+          schema:
+            $ref: '#/components/schemas/AddressTown'
+          example: 'Woking'
+        - in: query
+          name: assessment_id
+          description: The RRN of the assesssment being searched for
+          schema:
+            $ref: '#/components/schemas/AssessmentId'
+          example: '1234-2345-3456-4567-6789'
+      responses:
+        200:
+          description: Assessment search results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      assessments:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/DomesticEnergyAssessmentWithBand'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /assessments:
     post:
@@ -1524,15 +1592,16 @@ components:
 
     AssessmentType:
       type: string
-      example: 'domestic-epc'
+      example: 'RdSAP'
       enum:
-        - domestic-epc
-        - non-domestic-epc
-        - recommendation-report
-        - dec
-        - dec-recommendation-report
-        - ac-report
-        - ac-cert
+        - RdSAP
+        - SAP
+        - CEPC
+        - CEPC-RR
+        - DEC
+        - DEC-RR
+        - AC-CERT
+        - AC-REPORT
 
     DomesticEnergyAssessmentWithBand:
       allOf:
