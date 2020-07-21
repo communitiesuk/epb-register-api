@@ -3,6 +3,7 @@
 module Gateway
   class AssessmentsGateway
     class Assessment < ActiveRecord::Base; end
+
     class DomesticEpcEnergyImprovement < ActiveRecord::Base; end
 
     def valid_energy_rating(rating)
@@ -45,13 +46,8 @@ module Gateway
     end
 
     def search_by_postcode(postcode, assessment_types = [])
-      sanitized_assessment_types =
-        assessment_types.map do |assessment_type|
-          ActiveRecord::Base.sanitize_sql(assessment_type)
-        end
-
-      sql =
-        "SELECT
+      sql = <<-SQL
+        SELECT
             scheme_assessor_id, assessment_id, date_of_assessment, date_registered, dwelling_type,
             type_of_assessment, total_floor_area, current_energy_efficiency_rating,
             potential_energy_efficiency_rating, opt_out, postcode, date_of_expiry,
@@ -62,14 +58,23 @@ module Gateway
             related_party_disclosure_text, cancelled_at, not_for_issue_at, lighting_cost_current,
           heating_cost_current, hot_water_cost_current, lighting_cost_potential, heating_cost_potential, hot_water_cost_potential
         FROM assessments
-        WHERE postcode = '#{
-          ActiveRecord::Base.sanitize_sql(postcode)
-        }' AND type_of_assessment IN('" +
-        sanitized_assessment_types.join("', '") +
-        "')
-AND cancelled_at IS NULL
-AND not_for_issue_at IS NULL
-AND opt_out = false"
+        WHERE postcode = '#{ActiveRecord::Base.sanitize_sql(postcode)}'
+        AND cancelled_at IS NULL
+        AND not_for_issue_at IS NULL
+        AND opt_out = false
+      SQL
+
+      unless assessment_types.nil? || assessment_types.empty?
+        sanitized_assessment_types =
+          assessment_types.map do |assessment_type|
+            ActiveRecord::Base.sanitize_sql(assessment_type)
+          end
+
+        sql +=
+          " AND type_of_assessment IN('" +
+          sanitized_assessment_types.join("', '") + "')"
+      end
+
       response = Assessment.connection.execute(sql)
       result = []
 
@@ -129,7 +134,9 @@ AND opt_out = false"
       result
     end
 
-    def search_by_street_name_and_town(street_name, town, assessment_type, restrictive = true)
+    def search_by_street_name_and_town(
+      street_name, town, assessment_type, restrictive = true
+    )
       sql =
         "SELECT
           scheme_assessor_id, assessment_id, date_of_assessment, date_registered, dwelling_type,

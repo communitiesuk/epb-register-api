@@ -10,9 +10,11 @@ module UseCase
       raise ParameterMissing if street_name.blank? || town.blank?
 
       result =
-        @assessment_gateway.search_by_street_name_and_town(street_name,
-                                                           town,
-                                                           assessment_type)
+        @assessment_gateway.search_by_street_name_and_town(
+          street_name,
+          town,
+          assessment_type,
+        )
 
       { data: result.map(&:to_hash), search_query: [street_name, town] }
     end
