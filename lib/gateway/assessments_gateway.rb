@@ -146,8 +146,8 @@ module Gateway
     def search_by_street_name_and_town(
       street_name, town, assessment_type, restrictive = true
     )
-      sql =
-        "SELECT
+      sql = <<-SQL
+        SELECT
           scheme_assessor_id, assessment_id, date_of_assessment, date_registered, dwelling_type,
           type_of_assessment, total_floor_area, current_energy_efficiency_rating,
           potential_energy_efficiency_rating, opt_out, postcode, date_of_expiry,
@@ -158,13 +158,22 @@ module Gateway
           related_party_disclosure_text, cancelled_at, not_for_issue_at, lighting_cost_current,
           heating_cost_current, hot_water_cost_current, lighting_cost_potential, heating_cost_potential, hot_water_cost_potential
         FROM assessments
-        WHERE (address_line1 ILIKE '%#{
-          ActiveRecord::Base.sanitize_sql(street_name)
-        }' OR address_line2 ILIKE '%#{
-          ActiveRecord::Base.sanitize_sql(street_name)
-        }' OR address_line3 ILIKE '%#{
-          ActiveRecord::Base.sanitize_sql(street_name)
-        }') AND (town ILIKE '#{ActiveRecord::Base.sanitize_sql(town)}')"
+        WHERE (address_line1 ILIKE $1 OR address_line2 ILIKE $1 OR address_line3 ILIKE $1)
+          AND town ILIKE $2
+      SQL
+
+      binds = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "street",
+          street_name,
+          ActiveRecord::Type::String.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "town",
+          town,
+          ActiveRecord::Type::String.new,
+        ),
+      ]
 
       unless assessment_type.nil? || assessment_type.empty?
         ins = []
@@ -180,7 +189,7 @@ module Gateway
         sql += " AND opt_out = false"
       end
 
-      response = Assessment.connection.execute(sql)
+      response = Assessment.connection.exec_query sql, "SQL", binds
 
       result = []
       response.each { |row| result << row_to_domain(row) }
