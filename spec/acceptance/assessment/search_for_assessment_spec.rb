@@ -329,6 +329,15 @@ describe "Acceptance::Assessment::SearchForAssessments" do
                                      %w[assessment:search],
                                      []
     end
+
+    it "rejects invalid assessment types" do
+      assessments_search_by_postcode "A0 0AA",
+                                     [400],
+                                     true,
+                                     nil,
+                                     %w[assessment:search],
+                                     %w[rdap]
+    end
   end
 
   context "searching by ID" do

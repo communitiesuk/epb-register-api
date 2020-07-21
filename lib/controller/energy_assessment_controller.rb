@@ -28,6 +28,12 @@ module Controller
         error_response 400, "MALFORMED_REQUEST", "Required query params missing"
       when UseCase::FindAssessmentsByPostcode::ParameterMissing
         error_response 400, "MALFORMED_REQUEST", "Required query params missing"
+      when UseCase::FindAssessmentsByPostcode::AssessmentTypeNotValid
+        error_response(
+          400,
+          "MALFORMED_REQUEST",
+          "The requested assessment type is not valid",
+        )
       else
         server_error(e.message)
       end

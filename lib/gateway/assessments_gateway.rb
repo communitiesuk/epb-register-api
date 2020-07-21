@@ -6,6 +6,8 @@ module Gateway
 
     class DomesticEpcEnergyImprovement < ActiveRecord::Base; end
 
+    class InvalidAssessmentType < StandardError; end
+
     def valid_energy_rating(rating)
       rating.is_a?(Integer) && rating.positive?
     end
@@ -75,6 +77,19 @@ module Gateway
       unless assessment_types.nil? || assessment_types.empty?
         sanitized_assessment_types =
           assessment_types.map do |assessment_type|
+            unless %w[
+              RdSAP
+              SAP
+              CEPC
+              CEPC-RR
+              DEC
+              DEC-RR
+              AC-CERT
+              AC-REPORT
+            ].include? assessment_type
+              raise InvalidAssessmentType
+            end
+
             ActiveRecord::Base.sanitize_sql(assessment_type)
           end
 
