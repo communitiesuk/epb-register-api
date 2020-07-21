@@ -150,7 +150,7 @@ AND opt_out = false"
           ActiveRecord::Base.sanitize_sql(street_name)
         }') AND (town ILIKE '#{ActiveRecord::Base.sanitize_sql(town)}')"
 
-      unless assessment_type.empty?
+      unless assessment_type.nil? || assessment_type.empty?
         ins = []
         assessment_type.each do |type|
           ins.push("'" + ActiveRecord::Base.sanitize_sql(type) + "'")

@@ -525,6 +525,13 @@ describe "Acceptance::Assessment::SearchForAssessments" do
       )
     end
 
+    it "allows missing assessment types" do
+      assessments_search_by_street_name_and_town "Palmtree Road",
+                                                 "Brighton",
+                                                 [200],
+                                                 []
+    end
+
     it "returns matching assessments" do
       setup_scheme_and_lodge
       response =
