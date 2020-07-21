@@ -10,11 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_14_115002) do
+ActiveRecord::Schema.define(version: 2020_07_21_131250) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "plpgsql"
+
+  create_table "address_base", primary_key: "uprn", id: :string, force: :cascade do |t|
+    t.string "postcode"
+    t.string "address_line1"
+    t.string "address_line2"
+    t.string "address_line3"
+    t.string "address_line4"
+    t.string "town"
+    t.index ["postcode"], name: "index_address_base_on_postcode"
+  end
 
   create_table "assessments", primary_key: "assessment_id", id: :string, force: :cascade do |t|
     t.datetime "date_of_assessment"
