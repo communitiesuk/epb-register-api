@@ -476,6 +476,12 @@ paths:
                         type: array
                         items:
                           $ref: '#/components/schemas/DomesticEnergyAssessmentWithBand'
+        400:
+          description: Bad request - missing or malformed parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         403:
           description: Forbidden
           content:
