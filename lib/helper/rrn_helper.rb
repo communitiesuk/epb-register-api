@@ -8,18 +8,14 @@ module Helper
       rrn = rrn.strip
 
       # Remove all hyphens
-      rrn = rrn.tr('-','')
-      unless rrn.length == 20
-        raise RrnNotValid
-      end
+      rrn = rrn.tr("-", "")
+      raise RrnNotValid unless rrn.length == 20
 
       # Add a hyphen every four characters to give desired RRN format
-      rrn = rrn.scan(/.{1,4}/).join('-')
-      unless Regexp.new(VALID_RRN).match(rrn)
-        raise RrnNotValid
-      end
+      rrn = rrn.scan(/.{1,4}/).join("-")
+      raise RrnNotValid unless Regexp.new(VALID_RRN).match(rrn)
 
-      return rrn
+      rrn
     end
   end
 end
