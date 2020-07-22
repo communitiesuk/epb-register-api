@@ -316,7 +316,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
         {
           errors: [
             {
-              code: "MALFORMED_REQUEST", title: "Required query params missing"
+              code: "INVALID_REQUEST", title: "Required query params missing"
             },
           ],
         },
@@ -354,7 +354,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
         {
           errors: [
             {
-              code: "MALFORMED_REQUEST",
+              code: "INVALID_REQUEST",
               title: "The requested assessment id is not valid",
             },
           ],
@@ -543,7 +543,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
         {
           errors: [
             {
-              code: "MALFORMED_REQUEST", title: "Required query params missing"
+              code: "INVALID_REQUEST", title: "Required query params missing"
             },
           ],
         },
@@ -557,7 +557,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
         {
           errors: [
             {
-              code: "MALFORMED_REQUEST", title: "Required query params missing"
+              code: "INVALID_REQUEST", title: "Required query params missing"
             },
           ],
         },

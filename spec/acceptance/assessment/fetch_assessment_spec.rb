@@ -238,7 +238,7 @@ describe "Acceptance::Assessment" do
         {
           "errors" => [
             {
-              "code" => "MALFORMED_REQUEST",
+              "code" => "INVALID_REQUEST",
               "title" => "The requested assessment id is not valid",
             },
           ],
