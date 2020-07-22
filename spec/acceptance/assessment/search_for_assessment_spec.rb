@@ -343,6 +343,25 @@ describe "Acceptance::Assessment::SearchForAssessments" do
   end
 
   context "searching by ID" do
+    it "returns an error for badly formed IDs" do
+      response_body =
+        domestic_assessments_search_by_assessment_id(
+          "123-123-123-123-123",
+          [400],
+        ).body
+
+      expect(JSON.parse(response_body, symbolize_names: true)).to eq(
+        {
+          errors: [
+            {
+              code: "MALFORMED_REQUEST",
+              title: "The requested assessment id is not valid",
+            },
+          ],
+        },
+      )
+    end
+
     it "returns the matching assessment" do
       setup_scheme_and_lodge
       response =
