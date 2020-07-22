@@ -131,23 +131,19 @@ module UseCase
           xml: data[:raw_data],
         )
 
+      non_dom_cepc_rr = {
+        short_payback_recommendation: data[:short_payback_recommendation],
+        short_payback_potential_impact: data[:short_payback_potential_impact],
+        medium_payback_recommendation: data[:medium_payback_recommendation],
+        medium_payback_potential_impact: data[:medium_payback_potential_impact],
+        long_payback_recommendation: data[:long_payback_recommendation],
+        long_payback_potential_impact: data[:long_payback_potential_impact],
+        other_payback_recommendation: data[:other_payback_recommendation],
+        other_payback_potential_impact: data[:other_payback_potential_impact],
+      }
+
       if assessment.is_type?(Domain::CepcRrAssessment)
-        assessment.set(
-          :non_dom_cepc_rr,
-          {
-            short_payback_recommendation: data[:short_payback_recommendation],
-            short_payback_potential_impact:
-              data[:short_payback_potential_impact],
-            medium_payback_recommendation: data[:medium_payback_recommendation],
-            medium_payback_potential_impact:
-              data[:medium_payback_potential_impact],
-            long_payback_recommendation: data[:long_payback_recommendation],
-            long_payback_potential_impact: data[:long_payback_potential_impact],
-            other_payback_recommendation: data[:other_payback_recommendation],
-            other_payback_potential_impact:
-              data[:other_payback_potential_impact],
-          },
-        )
+        assessment.set(:non_dom_cepc_rr, non_dom_cepc_rr)
       end
 
       if assessment.is_type?(Domain::RdsapAssessment) ||
