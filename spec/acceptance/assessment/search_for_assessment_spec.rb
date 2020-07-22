@@ -48,19 +48,21 @@ describe "Acceptance::Assessment::SearchForAssessments" do
 
   context "searching by postcode" do
     it "can handle a lowercase postcode" do
-      response = assessments_search_by_postcode("e20sz")
+      setup_scheme_and_lodge
+      response = assessments_search_by_postcode("A00aa")
 
       response_json = JSON.parse(response.body)
 
-      expect(response_json["data"]["assessments"]).to be_an(Array)
+      expect(response_json["data"]["assessments"].length).to eq 1
     end
 
     it "can handle a postcode with excessive whitespace" do
-      response = assessments_search_by_postcode("  SE1 7EZ    ", [200])
+      setup_scheme_and_lodge
+      response = assessments_search_by_postcode("  A0 0AA    ", [200])
 
       response_json = JSON.parse(response.body)
 
-      expect(response_json["data"]["assessments"]).to be_an(Array)
+      expect(response_json["data"]["assessments"].length).to eq 1
     end
 
     it "returns matching assessments" do

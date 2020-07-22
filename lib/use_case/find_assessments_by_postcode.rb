@@ -9,7 +9,8 @@ module UseCase
     end
 
     def execute(postcode, assessment_types = [])
-      postcode&.strip!&.upcase!
+      postcode&.strip!
+      postcode&.upcase!
 
       raise ParameterMissing if postcode.blank?
 
