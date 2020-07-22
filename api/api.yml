@@ -652,6 +652,12 @@ paths:
                 properties:
                   data:
                     $ref: '#/components/schemas/Empty'
+        400:
+          description: Bad request - The assessmentId parameter is badly formatted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         403:
           description: Forbidden
           content:
