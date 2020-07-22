@@ -318,6 +318,28 @@
     </CEPC:Report-Header>
     <CEPC:Formatted-Report>ZGVmYXVsdA==</CEPC:Formatted-Report>
     <CEPC:Recommendations-Report>
+      <CEPC:RR-Recommendations>
+        <CEPC:Short-Payback>
+          <CEPC:Recommendation-Code>1</CEPC:Recommendation-Code>
+          <CEPC:Recommendation>SOME RECOMMENDATION</CEPC:Recommendation>
+          <CEPC:CO2-Impact>HIGH</CEPC:CO2-Impact>
+        </CEPC:Short-Payback>
+        <CEPC:Medium-Payback>
+          <CEPC:Recommendation-Code>2</CEPC:Recommendation-Code>
+          <CEPC:Recommendation>SOME RECOMMENDATION</CEPC:Recommendation>
+          <CEPC:CO2-Impact>HIGH</CEPC:CO2-Impact>
+        </CEPC:Medium-Payback>
+        <CEPC:Long-Payback>
+          <CEPC:Recommendation-Code>3</CEPC:Recommendation-Code>
+          <CEPC:Recommendation>SOME RECOMMENDATION</CEPC:Recommendation>
+          <CEPC:CO2-Impact>HIGH</CEPC:CO2-Impact>
+        </CEPC:Long-Payback>
+        <CEPC:Other-Payback>
+          <CEPC:Recommendation-Code>4</CEPC:Recommendation-Code>
+          <CEPC:Recommendation>SOME RECOMMENDATION</CEPC:Recommendation>
+          <CEPC:CO2-Impact>HIGH</CEPC:CO2-Impact>
+        </CEPC:Other-Payback>
+      </CEPC:RR-Recommendations>
       <CEPC:Technical-Information>
         <CEPC:Floor-Area>10</CEPC:Floor-Area>
         <CEPC:Building-Environment>Natural Ventilation Only</CEPC:Building-Environment>

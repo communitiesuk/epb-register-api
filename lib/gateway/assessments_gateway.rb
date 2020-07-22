@@ -58,7 +58,8 @@ module Gateway
             impact_of_cavity_insulation, impact_of_solid_wall_insulation, tenure, property_age_band,
             current_carbon_emission, potential_carbon_emission, property_summary, related_party_disclosure_number,
             related_party_disclosure_text, cancelled_at, not_for_issue_at, lighting_cost_current,
-          heating_cost_current, hot_water_cost_current, lighting_cost_potential, heating_cost_potential, hot_water_cost_potential
+          heating_cost_current, hot_water_cost_current, lighting_cost_potential, heating_cost_potential, hot_water_cost_potential,
+          non_dom_cepc_rr
         FROM assessments
         WHERE postcode = $1
         AND cancelled_at IS NULL
@@ -120,7 +121,8 @@ module Gateway
           impact_of_cavity_insulation, impact_of_solid_wall_insulation, tenure, property_age_band,
           current_carbon_emission, potential_carbon_emission, property_summary, related_party_disclosure_number,
           related_party_disclosure_text, cancelled_at, not_for_issue_at, address_id, lighting_cost_current,
-          heating_cost_current, hot_water_cost_current, lighting_cost_potential, heating_cost_potential, hot_water_cost_potential
+          heating_cost_current, hot_water_cost_current, lighting_cost_potential, heating_cost_potential, hot_water_cost_potential,
+          non_dom_cepc_rr
         FROM assessments
         WHERE assessment_id = '#{
           ActiveRecord::Base.sanitize_sql(assessment_id)
@@ -171,7 +173,8 @@ module Gateway
           impact_of_cavity_insulation, impact_of_solid_wall_insulation, tenure, property_age_band,
           current_carbon_emission, potential_carbon_emission, property_summary, related_party_disclosure_number,
           related_party_disclosure_text, cancelled_at, not_for_issue_at, lighting_cost_current,
-          heating_cost_current, hot_water_cost_current, lighting_cost_potential, heating_cost_potential, hot_water_cost_potential
+          heating_cost_current, hot_water_cost_current, lighting_cost_potential, heating_cost_potential, hot_water_cost_potential,
+          non_dom_cepc_rr
         FROM assessments
         WHERE (address_line1 ILIKE $1 OR address_line2 ILIKE $1 OR address_line3 ILIKE $1)
           AND town ILIKE $2
@@ -281,7 +284,12 @@ module Gateway
       lighting_cost_potential = row.delete(:lighting_cost_potential)
       heating_cost_potential = row.delete(:heating_cost_potential)
       hot_water_cost_potential = row.delete(:hot_water_cost_potential)
+      non_dom_cepc_rr = row.delete(:non_dom_cepc_rr)
       domain = Domain::Assessment.new(row)
+
+      if domain.is_type?(Domain::CepcRrAssessment)
+        domain.set(:non_dom_cepc_rr, JSON.parse(non_dom_cepc_rr))
+      end
 
       if domain.is_type?(Domain::RdsapAssessment) ||
           domain.is_type?(Domain::SapAssessment)

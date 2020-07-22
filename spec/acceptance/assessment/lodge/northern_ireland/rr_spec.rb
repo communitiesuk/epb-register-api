@@ -161,6 +161,16 @@ describe "Acceptance::LodgeRRNIEnergyAssessment" do
             },
           ],
           "status" => "ENTERED",
+          "nonDomCepcRr" => {
+            "longPaybackPotentialImpact" => "HIGH",
+            "longPaybackRecommendation" => "SOME RECOMMENDATION",
+            "mediumPaybackPotentialImpact" => "HIGH",
+            "mediumPaybackRecommendation" => "SOME RECOMMENDATION",
+            "otherPaybackPotentialImpact" => "HIGH",
+            "otherPaybackRecommendation" => "SOME RECOMMENDATION",
+            "shortPaybackPotentialImpact" => "HIGH",
+            "shortPaybackRecommendation" => "SOME RECOMMENDATION",
+          },
         }
 
         expect(response["data"]).to eq(expected_response)

@@ -32,6 +32,28 @@
     </Report-Header>
     <Formatted-Report>ZGVmYXVsdA==</Formatted-Report>
     <Recommendations-Report>
+      <RR-Recommendations>
+        <Short-Payback>
+          <Recommendation-Code>1</Recommendation-Code>
+          <Recommendation>SOME RECOMMENDATION</Recommendation>
+          <CO2-Impact>HIGH</CO2-Impact>
+        </Short-Payback>
+        <Medium-Payback>
+          <Recommendation-Code>2</Recommendation-Code>
+          <Recommendation>SOME RECOMMENDATION</Recommendation>
+          <CO2-Impact>HIGH</CO2-Impact>
+        </Medium-Payback>
+        <Long-Payback>
+          <Recommendation-Code>3</Recommendation-Code>
+          <Recommendation>SOME RECOMMENDATION</Recommendation>
+          <CO2-Impact>HIGH</CO2-Impact>
+        </Long-Payback>
+        <Other-Payback>
+          <Recommendation-Code>4</Recommendation-Code>
+          <Recommendation>SOME RECOMMENDATION</Recommendation>
+          <CO2-Impact>HIGH</CO2-Impact>
+        </Other-Payback>
+      </RR-Recommendations>
       <Technical-Information>
         <Floor-Area>10</Floor-Area>
         <Building-Environment>Natural Ventilation Only</Building-Environment>

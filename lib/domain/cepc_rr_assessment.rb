@@ -47,7 +47,8 @@ module Domain
       not_for_issue_at: nil,
       scheme_assessor_id: nil,
       xml: nil,
-      related_assessments: nil
+      related_assessments: nil,
+      non_dom_cepc_rr: {}
     )
       @migrated = migrated
       @date_of_assessment =
@@ -103,6 +104,7 @@ module Domain
       @scheme_assessor_id = scheme_assessor_id
       @xml = xml
       @related_assessments = related_assessments
+      @non_dom_cepc_rr = non_dom_cepc_rr
     end
 
     def get_energy_rating_band(number)
@@ -172,6 +174,7 @@ module Domain
           else
             "ENTERED"
           end,
+        non_dom_cepc_rr: @non_dom_cepc_rr,
       }
     end
 
@@ -208,6 +211,7 @@ module Domain
         property_summary: @property_summary,
         related_party_disclosure_number: @related_party_disclosure_number,
         related_party_disclosure_text: @related_party_disclosure_text,
+        non_dom_cepc_rr: @non_dom_cepc_rr,
       }
     end
 
