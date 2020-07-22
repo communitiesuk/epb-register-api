@@ -9,7 +9,8 @@ module UseCase
     end
 
     def execute(postcode, qualifications)
-      postcode&.strip!&.upcase!
+      postcode&.strip!
+      postcode&.upcase!
 
       unless Regexp.new(Helper::RegexHelper::POSTCODE, Regexp::IGNORECASE)
                .match(postcode)

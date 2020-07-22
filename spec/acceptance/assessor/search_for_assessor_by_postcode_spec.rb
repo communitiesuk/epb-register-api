@@ -90,41 +90,62 @@ describe "Acceptance::SearchForAssessor" do
   end
 
   context "when a search postcode is valid" do
-    it "returns status 200 for a normal looking postcode" do
+    it "allows searching using a normal looking postcode" do
       add_postcodes("SE1 7EZ")
-      assessors_search("SE17EZ", "domesticRdSap", [200])
+      scheme_id = add_scheme_and_get_id
+      add_assessor scheme_id,
+                   "ASSESSOR999",
+                   valid_assessor_with_contact_request_body
+
+      response = assessors_search("SE1 7EZ", "domesticRdSap", [200])
+      response_json = JSON.parse(response.body)
+
+      expect(response_json["data"]["assessors"].length).to eq 1
     end
 
-    it "returns status 200 for a postcode with excessive spaces" do
+    it "allows searching using a postcode with excessive spaces" do
       add_postcodes("SE1 7EZ")
-      assessors_search("  SE1 7EZ   ", "domesticRdSap", [200])
+      scheme_id = add_scheme_and_get_id
+      add_assessor scheme_id,
+                   "ASSESSOR999",
+                   valid_assessor_with_contact_request_body
+
+      response = assessors_search("  SE1 7EZ   ", "domesticRdSap", [200])
+      response_json = JSON.parse(response.body)
+
+      expect(response_json["data"]["assessors"].length).to eq 1
     end
 
-    it "looks as it should" do
+    it "allows searching using a postcode with no spaces" do
       add_postcodes("SE1 7EZ")
+      scheme_id = add_scheme_and_get_id
+      add_assessor scheme_id,
+                   "ASSESSOR999",
+                   valid_assessor_with_contact_request_body
 
       response = assessors_search("SE17EZ", "domesticRdSap")
-
       response_json = JSON.parse(response.body)
 
-      expect(response_json["data"]["assessors"]).to be_an(Array)
+      expect(response_json["data"]["assessors"].length).to eq 1
     end
 
-    it "can handle a lowercase postcode" do
-      add_postcodes("E2 0SZ")
+    it "allows searching using a lowercase postcode" do
+      add_postcodes("SE1 7EZ")
+      scheme_id = add_scheme_and_get_id
+      add_assessor scheme_id,
+                   "ASSESSOR999",
+                   valid_assessor_with_contact_request_body
 
-      response = assessors_search("e20sz", "domesticRdSap")
-
+      response = assessors_search("se1 7ez", "domesticRdSap")
       response_json = JSON.parse(response.body)
 
-      expect(response_json["data"]["assessors"]).to be_an(Array)
+      expect(response_json["data"]["assessors"].length).to eq 1
     end
 
     it "has the properties we expect" do
       add_postcodes("SE1 7EZ")
 
       response = assessors_search("SE17EZ", "domesticRdSap")
-
       response_json = JSON.parse(response.body)
 
       expect(response_json).to include("data", "meta")
