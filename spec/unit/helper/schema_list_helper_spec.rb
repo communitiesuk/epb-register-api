@@ -2,7 +2,7 @@ describe Helper::SchemaListHelper do
   let(:valid_schema_name) { "RdSAP-Schema-20.0.0" }
 
   context "when checking a schema exists" do
-    it "will return true if it exisits under our schema list" do
+    it "will return true if it exists under our schema list" do
       result = described_class.new(valid_schema_name).schema_exists?
       expect(result).to eq(true)
     end
