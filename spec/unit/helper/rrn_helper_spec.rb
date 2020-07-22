@@ -20,7 +20,9 @@ describe Helper::RrnHelper do
       describe "   1234-5678123-4567-81234     " do
         it "returns normalised RRN 1234-5678-1234-5678-1234" do
           expect(
-            described_class.normalise_rrn_format("   1234-5678123-4567-81234     "),
+            described_class.normalise_rrn_format(
+              "   1234-5678123-4567-81234     ",
+            ),
           ).to eq("1234-5678-1234-5678-1234")
         end
       end
@@ -28,7 +30,9 @@ describe Helper::RrnHelper do
       describe "   1-2-3-4-5-6-7-8-1-2-3-4-5-6-7-8-1-2-3-4    " do
         it "returns normalised RRN 1234-5678-1234-5678-1234" do
           expect(
-            described_class.normalise_rrn_format("   1-2-3-4-5-6-7-8-1-2-3-4-5-6-7-8-1-2-3-4    "),
+            described_class.normalise_rrn_format(
+              "   1-2-3-4-5-6-7-8-1-2-3-4-5-6-7-8-1-2-3-4    ",
+            ),
           ).to eq("1234-5678-1234-5678-1234")
         end
       end

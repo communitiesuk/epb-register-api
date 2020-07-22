@@ -207,10 +207,12 @@ describe "Acceptance::Assessment" do
   end
 
   context "when a domestic assessment doesnt exist" do
-    let(:response) { JSON.parse fetch_assessment("DOESNT-EXIST", [404]).body }
+    let(:response) do
+      JSON.parse fetch_assessment("9999-9999-9999-9999-9999", [404]).body
+    end
 
     it "returns status 404 for a get" do
-      fetch_assessment("DOESNT-EXIST", [404])
+      fetch_assessment("9999-9999-9999-9999-9999", [404])
     end
 
     it "returns an error message structure" do
@@ -218,6 +220,27 @@ describe "Acceptance::Assessment" do
         {
           "errors" => [
             { "code" => "NOT_FOUND", "title" => "Assessment not found" },
+          ],
+        },
+      )
+    end
+  end
+
+  context "when the assessment ID is badly formatted" do
+    let(:response) { JSON.parse fetch_assessment("NOT-AN-RRN", [400]).body }
+
+    it "returns status 400 for a get" do
+      fetch_assessment("NOT-AN-RRN", [400])
+    end
+
+    it "returns an error message structure" do
+      expect(response).to eq(
+        {
+          "errors" => [
+            {
+              "code" => "MALFORMED_REQUEST",
+              "title" => "The requested assessment id is not valid",
+            },
           ],
         },
       )
@@ -243,6 +266,13 @@ describe "Acceptance::Assessment" do
 
     it "returns the assessment details" do
       expect(response["data"]).to eq(
+        JSON.parse(expected_sap_response(scheme_id).to_json),
+      )
+    end
+
+    it "can be fetched using the 20 digit RRN without hyphens" do
+      response_body = JSON.parse fetch_assessment("00000000000000000000").body
+      expect(response_body["data"]).to eq(
         JSON.parse(expected_sap_response(scheme_id).to_json),
       )
     end

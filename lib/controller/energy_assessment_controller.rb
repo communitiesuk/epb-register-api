@@ -200,6 +200,12 @@ module Controller
         not_found_error("Assessment not found")
       when UseCase::FetchAssessment::AssessmentGone
         gone_error("Assessment not for issue")
+      when Helper::RrnHelper::RrnNotValid
+        error_response(
+          400,
+          "MALFORMED_REQUEST",
+          "The requested assessment id is not valid",
+        )
       else
         server_error(e)
       end

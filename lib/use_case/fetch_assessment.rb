@@ -12,6 +12,7 @@ module UseCase
     end
 
     def execute(assessment_id, xml = false)
+      assessment_id = Helper::RrnHelper.normalise_rrn_format(assessment_id)
       assessments =
         @assessments_gateway.search_by_assessment_id assessment_id, false
 
