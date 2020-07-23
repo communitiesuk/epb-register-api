@@ -34,22 +34,19 @@ task :import_address_base do
 
     if csv_contents.size > 0
       address_base = CSV.parse(csv_contents)
-      ActiveRecord::Base.transaction do
-        address_base.each do |row|
-          query = "INSERT INTO
-              address_base
-              VALUES (
-                  '#{ActiveRecord::Base.sanitize_sql(row[0])}',
-                  '#{ActiveRecord::Base.sanitize_sql(row[64])}',
-                  '#{ActiveRecord::Base.sanitize_sql(row[34])}',
-                  '#{ActiveRecord::Base.sanitize_sql([row[28], row[24], row[25], row[26], row[27]].reject(&:blank?).join(" "))}',
-                  '#{ActiveRecord::Base.sanitize_sql([row[34], row[30], row[31], row[32], row[33]].reject(&:blank?).join(" "))}',
-                  '#{ActiveRecord::Base.sanitize_sql(row[49])}',
-                  '#{ActiveRecord::Base.sanitize_sql(row[60])}'
-              )"
-
-          ActiveRecord::Base.connection.execute(query)
-        end
+      address_base.each do |row|
+        query = "INSERT INTO
+            address_base
+            VALUES (
+                '#{ActiveRecord::Base.sanitize_sql(row[0])}',
+                '#{ActiveRecord::Base.sanitize_sql(row[64])}',
+                '#{ActiveRecord::Base.sanitize_sql(row[34])}',
+                '#{ActiveRecord::Base.sanitize_sql([row[28], row[24], row[25], row[26], row[27]].reject(&:blank?).join(" "))}',
+                '#{ActiveRecord::Base.sanitize_sql([row[34], row[30], row[31], row[32], row[33]].reject(&:blank?).join(" "))}',
+                '#{ActiveRecord::Base.sanitize_sql(row[49])}',
+                '#{ActiveRecord::Base.sanitize_sql(row[60])}'
+            )"
+        ActiveRecord::Base.connection.execute(query)
       end
     end
   end
