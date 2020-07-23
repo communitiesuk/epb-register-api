@@ -315,9 +315,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
       expect(JSON.parse(response_body, symbolize_names: true)).to eq(
         {
           errors: [
-            {
-              code: "INVALID_REQUEST", title: "Required query params missing"
-            },
+            { code: "INVALID_REQUEST", title: "Required query params missing" },
           ],
         },
       )
@@ -542,9 +540,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
       expect(JSON.parse(response_body, symbolize_names: true)).to eq(
         {
           errors: [
-            {
-              code: "INVALID_REQUEST", title: "Required query params missing"
-            },
+            { code: "INVALID_REQUEST", title: "Required query params missing" },
           ],
         },
       )
@@ -556,9 +552,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
       expect(JSON.parse(response_body, symbolize_names: true)).to eq(
         {
           errors: [
-            {
-              code: "INVALID_REQUEST", title: "Required query params missing"
-            },
+            { code: "INVALID_REQUEST", title: "Required query params missing" },
           ],
         },
       )

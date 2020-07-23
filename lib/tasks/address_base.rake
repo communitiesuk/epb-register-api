@@ -37,8 +37,8 @@ task :import_green_deal_plans do
                 '#{ActiveRecord::Base.sanitize_sql(row[0])}',
                 '#{ActiveRecord::Base.sanitize_sql(row[64])}',
                 '#{ActiveRecord::Base.sanitize_sql(row[34])}',
-                '#{ActiveRecord::Base.sanitize_sql([row[28], row[24], row[25], row[26], row[27]].reject(&:empty?).join(" "))}',
-                '#{ActiveRecord::Base.sanitize_sql([row[34], row[30], row[31], row[32], row[33]].reject(&:empty?).join(" "))}',
+                '#{ActiveRecord::Base.sanitize_sql([row[28], row[24], row[25], row[26], row[27]].reject(&:empty?).join(' '))}',
+                '#{ActiveRecord::Base.sanitize_sql([row[34], row[30], row[31], row[32], row[33]].reject(&:empty?).join(' '))}',
                 '#{ActiveRecord::Base.sanitize_sql(row[49])}',
                 '#{ActiveRecord::Base.sanitize_sql(row[60])}'
             )"
