@@ -1,5 +1,6 @@
 require "openssl"
 require "csv"
+require "zip"
 
 desc "Truncate AddressBase data"
 
@@ -9,7 +10,7 @@ end
 
 desc "Import AddressBase data"
 
-task :import_green_deal_plans do
+task :import_address_base do
   ActiveRecord::Base.logger = nil
 
   uri = URI(ENV["url"])
@@ -26,23 +27,30 @@ task :import_green_deal_plans do
     http.request request
   end
 
-  address_base = CSV.parse(raw_address_base.body)
+  Zip::InputStream.open(StringIO.new(raw_address_base.body)) do |io|
+    io.get_next_entry
 
-  ActiveRecord::Base.transaction do
-    address_base.each do |row|
-      puts row
-      query = "INSERT INTO
-            address_base
-            VALUES (
-                '#{ActiveRecord::Base.sanitize_sql(row[0])}',
-                '#{ActiveRecord::Base.sanitize_sql(row[64])}',
-                '#{ActiveRecord::Base.sanitize_sql(row[34])}',
-                '#{ActiveRecord::Base.sanitize_sql([row[28], row[24], row[25], row[26], row[27]].reject(&:empty?).join(' '))}',
-                '#{ActiveRecord::Base.sanitize_sql([row[34], row[30], row[31], row[32], row[33]].reject(&:empty?).join(' '))}',
-                '#{ActiveRecord::Base.sanitize_sql(row[49])}',
-                '#{ActiveRecord::Base.sanitize_sql(row[60])}'
-            )"
-      ActiveRecord::Base.connection.execute(query)
+    csv_contents = io.read
+
+    if csv_contents.size > 0
+      address_base = CSV.parse(csv_contents)
+      ActiveRecord::Base.transaction do
+        address_base.each do |row|
+          query = "INSERT INTO
+              address_base
+              VALUES (
+                  '#{ActiveRecord::Base.sanitize_sql(row[0])}',
+                  '#{ActiveRecord::Base.sanitize_sql(row[64])}',
+                  '#{ActiveRecord::Base.sanitize_sql(row[34])}',
+                  '#{ActiveRecord::Base.sanitize_sql([row[28], row[24], row[25], row[26], row[27]].reject(&:blank?).join(" "))}',
+                  '#{ActiveRecord::Base.sanitize_sql([row[34], row[30], row[31], row[32], row[33]].reject(&:blank?).join(" "))}',
+                  '#{ActiveRecord::Base.sanitize_sql(row[49])}',
+                  '#{ActiveRecord::Base.sanitize_sql(row[60])}'
+              )"
+
+          ActiveRecord::Base.connection.execute(query)
+        end
+      end
     end
   end
 end
