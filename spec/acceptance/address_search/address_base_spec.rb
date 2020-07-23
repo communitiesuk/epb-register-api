@@ -10,15 +10,15 @@ describe "Acceptance::AddressBase" do
 
     let(:response) do
       JSON.parse(
-          assertive_get(
-              "/api/search/addresses?postcode=A0%200AA",
-              [200],
-              true,
-              nil,
-              %w[address:search],
-              ).body,
-          symbolize_names: true,
-          )
+        assertive_get(
+          "/api/search/addresses?postcode=A0%200AA",
+          [200],
+          true,
+          nil,
+          %w[address:search],
+        ).body,
+        symbolize_names: true,
+      )
     end
 
     before do
@@ -88,18 +88,44 @@ describe "Acceptance::AddressBase" do
       )
     end
 
-    it 'returns a valid address when a postcode is searched for ' do
+    it "returns all address when at that postcode " do
       expect(response[:data][:addresses]).to eq(
-                                                    {
-                                                        :addressLine1 => "5 Grimal Place",
-                                                        :addressLine2 => "Skewit Road",
-                                                        :addressLine3 => "",
-                                                        :addressLine4 => "",
-                                                        :postcode => "A0 0AA",
-                                                        :town => "London",
-                                                        :uprn => "73546792",
-                                                    },
-                                                    )
+        [
+          {
+            line1: "5 Grimal Place",
+            line2: "Skewit Road",
+            line3: nil,
+            line4: nil,
+            postcode: "A0 0AA",
+            town: "London",
+            addressId: "73546792",
+            source: "ADDRESS_BASE",
+            existingAssessments: nil,
+          },
+          {
+            line1: "7 Grimal Place",
+            line2: "Skewit Road",
+            line3: nil,
+            line4: nil,
+            postcode: "A0 0AA",
+            town: "London",
+            addressId: "73546793",
+            source: "ADDRESS_BASE",
+            existingAssessments: nil,
+          },
+          {
+            line1: "9 Grimal Place",
+            line2: "Skewit Road",
+            line3: nil,
+            line4: nil,
+            postcode: "A0 0AA",
+            town: "London",
+            addressId: "73546794",
+            source: "ADDRESS_BASE",
+            existingAssessments: nil,
+          },
+        ],
+      )
     end
   end
 end
