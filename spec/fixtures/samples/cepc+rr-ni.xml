@@ -329,6 +329,11 @@
           <CEPC:Recommendation>SOME RECOMMENDATION</CEPC:Recommendation>
           <CEPC:CO2-Impact>HIGH</CEPC:CO2-Impact>
         </CEPC:Medium-Payback>
+        <CEPC:Medium-Payback>
+          <CEPC:Recommendation-Code>2</CEPC:Recommendation-Code>
+          <CEPC:Recommendation>ANOTHER MEDIUM RECOMMENDATION</CEPC:Recommendation>
+          <CEPC:CO2-Impact>HIGH</CEPC:CO2-Impact>
+        </CEPC:Medium-Payback>
         <CEPC:Long-Payback>
           <CEPC:Recommendation-Code>3</CEPC:Recommendation-Code>
           <CEPC:Recommendation>SOME RECOMMENDATION</CEPC:Recommendation>
