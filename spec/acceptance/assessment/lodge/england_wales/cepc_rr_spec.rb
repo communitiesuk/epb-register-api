@@ -225,14 +225,26 @@ describe "Acceptance::LodgeCEPC+RREnergyAssessment" do
           ],
           "status" => "ENTERED",
           "nonDomCepcRr" => {
-            "longPaybackPotentialImpact" => "HIGH",
-            "longPaybackRecommendation" => "SOME RECOMMENDATION",
-            "mediumPaybackPotentialImpact" => "HIGH",
-            "mediumPaybackRecommendation" => "SOME RECOMMENDATION",
-            "otherPaybackPotentialImpact" => "HIGH",
-            "otherPaybackRecommendation" => "SOME RECOMMENDATION",
-            "shortPaybackPotentialImpact" => "HIGH",
-            "shortPaybackRecommendation" => "SOME RECOMMENDATION",
+            "longPaybackPotentialImpact" => [{ "impact" => "HIGH" }],
+            "longPaybackRecommendation" => [
+              { "recommendation" => "SOME RECOMMENDATION" },
+            ],
+            "mediumPaybackPotentialImpact" => [{ "impact" => "HIGH" }],
+            "mediumPaybackRecommendation" => [
+              { "recommendation" => "SOME RECOMMENDATION" },
+            ],
+            "otherPaybackPotentialImpact" => [{ "impact" => "HIGH" }],
+            "otherPaybackRecommendation" => [
+              { "recommendation" => "SOME RECOMMENDATION" },
+            ],
+            "shortPaybackPotentialImpact" => [
+              { "impact" => "HIGH" },
+              { "impact" => "LOW" },
+            ],
+            "shortPaybackRecommendation" => [
+              { "recommendation" => "SOME RECOMMENDATION" },
+              { "recommendation" => "ANOTHER SHORT RECOMMENDATION" },
+            ],
           },
         }
 

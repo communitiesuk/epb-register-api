@@ -41,6 +41,11 @@
           <Recommendation>SOME RECOMMENDATION</Recommendation>
           <CO2-Impact>HIGH</CO2-Impact>
         </Medium-Payback>
+         <Medium-Payback>
+          <Recommendation-Code>2</Recommendation-Code>
+          <Recommendation>ANOTHER MEDIUM RECOMMENDATION</Recommendation>
+          <CO2-Impact>MEDIUM</CO2-Impact>
+        </Medium-Payback>
         <Long-Payback>
           <Recommendation-Code>3</Recommendation-Code>
           <Recommendation>SOME RECOMMENDATION</Recommendation>
