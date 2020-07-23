@@ -12,7 +12,8 @@ module Gateway
             address_line3,
             address_line4,
             town,
-            postcode
+            postcode,
+            uprn
           FROM address_base
           WHERE
             LOWER(REPLACE(postcode, ' ', '')) = $1"
@@ -24,6 +25,8 @@ module Gateway
               ActiveRecord::Type::String.new,
               ),
       ]
+
+      ActiveRecord::Base.connection.exec_query sql, "SQL", binds
     end
   end
 end
