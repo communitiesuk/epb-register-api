@@ -7,7 +7,7 @@ module Gateway
     TOWN_PERMISSIVENESS = "0.3".freeze
 
     def search_by_postcode(postcode, building_name_number, address_type)
-      postcode = postcode.delete " "
+      postcode = postcode.downcase.delete " "
       sql =
         "SELECT
             assessment_id,
@@ -28,7 +28,7 @@ module Gateway
       binds = [
         ActiveRecord::Relation::QueryAttribute.new(
           "postcode",
-          postcode.downcase,
+          postcode,
           ActiveRecord::Type::String.new,
         ),
       ]
