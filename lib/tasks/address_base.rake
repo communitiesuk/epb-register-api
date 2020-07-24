@@ -38,15 +38,55 @@ task :import_address_base do
         query = "INSERT INTO
             address_base
             VALUES (
-                '#{ActiveRecord::Base.sanitize_sql(row[0])}',
-                '#{ActiveRecord::Base.sanitize_sql(row[64])}',
-                '#{ActiveRecord::Base.sanitize_sql(row[34])}',
-                '#{ActiveRecord::Base.sanitize_sql([row[28], row[24], row[25], row[26], row[27]].reject(&:blank?).join(" "))}',
-                '#{ActiveRecord::Base.sanitize_sql([row[34], row[30], row[31], row[32], row[33]].reject(&:blank?).join(" "))}',
-                '#{ActiveRecord::Base.sanitize_sql(row[49])}',
-                '#{ActiveRecord::Base.sanitize_sql(row[60])}'
+                $1,
+                $2,
+                $3,
+                $4,
+                $5,
+                $6,
+                $7
             )"
-        ActiveRecord::Base.connection.execute(query)
+        ActiveRecord::Base.connection.exec_query(
+          query,
+          "SQL",
+          [
+            ActiveRecord::Relation::QueryAttribute.new(
+              "rrn",
+              row[0],
+              ActiveRecord::Type::String.new,
+            ),
+            ActiveRecord::Relation::QueryAttribute.new(
+              "rrn",
+              row[64],
+              ActiveRecord::Type::String.new,
+            ),
+            ActiveRecord::Relation::QueryAttribute.new(
+              "rrn",
+              row[34],
+              ActiveRecord::Type::String.new,
+            ),
+            ActiveRecord::Relation::QueryAttribute.new(
+              "rrn",
+              [row[28], row[24], row[25], row[26], row[27]].reject(&:blank?).join(" "),
+              ActiveRecord::Type::String.new,
+            ),
+            ActiveRecord::Relation::QueryAttribute.new(
+              "rrn",
+              [row[34], row[30], row[31], row[32], row[33]].reject(&:blank?).join(" "),
+              ActiveRecord::Type::String.new,
+            ),
+            ActiveRecord::Relation::QueryAttribute.new(
+              "rrn",
+              row[49],
+              ActiveRecord::Type::String.new,
+            ),
+            ActiveRecord::Relation::QueryAttribute.new(
+              "rrn",
+              row[60],
+              ActiveRecord::Type::String.new,
+            ),
+          ],
+        )
       end
     end
   end
