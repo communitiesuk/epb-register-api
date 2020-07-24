@@ -61,7 +61,7 @@ module UseCase
         raise InactiveAssessorException
       end
 
-      if assessment_type == "ACIR" &&
+      if assessment_type == "AC-REPORT" &&
           assessor.non_domestic_sp3_qualification == "INACTIVE"
         raise InactiveAssessorException
       end

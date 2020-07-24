@@ -19,7 +19,7 @@ tags:
   - name: Manage Assessors
     description: Manage assessors for a given Scheme
   - name: Manage Assessments
-    description: Manage EPCs, DECs, RRs and ACIRs
+    description: Manage EPCs, DECs, RRs and AC-REPORTs
   - name: Manage Addresses
     description: Manage addresses in the register
   - name: Manage Schemes

@@ -5,11 +5,11 @@ describe "Acceptance::LodgeExamples" do
 
   let(:acic_acir_xml) do
     File.read File.join Dir.pwd,
-                        "api/schemas/xml/examples/CEPC-8.0.0(AC-CERT+ACIR).xml"
+                        "api/schemas/xml/examples/CEPC-8.0.0(AC-CERT+AC-REPORT).xml"
   end
   let(:acic_acir_ni_xml) do
     File.read File.join Dir.pwd,
-                        "api/schemas/xml/examples/CEPC-NI-8.0.0(AC-CERT+ACIR).xml"
+                        "api/schemas/xml/examples/CEPC-NI-8.0.0(AC-CERT+AC-REPORT).xml"
   end
   let(:cepc_rr_xml) do
     File.read File.join Dir.pwd,
@@ -73,7 +73,7 @@ describe "Acceptance::LodgeExamples" do
       )
     end
 
-    it "can lodge the example AC-CERT+ACIR" do
+    it "can lodge the example AC-CERT+AC-REPORT" do
       lodge_assessment(
         assessment_body: acic_acir_xml,
         accepted_responses: [201],
@@ -117,7 +117,7 @@ describe "Acceptance::LodgeExamples" do
       )
     end
 
-    it "can lodge the example AC-CERT+ACIR NI" do
+    it "can lodge the example AC-CERT+AC-REPORT NI" do
       lodge_assessment(
         assessment_body: acic_acir_ni_xml,
         accepted_responses: [201],

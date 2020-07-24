@@ -1,13 +1,13 @@
-describe "Acceptance::AssessmentStatus::ACIR" do
+describe "Acceptance::AssessmentStatus::AC-REPORT" do
   include RSpecRegisterApiServiceMixin
 
   let(:fetch_assessor_stub) { AssessorStub.new }
 
   let(:valid_acir_xml) do
-    File.read File.join Dir.pwd, "spec/fixtures/samples/acir.xml"
+    File.read File.join Dir.pwd, "spec/fixtures/samples/ac-report.xml"
   end
 
-  context "when cancelling an ACIR assessment" do
+  context "when cancelling an AC-REPORT assessment" do
     let(:response) do
       scheme_id = add_scheme_and_get_id
 
@@ -41,7 +41,7 @@ describe "Acceptance::AssessmentStatus::ACIR" do
     end
   end
 
-  context "when marking an ACIR assessment not for issue" do
+  context "when marking an AC-REPORT assessment not for issue" do
     let(:response) do
       scheme_id = add_scheme_and_get_id
 

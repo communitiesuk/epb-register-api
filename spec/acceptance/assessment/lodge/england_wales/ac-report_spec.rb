@@ -1,43 +1,16 @@
 # frozen_string_literal: true
 
-describe "Acceptance::LodgeACIRNIEnergyAssessment" do
+describe "Acceptance::LodgeAC-REPORTEnergyAssessment" do
   include RSpecRegisterApiServiceMixin
 
   let(:fetch_assessor_stub) { AssessorStub.new }
 
-  let(:valid_cepc_acir_ni_xml) do
-    File.read File.join Dir.pwd, "spec/fixtures/samples/acir-ni.xml"
+  let(:valid_xml) do
+    File.read File.join Dir.pwd, "spec/fixtures/samples/ac-report.xml"
   end
 
-  context "when lodging an ACIR-NI assessment" do
-    context "when an assessor is inactive" do
-      let(:scheme_id) { add_scheme_and_get_id }
-
-      let(:response) do
-        JSON.parse(
-          lodge_assessment(
-            assessment_body: valid_cepc_acir_ni_xml,
-            accepted_responses: [400],
-            auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "CEPC-NI-8.0.0",
-          ).body,
-        )
-      end
-
-      before do
-        add_assessor(
-          scheme_id,
-          "SPEC000000",
-          fetch_assessor_stub.fetch_request_body(nonDomesticSp3: "INACTIVE"),
-        )
-      end
-
-      it "returns status 400 with the correct error response" do
-        expect(response["errors"][0]["title"]).to eq("Assessor is not active.")
-      end
-    end
-
-    context "when an assessor is active" do
+  context "when lodging AC-REPORT" do
+    context "with an active assessor" do
       let(:scheme_id) { add_scheme_and_get_id }
 
       let(:response) do
@@ -52,42 +25,18 @@ describe "Acceptance::LodgeACIRNIEnergyAssessment" do
         )
 
         lodge_assessment(
-          assessment_body: valid_cepc_acir_ni_xml,
+          assessment_body: valid_xml,
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] },
-          schema_name: "CEPC-NI-8.0.0",
+          schema_name: "CEPC-8.0.0",
         )
       end
 
-      it "accepts an assessment with type ACIR" do
-        expect(response["data"]["typeOfAssessment"]).to eq("ACIR")
-      end
-    end
-
-    context "when saving a (ACIR-NI) assessment" do
-      let(:scheme_id) { add_scheme_and_get_id }
-      let(:doc) { Nokogiri.XML valid_cepc_acir_ni_xml }
-
-      let(:response) do
-        JSON.parse(fetch_assessment("0000-0000-0000-0000-0000").body)
+      it "accepts an assessment with type AC-REPORT" do
+        expect(response["data"]["typeOfAssessment"]).to eq("AC-REPORT")
       end
 
-      before do
-        add_assessor(
-          scheme_id,
-          "SPEC000000",
-          fetch_assessor_stub.fetch_request_body(nonDomesticSp3: "ACTIVE"),
-        )
-
-        lodge_assessment(
-          assessment_body: doc.to_xml,
-          accepted_responses: [201],
-          auth_data: { scheme_ids: [scheme_id] },
-          schema_name: "CEPC-NI-8.0.0",
-        )
-      end
-
-      it "returns the data that was lodged" do
+      it "returns the expected response" do
         expected_response = {
           "addressId" => "RRN-0000-0000-0000-0000-0000",
           "addressLine1" => "2 Lonely Street",
@@ -142,9 +91,9 @@ describe "Acceptance::LodgeACIRNIEnergyAssessment" do
           "potentialCarbonEmission" => 0.0,
           "potentialEnergyEfficiencyBand" => "a",
           "potentialEnergyEfficiencyRating" => 99,
-          "totalFloorArea" => 0.0,
+          "totalFloorArea" => 99.0,
           "town" => "Post-Town1",
-          "typeOfAssessment" => "ACIR",
+          "typeOfAssessment" => "AC-REPORT",
           "relatedPartyDisclosureNumber" => nil,
           "relatedPartyDisclosureText" => nil,
           "recommendedImprovements" => [],
@@ -156,11 +105,38 @@ describe "Acceptance::LodgeACIRNIEnergyAssessment" do
         expect(response["data"]).to eq(expected_response)
       end
     end
+
+    context "with an inactive assessor" do
+      let(:scheme_id) { add_scheme_and_get_id }
+
+      let(:response) do
+        JSON.parse(
+          lodge_assessment(
+            assessment_body: valid_xml,
+            accepted_responses: [400],
+            auth_data: { scheme_ids: [scheme_id] },
+            schema_name: "CEPC-8.0.0",
+          ).body,
+        )
+      end
+
+      before do
+        add_assessor(
+          scheme_id,
+          "SPEC000000",
+          fetch_assessor_stub.fetch_request_body(nonDomesticSp3: "INACTIVE"),
+        )
+      end
+
+      it "returns status 400 with the correct error response" do
+        expect(response["errors"][0]["title"]).to eq("Assessor is not active.")
+      end
+    end
   end
 
   context "when rejecting an assessment" do
     let(:scheme_id) { add_scheme_and_get_id }
-    let(:doc) { Nokogiri.XML valid_cepc_acir_ni_xml }
+    let(:doc) { Nokogiri.XML valid_xml }
 
     before do
       add_assessor(
@@ -177,7 +153,7 @@ describe "Acceptance::LodgeACIRNIEnergyAssessment" do
         assessment_body: doc.to_xml,
         accepted_responses: [400],
         auth_data: { scheme_ids: [scheme_id] },
-        schema_name: "CEPC-NI-8.0.0",
+        schema_name: "CEPC-8.0.0",
       )
     end
   end

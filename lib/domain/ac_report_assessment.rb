@@ -1,5 +1,5 @@
 module Domain
-  class AcirAssessment
+  class AcReportAssessment
     attr_reader :current_energy_efficiency_rating,
                 :potential_energy_efficiency_rating,
                 :assessment_id,

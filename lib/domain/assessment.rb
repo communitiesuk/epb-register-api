@@ -8,7 +8,7 @@ module Domain
       "DEC": Domain::DecAssessment,
       "CEPC-RR": Domain::CepcRrAssessment,
       "AC-CERT": Domain::AcCertAssessment,
-      "ACIR": Domain::AcirAssessment,
+      "AC-REPORT": Domain::AcReportAssessment,
     }.freeze
 
     def initialize(data)
