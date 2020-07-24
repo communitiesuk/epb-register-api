@@ -3,8 +3,6 @@ module Gateway
     ADDRESS_TYPES = {
       DOMESTIC: %w[SAP RdSAP], COMMERCIAL: %w[DEC DEC-AR CEPC CEPC-RR ACIR ACIC]
     }.freeze
-    STREET_PERMISSIVENESS = "0.35".freeze
-    TOWN_PERMISSIVENESS = "0.3".freeze
 
     def search_by_postcode(postcode, building_name_number, address_type)
       postcode = postcode.downcase.delete " "
@@ -43,8 +41,8 @@ module Gateway
 
       if building_name_number
         sql <<
-          "#{levenshtein('address_line1', '$2')}, #{
-            levenshtein('address_line2', '$2')
+          "#{Helper::LevenshteinSqlHelper.levenshtein('address_line1', '$2')}, #{
+            Helper::LevenshteinSqlHelper.levenshtein('address_line2', '$2')
           }, "
 
         binds <<
@@ -104,13 +102,49 @@ module Gateway
         WHERE
           cancelled_at IS NULL
         AND not_for_issue_at IS NULL
-        AND (#{levenshtein('address_line1', '$1', STREET_PERMISSIVENESS)} OR #{
-          levenshtein('address_line2', '$1', STREET_PERMISSIVENESS)
-        } OR #{levenshtein('address_line3', '$1', STREET_PERMISSIVENESS)})
-        AND (#{levenshtein('town', '$2', TOWN_PERMISSIVENESS)} OR #{
-          levenshtein('address_line2', '$2', TOWN_PERMISSIVENESS)
-        } OR #{levenshtein('address_line3', '$2', TOWN_PERMISSIVENESS)} OR #{
-          levenshtein('address_line4', '$2', TOWN_PERMISSIVENESS)
+        AND (#{
+          Helper::LevenshteinSqlHelper.levenshtein(
+            'address_line1',
+            '$1',
+            Helper::LevenshteinSqlHelper::STREET_PERMISSIVENESS,
+          )
+        } OR #{
+          Helper::LevenshteinSqlHelper.levenshtein(
+            'address_line2',
+            '$1',
+            Helper::LevenshteinSqlHelper::STREET_PERMISSIVENESS,
+          )
+        } OR #{
+          Helper::LevenshteinSqlHelper.levenshtein(
+            'address_line3',
+            '$1',
+            Helper::LevenshteinSqlHelper::STREET_PERMISSIVENESS,
+          )
+        })
+        AND (#{
+          Helper::LevenshteinSqlHelper.levenshtein(
+            'town',
+            '$2',
+            Helper::LevenshteinSqlHelper::TOWN_PERMISSIVENESS,
+          )
+        } OR #{
+          Helper::LevenshteinSqlHelper.levenshtein(
+            'address_line2',
+            '$2',
+            Helper::LevenshteinSqlHelper::TOWN_PERMISSIVENESS,
+          )
+        } OR #{
+          Helper::LevenshteinSqlHelper.levenshtein(
+            'address_line3',
+            '$2',
+            Helper::LevenshteinSqlHelper::TOWN_PERMISSIVENESS,
+          )
+        } OR #{
+          Helper::LevenshteinSqlHelper.levenshtein(
+            'address_line4',
+            '$2',
+            Helper::LevenshteinSqlHelper::TOWN_PERMISSIVENESS,
+          )
         })"
 
       binds = [
@@ -134,8 +168,8 @@ module Gateway
 
       sql <<
         " ORDER BY
-                #{levenshtein('address_line1', '$1')},
-                #{levenshtein('town', '$2')},
+                #{Helper::LevenshteinSqlHelper.levenshtein('address_line1', '$1')},
+                #{Helper::LevenshteinSqlHelper.levenshtein('town', '$2')},
                 address_line1,
                 assessment_id"
 
@@ -169,17 +203,6 @@ module Gateway
         end
 
       results.uniq(&:address_id)
-    end
-
-    def levenshtein(property, bind, permissiveness = nil)
-      levenshtein =
-        "LEVENSHTEIN(LOWER(#{property}), LOWER(#{
-          bind
-        }))::decimal / GREATEST(length(#{property}), length(#{bind}))"
-
-      levenshtein << " < #{permissiveness}" if permissiveness
-
-      levenshtein
     end
 
     def populate_existing_assessments(address)

@@ -176,8 +176,50 @@ module Gateway
           heating_cost_current, hot_water_cost_current, lighting_cost_potential, heating_cost_potential, hot_water_cost_potential,
           non_dom_cepc_rr
         FROM assessments
-        WHERE (address_line1 ILIKE $1 OR address_line2 ILIKE $1 OR address_line3 ILIKE $1)
-          AND town ILIKE $2
+        WHERE (#{
+        Helper::LevenshteinSqlHelper.levenshtein(
+          'address_line1',
+          '$1',
+          Helper::LevenshteinSqlHelper::STREET_PERMISSIVENESS,
+        )
+      } OR #{
+        Helper::LevenshteinSqlHelper.levenshtein(
+          'address_line2',
+          '$1',
+          Helper::LevenshteinSqlHelper::STREET_PERMISSIVENESS,
+        )
+      } OR #{
+        Helper::LevenshteinSqlHelper.levenshtein(
+          'address_line3',
+          '$1',
+          Helper::LevenshteinSqlHelper::STREET_PERMISSIVENESS,
+        )
+      })
+                AND (#{
+        Helper::LevenshteinSqlHelper.levenshtein(
+          'town',
+          '$2',
+          Helper::LevenshteinSqlHelper::TOWN_PERMISSIVENESS,
+        )
+      } OR #{
+        Helper::LevenshteinSqlHelper.levenshtein(
+          'address_line2',
+          '$2',
+          Helper::LevenshteinSqlHelper::TOWN_PERMISSIVENESS,
+        )
+      } OR #{
+        Helper::LevenshteinSqlHelper.levenshtein(
+          'address_line3',
+          '$2',
+          Helper::LevenshteinSqlHelper::TOWN_PERMISSIVENESS,
+        )
+      } OR #{
+        Helper::LevenshteinSqlHelper.levenshtein(
+          'address_line4',
+          '$2',
+          Helper::LevenshteinSqlHelper::TOWN_PERMISSIVENESS,
+        )
+      })
       SQL
 
       binds = [
@@ -202,10 +244,18 @@ module Gateway
       end
 
       if restrictive
-        sql += " AND cancelled_at IS NULL"
-        sql += " AND not_for_issue_at IS NULL"
-        sql += " AND opt_out = false"
+        sql +=
+            " AND cancelled_at IS NULL
+              AND not_for_issue_at IS NULL
+              AND opt_out = false"
       end
+
+      sql +=
+            " ORDER BY
+                #{Helper::LevenshteinSqlHelper.levenshtein('address_line1', '$1')},
+                #{Helper::LevenshteinSqlHelper.levenshtein('town', '$2')},
+                address_line1,
+                assessment_id"
 
       response = Assessment.connection.exec_query sql, "SQL", binds
 

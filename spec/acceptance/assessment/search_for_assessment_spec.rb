@@ -533,6 +533,142 @@ describe "Acceptance::Assessment::SearchForAssessments" do
   end
 
   context "searching by town and street name" do
+    expected_response =
+        JSON.parse(
+            {
+                assessor: nil,
+                assessmentId: "0000-0000-0000-0000-0000",
+                dateOfAssessment: "2020-05-04",
+                dateRegistered: "2020-05-04",
+                totalFloorArea: 0.0,
+                typeOfAssessment: "RdSAP",
+                dwellingType: "Dwelling-Type0",
+                currentEnergyEfficiencyRating: 50,
+                potentialEnergyEfficiencyRating: 50,
+                currentCarbonEmission: 2.4,
+                potentialCarbonEmission: 1.4,
+                currentEnergyEfficiencyBand: "e",
+                potentialEnergyEfficiencyBand: "e",
+                optOut: false,
+                postcode: "A0 0AA",
+                dateOfExpiry: "2030-05-04",
+                town: "Post-Town1",
+                addressId: nil,
+                addressLine1: "1 Some Street",
+                addressLine2: "",
+                addressLine3: "",
+                addressLine4: "",
+                lightingCostCurrent: "123.45",
+                heatingCostCurrent: "365.98",
+                hotWaterCostCurrent: "200.40",
+                lightingCostPotential: "84.23",
+                heatingCostPotential: "250.34",
+                hotWaterCostPotential: "180.43",
+                estimatedEnergyCost: "689.83",
+                potentialEnergySaving: "174.83",
+                heatDemand: {
+                    currentSpaceHeatingDemand: 30.0,
+                    currentWaterHeatingDemand: 60.0,
+                    impactOfLoftInsulation: -8,
+                    impactOfCavityInsulation: -12,
+                    impactOfSolidWallInsulation: -16,
+                },
+                propertySummary: [
+                    {
+                        "description" => "Description0",
+                        "energyEfficiencyRating" => 0,
+                        "environmentalEfficiencyRating" => 0,
+                        "name" => "wall",
+                    },
+                    {
+                        "description" => "Description1",
+                        "energyEfficiencyRating" => 0,
+                        "environmentalEfficiencyRating" => 0,
+                        "name" => "wall",
+                    },
+                    {
+                        "description" => "Description2",
+                        "energyEfficiencyRating" => 0,
+                        "environmentalEfficiencyRating" => 0,
+                        "name" => "roof",
+                    },
+                    {
+                        "description" => "Description3",
+                        "energyEfficiencyRating" => 0,
+                        "environmentalEfficiencyRating" => 0,
+                        "name" => "roof",
+                    },
+                    {
+                        "description" => "Description4",
+                        "energyEfficiencyRating" => 0,
+                        "environmentalEfficiencyRating" => 0,
+                        "name" => "floor",
+                    },
+                    {
+                        "description" => "Description5",
+                        "energyEfficiencyRating" => 0,
+                        "environmentalEfficiencyRating" => 0,
+                        "name" => "floor",
+                    },
+                    {
+                        "description" => "Description6",
+                        "energyEfficiencyRating" => 0,
+                        "environmentalEfficiencyRating" => 0,
+                        "name" => "window",
+                    },
+                    {
+                        "description" => "Description7",
+                        "energyEfficiencyRating" => 0,
+                        "environmentalEfficiencyRating" => 0,
+                        "name" => "main_heating",
+                    },
+                    {
+                        "description" => "Description8",
+                        "energyEfficiencyRating" => 0,
+                        "environmentalEfficiencyRating" => 0,
+                        "name" => "main_heating",
+                    },
+                    {
+                        "description" => "Description9",
+                        "energyEfficiencyRating" => 0,
+                        "environmentalEfficiencyRating" => 0,
+                        "name" => "main_heating_controls",
+                    },
+                    {
+                        "description" => "Description10",
+                        "energyEfficiencyRating" => 0,
+                        "environmentalEfficiencyRating" => 0,
+                        "name" => "main_heating_controls",
+                    },
+                    {
+                        "description" => "Description11",
+                        "energyEfficiencyRating" => 0,
+                        "environmentalEfficiencyRating" => 0,
+                        "name" => "hot_water",
+                    },
+                    {
+                        "description" => "Description12",
+                        "energyEfficiencyRating" => 0,
+                        "environmentalEfficiencyRating" => 0,
+                        "name" => "lighting",
+                    },
+                    {
+                        "description" => "Description13",
+                        "energyEfficiencyRating" => 0,
+                        "environmentalEfficiencyRating" => 0,
+                        "name" => "secondary_heating",
+                    },
+                ],
+                propertyAgeBand: "K",
+                recommendedImprovements: [],
+                relatedPartyDisclosureNumber: nil,
+                relatedPartyDisclosureText: "Related-Party-Disclosure-Text0",
+                status: "ENTERED",
+                tenure: "1",
+                relatedAssessments: nil,
+            }.to_json,
+            )
+
     it "rejects a missing town" do
       response_body =
         assessments_search_by_street_name_and_town("Palmtree Road", "", [400])
@@ -575,141 +711,57 @@ describe "Acceptance::Assessment::SearchForAssessments" do
 
       response_json = JSON.parse(response.body)
 
-      expected_response =
-        JSON.parse(
-          {
-            assessor: nil,
-            assessmentId: "0000-0000-0000-0000-0000",
-            dateOfAssessment: "2020-05-04",
-            dateRegistered: "2020-05-04",
-            totalFloorArea: 0.0,
-            typeOfAssessment: "RdSAP",
-            dwellingType: "Dwelling-Type0",
-            currentEnergyEfficiencyRating: 50,
-            potentialEnergyEfficiencyRating: 50,
-            currentCarbonEmission: 2.4,
-            potentialCarbonEmission: 1.4,
-            currentEnergyEfficiencyBand: "e",
-            potentialEnergyEfficiencyBand: "e",
-            optOut: false,
-            postcode: "A0 0AA",
-            dateOfExpiry: "2030-05-04",
-            town: "Post-Town1",
-            addressId: nil,
-            addressLine1: "1 Some Street",
-            addressLine2: "",
-            addressLine3: "",
-            addressLine4: "",
-            lightingCostCurrent: "123.45",
-            heatingCostCurrent: "365.98",
-            hotWaterCostCurrent: "200.40",
-            lightingCostPotential: "84.23",
-            heatingCostPotential: "250.34",
-            hotWaterCostPotential: "180.43",
-            estimatedEnergyCost: "689.83",
-            potentialEnergySaving: "174.83",
-            heatDemand: {
-              currentSpaceHeatingDemand: 30.0,
-              currentWaterHeatingDemand: 60.0,
-              impactOfLoftInsulation: -8,
-              impactOfCavityInsulation: -12,
-              impactOfSolidWallInsulation: -16,
-            },
-            propertySummary: [
-              {
-                "description" => "Description0",
-                "energyEfficiencyRating" => 0,
-                "environmentalEfficiencyRating" => 0,
-                "name" => "wall",
-              },
-              {
-                "description" => "Description1",
-                "energyEfficiencyRating" => 0,
-                "environmentalEfficiencyRating" => 0,
-                "name" => "wall",
-              },
-              {
-                "description" => "Description2",
-                "energyEfficiencyRating" => 0,
-                "environmentalEfficiencyRating" => 0,
-                "name" => "roof",
-              },
-              {
-                "description" => "Description3",
-                "energyEfficiencyRating" => 0,
-                "environmentalEfficiencyRating" => 0,
-                "name" => "roof",
-              },
-              {
-                "description" => "Description4",
-                "energyEfficiencyRating" => 0,
-                "environmentalEfficiencyRating" => 0,
-                "name" => "floor",
-              },
-              {
-                "description" => "Description5",
-                "energyEfficiencyRating" => 0,
-                "environmentalEfficiencyRating" => 0,
-                "name" => "floor",
-              },
-              {
-                "description" => "Description6",
-                "energyEfficiencyRating" => 0,
-                "environmentalEfficiencyRating" => 0,
-                "name" => "window",
-              },
-              {
-                "description" => "Description7",
-                "energyEfficiencyRating" => 0,
-                "environmentalEfficiencyRating" => 0,
-                "name" => "main_heating",
-              },
-              {
-                "description" => "Description8",
-                "energyEfficiencyRating" => 0,
-                "environmentalEfficiencyRating" => 0,
-                "name" => "main_heating",
-              },
-              {
-                "description" => "Description9",
-                "energyEfficiencyRating" => 0,
-                "environmentalEfficiencyRating" => 0,
-                "name" => "main_heating_controls",
-              },
-              {
-                "description" => "Description10",
-                "energyEfficiencyRating" => 0,
-                "environmentalEfficiencyRating" => 0,
-                "name" => "main_heating_controls",
-              },
-              {
-                "description" => "Description11",
-                "energyEfficiencyRating" => 0,
-                "environmentalEfficiencyRating" => 0,
-                "name" => "hot_water",
-              },
-              {
-                "description" => "Description12",
-                "energyEfficiencyRating" => 0,
-                "environmentalEfficiencyRating" => 0,
-                "name" => "lighting",
-              },
-              {
-                "description" => "Description13",
-                "energyEfficiencyRating" => 0,
-                "environmentalEfficiencyRating" => 0,
-                "name" => "secondary_heating",
-              },
-            ],
-            propertyAgeBand: "K",
-            recommendedImprovements: [],
-            relatedPartyDisclosureNumber: nil,
-            relatedPartyDisclosureText: "Related-Party-Disclosure-Text0",
-            status: "ENTERED",
-            tenure: "1",
-            relatedAssessments: nil,
-          }.to_json,
-        )
+      expect(response_json["data"]["assessments"][0]).to eq(expected_response)
+    end
+
+    it "returns matching assessments with missing property number" do
+      setup_scheme_and_lodge
+      response =
+          assessments_search_by_street_name_and_town(
+              "Some Street",
+              "Post-Town1",
+              )
+
+      response_json = JSON.parse(response.body)
+
+      expect(response_json["data"]["assessments"][0]).to eq(expected_response)
+    end
+
+    it "returns matching assessments with slightly misspelled street" do
+      setup_scheme_and_lodge
+      response =
+          assessments_search_by_street_name_and_town(
+              "Sum Street",
+              "Post-Town1",
+              )
+
+      response_json = JSON.parse(response.body)
+
+      expect(response_json["data"]["assessments"][0]).to eq(expected_response)
+    end
+
+    it "returns matching assessments with slightly misspelled town" do
+      setup_scheme_and_lodge
+      response =
+          assessments_search_by_street_name_and_town(
+              "Some Street",
+              "Post-Twn1",
+              )
+
+      response_json = JSON.parse(response.body)
+
+      expect(response_json["data"]["assessments"][0]).to eq(expected_response)
+    end
+
+    it "returns matching assessments with slightly misspelled street & town" do
+      setup_scheme_and_lodge
+      response =
+          assessments_search_by_street_name_and_town(
+              "Sum Street",
+              "Post-Twn1",
+              )
+
+      response_json = JSON.parse(response.body)
 
       expect(response_json["data"]["assessments"][0]).to eq(expected_response)
     end
