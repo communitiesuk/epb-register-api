@@ -1,6 +1,6 @@
 module Gateway
   class AddressBaseSearchGateway
-    def search_by_postcode(postcode, _building_name_number, _address_type)
+    def search_by_postcode(postcode, building_name_number, _address_type)
       postcode = postcode.delete " "
 
       sql =
@@ -24,6 +24,24 @@ module Gateway
         ),
       ]
 
+      sql << " ORDER BY "
+
+      if building_name_number
+        sql <<
+            "#{levenshtein('address_line1', '$2')}, #{
+            levenshtein('address_line2', '$2')
+            }, "
+
+        binds <<
+            ActiveRecord::Relation::QueryAttribute.new(
+                "building_name_number",
+                building_name_number,
+                ActiveRecord::Type::String.new,
+                )
+      end
+
+      sql << "uprn"
+
       parse_results ActiveRecord::Base.connection.exec_query sql, "SQL", binds
     end
 
@@ -31,6 +49,17 @@ module Gateway
       results = results.map { |row| record_to_address_domain row }
 
       results
+    end
+
+    def levenshtein(property, bind, permissiveness = nil)
+      levenshtein =
+          "LEVENSHTEIN(LOWER(#{property}), LOWER(#{
+          bind
+          }))::decimal / GREATEST(length(#{property}), length(#{bind}))"
+
+      levenshtein << " < #{permissiveness}" if permissiveness
+
+      levenshtein
     end
 
     def record_to_address_domain(row)
