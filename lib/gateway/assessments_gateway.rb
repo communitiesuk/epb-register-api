@@ -245,14 +245,16 @@ module Gateway
 
       if restrictive
         sql +=
-            " AND cancelled_at IS NULL
+          ' AND cancelled_at IS NULL
               AND not_for_issue_at IS NULL
-              AND opt_out = false"
+              AND opt_out = false'
       end
 
       sql +=
-            " ORDER BY
-                #{Helper::LevenshteinSqlHelper.levenshtein('address_line1', '$1')},
+        " ORDER BY
+                #{
+          Helper::LevenshteinSqlHelper.levenshtein('address_line1', '$1')
+        },
                 #{Helper::LevenshteinSqlHelper.levenshtein('town', '$2')},
                 address_line1,
                 assessment_id"

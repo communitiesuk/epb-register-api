@@ -41,7 +41,9 @@ module Gateway
 
       if building_name_number
         sql <<
-          "#{Helper::LevenshteinSqlHelper.levenshtein('address_line1', '$2')}, #{
+          "#{
+            Helper::LevenshteinSqlHelper.levenshtein('address_line1', '$2')
+          }, #{
             Helper::LevenshteinSqlHelper.levenshtein('address_line2', '$2')
           }, "
 
@@ -168,7 +170,9 @@ module Gateway
 
       sql <<
         " ORDER BY
-                #{Helper::LevenshteinSqlHelper.levenshtein('address_line1', '$1')},
+                #{
+          Helper::LevenshteinSqlHelper.levenshtein('address_line1', '$1')
+        },
                 #{Helper::LevenshteinSqlHelper.levenshtein('town', '$2')},
                 address_line1,
                 assessment_id"
