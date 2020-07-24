@@ -1,13 +1,13 @@
-describe "Acceptance::AssessmentStatus::DEC-AR" do
+describe "Acceptance::AssessmentStatus::DEC-RR" do
   include RSpecRegisterApiServiceMixin
 
   let(:fetch_assessor_stub) { AssessorStub.new }
 
   let(:valid_dec_ar_xml) do
-    File.read File.join Dir.pwd, "spec/fixtures/samples/dec-ar.xml"
+    File.read File.join Dir.pwd, "spec/fixtures/samples/dec-rr.xml"
   end
 
-  context "when cancelling an DEC-AR assessment" do
+  context "when cancelling an DEC-RR assessment" do
     let(:response) do
       scheme_id = add_scheme_and_get_id
 
@@ -39,7 +39,7 @@ describe "Acceptance::AssessmentStatus::DEC-AR" do
     end
   end
 
-  context "when marking an DEC-AR assessment not for issue" do
+  context "when marking an DEC-RR assessment not for issue" do
     let(:response) do
       scheme_id = add_scheme_and_get_id
 

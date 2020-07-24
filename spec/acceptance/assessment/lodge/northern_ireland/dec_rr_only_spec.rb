@@ -6,7 +6,7 @@ describe "Acceptance::LodgeDEC(AR)NIEnergyAssessment" do
   let(:fetch_assessor_stub) { AssessorStub.new }
 
   let(:valid_xml) do
-    File.read File.join Dir.pwd, "spec/fixtures/samples/dec-ar-ni.xml"
+    File.read File.join Dir.pwd, "spec/fixtures/samples/dec-rr-ni.xml"
   end
 
   context "when lodging DEC advisory reports NI" do
@@ -14,7 +14,7 @@ describe "Acceptance::LodgeDEC(AR)NIEnergyAssessment" do
       JSON.parse(fetch_assessment("0000-0000-0000-0000-0000").body)
     end
 
-    it "accepts an assessment with type DEC-AR" do
+    it "accepts an assessment with type DEC-RR" do
       scheme_id = add_scheme_and_get_id
       add_assessor(
         scheme_id,
@@ -29,7 +29,7 @@ describe "Acceptance::LodgeDEC(AR)NIEnergyAssessment" do
         schema_name: "CEPC-NI-8.0.0",
       )
 
-      expect(response["data"]["typeOfAssessment"]).to eq("DEC-AR")
+      expect(response["data"]["typeOfAssessment"]).to eq("DEC-RR")
     end
 
     it "returns the expected response" do
@@ -103,7 +103,7 @@ describe "Acceptance::LodgeDEC(AR)NIEnergyAssessment" do
         "potentialEnergyEfficiencyRating" => 99,
         "totalFloorArea" => 0.0,
         "town" => "Post-Town0",
-        "typeOfAssessment" => "DEC-AR",
+        "typeOfAssessment" => "DEC-RR",
         "relatedPartyDisclosureNumber" => nil,
         "relatedPartyDisclosureText" => nil,
         "recommendedImprovements" => [],

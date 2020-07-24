@@ -6,7 +6,7 @@ describe "Acceptance::LodgeDEC+ARNIEnergyAssessment" do
   let(:fetch_assessor_stub) { AssessorStub.new }
 
   let(:valid_xml) do
-    File.read File.join Dir.pwd, "spec/fixtures/samples/dec+ar-ni.xml"
+    File.read File.join Dir.pwd, "spec/fixtures/samples/dec+rr-ni.xml"
   end
 
   context "when lodging an DEC+AR assessment (post)" do
@@ -142,7 +142,7 @@ describe "Acceptance::LodgeDEC+ARNIEnergyAssessment" do
               "assessmentExpiryDate" => "2026-05-04",
               "assessmentId" => "0000-0000-0000-0000-0001",
               "assessmentStatus" => "ENTERED",
-              "assessmentType" => "DEC-AR",
+              "assessmentType" => "DEC-RR",
             },
             {
               "assessmentExpiryDate" => "2026-05-04",
@@ -212,7 +212,7 @@ describe "Acceptance::LodgeDEC+ARNIEnergyAssessment" do
           "potentialEnergyEfficiencyRating" => 99,
           "totalFloorArea" => 0.0,
           "town" => "Post-Town0",
-          "typeOfAssessment" => "DEC-AR",
+          "typeOfAssessment" => "DEC-RR",
           "relatedPartyDisclosureNumber" => nil,
           "relatedPartyDisclosureText" => nil,
           "recommendedImprovements" => [],
@@ -222,7 +222,7 @@ describe "Acceptance::LodgeDEC+ARNIEnergyAssessment" do
               "assessmentExpiryDate" => "2026-05-04",
               "assessmentId" => "0000-0000-0000-0000-0001",
               "assessmentStatus" => "ENTERED",
-              "assessmentType" => "DEC-AR",
+              "assessmentType" => "DEC-RR",
             },
           ],
           "status" => "ENTERED",

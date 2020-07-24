@@ -6,7 +6,7 @@ describe "Acceptance::LodgeAdvisoryReport" do
   let(:fetch_assessor_stub) { AssessorStub.new }
 
   let(:valid_ar_xml) do
-    File.read File.join Dir.pwd, "spec/fixtures/samples/dec-ar.xml"
+    File.read File.join Dir.pwd, "spec/fixtures/samples/dec-rr.xml"
   end
 
   context "when lodging a AR (post)" do
@@ -134,7 +134,7 @@ describe "Acceptance::LodgeAdvisoryReport" do
           "potentialEnergyEfficiencyRating" => 99,
           "totalFloorArea" => 99.0,
           "town" => "Post-Town0",
-          "typeOfAssessment" => "DEC-AR",
+          "typeOfAssessment" => "DEC-RR",
           "relatedPartyDisclosureNumber" => nil,
           "relatedPartyDisclosureText" => nil,
           "recommendedImprovements" => [],

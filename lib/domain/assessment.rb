@@ -4,7 +4,7 @@ module Domain
       "CEPC": Domain::CepcAssessment,
       "SAP": Domain::SapAssessment,
       "RdSAP": Domain::RdsapAssessment,
-      "DEC-AR": Domain::DecArAssessment,
+      "DEC-RR": Domain::DecRrAssessment,
       "DEC": Domain::DecAssessment,
       "CEPC-RR": Domain::CepcRrAssessment,
       "ACIC": Domain::AcicAssessment,
