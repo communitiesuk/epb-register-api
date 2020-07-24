@@ -12,8 +12,8 @@ module UseCase
       address_base_addresses = @address_base_search_gateway.search_by_postcode postcode,
                                                       building_name_number,
                                                       address_type
-      assessment_addresses << address_base_addresses
-      assessment_addresses.flatten
+      address_base_addresses << assessment_addresses
+      address_base_addresses.flatten
     end
   end
 end
