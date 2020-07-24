@@ -51,12 +51,12 @@ task :import_address_base do
           "SQL",
           [
             ActiveRecord::Relation::QueryAttribute.new(
-              "rrn",
+              "uprn",
               row[0],
               ActiveRecord::Type::String.new,
             ),
             ActiveRecord::Relation::QueryAttribute.new(
-              "rrn",
+              "postcode",
               row[64],
               ActiveRecord::Type::String.new,
             ),
@@ -66,22 +66,22 @@ task :import_address_base do
               ActiveRecord::Type::String.new,
             ),
             ActiveRecord::Relation::QueryAttribute.new(
-              "rrn",
+              "addressline_1",
               [row[28], row[24], row[25], row[26], row[27]].reject(&:blank?).join(" "),
               ActiveRecord::Type::String.new,
             ),
             ActiveRecord::Relation::QueryAttribute.new(
-              "rrn",
+              "addressline_2",
               [row[34], row[30], row[31], row[32], row[33]].reject(&:blank?).join(" "),
               ActiveRecord::Type::String.new,
             ),
             ActiveRecord::Relation::QueryAttribute.new(
-              "rrn",
+              "addressline_3",
               row[49],
               ActiveRecord::Type::String.new,
             ),
             ActiveRecord::Relation::QueryAttribute.new(
-              "rrn",
+              "town",
               row[60],
               ActiveRecord::Type::String.new,
             ),
