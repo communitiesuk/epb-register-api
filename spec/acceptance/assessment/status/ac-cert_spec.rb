@@ -1,13 +1,13 @@
-describe "Acceptance::AssessmentStatus::ACIC" do
+describe "Acceptance::AssessmentStatus::AC-CERT" do
   include RSpecRegisterApiServiceMixin
 
   let(:fetch_assessor_stub) { AssessorStub.new }
 
   let(:valid_acic_xml) do
-    File.read File.join Dir.pwd, "spec/fixtures/samples/acic.xml"
+    File.read File.join Dir.pwd, "spec/fixtures/samples/ac-cert.xml"
   end
 
-  context "when cancelling an ACIC assessment" do
+  context "when cancelling an AC-CERT assessment" do
     let(:response) do
       scheme_id = add_scheme_and_get_id
 
@@ -41,7 +41,7 @@ describe "Acceptance::AssessmentStatus::ACIC" do
     end
   end
 
-  context "when marking an ACIC assessment not for issue" do
+  context "when marking an AC-CERT assessment not for issue" do
     let(:response) do
       scheme_id = add_scheme_and_get_id
 

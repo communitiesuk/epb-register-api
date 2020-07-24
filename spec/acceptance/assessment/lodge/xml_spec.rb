@@ -6,7 +6,7 @@ describe "Acceptance::LodgeAssessment::XML" do
   let(:fetch_assessor_stub) { AssessorStub.new }
 
   let(:valid_cepc_xml) do
-    File.read File.join Dir.pwd, "spec/fixtures/samples/acic.xml"
+    File.read File.join Dir.pwd, "spec/fixtures/samples/ac-cert.xml"
   end
 
   let(:valid_sap_xml) do
@@ -18,7 +18,7 @@ describe "Acceptance::LodgeAssessment::XML" do
   end
 
   let(:cleaned_xml) do
-    File.read File.join Dir.pwd, "spec/fixtures/sanitised/acic.xml"
+    File.read File.join Dir.pwd, "spec/fixtures/sanitised/ac-cert.xml"
   end
 
   let(:cleaned_sap_xml) do

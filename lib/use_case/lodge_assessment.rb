@@ -66,7 +66,7 @@ module UseCase
         raise InactiveAssessorException
       end
 
-      if assessment_type == "ACIC" &&
+      if assessment_type == "AC-CERT" &&
           assessor.non_domestic_cc4_qualification == "INACTIVE"
         raise InactiveAssessorException
       end

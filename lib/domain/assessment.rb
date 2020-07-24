@@ -7,7 +7,7 @@ module Domain
       "DEC-RR": Domain::DecRrAssessment,
       "DEC": Domain::DecAssessment,
       "CEPC-RR": Domain::CepcRrAssessment,
-      "ACIC": Domain::AcicAssessment,
+      "AC-CERT": Domain::AcCertAssessment,
       "ACIR": Domain::AcirAssessment,
     }.freeze
 

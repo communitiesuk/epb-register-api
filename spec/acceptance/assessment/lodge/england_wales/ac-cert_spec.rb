@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-describe "Acceptance::LodgeACICEnergyAssessment" do
+describe "Acceptance::LodgeAC-CERTEnergyAssessment" do
   include RSpecRegisterApiServiceMixin
 
   let(:fetch_assessor_stub) { AssessorStub.new }
 
   let(:valid_cepc_acic_xml) do
-    File.read File.join Dir.pwd, "spec/fixtures/samples/acic.xml"
+    File.read File.join Dir.pwd, "spec/fixtures/samples/ac-cert.xml"
   end
 
-  context "when lodging an ACIC assessment (post)" do
+  context "when lodging an AC-CERT assessment (post)" do
     context "when an assessor is inactive" do
       let(:scheme_id) { add_scheme_and_get_id }
 
@@ -59,12 +59,12 @@ describe "Acceptance::LodgeACICEnergyAssessment" do
         )
       end
 
-      it "accepts an assessment with type ACIC" do
-        expect(response["data"]["typeOfAssessment"]).to eq("ACIC")
+      it "accepts an assessment with type AC-CERT" do
+        expect(response["data"]["typeOfAssessment"]).to eq("AC-CERT")
       end
     end
 
-    context "when saving an (ACIC) assessment" do
+    context "when saving an (AC-CERT) assessment" do
       let(:scheme_id) { add_scheme_and_get_id }
       let(:doc) { Nokogiri.XML valid_cepc_acic_xml }
 
@@ -144,7 +144,7 @@ describe "Acceptance::LodgeACICEnergyAssessment" do
           "potentialEnergyEfficiencyRating" => 99,
           "totalFloorArea" => 99.0,
           "town" => "Post-Town1",
-          "typeOfAssessment" => "ACIC",
+          "typeOfAssessment" => "AC-CERT",
           "relatedPartyDisclosureNumber" => nil,
           "relatedPartyDisclosureText" => nil,
           "recommendedImprovements" => [],
@@ -154,7 +154,7 @@ describe "Acceptance::LodgeACICEnergyAssessment" do
               "assessmentExpiryDate" => "2024-05-04",
               "assessmentId" => "0000-0000-0000-0000-0000",
               "assessmentStatus" => "ENTERED",
-              "assessmentType" => "ACIC",
+              "assessmentType" => "AC-CERT",
             },
           ],
           "status" => "ENTERED",

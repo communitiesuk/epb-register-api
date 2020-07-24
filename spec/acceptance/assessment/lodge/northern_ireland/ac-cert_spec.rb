@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-describe "Acceptance::LodgeACICNIEnergyAssessment" do
+describe "Acceptance::LodgeAC-CERTNIEnergyAssessment" do
   include RSpecRegisterApiServiceMixin
 
   let(:fetch_assessor_stub) { AssessorStub.new }
 
   let(:valid_cepc_ni_xml) do
-    File.read File.join Dir.pwd, "spec/fixtures/samples/acic-ni.xml"
+    File.read File.join Dir.pwd, "spec/fixtures/samples/ac-cert-ni.xml"
   end
 
-  context "when lodging an ACIC assessment (post)" do
+  context "when lodging an AC-CERT assessment (post)" do
     context "when an assessor is inactive" do
       let(:scheme_id) { add_scheme_and_get_id }
 
@@ -21,7 +21,7 @@ describe "Acceptance::LodgeACICNIEnergyAssessment" do
         )
       end
 
-      context "when unqualified for ACIC" do
+      context "when unqualified for AC-CERT" do
         it "returns status 400 with the correct error response" do
           response =
             JSON.parse(
@@ -56,7 +56,7 @@ describe "Acceptance::LodgeACICNIEnergyAssessment" do
       )
     end
 
-    context "when saving a (ACIC) assessment" do
+    context "when saving a (AC-CERT) assessment" do
       let(:scheme_id) { add_scheme_and_get_id }
       let(:doc) { Nokogiri.XML valid_cepc_ni_xml }
       let(:response) do
@@ -135,7 +135,7 @@ describe "Acceptance::LodgeACICNIEnergyAssessment" do
           "potentialEnergyEfficiencyRating" => 99,
           "totalFloorArea" => 0.0,
           "town" => "Post-Town1",
-          "typeOfAssessment" => "ACIC",
+          "typeOfAssessment" => "AC-CERT",
           "relatedPartyDisclosureNumber" => nil,
           "relatedPartyDisclosureText" => nil,
           "recommendedImprovements" => [],
@@ -145,7 +145,7 @@ describe "Acceptance::LodgeACICNIEnergyAssessment" do
               "assessmentExpiryDate" => "2030-05-04",
               "assessmentId" => "0000-0000-0000-0000-0000",
               "assessmentStatus" => "ENTERED",
-              "assessmentType" => "ACIC",
+              "assessmentType" => "AC-CERT",
             },
           ],
           "status" => "ENTERED",

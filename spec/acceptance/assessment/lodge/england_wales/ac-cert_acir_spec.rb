@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 
-describe "Acceptance::LodgeACICEnergyAssessment" do
+describe "Acceptance::LodgeAC-CERTEnergyAssessment" do
   include RSpecRegisterApiServiceMixin
 
   let(:fetch_assessor_stub) { AssessorStub.new }
 
   let(:valid_cepc_ni_xml) do
-    File.read File.join Dir.pwd, "spec/fixtures/samples/acic+acir.xml"
+    File.read File.join Dir.pwd, "spec/fixtures/samples/ac-cert+acir.xml"
   end
 
-  context "when lodging an ACIC+ACIR assessment (post)" do
+  context "when lodging an AC-CERT+ACIR assessment (post)" do
     context "when an assessor is inactive" do
       let(:scheme_id) { add_scheme_and_get_id }
 
-      context "when unqualified for ACIC" do
+      context "when unqualified for AC-CERT" do
         it "returns status 400 with the correct error response" do
           add_assessor(
             scheme_id,
@@ -83,7 +83,7 @@ describe "Acceptance::LodgeACICEnergyAssessment" do
       )
     end
 
-    context "when saving a (ACIC+ACIR) assessment" do
+    context "when saving a (AC-CERT+ACIR) assessment" do
       let(:scheme_id) { add_scheme_and_get_id }
       let(:doc) { Nokogiri.XML valid_cepc_ni_xml }
       let(:response_acic) do
@@ -167,7 +167,7 @@ describe "Acceptance::LodgeACICEnergyAssessment" do
           "potentialEnergyEfficiencyRating" => 99,
           "totalFloorArea" => 99.0,
           "town" => "London",
-          "typeOfAssessment" => "ACIC",
+          "typeOfAssessment" => "AC-CERT",
           "relatedPartyDisclosureNumber" => nil,
           "relatedPartyDisclosureText" => nil,
           "recommendedImprovements" => [],
@@ -183,7 +183,7 @@ describe "Acceptance::LodgeACICEnergyAssessment" do
               "assessmentExpiryDate" => "2022-05-19",
               "assessmentId" => "0000-0000-0000-0000-0000",
               "assessmentStatus" => "ENTERED",
-              "assessmentType" => "ACIC",
+              "assessmentType" => "AC-CERT",
             },
           ],
           "status" => "ENTERED",
@@ -263,7 +263,7 @@ describe "Acceptance::LodgeACICEnergyAssessment" do
               "assessmentExpiryDate" => "2022-05-19",
               "assessmentId" => "0000-0000-0000-0000-0000",
               "assessmentStatus" => "ENTERED",
-              "assessmentType" => "ACIC",
+              "assessmentType" => "AC-CERT",
             },
           ],
           "status" => "ENTERED",
@@ -273,7 +273,7 @@ describe "Acceptance::LodgeACICEnergyAssessment" do
       end
     end
 
-    context "when failing so save ACIR as ACIC went through" do
+    context "when failing so save ACIR as AC-CERT went through" do
       let(:scheme_id) { add_scheme_and_get_id }
 
       before do
