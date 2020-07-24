@@ -25,9 +25,8 @@ describe "Acceptance::AddressSearch::ByPostcode" do
     let(:cepc_address_line_one) { non_domestic_xml.at("//CEPC:Address-Line-1") }
 
     before(:each) do
-
       ActiveRecord::Base.connection.execute(
-          "INSERT INTO
+        "INSERT INTO
               address_base
                 (
                   uprn,
@@ -75,7 +74,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
                 '',
                 'Newcastle'
               )",
-          )
+      )
 
       add_assessor(scheme_id, "SPEC000000", VALID_ASSESSOR_REQUEST_BODY)
 
@@ -169,18 +168,18 @@ describe "Acceptance::AddressSearch::ByPostcode" do
 
           it "returns the address from address_base" do
             expect(response[:data][:addresses][0]).to eq(
-                                                          {
-                                                              line1: "5 Grimal Place",
-                                                              line2: "Skewit Road",
-                                                              line3: nil,
-                                                              line4: nil,
-                                                              postcode: "A0 0AA",
-                                                              town: "London",
-                                                              addressId: "73546792",
-                                                              source: "ADDRESS_BASE",
-                                                              existingAssessments: nil,
-                                                          },
-                                                          )
+              {
+                line1: "5 Grimal Place",
+                line2: "Skewit Road",
+                line3: nil,
+                line4: nil,
+                postcode: "A0 0AA",
+                town: "London",
+                addressId: "73546792",
+                source: "ADDRESS_BASE",
+                existingAssessments: nil,
+              },
+            )
           end
 
           it "returns the address from previous assessments" do
@@ -278,18 +277,18 @@ describe "Acceptance::AddressSearch::ByPostcode" do
 
         it "returns the address from address_base" do
           expect(response[:data][:addresses][0]).to eq(
-                                                        {
-                                                            line1: "5 Grimal Place",
-                                                            line2: "Skewit Road",
-                                                            line3: nil,
-                                                            line4: nil,
-                                                            postcode: "A0 0AA",
-                                                            town: "London",
-                                                            addressId: "73546792",
-                                                            source: "ADDRESS_BASE",
-                                                            existingAssessments: nil,
-                                                        },
-                                                        )
+            {
+              line1: "5 Grimal Place",
+              line2: "Skewit Road",
+              line3: nil,
+              line4: nil,
+              postcode: "A0 0AA",
+              town: "London",
+              addressId: "73546792",
+              source: "ADDRESS_BASE",
+              existingAssessments: nil,
+            },
+          )
         end
 
         it "returns the address from previous assessments" do
@@ -340,18 +339,18 @@ describe "Acceptance::AddressSearch::ByPostcode" do
 
         it "returns the address from address_base" do
           expect(response[:data][:addresses][0]).to eq(
-                                                        {
-                                                            line1: "5 Grimal Place",
-                                                            line2: "Skewit Road",
-                                                            line3: nil,
-                                                            line4: nil,
-                                                            postcode: "A0 0AA",
-                                                            town: "London",
-                                                            addressId: "73546792",
-                                                            source: "ADDRESS_BASE",
-                                                            existingAssessments: nil,
-                                                        },
-                                                        )
+            {
+              line1: "5 Grimal Place",
+              line2: "Skewit Road",
+              line3: nil,
+              line4: nil,
+              postcode: "A0 0AA",
+              town: "London",
+              addressId: "73546792",
+              source: "ADDRESS_BASE",
+              existingAssessments: nil,
+            },
+          )
         end
 
         it "returns the address from previous assessments" do
@@ -403,18 +402,18 @@ describe "Acceptance::AddressSearch::ByPostcode" do
 
           it "returns the address from address_base" do
             expect(response[:data][:addresses][0]).to eq(
-                                                          {
-                                                              line1: "The house Grimal Place",
-                                                              line2: "Skewit Road",
-                                                              line3: nil,
-                                                              line4: nil,
-                                                              postcode: "A0 0AA",
-                                                              town: "London",
-                                                              addressId: "73546793",
-                                                              source: "ADDRESS_BASE",
-                                                              existingAssessments: nil,
-                                                          },
-                                                          )
+              {
+                line1: "The house Grimal Place",
+                line2: "Skewit Road",
+                line3: nil,
+                line4: nil,
+                postcode: "A0 0AA",
+                town: "London",
+                addressId: "73546793",
+                source: "ADDRESS_BASE",
+                existingAssessments: nil,
+              },
+            )
           end
 
           it "returns the expected address" do
@@ -465,18 +464,18 @@ describe "Acceptance::AddressSearch::ByPostcode" do
 
           it "returns the address from address_base" do
             expect(response[:data][:addresses][0]).to eq(
-                                                          {
-                                                              line1: "2 Grimal Place",
-                                                              line2: "345 Skewit Road",
-                                                              line3: nil,
-                                                              line4: nil,
-                                                              postcode: "A0 0AA",
-                                                              town: "London",
-                                                              addressId: "73546795",
-                                                              source: "ADDRESS_BASE",
-                                                              existingAssessments: nil,
-                                                          },
-                                                          )
+              {
+                line1: "2 Grimal Place",
+                line2: "345 Skewit Road",
+                line3: nil,
+                line4: nil,
+                postcode: "A0 0AA",
+                town: "London",
+                addressId: "73546795",
+                source: "ADDRESS_BASE",
+                existingAssessments: nil,
+              },
+            )
           end
 
           it "returns the expected address" do
@@ -522,18 +521,18 @@ describe "Acceptance::AddressSearch::ByPostcode" do
 
           it "returns the address from address_base" do
             expect(response[:data][:addresses][2]).to eq(
-                                                          {
-                                                              line1: "2 Grimal Place",
-                                                              line2: "345 Skewit Road",
-                                                              line3: nil,
-                                                              line4: nil,
-                                                              postcode: "A0 0AA",
-                                                              town: "London",
-                                                              addressId: "73546795",
-                                                              source: "ADDRESS_BASE",
-                                                              existingAssessments: nil,
-                                                          },
-                                                          )
+              {
+                line1: "2 Grimal Place",
+                line2: "345 Skewit Road",
+                line3: nil,
+                line4: nil,
+                postcode: "A0 0AA",
+                town: "London",
+                addressId: "73546795",
+                source: "ADDRESS_BASE",
+                existingAssessments: nil,
+              },
+            )
           end
 
           it "returns the expected address" do
@@ -597,18 +596,18 @@ describe "Acceptance::AddressSearch::ByPostcode" do
 
         it "returns the address from address_base" do
           expect(response[:data][:addresses][0]).to eq(
-                                                        {
-                                                            line1: "5 Grimal Place",
-                                                            line2: "Skewit Road",
-                                                            line3: nil,
-                                                            line4: nil,
-                                                            postcode: "A0 0AA",
-                                                            town: "London",
-                                                            addressId: "73546792",
-                                                            source: "ADDRESS_BASE",
-                                                            existingAssessments: nil,
-                                                        },
-                                                        )
+            {
+              line1: "5 Grimal Place",
+              line2: "Skewit Road",
+              line3: nil,
+              line4: nil,
+              postcode: "A0 0AA",
+              town: "London",
+              addressId: "73546792",
+              source: "ADDRESS_BASE",
+              existingAssessments: nil,
+            },
+          )
         end
 
         it "returns the expected address" do
@@ -659,18 +658,18 @@ describe "Acceptance::AddressSearch::ByPostcode" do
 
         it "returns the address from address_base" do
           expect(response[:data][:addresses][0]).to eq(
-                                                        {
-                                                            line1: "5 Grimal Place",
-                                                            line2: "Skewit Road",
-                                                            line3: nil,
-                                                            line4: nil,
-                                                            postcode: "A0 0AA",
-                                                            town: "London",
-                                                            addressId: "73546792",
-                                                            source: "ADDRESS_BASE",
-                                                            existingAssessments: nil,
-                                                        },
-                                                        )
+            {
+              line1: "5 Grimal Place",
+              line2: "Skewit Road",
+              line3: nil,
+              line4: nil,
+              postcode: "A0 0AA",
+              town: "London",
+              addressId: "73546792",
+              source: "ADDRESS_BASE",
+              existingAssessments: nil,
+            },
+          )
         end
 
         it "returns the expected address" do
@@ -721,18 +720,18 @@ describe "Acceptance::AddressSearch::ByPostcode" do
 
         it "returns the address from address_base" do
           expect(response[:data][:addresses][0]).to eq(
-                                                        {
-                                                            line1: "5 Grimal Place",
-                                                            line2: "Skewit Road",
-                                                            line3: nil,
-                                                            line4: nil,
-                                                            postcode: "A0 0AA",
-                                                            town: "London",
-                                                            addressId: "73546792",
-                                                            source: "ADDRESS_BASE",
-                                                            existingAssessments: nil,
-                                                        },
-                                                        )
+            {
+              line1: "5 Grimal Place",
+              line2: "Skewit Road",
+              line3: nil,
+              line4: nil,
+              postcode: "A0 0AA",
+              town: "London",
+              addressId: "73546792",
+              source: "ADDRESS_BASE",
+              existingAssessments: nil,
+            },
+          )
         end
 
         it "returns the expected address" do
@@ -788,18 +787,18 @@ describe "Acceptance::AddressSearch::ByPostcode" do
 
         it "returns the address from address_base" do
           expect(response[:data][:addresses][0]).to eq(
-                                                        {
-                                                            line1: "5 Grimal Place",
-                                                            line2: "Skewit Road",
-                                                            line3: nil,
-                                                            line4: nil,
-                                                            postcode: "A0 0AA",
-                                                            town: "London",
-                                                            addressId: "73546792",
-                                                            source: "ADDRESS_BASE",
-                                                            existingAssessments: nil,
-                                                        },
-                                                        )
+            {
+              line1: "5 Grimal Place",
+              line2: "Skewit Road",
+              line3: nil,
+              line4: nil,
+              postcode: "A0 0AA",
+              town: "London",
+              addressId: "73546792",
+              source: "ADDRESS_BASE",
+              existingAssessments: nil,
+            },
+          )
         end
 
         it "returns the expected address" do

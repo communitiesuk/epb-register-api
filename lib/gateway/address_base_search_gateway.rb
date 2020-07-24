@@ -28,22 +28,24 @@ module Gateway
 
       if building_name_number
         sql <<
-            "#{levenshtein('address_line1', '$2')}, #{
+          "#{levenshtein('address_line1', '$2')}, #{
             levenshtein('address_line2', '$2')
-            }, "
+          }, "
 
         binds <<
-            ActiveRecord::Relation::QueryAttribute.new(
-                "building_name_number",
-                building_name_number,
-                ActiveRecord::Type::String.new,
-                )
+          ActiveRecord::Relation::QueryAttribute.new(
+            "building_name_number",
+            building_name_number,
+            ActiveRecord::Type::String.new,
+          )
       end
 
       sql << "uprn"
 
       parse_results ActiveRecord::Base.connection.exec_query sql, "SQL", binds
     end
+
+  private
 
     def parse_results(results)
       results = results.map { |row| record_to_address_domain row }
@@ -53,9 +55,9 @@ module Gateway
 
     def levenshtein(property, bind, permissiveness = nil)
       levenshtein =
-          "LEVENSHTEIN(LOWER(#{property}), LOWER(#{
+        "LEVENSHTEIN(LOWER(#{property}), LOWER(#{
           bind
-          }))::decimal / GREATEST(length(#{property}), length(#{bind}))"
+        }))::decimal / GREATEST(length(#{property}), length(#{bind}))"
 
       levenshtein << " < #{permissiveness}" if permissiveness
 

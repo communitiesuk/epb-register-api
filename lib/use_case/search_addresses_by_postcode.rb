@@ -6,12 +6,14 @@ module UseCase
     end
 
     def execute(postcode:, building_name_number: nil, address_type: nil)
-      assessment_addresses = @address_search_gateway.search_by_postcode postcode,
-                                                 building_name_number,
-                                                 address_type
-      address_base_addresses = @address_base_search_gateway.search_by_postcode postcode,
-                                                      building_name_number,
-                                                      address_type
+      assessment_addresses =
+        @address_search_gateway.search_by_postcode postcode,
+                                                   building_name_number,
+                                                   address_type
+      address_base_addresses =
+        @address_base_search_gateway.search_by_postcode postcode,
+                                                        building_name_number,
+                                                        address_type
       address_base_addresses << assessment_addresses
       address_base_addresses.flatten
     end
