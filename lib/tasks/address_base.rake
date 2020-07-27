@@ -62,11 +62,6 @@ task :import_address_base do
               ActiveRecord::Type::String.new,
             ),
             ActiveRecord::Relation::QueryAttribute.new(
-              "rrn",
-              row[34],
-              ActiveRecord::Type::String.new,
-            ),
-            ActiveRecord::Relation::QueryAttribute.new(
               "addressline_1",
               [row[28], row[24], row[25], row[26], row[27]].reject(&:blank?).join(" "),
               ActiveRecord::Type::String.new,
@@ -78,6 +73,11 @@ task :import_address_base do
             ),
             ActiveRecord::Relation::QueryAttribute.new(
               "addressline_3",
+              row[49],
+              ActiveRecord::Type::String.new,
+            ),
+            ActiveRecord::Relation::QueryAttribute.new(
+              "addressline_4",
               row[49],
               ActiveRecord::Type::String.new,
             ),
