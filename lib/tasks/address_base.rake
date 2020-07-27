@@ -28,13 +28,14 @@ task :import_address_base do
   end
 
   Zip::InputStream.open(StringIO.new(raw_address_base.body)) do |io|
+    raw_address_base = nil
     io.get_next_entry
 
     csv_contents = io.read
 
-    if csv_contents.size > 0
-      address_base = CSV.parse(csv_contents)
-      address_base.each do |row|
+    if csv_contents.positive?
+      csv_contents = CSV.parse(csv_contents)
+      csv_contents.each do |row|
         query = "INSERT INTO
             address_base
             VALUES (
