@@ -44,7 +44,7 @@
 	<xs:element name="Energy-Assessor" type="Energy-Assessor"/>
 	<xs:complexType name="Energy-Assessor">
 		<xs:annotation>
-			<xs:documentation>A Energy-Assessor is a person certified by a Accrediation Scheme as being qualified to carry out an Energy Assessment and produce an Energy Performance Certificate.
+			<xs:documentation>An Energy-Assessor is a person certified by an Accreditation Scheme as being qualified to carry out an Energy Assessment and produce an Energy Performance Certificate.
 </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
