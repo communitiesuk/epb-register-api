@@ -12,7 +12,15 @@ module Domain
     }.freeze
 
     def initialize(data)
-      @assessment = TYPE2LODGEMENT[data[:type_of_assessment].to_sym].new(data)
+      if %i[CEPC-RR].include? data[:type_of_assessment].to_sym
+        domain_object = TYPE2LODGEMENT[data[:type_of_assessment].to_sym]
+
+        needed_params = domain_object.instance_method(:initialize).parameters.map(&:second)
+
+        @assessment = domain_object.new(**data.slice(*needed_params))
+      else
+        @assessment = TYPE2LODGEMENT[data[:type_of_assessment].to_sym].new(data)
+      end
     end
 
     def to_hash
