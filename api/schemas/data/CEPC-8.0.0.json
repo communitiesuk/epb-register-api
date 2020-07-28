@@ -81,6 +81,9 @@
   "root": "address",
   "path": ["Postcode"]
 }, {
+  "key": "dwelling_type",
+  "path": ["Report", "Report_Header", "Property_Details", "Property_Type"]
+}, {
   "key": "current_energy_rating",
   "path": ["_"],
   "default": "99"

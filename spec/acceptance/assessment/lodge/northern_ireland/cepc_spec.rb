@@ -133,7 +133,7 @@ describe "Acceptance::LodgeCEPCENIEnergyAssessment" do
           "dateOfAssessment" => "2020-05-04",
           "dateOfExpiry" => "2030-05-04",
           "dateRegistered" => "2020-05-04",
-          "dwellingType" => nil,
+          "dwellingType" => "Property-Type0",
           "heatDemand" => {
             "currentSpaceHeatingDemand" => 0.0,
             "currentWaterHeatingDemand" => 0.0,

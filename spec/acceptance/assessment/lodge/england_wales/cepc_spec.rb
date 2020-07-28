@@ -144,7 +144,7 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
           "dateOfAssessment" => "2020-05-04",
           "dateOfExpiry" => "2026-05-04",
           "dateRegistered" => "2020-05-04",
-          "dwellingType" => nil,
+          "dwellingType" => "B1 Offices and Workshop businesses",
           "heatDemand" => {
             "currentSpaceHeatingDemand" => 0.0,
             "currentWaterHeatingDemand" => 0.0,

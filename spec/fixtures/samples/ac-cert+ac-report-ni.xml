@@ -38,7 +38,7 @@
           <Post-Town>London</Post-Town>
           <Postcode>AB12 2AA</Postcode>
         </Property-Address>
-        <Property-Type />
+        <Property-Type>Property-Type1</Property-Type>
         <Is-Heritage-Site>N</Is-Heritage-Site>
       </Property-Details>
       <Calculation-Details>

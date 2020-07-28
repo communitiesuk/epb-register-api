@@ -154,7 +154,7 @@ describe "Acceptance::LodgeAC-CERT+AC-REPORTNIEnergyAssessment" do
           "dateOfAssessment" => "2019-05-20",
           "dateOfExpiry" => "2030-05-19",
           "dateRegistered" => "2019-05-20",
-          "dwellingType" => nil,
+          "dwellingType" => "Property-Type1",
           "heatDemand" => {
             "currentSpaceHeatingDemand" => 0.0,
             "currentWaterHeatingDemand" => 0.0,

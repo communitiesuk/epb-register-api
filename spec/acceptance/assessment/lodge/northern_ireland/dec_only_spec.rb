@@ -121,7 +121,7 @@ describe "Acceptance::LodgeDECNIEnergyAssessment" do
           "dateOfAssessment" => "2018-05-04",
           "dateOfExpiry" => "2028-05-04",
           "dateRegistered" => "2018-05-05",
-          "dwellingType" => nil,
+          "dwellingType" => "B1 Offices and Workshop businesses",
           "heatDemand" => {
             "currentSpaceHeatingDemand" => 0.0,
             "currentWaterHeatingDemand" => 0.0,

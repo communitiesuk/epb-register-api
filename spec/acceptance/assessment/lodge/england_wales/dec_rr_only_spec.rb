@@ -120,7 +120,7 @@ describe "Acceptance::LodgeAdvisoryReport" do
           "dateOfAssessment" => "2020-05-04",
           "dateOfExpiry" => "2028-05-03",
           "dateRegistered" => "2020-05-05",
-          "dwellingType" => nil,
+          "dwellingType" => "Property-Type0",
           "heatDemand" => {
             "currentSpaceHeatingDemand" => 0.0,
             "currentWaterHeatingDemand" => 0.0,
