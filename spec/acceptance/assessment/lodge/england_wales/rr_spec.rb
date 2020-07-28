@@ -158,25 +158,37 @@ describe "Acceptance::LodgeRREnergyAssessment" do
           ],
           "status" => "ENTERED",
           "nonDomCepcRr" => {
-            "longPaybackPotentialImpact" => [{ "impact" => "HIGH" }],
             "longPaybackRecommendation" => [
-              { "recommendation" => "SOME RECOMMENDATION" },
+              {
+                "recommendation" =>
+                  "Consider installing an air source heat pump.",
+                "carbonImpact" => "HIGH",
+              },
             ],
-            "mediumPaybackPotentialImpact" => [
-              { "impact" => "HIGH" },
-              { "impact" => "MEDIUM" },
+            "otherPaybackRecommendation" => [
+              {
+                "recommendation" => "Consider installing PV.",
+                "carbonImpact" => "HIGH",
+              },
+            ],
+            "shortPaybackRecommendation" => [
+              {
+                "recommendation" =>
+                  "Consider replacing T8 lamps with retrofit T5 conversion kit.",
+                "carbonImpact" => "HIGH",
+              },
+              {
+                "recommendation" =>
+                  "Introduce HF (high frequency) ballasts for fluorescent tubes: Reduced number of fittings required.",
+                "carbonImpact" => "LOW",
+              },
             ],
             "mediumPaybackRecommendation" => [
-              { "recommendation" => "SOME RECOMMENDATION" },
-              { "recommendation" => "ANOTHER MEDIUM RECOMMENDATION" },
-            ],
-            "otherPaybackPotentialImpact" => [{ "impact" => "HIGH" }],
-            "otherPaybackRecommendation" => [
-              { "recommendation" => "SOME RECOMMENDATION" },
-            ],
-            "shortPaybackPotentialImpact" => [{ "impact" => "HIGH" }],
-            "shortPaybackRecommendation" => [
-              { "recommendation" => "SOME RECOMMENDATION" },
+              {
+                "recommendation" =>
+                  "Add optimum start/stop to the heating system.",
+                "carbonImpact" => "MEDIUM",
+              },
             ],
           },
         }

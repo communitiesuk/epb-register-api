@@ -103,4 +103,53 @@
   "key": "total_floor_area",
   "root": "technical_information",
   "path": ["Floor_Area"]
+},{
+  "key": "short_payback_recommendation",
+  "path": ["Report", "Recommendations_Report", "RR_Recommendations", "Short_Payback"],
+  "extract": [
+    {
+      "key": "recommendation",
+      "path": ["Recommendation"]
+    }, {
+      "key": "carbon_impact",
+      "path": ["CO2_Impact"]
+    }
+  ]
+}, {
+  "key": "medium_payback_recommendation",
+  "path": ["Report", "Recommendations_Report", "RR_Recommendations", "Medium_Payback"],
+  "extract": [
+    {
+      "key": "recommendation",
+      "path": ["Recommendation"]
+    }, {
+      "key": "carbon_impact",
+      "path": ["CO2_Impact"]
+    }
+  ]
+}, {
+  "key": "long_payback_recommendation",
+  "path": ["Report", "Recommendations_Report", "RR_Recommendations", "Long_Payback"],
+  "extract": [
+    {
+      "key": "recommendation",
+      "path": ["Recommendation"]
+    },
+    {
+      "key": "carbon_impact",
+      "path": ["CO2_Impact"]
+    }
+  ]
+}, {
+  "key": "other_payback_recommendation",
+  "path": ["Report", "Recommendations_Report", "RR_Recommendations", "Other_Payback"],
+  "extract": [
+    {
+      "key": "recommendation",
+      "path": ["Recommendation"]
+    }, {
+      "key": "carbon_impact",
+      "path": ["CO2_Impact"]
+    }
+  ]
 }]

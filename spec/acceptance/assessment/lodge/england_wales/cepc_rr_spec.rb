@@ -225,25 +225,37 @@ describe "Acceptance::LodgeCEPC+RREnergyAssessment" do
           ],
           "status" => "ENTERED",
           "nonDomCepcRr" => {
-            "longPaybackPotentialImpact" => [{ "impact" => "HIGH" }],
             "longPaybackRecommendation" => [
-              { "recommendation" => "SOME RECOMMENDATION" },
+              {
+                "recommendation" =>
+                  "Consider installing an air source heat pump.",
+                "carbonImpact" => "HIGH",
+              },
             ],
-            "mediumPaybackPotentialImpact" => [{ "impact" => "HIGH" }],
-            "mediumPaybackRecommendation" => [
-              { "recommendation" => "SOME RECOMMENDATION" },
-            ],
-            "otherPaybackPotentialImpact" => [{ "impact" => "HIGH" }],
             "otherPaybackRecommendation" => [
-              { "recommendation" => "SOME RECOMMENDATION" },
-            ],
-            "shortPaybackPotentialImpact" => [
-              { "impact" => "HIGH" },
-              { "impact" => "LOW" },
+              {
+                "recommendation" => "Consider installing PV.",
+                "carbonImpact" => "HIGH",
+              },
             ],
             "shortPaybackRecommendation" => [
-              { "recommendation" => "SOME RECOMMENDATION" },
-              { "recommendation" => "ANOTHER SHORT RECOMMENDATION" },
+              {
+                "recommendation" =>
+                  "Consider replacing T8 lamps with retrofit T5 conversion kit.",
+                "carbonImpact" => "HIGH",
+              },
+              {
+                "recommendation" =>
+                  "Introduce HF (high frequency) ballasts for fluorescent tubes: Reduced number of fittings required.",
+                "carbonImpact" => "LOW",
+              },
+            ],
+            "mediumPaybackRecommendation" => [
+              {
+                "recommendation" =>
+                  "Add optimum start/stop to the heating system.",
+                "carbonImpact" => "MEDIUM",
+              },
             ],
           },
         }
