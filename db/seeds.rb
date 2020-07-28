@@ -6,6 +6,9 @@ unless defined?(Zeitwerk)
   loader.setup
 end
 
+# The values in this fuel code map come from the table GDP_FUEL_CODE_MAPPING
+# in the old register system, and are used to calculate potential savings due to
+# energy-saving measures installed under a Green Deal Plan.
 fuel_code_map = [
   { fuel_code: 26, fuel_category: 1, fuel_heat_source: 1 },
   { fuel_code: 27, fuel_category: 3, fuel_heat_source: 2 },
@@ -37,6 +40,7 @@ fuel_code_map = [
 ]
 
 sql = <<~SQL
+  DELETE FROM green_deal_fuel_code_map;
   INSERT INTO green_deal_fuel_code_map (
     fuel_code,
     fuel_category,
