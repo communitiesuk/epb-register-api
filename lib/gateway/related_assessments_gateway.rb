@@ -55,8 +55,6 @@ module Gateway
           ],
         )
 
-      assessment_id = address_id.sub "RRN-", ""
-
       output =
         results.map do |result|
           Domain::RelatedAssessment.new(
