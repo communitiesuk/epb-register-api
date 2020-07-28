@@ -33,61 +33,23 @@ task :import_address_base do
 
     csv_contents = io.read
 
-    if csv_contents.positive?
+    if csv_contents.size.positive?
       csv_contents = CSV.parse(csv_contents)
-      csv_contents.each do |row|
-        query = "INSERT INTO
-            address_base
-            VALUES (
-                $1,
-                $2,
-                $3,
-                $4,
-                $5,
-                $6,
-                $7
-            )"
-        ActiveRecord::Base.connection.exec_query(
-          query,
-          "SQL",
-          [
-            ActiveRecord::Relation::QueryAttribute.new(
-              "uprn",
-              row[0],
-              ActiveRecord::Type::String.new,
-            ),
-            ActiveRecord::Relation::QueryAttribute.new(
-              "postcode",
-              row[64],
-              ActiveRecord::Type::String.new,
-            ),
-            ActiveRecord::Relation::QueryAttribute.new(
-              "addressline_1",
-              [row[28], row[24], row[25], row[26], row[27]].reject(&:blank?).join(" "),
-              ActiveRecord::Type::String.new,
-            ),
-            ActiveRecord::Relation::QueryAttribute.new(
-              "addressline_2",
-              [row[34], row[30], row[31], row[32], row[33]].reject(&:blank?).join(" "),
-              ActiveRecord::Type::String.new,
-            ),
-            ActiveRecord::Relation::QueryAttribute.new(
-              "addressline_3",
-              row[49],
-              ActiveRecord::Type::String.new,
-            ),
-            ActiveRecord::Relation::QueryAttribute.new(
-              "addressline_4",
-              row[49],
-              ActiveRecord::Type::String.new,
-            ),
-            ActiveRecord::Relation::QueryAttribute.new(
-              "town",
-              row[60],
-              ActiveRecord::Type::String.new,
-            ),
-          ],
-        )
+      csv_contents.each_slice(10_000) do |inserts|
+        query = []
+        inserts.map do |row|
+          query.push("(
+                  '#{row[0].gsub("'", "\\'")}',
+                  '#{row[64].gsub("'", "\\'")}',
+                  '#{[row[28], row[24], row[25], row[26], row[27]].reject(&:blank?).join(' ').gsub("'", "\\'")}',
+                  '#{[row[34], row[30], row[31], row[32], row[33]].reject(&:blank?).join(' ').gsub("'", "\\'")}',
+                  '#{row[49].gsub("'", "\\'" )}',
+                  '#{row[49].gsub("'", "\\'" )}',
+                  '#{row[60].gsub("'", "\\'" )}'
+              )")
+        end
+
+        ActiveRecord::Base.connection.execute("INSERT INTO address_base VALUES " + query.join(", "))
       end
     end
   end
