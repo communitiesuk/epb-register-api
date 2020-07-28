@@ -23,6 +23,10 @@
   "root": "header",
   "path": ["Energy_Assessor", "Certificate_Number"]
 }, {
+  "key": "related_party_disclosure_text",
+  "root": "header",
+  "path": ["Energy_Assessor", "Related_Party_Disclosure"]
+}, {
   "key": "inspection_date",
   "root": "header",
   "path": ["Inspection_Date"]

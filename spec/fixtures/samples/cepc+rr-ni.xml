@@ -302,6 +302,7 @@
         <CEPC:Certificate-Number>SPEC000000</CEPC:Certificate-Number>
         <CEPC:Name>Name0</CEPC:Name>
         <CEPC:Accreditation-Scheme-Name>Accreditation-Scheme-Name0</CEPC:Accreditation-Scheme-Name>
+        <CEPC:Related-Party-Disclosure>Related to the owner</CEPC:Related-Party-Disclosure>
       </CEPC:Energy-Assessor>
       <CEPC:Property-Details>
         <CEPC:UPRN>UPRN-000000000000</CEPC:UPRN>

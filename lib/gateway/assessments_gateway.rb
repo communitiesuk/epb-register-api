@@ -33,13 +33,13 @@ module Gateway
 
     def insert_or_update(assessment)
       unless valid_energy_rating(
-        assessment.get(:current_energy_efficiency_rating),
+        assessment.get(:current_energy_efficiency_rating)
       )
         raise ArgumentError, "Invalid current energy rating"
       end
 
       unless valid_energy_rating(
-        assessment.get(:potential_energy_efficiency_rating),
+        assessment.get(:potential_energy_efficiency_rating)
       )
         raise ArgumentError, "Invalid potential energy rating"
       end

@@ -145,7 +145,7 @@ describe "Acceptance::LodgeRREnergyAssessment" do
           "town" => "Post-Town0",
           "typeOfAssessment" => "CEPC-RR",
           "relatedPartyDisclosureNumber" => nil,
-          "relatedPartyDisclosureText" => nil,
+          "relatedPartyDisclosureText" => "Related to the owner",
           "recommendedImprovements" => [],
           "propertySummary" => [],
           "relatedAssessments" => [
