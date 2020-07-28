@@ -44,8 +44,11 @@ setup-db:
 	@bundle exec rake db:create
 	@echo ">>>>> Migrating DB"
 	@bundle exec rake db:migrate
+	@echo ">>>>> Seeding DB with fuel code mapping data"
+	@bundle exec rake db:seed
 	@echo ">>>>> Populating Test DB"
 	@bundle exec rake db:test:prepare
+	@printf "\nDB setup complete.\nTo load fuel price data run 'bundle exec rake green_deal_update_fuel_data'.\n"
 
 .PHONY: migrate-db-and-wait-for-success
 migrate-db-and-wait-for-success:
