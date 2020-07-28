@@ -43,9 +43,9 @@ task :import_address_base do
                   '#{row[64].gsub("'", "\\'")}',
                   '#{[row[28], row[24], row[25], row[26], row[27]].reject(&:blank?).join(' ').gsub("'", "\\'")}',
                   '#{[row[34], row[30], row[31], row[32], row[33]].reject(&:blank?).join(' ').gsub("'", "\\'")}',
-                  '#{row[49].gsub("'", "\\'" )}',
-                  '#{row[49].gsub("'", "\\'" )}',
-                  '#{row[60].gsub("'", "\\'" )}'
+                  '#{row[49].gsub("'", "\\'")}',
+                  '#{row[49].gsub("'", "\\'")}',
+                  '#{row[60].gsub("'", "\\'")}'
               )")
         end
 

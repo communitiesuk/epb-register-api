@@ -6,7 +6,8 @@ describe "Acceptance::LodgeAC-CERT+AC-REPORTNIEnergyAssessment" do
   let(:fetch_assessor_stub) { AssessorStub.new }
 
   let(:valid_xml) do
-    File.read File.join Dir.pwd, "spec/fixtures/samples/ac-cert+ac-report-ni.xml"
+    File.read File.join Dir.pwd,
+                        "spec/fixtures/samples/ac-cert+ac-report-ni.xml"
   end
 
   context "when lodging an AC-CERT+AC-REPORT assessment (post)" do
