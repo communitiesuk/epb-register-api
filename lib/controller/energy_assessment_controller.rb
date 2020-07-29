@@ -75,13 +75,13 @@ module Controller
       sup = env[:jwt_auth].supplemental("scheme_ids")
       validate_and_lodge_assessment = UseCase::ValidateAndLodgeAssessment.new
 
-      content_type = request.env["CONTENT_TYPE"].split("+")[1]
+      xml_schema_type = request.env["CONTENT_TYPE"].split("+")[1]
       scheme_ids = sup
 
       results =
         validate_and_lodge_assessment.execute(
           sanitised_xml,
-          content_type,
+          xml_schema_type,
           scheme_ids,
           migrated,
         )
