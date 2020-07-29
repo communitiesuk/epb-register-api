@@ -58,10 +58,12 @@ describe "Acceptance::LodgeCEPC+RREnergyAssessment" do
       let(:scheme_id) { add_scheme_and_get_id }
       let(:doc) { Nokogiri.XML valid_xml }
       let(:response_cepc) do
-        JSON.parse(fetch_assessment("0000-0000-0000-0000-0000").body)
+        JSON.parse fetch_assessment("0000-0000-0000-0000-0000").body,
+                   symbolize_names: true
       end
       let(:response_rr) do
-        JSON.parse(fetch_assessment("0000-0000-0000-0000-0001").body)
+        JSON.parse fetch_assessment("0000-0000-0000-0000-0001").body,
+                   symbolize_names: true
       end
 
       before do
@@ -73,194 +75,192 @@ describe "Acceptance::LodgeCEPC+RREnergyAssessment" do
       end
 
       it "returns the data that was lodged" do
-        lodge_assessment(
-          assessment_body: doc.to_xml,
-          accepted_responses: [201],
-          auth_data: { scheme_ids: [scheme_id] },
-          schema_name: "CEPC-8.0.0",
-        )
+        lodge_assessment assessment_body: doc.to_xml,
+                         accepted_responses: [201],
+                         auth_data: { scheme_ids: [scheme_id] },
+                         schema_name: "CEPC-8.0.0"
 
         expected_cepc_response = {
-          "addressId" => "UPRN-000000000001",
-          "addressLine1" => "2 Lonely Street",
-          "addressLine2" => "",
-          "addressLine3" => "",
-          "addressLine4" => "",
-          "assessmentId" => "0000-0000-0000-0000-0000",
-          "assessor" => {
-            "contactDetails" => {
-              "email" => "person@person.com",
-              "telephoneNumber" => "010199991010101",
+          addressId: "UPRN-000000000001",
+          addressLine1: "2 Lonely Street",
+          addressLine2: "",
+          addressLine3: "",
+          addressLine4: "",
+          assessmentId: "0000-0000-0000-0000-0000",
+          assessor: {
+            contactDetails: {
+              email: "person@person.com",
+              telephoneNumber: "010199991010101",
             },
-            "dateOfBirth" => "1991-02-25",
-            "firstName" => "Someone",
-            "lastName" => "Person",
-            "middleNames" => "Muddle",
-            "qualifications" => {
-              "domesticSap" => "INACTIVE",
-              "domesticRdSap" => "INACTIVE",
-              "nonDomesticCc4" => "INACTIVE",
-              "nonDomesticSp3" => "INACTIVE",
-              "nonDomesticDec" => "INACTIVE",
-              "nonDomesticNos3" => "ACTIVE",
-              "nonDomesticNos4" => "INACTIVE",
-              "nonDomesticNos5" => "INACTIVE",
-              "gda" => "INACTIVE",
+            dateOfBirth: "1991-02-25",
+            firstName: "Someone",
+            lastName: "Person",
+            middleNames: "Muddle",
+            qualifications: {
+              domesticSap: "INACTIVE",
+              domesticRdSap: "INACTIVE",
+              nonDomesticCc4: "INACTIVE",
+              nonDomesticSp3: "INACTIVE",
+              nonDomesticDec: "INACTIVE",
+              nonDomesticNos3: "ACTIVE",
+              nonDomesticNos4: "INACTIVE",
+              nonDomesticNos5: "INACTIVE",
+              gda: "INACTIVE",
             },
-            "address" => {},
-            "companyDetails" => {},
-            "registeredBy" => {
-              "name" => "test scheme", "schemeId" => scheme_id
+            address: {},
+            companyDetails: {},
+            registeredBy: {
+              name: "test scheme",
+              schemeId: scheme_id
             },
-            "schemeAssessorId" => "SPEC000000",
-            "searchResultsComparisonPostcode" => "",
+            schemeAssessorId: "SPEC000000",
+            searchResultsComparisonPostcode: "",
           },
-          "currentCarbonEmission" => 0.0,
-          "currentEnergyEfficiencyBand" => "a",
-          "currentEnergyEfficiencyRating" => 99,
-          "optOut" => false,
-          "dateOfAssessment" => "2020-05-04",
-          "dateOfExpiry" => "2026-05-04",
-          "dateRegistered" => "2020-05-05",
-          "dwellingType" => "B1 Offices and Workshop businesses",
-          "heatDemand" => {
-            "currentSpaceHeatingDemand" => 0.0,
-            "currentWaterHeatingDemand" => 0.0,
-            "impactOfCavityInsulation" => nil,
-            "impactOfLoftInsulation" => nil,
-            "impactOfSolidWallInsulation" => nil,
+          currentCarbonEmission: 0.0,
+          currentEnergyEfficiencyBand: "a",
+          currentEnergyEfficiencyRating: 99,
+          optOut: false,
+          dateOfAssessment: "2020-05-04",
+          dateOfExpiry: "2026-05-04",
+          dateRegistered: "2020-05-05",
+          dwellingType: "B1 Offices and Workshop businesses",
+          heatDemand: {
+            currentSpaceHeatingDemand: 0.0,
+            currentWaterHeatingDemand: 0.0,
+            impactOfCavityInsulation: nil,
+            impactOfLoftInsulation: nil,
+            impactOfSolidWallInsulation: nil,
           },
-          "postcode" => "A0 0AA",
-          "potentialCarbonEmission" => 0.0,
-          "potentialEnergyEfficiencyBand" => "a",
-          "potentialEnergyEfficiencyRating" => 99,
-          "totalFloorArea" => 99.0,
-          "town" => "Post-Town1",
-          "typeOfAssessment" => "CEPC",
-          "relatedPartyDisclosureNumber" => nil,
-          "relatedPartyDisclosureText" => nil,
-          "recommendedImprovements" => [],
-          "propertySummary" => [],
-          "relatedAssessments" => [
+          postcode: "A0 0AA",
+          potentialCarbonEmission: 0.0,
+          potentialEnergyEfficiencyBand: "a",
+          potentialEnergyEfficiencyRating: 99,
+          totalFloorArea: 99.0,
+          town: "Post-Town1",
+          typeOfAssessment: "CEPC",
+          relatedPartyDisclosureNumber: nil,
+          relatedPartyDisclosureText: nil,
+          recommendedImprovements: [],
+          propertySummary: [],
+          relatedAssessments: [
             {
-              "assessmentExpiryDate" => "2026-05-04",
-              "assessmentId" => "0000-0000-0000-0000-0000",
-              "assessmentStatus" => "ENTERED",
-              "assessmentType" => "CEPC",
+              assessmentExpiryDate: "2026-05-04",
+              assessmentId: "0000-0000-0000-0000-0000",
+              assessmentStatus: "ENTERED",
+              assessmentType: "CEPC",
             },
           ],
-          "status" => "ENTERED",
+          status: "ENTERED",
         }
 
-        expect(response_cepc["data"]).to eq(expected_cepc_response)
+        expect(response_cepc[:data]).to eq(expected_cepc_response)
 
         expected_rr_response = {
-          "addressId" => "UPRN-000000000000",
-          "addressLine1" => "1 Lonely Street",
-          "addressLine2" => "",
-          "addressLine3" => "",
-          "addressLine4" => "",
-          "assessmentId" => "0000-0000-0000-0000-0001",
-          "assessor" => {
-            "contactDetails" => {
-              "email" => "person@person.com",
-              "telephoneNumber" => "010199991010101",
+          addressId: "UPRN-000000000000",
+          addressLine1: "1 Lonely Street",
+          addressLine2: "",
+          addressLine3: "",
+          addressLine4: "",
+          assessmentId: "0000-0000-0000-0000-0001",
+          assessor: {
+            contactDetails: {
+              email: "person@person.com",
+              telephoneNumber: "010199991010101",
             },
-            "dateOfBirth" => "1991-02-25",
-            "firstName" => "Someone",
-            "lastName" => "Person",
-            "middleNames" => "Muddle",
-            "qualifications" => {
-              "domesticSap" => "INACTIVE",
-              "domesticRdSap" => "INACTIVE",
-              "nonDomesticCc4" => "INACTIVE",
-              "nonDomesticSp3" => "INACTIVE",
-              "nonDomesticDec" => "INACTIVE",
-              "nonDomesticNos3" => "ACTIVE",
-              "nonDomesticNos4" => "INACTIVE",
-              "nonDomesticNos5" => "INACTIVE",
-              "gda" => "INACTIVE",
+            dateOfBirth: "1991-02-25",
+            firstName: "Someone",
+            lastName: "Person",
+            middleNames: "Muddle",
+            qualifications: {
+              domesticSap: "INACTIVE",
+              domesticRdSap: "INACTIVE",
+              nonDomesticCc4: "INACTIVE",
+              nonDomesticSp3: "INACTIVE",
+              nonDomesticDec: "INACTIVE",
+              nonDomesticNos3: "ACTIVE",
+              nonDomesticNos4: "INACTIVE",
+              nonDomesticNos5: "INACTIVE",
+              gda: "INACTIVE",
             },
-            "address" => {},
-            "companyDetails" => {},
-            "registeredBy" => {
-              "name" => "test scheme", "schemeId" => scheme_id
+            address: {},
+            companyDetails: {},
+            registeredBy: {
+              name: "test scheme",
+              schemeId: scheme_id
             },
-            "schemeAssessorId" => "SPEC000000",
-            "searchResultsComparisonPostcode" => "",
+            schemeAssessorId: "SPEC000000",
+            searchResultsComparisonPostcode: "",
           },
-          "currentCarbonEmission" => 0.0,
-          "currentEnergyEfficiencyBand" => "a",
-          "currentEnergyEfficiencyRating" => 99,
-          "optOut" => false,
-          "dateOfAssessment" => "2020-05-04",
-          "dateOfExpiry" => "2026-05-04",
-          "dateRegistered" => "2020-05-05",
-          "dwellingType" => "Property-Type0",
-          "heatDemand" => {
-            "currentSpaceHeatingDemand" => 0.0,
-            "currentWaterHeatingDemand" => 0.0,
-            "impactOfCavityInsulation" => nil,
-            "impactOfLoftInsulation" => nil,
-            "impactOfSolidWallInsulation" => nil,
+          currentCarbonEmission: 0.0,
+          currentEnergyEfficiencyBand: "a",
+          currentEnergyEfficiencyRating: 99,
+          optOut: false,
+          dateOfAssessment: "2020-05-04",
+          dateOfExpiry: "2026-05-04",
+          dateRegistered: "2020-05-05",
+          dwellingType: "Property-Type0",
+          heatDemand: {
+            currentSpaceHeatingDemand: 0.0,
+            currentWaterHeatingDemand: 0.0,
+            impactOfCavityInsulation: nil,
+            impactOfLoftInsulation: nil,
+            impactOfSolidWallInsulation: nil,
           },
-          "postcode" => "A0 0AA",
-          "potentialCarbonEmission" => 0.0,
-          "potentialEnergyEfficiencyBand" => "a",
-          "potentialEnergyEfficiencyRating" => 99,
-          "totalFloorArea" => 99.0,
-          "town" => "Post-Town0",
-          "typeOfAssessment" => "CEPC-RR",
-          "relatedPartyDisclosureNumber" => nil,
-          "relatedPartyDisclosureText" => "Related to the owner",
-          "recommendedImprovements" => [],
-          "propertySummary" => [],
-          "relatedAssessments" => [
+          postcode: "A0 0AA",
+          potentialCarbonEmission: 0.0,
+          potentialEnergyEfficiencyBand: "a",
+          potentialEnergyEfficiencyRating: 99,
+          totalFloorArea: 99.0,
+          town: "Post-Town0",
+          typeOfAssessment: "CEPC-RR",
+          relatedPartyDisclosureNumber: nil,
+          relatedPartyDisclosureText: "Related to the owner",
+          recommendedImprovements: [],
+          propertySummary: [],
+          relatedAssessments: [
             {
-              "assessmentExpiryDate" => "2026-05-04",
-              "assessmentId" => "0000-0000-0000-0000-0001",
-              "assessmentStatus" => "ENTERED",
-              "assessmentType" => "CEPC-RR",
+              assessmentExpiryDate: "2026-05-04",
+              assessmentId: "0000-0000-0000-0000-0001",
+              assessmentStatus: "ENTERED",
+              assessmentType: "CEPC-RR",
             },
           ],
-          "status" => "ENTERED",
-          "nonDomCepcRr" => {
-            "longPaybackRecommendation" => [
+          status: "ENTERED",
+          nonDomCepcRr: {
+            longPaybackRecommendation: [
               {
-                "recommendation" =>
-                  "Consider installing an air source heat pump.",
-                "carbonImpact" => "HIGH",
+                recommendation: "Consider installing an air source heat pump.",
+                carbonImpact: "HIGH",
               },
             ],
-            "otherPaybackRecommendation" => [
+            otherPaybackRecommendation: [
               {
-                "recommendation" => "Consider installing PV.",
-                "carbonImpact" => "HIGH",
+                recommendation: "Consider installing PV.",
+                carbonImpact: "HIGH",
               },
             ],
-            "shortPaybackRecommendation" => [
+            shortPaybackRecommendation: [
               {
-                "recommendation" =>
+                recommendation:
                   "Consider replacing T8 lamps with retrofit T5 conversion kit.",
-                "carbonImpact" => "HIGH",
+                carbonImpact: "HIGH",
               },
               {
-                "recommendation" =>
+                recommendation:
                   "Introduce HF (high frequency) ballasts for fluorescent tubes: Reduced number of fittings required.",
-                "carbonImpact" => "LOW",
+                carbonImpact: "LOW",
               },
             ],
-            "mediumPaybackRecommendation" => [
+            mediumPaybackRecommendation: [
               {
-                "recommendation" =>
-                  "Add optimum start/stop to the heating system.",
-                "carbonImpact" => "MEDIUM",
+                recommendation: "Add optimum start/stop to the heating system.",
+                carbonImpact: "MEDIUM",
               },
             ],
           },
         }
 
-        expect(response_rr["data"]).to eq(expected_rr_response)
+        expect(response_rr[:data]).to eq(expected_rr_response)
       end
     end
 
