@@ -28,31 +28,42 @@ task :import_address_base do
   end
 
   csv_contents = raw_address_base.body
-  if ENV["URL"].include?(".zip")
-    Zip::InputStream.open(StringIO.new(raw_address_base.body)) do |io|
+
+  if ENV["url"].to_s.include?(".zip")
+    Zip::InputStream.open(StringIO.new(csv_contents)) do |io|
       io.get_next_entry
 
       csv_contents = io.read
     end
   end
 
-  if csv_contents.size.positive?
-    csv_contents = CSV.parse(csv_contents)
-    csv_contents.each_slice(10_000) do |inserts|
-      query = []
-      inserts.map do |row|
-        query.push("(
-                '#{row[0].gsub("'", "\\'")}',
-                '#{row[64].gsub("'", "\\'")}',
-                '#{[row[28], row[24], row[25], row[26], row[27]].reject(&:blank?).join(' ').gsub("'", "\\'")}',
-                '#{[row[34], row[30], row[31], row[32], row[33]].reject(&:blank?).join(' ').gsub("'", "\\'")}',
-                '#{row[49].gsub("'", "\\'")}',
-                '#{row[49].gsub("'", "\\'")}',
-                '#{row[60].gsub("'", "\\'")}'
-            )")
-      end
+  ActiveRecord::Base.transaction do
+    if csv_contents.size.positive?
+      csv_contents = CSV.parse(csv_contents)
+      csv_contents.each_slice(100) do |inserts|
+        query = []
+        inserts.map do |row|
+          uprn = ActiveRecord::Base.connection.quote(row[0])
+          postcode = ActiveRecord::Base.connection.quote(row[64])
+          address_line1 = ActiveRecord::Base.connection.quote([row[28], row[24], row[25], row[26], row[27]].reject(&:blank?).join(" "))
+          address_line2 = ActiveRecord::Base.connection.quote([row[34], row[30], row[31], row[32], row[33]].reject(&:blank?).join(" "))
+          address_line3 = ActiveRecord::Base.connection.quote(row[49])
+          address_line4 = ActiveRecord::Base.connection.quote(row[49])
+          town = ActiveRecord::Base.connection.quote(row[60])
 
-      ActiveRecord::Base.connection.execute("INSERT INTO address_base VALUES " + query.join(", "))
+          query.push("(
+                  #{uprn},
+                  #{postcode},
+                  #{address_line1},
+                  #{address_line2},
+                  #{address_line3},
+                  #{address_line4},
+                  #{town}
+              )")
+        end
+
+        ActiveRecord::Base.connection.execute("INSERT INTO address_base VALUES " + query.join(", "))
+      end
     end
   end
 end
