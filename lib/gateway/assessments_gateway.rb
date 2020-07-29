@@ -313,12 +313,6 @@ module Gateway
     def row_to_domain(row)
       row.symbolize_keys!
       row[:property_summary] = JSON.parse(row[:property_summary])
-      lighting_cost_current = row.delete(:lighting_cost_current)
-      heating_cost_current = row.delete(:heating_cost_current)
-      hot_water_cost_current = row.delete(:hot_water_cost_current)
-      lighting_cost_potential = row.delete(:lighting_cost_potential)
-      heating_cost_potential = row.delete(:heating_cost_potential)
-      hot_water_cost_potential = row.delete(:hot_water_cost_potential)
       non_dom_cepc_rr = row.delete(:non_dom_cepc_rr)
       domain = Domain::Assessment.new(row)
 
@@ -328,12 +322,12 @@ module Gateway
 
       if domain.is_type?(Domain::RdsapAssessment) ||
           domain.is_type?(Domain::SapAssessment)
-        domain.set(:lighting_cost_current, lighting_cost_current)
-        domain.set(:heating_cost_current, heating_cost_current)
-        domain.set(:hot_water_cost_current, hot_water_cost_current)
-        domain.set(:lighting_cost_potential, lighting_cost_potential)
-        domain.set(:heating_cost_potential, heating_cost_potential)
-        domain.set(:hot_water_cost_potential, hot_water_cost_potential)
+        domain.set(:lighting_cost_current, row[:lighting_cost_current])
+        domain.set(:heating_cost_current, row[:heating_cost_current])
+        domain.set(:hot_water_cost_current, row[:hot_water_cost_current])
+        domain.set(:lighting_cost_potential, row[:lighting_cost_potential])
+        domain.set(:heating_cost_potential, row[:heating_cost_potential])
+        domain.set(:hot_water_cost_potential, row[:hot_water_cost_potential])
       end
 
       domain
