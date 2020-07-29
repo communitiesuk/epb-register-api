@@ -32,11 +32,6 @@ module Domain
       address_line3: nil,
       address_line4: nil,
       town: nil,
-      current_space_heating_demand: nil,
-      current_water_heating_demand: nil,
-      impact_of_loft_insulation: nil,
-      impact_of_cavity_insulation: nil,
-      impact_of_solid_wall_insulation: nil,
       recommended_improvements: nil,
       property_summary: [],
       property_age_band: nil,
@@ -85,11 +80,6 @@ module Domain
       @address_line3 = address_line3
       @address_line4 = address_line4
       @town = town
-      @current_space_heating_demand = current_space_heating_demand.to_f
-      @current_water_heating_demand = current_water_heating_demand.to_f
-      @impact_of_loft_insulation = impact_of_loft_insulation
-      @impact_of_cavity_insulation = impact_of_cavity_insulation
-      @impact_of_solid_wall_insulation = impact_of_solid_wall_insulation
       @recommended_improvements = recommended_improvements
       @property_summary = property_summary
       @related_party_disclosure_number = related_party_disclosure_number
@@ -147,13 +137,6 @@ module Domain
         address_line3: @address_line3,
         address_line4: @address_line4,
         town: @town,
-        heat_demand: {
-          current_space_heating_demand: @current_space_heating_demand.to_f,
-          current_water_heating_demand: @current_water_heating_demand.to_f,
-          impact_of_loft_insulation: @impact_of_loft_insulation,
-          impact_of_cavity_insulation: @impact_of_cavity_insulation,
-          impact_of_solid_wall_insulation: @impact_of_solid_wall_insulation,
-        },
         current_energy_efficiency_band:
           get_energy_rating_band(@current_energy_efficiency_rating),
         potential_energy_efficiency_band:
@@ -202,11 +185,6 @@ module Domain
         address_line3: @address_line3,
         address_line4: @address_line4,
         town: @town,
-        current_space_heating_demand: @current_space_heating_demand,
-        current_water_heating_demand: @current_water_heating_demand,
-        impact_of_loft_insulation: @impact_of_loft_insulation,
-        impact_of_cavity_insulation: @impact_of_cavity_insulation,
-        impact_of_solid_wall_insulation: @impact_of_solid_wall_insulation,
         property_summary: @property_summary,
         related_party_disclosure_number: @related_party_disclosure_number,
         related_party_disclosure_text: @related_party_disclosure_text,

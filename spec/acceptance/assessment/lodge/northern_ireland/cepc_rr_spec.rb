@@ -193,13 +193,6 @@ describe "Acceptance::LodgeCEPC+RRNIEnergyAssessment" do
           "dateOfExpiry" => "2026-05-04",
           "dateRegistered" => "2020-05-04",
           "dwellingType" => "Property-Type0",
-          "heatDemand" => {
-            "currentSpaceHeatingDemand" => 0.0,
-            "currentWaterHeatingDemand" => 0.0,
-            "impactOfCavityInsulation" => nil,
-            "impactOfLoftInsulation" => nil,
-            "impactOfSolidWallInsulation" => nil,
-          },
           "postcode" => "A0 0AA",
           "potentialCarbonEmission" => 0.0,
           "potentialEnergyEfficiencyBand" => "a",
