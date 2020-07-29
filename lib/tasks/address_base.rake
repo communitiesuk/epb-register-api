@@ -27,30 +27,32 @@ task :import_address_base do
     http.request request
   end
 
-  Zip::InputStream.open(StringIO.new(raw_address_base.body)) do |io|
-    raw_address_base = nil
-    io.get_next_entry
+  csv_contents = raw_address_base.body
+  if ENV["URL"].include?(".zip")
+    Zip::InputStream.open(StringIO.new(raw_address_base.body)) do |io|
+      io.get_next_entry
 
-    csv_contents = io.read
+      csv_contents = io.read
+    end
+  end
 
-    if csv_contents.size.positive?
-      csv_contents = CSV.parse(csv_contents)
-      csv_contents.each_slice(10_000) do |inserts|
-        query = []
-        inserts.map do |row|
-          query.push("(
-                  '#{row[0].gsub("'", "\\'")}',
-                  '#{row[64].gsub("'", "\\'")}',
-                  '#{[row[28], row[24], row[25], row[26], row[27]].reject(&:blank?).join(' ').gsub("'", "\\'")}',
-                  '#{[row[34], row[30], row[31], row[32], row[33]].reject(&:blank?).join(' ').gsub("'", "\\'")}',
-                  '#{row[49].gsub("'", "\\'")}',
-                  '#{row[49].gsub("'", "\\'")}',
-                  '#{row[60].gsub("'", "\\'")}'
-              )")
-        end
-
-        ActiveRecord::Base.connection.execute("INSERT INTO address_base VALUES " + query.join(", "))
+  if csv_contents.size.positive?
+    csv_contents = CSV.parse(csv_contents)
+    csv_contents.each_slice(10_000) do |inserts|
+      query = []
+      inserts.map do |row|
+        query.push("(
+                '#{row[0].gsub("'", "\\'")}',
+                '#{row[64].gsub("'", "\\'")}',
+                '#{[row[28], row[24], row[25], row[26], row[27]].reject(&:blank?).join(' ').gsub("'", "\\'")}',
+                '#{[row[34], row[30], row[31], row[32], row[33]].reject(&:blank?).join(' ').gsub("'", "\\'")}',
+                '#{row[49].gsub("'", "\\'")}',
+                '#{row[49].gsub("'", "\\'")}',
+                '#{row[60].gsub("'", "\\'")}'
+            )")
       end
+
+      ActiveRecord::Base.connection.execute("INSERT INTO address_base VALUES " + query.join(", "))
     end
   end
 end
