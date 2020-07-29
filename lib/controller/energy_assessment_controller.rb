@@ -57,7 +57,7 @@ module Controller
       end
       logit_char_limit = 50_000
 
-      sanitized_body =
+      sanitised_xml =
         Helper::SanitizeXmlHelper.new.sanitize(request.body.read.to_s)
 
       @events.event(
@@ -65,9 +65,9 @@ module Controller
         {
           event_type: :lodgement_attempt,
           correlation_id: correlation_id,
-          request_body: sanitized_body.slice(0..logit_char_limit),
+          request_body: sanitised_xml.slice(0..logit_char_limit),
           request_headers: headers,
-          request_body_truncated: sanitized_body.length > logit_char_limit,
+          request_body_truncated: sanitised_xml.length > logit_char_limit,
         },
         true,
       )
@@ -75,13 +75,12 @@ module Controller
       sup = env[:jwt_auth].supplemental("scheme_ids")
       validate_and_lodge_assessment = UseCase::ValidateAndLodgeAssessment.new
 
-      xml = sanitized_body
       content_type = request.env["CONTENT_TYPE"].split("+")[1]
       scheme_ids = sup
 
       results =
         validate_and_lodge_assessment.execute(
-          xml,
+          sanitised_xml,
           content_type,
           scheme_ids,
           migrated,
