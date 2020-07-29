@@ -31,7 +31,6 @@ module Domain
       address_line3: nil,
       address_line4: nil,
       town: nil,
-      property_summary: [],
       property_age_band: nil,
       related_party_disclosure_number: nil,
       related_party_disclosure_text: nil,
@@ -78,7 +77,6 @@ module Domain
       @address_line3 = address_line3
       @address_line4 = address_line4
       @town = town
-      @property_summary = property_summary
       @related_party_disclosure_number = related_party_disclosure_number
       @related_party_disclosure_text = related_party_disclosure_text
       @cancelled_at =
@@ -138,7 +136,6 @@ module Domain
           get_energy_rating_band(@current_energy_efficiency_rating),
         potential_energy_efficiency_band:
           get_energy_rating_band(@potential_energy_efficiency_rating),
-        property_summary: @property_summary,
         related_party_disclosure_number: @related_party_disclosure_number,
         related_party_disclosure_text: @related_party_disclosure_text,
         related_assessments: @related_assessments,
@@ -181,7 +178,6 @@ module Domain
         address_line3: @address_line3,
         address_line4: @address_line4,
         town: @town,
-        property_summary: @property_summary,
         related_party_disclosure_number: @related_party_disclosure_number,
         related_party_disclosure_text: @related_party_disclosure_text,
         non_dom_cepc_rr: @non_dom_cepc_rr,

@@ -141,7 +141,6 @@ describe "Acceptance::LodgeRREnergyAssessment" do
           typeOfAssessment: "CEPC-RR",
           relatedPartyDisclosureNumber: nil,
           relatedPartyDisclosureText: "Related to the owner",
-          propertySummary: [],
           relatedAssessments: [
             {
               assessmentExpiryDate: "2021-05-03",
