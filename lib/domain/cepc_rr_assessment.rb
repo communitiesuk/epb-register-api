@@ -21,7 +21,6 @@ module Domain
       current_energy_efficiency_rating: nil,
       potential_energy_efficiency_rating: nil,
       current_carbon_emission: nil,
-      potential_carbon_emission: nil,
       opt_out: false,
       postcode: nil,
       date_of_expiry: nil,
@@ -62,7 +61,6 @@ module Domain
       @current_energy_efficiency_rating = current_energy_efficiency_rating
       @potential_energy_efficiency_rating = potential_energy_efficiency_rating
       @current_carbon_emission = current_carbon_emission
-      @potential_carbon_emission = potential_carbon_emission
       @opt_out = opt_out
       @postcode = postcode
       @date_of_expiry =
@@ -122,7 +120,6 @@ module Domain
         current_energy_efficiency_rating: @current_energy_efficiency_rating,
         potential_energy_efficiency_rating: @potential_energy_efficiency_rating,
         current_carbon_emission: @current_carbon_emission.to_f,
-        potential_carbon_emission: @potential_carbon_emission.to_f,
         opt_out: @opt_out,
         postcode: @postcode,
         date_of_expiry: @date_of_expiry.strftime("%Y-%m-%d"),
@@ -168,7 +165,6 @@ module Domain
         potential_energy_efficiency_rating:
           @potential_energy_efficiency_rating.to_f,
         current_carbon_emission: @current_carbon_emission.to_f,
-        potential_carbon_emission: @potential_carbon_emission.to_f,
         opt_out: @opt_out,
         postcode: @postcode,
         date_of_expiry: @date_of_expiry,

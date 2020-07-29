@@ -200,7 +200,6 @@ describe "Acceptance::LodgeCEPC+RREnergyAssessment" do
           dateRegistered: "2020-05-05",
           dwellingType: "Property-Type0",
           postcode: "A0 0AA",
-          potentialCarbonEmission: 0.0,
           potentialEnergyEfficiencyBand: "a",
           potentialEnergyEfficiencyRating: 99,
           totalFloorArea: 99.0,
