@@ -206,7 +206,6 @@ describe "Acceptance::LodgeCEPC+RRNIEnergyAssessment" do
           typeOfAssessment: "CEPC-RR",
           relatedPartyDisclosureNumber: nil,
           relatedPartyDisclosureText: "Related to the owner",
-          recommendedImprovements: [],
           propertySummary: [],
           relatedAssessments: [
             {

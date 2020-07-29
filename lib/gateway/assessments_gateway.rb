@@ -318,10 +318,7 @@ module Gateway
 
         Assessment.create assessment.to_record
 
-        improvements =
-          assessment.get(:recommended_improvements).map(&:to_record)
-
-        improvements.each do |improvement|
+        assessment.get(:recommended_improvements)&.map(&:to_record)&.each do |improvement|
           DomesticEpcEnergyImprovement.create improvement
         end
       end

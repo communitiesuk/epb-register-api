@@ -3,7 +3,6 @@ module Domain
     attr_reader :current_energy_efficiency_rating,
                 :potential_energy_efficiency_rating,
                 :assessment_id,
-                :recommended_improvements,
                 :xml,
                 :scheme_assessor_id,
                 :opt_out
@@ -32,7 +31,6 @@ module Domain
       address_line3: nil,
       address_line4: nil,
       town: nil,
-      recommended_improvements: nil,
       property_summary: [],
       property_age_band: nil,
       related_party_disclosure_number: nil,
@@ -80,7 +78,6 @@ module Domain
       @address_line3 = address_line3
       @address_line4 = address_line4
       @town = town
-      @recommended_improvements = recommended_improvements
       @property_summary = property_summary
       @related_party_disclosure_number = related_party_disclosure_number
       @related_party_disclosure_text = related_party_disclosure_text
@@ -141,7 +138,6 @@ module Domain
           get_energy_rating_band(@current_energy_efficiency_rating),
         potential_energy_efficiency_band:
           get_energy_rating_band(@potential_energy_efficiency_rating),
-        recommended_improvements: @recommended_improvements.map(&:to_hash),
         property_summary: @property_summary,
         related_party_disclosure_number: @related_party_disclosure_number,
         related_party_disclosure_text: @related_party_disclosure_text,
