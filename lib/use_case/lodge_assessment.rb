@@ -131,15 +131,23 @@ module UseCase
           xml: data[:raw_data],
         )
 
-      non_dom_cepc_rr = {
-        short_payback_recommendation: data[:short_payback_recommendation],
-        medium_payback_recommendation: data[:medium_payback_recommendation],
-        long_payback_recommendation: data[:long_payback_recommendation],
-        other_payback_recommendation: data[:other_payback_recommendation],
-      }
-
       if assessment.is_type?(Domain::CepcRrAssessment)
-        assessment.set(:non_dom_cepc_rr, non_dom_cepc_rr)
+        assessment.set(
+          :non_dom_cepc_rr,
+          {
+            technical_information: {
+              building_environment: data[:technical_info_building_environment],
+              total_floor_area: data[:technical_info_total_floor_area],
+            },
+            recommendations: {
+              short_payback_recommendation: data[:short_payback_recommendation],
+              medium_payback_recommendation:
+                data[:medium_payback_recommendation],
+              long_payback_recommendation: data[:long_payback_recommendation],
+              other_payback_recommendation: data[:other_payback_recommendation],
+            },
+          },
+        )
       end
 
       if assessment.is_type?(Domain::RdsapAssessment) ||

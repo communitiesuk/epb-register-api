@@ -89,8 +89,7 @@ describe "Acceptance::LodgeCEPC+RREnergyAssessment" do
           assessmentId: "0000-0000-0000-0000-0000",
           assessor: {
             contactDetails: {
-              email: "person@person.com",
-              telephoneNumber: "010199991010101",
+              email: "person@person.com", telephoneNumber: "010199991010101"
             },
             dateOfBirth: "1991-02-25",
             firstName: "Someone",
@@ -109,10 +108,7 @@ describe "Acceptance::LodgeCEPC+RREnergyAssessment" do
             },
             address: {},
             companyDetails: {},
-            registeredBy: {
-              name: "test scheme",
-              schemeId: scheme_id
-            },
+            registeredBy: { name: "test scheme", schemeId: scheme_id },
             schemeAssessorId: "SPEC000000",
             searchResultsComparisonPostcode: "",
           },
@@ -164,8 +160,7 @@ describe "Acceptance::LodgeCEPC+RREnergyAssessment" do
           assessmentId: "0000-0000-0000-0000-0001",
           assessor: {
             contactDetails: {
-              email: "person@person.com",
-              telephoneNumber: "010199991010101",
+              email: "person@person.com", telephoneNumber: "010199991010101"
             },
             dateOfBirth: "1991-02-25",
             firstName: "Someone",
@@ -184,28 +179,18 @@ describe "Acceptance::LodgeCEPC+RREnergyAssessment" do
             },
             address: {},
             companyDetails: {},
-            registeredBy: {
-              name: "test scheme",
-              schemeId: scheme_id
-            },
+            registeredBy: { name: "test scheme", schemeId: scheme_id },
             schemeAssessorId: "SPEC000000",
             searchResultsComparisonPostcode: "",
           },
-          currentCarbonEmission: 0.0,
-          currentEnergyEfficiencyBand: "a",
-          currentEnergyEfficiencyRating: 99,
           optOut: false,
           dateOfAssessment: "2020-05-04",
           dateOfExpiry: "2026-05-04",
           dateRegistered: "2020-05-05",
           dwellingType: "Property-Type0",
           postcode: "A0 0AA",
-          potentialEnergyEfficiencyBand: "a",
-          potentialEnergyEfficiencyRating: 99,
-          totalFloorArea: 99.0,
           town: "Post-Town0",
           typeOfAssessment: "CEPC-RR",
-          relatedPartyDisclosureNumber: nil,
           relatedPartyDisclosureText: "Related to the owner",
           relatedAssessments: [
             {
@@ -217,36 +202,44 @@ describe "Acceptance::LodgeCEPC+RREnergyAssessment" do
           ],
           status: "ENTERED",
           nonDomCepcRr: {
-            longPaybackRecommendation: [
-              {
-                recommendation: "Consider installing an air source heat pump.",
-                carbonImpact: "HIGH",
-              },
-            ],
-            otherPaybackRecommendation: [
-              {
-                recommendation: "Consider installing PV.",
-                carbonImpact: "HIGH",
-              },
-            ],
-            shortPaybackRecommendation: [
-              {
-                recommendation:
-                  "Consider replacing T8 lamps with retrofit T5 conversion kit.",
-                carbonImpact: "HIGH",
-              },
-              {
-                recommendation:
-                  "Introduce HF (high frequency) ballasts for fluorescent tubes: Reduced number of fittings required.",
-                carbonImpact: "LOW",
-              },
-            ],
-            mediumPaybackRecommendation: [
-              {
-                recommendation: "Add optimum start/stop to the heating system.",
-                carbonImpact: "MEDIUM",
-              },
-            ],
+            technicalInformation: {
+              buildingEnvironment: "Natural Ventilation Only",
+              totalFloorArea: "10",
+            },
+            recommendations: {
+              longPaybackRecommendation: [
+                {
+                  recommendation:
+                    "Consider installing an air source heat pump.",
+                  carbonImpact: "HIGH",
+                },
+              ],
+              otherPaybackRecommendation: [
+                {
+                  recommendation: "Consider installing PV.",
+                  carbonImpact: "HIGH",
+                },
+              ],
+              shortPaybackRecommendation: [
+                {
+                  recommendation:
+                    "Consider replacing T8 lamps with retrofit T5 conversion kit.",
+                  carbonImpact: "HIGH",
+                },
+                {
+                  recommendation:
+                    "Introduce HF (high frequency) ballasts for fluorescent tubes: Reduced number of fittings required.",
+                  carbonImpact: "LOW",
+                },
+              ],
+              mediumPaybackRecommendation: [
+                {
+                  recommendation:
+                    "Add optimum start/stop to the heating system.",
+                  carbonImpact: "MEDIUM",
+                },
+              ],
+            },
           },
         }
 

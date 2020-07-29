@@ -111,6 +111,12 @@
   "root": "technical_information",
   "path": ["Floor_Area"]
 }, {
+  "key": "technical_info_building_environment",
+  "path": ["Report", "Recommendations_Report", "Technical_Information", "Building_Environment"]
+}, {
+  "key": "technical_info_total_floor_area",
+  "path": ["Report", "Recommendations_Report", "Technical_Information", "Floor_Area"]
+}, {
   "key": "short_payback_recommendation",
   "path": ["Report", "Recommendations_Report", "RR_Recommendations", "Short_Payback"],
   "extract": [

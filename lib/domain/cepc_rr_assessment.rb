@@ -1,11 +1,6 @@
 module Domain
   class CepcRrAssessment
-    attr_reader :current_energy_efficiency_rating,
-                :potential_energy_efficiency_rating,
-                :assessment_id,
-                :xml,
-                :scheme_assessor_id,
-                :opt_out
+    attr_reader :assessment_id, :xml, :scheme_assessor_id, :opt_out
 
     attr_writer :assessor, :green_deal_plan
 
@@ -15,12 +10,8 @@ module Domain
       date_registered: nil,
       dwelling_type: nil,
       type_of_assessment: nil,
-      total_floor_area: nil,
       assessment_id: nil,
       assessor: nil,
-      current_energy_efficiency_rating: nil,
-      potential_energy_efficiency_rating: nil,
-      current_carbon_emission: nil,
       opt_out: false,
       postcode: nil,
       date_of_expiry: nil,
@@ -31,7 +22,6 @@ module Domain
       address_line4: nil,
       town: nil,
       property_age_band: nil,
-      related_party_disclosure_number: nil,
       related_party_disclosure_text: nil,
       cancelled_at: nil,
       not_for_issue_at: nil,
@@ -55,12 +45,8 @@ module Domain
         end
       @dwelling_type = dwelling_type
       @type_of_assessment = type_of_assessment
-      @total_floor_area = total_floor_area.to_f
       @assessment_id = assessment_id
       @assessor = assessor
-      @current_energy_efficiency_rating = current_energy_efficiency_rating
-      @potential_energy_efficiency_rating = potential_energy_efficiency_rating
-      @current_carbon_emission = current_carbon_emission
       @opt_out = opt_out
       @postcode = postcode
       @date_of_expiry =
@@ -75,7 +61,6 @@ module Domain
       @address_line3 = address_line3
       @address_line4 = address_line4
       @town = town
-      @related_party_disclosure_number = related_party_disclosure_number
       @related_party_disclosure_text = related_party_disclosure_text
       @cancelled_at =
         (Date.strptime(cancelled_at.to_s, "%Y-%m-%d") unless cancelled_at.nil?)
@@ -89,37 +74,14 @@ module Domain
       @non_dom_cepc_rr = non_dom_cepc_rr
     end
 
-    def get_energy_rating_band(number)
-      case number
-      when 1..20
-        "g"
-      when 21..38
-        "f"
-      when 39..54
-        "e"
-      when 55..68
-        "d"
-      when 69..80
-        "c"
-      when 81..91
-        "b"
-      when 92..1_000
-        "a"
-      end
-    end
-
     def to_hash
       {
         date_of_assessment: @date_of_assessment.strftime("%Y-%m-%d"),
         date_registered: @date_registered.strftime("%Y-%m-%d"),
         dwelling_type: @dwelling_type,
         type_of_assessment: @type_of_assessment,
-        total_floor_area: @total_floor_area.to_f,
         assessment_id: @assessment_id,
         assessor: @assessor,
-        current_energy_efficiency_rating: @current_energy_efficiency_rating,
-        potential_energy_efficiency_rating: @potential_energy_efficiency_rating,
-        current_carbon_emission: @current_carbon_emission.to_f,
         opt_out: @opt_out,
         postcode: @postcode,
         date_of_expiry: @date_of_expiry.strftime("%Y-%m-%d"),
@@ -129,11 +91,6 @@ module Domain
         address_line3: @address_line3,
         address_line4: @address_line4,
         town: @town,
-        current_energy_efficiency_band:
-          get_energy_rating_band(@current_energy_efficiency_rating),
-        potential_energy_efficiency_band:
-          get_energy_rating_band(@potential_energy_efficiency_rating),
-        related_party_disclosure_number: @related_party_disclosure_number,
         related_party_disclosure_text: @related_party_disclosure_text,
         related_assessments: @related_assessments,
         status:
@@ -157,14 +114,8 @@ module Domain
         date_registered: @date_registered,
         dwelling_type: @dwelling_type,
         type_of_assessment: @type_of_assessment,
-        total_floor_area: @total_floor_area.to_f,
         assessment_id: @assessment_id,
         scheme_assessor_id: @assessor.scheme_assessor_id,
-        current_energy_efficiency_rating:
-          @current_energy_efficiency_rating.to_f,
-        potential_energy_efficiency_rating:
-          @potential_energy_efficiency_rating.to_f,
-        current_carbon_emission: @current_carbon_emission.to_f,
         opt_out: @opt_out,
         postcode: @postcode,
         date_of_expiry: @date_of_expiry,
@@ -174,7 +125,6 @@ module Domain
         address_line3: @address_line3,
         address_line4: @address_line4,
         town: @town,
-        related_party_disclosure_number: @related_party_disclosure_number,
         related_party_disclosure_text: @related_party_disclosure_text,
         non_dom_cepc_rr: @non_dom_cepc_rr,
       }

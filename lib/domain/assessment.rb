@@ -14,7 +14,8 @@ module Domain
     def initialize(data)
       domain_object = TYPE2LODGEMENT[data[:type_of_assessment].to_sym]
 
-      needed_params = domain_object.instance_method(:initialize).parameters.map(&:second)
+      needed_params =
+        domain_object.instance_method(:initialize).parameters.map(&:second)
 
       @assessment = domain_object.new(**data.slice(*needed_params))
     end

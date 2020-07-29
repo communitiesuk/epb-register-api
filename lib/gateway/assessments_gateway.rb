@@ -8,10 +8,6 @@ module Gateway
 
     class InvalidAssessmentType < StandardError; end
 
-    def valid_energy_rating(rating)
-      rating.is_a?(Integer) && rating.positive?
-    end
-
     def row_to_energy_improvement(row)
       Domain::RecommendedImprovement.new(
         assessment_id: row[:assessment_id],
@@ -32,19 +28,8 @@ module Gateway
     end
 
     def insert_or_update(assessment)
-      unless valid_energy_rating(
-        assessment.get(:current_energy_efficiency_rating)
-      )
-        raise ArgumentError, "Invalid current energy rating"
-      end
-
-      unless valid_energy_rating(
-        assessment.get(:potential_energy_efficiency_rating)
-      )
-        raise ArgumentError, "Invalid potential energy rating"
-      end
-
-      send_to_db(assessment)
+      check_valid_energy_ratings assessment
+      send_to_db assessment
     end
 
     def search_by_postcode(postcode, assessment_types = [])
@@ -318,7 +303,8 @@ module Gateway
 
         Assessment.create assessment.to_record
 
-        assessment.get(:recommended_improvements)&.map(&:to_record)&.each do |improvement|
+        assessment.get(:recommended_improvements)&.map(&:to_record)
+          &.each do |improvement|
           DomesticEpcEnergyImprovement.create improvement
         end
       end
@@ -351,6 +337,22 @@ module Gateway
       end
 
       domain
+    end
+
+    def check_valid_energy_ratings(assessment)
+      if %w[CEPC RdSAP SAP].include? assessment.get(:type_of_assessment)
+        current = assessment.get(:current_energy_efficiency_rating)
+
+        unless current.is_a?(Integer) && current.positive?
+          raise ArgumentError, "Invalid current energy rating"
+        end
+
+        potential = assessment.get(:potential_energy_efficiency_rating)
+
+        unless potential.is_a?(Integer) && potential.positive?
+          raise ArgumentError, "Invalid potential energy rating"
+        end
+      end
     end
   end
 end
