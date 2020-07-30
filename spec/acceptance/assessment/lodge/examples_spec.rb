@@ -23,11 +23,11 @@ describe "Acceptance::LodgeExamples" do
     File.read File.join Dir.pwd, "api/schemas/xml/examples/CEPC-8.0.0(DEC).xml"
   end
   let(:ar_xml) do
-    File.read File.join Dir.pwd, "api/schemas/xml/examples/CEPC-8.0.0.xml"
+    File.read File.join Dir.pwd, "api/schemas/xml/examples/CEPC-8.0.0(DEC_RR).xml"
   end
   let(:dec_ar_xml) do
     File.read File.join Dir.pwd,
-                        "api/schemas/xml/examples/CEPC-8.0.0(DEC+AR).xml"
+                        "api/schemas/xml/examples/CEPC-8.0.0(DEC+RR).xml"
   end
   let(:dec_ni_xml) do
     File.read File.join Dir.pwd,
@@ -35,11 +35,11 @@ describe "Acceptance::LodgeExamples" do
   end
   let(:ar_ni_xml) do
     File.read File.join Dir.pwd,
-                        "api/schemas/xml/examples/CEPC-NI-8.0.0(AR).xml"
+                        "api/schemas/xml/examples/CEPC-NI-8.0.0(DEC_RR).xml"
   end
   let(:dec_ar_ni_xml) do
     File.read File.join Dir.pwd,
-                        "api/schemas/xml/examples/CEPC-NI-8.0.0(DEC+AR).xml"
+                        "api/schemas/xml/examples/CEPC-NI-8.0.0(DEC+RR).xml"
   end
   let(:rdsap_xml) do
     File.read File.join Dir.pwd, "api/schemas/xml/examples/RdSAP-20.0.0.xml"
