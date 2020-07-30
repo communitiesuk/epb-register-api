@@ -1,7 +1,7 @@
 module ViewModel
   module Cepc
     class CepcWrapper
-      TYPE_OF_ASSESSMENT = "CEPC"
+      TYPE_OF_ASSESSMENT = "CEPC".freeze
       def initialize(xml, schema_type)
         case schema_type
         when "CEPC-8.0.0"
@@ -32,10 +32,9 @@ module ViewModel
         end
       end
 
-
       def to_hash
         {
-            type_of_assessment: TYPE_OF_ASSESSMENT,
+          type_of_assessment: TYPE_OF_ASSESSMENT,
           assessment_id: @view_model.assessment_id,
           date_of_expiry: @view_model.date_of_expiry,
           report_type: @view_model.report_type,
@@ -57,9 +56,11 @@ module ViewModel
           primary_energy_use: @view_model.primary_energy_use,
           related_rrn: @view_model.related_rrn,
           new_build_rating: @view_model.new_build_rating,
-            new_build_band: get_energy_rating_band(@view_model.new_build_rating.to_i),
-            existing_build_rating: @view_model.existing_build_rating,
-            existing_build_band: get_energy_rating_band(@view_model.existing_build_rating.to_i),
+          new_build_band:
+            get_energy_rating_band(@view_model.new_build_rating.to_i),
+          existing_build_rating: @view_model.existing_build_rating,
+          existing_build_band:
+            get_energy_rating_band(@view_model.existing_build_rating.to_i),
           energy_efficiency_rating: @view_model.energy_efficiency_rating,
           assessor: {
             scheme_assessor_id: @view_model.scheme_assessor_id,
@@ -73,7 +74,8 @@ module ViewModel
               address: @view_model.company_address,
             },
           },
-            current_energy_efficiency_band: get_energy_rating_band(@view_model.energy_efficiency_rating.to_i)
+          current_energy_efficiency_band:
+            get_energy_rating_band(@view_model.energy_efficiency_rating.to_i),
         }
       end
     end
