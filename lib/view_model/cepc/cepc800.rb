@@ -62,6 +62,10 @@ module ViewModel
       def building_emission_rate
         xpath(%w[//CEPC:BER])
       end
+
+      def primary_energy_use
+        xpath(%w[//CEPC:Energy-Consumption-Current])
+      end
     end
   end
 end
