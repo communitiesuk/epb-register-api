@@ -22,6 +22,9 @@ module ViewModel
             town: @view_model.town,
             postcode: @view_model.postcode,
           },
+          technical_information: {
+            main_heating_fuel: @view_model.main_heating_fuel,
+          },
         }
       end
     end

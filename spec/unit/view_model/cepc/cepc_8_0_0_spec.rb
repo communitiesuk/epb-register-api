@@ -23,5 +23,13 @@ describe ViewModel::Cepc::CepcWrapper do
         },
       )
     end
+
+    it "returns the technical information" do
+      expect(cepc.to_hash[:technical_information]).to eq(
+        {
+          main_heating_fuel: "Natural Gas",
+        },
+      )
+    end
   end
 end

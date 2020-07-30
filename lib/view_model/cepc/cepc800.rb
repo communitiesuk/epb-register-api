@@ -42,6 +42,10 @@ module ViewModel
       def postcode
         xpath(%w[//CEPC:Property-Address //CEPC:Postcode])
       end
+
+      def main_heating_fuel
+        xpath(%w[//CEPC:Main-Heating-Fuel])
+      end
     end
   end
 end
