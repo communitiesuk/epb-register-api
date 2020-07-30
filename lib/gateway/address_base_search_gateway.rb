@@ -11,7 +11,7 @@ module Gateway
             address_line4,
             town,
             postcode,
-            uprn
+            CONCAT('UPRN-', uprn) AS uprn
           FROM address_base
           WHERE
             LOWER(REPLACE(postcode, ' ', '')) = $1"
