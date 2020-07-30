@@ -9,5 +9,9 @@ describe ViewModel::Cepc::CepcWrapper do
     it "Returns the assessment ID" do
       expect(cepc.to_hash[:assessment_id]).to eq("0000-0000-0000-0000-0000")
     end
+
+    it "Returns the expiry date" do
+      expect(cepc.to_hash[:date_of_expiry]).to eq("2026-05-04")
+    end
   end
 end
