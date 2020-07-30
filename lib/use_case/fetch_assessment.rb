@@ -24,7 +24,7 @@ module UseCase
         raise AssessmentGone
       end
 
-      return @assessments_xml_gateway.fetch(assessment_id) if xml
+      return @assessments_xml_gateway.fetch(assessment_id)[:xml] if xml
 
       assessor = @assessors_gateway.fetch(assessment.get(:scheme_assessor_id))
 

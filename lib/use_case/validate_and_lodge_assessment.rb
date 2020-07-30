@@ -39,7 +39,7 @@ module UseCase
           end
 
           responses.push(
-            @lodge_assessment_use_case.execute(lodgement_data, migrated),
+            @lodge_assessment_use_case.execute(lodgement_data, migrated, schema_name),
           )
         end
       end

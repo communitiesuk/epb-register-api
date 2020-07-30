@@ -13,7 +13,7 @@ module UseCase
       @assessments_xml_gateway = Gateway::AssessmentsXmlGateway.new
     end
 
-    def execute(data, migrated)
+    def execute(data, migrated, schema_name)
       assessment_id = data[:assessment_id]
       assessment_type = data[:assessment_type]
 
@@ -171,7 +171,7 @@ module UseCase
       @assessments_gateway.insert_or_update assessment
 
       @assessments_xml_gateway.send_to_db(
-        { assessment_id: data[:assessment_id], xml: data[:raw_data] },
+        { assessment_id: data[:assessment_id], xml: data[:raw_data], schema_type: schema_name},
       )
 
       assessment

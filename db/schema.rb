@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_28_102954) do
+ActiveRecord::Schema.define(version: 2020_07_30_110134) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -50,7 +50,7 @@ ActiveRecord::Schema.define(version: 2020_07_28_102954) do
     t.boolean "opt_out", default: false
     t.decimal "current_carbon_emission", default: "0.0", null: false
     t.decimal "potential_carbon_emission", default: "0.0", null: false
-    t.jsonb "property_summary", default: {}
+    t.jsonb "property_summary", default: []
     t.integer "related_party_disclosure_number"
     t.string "related_party_disclosure_text"
     t.string "address_id"
@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 2020_07_28_102954) do
 
   create_table "assessments_xml", primary_key: "assessment_id", id: :string, default: "", force: :cascade do |t|
     t.xml "xml"
+    t.string "schema_type"
   end
 
   create_table "assessors", primary_key: "scheme_assessor_id", id: :string, force: :cascade do |t|
