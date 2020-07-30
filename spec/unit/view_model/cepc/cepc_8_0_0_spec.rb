@@ -1,6 +1,15 @@
 describe ViewModel::Cepc::CepcWrapper do
-  context "when constructed with a valid CEPC 8.0.0 document" do
-    let(:xml) { File.read File.join Dir.pwd, "spec/fixtures/samples/cepc.xml" }
+  let(:xml) { File.read File.join Dir.pwd, "spec/fixtures/samples/cepc.xml" }
+
+  context "without a valid schema type" do
+    let(:cepc) { described_class.new xml, "invalid" }
+
+    it "returns the expected error response" do
+      expect { cepc }.to raise_error.with_message "Unsupported schema type"
+    end
+  end
+
+  context "with a valid CEPC 8.0.0 XML" do
     let(:cepc) { described_class.new xml, "CEPC-8.0.0" }
 
     it "returns the assessment ID" do

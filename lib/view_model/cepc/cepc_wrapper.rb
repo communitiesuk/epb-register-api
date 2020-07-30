@@ -6,7 +6,7 @@ module ViewModel
         when "CEPC-8.0.0"
           @view_model = ViewModel::Cepc::Cepc800.new xml
         else
-          raise ArgumentError, "Unsupported assessment type"
+          raise ArgumentError, "Unsupported schema type"
         end
       end
 
