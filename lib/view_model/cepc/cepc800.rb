@@ -74,6 +74,10 @@ module ViewModel
       def new_build_rating
         xpath(%w[//CEPC:New-Build-Benchmark])
       end
+
+      def existing_build_rating
+        xpath(%w[//CEPC:Existing-Stock-Benchmark])
+      end
     end
   end
 end

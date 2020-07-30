@@ -50,5 +50,9 @@ describe ViewModel::Cepc::CepcWrapper do
     it "returns the new build rating" do
       expect(cepc.to_hash[:new_build_rating]).to eq "28"
     end
+
+    it "returns the existing build rating" do
+      expect(cepc.to_hash[:existing_build_rating]).to eq "81"
+    end
   end
 end

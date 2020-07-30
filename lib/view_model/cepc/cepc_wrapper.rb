@@ -32,6 +32,7 @@ module ViewModel
           primary_energy_use: @view_model.primary_energy_use,
           related_rrn: @view_model.related_rrn,
           new_build_rating: @view_model.new_build_rating,
+          existing_build_rating: @view_model.existing_build_rating,
         }
       end
     end
