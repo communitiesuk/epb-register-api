@@ -118,6 +118,10 @@ module ViewModel
       def date_of_registration
         xpath(%w[//CEPC:Registration-Date])
       end
+
+      def related_party_disclosure
+        xpath(%w[//CEPC:EPC-Related-Party-Disclosure])
+      end
     end
   end
 end

@@ -109,5 +109,9 @@ describe ViewModel::Cepc::CepcWrapper do
       expect(cepc.to_hash[:date_of_registration]).to eq("2020-05-04")
     end
 
+    it "returns the related party disclosure" do
+      expect(cepc.to_hash[:related_party_disclosure]).to eq("1")
+    end
+
   end
 end

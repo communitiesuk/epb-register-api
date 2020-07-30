@@ -76,6 +76,7 @@ module ViewModel
               address: @view_model.company_address,
             },
           },
+          related_party_disclosure: @view_model.related_party_disclosure,
           current_energy_efficiency_band:
             get_energy_rating_band(@view_model.energy_efficiency_rating.to_i),
         }

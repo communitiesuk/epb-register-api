@@ -51,6 +51,7 @@ describe "Acceptance::AssessmentSummary::CEPC" do
           },
           buildingEmissionRate: "67.09",
           primaryEnergyUse: "413.22",
+          relatedPartyDisclosure: "1",
           relatedRrn: "4192-1535-8427-8844-6702",
           newBuildRating: "28",
           newBuildBand: "b",
