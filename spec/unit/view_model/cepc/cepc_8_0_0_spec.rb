@@ -54,5 +54,9 @@ describe ViewModel::Cepc::CepcWrapper do
     it "returns the existing build rating" do
       expect(cepc.to_hash[:existing_build_rating]).to eq "81"
     end
+
+    it "returns the energy efficiency rating" do
+      expect(cepc.to_hash[:energy_efficiency_rating]).to eq "80"
+    end
   end
 end

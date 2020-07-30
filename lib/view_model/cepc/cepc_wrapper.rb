@@ -33,6 +33,7 @@ module ViewModel
           related_rrn: @view_model.related_rrn,
           new_build_rating: @view_model.new_build_rating,
           existing_build_rating: @view_model.existing_build_rating,
+          energy_efficiency_rating: @view_model.energy_efficiency_rating,
         }
       end
     end

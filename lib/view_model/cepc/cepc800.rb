@@ -78,6 +78,10 @@ module ViewModel
       def existing_build_rating
         xpath(%w[//CEPC:Existing-Stock-Benchmark])
       end
+
+      def energy_efficiency_rating
+        xpath(%w[//CEPC:Asset-Rating])
+      end
     end
   end
 end
