@@ -1,8 +1,8 @@
 module ViewModel
   module Cepc
     class CepcWrapper
-      def initialize(xml, assessment_type)
-        case assessment_type
+      def initialize(xml, schema_type)
+        case schema_type
         when "CEPC-8.0.0"
           @view_model = ViewModel::Cepc::Cepc800.new(xml)
         else
