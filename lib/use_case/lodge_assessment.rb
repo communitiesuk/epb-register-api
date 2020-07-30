@@ -126,7 +126,8 @@ module UseCase
           related_party_disclosure_number:
             data[:related_party_disclosure_number],
           related_party_disclosure_text: data[:related_party_disclosure_text],
-          calculation_tool: data[:technical_information_calculation_tool] || nil,
+          calculation_tool:
+            data[:technical_information_calculation_tool] || nil,
           property_summary: data[:property_summary],
           property_age_band: data[:property_age_band],
           xml: data[:raw_data],

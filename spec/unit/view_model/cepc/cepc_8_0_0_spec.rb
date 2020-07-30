@@ -31,10 +31,16 @@ describe ViewModel::Cepc::CepcWrapper do
           building_environment: "Air Conditioning",
           floor_area: "403",
           building_level: "3",
-          building_emission_rate: "67.09",
-          primary_energy_use: "413.22",
         },
       )
+    end
+
+    it "returns the building emission rate" do
+      expect(cepc.to_hash[:building_emission_rate]).to eq "67.09"
+    end
+
+    it "returns the primary energy use" do
+      expect(cepc.to_hash[:primary_energy_use]).to eq "413.22"
     end
   end
 end

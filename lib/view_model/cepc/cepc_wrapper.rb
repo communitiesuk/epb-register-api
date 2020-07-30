@@ -27,9 +27,9 @@ module ViewModel
             building_environment: @view_model.building_environment,
             floor_area: @view_model.floor_area,
             building_level: @view_model.building_level,
-            building_emission_rate: @view_model.building_emission_rate,
-            primary_energy_use: @view_model.primary_energy_use,
           },
+          building_emission_rate: @view_model.building_emission_rate,
+          primary_energy_use: @view_model.primary_energy_use,
         }
       end
     end
