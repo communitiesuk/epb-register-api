@@ -80,5 +80,9 @@ describe ViewModel::Cepc::CepcWrapper do
         },
       )
     end
+
+    it "returns the report type" do
+      expect(cepc.to_hash[:report_type]).to eq("3")
+    end
   end
 end

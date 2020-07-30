@@ -31,6 +31,7 @@ describe "Acceptance::AssessmentSummary::CEPC" do
         {
           assessmentId: "0000-0000-0000-0000-0000",
           dateOfExpiry: "2026-05-04",
+          reportType: "3",
           address: {
             addressLine1: "2 Lonely Street",
             addressLine2: nil,

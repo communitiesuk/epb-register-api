@@ -106,6 +106,10 @@ module ViewModel
       def company_address
         xpath(%w[//CEPC:Energy-Assessor //CEPC:Trading-Address])
       end
+
+      def report_type
+        xpath(%w[//CEPC:Report-Type])
+      end
     end
   end
 end
