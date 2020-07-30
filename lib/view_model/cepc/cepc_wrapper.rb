@@ -1,6 +1,7 @@
 module ViewModel
   module Cepc
     class CepcWrapper
+      TYPE_OF_ASSESSMENT = "CEPC"
       def initialize(xml, schema_type)
         case schema_type
         when "CEPC-8.0.0"
@@ -12,6 +13,7 @@ module ViewModel
 
       def to_hash
         {
+            type_of_assessment: TYPE_OF_ASSESSMENT,
           assessment_id: @view_model.assessment_id,
           date_of_expiry: @view_model.date_of_expiry,
           report_type: @view_model.report_type,
