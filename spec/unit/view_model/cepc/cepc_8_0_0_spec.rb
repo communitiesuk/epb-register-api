@@ -29,6 +29,7 @@ describe ViewModel::Cepc::CepcWrapper do
         {
           main_heating_fuel: "Natural Gas",
           building_environment: "Air Conditioning",
+          floor_area: "403",
         },
       )
     end
