@@ -46,6 +46,10 @@ module ViewModel
       def main_heating_fuel
         xpath(%w[//CEPC:Main-Heating-Fuel])
       end
+
+      def building_environment
+        xpath(%w[//CEPC:Building-Environment])
+      end
     end
   end
 end
