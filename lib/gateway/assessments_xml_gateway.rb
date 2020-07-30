@@ -13,8 +13,7 @@ module Gateway
 
     def fetch(assessment_id)
       result = AssessmentsXml.find_by(assessment_id: assessment_id)
-      result ?
-      {xml: result["xml"], schema_type: result["schema_type"]} : nil
+      result ? { xml: result["xml"], schema_type: result["schema_type"] } : nil
     end
   end
 end

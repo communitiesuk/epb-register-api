@@ -171,7 +171,11 @@ module UseCase
       @assessments_gateway.insert_or_update assessment
 
       @assessments_xml_gateway.send_to_db(
-        { assessment_id: data[:assessment_id], xml: data[:raw_data], schema_type: schema_name},
+        {
+          assessment_id: data[:assessment_id],
+          xml: data[:raw_data],
+          schema_type: schema_name,
+        },
       )
 
       assessment

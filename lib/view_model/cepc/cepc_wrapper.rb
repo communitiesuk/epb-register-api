@@ -6,12 +6,12 @@ module ViewModel
         when "CEPC-8.0.0"
           @view_model = ViewModel::Cepc::Cepc800.new(xml)
         else
-          raise ArgumentError.new("Unsupported assessment type")
+          raise ArgumentError, "Unsupported assessment type"
         end
       end
 
       def to_hash
-        {assessment_id: @view_model.assessment_id}
+        { assessment_id: @view_model.assessment_id }
       end
     end
   end

@@ -6,7 +6,8 @@ module UseCase
 
       raise NotFoundException unless result
 
-      view_model = ViewModel::Factory.new.create(result[:xml], result[:schema_type])
+      view_model =
+        ViewModel::Factory.new.create(result[:xml], result[:schema_type])
 
       view_model.to_hash
     end
