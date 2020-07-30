@@ -1,4 +1,3 @@
 module ViewModel
-  class Cepc
-  end
+  class Cepc; end
 end

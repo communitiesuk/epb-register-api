@@ -4,7 +4,6 @@ module Controller
   class AssessmentSummaryController < Controller::BaseController
     get "/api/assessments/:assessment_id/summary",
         jwt_auth: %w[assessment:fetch] do
-
       assessment_id = params[:assessment_id]
       summary = UseCase::FetchAssessmentSummary.new.execute(assessment_id)
 

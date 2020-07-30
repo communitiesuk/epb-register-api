@@ -317,20 +317,20 @@ def fetch_assessment(
 end
 
 def fetch_assessment_summary(
-    assessment_id,
-    accepted_responses = [200],
-    authenticate = true,
-    auth_data = nil,
-    scopes = %w[assessment:fetch],
-    headers: {}
+  assessment_id,
+  accepted_responses = [200],
+  authenticate = true,
+  auth_data = nil,
+  scopes = %w[assessment:fetch],
+  headers: {}
 )
   assertive_get(
-      "api/assessments/#{assessment_id}/summary",
-      accepted_responses,
-      authenticate,
-      auth_data,
-      scopes,
-      )
+    "api/assessments/#{assessment_id}/summary",
+    accepted_responses,
+    authenticate,
+    auth_data,
+    scopes,
+  )
 end
 
 def assessments_search_by_postcode(

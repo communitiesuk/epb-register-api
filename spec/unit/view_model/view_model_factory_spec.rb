@@ -1,5 +1,4 @@
 describe ViewModel::Factory do
-
   it "constructs a CEPC object for CEPC-8.0.0 xml" do
     xml_file = File.read File.join Dir.pwd, "spec/fixtures/samples/cepc.xml"
     xml_doc = Nokogiri.XML xml_file

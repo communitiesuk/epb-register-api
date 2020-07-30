@@ -6,7 +6,7 @@ module UseCase
 
       raise NotFoundException unless xml
 
-      {assessment_id: assessment_id}
+      { assessment_id: assessment_id }
     end
   end
 end
