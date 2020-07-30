@@ -69,7 +69,7 @@ describe ViewModel::Cepc::CepcWrapper do
     end
 
     it "returns the scheme assessor ID" do
-      expect(cepc.to_hash[:scheme_assessor_id]).to eq "SPEC000000"
+      expect(cepc.to_hash[:assessor][:scheme_assessor_id]).to eq "SPEC000000"
     end
   end
 end

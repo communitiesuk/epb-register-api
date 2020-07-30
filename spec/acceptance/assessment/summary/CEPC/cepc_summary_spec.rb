@@ -26,8 +26,60 @@ describe "Acceptance::AssessmentSummary::CEPC" do
       )
     end
 
-    it "Returns the assessment id" do
-      expect(response[:data][:assessmentId]).to eq("0000-0000-0000-0000-0000")
+    it "returns the assessment" do
+      expect(response[:data]).to eq(
+        {
+          assessmentId: "0000-0000-0000-0000-0000",
+          dateOfExpiry: "2026-05-04",
+          address: {
+            addressLine1: "2 Lonely Street",
+            addressLine2: nil,
+            addressLine3: nil,
+            addressLine4: nil,
+            town: "Post-Town1",
+            postcode: "A0 0AA",
+          },
+          technicalInformation: {
+            mainHeatingFuel: "Natural Gas",
+            buildingEnvironment: "Air Conditioning",
+            floorArea: "403",
+            buildingLevel: "3",
+          },
+          buildingEmissionRate: "67.09",
+          primaryEnergyUse: "413.22",
+          relatedRrn: "4192-1535-8427-8844-6702",
+          newBuildRating: "28",
+          existingBuildRating: "81",
+          energyEfficiencyRating: "80",
+          assessor: {
+            firstName: "Someone",
+            lastName: "Person",
+            registeredBy: {
+              name: "test scheme", schemeId: 1
+            },
+            schemeAssessorId: "SPEC000000",
+            dateOfBirth: "1991-02-25",
+            contactDetails: {
+              email: "person@person.com", telephoneNumber: "010199991010101"
+            },
+            searchResultsComparisonPostcode: "",
+            address: {},
+            companyDetails: {},
+            qualifications: {
+              domesticSap: "INACTIVE",
+              domesticRdSap: "INACTIVE",
+              nonDomesticSp3: "INACTIVE",
+              nonDomesticCc4: "INACTIVE",
+              nonDomesticDec: "INACTIVE",
+              nonDomesticNos3: "ACTIVE",
+              nonDomesticNos4: "ACTIVE",
+              nonDomesticNos5: "ACTIVE",
+              gda: "INACTIVE",
+            },
+            middleNames: "Muddle",
+          },
+        },
+      )
     end
   end
 end
