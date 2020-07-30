@@ -12,7 +12,15 @@ module ViewModel
 
       def to_hash
         { assessment_id: @view_model.assessment_id,
-          date_of_expiry: @view_model.date_of_expiry }
+          date_of_expiry: @view_model.date_of_expiry,
+          address: {
+              address_line1: @view_model.address_line1,
+              address_line2: @view_model.address_line2,
+              address_line3: @view_model.address_line3,
+              address_line4: @view_model.address_line4,
+              town: @view_model.town,
+              postcode: @view_model.postcode,
+          }}
       end
     end
   end

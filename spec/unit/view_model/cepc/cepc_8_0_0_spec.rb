@@ -13,5 +13,18 @@ describe ViewModel::Cepc::CepcWrapper do
     it "Returns the expiry date" do
       expect(cepc.to_hash[:date_of_expiry]).to eq("2026-05-04")
     end
+
+    it "Returns the address" do
+      expect(cepc.to_hash[:address]).to eq(
+                                            {
+                                                address_line1: "2 Lonely Street",
+                                                address_line2: nil,
+                                                address_line3: nil,
+                                                address_line4: nil,
+                                                town: "Post-Town1",
+                                                postcode: "A0 0AA"
+
+      })
+    end
   end
 end
