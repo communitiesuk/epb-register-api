@@ -3,6 +3,7 @@
 module Domain
   class Assessor
     attr_reader :registered_by_id,
+                :registered_by_name,
                 :scheme_assessor_id,
                 :domestic_rd_sap_qualification,
                 :domestic_sap_qualification,

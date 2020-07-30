@@ -60,6 +60,10 @@ describe "Acceptance::AssessmentSummary::CEPC" do
             companyDetails: {
               name: "Joe Bloggs Ltd", address: "123 My Street, My City, AB3 4CD"
             },
+            registeredBy: {
+                name: "test scheme",
+                schemeId: scheme_id
+            }
           },
         },
       )
