@@ -54,6 +54,10 @@ module ViewModel
       def floor_area
         xpath(%w[//CEPC:Floor-Area])
       end
+
+      def building_level
+        xpath(%w[//CEPC:Building-Level])
+      end
     end
   end
 end

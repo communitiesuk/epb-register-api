@@ -26,6 +26,7 @@ module ViewModel
             main_heating_fuel: @view_model.main_heating_fuel,
             building_environment: @view_model.building_environment,
             floor_area: @view_model.floor_area,
+            building_level: @view_model.building_level,
           },
         }
       end
