@@ -12,7 +12,6 @@ module ViewModel
         else
           raise ArgumentError.new("Invalid CEPC report type")
         end
-
       end
     end
   end

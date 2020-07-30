@@ -22,9 +22,10 @@ module UseCase
 
       view_model =
         ViewModel::Factory.new.create(result[:xml], result[:schema_type])
-          .to_hash
 
-      view_model_with_merged_attributes = other_values_for_cepc(view_model)
+      raise ArgumentError.new("Assessment summary unsupported for this assessment type") unless view_model
+
+      view_model_with_merged_attributes = other_values_for_cepc(view_model.to_hash)
       view_model_with_merged_attributes
     end
   end
