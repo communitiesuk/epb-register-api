@@ -100,5 +100,9 @@ describe ViewModel::Cepc::CepcWrapper do
     it "calculates the energy efficiency band" do
       expect(cepc.to_hash[:current_energy_efficiency_band]).to eq("d")
     end
+
+    it "returns the date of assessment" do
+      expect(cepc.to_hash[:date_of_assessment]).to eq("2020-05-04")
+    end
   end
 end

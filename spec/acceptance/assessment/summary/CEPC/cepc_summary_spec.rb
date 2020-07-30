@@ -33,6 +33,7 @@ describe "Acceptance::AssessmentSummary::CEPC" do
           dateOfExpiry: "2026-05-04",
           reportType: "3",
           typeOfAssessment: "CEPC",
+          dateOfAssessment: "2020-05-04",
           address: {
             addressLine1: "2 Lonely Street",
             addressLine2: nil,

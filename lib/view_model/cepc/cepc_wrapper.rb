@@ -38,6 +38,7 @@ module ViewModel
           assessment_id: @view_model.assessment_id,
           date_of_expiry: @view_model.date_of_expiry,
           report_type: @view_model.report_type,
+          date_of_assessment: @view_model.date_of_assessment,
           address: {
             address_line1: @view_model.address_line1,
             address_line2: @view_model.address_line2,

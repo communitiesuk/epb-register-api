@@ -110,6 +110,10 @@ module ViewModel
       def report_type
         xpath(%w[//CEPC:Report-Type])
       end
+
+      def date_of_assessment
+        xpath(%w[//CEPC:Inspection-Date])
+      end
     end
   end
 end
