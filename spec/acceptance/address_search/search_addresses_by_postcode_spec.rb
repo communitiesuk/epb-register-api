@@ -176,7 +176,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
                 postcode: "A0 0AA",
                 town: "London",
                 addressId: "UPRN-73546792",
-                source: "ADDRESS_BASE",
+                source: "GAZETTEER",
                 existingAssessments: nil,
               },
             )
@@ -285,7 +285,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
               postcode: "A0 0AA",
               town: "London",
               addressId: "UPRN-73546792",
-              source: "ADDRESS_BASE",
+              source: "GAZETTEER",
               existingAssessments: nil,
             },
           )
@@ -347,7 +347,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
               postcode: "A0 0AA",
               town: "London",
               addressId: "UPRN-73546792",
-              source: "ADDRESS_BASE",
+              source: "GAZETTEER",
               existingAssessments: nil,
             },
           )
@@ -410,7 +410,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
                 postcode: "A0 0AA",
                 town: "London",
                 addressId: "UPRN-73546793",
-                source: "ADDRESS_BASE",
+                source: "GAZETTEER",
                 existingAssessments: nil,
               },
             )
@@ -472,7 +472,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
                 postcode: "A0 0AA",
                 town: "London",
                 addressId: "UPRN-73546795",
-                source: "ADDRESS_BASE",
+                source: "GAZETTEER",
                 existingAssessments: nil,
               },
             )
@@ -529,7 +529,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
                 postcode: "A0 0AA",
                 town: "London",
                 addressId: "UPRN-73546795",
-                source: "ADDRESS_BASE",
+                source: "GAZETTEER",
                 existingAssessments: nil,
               },
             )
@@ -604,7 +604,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
               postcode: "A0 0AA",
               town: "London",
               addressId: "UPRN-73546792",
-              source: "ADDRESS_BASE",
+              source: "GAZETTEER",
               existingAssessments: nil,
             },
           )
@@ -666,7 +666,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
               postcode: "A0 0AA",
               town: "London",
               addressId: "UPRN-73546792",
-              source: "ADDRESS_BASE",
+              source: "GAZETTEER",
               existingAssessments: nil,
             },
           )
@@ -728,7 +728,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
               postcode: "A0 0AA",
               town: "London",
               addressId: "UPRN-73546792",
-              source: "ADDRESS_BASE",
+              source: "GAZETTEER",
               existingAssessments: nil,
             },
           )
@@ -795,7 +795,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
               postcode: "A0 0AA",
               town: "London",
               addressId: "UPRN-73546792",
-              source: "ADDRESS_BASE",
+              source: "GAZETTEER",
               existingAssessments: nil,
             },
           )

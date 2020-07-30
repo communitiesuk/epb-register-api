@@ -72,7 +72,7 @@ module Gateway
                           line4: row["address_line4"].presence,
                           town: row["town"],
                           postcode: row["postcode"],
-                          source: "ADDRESS_BASE",
+                          source: "GAZETTEER",
                           existing_assessments: nil
     end
   end
