@@ -46,5 +46,9 @@ describe ViewModel::Cepc::CepcWrapper do
     it "returns the related assessment ID" do
       expect(cepc.to_hash[:related_rrn]).to eq "4192-1535-8427-8844-6702"
     end
+
+    it "returns the new build rating" do
+      expect(cepc.to_hash[:new_build_rating]).to eq "28"
+    end
   end
 end

@@ -70,6 +70,10 @@ module ViewModel
       def related_rrn
         xpath(%w[//CEPC:Related-RRN])
       end
+
+      def new_build_rating
+        xpath(%w[//CEPC:New-Build-Benchmark])
+      end
     end
   end
 end

@@ -31,6 +31,7 @@ module ViewModel
           building_emission_rate: @view_model.building_emission_rate,
           primary_energy_use: @view_model.primary_energy_use,
           related_rrn: @view_model.related_rrn,
+          new_build_rating: @view_model.new_build_rating,
         }
       end
     end
