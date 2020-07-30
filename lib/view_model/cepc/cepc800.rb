@@ -58,6 +58,10 @@ module ViewModel
       def building_level
         xpath(%w[//CEPC:Building-Level])
       end
+
+      def building_emission_rate
+        xpath(%w[//CEPC:BER])
+      end
     end
   end
 end

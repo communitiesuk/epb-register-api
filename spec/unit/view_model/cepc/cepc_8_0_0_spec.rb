@@ -31,6 +31,7 @@ describe ViewModel::Cepc::CepcWrapper do
           building_environment: "Air Conditioning",
           floor_area: "403",
           building_level: "3",
+          building_emission_rate: "67.09",
         },
       )
     end
