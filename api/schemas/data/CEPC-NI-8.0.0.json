@@ -111,6 +111,10 @@
   "root": "technical_information",
   "path": ["Floor_Area"]
 }, {
+  "key": "technical_information_calculation_tool",
+  "root": "header",
+  "path": ["Calculation_Details", "Calculation_Tool"]
+}, {
   "key": "technical_info_building_environment",
   "path": ["Report", "Recommendations_Report", "Technical_Information", "Building_Environment"]
 }, {

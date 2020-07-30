@@ -205,6 +205,7 @@ describe "Acceptance::LodgeCEPC+RREnergyAssessment" do
             technicalInformation: {
               buildingEnvironment: "Natural Ventilation Only",
               totalFloorArea: "10",
+              calculationTool: "Calculation-Tool0",
             },
             recommendations: {
               longPaybackRecommendation: [
