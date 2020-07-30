@@ -13,20 +13,22 @@ module ViewModel
 
       def get_energy_rating_band(number)
         case number
-        when 1..20
-          "g"
-        when 21..38
-          "f"
-        when 39..54
-          "e"
-        when 55..68
-          "d"
-        when 69..80
-          "c"
-        when 81..91
-          "b"
-        when 92..1_000
+        when number < 0
+          "a+"
+        when 0..25
           "a"
+        when 26..50
+          "b"
+        when 51..75
+          "c"
+        when 76..100
+          "d"
+        when 101..125
+          "e"
+        when 126..150
+          "f"
+        else
+          "g"
         end
       end
 
@@ -55,7 +57,9 @@ module ViewModel
           primary_energy_use: @view_model.primary_energy_use,
           related_rrn: @view_model.related_rrn,
           new_build_rating: @view_model.new_build_rating,
-          existing_build_rating: @view_model.existing_build_rating,
+            new_build_band: get_energy_rating_band(@view_model.new_build_rating.to_i),
+            existing_build_rating: @view_model.existing_build_rating,
+            existing_build_band: get_energy_rating_band(@view_model.existing_build_rating.to_i),
           energy_efficiency_rating: @view_model.energy_efficiency_rating,
           assessor: {
             scheme_assessor_id: @view_model.scheme_assessor_id,

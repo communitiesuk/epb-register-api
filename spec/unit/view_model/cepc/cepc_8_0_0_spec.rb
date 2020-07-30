@@ -60,8 +60,16 @@ describe ViewModel::Cepc::CepcWrapper do
       expect(cepc.to_hash[:new_build_rating]).to eq "28"
     end
 
+    it "returns the new build band" do
+      expect(cepc.to_hash[:new_build_band]).to eq "b"
+    end
+
     it "returns the existing build rating" do
       expect(cepc.to_hash[:existing_build_rating]).to eq "81"
+    end
+
+    it "returns the existing build band" do
+      expect(cepc.to_hash[:existing_build_band]).to eq "d"
     end
 
     it "returns the energy efficiency rating" do
@@ -89,8 +97,8 @@ describe ViewModel::Cepc::CepcWrapper do
       expect(cepc.to_hash[:type_of_assessment]).to eq("CEPC")
     end
 
-    it "calculates the energy efficiency bamd type" do
-      expect(cepc.to_hash[:current_energy_efficiency_band]).to eq("c")
+    it "calculates the energy efficiency band" do
+      expect(cepc.to_hash[:current_energy_efficiency_band]).to eq("d")
     end
   end
 end

@@ -51,9 +51,11 @@ describe "Acceptance::AssessmentSummary::CEPC" do
           primaryEnergyUse: "413.22",
           relatedRrn: "4192-1535-8427-8844-6702",
           newBuildRating: "28",
+          newBuildBand: "b",
           existingBuildRating: "81",
+          existingBuildBand: "d",
           energyEfficiencyRating: "80",
-          currentEnergyEfficiencyBand: "c",
+          currentEnergyEfficiencyBand: "d",
           assessor: {
             name: "TEST NAME BOI",
             schemeAssessorId: "SPEC000000",
