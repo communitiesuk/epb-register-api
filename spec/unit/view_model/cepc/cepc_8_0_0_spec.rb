@@ -88,5 +88,9 @@ describe ViewModel::Cepc::CepcWrapper do
     it "returns the assessment type" do
       expect(cepc.to_hash[:type_of_assessment]).to eq("CEPC")
     end
+
+    it "calculates the energy efficiency bamd type" do
+      expect(cepc.to_hash[:current_energy_efficiency_band]).to eq("c")
+    end
   end
 end

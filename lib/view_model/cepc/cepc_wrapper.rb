@@ -11,6 +11,26 @@ module ViewModel
         end
       end
 
+      def get_energy_rating_band(number)
+        case number
+        when 1..20
+          "g"
+        when 21..38
+          "f"
+        when 39..54
+          "e"
+        when 55..68
+          "d"
+        when 69..80
+          "c"
+        when 81..91
+          "b"
+        when 92..1_000
+          "a"
+        end
+      end
+
+
       def to_hash
         {
             type_of_assessment: TYPE_OF_ASSESSMENT,
@@ -49,6 +69,7 @@ module ViewModel
               address: @view_model.company_address,
             },
           },
+            current_energy_efficiency_band: get_energy_rating_band(@view_model.energy_efficiency_rating.to_i)
         }
       end
     end

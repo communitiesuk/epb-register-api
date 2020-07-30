@@ -53,6 +53,7 @@ describe "Acceptance::AssessmentSummary::CEPC" do
           newBuildRating: "28",
           existingBuildRating: "81",
           energyEfficiencyRating: "80",
+          currentEnergyEfficiencyBand: "c",
           assessor: {
             name: "TEST NAME BOI",
             schemeAssessorId: "SPEC000000",
