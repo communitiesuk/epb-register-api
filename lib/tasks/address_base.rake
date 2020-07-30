@@ -40,7 +40,7 @@ task :import_address_base do
   ActiveRecord::Base.transaction do
     if csv_contents.size.positive?
       csv_contents = CSV.parse(csv_contents)
-      csv_contents.each_slice(100) do |inserts|
+      csv_contents.each_slice(10_000) do |inserts|
         query = []
         inserts.map do |row|
           uprn = ActiveRecord::Base.connection.quote(row[0])
