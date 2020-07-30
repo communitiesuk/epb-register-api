@@ -114,6 +114,10 @@ module ViewModel
       def date_of_assessment
         xpath(%w[//CEPC:Inspection-Date])
       end
+
+      def date_of_registration
+        xpath(%w[//CEPC:Registration-Date])
+      end
     end
   end
 end

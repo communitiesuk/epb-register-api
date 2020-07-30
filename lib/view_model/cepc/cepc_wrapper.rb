@@ -39,6 +39,7 @@ module ViewModel
           date_of_expiry: @view_model.date_of_expiry,
           report_type: @view_model.report_type,
           date_of_assessment: @view_model.date_of_assessment,
+          date_of_registration: @view_model.date_of_registration,
           address: {
             address_line1: @view_model.address_line1,
             address_line2: @view_model.address_line2,

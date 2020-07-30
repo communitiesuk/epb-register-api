@@ -104,5 +104,10 @@ describe ViewModel::Cepc::CepcWrapper do
     it "returns the date of assessment" do
       expect(cepc.to_hash[:date_of_assessment]).to eq("2020-05-04")
     end
+
+    it "returns the date of registration" do
+      expect(cepc.to_hash[:date_of_registration]).to eq("2020-05-04")
+    end
+
   end
 end
