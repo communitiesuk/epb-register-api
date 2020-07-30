@@ -42,5 +42,9 @@ describe ViewModel::Cepc::CepcWrapper do
     it "returns the primary energy use" do
       expect(cepc.to_hash[:primary_energy_use]).to eq "413.22"
     end
+
+    it "returns the related assessment ID" do
+      expect(cepc.to_hash[:related_rrn]).to eq "4192-1535-8427-8844-6702"
+    end
   end
 end

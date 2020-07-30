@@ -66,6 +66,10 @@ module ViewModel
       def primary_energy_use
         xpath(%w[//CEPC:Energy-Consumption-Current])
       end
+
+      def related_rrn
+        xpath(%w[//CEPC:Related-RRN])
+      end
     end
   end
 end
