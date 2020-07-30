@@ -58,8 +58,7 @@ describe "Acceptance::AssessmentSummary::CEPC" do
               email: "test@testscheme.com", telephone: "012345"
             },
             companyDetails: {
-              name: "Joe Bloggs Ltd",
-              address: "123 My Street, My City, AB3 4CD",
+              name: "Joe Bloggs Ltd", address: "123 My Street, My City, AB3 4CD"
             },
           },
         },

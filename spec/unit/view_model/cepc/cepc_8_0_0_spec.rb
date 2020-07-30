@@ -74,12 +74,9 @@ describe ViewModel::Cepc::CepcWrapper do
           scheme_assessor_id: "SPEC000000",
           name: "TEST NAME BOI",
           company_details: {
-            name: "Joe Bloggs Ltd",
-            address: "123 My Street, My City, AB3 4CD",
+            name: "Joe Bloggs Ltd", address: "123 My Street, My City, AB3 4CD"
           },
-          contact_details: {
-            email: "test@testscheme.com", telephone: "012345"
-          },
+          contact_details: { email: "test@testscheme.com", telephone: "012345" },
         },
       )
     end
