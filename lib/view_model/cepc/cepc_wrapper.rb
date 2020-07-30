@@ -34,9 +34,7 @@ module ViewModel
           new_build_rating: @view_model.new_build_rating,
           existing_build_rating: @view_model.existing_build_rating,
           energy_efficiency_rating: @view_model.energy_efficiency_rating,
-          assessor: {
-            scheme_assessor_id: @view_model.scheme_assessor_id,
-          },
+          assessor: { scheme_assessor_id: @view_model.scheme_assessor_id },
         }
       end
     end

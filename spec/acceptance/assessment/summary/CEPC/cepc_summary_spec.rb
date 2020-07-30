@@ -4,8 +4,8 @@ describe "Acceptance::AssessmentSummary::CEPC" do
   include RSpecRegisterApiServiceMixin
 
   context "when a valid CEPC 8.0.0 is lodged" do
+    let(:scheme_id) { add_scheme_and_get_id }
     let(:response) do
-      scheme_id = add_scheme_and_get_id
       assessor =
         AssessorStub.new.fetch_request_body(
           nonDomesticNos3: "ACTIVE",
@@ -54,9 +54,7 @@ describe "Acceptance::AssessmentSummary::CEPC" do
           assessor: {
             firstName: "Someone",
             lastName: "Person",
-            registeredBy: {
-              name: "test scheme", schemeId: 1
-            },
+            registeredBy: { name: "test scheme", schemeId: scheme_id },
             schemeAssessorId: "SPEC000000",
             dateOfBirth: "1991-02-25",
             contactDetails: {
