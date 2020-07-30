@@ -143,6 +143,7 @@ describe "Acceptance::LodgeRRNIEnergyAssessment" do
           ],
           status: "ENTERED",
           nonDomCepcRr: {
+            relatedCepcReportAssessmentId: nil,
             technicalInformation: {
               buildingEnvironment: "Natural Ventilation Only",
               totalFloorArea: "10",

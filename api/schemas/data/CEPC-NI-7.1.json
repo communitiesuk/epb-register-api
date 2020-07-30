@@ -111,6 +111,10 @@
   "root": "technical_information",
   "path": ["Floor_Area"]
 }, {
+  "key": "related_report_rrn",
+  "root": "header",
+  "path": ["Related_RRN"]
+}, {
   "key": "technical_information_calculation_tool",
   "root": "header",
   "path": ["Calculation_Details", "Calculation_Tool"]

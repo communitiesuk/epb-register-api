@@ -112,6 +112,10 @@
   "root": "header",
   "path": ["Calculation_Details", "Calculation_Tool"]
 }, {
+  "key": "related_report_rrn",
+  "root": "header",
+  "path": ["Related_RRN"]
+}, {
   "key": "technical_info_building_environment",
   "path": ["Report", "Recommendations_Report", "Technical_Information", "Building_Environment"]
 }, {

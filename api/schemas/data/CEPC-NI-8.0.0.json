@@ -107,6 +107,10 @@
   "key": "technical_information",
   "path": ["Report", "Energy_Performance_Certificate", "Technical_Information"]
 }, {
+  "key": "related_report_rrn",
+  "root": "header",
+  "path": ["Related_RRN"]
+}, {
   "key": "total_floor_area",
   "root": "technical_information",
   "path": ["Floor_Area"]

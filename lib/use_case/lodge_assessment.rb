@@ -137,6 +137,7 @@ module UseCase
         assessment.set(
           :non_dom_cepc_rr,
           {
+            related_cepc_report_assessment_id: data[:related_report_rrn],
             technical_information: {
               building_environment: data[:technical_info_building_environment],
               total_floor_area: data[:technical_info_total_floor_area],
