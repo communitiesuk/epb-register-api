@@ -4,7 +4,7 @@ module ViewModel
       def initialize(xml, schema_type)
         case schema_type
         when "CEPC-8.0.0"
-          @view_model = ViewModel::Cepc::Cepc800.new(xml)
+          @view_model = ViewModel::Cepc::Cepc800.new xml
         else
           raise ArgumentError, "Unsupported assessment type"
         end
@@ -34,6 +34,7 @@ module ViewModel
           new_build_rating: @view_model.new_build_rating,
           existing_build_rating: @view_model.existing_build_rating,
           energy_efficiency_rating: @view_model.energy_efficiency_rating,
+          scheme_assessor_id: @view_model.scheme_assessor_id,
         }
       end
     end

@@ -58,5 +58,9 @@ describe ViewModel::Cepc::CepcWrapper do
     it "returns the energy efficiency rating" do
       expect(cepc.to_hash[:energy_efficiency_rating]).to eq "80"
     end
+
+    it "returns the scheme assessor ID" do
+      expect(cepc.to_hash[:scheme_assessor_id]).to eq "SPEC000000"
+    end
   end
 end

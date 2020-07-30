@@ -2,12 +2,12 @@ module ViewModel
   module Cepc
     class Cepc800
       def initialize(xml)
-        @xml_doc = Nokogiri.XML(xml)
+        @xml_doc = Nokogiri.XML xml
       end
 
       def xpath(queries)
         node = @xml_doc
-        queries.each { |query| node = node.at(query) }
+        queries.each { |query| node = node.at query }
         node ? node.content : nil
       end
 
@@ -81,6 +81,10 @@ module ViewModel
 
       def energy_efficiency_rating
         xpath(%w[//CEPC:Asset-Rating])
+      end
+
+      def scheme_assessor_id
+        xpath(%w[//CEPC:Certificate-Number])
       end
     end
   end
