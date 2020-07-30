@@ -93,7 +93,8 @@ module Controller
       message =
         exception.methods.include?(:message) ? exception.message : exception
 
-      logger.error(message)
+      pp exception.backtrace
+      logger.error(exception)
       error_response(500, "SERVER_ERROR", message)
     end
 
