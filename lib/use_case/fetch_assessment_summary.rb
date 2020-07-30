@@ -6,7 +6,9 @@ module UseCase
 
       raise NotFoundException unless xml
 
-      { assessment_id: assessment_id }
+      view_model = ViewModel::Factory.new.create(xml, "CEPC-8.0.0")
+
+      view_model.to_hash
     end
   end
 end
