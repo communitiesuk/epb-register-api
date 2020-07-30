@@ -13,11 +13,6 @@ module UseCase
         ViewModel::Factory.new.create(result[:xml], result[:schema_type])
           .to_hash
 
-      view_model[:assessor] =
-        Gateway::AssessorsGateway.new.fetch view_model[:assessor][
-                                              :scheme_assessor_id
-                                            ]
-
       view_model
     end
   end

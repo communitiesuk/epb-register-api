@@ -17,13 +17,15 @@
       <CEPC:Language-Code>1</CEPC:Language-Code>
       <CEPC:Energy-Assessor>
         <CEPC:Certificate-Number>SPEC000000</CEPC:Certificate-Number>
-        <CEPC:Name>Name1</CEPC:Name>
-        <CEPC:Accreditation-Scheme-Name>Information not available</CEPC:Accreditation-Scheme-Name>
+        <CEPC:Name>TEST NAME BOI</CEPC:Name>
+        <CEPC:Accreditation-Scheme-Name>TESTSCHEME</CEPC:Accreditation-Scheme-Name>
         <CEPC:Accreditation-Scheme-Website>Information not available</CEPC:Accreditation-Scheme-Website>
         <CEPC:Trading-Address>123 My Street, My City, AB3 4CD</CEPC:Trading-Address>
         <CEPC:Company-Name>Joe Bloggs Ltd</CEPC:Company-Name>
         <CEPC:Qualifications>NOS5</CEPC:Qualifications>
         <CEPC:Status>Registered</CEPC:Status>
+        <CEPC:E-Mail>test@testscheme.com</CEPC:E-Mail>
+        <CEPC:Telephone-Number>012345</CEPC:Telephone-Number>
       </CEPC:Energy-Assessor>
       <CEPC:Building-Complexity>Level 3</CEPC:Building-Complexity>
       <CEPC:Property-Details>

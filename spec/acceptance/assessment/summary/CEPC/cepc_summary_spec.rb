@@ -52,29 +52,15 @@ describe "Acceptance::AssessmentSummary::CEPC" do
           existingBuildRating: "81",
           energyEfficiencyRating: "80",
           assessor: {
-            firstName: "Someone",
-            lastName: "Person",
-            registeredBy: { name: "test scheme", schemeId: scheme_id },
+            name: "TEST NAME BOI",
             schemeAssessorId: "SPEC000000",
-            dateOfBirth: "1991-02-25",
             contactDetails: {
-              email: "person@person.com", telephoneNumber: "010199991010101"
+              email: "test@testscheme.com", telephone: "012345"
             },
-            searchResultsComparisonPostcode: "",
-            address: {},
-            companyDetails: {},
-            qualifications: {
-              domesticSap: "INACTIVE",
-              domesticRdSap: "INACTIVE",
-              nonDomesticSp3: "INACTIVE",
-              nonDomesticCc4: "INACTIVE",
-              nonDomesticDec: "INACTIVE",
-              nonDomesticNos3: "ACTIVE",
-              nonDomesticNos4: "ACTIVE",
-              nonDomesticNos5: "ACTIVE",
-              gda: "INACTIVE",
+            companyDetails: {
+              name: "Joe Bloggs Ltd",
+              address: "123 My Street, My City, AB3 4CD",
             },
-            middleNames: "Muddle",
           },
         },
       )

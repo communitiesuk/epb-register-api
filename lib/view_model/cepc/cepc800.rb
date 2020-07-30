@@ -86,6 +86,26 @@ module ViewModel
       def scheme_assessor_id
         xpath(%w[//CEPC:Certificate-Number])
       end
+
+      def assessor_name
+        xpath(%w[//CEPC:Energy-Assessor //CEPC:Name])
+      end
+
+      def assessor_email
+        xpath(%w[//CEPC:Energy-Assessor //CEPC:E-Mail])
+      end
+
+      def assessor_telephone
+        xpath(%w[//CEPC:Energy-Assessor //CEPC:Telephone-Number])
+      end
+
+      def company_name
+        xpath(%w[//CEPC:Energy-Assessor //CEPC:Company-Name])
+      end
+
+      def company_address
+        xpath(%w[//CEPC:Energy-Assessor //CEPC:Trading-Address])
+      end
     end
   end
 end
