@@ -16,15 +16,15 @@ describe ViewModel::Cepc::CepcWrapper do
 
     it "Returns the address" do
       expect(cepc.to_hash[:address]).to eq(
-                                            {
-                                                address_line1: "2 Lonely Street",
-                                                address_line2: nil,
-                                                address_line3: nil,
-                                                address_line4: nil,
-                                                town: "Post-Town1",
-                                                postcode: "A0 0AA"
-
-      })
+        {
+          address_line1: "2 Lonely Street",
+          address_line2: nil,
+          address_line3: nil,
+          address_line4: nil,
+          town: "Post-Town1",
+          postcode: "A0 0AA",
+        },
+      )
     end
   end
 end

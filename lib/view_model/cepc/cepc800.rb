@@ -7,42 +7,40 @@ module ViewModel
 
       def xpath(queries)
         node = @xml_doc
-        queries.each do |query|
-          node = node.at(query)
-        end
+        queries.each { |query| node = node.at(query) }
         node ? node.content : nil
       end
 
       def assessment_id
-        xpath(["//CEPC:RRN"])
+        xpath(%w[//CEPC:RRN])
       end
 
       def date_of_expiry
-        xpath(["//CEPC:Valid-Until"])
+        xpath(%w[//CEPC:Valid-Until])
       end
 
       def address_line1
-        xpath(["//CEPC:Property-Address", "//CEPC:Address-Line-1"])
+        xpath(%w[//CEPC:Property-Address //CEPC:Address-Line-1])
       end
 
       def address_line2
-        xpath(["//CEPC:Property-Address", "//CEPC:Address-Line-2"])
+        xpath(%w[//CEPC:Property-Address //CEPC:Address-Line-2])
       end
 
       def address_line3
-        xpath(["//CEPC:Property-Address", "//CEPC:Address-Line-3"])
+        xpath(%w[//CEPC:Property-Address //CEPC:Address-Line-3])
       end
 
       def address_line4
-        xpath(["//CEPC:Property-Address", "//CEPC:Address-Line-4"])
+        xpath(%w[//CEPC:Property-Address //CEPC:Address-Line-4])
       end
 
       def town
-        xpath(["//CEPC:Property-Address", "//CEPC:Post-Town"])
+        xpath(%w[//CEPC:Property-Address //CEPC:Post-Town])
       end
 
       def postcode
-        xpath(["//CEPC:Property-Address", "//CEPC:Postcode"])
+        xpath(%w[//CEPC:Property-Address //CEPC:Postcode])
       end
     end
   end
