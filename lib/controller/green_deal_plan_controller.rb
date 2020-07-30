@@ -26,7 +26,7 @@ module Controller
         endDate: { type: "string", format: "iso-date" },
         providerDetails: {
           type: "object",
-          required: %w[name telephone email],
+          required: %w[name],
           properties: {
             name: { type: "string" },
             telephone: { type: "string" },
