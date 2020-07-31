@@ -14,6 +14,7 @@ describe ViewModel::CepcRr::CepcRrWrapper do
       assessment_id: "0000-0000-0000-0000-0000",
       report_type: "4",
       type_of_assessment: "CEPC-RR",
+      date_of_expiry: "2021-05-03"
     }.freeze
 
     it "should read the appropriate value from the XML doc" do
