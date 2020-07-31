@@ -112,6 +112,5 @@ describe ViewModel::Cepc::CepcWrapper do
     it "returns the related party disclosure" do
       expect(cepc.to_hash[:related_party_disclosure]).to eq("1")
     end
-
   end
 end
