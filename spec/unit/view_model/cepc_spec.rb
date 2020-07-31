@@ -75,6 +75,8 @@ describe ViewModel::Cepc::CepcWrapper do
   end
 
   it "returns the expect error without a valid schema type" do
-    expect { ViewModel::Cepc.CepcWrapper "", "invalid" }.to raise_error
+    expect { ViewModel::Cepc::CepcWrapper.new "", "invalid" }
+        .to raise_error
+                .with_message"Unsupported schema type"
   end
 end
