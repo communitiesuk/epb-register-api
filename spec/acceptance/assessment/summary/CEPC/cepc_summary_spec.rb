@@ -115,6 +115,7 @@ describe "Acceptance::AssessmentSummary::CEPC" do
             registeredBy: { name: "test scheme", schemeId: scheme_id },
           },
           relatedAssessments: [],
+          propertyType: "B1 Offices and Workshop businesses",
         },
       )
     end

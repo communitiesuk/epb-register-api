@@ -91,27 +91,31 @@ describe ViewModel::Cepc::CepcWrapper do
     end
 
     it "returns the report type" do
-      expect(cepc.to_hash[:report_type]).to eq("3")
+      expect(cepc.to_hash[:report_type]).to eq "3"
     end
 
     it "returns the assessment type" do
-      expect(cepc.to_hash[:type_of_assessment]).to eq("CEPC")
+      expect(cepc.to_hash[:type_of_assessment]).to eq "CEPC"
     end
 
     it "calculates the energy efficiency band" do
-      expect(cepc.to_hash[:current_energy_efficiency_band]).to eq("d")
+      expect(cepc.to_hash[:current_energy_efficiency_band]).to eq "d"
     end
 
     it "returns the date of assessment" do
-      expect(cepc.to_hash[:date_of_assessment]).to eq("2020-05-04")
+      expect(cepc.to_hash[:date_of_assessment]).to eq "2020-05-04"
     end
 
     it "returns the date of registration" do
-      expect(cepc.to_hash[:date_of_registration]).to eq("2020-05-04")
+      expect(cepc.to_hash[:date_of_registration]).to eq "2020-05-04"
     end
 
     it "returns the related party disclosure" do
-      expect(cepc.to_hash[:related_party_disclosure]).to eq("1")
+      expect(cepc.to_hash[:related_party_disclosure]).to eq "1"
+    end
+
+    it "returns the property type" do
+      expect(cepc.to_hash[:property_type]).to eq "B1 Offices and Workshop businesses"
     end
   end
 end

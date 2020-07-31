@@ -126,6 +126,10 @@ module ViewModel
       def address_id
         xpath(%w[//CEPC:UPRN])
       end
+
+      def property_type
+        xpath(%w[//CEPC:Property-Type])
+      end
     end
   end
 end
