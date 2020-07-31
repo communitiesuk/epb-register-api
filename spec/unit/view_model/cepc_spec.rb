@@ -1,6 +1,6 @@
 describe ViewModel::Cepc::CepcWrapper do
   # You should only need to add to this list to test new CEPC schema
-  SUPPORTED_SCHEMA = [
+  supported_schema = [
     {
       schema_name: "CEPC-8.0.0",
       xml_file: "spec/fixtures/samples/cepc.xml",
@@ -9,7 +9,7 @@ describe ViewModel::Cepc::CepcWrapper do
   ].freeze
 
   # You should only need to add to this list to test new fields on all CEPC schema
-  ASSERTED_KEYS = {
+  asserted_keys = {
     assessment_id: "0000-0000-0000-0000-0000",
     date_of_expiry: "2026-05-04",
     address: {
@@ -53,12 +53,12 @@ describe ViewModel::Cepc::CepcWrapper do
   }.freeze
 
   it "should read the appropriate value from the XML doc" do
-    SUPPORTED_SCHEMA.each do |schema|
+    supported_schema.each do |schema|
       xml_file = File.read File.join Dir.pwd, schema[:xml_file]
       cepc =
         ViewModel::Cepc::CepcWrapper.new(xml_file, schema[:schema_name]).to_hash
 
-      ASSERTED_KEYS.each do |key, value|
+      asserted_keys.each do |key, value|
         result = cepc[key]
         if schema[:unsupported_fields].include? key
           expect(result).to be_nil,
@@ -75,8 +75,8 @@ describe ViewModel::Cepc::CepcWrapper do
   end
 
   it "returns the expect error without a valid schema type" do
-    expect { ViewModel::Cepc::CepcWrapper.new "", "invalid" }
-        .to raise_error
-                .with_message"Unsupported schema type"
+    expect {
+      ViewModel::Cepc::CepcWrapper.new "", "invalid"
+    }.to raise_error.with_message "Unsupported schema type"
   end
 end
