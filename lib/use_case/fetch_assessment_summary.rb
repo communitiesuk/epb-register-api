@@ -2,6 +2,13 @@ module UseCase
   class FetchAssessmentSummary
     class NotFoundException < StandardError; end
 
+    def supported_in_legacy_route?(assessment_id)
+      !Gateway::AssessmentsGateway
+          .new
+          .search_by_assessment_id(assessment_id, false)
+          .empty?
+    end
+
     def add_cepc_supplementary_values!(cepc_hash)
       assessor_id = cepc_hash[:assessor][:scheme_assessor_id]
       assessor = Gateway::AssessorsGateway.new.fetch(assessor_id)
@@ -12,7 +19,7 @@ module UseCase
       cepc_hash
     end
 
-    def build_view_model_from_xml_attributes(xml, schema_type)
+    def lodged_values_from_xml(xml, schema_type)
       view_model = ViewModel::Factory.new.create(xml, schema_type)
       unless view_model
         raise ArgumentError,
@@ -24,12 +31,17 @@ module UseCase
     def execute(assessment_id)
       lodged_xml_document =
         Gateway::AssessmentsXmlGateway.new.fetch assessment_id
-      raise NotFoundException unless lodged_xml_document
-
-      # TODO: Check if there are multiple reports in lodged XML and only pass the desired one to the factory
+      unless lodged_xml_document
+        if supported_in_legacy_route?(assessment_id)
+          raise ArgumentError,
+                "Request will succeed on fetch assessment endpoint, summary unavailable because XML not lodged"
+        else
+          raise NotFoundException
+        end
+      end
 
       lodged_values =
-        build_view_model_from_xml_attributes(
+        lodged_values_from_xml(
           lodged_xml_document[:xml],
           lodged_xml_document[:schema_type],
         )
