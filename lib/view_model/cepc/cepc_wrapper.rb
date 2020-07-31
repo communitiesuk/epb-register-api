@@ -45,6 +45,7 @@ module ViewModel
           date_of_assessment: @view_model.date_of_assessment,
           date_of_registration: @view_model.date_of_registration,
           address: {
+            address_id: @view_model.address_id,
             address_line1: @view_model.address_line1,
             address_line2: @view_model.address_line2,
             address_line3: @view_model.address_line3,

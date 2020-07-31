@@ -122,6 +122,10 @@ module ViewModel
       def related_party_disclosure
         xpath(%w[//CEPC:EPC-Related-Party-Disclosure])
       end
+
+      def address_id
+        xpath(%w[//CEPC:UPRN])
+      end
     end
   end
 end

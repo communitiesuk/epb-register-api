@@ -17,6 +17,11 @@ module UseCase
       cepc_hash[:assessor][:registered_by] = {
         name: assessor.registered_by_name, scheme_id: assessor.registered_by_id
       }
+
+      related_assessments = Gateway::RelatedAssessmentsGateway.new.by_address_id cepc_hash[:address][:address_id]
+
+      cepc_hash[:related_assessments] = related_assessments
+
       cepc_hash
     end
 
