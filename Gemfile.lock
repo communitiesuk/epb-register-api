@@ -169,7 +169,7 @@ DEPENDENCIES
   zeitwerk (~> 2.4.0)!
 
 RUBY VERSION
-   ruby 2.6.6p146
+   ruby 2.6.5p114
 
 BUNDLED WITH
    2.1.4
