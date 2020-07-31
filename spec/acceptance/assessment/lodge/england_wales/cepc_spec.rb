@@ -176,52 +176,6 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
 
         expect(response["data"]).to eq(expected_response)
       end
-
-      it "can return the correct second address line of the property" do
-        address_line_one = doc.search("//CEPC:Address-Line-1")[0]
-        address_line_two = Nokogiri::XML::Node.new "CEPC:Address-Line-2", doc
-        address_line_two.content = "2 test street"
-        address_line_one.add_next_sibling address_line_two
-
-        lodge_assessment(
-          assessment_body: doc.to_xml,
-          accepted_responses: [201],
-          auth_data: { scheme_ids: [scheme_id] },
-          schema_name: "CEPC-8.0.0",
-        )
-
-        expect(response["data"]["addressLine2"]).to eq("2 test street")
-      end
-
-      it "can return the correct third address line of the property" do
-        address_line_one = doc.search("//CEPC:Address-Line-1")[0]
-        address_line_three = Nokogiri::XML::Node.new "CEPC:Address-Line-3", doc
-        address_line_three.content = "3 test street"
-        address_line_one.add_next_sibling address_line_three
-
-        lodge_assessment(
-          assessment_body: doc.to_xml,
-          accepted_responses: [201],
-          auth_data: { scheme_ids: [scheme_id] },
-          schema_name: "CEPC-8.0.0",
-        )
-
-        expect(response["data"]["addressLine3"]).to eq("3 test street")
-      end
-
-      context "when missing optional elements" do
-        it "can return an empty string for address lines" do
-          lodge_assessment(
-            assessment_body: doc.to_xml,
-            accepted_responses: [201],
-            auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "CEPC-8.0.0",
-          )
-          expect(response["data"]["addressLine2"]).to eq("")
-          expect(response["data"]["addressLine3"]).to eq("")
-          expect(response["data"]["addressLine4"]).to eq("")
-        end
-      end
     end
 
     context "when rejecting an assessment" do
