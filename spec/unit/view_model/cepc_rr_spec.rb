@@ -14,7 +14,16 @@ describe ViewModel::CepcRr::CepcRrWrapper do
       assessment_id: "0000-0000-0000-0000-0000",
       report_type: "4",
       type_of_assessment: "CEPC-RR",
-      date_of_expiry: "2021-05-03"
+      date_of_expiry: "2021-05-03",
+      address: {
+          address_id: "UPRN-000000000000",
+          address_line1: "1 Lonely Street",
+          address_line2: nil,
+          address_line3: nil,
+          address_line4: nil,
+          town: "Post-Town0",
+          postcode: "A0 0AA",
+      },
     }.freeze
 
     it "should read the appropriate value from the XML doc" do
