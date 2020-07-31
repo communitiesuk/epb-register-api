@@ -74,7 +74,6 @@ module ViewModel
       def company_address
         xpath(%w[Energy-Assessor Trading-Address])
       end
-
     end
   end
 end

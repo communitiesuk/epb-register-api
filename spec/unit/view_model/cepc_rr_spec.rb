@@ -16,21 +16,22 @@ describe ViewModel::CepcRr::CepcRrWrapper do
       type_of_assessment: "CEPC-RR",
       date_of_expiry: "2021-05-03",
       address: {
-          address_id: "UPRN-000000000000",
-          address_line1: "1 Lonely Street",
-          address_line2: nil,
-          address_line3: nil,
-          address_line4: nil,
-          town: "Post-Town0",
-          postcode: "A0 0AA",
+        address_id: "UPRN-000000000000",
+        address_line1: "1 Lonely Street",
+        address_line2: nil,
+        address_line3: nil,
+        address_line4: nil,
+        town: "Post-Town0",
+        postcode: "A0 0AA",
       },
       assessor: {
-          scheme_assessor_id: "SPEC000000",
-          name: "Mrs Report Writer",
-          company_details: {
-              name: "Energy Report Writers Ltd", address: "12 Industrial Estate, Oxford"
-          },
-          contact_details: { email: "test@report.com", telephone: "0800" },
+        scheme_assessor_id: "SPEC000000",
+        name: "Mrs Report Writer",
+        company_details: {
+          name: "Energy Report Writers Ltd",
+          address: "12 Industrial Estate, Oxford",
+        },
+        contact_details: { email: "test@report.com", telephone: "0800" },
       },
     }.freeze
 
