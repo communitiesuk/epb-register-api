@@ -1,6 +1,7 @@
 module UseCase
   class FetchAssessmentSummary
     class NotFoundException < StandardError; end
+    ASSESSMENT_WITHOUT_XML = "Request will succeed on fetch assessment endpoint, summary unavailable because XML not lodged"
 
     def supported_in_legacy_route?(assessment_id)
       !Gateway::AssessmentsGateway
@@ -28,13 +29,14 @@ module UseCase
       view_model
     end
 
+
     def execute(assessment_id)
       lodged_xml_document =
         Gateway::AssessmentsXmlGateway.new.fetch assessment_id
       unless lodged_xml_document
         if supported_in_legacy_route?(assessment_id)
           raise ArgumentError,
-                "Request will succeed on fetch assessment endpoint, summary unavailable because XML not lodged"
+                ASSESSMENT_WITHOUT_XML
         else
           raise NotFoundException
         end
