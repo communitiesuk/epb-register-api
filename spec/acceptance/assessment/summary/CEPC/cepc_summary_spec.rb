@@ -4,7 +4,9 @@ describe "Acceptance::AssessmentSummary::CEPC" do
   include RSpecRegisterApiServiceMixin
 
   context "when a valid CEPC 8.0.0 is lodged" do
-    let(:xml_file) { File.read File.join Dir.pwd, "spec/fixtures/samples/cepc.xml" }
+    let(:xml_file) do
+      File.read File.join Dir.pwd, "spec/fixtures/samples/cepc.xml"
+    end
     let(:assessment) { Nokogiri.XML xml_file }
     let(:scheme_id) { add_scheme_and_get_id }
     let(:response) do
