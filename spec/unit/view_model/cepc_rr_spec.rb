@@ -27,11 +27,6 @@ describe ViewModel::CepcRr::CepcRrWrapper do
       assessor: {
         scheme_assessor_id: "SPEC000000",
         name: "Mrs Report Writer",
-        company_details: {
-          name: "Energy Report Writers Ltd",
-          address: "12 Industrial Estate, Oxford",
-        },
-        contact_details: { email: "test@report.com", telephone: "0800" },
       },
     }.freeze
 
