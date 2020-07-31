@@ -24,6 +24,14 @@ describe ViewModel::CepcRr::CepcRrWrapper do
           town: "Post-Town0",
           postcode: "A0 0AA",
       },
+      assessor: {
+          scheme_assessor_id: "SPEC000000",
+          name: "Mrs Report Writer",
+          company_details: {
+              name: "Energy Report Writers Ltd", address: "12 Industrial Estate, Oxford"
+          },
+          contact_details: { email: "test@report.com", telephone: "0800" },
+      },
     }.freeze
 
     it "should read the appropriate value from the XML doc" do

@@ -12,9 +12,15 @@
       <Language-Code>1</Language-Code>
       <Energy-Assessor>
         <Certificate-Number>SPEC000000</Certificate-Number>
-        <Name>Name0</Name>
-        <Accreditation-Scheme-Name>Accreditation-Scheme-Name0</Accreditation-Scheme-Name>
-        <Related-Party-Disclosure>Related to the owner</Related-Party-Disclosure>
+        <Name>Mrs Report Writer</Name>
+        <Accreditation-Scheme-Name>EPC Scheme</Accreditation-Scheme-Name>
+        <Accreditation-Scheme-Website>Information not available</Accreditation-Scheme-Website>
+        <Trading-Address>12 Industrial Estate, Oxford</Trading-Address>
+        <Company-Name>Energy Report Writers Ltd</Company-Name>
+        <Qualifications>NOS5</Qualifications>
+        <Status>Registered</Status>
+        <E-Mail>test@report.com</E-Mail>
+        <Telephone-Number>0800</Telephone-Number>
       </Energy-Assessor>
       <Property-Details>
         <UPRN>UPRN-000000000000</UPRN>
