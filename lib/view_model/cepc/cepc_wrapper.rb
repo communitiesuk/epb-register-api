@@ -32,6 +32,10 @@ module ViewModel
         end
       end
 
+      def type
+        :CEPC
+      end
+
       def to_hash
         {
           type_of_assessment: TYPE_OF_ASSESSMENT,

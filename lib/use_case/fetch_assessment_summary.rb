@@ -12,22 +12,33 @@ module UseCase
       cepc_hash
     end
 
-    def execute(assessment_id)
-      result = Gateway::AssessmentsXmlGateway.new.fetch assessment_id
-      raise NotFoundException unless result
-
-      # TODO: Check if there are multiple reports in lodged XML and only pass the desired one to the factory
-
-      view_model =
-        ViewModel::Factory.new.create(result[:xml], result[:schema_type])
+    def build_view_model_from_xml_attributes(xml, schema_type)
+      view_model = ViewModel::Factory.new.create(xml, schema_type)
       unless view_model
         raise ArgumentError,
               "Assessment summary unsupported for this assessment type"
       end
+      view_model
+    end
 
-      view_model_with_merged_attributes =
-        other_values_for_cepc(view_model.to_hash)
-      view_model_with_merged_attributes
+    def execute(assessment_id)
+      lodged_xml_document = Gateway::AssessmentsXmlGateway.new.fetch assessment_id
+      raise NotFoundException unless lodged_xml_document
+
+      # TODO: Check if there are multiple reports in lodged XML and only pass the desired one to the factory
+
+      lodged_values = build_view_model_from_xml_attributes(
+          lodged_xml_document[:xml],
+          lodged_xml_document[:schema_type])
+
+      case lodged_values.type
+      when :CEPC
+        full_summary = other_values_for_cepc(lodged_values.to_hash)
+      else
+        full_summary = lodged_values.to_hash
+      end
+
+      full_summary
     end
   end
 end
