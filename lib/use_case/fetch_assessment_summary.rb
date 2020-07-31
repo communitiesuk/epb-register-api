@@ -2,7 +2,8 @@ module UseCase
   class FetchAssessmentSummary
     class NotFoundException < StandardError; end
     ASSESSMENT_WITHOUT_XML =
-      "Request will succeed on fetch assessment endpoint, summary unavailable because XML not lodged".freeze
+      "Request will succeed on fetch assessment endpoint, summary unavailable because XML not lodged"
+        .freeze
 
     def supported_in_legacy_route?(assessment_id)
       !Gateway::AssessmentsGateway.new.search_by_assessment_id(
