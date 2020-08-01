@@ -26,47 +26,11 @@ describe "Acceptance::AssessmentSummary::CEPC" do
 
       add_assessor(scheme_id, "SPEC000000", assessor)
 
-      assessment.at("//CEPC:UPRN").remove
-
       lodge_assessment(
         assessment_body: assessment.to_xml,
         auth_data: { scheme_ids: [scheme_id] },
         schema_name: "CEPC-8.0.0",
       )
-    end
-
-    context "with another assessment at the same address" do
-      let(:second_assessment) { Nokogiri.XML xml_file }
-      let(:assessment_id) { second_assessment.at "//CEPC:RRN" }
-      let(:address_id) { second_assessment.at "//CEPC:UPRN" }
-      let(:response) do
-        JSON.parse(
-          fetch_assessment_summary("1234-0000-0000-0000-0000").body,
-          symbolize_names: true,
-        )
-      end
-
-      before do
-        assessment_id.children = "1234-0000-0000-0000-0000"
-        address_id.children = "RRN-0000-0000-0000-0000-0000"
-
-        lodge_assessment assessment_body: second_assessment.to_xml,
-                         auth_data: { scheme_ids: [scheme_id] },
-                         schema_name: "CEPC-8.0.0"
-      end
-
-      it "returns the expected related assessment" do
-        expect(response[:data][:relatedAssessments]).to eq(
-          [
-            {
-              assessmentId: "1234-0000-0000-0000-0000",
-              assessmentStatus: "ENTERED",
-              assessmentType: "CEPC",
-              assessmentExpiryDate: "2026-05-04",
-            },
-          ],
-        )
-      end
     end
 
     it "returns the assessment" do
@@ -79,7 +43,7 @@ describe "Acceptance::AssessmentSummary::CEPC" do
           dateOfAssessment: "2020-05-04",
           dateOfRegistration: "2020-05-04",
           address: {
-            addressId: nil,
+            addressId: "UPRN-000000000001",
             addressLine1: "2 Lonely Street",
             addressLine2: nil,
             addressLine3: nil,
@@ -118,6 +82,37 @@ describe "Acceptance::AssessmentSummary::CEPC" do
           propertyType: "B1 Offices and Workshop businesses",
         },
       )
+    end
+    context "with another assessment at the same address" do
+      let(:second_assessment) { Nokogiri.XML xml_file }
+      let(:assessment_id) { second_assessment.at "//CEPC:RRN" }
+      let(:response) do
+        JSON.parse(
+          fetch_assessment_summary("1234-0000-0000-0000-0000").body,
+          symbolize_names: true,
+        )
+      end
+
+      before do
+        assessment_id.children = "1234-0000-0000-0000-0000"
+
+        lodge_assessment assessment_body: second_assessment.to_xml,
+                         auth_data: { scheme_ids: [scheme_id] },
+                         schema_name: "CEPC-8.0.0"
+      end
+
+      it "returns the expected related assessment" do
+        expect(response[:data][:relatedAssessments]).to eq(
+          [
+            {
+              assessmentId: "0000-0000-0000-0000-0000",
+              assessmentStatus: "ENTERED",
+              assessmentType: "CEPC",
+              assessmentExpiryDate: "2026-05-04",
+            },
+          ],
+        )
+      end
     end
   end
 end

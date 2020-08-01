@@ -10,6 +10,21 @@ module UseCase
           scheme_id: assessor.registered_by_id,
         }
       end
+
+      def related_assessments!(hash)
+        related_assessments =
+          Gateway::RelatedAssessmentsGateway
+              .new
+              .by_address_id hash[:address][:address_id]
+
+        other_assessments_without_self = related_assessments
+                           .filter{ |assessment|
+                             assessment
+                                 .to_hash[:assessment_id] != hash[:assessment_id]
+                           }
+
+        hash[:related_assessments] = other_assessments_without_self
+      end
     end
   end
 end
