@@ -22,6 +22,7 @@ module ViewModel
           assessment_id: @view_model.assessment_id,
           report_type: @view_model.report_type,
           date_of_expiry: @view_model.date_of_expiry,
+          date_of_registration: @view_model.date_of_registration,
           address: {
             address_id: @view_model.address_id,
             address_line1: @view_model.address_line1,

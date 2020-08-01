@@ -85,6 +85,10 @@ module ViewModel
       def other_recommendations
         recommendations("Other-Payback")
       end
+
+      def date_of_registration
+        xpath(%w[Inspection-Date])
+      end
     end
   end
 end

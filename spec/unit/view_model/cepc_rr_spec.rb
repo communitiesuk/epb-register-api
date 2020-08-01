@@ -17,6 +17,7 @@ describe ViewModel::CepcRr::CepcRrWrapper do
       report_type: "4",
       type_of_assessment: "CEPC-RR",
       date_of_expiry: "2021-05-03",
+      date_of_registration: "2020-05-04",
       address: {
         address_id: "UPRN-000000000000",
         address_line1: "1 Lonely Street",
