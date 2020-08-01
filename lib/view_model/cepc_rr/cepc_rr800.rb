@@ -101,6 +101,10 @@ module ViewModel
       def calculation_tools
         xpath(%w[Calculation-Tool])
       end
+
+      def related_certificate
+        xpath(%w[Related-RRN])
+      end
     end
   end
 end
