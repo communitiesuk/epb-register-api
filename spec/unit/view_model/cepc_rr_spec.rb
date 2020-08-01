@@ -58,6 +58,11 @@ describe ViewModel::CepcRr::CepcRrWrapper do
       other_recommendations: [
         { code: "4", text: "Consider installing PV.", cO2Impact: "HIGH" },
       ],
+      technical_information: {
+          floor_area: "10",
+          building_environment: "Natural Ventilation Only",
+          calculation_tool: "Calculation-Tool0"
+      }
     }.freeze
 
     it "should read the appropriate values from the XML doc" do

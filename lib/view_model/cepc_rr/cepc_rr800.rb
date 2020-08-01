@@ -89,6 +89,18 @@ module ViewModel
       def date_of_registration
         xpath(%w[Inspection-Date])
       end
+
+      def floor_area
+        xpath(%w[Floor-Area])
+      end
+
+      def building_environment
+        xpath(%w[Building-Environment])
+      end
+
+      def calculation_tools
+        xpath(%w[Calculation-Tool])
+      end
     end
   end
 end
