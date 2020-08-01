@@ -1,3 +1,5 @@
+require_relative 'xml_view_test_helper'
+
 describe ViewModel::CepcRr::CepcRrWrapper do
   context "Testing the CEPC-RR schemas" do
     # You should only need to add to this list to test new CEPC schema
@@ -57,27 +59,8 @@ describe ViewModel::CepcRr::CepcRrWrapper do
       ],
     }.freeze
 
-    it "should read the appropriate value from the XML doc" do
-      supported_schema.each do |schema|
-        xml_file = File.read File.join Dir.pwd, schema[:xml_file]
-        cepc_rr =
-          ViewModel::CepcRr::CepcRrWrapper.new(xml_file, schema[:schema_name])
-            .to_hash
-
-        asserted_keys.each do |key, value|
-          result = cepc_rr[key]
-          if schema[:unsupported_fields].include? key
-            expect(result).to be_nil,
-                              "Failed on #{schema[:schema_name]}:#{key}\n" \
-                                "Unsupported fields must return nil, got \"#{result}\""
-          else
-            expect(result).to eq(value),
-                              "Failed on #{schema[:schema_name]}:#{key}\n" \
-                                "EXPECTED: \"#{value}\"\n" \
-                                "     GOT: \"#{result}\"\n"
-          end
-        end
-      end
+    it "should read the appropriate values from the XML doc" do
+      test_xml_doc(ViewModel::CepcRr::CepcRrWrapper, supported_schema, asserted_keys)
     end
 
     it "returns the expect error without a valid schema type" do
