@@ -93,6 +93,7 @@ describe "Acceptance::AssessmentSummary::CEPC-RR" do
             buildingEnvironment: "Natural Ventilation Only",
             calculationTool: "Calculation-Tool0",
           },
+          relatedPartyDisclosure: "Related to the owner",
         },
       )
     end

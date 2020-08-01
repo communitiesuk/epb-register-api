@@ -64,6 +64,7 @@ describe ViewModel::CepcRr::CepcRrWrapper do
         building_environment: "Natural Ventilation Only",
         calculation_tool: "Calculation-Tool0",
       },
+      related_party_disclosure: "Related to the owner",
     }.freeze
 
     it "should read the appropriate values from the XML doc" do

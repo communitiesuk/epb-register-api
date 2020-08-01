@@ -104,6 +104,10 @@ module ViewModel
       def related_certificate
         xpath(%w[Related-RRN])
       end
+
+      def related_party_disclosure
+        xpath(%w[Related-Party-Disclosure])
+      end
     end
   end
 end
