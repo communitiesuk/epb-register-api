@@ -52,6 +52,9 @@ describe ViewModel::CepcRr::CepcRrWrapper do
           cO2Impact: "HIGH",
         },
       ],
+      other_recommendations: [
+        { code: "4", text: "Consider installing PV.", cO2Impact: "HIGH" },
+      ],
     }.freeze
 
     it "should read the appropriate value from the XML doc" do

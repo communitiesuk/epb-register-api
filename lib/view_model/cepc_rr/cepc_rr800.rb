@@ -81,6 +81,10 @@ module ViewModel
       def long_payback_recommendations
         recommendations("Long-Payback")
       end
+
+      def other_recommendations
+        recommendations("Other-Payback")
+      end
     end
   end
 end
