@@ -12,14 +12,13 @@ module ViewModel
       end
 
       def recommendations(payback)
-        nodes =
-          @xml_doc.search("RR-Recommendations/#{payback}").map do |node|
-            {
-              code: node.at("Recommendation-Code").content,
-              text: node.at("Recommendation").content,
-              cO2Impact: node.at("CO2-Impact").content,
-            }
-          end
+        @xml_doc.search("RR-Recommendations/#{payback}").map do |node|
+          {
+            code: node.at("Recommendation-Code").content,
+            text: node.at("Recommendation").content,
+            cO2Impact: node.at("CO2-Impact").content,
+          }
+        end
       end
 
       def assessment_id
