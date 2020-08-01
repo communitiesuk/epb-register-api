@@ -7,7 +7,6 @@ describe "Acceptance::AssessmentSummary::CEPC-RR" do
     let(:xml_file) do
       File.read File.join Dir.pwd, "spec/fixtures/samples/cepc-rr.xml"
     end
-    let(:assessment) { Nokogiri.XML xml_file }
     let(:scheme_id) { add_scheme_and_get_id }
     let(:response) do
       JSON.parse(
@@ -25,9 +24,18 @@ describe "Acceptance::AssessmentSummary::CEPC-RR" do
         )
 
       add_assessor(scheme_id, "SPEC000000", assessor)
-
+      cepc_rr = Nokogiri.XML(xml_file)
       lodge_assessment(
-        assessment_body: assessment.to_xml,
+        assessment_body: cepc_rr.to_xml,
+        auth_data: { scheme_ids: [scheme_id] },
+        schema_name: "CEPC-8.0.0",
+      )
+
+      cepc_file = File.read File.join Dir.pwd, "spec/fixtures/samples/cepc.xml"
+      cepc = Nokogiri.XML(cepc_file)
+      cepc.at("//CEPC:RRN").content = "0000-0000-0000-0000-1111"
+      lodge_assessment(
+        assessment_body: cepc.to_xml,
         auth_data: { scheme_ids: [scheme_id] },
         schema_name: "CEPC-8.0.0",
       )
@@ -94,6 +102,7 @@ describe "Acceptance::AssessmentSummary::CEPC-RR" do
             calculationTool: "Calculation-Tool0",
           },
           relatedPartyDisclosure: "Related to the owner",
+          energyBandFromRelatedCertificate: "d",
         },
       )
     end
@@ -105,7 +114,7 @@ describe "Acceptance::AssessmentSummary::CEPC-RR" do
         JSON.parse(
           fetch_assessment_summary("1234-0000-0000-0000-0000").body,
             symbolize_names: true,
-            )
+        )
       end
 
       before do
@@ -126,7 +135,7 @@ describe "Acceptance::AssessmentSummary::CEPC-RR" do
               assessmentExpiryDate: "2021-05-03",
             },
           ],
-                                                            )
+        )
       end
     end
   end
