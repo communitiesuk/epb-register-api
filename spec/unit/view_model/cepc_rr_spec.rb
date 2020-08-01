@@ -47,6 +47,13 @@ describe ViewModel::CepcRr::CepcRrWrapper do
             cO2Impact: "MEDIUM"
         }
     ],
+      long_payback_recommendations: [
+          {
+              code: "3",
+              text: "Consider installing an air source heat pump.",
+              cO2Impact: "HIGH"
+          }
+      ]
     }.freeze
 
     it "should read the appropriate value from the XML doc" do

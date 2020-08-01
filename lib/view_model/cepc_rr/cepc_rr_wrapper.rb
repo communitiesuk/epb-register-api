@@ -37,6 +37,7 @@ module ViewModel
           },
           short_payback_recommendations: @view_model.short_payback_recommendations,
           medium_payback_recommendations: @view_model.medium_payback_recommendations,
+          long_payback_recommendations: @view_model.long_payback_recommendations,
         }
       end
     end
