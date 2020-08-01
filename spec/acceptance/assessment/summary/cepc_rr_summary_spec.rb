@@ -54,10 +54,7 @@ describe "Acceptance::AssessmentSummary::CEPC-RR" do
           assessor: {
             schemeAssessorId: "SPEC000000",
             name: "Mrs Report Writer",
-            registeredBy: {
-                name: "test scheme",
-                schemeId: scheme_id,
-            }
+            registeredBy: { name: "test scheme", schemeId: scheme_id },
           },
           shortPaybackRecommendations: [
             {
