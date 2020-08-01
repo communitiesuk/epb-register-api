@@ -24,36 +24,34 @@ describe ViewModel::CepcRr::CepcRrWrapper do
         town: "Post-Town0",
         postcode: "A0 0AA",
       },
-      assessor: {
-        scheme_assessor_id: "SPEC000000",
-        name: "Mrs Report Writer",
-      },
+      assessor: { scheme_assessor_id: "SPEC000000", name: "Mrs Report Writer" },
       short_payback_recommendations: [
-          {
-              code: "1",
-              text: "Consider replacing T8 lamps with retrofit T5 conversion kit.",
-              cO2Impact: "HIGH"
-          },
-          {
-              code: "3",
-              text: "Introduce HF (high frequency) ballasts for fluorescent tubes: Reduced number of fittings required.",
-              cO2Impact: "LOW"
-          },
-      ],
-    medium_payback_recommendations: [
         {
-            code: "2",
-            text: "Add optimum start/stop to the heating system.",
-            cO2Impact: "MEDIUM"
-        }
-    ],
+          code: "1",
+          text: "Consider replacing T8 lamps with retrofit T5 conversion kit.",
+          cO2Impact: "HIGH",
+        },
+        {
+          code: "3",
+          text:
+            "Introduce HF (high frequency) ballasts for fluorescent tubes: Reduced number of fittings required.",
+          cO2Impact: "LOW",
+        },
+      ],
+      medium_payback_recommendations: [
+        {
+          code: "2",
+          text: "Add optimum start/stop to the heating system.",
+          cO2Impact: "MEDIUM",
+        },
+      ],
       long_payback_recommendations: [
-          {
-              code: "3",
-              text: "Consider installing an air source heat pump.",
-              cO2Impact: "HIGH"
-          }
-      ]
+        {
+          code: "3",
+          text: "Consider installing an air source heat pump.",
+          cO2Impact: "HIGH",
+        },
+      ],
     }.freeze
 
     it "should read the appropriate value from the XML doc" do
