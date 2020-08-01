@@ -13,38 +13,6 @@ module UseCase
         ).empty?
       end
 
-      def add_cepc_supplementary_values!(cepc_hash)
-        assessor_id = cepc_hash[:assessor][:scheme_assessor_id]
-        assessor = Gateway::AssessorsGateway.new.fetch(assessor_id)
-
-        cepc_hash[:assessor][:registered_by] = {
-          name: assessor.registered_by_name,
-          scheme_id: assessor.registered_by_id,
-        }
-
-        related_assessments =
-          Gateway::RelatedAssessmentsGateway.new.by_address_id cepc_hash[
-                                                                 :address
-                                                               ][
-                                                                 :address_id
-                                                               ]
-
-        cepc_hash[:related_assessments] = related_assessments
-
-        cepc_hash
-      end
-
-      def add_cepc_rr_supplementary_values!(cepc_rr_hash)
-        assessor_id = cepc_rr_hash[:assessor][:scheme_assessor_id]
-        assessor = Gateway::AssessorsGateway.new.fetch(assessor_id)
-
-        cepc_rr_hash[:assessor][:registered_by] = {
-          name: assessor.registered_by_name,
-          scheme_id: assessor.registered_by_id,
-        }
-        cepc_rr_hash
-      end
-
       def lodged_values_from_xml(xml, schema_type)
         view_model = ViewModel::Factory.new.create(xml, schema_type)
         unless view_model
@@ -74,9 +42,9 @@ module UseCase
         full_summary =
           case lodged_values.type
           when :CEPC
-            add_cepc_supplementary_values!(lodged_values.to_hash)
+            CepcSupplement.new.add_data!(lodged_values.to_hash)
           when :CEPC_RR
-            add_cepc_rr_supplementary_values!(lodged_values.to_hash)
+            CepcRrSupplement.new.add_data!(lodged_values.to_hash)
           else
             lodged_values.to_hash
           end
