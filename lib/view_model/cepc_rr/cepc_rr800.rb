@@ -22,9 +22,6 @@ module ViewModel
                   cO2Impact: node.at("CO2-Impact").content
               }
             }
-
-        pp nodes
-        nodes
       end
 
       def assessment_id
@@ -75,11 +72,13 @@ module ViewModel
         xpath(%w[Energy-Assessor Name])
       end
 
-
       def short_payback_recommendations
         recommendations("Short-Payback")
       end
 
+      def medium_payback_recommendations
+        recommendations("Medium-Payback")
+      end
     end
   end
 end

@@ -39,7 +39,14 @@ describe ViewModel::CepcRr::CepcRrWrapper do
               text: "Introduce HF (high frequency) ballasts for fluorescent tubes: Reduced number of fittings required.",
               cO2Impact: "LOW"
           },
-      ]
+      ],
+    medium_payback_recommendations: [
+        {
+            code: "2",
+            text: "Add optimum start/stop to the heating system.",
+            cO2Impact: "MEDIUM"
+        }
+    ],
     }.freeze
 
     it "should read the appropriate value from the XML doc" do
