@@ -52,7 +52,12 @@ describe "Acceptance::AssessmentSummary::CEPC-RR" do
             postcode: "A0 0AA",
           },
           assessor: {
-            schemeAssessorId: "SPEC000000", name: "Mrs Report Writer"
+            schemeAssessorId: "SPEC000000",
+            name: "Mrs Report Writer",
+            registeredBy: {
+                name: "test scheme",
+                schemeId: scheme_id,
+            }
           },
           shortPaybackRecommendations: [
             {
