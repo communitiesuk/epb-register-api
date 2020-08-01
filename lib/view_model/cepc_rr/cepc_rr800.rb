@@ -11,6 +11,22 @@ module ViewModel
         node ? node.content : nil
       end
 
+      def recommendations(payback)
+
+        nodes = @xml_doc
+                    .search("RR-Recommendations/#{payback}")
+            .map { |node|
+              {
+                  code: node.at("Recommendation-Code").content,
+                  text: node.at("Recommendation").content,
+                  cO2Impact: node.at("CO2-Impact").content
+              }
+            }
+
+        pp nodes
+        nodes
+      end
+
       def assessment_id
         xpath(%w[RRN])
       end
@@ -57,6 +73,11 @@ module ViewModel
 
       def assessor_name
         xpath(%w[Energy-Assessor Name])
+      end
+
+
+      def short_payback_recommendations
+        recommendations("Short-Payback")
       end
 
     end

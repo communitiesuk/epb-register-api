@@ -35,6 +35,7 @@ module ViewModel
             scheme_assessor_id: @view_model.scheme_assessor_id,
             name: @view_model.assessor_name,
           },
+          short_payback_recommendations: @view_model.short_payback_recommendations,
         }
       end
     end

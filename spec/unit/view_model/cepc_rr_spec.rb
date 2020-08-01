@@ -28,6 +28,18 @@ describe ViewModel::CepcRr::CepcRrWrapper do
         scheme_assessor_id: "SPEC000000",
         name: "Mrs Report Writer",
       },
+      short_payback_recommendations: [
+          {
+              code: "1",
+              text: "Consider replacing T8 lamps with retrofit T5 conversion kit.",
+              cO2Impact: "HIGH"
+          },
+          {
+              code: "3",
+              text: "Introduce HF (high frequency) ballasts for fluorescent tubes: Reduced number of fittings required.",
+              cO2Impact: "LOW"
+          },
+      ]
     }.freeze
 
     it "should read the appropriate value from the XML doc" do
