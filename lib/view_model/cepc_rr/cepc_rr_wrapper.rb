@@ -45,10 +45,10 @@ module ViewModel
             @view_model.long_payback_recommendations,
           other_recommendations: @view_model.other_recommendations,
           technical_information: {
-              floor_area: @view_model.floor_area,
-              building_environment: @view_model.building_environment,
-              calculation_tool:  @view_model.calculation_tools
-          }
+            floor_area: @view_model.floor_area,
+            building_environment: @view_model.building_environment,
+            calculation_tool: @view_model.calculation_tools,
+          },
         }
       end
     end

@@ -1,4 +1,4 @@
-require_relative 'xml_view_test_helper'
+require_relative "xml_view_test_helper"
 
 describe ViewModel::CepcRr::CepcRrWrapper do
   context "Testing the CEPC-RR schemas" do
@@ -60,14 +60,18 @@ describe ViewModel::CepcRr::CepcRrWrapper do
         { code: "4", text: "Consider installing PV.", cO2Impact: "HIGH" },
       ],
       technical_information: {
-          floor_area: "10",
-          building_environment: "Natural Ventilation Only",
-          calculation_tool: "Calculation-Tool0"
-      }
+        floor_area: "10",
+        building_environment: "Natural Ventilation Only",
+        calculation_tool: "Calculation-Tool0",
+      },
     }.freeze
 
     it "should read the appropriate values from the XML doc" do
-      test_xml_doc(ViewModel::CepcRr::CepcRrWrapper, supported_schema, asserted_keys)
+      test_xml_doc(
+        ViewModel::CepcRr::CepcRrWrapper,
+        supported_schema,
+        asserted_keys,
+      )
     end
 
     it "returns the expect error without a valid schema type" do

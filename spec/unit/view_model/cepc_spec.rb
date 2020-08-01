@@ -1,4 +1,4 @@
-require_relative 'xml_view_test_helper'
+require_relative "xml_view_test_helper"
 
 describe ViewModel::Cepc::CepcWrapper do
   # You should only need to add to this list to test new CEPC schema
@@ -55,7 +55,7 @@ describe ViewModel::Cepc::CepcWrapper do
   }.freeze
 
   it "should read the appropriate values from the XML doc" do
-    test_xml_doc(ViewModel::Cepc::CepcWrapper,supported_schema, asserted_keys)
+    test_xml_doc(ViewModel::Cepc::CepcWrapper, supported_schema, asserted_keys)
   end
 
   it "returns the expect error without a valid schema type" do
