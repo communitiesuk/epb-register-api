@@ -49,7 +49,7 @@ module ViewModel
             building_environment: @view_model.building_environment,
             calculation_tool: @view_model.calculation_tools,
           },
-          related_party_disclosure: @view_model.related_party_disclosure
+          related_party_disclosure: @view_model.related_party_disclosure,
         }
       end
     end

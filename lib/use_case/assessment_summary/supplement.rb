@@ -13,15 +13,14 @@ module UseCase
 
       def related_assessments!(hash)
         related_assessments =
-          Gateway::RelatedAssessmentsGateway
-              .new
-              .by_address_id hash[:address][:address_id]
+          Gateway::RelatedAssessmentsGateway.new.by_address_id hash[:address][
+                                                                 :address_id
+                                                               ]
 
-        other_assessments_without_self = related_assessments
-                           .filter{ |assessment|
-                             assessment
-                                 .to_hash[:assessment_id] != hash[:assessment_id]
-                           }
+        other_assessments_without_self =
+          related_assessments.filter do |assessment|
+            assessment.to_hash[:assessment_id] != hash[:assessment_id]
+          end
 
         hash[:related_assessments] = other_assessments_without_self
       end

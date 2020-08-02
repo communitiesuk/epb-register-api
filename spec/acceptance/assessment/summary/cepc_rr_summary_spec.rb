@@ -113,7 +113,7 @@ describe "Acceptance::AssessmentSummary::CEPC-RR" do
       let(:response) do
         JSON.parse(
           fetch_assessment_summary("1234-0000-0000-0000-0000").body,
-            symbolize_names: true,
+          symbolize_names: true,
         )
       end
 
