@@ -54,7 +54,6 @@ module ViewModel
       def address_id
         xpath(%w[UPRN])
       end
-
     end
   end
 end
