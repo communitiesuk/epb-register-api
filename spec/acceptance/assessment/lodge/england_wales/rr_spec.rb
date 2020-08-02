@@ -25,23 +25,20 @@ describe "Acceptance::LodgeRREnergyAssessment" do
         )
       end
 
-      context "when unqualified for RR" do
-        it "returns status 400 with the correct error response" do
-          response =
+      it "returns status 400 with the correct error response" do
+        response =
             JSON.parse(
-              lodge_assessment(
-                assessment_body: valid_cepc_ni_xml,
-                accepted_responses: [400],
-                auth_data: { scheme_ids: [scheme_id] },
-                schema_name: "CEPC-8.0.0",
-              ).body,
-            )
+                lodge_assessment(
+                    assessment_body: valid_cepc_ni_xml,
+                    accepted_responses: [400],
+                    auth_data: { scheme_ids: [scheme_id] },
+                    schema_name: "CEPC-8.0.0",
+                    ).body,
+                )
 
-          expect(response["errors"][0]["title"]).to eq(
-            "Assessor is not active.",
-          )
-        end
+        expect(response["errors"][0]["title"]).to eq("Assessor is not active.")
       end
+
     end
 
     it "returns status 201" do
