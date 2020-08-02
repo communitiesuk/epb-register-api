@@ -27,8 +27,7 @@ module Domain
       not_for_issue_at: nil,
       scheme_assessor_id: nil,
       xml: nil,
-      related_assessments: nil,
-      non_dom_cepc_rr: {}
+      related_assessments: nil
     )
       @migrated = migrated
       @date_of_assessment =
@@ -71,7 +70,6 @@ module Domain
       @scheme_assessor_id = scheme_assessor_id
       @xml = xml
       @related_assessments = related_assessments
-      @non_dom_cepc_rr = non_dom_cepc_rr
     end
 
     def to_hash
@@ -103,7 +101,6 @@ module Domain
           else
             "ENTERED"
           end,
-        non_dom_cepc_rr: @non_dom_cepc_rr,
       }
     end
 
@@ -126,7 +123,6 @@ module Domain
         address_line4: @address_line4,
         town: @town,
         related_party_disclosure_text: @related_party_disclosure_text,
-        non_dom_cepc_rr: @non_dom_cepc_rr,
       }
     end
 

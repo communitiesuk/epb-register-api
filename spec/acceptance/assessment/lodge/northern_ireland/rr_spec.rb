@@ -142,48 +142,6 @@ describe "Acceptance::LodgeRRNIEnergyAssessment" do
             },
           ],
           status: "ENTERED",
-          nonDomCepcRr: {
-            relatedCepcReportAssessmentId: nil,
-            technicalInformation: {
-              buildingEnvironment: "Natural Ventilation Only",
-              totalFloorArea: "10",
-              calculationTool: "Calculation-Tool0",
-            },
-            recommendations: {
-              longPaybackRecommendation: [
-                {
-                  recommendation:
-                    "Consider installing an air source heat pump.",
-                  carbonImpact: "HIGH",
-                },
-              ],
-              otherPaybackRecommendation: [
-                {
-                  recommendation: "Consider installing PV.",
-                  carbonImpact: "HIGH",
-                },
-              ],
-              shortPaybackRecommendation: [
-                {
-                  recommendation:
-                    "Consider replacing T8 lamps with retrofit T5 conversion kit.",
-                  carbonImpact: "HIGH",
-                },
-                {
-                  recommendation:
-                    "Introduce HF (high frequency) ballasts for fluorescent tubes: Reduced number of fittings required.",
-                  carbonImpact: "LOW",
-                },
-              ],
-              mediumPaybackRecommendation: [
-                {
-                  recommendation:
-                    "Add optimum start/stop to the heating system.",
-                  carbonImpact: "MEDIUM",
-                },
-              ],
-            },
-          },
         }
 
         expect(response[:data]).to eq(expected_response)
