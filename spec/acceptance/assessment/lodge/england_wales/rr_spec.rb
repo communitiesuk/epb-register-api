@@ -5,7 +5,7 @@ describe "Acceptance::LodgeRREnergyAssessment" do
 
   let(:fetch_assessor_stub) { AssessorStub.new }
 
-  let(:valid_cepc_ni_xml) do
+  let(:cepc_rr_xml) do
     File.read File.join Dir.pwd, "spec/fixtures/samples/cepc-rr.xml"
   end
 
@@ -25,7 +25,7 @@ describe "Acceptance::LodgeRREnergyAssessment" do
       response =
           JSON.parse(
               lodge_assessment(
-                  assessment_body: valid_cepc_ni_xml,
+                  assessment_body: cepc_rr_xml,
                   accepted_responses: [400],
                   auth_data: { scheme_ids: [scheme_id] },
                   schema_name: "CEPC-8.0.0",
@@ -36,7 +36,7 @@ describe "Acceptance::LodgeRREnergyAssessment" do
     end
 
     context "when saving a (RR) assessment" do
-      let(:doc) { Nokogiri.XML valid_cepc_ni_xml }
+      let(:doc) { Nokogiri.XML cepc_rr_xml }
       let(:response) do
         JSON.parse fetch_assessment("0000-0000-0000-0000-0000").body,
                    symbolize_names: true
