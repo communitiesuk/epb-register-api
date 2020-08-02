@@ -35,32 +35,28 @@ describe "Acceptance::LodgeRREnergyAssessment" do
       expect(response["errors"][0]["title"]).to eq("Assessor is not active.")
     end
 
-    context "when saving a (RR) assessment" do
-      let(:doc) { Nokogiri.XML cepc_rr_xml }
-      let(:response) do
-        JSON.parse fetch_assessment("0000-0000-0000-0000-0000").body,
-                   symbolize_names: true
-      end
+    it "successfully lodges the report" do
+      doc = Nokogiri.XML cepc_rr_xml
 
-      before do
-        add_assessor(
+      add_assessor(
           scheme_id,
           "SPEC000000",
           fetch_assessor_stub.fetch_request_body(
-            nonDomesticNos3: "ACTIVE", nonDomesticNos4: "ACTIVE",
-          ),
-        )
-      end
+              nonDomesticNos3: "ACTIVE", nonDomesticNos4: "ACTIVE",
+              ),
+          )
 
-      it "returns the data that was lodged" do
-        lodge_assessment(
+      lodge_assessment(
           assessment_body: doc.to_xml,
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] },
           schema_name: "CEPC-8.0.0",
-        )
+          )
 
-        expected_response = {
+      response = JSON.parse fetch_assessment("0000-0000-0000-0000-0000").body,
+                            symbolize_names: true
+
+      expected_response = {
           addressId: "UPRN-000000000000",
           addressLine1: "1 Lonely Street",
           addressLine2: "",
@@ -69,29 +65,29 @@ describe "Acceptance::LodgeRREnergyAssessment" do
           postcode: "A0 0AA",
           assessmentId: "0000-0000-0000-0000-0000",
           assessor: {
-            contactDetails: {
-              email: "person@person.com", telephoneNumber: "010199991010101"
-            },
-            dateOfBirth: "1991-02-25",
-            firstName: "Someone",
-            lastName: "Person",
-            middleNames: "Muddle",
-            qualifications: {
-              domesticSap: "INACTIVE",
-              domesticRdSap: "INACTIVE",
-              nonDomesticCc4: "INACTIVE",
-              nonDomesticSp3: "INACTIVE",
-              nonDomesticDec: "INACTIVE",
-              nonDomesticNos3: "ACTIVE",
-              nonDomesticNos4: "ACTIVE",
-              nonDomesticNos5: "INACTIVE",
-              gda: "INACTIVE",
-            },
-            address: {},
-            companyDetails: {},
-            registeredBy: { name: "test scheme", schemeId: scheme_id },
-            schemeAssessorId: "SPEC000000",
-            searchResultsComparisonPostcode: "",
+              contactDetails: {
+                  email: "person@person.com", telephoneNumber: "010199991010101"
+              },
+              dateOfBirth: "1991-02-25",
+              firstName: "Someone",
+              lastName: "Person",
+              middleNames: "Muddle",
+              qualifications: {
+                  domesticSap: "INACTIVE",
+                  domesticRdSap: "INACTIVE",
+                  nonDomesticCc4: "INACTIVE",
+                  nonDomesticSp3: "INACTIVE",
+                  nonDomesticDec: "INACTIVE",
+                  nonDomesticNos3: "ACTIVE",
+                  nonDomesticNos4: "ACTIVE",
+                  nonDomesticNos5: "INACTIVE",
+                  gda: "INACTIVE",
+              },
+              address: {},
+              companyDetails: {},
+              registeredBy: { name: "test scheme", schemeId: scheme_id },
+              schemeAssessorId: "SPEC000000",
+              searchResultsComparisonPostcode: "",
           },
           optOut: false,
           dateOfAssessment: "2020-05-04",
@@ -102,18 +98,17 @@ describe "Acceptance::LodgeRREnergyAssessment" do
           typeOfAssessment: "CEPC-RR",
           relatedPartyDisclosureText: "Related to the owner",
           relatedAssessments: [
-            {
-              assessmentExpiryDate: "2021-05-03",
-              assessmentId: "0000-0000-0000-0000-0000",
-              assessmentStatus: "ENTERED",
-              assessmentType: "CEPC-RR",
-            },
+              {
+                  assessmentExpiryDate: "2021-05-03",
+                  assessmentId: "0000-0000-0000-0000-0000",
+                  assessmentStatus: "ENTERED",
+                  assessmentType: "CEPC-RR",
+              },
           ],
           status: "ENTERED",
-        }
+      }
 
-        expect(response[:data]).to eq(expected_response)
-      end
+      expect(response[:data]).to eq(expected_response)
     end
   end
 end
