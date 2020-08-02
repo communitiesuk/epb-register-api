@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_30_110134) do
+ActiveRecord::Schema.define(version: 2020_08_02_163906) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -65,7 +65,6 @@ ActiveRecord::Schema.define(version: 2020_07_30_110134) do
     t.decimal "lighting_cost_potential", precision: 10, scale: 2
     t.decimal "heating_cost_potential", precision: 10, scale: 2
     t.decimal "hot_water_cost_potential", precision: 10, scale: 2
-    t.jsonb "non_dom_cepc_rr", default: "{}", null: false
     t.index ["address_id"], name: "index_assessments_on_address_id"
     t.index ["postcode"], name: "index_assessments_on_postcode"
     t.index ["town"], name: "index_assessments_on_town"
