@@ -133,27 +133,6 @@ module UseCase
           xml: data[:raw_data],
         )
 
-      if assessment.is_type?(Domain::CepcRrAssessment)
-        assessment.set(
-          :non_dom_cepc_rr,
-          {
-            related_cepc_report_assessment_id: data[:related_report_rrn],
-            technical_information: {
-              building_environment: data[:technical_info_building_environment],
-              total_floor_area: data[:technical_info_total_floor_area],
-              calculation_tool: data[:technical_information_calculation_tool],
-            },
-            recommendations: {
-              short_payback_recommendation: data[:short_payback_recommendation],
-              medium_payback_recommendation:
-                data[:medium_payback_recommendation],
-              long_payback_recommendation: data[:long_payback_recommendation],
-              other_payback_recommendation: data[:other_payback_recommendation],
-            },
-          },
-        )
-      end
-
       if assessment.is_type?(Domain::RdsapAssessment) ||
           assessment.is_type?(Domain::SapAssessment)
         assessment.set(:lighting_cost_current, data[:lighting_cost_current])
