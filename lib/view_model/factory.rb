@@ -15,6 +15,8 @@ module ViewModel
         report_type = filtered_results.at("Report-Type").content
 
         case report_type
+        when "1"
+          ViewModel::Dec::DecWrapper.new(filtered_results.to_xml, schema_type)
         when "3"
           ViewModel::Cepc::CepcWrapper.new(filtered_results.to_xml, schema_type)
         when "4"
