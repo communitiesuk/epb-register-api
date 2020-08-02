@@ -36,8 +36,6 @@ describe "Acceptance::LodgeRREnergyAssessment" do
     end
 
     it "successfully lodges the report" do
-      doc = Nokogiri.XML cepc_rr_xml
-
       add_assessor(
           scheme_id,
           "SPEC000000",
@@ -47,7 +45,7 @@ describe "Acceptance::LodgeRREnergyAssessment" do
           )
 
       lodge_assessment(
-          assessment_body: doc.to_xml,
+          assessment_body: cepc_rr_xml,
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] },
           schema_name: "CEPC-8.0.0",
