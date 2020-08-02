@@ -13,8 +13,8 @@ module UseCase
         ).empty?
       end
 
-      def lodged_values_from_xml(xml, schema_type)
-        view_model = ViewModel::Factory.new.create(xml, schema_type)
+      def lodged_values_from_xml(xml, schema_type, assessment_id)
+        view_model = ViewModel::Factory.new.create(xml, schema_type, assessment_id)
         unless view_model
           raise ArgumentError,
                 "Assessment summary unsupported for this assessment type"
@@ -37,6 +37,7 @@ module UseCase
           lodged_values_from_xml(
             lodged_xml_document[:xml],
             lodged_xml_document[:schema_type],
+            assessment_id
           )
 
         full_summary =

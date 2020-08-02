@@ -69,7 +69,6 @@ describe ViewModel::CepcRr::CepcRrWrapper do
 
     it "should read the appropriate values from the XML doc" do
       test_xml_doc(
-        ViewModel::CepcRr::CepcRrWrapper,
         supported_schema,
         asserted_keys,
       )

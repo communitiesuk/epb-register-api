@@ -12,123 +12,123 @@ module ViewModel
       end
 
       def assessment_id
-        xpath(%w[//CEPC:RRN])
+        xpath(%w[RRN])
       end
 
       def date_of_expiry
-        xpath(%w[//CEPC:Valid-Until])
+        xpath(%w[Valid-Until])
       end
 
       def address_line1
-        xpath(%w[//CEPC:Property-Address //CEPC:Address-Line-1])
+        xpath(%w[Property-Address Address-Line-1])
       end
 
       def address_line2
-        xpath(%w[//CEPC:Property-Address //CEPC:Address-Line-2])
+        xpath(%w[Property-Address Address-Line-2])
       end
 
       def address_line3
-        xpath(%w[//CEPC:Property-Address //CEPC:Address-Line-3])
+        xpath(%w[Property-Address Address-Line-3])
       end
 
       def address_line4
-        xpath(%w[//CEPC:Property-Address //CEPC:Address-Line-4])
+        xpath(%w[Property-Address Address-Line-4])
       end
 
       def town
-        xpath(%w[//CEPC:Property-Address //CEPC:Post-Town])
+        xpath(%w[Property-Address Post-Town])
       end
 
       def postcode
-        xpath(%w[//CEPC:Property-Address //CEPC:Postcode])
+        xpath(%w[Property-Address Postcode])
       end
 
       def main_heating_fuel
-        xpath(%w[//CEPC:Main-Heating-Fuel])
+        xpath(%w[Main-Heating-Fuel])
       end
 
       def building_environment
-        xpath(%w[//CEPC:Building-Environment])
+        xpath(%w[Building-Environment])
       end
 
       def floor_area
-        xpath(%w[//CEPC:Floor-Area])
+        xpath(%w[Floor-Area])
       end
 
       def building_level
-        xpath(%w[//CEPC:Building-Level])
+        xpath(%w[Building-Level])
       end
 
       def building_emission_rate
-        xpath(%w[//CEPC:BER])
+        xpath(%w[BER])
       end
 
       def primary_energy_use
-        xpath(%w[//CEPC:Energy-Consumption-Current])
+        xpath(%w[Energy-Consumption-Current])
       end
 
       def related_rrn
-        xpath(%w[//CEPC:Related-RRN])
+        xpath(%w[Related-RRN])
       end
 
       def new_build_rating
-        xpath(%w[//CEPC:New-Build-Benchmark])
+        xpath(%w[New-Build-Benchmark])
       end
 
       def existing_build_rating
-        xpath(%w[//CEPC:Existing-Stock-Benchmark])
+        xpath(%w[Existing-Stock-Benchmark])
       end
 
       def energy_efficiency_rating
-        xpath(%w[//CEPC:Asset-Rating])
+        xpath(%w[Asset-Rating])
       end
 
       def scheme_assessor_id
-        xpath(%w[//CEPC:Certificate-Number])
+        xpath(%w[Certificate-Number])
       end
 
       def assessor_name
-        xpath(%w[//CEPC:Energy-Assessor //CEPC:Name])
+        xpath(%w[Energy-Assessor Name])
       end
 
       def assessor_email
-        xpath(%w[//CEPC:Energy-Assessor //CEPC:E-Mail])
+        xpath(%w[Energy-Assessor E-Mail])
       end
 
       def assessor_telephone
-        xpath(%w[//CEPC:Energy-Assessor //CEPC:Telephone-Number])
+        xpath(%w[Energy-Assessor Telephone-Number])
       end
 
       def company_name
-        xpath(%w[//CEPC:Energy-Assessor //CEPC:Company-Name])
+        xpath(%w[Energy-Assessor Company-Name])
       end
 
       def company_address
-        xpath(%w[//CEPC:Energy-Assessor //CEPC:Trading-Address])
+        xpath(%w[Energy-Assessor Trading-Address])
       end
 
       def report_type
-        xpath(%w[//CEPC:Report-Type])
+        xpath(%w[Report-Type])
       end
 
       def date_of_assessment
-        xpath(%w[//CEPC:Inspection-Date])
+        xpath(%w[Inspection-Date])
       end
 
       def date_of_registration
-        xpath(%w[//CEPC:Registration-Date])
+        xpath(%w[Registration-Date])
       end
 
       def related_party_disclosure
-        xpath(%w[//CEPC:EPC-Related-Party-Disclosure])
+        xpath(%w[EPC-Related-Party-Disclosure])
       end
 
       def address_id
-        xpath(%w[//CEPC:UPRN])
+        xpath(%w[UPRN])
       end
 
       def property_type
-        xpath(%w[//CEPC:Property-Type])
+        xpath(%w[Property-Type])
       end
     end
   end

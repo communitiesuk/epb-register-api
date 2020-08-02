@@ -55,7 +55,7 @@ describe ViewModel::Cepc::CepcWrapper do
   }.freeze
 
   it "should read the appropriate values from the XML doc" do
-    test_xml_doc(ViewModel::Cepc::CepcWrapper, supported_schema, asserted_keys)
+    test_xml_doc(supported_schema, asserted_keys)
   end
 
   it "returns the expect error without a valid schema type" do
