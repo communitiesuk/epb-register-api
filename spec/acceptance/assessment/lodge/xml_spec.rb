@@ -120,7 +120,7 @@ describe "Acceptance::LodgeAssessment::XML" do
       )
     end
 
-    context "when lodging two energy assessments" do
+    context "when lodging CEPC with RR in same document" do
       let(:scheme_id) { add_scheme_and_get_id }
 
       let(:response) do

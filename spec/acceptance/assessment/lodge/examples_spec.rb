@@ -83,15 +83,6 @@ describe "Acceptance::LodgeExamples" do
       )
     end
 
-    it "can lodge the example CEPC+RR" do
-      lodge_assessment(
-        assessment_body: cepc_rr_xml,
-        accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
-        schema_name: "CEPC-8.0.0",
-      )
-    end
-
     it "can lodge the example DEC" do
       lodge_assessment(
         assessment_body: dec_xml,
