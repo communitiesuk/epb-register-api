@@ -103,10 +103,12 @@ task :import_address_base do
         lines.push(row[57])
 
         # followed by the town name on the line below it. If there is no locality name, the town name should appear alone on the line beneath the street description.
-        lines.push(row[61])
+        if row[60] != row[62]
+          lines.push(row[61])
+        end
 
         # If the administrative area name is desired, and if it is not a duplicate of the town name, if may optionally be included on a separate line beneath the town name.
-        if row[62] != row[61]
+        if row[62] != row[61] && row[60] != row[62]
           lines.push(row[62])
         end
 
