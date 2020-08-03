@@ -2,6 +2,7 @@ module Gateway
   class AddressBaseSearchGateway
     def search_by_postcode(postcode, building_name_number, _address_type)
       postcode = postcode.insert(-4, " ") if postcode[-4] != " "
+      postcode = postcode.upcase
 
       sql =
         "SELECT
