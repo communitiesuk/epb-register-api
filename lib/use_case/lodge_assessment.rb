@@ -147,7 +147,7 @@ module UseCase
       end
 
       validator = Helper::RdsapValidator::ValidateAll.new
-      errors = validator.validate assessment
+      errors = validator.validate data[:raw_data]
 
       raise AssessmentRuleException, errors.to_json unless errors.empty?
 
