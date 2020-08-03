@@ -136,10 +136,9 @@ task :import_address_base do
 
       ActiveRecord::Base.connection.execute("INSERT INTO address_base_temp VALUES " + query.join(", "))
     end
-
-    ActiveRecord::Base.connection.execute("INSERT INTO address_base SELECT * FROM address_base_temp ON CONFLICT DO NOTHING")
-    ActiveRecord::Base.connection.execute("TRUNCATE TABLE address_base_temp")
   end
 
+  ActiveRecord::Base.connection.execute("INSERT INTO address_base SELECT * FROM address_base_temp ON CONFLICT DO NOTHING")
+  ActiveRecord::Base.connection.execute("TRUNCATE TABLE address_base_temp")
   ActiveRecord::Base.connection.execute("DROP TABLE address_base_temp")
 end
