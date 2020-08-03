@@ -1,7 +1,7 @@
 module Gateway
   class AddressBaseSearchGateway
     def search_by_postcode(postcode, building_name_number, _address_type)
-      postcode = postcode.delete " "
+      postcode = postcode.insert(-4, " ") if postcode[-4] != " "
 
       sql =
         "SELECT
@@ -11,15 +11,15 @@ module Gateway
             address_line4,
             town,
             postcode,
-            CONCAT('UPRN-', uprn) AS uprn
+            uprn
           FROM address_base
           WHERE
-            LOWER(REPLACE(postcode, ' ', '')) = $1"
+            postcode = $1"
 
       binds = [
         ActiveRecord::Relation::QueryAttribute.new(
           "postcode",
-          postcode.downcase,
+          postcode,
           ActiveRecord::Type::String.new,
         ),
       ]
@@ -65,7 +65,7 @@ module Gateway
     end
 
     def record_to_address_domain(row)
-      Domain::Address.new address_id: row["uprn"],
+      Domain::Address.new address_id: "UPRN-" + row["uprn"],
                           line1: row["address_line1"],
                           line2: row["address_line2"].presence,
                           line3: row["address_line3"].presence,
