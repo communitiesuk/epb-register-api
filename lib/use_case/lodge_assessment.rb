@@ -5,7 +5,6 @@ module UseCase
     class InactiveAssessorException < StandardError; end
     class AssessmentIdMismatchException < StandardError; end
     class DuplicateAssessmentIdException < StandardError; end
-    class AssessmentRuleException < StandardError; end
 
     def initialize
       @assessments_gateway = Gateway::AssessmentsGateway.new
@@ -145,11 +144,6 @@ module UseCase
           data[:hot_water_cost_potential],
         )
       end
-
-      validator = Helper::RdsapValidator::ValidateAll.new
-      errors = validator.validate data[:raw_data]
-
-      raise AssessmentRuleException, errors.to_json unless errors.empty?
 
       @assessments_gateway.insert_or_update assessment
 

@@ -174,8 +174,6 @@ module Controller
         error_response(409, "INVALID_REQUEST", "Assessment ID already exists.")
       when REXML::ParseException
         error_response(400, "INVALID_REQUEST", e.message)
-      when UseCase::LodgeAssessment::AssessmentRuleException
-        error_response(422, "ASSESSMENT_RULE_VIOLATION", e.message)
       else
         server_error(e)
       end
