@@ -8,7 +8,8 @@ module LodgementRules
         test: lambda do |adaptor|
           Date.parse(adaptor.date_of_assessment).before?(Date.today) &&
             Date.parse(adaptor.date_of_registration).before?(Date.today) &&
-            Date.parse(adaptor.date_of_issue).before?(Date.today)
+            Date.parse(adaptor.date_of_issue).before?(Date.today) &&
+            Date.parse(adaptor.date_of_assessment).after?(Date.today - 365.25 * 4)
         end,
       },
     ].freeze
