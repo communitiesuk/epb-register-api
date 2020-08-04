@@ -9,6 +9,8 @@ describe LodgementRules::NonDomestic do
 
     xml_doc.at("//CEPC:Inspection-Date").children = Date.yesterday.to_s
 
+    xml_doc.at("//CEPC:Issue-Date").children = Date.yesterday.to_s
+
     xml_doc
   end
 
