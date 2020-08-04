@@ -76,7 +76,7 @@ describe LodgementRules::NonDomestic do
         get_xml_errors(
           "//CEPC:Registration-Date",
           four_years_and_a_day_ago.to_s,
-          )
+        )
       expect(errors).to include(error)
     end
 
