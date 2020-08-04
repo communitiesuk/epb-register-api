@@ -66,7 +66,7 @@ module Gateway
     end
 
     def record_to_address_domain(row)
-      Domain::Address.new address_id: "UPRN-" + row["uprn"],
+      Domain::Address.new address_id: "UPRN-" + (row["uprn"].rjust(12, "0")),
                           line1: row["address_line1"],
                           line2: row["address_line2"].presence,
                           line3: row["address_line3"].presence,
