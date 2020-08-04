@@ -38,8 +38,8 @@ module ViewModel
             name: @view_model.assessor_name,
             company_details: {
               name: @view_model.company_name,
-              address: @view_model.company_address
-            }
+              address: @view_model.company_address,
+            },
           },
           short_payback_recommendations:
             @view_model.short_payback_recommendations,

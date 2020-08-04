@@ -66,7 +66,7 @@ describe "Acceptance::AssessmentSummary::CEPC-RR" do
             registeredBy: { name: "test scheme", schemeId: scheme_id },
             companyDetails: {
               name: "Joe Bloggs Ltd", address: "123 My Street, My City, AB3 4CD"
-            }
+            },
           },
           shortPaybackRecommendations: [
             {

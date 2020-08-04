@@ -12,10 +12,7 @@ module LodgementRules
             adaptor.date_of_issue,
           ]
 
-          failed_rules =
-            dates.select do |date|
-              Date.parse(date).future?
-            end
+          failed_rules = dates.select { |date| Date.parse(date).future? }
 
           failed_rules.empty?
         end,
@@ -33,7 +30,7 @@ module LodgementRules
 
           failed_rules =
             dates.select do |date|
-                Date.parse(date).before?(Date.today << 12 * 4)
+              Date.parse(date).before?(Date.today << 12 * 4)
             end
 
           failed_rules.empty?

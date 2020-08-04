@@ -5,7 +5,7 @@ module Gateway
       postcode = postcode.upcase
 
       sql =
-        "SELECT
+        'SELECT
             address_line1,
             address_line2,
             address_line3,
@@ -15,7 +15,7 @@ module Gateway
             uprn
           FROM address_base
           WHERE
-            postcode = $1"
+            postcode = $1'
 
       binds = [
         ActiveRecord::Relation::QueryAttribute.new(
@@ -66,7 +66,7 @@ module Gateway
     end
 
     def record_to_address_domain(row)
-      Domain::Address.new address_id: "UPRN-" + (row["uprn"].rjust(12, "0")),
+      Domain::Address.new address_id: "UPRN-" + row["uprn"].rjust(12, "0"),
                           line1: row["address_line1"],
                           line2: row["address_line2"].presence,
                           line3: row["address_line3"].presence,

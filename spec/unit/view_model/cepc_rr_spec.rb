@@ -29,11 +29,11 @@ describe ViewModel::CepcRr::CepcRrWrapper do
         postcode: "A0 0AA",
       },
       assessor: {
-          scheme_assessor_id: "SPEC000000",
-          name: "Mrs Report Writer",
-          company_details: {
-            name: "Joe Bloggs Ltd", address: "123 My Street, My City, AB3 4CD"
-          },
+        scheme_assessor_id: "SPEC000000",
+        name: "Mrs Report Writer",
+        company_details: {
+          name: "Joe Bloggs Ltd", address: "123 My Street, My City, AB3 4CD"
+        },
       },
       short_payback_recommendations: [
         {
