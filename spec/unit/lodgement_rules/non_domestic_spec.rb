@@ -45,5 +45,10 @@ describe LodgementRules::NonDomestic do
       errors = get_xml_errors("//CEPC:Registration-Date", Date.tomorrow.to_s)
       expect(errors).to include(error)
     end
+
+    it "returns an error if the issue date is in the future" do
+      errors = get_xml_errors("//CEPC:Issue-Date", Date.tomorrow.to_s)
+      expect(errors).to include(error)
+    end
   end
 end

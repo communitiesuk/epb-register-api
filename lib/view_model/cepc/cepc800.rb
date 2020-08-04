@@ -119,6 +119,10 @@ module ViewModel
         xpath(%w[Registration-Date])
       end
 
+      def date_of_issue
+        xpath(%w[Issue-Date])
+      end
+
       def related_party_disclosure
         xpath(%w[EPC-Related-Party-Disclosure])
       end
