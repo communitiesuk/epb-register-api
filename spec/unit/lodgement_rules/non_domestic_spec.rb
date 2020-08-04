@@ -56,10 +56,24 @@ describe LodgementRules::NonDomestic do
     it "returns an error if the inspection date is more than four years ago" do
       four_years_and_a_day_ago = (Date.today << 12 * 4) - 1
       errors =
+        get_xml_errors("//CEPC:Inspection-Date", four_years_and_a_day_ago.to_s)
+      expect(errors).to include(error)
+    end
+
+    it "returns an error if the registration date is more than four years ago" do
+      four_years_and_a_day_ago = (Date.today << 12 * 4) - 1
+      errors =
         get_xml_errors(
-          "//CEPC:Inspection-Date",
+          "//CEPC:Registration-Date",
           four_years_and_a_day_ago.to_s,
         )
+      expect(errors).to include(error)
+    end
+
+    it "returns an error if the issue date is more than four years ago" do
+      four_years_and_a_day_ago = (Date.today << 12 * 4) - 1
+      errors =
+        get_xml_errors("//CEPC:Issue-Date", four_years_and_a_day_ago.to_s)
       expect(errors).to include(error)
     end
   end
