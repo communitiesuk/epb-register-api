@@ -20,38 +20,30 @@ describe LodgementRules::NonDomestic do
   end
 
   context "INSPECTION_REGISTRATION_ISSUE_DATE" do
-    it "returns an error if the inspection date is in the future" do
-      xml_doc.at("//CEPC:Inspection-Date").children = Date.tomorrow.to_s
+    def get_xml_errors(key, value)
+      xml_doc.at(key).children = value
 
       wrapper = ViewModel::Factory.new.create(xml_doc.to_xml, "CEPC-8.0.0")
       adapter = wrapper.get_view_model
-      errors = described_class.new.validate(adapter)
-      expect(errors).to eq(
-        [
-          {
-            "code": "INSPECTION_REGISTRATION_ISSUE_DATE",
-            "message":
-              '"Inspection-Date", "Registration-Date" and "Issue-Date" must not be in the future and must not be more than 4 years ago',
-          },
-        ],
-      )
+      described_class.new.validate(adapter)
+    end
+
+    let(:error) do
+      {
+        "code": "INSPECTION_REGISTRATION_ISSUE_DATE",
+        "message":
+          '"Inspection-Date", "Registration-Date" and "Issue-Date" must not be in the future and must not be more than 4 years ago',
+      }.freeze
+    end
+
+    it "returns an error if the inspection date is in the future" do
+      errors = get_xml_errors("//CEPC:Inspection-Date", Date.tomorrow.to_s)
+      expect(errors).to include(error)
     end
 
     it "returns an error if the registration date is in the future" do
-      xml_doc.at("//CEPC:Registration-Date").children = Date.tomorrow.to_s
-
-      wrapper = ViewModel::Factory.new.create(xml_doc.to_xml, "CEPC-8.0.0")
-      adapter = wrapper.get_view_model
-      errors = described_class.new.validate(adapter)
-      expect(errors).to eq(
-        [
-          {
-            "code": "INSPECTION_REGISTRATION_ISSUE_DATE",
-            "message":
-              '"Inspection-Date", "Registration-Date" and "Issue-Date" must not be in the future and must not be more than 4 years ago',
-          },
-        ],
-      )
+      errors = get_xml_errors("//CEPC:Registration-Date", Date.tomorrow.to_s)
+      expect(errors).to include(error)
     end
   end
 end
