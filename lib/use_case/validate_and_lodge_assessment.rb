@@ -6,6 +6,7 @@ module UseCase
     class UnauthorisedToLodgeAsThisSchemeException < StandardError; end
     class SchemaNotSupportedException < StandardError; end
     class SchemaNotDefined < StandardError; end
+    class LodgementRulesException < StandardError; end
 
     def initialize
       @validate_assessment_use_case = UseCase::ValidateAssessment.new
@@ -28,6 +29,23 @@ module UseCase
         Helper::SchemaListHelper.new(schema_name).schema_path,
       )
         raise ValidationErrorException
+      end
+
+      if schema_name == "CEPC-8.0.0"
+        rescued = false
+        validation_result = []
+        begin
+          factory = ViewModel::Factory.new.create(xml, schema_name)
+
+          validation_result =
+            LodgementRules::NonDomestic.new.validate(factory.get_view_model)
+        rescue StandardError
+          rescued = true
+        end
+
+        if rescued != true && !validation_result.empty?
+          raise LodgementRulesException, validation_result
+        end
       end
 
       responses = []

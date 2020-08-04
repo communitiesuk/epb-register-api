@@ -174,6 +174,14 @@ module Controller
         error_response(409, "INVALID_REQUEST", "Assessment ID already exists.")
       when REXML::ParseException
         error_response(400, "INVALID_REQUEST", e.message)
+      when UseCase::ValidateAndLodgeAssessment::LodgementRulesException
+        json_response(
+          400,
+          errors:
+            e.message.map do |error|
+              { errorCode: error.code, errorDescription: error.message }
+            end,
+        )
       else
         server_error(e)
       end
