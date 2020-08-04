@@ -2,9 +2,9 @@ module LodgementRules
   class NonDomestic
     RULES = [
       {
-        name: "INSPECTION_REGISTRATION_ISSUE_DATE",
+        name: "DATES_CANT_BE_IN_FUTURE",
         message:
-          '"Inspection-Date", "Registration-Date" and "Issue-Date" must not be in the future and must not be more than 4 years ago',
+          '"Inspection-Date", "Registration-Date" and "Issue-Date" must not be in the future',
         test: lambda do |adaptor|
           dates = [
             adaptor.date_of_assessment,
@@ -14,7 +14,25 @@ module LodgementRules
 
           failed_rules =
             dates.select do |date|
-              Date.parse(date).future? ||
+              Date.parse(date).future?
+            end
+
+          failed_rules.empty?
+        end,
+      },
+      {
+        name: "DATES_CANT_BE_MORE_THAN_4_YEARS_AGO",
+        message:
+          '"Inspection-Date", "Registration-Date" and "Issue-Date" must not be more than 4 years ago',
+        test: lambda do |adaptor|
+          dates = [
+            adaptor.date_of_assessment,
+            adaptor.date_of_registration,
+            adaptor.date_of_issue,
+          ]
+
+          failed_rules =
+            dates.select do |date|
                 Date.parse(date).before?(Date.today << 12 * 4)
             end
 
