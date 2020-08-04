@@ -108,6 +108,10 @@ module ViewModel
       def related_party_disclosure
         xpath(%w[Related-Party-Disclosure])
       end
+
+      def company_address
+        xpath(%w[Trading-Address])
+      end
     end
   end
 end

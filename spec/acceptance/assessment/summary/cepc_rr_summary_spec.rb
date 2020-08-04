@@ -64,6 +64,9 @@ describe "Acceptance::AssessmentSummary::CEPC-RR" do
             schemeAssessorId: "SPEC000000",
             name: "Mrs Report Writer",
             registeredBy: { name: "test scheme", schemeId: scheme_id },
+            companyDetails: {
+              address: "123 My Street, My City, AB3 4CD",
+            }
           },
           shortPaybackRecommendations: [
             {

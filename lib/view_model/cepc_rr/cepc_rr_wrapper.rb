@@ -36,6 +36,9 @@ module ViewModel
           assessor: {
             scheme_assessor_id: @view_model.scheme_assessor_id,
             name: @view_model.assessor_name,
+            company_details: {
+              address: @view_model.company_address
+            }
           },
           short_payback_recommendations:
             @view_model.short_payback_recommendations,
