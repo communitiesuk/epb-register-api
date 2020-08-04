@@ -15,7 +15,7 @@ module LodgementRules
           failed_rules =
             dates.select do |date|
               Date.parse(date).future? ||
-                Date.parse(date).before?(Date.today - (365.25 * 4))
+                Date.parse(date).before?(Date.today << 12 * 4)
             end
 
           failed_rules.empty?
