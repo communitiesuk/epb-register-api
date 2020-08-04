@@ -87,6 +87,10 @@ module ViewModel
           property_type: @view_model.property_type,
         }
       end
+
+      def get_view_model
+        @view_model
+      end
     end
   end
 end
