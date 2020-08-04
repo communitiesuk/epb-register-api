@@ -32,7 +32,7 @@ describe ViewModel::CepcRr::CepcRrWrapper do
           scheme_assessor_id: "SPEC000000",
           name: "Mrs Report Writer",
           company_details: {
-              address: "123 My Street, My City, AB3 4CD",
+            name: "Joe Bloggs Ltd", address: "123 My Street, My City, AB3 4CD"
           },
       },
       short_payback_recommendations: [

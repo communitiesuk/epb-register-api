@@ -65,7 +65,7 @@ describe "Acceptance::AssessmentSummary::CEPC-RR" do
             name: "Mrs Report Writer",
             registeredBy: { name: "test scheme", schemeId: scheme_id },
             companyDetails: {
-              address: "123 My Street, My City, AB3 4CD",
+              name: "Joe Bloggs Ltd", address: "123 My Street, My City, AB3 4CD"
             }
           },
           shortPaybackRecommendations: [

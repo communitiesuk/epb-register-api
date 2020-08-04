@@ -112,6 +112,10 @@ module ViewModel
       def company_address
         xpath(%w[Trading-Address])
       end
+
+      def company_name
+        xpath(%w[Company-Name])
+      end
     end
   end
 end
