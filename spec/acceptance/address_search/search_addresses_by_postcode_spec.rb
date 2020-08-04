@@ -416,7 +416,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
             )
           end
 
-          it "returns the expected address" do
+          it "returns the expected previous assessment address" do
             expect(response[:data][:addresses][3]).to eq(
               {
                 addressId: "RRN-0000-0000-0000-0000-0004",
@@ -478,7 +478,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
             )
           end
 
-          it "returns the expected address" do
+          it "returns the expected previous assessment address" do
             expect(response[:data][:addresses][3]).to eq(
               {
                 addressId: "RRN-0000-0000-0000-0000-0001",
@@ -535,7 +535,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
             )
           end
 
-          it "returns the expected address" do
+          it "returns the expected previous assessment address" do
             expect(response[:data][:addresses][4]).to eq(
               {
                 addressId: "RRN-0000-0000-0000-0000-0004",
@@ -610,7 +610,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
           )
         end
 
-        it "returns the expected address" do
+        it "returns the expected previous assessment address" do
           expect(response[:data][:addresses][3]).to eq(
             {
               addressId: "RRN-0000-0000-0000-0000-0001",
@@ -672,7 +672,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
           )
         end
 
-        it "returns the expected address" do
+        it "returns the expected previous assessment address" do
           expect(response[:data][:addresses][3]).to eq(
             {
               addressId: "RRN-0000-0000-0000-0000-0002",
@@ -734,7 +734,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
           )
         end
 
-        it "returns the expected address" do
+        it "returns the expected previous assessment address" do
           expect(response[:data][:addresses][3]).to eq(
             {
               addressId: "RRN-0000-0000-0000-0000-0001",
@@ -801,7 +801,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
           )
         end
 
-        it "returns the expected address" do
+        it "returns the expected previous assessment address" do
           expect(response[:data][:addresses][3]).to eq(
             {
               addressId: "RRN-0000-0000-0000-0000-0001",
