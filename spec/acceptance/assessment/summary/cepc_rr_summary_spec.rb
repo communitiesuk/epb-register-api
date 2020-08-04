@@ -48,7 +48,7 @@ describe "Acceptance::AssessmentSummary::CEPC-RR" do
           assessmentId: "0000-0000-0000-0000-0000",
           reportType: "4",
           dateOfExpiry: "2021-05-03",
-          dateOfRegistration: "2020-05-04",
+          dateOfRegistration: "2020-05-05",
           relatedCertificate: "0000-0000-0000-0000-1111",
           relatedAssessments: [],
           address: {

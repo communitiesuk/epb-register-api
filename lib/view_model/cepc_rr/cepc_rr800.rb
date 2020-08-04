@@ -86,7 +86,7 @@ module ViewModel
       end
 
       def date_of_registration
-        xpath(%w[Inspection-Date])
+        xpath(%w[Registration-Date])
       end
 
       def floor_area
