@@ -8,7 +8,7 @@
 |AC_ESTIMATED_OUTPUT|If "AC-Present" is equal to "Yes" then: if "AC-Rating-Unknown-Flag" is equal to "true" then "AC-Estimated-Output" must be provided, if "AC-Rated-Output" is greater than 12 then "AC-Estimated-Output" must be provided, if "AC-Estimated-Output" is equal to 2 or 3 then "AC-Inspection-Commissioned" must not be equal to 4|no|
 |EMISSION_RATINGS_MUST_NOT_BE_NEGATIVE|"SER", "BER", "TER" and "TYR" must not be negative numbers|yes|
 |MUST_RECORD_TRANSACTION_TYPE|"Transaction-Type" must not be equal to 7|yes|
-|MUST_RECORD_EPC_DISCLOSURE|"EPC-Related-Party-Disclosure" must not be equal to 13|no|
+|MUST_RECORD_EPC_DISCLOSURE|"EPC-Related-Party-Disclosure" must not be equal to 13|yes|
 |MUST_RECORD_ENERGY_TYPE|"Energy-Type" must not be equal to 4|no|
 |QUESTION_MUST_HAVE_CODE_AND_NUMBER|If "Question-Code" is supplied then "Question-Code-Number" must be supplied|no|
 |ANSWER_MUST_HAVE_CODE_AND_NUMBER|If "Answer-Code" is supplied then "Answer-Code-Number" must be supplied|no|
