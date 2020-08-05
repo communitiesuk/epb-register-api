@@ -137,4 +137,40 @@ describe LodgementRules::NonDomestic do
       expect(errors).to include(error)
     end
   end
+
+  context "EMISSION_RATINGS_MUST_NOT_BE_NEGATIVE" do
+    let(:error) do
+      {
+        "code": "EMISSION_RATINGS_MUST_NOT_BE_NEGATIVE",
+        "message":
+          '"SER", "BER", "TER" and "TYR" must not be negative numbers',
+      }.freeze
+    end
+
+    it "returns an error if SER is minus one" do
+      errors =
+        get_xml_errors("//CEPC:SER", "-1.01")
+      expect(errors).to include(error)
+    end
+
+    it "returns an error if BER is minus one" do
+      errors =
+        get_xml_errors("//CEPC:BER", "-1.01")
+      expect(errors).to include(error)
+    end
+
+    it "returns an error if TER is minus one" do
+      errors =
+        get_xml_errors("//CEPC:TER", "-1.01")
+      expect(errors).to include(error)
+    end
+
+    it "returns an error if TYR is minus one" do
+      errors =
+        get_xml_errors("//CEPC:TYR", "-1.01")
+      expect(errors).to include(error)
+    end
+
+  end
+
 end

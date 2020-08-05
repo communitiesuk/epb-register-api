@@ -47,6 +47,17 @@ module LodgementRules
             adapter.all_floor_areas.map(&:to_i).select { |number| number.negative? }.empty?
           end,
       },
+      {
+          name: "EMISSION_RATINGS_MUST_NOT_BE_NEGATIVE",
+          message:
+              '"SER", "BER", "TER" and "TYR" must not be negative numbers',
+          test: lambda do |adapter|
+            [adapter.standard_emissions,
+             adapter.building_emissions,
+             adapter.target_emissions,
+             adapter.typical_emissions].map(&:to_f).select(&:negative?).empty?
+          end,
+      },
     ].freeze
 
     def validate(xml_adaptor)

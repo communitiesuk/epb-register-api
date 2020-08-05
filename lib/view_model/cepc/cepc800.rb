@@ -154,6 +154,22 @@ module ViewModel
       def all_floor_areas
         @xml_doc.search("Floor-Area").map(&:content)
       end
+
+      def standard_emissions
+        xpath(%w[SER])
+      end
+
+      def building_emissions
+        xpath(%w[BER])
+      end
+
+      def target_emissions
+        xpath(%w[TER])
+      end
+
+      def typical_emissions
+        xpath(%w[TYR])
+      end
     end
   end
 end

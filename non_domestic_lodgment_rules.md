@@ -6,7 +6,7 @@
 |DATES_CANT_BE_IN_FUTURE|Inspection-Date", "Registration-Date", "Issue-Date", "Effective-Date", "OR-Availability-Date", "Start-Date" and "OR-Assessment-Start-Date" must not be in the future|yes|
 |FLOOR_AREA_CANT_BE_LESS_THAN_ZERO|"Floor-Area" must be greater than 0|yes|
 |AC_ESTIMATED_OUTPUT|If "AC-Present" is equal to "Yes" then: if "AC-Rating-Unknown-Flag" is equal to "true" then "AC-Estimated-Output" must be provided, if "AC-Rated-Output" is greater than 12 then "AC-Estimated-Output" must be provided, if "AC-Estimated-Output" is equal to 2 or 3 then "AC-Inspection-Commissioned" must not be equal to 4|no|
-|?SER_BER_TER_TYR_MUST_NOT_BE_MINUS_ONE|"SER", "BER", "TER" and "TYR" must not be equal to -1|no|
+|EMISSION_RATINGS_MUST_NOT_BE_NEGATIVE|"SER", "BER", "TER" and "TYR" must not be negative numbers|yes|
 |MUST_RECORD_TRANSACTION_TYPE|"Transaction-Type" must not be equal to 7|no|
 |MUST_RECORD_EPC_DISCLOSURE|"EPC-Related-Party-Disclosure" must not be equal to 13|no|
 |MUST_RECORD_ENERGY_TYPE|"Energy-Type" must not be equal to 4|no|
