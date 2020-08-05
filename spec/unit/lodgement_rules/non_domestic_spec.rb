@@ -206,4 +206,21 @@ describe LodgementRules::NonDomestic do
 
   end
 
+  context "MUST_RECORD_ENERGY_TYPE" do
+    let(:error) do
+      {
+        "code": "MUST_RECORD_ENERGY_TYPE",
+        "message":
+          '"Energy-Type" must not be equal to 4',
+      }.freeze
+    end
+
+    it "returns an error if Energy-Type is 4" do
+      errors =
+        get_xml_errors("//CEPC:Energy-Type", "4")
+      expect(errors).to include(error)
+    end
+
+  end
+
 end

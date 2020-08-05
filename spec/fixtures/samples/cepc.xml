@@ -276,6 +276,15 @@
           <CEPC:Start-Date>2019-12-25</CEPC:Start-Date>
         </CEPC:Anthracite>
       </CEPC:OR-Energy-Consumption>
+      <CEPC:Renewable-Energy-Source>
+        <CEPC:Energy-Source>
+          <CEPC:Start-Date>2019-12-25</CEPC:Start-Date>
+          <CEPC:End-Date>2030-12-25</CEPC:End-Date>
+          <CEPC:Name>Solar panel</CEPC:Name>
+          <CEPC:Generation>20</CEPC:Generation>
+          <CEPC:Energy-Type>2</CEPC:Energy-Type>
+        </CEPC:Energy-Source>
+      </CEPC:Renewable-Energy-Source>
     </CEPC:OR-Operational-Rating>
     <CEPC:Insurance-Details>
       <CEPC:Insurer>Insurance</CEPC:Insurer>

@@ -74,6 +74,17 @@ module LodgementRules
             adapter.epc_related_party_disclosure.to_i != 13
           end,
       },
+      {
+          name: "MUST_RECORD_ENERGY_TYPE",
+          message:
+              '"Energy-Type" must not be equal to 4',
+          test: lambda do |adapter|
+            adapter
+                .all_energy_types.map(&:to_i)
+                .select{|energy_type| energy_type == 4}
+                .empty?
+          end,
+      },
     ].freeze
 
     def validate(xml_adaptor)

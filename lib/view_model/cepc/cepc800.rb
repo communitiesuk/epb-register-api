@@ -155,6 +155,10 @@ module ViewModel
         @xml_doc.search("Floor-Area").map(&:content)
       end
 
+      def all_energy_types
+        @xml_doc.search("Energy-Type").map(&:content)
+      end
+
       def standard_emissions
         xpath(%w[SER])
       end
