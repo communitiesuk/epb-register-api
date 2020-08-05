@@ -134,6 +134,10 @@ module ViewModel
       def property_type
         xpath(%w[Property-Type])
       end
+
+      def effective_date
+        xpath(%w[Effective-Date])
+      end
     end
   end
 end
