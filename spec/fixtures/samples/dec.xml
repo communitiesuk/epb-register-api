@@ -267,12 +267,13 @@
       <This-Assessment>
         <Nominated-Date>2020-01-01</Nominated-Date>
         <Energy-Rating>1</Energy-Rating>
-        <Electricity-CO2>1</Electricity-CO2>
-        <Heating-CO2>1</Heating-CO2>
+        <Electricity-CO2>7</Electricity-CO2>
+        <Heating-CO2>3</Heating-CO2>
+        <Renewables-CO2>0</Renewables-CO2>
       </This-Assessment>
       <Year1-Assessment>
         <Nominated-Date>2019-01-01</Nominated-Date>
-        <Energy-Rating>0</Energy-Rating>
+        <Energy-Rating>24</Energy-Rating>
         <Electricity-CO2>0</Electricity-CO2>
         <Heating-CO2>0</Heating-CO2>
       </Year1-Assessment>

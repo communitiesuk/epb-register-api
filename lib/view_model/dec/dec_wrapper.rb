@@ -34,6 +34,13 @@ module ViewModel
           },
           type_of_assessment: "DEC",
           report_type: @view_model.report_type,
+          current_assessment: {
+              date: @view_model.current_assessment_date,
+              energy_efficiency_rating: @view_model.energy_efficiency_rating,
+              heating_co2: @view_model.current_heating_co2,
+              electricity_co2: @view_model.current_electricity_co2,
+              renewables_co2: @view_model.current_renewables_co2
+          }
         }
       end
 

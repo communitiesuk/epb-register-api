@@ -54,6 +54,22 @@ module ViewModel
       def address_id
         xpath(%w[UPRN])
       end
+
+      def current_assessment_date
+        xpath(%w[This-Assessment Nominated-Date])
+      end
+
+      def current_heating_co2
+        xpath(%w[This-Assessment Heating-CO2])
+      end
+
+      def current_electricity_co2
+        xpath(%w[This-Assessment Electricity-CO2])
+      end
+
+      def current_renewables_co2
+        xpath(%w[This-Assessment Renewables-CO2])
+      end
     end
   end
 end

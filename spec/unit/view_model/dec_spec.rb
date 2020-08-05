@@ -27,6 +27,13 @@ describe ViewModel::Dec::DecWrapper do
     },
     type_of_assessment: "DEC",
     report_type: "1",
+    current_assessment: {
+        date: "2020-01-01",
+        energy_efficiency_rating: "1",
+        heating_co2: "3",
+        electricity_co2: "7",
+        renewables_co2: "0"
+    }
   }.freeze
 
   it "should read the appropriate values from the XML doc" do
