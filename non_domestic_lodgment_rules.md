@@ -1,6 +1,6 @@
 ## Non-Domestic Lodgment Rules
 
-|Code|Message|Done?| 
+|Code|Message|Done?|
 |----|-------|-----|
 |DATES_CANT_BE_MORE_THAN_4_YEARS_AGO|Inspection-Date", "Registration-Date" and "Issue-Date" must not be in the future and must not be more than 4 years ago|yes|
 |DATES_CANT_BE_IN_FUTURE|Inspection-Date", "Registration-Date", "Issue-Date", "Effective-Date", "OR-Availability-Date", "Start-Date" and "OR-Assessment-Start-Date" must not be in the future|yes|
@@ -10,8 +10,6 @@
 |MUST_RECORD_TRANSACTION_TYPE|"Transaction-Type" must not be equal to 7|yes|
 |MUST_RECORD_EPC_DISCLOSURE|"EPC-Related-Party-Disclosure" must not be equal to 13|yes|
 |MUST_RECORD_ENERGY_TYPE|"Energy-Type" must not be equal to 4|yes|
-|QUESTION_MUST_HAVE_CODE_AND_NUMBER|If "Question-Code" is supplied then "Question-Code-Number" must be supplied|no|
-|ANSWER_MUST_HAVE_CODE_AND_NUMBER|If "Answer-Code" is supplied then "Answer-Code-Number" must be supplied|no|
-|MUST_RECORD_REASON_TYPE|"Reason-Type" must not be equal to 7|no|
-|NOMINATED_DATE_TOO_LATE|"Nominated-Date" must not be more than three months after "OR-Assessment-End-Date"|no|
+|MUST_RECORD_REASON_TYPE|"Reason-Type" must not be equal to 7|no (DEC)|
+|NOMINATED_DATE_TOO_LATE|"Nominated-Date" must not be more than three months after "OR-Assessment-End-Date"|no (DEC)|
 |MUST_RECORD_DEC_DISCLOSURE|"DEC-Related-Party-Disclosure" must not be equal to 8|no|
