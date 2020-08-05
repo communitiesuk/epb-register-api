@@ -264,7 +264,14 @@
           </CEPC:Benchmark>
         </CEPC:Benchmarks>
       </CEPC:OR-Benchmark-Data>
-      <CEPC:OR-Energy-Consumption></CEPC:OR-Energy-Consumption>
+      <CEPC:OR-Energy-Consumption>
+        <CEPC:Anthracite>
+          <CEPC:Consumption>12.6</CEPC:Consumption>
+          <CEPC:End-Date>2030-12-25</CEPC:End-Date>
+          <CEPC:Estimate>3</CEPC:Estimate>
+          <CEPC:Start-Date>2019-12-25</CEPC:Start-Date>
+        </CEPC:Anthracite>
+      </CEPC:OR-Energy-Consumption>
     </CEPC:OR-Operational-Rating>
     <CEPC:Insurance-Details>
       <CEPC:Insurer>Insurance</CEPC:Insurer>
