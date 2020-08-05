@@ -177,10 +177,7 @@ module Controller
       when UseCase::ValidateAndLodgeAssessment::LodgementRulesException
         json_response(
           400,
-          errors:
-            e.message.map do |error|
-              { errorCode: error.code, errorDescription: error.message }
-            end,
+          errors: e.message
         )
       else
         server_error(e)

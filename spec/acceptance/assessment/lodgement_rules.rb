@@ -18,10 +18,23 @@ describe "Acceptance::LodgementRules" do
     Nokogiri.XML(file)
   end
 
-  context "when lodging a CEPC that breaks the rules" do
+  context "when lodging a CEPC that breaks two rules" do
     it "should reject the assessment" do
       xml_doc.at("//CEPC:Registration-Date").children = Date.tomorrow.to_s
       xml_doc.at("//CEPC:Issue-Date").children = (Date.today << 12 * 5).to_s
+
+      lodge_assessment(
+        assessment_body: xml_doc.to_xml,
+        accepted_responses: [400],
+        auth_data: { scheme_ids: [scheme_id] },
+        schema_name: "CEPC-8.0.0",
+      )
+    end
+  end
+
+  context "when lodging a CEPC that breaks one rule" do
+    it "should reject the assessment" do
+      xml_doc.at("//CEPC:Registration-Date").children = Date.tomorrow.to_s
 
       lodge_assessment(
         assessment_body: xml_doc.to_xml,
