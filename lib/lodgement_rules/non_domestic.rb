@@ -58,6 +58,14 @@ module LodgementRules
              adapter.typical_emissions].map(&:to_f).select(&:negative?).empty?
           end,
       },
+      {
+          name: "MUST_RECORD_TRANSACTION_TYPE",
+          message:
+              '"Transaction-Type" must not be equal to 7',
+          test: lambda do |adapter|
+            adapter.transaction_type.to_i != 7
+          end,
+      },
     ].freeze
 
     def validate(xml_adaptor)

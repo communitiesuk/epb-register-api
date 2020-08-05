@@ -173,4 +173,21 @@ describe LodgementRules::NonDomestic do
 
   end
 
+  context "MUST_RECORD_TRANSACTION_TYPE" do
+    let(:error) do
+      {
+        "code": "MUST_RECORD_TRANSACTION_TYPE",
+        "message":
+          '"Transaction-Type" must not be equal to 7',
+      }.freeze
+    end
+
+    it "returns an error if Transaction-Type is 7" do
+      errors =
+        get_xml_errors("//CEPC:Transaction-Type", "7")
+      expect(errors).to include(error)
+    end
+
+  end
+
 end

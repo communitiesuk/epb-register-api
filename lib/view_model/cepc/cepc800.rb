@@ -170,6 +170,10 @@ module ViewModel
       def typical_emissions
         xpath(%w[TYR])
       end
+
+      def transaction_type
+        xpath(%w[Transaction-Type])
+      end
     end
   end
 end
