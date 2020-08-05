@@ -36,11 +36,24 @@ describe "Acceptance::LodgementRules" do
     it "should reject the assessment" do
       xml_doc.at("//CEPC:Registration-Date").children = Date.tomorrow.to_s
 
-      lodge_assessment(
-        assessment_body: xml_doc.to_xml,
-        accepted_responses: [400],
-        auth_data: { scheme_ids: [scheme_id] },
-        schema_name: "CEPC-8.0.0",
+      result =
+        lodge_assessment(
+          assessment_body: xml_doc.to_xml,
+          accepted_responses: [400],
+          auth_data: { scheme_ids: [scheme_id] },
+          schema_name: "CEPC-8.0.0",
+        )
+
+      expect(JSON.parse(result.body, symbolize_names: true)).to eq(
+        {
+          errors: [
+            {
+              code: "DATES_CANT_BE_IN_FUTURE",
+              message:
+                "\"Inspection-Date\", \"Registration-Date\" and \"Issue-Date\" must not be in the future",
+            },
+          ],
+        },
       )
     end
   end

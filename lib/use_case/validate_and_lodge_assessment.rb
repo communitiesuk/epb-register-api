@@ -6,7 +6,12 @@ module UseCase
     class UnauthorisedToLodgeAsThisSchemeException < StandardError; end
     class SchemaNotSupportedException < StandardError; end
     class SchemaNotDefined < StandardError; end
-    class LodgementRulesException < StandardError; end
+    class LodgementRulesException < StandardError
+      attr_reader :errors
+      def initialize(errors)
+        @errors = errors
+      end
+    end
 
     def initialize
       @validate_assessment_use_case = UseCase::ValidateAssessment.new
