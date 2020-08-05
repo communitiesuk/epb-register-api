@@ -12,6 +12,7 @@ module LodgementRules
             adaptor.date_of_issue,
             adaptor.effective_date,
             adaptor.or_availability_date,
+            adaptor.or_assessment_start_date,
           ]
 
           failed_rules = dates.select { |date| Date.parse(date).future? }

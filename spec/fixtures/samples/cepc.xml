@@ -236,6 +236,36 @@
         </CEPC:HVAC-Systems>
       </CEPC:Building-Data>
     </CEPC:Summary-Of-Performance>
+    <CEPC:OR-Operational-Rating>
+      <CEPC:OR-Assessment-Start-Date>2020-05-14</CEPC:OR-Assessment-Start-Date>
+      <CEPC:OR-Assessment-End-Date>2030-05-14</CEPC:OR-Assessment-End-Date>
+      <CEPC:Building-Category></CEPC:Building-Category>
+      <CEPC:OR-Building-Data>
+        <CEPC:HVAC-System>Yes</CEPC:HVAC-System>
+        <CEPC:Other-HVAC-System>Yes</CEPC:Other-HVAC-System>
+        <CEPC:Internal-Environment>Yes</CEPC:Internal-Environment>
+        <CEPC:Assessment-Period-Alignment>Yes</CEPC:Assessment-Period-Alignment>
+      </CEPC:OR-Building-Data>
+      <CEPC:OR-Usable-Floor-Area></CEPC:OR-Usable-Floor-Area>
+      <CEPC:OR-Previous-Data></CEPC:OR-Previous-Data>
+      <CEPC:OR-Benchmark-Data>
+        <CEPC:Main-Benchmark></CEPC:Main-Benchmark>
+        <CEPC:Benchmarks>
+          <CEPC:Benchmark>
+            <CEPC:Area-Metric></CEPC:Area-Metric>
+            <CEPC:Benchmark></CEPC:Benchmark>
+            <CEPC:Benchmark-ID>1</CEPC:Benchmark-ID>
+            <CEPC:Floor-Area>403</CEPC:Floor-Area>
+            <CEPC:Name></CEPC:Name>
+            <CEPC:Occupancy-Level></CEPC:Occupancy-Level>
+            <CEPC:Special-Uses-Area></CEPC:Special-Uses-Area>
+            <CEPC:Total-Equivalent></CEPC:Total-Equivalent>
+            <CEPC:TUFA></CEPC:TUFA>
+          </CEPC:Benchmark>
+        </CEPC:Benchmarks>
+      </CEPC:OR-Benchmark-Data>
+      <CEPC:OR-Energy-Consumption></CEPC:OR-Energy-Consumption>
+    </CEPC:OR-Operational-Rating>
     <CEPC:Insurance-Details>
       <CEPC:Insurer>Insurance</CEPC:Insurer>
       <CEPC:Policy-No>0001</CEPC:Policy-No>

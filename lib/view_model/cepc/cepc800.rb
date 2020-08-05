@@ -142,6 +142,10 @@ module ViewModel
       def or_availability_date
         xpath(%w[Technical-Information OR-Availability-Date])
       end
+
+      def or_assessment_start_date
+        xpath(%w[OR-Operational-Rating OR-Assessment-Start-Date])
+      end
     end
   end
 end

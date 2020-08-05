@@ -66,6 +66,12 @@ describe LodgementRules::NonDomestic do
       errors = get_xml_errors("//CEPC:OR-Availability-Date", Date.tomorrow.to_s)
       expect(errors).to include(error)
     end
+
+    it "returns an error if the OR assessment start date is in the future" do
+      errors =
+        get_xml_errors("//CEPC:OR-Assessment-Start-Date", Date.tomorrow.to_s)
+      expect(errors).to include(error)
+    end
   end
 
   context "DATES_CANT_BE_MORE_THAN_4_YEARS_AGO" do
