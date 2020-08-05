@@ -20,9 +20,6 @@ module ViewModel
         {
           assessment_id: @view_model.assessment_id,
           date_of_expiry: @view_model.date_of_expiry,
-          energy_efficiency_rating: @view_model.energy_efficiency_rating,
-          energy_efficiency_band:
-            get_energy_rating_band(@view_model.energy_efficiency_rating.to_i),
           address: {
             address_id: @view_model.address_id,
             address_line1: @view_model.address_line1,
@@ -37,6 +34,7 @@ module ViewModel
           current_assessment: {
               date: @view_model.current_assessment_date,
               energy_efficiency_rating: @view_model.energy_efficiency_rating,
+              energy_efficiency_band: get_energy_rating_band(@view_model.energy_efficiency_rating.to_i),
               heating_co2: @view_model.current_heating_co2,
               electricity_co2: @view_model.current_electricity_co2,
               renewables_co2: @view_model.current_renewables_co2
@@ -44,6 +42,7 @@ module ViewModel
           year1_assessment: {
               date: @view_model.year1_assessment_date,
               energy_efficiency_rating: @view_model.year1_energy_efficiency_rating,
+              energy_efficiency_band: get_energy_rating_band(@view_model.year1_energy_efficiency_rating.to_i),
               heating_co2: @view_model.year1_heating_co2,
               electricity_co2: @view_model.year1_electricity_co2,
               renewables_co2:   @view_model.year1_renewables_co2
@@ -51,6 +50,7 @@ module ViewModel
           year2_assessment: {
               date: @view_model.year2_assessment_date,
               energy_efficiency_rating: @view_model.year2_energy_efficiency_rating,
+              energy_efficiency_band: get_energy_rating_band(@view_model.year2_energy_efficiency_rating.to_i),
               heating_co2: @view_model.year2_heating_co2,
               electricity_co2: @view_model.year2_electricity_co2,
               renewables_co2: @view_model.year2_renewables_co2

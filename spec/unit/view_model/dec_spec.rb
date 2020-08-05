@@ -14,8 +14,6 @@ describe ViewModel::Dec::DecWrapper do
   asserted_keys = {
     assessment_id: "0000-0000-0000-0000-0000",
     date_of_expiry: "2026-05-04",
-    energy_efficiency_rating: "1",
-    energy_efficiency_band: "a",
     address: {
       address_id: "UPRN-000000000001",
       address_line1: "2 Lonely Street",
@@ -30,6 +28,7 @@ describe ViewModel::Dec::DecWrapper do
     current_assessment: {
         date: "2020-01-01",
         energy_efficiency_rating: "1",
+        energy_efficiency_band: "a",
         heating_co2: "3",
         electricity_co2: "7",
         renewables_co2: "0"
@@ -37,6 +36,7 @@ describe ViewModel::Dec::DecWrapper do
     year1_assessment: {
         date: "2019-01-01",
         energy_efficiency_rating: "24",
+        energy_efficiency_band: "a",
         heating_co2: "5",
         electricity_co2: "10",
         renewables_co2: "1"
@@ -44,6 +44,7 @@ describe ViewModel::Dec::DecWrapper do
     year2_assessment: {
         date: "2018-01-01",
         energy_efficiency_rating: "40",
+        energy_efficiency_band: "b",
         heating_co2: "10",
         electricity_co2: "15",
         renewables_co2: "2"

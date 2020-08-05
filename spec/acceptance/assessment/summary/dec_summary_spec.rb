@@ -33,8 +33,6 @@ describe "Acceptance::AssessmentSummary::DEC" do
           assessmentId: "0000-0000-0000-0000-0000",
           reportType: "1",
           dateOfExpiry: "2026-05-04",
-          energyEfficiencyBand: "a",
-          energyEfficiencyRating: "1",
           address: {
             addressId: "UPRN-000000000001",
             addressLine1: "2 Lonely Street",
@@ -47,6 +45,7 @@ describe "Acceptance::AssessmentSummary::DEC" do
           currentAssessment: {
               date: "2020-01-01",
               energyEfficiencyRating: "1",
+              energyEfficiencyBand: "a",
               heatingCo2: "3",
               electricityCo2: "7",
               renewablesCo2: "0"
@@ -54,6 +53,7 @@ describe "Acceptance::AssessmentSummary::DEC" do
           year1Assessment: {
               date: "2019-01-01",
               energyEfficiencyRating: "24",
+              energyEfficiencyBand: "a",
               heatingCo2: "5",
               electricityCo2: "10",
               renewablesCo2: "1"
@@ -61,6 +61,7 @@ describe "Acceptance::AssessmentSummary::DEC" do
           year2Assessment: {
               date: "2018-01-01",
               energyEfficiencyRating: "40",
+              energyEfficiencyBand: "b",
               heatingCo2: "10",
               electricityCo2: "15",
               renewablesCo2: "2"
