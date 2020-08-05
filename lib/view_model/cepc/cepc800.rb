@@ -123,7 +123,7 @@ module ViewModel
         xpath(%w[Issue-Date])
       end
 
-      def related_party_disclosure
+      def epc_related_party_disclosure
         xpath(%w[EPC-Related-Party-Disclosure])
       end
 

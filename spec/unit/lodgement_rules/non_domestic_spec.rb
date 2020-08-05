@@ -189,5 +189,21 @@ describe LodgementRules::NonDomestic do
     end
 
   end
+  context "MUST_RECORD_EPC_DISCLOSURE" do
+    let(:error) do
+      {
+        "code": "MUST_RECORD_EPC_DISCLOSURE",
+        "message":
+          '"EPC-Related-Party-Disclosure" must not be equal to 13',
+      }.freeze
+    end
+
+    it "returns an error if EPC-Related-Party-Disclosure is 13" do
+      errors =
+        get_xml_errors("//CEPC:EPC-Related-Party-Disclosure", "13")
+      expect(errors).to include(error)
+    end
+
+  end
 
 end

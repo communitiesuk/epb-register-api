@@ -66,6 +66,14 @@ module LodgementRules
             adapter.transaction_type.to_i != 7
           end,
       },
+      {
+          name: "MUST_RECORD_EPC_DISCLOSURE",
+          message:
+              '"EPC-Related-Party-Disclosure" must not be equal to 13',
+          test: lambda do |adapter|
+            adapter.epc_related_party_disclosure.to_i != 13
+          end,
+      },
     ].freeze
 
     def validate(xml_adaptor)
