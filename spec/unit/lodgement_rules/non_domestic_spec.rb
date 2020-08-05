@@ -13,6 +13,8 @@ describe LodgementRules::NonDomestic do
 
     xml_doc.at("//CEPC:Effective-Date").children = Date.yesterday.to_s
 
+    xml_doc.at("//CEPC:OR-Availability-Date").children = Date.yesterday.to_s
+
     xml_doc
   end
 
@@ -57,6 +59,11 @@ describe LodgementRules::NonDomestic do
 
     it "returns an error if the effective date is in the future" do
       errors = get_xml_errors("//CEPC:Issue-Date", Date.tomorrow.to_s)
+      expect(errors).to include(error)
+    end
+
+    it "returns an error if the OR availability date is in the future" do
+      errors = get_xml_errors("//CEPC:OR-Availability-Date", Date.tomorrow.to_s)
       expect(errors).to include(error)
     end
   end

@@ -138,6 +138,10 @@ module ViewModel
       def effective_date
         xpath(%w[Effective-Date])
       end
+
+      def or_availability_date
+        xpath(%w[Technical-Information OR-Availability-Date])
+      end
     end
   end
 end
