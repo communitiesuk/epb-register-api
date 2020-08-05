@@ -1,38 +1,17 @@
 ## Non-Domestic Lodgment Rules
 
-###### Must not be more than 4 years ago:
-`"Inspection-Date", "Registration-Date" and "Issue-Date"`
-
-###### Must not be in the future:
-```"Inspection-Date", "Registration-Date", "Issue-Date", "Effective-Date", "OR-Availability-Date", "Start-Date" and "OR-Assessment-Start-Date"```
-
-###### Must be greater than 0:
-`"Floor-Area"`
-
-###### Must NOT be equal to -1:
-`"SER", "BER", "TER" and "TYR" `
-
-###### Must NOT be equal to 7:
-`"Transaction-Type", "Reason-Type" `
-
-###### Must NOT be equal to 13:
-`"EPC-Related-Party-Disclosure"`
-
-###### Must not be equal to 4:
-`"Energy-Type"`
-
-###### Must not be equal to 8:
-`"DEC-Related-Party-Disclosure"`
-
-###### If "Question-Code" is supplied then "Question-Code-Number" must be supplied
-`"Question-Code", "Question-Code-Number"`
-
-###### If "Answer-Code" is supplied then "Answer-Code-Number" must be supplied
-`"Answer-Code", "Answer-Code-Number"`
-
-###### "Nominated-Date" must not be more than three months after "OR-Assessment-End-Date"
-`Nominated-Date", "OR-Assessment-End-Date"`
-
-###### "If "AC-Present" is equal to "Yes" then: if "AC-Rating-Unknown-Flag" is equal to "true" then "AC-Estimated-Output" must be provided, if "AC-Rated-Output" is greater than 12 then "AC-Estimated-Output" must be provided, if "AC-Estimated-Output" is equal to 2 or 3 then "AC-Inspection-Commissioned" must not be equal to 4"
-
-```"AC-Present", "AC-Rating-Unknown-Flag", "AC-Estimated-Output", "AC-Rated-Output", "AC-Estimated-Output", "AC-Estimated-Output", "AC-Inspection-Commissioned" ```
+|Code|Message|Done?| 
+|----|-------|-----|
+|DATES_CANT_BE_MORE_THAN_4_YEARS_AGO|Inspection-Date", "Registration-Date" and "Issue-Date" must not be in the future and must not be more than 4 years ago|yes|
+|DATES_CANT_BE_IN_FUTURE|Inspection-Date", "Registration-Date", "Issue-Date", "Effective-Date", "OR-Availability-Date", "Start-Date" and "OR-Assessment-Start-Date" must not be in the future|no|
+|FLOOR_AREA_CANT_BE_LESS_THAN_ZERO|"Floor-Area" must be greater than 0|no|
+|AC_ESTIMATED_OUTPUT|If "AC-Present" is equal to "Yes" then: if "AC-Rating-Unknown-Flag" is equal to "true" then "AC-Estimated-Output" must be provided, if "AC-Rated-Output" is greater than 12 then "AC-Estimated-Output" must be provided, if "AC-Estimated-Output" is equal to 2 or 3 then "AC-Inspection-Commissioned" must not be equal to 4|no|
+|?SER_BER_TER_TYR_MUST_NOT_BE_MINUS_ONE|"SER", "BER", "TER" and "TYR" must not be equal to -1|no|
+|MUST_RECORD_TRANSACTION_TYPE|"Transaction-Type" must not be equal to 7|no|
+|MUST_RECORD_EPC_DISCLOSURE|"EPC-Related-Party-Disclosure" must not be equal to 13|no|
+|MUST_RECORD_ENERGY_TYPE|"Energy-Type" must not be equal to 4|no|
+|QUESTION_MUST_HAVE_CODE_AND_NUMBER|If "Question-Code" is supplied then "Question-Code-Number" must be supplied|no|
+|ANSWER_MUST_HAVE_CODE_AND_NUMBER|If "Answer-Code" is supplied then "Answer-Code-Number" must be supplied|no|
+|MUST_RECORD_REASON_TYPE|"Reason-Type" must not be equal to 7|no|
+|NOMINATED_DATE_TOO_LATE|"Nominated-Date" must not be more than three months after "OR-Assessment-End-Date"|no|
+|MUST_RECORD_DEC_DISCLOSURE|"DEC-Related-Party-Disclosure" must not be equal to 8|no|
