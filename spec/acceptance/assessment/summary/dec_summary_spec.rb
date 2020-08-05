@@ -58,6 +58,13 @@ describe "Acceptance::AssessmentSummary::DEC" do
               electricityCo2: "10",
               renewablesCo2: "1"
           },
+          year2Assessment: {
+              date: "2018-01-01",
+              energyEfficiencyRating: "40",
+              heatingCo2: "10",
+              electricityCo2: "15",
+              renewablesCo2: "2"
+          },
         },
       )
     end

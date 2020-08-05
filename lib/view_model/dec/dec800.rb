@@ -91,6 +91,26 @@ module ViewModel
         xpath(%w[Year1-Assessment Energy-Rating])
       end
 
+      def year2_assessment_date
+        xpath(%w[Year2-Assessment Nominated-Date])
+      end
+
+      def year2_heating_co2
+        xpath(%w[Year2-Assessment Heating-CO2])
+      end
+
+      def year2_electricity_co2
+        xpath(%w[Year2-Assessment Electricity-CO2])
+      end
+
+      def year2_renewables_co2
+        xpath(%w[Year2-Assessment Renewables-CO2])
+      end
+
+      def year2_energy_efficiency_rating
+        xpath(%w[Year2-Assessment Energy-Rating])
+      end
+
     end
   end
 end

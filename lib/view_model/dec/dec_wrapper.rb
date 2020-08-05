@@ -46,7 +46,14 @@ module ViewModel
               energy_efficiency_rating: @view_model.year1_energy_efficiency_rating,
               heating_co2: @view_model.year1_heating_co2,
               electricity_co2: @view_model.year1_electricity_co2,
-              renewables_co2: @view_model.year1_renewables_co2
+              renewables_co2:   @view_model.year1_renewables_co2
+          },
+          year2_assessment: {
+              date: @view_model.year2_assessment_date,
+              energy_efficiency_rating: @view_model.year2_energy_efficiency_rating,
+              heating_co2: @view_model.year2_heating_co2,
+              electricity_co2: @view_model.year2_electricity_co2,
+              renewables_co2: @view_model.year2_renewables_co2
           },
         }
       end

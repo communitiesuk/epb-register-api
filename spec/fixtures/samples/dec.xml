@@ -280,9 +280,10 @@
       </Year1-Assessment>
       <Year2-Assessment>
         <Nominated-Date>2018-01-01</Nominated-Date>
-        <Energy-Rating>0</Energy-Rating>
-        <Electricity-CO2>0</Electricity-CO2>
-        <Heating-CO2>0</Heating-CO2>
+        <Energy-Rating>40</Energy-Rating>
+        <Electricity-CO2>15</Electricity-CO2>
+        <Heating-CO2>10</Heating-CO2>
+        <Renewables-CO2>2</Renewables-CO2>
       </Year2-Assessment>
     </Display-Certificate>
   </Report>
