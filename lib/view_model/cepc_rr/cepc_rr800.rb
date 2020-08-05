@@ -90,7 +90,7 @@ module ViewModel
       end
 
       def floor_area
-        xpath(%w[Floor-Area])
+        xpath(%w[Technical-Information Floor-Area])
       end
 
       def building_environment

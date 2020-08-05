@@ -246,7 +246,11 @@
         <CEPC:Internal-Environment>Yes</CEPC:Internal-Environment>
         <CEPC:Assessment-Period-Alignment>Yes</CEPC:Assessment-Period-Alignment>
       </CEPC:OR-Building-Data>
-      <CEPC:OR-Usable-Floor-Area></CEPC:OR-Usable-Floor-Area>
+      <CEPC:OR-Usable-Floor-Area>
+        <CEPC:UFA-1>
+          <CEPC:Floor-Area>100</CEPC:Floor-Area>
+        </CEPC:UFA-1>
+      </CEPC:OR-Usable-Floor-Area>
       <CEPC:OR-Previous-Data></CEPC:OR-Previous-Data>
       <CEPC:OR-Benchmark-Data>
         <CEPC:Main-Benchmark></CEPC:Main-Benchmark>
