@@ -72,6 +72,12 @@ describe LodgementRules::NonDomestic do
         get_xml_errors("//CEPC:OR-Assessment-Start-Date", Date.tomorrow.to_s)
       expect(errors).to include(error)
     end
+
+    it "returns an error if the consumption type start date is in the future" do
+      errors =
+        get_xml_errors("//CEPC:Anthracite/CEPC:Start-Date", Date.tomorrow.to_s)
+      expect(errors).to include(error)
+    end
   end
 
   context "DATES_CANT_BE_MORE_THAN_4_YEARS_AGO" do

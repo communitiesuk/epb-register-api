@@ -146,6 +146,10 @@ module ViewModel
       def or_assessment_start_date
         xpath(%w[OR-Operational-Rating OR-Assessment-Start-Date])
       end
+
+      def start_dates
+        @xml_doc.search("Start-Date").map(&:content)
+      end
     end
   end
 end

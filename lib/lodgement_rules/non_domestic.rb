@@ -5,15 +5,15 @@ module LodgementRules
         name: "DATES_CANT_BE_IN_FUTURE",
         message:
           '"Inspection-Date", "Registration-Date" and "Issue-Date" must not be in the future',
-        test: lambda do |adaptor|
+        test: lambda do |adapter|
           dates = [
-            adaptor.date_of_assessment,
-            adaptor.date_of_registration,
-            adaptor.date_of_issue,
-            adaptor.effective_date,
-            adaptor.or_availability_date,
-            adaptor.or_assessment_start_date,
-          ]
+            adapter.date_of_assessment,
+            adapter.date_of_registration,
+            adapter.date_of_issue,
+            adapter.effective_date,
+            adapter.or_availability_date,
+            adapter.or_assessment_start_date,
+          ] + adapter.start_dates
 
           failed_rules = dates.select { |date| Date.parse(date).future? }
 
