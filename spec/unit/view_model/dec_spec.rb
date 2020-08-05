@@ -33,7 +33,14 @@ describe ViewModel::Dec::DecWrapper do
         heating_co2: "3",
         electricity_co2: "7",
         renewables_co2: "0"
-    }
+    },
+    year1_assessment: {
+        date: "2019-01-01",
+        energy_efficiency_rating: "24",
+        heating_co2: "5",
+        electricity_co2: "10",
+        renewables_co2: "1"
+    },
   }.freeze
 
   it "should read the appropriate values from the XML doc" do

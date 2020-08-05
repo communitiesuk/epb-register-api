@@ -70,6 +70,27 @@ module ViewModel
       def current_renewables_co2
         xpath(%w[This-Assessment Renewables-CO2])
       end
+
+      def year1_assessment_date
+        xpath(%w[Year1-Assessment Nominated-Date])
+      end
+
+      def year1_heating_co2
+        xpath(%w[Year1-Assessment Heating-CO2])
+      end
+
+      def year1_electricity_co2
+        xpath(%w[Year1-Assessment Electricity-CO2])
+      end
+
+      def year1_renewables_co2
+        xpath(%w[Year1-Assessment Renewables-CO2])
+      end
+
+      def year1_energy_efficiency_rating
+        xpath(%w[Year1-Assessment Energy-Rating])
+      end
+
     end
   end
 end
