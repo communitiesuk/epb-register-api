@@ -113,4 +113,20 @@ describe LodgementRules::NonDomestic do
       expect(errors).to include(error)
     end
   end
+
+  context "FLOOR_AREA_CANT_BE_LESS_THAN_ZERO" do
+    let(:error) do
+      {
+        "code": "FLOOR_AREA_CANT_BE_LESS_THAN_ZERO",
+        "message":
+          '"Floor-Area" must be greater than 0',
+      }.freeze
+    end
+
+    it "returns an error if technical information / floor area is less than zero" do
+      errors =
+        get_xml_errors("//CEPC:Technical-Information/CEPC:Floor-Area", "-1")
+      expect(errors).to include(error)
+    end
+  end
 end

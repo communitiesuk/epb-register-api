@@ -24,11 +24,11 @@ module LodgementRules
         name: "DATES_CANT_BE_MORE_THAN_4_YEARS_AGO",
         message:
           '"Inspection-Date", "Registration-Date" and "Issue-Date" must not be more than 4 years ago',
-        test: lambda do |adaptor|
+        test: lambda do |adapter|
           dates = [
-            adaptor.date_of_assessment,
-            adaptor.date_of_registration,
-            adaptor.date_of_issue,
+            adapter.date_of_assessment,
+            adapter.date_of_registration,
+            adapter.date_of_issue,
           ]
 
           failed_rules =
@@ -38,6 +38,14 @@ module LodgementRules
 
           failed_rules.empty?
         end,
+      },
+      {
+          name: "FLOOR_AREA_CANT_BE_LESS_THAN_ZERO",
+          message:
+              '"Floor-Area" must be greater than 0',
+          test: lambda do |adapter|
+            adapter.all_floor_areas.map(&:to_i).select { |number| number.negative? }.empty?
+          end,
       },
     ].freeze
 

@@ -150,6 +150,10 @@ module ViewModel
       def start_dates
         @xml_doc.search("Start-Date").map(&:content)
       end
+
+      def all_floor_areas
+        @xml_doc.search("Floor-Area").map(&:content)
+      end
     end
   end
 end
