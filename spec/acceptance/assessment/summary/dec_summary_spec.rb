@@ -44,6 +44,13 @@ describe "Acceptance::AssessmentSummary::DEC" do
             town: "Post-Town1",
             postcode: "A0 0AA",
           },
+          currentAssessment: {
+              date: "2020-01-01",
+              energyEfficiencyRating: "1",
+              heatingCo2: "3",
+              electricityCo2: "7",
+              renewablesCo2: "0"
+          }
         },
       )
     end
