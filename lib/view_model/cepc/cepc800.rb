@@ -102,18 +102,6 @@ module ViewModel
         xpath(%w[OR-Operational-Rating OR-Assessment-Start-Date])
       end
 
-      def all_start_dates
-        @xml_doc.search("Start-Date").map(&:content)
-      end
-
-      def all_floor_areas
-        @xml_doc.search("Floor-Area").map(&:content)
-      end
-
-      def all_energy_types
-        @xml_doc.search("Energy-Type").map(&:content)
-      end
-
       def standard_emissions
         xpath(%w[SER])
       end
