@@ -37,7 +37,7 @@ describe LodgementRules::NonDomestic do
     let(:error) do
       {
         "code": "DATES_CANT_BE_IN_FUTURE",
-        "message":
+        "title":
           '"Inspection-Date", "Registration-Date" and "Issue-Date" must not be in the future',
       }.freeze
     end
@@ -84,7 +84,7 @@ describe LodgementRules::NonDomestic do
     let(:error) do
       {
         "code": "DATES_CANT_BE_MORE_THAN_4_YEARS_AGO",
-        "message":
+        "title":
           '"Inspection-Date", "Registration-Date" and "Issue-Date" must not be more than 4 years ago',
       }.freeze
     end
@@ -118,7 +118,7 @@ describe LodgementRules::NonDomestic do
     let(:error) do
       {
         "code": "FLOOR_AREA_CANT_BE_LESS_THAN_ZERO",
-        "message": '"Floor-Area" must be greater than 0',
+        "title": '"Floor-Area" must be greater than 0',
       }.freeze
     end
 
@@ -141,7 +141,7 @@ describe LodgementRules::NonDomestic do
     let(:error) do
       {
         "code": "EMISSION_RATINGS_MUST_NOT_BE_NEGATIVE",
-        "message": '"SER", "BER", "TER" and "TYR" must not be negative numbers',
+        "title": '"SER", "BER", "TER" and "TYR" must not be negative numbers',
       }.freeze
     end
 
@@ -170,7 +170,7 @@ describe LodgementRules::NonDomestic do
     let(:error) do
       {
         "code": "MUST_RECORD_TRANSACTION_TYPE",
-        "message": '"Transaction-Type" must not be equal to 7',
+        "title": '"Transaction-Type" must not be equal to 7',
       }.freeze
     end
 
@@ -183,7 +183,7 @@ describe LodgementRules::NonDomestic do
     let(:error) do
       {
         "code": "MUST_RECORD_EPC_DISCLOSURE",
-        "message": '"EPC-Related-Party-Disclosure" must not be equal to 13',
+        "title": '"EPC-Related-Party-Disclosure" must not be equal to 13',
       }.freeze
     end
 
@@ -197,7 +197,7 @@ describe LodgementRules::NonDomestic do
     let(:error) do
       {
         "code": "MUST_RECORD_ENERGY_TYPE",
-        "message": '"Energy-Type" must not be equal to 4',
+        "title": '"Energy-Type" must not be equal to 4',
       }.freeze
     end
 

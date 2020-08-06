@@ -3,7 +3,7 @@ module LodgementRules
     RULES = [
       {
         name: "DATES_CANT_BE_IN_FUTURE",
-        message:
+        title:
           '"Inspection-Date", "Registration-Date" and "Issue-Date" must not be in the future',
         test: lambda do |adapter|
           dates =
@@ -23,7 +23,7 @@ module LodgementRules
       },
       {
         name: "DATES_CANT_BE_MORE_THAN_4_YEARS_AGO",
-        message:
+        title:
           '"Inspection-Date", "Registration-Date" and "Issue-Date" must not be more than 4 years ago',
         test: lambda do |adapter|
           dates = [
@@ -42,14 +42,14 @@ module LodgementRules
       },
       {
         name: "FLOOR_AREA_CANT_BE_LESS_THAN_ZERO",
-        message: '"Floor-Area" must be greater than 0',
+        title: '"Floor-Area" must be greater than 0',
         test: lambda do |adapter|
           adapter.all_floor_areas.map(&:to_i).select(&:negative?).empty?
         end,
       },
       {
         name: "EMISSION_RATINGS_MUST_NOT_BE_NEGATIVE",
-        message: '"SER", "BER", "TER" and "TYR" must not be negative numbers',
+        title: '"SER", "BER", "TER" and "TYR" must not be negative numbers',
         test: lambda do |adapter|
           [
             adapter.standard_emissions,
@@ -61,17 +61,17 @@ module LodgementRules
       },
       {
         name: "MUST_RECORD_TRANSACTION_TYPE",
-        message: '"Transaction-Type" must not be equal to 7',
+        title: '"Transaction-Type" must not be equal to 7',
         test: ->(adapter) { adapter.transaction_type.to_i != 7 },
       },
       {
         name: "MUST_RECORD_EPC_DISCLOSURE",
-        message: '"EPC-Related-Party-Disclosure" must not be equal to 13',
+        title: '"EPC-Related-Party-Disclosure" must not be equal to 13',
         test: ->(adapter) { adapter.epc_related_party_disclosure.to_i != 13 },
       },
       {
         name: "MUST_RECORD_ENERGY_TYPE",
-        message: '"Energy-Type" must not be equal to 4',
+        title: '"Energy-Type" must not be equal to 4',
         test: lambda do |adapter|
           adapter.all_energy_types.map(&:to_i).select { |energy_type|
             energy_type == 4
@@ -83,7 +83,7 @@ module LodgementRules
     def validate(xml_adaptor)
       errors = RULES.reject { |rule| rule[:test].call(xml_adaptor) }
 
-      errors.map { |error| { code: error[:name], message: error[:message] } }
+      errors.map { |error| { code: error[:name], title: error[:title] } }
     end
   end
 end
