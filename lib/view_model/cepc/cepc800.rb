@@ -41,14 +41,6 @@ module ViewModel
         xpath(%w[Asset-Rating])
       end
 
-      def scheme_assessor_id
-        xpath(%w[Certificate-Number])
-      end
-
-      def assessor_name
-        xpath(%w[Energy-Assessor Name])
-      end
-
       def assessor_email
         xpath(%w[Energy-Assessor E-Mail])
       end

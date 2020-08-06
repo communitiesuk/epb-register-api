@@ -50,6 +50,14 @@ module ViewModel
         xpath(%w[Property-Address Postcode])
       end
 
+      def scheme_assessor_id
+        xpath(%w[Certificate-Number])
+      end
+
+      def assessor_name
+        xpath(%w[Energy-Assessor Name])
+      end
+
       def all_start_dates
         @xml_doc.search("Start-Date").map(&:content)
       end
