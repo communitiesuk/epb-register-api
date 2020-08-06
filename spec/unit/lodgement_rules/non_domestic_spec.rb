@@ -38,7 +38,7 @@ describe LodgementRules::NonDomestic do
       {
         "code": "DATES_CANT_BE_IN_FUTURE",
         "title":
-          '"Inspection-Date", "Registration-Date" and "Issue-Date" must not be in the future',
+          'Inspection-Date", "Registration-Date", "Issue-Date", "Effective-Date", "OR-Availability-Date", "Start-Date" and "OR-Assessment-Start-Date" must not be in the future',
       }.freeze
     end
 
