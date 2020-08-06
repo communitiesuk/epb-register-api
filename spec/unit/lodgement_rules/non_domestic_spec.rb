@@ -128,11 +128,25 @@ describe LodgementRules::NonDomestic do
       expect(errors).to include(error)
     end
 
-    it "returns an error if multiple floor areas are less than zero" do
+    it "returns an error if technical information / floor area is equal to zero" do
+      errors =
+        get_xml_errors("//CEPC:Technical-Information/CEPC:Floor-Area", "0")
+      expect(errors).to include(error)
+    end
+
+    it "returns an error if any floor area is less than zero" do
       xml_doc.at("//CEPC:Benchmark/CEPC:Floor-Area").children = "-1"
 
       errors =
         get_xml_errors("//CEPC:Technical-Information/CEPC:Floor-Area", "-1")
+      expect(errors).to include(error)
+    end
+
+    it "returns an error if any floor area is equal to zero" do
+      xml_doc.at("//CEPC:Benchmark/CEPC:Floor-Area").children = "0"
+
+      errors =
+        get_xml_errors("//CEPC:Technical-Information/CEPC:Floor-Area", "0")
       expect(errors).to include(error)
     end
   end
