@@ -1,15 +1,6 @@
 module ViewModel
   module Dec
-    class Dec800
-      def initialize(xml)
-        @xml_doc = Nokogiri.XML xml
-      end
-
-      def xpath(queries)
-        node = @xml_doc
-        queries.each { |query| node = node.at query }
-        node ? node.content : nil
-      end
+    class Dec800 < ViewModel::Common::SchemaCepc800
 
       def assessment_id
         xpath(%w[RRN])

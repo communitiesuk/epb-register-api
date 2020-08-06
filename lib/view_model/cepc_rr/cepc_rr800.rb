@@ -1,16 +1,6 @@
 module ViewModel
   module CepcRr
-    class CepcRr800
-      def initialize(xml)
-        @xml_doc = Nokogiri.XML xml
-      end
-
-      def xpath(queries)
-        node = @xml_doc
-        queries.each { |query| node = node.at query }
-        node ? node.content : nil
-      end
-
+    class CepcRr800 < ViewModel::Common::SchemaCepc800
       def recommendations(payback)
         @xml_doc.search("RR-Recommendations/#{payback}").map do |node|
           {

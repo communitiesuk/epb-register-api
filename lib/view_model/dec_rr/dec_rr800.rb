@@ -1,16 +1,6 @@
 module ViewModel
   module DecRr
-    class DecRr800
-      def initialize(xml)
-        @xml_doc = Nokogiri.XML xml
-      end
-
-      def xpath(queries)
-        node = @xml_doc
-        queries.each { |query| node = node.at query }
-        node ? node.content : nil
-      end
-
+    class DecRr800 < ViewModel::Common::SchemaCepc800
       def assessment_id
         xpath(%w[RRN])
       end

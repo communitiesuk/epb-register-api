@@ -1,11 +1,6 @@
 module ViewModel
   module Cepc
     class Cepc800 < ViewModel::Common::SchemaCepc800
-      def initialize(xml)
-        @xml_doc = Nokogiri.XML xml
-      end
-
-
       def assessment_id
         xpath(%w[RRN])
       end
