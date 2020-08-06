@@ -86,6 +86,10 @@ module ViewModel
         xpath(%w[Issue-Date])
       end
 
+      def address_id
+        xpath(%w[UPRN])
+      end
+
       def all_start_dates
         @xml_doc.search("Start-Date").map(&:content)
       end

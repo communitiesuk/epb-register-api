@@ -45,10 +45,6 @@ module ViewModel
         xpath(%w[EPC-Related-Party-Disclosure])
       end
 
-      def address_id
-        xpath(%w[UPRN])
-      end
-
       def property_type
         xpath(%w[Property-Type])
       end

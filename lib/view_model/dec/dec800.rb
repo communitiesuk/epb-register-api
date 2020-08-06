@@ -6,10 +6,6 @@ module ViewModel
         xpath(%w[This-Assessment Energy-Rating])
       end
 
-      def address_id
-        xpath(%w[UPRN])
-      end
-
       def current_assessment_date
         xpath(%w[This-Assessment Nominated-Date])
       end

@@ -11,10 +11,6 @@ module ViewModel
         end
       end
 
-      def address_id
-        xpath(%w[UPRN])
-      end
-
       def short_payback_recommendations
         recommendations("Short-Payback")
       end
