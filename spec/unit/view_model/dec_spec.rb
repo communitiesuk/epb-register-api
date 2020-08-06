@@ -26,29 +26,29 @@ describe ViewModel::Dec::DecWrapper do
     type_of_assessment: "DEC",
     report_type: "1",
     current_assessment: {
-        date: "2020-01-01",
-        energy_efficiency_rating: "1",
-        energy_efficiency_band: "a",
-        heating_co2: "3",
-        electricity_co2: "7",
-        renewables_co2: "0"
+      date: "2020-01-01",
+      energy_efficiency_rating: "1",
+      energy_efficiency_band: "a",
+      heating_co2: "3",
+      electricity_co2: "7",
+      renewables_co2: "0",
     },
     year1_assessment: {
-        date: "2019-01-01",
-        energy_efficiency_rating: "24",
-        energy_efficiency_band: "a",
-        heating_co2: "5",
-        electricity_co2: "10",
-        renewables_co2: "1"
+      date: "2019-01-01",
+      energy_efficiency_rating: "24",
+      energy_efficiency_band: "a",
+      heating_co2: "5",
+      electricity_co2: "10",
+      renewables_co2: "1",
     },
     year2_assessment: {
-        date: "2018-01-01",
-        energy_efficiency_rating: "40",
-        energy_efficiency_band: "b",
-        heating_co2: "10",
-        electricity_co2: "15",
-        renewables_co2: "2"
-    }
+      date: "2018-01-01",
+      energy_efficiency_rating: "40",
+      energy_efficiency_band: "b",
+      heating_co2: "10",
+      electricity_co2: "15",
+      renewables_co2: "2",
+    },
   }.freeze
 
   it "should read the appropriate values from the XML doc" do

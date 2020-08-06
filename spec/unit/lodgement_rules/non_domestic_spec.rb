@@ -118,8 +118,7 @@ describe LodgementRules::NonDomestic do
     let(:error) do
       {
         "code": "FLOOR_AREA_CANT_BE_LESS_THAN_ZERO",
-        "message":
-          '"Floor-Area" must be greater than 0',
+        "message": '"Floor-Area" must be greater than 0',
       }.freeze
     end
 
@@ -130,10 +129,10 @@ describe LodgementRules::NonDomestic do
     end
 
     it "returns an error if multiple floor areas are less than zero" do
-      xml_doc.at("//CEPC:Benchmark/CEPC:Floor-Area").children = '-1'
+      xml_doc.at("//CEPC:Benchmark/CEPC:Floor-Area").children = "-1"
 
       errors =
-          get_xml_errors("//CEPC:Technical-Information/CEPC:Floor-Area", "-1")
+        get_xml_errors("//CEPC:Technical-Information/CEPC:Floor-Area", "-1")
       expect(errors).to include(error)
     end
   end
@@ -142,85 +141,69 @@ describe LodgementRules::NonDomestic do
     let(:error) do
       {
         "code": "EMISSION_RATINGS_MUST_NOT_BE_NEGATIVE",
-        "message":
-          '"SER", "BER", "TER" and "TYR" must not be negative numbers',
+        "message": '"SER", "BER", "TER" and "TYR" must not be negative numbers',
       }.freeze
     end
 
     it "returns an error if SER is minus one" do
-      errors =
-        get_xml_errors("//CEPC:SER", "-1.01")
+      errors = get_xml_errors("//CEPC:SER", "-1.01")
       expect(errors).to include(error)
     end
 
     it "returns an error if BER is minus one" do
-      errors =
-        get_xml_errors("//CEPC:BER", "-1.01")
+      errors = get_xml_errors("//CEPC:BER", "-1.01")
       expect(errors).to include(error)
     end
 
     it "returns an error if TER is minus one" do
-      errors =
-        get_xml_errors("//CEPC:TER", "-1.01")
+      errors = get_xml_errors("//CEPC:TER", "-1.01")
       expect(errors).to include(error)
     end
 
     it "returns an error if TYR is minus one" do
-      errors =
-        get_xml_errors("//CEPC:TYR", "-1.01")
+      errors = get_xml_errors("//CEPC:TYR", "-1.01")
       expect(errors).to include(error)
     end
-
   end
 
   context "MUST_RECORD_TRANSACTION_TYPE" do
     let(:error) do
       {
         "code": "MUST_RECORD_TRANSACTION_TYPE",
-        "message":
-          '"Transaction-Type" must not be equal to 7',
+        "message": '"Transaction-Type" must not be equal to 7',
       }.freeze
     end
 
     it "returns an error if Transaction-Type is 7" do
-      errors =
-        get_xml_errors("//CEPC:Transaction-Type", "7")
+      errors = get_xml_errors("//CEPC:Transaction-Type", "7")
       expect(errors).to include(error)
     end
-
   end
   context "MUST_RECORD_EPC_DISCLOSURE" do
     let(:error) do
       {
         "code": "MUST_RECORD_EPC_DISCLOSURE",
-        "message":
-          '"EPC-Related-Party-Disclosure" must not be equal to 13',
+        "message": '"EPC-Related-Party-Disclosure" must not be equal to 13',
       }.freeze
     end
 
     it "returns an error if EPC-Related-Party-Disclosure is 13" do
-      errors =
-        get_xml_errors("//CEPC:EPC-Related-Party-Disclosure", "13")
+      errors = get_xml_errors("//CEPC:EPC-Related-Party-Disclosure", "13")
       expect(errors).to include(error)
     end
-
   end
 
   context "MUST_RECORD_ENERGY_TYPE" do
     let(:error) do
       {
         "code": "MUST_RECORD_ENERGY_TYPE",
-        "message":
-          '"Energy-Type" must not be equal to 4',
+        "message": '"Energy-Type" must not be equal to 4',
       }.freeze
     end
 
     it "returns an error if Energy-Type is 4" do
-      errors =
-        get_xml_errors("//CEPC:Energy-Type", "4")
+      errors = get_xml_errors("//CEPC:Energy-Type", "4")
       expect(errors).to include(error)
     end
-
   end
-
 end

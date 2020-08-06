@@ -32,28 +32,37 @@ module ViewModel
           type_of_assessment: "DEC",
           report_type: @view_model.report_type,
           current_assessment: {
-              date: @view_model.current_assessment_date,
-              energy_efficiency_rating: @view_model.energy_efficiency_rating,
-              energy_efficiency_band: get_energy_rating_band(@view_model.energy_efficiency_rating.to_i),
-              heating_co2: @view_model.current_heating_co2,
-              electricity_co2: @view_model.current_electricity_co2,
-              renewables_co2: @view_model.current_renewables_co2
+            date: @view_model.current_assessment_date,
+            energy_efficiency_rating: @view_model.energy_efficiency_rating,
+            energy_efficiency_band:
+              get_energy_rating_band(@view_model.energy_efficiency_rating.to_i),
+            heating_co2: @view_model.current_heating_co2,
+            electricity_co2: @view_model.current_electricity_co2,
+            renewables_co2: @view_model.current_renewables_co2,
           },
           year1_assessment: {
-              date: @view_model.year1_assessment_date,
-              energy_efficiency_rating: @view_model.year1_energy_efficiency_rating,
-              energy_efficiency_band: get_energy_rating_band(@view_model.year1_energy_efficiency_rating.to_i),
-              heating_co2: @view_model.year1_heating_co2,
-              electricity_co2: @view_model.year1_electricity_co2,
-              renewables_co2:   @view_model.year1_renewables_co2
+            date: @view_model.year1_assessment_date,
+            energy_efficiency_rating:
+              @view_model.year1_energy_efficiency_rating,
+            energy_efficiency_band:
+              get_energy_rating_band(
+                @view_model.year1_energy_efficiency_rating.to_i,
+              ),
+            heating_co2: @view_model.year1_heating_co2,
+            electricity_co2: @view_model.year1_electricity_co2,
+            renewables_co2: @view_model.year1_renewables_co2,
           },
           year2_assessment: {
-              date: @view_model.year2_assessment_date,
-              energy_efficiency_rating: @view_model.year2_energy_efficiency_rating,
-              energy_efficiency_band: get_energy_rating_band(@view_model.year2_energy_efficiency_rating.to_i),
-              heating_co2: @view_model.year2_heating_co2,
-              electricity_co2: @view_model.year2_electricity_co2,
-              renewables_co2: @view_model.year2_renewables_co2
+            date: @view_model.year2_assessment_date,
+            energy_efficiency_rating:
+              @view_model.year2_energy_efficiency_rating,
+            energy_efficiency_band:
+              get_energy_rating_band(
+                @view_model.year2_energy_efficiency_rating.to_i,
+              ),
+            heating_co2: @view_model.year2_heating_co2,
+            electricity_co2: @view_model.year2_electricity_co2,
+            renewables_co2: @view_model.year2_renewables_co2,
           },
         }
       end

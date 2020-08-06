@@ -1,7 +1,6 @@
 module ViewModel
   module Dec
     class Dec800 < ViewModel::Common::SchemaCepc800
-
       def energy_efficiency_rating
         xpath(%w[This-Assessment Energy-Rating])
       end
@@ -61,7 +60,6 @@ module ViewModel
       def year2_energy_efficiency_rating
         xpath(%w[Year2-Assessment Energy-Rating])
       end
-
     end
   end
 end

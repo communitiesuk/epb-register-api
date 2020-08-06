@@ -1,8 +1,8 @@
 module ViewModel
   module Common
     class SchemaCepc800
-      #This class should contain fields only that are common
-      #to ALL types of CEPC-8.0.0 documents: CEPC, RR, DEC, AC, etc
+      # This class should contain fields only that are common
+      # to ALL types of CEPC-8.0.0 documents: CEPC, RR, DEC, AC, etc
 
       def initialize(xml)
         @xml_doc = Nokogiri.XML xml
