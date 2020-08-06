@@ -53,12 +53,10 @@ module UseCase
           if rescued != true && !validation_result.empty?
             if overidden
               lodgement.fetch_data.each do |lodgement_data|
-                overidden_event =
-                  OveriddenLodgementEvent.create(
-                    assessment_id: lodgement_data[:assessment_id],
-                    rule_triggers: validation_result,
-                  )
-                overidden_event.save
+                Gateway::OverridenLodgmentEventsGateway.new.add(
+                  lodgement_data[:assessment_id],
+                  validation_result,
+                )
               end
             else
               raise LodgementRulesException, validation_result
