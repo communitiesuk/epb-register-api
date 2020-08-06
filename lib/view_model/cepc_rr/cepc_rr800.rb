@@ -1,6 +1,6 @@
 module ViewModel
   module CepcRr
-    class CepcRr800 < ViewModel::Common::SchemaCepc800
+    class CepcRr800 < ViewModel::Cepc800::CommonSchema
       def recommendations(payback)
         @xml_doc.search("RR-Recommendations/#{payback}").map do |node|
           {

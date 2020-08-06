@@ -1,6 +1,6 @@
 module ViewModel
-  module Common
-    class SchemaCepc800
+  module Cepc800
+    class CommonSchema
       # This class should contain fields only that are common
       # to ALL types of CEPC-8.0.0 documents: CEPC, RR, DEC, AC, etc
 
