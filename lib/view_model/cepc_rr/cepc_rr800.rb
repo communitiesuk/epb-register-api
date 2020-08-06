@@ -54,14 +54,6 @@ module ViewModel
       def related_party_disclosure
         xpath(%w[Related-Party-Disclosure])
       end
-
-      def company_address
-        xpath(%w[Trading-Address])
-      end
-
-      def company_name
-        xpath(%w[Company-Name])
-      end
     end
   end
 end

@@ -41,23 +41,6 @@ module ViewModel
         xpath(%w[Asset-Rating])
       end
 
-      def assessor_email
-        xpath(%w[Energy-Assessor E-Mail])
-      end
-
-      def assessor_telephone
-        xpath(%w[Energy-Assessor Telephone-Number])
-      end
-
-      def company_name
-        xpath(%w[Energy-Assessor Company-Name])
-      end
-
-      def company_address
-        xpath(%w[Energy-Assessor Trading-Address])
-      end
-
-
       def date_of_assessment
         xpath(%w[Inspection-Date])
       end
