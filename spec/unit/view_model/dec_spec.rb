@@ -1,6 +1,6 @@
 require_relative "xml_view_test_helper"
 
-describe ViewModel::Dec::DecWrapper do
+describe ViewModel::DecWrapper do
   # You should only need to add to this list to test new CEPC schema
   supported_schema = [
     {
@@ -57,7 +57,7 @@ describe ViewModel::Dec::DecWrapper do
 
   it "returns the expect error without a valid schema type" do
     expect {
-      ViewModel::Dec::DecWrapper.new "", "invalid"
+      ViewModel::DecWrapper.new "", "invalid"
     }.to raise_error.with_message "Unsupported schema type"
   end
 end

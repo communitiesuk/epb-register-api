@@ -16,7 +16,7 @@ module ViewModel
 
         case report_type
         when "1"
-          ViewModel::Dec::DecWrapper.new(filtered_results.to_xml, schema_type)
+          ViewModel::DecWrapper.new(filtered_results.to_xml, schema_type)
         when "2"
           ViewModel::DecRr::DecRrWrapper.new(
             filtered_results.to_xml,
@@ -25,10 +25,7 @@ module ViewModel
         when "3"
           ViewModel::CepcWrapper.new(filtered_results.to_xml, schema_type)
         when "4"
-          ViewModel::CepcRrWrapper.new(
-            filtered_results.to_xml,
-            schema_type,
-          )
+          ViewModel::CepcRrWrapper.new(filtered_results.to_xml, schema_type)
         else
           raise ArgumentError, "Invalid CEPC report type"
         end
