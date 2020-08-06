@@ -590,10 +590,10 @@ paths:
                     items:
                       type: object
                       properties:
-                        errorCode:
+                        code:
                           type: string
                           example: "FLOOR_AREA_LESS_THAN_ZERO"
-                        errorDescription:
+                        title:
                           type: string
                           example: "Floor-Area must be greater than zero"
                   meta:
