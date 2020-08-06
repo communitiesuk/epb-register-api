@@ -11,18 +11,6 @@ module ViewModel
         end
       end
 
-      def assessment_id
-        xpath(%w[RRN])
-      end
-
-      def report_type
-        xpath(%w[Report-Type])
-      end
-
-      def date_of_expiry
-        xpath(%w[Valid-Until])
-      end
-
       def address_line1
         xpath(%w[Property-Address Address-Line-1])
       end

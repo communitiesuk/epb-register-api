@@ -1,14 +1,6 @@
 module ViewModel
   module Cepc
     class Cepc800 < ViewModel::Common::SchemaCepc800
-      def assessment_id
-        xpath(%w[RRN])
-      end
-
-      def date_of_expiry
-        xpath(%w[Valid-Until])
-      end
-
       def address_line1
         xpath(%w[Property-Address Address-Line-1])
       end
@@ -97,9 +89,6 @@ module ViewModel
         xpath(%w[Energy-Assessor Trading-Address])
       end
 
-      def report_type
-        xpath(%w[Report-Type])
-      end
 
       def date_of_assessment
         xpath(%w[Inspection-Date])

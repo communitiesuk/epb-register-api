@@ -14,6 +14,18 @@ module ViewModel
         node ? node.content : nil
       end
 
+      def assessment_id
+        xpath(%w[RRN])
+      end
+
+      def date_of_expiry
+        xpath(%w[Valid-Until])
+      end
+
+      def report_type
+        xpath(%w[Report-Type])
+      end
+
     end
   end
 end

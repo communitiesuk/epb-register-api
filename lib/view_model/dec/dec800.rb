@@ -2,14 +2,6 @@ module ViewModel
   module Dec
     class Dec800 < ViewModel::Common::SchemaCepc800
 
-      def assessment_id
-        xpath(%w[RRN])
-      end
-
-      def date_of_expiry
-        xpath(%w[Valid-Until])
-      end
-
       def address_line1
         xpath(%w[Property-Address Address-Line-1])
       end
@@ -36,10 +28,6 @@ module ViewModel
 
       def energy_efficiency_rating
         xpath(%w[This-Assessment Energy-Rating])
-      end
-
-      def report_type
-        xpath(%w[Report-Type])
       end
 
       def address_id
