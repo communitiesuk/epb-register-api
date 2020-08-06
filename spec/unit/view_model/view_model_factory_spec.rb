@@ -4,7 +4,7 @@ describe ViewModel::Factory do
     xml_doc = Nokogiri.XML xml_file
     factory = described_class.new
     result = factory.create(xml_doc.to_xml, "CEPC-8.0.0")
-    expect(result).to be_kind_of(ViewModel::Cepc::CepcWrapper)
+    expect(result).to be_kind_of(ViewModel::CepcWrapper)
   end
 
   it "can filter an xml document with multiple reports" do

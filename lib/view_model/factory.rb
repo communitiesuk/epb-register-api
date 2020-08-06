@@ -23,7 +23,7 @@ module ViewModel
             schema_type,
           )
         when "3"
-          ViewModel::Cepc::CepcWrapper.new(filtered_results.to_xml, schema_type)
+          ViewModel::CepcWrapper.new(filtered_results.to_xml, schema_type)
         when "4"
           ViewModel::CepcRr::CepcRrWrapper.new(
             filtered_results.to_xml,

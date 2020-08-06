@@ -1,6 +1,6 @@
 module ViewModel
-  module Cepc
-    class Cepc800 < ViewModel::Cepc800::CommonSchema
+  module Cepc800
+    class Cepc < ViewModel::Cepc800::CommonSchema
       def main_heating_fuel
         xpath(%w[Main-Heating-Fuel])
       end
