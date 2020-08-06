@@ -2,30 +2,6 @@ module ViewModel
   module Dec
     class Dec800 < ViewModel::Common::SchemaCepc800
 
-      def address_line1
-        xpath(%w[Property-Address Address-Line-1])
-      end
-
-      def address_line2
-        xpath(%w[Property-Address Address-Line-2])
-      end
-
-      def address_line3
-        xpath(%w[Property-Address Address-Line-3])
-      end
-
-      def address_line4
-        xpath(%w[Property-Address Address-Line-4])
-      end
-
-      def town
-        xpath(%w[Property-Address Post-Town])
-      end
-
-      def postcode
-        xpath(%w[Property-Address Postcode])
-      end
-
       def energy_efficiency_rating
         xpath(%w[This-Assessment Energy-Rating])
       end
