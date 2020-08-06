@@ -2,6 +2,7 @@
 
 module UseCase
   class ValidateAndLodgeAssessment
+    class OveriddenLodgementEvent < ActiveRecord::Base; end
     class ValidationErrorException < StandardError; end
     class UnauthorisedToLodgeAsThisSchemeException < StandardError; end
     class SchemaNotSupportedException < StandardError; end
@@ -20,7 +21,7 @@ module UseCase
         UseCase::CheckAssessorBelongsToScheme.new
     end
 
-    def execute(xml, schema_name, scheme_ids, migrated)
+    def execute(xml, schema_name, scheme_ids, migrated, overidden)
       raise SchemaNotDefined unless schema_name
 
       lodgement = Domain::Lodgement.new(xml, schema_name)
@@ -50,7 +51,18 @@ module UseCase
           end
 
           if rescued != true && !validation_result.empty?
-            raise LodgementRulesException, validation_result
+            if overidden
+              lodgement.fetch_data.each do |lodgement_data|
+                overidden_event =
+                  OveriddenLodgementEvent.create(
+                    assessment_id: lodgement_data[:assessment_id],
+                    rule_triggers: validation_result,
+                  )
+                overidden_event.save
+              end
+            else
+              raise LodgementRulesException, validation_result
+            end
           end
         end
       end

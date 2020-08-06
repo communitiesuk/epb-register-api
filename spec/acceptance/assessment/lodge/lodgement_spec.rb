@@ -4,7 +4,9 @@ describe "Acceptance::Assessment::Lodge" do
   include RSpecRegisterApiServiceMixin
 
   let(:valid_assessor_request_body) do
-    AssessorStub.new.fetch_request_body(domesticRdSap: "ACTIVE")
+    AssessorStub.new.fetch_request_body(
+      domesticRdSap: "ACTIVE", nonDomesticNos3: "ACTIVE",
+    )
   end
 
   let(:valid_rdsap_xml) do
@@ -418,6 +420,44 @@ describe "Acceptance::Assessment::Lodge" do
       expect(
         lighting_cost_potential.entries.first["lighting_cost_potential"],
       ).to eq "0.00"
+    end
+  end
+
+  context "when lodging an assessment with the override flag set to true" do
+    let(:valid_cepc_xml) do
+      File.read File.join Dir.pwd, "spec/fixtures/samples/cepc.xml"
+    end
+
+    let(:cepc_xml_doc) do
+      cepc_xml_doc = Nokogiri.XML(valid_cepc_xml)
+      cepc_xml_doc
+    end
+
+    it "will lodge the assessment and log the events to the overidden_lodgement_events table" do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
+
+      cepc_xml_doc.at("//CEPC:Registration-Date").children = "2030-05-04"
+
+      lodge_assessment(
+        assessment_body: cepc_xml_doc.to_xml,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] },
+        schema_name: "CEPC-8.0.0",
+        override: true,
+      )
+
+      overidden_lodgement_event =
+        ActiveRecord::Base.connection.execute(
+          "SELECT * FROM overidden_lodgement_events WHERE assessment_id = '0000-0000-0000-0000-0000'",
+        ).first
+
+      expect(overidden_lodgement_event["assessment_id"]).to eq(
+        "0000-0000-0000-0000-0000",
+      )
+      expect(overidden_lodgement_event["rule_triggers"]).to eq(
+        "[{\"code\": \"DATES_CANT_BE_IN_FUTURE\", \"message\": \"\\\"Inspection-Date\\\", \\\"Registration-Date\\\" and \\\"Issue-Date\\\" must not be in the future\"}]",
+      )
     end
   end
 end

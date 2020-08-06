@@ -225,9 +225,17 @@ def lodge_assessment(
   json: false,
   schema_name: "RdSAP-Schema-20.0.0",
   headers: {},
-  migrated: nil
+  migrated: nil,
+  override: nil
 )
-  path = migrated == true ? "api/assessments?migrated" : "api/assessments"
+  path = if migrated == true
+           "api/assessments?migrated"
+         elsif override == true
+           "api/assessments?override"
+         else
+           "api/assessments"
+         end
+
   header "Content-type", "application/xml+" + schema_name
 
   headers.each { |key, value| header key.to_s, value.to_s }

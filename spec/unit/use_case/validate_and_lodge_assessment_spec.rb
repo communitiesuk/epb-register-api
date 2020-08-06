@@ -50,6 +50,7 @@ describe UseCase::ValidateAndLodgeAssessment do
           "Non-existent-RdSAP-Schema-20.0.0",
           "1",
           false,
+          false,
         )
       }.to raise_exception(
         UseCase::ValidateAndLodgeAssessment::SchemaNotSupportedException,
@@ -58,7 +59,7 @@ describe UseCase::ValidateAndLodgeAssessment do
 
     it "raises the error SchemaNotDefined" do
       expect {
-        use_case.execute(valid_xml, nil, "1", false)
+        use_case.execute(valid_xml, nil, "1", false, false)
       }.to raise_exception(
         UseCase::ValidateAndLodgeAssessment::SchemaNotDefined,
       )
