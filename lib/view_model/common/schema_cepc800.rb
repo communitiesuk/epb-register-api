@@ -74,6 +74,18 @@ module ViewModel
         xpath(%w[Energy-Assessor Trading-Address])
       end
 
+      def date_of_assessment
+        xpath(%w[Inspection-Date])
+      end
+
+      def date_of_registration
+        xpath(%w[Registration-Date])
+      end
+
+      def date_of_issue
+        xpath(%w[Issue-Date])
+      end
+
       def all_start_dates
         @xml_doc.search("Start-Date").map(&:content)
       end

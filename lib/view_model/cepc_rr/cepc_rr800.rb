@@ -31,10 +31,6 @@ module ViewModel
         recommendations("Other-Payback")
       end
 
-      def date_of_registration
-        xpath(%w[Registration-Date])
-      end
-
       def floor_area
         xpath(%w[Technical-Information Floor-Area])
       end

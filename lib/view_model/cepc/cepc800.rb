@@ -41,18 +41,6 @@ module ViewModel
         xpath(%w[Asset-Rating])
       end
 
-      def date_of_assessment
-        xpath(%w[Inspection-Date])
-      end
-
-      def date_of_registration
-        xpath(%w[Registration-Date])
-      end
-
-      def date_of_issue
-        xpath(%w[Issue-Date])
-      end
-
       def epc_related_party_disclosure
         xpath(%w[EPC-Related-Party-Disclosure])
       end
