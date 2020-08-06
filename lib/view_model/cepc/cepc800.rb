@@ -1,15 +1,10 @@
 module ViewModel
   module Cepc
-    class Cepc800
+    class Cepc800 < ViewModel::Common::SchemaCepc800
       def initialize(xml)
         @xml_doc = Nokogiri.XML xml
       end
 
-      def xpath(queries)
-        node = @xml_doc
-        queries.each { |query| node = node.at query }
-        node ? node.content : nil
-      end
 
       def assessment_id
         xpath(%w[RRN])
