@@ -1,12 +1,11 @@
 module ViewModel
-  module DecRr
     class DecRrWrapper
       TYPE_OF_ASSESSMENT = "DEC-RR".freeze
 
       def initialize(xml, schema_type)
         case schema_type
         when "CEPC-8.0.0"
-          @view_model = ViewModel::DecRr::DecRr800.new xml
+          @view_model = ViewModel::Cepc800::Dec.new xml
         else
           raise ArgumentError, "Unsupported schema type"
         end
@@ -33,5 +32,4 @@ module ViewModel
         }
       end
     end
-  end
 end

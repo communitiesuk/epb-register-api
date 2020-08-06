@@ -1,6 +1,6 @@
 require_relative "xml_view_test_helper"
 
-describe ViewModel::DecRr::DecRrWrapper do
+describe ViewModel::DecRrWrapper do
   context "Testing the DEC-RR schemas" do
     supported_schema = [
       {
@@ -31,7 +31,7 @@ describe ViewModel::DecRr::DecRrWrapper do
 
     it "returns the expect error without a valid schema type" do
       expect {
-        ViewModel::DecRr::DecRrWrapper.new "", "invalid"
+        ViewModel::DecRrWrapper.new "", "invalid"
       }.to raise_error.with_message "Unsupported schema type"
     end
   end
