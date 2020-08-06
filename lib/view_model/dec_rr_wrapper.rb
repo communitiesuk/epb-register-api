@@ -5,7 +5,7 @@ module ViewModel
       def initialize(xml, schema_type)
         case schema_type
         when "CEPC-8.0.0"
-          @view_model = ViewModel::Cepc800::Dec.new xml
+          @view_model = ViewModel::Cepc800::DecRr.new xml
         else
           raise ArgumentError, "Unsupported schema type"
         end
