@@ -1,7 +1,6 @@
 module ViewModel
   module RdSapSchema200
     class CommonSchema
-
       def initialize(xml)
         @xml_doc = Nokogiri.XML xml
       end

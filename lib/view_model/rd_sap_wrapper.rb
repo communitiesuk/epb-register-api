@@ -16,9 +16,7 @@ module ViewModel
     end
 
     def to_hash
-      {
-          type_of_assessment: "RdSAP",
-      }
+      { type_of_assessment: "RdSAP" }
     end
   end
 end
