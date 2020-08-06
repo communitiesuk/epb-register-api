@@ -228,13 +228,14 @@ def lodge_assessment(
   migrated: nil,
   override: nil
 )
-  path = if migrated == true
-           "api/assessments?migrated"
-         elsif override == true
-           "api/assessments?override"
-         else
-           "api/assessments"
-         end
+  path =
+    if migrated == true
+      "api/assessments?migrated"
+    elsif override == true
+      "api/assessments?override"
+    else
+      "api/assessments"
+    end
 
   header "Content-type", "application/xml+" + schema_name
 
