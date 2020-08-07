@@ -63,6 +63,7 @@ module ViewModel
         },
         technical_information: {
           main_heating_fuel: @view_model.main_heating_fuel,
+          building_environment: @view_model.building_environment,
         },
       }
     end

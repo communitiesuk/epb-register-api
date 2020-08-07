@@ -68,6 +68,7 @@ describe "Acceptance::AssessmentSummary::DEC" do
           },
           technicalInformation: {
             mainHeatingFuel: "Natural Gas",
+            buildingEnvironment: "Heating and Natural Ventilation",
           },
         },
       )

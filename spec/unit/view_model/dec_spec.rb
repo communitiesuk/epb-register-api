@@ -50,8 +50,9 @@ describe ViewModel::DecWrapper do
       renewables_co2: "2",
     },
     technical_information: {
-        main_heating_fuel: "Natural Gas"
-    }
+      main_heating_fuel: "Natural Gas",
+      building_environment: "Heating and Natural Ventilation",
+    },
   }.freeze
 
   it "should read the appropriate values from the XML doc" do
