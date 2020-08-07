@@ -56,6 +56,8 @@ describe ViewModel::DecWrapper do
       asset_rating: "1",
       annual_energy_use_fuel_thermal: "1",
       annual_energy_use_electrical: "1",
+      typical_thermal_use: "1",
+      typical_electrical_use: "1",
     },
   }.freeze
 

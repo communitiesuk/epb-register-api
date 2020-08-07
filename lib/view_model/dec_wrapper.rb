@@ -68,6 +68,8 @@ module ViewModel
           asset_rating: @view_model.asset_rating,
           annual_energy_use_fuel_thermal: @view_model.annual_energy_use_fuel_thermal,
           annual_energy_use_electrical: @view_model.annual_energy_use_electrical,
+          typical_thermal_use: @view_model.typical_thermal_use,
+          typical_electrical_use: @view_model.typical_electrical_use,
         },
       }
     end

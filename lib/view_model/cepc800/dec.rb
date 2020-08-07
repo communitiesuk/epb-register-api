@@ -84,6 +84,14 @@ module ViewModel
       def annual_energy_use_electrical
         xpath(%w[DEC-Annual-Energy-Summary Annual-Energy-Use-Electrical])
       end
+
+      def typical_thermal_use
+        xpath(%w[DEC-Annual-Energy-Summary Typical-Thermal-Use])
+      end
+
+      def typical_electrical_use
+        xpath(%w[DEC-Annual-Energy-Summary Typical-Electrical-Use])
+      end
     end
   end
 end

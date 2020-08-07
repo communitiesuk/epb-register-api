@@ -73,6 +73,8 @@ describe "Acceptance::AssessmentSummary::DEC" do
             assetRating: "1",
             annualEnergyUseFuelThermal: "1",
             annualEnergyUseElectrical: "1",
+            typicalThermalUse: "1",
+            typicalElectricalUse: "1",
           },
         },
       )
