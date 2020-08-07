@@ -31,6 +31,7 @@ module ViewModel
         },
       }
     end
+
     def get_view_model
       @view_model
     end

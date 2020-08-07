@@ -86,6 +86,7 @@ module ViewModel
         "g"
       end
     end
+
     def get_view_model
       @view_model
     end

@@ -42,14 +42,14 @@ module UseCase
           factory = ViewModel::Factory.new.create(xml, schema_name)
 
           validation_result =
-              LodgementRules::NonDomestic.new.validate(factory.get_view_model)
+            LodgementRules::NonDomestic.new.validate(factory.get_view_model)
 
           unless validation_result.empty?
             if overidden
               lodgement.fetch_data.each do |lodgement_data|
                 Gateway::OverridenLodgmentEventsGateway.new.add(
-                    lodgement_data[:assessment_id],
-                    validation_result,
+                  lodgement_data[:assessment_id],
+                  validation_result,
                 )
               end
             else

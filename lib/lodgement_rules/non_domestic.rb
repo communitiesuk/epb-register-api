@@ -1,10 +1,7 @@
 module LodgementRules
   class NonDomestic
-
     def self.method_or_nil(adapter, method)
-
       adapter.send(method)
-
     rescue NoMethodError
       nil
     end
@@ -63,12 +60,16 @@ module LodgementRules
       {
         name: "MUST_RECORD_TRANSACTION_TYPE",
         title: '"Transaction-Type" must not be equal to 7',
-        test: ->(adapter) { method_or_nil(adapter, :transaction_type).to_i != 7 },
+        test: lambda do |adapter|
+          method_or_nil(adapter, :transaction_type).to_i != 7
+        end,
       },
       {
         name: "MUST_RECORD_EPC_DISCLOSURE",
         title: '"EPC-Related-Party-Disclosure" must not be equal to 13',
-        test: ->(adapter) { method_or_nil(adapter, :epc_related_party_disclosure).to_i != 13 },
+        test: lambda do |adapter|
+          method_or_nil(adapter, :epc_related_party_disclosure).to_i != 13
+        end,
       },
       {
         name: "MUST_RECORD_ENERGY_TYPE",
