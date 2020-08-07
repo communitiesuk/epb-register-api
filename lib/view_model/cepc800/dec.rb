@@ -72,6 +72,10 @@ module ViewModel
       def floor_area
         xpath(%w[Technical-Information Floor-Area])
       end
+
+      def asset_rating
+        xpath(%w[This-Assessment Energy-Rating])
+      end
     end
   end
 end

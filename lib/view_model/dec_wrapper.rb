@@ -65,6 +65,7 @@ module ViewModel
           main_heating_fuel: @view_model.main_heating_fuel,
           building_environment: @view_model.building_environment,
           floor_area: @view_model.floor_area,
+          asset_rating: @view_model.asset_rating,
         },
       }
     end

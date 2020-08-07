@@ -53,6 +53,7 @@ describe ViewModel::DecWrapper do
       main_heating_fuel: "Natural Gas",
       building_environment: "Heating and Natural Ventilation",
       floor_area: "99",
+      asset_rating: "1",
     },
   }.freeze
 

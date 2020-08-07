@@ -70,6 +70,7 @@ describe "Acceptance::AssessmentSummary::DEC" do
             mainHeatingFuel: "Natural Gas",
             buildingEnvironment: "Heating and Natural Ventilation",
             floorArea: "99",
+            assetRating: "1",
           },
         },
       )
