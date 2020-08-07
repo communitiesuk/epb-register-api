@@ -177,7 +177,13 @@ module Controller
       when REXML::ParseException
         error_response(400, "INVALID_REQUEST", e.message)
       when UseCase::ValidateAndLodgeAssessment::LodgementRulesException
-        json_response(400, errors: e.errors)
+        json_response(
+          400,
+          {
+            errors: e.errors,
+            meta: { links: { override: "/api/assessments?override=true" } },
+          },
+        )
       else
         server_error(e)
       end
