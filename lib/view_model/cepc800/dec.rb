@@ -60,6 +60,10 @@ module ViewModel
       def year2_energy_efficiency_rating
         xpath(%w[Year2-Assessment Energy-Rating])
       end
+
+      def main_heating_fuel
+        xpath(%w[HVAC-Systems HVAC-System-Data Fuel-Type])
+      end
     end
   end
 end

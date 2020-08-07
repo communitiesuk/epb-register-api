@@ -66,6 +66,9 @@ describe "Acceptance::AssessmentSummary::DEC" do
             electricityCo2: "15",
             renewablesCo2: "2",
           },
+          technicalInformation: {
+            mainHeatingFuel: "Natural Gas",
+          },
         },
       )
     end

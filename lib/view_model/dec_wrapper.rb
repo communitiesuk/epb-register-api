@@ -61,6 +61,9 @@ module ViewModel
           electricity_co2: @view_model.year2_electricity_co2,
           renewables_co2: @view_model.year2_renewables_co2,
         },
+        technical_information: {
+          main_heating_fuel: @view_model.main_heating_fuel,
+        },
       }
     end
 
