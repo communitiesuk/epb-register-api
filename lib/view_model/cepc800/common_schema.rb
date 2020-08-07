@@ -10,7 +10,13 @@ module ViewModel
 
       def xpath(queries)
         node = @xml_doc
-        queries.each { |query| node = node.at query }
+        queries.each do |query|
+          if node
+            node = node.at query
+          else
+            return nil
+          end
+        end
         node ? node.content : nil
       end
 

@@ -53,5 +53,9 @@ module ViewModel
         related_party_disclosure: @view_model.related_party_disclosure,
       }
     end
+
+    def get_view_model
+      @view_model
+    end
   end
 end

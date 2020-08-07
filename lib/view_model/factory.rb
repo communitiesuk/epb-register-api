@@ -29,6 +29,10 @@ module ViewModel
           ViewModel::CepcWrapper.new(filtered_results.to_xml, schema_type)
         when "4"
           ViewModel::CepcRrWrapper.new(filtered_results.to_xml, schema_type)
+        when "5"
+          ViewModel::AcReportWrapper.new(filtered_results.to_xml, schema_type)
+        when "6"
+          ViewModel::AcCertWrapper.new(filtered_results.to_xml, schema_type)
         else
           raise ArgumentError, "Invalid CEPC report type"
         end
