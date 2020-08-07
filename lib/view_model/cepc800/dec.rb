@@ -68,6 +68,10 @@ module ViewModel
       def building_environment
         xpath(%w[Technical-Information Building-Environment])
       end
+
+      def floor_area
+        xpath(%w[Technical-Information Floor-Area])
+      end
     end
   end
 end

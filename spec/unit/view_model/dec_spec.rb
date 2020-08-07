@@ -52,6 +52,7 @@ describe ViewModel::DecWrapper do
     technical_information: {
       main_heating_fuel: "Natural Gas",
       building_environment: "Heating and Natural Ventilation",
+      floor_area: "99",
     },
   }.freeze
 
