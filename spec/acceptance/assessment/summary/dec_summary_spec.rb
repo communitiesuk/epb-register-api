@@ -75,6 +75,8 @@ describe "Acceptance::AssessmentSummary::DEC" do
             annualEnergyUseElectrical: "1",
             typicalThermalUse: "1",
             typicalElectricalUse: "1",
+            renewablesFuelThermal: "1",
+            renewablesElectrical: "1",
           },
         },
       )

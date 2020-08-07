@@ -58,6 +58,8 @@ describe ViewModel::DecWrapper do
       annual_energy_use_electrical: "1",
       typical_thermal_use: "1",
       typical_electrical_use: "1",
+      renewables_fuel_thermal: "1",
+      renewables_electrical: "1",
     },
   }.freeze
 

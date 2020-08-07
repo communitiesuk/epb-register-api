@@ -70,6 +70,8 @@ module ViewModel
           annual_energy_use_electrical: @view_model.annual_energy_use_electrical,
           typical_thermal_use: @view_model.typical_thermal_use,
           typical_electrical_use: @view_model.typical_electrical_use,
+          renewables_fuel_thermal: @view_model.renewables_fuel_thermal,
+          renewables_electrical: @view_model.renewables_electrical,
         },
       }
     end
