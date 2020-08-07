@@ -71,6 +71,8 @@ describe "Acceptance::AssessmentSummary::DEC" do
             buildingEnvironment: "Heating and Natural Ventilation",
             floorArea: "99",
             assetRating: "1",
+            annualEnergyUseFuelThermal: "1",
+            annualEnergyUseElectrical: "1",
           },
         },
       )

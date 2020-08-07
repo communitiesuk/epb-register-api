@@ -76,6 +76,14 @@ module ViewModel
       def asset_rating
         xpath(%w[This-Assessment Energy-Rating])
       end
+
+      def annual_energy_use_fuel_thermal
+        xpath(%w[DEC-Annual-Energy-Summary Annual-Energy-Use-Fuel-Thermal])
+      end
+
+      def annual_energy_use_electrical
+        xpath(%w[DEC-Annual-Energy-Summary Annual-Energy-Use-Electrical])
+      end
     end
   end
 end

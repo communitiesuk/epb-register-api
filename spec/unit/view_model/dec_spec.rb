@@ -54,6 +54,8 @@ describe ViewModel::DecWrapper do
       building_environment: "Heating and Natural Ventilation",
       floor_area: "99",
       asset_rating: "1",
+      annual_energy_use_fuel_thermal: "1",
+      annual_energy_use_electrical: "1",
     },
   }.freeze
 
