@@ -16,9 +16,7 @@ module LodgementRules
               adapter.or_assessment_start_date,
             ] + adapter.all_start_dates
 
-          failed_rules = dates.select { |date| Date.parse(date).future? }
-
-          failed_rules.empty?
+          dates.none? { |date| Date.parse(date).future? }
         end,
       },
       {
@@ -32,21 +30,14 @@ module LodgementRules
             adapter.date_of_issue,
           ]
 
-          failed_rules =
-            dates.select do |date|
-              Date.parse(date).before?(Date.today << 12 * 4)
-            end
-
-          failed_rules.empty?
+          dates.none? { |date| Date.parse(date).before?(Date.today << 12 * 4) }
         end,
       },
       {
         name: "FLOOR_AREA_CANT_BE_LESS_THAN_ZERO",
         title: '"Floor-Area" must be greater than 0',
         test: lambda do |adapter|
-          adapter.all_floor_areas.map(&:to_i).select { |floor_area|
-            floor_area <= 0
-          }.empty?
+          adapter.all_floor_areas.map(&:to_i).all?(&:positive?)
         end,
       },
       {
@@ -58,7 +49,7 @@ module LodgementRules
             adapter.building_emissions,
             adapter.target_emissions,
             adapter.typical_emissions,
-          ].map(&:to_f).select(&:negative?).empty?
+          ].map(&:to_f).none?(&:negative?)
         end,
       },
       {
@@ -75,9 +66,9 @@ module LodgementRules
         name: "MUST_RECORD_ENERGY_TYPE",
         title: '"Energy-Type" must not be equal to 4',
         test: lambda do |adapter|
-          adapter.all_energy_types.map(&:to_i).select { |energy_type|
+          adapter.all_energy_types.map(&:to_i).none? do |energy_type|
             energy_type == 4
-          }.empty?
+          end
         end,
       },
     ].freeze
