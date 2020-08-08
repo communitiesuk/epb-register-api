@@ -1,36 +1,54 @@
 describe LodgementRules::NonDomestic do
-  let(:xml_file) do
-    File.read File.join Dir.pwd, "spec/fixtures/samples/cepc.xml"
+
+  let(:docs_under_test) do
+    [
+      {
+          xml_doc:
+              Nokogiri.XML(
+                  File.read(File.join(Dir.pwd, "spec/fixtures/samples/cepc.xml")),
+                  ),
+          schema_name: "CEPC-8.0.0",
+      },
+    ]
   end
-  let(:xml_doc) do
-    xml_doc = Nokogiri.XML(xml_file)
 
-    xml_doc.at("//CEPC:Registration-Date").children = Date.yesterday.to_s
-
-    xml_doc.at("//CEPC:Inspection-Date").children = Date.yesterday.to_s
-
-    xml_doc.at("//CEPC:Issue-Date").children = Date.yesterday.to_s
-
-    xml_doc.at("//CEPC:Effective-Date").children = Date.yesterday.to_s
-
-    xml_doc.at("//CEPC:OR-Availability-Date").children = Date.yesterday.to_s
-
+  def reset_dates_to_yesterday(xml_doc)
+    yesterday = Date.yesterday.to_s
+    xml_doc.at("//CEPC:Registration-Date").children = yesterday
+    xml_doc.at("//CEPC:Inspection-Date").children = yesterday
+    xml_doc.at("//CEPC:Issue-Date").children = yesterday
+    xml_doc.at("//CEPC:Effective-Date").children = yesterday
+    xml_doc.at("//CEPC:OR-Availability-Date").children = yesterday
     xml_doc
   end
 
-  def get_xml_errors(key, value)
-    xml_doc.at(key).children = value
+  def assert_errors(key, value, expected_errors)
+    docs_under_test.each do |doc|
+      xml_doc = doc[:xml_doc]
+      xml_doc.at(key).children = value
 
-    wrapper = ViewModel::Factory.new.create(xml_doc.to_xml, "CEPC-8.0.0")
-    adapter = wrapper.get_view_model
-    described_class.new.validate(adapter)
+      wrapper =
+          ViewModel::Factory.new.create(
+              xml_doc.to_xml,
+              doc[:schema_name],
+              false,
+              true,
+              )
+      adapter = wrapper.get_view_model
+      errors = described_class.new.validate(adapter)
+      expect(errors).to match_array(expected_errors)
+    end
   end
 
   it "Returns an empty list for a valid file" do
-    wrapper = ViewModel::Factory.new.create(xml_doc.to_xml, "CEPC-8.0.0")
-    adapter = wrapper.get_view_model
-    errors = described_class.new.validate(adapter)
-    expect(errors).to eq([])
+    docs_under_test.each{ | doc |
+      xml = doc[:xml_doc]
+      xml_doc = reset_dates_to_yesterday(xml)
+      wrapper = ViewModel::Factory.new.create(xml_doc.to_xml, doc[:schema_name])
+      adapter = wrapper.get_view_model
+      errors = described_class.new.validate(adapter)
+      expect(errors).to eq([])
+    }
   end
 
   context "DATES_CANT_BE_IN_FUTURE" do
@@ -43,40 +61,31 @@ describe LodgementRules::NonDomestic do
     end
 
     it "returns an error if the inspection date is in the future" do
-      errors = get_xml_errors("//CEPC:Inspection-Date", Date.tomorrow.to_s)
-      expect(errors).to include(error)
+      assert_errors("//CEPC:Inspection-Date", Date.tomorrow.to_s, [error])
     end
 
     it "returns an error if the registration date is in the future" do
-      errors = get_xml_errors("//CEPC:Registration-Date", Date.tomorrow.to_s)
-      expect(errors).to include(error)
+      assert_errors("//CEPC:Registration-Date", Date.tomorrow.to_s, [error])
     end
 
     it "returns an error if the issue date is in the future" do
-      errors = get_xml_errors("//CEPC:Effective-Date", Date.tomorrow.to_s)
-      expect(errors).to include(error)
+      assert_errors("//CEPC:Effective-Date", Date.tomorrow.to_s, [error])
     end
 
     it "returns an error if the effective date is in the future" do
-      errors = get_xml_errors("//CEPC:Issue-Date", Date.tomorrow.to_s)
-      expect(errors).to include(error)
+      assert_errors("//CEPC:Issue-Date", Date.tomorrow.to_s, [error])
     end
 
     it "returns an error if the OR availability date is in the future" do
-      errors = get_xml_errors("//CEPC:OR-Availability-Date", Date.tomorrow.to_s)
-      expect(errors).to include(error)
+      assert_errors("//CEPC:OR-Availability-Date", Date.tomorrow.to_s, [error])
     end
 
     it "returns an error if the OR assessment start date is in the future" do
-      errors =
-        get_xml_errors("//CEPC:OR-Assessment-Start-Date", Date.tomorrow.to_s)
-      expect(errors).to include(error)
+      assert_errors("//CEPC:OR-Assessment-Start-Date", Date.tomorrow.to_s, [error])
     end
 
     it "returns an error if the consumption type start date is in the future" do
-      errors =
-        get_xml_errors("//CEPC:Anthracite/CEPC:Start-Date", Date.tomorrow.to_s)
-      expect(errors).to include(error)
+      assert_errors("//CEPC:Anthracite/CEPC:Start-Date", Date.tomorrow.to_s, [error])
     end
   end
 
@@ -91,26 +100,20 @@ describe LodgementRules::NonDomestic do
 
     it "returns an error if the inspection date is more than four years ago" do
       four_years_and_a_day_ago = (Date.today << 12 * 4) - 1
-      errors =
-        get_xml_errors("//CEPC:Inspection-Date", four_years_and_a_day_ago.to_s)
-      expect(errors).to include(error)
+      assert_errors("//CEPC:Inspection-Date", four_years_and_a_day_ago.to_s, [error])
     end
 
     it "returns an error if the registration date is more than four years ago" do
       four_years_and_a_day_ago = (Date.today << 12 * 4) - 1
-      errors =
-        get_xml_errors(
+      assert_errors(
           "//CEPC:Registration-Date",
-          four_years_and_a_day_ago.to_s,
+          four_years_and_a_day_ago.to_s, [error]
         )
-      expect(errors).to include(error)
     end
 
     it "returns an error if the issue date is more than four years ago" do
       four_years_and_a_day_ago = (Date.today << 12 * 4) - 1
-      errors =
-        get_xml_errors("//CEPC:Issue-Date", four_years_and_a_day_ago.to_s)
-      expect(errors).to include(error)
+      assert_errors("//CEPC:Issue-Date", four_years_and_a_day_ago.to_s, [error])
     end
   end
 
@@ -123,31 +126,19 @@ describe LodgementRules::NonDomestic do
     end
 
     it "returns an error if technical information / floor area is less than zero" do
-      errors =
-        get_xml_errors("//CEPC:Technical-Information/CEPC:Floor-Area", "-1")
-      expect(errors).to include(error)
+      assert_errors("//CEPC:Technical-Information/CEPC:Floor-Area", "-1", [error])
     end
 
     it "returns an error if technical information / floor area is equal to zero" do
-      errors =
-        get_xml_errors("//CEPC:Technical-Information/CEPC:Floor-Area", "0")
-      expect(errors).to include(error)
+      assert_errors("//CEPC:Technical-Information/CEPC:Floor-Area", "0", [error])
     end
 
     it "returns an error if any floor area is less than zero" do
-      xml_doc.at("//CEPC:Benchmark/CEPC:Floor-Area").children = "-1"
-
-      errors =
-        get_xml_errors("//CEPC:Technical-Information/CEPC:Floor-Area", "-1")
-      expect(errors).to include(error)
+      assert_errors("//CEPC:Technical-Information/CEPC:Floor-Area", "-1", [error])
     end
 
     it "returns an error if any floor area is equal to zero" do
-      xml_doc.at("//CEPC:Benchmark/CEPC:Floor-Area").children = "0"
-
-      errors =
-        get_xml_errors("//CEPC:Technical-Information/CEPC:Floor-Area", "0")
-      expect(errors).to include(error)
+      assert_errors("//CEPC:Technical-Information/CEPC:Floor-Area", "0", [error])
     end
   end
 
@@ -160,23 +151,19 @@ describe LodgementRules::NonDomestic do
     end
 
     it "returns an error if SER is minus one" do
-      errors = get_xml_errors("//CEPC:SER", "-1.01")
-      expect(errors).to include(error)
+      assert_errors("//CEPC:SER", "-1.01", [error])
     end
 
     it "returns an error if BER is minus one" do
-      errors = get_xml_errors("//CEPC:BER", "-1.01")
-      expect(errors).to include(error)
+      assert_errors("//CEPC:BER", "-1.01", [error])
     end
 
     it "returns an error if TER is minus one" do
-      errors = get_xml_errors("//CEPC:TER", "-1.01")
-      expect(errors).to include(error)
+      assert_errors("//CEPC:TER", "-1.01", [error])
     end
 
     it "returns an error if TYR is minus one" do
-      errors = get_xml_errors("//CEPC:TYR", "-1.01")
-      expect(errors).to include(error)
+      assert_errors("//CEPC:TYR", "-1.01", [error])
     end
   end
 
@@ -189,8 +176,7 @@ describe LodgementRules::NonDomestic do
     end
 
     it "returns an error if Transaction-Type is 7" do
-      errors = get_xml_errors("//CEPC:Transaction-Type", "7")
-      expect(errors).to include(error)
+      assert_errors("//CEPC:Transaction-Type", "7", [error])
     end
   end
   context "MUST_RECORD_EPC_DISCLOSURE" do
@@ -202,8 +188,7 @@ describe LodgementRules::NonDomestic do
     end
 
     it "returns an error if EPC-Related-Party-Disclosure is 13" do
-      errors = get_xml_errors("//CEPC:EPC-Related-Party-Disclosure", "13")
-      expect(errors).to include(error)
+      assert_errors("//CEPC:EPC-Related-Party-Disclosure", "13", [error])
     end
   end
 
@@ -216,8 +201,7 @@ describe LodgementRules::NonDomestic do
     end
 
     it "returns an error if Energy-Type is 4" do
-      errors = get_xml_errors("//CEPC:Energy-Type", "4")
-      expect(errors).to include(error)
+      assert_errors("//CEPC:Energy-Type", "4", [error])
     end
   end
 end
