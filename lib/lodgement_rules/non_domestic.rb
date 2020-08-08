@@ -102,6 +102,20 @@ module LodgementRules
           disclosure.nil? || disclosure != "8"
         end,
       },
+      {
+        name: "NOMINATED_DATE_TOO_LATE",
+        title: '"Nominated-Date" must not be more than three months after "OR-Assessment-End-Date"',
+        test: lambda do |adapter|
+          current_nominated_date = method_or_nil(adapter, :current_assessment_date)
+          or_end_date = method_or_nil(adapter, :or_assessment_end_date)
+          unless current_nominated_date && or_end_date
+            return true
+          end
+
+          latest_nominated_date = Date.parse(or_end_date) >> 3
+          Date.parse(current_nominated_date).before?(latest_nominated_date)
+        end,
+      },
     ].freeze
 
     def validate(xml_adaptor)

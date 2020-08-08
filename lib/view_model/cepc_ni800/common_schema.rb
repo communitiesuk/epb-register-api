@@ -111,6 +111,10 @@ module ViewModel
       def all_reason_types
         @xml_doc.search("Reason-Type").map(&:content)
       end
+
+      def or_assessment_end_date
+        xpath(%w[OR-Operational-Rating OR-Assessment-End-Date])
+      end
     end
   end
 end

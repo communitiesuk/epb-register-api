@@ -79,4 +79,18 @@ describe LodgementRules::NonDomestic do
       assert_errors("DEC-Related-Party-Disclosure", "8", [error])
     end
   end
+
+  context "NOMINATED_DATE_TOO_LATE" do
+    let(:error) do
+      {
+          "code": "NOMINATED_DATE_TOO_LATE",
+          "title":
+              '"Nominated-Date" must not be more than three months after "OR-Assessment-End-Date"',
+      }.freeze
+    end
+
+    it "returns an error if the nominated date is more than three months after the or-assessment-end-date" do
+      assert_errors("OR-Assessment-End-Date", "2019-09-30", [error])
+    end
+  end
 end
