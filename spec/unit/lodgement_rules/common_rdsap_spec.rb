@@ -115,5 +115,9 @@ describe LodgementRules::DomesticCommon do
     it "returns an error if Roof has a description of roof" do
       assert_errors("Roof/Description", "roof", [error])
     end
+
+    it "returns an error if Floor has a description of floor" do
+      assert_errors("Floor/Description", "floor", [error])
+    end
   end
 end

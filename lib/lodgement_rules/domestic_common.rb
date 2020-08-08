@@ -57,6 +57,13 @@ module LodgementRules
               return false
             end
           end
+          floors = method_or_nil(adapter, :all_floor_descriptions)
+          unless floors.nil?
+            unless floors.compact
+              .select { |desc| desc.downcase == "floor" }.empty?
+              return false
+            end
+          end
           true
         end,
       },
