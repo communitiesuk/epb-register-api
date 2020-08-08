@@ -6,19 +6,26 @@ describe LodgementRules::NonDomestic do
           xml_doc:
               Nokogiri.XML(
                   File.read(File.join(Dir.pwd, "spec/fixtures/samples/cepc.xml")),
-                  ),
+                  ).remove_namespaces!,
           schema_name: "CEPC-8.0.0",
+      },
+      {
+          xml_doc:
+              Nokogiri.XML(
+                  File.read(File.join(Dir.pwd, "spec/fixtures/samples/cepc-ni.xml")),
+                  ).remove_namespaces!,
+          schema_name: "CEPC-NI-8.0.0",
       },
     ]
   end
 
   def reset_dates_to_yesterday(xml_doc)
     yesterday = Date.yesterday.to_s
-    xml_doc.at("//CEPC:Registration-Date").children = yesterday
-    xml_doc.at("//CEPC:Inspection-Date").children = yesterday
-    xml_doc.at("//CEPC:Issue-Date").children = yesterday
-    xml_doc.at("//CEPC:Effective-Date").children = yesterday
-    xml_doc.at("//CEPC:OR-Availability-Date").children = yesterday
+    xml_doc.at("Registration-Date").children = yesterday
+    xml_doc.at("Inspection-Date").children = yesterday
+    xml_doc.at("Issue-Date").children = yesterday
+    xml_doc.at("Effective-Date").children = yesterday
+    xml_doc.at("OR-Availability-Date").children = yesterday
     xml_doc
   end
 
@@ -61,31 +68,31 @@ describe LodgementRules::NonDomestic do
     end
 
     it "returns an error if the inspection date is in the future" do
-      assert_errors("//CEPC:Inspection-Date", Date.tomorrow.to_s, [error])
+      assert_errors("Inspection-Date", Date.tomorrow.to_s, [error])
     end
 
     it "returns an error if the registration date is in the future" do
-      assert_errors("//CEPC:Registration-Date", Date.tomorrow.to_s, [error])
+      assert_errors("Registration-Date", Date.tomorrow.to_s, [error])
     end
 
     it "returns an error if the issue date is in the future" do
-      assert_errors("//CEPC:Effective-Date", Date.tomorrow.to_s, [error])
+      assert_errors("Effective-Date", Date.tomorrow.to_s, [error])
     end
 
     it "returns an error if the effective date is in the future" do
-      assert_errors("//CEPC:Issue-Date", Date.tomorrow.to_s, [error])
+      assert_errors("Issue-Date", Date.tomorrow.to_s, [error])
     end
 
     it "returns an error if the OR availability date is in the future" do
-      assert_errors("//CEPC:OR-Availability-Date", Date.tomorrow.to_s, [error])
+      assert_errors("OR-Availability-Date", Date.tomorrow.to_s, [error])
     end
 
     it "returns an error if the OR assessment start date is in the future" do
-      assert_errors("//CEPC:OR-Assessment-Start-Date", Date.tomorrow.to_s, [error])
+      assert_errors("OR-Assessment-Start-Date", Date.tomorrow.to_s, [error])
     end
 
     it "returns an error if the consumption type start date is in the future" do
-      assert_errors("//CEPC:Anthracite/CEPC:Start-Date", Date.tomorrow.to_s, [error])
+      assert_errors("Anthracite/Start-Date", Date.tomorrow.to_s, [error])
     end
   end
 
@@ -100,20 +107,20 @@ describe LodgementRules::NonDomestic do
 
     it "returns an error if the inspection date is more than four years ago" do
       four_years_and_a_day_ago = (Date.today << 12 * 4) - 1
-      assert_errors("//CEPC:Inspection-Date", four_years_and_a_day_ago.to_s, [error])
+      assert_errors("Inspection-Date", four_years_and_a_day_ago.to_s, [error])
     end
 
     it "returns an error if the registration date is more than four years ago" do
       four_years_and_a_day_ago = (Date.today << 12 * 4) - 1
       assert_errors(
-          "//CEPC:Registration-Date",
+          "Registration-Date",
           four_years_and_a_day_ago.to_s, [error]
         )
     end
 
     it "returns an error if the issue date is more than four years ago" do
       four_years_and_a_day_ago = (Date.today << 12 * 4) - 1
-      assert_errors("//CEPC:Issue-Date", four_years_and_a_day_ago.to_s, [error])
+      assert_errors("Issue-Date", four_years_and_a_day_ago.to_s, [error])
     end
   end
 
@@ -126,19 +133,19 @@ describe LodgementRules::NonDomestic do
     end
 
     it "returns an error if technical information / floor area is less than zero" do
-      assert_errors("//CEPC:Technical-Information/CEPC:Floor-Area", "-1", [error])
+      assert_errors("Technical-Information/Floor-Area", "-1", [error])
     end
 
     it "returns an error if technical information / floor area is equal to zero" do
-      assert_errors("//CEPC:Technical-Information/CEPC:Floor-Area", "0", [error])
+      assert_errors("Technical-Information/Floor-Area", "0", [error])
     end
 
     it "returns an error if any floor area is less than zero" do
-      assert_errors("//CEPC:Technical-Information/CEPC:Floor-Area", "-1", [error])
+      assert_errors("Technical-Information/Floor-Area", "-1", [error])
     end
 
     it "returns an error if any floor area is equal to zero" do
-      assert_errors("//CEPC:Technical-Information/CEPC:Floor-Area", "0", [error])
+      assert_errors("Technical-Information/Floor-Area", "0", [error])
     end
   end
 
@@ -151,19 +158,19 @@ describe LodgementRules::NonDomestic do
     end
 
     it "returns an error if SER is minus one" do
-      assert_errors("//CEPC:SER", "-1.01", [error])
+      assert_errors("SER", "-1.01", [error])
     end
 
     it "returns an error if BER is minus one" do
-      assert_errors("//CEPC:BER", "-1.01", [error])
+      assert_errors("BER", "-1.01", [error])
     end
 
     it "returns an error if TER is minus one" do
-      assert_errors("//CEPC:TER", "-1.01", [error])
+      assert_errors("TER", "-1.01", [error])
     end
 
     it "returns an error if TYR is minus one" do
-      assert_errors("//CEPC:TYR", "-1.01", [error])
+      assert_errors("TYR", "-1.01", [error])
     end
   end
 
@@ -176,7 +183,7 @@ describe LodgementRules::NonDomestic do
     end
 
     it "returns an error if Transaction-Type is 7" do
-      assert_errors("//CEPC:Transaction-Type", "7", [error])
+      assert_errors("Transaction-Type", "7", [error])
     end
   end
   context "MUST_RECORD_EPC_DISCLOSURE" do
@@ -188,7 +195,7 @@ describe LodgementRules::NonDomestic do
     end
 
     it "returns an error if EPC-Related-Party-Disclosure is 13" do
-      assert_errors("//CEPC:EPC-Related-Party-Disclosure", "13", [error])
+      assert_errors("EPC-Related-Party-Disclosure", "13", [error])
     end
   end
 
@@ -201,7 +208,7 @@ describe LodgementRules::NonDomestic do
     end
 
     it "returns an error if Energy-Type is 4" do
-      assert_errors("//CEPC:Energy-Type", "4", [error])
+      assert_errors("Energy-Type", "4", [error])
     end
   end
 end

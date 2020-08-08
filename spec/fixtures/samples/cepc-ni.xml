@@ -31,6 +31,63 @@
       </Calculation-Details>
     </Report-Header>
     <Formatted-Report>ZGVmYXVsdA==</Formatted-Report>
+    <OR-Operational-Rating>
+      <OR-Assessment-Start-Date>2020-05-14</OR-Assessment-Start-Date>
+      <OR-Assessment-End-Date>2030-05-14</OR-Assessment-End-Date>
+      <Building-Category></Building-Category>
+      <OR-Building-Data>
+        <HVAC-System>Yes</HVAC-System>
+        <Other-HVAC-System>Yes</Other-HVAC-System>
+        <Internal-Environment>Yes</Internal-Environment>
+        <Assessment-Period-Alignment>Yes</Assessment-Period-Alignment>
+      </OR-Building-Data>
+      <OR-Usable-Floor-Area>
+        <UFA-1>
+          <Floor-Area>100</Floor-Area>
+        </UFA-1>
+      </OR-Usable-Floor-Area>
+      <OR-Previous-Data></OR-Previous-Data>
+      <OR-Benchmark-Data>
+        <Main-Benchmark></Main-Benchmark>
+        <Benchmarks>
+          <Benchmark>
+            <Area-Metric></Area-Metric>
+            <Benchmark></Benchmark>
+            <Benchmark-ID>1</Benchmark-ID>
+            <Floor-Area>403</Floor-Area>
+            <Name></Name>
+            <Occupancy-Level></Occupancy-Level>
+            <Special-Uses-Area></Special-Uses-Area>
+            <Total-Equivalent></Total-Equivalent>
+            <TUFA></TUFA>
+          </Benchmark>
+        </Benchmarks>
+      </OR-Benchmark-Data>
+      <OR-Energy-Consumption>
+        <Anthracite>
+          <Consumption>12.6</Consumption>
+          <End-Date>2030-12-25</End-Date>
+          <Estimate>3</Estimate>
+          <Start-Date>2019-12-25</Start-Date>
+        </Anthracite>
+      </OR-Energy-Consumption>
+      <Renewable-Energy-Source>
+        <Energy-Source>
+          <Start-Date>2019-12-25</Start-Date>
+          <End-Date>2030-12-25</End-Date>
+          <Name>Solar panel</Name>
+          <Generation>20</Generation>
+          <Energy-Type>2</Energy-Type>
+        </Energy-Source>
+      </Renewable-Energy-Source>
+    </OR-Operational-Rating>
+    <Insurance-Details>
+      <Insurer>Insurer</Insurer>
+      <Policy-No>0001</Policy-No>
+      <Effective-Date>2020-01-05</Effective-Date>
+      <Expiry-Date>2021-01-05</Expiry-Date>
+      <PI-Limit>20.1</PI-Limit>
+    </Insurance-Details>
     <Energy-Performance-Certificate>
       <Transaction-Type>1</Transaction-Type>
       <EPC-Related-Party-Disclosure>1</EPC-Related-Party-Disclosure>
@@ -51,6 +108,7 @@
       <Technical-Information>
         <Building-Environment>Air Conditioning</Building-Environment>
         <Floor-Area>101</Floor-Area>
+        <OR-Availability-Date>2020-01-04</OR-Availability-Date>
       </Technical-Information>
       <EPC-Rating>
         <Asset-Rating>0</Asset-Rating>

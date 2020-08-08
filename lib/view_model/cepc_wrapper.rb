@@ -5,6 +5,8 @@ module ViewModel
       case schema_type
       when "CEPC-8.0.0"
         @view_model = ViewModel::Cepc800::Cepc.new xml
+      when "CEPC-NI-8.0.0"
+        @view_model = ViewModel::CepcNi800::Cepc.new xml
       else
         raise ArgumentError, "Unsupported schema type"
       end
