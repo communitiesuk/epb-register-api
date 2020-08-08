@@ -65,4 +65,18 @@ describe LodgementRules::NonDomestic do
       assert_errors("Reason-Type", "7", [error])
     end
   end
+
+  context "MUST_RECORD_DEC_DISCLOSURE" do
+    let(:error) do
+      {
+          "code": "MUST_RECORD_DEC_DISCLOSURE",
+          "title":
+              '"DEC-Related-Party-Disclosure" must not be equal to 8',
+      }.freeze
+    end
+
+    it "returns an error if the dec related party disclosure is 8" do
+      assert_errors("DEC-Related-Party-Disclosure", "8", [error])
+    end
+  end
 end

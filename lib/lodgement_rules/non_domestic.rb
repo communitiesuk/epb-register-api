@@ -94,6 +94,14 @@ module LodgementRules
                       .empty?
         end,
       },
+      {
+        name: "MUST_RECORD_DEC_DISCLOSURE",
+        title: '"DEC-Related-Party-Disclosure" must not be equal to 8',
+        test: lambda do |adapter|
+          disclosure = method_or_nil(adapter, :dec_related_party_disclosure)
+          disclosure.nil? || disclosure != "8"
+        end,
+      },
     ].freeze
 
     def validate(xml_adaptor)
