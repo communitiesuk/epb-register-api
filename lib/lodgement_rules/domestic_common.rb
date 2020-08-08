@@ -64,6 +64,13 @@ module LodgementRules
               return false
             end
           end
+          windows = method_or_nil(adapter, :all_window_descriptions)
+          unless windows.nil?
+            unless windows.compact
+              .select { |desc| desc.downcase == "window" }.empty?
+              return false
+            end
+          end
           true
         end,
       },
