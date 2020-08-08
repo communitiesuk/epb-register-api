@@ -8,6 +8,11 @@ describe ViewModel::AcReportWrapper do
         xml_file: "spec/fixtures/samples/ac-report.xml",
         unsupported_fields: [],
       },
+      {
+        schema_name: "CEPC-NI-8.0.0",
+        xml_file: "spec/fixtures/samples/ac-report-ni.xml",
+        unsupported_fields: [],
+      },
     ].freeze
 
     asserted_keys = {
