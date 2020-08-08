@@ -39,5 +39,10 @@ describe LodgementRules::DomesticCommon do
       errors = get_xml_errors("Habitable-Room-Count", "0")
       expect(errors).to include(error)
     end
+
+    it "returns an error if the habitable room count is negative" do
+      errors = get_xml_errors("Habitable-Room-Count", "-2")
+      expect(errors).to include(error)
+    end
   end
 end
