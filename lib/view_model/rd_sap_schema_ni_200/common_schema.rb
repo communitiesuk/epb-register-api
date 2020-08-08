@@ -34,6 +34,10 @@ module ViewModel
       def all_wall_descriptions
         @xml_doc.search("Wall/Description").map(&:content)
       end
+
+      def all_roof_descriptions
+        @xml_doc.search("Roof/Description").map(&:content)
+      end
     end
   end
 end

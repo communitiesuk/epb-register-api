@@ -50,6 +50,13 @@ module LodgementRules
               return false
             end
           end
+          roofs = method_or_nil(adapter, :all_roof_descriptions)
+          unless roofs.nil?
+            unless roofs.compact
+              .select { |desc| desc.downcase == "roof" }.empty?
+              return false
+            end
+          end
           true
         end,
       },
