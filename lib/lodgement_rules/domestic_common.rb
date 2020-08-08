@@ -16,6 +16,7 @@ module LodgementRules
           if habitable_room_count.nil?
             return true
           end
+
           begin
             Integer(habitable_room_count) >= 1
           rescue StandardError
