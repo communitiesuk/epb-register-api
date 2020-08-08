@@ -22,6 +22,10 @@ module ViewModel
       def energy_rating_potential
         xpath(%w[Energy-Rating-Potential])
       end
+
+      def environmental_impact_current
+        xpath(%w[Environmental-Impact-Current])
+      end
     end
   end
 end

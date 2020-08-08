@@ -32,6 +32,7 @@ module LodgementRules
           ratings = [
               method_or_nil(adapter, :energy_rating_current),
               method_or_nil(adapter, :energy_rating_potential),
+              method_or_nil(adapter, :environmental_impact_current),
           ]
           ratings.compact.map(&:to_i).select{|rating| rating <= 0}.empty?
         end,
