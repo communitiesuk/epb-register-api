@@ -85,5 +85,9 @@ describe LodgementRules::DomesticCommon do
     it "returns an error if Energy Rating Current is 0" do
       assert_errors("Energy-Rating-Current", "0", [error])
     end
+
+    it "returns an error if Energy Rating Potential is 0" do
+      assert_errors("Energy-Rating-Potential", "0", [error])
+    end
   end
 end
