@@ -10,6 +10,10 @@ module ViewModel
         queries.each { |query| node = node.at query }
         node ? node.content : nil
       end
+
+      def habitable_room_count
+        xpath(%w[Habitable-Room-Count])
+      end
     end
   end
 end

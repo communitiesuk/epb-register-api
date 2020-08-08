@@ -11,5 +11,9 @@ module ViewModel
         node ? node.content : nil
       end
     end
+
+    def habitable_room_count
+      xpath(%w[Habitable-Room-Count])
+    end
   end
 end
