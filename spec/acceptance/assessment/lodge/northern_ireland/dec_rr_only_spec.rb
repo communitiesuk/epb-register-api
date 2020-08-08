@@ -87,7 +87,7 @@ describe "Acceptance::LodgeDEC(AR)NIEnergyAssessment" do
         "currentEnergyEfficiencyRating" => 99,
         "optOut" => false,
         "dateOfAssessment" => "2020-05-04",
-        "dateOfExpiry" => "2030-05-04",
+        "dateOfExpiry" => "2028-05-03",
         "dateRegistered" => "2020-05-04",
         "dwellingType" => "Property-Type0",
         "heatDemand" => {

@@ -8,6 +8,11 @@ describe ViewModel::DecRrWrapper do
         xml_file: "spec/fixtures/samples/dec-rr.xml",
         unsupported_fields: [],
       },
+      {
+        schema_name: "CEPC-NI-8.0.0",
+        xml_file: "spec/fixtures/samples/dec-rr-ni.xml",
+        unsupported_fields: [],
+      },
     ].freeze
 
     asserted_keys = {
