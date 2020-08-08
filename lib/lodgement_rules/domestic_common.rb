@@ -71,6 +71,13 @@ module LodgementRules
               return false
             end
           end
+          main_heating = method_or_nil(adapter, :all_main_heating_descriptions)
+          unless main_heating.nil?
+            unless main_heating.compact
+              .select { |desc| desc.downcase == "main-heating" }.empty?
+              return false
+            end
+          end
           true
         end,
       },

@@ -123,5 +123,9 @@ describe LodgementRules::DomesticCommon do
     it "returns an error if Window has a description of window" do
       assert_errors("Window/Description", "window", [error])
     end
+
+    it "returns an error if Main-Heating has a description of main-heating" do
+      assert_errors("Main-Heating/Description", "main-heating", [error])
+    end
   end
 end
