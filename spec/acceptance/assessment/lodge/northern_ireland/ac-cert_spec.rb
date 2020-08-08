@@ -119,7 +119,7 @@ describe "Acceptance::LodgeAC-CERTNIEnergyAssessment" do
           "currentEnergyEfficiencyRating" => 99,
           "optOut" => false,
           "dateOfAssessment" => "2020-05-04",
-          "dateOfExpiry" => "2030-05-04",
+          "dateOfExpiry" => "2024-05-04",
           "dateRegistered" => "2020-05-04",
           "dwellingType" => "Property-Type1",
           "heatDemand" => {
@@ -142,7 +142,7 @@ describe "Acceptance::LodgeAC-CERTNIEnergyAssessment" do
           "propertySummary" => [],
           "relatedAssessments" => [
             {
-              "assessmentExpiryDate" => "2030-05-04",
+              "assessmentExpiryDate" => "2024-05-04",
               "assessmentId" => "0000-0000-0000-0000-0000",
               "assessmentStatus" => "ENTERED",
               "assessmentType" => "AC-CERT",
