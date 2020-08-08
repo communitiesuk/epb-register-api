@@ -9,7 +9,7 @@
       <RRN>0000-0000-0000-0000-0000</RRN>
       <Issue-Date>2020-05-14</Issue-Date>
       <Report-Type>1</Report-Type>
-      <Valid-Until>2028-05-04</Valid-Until>
+      <Valid-Until>2026-05-04</Valid-Until>
       <Related-RRN>4192-1535-8427-8844-6702</Related-RRN>
       <Inspection-Date>2018-05-04</Inspection-Date>
       <Registration-Date>2018-05-05</Registration-Date>
@@ -294,20 +294,23 @@
       <This-Assessment>
         <Nominated-Date>2020-01-01</Nominated-Date>
         <Energy-Rating>1</Energy-Rating>
-        <Electricity-CO2>1</Electricity-CO2>
-        <Heating-CO2>1</Heating-CO2>
+        <Electricity-CO2>7</Electricity-CO2>
+        <Heating-CO2>3</Heating-CO2>
+        <Renewables-CO2>0</Renewables-CO2>
       </This-Assessment>
       <Year1-Assessment>
         <Nominated-Date>2019-01-01</Nominated-Date>
-        <Energy-Rating>0</Energy-Rating>
-        <Electricity-CO2>0</Electricity-CO2>
-        <Heating-CO2>0</Heating-CO2>
+        <Energy-Rating>24</Energy-Rating>
+        <Electricity-CO2>10</Electricity-CO2>
+        <Heating-CO2>5</Heating-CO2>
+        <Renewables-CO2>1</Renewables-CO2>
       </Year1-Assessment>
       <Year2-Assessment>
         <Nominated-Date>2018-01-01</Nominated-Date>
-        <Energy-Rating>0</Energy-Rating>
-        <Electricity-CO2>0</Electricity-CO2>
-        <Heating-CO2>0</Heating-CO2>
+        <Energy-Rating>40</Energy-Rating>
+        <Electricity-CO2>15</Electricity-CO2>
+        <Heating-CO2>10</Heating-CO2>
+        <Renewables-CO2>2</Renewables-CO2>
       </Year2-Assessment>
     </Display-Certificate>
   </Report>

@@ -119,7 +119,7 @@ describe "Acceptance::LodgeDECNIEnergyAssessment" do
           "currentEnergyEfficiencyRating" => 99,
           "optOut" => false,
           "dateOfAssessment" => "2018-05-04",
-          "dateOfExpiry" => "2028-05-04",
+          "dateOfExpiry" => "2026-05-04",
           "dateRegistered" => "2018-05-05",
           "dwellingType" => "B1 Offices and Workshop businesses",
           "heatDemand" => {
@@ -142,7 +142,7 @@ describe "Acceptance::LodgeDECNIEnergyAssessment" do
           "propertySummary" => [],
           "relatedAssessments" => [
             {
-              "assessmentExpiryDate" => "2028-05-04",
+              "assessmentExpiryDate" => "2026-05-04",
               "assessmentId" => "0000-0000-0000-0000-0000",
               "assessmentStatus" => "ENTERED",
               "assessmentType" => "DEC",
