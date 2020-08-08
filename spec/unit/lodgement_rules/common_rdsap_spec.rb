@@ -7,6 +7,11 @@ describe LodgementRules::DomesticCommon do
                             "spec/fixtures/samples/rdsap.xml"))),
         schema_name: "RdSAP-Schema-20.0.0",
        },
+      { xml_doc: Nokogiri.XML(
+        File.read(File.join(Dir.pwd,
+                            "spec/fixtures/samples/rdsap-ni.xml"))),
+        schema_name: "RdSAP-Schema-NI-20.0.0",
+       },
     ]
   end
 
