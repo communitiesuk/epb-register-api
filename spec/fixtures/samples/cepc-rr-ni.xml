@@ -7,16 +7,23 @@
       <RRN>0000-0000-0000-0000-0000</RRN>
       <Issue-Date>2020-05-04</Issue-Date>
       <Report-Type>4</Report-Type>
-      <Valid-Until>2030-05-04</Valid-Until>
+      <Valid-Until>2021-05-03</Valid-Until>
+      <Related-RRN>0000-0000-0000-0000-1111</Related-RRN>
       <Inspection-Date>2020-05-04</Inspection-Date>
-      <Registration-Date>2020-05-04</Registration-Date>
+      <Registration-Date>2020-05-05</Registration-Date>
       <Status>entered</Status>
       <Language-Code>1</Language-Code>
       <Energy-Assessor>
         <Certificate-Number>SPEC000000</Certificate-Number>
-        <Name>Name0</Name>
-        <Accreditation-Scheme-Name>Accreditation-Scheme-Name0</Accreditation-Scheme-Name>
+        <Name>Mrs Report Writer</Name>
+        <Accreditation-Scheme-Name>EPC Scheme</Accreditation-Scheme-Name>
+        <Trading-Address>123 My Street, My City, AB3 4CD</Trading-Address>
+        <Company-Name>Joe Bloggs Ltd</Company-Name>
         <Related-Party-Disclosure>Related to the owner</Related-Party-Disclosure>
+        <Qualifications>NOS5</Qualifications>
+        <Status>Registered</Status>
+        <E-Mail>test@report.com</E-Mail>
+        <Telephone-Number>0800</Telephone-Number>
       </Energy-Assessor>
       <Property-Details>
         <UPRN>UPRN-000000000000</UPRN>

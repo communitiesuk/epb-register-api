@@ -126,8 +126,8 @@ describe "Acceptance::LodgeRRNIEnergyAssessment" do
           },
           optOut: false,
           dateOfAssessment: "2020-05-04",
-          dateOfExpiry: "2030-05-04",
-          dateRegistered: "2020-05-04",
+          dateOfExpiry: "2021-05-03",
+          dateRegistered: "2020-05-05",
           dwellingType: "Property-Type0",
           postcode: "A0 0AA",
           town: "Post-Town0",
@@ -135,7 +135,7 @@ describe "Acceptance::LodgeRRNIEnergyAssessment" do
           relatedPartyDisclosureText: "Related to the owner",
           relatedAssessments: [
             {
-              assessmentExpiryDate: "2030-05-04",
+              assessmentExpiryDate: "2021-05-03",
               assessmentId: "0000-0000-0000-0000-0000",
               assessmentStatus: "ENTERED",
               assessmentType: "CEPC-RR",

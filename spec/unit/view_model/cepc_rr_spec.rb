@@ -9,6 +9,11 @@ describe ViewModel::CepcRrWrapper do
         xml_file: "spec/fixtures/samples/cepc-rr.xml",
         unsupported_fields: [],
       },
+      {
+        schema_name: "CEPC-NI-8.0.0",
+        xml_file: "spec/fixtures/samples/cepc-rr-ni.xml",
+        unsupported_fields: [],
+      },
     ].freeze
 
     # You should only need to add to this list to test new fields on all CEPC schema
