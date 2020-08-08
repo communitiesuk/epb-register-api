@@ -1,24 +1,37 @@
 describe LodgementRules::DomesticCommon do
-  let(:xml_file) do
-    File.read File.join Dir.pwd, "spec/fixtures/samples/rdsap.xml"
-  end
-  let(:xml_doc) do
-    Nokogiri.XML(xml_file)
+
+  let(:docs_under_test) do
+    [
+      { xml_doc: Nokogiri.XML(
+        File.read(File.join(Dir.pwd,
+                            "spec/fixtures/samples/rdsap.xml"))),
+        schema_name: "RdSAP-Schema-20.0.0",
+       },
+    ]
   end
 
-  def get_xml_errors(key, value)
-    xml_doc.at(key).children = value
+  def assert_errors(key, value, errors)
+    docs_under_test.each { |doc|
+      xml_doc = doc[:xml_doc]
+      xml_doc.at(key).children = value
 
-    wrapper = ViewModel::Factory.new.create(xml_doc.to_xml, "RdSAP-Schema-20.0.0", false, true)
-    adapter = wrapper.get_view_model
-    described_class.new.validate(adapter)
+      wrapper = ViewModel::Factory.new.create(xml_doc.to_xml, "RdSAP-Schema-20.0.0", false, true)
+      adapter = wrapper.get_view_model
+      errors = described_class.new.validate(adapter)
+      expect(errors).to match_array(errors)
+    }
   end
 
   it "Returns an empty list for a valid file" do
-    wrapper = ViewModel::Factory.new.create(xml_doc.to_xml, "RdSAP-Schema-20.0.0", false, true)
-    adapter = wrapper.get_view_model
-    errors = described_class.new.validate(adapter)
-    expect(errors).to eq([])
+    docs_under_test.each{ |doc|
+      wrapper = ViewModel::Factory.new.create(doc[:xml_doc].to_xml,
+                                              doc[:schema_name],
+                                              false,
+                                              true)
+      adapter = wrapper.get_view_model
+      errors = described_class.new.validate(adapter)
+      expect(errors).to eq([])
+    }
   end
 
   context "MUST_HAVE_HABITABLE_ROOMS" do
@@ -31,18 +44,15 @@ describe LodgementRules::DomesticCommon do
     end
 
     it "returns an error if the habitable room count is not an integer" do
-      errors = get_xml_errors("Habitable-Room-Count", "6.2")
-      expect(errors).to include(error)
+      assert_errors("Habitable-Room-Count", "6.2", [error])
     end
 
     it "returns an error if the habitable room count is zero" do
-      errors = get_xml_errors("Habitable-Room-Count", "0")
-      expect(errors).to include(error)
+      assert_errors("Habitable-Room-Count", "0", [error])
     end
 
     it "returns an error if the habitable room count is negative" do
-      errors = get_xml_errors("Habitable-Room-Count", "-2")
-      expect(errors).to include(error)
+      assert_errors("Habitable-Room-Count", "-2", [error])
     end
   end
 end
