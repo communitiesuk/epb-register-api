@@ -7,24 +7,33 @@
       <RRN>0000-0000-0000-0000-0000</RRN>
       <Issue-Date>2020-05-04</Issue-Date>
       <Report-Type>3</Report-Type>
-      <Valid-Until>2030-05-04</Valid-Until>
+      <Valid-Until>2026-05-04</Valid-Until>
+      <Related-RRN>4192-1535-8427-8844-6702</Related-RRN>
       <Inspection-Date>2020-05-04</Inspection-Date>
       <Registration-Date>2020-05-04</Registration-Date>
       <Status>entered</Status>
       <Language-Code>1</Language-Code>
       <Energy-Assessor>
         <Certificate-Number>SPEC000000</Certificate-Number>
-        <Name>Name0</Name>
-        <Accreditation-Scheme-Name>Accreditation-Scheme-Name0</Accreditation-Scheme-Name>
+        <Name>TEST NAME BOI</Name>
+        <Accreditation-Scheme-Name>TESTSCHEME</Accreditation-Scheme-Name>
+        <Accreditation-Scheme-Website>Information not available</Accreditation-Scheme-Website>
+        <Trading-Address>123 My Street, My City, AB3 4CD</Trading-Address>
+        <Company-Name>Joe Bloggs Ltd</Company-Name>
+        <Qualifications>NOS5</Qualifications>
+        <Status>Registered</Status>
+        <E-Mail>test@testscheme.com</E-Mail>
+        <Telephone-Number>012345</Telephone-Number>
       </Energy-Assessor>
       <Property-Details>
-        <UPRN>UPRN-000000000000</UPRN>
+        <UPRN>UPRN-000000000001</UPRN>
         <Property-Address>
-          <Address-Line-1>1 Lonely Street</Address-Line-1>
-          <Post-Town>Post-Town0</Post-Town>
+          <Address-Line-1>2 Lonely Street</Address-Line-1>
+          <Post-Town>Post-Town1</Post-Town>
           <Postcode>A0 0AA</Postcode>
         </Property-Address>
-        <Property-Type>Property-Type0</Property-Type>
+        <Property-Type>B1 Offices and Workshop businesses</Property-Type>
+        <Is-Heritage-Site>N</Is-Heritage-Site>
       </Property-Details>
       <Calculation-Details>
         <Calculation-Tool>Calculation-Tool0</Calculation-Tool>
@@ -106,19 +115,26 @@
         <Lowest-Number-G-Scale>0</Lowest-Number-G-Scale>
       </EPC-Rating-Scale>
       <Technical-Information>
+        <Main-Heating-Fuel>Natural Gas</Main-Heating-Fuel>
         <Building-Environment>Air Conditioning</Building-Environment>
-        <Floor-Area>101</Floor-Area>
+        <Floor-Area>403</Floor-Area>
+        <Building-Level>3</Building-Level>
         <OR-Availability-Date>2020-01-04</OR-Availability-Date>
       </Technical-Information>
       <EPC-Rating>
-        <Asset-Rating>0</Asset-Rating>
-        <New-Build-Benchmark>0</New-Build-Benchmark>
-        <Existing-Stock-Benchmark>0</Existing-Stock-Benchmark>
-        <SER>0</SER>
-        <BER>0</BER>
-        <TER>0</TER>
-        <TYR>0</TYR>
+        <Asset-Rating>80</Asset-Rating>
+        <New-Build-Benchmark>28</New-Build-Benchmark>
+        <Existing-Stock-Benchmark>81</Existing-Stock-Benchmark>
+        <SER>42.07</SER>
+        <BER>67.09</BER>
+        <TER>23.2</TER>
+        <TYR>67.98</TYR>
       </EPC-Rating>
+      <Energy-Assessment>
+        <Energy-Use>
+          <Energy-Consumption-Current>413.22</Energy-Consumption-Current>
+        </Energy-Use>
+      </Energy-Assessment>
       <AC-Questionnaire>
         <AC-Present>Yes</AC-Present>
         <AC-Rated-Output>

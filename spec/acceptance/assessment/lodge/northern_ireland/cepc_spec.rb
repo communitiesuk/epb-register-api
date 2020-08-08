@@ -92,8 +92,8 @@ describe "Acceptance::LodgeCEPCENIEnergyAssessment" do
         )
 
         expected_response = {
-          "addressId" => "UPRN-000000000000",
-          "addressLine1" => "1 Lonely Street",
+          "addressId" => "UPRN-000000000001",
+          "addressLine1" => "2 Lonely Street",
           "addressLine2" => "",
           "addressLine3" => "",
           "addressLine4" => "",
@@ -131,9 +131,9 @@ describe "Acceptance::LodgeCEPCENIEnergyAssessment" do
           "currentEnergyEfficiencyRating" => 99,
           "optOut" => false,
           "dateOfAssessment" => "2020-05-04",
-          "dateOfExpiry" => "2030-05-04",
+          "dateOfExpiry" => "2026-05-04",
           "dateRegistered" => "2020-05-04",
-          "dwellingType" => "Property-Type0",
+          "dwellingType" => "B1 Offices and Workshop businesses",
           "heatDemand" => {
             "currentSpaceHeatingDemand" => 0.0,
             "currentWaterHeatingDemand" => 0.0,
@@ -145,8 +145,8 @@ describe "Acceptance::LodgeCEPCENIEnergyAssessment" do
           "potentialCarbonEmission" => 0.0,
           "potentialEnergyEfficiencyBand" => "a",
           "potentialEnergyEfficiencyRating" => 99,
-          "totalFloorArea" => 101.0,
-          "town" => "Post-Town0",
+          "totalFloorArea" => 403.0,
+          "town" => "Post-Town1",
           "typeOfAssessment" => "CEPC",
           "relatedPartyDisclosureNumber" => nil,
           "relatedPartyDisclosureText" => nil,
@@ -154,7 +154,7 @@ describe "Acceptance::LodgeCEPCENIEnergyAssessment" do
           "propertySummary" => [],
           "relatedAssessments" => [
             {
-              "assessmentExpiryDate" => "2030-05-04",
+              "assessmentExpiryDate" => "2026-05-04",
               "assessmentId" => "0000-0000-0000-0000-0000",
               "assessmentStatus" => "ENTERED",
               "assessmentType" => "CEPC",
