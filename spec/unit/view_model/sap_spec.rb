@@ -3,16 +3,16 @@ require_relative "xml_view_test_helper"
 describe ViewModel::SapWrapper do
   # You should only need to add to this list to test new CEPC schema
   supported_schema = [
-      {
-          schema_name: "SAP-Schema-18.0.0",
-          xml_file: "spec/fixtures/samples/sap.xml",
-          unsupported_fields: [],
-      },
-      {
-          schema_name: "SAP-Schema-NI-18.0.0",
-          xml_file: "spec/fixtures/samples/sap-ni.xml",
-          unsupported_fields: [],
-      },
+    {
+      schema_name: "SAP-Schema-18.0.0",
+      xml_file: "spec/fixtures/samples/sap.xml",
+      unsupported_fields: [],
+    },
+    {
+      schema_name: "SAP-Schema-NI-18.0.0",
+      xml_file: "spec/fixtures/samples/sap-ni.xml",
+      unsupported_fields: [],
+    },
   ].freeze
 
   # You should only need to add to this list to test new fields on all CEPC schema
