@@ -18,7 +18,7 @@ describe LodgementRules::DomesticCommon do
     ]
   end
 
-  def assert_errors(key, value, errors)
+  def assert_errors(key, value, expected_errors)
     docs_under_test.each do |doc|
       xml_doc = doc[:xml_doc]
       xml_doc.at(key).children = value
@@ -32,7 +32,7 @@ describe LodgementRules::DomesticCommon do
         )
       adapter = wrapper.get_view_model
       errors = described_class.new.validate(adapter)
-      expect(errors).to match_array(errors)
+      expect(errors).to match_array(expected_errors)
     end
   end
 
@@ -70,6 +70,20 @@ describe LodgementRules::DomesticCommon do
 
     it "returns an error if the habitable room count is negative" do
       assert_errors("Habitable-Room-Count", "-2", [error])
+    end
+  end
+
+  context "RATINGS_MUST_BE_POSITIVE" do
+    let(:error) do
+      {
+        "code": "RATINGS_MUST_BE_POSITIVE",
+        "title":
+          '"Energy-Rating-Current", "Energy-Rating-Potential", "Environmental-Impact-Current" and "Environmental-Impact-Potential" must be greater than 0',
+      }.freeze
+    end
+
+    it "returns an error if Energy Rating Current is 0" do
+      assert_errors("Energy-Rating-Current", "0", [error])
     end
   end
 end

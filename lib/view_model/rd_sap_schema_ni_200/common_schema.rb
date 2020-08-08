@@ -14,6 +14,10 @@ module ViewModel
       def habitable_room_count
         xpath(%w[Habitable-Room-Count])
       end
+
+      def energy_rating_current
+        xpath(%w[Energy-Rating-Current])
+      end
     end
   end
 end

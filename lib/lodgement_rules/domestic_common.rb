@@ -24,6 +24,15 @@ module LodgementRules
           end
         end,
       },
+      {
+        name: "RATINGS_MUST_BE_POSITIVE",
+        title:
+          '"Energy-Rating-Current", "Energy-Rating-Potential", "Environmental-Impact-Current" and "Environmental-Impact-Potential" must be greater than 0',
+        test: lambda do |adapter|
+          ratings = [method_or_nil(adapter, :energy_rating_current)]
+          ratings.compact.map(&:to_i).select{|rating| rating <= 0}.empty?
+        end,
+      },
     ].freeze
 
     def validate(xml_adaptor)
