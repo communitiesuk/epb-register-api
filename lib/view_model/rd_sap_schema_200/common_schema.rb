@@ -26,6 +26,10 @@ module ViewModel
       def environmental_impact_current
         xpath(%w[Environmental-Impact-Current])
       end
+
+      def environmental_impact_potential
+        xpath(%w[Environmental-Impact-Potential])
+      end
     end
   end
 end
