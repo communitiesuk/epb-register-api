@@ -135,5 +135,9 @@ describe LodgementRules::DomesticCommon do
     it "returns an error if Hot-Water has a description of hot-water" do
       assert_errors("Hot-Water/Description", "hot-water", [error])
     end
+
+    it "returns an error if Lighting has a description of lighting" do
+      assert_errors("Lighting/Description", "lighting", [error])
+    end
   end
 end

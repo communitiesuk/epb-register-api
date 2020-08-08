@@ -92,6 +92,13 @@ module LodgementRules
               return false
             end
           end
+          lighting = method_or_nil(adapter, :all_lighting_descriptions)
+          unless lighting.nil?
+            unless lighting.compact
+              .select { |desc| desc.downcase == "lighting" }.empty?
+              return false
+            end
+          end
           true
         end,
       },

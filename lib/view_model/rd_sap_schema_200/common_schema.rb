@@ -58,6 +58,10 @@ module ViewModel
       def all_hot_water_descriptions
         @xml_doc.search("Hot-Water/Description").map(&:content)
       end
+
+      def all_lighting_descriptions
+        @xml_doc.search("Lighting/Description").map(&:content)
+      end
     end
   end
 end
