@@ -14,8 +14,7 @@ module LodgementRules
           test: lambda do |adapter|
             habitable_room_count = method_or_nil(adapter, :habitable_room_count)
             begin
-              Integer(habitable_room_count)
-              return true
+              Integer(habitable_room_count) != 0
             rescue StandardError
               return false
             end
