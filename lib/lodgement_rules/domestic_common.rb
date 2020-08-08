@@ -85,6 +85,13 @@ module LodgementRules
               return false
             end
           end
+          hot_water = method_or_nil(adapter, :all_hot_water_descriptions)
+          unless hot_water.nil?
+            unless hot_water.compact
+              .select { |desc| desc.downcase == "hot-water" }.empty?
+              return false
+            end
+          end
           true
         end,
       },

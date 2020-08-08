@@ -55,6 +55,9 @@ module ViewModel
         @xml_doc.search("Main-Heating-Controls/Description").map(&:content)
       end
 
+      def all_hot_water_descriptions
+        @xml_doc.search("Hot-Water/Description").map(&:content)
+      end
     end
   end
 end
