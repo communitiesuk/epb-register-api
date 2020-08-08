@@ -80,6 +80,20 @@ module LodgementRules
           end
         end,
       },
+      {
+        name: "MUST_RECORD_REASON_TYPE",
+        title: '"Reason-Type" must not be equal to 7',
+        test: lambda do |adapter|
+          reason_types = method_or_nil(adapter, :all_reason_types)
+          unless reason_types
+            return true
+          end
+
+          reason_types.compact
+                      .select{|reason| reason == "7"}
+                      .empty?
+        end,
+      },
     ].freeze
 
     def validate(xml_adaptor)

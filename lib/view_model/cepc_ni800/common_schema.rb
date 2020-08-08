@@ -107,6 +107,10 @@ module ViewModel
       def all_energy_types
         @xml_doc.search("Energy-Type").map(&:content)
       end
+
+      def all_reason_types
+        @xml_doc.search("Reason-Type").map(&:content)
+      end
     end
   end
 end

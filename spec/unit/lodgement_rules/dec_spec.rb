@@ -51,4 +51,18 @@ describe LodgementRules::NonDomestic do
       expect(errors).to eq([])
     end
   end
+
+  context "MUST_RECORD_REASON_TYPE" do
+    let(:error) do
+      {
+          "code": "MUST_RECORD_REASON_TYPE",
+          "title":
+              '"Reason-Type" must not be equal to 7',
+      }.freeze
+    end
+
+    it "returns an error if the reason type is 7" do
+      assert_errors("Reason-Type", "7", [error])
+    end
+  end
 end

@@ -9,6 +9,6 @@
 |MUST_RECORD_TRANSACTION_TYPE|"Transaction-Type" must not be equal to 7|yes|
 |MUST_RECORD_EPC_DISCLOSURE|"EPC-Related-Party-Disclosure" must not be equal to 13|yes|
 |MUST_RECORD_ENERGY_TYPE|"Energy-Type" must not be equal to 4|yes|
-|MUST_RECORD_REASON_TYPE|"Reason-Type" must not be equal to 7|no (DEC)|
+|MUST_RECORD_REASON_TYPE|"Reason-Type" must not be equal to 7|yes|
 |NOMINATED_DATE_TOO_LATE|"Nominated-Date" must not be more than three months after "OR-Assessment-End-Date"|no (DEC)|
 |MUST_RECORD_DEC_DISCLOSURE|"DEC-Related-Party-Disclosure" must not be equal to 8|no|

@@ -243,7 +243,7 @@
     </Insurance-Details>
     <Display-Certificate>
       <DEC-Status>1</DEC-Status>
-      <Reason-Type>7</Reason-Type>
+      <Reason-Type>6</Reason-Type>
       <DEC-Related-Party-Disclosure>8</DEC-Related-Party-Disclosure>
       <DEC-Annual-Energy-Summary>
         <Annual-Energy-Use-Fuel-Thermal>1</Annual-Energy-Use-Fuel-Thermal>
