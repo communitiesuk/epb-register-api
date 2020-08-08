@@ -98,4 +98,18 @@ describe LodgementRules::DomesticCommon do
       assert_errors("Environmental-Impact-Potential", "0", [error])
     end
   end
+
+  context "MUST_HAVE_DESCRIPTION" do
+    let(:error) do
+      {
+        "code": "MUST_HAVE_DESCRIPTION",
+        "title":
+          '"Description" for parent node "Wall", "Walls", "Roof", "Floor", "Window", "Windows", "Main-Heating", "Main-Heating-Controls", "Hot-Water", "Lighting" and "Secondary-Heating" must not be equal to the parent node name, ignoring case',
+      }.freeze
+    end
+
+    it "returns an error if Wall has a description of wall" do
+      assert_errors("Wall/Description", "wall", [error])
+    end
+  end
 end

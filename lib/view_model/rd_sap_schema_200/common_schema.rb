@@ -30,6 +30,10 @@ module ViewModel
       def environmental_impact_potential
         xpath(%w[Environmental-Impact-Potential])
       end
+
+      def all_wall_descriptions
+        @xml_doc.search("Wall/Description").map(&:content)
+      end
     end
   end
 end

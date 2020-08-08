@@ -35,7 +35,22 @@ module LodgementRules
               method_or_nil(adapter, :environmental_impact_current),
               method_or_nil(adapter, :environmental_impact_potential),
           ]
-          ratings.compact.map(&:to_i).select{|rating| rating <= 0}.empty?
+          ratings.compact.map(&:to_i).select {|rating| rating <= 0}.empty?
+        end,
+      },
+      {
+        name: "MUST_HAVE_DESCRIPTION",
+        title:
+          '"Description" for parent node "Wall", "Walls", "Roof", "Floor", "Window", "Windows", "Main-Heating", "Main-Heating-Controls", "Hot-Water", "Lighting" and "Secondary-Heating" must not be equal to the parent node name, ignoring case',
+        test: lambda do |adapter|
+          walls = method_or_nil(adapter, :all_wall_descriptions)
+          unless walls.nil?
+            unless walls.compact
+              .select { |desc| desc.downcase == "wall" }.empty?
+              return false
+            end
+          end
+          true
         end,
       },
     ].freeze
