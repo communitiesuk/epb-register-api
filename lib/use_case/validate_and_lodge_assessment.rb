@@ -14,6 +14,10 @@ module UseCase
       end
     end
 
+    LATEST_COMMERCIAL = %w[CEPC-8.0.0 CEPC-NI-8.0.0]
+    LATEST_DOM_EW = %w[SAP-Schema-18.0.0 RdSAP-Schema-20.0.0]
+    LATEST_DOM_NI = %w[SAP-Schema-NI-18.0.0 RdSAP-Schema-NI-20.0.0]
+
     def initialize
       @validate_assessment_use_case = UseCase::ValidateAssessment.new
       @lodge_assessment_use_case = UseCase::LodgeAssessment.new
@@ -38,11 +42,16 @@ module UseCase
       end
 
       unless migrated
-        if schema_name == "CEPC-8.0.0"
-          factory = ViewModel::Factory.new.create(xml, schema_name)
+        wrapper = ViewModel::Factory.new.create(xml, schema_name, false, true)
+        if ((LATEST_COMMERCIAL + LATEST_DOM_EW + LATEST_DOM_NI).include? schema_name) && !wrapper.nil?
 
-          validation_result =
-            LodgementRules::NonDomestic.new.validate(factory.get_view_model)
+          rules = if LATEST_COMMERCIAL.include? schema_name
+                    LodgementRules::NonDomestic.new
+                  else
+                    LodgementRules::DomesticCommon.new
+                  end
+
+          validation_result = rules.validate(wrapper.get_view_model)
 
           unless validation_result.empty?
             if overidden

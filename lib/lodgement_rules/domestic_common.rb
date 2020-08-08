@@ -13,6 +13,9 @@ module LodgementRules
           '"Habitable-Room-Count" must be an integer and must be greater than or equal to 1',
         test: lambda do |adapter|
           habitable_room_count = method_or_nil(adapter, :habitable_room_count)
+          if habitable_room_count.nil?
+            return true
+          end
           begin
             Integer(habitable_room_count) >= 1
           rescue StandardError
