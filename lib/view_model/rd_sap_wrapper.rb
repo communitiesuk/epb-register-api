@@ -6,6 +6,8 @@ module ViewModel
       case schema_type
       when "RdSAP-Schema-20.0.0"
         @view_model = ViewModel::RdSapSchema200::CommonSchema.new xml
+      when "RdSAP-Schema-NI-20.0.0"
+        @view_model = ViewModel::RdSapSchemaNi200::CommonSchema.new xml
       else
         raise ArgumentError, "Unsupported schema type"
       end
