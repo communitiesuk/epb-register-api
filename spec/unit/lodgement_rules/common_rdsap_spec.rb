@@ -127,5 +127,9 @@ describe LodgementRules::DomesticCommon do
     it "returns an error if Main-Heating has a description of main-heating" do
       assert_errors("Main-Heating/Description", "main-heating", [error])
     end
+
+    it "returns an error if Main-Heating-Controls has a description of main-heating-controls" do
+      assert_errors("Main-Heating-Controls/Description", "main-heating-controls", [error])
+    end
   end
 end
