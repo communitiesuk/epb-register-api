@@ -62,6 +62,10 @@ module ViewModel
       def all_lighting_descriptions
         @xml_doc.search("Lighting/Description").map(&:content)
       end
+
+      def all_secondary_heating_descriptions
+        @xml_doc.search("Secondary-Heating/Description").map(&:content)
+      end
     end
   end
 end

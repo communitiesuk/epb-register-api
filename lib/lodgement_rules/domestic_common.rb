@@ -13,9 +13,7 @@ module LodgementRules
           '"Habitable-Room-Count" must be an integer and must be greater than or equal to 1',
         test: lambda do |adapter|
           habitable_room_count = method_or_nil(adapter, :habitable_room_count)
-          if habitable_room_count.nil?
-            return true
-          end
+          return true if habitable_room_count.nil?
 
           begin
             Integer(habitable_room_count) >= 1
@@ -30,12 +28,12 @@ module LodgementRules
           '"Energy-Rating-Current", "Energy-Rating-Potential", "Environmental-Impact-Current" and "Environmental-Impact-Potential" must be greater than 0',
         test: lambda do |adapter|
           ratings = [
-              method_or_nil(adapter, :energy_rating_current),
-              method_or_nil(adapter, :energy_rating_potential),
-              method_or_nil(adapter, :environmental_impact_current),
-              method_or_nil(adapter, :environmental_impact_potential),
+            method_or_nil(adapter, :energy_rating_current),
+            method_or_nil(adapter, :energy_rating_potential),
+            method_or_nil(adapter, :environmental_impact_current),
+            method_or_nil(adapter, :environmental_impact_potential),
           ]
-          ratings.compact.map(&:to_i).select {|rating| rating <= 0}.empty?
+          ratings.compact.map(&:to_i).select { |rating| rating <= 0 }.empty?
         end,
       },
       {
@@ -45,57 +43,75 @@ module LodgementRules
         test: lambda do |adapter|
           walls = method_or_nil(adapter, :all_wall_descriptions)
           unless walls.nil?
-            unless walls.compact
-              .select { |desc| desc.downcase == "wall" }.empty?
+            unless walls.compact.select { |desc|
+                     desc.downcase == "wall"
+                   }.empty?
               return false
             end
           end
           roofs = method_or_nil(adapter, :all_roof_descriptions)
           unless roofs.nil?
-            unless roofs.compact
-              .select { |desc| desc.downcase == "roof" }.empty?
+            unless roofs.compact.select { |desc|
+                     desc.downcase == "roof"
+                   }.empty?
               return false
             end
           end
           floors = method_or_nil(adapter, :all_floor_descriptions)
           unless floors.nil?
-            unless floors.compact
-              .select { |desc| desc.downcase == "floor" }.empty?
+            unless floors.compact.select { |desc|
+                     desc.downcase == "floor"
+                   }.empty?
               return false
             end
           end
           windows = method_or_nil(adapter, :all_window_descriptions)
           unless windows.nil?
-            unless windows.compact
-              .select { |desc| desc.downcase == "window" }.empty?
+            unless windows.compact.select { |desc|
+                     desc.downcase == "window"
+                   }.empty?
               return false
             end
           end
           main_heating = method_or_nil(adapter, :all_main_heating_descriptions)
           unless main_heating.nil?
-            unless main_heating.compact
-              .select { |desc| desc.downcase == "main-heating" }.empty?
+            unless main_heating.compact.select { |desc|
+                     desc.downcase == "main-heating"
+                   }.empty?
               return false
             end
           end
-          main_heating_controls = method_or_nil(adapter, :all_main_heating_controls_descriptions)
+          main_heating_controls =
+            method_or_nil(adapter, :all_main_heating_controls_descriptions)
           unless main_heating_controls.nil?
-            unless main_heating_controls.compact
-              .select { |desc| desc.downcase == "main-heating-controls" }.empty?
+            unless main_heating_controls.compact.select { |desc|
+                     desc.downcase == "main-heating-controls"
+                   }.empty?
               return false
             end
           end
           hot_water = method_or_nil(adapter, :all_hot_water_descriptions)
           unless hot_water.nil?
-            unless hot_water.compact
-              .select { |desc| desc.downcase == "hot-water" }.empty?
+            unless hot_water.compact.select { |desc|
+                     desc.downcase == "hot-water"
+                   }.empty?
               return false
             end
           end
           lighting = method_or_nil(adapter, :all_lighting_descriptions)
           unless lighting.nil?
-            unless lighting.compact
-              .select { |desc| desc.downcase == "lighting" }.empty?
+            unless lighting.compact.select { |desc|
+                     desc.downcase == "lighting"
+                   }.empty?
+              return false
+            end
+          end
+          secondary_heating =
+            method_or_nil(adapter, :all_secondary_heating_descriptions)
+          unless secondary_heating.nil?
+            unless secondary_heating.compact.select { |desc|
+                     desc.downcase == "secondary-heating"
+                   }.empty?
               return false
             end
           end
