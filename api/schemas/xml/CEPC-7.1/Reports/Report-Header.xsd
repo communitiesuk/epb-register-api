@@ -210,12 +210,12 @@
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="UPRNType">
-		<xs:annotation>
-			<xs:documentation>Unique Property Reference Number</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:string">
-			<xs:pattern value="UPRN-[0-9]{1,12}|RRN-[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}"/>
-		</xs:restriction>
+    <xs:annotation>
+      <xs:documentation>Unique Property Reference Number</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]{12}"/>
+    </xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="AssessorQualificationsCode">
 		<xs:annotation>
