@@ -55,9 +55,8 @@ describe LodgementRules::NonDomestic do
   context "MUST_RECORD_REASON_TYPE" do
     let(:error) do
       {
-          "code": "MUST_RECORD_REASON_TYPE",
-          "title":
-              '"Reason-Type" must not be equal to 7',
+        "code": "MUST_RECORD_REASON_TYPE",
+        "title": '"Reason-Type" must not be equal to 7',
       }.freeze
     end
 
@@ -69,9 +68,8 @@ describe LodgementRules::NonDomestic do
   context "MUST_RECORD_DEC_DISCLOSURE" do
     let(:error) do
       {
-          "code": "MUST_RECORD_DEC_DISCLOSURE",
-          "title":
-              '"DEC-Related-Party-Disclosure" must not be equal to 8',
+        "code": "MUST_RECORD_DEC_DISCLOSURE",
+        "title": '"DEC-Related-Party-Disclosure" must not be equal to 8',
       }.freeze
     end
 
@@ -83,9 +81,9 @@ describe LodgementRules::NonDomestic do
   context "NOMINATED_DATE_TOO_LATE" do
     let(:error) do
       {
-          "code": "NOMINATED_DATE_TOO_LATE",
-          "title":
-              '"Nominated-Date" must not be more than three months after "OR-Assessment-End-Date"',
+        "code": "NOMINATED_DATE_TOO_LATE",
+        "title":
+          '"Nominated-Date" must not be more than three months after "OR-Assessment-End-Date"',
       }.freeze
     end
 

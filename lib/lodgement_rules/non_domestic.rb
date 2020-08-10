@@ -85,13 +85,9 @@ module LodgementRules
         title: '"Reason-Type" must not be equal to 7',
         test: lambda do |adapter|
           reason_types = method_or_nil(adapter, :all_reason_types)
-          unless reason_types
-            return true
-          end
+          return true unless reason_types
 
-          reason_types.compact
-                      .select{|reason| reason == "7"}
-                      .empty?
+          reason_types.compact.select { |reason| reason == "7" }.empty?
         end,
       },
       {
@@ -104,13 +100,13 @@ module LodgementRules
       },
       {
         name: "NOMINATED_DATE_TOO_LATE",
-        title: '"Nominated-Date" must not be more than three months after "OR-Assessment-End-Date"',
+        title:
+          '"Nominated-Date" must not be more than three months after "OR-Assessment-End-Date"',
         test: lambda do |adapter|
-          current_nominated_date = method_or_nil(adapter, :current_assessment_date)
+          current_nominated_date =
+            method_or_nil(adapter, :current_assessment_date)
           or_end_date = method_or_nil(adapter, :or_assessment_end_date)
-          unless current_nominated_date && or_end_date
-            return true
-          end
+          return true unless current_nominated_date && or_end_date
 
           latest_nominated_date = Date.parse(or_end_date) >> 3
           Date.parse(current_nominated_date).before?(latest_nominated_date)
