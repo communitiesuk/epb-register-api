@@ -234,6 +234,33 @@
         </HVAC-Systems>
       </Building-Data>
     </Summary-Of-Performance>
+    <OR-Operational-Rating>
+      <OR-Assessment-Start-Date>2020-05-01</OR-Assessment-Start-Date>
+      <OR-Assessment-End-Date>2020-05-01</OR-Assessment-End-Date>
+      <Building-Category></Building-Category>
+      <OR-Building-Data>
+        <HVAC-System></HVAC-System>
+        <Internal-Environment></Internal-Environment>
+        <Assessment-Period-Alignment></Assessment-Period-Alignment>
+      </OR-Building-Data>
+      <OR-Usable-Floor-Area></OR-Usable-Floor-Area>
+      <OR-Previous-Data></OR-Previous-Data>
+      <OR-Benchmark-Data>
+        <Main-Benchmark></Main-Benchmark>
+        <Benchmarks>
+          <Benchmark>
+            <Area-Metric></Area-Metric>
+            <Benchmark></Benchmark>
+            <Benchmark-ID>45</Benchmark-ID>
+            <Floor-Area>15</Floor-Area>
+            <Name></Name>
+            <Special-Uses-Area></Special-Uses-Area>
+            <TUFA></TUFA>
+          </Benchmark>
+        </Benchmarks>
+      </OR-Benchmark-Data>
+      <OR-Energy-Consumption></OR-Energy-Consumption>
+    </OR-Operational-Rating>
     <Insurance-Details>
       <Insurer>Insurance</Insurer>
       <Policy-No>0001</Policy-No>
