@@ -29,6 +29,7 @@ describe ViewModel::DecWrapper do
       postcode: "A0 0AA",
     },
     type_of_assessment: "DEC",
+    issue_date: "2020-05-14",
     report_type: "1",
     current_assessment: {
       date: "2020-01-01",

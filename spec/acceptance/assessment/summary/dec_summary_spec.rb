@@ -31,6 +31,7 @@ describe "Acceptance::AssessmentSummary::DEC" do
         {
           typeOfAssessment: "DEC",
           assessmentId: "0000-0000-0000-0000-0000",
+          issueDate: "2020-05-14",
           reportType: "1",
           dateOfExpiry: "2026-05-04",
           address: {

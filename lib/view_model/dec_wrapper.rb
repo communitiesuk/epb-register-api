@@ -31,6 +31,7 @@ module ViewModel
           postcode: @view_model.postcode,
         },
         type_of_assessment: "DEC",
+        issue_date: @view_model.date_of_issue,
         report_type: @view_model.report_type,
         current_assessment: {
           date: @view_model.current_assessment_date,
