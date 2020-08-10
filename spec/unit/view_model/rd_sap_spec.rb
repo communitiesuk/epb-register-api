@@ -7,11 +7,13 @@ describe ViewModel::RdSapWrapper do
       schema_name: "RdSAP-Schema-20.0.0",
       xml_file: "spec/fixtures/samples/rdsap.xml",
       unsupported_fields: [],
+      different_fields: {},
     },
     {
       schema_name: "RdSAP-Schema-NI-20.0.0",
       xml_file: "spec/fixtures/samples/rdsap-ni.xml",
       unsupported_fields: [],
+      different_fields: {},
     },
   ].freeze
 

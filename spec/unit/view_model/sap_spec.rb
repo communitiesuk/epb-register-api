@@ -7,11 +7,13 @@ describe ViewModel::SapWrapper do
       schema_name: "SAP-Schema-18.0.0",
       xml_file: "spec/fixtures/samples/sap.xml",
       unsupported_fields: [],
+      different_fields: {},
     },
     {
       schema_name: "SAP-Schema-NI-18.0.0",
       xml_file: "spec/fixtures/samples/sap-ni.xml",
       unsupported_fields: [],
+      different_fields: {},
     },
   ].freeze
 

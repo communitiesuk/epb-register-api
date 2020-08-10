@@ -7,11 +7,13 @@ describe ViewModel::AcCertWrapper do
         schema_name: "CEPC-8.0.0",
         xml_file: "spec/fixtures/samples/ac-cert.xml",
         unsupported_fields: [],
+        different_fields: {},
       },
       {
         schema_name: "CEPC-NI-8.0.0",
         xml_file: "spec/fixtures/samples/ac-cert-ni.xml",
         unsupported_fields: [],
+        different_fields: {},
       },
     ].freeze
 

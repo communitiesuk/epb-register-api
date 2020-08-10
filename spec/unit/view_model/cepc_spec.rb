@@ -7,16 +7,19 @@ describe ViewModel::CepcWrapper do
       schema_name: "CEPC-8.0.0",
       xml_file: "spec/fixtures/samples/cepc.xml",
       unsupported_fields: [],
+      different_fields: {},
     },
     {
       schema_name: "CEPC-NI-8.0.0",
       xml_file: "spec/fixtures/samples/cepc-ni.xml",
       unsupported_fields: [],
+      different_fields: {},
     },
     {
       schema_name: "CEPC-7.1",
       xml_file: "api/schemas/xml/examples/CEPC-7.1(EPC).xml",
       unsupported_fields: [],
+      different_fields: {},
     },
   ].freeze
 

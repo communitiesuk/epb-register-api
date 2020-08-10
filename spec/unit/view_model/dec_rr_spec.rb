@@ -7,11 +7,13 @@ describe ViewModel::DecRrWrapper do
         schema_name: "CEPC-8.0.0",
         xml_file: "spec/fixtures/samples/dec-rr.xml",
         unsupported_fields: [],
+        different_fields: {},
       },
       {
         schema_name: "CEPC-NI-8.0.0",
         xml_file: "spec/fixtures/samples/dec-rr-ni.xml",
         unsupported_fields: [],
+        different_fields: {},
       },
     ].freeze
 
