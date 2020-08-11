@@ -43,7 +43,8 @@ module Gateway
             impact_of_cavity_insulation, impact_of_solid_wall_insulation, tenure, property_age_band,
             current_carbon_emission, potential_carbon_emission, property_summary, related_party_disclosure_number,
             related_party_disclosure_text, cancelled_at, not_for_issue_at, lighting_cost_current,
-          heating_cost_current, hot_water_cost_current, lighting_cost_potential, heating_cost_potential, hot_water_cost_potential
+            heating_cost_current, hot_water_cost_current, lighting_cost_potential, heating_cost_potential, hot_water_cost_potential,
+            address_id
         FROM assessments
         WHERE postcode = $1
         AND cancelled_at IS NULL
@@ -156,7 +157,8 @@ module Gateway
           impact_of_cavity_insulation, impact_of_solid_wall_insulation, tenure, property_age_band,
           current_carbon_emission, potential_carbon_emission, property_summary, related_party_disclosure_number,
           related_party_disclosure_text, cancelled_at, not_for_issue_at, lighting_cost_current,
-          heating_cost_current, hot_water_cost_current, lighting_cost_potential, heating_cost_potential, hot_water_cost_potential
+          heating_cost_current, hot_water_cost_current, lighting_cost_potential, heating_cost_potential, hot_water_cost_potential,
+          address_id
         FROM assessments
         WHERE (#{
         Helper::LevenshteinSqlHelper.levenshtein(
