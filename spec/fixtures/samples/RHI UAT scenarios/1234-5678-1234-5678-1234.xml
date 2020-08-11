@@ -141,6 +141,103 @@
       <Impact-Of-Solid-Wall-Insulation>-16</Impact-Of-Solid-Wall-Insulation>
     </Renewable-Heat-Incentive>
   </Energy-Assessment>
+  <SAP-Data>
+    <SAP-Property-Details>
+      <Property-Type>0</Property-Type>
+      <Built-Form>2</Built-Form>
+      <Extensions-Count>0</Extensions-Count>
+      <Multiple-Glazed-Proportion>100</Multiple-Glazed-Proportion>
+      <Multiple-Glazing-Type>2</Multiple-Glazing-Type>
+      <Glazed-Area>1</Glazed-Area>
+      <Door-Count>2</Door-Count>
+      <Insulated-Door-Count>2</Insulated-Door-Count>
+      <Insulated-Door-U-Value>3</Insulated-Door-U-Value>
+      <Windows-Transmission-Details>
+        <U-Value>2</U-Value>
+        <Solar-Transmittance>0.72</Solar-Transmittance>
+        <Data-Source>2</Data-Source>
+      </Windows-Transmission-Details>
+      <Percent-Draughtproofed>100</Percent-Draughtproofed>
+      <Habitable-Room-Count>5</Habitable-Room-Count>
+      <Heated-Room-Count>5</Heated-Room-Count>
+      <Fixed-Lighting-Outlets-Count>16</Fixed-Lighting-Outlets-Count>
+      <Low-Energy-Fixed-Lighting-Outlets-Count>16</Low-Energy-Fixed-Lighting-Outlets-Count>
+      <Low-Energy-Lighting>100</Low-Energy-Lighting>
+      <Measurement-Type>1</Measurement-Type>
+      <Mechanical-Ventilation>0</Mechanical-Ventilation>
+      <Open-Fireplaces-Count>0</Open-Fireplaces-Count>
+      <Solar-Water-Heating>N</Solar-Water-Heating>
+      <Conservatory-Type>1</Conservatory-Type>
+      <SAP-Building-Parts>
+        <SAP-Building-Part>
+          <Building-Part-Number>1</Building-Part-Number>
+          <Identifier>Main Dwelling</Identifier>
+          <Construction-Age-Band>B</Construction-Age-Band>
+          <SAP-Floor-Dimensions>
+            <SAP-Floor-Dimension>
+              <Floor>0</Floor>
+              <Floor-Construction>1</Floor-Construction>
+              <Floor-Insulation>1</Floor-Insulation>
+              <Heat-Loss-Perimeter quantity="metres">19.5</Heat-Loss-Perimeter>
+              <Party-Wall-Length quantity="metres">7.9</Party-Wall-Length>
+              <Total-Floor-Area quantity="square metres">45.82</Total-Floor-Area>
+              <Room-Height quantity="metres">2.45</Room-Height>
+            </SAP-Floor-Dimension>
+          </SAP-Floor-Dimensions>
+          <Floor-Heat-Loss>7</Floor-Heat-Loss>
+          <Roof-Construction>4</Roof-Construction>
+          <Roof-Insulation-Location>2</Roof-Insulation-Location>
+          <Roof-Insulation-Thickness>200mm</Roof-Insulation-Thickness>
+          <Wall-Construction>4</Wall-Construction>
+          <Wall-Insulation-Type>2</Wall-Insulation-Type>
+          <Wall-Thickness-Measured>N</Wall-Thickness-Measured>
+          <Wall-Dry-Lined>N</Wall-Dry-Lined>
+          <Party-Wall-Construction>0</Party-Wall-Construction>
+        </SAP-Building-Part>
+      </SAP-Building-Parts>
+      <SAP-Heating>
+        <Main-Heating-Details>
+          <Main-Heating>
+            <Main-Heating-Number>1</Main-Heating-Number>
+            <Main-Heating-Category>2</Main-Heating-Category>
+            <Main-Fuel-Type>26</Main-Fuel-Type>
+            <Main-Heating-Control>2106</Main-Heating-Control>
+            <Main-Heating-Data-Source>1</Main-Heating-Data-Source>
+            <Main-Heating-Index-Number>017507</Main-Heating-Index-Number>
+            <Boiler-Flue-Type>2</Boiler-Flue-Type>
+            <Fan-Flue-Present>N</Fan-Flue-Present>
+            <Heat-Emitter-Type>1</Heat-Emitter-Type>
+            <Main-Heating-Fraction>1</Main-Heating-Fraction>
+            <Has-FGHRS>N</Has-FGHRS>
+            <Emitter-Temperature>0</Emitter-Temperature>
+            <Central-Heating-Pump-Age>0</Central-Heating-Pump-Age>
+          </Main-Heating>
+        </Main-Heating-Details>
+        <Water-Heating-Code>901</Water-Heating-Code>
+        <Water-Heating-Fuel>26</Water-Heating-Fuel>
+        <Immersion-Heating-Type>NA</Immersion-Heating-Type>
+        <Cylinder-Size>1</Cylinder-Size>
+        <Has-Fixed-Air-Conditioning>false</Has-Fixed-Air-Conditioning>
+        <Instantaneous-WWHRS>
+          <Rooms-With-Bath-And-Or-Shower>1</Rooms-With-Bath-And-Or-Shower>
+          <Rooms-With-Mixer-Shower-No-Bath>0</Rooms-With-Mixer-Shower-No-Bath>
+          <Rooms-With-Bath-And-Mixer-Shower>0</Rooms-With-Bath-And-Mixer-Shower>
+        </Instantaneous-WWHRS>
+      </SAP-Heating>
+      <SAP-Energy-Source>
+        <Meter-Type>2</Meter-Type>
+        <Mains-Gas>Y</Mains-Gas>
+        <Wind-Turbines-Count>0</Wind-Turbines-Count>
+        <Wind-Turbines-Terrain-Type>2</Wind-Turbines-Terrain-Type>
+        <Photovoltaic-Supply>
+          <None-Or-No-Details>
+            <Percent-Roof-Area>0</Percent-Roof-Area>
+            <PV-Connection>0</PV-Connection>
+          </None-Or-No-Details>
+        </Photovoltaic-Supply>
+      </SAP-Energy-Source>
+    </SAP-Property-Details>
+  </SAP-Data>
   <Report-Header>
     <RRN>1234-5678-1234-5678-1234</RRN>
     <Inspection-Date>2020-02-02</Inspection-Date>
