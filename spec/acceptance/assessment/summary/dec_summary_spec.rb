@@ -31,6 +31,15 @@ describe "Acceptance::AssessmentSummary::DEC" do
         {
           typeOfAssessment: "DEC",
           assessmentId: "0000-0000-0000-0000-0000",
+          assessor: {
+            companyDetails: {
+              address: "123 My Street, My City, AB3 4CD", name: "Joe Bloggs Ltd"
+            },
+            contactDetails: { email: nil, telephone: nil },
+            name: "Name1",
+            registeredBy: { name: "test scheme", schemeId: scheme_id },
+            schemeAssessorId: "SPEC000000",
+          },
           issueDate: "2020-05-14",
           reportType: "1",
           dateOfExpiry: "2026-05-04",
@@ -79,6 +88,7 @@ describe "Acceptance::AssessmentSummary::DEC" do
             renewablesFuelThermal: "1",
             renewablesElectrical: "1",
           },
+          relatedAssessments: [],
         },
       )
     end
