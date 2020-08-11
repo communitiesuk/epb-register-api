@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns="DCLG-CEPC" xmlns:CEPC="DCLG-CEPC" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:UDT="DCLG-CEPC" targetNamespace="DCLG-CEPC" elementFormDefault="qualified" version="LIG-CEPC-7.1">
-	<xs:include schemaLocation="../Reports/BaseDataTypes.xsd"/>
+	<xs:include schemaLocation="BaseDataTypes.xsd"/>
 	<xs:element name="Property-Details" type="Property-Details"/>
 	<xs:complexType name="Property-Details">
 		<xs:all>
@@ -44,7 +44,7 @@
 	<xs:element name="Energy-Assessor" type="Energy-Assessor"/>
 	<xs:complexType name="Energy-Assessor">
 		<xs:annotation>
-			<xs:documentation>A Energy-Assessor is a person certified by a Accrediation Scheme as being qualified to carry out an Energy Assessment and produce an Energy Performance Certificate. 
+			<xs:documentation>A Energy-Assessor is a person certified by a Accrediation Scheme as being qualified to carry out an Energy Assessment and produce an Energy Performance Certificate.
 </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
@@ -488,9 +488,9 @@ A Report can have a number of distinct states depending on whereabouts in its ov
 			<xs:documentation>A Person Name is a complex structure to capture the separate components of the name for a Person, consisting of:
 *	A prefix e.g. "Mr", "Mrs", "Dr" etc.
 *	First Name e.g. "John"
-*	Middle Initial 
+*	Middle Initial
 *	Surname e.g. "Smith"
-*	Suffix e.g. "PhD", "FRICS" 
+*	Suffix e.g. "PhD", "FRICS"
 The First Name and Surname are the only mandatory elements of a name.
 
 The name elements can then be combined in a number of different ways to produce different formats appropriate to the output context.
