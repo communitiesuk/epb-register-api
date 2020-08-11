@@ -48,7 +48,6 @@ module ViewModel
       def property_type
         xpath(%w[Property-Type])
       end
-
     end
   end
 end

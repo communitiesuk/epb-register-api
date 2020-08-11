@@ -20,16 +20,17 @@ describe ViewModel::CepcRrWrapper do
         schema_name: "CEPC-7.1",
         xml_file: "api/schemas/xml/examples/CEPC-7.1(EPC-RR).xml",
         unsupported_fields: [],
-        different_fields: {address:         {
+        different_fields: {
+          address: {
             address_id: "000000000000",
-                           address_line1: "1 Lonely Street",
-                           address_line2: nil,
-                           address_line3: nil,
-                           address_line4: nil,
-                           town: "Post-Town0",
-                           postcode: "A0 0AA",
-        }
-        }
+            address_line1: "1 Lonely Street",
+            address_line2: nil,
+            address_line3: nil,
+            address_line4: nil,
+            town: "Post-Town0",
+            postcode: "A0 0AA",
+          },
+        },
       },
     ].freeze
 
