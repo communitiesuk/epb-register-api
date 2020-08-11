@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns="https://epbr.digital.communities.gov.uk/xsd/cepc" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="https://epbr.digital.communities.gov.uk/xsd/cepc" elementFormDefault="qualified" version="CEPC-7.1">
-	<xs:include schemaLocation="BaseDataTypes.xsd"/>
+<xs:schema xmlns="DCLG-CEPC" xmlns:CEPC="DCLG-CEPC" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:UDT="DCLG-CEPC" targetNamespace="DCLG-CEPC" elementFormDefault="qualified" version="LIG-CEPC-7.1">
+	<xs:include schemaLocation="../Reports/BaseDataTypes.xsd"/>
 	<xs:element name="Property-Details" type="Property-Details"/>
 	<xs:complexType name="Property-Details">
 		<xs:all>
@@ -9,7 +9,7 @@
 					<xs:documentation>A list of floors and rooms that describes the Building-Part being assessed b y this report.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="UPRN" type="UPRNType" minOccurs="0">
+			<xs:element name="UPRN" type="UPRNType">
 				<xs:annotation>
 					<xs:documentation>Unique Property Reference Number</xs:documentation>
 				</xs:annotation>
@@ -44,7 +44,7 @@
 	<xs:element name="Energy-Assessor" type="Energy-Assessor"/>
 	<xs:complexType name="Energy-Assessor">
 		<xs:annotation>
-			<xs:documentation>An Energy-Assessor is a person certified by an Accreditation Scheme as being qualified to carry out an Energy Assessment and produce an Energy Performance Certificate.
+			<xs:documentation>A Energy-Assessor is a person certified by a Accrediation Scheme as being qualified to carry out an Energy Assessment and produce an Energy Performance Certificate. 
 </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
@@ -210,16 +210,16 @@
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="UPRNType">
-    <xs:annotation>
-      <xs:documentation>Unique Property Reference Number</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:pattern value="[0-9]{12}"/>
-    </xs:restriction>
+		<xs:annotation>
+			<xs:documentation>Unique Property Reference Number</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]{12}"/>
+		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="AssessorQualificationsCode">
 		<xs:annotation>
-			<xs:documentation>The types of qualifications the Energy assessor may have - these indicates the types and complexity of reports the EA may produce.</xs:documentation>
+			<xs:documentation>The types of qualificatiosn the Energy assessor may have - these indicates the types and complexity of reports the EA may produce.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="DEC">
@@ -386,7 +386,7 @@
 </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Address-Line-1" type="xs:string"/>
+			<xs:element name="Address-Line-1" type="xs:string" minOccurs="0"/>
 			<xs:element name="Address-Line-2" type="xs:string" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>The District part of the Address.
@@ -488,9 +488,9 @@ A Report can have a number of distinct states depending on whereabouts in its ov
 			<xs:documentation>A Person Name is a complex structure to capture the separate components of the name for a Person, consisting of:
 *	A prefix e.g. "Mr", "Mrs", "Dr" etc.
 *	First Name e.g. "John"
-*	Middle Initial
+*	Middle Initial 
 *	Surname e.g. "Smith"
-*	Suffix e.g. "PhD", "FRICS"
+*	Suffix e.g. "PhD", "FRICS" 
 The First Name and Surname are the only mandatory elements of a name.
 
 The name elements can then be combined in a number of different ways to produce different formats appropriate to the output context.
