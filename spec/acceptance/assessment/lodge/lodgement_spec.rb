@@ -74,31 +74,6 @@ describe "Acceptance::Assessment::Lodge" do
       )
     end
 
-    it "returns status 201" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
-
-      lodge_assessment(
-        assessment_body: valid_rdsap_xml,
-        accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
-      )
-    end
-
-    it "returns json" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
-
-      response =
-        lodge_assessment(
-          assessment_body: valid_rdsap_xml,
-          accepted_responses: [201],
-          auth_data: { scheme_ids: [scheme_id] },
-        )
-
-      expect(response.headers["Content-Type"]).to eq("application/json")
-    end
-
     it "returns the correct response" do
       scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
