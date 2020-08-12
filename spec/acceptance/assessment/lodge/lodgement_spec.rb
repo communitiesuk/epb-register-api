@@ -489,34 +489,22 @@ describe "Acceptance::Assessment::Lodge" do
     assessments = {
       "RdSAP-Schema-NI-20.0.0": {
         "valid_rdsap": {
-          xml: "rdsap-ni",
-          assessor_qualification: {
-            domesticRdSap: "ACTIVE",
-          },
+          xml: "rdsap-ni", assessor_qualification: { domesticRdSap: "ACTIVE" }
         },
       },
       "RdSAP-Schema-20.0.0": {
         "valid_rdsap": {
-          xml: "rdsap",
-          assessor_qualification: {
-            domesticRdSap: "ACTIVE",
-          },
+          xml: "rdsap", assessor_qualification: { domesticRdSap: "ACTIVE" }
         },
       },
       "SAP-Schema-NI-18.0.0": {
         "valid_sap": {
-          xml: "sap-ni",
-          assessor_qualification: {
-            domesticSap: "ACTIVE",
-          },
+          xml: "sap-ni", assessor_qualification: { domesticSap: "ACTIVE" }
         },
       },
       "SAP-Schema-18.0.0": {
         "valid_sap": {
-          xml: "sap",
-          assessor_qualification: {
-            domesticSap: "ACTIVE",
-          },
+          xml: "sap", assessor_qualification: { domesticSap: "ACTIVE" }
         },
       },
       "CEPC-8.0.0": {
