@@ -40,22 +40,6 @@ describe "Acceptance::LodgeAC-CERTNIEnergyAssessment" do
       end
     end
 
-    it "returns status 201" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(
-        scheme_id,
-        "SPEC000000",
-        fetch_assessor_stub.fetch_request_body(nonDomesticCc4: "ACTIVE"),
-      )
-
-      lodge_assessment(
-        assessment_body: valid_cepc_ni_xml,
-        accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
-        schema_name: "CEPC-NI-8.0.0",
-      )
-    end
-
     context "when saving a (AC-CERT) assessment" do
       let(:scheme_id) { add_scheme_and_get_id }
       let(:doc) { Nokogiri.XML valid_cepc_ni_xml }

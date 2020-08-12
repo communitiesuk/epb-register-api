@@ -509,17 +509,13 @@ describe "Acceptance::Assessment::Lodge" do
         },
         "valid_dec": {
           xml: "dec",
-          assessor_qualification: {
-            nonDomesticDec: "ACTIVE",
-          },
+          assessor_qualification: { nonDomesticDec: "ACTIVE" },
           response_code: [201],
           expected_response: "lodgement",
         },
         "valid_dec+rr": {
           xml: "dec+rr",
-          assessor_qualification: {
-            nonDomesticDec: "ACTIVE",
-          },
+          assessor_qualification: { nonDomesticDec: "ACTIVE" },
           response_code: [201],
           expected_response: "dual_lodgement",
         },
@@ -535,25 +531,84 @@ describe "Acceptance::Assessment::Lodge" do
         },
         "valid_ac-report": {
           xml: "ac-report",
-          assessor_qualification: {
-            nonDomesticSp3: "ACTIVE",
-          },
+          assessor_qualification: { nonDomesticSp3: "ACTIVE" },
           response_code: [201],
           expected_response: "lodgement",
         },
         "valid_ac-cert": {
           xml: "ac-cert",
-          assessor_qualification: {
-            nonDomesticCc4: "ACTIVE",
-          },
+          assessor_qualification: { nonDomesticCc4: "ACTIVE" },
           response_code: [201],
           expected_response: "lodgement",
         },
         "valid_ac-cert+ac-report": {
           xml: "ac-cert+ac-report",
           assessor_qualification: {
-            nonDomesticCc4: "ACTIVE",
-            nonDomesticSp3: "ACTIVE",
+            nonDomesticCc4: "ACTIVE", nonDomesticSp3: "ACTIVE"
+          },
+          response_code: [201],
+          expected_response: "dual_lodgement",
+        },
+      },
+      "CEPC-NI-8.0.0": {
+        "valid_cepc": {
+          xml: "cepc-ni",
+          assessor_qualification: {
+            nonDomesticNos3: "ACTIVE",
+            nonDomesticNos4: "ACTIVE",
+            nonDomesticNos5: "ACTIVE",
+          },
+          response_code: [201],
+          expected_response: "lodgement",
+        },
+        "valid_cepc+rr": {
+          xml: "cepc+rr-ni",
+          assessor_qualification: {
+            nonDomesticNos3: "ACTIVE",
+            nonDomesticNos4: "ACTIVE",
+            nonDomesticNos5: "ACTIVE",
+          },
+          response_code: [201],
+          expected_response: "dual_lodgement",
+        },
+        "valid_dec": {
+          xml: "dec-ni",
+          assessor_qualification: { nonDomesticDec: "ACTIVE" },
+          response_code: [201],
+          expected_response: "lodgement",
+        },
+        "valid_dec+rr": {
+          xml: "dec+rr-ni",
+          assessor_qualification: { nonDomesticDec: "ACTIVE" },
+          response_code: [201],
+          expected_response: "dual_lodgement",
+        },
+        "valid_rr": {
+          xml: "cepc-rr-ni",
+          assessor_qualification: {
+            nonDomesticNos3: "ACTIVE",
+            nonDomesticNos4: "ACTIVE",
+            nonDomesticNos5: "ACTIVE",
+          },
+          response_code: [201],
+          expected_response: "lodgement",
+        },
+        "valid_ac-report": {
+          xml: "ac-report-ni",
+          assessor_qualification: { nonDomesticSp3: "ACTIVE" },
+          response_code: [201],
+          expected_response: "lodgement",
+        },
+        "valid_ac-cert": {
+          xml: "ac-cert-ni",
+          assessor_qualification: { nonDomesticCc4: "ACTIVE" },
+          response_code: [201],
+          expected_response: "lodgement",
+        },
+        "valid_ac-cert+ac-report": {
+          xml: "ac-cert+ac-report-ni",
+          assessor_qualification: {
+            nonDomesticCc4: "ACTIVE", nonDomesticSp3: "ACTIVE"
           },
           response_code: [201],
           expected_response: "dual_lodgement",
