@@ -90,7 +90,8 @@ describe "Acceptance::AssessmentSummary::DEC" do
           relatedAssessments: [],
           administrativeInformation: {
             calculationTool: "DCLG, ORCalc, v3.6.3",
-          }
+            relatedPartyDisclosure: "4",
+          },
         },
       )
     end

@@ -71,6 +71,7 @@ describe ViewModel::DecWrapper do
     },
     administrative_information: {
       calculation_tool: "DCLG, ORCalc, v3.6.3",
+      related_party_disclosure: "4",
     },
     assessor: {
       company_details: {
