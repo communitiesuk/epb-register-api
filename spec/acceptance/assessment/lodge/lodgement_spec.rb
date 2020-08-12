@@ -466,13 +466,14 @@ describe "Acceptance::Assessment::Lodge" do
     end
 
     def response(name)
-      JSON.parse(
-        (
-          File.read File.join Dir.pwd,
-                              "spec/fixtures/responses/" + name + ".json"
-        ),
-        symbolize_names: true,
-      )
+      filename = "spec/fixtures/responses/" + name + ".json"
+
+      if File.file?(filename)
+        JSON.parse(
+          (File.read File.join Dir.pwd, filename),
+          symbolize_names: true,
+        )
+      end
     end
 
     let(:scheme_id) { add_scheme_and_get_id }
@@ -494,8 +495,6 @@ describe "Acceptance::Assessment::Lodge" do
             nonDomesticNos4: "ACTIVE",
             nonDomesticNos5: "ACTIVE",
           },
-          response_code: [201],
-          expected_response: "lodgement",
         },
         "valid_cepc+rr": {
           xml: "cepc+rr",
@@ -504,19 +503,14 @@ describe "Acceptance::Assessment::Lodge" do
             nonDomesticNos4: "ACTIVE",
             nonDomesticNos5: "ACTIVE",
           },
-          response_code: [201],
           expected_response: "dual_lodgement",
         },
         "valid_dec": {
-          xml: "dec",
-          assessor_qualification: { nonDomesticDec: "ACTIVE" },
-          response_code: [201],
-          expected_response: "lodgement",
+          xml: "dec", assessor_qualification: { nonDomesticDec: "ACTIVE" }
         },
         "valid_dec+rr": {
           xml: "dec+rr",
           assessor_qualification: { nonDomesticDec: "ACTIVE" },
-          response_code: [201],
           expected_response: "dual_lodgement",
         },
         "valid_rr": {
@@ -526,27 +520,18 @@ describe "Acceptance::Assessment::Lodge" do
             nonDomesticNos4: "ACTIVE",
             nonDomesticNos5: "ACTIVE",
           },
-          response_code: [201],
-          expected_response: "lodgement",
         },
         "valid_ac-report": {
-          xml: "ac-report",
-          assessor_qualification: { nonDomesticSp3: "ACTIVE" },
-          response_code: [201],
-          expected_response: "lodgement",
+          xml: "ac-report", assessor_qualification: { nonDomesticSp3: "ACTIVE" }
         },
         "valid_ac-cert": {
-          xml: "ac-cert",
-          assessor_qualification: { nonDomesticCc4: "ACTIVE" },
-          response_code: [201],
-          expected_response: "lodgement",
+          xml: "ac-cert", assessor_qualification: { nonDomesticCc4: "ACTIVE" }
         },
         "valid_ac-cert+ac-report": {
           xml: "ac-cert+ac-report",
           assessor_qualification: {
             nonDomesticCc4: "ACTIVE", nonDomesticSp3: "ACTIVE"
           },
-          response_code: [201],
           expected_response: "dual_lodgement",
         },
       },
@@ -558,8 +543,6 @@ describe "Acceptance::Assessment::Lodge" do
             nonDomesticNos4: "ACTIVE",
             nonDomesticNos5: "ACTIVE",
           },
-          response_code: [201],
-          expected_response: "lodgement",
         },
         "valid_cepc+rr": {
           xml: "cepc+rr-ni",
@@ -568,19 +551,14 @@ describe "Acceptance::Assessment::Lodge" do
             nonDomesticNos4: "ACTIVE",
             nonDomesticNos5: "ACTIVE",
           },
-          response_code: [201],
           expected_response: "dual_lodgement",
         },
         "valid_dec": {
-          xml: "dec-ni",
-          assessor_qualification: { nonDomesticDec: "ACTIVE" },
-          response_code: [201],
-          expected_response: "lodgement",
+          xml: "dec-ni", assessor_qualification: { nonDomesticDec: "ACTIVE" }
         },
         "valid_dec+rr": {
           xml: "dec+rr-ni",
           assessor_qualification: { nonDomesticDec: "ACTIVE" },
-          response_code: [201],
           expected_response: "dual_lodgement",
         },
         "valid_rr": {
@@ -590,27 +568,20 @@ describe "Acceptance::Assessment::Lodge" do
             nonDomesticNos4: "ACTIVE",
             nonDomesticNos5: "ACTIVE",
           },
-          response_code: [201],
-          expected_response: "lodgement",
         },
         "valid_ac-report": {
           xml: "ac-report-ni",
           assessor_qualification: { nonDomesticSp3: "ACTIVE" },
-          response_code: [201],
-          expected_response: "lodgement",
         },
         "valid_ac-cert": {
           xml: "ac-cert-ni",
           assessor_qualification: { nonDomesticCc4: "ACTIVE" },
-          response_code: [201],
-          expected_response: "lodgement",
         },
         "valid_ac-cert+ac-report": {
           xml: "ac-cert+ac-report-ni",
           assessor_qualification: {
             nonDomesticCc4: "ACTIVE", nonDomesticSp3: "ACTIVE"
           },
-          response_code: [201],
           expected_response: "dual_lodgement",
         },
       },
@@ -619,6 +590,13 @@ describe "Acceptance::Assessment::Lodge" do
     assessments.each do |schema_name, assessments|
       context "when lodging with schema " + schema_name.to_s do
         assessments.each do |assessment_name, assessment_settings|
+          if assessment_settings[:response_code].nil?
+            assessment_settings[:response_code] = [201]
+          end
+          if assessment_settings[:expected_response].nil?
+            assessment_settings[:expected_response] = "lodgement"
+          end
+
           it "tries to lodge a " + assessment_name.to_s +
             " with response code " +
             assessment_settings[:response_code].join(", ") do
@@ -638,6 +616,26 @@ describe "Acceptance::Assessment::Lodge" do
             if assessment_settings[:expected_response]
               expect(lodgement_response).to eq(
                 response(assessment_settings[:expected_response]),
+              )
+            end
+
+            if assessment_settings[:dont_check_lodgement_response].nil?
+              fetch_endpoint_response =
+                JSON.parse(
+                  fetch_assessment("0000-0000-0000-0000-0000").body,
+                  symbolize_names: true,
+                )
+
+              expected_fetch_endpoint_response =
+                response(assessment_settings[:xml])
+
+              expected_fetch_endpoint_response[:data][:assessor][:registeredBy][
+                :schemeId
+              ] =
+                scheme_id
+
+              expect(fetch_endpoint_response).to eq(
+                expected_fetch_endpoint_response,
               )
             end
           end
