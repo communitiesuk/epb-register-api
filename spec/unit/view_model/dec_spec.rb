@@ -15,6 +15,12 @@ describe ViewModel::DecWrapper do
       unsupported_fields: [],
       different_fields: {},
     },
+    {
+      schema_name: "CEPC-7.1",
+      xml_file: "api/schemas/xml/examples/CEPC-7.1(DEC).xml",
+      unsupported_fields: [],
+      different_fields: {},
+    },
   ].freeze
 
   # You should only need to add to this list to test new fields on all CEPC schema
