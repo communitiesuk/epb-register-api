@@ -31,7 +31,6 @@ describe ViewModel::DecWrapper do
       postcode: "A0 0AA",
     },
     type_of_assessment: "DEC",
-    issue_date: "2020-05-14",
     report_type: "1",
     current_assessment: {
       date: "2020-01-01",
@@ -70,6 +69,7 @@ describe ViewModel::DecWrapper do
       renewables_electrical: "1",
     },
     administrative_information: {
+      issue_date: "2020-05-14",
       calculation_tool: "DCLG, ORCalc, v3.6.3",
       related_party_disclosure: "4",
       related_rrn: "4192-1535-8427-8844-6702",

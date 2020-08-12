@@ -39,7 +39,6 @@ describe "Acceptance::AssessmentSummary::DEC" do
             registeredBy: { name: "test scheme", schemeId: scheme_id },
             schemeAssessorId: "SPEC000000",
           },
-          issueDate: "2020-05-14",
           reportType: "1",
           dateOfExpiry: "2026-05-04",
           address: {
@@ -89,6 +88,7 @@ describe "Acceptance::AssessmentSummary::DEC" do
           },
           relatedAssessments: [],
           administrativeInformation: {
+            issueDate: "2020-05-14",
             calculationTool: "DCLG, ORCalc, v3.6.3",
             relatedPartyDisclosure: "4",
             relatedRrn: "4192-1535-8427-8844-6702",
