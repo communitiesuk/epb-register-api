@@ -3,56 +3,90 @@
   <Report>
     <Report-Header>
       <RRN>0000-0000-0000-0000-0000</RRN>
-      <Issue-Date>2020-05-04</Issue-Date>
+      <Issue-Date>2020-06-02</Issue-Date>
       <Report-Type>6</Report-Type>
       <Valid-Until>2024-05-04</Valid-Until>
-      <Inspection-Date>2020-05-04</Inspection-Date>
-      <Registration-Date>2020-05-04</Registration-Date>
+      <Related-RRN>0000-0000-0000-0000-0001</Related-RRN>
+      <Inspection-Date>2020-05-20</Inspection-Date>
+      <Registration-Date>2020-05-20</Registration-Date>
       <Status>entered</Status>
       <Language-Code>1</Language-Code>
+      <Building-Complexity>Level 3</Building-Complexity>
       <Energy-Assessor>
         <Certificate-Number>SPEC000000</Certificate-Number>
-        <Name>Name1</Name>
-        <Accreditation-Scheme-Name>Accreditation-Scheme-Name1</Accreditation-Scheme-Name>
+        <Name>Test Assessor Name</Name>
+        <Accreditation-Scheme-Name>Some Accreditation Limited</Accreditation-Scheme-Name>
+        <Accreditation-Scheme-Website>www.example.com</Accreditation-Scheme-Website>
+        <Trading-Address>111 Twotwotwo Street, Mytown,, MT7 1AA</Trading-Address>
+        <Company-Name>Assess Energy Limited</Company-Name>
+        <Qualifications>SP3</Qualifications>
+        <Qualifications>CC4</Qualifications>
+        <E-Mail>test@example.com</E-Mail>
+        <Telephone-Number>07555 666777</Telephone-Number>
       </Energy-Assessor>
       <Property-Details>
-        <UPRN>UPRN-000000000000</UPRN>
+        <UPRN>UPRN-432167890000</UPRN>
         <Property-Address>
           <Address-Line-1>2 Lonely Street</Address-Line-1>
           <Post-Town>Post-Town1</Post-Town>
           <Postcode>A0 0AA</Postcode>
         </Property-Address>
-        <Property-Type>Property-Type1</Property-Type>
+        <Property-Type />
+        <Is-Heritage-Site>N</Is-Heritage-Site>
       </Property-Details>
       <Calculation-Details>
-        <Calculation-Tool>Calculation-Tool1</Calculation-Tool>
+        <Calculation-Tool>Sterling Accreditation, Sterling e-Volve, v1.2</Calculation-Tool>
       </Calculation-Details>
     </Report-Header>
-    <Unstructured-Data>
-      <Data-Blob></Data-Blob>
-    </Unstructured-Data>
+    <Insurance-Details>
+      <Insurer>Assessor Underwriting Limited</Insurer>
+      <Policy-No>AB1234567CD</Policy-No>
+      <Effective-Date>2023-02-01</Effective-Date>
+      <Expiry-Date>2018-01-31</Expiry-Date>
+      <PI-Limit>2000000</PI-Limit>
+    </Insurance-Details>
     <Air-Conditioning-Inspection-Certificate>
-      <Building-Name>Building-Name0</Building-Name>
-      <F-Gas-Compliant-Date>00/00/,,00</F-Gas-Compliant-Date>
+      <Equipment-Owner>
+        <Equipment-Owner-Name>Katy Smith</Equipment-Owner-Name>
+        <Telephone-Number>0208777777</Telephone-Number>
+        <Organisation-Name>The Shop</Organisation-Name>
+        <Registered-Address>
+          <Address-Line-1>A. Shop</Address-Line-1>
+          <Address-Line-2>The High Street</Address-Line-2>
+          <Address-Line-3 />
+          <Address-Line-4 />
+          <Post-Town>London</Post-Town>
+          <Postcode>AB12 2AA</Postcode>
+        </Registered-Address>
+      </Equipment-Owner>
+      <Equipment-Operator>
+        <Responsible-Person>Katy Smith</Responsible-Person>
+        <Telephone-Number>0208777777</Telephone-Number>
+        <Organisation-Name>The Shop</Organisation-Name>
+        <Registered-Address>
+          <Address-Line-1>A. Shop</Address-Line-1>
+          <Address-Line-2>The High Street</Address-Line-2>
+          <Address-Line-3 />
+          <Address-Line-4 />
+          <Post-Town>London</Post-Town>
+          <Postcode>AB12 2AA</Postcode>
+        </Registered-Address>
+      </Equipment-Operator>
+      <Building-Name>A. Shop</Building-Name>
+      <F-Gas-Compliant-Date>Not Provided</F-Gas-Compliant-Date>
       <AC-Rated-Output>
-        <AC-Rating-Unknown-Flag>false</AC-Rating-Unknown-Flag>
+        <AC-kW-Rating>40</AC-kW-Rating>
       </AC-Rated-Output>
       <Random-Sampling-Flag>Y</Random-Sampling-Flag>
-      <Treated-Floor-Area>50</Treated-Floor-Area>
+      <Treated-Floor-Area>1876</Treated-Floor-Area>
       <AC-System-Metered-Flag>0</AC-System-Metered-Flag>
-      <Refrigerant-Charge-Total>50</Refrigerant-Charge-Total>
+      <Refrigerant-Charge-Total>12</Refrigerant-Charge-Total>
       <AC-Sub-Systems>
         <AC-Sub-System>
-          <Sub-System-Number>Sub-System-Number0</Sub-System-Number>
-          <Sub-System-Description>Sub-System-Description0</Sub-System-Description>
-          <Refrigerant-Type>Refrigerant-Type0</Refrigerant-Type>
-          <Sub-System-Age>Sub-System-Age0</Sub-System-Age>
-        </AC-Sub-System>
-        <AC-Sub-System>
-          <Sub-System-Number>Sub-System-Number1</Sub-System-Number>
-          <Sub-System-Description>Sub-System-Description1</Sub-System-Description>
-          <Refrigerant-Type>Refrigerant-Type1</Refrigerant-Type>
-          <Sub-System-Age>Sub-System-Age1</Sub-System-Age>
+          <Sub-System-Number>VOL001/SYS001 R410A Inverter Split Systems to Sales Area</Sub-System-Number>
+          <Sub-System-Description>This sub system comprised of; 4Nr 10kW R410A Mitsubishi Heavy Industries inverter driven split AC condensers interconnected to indoor cassette units within the Sales Area dating from circa 2014.</Sub-System-Description>
+          <Refrigerant-Type>R410A</Refrigerant-Type>
+          <Sub-System-Age>2014</Sub-System-Age>
         </AC-Sub-System>
       </AC-Sub-Systems>
     </Air-Conditioning-Inspection-Certificate>

@@ -49,7 +49,7 @@ describe "Acceptance::AssessmentSummary::CEPC-RR" do
           reportType: "4",
           dateOfExpiry: "2021-05-03",
           dateOfRegistration: "2020-05-05",
-          relatedCertificate: "0000-0000-0000-0000-1111",
+          relatedCertificate: "0000-0000-0000-0000-0001",
           relatedAssessments: [],
           address: {
             addressId: "UPRN-000000000000",
@@ -105,14 +105,14 @@ describe "Acceptance::AssessmentSummary::CEPC-RR" do
             calculationTool: "Calculation-Tool0",
           },
           relatedPartyDisclosure: "Related to the owner",
-          energyBandFromRelatedCertificate: "d",
+          energyBandFromRelatedCertificate: nil,
         },
       )
     end
 
     context "with another assessment at the same address" do
       let(:second_assessment) { Nokogiri.XML xml_file }
-      let(:assessment_id) { second_assessment.at "RRN" }
+      let(:assessment_id) { second_assessment.at "//CEPC:RRN" }
       let(:response) do
         JSON.parse(
           fetch_assessment_summary("1234-0000-0000-0000-0000").body,

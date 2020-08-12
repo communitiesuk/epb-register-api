@@ -41,7 +41,7 @@ describe ViewModel::CepcRrWrapper do
       type_of_assessment: "CEPC-RR",
       date_of_expiry: "2021-05-03",
       date_of_registration: "2020-05-05",
-      related_certificate: "0000-0000-0000-0000-1111",
+      related_certificate: "0000-0000-0000-0000-0001",
       address: {
         address_id: "UPRN-000000000000",
         address_line1: "1 Lonely Street",
