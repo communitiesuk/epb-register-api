@@ -91,6 +91,7 @@ describe "Acceptance::AssessmentSummary::DEC" do
           administrativeInformation: {
             calculationTool: "DCLG, ORCalc, v3.6.3",
             relatedPartyDisclosure: "4",
+            relatedRrn: "4192-1535-8427-8844-6702",
           },
         },
       )

@@ -72,6 +72,7 @@ describe ViewModel::DecWrapper do
     administrative_information: {
       calculation_tool: "DCLG, ORCalc, v3.6.3",
       related_party_disclosure: "4",
+      related_rrn: "4192-1535-8427-8844-6702",
     },
     assessor: {
       company_details: {

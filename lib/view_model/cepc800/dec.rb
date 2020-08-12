@@ -108,6 +108,10 @@ module ViewModel
       def calculation_tool
         xpath(%w[Calculation-Details Calculation-Tool])
       end
+
+      def related_rrn
+        xpath(%w[Related-RRN])
+      end
     end
   end
 end
