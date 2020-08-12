@@ -14,7 +14,6 @@ module UseCase
 
     def execute(data, migrated, schema_name)
       assessment_id = data[:assessment_id]
-      assessment_type = data[:assessment_type]
 
       unless migrated
         if @assessments_gateway.search_by_assessment_id(assessment_id).first
@@ -28,47 +27,7 @@ module UseCase
 
       assessor = @assessors_gateway.fetch scheme_assessor_id
 
-      if assessment_type == "RdSAP" &&
-          assessor.domestic_rd_sap_qualification == "INACTIVE"
-        raise InactiveAssessorException
-      end
-
-      if assessment_type == "SAP" &&
-          assessor.domestic_sap_qualification == "INACTIVE"
-        raise InactiveAssessorException
-      end
-
-      if %w[CEPC CEPC-RR].include?(assessment_type)
-        if data[:building_complexity]
-          level = data[:building_complexity][-1]
-
-          if assessor.send(:"non_domestic_nos#{level}_qualification") ==
-              "INACTIVE"
-            raise InactiveAssessorException
-          end
-        end
-
-        if assessor.non_domestic_nos3_qualification == "INACTIVE" &&
-            assessor.non_domestic_nos4_qualification == "INACTIVE" &&
-            assessor.non_domestic_nos5_qualification == "INACTIVE"
-          raise InactiveAssessorException
-        end
-      end
-
-      if %w[DEC DEC-RR].include?(assessment_type) &&
-          assessor.non_domestic_dec_qualification == "INACTIVE"
-        raise InactiveAssessorException
-      end
-
-      if assessment_type == "AC-REPORT" &&
-          assessor.non_domestic_sp3_qualification == "INACTIVE"
-        raise InactiveAssessorException
-      end
-
-      if assessment_type == "AC-CERT" &&
-          assessor.non_domestic_cc4_qualification == "INACTIVE"
-        raise InactiveAssessorException
-      end
+      check_assessor_qualification data, assessor
 
       data[:improvements] =
         data[:improvements].map do |improvement|
@@ -96,7 +55,7 @@ module UseCase
           date_registered: data[:registration_date],
           tenure: data[:tenure],
           dwelling_type: data[:dwelling_type],
-          type_of_assessment: assessment_type,
+          type_of_assessment: data[:assessment_type],
           total_floor_area: data[:total_floor_area],
           assessment_id: data[:assessment_id],
           assessor: assessor,
@@ -156,6 +115,52 @@ module UseCase
       )
 
       assessment
+    end
+
+  private
+
+    def check_assessor_qualification(data, assessor)
+      if data[:assessment_type] == "RdSAP" &&
+          assessor.domestic_rd_sap_qualification == "INACTIVE"
+        raise InactiveAssessorException
+      end
+
+      if data[:assessment_type] == "SAP" &&
+          assessor.domestic_sap_qualification == "INACTIVE"
+        raise InactiveAssessorException
+      end
+
+      if %w[CEPC CEPC-RR].include?(data[:assessment_type])
+        if data[:building_complexity]
+          level = data[:building_complexity][-1]
+
+          if assessor.send(:"non_domestic_nos#{level}_qualification") ==
+              "INACTIVE"
+            raise InactiveAssessorException
+          end
+        end
+
+        if assessor.non_domestic_nos3_qualification == "INACTIVE" &&
+            assessor.non_domestic_nos4_qualification == "INACTIVE" &&
+            assessor.non_domestic_nos5_qualification == "INACTIVE"
+          raise InactiveAssessorException
+        end
+      end
+
+      if %w[DEC DEC-RR].include?(data[:assessment_type]) &&
+          assessor.non_domestic_dec_qualification == "INACTIVE"
+        raise InactiveAssessorException
+      end
+
+      if data[:assessment_type] == "AC-REPORT" &&
+          assessor.non_domestic_sp3_qualification == "INACTIVE"
+        raise InactiveAssessorException
+      end
+
+      if data[:assessment_type] == "AC-CERT" &&
+          assessor.non_domestic_cc4_qualification == "INACTIVE"
+        raise InactiveAssessorException
+      end
     end
   end
 end
