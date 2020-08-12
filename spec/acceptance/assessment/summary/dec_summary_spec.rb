@@ -35,7 +35,6 @@ describe "Acceptance::AssessmentSummary::DEC" do
             companyDetails: {
               address: "123 My Street, My City, AB3 4CD", name: "Joe Bloggs Ltd"
             },
-            contactDetails: { email: nil, telephone: nil },
             name: "Name1",
             registeredBy: { name: "test scheme", schemeId: scheme_id },
             schemeAssessorId: "SPEC000000",

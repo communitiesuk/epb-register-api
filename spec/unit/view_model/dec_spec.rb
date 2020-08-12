@@ -72,6 +72,13 @@ describe ViewModel::DecWrapper do
     administrative_information: {
       calculation_tool: "DCLG, ORCalc, v3.6.3",
     },
+    assessor: {
+      company_details: {
+        address: "123 My Street, My City, AB3 4CD", name: "Joe Bloggs Ltd"
+      },
+      name: "Name1",
+      scheme_assessor_id: "SPEC000000",
+    },
   }.freeze
 
   it "should read the appropriate values from the XML doc" do
