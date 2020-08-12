@@ -38,22 +38,6 @@ describe "Acceptance::LodgeCEPC+RREnergyAssessment" do
       end
     end
 
-    it "returns status 201" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(
-        scheme_id,
-        "SPEC000000",
-        fetch_assessor_stub.fetch_request_body(nonDomesticNos3: "ACTIVE"),
-      )
-
-      lodge_assessment(
-        assessment_body: valid_xml,
-        accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
-        schema_name: "CEPC-8.0.0",
-      )
-    end
-
     context "when saving a (CEPC+RR) assessment" do
       let(:scheme_id) { add_scheme_and_get_id }
       let(:doc) { Nokogiri.XML valid_xml }
