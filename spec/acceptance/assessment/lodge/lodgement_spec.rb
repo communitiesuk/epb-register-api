@@ -507,6 +507,14 @@ describe "Acceptance::Assessment::Lodge" do
           response_code: [201],
           expected_response: "dual_lodgement",
         },
+        "valid_dec": {
+          xml: "dec",
+          assessor_qualification: {
+            nonDomesticDec: "ACTIVE",
+          },
+          response_code: [201],
+          expected_response: "lodgement",
+        },
       },
     }
 
