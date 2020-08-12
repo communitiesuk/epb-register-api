@@ -31,12 +31,12 @@
       <Property-Details>
         <UPRN>UPRN-432167890000</UPRN>
         <Property-Address>
-          <Address-Line-1>A. Shop</Address-Line-1>
-          <Address-Line-2>The High Street</Address-Line-2>
+          <Address-Line-1>2 Lonely Street</Address-Line-1>
+          <Address-Line-2 />
           <Address-Line-3 />
           <Address-Line-4 />
-          <Post-Town>London</Post-Town>
-          <Postcode>AB12 2AA</Postcode>
+          <Post-Town>Post-Town1</Post-Town>
+          <Postcode>A0 0AA</Postcode>
         </Property-Address>
         <Property-Type />
         <Is-Heritage-Site>N</Is-Heritage-Site>
@@ -126,12 +126,12 @@
       <Property-Details>
         <UPRN>UPRN-432167890000</UPRN>
         <Property-Address>
-          <Address-Line-1>A. Shop</Address-Line-1>
-          <Address-Line-2>The High Street</Address-Line-2>
+          <Address-Line-1>2 Lonely Street</Address-Line-1>
+          <Address-Line-2 />
           <Address-Line-3 />
           <Address-Line-4 />
-          <Post-Town>London</Post-Town>
-          <Postcode>AB12 2AA</Postcode>
+          <Post-Town>Post-Town1</Post-Town>
+          <Postcode>A0 0AA</Postcode>
         </Property-Address>
         <Property-Type />
         <Is-Heritage-Site>N</Is-Heritage-Site>

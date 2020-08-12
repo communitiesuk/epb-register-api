@@ -10,20 +10,22 @@
       <CEPC:Issue-Date>2020-05-14</CEPC:Issue-Date>
       <CEPC:Report-Type>3</CEPC:Report-Type>
       <CEPC:Valid-Until>2026-05-04</CEPC:Valid-Until>
-      <CEPC:Related-RRN>0000-0000-0000-0000-0001</CEPC:Related-RRN>
+      <CEPC:Related-RRN>4192-1535-8427-8844-6702</CEPC:Related-RRN>
       <CEPC:Inspection-Date>2020-05-04</CEPC:Inspection-Date>
-      <CEPC:Registration-Date>2020-05-05</CEPC:Registration-Date>
+      <CEPC:Registration-Date>2020-05-04</CEPC:Registration-Date>
       <CEPC:Status>entered</CEPC:Status>
       <CEPC:Language-Code>1</CEPC:Language-Code>
       <CEPC:Energy-Assessor>
         <CEPC:Certificate-Number>SPEC000000</CEPC:Certificate-Number>
-        <CEPC:Name>Name1</CEPC:Name>
-        <CEPC:Accreditation-Scheme-Name>Information not available</CEPC:Accreditation-Scheme-Name>
+        <CEPC:Name>TEST NAME BOI</CEPC:Name>
+        <CEPC:Accreditation-Scheme-Name>TESTSCHEME</CEPC:Accreditation-Scheme-Name>
         <CEPC:Accreditation-Scheme-Website>Information not available</CEPC:Accreditation-Scheme-Website>
         <CEPC:Trading-Address>123 My Street, My City, AB3 4CD</CEPC:Trading-Address>
         <CEPC:Company-Name>Joe Bloggs Ltd</CEPC:Company-Name>
         <CEPC:Qualifications>NOS5</CEPC:Qualifications>
         <CEPC:Status>Registered</CEPC:Status>
+        <CEPC:E-Mail>test@testscheme.com</CEPC:E-Mail>
+        <CEPC:Telephone-Number>012345</CEPC:Telephone-Number>
       </CEPC:Energy-Assessor>
       <CEPC:Building-Complexity>Level 3</CEPC:Building-Complexity>
       <CEPC:Property-Details>
@@ -234,6 +236,56 @@
         </CEPC:HVAC-Systems>
       </CEPC:Building-Data>
     </CEPC:Summary-Of-Performance>
+    <CEPC:OR-Operational-Rating>
+      <CEPC:OR-Assessment-Start-Date>2020-05-14</CEPC:OR-Assessment-Start-Date>
+      <CEPC:OR-Assessment-End-Date>2030-05-14</CEPC:OR-Assessment-End-Date>
+      <CEPC:Building-Category></CEPC:Building-Category>
+      <CEPC:OR-Building-Data>
+        <CEPC:HVAC-System>Yes</CEPC:HVAC-System>
+        <CEPC:Other-HVAC-System>Yes</CEPC:Other-HVAC-System>
+        <CEPC:Internal-Environment>Yes</CEPC:Internal-Environment>
+        <CEPC:Assessment-Period-Alignment>Yes</CEPC:Assessment-Period-Alignment>
+      </CEPC:OR-Building-Data>
+      <CEPC:OR-Usable-Floor-Area>
+        <CEPC:UFA-1>
+          <CEPC:Floor-Area>100</CEPC:Floor-Area>
+        </CEPC:UFA-1>
+      </CEPC:OR-Usable-Floor-Area>
+      <CEPC:OR-Previous-Data></CEPC:OR-Previous-Data>
+      <CEPC:OR-Benchmark-Data>
+        <CEPC:Main-Benchmark></CEPC:Main-Benchmark>
+        <CEPC:Benchmarks>
+          <CEPC:Benchmark>
+            <CEPC:Area-Metric></CEPC:Area-Metric>
+            <CEPC:Benchmark></CEPC:Benchmark>
+            <CEPC:Benchmark-ID>1</CEPC:Benchmark-ID>
+            <CEPC:Floor-Area>403</CEPC:Floor-Area>
+            <CEPC:Name></CEPC:Name>
+            <CEPC:Occupancy-Level></CEPC:Occupancy-Level>
+            <CEPC:Special-Uses-Area></CEPC:Special-Uses-Area>
+            <CEPC:Total-Equivalent></CEPC:Total-Equivalent>
+            <CEPC:TUFA></CEPC:TUFA>
+          </CEPC:Benchmark>
+        </CEPC:Benchmarks>
+      </CEPC:OR-Benchmark-Data>
+      <CEPC:OR-Energy-Consumption>
+        <CEPC:Anthracite>
+          <CEPC:Consumption>12.6</CEPC:Consumption>
+          <CEPC:End-Date>2030-12-25</CEPC:End-Date>
+          <CEPC:Estimate>3</CEPC:Estimate>
+          <CEPC:Start-Date>2019-12-25</CEPC:Start-Date>
+        </CEPC:Anthracite>
+      </CEPC:OR-Energy-Consumption>
+      <CEPC:Renewable-Energy-Source>
+        <CEPC:Energy-Source>
+          <CEPC:Start-Date>2019-12-25</CEPC:Start-Date>
+          <CEPC:End-Date>2030-12-25</CEPC:End-Date>
+          <CEPC:Name>Solar panel</CEPC:Name>
+          <CEPC:Generation>20</CEPC:Generation>
+          <CEPC:Energy-Type>2</CEPC:Energy-Type>
+        </CEPC:Energy-Source>
+      </CEPC:Renewable-Energy-Source>
+    </CEPC:OR-Operational-Rating>
     <CEPC:Insurance-Details>
       <CEPC:Insurer>Insurance</CEPC:Insurer>
       <CEPC:Policy-No>0001</CEPC:Policy-No>
@@ -277,6 +329,7 @@
         <CEPC:Building-Environment>Air Conditioning</CEPC:Building-Environment>
         <CEPC:Floor-Area>403</CEPC:Floor-Area>
         <CEPC:Building-Level>3</CEPC:Building-Level>
+        <CEPC:OR-Availability-Date>2020-01-04</CEPC:OR-Availability-Date>
       </CEPC:Technical-Information>
       <CEPC:AC-Questionnaire>
         <CEPC:AC-Present>No</CEPC:AC-Present>

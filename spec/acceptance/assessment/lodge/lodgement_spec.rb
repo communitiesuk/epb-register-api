@@ -504,6 +504,10 @@ describe "Acceptance::Assessment::Lodge" do
             nonDomesticNos5: "ACTIVE",
           },
           expected_response: "dual_lodgement",
+          expected_lodgement_responses: {
+            "0000-0000-0000-0000-0000": "cepc-dual",
+            "0000-0000-0000-0000-0001": "cepc-rr-dual",
+          },
         },
         "valid_dec": {
           xml: "dec", assessor_qualification: { nonDomesticDec: "ACTIVE" }
@@ -512,6 +516,10 @@ describe "Acceptance::Assessment::Lodge" do
           xml: "dec+rr",
           assessor_qualification: { nonDomesticDec: "ACTIVE" },
           expected_response: "dual_lodgement",
+          expected_lodgement_responses: {
+            "0000-0000-0000-0000-0000": "dec-dual",
+            "0000-0000-0000-0000-0001": "dec-rr-dual",
+          },
         },
         "valid_rr": {
           xml: "cepc-rr",
@@ -533,6 +541,10 @@ describe "Acceptance::Assessment::Lodge" do
             nonDomesticCc4: "ACTIVE", nonDomesticSp3: "ACTIVE"
           },
           expected_response: "dual_lodgement",
+          expected_lodgement_responses: {
+            "0000-0000-0000-0000-0000": "ac-cert-dual",
+            "0000-0000-0000-0000-0001": "ac-report-dual",
+          },
         },
       },
       "CEPC-NI-8.0.0": {
@@ -552,6 +564,10 @@ describe "Acceptance::Assessment::Lodge" do
             nonDomesticNos5: "ACTIVE",
           },
           expected_response: "dual_lodgement",
+          expected_lodgement_responses: {
+            "0000-0000-0000-0000-0000": "cepc-ni-dual",
+            "0000-0000-0000-0000-0001": "cepc-rr-ni-dual",
+          },
         },
         "valid_dec": {
           xml: "dec-ni", assessor_qualification: { nonDomesticDec: "ACTIVE" }
@@ -560,6 +576,10 @@ describe "Acceptance::Assessment::Lodge" do
           xml: "dec+rr-ni",
           assessor_qualification: { nonDomesticDec: "ACTIVE" },
           expected_response: "dual_lodgement",
+          expected_lodgement_responses: {
+            "0000-0000-0000-0000-0000": "dec-ni-dual",
+            "0000-0000-0000-0000-0001": "dec-rr-ni-dual",
+          },
         },
         "valid_rr": {
           xml: "cepc-rr-ni",
@@ -583,6 +603,10 @@ describe "Acceptance::Assessment::Lodge" do
             nonDomesticCc4: "ACTIVE", nonDomesticSp3: "ACTIVE"
           },
           expected_response: "dual_lodgement",
+          expected_lodgement_responses: {
+            "0000-0000-0000-0000-0000": "ac-cert-ni-dual",
+            "0000-0000-0000-0000-0001": "ac-report-ni-dual",
+          },
         },
       },
     }
@@ -593,8 +617,15 @@ describe "Acceptance::Assessment::Lodge" do
           if assessment_settings[:response_code].nil?
             assessment_settings[:response_code] = [201]
           end
+
           if assessment_settings[:expected_response].nil?
             assessment_settings[:expected_response] = "lodgement"
+          end
+
+          if assessment_settings[:expected_lodgement_responses].nil?
+            assessment_settings[:expected_lodgement_responses] = {
+              "0000-0000-0000-0000-0000": assessment_settings[:xml],
+            }
           end
 
           it "tries to lodge a " + assessment_name.to_s +
@@ -619,15 +650,12 @@ describe "Acceptance::Assessment::Lodge" do
               )
             end
 
-            if assessment_settings[:dont_check_lodgement_response].nil?
+            assessment_settings[:expected_lodgement_responses]
+              .each do |rrn, filename|
               fetch_endpoint_response =
-                JSON.parse(
-                  fetch_assessment("0000-0000-0000-0000-0000").body,
-                  symbolize_names: true,
-                )
+                JSON.parse(fetch_assessment(rrn).body, symbolize_names: true)
 
-              expected_fetch_endpoint_response =
-                response(assessment_settings[:xml])
+              expected_fetch_endpoint_response = response(filename)
 
               expected_fetch_endpoint_response[:data][:assessor][:registeredBy][
                 :schemeId
