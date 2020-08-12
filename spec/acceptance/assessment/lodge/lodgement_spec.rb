@@ -484,4 +484,64 @@ describe "Acceptance::Assessment::Lodge" do
       )
     end
   end
+
+  context "when lodging all assessment types" do
+    def sample(name)
+      File.read File.join Dir.pwd, "spec/fixtures/samples/" + name + ".xml"
+    end
+
+    def response(name)
+      JSON.parse((File.read File.join Dir.pwd, "spec/fixtures/responses/" + name + ".json"), symbolize_names: true)
+    end
+
+    let(:scheme_id) { add_scheme_and_get_id }
+
+    def create_assessor(qualifications)
+      add_assessor(
+        scheme_id,
+        "SPEC000000",
+        AssessorStub.new.fetch_request_body(qualifications),
+      )
+    end
+
+    assessments = {
+      "CEPC-8.0.0": {
+        "valid_cepc": {
+          xml: "cepc",
+          assessor_qualification: {
+            nonDomesticNos3: "ACTIVE",
+            nonDomesticNos4: "ACTIVE",
+            nonDomesticNos5: "ACTIVE",
+          },
+          response_code: [201],
+          expected_response: "lodgement",
+        },
+      },
+    }
+
+    assessments.each do |schema_name, assessments|
+      context "when lodging with schema " + schema_name.to_s do
+        assessments.each do |assessment_name, assessment_settings|
+          it "tries to lodge a " + assessment_name.to_s + " with response code " + assessment_settings[:response_code].join(", ") do
+            create_assessor(assessment_settings[:assessor_qualification])
+
+            lodgement_response =
+              JSON.parse(
+                lodge_assessment(
+                  assessment_body: sample(assessment_settings[:xml]),
+                  accepted_responses: assessment_settings[:response_code],
+                  auth_data: { scheme_ids: [scheme_id] },
+                  schema_name: schema_name.to_s,
+                  ).body,
+                symbolize_names: true,
+              )
+
+            if assessment_settings[:expected_response]
+              expect(lodgement_response).to eq(response(assessment_settings[:expected_response]))
+            end
+          end
+        end
+      end
+    end
+  end
 end
