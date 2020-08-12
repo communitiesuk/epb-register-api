@@ -293,6 +293,30 @@ describe "Acceptance::Assessment::Lodge" do
           expect(migrated_column.entries.first["migrated"]).to be_truthy
         end
       end
+
+      context "when migrating an assessment submitted by an assessor who is now unqualified" do
+        let(:rdsap_xml) do
+          add_assessor scheme_id,
+                       "UNQU000000",
+                       AssessorStub.new.fetch_request_body(
+                         domesticRdSap: "INACTIVE",
+                       )
+
+          xml = Nokogiri.XML valid_rdsap_xml
+
+          xml.css("Certificate-Number").children.first.content = "UNQU000000"
+
+          xml.to_s
+        end
+
+        it "should be true in migrated column" do
+          lodge_assessment assessment_body: rdsap_xml,
+                           accepted_responses: [201],
+                           scopes: %w[assessment:lodge migrate:assessment],
+                           auth_data: { scheme_ids: [scheme_id] },
+                           migrated: true
+        end
+      end
     end
 
     context "without migrated parameter" do
