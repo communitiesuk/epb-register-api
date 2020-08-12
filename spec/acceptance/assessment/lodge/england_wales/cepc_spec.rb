@@ -10,7 +10,7 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
   end
 
   context "when lodging a CEPC assessment (post)" do
-    context "when an assessor is inactive" do
+    context "when missing building complexity element" do
       let(:scheme_id) { add_scheme_and_get_id }
 
       before do
@@ -25,37 +25,17 @@ describe "Acceptance::LodgeCEPCEnergyAssessment" do
         )
       end
 
-      context "when unqualified for NOS3, NOS4 and NOS5" do
-        it "returns status 400 with the correct error response" do
-          response =
-            JSON.parse(
-              lodge_assessment(
-                assessment_body: valid_cepc_xml,
-                accepted_responses: [400],
-                auth_data: { scheme_ids: [scheme_id] },
-                schema_name: "CEPC-8.0.0",
-              ).body,
-            )
+      it "can return status 400 with the correct error response" do
+        doc = Nokogiri.XML valid_cepc_xml
 
-          expect(response["errors"][0]["title"]).to eq(
-            "Assessor is not active.",
-          )
-        end
-      end
+        doc.at("//CEPC:Building-Complexity").remove
 
-      context "when missing building complexity element" do
-        it "can return status 400 with the correct error response" do
-          doc = Nokogiri.XML valid_cepc_xml
-
-          doc.at("//CEPC:Building-Complexity").remove
-
-          lodge_assessment(
-            assessment_body: doc.to_xml,
-            accepted_responses: [400],
-            auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "CEPC-8.0.0",
-          )
-        end
+        lodge_assessment(
+          assessment_body: doc.to_xml,
+          accepted_responses: [400],
+          auth_data: { scheme_ids: [scheme_id] },
+          schema_name: "CEPC-8.0.0",
+        )
       end
     end
 

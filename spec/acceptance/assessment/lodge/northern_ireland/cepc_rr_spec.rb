@@ -10,30 +10,6 @@ describe "Acceptance::LodgeCEPC+RRNIEnergyAssessment" do
   end
 
   context "when lodging an CEPC+RR assessment (post)" do
-    context "when unqualified for CEPC" do
-      let(:scheme_id) { add_scheme_and_get_id }
-
-      it "returns status 400 with the correct error response" do
-        add_assessor(
-          scheme_id,
-          "SPEC000000",
-          fetch_assessor_stub.fetch_request_body(nonDomesticNos3: "INACTIVE"),
-        )
-
-        response =
-          JSON.parse(
-            lodge_assessment(
-              assessment_body: valid_xml,
-              accepted_responses: [400],
-              auth_data: { scheme_ids: [scheme_id] },
-              schema_name: "CEPC-NI-8.0.0",
-            ).body,
-          )
-
-        expect(response["errors"][0]["title"]).to eq("Assessor is not active.")
-      end
-    end
-
     context "when saving a (CEPC+RR) assessment" do
       let(:scheme_id) { add_scheme_and_get_id }
       let(:doc) { Nokogiri.XML valid_xml }

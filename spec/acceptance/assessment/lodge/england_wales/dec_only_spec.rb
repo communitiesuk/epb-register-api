@@ -18,36 +18,6 @@ describe "Acceptance::LodgeDECEnergyAssessment" do
       )
     end
 
-    context "when an assessor is inactive" do
-      let(:scheme_id) { add_scheme_and_get_id }
-
-      before do
-        add_assessor(
-          scheme_id,
-          "SPEC000000",
-          fetch_assessor_stub.fetch_request_body(nonDomesticDec: "INACTIVE"),
-        )
-      end
-
-      context "when unqualified for DEC" do
-        it "returns status 400 with the correct error response" do
-          response =
-            JSON.parse(
-              lodge_assessment(
-                assessment_body: valid_dec_xml,
-                accepted_responses: [400],
-                auth_data: { scheme_ids: [scheme_id] },
-                schema_name: "CEPC-8.0.0",
-              ).body,
-            )
-
-          expect(response["errors"][0]["title"]).to eq(
-            "Assessor is not active.",
-          )
-        end
-      end
-    end
-
     context "when saving a (DEC) assessment" do
       let(:scheme_id) { add_scheme_and_get_id }
       let(:doc) { Nokogiri.XML valid_dec_xml }

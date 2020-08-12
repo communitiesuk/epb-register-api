@@ -12,29 +12,6 @@ describe "Acceptance::LodgeRREnergyAssessment" do
   context "when lodging a RR assessment (post)" do
     let(:scheme_id) { add_scheme_and_get_id }
 
-    it "rejects a lodgement from an unqualified assessor" do
-      add_assessor(
-        scheme_id,
-        "SPEC000000",
-        fetch_assessor_stub.fetch_request_body(
-          nonDomesticNos3: "INACTIVE",
-          nonDomesticNos4: "INACTIVE",
-          nonDomesticNos5: "INACTIVE",
-        ),
-      )
-      response =
-        JSON.parse(
-          lodge_assessment(
-            assessment_body: cepc_rr_xml,
-            accepted_responses: [400],
-            auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "CEPC-8.0.0",
-          ).body,
-        )
-
-      expect(response["errors"][0]["title"]).to eq("Assessor is not active.")
-    end
-
     it "successfully lodges the report" do
       add_assessor(
         scheme_id,

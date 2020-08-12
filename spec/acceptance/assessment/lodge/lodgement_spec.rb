@@ -641,6 +641,27 @@ describe "Acceptance::Assessment::Lodge" do
               )
             end
           end
+
+          next unless assessment_settings[:dont_check_incorrect_assessor].nil?
+
+          it "gives error 400 when lodging with insufficient qualification" do
+            create_assessor({})
+
+            lodgement_response =
+              JSON.parse(
+                lodge_assessment(
+                  assessment_body: sample(assessment_settings[:xml]),
+                  accepted_responses: [400],
+                  auth_data: { scheme_ids: [scheme_id] },
+                  schema_name: schema_name.to_s,
+                ).body,
+                symbolize_names: true,
+              )
+
+            expect(lodgement_response[:errors][0][:title]).to eq(
+              "Assessor is not active.",
+            )
+          end
         end
       end
     end
