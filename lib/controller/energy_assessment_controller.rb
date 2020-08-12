@@ -56,7 +56,7 @@ module Controller
           "You are not authorised to perform this request",
         )
       end
-      logit_char_limit = 50_000
+      logit_char_limit = 500
 
       sanitised_xml =
         Helper::SanitizeXmlHelper.new.sanitize(request.body.read.to_s)
