@@ -11,6 +11,13 @@ module UseCase
         }
       end
 
+      def set_assessor!(hash)
+        assessor_id = hash[:assessor][:scheme_assessor_id]
+        assessor = Gateway::AssessorsGateway.new.fetch(assessor_id)
+
+        hash[:assessor] = assessor
+      end
+
       def related_assessments!(hash)
         related_assessments =
           Gateway::RelatedAssessmentsGateway.new.by_address_id hash[:address][

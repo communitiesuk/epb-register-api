@@ -49,6 +49,8 @@ module UseCase
             CepcRrSupplement.new.add_data!(lodged_values.to_hash)
           when :DEC
             DecSupplement.new.add_data!(lodged_values.to_hash)
+          when :SAP
+            SapSupplement.new.add_data!(lodged_values.to_hash)
           else
             lodged_values.to_hash
           end

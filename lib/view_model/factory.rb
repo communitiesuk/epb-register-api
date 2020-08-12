@@ -11,6 +11,10 @@ module ViewModel
     )
       xml_doc = Nokogiri.XML(xml).remove_namespaces!
 
+      unless allow_domestic
+        allow_domestic ||= !ENV["OVERRULE_ALLOW_DOMESTIC_FACTORY"].nil?
+      end
+
       if TYPES_OF_CEPC.include? schema_type
         filtered_results =
           if filter_results_for
