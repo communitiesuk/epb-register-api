@@ -7,10 +7,10 @@
     <Calculation-Software-Version>Calculation-Software-Version0</Calculation-Software-Version>
     <Report-Header>
         <RRN>0000-0000-0000-0000-0000</RRN>
-        <Inspection-Date>2019-05-04</Inspection-Date>
+        <Inspection-Date>2020-05-04</Inspection-Date>
         <Report-Type>1</Report-Type>
-        <Completion-Date>2019-05-04</Completion-Date>
-        <Registration-Date>2019-05-04</Registration-Date>
+        <Completion-Date>2020-05-04</Completion-Date>
+        <Registration-Date>2020-05-04</Registration-Date>
         <Status>entered</Status>
         <Language-Code>1</Language-Code>
         <Restricted-Access>0</Restricted-Access>
@@ -55,14 +55,14 @@
         </Home-Inspector>
         <Property>
             <Address>
-                <Address-Line-1>2 Some Street</Address-Line-1>
-                <Post-Town>Post-Town2</Post-Town>
+                <Address-Line-1>1 Some Street</Address-Line-1>
+                <Post-Town>Post-Town1</Post-Town>
                 <Postcode>A0 0AA</Postcode>
             </Address>
             <UPRN>UPRN-000000000000</UPRN>
         </Property>
         <Related-Party-Disclosure>
-            <Related-Party-Disclosure-Text>Related-Party-Disclosure-Text0</Related-Party-Disclosure-Text>
+            <Related-Party-Disclosure-Number>1</Related-Party-Disclosure-Number>
         </Related-Party-Disclosure>
     </Report-Header>
     <Energy-Assessment>
@@ -141,16 +141,18 @@
             <CO2-Emissions-Current-Per-Floor-Area>0</CO2-Emissions-Current-Per-Floor-Area>
             <CO2-Emissions-Potential>1.4</CO2-Emissions-Potential>
             <Lighting-Cost-Current>123.45</Lighting-Cost-Current>
-            <Lighting-Cost-Potential>84.25</Lighting-Cost-Potential>
-            <Heating-Cost-Current>365.95</Heating-Cost-Current>
-            <Heating-Cost-Potential>250.35</Heating-Cost-Potential>
-            <Hot-Water-Cost-Current>200.45</Hot-Water-Cost-Current>
-            <Hot-Water-Cost-Potential>180.45</Hot-Water-Cost-Potential>
+            <Lighting-Cost-Potential>84.23</Lighting-Cost-Potential>
+            <Heating-Cost-Current>365.98</Heating-Cost-Current>
+            <Heating-Cost-Potential>250.34</Heating-Cost-Potential>
+            <Hot-Water-Cost-Current>200.40</Hot-Water-Cost-Current>
+            <Hot-Water-Cost-Potential>180.43</Hot-Water-Cost-Potential>
         </Energy-Use>
       <Renewable-Heat-Incentive>
         <RHI-Existing-Dwelling>
           <Space-Heating-Existing-Dwelling>30</Space-Heating-Existing-Dwelling>
           <Water-Heating>60</Water-Heating>
+          <Space-Heating-With-Cavity-Insulation>-12</Space-Heating-With-Cavity-Insulation>
+          <Space-Heating-With-Loft-And-Cavity-Insulation>-8</Space-Heating-With-Loft-And-Cavity-Insulation>
         </RHI-Existing-Dwelling>
       </Renewable-Heat-Incentive>
       <Suggested-Improvements>
@@ -192,6 +194,7 @@
                 <SAP-Building-Part>
                     <Building-Part-Number>1</Building-Part-Number>
                     <Construction-Age-Band>K</Construction-Age-Band>
+                    <Construction-Year>1750</Construction-Year>
                     <Overshading>1</Overshading>
                 </SAP-Building-Part>
                 <SAP-Building-Part>
