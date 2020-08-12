@@ -51,6 +51,8 @@ module UseCase
             DecSupplement.new.add_data!(lodged_values.to_hash)
           when :SAP
             SapSupplement.new.add_data!(lodged_values.to_hash)
+          when :RdSAP
+            RdSapSupplement.new.add_data!(lodged_values.to_hash)
           else
             lodged_values.to_hash
           end
