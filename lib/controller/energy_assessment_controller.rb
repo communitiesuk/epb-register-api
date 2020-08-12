@@ -48,7 +48,7 @@ module Controller
     post "/api/assessments", jwt_auth: %w[assessment:lodge] do
       correlation_id = rand
       migrated = params.key?("migrated")
-      overidden = params.key?("override")
+      overridden = params.key?("override")
 
       if migrated && !env[:jwt_auth].scopes?(%w[migrate:assessment])
         forbidden(
@@ -85,7 +85,7 @@ module Controller
           xml_schema_type,
           scheme_ids,
           migrated,
-          overidden,
+          overridden,
         )
 
       results.each do |result|
