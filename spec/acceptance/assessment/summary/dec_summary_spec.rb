@@ -89,6 +89,9 @@ describe "Acceptance::AssessmentSummary::DEC" do
             renewablesElectrical: "1",
           },
           relatedAssessments: [],
+          administrativeInformation: {
+            calculationTool: "DCLG, ORCalc, v3.6.3",
+          }
         },
       )
     end

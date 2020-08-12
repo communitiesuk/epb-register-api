@@ -104,6 +104,10 @@ module ViewModel
       def dec_related_party_disclosure
         xpath(%w[DEC-Related-Party-Disclosure])
       end
+
+      def calculation_tool
+        xpath(%w[Calculation-Details Calculation-Tool])
+      end
     end
   end
 end

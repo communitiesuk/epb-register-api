@@ -69,6 +69,9 @@ describe ViewModel::DecWrapper do
       renewables_fuel_thermal: "1",
       renewables_electrical: "1",
     },
+    administrative_information: {
+      calculation_tool: "DCLG, ORCalc, v3.6.3",
+    },
   }.freeze
 
   it "should read the appropriate values from the XML doc" do

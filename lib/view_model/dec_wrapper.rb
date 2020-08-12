@@ -89,6 +89,9 @@ module ViewModel
             name: @view_model.company_name, address: @view_model.company_address
           },
         },
+        administrative_information: {
+          calculation_tool: @view_model.calculation_tool,
+        }
       }
     end
 
