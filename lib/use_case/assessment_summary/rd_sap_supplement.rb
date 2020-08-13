@@ -12,6 +12,7 @@ module UseCase
             assessment_type: "RdSAP",
           },
         )
+        add_green_deal!(hash)
         hash
       end
     end

@@ -12,6 +12,7 @@ module UseCase
             assessment_type: "SAP",
           },
         )
+        add_green_deal!(hash)
         hash
       end
     end
