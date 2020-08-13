@@ -1,4 +1,5 @@
 ENV["RACK_ENV"] = "test"
+ENV["STAGE"] = "test"
 ENV["EPB_UNLEASH_URI"] = "https://google.com"
 
 require "assertive_client"
