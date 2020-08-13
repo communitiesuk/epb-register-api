@@ -3,7 +3,6 @@ module Domain
     attr_reader :current_energy_efficiency_rating,
                 :potential_energy_efficiency_rating,
                 :assessment_id,
-                :recommended_improvements,
                 :xml,
                 :scheme_assessor_id,
                 :opt_out
@@ -38,7 +37,6 @@ module Domain
       impact_of_loft_insulation: nil,
       impact_of_cavity_insulation: nil,
       impact_of_solid_wall_insulation: nil,
-      recommended_improvements: nil,
       property_summary: [],
       property_age_band: nil,
       related_party_disclosure_number: nil,
@@ -90,7 +88,6 @@ module Domain
       @impact_of_loft_insulation = impact_of_loft_insulation
       @impact_of_cavity_insulation = impact_of_cavity_insulation
       @impact_of_solid_wall_insulation = impact_of_solid_wall_insulation
-      @recommended_improvements = recommended_improvements
       @property_summary = property_summary
       @related_party_disclosure_number = related_party_disclosure_number
       @related_party_disclosure_text = related_party_disclosure_text
@@ -157,7 +154,6 @@ module Domain
           get_energy_rating_band(@current_energy_efficiency_rating),
         potential_energy_efficiency_band:
           get_energy_rating_band(@potential_energy_efficiency_rating),
-        recommended_improvements: @recommended_improvements.map(&:to_hash),
         property_summary: @property_summary,
         related_party_disclosure_number: @related_party_disclosure_number,
         related_party_disclosure_text: @related_party_disclosure_text,
