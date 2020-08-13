@@ -151,7 +151,7 @@ DEPENDENCIES
   epb-auth-tools (~> 1.0.4)!
   geocoder (~> 1.6.2)!
   json-schema (~> 2.8)!
-  newrelic_rpm (~> 6.12)
+  newrelic_rpm (~> 6.12)!
   nokogiri (~> 1.10.10)!
   ougai (~> 1.8)!
   pg!
