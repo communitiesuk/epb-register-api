@@ -21,8 +21,6 @@ describe "Acceptance::ExtractionMethodTransition" do
     end
 
     it "has a 100% match between the two endpoints" do
-      ENV["OVERRULE_ALLOW_DOMESTIC_FACTORY"] = "true"
-
       old_endpoint =
         JSON.parse fetch_assessment("0000-0000-0000-0000-0000").body
       new_endpoint =
@@ -56,8 +54,6 @@ describe "Acceptance::ExtractionMethodTransition" do
     end
 
     it "has a 100% match between the two endpoints" do
-      ENV["OVERRULE_ALLOW_DOMESTIC_FACTORY"] = "true"
-
       old_endpoint =
         JSON.parse fetch_assessment("0000-0000-0000-0000-0000").body
       new_endpoint =

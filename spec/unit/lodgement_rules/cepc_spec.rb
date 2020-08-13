@@ -37,8 +37,7 @@ describe LodgementRules::NonDomestic do
         ViewModel::Factory.new.create(
           xml_doc.to_xml,
           doc[:schema_name],
-          false,
-          true,
+          false
         )
       adapter = wrapper.get_view_model
       errors = described_class.new.validate(adapter)

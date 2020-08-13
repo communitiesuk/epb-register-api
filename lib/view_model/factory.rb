@@ -6,14 +6,9 @@ module ViewModel
     def create(
       xml = nil,
       schema_type = nil,
-      filter_results_for = nil,
-      allow_domestic = false
+      filter_results_for = nil
     )
       xml_doc = Nokogiri.XML(xml).remove_namespaces!
-
-      unless allow_domestic
-        allow_domestic ||= !ENV["OVERRULE_ALLOW_DOMESTIC_FACTORY"].nil?
-      end
 
       if TYPES_OF_CEPC.include? schema_type
         filtered_results =
@@ -41,9 +36,9 @@ module ViewModel
         else
           raise ArgumentError, "Invalid CEPC report type"
         end
-      elsif (TYPES_OF_RD_SAP.include? schema_type) && allow_domestic
+      elsif TYPES_OF_RD_SAP.include?(schema_type)
         ViewModel::RdSapWrapper.new(xml_doc.to_xml, schema_type)
-      elsif (TYPES_OF_SAP.include? schema_type) && allow_domestic
+      elsif TYPES_OF_SAP.include?(schema_type)
         ViewModel::SapWrapper.new(xml_doc.to_xml, schema_type)
       end
     end

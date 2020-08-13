@@ -27,8 +27,7 @@ describe LodgementRules::DomesticCommon do
         ViewModel::Factory.new.create(
           xml_doc.to_xml,
           "RdSAP-Schema-20.0.0",
-          false,
-          true,
+          false
         )
       adapter = wrapper.get_view_model
       errors = described_class.new.validate(adapter)
@@ -42,8 +41,7 @@ describe LodgementRules::DomesticCommon do
         ViewModel::Factory.new.create(
           doc[:xml_doc].to_xml,
           doc[:schema_name],
-          false,
-          true,
+          false
         )
       adapter = wrapper.get_view_model
       errors = described_class.new.validate(adapter)

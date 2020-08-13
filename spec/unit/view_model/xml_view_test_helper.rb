@@ -3,7 +3,7 @@ def test_xml_doc(supported_schema, asserted_keys)
     xml_file = File.read File.join Dir.pwd, schema[:xml_file]
 
     view_model =
-      ViewModel::Factory.new.create(xml_file, schema[:schema_name], nil, true)
+      ViewModel::Factory.new.create(xml_file, schema[:schema_name], nil)
         .to_hash
 
     asserted_keys.each do |key, value|

@@ -42,7 +42,7 @@ module UseCase
       end
 
       unless migrated
-        wrapper = ViewModel::Factory.new.create(xml, schema_name, false, true)
+        wrapper = ViewModel::Factory.new.create(xml, schema_name, false)
         if (
              (
                LATEST_COMMERCIAL + LATEST_DOM_EW + LATEST_DOM_NI
