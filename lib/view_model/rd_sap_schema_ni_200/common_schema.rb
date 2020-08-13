@@ -100,6 +100,7 @@ module ViewModel
             environmental_efficiency_rating:
               xpath(%w[Environmental-Efficiency-Rating], node).to_i,
             name: node.name.underscore,
+            description: xpath(%w[Description], node),
           }
         }.compact
       end
@@ -109,7 +110,8 @@ module ViewModel
       end
 
       def related_party_disclosure_number
-        xpath(%w[Related-Party-Disclosure-Number]).to_i
+        disclosure_number = xpath(%w[Related-Party-Disclosure-Number])
+        disclosure_number.nil? ? nil : disclosure_number.to_i
       end
 
       def improvements
@@ -200,7 +202,7 @@ module ViewModel
       def potential_energy_saving; end
 
       def property_age_band
-        xpath(%w[Construction-Year])
+        xpath(%w[Construction-Age-Band])
       end
 
       def tenure

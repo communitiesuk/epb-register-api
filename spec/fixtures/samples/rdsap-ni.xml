@@ -86,7 +86,7 @@
                 <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
             </Secondary-Heating>
             <Dwelling-Type>Dwelling-Type0</Dwelling-Type>
-            <Total-Floor-Area>10</Total-Floor-Area>
+            <Total-Floor-Area>0</Total-Floor-Area>
             <Multiple-Glazed-Proportion-NR>NR</Multiple-Glazed-Proportion-NR>
         </Property-Summary>
         <Energy-Use>
@@ -285,7 +285,7 @@
             <UPRN>UPRN-000000000000</UPRN>
         </Property>
         <Related-Party-Disclosure>
-          <Related-Party-Disclosure-Text>Financial interest</Related-Party-Disclosure-Text>
+          <Related-Party-Disclosure-Text>Related-Party-Disclosure-Text0</Related-Party-Disclosure-Text>
         </Related-Party-Disclosure>
     </Report-Header>
     <Insurance-Details>
