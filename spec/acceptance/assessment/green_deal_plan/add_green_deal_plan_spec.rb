@@ -168,7 +168,7 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan" do
 
         let(:response) do
           JSON.parse(
-            fetch_assessment("0000-0000-0000-0000-0000").body,
+            fetch_assessment_summary("0000-0000-0000-0000-0000").body,
             symbolize_names: true,
           )
         end
