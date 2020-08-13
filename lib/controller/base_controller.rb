@@ -65,6 +65,9 @@ module Controller
     def json_response(code = 200, object)
       content_type :json
       status code
+
+      ActiveRecord::Base.clear_active_connections!
+
       @json_helper.convert_to_json(object)
     end
 
@@ -82,6 +85,9 @@ module Controller
     def xml_response(code = 200, xml)
       content_type :xml
       status code
+
+      ActiveRecord::Base.clear_active_connections!
+
       body xml
     end
 
@@ -97,6 +103,9 @@ module Controller
         logger.error(exception.backtrace)
       end
       logger.error(exception)
+
+      ActiveRecord::Base.clear_active_connections!
+
       error_response(500, "SERVER_ERROR", message)
     end
 
