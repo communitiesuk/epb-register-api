@@ -85,6 +85,10 @@ module ViewModel
           company_details: {
             name: @view_model.company_name, address: @view_model.company_address
           },
+          contact_details: {
+            email: @view_model.assessor_email,
+            telephone: @view_model.assessor_telephone,
+          },
         },
         administrative_information: {
           issue_date: @view_model.date_of_issue,

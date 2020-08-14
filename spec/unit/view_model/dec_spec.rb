@@ -86,6 +86,7 @@ describe ViewModel::DecWrapper do
       },
       name: "Name1",
       scheme_assessor_id: "SPEC000000",
+      contact_details: { email: nil, telephone: nil },
     },
   }.freeze
 

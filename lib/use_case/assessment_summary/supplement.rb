@@ -3,12 +3,22 @@ module UseCase
     class Supplement
       def registered_by!(hash)
         assessor_id = hash[:assessor][:scheme_assessor_id]
-        assessor = Gateway::AssessorsGateway.new.fetch(assessor_id)
+        assessor = Gateway::AssessorsGateway.new.fetch(assessor_id).to_hash
 
         hash[:assessor][:registered_by] = {
-          name: assessor.registered_by_name,
-          scheme_id: assessor.registered_by_id,
+          name: assessor[:registered_by][:name],
+          scheme_id: assessor[:registered_by][:scheme_id],
         }
+
+        if hash.dig(:assessor, :contact_details, :email).nil?
+          hash[:assessor][:contact_details][:email] =
+            assessor[:contact_details][:email]
+        end
+
+        if hash[:assessor][:contact_details][:telephone].nil?
+          hash[:assessor][:contact_details][:telephone] =
+            assessor[:contact_details][:telephone_number]
+        end
       end
 
       def set_assessor!(hash)

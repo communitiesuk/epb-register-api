@@ -67,6 +67,9 @@ describe "Acceptance::AssessmentSummary::CEPC-RR" do
             companyDetails: {
               name: "Joe Bloggs Ltd", address: "123 My Street, My City, AB3 4CD"
             },
+            contactDetails: {
+              email: "person@person.com", telephone: "010199991010101"
+            },
           },
           shortPaybackRecommendations: [
             {

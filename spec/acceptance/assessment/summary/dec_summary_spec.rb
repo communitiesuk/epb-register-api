@@ -38,6 +38,9 @@ describe "Acceptance::AssessmentSummary::DEC" do
             name: "Name1",
             registeredBy: { name: "test scheme", schemeId: scheme_id },
             schemeAssessorId: "SPEC000000",
+            contactDetails: {
+              email: "person@person.com", telephone: "010199991010101"
+            },
           },
           reportType: "1",
           dateOfExpiry: "2026-05-04",
