@@ -77,7 +77,11 @@ describe ViewModel::SapWrapper do
       town: "Post-Town1",
       postcode: "A0 0AA",
     },
-    assessor: { scheme_assessor_id: "SPEC000000", name: nil },
+    assessor: {
+      scheme_assessor_id: "SPEC000000",
+      name: "Name0",
+      contact_details: { email: nil, telephone: nil },
+    },
     current_carbon_emission: 2.4,
     current_energy_efficiency_band: "e",
     current_energy_efficiency_rating: 50,

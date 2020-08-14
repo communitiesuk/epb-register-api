@@ -70,6 +70,10 @@ module ViewModel
         assessor: {
           scheme_assessor_id: @view_model.scheme_assessor_id,
           name: @view_model.assessor_name,
+          contact_details: {
+            email: @view_model.assessor_email,
+            telephone: @view_model.assessor_telephone,
+          },
         },
         current_carbon_emission: @view_model.current_carbon_emission,
         current_energy_efficiency_band:
