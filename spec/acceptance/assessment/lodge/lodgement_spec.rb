@@ -308,6 +308,11 @@ describe "Acceptance::Assessment::Lodge" do
           }
         end
 
+        let(:response) do
+          JSON.parse fetch_assessment_summary("0000-0000-0000-0000-0000").body,
+                     symbolize_names: true
+        end
+
         before do
           add_green_deal_plan assessment_id: "0000-0000-0000-0000-0000",
                               body: valid_green_deal_plan_request_body
@@ -320,6 +325,10 @@ describe "Acceptance::Assessment::Lodge" do
 
         it "should be true in migrated column" do
           expect(migrated_column.entries.first["migrated"]).to be_truthy
+        end
+
+        it "returns the expected associated Green Deal Plan" do
+          expect(response[:data][:greenDealPlan][:greenDealPlanId]).to eq "ABC123456DEF"
         end
       end
 
