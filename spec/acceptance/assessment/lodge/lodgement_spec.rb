@@ -534,14 +534,16 @@ describe "Acceptance::Assessment::Lodge" do
       File.read File.join Dir.pwd, "spec/fixtures/samples/" + name + ".xml"
     end
 
-    def response(name)
-      filename = "spec/fixtures/responses/" + name + ".json"
+    def vcr(
+      filename, expected_response, folder = "responses", filetype = ".json"
+    )
+      path = "spec/fixtures/" + folder + "/" + filename + filetype
+      if File.file?(path)
+        JSON.parse((File.read File.join Dir.pwd, path), symbolize_names: true)
+      else
+        File.write(path, expected_response.to_json)
 
-      if File.file?(filename)
-        JSON.parse(
-          (File.read File.join Dir.pwd, filename),
-          symbolize_names: true,
-        )
+        vcr(filename, expected_response, folder, filetype)
       end
     end
 
@@ -735,7 +737,7 @@ describe "Acceptance::Assessment::Lodge" do
 
             if assessment_settings[:expected_response]
               expect(lodgement_response).to eq(
-                response(assessment_settings[:expected_response]),
+                vcr(assessment_settings[:expected_response], lodgement_response),
               )
             end
 
@@ -744,21 +746,13 @@ describe "Acceptance::Assessment::Lodge" do
               fetch_endpoint_response =
                 JSON.parse(fetch_assessment(rrn).body, symbolize_names: true)
 
-              expected_fetch_endpoint_response = response(filename)
-
-              if expected_fetch_endpoint_response.nil?
-                File.write(
-                  "spec/fixtures/responses/" + filename + ".json",
-                  fetch_endpoint_response.to_json,
-                )
-
-                expected_fetch_endpoint_response = response(filename)
-              end
-
-              expected_fetch_endpoint_response[:data][:assessor][:registeredBy][
+              fetch_endpoint_response[:data][:assessor][:registeredBy][
                 :schemeId
               ] =
-                scheme_id
+                "{schemeId}"
+
+              expected_fetch_endpoint_response =
+                vcr(filename, fetch_endpoint_response)
 
               expect(fetch_endpoint_response).to eq(
                 expected_fetch_endpoint_response,

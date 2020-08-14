@@ -1,2 +1,1 @@
-{"data": {"assessments": ["0000-0000-0000-0000-0000"]},
-  "meta": {"links": {"assessments": ["/api/assessments/0000-0000-0000-0000-0000"]}}}
+{"data":{"assessments":["0000-0000-0000-0000-0000"]},"meta":{"links":{"assessments":["/api/assessments/0000-0000-0000-0000-0000"]}}}
