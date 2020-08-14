@@ -3,11 +3,7 @@ module ViewModel
     TYPES_OF_CEPC = %w[CEPC-8.0.0 CEPC-NI-8.0.0 CEPC-7.1].freeze
     TYPES_OF_RD_SAP = %w[RdSAP-Schema-20.0.0 RdSAP-Schema-NI-20.0.0].freeze
     TYPES_OF_SAP = %w[SAP-Schema-18.0.0 SAP-Schema-NI-18.0.0].freeze
-    def create(
-      xml = nil,
-      schema_type = nil,
-      filter_results_for = nil
-    )
+    def create(xml = nil, schema_type = nil, filter_results_for = nil)
       xml_doc = Nokogiri.XML(xml).remove_namespaces!
 
       if TYPES_OF_CEPC.include? schema_type

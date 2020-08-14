@@ -29,11 +29,7 @@ describe LodgementRules::NonDomestic do
       xml_doc.at(key).children = value
 
       wrapper =
-        ViewModel::Factory.new.create(
-          xml_doc.to_xml,
-          doc[:schema_name],
-          false
-        )
+        ViewModel::Factory.new.create(xml_doc.to_xml, doc[:schema_name], false)
       adapter = wrapper.get_view_model
       errors = described_class.new.validate(adapter)
       expect(errors).to match_array(expected_errors)

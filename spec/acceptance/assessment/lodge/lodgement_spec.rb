@@ -678,7 +678,10 @@ describe "Acceptance::Assessment::Lodge" do
               expected_fetch_endpoint_response = response(filename)
 
               if expected_fetch_endpoint_response.nil?
-                File.write("spec/fixtures/responses/" + filename + ".json", fetch_endpoint_response.to_json)
+                File.write(
+                  "spec/fixtures/responses/" + filename + ".json",
+                  fetch_endpoint_response.to_json,
+                )
 
                 expected_fetch_endpoint_response = response(filename)
               end
