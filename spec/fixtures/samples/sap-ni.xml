@@ -20,10 +20,10 @@
         <Property-Type>0</Property-Type>
         <Home-Inspector>
             <Name>
-                <Prefix>Prefix0</Prefix>
-                <First-Name>First-Name0</First-Name>
-                <Surname>Surname0</Surname>
-                <Suffix>Suffix0</Suffix>
+                <Prefix />
+                <First-Name>Name0</First-Name>
+                <Surname />
+                <Suffix />
             </Name>
             <Certification-Date>2019-05-04</Certification-Date>
             <Status>Inactive</Status>
