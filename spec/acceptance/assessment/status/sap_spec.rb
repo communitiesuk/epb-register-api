@@ -7,38 +7,6 @@ describe "Acceptance::AssessmentStatus::SAP" do
     File.read File.join Dir.pwd, "spec/fixtures/samples/sap.xml"
   end
 
-  context "when cancelling an SAP assessment" do
-    let(:response) do
-      scheme_id = add_scheme_and_get_id
-
-      add_assessor(
-        scheme_id,
-        "SPEC000000",
-        fetch_assessor_stub.fetch_request_body(domesticSap: "ACTIVE"),
-      )
-
-      lodge_assessment assessment_body: valid_sap_xml,
-                       accepted_responses: [201],
-                       auth_data: { scheme_ids: [scheme_id] },
-                       schema_name: "SAP-Schema-18.0.0"
-
-      assessment_status =
-        update_assessment_status(
-          assessment_id: "0000-0000-0000-0000-0000",
-          assessment_status_body: { "status": "CANCELLED" },
-          accepted_responses: [200],
-          auth_data: { scheme_ids: [scheme_id] },
-        )
-
-      JSON.parse assessment_status.body, symbolize_names: true
-    end
-
-    it "cancels the assessment" do
-      expect(response[:data][:status]).to eq("CANCELLED")
-      fetch_assessment("0000-0000-0000-0000-0000", [410])
-    end
-  end
-
   context "when marking an SAP assessment not for issue" do
     let(:response) do
       scheme_id = add_scheme_and_get_id

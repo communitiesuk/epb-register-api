@@ -557,6 +557,18 @@ describe "Acceptance::Assessment::Lodge" do
       )
     end
 
+    def get_lodgement(xml_name, response_code, schema_name)
+      JSON.parse(
+        lodge_assessment(
+          assessment_body: sample(xml_name),
+          accepted_responses: response_code,
+          auth_data: { scheme_ids: [scheme_id] },
+          schema_name: schema_name.to_s,
+        ).body,
+        symbolize_names: true,
+      )
+    end
+
     assessments = {
       "RdSAP-Schema-NI-20.0.0": {
         "valid_rdsap": {
@@ -725,14 +737,10 @@ describe "Acceptance::Assessment::Lodge" do
             create_assessor(assessment_settings[:assessor_qualification])
 
             lodgement_response =
-              JSON.parse(
-                lodge_assessment(
-                  assessment_body: sample(assessment_settings[:xml]),
-                  accepted_responses: assessment_settings[:response_code],
-                  auth_data: { scheme_ids: [scheme_id] },
-                  schema_name: schema_name.to_s,
-                ).body,
-                symbolize_names: true,
+              get_lodgement(
+                assessment_settings[:xml],
+                assessment_settings[:response_code],
+                schema_name,
               )
 
             if assessment_settings[:expected_response]
@@ -760,25 +768,45 @@ describe "Acceptance::Assessment::Lodge" do
             end
           end
 
-          next unless assessment_settings[:dont_check_incorrect_assessor].nil?
+          if assessment_settings[:dont_check_incorrect_assessor].nil?
+            it "gives error 400 when lodging with insufficient qualification" do
+              create_assessor({})
 
-          it "gives error 400 when lodging with insufficient qualification" do
-            create_assessor({})
+              lodgement_response =
+                get_lodgement(assessment_settings[:xml], [400], schema_name)
 
-            lodgement_response =
-              JSON.parse(
-                lodge_assessment(
-                  assessment_body: sample(assessment_settings[:xml]),
-                  accepted_responses: [400],
-                  auth_data: { scheme_ids: [scheme_id] },
-                  schema_name: schema_name.to_s,
-                ).body,
-                symbolize_names: true,
+              expect(lodgement_response[:errors][0][:title]).to eq(
+                "Assessor is not active.",
+              )
+            end
+          end
+
+          next unless assessment_settings[:dont_cancel_assessment].nil?
+
+          it "can cancel the report " + assessment_name.to_s do
+            create_assessor(assessment_settings[:assessor_qualification])
+
+            get_lodgement(assessment_settings[:xml], [201], schema_name)
+
+            assessment_settings[:expected_lodgement_responses]
+              .each do |rrn, _|
+              assessment_status =
+                JSON.parse(
+                  update_assessment_status(
+                    assessment_id: rrn.to_s,
+                    assessment_status_body: { "status": "CANCELLED" },
+                    accepted_responses: [200],
+                    auth_data: { scheme_ids: [scheme_id] },
+                  ).body,
+                  symbolize_names: true,
+                )
+
+              expect(assessment_status).to eq(
+                vcr("cancelled_assessment", assessment_status),
               )
 
-            expect(lodgement_response[:errors][0][:title]).to eq(
-              "Assessor is not active.",
-            )
+              fetch_assessment(rrn, [410])
+            end
           end
         end
       end
