@@ -277,6 +277,14 @@ module Gateway
             DELETE FROM domestic_epc_energy_improvements WHERE assessment_id = $1
           SQL
 
+          green_deal_plan_id = <<-SQL
+            SELECT green_deal_plan_id FROM green_deal_assessments WHERE assessment_id = $1
+          SQL
+
+          delete_green_deal_assessment = <<-SQL
+            DELETE FROM green_deal_assessments WHERE assessment_id = $1
+          SQL
+
           delete_assessment = <<-SQL
             DELETE FROM assessments WHERE assessment_id = $1
           SQL
@@ -295,16 +303,41 @@ module Gateway
                                                    "SQL",
                                                    binds
 
+          results = ActiveRecord::Base.connection.exec_query green_deal_plan_id,
+                                                             "SQL",
+                                                             binds
+
+          ActiveRecord::Base.connection.exec_query delete_green_deal_assessment,
+                                                   "SQL",
+                                                   binds
+
           ActiveRecord::Base.connection.exec_query delete_assessment,
                                                    "SQL",
                                                    binds
-        end
 
-        Assessment.create assessment.to_record
+          Assessment.create assessment.to_record
 
-        assessment.get(:recommended_improvements)&.map(&:to_record)
-          &.each do |improvement|
-          DomesticEpcEnergyImprovement.create improvement
+          add_green_deal_plan = <<-SQL
+            INSERT INTO green_deal_assessments (assessment_id, green_deal_plan_id)
+            VALUES ($1, $2)
+          SQL
+
+          binds << ActiveRecord::Relation::QueryAttribute.new(
+            "green_deal_plan_id",
+            results.map { |result| result["green_deal_plan_id"] }.reduce,
+            ActiveRecord::Type::String.new,
+          )
+
+          ActiveRecord::Base.connection.exec_query add_green_deal_plan,
+                                                   "SQL",
+                                                   binds
+        else
+          Assessment.create assessment.to_record
+
+          assessment.get(:recommended_improvements)&.map(&:to_record)
+            &.each do |improvement|
+            DomesticEpcEnergyImprovement.create improvement
+          end
         end
       end
     end
