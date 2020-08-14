@@ -303,9 +303,10 @@ module Gateway
                                                    "SQL",
                                                    binds
 
-          results = ActiveRecord::Base.connection.exec_query green_deal_plan_id,
-                                                             "SQL",
-                                                             binds
+          results =
+            ActiveRecord::Base.connection.exec_query green_deal_plan_id,
+                                                     "SQL",
+                                                     binds
 
           ActiveRecord::Base.connection.exec_query delete_green_deal_assessment,
                                                    "SQL",
@@ -322,11 +323,12 @@ module Gateway
             VALUES ($1, $2)
           SQL
 
-          binds << ActiveRecord::Relation::QueryAttribute.new(
-            "green_deal_plan_id",
-            results.map { |result| result["green_deal_plan_id"] }.reduce,
-            ActiveRecord::Type::String.new,
-          )
+          binds <<
+            ActiveRecord::Relation::QueryAttribute.new(
+              "green_deal_plan_id",
+              results.map { |result| result["green_deal_plan_id"] }.reduce,
+              ActiveRecord::Type::String.new,
+            )
 
           ActiveRecord::Base.connection.exec_query add_green_deal_plan,
                                                    "SQL",
