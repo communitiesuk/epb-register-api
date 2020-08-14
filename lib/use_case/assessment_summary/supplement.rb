@@ -23,7 +23,17 @@ module UseCase
 
       def set_assessor!(hash)
         assessor_id = hash[:assessor][:scheme_assessor_id]
-        assessor = Gateway::AssessorsGateway.new.fetch(assessor_id)
+        assessor = Gateway::AssessorsGateway.new.fetch(assessor_id).to_hash
+
+        unless hash.dig(:assessor, :contact_details, :email).nil?
+          assessor[:contact_details][:email] =
+            hash[:assessor][:contact_details][:email]
+        end
+
+        unless hash.dig(:assessor, :contact_details, :telephone).nil?
+          assessor[:contact_details][:telephone_number] =
+            hash[:assessor][:contact_details][:telephone]
+        end
 
         hash[:assessor] = assessor
       end
