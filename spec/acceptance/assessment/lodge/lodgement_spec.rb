@@ -788,8 +788,7 @@ describe "Acceptance::Assessment::Lodge" do
 
             get_lodgement(assessment_settings[:xml], [201], schema_name)
 
-            assessment_settings[:expected_lodgement_responses]
-              .each do |rrn, _|
+            assessment_settings[:expected_lodgement_responses].each do |rrn, _|
               assessment_status =
                 JSON.parse(
                   update_assessment_status(
@@ -803,6 +802,32 @@ describe "Acceptance::Assessment::Lodge" do
 
               expect(assessment_status).to eq(
                 vcr("cancelled_assessment", assessment_status),
+              )
+
+              fetch_assessment(rrn, [410])
+            end
+          end
+
+          it "can change report type " + assessment_name.to_s +
+            " to NOT_FOR_ISSUE" do
+            create_assessor(assessment_settings[:assessor_qualification])
+
+            get_lodgement(assessment_settings[:xml], [201], schema_name)
+
+            assessment_settings[:expected_lodgement_responses].each do |rrn, _|
+              assessment_status =
+                JSON.parse(
+                  update_assessment_status(
+                    assessment_id: rrn.to_s,
+                    assessment_status_body: { "status": "NOT_FOR_ISSUE" },
+                    accepted_responses: [200],
+                    auth_data: { scheme_ids: [scheme_id] },
+                  ).body,
+                  symbolize_names: true,
+                )
+
+              expect(assessment_status).to eq(
+                vcr("not_for_issue_assessment", assessment_status),
               )
 
               fetch_assessment(rrn, [410])
