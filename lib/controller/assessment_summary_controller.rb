@@ -14,6 +14,8 @@ module Controller
         not_found_error("No matching assessment found")
       when ArgumentError
         error_response(400, "INVALID_QUERY", e.message)
+      when UseCase::AssessmentSummary::Fetch::AssessmentGone
+        gone_error("Assessment not for issue")
       else
         server_error(e.message)
       end

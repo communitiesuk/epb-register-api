@@ -24,15 +24,23 @@ module UseCase
       end
 
       def execute(assessment_id)
+        assessment =
+          Gateway::AssessmentsGateway.new.search_by_assessment_id(
+            assessment_id,
+            false,
+          ).first
+
+        if assessment
+          if %w[CANCELLED NOT_FOR_ISSUE].include? assessment.to_hash[:status]
+            raise AssessmentGone
+          end
+        else
+          raise NotFoundException
+        end
+
         lodged_xml_document =
           Gateway::AssessmentsXmlGateway.new.fetch assessment_id
-        unless lodged_xml_document
-          if supported_in_legacy_route?(assessment_id)
-            raise ArgumentError, ASSESSMENT_WITHOUT_XML
-          else
-            raise NotFoundException
-          end
-        end
+        raise NotFoundException unless lodged_xml_document
 
         lodged_values =
           lodged_values_from_xml(
