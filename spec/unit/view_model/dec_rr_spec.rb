@@ -15,6 +15,12 @@ describe ViewModel::DecRrWrapper do
         unsupported_fields: [],
         different_fields: {},
       },
+      {
+          schema_name: "CEPC-7.1",
+          xml_file: "api/schemas/xml/examples/CEPC-7.1(DEC_RR).xml",
+          unsupported_fields: [],
+          different_fields: {},
+      },
     ].freeze
 
     asserted_keys = {

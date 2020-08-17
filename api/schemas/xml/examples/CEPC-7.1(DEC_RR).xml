@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Reports
+  xmlns="https://epbr.digital.communities.gov.uk/xsd/cepc"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/cepc  ../CEPC-7.1/Reports/CEPC-Reports.xsd"
+>
+  <Report>
+    <Report-Header>
+      <RRN>0000-0000-0000-0000-0000</RRN>
+      <Issue-Date>2019-11-21</Issue-Date>
+      <Valid-Until>2028-05-03</Valid-Until>
+      <Report-Type>2</Report-Type>
+      <Inspection-Date>2019-11-20</Inspection-Date>
+      <Registration-Date>2019-11-21</Registration-Date>
+      <Status>entered</Status>
+      <Related-RRN>0000-0000-0000-0000-0001</Related-RRN>
+      <Language-Code>1</Language-Code>
+      <Energy-Assessor>
+        <Certificate-Number>TEST00004</Certificate-Number>
+        <Name>Bob Testerton</Name>
+        <Accreditation-Scheme-Name>Elmhurst Energy Systems</Accreditation-Scheme-Name>
+        <Trading-Address>Test house Testerton Street</Trading-Address>
+        <Company-Name>EPC For You Ltd</Company-Name>
+        <Status>Registered</Status>
+      </Energy-Assessor>
+      <Property-Details>
+        <Location-Description>Primary School</Location-Description>
+        <UPRN>000000000000</UPRN>
+        <Property-Address>
+          <Address-Line-1>1 Lonely Street</Address-Line-1>
+          <Post-Town>Post-Town0</Post-Town>
+          <Postcode>A0 0AA</Postcode>
+        </Property-Address>
+        <Is-Heritage-Site>N</Is-Heritage-Site>
+        <Property-Type>Schools And Seasonal Public Buildings</Property-Type>
+        <Occupier>Primary School</Occupier>
+      </Property-Details>
+      <Calculation-Details>
+        <Methodology>ORCalc</Methodology>
+        <Calculation-Tool>DCLG, ORCalc, v3.6.3</Calculation-Tool>
+        <Inspection-Type>Physical</Inspection-Type>
+        <Output-Engine>ORGen v3.6.3</Output-Engine>
+      </Calculation-Details>
+    </Report-Header>
+    <Formatted-Report/>
+    <Insurance-Details>
+      <Insurer>Insurance Company Ltd</Insurer>
+      <Policy-No>00000900</Policy-No>
+      <Effective-Date>2019-07-01</Effective-Date>
+      <Expiry-Date>2020-06-23</Expiry-Date>
+      <PI-Limit>54</PI-Limit>
+    </Insurance-Details>
+    <Advisory-Report>
+      <AR-Recommendations>
+        <Short-Payback>
+          <Recommendation-Code>1</Recommendation-Code>
+          <Recommendation>Consider thinking about maybe possibly getting a solar panel but only one.</Recommendation>
+          <CO2-Impact>MEDIUM</CO2-Impact>
+        </Short-Payback>
+        <Short-Payback>
+          <Recommendation-Code>2</Recommendation-Code>
+          <Recommendation>Consider introducing variable speed drives (VSD) for fans, pumps and compressors.</Recommendation>
+          <CO2-Impact>LOW</CO2-Impact>
+        </Short-Payback>
+        <Medium-Payback>
+          <Recommendation-Code>3</Recommendation-Code>
+          <Recommendation>Engage experts to propose specific measures to reduce hot waterwastage and plan to carry this out.</Recommendation>
+          <CO2-Impact>LOW</CO2-Impact>
+        </Medium-Payback>
+        <Long-Payback>
+          <Recommendation-Code>4</Recommendation-Code>
+          <Recommendation>Consider replacing or improving glazing</Recommendation>
+          <CO2-Impact>LOW</CO2-Impact>
+        </Long-Payback>
+        <Other-Payback>
+          <Recommendation-Code>5</Recommendation-Code>
+          <Recommendation>Add a big wind turbine</Recommendation>
+          <CO2-Impact>HIGH</CO2-Impact>
+        </Other-Payback>
+      </AR-Recommendations>
+      <Technical-Information>
+        <Main-Heating-Fuel>Oil</Main-Heating-Fuel>
+        <Building-Environment>Air Conditioning</Building-Environment>
+        <Floor-Area>10</Floor-Area>
+      </Technical-Information>
+      <Site-Services>
+        <Service-1>
+          <Description>Oil</Description>
+          <Quantity>42942</Quantity>
+        </Service-1>
+        <Service-2>
+          <Description>Electricity</Description>
+          <Quantity>23181</Quantity>
+        </Service-2>
+        <Service-3>
+          <Description>Not used</Description>
+          <Quantity>0</Quantity>
+        </Service-3>
+      </Site-Services>
+    </Advisory-Report>
+  </Report>
+</Reports>

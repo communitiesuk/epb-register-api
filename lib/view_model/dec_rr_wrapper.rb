@@ -8,6 +8,8 @@ module ViewModel
         @view_model = ViewModel::Cepc800::DecRr.new xml
       when "CEPC-NI-8.0.0"
         @view_model = ViewModel::CepcNi800::DecRr.new xml
+      when "CEPC-7.1"
+        @view_model = ViewModel::Cepc71::DecRr.new xml
       else
         raise ArgumentError, "Unsupported schema type"
       end
@@ -24,6 +26,7 @@ module ViewModel
         report_type: @view_model.report_type,
         date_of_expiry: @view_model.date_of_expiry,
         address: {
+
           address_line1: @view_model.address_line1,
           address_line2: @view_model.address_line2,
           address_line3: @view_model.address_line3,
