@@ -182,8 +182,6 @@ describe "Acceptance::Assessment" do
           typicalSaving: "0.1",
         },
       ],
-      relatedPartyDisclosureNumber: 1,
-      relatedPartyDisclosureText: nil,
       status: "ENTERED",
       relatedAssessments: [
         {

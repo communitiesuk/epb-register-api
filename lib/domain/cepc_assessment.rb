@@ -41,8 +41,6 @@ module Domain
       recommended_improvements: [],
       property_summary: [],
       property_age_band: nil,
-      related_party_disclosure_number: nil,
-      related_party_disclosure_text: nil,
       cancelled_at: nil,
       not_for_issue_at: nil,
       scheme_assessor_id: nil,
@@ -92,8 +90,6 @@ module Domain
       @impact_of_solid_wall_insulation = impact_of_solid_wall_insulation
       @recommended_improvements = recommended_improvements
       @property_summary = property_summary
-      @related_party_disclosure_number = related_party_disclosure_number
-      @related_party_disclosure_text = related_party_disclosure_text
       @cancelled_at =
         (Date.strptime(cancelled_at.to_s, "%Y-%m-%d") unless cancelled_at.nil?)
       @not_for_issue_at =
@@ -159,8 +155,6 @@ module Domain
           get_energy_rating_band(@potential_energy_efficiency_rating),
         recommended_improvements: @recommended_improvements.map(&:to_hash),
         property_summary: @property_summary,
-        related_party_disclosure_number: @related_party_disclosure_number,
-        related_party_disclosure_text: @related_party_disclosure_text,
         related_assessments: @related_assessments,
         status:
           if !@cancelled_at.nil?
@@ -206,8 +200,6 @@ module Domain
         impact_of_cavity_insulation: @impact_of_cavity_insulation,
         impact_of_solid_wall_insulation: @impact_of_solid_wall_insulation,
         property_summary: @property_summary,
-        related_party_disclosure_number: @related_party_disclosure_number,
-        related_party_disclosure_text: @related_party_disclosure_text,
       }
     end
 

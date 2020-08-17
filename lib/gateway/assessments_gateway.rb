@@ -41,8 +41,7 @@ module Gateway
             address_line1, address_line2, address_line3, address_line4, town,
             current_space_heating_demand, current_water_heating_demand, impact_of_loft_insulation,
             impact_of_cavity_insulation, impact_of_solid_wall_insulation, tenure, property_age_band,
-            current_carbon_emission, potential_carbon_emission, property_summary, related_party_disclosure_number,
-            related_party_disclosure_text, cancelled_at, not_for_issue_at, lighting_cost_current,
+            current_carbon_emission, potential_carbon_emission, property_summary, cancelled_at, not_for_issue_at, lighting_cost_current,
             heating_cost_current, hot_water_cost_current, lighting_cost_potential, heating_cost_potential, hot_water_cost_potential,
             address_id
         FROM assessments
@@ -104,8 +103,7 @@ module Gateway
           address_line1, address_line2, address_line3, address_line4, town,
           current_space_heating_demand, current_water_heating_demand, impact_of_loft_insulation,
           impact_of_cavity_insulation, impact_of_solid_wall_insulation, tenure, property_age_band,
-          current_carbon_emission, potential_carbon_emission, property_summary, related_party_disclosure_number,
-          related_party_disclosure_text, cancelled_at, not_for_issue_at, address_id, lighting_cost_current,
+          current_carbon_emission, potential_carbon_emission, property_summary, cancelled_at, not_for_issue_at, address_id, lighting_cost_current,
           heating_cost_current, hot_water_cost_current, lighting_cost_potential, heating_cost_potential, hot_water_cost_potential
         FROM assessments
         WHERE assessment_id = '#{
@@ -155,8 +153,8 @@ module Gateway
           address_line1, address_line2, address_line3, address_line4, town,
           current_space_heating_demand, current_water_heating_demand, impact_of_loft_insulation,
           impact_of_cavity_insulation, impact_of_solid_wall_insulation, tenure, property_age_band,
-          current_carbon_emission, potential_carbon_emission, property_summary, related_party_disclosure_number,
-          related_party_disclosure_text, cancelled_at, not_for_issue_at, lighting_cost_current,
+          current_carbon_emission, potential_carbon_emission, property_summary,
+          cancelled_at, not_for_issue_at, lighting_cost_current,
           heating_cost_current, hot_water_cost_current, lighting_cost_potential, heating_cost_potential, hot_water_cost_potential,
           address_id
         FROM assessments
