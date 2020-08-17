@@ -41,7 +41,7 @@ describe "Acceptance::LodgeAssessment::XML" do
 
   let(:scheme_id) { add_scheme_and_get_id }
 
-  context "when storing xml to the assessments_xml table" do
+  context "when retrieving lodged xml" do
     let(:database_xml) { get_stored_xml "0000-0000-0000-0000-0000" }
 
     before do
@@ -50,22 +50,6 @@ describe "Acceptance::LodgeAssessment::XML" do
                    fetch_assessor_stub.fetch_request_body(
                      nonDomesticCc4: "ACTIVE", domesticSap: "ACTIVE",
                    )
-    end
-
-    context "with a CEPC assessment" do
-      before do
-        lodge_assessment assessment_body: valid_cepc_xml,
-                         accepted_responses: [201],
-                         auth_data: { scheme_ids: [scheme_id] },
-                         schema_name: "CEPC-8.0.0"
-      end
-
-      it "will remove the <Formatted-Report> element" do
-        expect(valid_cepc_xml).to include("<Formatted-Report>")
-        expect(cleaned_xml).to eq(
-          '<?xml version="1.0" encoding="UTF-8"?>' + "\n" + database_xml,
-        )
-      end
     end
 
     context "with a SAP assessment" do
