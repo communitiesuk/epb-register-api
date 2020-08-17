@@ -41,8 +41,7 @@ module Gateway
             address_line1, address_line2, address_line3, address_line4, town,
             current_space_heating_demand, current_water_heating_demand, impact_of_loft_insulation,
             impact_of_cavity_insulation, impact_of_solid_wall_insulation, tenure, property_age_band,
-            current_carbon_emission, potential_carbon_emission, property_summary, cancelled_at, not_for_issue_at, lighting_cost_current,
-            heating_cost_current, hot_water_cost_current, lighting_cost_potential, heating_cost_potential, hot_water_cost_potential,
+            current_carbon_emission, potential_carbon_emission, property_summary, cancelled_at, not_for_issue_at,
             address_id
         FROM assessments
         WHERE postcode = $1
@@ -103,8 +102,7 @@ module Gateway
           address_line1, address_line2, address_line3, address_line4, town,
           current_space_heating_demand, current_water_heating_demand, impact_of_loft_insulation,
           impact_of_cavity_insulation, impact_of_solid_wall_insulation, tenure, property_age_band,
-          current_carbon_emission, potential_carbon_emission, property_summary, cancelled_at, not_for_issue_at, address_id, lighting_cost_current,
-          heating_cost_current, hot_water_cost_current, lighting_cost_potential, heating_cost_potential, hot_water_cost_potential
+          current_carbon_emission, potential_carbon_emission, property_summary, cancelled_at, not_for_issue_at, address_id
         FROM assessments
         WHERE assessment_id = '#{
           ActiveRecord::Base.sanitize_sql(assessment_id)
@@ -154,9 +152,7 @@ module Gateway
           current_space_heating_demand, current_water_heating_demand, impact_of_loft_insulation,
           impact_of_cavity_insulation, impact_of_solid_wall_insulation, tenure, property_age_band,
           current_carbon_emission, potential_carbon_emission, property_summary,
-          cancelled_at, not_for_issue_at, lighting_cost_current,
-          heating_cost_current, hot_water_cost_current, lighting_cost_potential, heating_cost_potential, hot_water_cost_potential,
-          address_id
+          cancelled_at, not_for_issue_at, address_id
         FROM assessments
         WHERE (#{
         Helper::LevenshteinSqlHelper.levenshtein(
@@ -345,19 +341,7 @@ module Gateway
     def row_to_domain(row)
       row.symbolize_keys!
       row[:property_summary] = JSON.parse(row[:property_summary])
-      domain = Domain::Assessment.new(row)
-
-      if domain.is_type?(Domain::RdsapAssessment) ||
-          domain.is_type?(Domain::SapAssessment)
-        domain.set(:lighting_cost_current, row[:lighting_cost_current])
-        domain.set(:heating_cost_current, row[:heating_cost_current])
-        domain.set(:hot_water_cost_current, row[:hot_water_cost_current])
-        domain.set(:lighting_cost_potential, row[:lighting_cost_potential])
-        domain.set(:heating_cost_potential, row[:heating_cost_potential])
-        domain.set(:hot_water_cost_potential, row[:hot_water_cost_potential])
-      end
-
-      domain
+      Domain::Assessment.new(row)
     end
 
     def check_valid_energy_ratings(assessment)

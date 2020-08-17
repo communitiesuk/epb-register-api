@@ -33,12 +33,6 @@ module Domain
       address_line3: nil,
       address_line4: nil,
       town: nil,
-      lighting_cost_current: nil,
-      heating_cost_current: nil,
-      hot_water_cost_current: nil,
-      lighting_cost_potential: nil,
-      heating_cost_potential: nil,
-      hot_water_cost_potential: nil,
       current_space_heating_demand: nil,
       current_water_heating_demand: nil,
       impact_of_loft_insulation: nil,
@@ -53,8 +47,6 @@ module Domain
       xml: nil,
       related_assessments: nil
     )
-      @estimated_cost_potential_saving_helper =
-        Helper::EstimatedCostPotentialSavingHelper.new
       @migrated = migrated
       @date_of_assessment =
         if !date_of_assessment.nil?
@@ -92,12 +84,6 @@ module Domain
       @address_line3 = address_line3
       @address_line4 = address_line4
       @town = town
-      @lighting_cost_current = lighting_cost_current
-      @heating_cost_current = heating_cost_current
-      @hot_water_cost_current = hot_water_cost_current
-      @lighting_cost_potential = lighting_cost_potential
-      @heating_cost_potential = heating_cost_potential
-      @hot_water_cost_potential = hot_water_cost_potential
       @current_space_heating_demand = current_space_heating_demand.to_f
       @current_water_heating_demand = current_water_heating_demand.to_f
       @impact_of_loft_insulation = impact_of_loft_insulation
@@ -137,19 +123,6 @@ module Domain
     end
 
     def to_hash
-      estimated_energy_cost =
-        @estimated_cost_potential_saving_helper.estimated_cost(
-          @lighting_cost_current,
-          @heating_cost_current,
-          @hot_water_cost_current,
-        )
-      potential_energy_saving =
-        @estimated_cost_potential_saving_helper.potential_saving(
-          @lighting_cost_potential,
-          @heating_cost_potential,
-          @hot_water_cost_potential,
-          estimated_energy_cost,
-        )
       data = {
         date_of_assessment: @date_of_assessment.strftime("%Y-%m-%d"),
         date_registered: @date_registered.strftime("%Y-%m-%d"),
@@ -172,14 +145,6 @@ module Domain
         address_line3: @address_line3,
         address_line4: @address_line4,
         town: @town,
-        lighting_cost_current: @lighting_cost_current,
-        heating_cost_current: @heating_cost_current,
-        hot_water_cost_current: @hot_water_cost_current,
-        lighting_cost_potential: @lighting_cost_potential,
-        heating_cost_potential: @heating_cost_potential,
-        hot_water_cost_potential: @hot_water_cost_potential,
-        estimated_energy_cost: estimated_energy_cost,
-        potential_energy_saving: potential_energy_saving,
         heat_demand: {
           current_space_heating_demand: @current_space_heating_demand.to_f,
           current_water_heating_demand: @current_water_heating_demand.to_f,
@@ -243,12 +208,6 @@ module Domain
         address_line3: @address_line3,
         address_line4: @address_line4,
         town: @town,
-        lighting_cost_current: @lighting_cost_current,
-        heating_cost_current: @heating_cost_current,
-        hot_water_cost_current: @hot_water_cost_current,
-        lighting_cost_potential: @lighting_cost_potential,
-        heating_cost_potential: @heating_cost_potential,
-        hot_water_cost_potential: @hot_water_cost_potential,
         current_space_heating_demand: @current_space_heating_demand,
         current_water_heating_demand: @current_water_heating_demand,
         impact_of_loft_insulation: @impact_of_loft_insulation,
