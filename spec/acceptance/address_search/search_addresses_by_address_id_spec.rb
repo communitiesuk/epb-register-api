@@ -213,4 +213,42 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
       )
     end
   end
+
+  context "when an address has reports lodged using UPRN" do
+    let(:scheme_id) { add_scheme_and_get_id }
+
+    let(:response) do
+      JSON.parse(
+        address_search_by_id("UPRN-000000000000").body,
+        symbolize_names: true,
+      )
+    end
+
+    before(:each) do
+      ActiveRecord::Base.connection.execute(
+        "INSERT INTO address_base (uprn, address_line1, postcode, town) VALUES ('000000000000', '1 Some Street', 'A0 0AA', 'Post-Town1')",
+      )
+      add_assessor(scheme_id, "SPEC000000", VALID_ASSESSOR_REQUEST_BODY)
+    end
+
+    it "returns the address with the associated reports" do
+      expect(response[:data]).to eq(
+        {
+          addresses: [
+            {
+              addressId: "UPRN-000000000000",
+              line1: "1 Some Street",
+              line2: nil,
+              line3: nil,
+              line4: nil,
+              town: "Post-Town1",
+              postcode: "A0 0AA",
+              source: "GAZETTEER",
+              existingAssessments: nil,
+            },
+          ],
+        },
+      )
+    end
+  end
 end

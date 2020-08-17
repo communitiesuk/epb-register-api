@@ -46,6 +46,31 @@ module Gateway
       parse_results ActiveRecord::Base.connection.exec_query sql, "SQL", binds
     end
 
+    def search_by_uprn(uprn)
+      sql =
+        'SELECT
+            address_line1,
+            address_line2,
+            address_line3,
+            address_line4,
+            town,
+            postcode,
+            uprn
+          FROM address_base
+          WHERE
+            uprn = $1'
+
+      binds = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "uprn",
+          uprn,
+          ActiveRecord::Type::String.new,
+        ),
+      ]
+
+      parse_results ActiveRecord::Base.connection.exec_query sql, "SQL", binds
+    end
+
   private
 
     def parse_results(results)
