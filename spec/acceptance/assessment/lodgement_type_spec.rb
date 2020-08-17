@@ -3,20 +3,6 @@
 describe "Acceptance::Assessment::LodgementType" do
   include RSpecRegisterApiServiceMixin
 
-  let(:valid_assessor_request_body) do
-    AssessorStub.new.fetch_request_body(
-      domesticRdSap: "ACTIVE", nonDomesticNos3: "ACTIVE",
-    )
-  end
-
-  let(:valid_rdsap_xml) do
-    File.read File.join Dir.pwd, "spec/fixtures/samples/rdsap.xml"
-  end
-
-  let(:valid_cepc_rr_xml) do
-    File.read File.join Dir.pwd, "spec/fixtures/samples/cepc+rr.xml"
-  end
-
   def sample(name)
     File.read File.join Dir.pwd, "spec/fixtures/samples/" + name + ".xml"
   end
@@ -238,12 +224,22 @@ describe "Acceptance::Assessment::LodgementType" do
             assessment_settings[:expected_lodgement_responses]
               .each do |rrn, filename|
               fetch_endpoint_response =
-                JSON.parse(fetch_assessment(rrn).body, symbolize_names: true)
+                JSON.parse(
+                  fetch_assessment_summary(rrn).body,
+                  symbolize_names: true,
+                )
 
-              fetch_endpoint_response[:data][:assessor][:registeredBy][
-                :schemeId
-              ] =
-                "{schemeId}"
+              unless fetch_endpoint_response.dig(
+                :data,
+                :assessor,
+                :registeredBy,
+                :schemeId,
+              ).nil?
+                fetch_endpoint_response[:data][:assessor][:registeredBy][
+                  :schemeId
+                ] =
+                  "{schemeId}"
+              end
 
               expected_fetch_endpoint_response =
                 vcr(filename, fetch_endpoint_response)
@@ -290,7 +286,7 @@ describe "Acceptance::Assessment::LodgementType" do
                 vcr("cancelled_assessment", assessment_status),
               )
 
-              fetch_assessment(rrn, [410])
+              fetch_assessment_summary(rrn, [410])
             end
           end
 
@@ -316,7 +312,7 @@ describe "Acceptance::Assessment::LodgementType" do
                 vcr("not_for_issue_assessment", assessment_status),
               )
 
-              fetch_assessment(rrn, [410])
+              fetch_assessment_summary(rrn, [410])
             end
           end
         end
