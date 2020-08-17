@@ -51,6 +51,12 @@ describe "Acceptance::AssessmentSummary::DEC-RR" do
             town: "Post-Town0",
             postcode: "A0 0AA",
           },
+          advisoryReport: {
+              technicalInformation: {
+                  buildingEnvironment: "Air Conditioning",
+                  floorArea: "10",
+              }
+          },
         },
       )
     end

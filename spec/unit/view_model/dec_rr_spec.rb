@@ -30,6 +30,12 @@ describe ViewModel::DecRrWrapper do
         town: "Post-Town0",
         postcode: "A0 0AA",
       },
+      advisory_report: {
+          technical_information: {
+              building_environment: "Air Conditioning",
+              floor_area: "10",
+          }
+      },
     }.freeze
 
     it "should read the appropriate values from the XML doc" do
