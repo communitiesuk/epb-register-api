@@ -26,7 +26,6 @@ module ViewModel
         report_type: @view_model.report_type,
         date_of_expiry: @view_model.date_of_expiry,
         address: {
-
           address_line1: @view_model.address_line1,
           address_line2: @view_model.address_line2,
           address_line3: @view_model.address_line3,
@@ -35,9 +34,9 @@ module ViewModel
           postcode: @view_model.postcode,
         },
         short_payback_recommendations:
-            @view_model.short_payback_recommendations,
+          @view_model.short_payback_recommendations,
         medium_payback_recommendations:
-            @view_model.medium_payback_recommendations,
+          @view_model.medium_payback_recommendations,
         long_payback_recommendations: @view_model.long_payback_recommendations,
         other_recommendations: @view_model.other_recommendations,
         technical_information: {

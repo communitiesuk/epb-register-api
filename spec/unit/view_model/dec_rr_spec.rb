@@ -16,10 +16,10 @@ describe ViewModel::DecRrWrapper do
         different_fields: {},
       },
       {
-          schema_name: "CEPC-7.1",
-          xml_file: "api/schemas/xml/examples/CEPC-7.1(DEC_RR).xml",
-          unsupported_fields: [],
-          different_fields: {},
+        schema_name: "CEPC-7.1",
+        xml_file: "api/schemas/xml/examples/CEPC-7.1(DEC_RR).xml",
+        unsupported_fields: [],
+        different_fields: {},
       },
     ].freeze
 
@@ -37,33 +37,36 @@ describe ViewModel::DecRrWrapper do
         postcode: "A0 0AA",
       },
       short_payback_recommendations: [
-          {
-              code: "1",
-              text: "Consider thinking about maybe possibly getting a solar panel but only one.",
-              cO2Impact: "MEDIUM",
-          },
-          {
-              code: "2",
-              text: "Consider introducing variable speed drives (VSD) for fans, pumps and compressors.",
-              cO2Impact: "LOW",
-          },
+        {
+          code: "1",
+          text:
+            "Consider thinking about maybe possibly getting a solar panel but only one.",
+          cO2Impact: "MEDIUM",
+        },
+        {
+          code: "2",
+          text:
+            "Consider introducing variable speed drives (VSD) for fans, pumps and compressors.",
+          cO2Impact: "LOW",
+        },
       ],
       medium_payback_recommendations: [
-          {
-              code: "3",
-              text: "Engage experts to propose specific measures to reduce hot waterwastage and plan to carry this out.",
-              cO2Impact: "LOW",
-          },
+        {
+          code: "3",
+          text:
+            "Engage experts to propose specific measures to reduce hot waterwastage and plan to carry this out.",
+          cO2Impact: "LOW",
+        },
       ],
       long_payback_recommendations: [
-          {
-              code: "4",
-              text: "Consider replacing or improving glazing",
-              cO2Impact: "LOW",
-          },
+        {
+          code: "4",
+          text: "Consider replacing or improving glazing",
+          cO2Impact: "LOW",
+        },
       ],
       other_recommendations: [
-          { code: "5", text: "Add a big wind turbine", cO2Impact: "HIGH" },
+        { code: "5", text: "Add a big wind turbine", cO2Impact: "HIGH" },
       ],
       technical_information: {
         building_environment: "Air Conditioning", floor_area: "10"
