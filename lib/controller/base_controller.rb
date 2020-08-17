@@ -99,10 +99,16 @@ module Controller
       message =
         exception.methods.include?(:message) ? exception.message : exception
 
-      if exception.methods.include?(:backtrace)
-        logger.error(exception.backtrace)
+      error = {
+        type: exception.class.name,
+        message: message,
+      }
+
+      if exception.methods.include? :backtrace
+        error[:backtrace] = exception.backtrace
       end
-      logger.error(exception)
+
+      logger.error(JSON.generate(error))
 
       ActiveRecord::Base.clear_active_connections!
 
