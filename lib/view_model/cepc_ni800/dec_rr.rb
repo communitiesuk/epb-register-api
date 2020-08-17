@@ -1,6 +1,6 @@
 module ViewModel
   module CepcNi800
-    class DecRr < ViewModel::CepcNi800::CommonSchema;
+    class DecRr < ViewModel::CepcNi800::CommonSchema
       def floor_area
         xpath(%w[Advisory-Report Technical-Information Floor-Area])
       end

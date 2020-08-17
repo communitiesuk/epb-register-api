@@ -32,10 +32,10 @@ module ViewModel
           postcode: @view_model.postcode,
         },
         advisory_report: {
-            technical_information: {
-                building_environment: @view_model.building_environment,
-                floor_area: @view_model.floor_area,
-            }
+          technical_information: {
+            building_environment: @view_model.building_environment,
+            floor_area: @view_model.floor_area,
+          },
         },
       }
     end

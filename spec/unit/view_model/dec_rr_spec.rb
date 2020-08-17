@@ -31,10 +31,9 @@ describe ViewModel::DecRrWrapper do
         postcode: "A0 0AA",
       },
       advisory_report: {
-          technical_information: {
-              building_environment: "Air Conditioning",
-              floor_area: "10",
-          }
+        technical_information: {
+          building_environment: "Air Conditioning", floor_area: "10"
+        },
       },
     }.freeze
 

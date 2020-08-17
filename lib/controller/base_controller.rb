@@ -99,10 +99,7 @@ module Controller
       message =
         exception.methods.include?(:message) ? exception.message : exception
 
-      error = {
-        type: exception.class.name,
-        message: message,
-      }
+      error = { type: exception.class.name, message: message }
 
       if exception.methods.include? :backtrace
         error[:backtrace] = exception.backtrace
