@@ -31,11 +31,15 @@ module ViewModel
           town: @view_model.town,
           postcode: @view_model.postcode,
         },
-        advisory_report: {
-          technical_information: {
-            building_environment: @view_model.building_environment,
-            floor_area: @view_model.floor_area,
-          },
+        short_payback_recommendations:
+            @view_model.short_payback_recommendations,
+        medium_payback_recommendations:
+            @view_model.medium_payback_recommendations,
+        long_payback_recommendations: @view_model.long_payback_recommendations,
+        other_recommendations: @view_model.other_recommendations,
+        technical_information: {
+          building_environment: @view_model.building_environment,
+          floor_area: @view_model.floor_area,
         },
       }
     end

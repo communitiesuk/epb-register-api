@@ -30,10 +30,32 @@ describe ViewModel::DecRrWrapper do
         town: "Post-Town0",
         postcode: "A0 0AA",
       },
-      advisory_report: {
-        technical_information: {
-          building_environment: "Air Conditioning", floor_area: "10"
-        },
+      short_payback_recommendations: [
+          {
+              code: "2",
+              text: "Consider introducing variable speed drives (VSD) for fans, pumps and compressors.",
+              cO2Impact: "LOW",
+          },
+      ],
+      medium_payback_recommendations: [
+          {
+              code: "3",
+              text: "Engage experts to propose specific measures to reduce hot waterwastage and plan to carry this out.",
+              cO2Impact: "LOW",
+          },
+      ],
+      long_payback_recommendations: [
+          {
+              code: "4",
+              text: "Consider replacing or improving glazing",
+              cO2Impact: "LOW",
+          },
+      ],
+      other_recommendations: [
+          { code: "5", text: "Add a big wind turbine", cO2Impact: "HIGH" },
+      ],
+      technical_information: {
+        building_environment: "Air Conditioning", floor_area: "10"
       },
     }.freeze
 
