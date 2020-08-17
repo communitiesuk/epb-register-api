@@ -32,6 +32,11 @@ describe ViewModel::DecRrWrapper do
       },
       short_payback_recommendations: [
           {
+              code: "1",
+              text: "Consider thinking about maybe possibly getting a solar panel but only one.",
+              cO2Impact: "MEDIUM",
+          },
+          {
               code: "2",
               text: "Consider introducing variable speed drives (VSD) for fans, pumps and compressors.",
               cO2Impact: "LOW",

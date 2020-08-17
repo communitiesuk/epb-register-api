@@ -33,6 +33,11 @@
       <Advisory-Report>
           <AR-Recommendations>
             <Short-Payback>
+              <Recommendation-Code>1</Recommendation-Code>
+              <Recommendation>Consider thinking about maybe possibly getting a solar panel but only one.</Recommendation>
+              <CO2-Impact>MEDIUM</CO2-Impact>
+            </Short-Payback>
+            <Short-Payback>
               <Recommendation-Code>2</Recommendation-Code>
               <Recommendation>Consider introducing variable speed drives (VSD) for fans, pumps and compressors.</Recommendation>
               <CO2-Impact>LOW</CO2-Impact>
