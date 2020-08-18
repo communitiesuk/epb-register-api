@@ -1568,9 +1568,22 @@ components:
 
     AssessorQualificationChangeEvent:
       type: object
-      allOf:
-        - $ref: '#/components/schemas/AssessorDetail'
       properties:
+        firstName:
+          type: string
+          example: "Joe"
+        middleNames:
+          type: string
+          example: "T"
+        lastName:
+          type: string
+          example: "Bloggs"
+        assessorSchemeId:
+          type: string
+          example: "TEST00001"
+        dateOfBirth:
+          type: string
+          example: "1974-12-28"
         qualificationChange:
           type: object
           properties:
