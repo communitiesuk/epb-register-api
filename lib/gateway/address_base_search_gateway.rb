@@ -103,11 +103,7 @@ module Gateway
           status =
             if row["cancelled_at"].nil?
               if row["not_for_issue_at"].nil?
-                if Date.parse(row["date_of_expiry"]) < Date.now
-                  "EXPIRED"
-                else
-                  "ENTERED"
-                end
+                row["date_of_expiry"] < Date.today ? "EXPIRED" : "ENTERED"
               else
                 "NOT_FOR_ISSUE"
               end
@@ -119,7 +115,7 @@ module Gateway
             {
               assessment_id: row["assessment_id"],
               assessment_status: status,
-              assessment_type: row["assessment_type"],
+              assessment_type: row["type_of_assessment"],
             },
           )
         end

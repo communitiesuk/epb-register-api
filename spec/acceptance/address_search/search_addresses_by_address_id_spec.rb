@@ -231,7 +231,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
       add_assessor(scheme_id, "SPEC000000", VALID_ASSESSOR_REQUEST_BODY)
     end
 
-    it "returns the address with the associated reports" do
+    it "returns the address" do
       expect(response[:data]).to eq(
         {
           addresses: [
@@ -245,6 +245,39 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
               postcode: "A0 0AA",
               source: "GAZETTEER",
               existingAssessments: [],
+            },
+          ],
+        },
+      )
+    end
+
+    it "returns the address with the associated reports" do
+      lodge_placeholder_assessment(
+        scheme_id,
+        "0000-0000-0000-0000-0000",
+        "UPRN-000000000001",
+        Date.today.prev_day(50).strftime("%Y-%m-%d"),
+      )
+
+      expect(response[:data]).to eq(
+        {
+          addresses: [
+            {
+              addressId: "UPRN-000000000001",
+              line1: "1 Some Street",
+              line2: nil,
+              line3: nil,
+              line4: nil,
+              town: "Post-Town1",
+              postcode: "A0 0AA",
+              source: "GAZETTEER",
+              existingAssessments: [
+                {
+                  assessmentId: "0000-0000-0000-0000-0000",
+                  assessmentStatus: "ENTERED",
+                  assessmentType: "RdSAP",
+                },
+              ],
             },
           ],
         },
