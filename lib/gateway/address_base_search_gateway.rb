@@ -63,7 +63,7 @@ module Gateway
       binds = [
         ActiveRecord::Relation::QueryAttribute.new(
           "uprn",
-          uprn,
+          uprn.to_i.to_s,
           ActiveRecord::Type::String.new,
         ),
       ]

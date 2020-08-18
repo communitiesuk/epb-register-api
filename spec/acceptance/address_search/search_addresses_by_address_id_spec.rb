@@ -219,14 +219,14 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
 
     let(:response) do
       JSON.parse(
-        address_search_by_id("UPRN-000000000000").body,
+        address_search_by_id("UPRN-000000000001").body,
         symbolize_names: true,
       )
     end
 
     before(:each) do
       ActiveRecord::Base.connection.execute(
-        "INSERT INTO address_base (uprn, address_line1, postcode, town) VALUES ('000000000000', '1 Some Street', 'A0 0AA', 'Post-Town1')",
+        "INSERT INTO address_base (uprn, address_line1, postcode, town) VALUES ('1', '1 Some Street', 'A0 0AA', 'Post-Town1')",
       )
       add_assessor(scheme_id, "SPEC000000", VALID_ASSESSOR_REQUEST_BODY)
     end
@@ -236,7 +236,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
         {
           addresses: [
             {
-              addressId: "UPRN-000000000000",
+              addressId: "UPRN-000000000001",
               line1: "1 Some Street",
               line2: nil,
               line3: nil,
