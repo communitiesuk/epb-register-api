@@ -109,6 +109,23 @@ def fetch_assessor(
   )
 end
 
+def fetch_assessors_status(
+  scheme_id,
+  accepted_responses = [200],
+  authenticate = true,
+  auth_data = nil,
+  scopes = %w[report:assessor:status]
+)
+  auth_data ||= { 'scheme_ids': [scheme_id] }
+  assertive_get(
+    "/api/reports/assessors/status",
+    accepted_responses,
+    authenticate,
+    auth_data,
+    scopes,
+  )
+end
+
 def add_assessor(
   scheme_id,
   assessor_id,
