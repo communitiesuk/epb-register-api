@@ -244,7 +244,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
               town: "Post-Town1",
               postcode: "A0 0AA",
               source: "GAZETTEER",
-              existingAssessments: nil,
+              existingAssessments: [],
             },
           ],
         },
