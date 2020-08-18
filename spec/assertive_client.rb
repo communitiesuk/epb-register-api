@@ -229,10 +229,10 @@ def lodge_assessment(
   override: nil
 )
   path =
-    if migrated == true
-      "api/assessments?migrated"
-    elsif override == true
-      "api/assessments?override"
+    if !migrated.nil?
+      "api/assessments?migrated#{(migrated === true ? '' : '=' + migrated)}"
+    elsif !override.nil?
+      "api/assessments?override#{(override === true ? '' : '=' + override)}"
     else
       "api/assessments"
     end

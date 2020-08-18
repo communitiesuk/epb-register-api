@@ -47,8 +47,8 @@ module Controller
 
     post "/api/assessments", jwt_auth: %w[assessment:lodge] do
       correlation_id = rand
-      migrated = params.key?("migrated")
-      overridden = params.key?("override")
+      migrated = check_param_state("migrated")
+      overridden = check_param_state("override")
 
       if migrated && !env[:jwt_auth].scopes?(%w[migrate:assessment])
         forbidden(

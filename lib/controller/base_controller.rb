@@ -123,5 +123,11 @@ module Controller
     def forbidden(error_code, title, code = 403)
       halt json_response(code, { errors: [{ code: error_code, title: title }] })
     end
+
+    def check_param_state(key)
+      if params.key?(key)
+        true if params[key].blank? || params[key] == "true"
+end
+    end
   end
 end

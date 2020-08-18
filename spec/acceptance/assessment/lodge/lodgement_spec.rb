@@ -209,7 +209,7 @@ describe "Acceptance::Assessment::Lodge" do
           assessment_body: valid_rdsap_xml,
           accepted_responses: [403],
           auth_data: { scheme_ids: [scheme_id] },
-          migrated: true,
+          migrated: "true",
         ).body,
         symbolize_names: true,
       )
@@ -248,7 +248,7 @@ describe "Acceptance::Assessment::Lodge" do
                          accepted_responses: [201],
                          scopes: %w[assessment:lodge migrate:assessment],
                          auth_data: { scheme_ids: [scheme_id] },
-                         migrated: true
+                         migrated: "true"
       end
 
       it "should be true in migrated column" do
@@ -367,7 +367,8 @@ describe "Acceptance::Assessment::Lodge" do
       before do
         lodge_assessment assessment_body: valid_rdsap_xml,
                          accepted_responses: [201],
-                         auth_data: { scheme_ids: [scheme_id] }
+                         auth_data: { scheme_ids: [scheme_id] },
+                         migrated: "false"
       end
 
       it "shows false in the migrated column" do
@@ -439,7 +440,7 @@ describe "Acceptance::Assessment::Lodge" do
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
         schema_name: "CEPC-8.0.0",
-        override: true,
+        override: "true",
       )
 
       overidden_lodgement_event =
