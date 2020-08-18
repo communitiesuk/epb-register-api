@@ -3,9 +3,9 @@
 	<xs:element name="Property" type="Property"/>
 	<xs:complexType name="Property">
 		<xs:annotation>
-			<xs:documentation>A discrete identifiable possession, such as a piece of real-estate, to which its owner has legal title. For the Home Information Pack legislation the types of property are restricted to residential properties. 
+			<xs:documentation>A discrete identifiable possession, such as a piece of real-estate, to which its owner has legal title. For the Home Information Pack legislation the types of property are restricted to residential properties.
 
-It should be observed that "a property is a property is a property" and all real-estate properties, whether residential or commercial or whether being sold for the first or the nth time will have a very similar conceptual structure and similar rules and constraints. 
+It should be observed that "a property is a property is a property" and all real-estate properties, whether residential or commercial or whether being sold for the first or the nth time will have a very similar conceptual structure and similar rules and constraints.
 
 As such the broad description of a Property can be regarded as a framework, containing a set of extension points, that can be expanded as necessary to cover additional detail.
 </xs:documentation>
@@ -50,7 +50,7 @@ A District is an optional sub-part of the Post Town e.g. "Kings Heath" in "Birmi
 			<xs:documentation>Unique Property Reference Number</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:pattern value="UPRN-[0-9]{1,12}|RRN-[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}"/>
+			<xs:pattern value="UPRN-[0-9]{10,12}|RRN-[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="PostcodeType">
