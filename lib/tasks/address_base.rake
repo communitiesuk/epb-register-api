@@ -15,8 +15,8 @@ task :import_address_base do
 
   iterations = ENV["iterations"] ? ENV["iterations"].to_i : 1
 
-  ActiveRecord::Base.connection.execute("DROP TABLE IF EXISTS address_base_temp")
-  ActiveRecord::Base.connection.execute("CREATE TABLE IF NOT EXISTS address_base_temp (
+  ActiveRecord::Base.connection.execute("DROP TABLE IF EXISTS address_base_tmp")
+  ActiveRecord::Base.connection.execute("CREATE TABLE IF NOT EXISTS address_base_tmp (
    uprn VARCHAR (255),
    postcode VARCHAR (255),
    address_line1 VARCHAR (255),
@@ -134,11 +134,13 @@ task :import_address_base do
             )")
       end
 
-      ActiveRecord::Base.connection.execute("INSERT INTO address_base_temp VALUES " + query.join(", "))
+      ActiveRecord::Base.connection.execute("INSERT INTO address_base_tmp VALUES " + query.join(", "))
     end
+
+    puts "Inserted file " + iteration.to_s + " out of " + iterations.to_s
   end
 
-  ActiveRecord::Base.connection.execute("INSERT INTO address_base SELECT * FROM address_base_temp ON CONFLICT DO NOTHING")
-  ActiveRecord::Base.connection.execute("TRUNCATE TABLE address_base_temp")
-  ActiveRecord::Base.connection.execute("DROP TABLE address_base_temp")
+  # ActiveRecord::Base.connection.execute("INSERT INTO address_base SELECT * FROM address_base_tmp ON CONFLICT DO NOTHING")
+  # ActiveRecord::Base.connection.execute("TRUNCATE TABLE address_base_tmp")
+  # ActiveRecord::Base.connection.execute("DROP TABLE address_base_tmp")
 end
