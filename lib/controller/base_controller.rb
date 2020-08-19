@@ -126,7 +126,9 @@ module Controller
 
     def boolean_parameter_true?(key)
       if params.key?(key)
-        true if params[key].blank? || params[key] == "true"
+        return true if params[key].blank?
+
+        return true if params[key] == "true"
       end
     end
   end

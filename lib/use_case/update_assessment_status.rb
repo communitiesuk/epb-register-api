@@ -14,7 +14,10 @@ module UseCase
 
     def execute(assessment_id, status, scheme_ids)
       assessment =
-          @assessments_search_gateway.search_by_assessment_id(assessment_id, false).first
+        @assessments_search_gateway.search_by_assessment_id(
+          assessment_id,
+          false,
+        ).first
 
       raise AssessmentNotFound unless assessment
 
