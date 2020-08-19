@@ -3,7 +3,7 @@ module UseCase
     class ParameterMissing < StandardError; end
 
     def initialize
-      @assessment_gateway = Gateway::AssessmentsGateway.new
+      @assessment_gateway = Gateway::AssessmentsSearchGateway.new
     end
 
     def execute(street_name, town, assessment_type)

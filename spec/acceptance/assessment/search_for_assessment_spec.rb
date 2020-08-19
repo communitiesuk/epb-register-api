@@ -274,7 +274,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
             addressLine2: "",
             addressLine3: "",
             addressLine4: "",
-            heatDemand: {
+              heatDemand: {
               currentSpaceHeatingDemand: 30.0,
               currentWaterHeatingDemand: 60.0,
               impactOfLoftInsulation: -8,
@@ -409,17 +409,11 @@ describe "Acceptance::Assessment::SearchForAssessments" do
     expected_response =
       JSON.parse(
         {
-          assessor: nil,
           assessmentId: "0000-0000-0000-0000-0000",
           dateOfAssessment: "2020-05-04",
-          dateRegistered: "2020-05-04",
           typeOfAssessment: "RdSAP",
           currentEnergyEfficiencyRating: 50,
-          potentialEnergyEfficiencyRating: 50,
-          currentCarbonEmission: 2.4,
-          potentialCarbonEmission: 1.4,
           currentEnergyEfficiencyBand: "e",
-          potentialEnergyEfficiencyBand: "e",
           optOut: false,
           postcode: "A0 0AA",
           dateOfExpiry: "2030-05-04",
@@ -429,104 +423,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
           addressLine2: "",
           addressLine3: "",
           addressLine4: "",
-          heatDemand: {
-            currentSpaceHeatingDemand: 30.0,
-            currentWaterHeatingDemand: 60.0,
-            impactOfLoftInsulation: -8,
-            impactOfCavityInsulation: -12,
-            impactOfSolidWallInsulation: -16,
-          },
-          propertySummary: [
-            {
-              "description" => "Description0",
-              "energyEfficiencyRating" => 0,
-              "environmentalEfficiencyRating" => 0,
-              "name" => "wall",
-            },
-            {
-              "description" => "Description1",
-              "energyEfficiencyRating" => 0,
-              "environmentalEfficiencyRating" => 0,
-              "name" => "wall",
-            },
-            {
-              "description" => "Description2",
-              "energyEfficiencyRating" => 0,
-              "environmentalEfficiencyRating" => 0,
-              "name" => "roof",
-            },
-            {
-              "description" => "Description3",
-              "energyEfficiencyRating" => 0,
-              "environmentalEfficiencyRating" => 0,
-              "name" => "roof",
-            },
-            {
-              "description" => "Description4",
-              "energyEfficiencyRating" => 0,
-              "environmentalEfficiencyRating" => 0,
-              "name" => "floor",
-            },
-            {
-              "description" => "Description5",
-              "energyEfficiencyRating" => 0,
-              "environmentalEfficiencyRating" => 0,
-              "name" => "floor",
-            },
-            {
-              "description" => "Description6",
-              "energyEfficiencyRating" => 0,
-              "environmentalEfficiencyRating" => 0,
-              "name" => "window",
-            },
-            {
-              "description" => "Description7",
-              "energyEfficiencyRating" => 0,
-              "environmentalEfficiencyRating" => 0,
-              "name" => "main_heating",
-            },
-            {
-              "description" => "Description8",
-              "energyEfficiencyRating" => 0,
-              "environmentalEfficiencyRating" => 0,
-              "name" => "main_heating",
-            },
-            {
-              "description" => "Description9",
-              "energyEfficiencyRating" => 0,
-              "environmentalEfficiencyRating" => 0,
-              "name" => "main_heating_controls",
-            },
-            {
-              "description" => "Description10",
-              "energyEfficiencyRating" => 0,
-              "environmentalEfficiencyRating" => 0,
-              "name" => "main_heating_controls",
-            },
-            {
-              "description" => "Description11",
-              "energyEfficiencyRating" => 0,
-              "environmentalEfficiencyRating" => 0,
-              "name" => "hot_water",
-            },
-            {
-              "description" => "Description12",
-              "energyEfficiencyRating" => 0,
-              "environmentalEfficiencyRating" => 0,
-              "name" => "lighting",
-            },
-            {
-              "description" => "Description13",
-              "energyEfficiencyRating" => 0,
-              "environmentalEfficiencyRating" => 0,
-              "name" => "secondary_heating",
-            },
-          ],
-          propertyAgeBand: "K",
-          recommendedImprovements: [],
           status: "ENTERED",
-          tenure: "1",
-          relatedAssessments: nil,
         }.to_json,
       )
 
