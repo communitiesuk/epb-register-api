@@ -111,6 +111,7 @@ end
 
 def fetch_assessors_status(
   scheme_id,
+  date,
   accepted_responses = [200],
   authenticate = true,
   auth_data = nil,
@@ -118,7 +119,7 @@ def fetch_assessors_status(
 )
   auth_data ||= { 'scheme_ids': [scheme_id] }
   assertive_get(
-    "/api/reports/assessors/status?date=2020-08-19",
+    "/api/reports/assessors/status?date=" + date,
     accepted_responses,
     authenticate,
     auth_data,

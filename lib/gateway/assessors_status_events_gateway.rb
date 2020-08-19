@@ -1,9 +1,16 @@
 module Gateway
   class AssessorsStatusEventsGateway
     class AssessorsStatusEvents < ActiveRecord::Base; end
-    def get(_date)
+    def get(date)
       sql =
-        "SELECT assessor, scheme_assessor_id, qualification_type, previous_status, new_status, recorded_at FROM assessors_status_events"
+        'SELECT
+           assessor, scheme_assessor_id, qualification_type, previous_status, new_status
+         FROM
+           assessors_status_events
+         WHERE
+           recorded_at BETWEEN ' +
+        ActiveRecord::Base.connection.quote(date.to_s) + " AND " +
+        ActiveRecord::Base.connection.quote((date + 1).to_s)
 
       response = AssessorsStatusEvents.connection.execute(sql)
 

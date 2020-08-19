@@ -15,19 +15,23 @@ describe "Acceptance::AssessorStatus" do
 
   it "doesn't show any assessor status changes when none has happened" do
     response =
-      JSON.parse(fetch_assessors_status(scheme_id).body, symbolize_names: true)
+      JSON.parse(
+        fetch_assessors_status(scheme_id, Date.today.to_s).body,
+        symbolize_names: true,
+      )
 
     expect(response[:data]).to eq({ assessorStatusEvents: [] })
   end
 
   it "does show an assessor status change when an existing assessors status has changed" do
     create_assessor(domesticRdSap: "ACTIVE")
-
-    created_date = Time.now
     create_assessor(domesticRdSap: "INACTIVE")
 
     response =
-      JSON.parse(fetch_assessors_status(scheme_id).body, symbolize_names: true)
+      JSON.parse(
+        fetch_assessors_status(scheme_id, Date.today.to_s).body,
+        symbolize_names: true,
+      )
 
     expect(response[:data]).to eq(
       assessorStatusEvents: [
@@ -45,5 +49,18 @@ describe "Acceptance::AssessorStatus" do
         },
       ],
     )
+  end
+
+  it "doesn't show an assessor status change done on a different date" do
+    create_assessor(domesticRdSap: "ACTIVE")
+    create_assessor(domesticRdSap: "INACTIVE")
+
+    response =
+      JSON.parse(
+        fetch_assessors_status(scheme_id, Date.tomorrow.to_s).body,
+        symbolize_names: true,
+      )
+
+    expect(response[:data]).to eq(assessorStatusEvents: [])
   end
 end
