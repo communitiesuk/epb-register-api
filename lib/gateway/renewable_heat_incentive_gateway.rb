@@ -12,12 +12,10 @@ module Gateway
     def fetch(assessment_id)
       sql = <<-SQL
         SELECT
-          assessments.assessment_id, scheme_assessor_id, date_of_assessment,
-          date_registered, type_of_assessment,
-          current_energy_efficiency_rating, potential_energy_efficiency_rating,
-          postcode, current_space_heating_demand, current_water_heating_demand,
-          impact_of_loft_insulation, tenure, property_age_band, cancelled_at,
-          impact_of_cavity_insulation, property_summary, not_for_issue_at,
+          assessments.assessment_id, scheme_assessor_id,
+           type_of_assessment,
+           cancelled_at,
+           property_summary, not_for_issue_at,
           string_agg(improvement_type, ', ') AS improvement_type
         FROM assessments
         LEFT JOIN domestic_epc_energy_improvements deei
@@ -49,33 +47,31 @@ module Gateway
         UseCase::AssessmentSummary::Fetch.new.execute(row["assessment_id"])
 
       Domain::RenewableHeatIncentive.new(
-        epc_rrn: row["assessment_id"],
+        epc_rrn: assessment_summary[:assessment_id],
         is_cancelled: row["cancelled_at"] || row["not_for_issue_at"],
-        assessor_name: fetch_assessor_name(row["scheme_assessor_id"]),
-        report_type: row["type_of_assessment"],
-        inspection_date: row["date_registered"],
-        lodgement_date: row["date_of_assessment"],
+        assessor_name: fetch_assessor_name(assessment_summary[:assessor][:scheme_assessor_id]),
+        report_type: assessment_summary[:type_of_assessment],
+        inspection_date: Date.parse(assessment_summary[:date_of_assessment]),
+        lodgement_date: Date.parse(assessment_summary[:date_of_registration]),
         dwelling_type: assessment_summary[:dwelling_type],
-        postcode: row["postcode"],
-        property_age_band: row["property_age_band"],
-        tenure: TENURE[row["tenure"]],
+        postcode: assessment_summary[:address][:postcode],
+        property_age_band: assessment_summary[:property_age_band],
+        tenure: TENURE[assessment_summary[:tenure]],
         total_floor_area: assessment_summary[:total_floor_area],
         cavity_wall_insulation: insulation?("B", row),
         loft_insulation: insulation?("A", row),
-        space_heating: row["current_space_heating_demand"],
-        water_heating: row["current_water_heating_demand"],
+        space_heating: assessment_summary[:heat_demand][:current_space_heating_demand],
+        water_heating: assessment_summary[:heat_demand][:current_water_heating_demand],
         secondary_heating:
           fetch_property_description(
             row["property_summary"],
             "secondary_heating",
           ),
         energy_efficiency: {
-          current_rating: row["current_energy_efficiency_rating"],
-          current_band:
-            get_energy_rating_band(row["current_energy_efficiency_rating"]),
-          potential_rating: row["potential_energy_efficiency_rating"],
-          potential_band:
-            get_energy_rating_band(row["potential_energy_efficiency_rating"]),
+          current_rating: assessment_summary[:current_energy_efficiency_rating],
+          current_band: assessment_summary[:current_energy_efficiency_band],
+          potential_rating: assessment_summary[:potential_energy_efficiency_rating],
+          potential_band: assessment_summary[:potential_energy_efficiency_band],
         },
       )
     end
