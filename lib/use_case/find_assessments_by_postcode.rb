@@ -5,7 +5,7 @@ module UseCase
     class AssessmentTypeNotValid < StandardError; end
 
     def initialize
-      @assessments_gateway = Gateway::AssessmentsGateway.new
+      @assessments_gateway = Gateway::AssessmentsSearchGateway.new
     end
 
     def execute(postcode, assessment_types = [])
@@ -25,7 +25,7 @@ module UseCase
         @assessments_gateway.search_by_postcode(postcode, assessment_types)
 
       { data: result.map(&:to_hash), searchQuery: postcode }
-    rescue Gateway::AssessmentsGateway::InvalidAssessmentType
+    rescue Gateway::AssessmentsSearchGateway::InvalidAssessmentType
       raise AssessmentTypeNotValid
     end
   end
