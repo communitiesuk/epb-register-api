@@ -194,7 +194,7 @@ module Controller
 
       xml = (request.env["HTTP_ACCEPT"] == "application/xml")
 
-      result = UseCase::FetchAssessment.new.execute(assessment_id, xml)
+      result = UseCase::FetchAssessment.new.execute(assessment_id)
 
       if xml
         xml_response(200, result)

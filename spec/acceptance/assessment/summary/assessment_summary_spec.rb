@@ -6,7 +6,7 @@ describe "Acceptance::AssessmentSummary" do
   include RSpecRegisterApiServiceMixin
 
   it "returns 404 for an assessment that doesnt exist" do
-    fetch_assessment_summary("000-000", [404])
+    fetch_assessment_summary("0000-0000-0000-0000-0000", [404])
   end
 
   context "security" do
@@ -58,6 +58,30 @@ describe "Acceptance::AssessmentSummary" do
         "0000-0000-0000-0000-0001",
       )
       expect(cepc_rr_response[:data][:typeOfAssessment]).to eq("CEPC-RR")
+    end
+  end
+
+  context "RRN format" do
+    it "Returns the summary for a URL without hyphens" do
+      scheme_id = add_scheme_and_get_id
+      xml_file =
+          File.read File.join Dir.pwd, "spec/fixtures/samples/cepc+rr.xml"
+      assessor =
+          AssessorStub.new.fetch_request_body(
+              nonDomesticNos3: "ACTIVE",
+              nonDomesticNos4: "ACTIVE",
+              nonDomesticNos5: "ACTIVE",
+              )
+      add_assessor(scheme_id, "SPEC000000", assessor)
+      cepc_and_rr = Nokogiri.XML(xml_file)
+
+      lodge_assessment(
+          assessment_body: cepc_and_rr.to_xml,
+          auth_data: { scheme_ids: [scheme_id] },
+          schema_name: "CEPC-8.0.0",
+          )
+
+      fetch_assessment_summary("00000000000000000000").body
     end
   end
 end

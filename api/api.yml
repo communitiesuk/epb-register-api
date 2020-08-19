@@ -640,12 +640,6 @@ paths:
         200:
           description: Energy Performance Assessment
           content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    $ref: '#/components/schemas/Empty'
             application/xml:
               schema:
                 type: object

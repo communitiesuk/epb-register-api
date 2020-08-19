@@ -91,7 +91,7 @@ describe "Acceptance::Assessment::GreenDealPlan:DeleteGreenDealPlan" do
       end
 
       def response
-        JSON.parse(fetch_assessment("0000-0000-0000-0000-0000").body)
+        JSON.parse(fetch_assessment_summary("0000-0000-0000-0000-0000").body)
       end
 
       it "returns status code 204" do

@@ -15,6 +15,7 @@ module UseCase
       end
 
       def execute(assessment_id)
+        assessment_id = Helper::RrnHelper.normalise_rrn_format(assessment_id)
         assessment =
           Gateway::AssessmentsGateway.new.search_by_assessment_id(
             assessment_id,
