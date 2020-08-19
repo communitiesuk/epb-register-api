@@ -168,7 +168,7 @@ module ViewModel
       end
 
       def potential_energy_rating
-        xpath(%w[Energy-Rating-Current]).to_i
+        xpath(%w[Energy-Rating-Potential]).to_i
       end
 
       def current_energy_rating
