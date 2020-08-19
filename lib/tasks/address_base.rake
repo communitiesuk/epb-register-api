@@ -115,7 +115,7 @@ task :import_address_base do
         lines = lines.reject(&:blank?)
 
         # Finally, the postcode locator, if present, should be inserted on the final line of the address.
-        postcode = row[64]
+        postcode = row[64] == "" ? row[65] : row[64]
 
         # administrative_location if town is not the same
         #
