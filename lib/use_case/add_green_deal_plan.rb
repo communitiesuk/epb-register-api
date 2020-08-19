@@ -8,7 +8,7 @@ module UseCase
     class InvalidFuelCode < StandardError; end
 
     def initialize
-      @assessments_gateway = Gateway::AssessmentsGateway.new
+      @assessments_gateway = Gateway::AssessmentsSearchGateway.new
       @green_deal_plan_gateway = Gateway::GreenDealPlansGateway.new
     end
 
