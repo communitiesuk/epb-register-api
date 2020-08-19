@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_19_122703) do
+ActiveRecord::Schema.define(version: 2020_08_19_153132) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -101,6 +101,15 @@ ActiveRecord::Schema.define(version: 2020_08_19_122703) do
     t.string "gda_qualification"
     t.index ["registered_by"], name: "index_assessors_on_registered_by"
     t.index ["search_results_comparison_postcode"], name: "index_assessors_on_search_results_comparison_postcode"
+  end
+
+  create_table "assessors_status_events", force: :cascade do |t|
+    t.jsonb "assessor", default: {}
+    t.string "scheme_assessor_id"
+    t.string "qualification_type"
+    t.string "previous_status"
+    t.string "new_status"
+    t.datetime "recorded_at"
   end
 
   create_table "domestic_epc_energy_improvements", id: false, force: :cascade do |t|

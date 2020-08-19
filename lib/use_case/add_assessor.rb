@@ -9,6 +9,8 @@ module UseCase
     def initialize
       @schemes_gateway = Gateway::SchemesGateway.new
       @assessors_gateway = Gateway::AssessorsGateway.new
+      @assessors_status_events_gateway =
+        Gateway::AssessorsStatusEventsGateway.new
     end
 
     def execute(add_assessor_request)
@@ -78,6 +80,22 @@ module UseCase
         )
 
       @assessors_gateway.update(assessor)
+
+      if existing_assessor
+        previous_qualifications = existing_assessor.to_hash[:qualifications]
+        new_qualifications = assessor.to_hash[:qualifications]
+
+        previous_qualifications.each do |qualification, status|
+          next unless status != new_qualifications[qualification]
+
+          @assessors_status_events_gateway.add(
+            assessor,
+            qualification,
+            status,
+            new_qualifications[qualification],
+          )
+        end
+      end
 
       { assessor_was_newly_created: existing_assessor.nil?, assessor: assessor }
     end
