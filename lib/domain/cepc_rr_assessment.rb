@@ -68,36 +68,6 @@ module Domain
       @related_assessments = related_assessments
     end
 
-    def to_hash
-      {
-        date_of_assessment: @date_of_assessment.strftime("%Y-%m-%d"),
-        date_registered: @date_registered.strftime("%Y-%m-%d"),
-        type_of_assessment: @type_of_assessment,
-        assessment_id: @assessment_id,
-        assessor: @assessor,
-        opt_out: @opt_out,
-        postcode: @postcode,
-        date_of_expiry: @date_of_expiry.strftime("%Y-%m-%d"),
-        address_id: @address_id,
-        address_line1: @address_line1,
-        address_line2: @address_line2,
-        address_line3: @address_line3,
-        address_line4: @address_line4,
-        town: @town,
-        related_assessments: @related_assessments,
-        status:
-          if !@cancelled_at.nil?
-            "CANCELLED"
-          elsif !@not_for_issue_at.nil?
-            "NOT_FOR_ISSUE"
-          elsif @date_of_expiry < Time.now
-            "EXPIRED"
-          else
-            "ENTERED"
-          end,
-      }
-    end
-
     def to_record
       {
         migrated: @migrated,
