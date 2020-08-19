@@ -57,7 +57,7 @@ describe ViewModel::RdSapWrapper do
       assessor: {
         scheme_assessor_id: "SPEC000000",
         name: "Name0",
-        contact_details: { email: nil, telephone: nil },
+        contact_details: { email: "a@b.c", telephone: "0921-19037" },
       },
       current_carbon_emission: 2.4,
       current_energy_efficiency_band: "e",

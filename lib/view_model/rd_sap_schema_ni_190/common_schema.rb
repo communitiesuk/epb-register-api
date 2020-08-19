@@ -57,7 +57,7 @@ module ViewModel
       end
 
       def assessor_telephone
-        xpath(%w[Energy-Assessor Telephone-Number])
+        xpath(%w[Energy-Assessor Telephone])
       end
 
       def date_of_assessment
