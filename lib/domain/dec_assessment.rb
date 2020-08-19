@@ -30,8 +30,6 @@ module Domain
       address_line3: nil,
       address_line4: nil,
       town: nil,
-      current_space_heating_demand: nil,
-      current_water_heating_demand: nil,
       property_summary: [],
       property_age_band: nil,
       cancelled_at: nil,
@@ -74,8 +72,6 @@ module Domain
       @address_line3 = address_line3
       @address_line4 = address_line4
       @town = town
-      @current_space_heating_demand = current_space_heating_demand.to_f
-      @current_water_heating_demand = current_water_heating_demand.to_f
       @property_summary = property_summary
       @cancelled_at =
         (Date.strptime(cancelled_at.to_s, "%Y-%m-%d") unless cancelled_at.nil?)
@@ -109,8 +105,6 @@ module Domain
         address_line3: @address_line3,
         address_line4: @address_line4,
         town: @town,
-        current_space_heating_demand: @current_space_heating_demand,
-        current_water_heating_demand: @current_water_heating_demand,
         property_summary: @property_summary,
       }
     end

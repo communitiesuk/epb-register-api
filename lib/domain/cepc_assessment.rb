@@ -31,8 +31,6 @@ module Domain
       address_line3: nil,
       address_line4: nil,
       town: nil,
-      current_space_heating_demand: nil,
-      current_water_heating_demand: nil,
       recommended_improvements: [],
       property_summary: [],
       property_age_band: nil,
@@ -76,8 +74,6 @@ module Domain
       @address_line3 = address_line3
       @address_line4 = address_line4
       @town = town
-      @current_space_heating_demand = current_space_heating_demand.to_f
-      @current_water_heating_demand = current_water_heating_demand.to_f
       @recommended_improvements = recommended_improvements
       @property_summary = property_summary
       @cancelled_at =
@@ -112,8 +108,6 @@ module Domain
         address_line3: @address_line3,
         address_line4: @address_line4,
         town: @town,
-        current_space_heating_demand: @current_space_heating_demand,
-        current_water_heating_demand: @current_water_heating_demand,
         property_summary: @property_summary,
       }
     end
