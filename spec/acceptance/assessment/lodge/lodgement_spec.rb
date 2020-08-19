@@ -135,9 +135,6 @@ describe "Acceptance::Assessment::Lodge" do
     context "when saving an assessment" do
       let(:scheme_id) { add_scheme_and_get_id }
       let(:doc) { Nokogiri.XML valid_rdsap_xml }
-      let(:response) do
-        JSON.parse(fetch_assessment("0000-0000-0000-0000-0000").body)
-      end
 
       before do
         add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
