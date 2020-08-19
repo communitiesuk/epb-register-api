@@ -107,8 +107,6 @@ module Domain
         scheme_assessor_id: @assessor.scheme_assessor_id,
         current_energy_efficiency_rating:
           @current_energy_efficiency_rating.to_f,
-        potential_energy_efficiency_rating:
-          @potential_energy_efficiency_rating.to_f,
         current_carbon_emission: @current_carbon_emission.to_f,
         potential_carbon_emission: @potential_carbon_emission.to_f,
         opt_out: @opt_out,

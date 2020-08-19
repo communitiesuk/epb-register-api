@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_19_153132) do
+ActiveRecord::Schema.define(version: 2020_08_19_163143) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -31,7 +31,6 @@ ActiveRecord::Schema.define(version: 2020_08_19_153132) do
     t.datetime "date_registered"
     t.string "type_of_assessment"
     t.integer "current_energy_efficiency_rating", limit: 2, default: 1, null: false
-    t.integer "potential_energy_efficiency_rating", limit: 2, default: 2, null: false
     t.string "postcode"
     t.datetime "date_of_expiry", null: false
     t.string "address_line1"
