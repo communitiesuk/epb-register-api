@@ -15,7 +15,6 @@ module Domain
       date_registered: nil,
       tenure: nil,
       type_of_assessment: nil,
-      total_floor_area: nil,
       assessment_id: nil,
       assessor: nil,
       current_energy_efficiency_rating: nil,
@@ -58,7 +57,6 @@ module Domain
           ""
         end
       @type_of_assessment = type_of_assessment
-      @total_floor_area = total_floor_area.to_f
       @assessment_id = assessment_id
       @assessor = assessor
       @current_energy_efficiency_rating = current_energy_efficiency_rating
@@ -120,7 +118,6 @@ module Domain
         date_of_assessment: @date_of_assessment.strftime("%Y-%m-%d"),
         date_registered: @date_registered.strftime("%Y-%m-%d"),
         type_of_assessment: @type_of_assessment,
-        total_floor_area: @total_floor_area.to_f,
         assessment_id: @assessment_id,
         assessor: @assessor,
         current_energy_efficiency_rating: @current_energy_efficiency_rating,
@@ -168,7 +165,6 @@ module Domain
         date_of_assessment: @date_of_assessment,
         date_registered: @date_registered,
         type_of_assessment: @type_of_assessment,
-        total_floor_area: @total_floor_area.to_f,
         assessment_id: @assessment_id,
         scheme_assessor_id: @assessor.scheme_assessor_id,
         current_energy_efficiency_rating:
