@@ -20,13 +20,30 @@ describe "Acceptance::AssessorStatus" do
     expect(response[:data]).to eq({ assessorStatusEvents: [] })
   end
 
-  it "when an assessor has been suspended" do
+  it "does show an assessor status change when an existing assessors status has changed" do
     create_assessor(domesticRdSap: "ACTIVE")
+
+    created_date = Time.now
     create_assessor(domesticRdSap: "INACTIVE")
 
     response =
       JSON.parse(fetch_assessors_status(scheme_id).body, symbolize_names: true)
 
-    expect(response[:data]).not_to eq({ assessorStatusEvents: [] })
+    expect(response[:data]).to eq(
+      assessorStatusEvents: [
+        {
+          firstName: "Someone",
+          middleNames: nil,
+          lastName: "Person",
+          schemeAssessorId: "SPEC000000",
+          dateOfBirth: "1991-02-25",
+          qualificationChange: {
+            qualificationType: "domestic_rd_sap",
+            previousStatus: "ACTIVE",
+            newStatus: "INACTIVE",
+          },
+        },
+      ],
+    )
   end
 end
