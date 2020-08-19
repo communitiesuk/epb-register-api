@@ -4,7 +4,7 @@ module UseCase
     class AssessmentGone < StandardError; end
 
     def initialize
-      @assessments_gateway = Gateway::AssessmentsGateway.new
+      @assessments_gateway = Gateway::AssessmentsSearchGateway.new
       @assessors_gateway = Gateway::AssessorsGateway.new
       @green_deal_plan_gateway = Gateway::GreenDealPlansGateway.new
       @related_assessments_gateway = Gateway::RelatedAssessmentsGateway.new

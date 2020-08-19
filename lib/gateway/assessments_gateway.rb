@@ -32,55 +32,6 @@ module Gateway
       send_to_db assessment
     end
 
-    def search_by_assessment_id(
-      assessment_id, restrictive = true, assessment_type = []
-    )
-      sql =
-        "SELECT
-          scheme_assessor_id, assessment_id, date_of_assessment, date_registered,
-          type_of_assessment, current_energy_efficiency_rating,
-          potential_energy_efficiency_rating, opt_out, postcode, date_of_expiry,
-          address_line1, address_line2, address_line3, address_line4, town,
-          current_space_heating_demand, current_water_heating_demand, impact_of_loft_insulation,
-          impact_of_cavity_insulation, impact_of_solid_wall_insulation, tenure, property_age_band,
-          current_carbon_emission, potential_carbon_emission, property_summary, cancelled_at, not_for_issue_at, address_id
-        FROM assessments
-        WHERE assessment_id = '#{
-          ActiveRecord::Base.sanitize_sql(assessment_id)
-        }'"
-
-      if restrictive
-        sql += " AND cancelled_at IS NULL"
-        sql += " AND not_for_issue_at IS NULL"
-      end
-
-      unless assessment_type.empty?
-        ins = []
-        assessment_type.each do |type|
-          ins.push("'" + ActiveRecord::Base.sanitize_sql(type) + "'")
-        end
-        sql += " AND type_of_assessment IN(" + ins.join(", ") + ")"
-      end
-
-      response = Assessment.connection.execute(sql)
-
-      result = []
-      response.each do |row|
-        assessment_domain = row_to_domain(row)
-
-        improvement_records =
-          DomesticEpcEnergyImprovement.where(assessment_id: assessment_id)
-        improvements =
-          improvement_records.map { |i| row_to_energy_improvement(i).to_hash }
-
-        assessment_domain.set(:recommended_improvements, improvements)
-
-        result << assessment_domain
-      end
-
-      result
-    end
-
     def update_field(assessment_id, field, value)
       sql =
         "UPDATE assessments SET " +

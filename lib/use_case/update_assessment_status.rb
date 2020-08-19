@@ -8,12 +8,13 @@ module UseCase
 
     def initialize
       @assessments_gateway = Gateway::AssessmentsGateway.new
+      @assessments_search_gateway = Gateway::AssessmentsSearchGateway.new
       @assessors_gateway = Gateway::AssessorsGateway.new
     end
 
     def execute(assessment_id, status, scheme_ids)
       assessment =
-        @assessments_gateway.search_by_assessment_id(assessment_id, false).first
+          @assessments_search_gateway.search_by_assessment_id(assessment_id, false).first
 
       raise AssessmentNotFound unless assessment
 

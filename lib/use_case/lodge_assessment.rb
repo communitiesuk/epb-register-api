@@ -8,6 +8,7 @@ module UseCase
 
     def initialize
       @assessments_gateway = Gateway::AssessmentsGateway.new
+      @assessments_search_gateway = Gateway::AssessmentsSearchGateway.new
       @assessors_gateway = Gateway::AssessorsGateway.new
       @assessments_xml_gateway = Gateway::AssessmentsXmlGateway.new
     end
@@ -16,7 +17,7 @@ module UseCase
       assessment_id = data[:assessment_id]
 
       unless migrated
-        if @assessments_gateway.search_by_assessment_id(assessment_id).first
+        if @assessments_search_gateway.search_by_assessment_id(assessment_id).first
           raise DuplicateAssessmentIdException
         end
       end

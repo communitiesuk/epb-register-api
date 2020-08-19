@@ -14,7 +14,7 @@ module Gateway
             opt_out, postcode, date_of_expiry,
             address_line1, address_line2, address_line3, address_line4, town,
             cancelled_at, not_for_issue_at,
-            address_id
+            address_id, scheme_assessor_id
         FROM assessments
         WHERE postcode = $1
         AND cancelled_at IS NULL
@@ -73,7 +73,7 @@ module Gateway
             opt_out, postcode, date_of_expiry,
             address_line1, address_line2, address_line3, address_line4, town,
             cancelled_at, not_for_issue_at,
-            address_id
+            address_id, scheme_assessor_id
         FROM assessments
         WHERE (#{
         Helper::LevenshteinSqlHelper.levenshtein(
@@ -175,7 +175,7 @@ module Gateway
             opt_out, postcode, date_of_expiry,
             address_line1, address_line2, address_line3, address_line4, town,
             cancelled_at, not_for_issue_at,
-            address_id
+            address_id, scheme_assessor_id
 
         FROM assessments
         WHERE assessment_id = '#{
