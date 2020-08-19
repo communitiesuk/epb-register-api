@@ -166,6 +166,47 @@ module Gateway
       result
     end
 
+    def search_by_assessment_id(
+        assessment_id, restrictive = true, assessment_type = []
+    )
+      sql =
+          "SELECT assessment_id, date_of_assessment,
+            type_of_assessment, current_energy_efficiency_rating,
+            opt_out, postcode, date_of_expiry,
+            address_line1, address_line2, address_line3, address_line4, town,
+            cancelled_at, not_for_issue_at,
+            address_id
+
+        FROM assessments
+        WHERE assessment_id = '#{
+          ActiveRecord::Base.sanitize_sql(assessment_id)
+          }'"
+
+      if restrictive
+        sql += " AND cancelled_at IS NULL"
+        sql += " AND not_for_issue_at IS NULL"
+      end
+
+      unless assessment_type.empty?
+        ins = []
+        assessment_type.each do |type|
+          ins.push("'" + ActiveRecord::Base.sanitize_sql(type) + "'")
+        end
+        sql += " AND type_of_assessment IN(" + ins.join(", ") + ")"
+      end
+
+      response = Assessment.connection.execute(sql)
+
+      result = []
+      response.each do |row|
+        search_domain = row_to_domain(row)
+        result << search_domain
+      end
+
+      result
+    end
+
+
     def row_to_domain(row)
       row.symbolize_keys!
       Domain::AssessmentSearchResult.new(row)

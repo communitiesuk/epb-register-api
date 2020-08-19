@@ -1,7 +1,7 @@
 module UseCase
   class FindAssessmentsByAssessmentId
     def initialize
-      @assessment_gateway = Gateway::AssessmentsGateway.new
+      @assessment_gateway = Gateway::AssessmentsSearchGateway.new
     end
 
     def execute(assessment_id)
