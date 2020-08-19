@@ -65,10 +65,6 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
                                auth_data: { scheme_ids: [scheme_id] }
     end
 
-    it "returns status 410 for a get" do
-      fetch_renewable_heat_incentive "0000-0000-0000-0000-0000", [410]
-    end
-
     it "returns the expected error response" do
       expect(response[:errors][0][:title]).to eq "Assessment not for issue"
     end

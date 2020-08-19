@@ -8,7 +8,6 @@ module Domain
       migrated: nil,
       date_of_assessment: nil,
       date_registered: nil,
-      dwelling_type: nil,
       type_of_assessment: nil,
       assessment_id: nil,
       assessor: nil,
@@ -41,7 +40,6 @@ module Domain
         else
           ""
         end
-      @dwelling_type = dwelling_type
       @type_of_assessment = type_of_assessment
       @assessment_id = assessment_id
       @assessor = assessor
@@ -74,7 +72,6 @@ module Domain
       {
         date_of_assessment: @date_of_assessment.strftime("%Y-%m-%d"),
         date_registered: @date_registered.strftime("%Y-%m-%d"),
-        dwelling_type: @dwelling_type,
         type_of_assessment: @type_of_assessment,
         assessment_id: @assessment_id,
         assessor: @assessor,
@@ -106,7 +103,6 @@ module Domain
         migrated: @migrated,
         date_of_assessment: @date_of_assessment,
         date_registered: @date_registered,
-        dwelling_type: @dwelling_type,
         type_of_assessment: @type_of_assessment,
         assessment_id: @assessment_id,
         scheme_assessor_id: @assessor.scheme_assessor_id,

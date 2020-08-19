@@ -15,6 +15,18 @@ describe ViewModel::RdSapWrapper do
       unsupported_fields: [],
       different_fields: {},
     },
+    {
+      schema_name: "RdSAP-Schema-19.0",
+      xml_file: "spec/fixtures/samples/rdsap.xml",
+      unsupported_fields: [],
+      different_fields: {},
+    },
+    {
+      schema_name: "RdSAP-Schema-NI-19.0",
+      xml_file: "spec/fixtures/samples/rdsap-ni.xml",
+      unsupported_fields: [],
+      different_fields: {},
+    },
   ].freeze
 
   # You should only need to add to this list to test new fields on all CEPC schema

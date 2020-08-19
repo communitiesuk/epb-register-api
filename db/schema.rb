@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_17_135249) do
+ActiveRecord::Schema.define(version: 2020_08_19_113347) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -29,7 +29,6 @@ ActiveRecord::Schema.define(version: 2020_08_17_135249) do
   create_table "assessments", primary_key: "assessment_id", id: :string, force: :cascade do |t|
     t.datetime "date_of_assessment"
     t.datetime "date_registered"
-    t.string "dwelling_type"
     t.string "type_of_assessment"
     t.decimal "total_floor_area"
     t.integer "current_energy_efficiency_rating", limit: 2, default: 1, null: false

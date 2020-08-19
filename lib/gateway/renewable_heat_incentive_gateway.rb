@@ -13,7 +13,7 @@ module Gateway
       sql = <<-SQL
         SELECT
           assessments.assessment_id, scheme_assessor_id, date_of_assessment,
-          date_registered, dwelling_type, type_of_assessment, total_floor_area,
+          date_registered, type_of_assessment, total_floor_area,
           current_energy_efficiency_rating, potential_energy_efficiency_rating,
           postcode, current_space_heating_demand, current_water_heating_demand,
           impact_of_loft_insulation, tenure, property_age_band, cancelled_at,
@@ -45,6 +45,10 @@ module Gateway
   private
 
     def record_to_rhi_domain(row)
+
+      assessment_summary = UseCase::AssessmentSummary::Fetch.new.execute(row["assessment_id"])
+
+
       Domain::RenewableHeatIncentive.new(
         epc_rrn: row["assessment_id"],
         is_cancelled: row["cancelled_at"] || row["not_for_issue_at"],
@@ -52,7 +56,7 @@ module Gateway
         report_type: row["type_of_assessment"],
         inspection_date: row["date_registered"],
         lodgement_date: row["date_of_assessment"],
-        dwelling_type: row["dwelling_type"],
+        dwelling_type: assessment_summary[:dwelling_type],
         postcode: row["postcode"],
         property_age_band: row["property_age_band"],
         tenure: TENURE[row["tenure"]],

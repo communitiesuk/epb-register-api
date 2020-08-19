@@ -49,7 +49,6 @@ describe "Acceptance::Assessment" do
       tenure: "1",
       totalFloorArea: 10.0,
       typeOfAssessment: "SAP",
-      dwellingType: "Dwelling-Type0",
       assessmentId: "0000-0000-0000-0000-0000",
       currentEnergyEfficiencyRating: 50,
       potentialEnergyEfficiencyRating: 50,

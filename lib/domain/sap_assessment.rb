@@ -15,7 +15,6 @@ module Domain
       date_of_assessment: nil,
       date_registered: nil,
       tenure: nil,
-      dwelling_type: nil,
       type_of_assessment: nil,
       total_floor_area: nil,
       assessment_id: nil,
@@ -61,7 +60,6 @@ module Domain
           ""
         end
       @tenure = tenure
-      @dwelling_type = dwelling_type
       @type_of_assessment = type_of_assessment
       @total_floor_area = total_floor_area.to_f
       @assessment_id = assessment_id
@@ -127,7 +125,6 @@ module Domain
         date_of_assessment: @date_of_assessment.strftime("%Y-%m-%d"),
         date_registered: @date_registered.strftime("%Y-%m-%d"),
         tenure: @tenure,
-        dwelling_type: @dwelling_type,
         type_of_assessment: @type_of_assessment,
         total_floor_area: @total_floor_area.to_f,
         assessment_id: @assessment_id,
@@ -188,7 +185,6 @@ module Domain
         date_of_assessment: @date_of_assessment,
         date_registered: @date_registered,
         tenure: @tenure,
-        dwelling_type: @dwelling_type,
         type_of_assessment: @type_of_assessment,
         total_floor_area: @total_floor_area.to_f,
         assessment_id: @assessment_id,

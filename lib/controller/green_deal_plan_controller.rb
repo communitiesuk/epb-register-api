@@ -159,6 +159,8 @@ module Controller
         not_found_error("Assessment not found")
       when UseCase::FetchRenewableHeatIncentive::AssessmentGone
         gone_error("Assessment not for issue")
+      when UseCase::AssessmentSummary::Fetch::AssessmentGone
+        gone_error("Assessment not for issue")
       else
         server_error(e)
       end

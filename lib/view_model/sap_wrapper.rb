@@ -8,6 +8,10 @@ module ViewModel
         @view_model = ViewModel::SapSchema1800::CommonSchema.new xml
       when "SAP-Schema-NI-18.0.0"
         @view_model = ViewModel::SapSchemaNi1800::CommonSchema.new xml
+      when "SAP-Schema-17.1"
+        @view_model = ViewModel::SapSchema171::CommonSchema.new xml
+      when "SAP-Schema-NI-17.1"
+        @view_model = ViewModel::SapSchemaNi171::CommonSchema.new xml
       else
         raise ArgumentError, "Unsupported schema type"
       end
