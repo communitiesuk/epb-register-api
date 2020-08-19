@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_19_163143) do
+ActiveRecord::Schema.define(version: 2020_08_19_163923) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -41,9 +41,6 @@ ActiveRecord::Schema.define(version: 2020_08_19_163143) do
     t.string "scheme_assessor_id", null: false
     t.decimal "current_space_heating_demand"
     t.decimal "current_water_heating_demand"
-    t.integer "impact_of_loft_insulation"
-    t.integer "impact_of_cavity_insulation"
-    t.integer "impact_of_solid_wall_insulation"
     t.boolean "opt_out", default: false
     t.decimal "current_carbon_emission", default: "0.0", null: false
     t.decimal "potential_carbon_emission", default: "0.0", null: false

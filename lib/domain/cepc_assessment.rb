@@ -33,9 +33,6 @@ module Domain
       town: nil,
       current_space_heating_demand: nil,
       current_water_heating_demand: nil,
-      impact_of_loft_insulation: nil,
-      impact_of_cavity_insulation: nil,
-      impact_of_solid_wall_insulation: nil,
       recommended_improvements: [],
       property_summary: [],
       property_age_band: nil,
@@ -81,9 +78,6 @@ module Domain
       @town = town
       @current_space_heating_demand = current_space_heating_demand.to_f
       @current_water_heating_demand = current_water_heating_demand.to_f
-      @impact_of_loft_insulation = impact_of_loft_insulation
-      @impact_of_cavity_insulation = impact_of_cavity_insulation
-      @impact_of_solid_wall_insulation = impact_of_solid_wall_insulation
       @recommended_improvements = recommended_improvements
       @property_summary = property_summary
       @cancelled_at =
@@ -120,9 +114,6 @@ module Domain
         town: @town,
         current_space_heating_demand: @current_space_heating_demand,
         current_water_heating_demand: @current_water_heating_demand,
-        impact_of_loft_insulation: @impact_of_loft_insulation,
-        impact_of_cavity_insulation: @impact_of_cavity_insulation,
-        impact_of_solid_wall_insulation: @impact_of_solid_wall_insulation,
         property_summary: @property_summary,
       }
     end
