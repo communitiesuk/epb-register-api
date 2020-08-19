@@ -49,7 +49,10 @@ module Gateway
       Domain::RenewableHeatIncentive.new(
         epc_rrn: assessment_summary[:assessment_id],
         is_cancelled: row["cancelled_at"] || row["not_for_issue_at"],
-        assessor_name: fetch_assessor_name(assessment_summary[:assessor][:scheme_assessor_id]),
+        assessor_name:
+          fetch_assessor_name(
+            assessment_summary[:assessor][:scheme_assessor_id],
+          ),
         report_type: assessment_summary[:type_of_assessment],
         inspection_date: Date.parse(assessment_summary[:date_of_assessment]),
         lodgement_date: Date.parse(assessment_summary[:date_of_registration]),
@@ -60,8 +63,10 @@ module Gateway
         total_floor_area: assessment_summary[:total_floor_area],
         cavity_wall_insulation: insulation?("B", row),
         loft_insulation: insulation?("A", row),
-        space_heating: assessment_summary[:heat_demand][:current_space_heating_demand],
-        water_heating: assessment_summary[:heat_demand][:current_water_heating_demand],
+        space_heating:
+          assessment_summary[:heat_demand][:current_space_heating_demand],
+        water_heating:
+          assessment_summary[:heat_demand][:current_water_heating_demand],
         secondary_heating:
           fetch_property_description(
             row["property_summary"],
@@ -70,7 +75,8 @@ module Gateway
         energy_efficiency: {
           current_rating: assessment_summary[:current_energy_efficiency_rating],
           current_band: assessment_summary[:current_energy_efficiency_band],
-          potential_rating: assessment_summary[:potential_energy_efficiency_rating],
+          potential_rating:
+            assessment_summary[:potential_energy_efficiency_rating],
           potential_band: assessment_summary[:potential_energy_efficiency_band],
         },
       )
