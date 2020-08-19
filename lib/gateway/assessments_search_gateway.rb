@@ -23,17 +23,17 @@ module Gateway
       SQL
 
       binds = [
-          ActiveRecord::Relation::QueryAttribute.new(
-              "postcode",
-              postcode,
-              ActiveRecord::Type::String.new,
-              ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "postcode",
+          postcode,
+          ActiveRecord::Type::String.new,
+        ),
       ]
 
       unless assessment_types.nil? || assessment_types.empty?
         sanitized_assessment_types =
-            assessment_types.map do |assessment_type|
-              unless %w[
+          assessment_types.map do |assessment_type|
+            unless %w[
               RdSAP
               SAP
               CEPC
@@ -43,15 +43,15 @@ module Gateway
               AC-CERT
               AC-REPORT
             ].include? assessment_type
-                raise InvalidAssessmentType
-              end
-
-              ActiveRecord::Base.sanitize_sql(assessment_type)
+              raise InvalidAssessmentType
             end
 
+            ActiveRecord::Base.sanitize_sql(assessment_type)
+          end
+
         sql +=
-            " AND type_of_assessment IN('" +
-                sanitized_assessment_types.join("', '") + "')"
+          " AND type_of_assessment IN('" +
+          sanitized_assessment_types.join("', '") + "')"
       end
 
       response = Assessment.connection.exec_query sql, "SQL", binds
@@ -64,7 +64,7 @@ module Gateway
     end
 
     def search_by_street_name_and_town(
-        street_name, town, assessment_type, restrictive = true
+      street_name, town, assessment_type, restrictive = true
     )
       sql = <<-SQL
         SELECT
@@ -76,62 +76,62 @@ module Gateway
             address_id
         FROM assessments
         WHERE (#{
-      Helper::LevenshteinSqlHelper.levenshtein(
+        Helper::LevenshteinSqlHelper.levenshtein(
           'address_line1',
           '$1',
           Helper::LevenshteinSqlHelper::STREET_PERMISSIVENESS,
-          )
+        )
       } OR #{
-      Helper::LevenshteinSqlHelper.levenshtein(
+        Helper::LevenshteinSqlHelper.levenshtein(
           'address_line2',
           '$1',
           Helper::LevenshteinSqlHelper::STREET_PERMISSIVENESS,
-          )
+        )
       } OR #{
-      Helper::LevenshteinSqlHelper.levenshtein(
+        Helper::LevenshteinSqlHelper.levenshtein(
           'address_line3',
           '$1',
           Helper::LevenshteinSqlHelper::STREET_PERMISSIVENESS,
-          )
+        )
       })
                 AND (#{
-      Helper::LevenshteinSqlHelper.levenshtein(
+        Helper::LevenshteinSqlHelper.levenshtein(
           'town',
           '$2',
           Helper::LevenshteinSqlHelper::TOWN_PERMISSIVENESS,
-          )
+        )
       } OR #{
-      Helper::LevenshteinSqlHelper.levenshtein(
+        Helper::LevenshteinSqlHelper.levenshtein(
           'address_line2',
           '$2',
           Helper::LevenshteinSqlHelper::TOWN_PERMISSIVENESS,
-          )
+        )
       } OR #{
-      Helper::LevenshteinSqlHelper.levenshtein(
+        Helper::LevenshteinSqlHelper.levenshtein(
           'address_line3',
           '$2',
           Helper::LevenshteinSqlHelper::TOWN_PERMISSIVENESS,
-          )
+        )
       } OR #{
-      Helper::LevenshteinSqlHelper.levenshtein(
+        Helper::LevenshteinSqlHelper.levenshtein(
           'address_line4',
           '$2',
           Helper::LevenshteinSqlHelper::TOWN_PERMISSIVENESS,
-          )
+        )
       })
       SQL
 
       binds = [
-          ActiveRecord::Relation::QueryAttribute.new(
-              "street",
-              street_name,
-              ActiveRecord::Type::String.new,
-              ),
-          ActiveRecord::Relation::QueryAttribute.new(
-              "town",
-              town,
-              ActiveRecord::Type::String.new,
-              ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "street",
+          street_name,
+          ActiveRecord::Type::String.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "town",
+          town,
+          ActiveRecord::Type::String.new,
+        ),
       ]
 
       unless assessment_type.nil? || assessment_type.empty?
@@ -144,16 +144,16 @@ module Gateway
 
       if restrictive
         sql +=
-            ' AND cancelled_at IS NULL
+          ' AND cancelled_at IS NULL
               AND not_for_issue_at IS NULL
               AND opt_out = false'
       end
 
       sql +=
-          " ORDER BY
+        " ORDER BY
                 #{
           Helper::LevenshteinSqlHelper.levenshtein('address_line1', '$1')
-          },
+        },
                 #{Helper::LevenshteinSqlHelper.levenshtein('town', '$2')},
                 address_line1,
                 assessment_id"
@@ -167,10 +167,10 @@ module Gateway
     end
 
     def search_by_assessment_id(
-        assessment_id, restrictive = true, assessment_type = []
+      assessment_id, restrictive = true, assessment_type = []
     )
       sql =
-          "SELECT assessment_id, date_of_assessment,
+        "SELECT assessment_id, date_of_assessment,
             type_of_assessment, current_energy_efficiency_rating,
             opt_out, postcode, date_of_expiry,
             address_line1, address_line2, address_line3, address_line4, town,
@@ -180,7 +180,7 @@ module Gateway
         FROM assessments
         WHERE assessment_id = '#{
           ActiveRecord::Base.sanitize_sql(assessment_id)
-          }'"
+        }'"
 
       if restrictive
         sql += " AND cancelled_at IS NULL"
@@ -205,7 +205,6 @@ module Gateway
 
       result
     end
-
 
     def row_to_domain(row)
       row.symbolize_keys!

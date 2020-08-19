@@ -50,10 +50,10 @@ module ViewModel
 
       def assessor_name
         [
-            xpath(%w[Home-Inspector Name Prefix]),
-            xpath(%w[Home-Inspector Name First-Name]),
-            xpath(%w[Home-Inspector Name Last-Name]),
-            xpath(%w[Home-Inspector Name Suffix]),
+          xpath(%w[Home-Inspector Name Prefix]),
+          xpath(%w[Home-Inspector Name First-Name]),
+          xpath(%w[Home-Inspector Name Last-Name]),
+          xpath(%w[Home-Inspector Name Suffix]),
         ].reject { |e| e.to_s.empty? }.join(" ")
       end
 
@@ -95,16 +95,16 @@ module ViewModel
 
       def property_summary
         @xml_doc.search("Energy-Assessment Property-Summary").children.select(
-            &:element?
+          &:element?
         ).map { |node|
           next if xpath(%w[Energy-Efficiency-Rating], node).nil?
 
           {
-              energy_efficiency_rating:
-                  xpath(%w[Energy-Efficiency-Rating], node).to_i,
-              environmental_efficiency_rating:
-                  xpath(%w[Environmental-Efficiency-Rating], node).to_i,
-              name: node.name.underscore,
+            energy_efficiency_rating:
+              xpath(%w[Energy-Efficiency-Rating], node).to_i,
+            environmental_efficiency_rating:
+              xpath(%w[Environmental-Efficiency-Rating], node).to_i,
+            name: node.name.underscore,
           }
         }.compact
       end
@@ -120,20 +120,20 @@ module ViewModel
       def improvements
         @xml_doc.search("Suggested-Improvements Improvement").map do |node|
           {
-              energy_performance_rating_improvement:
-                  xpath(%w[Energy-Performance-Rating], node).to_i,
-              environmental_impact_rating_improvement:
-                  xpath(%w[Environmental-Impact-Rating], node).to_i,
-              green_deal_category_code: xpath(%w[Green-Deal-Category], node),
-              improvement_category: xpath(%w[Improvement-Category], node),
-              improvement_code:
-                  xpath(%w[Improvement-Details Improvement-Number], node),
-              improvement_description: xpath(%w[Improvement-Description], node),
-              improvement_title: xpath(%w[Improvement-Title], node),
-              improvement_type: xpath(%w[Improvement-Type], node),
-              indicative_cost: xpath(%w[Indicative-Cost], node),
-              sequence: xpath(%w[Sequence], node).to_i,
-              typical_saving: xpath(%w[Typical-Saving], node),
+            energy_performance_rating_improvement:
+              xpath(%w[Energy-Performance-Rating], node).to_i,
+            environmental_impact_rating_improvement:
+              xpath(%w[Environmental-Impact-Rating], node).to_i,
+            green_deal_category_code: xpath(%w[Green-Deal-Category], node),
+            improvement_category: xpath(%w[Improvement-Category], node),
+            improvement_code:
+              xpath(%w[Improvement-Details Improvement-Number], node),
+            improvement_description: xpath(%w[Improvement-Description], node),
+            improvement_title: xpath(%w[Improvement-Title], node),
+            improvement_type: xpath(%w[Improvement-Type], node),
+            indicative_cost: xpath(%w[Indicative-Cost], node),
+            sequence: xpath(%w[Sequence], node).to_i,
+            typical_saving: xpath(%w[Typical-Saving], node),
           }
         end
       end

@@ -45,9 +45,8 @@ module Gateway
   private
 
     def record_to_rhi_domain(row)
-
-      assessment_summary = UseCase::AssessmentSummary::Fetch.new.execute(row["assessment_id"])
-
+      assessment_summary =
+        UseCase::AssessmentSummary::Fetch.new.execute(row["assessment_id"])
 
       Domain::RenewableHeatIncentive.new(
         epc_rrn: row["assessment_id"],
