@@ -6,16 +6,17 @@ module Gateway
 
     class InvalidAssessmentType < StandardError; end
 
-    def search_by_postcode(postcode, assessment_types = [])
-      sql = <<-SQL
+    ASSESSMENT_SEARCH_INDEX_SELECT = <<-SQL
         SELECT
-            assessment_id, date_of_assessment,
-            type_of_assessment, current_energy_efficiency_rating,
-            opt_out, postcode, date_of_expiry,
+            assessment_id, date_of_assessment,type_of_assessment,
+            current_energy_efficiency_rating, opt_out, postcode, date_of_expiry,
             address_line1, address_line2, address_line3, address_line4, town,
-            cancelled_at, not_for_issue_at,
-            address_id, scheme_assessor_id
+            cancelled_at, not_for_issue_at, address_id, scheme_assessor_id
         FROM assessments
+    SQL
+
+    def search_by_postcode(postcode, assessment_types = [])
+      sql = ASSESSMENT_SEARCH_INDEX_SELECT + <<-SQL
         WHERE postcode = $1
         AND cancelled_at IS NULL
         AND not_for_issue_at IS NULL
@@ -66,15 +67,7 @@ module Gateway
     def search_by_street_name_and_town(
       street_name, town, assessment_type, restrictive = true
     )
-      sql = <<-SQL
-        SELECT
-            assessment_id, date_of_assessment,
-            type_of_assessment, current_energy_efficiency_rating,
-            opt_out, postcode, date_of_expiry,
-            address_line1, address_line2, address_line3, address_line4, town,
-            cancelled_at, not_for_issue_at,
-            address_id, scheme_assessor_id
-        FROM assessments
+      sql = ASSESSMENT_SEARCH_INDEX_SELECT + <<-SQL
         WHERE (#{
         Helper::LevenshteinSqlHelper.levenshtein(
           'address_line1',
@@ -169,18 +162,11 @@ module Gateway
     def search_by_assessment_id(
       assessment_id, restrictive = true, assessment_type = []
     )
-      sql =
-        "SELECT assessment_id, date_of_assessment,
-            type_of_assessment, current_energy_efficiency_rating,
-            opt_out, postcode, date_of_expiry,
-            address_line1, address_line2, address_line3, address_line4, town,
-            cancelled_at, not_for_issue_at,
-            address_id, scheme_assessor_id
-
-        FROM assessments
+      sql = ASSESSMENT_SEARCH_INDEX_SELECT + <<-SQL
         WHERE assessment_id = '#{
           ActiveRecord::Base.sanitize_sql(assessment_id)
-        }'"
+        }'
+      SQL
 
       if restrictive
         sql += " AND cancelled_at IS NULL"
