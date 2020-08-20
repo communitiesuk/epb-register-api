@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Reports xmlns="DCLG-CEPC">
+  <Report>
+    <Report-Header>
+          <RRN>0000-0000-0000-0000-0000</RRN>
+          <Issue-Date>2020-05-04</Issue-Date>
+          <Report-Type>2</Report-Type>
+          <Related-RRN>0000-0000-0000-0000-1111</Related-RRN>
+          <Valid-Until>2028-05-03</Valid-Until>
+          <Inspection-Date>2020-05-04</Inspection-Date>
+          <Registration-Date>2020-05-05</Registration-Date>
+          <Status>entered</Status>
+          <Language-Code>1</Language-Code>
+          <Energy-Assessor>
+              <Certificate-Number>SPEC000000</Certificate-Number>
+              <Name>Name0</Name>
+              <Accreditation-Scheme-Name>Accreditation-Scheme-Name0</Accreditation-Scheme-Name>
+          </Energy-Assessor>
+          <Property-Details>
+              <UPRN>RRN-0000-0000-0000-0000-0000</UPRN>
+              <Property-Address>
+                  <Address-Line-1>1 Lonely Street</Address-Line-1>
+                  <Post-Town>Post-Town0</Post-Town>
+                  <Postcode>A0 0AA</Postcode>
+              </Property-Address>
+              <Property-Type>Property-Type0</Property-Type>
+          </Property-Details>
+          <Calculation-Details>
+              <Calculation-Tool>Calculation-Tool0</Calculation-Tool>
+          </Calculation-Details>
+      </Report-Header>
+      <Formatted-Report>ZGVmYXVsdA==</Formatted-Report>
+      <Advisory-Report>
+          <AR-Recommendations>
+            <Short-Payback>
+              <Recommendation-Code>1</Recommendation-Code>
+              <Recommendation>Consider thinking about maybe possibly getting a solar panel but only one.</Recommendation>
+              <CO2-Impact>MEDIUM</CO2-Impact>
+            </Short-Payback>
+            <Short-Payback>
+              <Recommendation-Code>2</Recommendation-Code>
+              <Recommendation>Consider introducing variable speed drives (VSD) for fans, pumps and compressors.</Recommendation>
+              <CO2-Impact>LOW</CO2-Impact>
+            </Short-Payback>
+            <Medium-Payback>
+              <Recommendation-Code>3</Recommendation-Code>
+              <Recommendation>Engage experts to propose specific measures to reduce hot waterwastage and plan to carry this out.</Recommendation>
+              <CO2-Impact>LOW</CO2-Impact>
+            </Medium-Payback>
+            <Long-Payback>
+              <Recommendation-Code>4</Recommendation-Code>
+              <Recommendation>Consider replacing or improving glazing</Recommendation>
+              <CO2-Impact>LOW</CO2-Impact>
+            </Long-Payback>
+            <Other-Payback>
+              <Recommendation-Code>5</Recommendation-Code>
+              <Recommendation>Add a big wind turbine</Recommendation>
+              <CO2-Impact>HIGH</CO2-Impact>
+            </Other-Payback>
+          </AR-Recommendations>
+          <Technical-Information>
+              <Building-Environment>Air Conditioning</Building-Environment>
+              <Floor-Area>10</Floor-Area>
+          </Technical-Information>
+          <Site-Services>
+              <Service-1>
+                  <Description>Description0</Description>
+                  <Quantity>0</Quantity>
+              </Service-1>
+              <Service-2>
+                  <Description>Description1</Description>
+                  <Quantity>0</Quantity>
+              </Service-2>
+              <Service-3>
+                  <Description>Description2</Description>
+                  <Quantity>0</Quantity>
+              </Service-3>
+          </Site-Services>
+      </Advisory-Report>
+  </Report>
+</Reports>
