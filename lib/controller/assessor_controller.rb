@@ -215,6 +215,7 @@ module Controller
             scheme_assessor_id: scheme_assessor_id,
             registered_by_id: scheme_id,
           ),
+          env[:jwt_auth].sub,
         )
       assessor_record = create_assessor_response[:assessor]
 

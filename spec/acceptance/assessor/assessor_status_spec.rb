@@ -63,4 +63,16 @@ describe "Acceptance::AssessorStatus" do
 
     expect(response[:data]).to eq(assessorStatusEvents: [])
   end
+
+  it "stores the auth client id successfully" do
+    create_assessor(domesticRdSap: "ACTIVE")
+    create_assessor(domesticRdSap: "INACTIVE")
+
+    result =
+      ActiveRecord::Base.connection.execute(
+        "SELECT auth_client_id FROM assessors_status_events",
+      )
+
+    expect(result.entries.first["auth_client_id"]).to eq("test-subject")
+  end
 end

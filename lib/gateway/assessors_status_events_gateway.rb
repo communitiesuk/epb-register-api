@@ -35,7 +35,9 @@ module Gateway
       result
     end
 
-    def add(assessor, qualification_type, previous_status, new_status)
+    def add(
+      assessor, qualification_type, previous_status, new_status, auth_client_id
+    )
       assessor = assessor.to_hash
       AssessorsStatusEvents.create(
         assessor: {
@@ -49,6 +51,7 @@ module Gateway
         previous_status: previous_status,
         new_status: new_status,
         recorded_at: Time.now,
+        auth_client_id: auth_client_id,
       )
     end
   end

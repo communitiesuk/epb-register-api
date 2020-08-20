@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_19_165600) do
+ActiveRecord::Schema.define(version: 2020_08_20_101620) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -102,6 +102,7 @@ ActiveRecord::Schema.define(version: 2020_08_19_165600) do
     t.string "previous_status"
     t.string "new_status"
     t.datetime "recorded_at"
+    t.string "auth_client_id"
   end
 
   create_table "domestic_epc_energy_improvements", id: false, force: :cascade do |t|
