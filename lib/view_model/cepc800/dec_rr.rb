@@ -42,6 +42,10 @@ module ViewModel
       def occupier
         xpath(%w[Occupier])
       end
+
+      def property_type
+        xpath(%w[Property-Type])
+      end
     end
   end
 end

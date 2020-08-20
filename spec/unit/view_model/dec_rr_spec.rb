@@ -72,6 +72,7 @@ describe ViewModel::DecRrWrapper do
         building_environment: "Air Conditioning",
         floor_area: "10",
         occupier: "Primary School",
+        property_type: "University campus",
       },
       related_rrn: "0000-0000-0000-0000-1111",
     }.freeze
