@@ -46,6 +46,10 @@ module ViewModel
       def property_type
         xpath(%w[Property-Type])
       end
+
+      def renewable_sources
+        xpath(%w[Renewable-Sources])
+      end
     end
   end
 end

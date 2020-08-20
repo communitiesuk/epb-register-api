@@ -73,6 +73,7 @@ describe ViewModel::DecRrWrapper do
         floor_area: "10",
         occupier: "Primary School",
         property_type: "University campus",
+        renewable_sources: "Renewable source",
       },
       related_rrn: "0000-0000-0000-0000-1111",
     }.freeze

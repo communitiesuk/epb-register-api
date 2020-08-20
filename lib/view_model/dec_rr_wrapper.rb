@@ -44,6 +44,7 @@ module ViewModel
           floor_area: @view_model.floor_area,
           occupier: @view_model.occupier,
           property_type: @view_model.property_type,
+          renewable_sources: @view_model.renewable_sources,
         },
         related_rrn: @view_model.related_rrn,
       }
