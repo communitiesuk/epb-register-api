@@ -8,8 +8,7 @@ describe LodgementRules::NonDomestic do
       },
       {
         xml_doc:
-          Nokogiri.XML(Samples.xml("CEPC-NI-8.0.0", "dec"))
-            .remove_namespaces!,
+          Nokogiri.XML(Samples.xml("CEPC-NI-8.0.0", "dec")).remove_namespaces!,
         schema_name: "CEPC-NI-8.0.0",
       },
     ]
