@@ -8,11 +8,7 @@ module Gateway
   class AssessmentsXmlGateway
     class AssessmentsXml < ActiveRecord::Base; end
     def send_to_db(record)
-      if AssessmentsXml.exists? record[:assessment_id]
-        AssessmentsXml.update record
-      else
-        AssessmentsXml.create record
-      end
+      AssessmentsXml.create(record)
     end
 
     def fetch(assessment_id)
