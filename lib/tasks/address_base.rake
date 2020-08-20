@@ -17,17 +17,19 @@ task :import_address_base do
 
   ActiveRecord::Base.connection.execute("DROP TABLE IF EXISTS address_base_tmp")
   ActiveRecord::Base.connection.execute("CREATE TABLE IF NOT EXISTS address_base_tmp (
-   uprn VARCHAR (255),
-   postcode VARCHAR (255),
-   address_line1 VARCHAR (255),
-   address_line2 VARCHAR (255),
-   address_line3 VARCHAR (255),
-   address_line4 VARCHAR (255),
-   town VARCHAR (255)
-);")
+     uprn VARCHAR (255),
+     postcode VARCHAR (255),
+     address_line1 VARCHAR (255),
+     address_line2 VARCHAR (255),
+     address_line3 VARCHAR (255),
+     address_line4 VARCHAR (255),
+     town VARCHAR (255)
+  );")
+  puts "Created table address_base_tmp"
 
   iterations.times do |iteration|
     internal_url = ENV["url"].gsub("{iteration}", sprintf("%.2d", (iteration + 1)))
+    puts "Reading AddressBase file from: #{internal_url}"
     uri = URI(internal_url)
 
     raw_address_base = Net::HTTP.start(
@@ -43,12 +45,14 @@ task :import_address_base do
     end
 
     csv_contents = raw_address_base.body
+    puts "   Got CSV contents..."
 
     if ENV["url"].to_s.include?(".zip")
       Zip::InputStream.open(StringIO.new(csv_contents)) do |io|
         io.get_next_entry
 
         csv_contents = io.read
+        puts "   Unzipped CSV contents..."
       end
     end
 
@@ -124,14 +128,14 @@ task :import_address_base do
         town = row[60]
 
         query.push("(
-                #{uprn},
-                #{ActiveRecord::Base.connection.quote(postcode)},
-                #{ActiveRecord::Base.connection.quote(lines[0])},
-                #{ActiveRecord::Base.connection.quote(lines[1])},
-                #{ActiveRecord::Base.connection.quote(lines[2])},
-                #{ActiveRecord::Base.connection.quote(lines[3])},
-                #{ActiveRecord::Base.connection.quote(town)}
-            )")
+                  #{uprn},
+                  #{ActiveRecord::Base.connection.quote(postcode)},
+                  #{ActiveRecord::Base.connection.quote(lines[0])},
+                  #{ActiveRecord::Base.connection.quote(lines[1])},
+                  #{ActiveRecord::Base.connection.quote(lines[2])},
+                  #{ActiveRecord::Base.connection.quote(lines[3])},
+                  #{ActiveRecord::Base.connection.quote(town)}
+              )")
       end
 
       ActiveRecord::Base.connection.execute("INSERT INTO address_base_tmp VALUES " + query.join(", "))
@@ -139,6 +143,8 @@ task :import_address_base do
 
     puts "Inserted file " + iteration.to_s + " out of " + iterations.to_s
   end
+rescue StandardError => e
+  puts "Error importing AddreessBase: #{e}"
 
   # ActiveRecord::Base.connection.execute("INSERT INTO address_base SELECT * FROM address_base_tmp ON CONFLICT DO NOTHING")
   # ActiveRecord::Base.connection.execute("TRUNCATE TABLE address_base_tmp")
