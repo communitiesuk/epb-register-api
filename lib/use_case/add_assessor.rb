@@ -89,11 +89,14 @@ module UseCase
           next unless status != new_qualifications[qualification]
 
           @assessors_status_events_gateway.add(
-            assessor,
-            qualification,
-            status,
-            new_qualifications[qualification],
-            auth_client_id,
+            Domain::AssessorsStatusEvent.new(
+              assessor: assessor.to_hash,
+              scheme_assessor_id: assessor.scheme_assessor_id,
+              qualification_type: qualification,
+              previous_status: status,
+              new_status: new_qualifications[qualification],
+              auth_client_id: auth_client_id,
+            ),
           )
         end
       end
