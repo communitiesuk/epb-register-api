@@ -257,131 +257,134 @@ describe "Acceptance::Assessment::LodgementType" do
     assessments.each do |schema_name, assessments|
       context "when lodging with schema " + schema_name.to_s do
         assessments.each do |assessment_name, assessment_settings|
-          if assessment_settings[:response_code].nil?
-            assessment_settings[:response_code] = [201]
-          end
 
-          if assessment_settings[:expected_response].nil?
-            assessment_settings[:expected_response] = "lodgement"
-          end
-
-          if assessment_settings[:expected_lodgement_responses].nil?
-            assessment_settings[:expected_lodgement_responses] = {
-              "0000-0000-0000-0000-0000": assessment_settings[:xml],
-            }
-          end
-
-          it "tries to lodge a " + assessment_name.to_s +
-            " with response code " +
-            assessment_settings[:response_code].join(", ") do
-            create_assessor(assessment_settings[:assessor_qualification])
-
-            lodgement_response =
-              get_lodgement(
-                assessment_settings[:xml],
-                assessment_settings[:response_code],
-                schema_name,
-                assessment_settings[:migrate] || nil,
-              )
-
-            if assessment_settings[:expected_response]
-              expect(lodgement_response).to eq(
-                vcr(assessment_settings[:expected_response], lodgement_response),
-              )
+          context "when assessment is a #{assessment_name}" do
+            if assessment_settings[:response_code].nil?
+              assessment_settings[:response_code] = [201]
             end
 
-            assessment_settings[:expected_lodgement_responses]
-              .each do |rrn, filename|
-              fetch_endpoint_response =
-                JSON.parse(
-                  fetch_assessment_summary(rrn).body,
-                  symbolize_names: true,
-                )
-
-              unless fetch_endpoint_response.dig(
-                :data,
-                :assessor,
-                :registeredBy,
-                :schemeId,
-              ).nil?
-                fetch_endpoint_response[:data][:assessor][:registeredBy][
-                  :schemeId
-                ] =
-                  "{schemeId}"
-              end
-
-              expected_fetch_endpoint_response =
-                vcr(filename, fetch_endpoint_response)
-
-              expect(fetch_endpoint_response).to eq(
-                expected_fetch_endpoint_response,
-              )
+            if assessment_settings[:expected_response].nil?
+              assessment_settings[:expected_response] = "lodgement"
             end
-          end
 
-          if assessment_settings[:dont_check_incorrect_assessor].nil?
-            it "gives error 400 when lodging with insufficient qualification" do
-              create_assessor({})
+            if assessment_settings[:expected_lodgement_responses].nil?
+              assessment_settings[:expected_lodgement_responses] = {
+                "0000-0000-0000-0000-0000": assessment_settings[:xml],
+              }
+            end
+
+            it "tries to lodge a " + assessment_name.to_s +
+              " with response code " +
+              assessment_settings[:response_code].join(", ") do
+              create_assessor(assessment_settings[:assessor_qualification])
 
               lodgement_response =
-                get_lodgement(assessment_settings[:xml], [400], schema_name)
-
-              expect(lodgement_response[:errors][0][:title]).to eq(
-                "Assessor is not active.",
-              )
-            end
-          end
-
-          next unless assessment_settings[:dont_cancel_assessment].nil?
-
-          it "can cancel the report " + assessment_name.to_s do
-            create_assessor(assessment_settings[:assessor_qualification])
-
-            get_lodgement(assessment_settings[:xml], [201], schema_name)
-
-            assessment_settings[:expected_lodgement_responses].each do |rrn, _|
-              assessment_status =
-                JSON.parse(
-                  update_assessment_status(
-                    assessment_id: rrn.to_s,
-                    assessment_status_body: { "status": "CANCELLED" },
-                    accepted_responses: [200],
-                    auth_data: { scheme_ids: [scheme_id] },
-                  ).body,
-                  symbolize_names: true,
+                get_lodgement(
+                  assessment_settings[:xml],
+                  assessment_settings[:response_code],
+                  schema_name,
+                  assessment_settings[:migrate] || nil,
                 )
 
-              expect(assessment_status).to eq(
-                vcr("cancelled_assessment", assessment_status),
-              )
+              if assessment_settings[:expected_response]
+                expect(lodgement_response).to eq(
+                  vcr(assessment_settings[:expected_response], lodgement_response),
+                )
+              end
 
-              fetch_assessment_summary(rrn, [410])
+              assessment_settings[:expected_lodgement_responses]
+                .each do |rrn, filename|
+                fetch_endpoint_response =
+                  JSON.parse(
+                    fetch_assessment_summary(rrn).body,
+                    symbolize_names: true,
+                  )
+
+                unless fetch_endpoint_response.dig(
+                  :data,
+                  :assessor,
+                  :registeredBy,
+                  :schemeId,
+                ).nil?
+                  fetch_endpoint_response[:data][:assessor][:registeredBy][
+                    :schemeId
+                  ] =
+                    "{schemeId}"
+                end
+
+                expected_fetch_endpoint_response =
+                  vcr(filename, fetch_endpoint_response)
+
+                expect(fetch_endpoint_response).to eq(
+                  expected_fetch_endpoint_response,
+                )
+              end
             end
-          end
 
-          it "can change report type " + assessment_name.to_s +
-            " to NOT_FOR_ISSUE" do
-            create_assessor(assessment_settings[:assessor_qualification])
+            if assessment_settings[:dont_check_incorrect_assessor].nil?
+              it "gives error 400 when lodging with insufficient qualification" do
+                create_assessor({})
 
-            get_lodgement(assessment_settings[:xml], [201], schema_name)
+                lodgement_response =
+                  get_lodgement(assessment_settings[:xml], [400], schema_name)
 
-            assessment_settings[:expected_lodgement_responses].each do |rrn, _|
-              assessment_status =
-                JSON.parse(
-                  update_assessment_status(
-                    assessment_id: rrn.to_s,
-                    assessment_status_body: { "status": "NOT_FOR_ISSUE" },
-                    accepted_responses: [200],
-                    auth_data: { scheme_ids: [scheme_id] },
-                  ).body,
-                  symbolize_names: true,
+                expect(lodgement_response[:errors][0][:title]).to eq(
+                  "Assessor is not active.",
+                )
+              end
+            end
+
+            next unless assessment_settings[:dont_cancel_assessment].nil?
+
+            it "can cancel the report " + assessment_name.to_s do
+              create_assessor(assessment_settings[:assessor_qualification])
+
+              get_lodgement(assessment_settings[:xml], [201], schema_name)
+
+              assessment_settings[:expected_lodgement_responses].each do |rrn, _|
+                assessment_status =
+                  JSON.parse(
+                    update_assessment_status(
+                      assessment_id: rrn.to_s,
+                      assessment_status_body: { "status": "CANCELLED" },
+                      accepted_responses: [200],
+                      auth_data: { scheme_ids: [scheme_id] },
+                    ).body,
+                    symbolize_names: true,
+                  )
+
+                expect(assessment_status).to eq(
+                  vcr("cancelled_assessment", assessment_status),
                 )
 
-              expect(assessment_status).to eq(
-                vcr("not_for_issue_assessment", assessment_status),
-              )
+                fetch_assessment_summary(rrn, [410])
+              end
+            end
 
-              fetch_assessment_summary(rrn, [410])
+            it "can change report type " + assessment_name.to_s +
+              " to NOT_FOR_ISSUE" do
+              create_assessor(assessment_settings[:assessor_qualification])
+
+              get_lodgement(assessment_settings[:xml], [201], schema_name)
+
+              assessment_settings[:expected_lodgement_responses].each do |rrn, _|
+                assessment_status =
+                  JSON.parse(
+                    update_assessment_status(
+                      assessment_id: rrn.to_s,
+                      assessment_status_body: { "status": "NOT_FOR_ISSUE" },
+                      accepted_responses: [200],
+                      auth_data: { scheme_ids: [scheme_id] },
+                    ).body,
+                    symbolize_names: true,
+                  )
+
+                expect(assessment_status).to eq(
+                  vcr("not_for_issue_assessment", assessment_status),
+                )
+
+                fetch_assessment_summary(rrn, [410])
+              end
             end
           end
         end
