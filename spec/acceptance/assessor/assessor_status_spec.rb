@@ -75,4 +75,16 @@ describe "Acceptance::AssessorStatus" do
 
     expect(result.entries.first["auth_client_id"]).to eq("test-subject")
   end
+
+  it "will give an error if date param is empty" do
+    response =
+      JSON.parse(
+        fetch_assessors_status(scheme_id, "", [400]).body,
+        symbolize_names: true,
+      )
+
+    expect(response).to eq(
+      { errors: [{ code: "INVALID_REQUEST", title: "invalid date" }] },
+    )
+  end
 end
