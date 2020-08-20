@@ -1,18 +1,29 @@
 module Gateway
   class AssessorsStatusEventsGateway
     class AssessorsStatusEvents < ActiveRecord::Base; end
-    def get(date)
+    def filter_by(date)
       sql =
         'SELECT
            assessor, scheme_assessor_id, qualification_type, previous_status, new_status
          FROM
            assessors_status_events
          WHERE
-           recorded_at BETWEEN ' +
-        ActiveRecord::Base.connection.quote(date.to_s) + " AND " +
-        ActiveRecord::Base.connection.quote((date + 1).to_s)
+           recorded_at BETWEEN $1 AND $2'
 
-      response = AssessorsStatusEvents.connection.execute(sql)
+      binds = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "from_date",
+          date.to_s,
+          ActiveRecord::Type::String.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "to_date",
+          (date + 1).to_s,
+          ActiveRecord::Type::String.new,
+        ),
+      ]
+
+      response = AssessorsStatusEvents.connection.exec_query(sql, "SQL", binds)
 
       result = []
       response.each do |row|

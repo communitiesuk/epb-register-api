@@ -8,7 +8,7 @@ module UseCase
     end
 
     def execute(date)
-      @assessors_status_events_gateway.get(date)
+      @assessors_status_events_gateway.filter_by(date)
     end
   end
 end
