@@ -95,9 +95,7 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan" do
     updated_green_deal_plan_request_body.tap { |field| field.delete key }
   end
 
-  let(:valid_rdsap_xml) do
-    File.read File.join Dir.pwd, "spec/fixtures/samples/rdsap.xml"
-  end
+  let(:valid_rdsap_xml) { Samples.xml "RdSAP-Schema-20.0.0" }
 
   describe "update a Green Deal Plan" do
     context "when unauthenticated" do
@@ -240,7 +238,7 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan" do
       end
 
       context "when missing required fields" do
-        let(:assessment) { Nokogiri.XML valid_rdsap_xml }
+        let(:assessment) { Nokogiri.XML Samples.xml "RdSAP-Schema-20.0.0" }
         let(:assessment_id) { assessment.at "RRN" }
 
         let(:response) do

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Reports xmlns="https://epbr.digital.communities.gov.uk/xsd/cepc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/cepc  ../../../api/schemas/xml/CEPC-8.0.0/Reports/CEPC-Reports.xsd">
+<Reports xmlns="https://epbr.digital.communities.gov.uk/xsd/cepc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/cepc  ../../../../api/schemas/xml/CEPC-8.0.0/Reports/CEPC-Reports.xsd">
   <Report>
     <Report-Header>
           <RRN>0000-0000-0000-0000-0000</RRN>

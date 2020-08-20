@@ -1,29 +1,29 @@
 require_relative "xml_view_test_helper"
 
 describe ViewModel::RdSapWrapper do
-  # You should only need to add to this list to test new CEPC schema
+  # You should only need to add to this list to test new RdSAP schemas
   supported_schema = [
     {
       schema_name: "RdSAP-Schema-20.0.0",
-      xml_file: "spec/fixtures/samples/rdsap.xml",
+      xml: Samples.xml("RdSAP-Schema-20.0.0"),
       unsupported_fields: [],
       different_fields: {},
     },
     {
       schema_name: "RdSAP-Schema-NI-20.0.0",
-      xml_file: "spec/fixtures/samples/rdsap-ni.xml",
+      xml: Samples.xml("RdSAP-Schema-NI-20.0.0"),
       unsupported_fields: [],
       different_fields: {},
     },
     {
       schema_name: "RdSAP-Schema-19.0",
-      xml_file: "spec/fixtures/samples/rdsap.xml",
+      xml: Samples.xml("RdSAP-Schema-19.0"),
       unsupported_fields: [],
       different_fields: {},
     },
     {
       schema_name: "RdSAP-Schema-NI-19.0",
-      xml_file: "spec/fixtures/samples/rdsap-ni.xml",
+      xml: Samples.xml("RdSAP-Schema-NI-19.0"),
       unsupported_fields: [],
       different_fields: {},
     },

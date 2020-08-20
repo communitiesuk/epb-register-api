@@ -5,17 +5,9 @@ describe "Acceptance::LodgeAssessment::XML" do
 
   let(:fetch_assessor_stub) { AssessorStub.new }
 
-  let(:valid_cepc_xml) do
-    File.read File.join Dir.pwd, "spec/fixtures/samples/ac-cert.xml"
-  end
-
-  let(:valid_sap_xml) do
-    File.read File.join Dir.pwd, "spec/fixtures/samples/sap.xml"
-  end
-
-  let(:valid_cepc_rr_xml) do
-    File.read File.join Dir.pwd, "spec/fixtures/samples/cepc+rr.xml"
-  end
+  let(:valid_cepc_xml) { Samples.xml "CEPC-8.0.0", "ac-cert" }
+  let(:valid_sap_xml) { Samples.xml "SAP-Schema-18.0.0" }
+  let(:valid_cepc_rr_xml) { Samples.xml "CEPC-8.0.0", "cepc+rr" }
 
   let(:cleaned_xml) do
     File.read File.join Dir.pwd, "spec/fixtures/sanitised/ac-cert.xml"

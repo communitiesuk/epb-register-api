@@ -5,13 +5,13 @@ describe ViewModel::AcReportWrapper do
     supported_schema = [
       {
         schema_name: "CEPC-8.0.0",
-        xml_file: "spec/fixtures/samples/ac-report.xml",
+        xml: Samples.xml("CEPC-8.0.0", "ac-report"),
         unsupported_fields: [],
         different_fields: {},
       },
       {
         schema_name: "CEPC-NI-8.0.0",
-        xml_file: "spec/fixtures/samples/ac-report-ni.xml",
+        xml: Samples.xml("CEPC-NI-8.0.0", "ac-report"),
         unsupported_fields: [],
         different_fields: {},
       },

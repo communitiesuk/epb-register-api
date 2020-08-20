@@ -5,21 +5,31 @@ describe ViewModel::CepcWrapper do
   supported_schema = [
     {
       schema_name: "CEPC-8.0.0",
-      xml_file: "spec/fixtures/samples/cepc.xml",
+      xml: Samples.xml("CEPC-8.0.0", "cepc"),
       unsupported_fields: [],
       different_fields: {},
     },
     {
       schema_name: "CEPC-NI-8.0.0",
-      xml_file: "spec/fixtures/samples/cepc-ni.xml",
+      xml: Samples.xml("CEPC-NI-8.0.0", "cepc"),
       unsupported_fields: [],
       different_fields: {},
     },
     {
       schema_name: "CEPC-7.1",
-      xml_file: "api/schemas/xml/examples/CEPC-7.1(EPC).xml",
+      xml: Samples.xml("CEPC-7.1", "cepc"),
       unsupported_fields: [],
-      different_fields: {},
+      different_fields: {
+        address: {
+          address_id: "000000000001",
+          address_line1: "2 Lonely Street",
+          address_line2: nil,
+          address_line3: nil,
+          address_line4: nil,
+          town: "Post-Town1",
+          postcode: "A0 0AA",
+        },
+      },
     },
   ].freeze
 

@@ -3,13 +3,9 @@
 describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
   include RSpecRegisterApiServiceMixin
 
-  let(:valid_rdsap_xml) do
-    File.read File.join Dir.pwd, "spec/fixtures/samples/rdsap.xml"
-  end
+  let(:valid_rdsap_xml) { Samples.xml "RdSAP-Schema-20.0.0" }
 
-  let(:valid_sap_xml) do
-    File.read File.join Dir.pwd, "spec/fixtures/samples/sap.xml"
-  end
+  let(:valid_sap_xml) { Samples.xml "SAP-Schema-18.0.0" }
 
   context "security" do
     it "rejects a request that is not authenticated" do

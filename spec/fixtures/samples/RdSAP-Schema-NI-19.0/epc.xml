@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RdSAP-Report xmlns="https://epbr.digital.communities.gov.uk/xsd/rdsap"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/rdsap ../../../api/schemas/xml/RdSAP-Schema-20.0.0/RdSAP/Templates/RdSAP-Report.xsd">
+ xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/rdsap ../../../../api/schemas/xml/RdSAP-Schema-NI-20.0.0/RdSAP/Templates/RdSAP-Report.xsd">
     <Calculation-Software-Name>Calculation-Software-Name0</Calculation-Software-Name>
     <Calculation-Software-Version>Calculation-Software-Version0</Calculation-Software-Version>
     <User-Interface-Name>User-Interface-Name0</User-Interface-Name>
@@ -135,13 +135,13 @@
           <Green-Deal-Category>3</Green-Deal-Category>
         </Improvement>
       </Suggested-Improvements>
-        <Renewable-Heat-Incentive>
-          <Space-Heating-Existing-Dwelling>30.0</Space-Heating-Existing-Dwelling>
-          <Water-Heating>60</Water-Heating>
-          <Impact-Of-Loft-Insulation>-8</Impact-Of-Loft-Insulation>
-          <Impact-Of-Cavity-Insulation>-12</Impact-Of-Cavity-Insulation>
-          <Impact-Of-Solid-Wall-Insulation>-16</Impact-Of-Solid-Wall-Insulation>
-        </Renewable-Heat-Incentive>
+      <Renewable-Heat-Incentive>
+        <Space-Heating-Existing-Dwelling>30</Space-Heating-Existing-Dwelling>
+        <Water-Heating>60</Water-Heating>
+        <Impact-Of-Loft-Insulation>-8</Impact-Of-Loft-Insulation>
+        <Impact-Of-Cavity-Insulation>-12</Impact-Of-Cavity-Insulation>
+        <Impact-Of-Solid-Wall-Insulation>-16</Impact-Of-Solid-Wall-Insulation>
+      </Renewable-Heat-Incentive>
     </Energy-Assessment>
     <SAP-Data>
       <SAP-Property-Details>
@@ -266,8 +266,6 @@
             <Name>Name0</Name>
             <Contact-Address>
               <Address-Line-1></Address-Line-1>
-              <Address-Line-2></Address-Line-2>
-              <Address-Line-3></Address-Line-3>
               <Post-Town></Post-Town>
               <Postcode>AB1C 2DE</Postcode>
             </Contact-Address>
@@ -289,7 +287,7 @@
             <UPRN>UPRN-000000000000</UPRN>
         </Property>
         <Related-Party-Disclosure>
-            <Related-Party-Disclosure-Text>Related-Party-Disclosure-Text0</Related-Party-Disclosure-Text>
+          <Related-Party-Disclosure-Text>Related-Party-Disclosure-Text0</Related-Party-Disclosure-Text>
         </Related-Party-Disclosure>
     </Report-Header>
     <Insurance-Details>

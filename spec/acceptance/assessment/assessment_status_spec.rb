@@ -13,9 +13,7 @@ describe "Acceptance::AssessmentStatus" do
     scheme_id
   end
 
-  let(:valid_rdsap_xml) do
-    File.read File.join Dir.pwd, "spec/fixtures/samples/rdsap.xml"
-  end
+  let(:valid_rdsap_xml) { Samples.xml "RdSAP-Schema-20.0.0" }
 
   context "an assessment that does not exist" do
     describe "cancelling an assessment" do

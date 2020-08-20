@@ -1,17 +1,17 @@
 require_relative "xml_view_test_helper"
 
 describe ViewModel::SapWrapper do
-  # You should only need to add to this list to test new CEPC schema
+  # You should only need to add to this list to test new SAP schemas
   supported_schema = [
     {
       schema_name: "SAP-Schema-18.0.0",
-      xml_file: "spec/fixtures/samples/sap.xml",
+      xml: Samples.xml("SAP-Schema-18.0.0"),
       unsupported_fields: [],
       different_fields: {},
     },
     {
       schema_name: "SAP-Schema-NI-18.0.0",
-      xml_file: "spec/fixtures/samples/sap-ni.xml",
+      xml: Samples.xml("SAP-Schema-NI-18.0.0"),
       unsupported_fields: [],
       different_fields: {
         heat_demand: {
@@ -53,13 +53,13 @@ describe ViewModel::SapWrapper do
     },
     {
       schema_name: "SAP-Schema-17.1",
-      xml_file: "spec/fixtures/samples/sap.xml",
+      xml: Samples.xml("SAP-Schema-17.1"),
       unsupported_fields: [],
       different_fields: {},
     },
     {
       schema_name: "SAP-Schema-NI-17.1",
-      xml_file: "spec/fixtures/samples/sap-ni.xml",
+      xml: Samples.xml("SAP-Schema-NI-17.1"),
       unsupported_fields: [],
       different_fields: {
         heat_demand: {

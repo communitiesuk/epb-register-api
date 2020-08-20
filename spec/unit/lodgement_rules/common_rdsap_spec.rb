@@ -2,17 +2,11 @@ describe LodgementRules::DomesticCommon do
   let(:docs_under_test) do
     [
       {
-        xml_doc:
-          Nokogiri.XML(
-            File.read(File.join(Dir.pwd, "spec/fixtures/samples/rdsap.xml")),
-          ),
+        xml_doc: Nokogiri.XML(Samples.xml("RdSAP-Schema-20.0.0")),
         schema_name: "RdSAP-Schema-20.0.0",
       },
       {
-        xml_doc:
-          Nokogiri.XML(
-            File.read(File.join(Dir.pwd, "spec/fixtures/samples/rdsap-ni.xml")),
-          ),
+        xml_doc: Nokogiri.XML(Samples.xml("RdSAP-Schema-NI-20.0.0")),
         schema_name: "RdSAP-Schema-NI-20.0.0",
       },
     ]

@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Reports
-  xmlns="https://epbr.digital.communities.gov.uk/xsd/cepc-ni"
+  xmlns="https://epbr.digital.communities.gov.uk/xsd/cepc"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/cepc-ni  ../../../api/schemas/xml/CEPC-NI-8.0.0/Reports/CEPC-Reports.xsd"
+  xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/cepc  ../../../../api/schemas/xml/CEPC-8.0.0/Reports/CEPC-Reports.xsd"
 >
   <Report>
     <Report-Header>
       <RRN>0000-0000-0000-0000-0000</RRN>
-      <Issue-Date>2019-06-02</Issue-Date>
+      <Issue-Date>2020-06-02</Issue-Date>
       <Report-Type>6</Report-Type>
-      <Valid-Until>2030-05-19</Valid-Until>
+      <Valid-Until>2022-05-19</Valid-Until>
       <Related-RRN>0000-0000-0000-0000-0001</Related-RRN>
-      <Inspection-Date>2019-05-20</Inspection-Date>
-      <Registration-Date>2019-05-20</Registration-Date>
+      <Inspection-Date>2020-05-20</Inspection-Date>
+      <Registration-Date>2020-05-20</Registration-Date>
       <Status>entered</Status>
       <Language-Code>1</Language-Code>
       <Building-Complexity>Level 3</Building-Complexity>
@@ -31,14 +31,14 @@
       <Property-Details>
         <UPRN>UPRN-432167890000</UPRN>
         <Property-Address>
-          <Address-Line-1>A. Shop</Address-Line-1>
-          <Address-Line-2>The High Street</Address-Line-2>
+          <Address-Line-1>2 Lonely Street</Address-Line-1>
+          <Address-Line-2 />
           <Address-Line-3 />
           <Address-Line-4 />
-          <Post-Town>London</Post-Town>
-          <Postcode>AB12 2AA</Postcode>
+          <Post-Town>Post-Town1</Post-Town>
+          <Postcode>A0 0AA</Postcode>
         </Property-Address>
-        <Property-Type>Property-Type1</Property-Type>
+        <Property-Type />
         <Is-Heritage-Site>N</Is-Heritage-Site>
       </Property-Details>
       <Calculation-Details>
@@ -102,12 +102,12 @@
   <Report>
     <Report-Header>
       <RRN>0000-0000-0000-0000-0001</RRN>
-      <Issue-Date>2019-06-02</Issue-Date>
+      <Issue-Date>2020-06-02</Issue-Date>
       <Report-Type>5</Report-Type>
-      <Valid-Until>2030-05-19</Valid-Until>
+      <Valid-Until>2022-05-19</Valid-Until>
       <Related-RRN>0000-0000-0000-0000-0000</Related-RRN>
-      <Inspection-Date>2019-05-20</Inspection-Date>
-      <Registration-Date>2019-05-20</Registration-Date>
+      <Inspection-Date>2020-05-20</Inspection-Date>
+      <Registration-Date>2020-05-20</Registration-Date>
       <Status>entered</Status>
       <Language-Code>1</Language-Code>
       <Building-Complexity>Level 3</Building-Complexity>
@@ -126,12 +126,12 @@
       <Property-Details>
         <UPRN>UPRN-432167890000</UPRN>
         <Property-Address>
-          <Address-Line-1>A. Shop</Address-Line-1>
-          <Address-Line-2>The High Street</Address-Line-2>
+          <Address-Line-1>2 Lonely Street</Address-Line-1>
+          <Address-Line-2 />
           <Address-Line-3 />
           <Address-Line-4 />
-          <Post-Town>London</Post-Town>
-          <Postcode>AB12 2AA</Postcode>
+          <Post-Town>Post-Town1</Post-Town>
+          <Postcode>A0 0AA</Postcode>
         </Property-Address>
         <Property-Type />
         <Is-Heritage-Site>N</Is-Heritage-Site>

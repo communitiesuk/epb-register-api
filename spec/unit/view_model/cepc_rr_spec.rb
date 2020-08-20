@@ -6,19 +6,19 @@ describe ViewModel::CepcRrWrapper do
     supported_schema = [
       {
         schema_name: "CEPC-8.0.0",
-        xml_file: "spec/fixtures/samples/cepc-rr.xml",
+        xml: Samples.xml("CEPC-8.0.0", "cepc-rr"),
         unsupported_fields: [],
         different_fields: {},
       },
       {
         schema_name: "CEPC-NI-8.0.0",
-        xml_file: "spec/fixtures/samples/cepc-rr-ni.xml",
+        xml: Samples.xml("CEPC-NI-8.0.0", "cepc-rr"),
         unsupported_fields: [],
         different_fields: {},
       },
       {
         schema_name: "CEPC-7.1",
-        xml_file: "api/schemas/xml/examples/CEPC-7.1(EPC-RR).xml",
+        xml: Samples.xml("CEPC-7.1", "cepc-rr"),
         unsupported_fields: [],
         different_fields: {
           address: {

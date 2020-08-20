@@ -92,7 +92,7 @@ describe "Acceptance::AddressSearch" do
         add_assessor(scheme_id, "SPEC000000", VALID_ASSESSOR_REQUEST_BODY)
 
         lodge_assessment(
-          assessment_body: VALID_RDSAP_XML,
+          assessment_body: Samples.xml("RdSAP-Schema-20.0.0"),
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] },
         )

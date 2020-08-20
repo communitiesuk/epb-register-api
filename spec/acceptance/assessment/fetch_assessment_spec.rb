@@ -8,9 +8,7 @@ describe "Acceptance::Assessment" do
   let(:fetch_assessor_stub) { AssessorStub.new }
   let(:green_deal_plan_stub) { GreenDealPlansGatewayStub.new }
 
-  let(:valid_sap_xml) do
-    File.read File.join Dir.pwd, "spec/fixtures/samples/sap.xml"
-  end
+  let(:valid_sap_xml) { Samples.xml "SAP-Schema-18.0.0" }
 
   let(:sanitised_sap_xml) do
     File.read File.join Dir.pwd, "spec/fixtures/sanitised/sap.xml"

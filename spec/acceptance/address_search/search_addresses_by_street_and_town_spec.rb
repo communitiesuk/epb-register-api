@@ -1,15 +1,15 @@
 describe "Acceptance::AddressSearch::ByStreetAndTown" do
   include RSpecRegisterApiServiceMixin
 
-  let(:valid_cepc_xml) do
-    File.read File.join Dir.pwd, "spec/fixtures/samples/cepc.xml"
-  end
+  let(:valid_cepc_xml) { Samples.xml "CEPC-8.0.0", "cepc" }
 
   context "an address that has a report lodged" do
     let(:scheme_id) { add_scheme_and_get_id }
 
-    let(:assessment) { Nokogiri.XML VALID_RDSAP_XML }
-    let(:expired_assessment) { Nokogiri.XML VALID_RDSAP_XML }
+    let(:assessment) { Nokogiri.XML Samples.xml "RdSAP-Schema-20.0.0" }
+    let(:expired_assessment) do
+      Nokogiri.XML Samples.xml "RdSAP-Schema-20.0.0"
+    end
     let(:address_id) { assessment.at("UPRN") }
     let(:assessment_id) { assessment.at("RRN") }
     let(:assessment_date) { assessment.at("Inspection-Date") }

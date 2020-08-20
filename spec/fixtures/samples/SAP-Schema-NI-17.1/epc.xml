@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SAP-Report xmlns="https://epbr.digital.communities.gov.uk/xsd/sap" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/sap ../../../api/schemas/xml/SAP-Schema-18.0.0/SAP/Templates/SAP-Report.xsd">
-    <Schema-Version-Original>Schema-Version-Original0</Schema-Version-Original>
+<SAP-Report xmlns="https://epbr.digital.communities.gov.uk/xsd/sap"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/sap ../../../../api/schemas/xml/SAP-Schema-NI-18.0.0/SAP/Templates/SAP-Report.xsd">
     <SAP-Version>9.80</SAP-Version>
-    <SAP-Data-Version>9.80</SAP-Data-Version>
     <Calculation-Software-Name>Calculation-Software-Name0</Calculation-Software-Name>
     <Calculation-Software-Version>Calculation-Software-Version0</Calculation-Software-Version>
     <Report-Header>
@@ -13,22 +13,42 @@
         <Registration-Date>2020-05-04</Registration-Date>
         <Status>entered</Status>
         <Language-Code>1</Language-Code>
-        <Tenure>1</Tenure>
+        <Restricted-Access>0</Restricted-Access>
         <Transaction-Type>1</Transaction-Type>
+        <Tenure>1</Tenure>
         <Seller-Commission-Report>Y</Seller-Commission-Report>
         <Property-Type>0</Property-Type>
         <Home-Inspector>
-            <Name>Name0</Name>
-            <Contact-Address>
-                <Address-Line-1></Address-Line-1>
-                <Address-Line-2></Address-Line-2>
-                <Address-Line-3></Address-Line-3>
-                <Post-Town>Post-Town0</Post-Town>
-                <Postcode>A0 0AA</Postcode>
-            </Contact-Address>
-            <Company-Name>Company-Name0</Company-Name>
-            <Scheme-Name>Scheme-Name0</Scheme-Name>
-            <Scheme-Web-Site>Scheme-Web-Site0</Scheme-Web-Site>
+            <Name>
+                <Prefix />
+                <First-Name>Name0</First-Name>
+                <Surname />
+                <Suffix />
+            </Name>
+            <Certification-Date>2019-05-04</Certification-Date>
+            <Status>Inactive</Status>
+            <Inspector-Report-Types>
+                <Report-Type>1</Report-Type>
+                <Report-Type>1</Report-Type>
+            </Inspector-Report-Types>
+            <Certification-Scheme>
+                <Scheme-Name>Scheme-Name0</Scheme-Name>
+                <Complaints-Address>
+                  <Address-Line-1>123 Some Street</Address-Line-1>
+                    <Post-Town>Post-Town0</Post-Town>
+                    <Postcode>A0 0AA</Postcode>
+                </Complaints-Address>
+                <Contact-Address>
+                  <Address-Line-1>321 Some Street</Address-Line-1>
+                    <Post-Town>Post-Town1</Post-Town>
+                    <Postcode>A0 0AA</Postcode>
+                </Contact-Address>
+                <Web-Site>Web-Site0</Web-Site>
+                <E-Mail>E-Mail0</E-Mail>
+                <Registered-Name>Registered-Name0</Registered-Name>
+                <Fax> </Fax>
+                <Telephone> </Telephone>
+            </Certification-Scheme>
             <Identification-Number>
                 <Certificate-Number>SPEC000000</Certificate-Number>
             </Identification-Number>
@@ -46,7 +66,7 @@
         </Related-Party-Disclosure>
     </Report-Header>
     <Energy-Assessment>
-        <Assessment-Date>2020-05-04</Assessment-Date>
+        <Assessment-Date>2019-05-04</Assessment-Date>
         <Property-Summary>
             <Walls>
                 <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
@@ -106,22 +126,13 @@
             </Lighting>
           <Dwelling-Type>Dwelling-Type0</Dwelling-Type>
           <Total-Floor-Area>10</Total-Floor-Area>
-            <Multiple-Glazed-Percentage>50</Multiple-Glazed-Percentage>
-          <Is-Zero-Carbon-Home>true</Is-Zero-Carbon-Home>
+          <Is-Zero-Carbon-Home>0</Is-Zero-Carbon-Home>
         </Property-Summary>
-        <Renewable-Heat-Incentive>
-            <RHI-Existing-Dwelling>
-              <Space-Heating-Existing-Dwelling>30</Space-Heating-Existing-Dwelling>
-              <Water-Heating>60</Water-Heating>
-              <Impact-Of-Cavity-Insulation>-12</Impact-Of-Cavity-Insulation>
-              <Impact-Of-Loft-Insulation>-8</Impact-Of-Loft-Insulation>
-              <Impact-Of-Solid-Wall-Insulation>-16</Impact-Of-Solid-Wall-Insulation>
-            </RHI-Existing-Dwelling>
-        </Renewable-Heat-Incentive>
         <Energy-Use>
             <Energy-Rating-Current>50</Energy-Rating-Current>
             <Energy-Rating-Potential>50</Energy-Rating-Potential>
             <Energy-Rating-Average>50</Energy-Rating-Average>
+            <Energy-Rating-Typical-Newbuild>50</Energy-Rating-Typical-Newbuild>
             <Environmental-Impact-Current>50</Environmental-Impact-Current>
             <Environmental-Impact-Potential>50</Environmental-Impact-Potential>
             <Energy-Consumption-Current>0</Energy-Consumption-Current>
@@ -136,11 +147,19 @@
             <Hot-Water-Cost-Current>200.40</Hot-Water-Cost-Current>
             <Hot-Water-Cost-Potential>180.43</Hot-Water-Cost-Potential>
         </Energy-Use>
+      <Renewable-Heat-Incentive>
+        <RHI-Existing-Dwelling>
+          <Space-Heating-Existing-Dwelling>30</Space-Heating-Existing-Dwelling>
+          <Water-Heating>60</Water-Heating>
+          <Space-Heating-With-Cavity-Insulation>-12</Space-Heating-With-Cavity-Insulation>
+          <Space-Heating-With-Loft-And-Cavity-Insulation>-8</Space-Heating-With-Loft-And-Cavity-Insulation>
+        </RHI-Existing-Dwelling>
+      </Renewable-Heat-Incentive>
       <Suggested-Improvements>
         <Improvement>
           <Sequence>0</Sequence>
-          <Improvement-Category>6</Improvement-Category>
-          <Improvement-Type>Z3</Improvement-Type>
+          <Improvement-Category>1</Improvement-Category>
+          <Improvement-Type>A</Improvement-Type>
           <Typical-Saving>0.0</Typical-Saving>
           <Energy-Performance-Rating>50</Energy-Performance-Rating>
           <Environmental-Impact-Rating>50</Environmental-Impact-Rating>
@@ -148,12 +167,11 @@
           <Improvement-Details>
             <Improvement-Number>5</Improvement-Number>
           </Improvement-Details>
-          <Green-Deal-Category>1</Green-Deal-Category>
         </Improvement>
         <Improvement>
           <Sequence>1</Sequence>
           <Improvement-Category>2</Improvement-Category>
-          <Improvement-Type>Z2</Improvement-Type>
+          <Improvement-Type>B</Improvement-Type>
           <Typical-Saving>0.1</Typical-Saving>
           <Energy-Performance-Rating>60</Energy-Performance-Rating>
           <Environmental-Impact-Rating>64</Environmental-Impact-Rating>
@@ -161,11 +179,10 @@
           <Improvement-Details>
             <Improvement-Number>1</Improvement-Number>
           </Improvement-Details>
-          <Green-Deal-Category>3</Green-Deal-Category>
         </Improvement>
       </Suggested-Improvements>
     </Energy-Assessment>
-    <SAP2012-Data>
+    <SAP09-Data>
         <Data-Type>1</Data-Type>
         <SAP-Property-Details>
             <Property-Type>0</Property-Type>
@@ -173,31 +190,10 @@
             <Orientation>0</Orientation>
             <Conservatory-Type>1</Conservatory-Type>
             <Is-In-Smoke-Control-Area>false</Is-In-Smoke-Control-Area>
-            <SAP-Heating>
-                <Water-Heating-Code>950</Water-Heating-Code>
-                <Secondary-Heating-Category>1</Secondary-Heating-Category>
-                <Main-Heating-Details>
-                    <Main-Heating>
-                        <Main-Heating-Number>2</Main-Heating-Number>
-                        <Main-Heating-Category>1</Main-Heating-Category>
-                        <Main-Heating-Data-Source>1</Main-Heating-Data-Source>
-                        <Main-Heating-Control>2500</Main-Heating-Control>
-                        <Main-Heating-Fraction>0</Main-Heating-Fraction>
-                        <Emitter-Temperature>0</Emitter-Temperature>
-                    </Main-Heating>
-                    <Main-Heating>
-                        <Main-Heating-Number>2</Main-Heating-Number>
-                        <Main-Heating-Category>1</Main-Heating-Category>
-                        <Main-Heating-Data-Source>1</Main-Heating-Data-Source>
-                        <Main-Heating-Control>2500</Main-Heating-Control>
-                        <Main-Heating-Fraction>0</Main-Heating-Fraction>
-                        <Emitter-Temperature>0</Emitter-Temperature>
-                    </Main-Heating>
-                </Main-Heating-Details>
-            </SAP-Heating>
             <SAP-Building-Parts>
                 <SAP-Building-Part>
                     <Building-Part-Number>1</Building-Part-Number>
+                    <Construction-Age-Band>K</Construction-Age-Band>
                     <Construction-Year>1750</Construction-Year>
                     <Overshading>1</Overshading>
                 </SAP-Building-Part>
@@ -208,7 +204,6 @@
                 </SAP-Building-Part>
             </SAP-Building-Parts>
         </SAP-Property-Details>
-    </SAP2012-Data>
-    <PDF>SGVsbG8=</PDF>
+    </SAP09-Data>
     <ExternalDefinitions-Revision-Number>ExternalDefinitions-Revision-Number0</ExternalDefinitions-Revision-Number>
 </SAP-Report>

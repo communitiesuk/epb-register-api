@@ -22,8 +22,7 @@ describe "Acceptance::AssessmentSummary" do
   context "dual lodgement" do
     it "Can give summaries for both documents in a CEPC+RR combo" do
       scheme_id = add_scheme_and_get_id
-      xml_file =
-        File.read File.join Dir.pwd, "spec/fixtures/samples/cepc+rr.xml"
+      xml_file = Samples.xml "CEPC-8.0.0", "cepc+rr"
       assessor =
         AssessorStub.new.fetch_request_body(
           nonDomesticNos3: "ACTIVE",
@@ -64,8 +63,7 @@ describe "Acceptance::AssessmentSummary" do
   context "RRN format" do
     it "Returns the summary for a URL without hyphens" do
       scheme_id = add_scheme_and_get_id
-      xml_file =
-        File.read File.join Dir.pwd, "spec/fixtures/samples/cepc+rr.xml"
+      xml_file = Samples.xml "CEPC-8.0.0", "cepc+rr"
       assessor =
         AssessorStub.new.fetch_request_body(
           nonDomesticNos3: "ACTIVE",

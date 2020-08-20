@@ -28,9 +28,7 @@ describe "Acceptance::Assessment::GreenDealPlan:DeleteGreenDealPlan" do
     end
 
     context "when a green deal plan exists" do
-      let(:valid_rdsap_xml) do
-        File.read File.join Dir.pwd, "spec/fixtures/samples/rdsap.xml"
-      end
+      let(:valid_rdsap_xml) { Samples.xml "RdSAP-Schema-20.0.0" }
 
       let(:valid_green_deal_plan_request_body) do
         {

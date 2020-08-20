@@ -29,9 +29,7 @@ describe UseCase::ValidateAndLodgeAssessment do
     end
   end
 
-  let(:valid_xml) do
-    File.read File.join Dir.pwd, "spec/fixtures/samples/rdsap.xml"
-  end
+  let(:valid_xml) { Samples.xml "RdSAP-Schema-20.0.0" }
 
   let(:check_assessor_belongs_to_scheme_use_case) do
     CheckAssessorBelongsToSchemeSpy.new

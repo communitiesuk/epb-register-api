@@ -1,22 +1,20 @@
 describe "Acceptance::AddressSearch::ByPostcode" do
   include RSpecRegisterApiServiceMixin
 
-  let(:valid_cepc_xml) do
-    File.read File.join Dir.pwd, "spec/fixtures/samples/cepc.xml"
-  end
-
   context "an address that has a report lodged" do
     let(:scheme_id) { add_scheme_and_get_id }
 
-    let(:doc) { Nokogiri.XML VALID_RDSAP_XML }
-    let(:expired_assessment) { Nokogiri.XML VALID_RDSAP_XML }
+    let(:doc) { Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0") }
+    let(:expired_assessment) do
+      Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
+    end
     let(:address_id) { doc.at("UPRN") }
     let(:assessment_id) { doc.at("RRN") }
     let(:assessment_date) { doc.at("Inspection-Date") }
     let(:address_line_one) { doc.search("Address-Line-1")[1] }
     let(:address_line_two) { Nokogiri::XML::Node.new "Address-Line-2", doc }
 
-    let(:non_domestic_xml) { Nokogiri.XML valid_cepc_xml }
+    let(:non_domestic_xml) { Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc") }
     let(:cepc_scheme_assessor_id) do
       non_domestic_xml.at("//CEPC:Certificate-Number")
     end

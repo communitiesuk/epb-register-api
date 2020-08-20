@@ -2,7 +2,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
   include RSpecRegisterApiServiceMixin
 
   def lodge_placeholder_assessment(scheme_id, assessment_id, address_id, date)
-    assessment = Nokogiri.XML VALID_RDSAP_XML
+    assessment = Nokogiri.XML Samples.xml "RdSAP-Schema-20.0.0"
     address_id_node = assessment.at("UPRN")
     assessment_id_node = assessment.at("RRN")
     assessment_date_node = assessment.at("Inspection-Date")

@@ -16,10 +16,7 @@ describe "Acceptance::LodgementRules" do
   end
 
   context "when lodging CEPC" do
-    let(:xml_doc) do
-      file = File.read File.join Dir.pwd, "spec/fixtures/samples/cepc.xml"
-      Nokogiri.XML(file)
-    end
+    let(:xml_doc) { Nokogiri.XML Samples.xml "CEPC-8.0.0", "cepc" }
 
     context "that breaks two rules" do
       it "should reject the assessment" do
@@ -78,10 +75,7 @@ describe "Acceptance::LodgementRules" do
   end
 
   context "when lodging RdSAP" do
-    let(:xml_doc) do
-      file = File.read File.join Dir.pwd, "spec/fixtures/samples/rdsap.xml"
-      Nokogiri.XML(file)
-    end
+    let(:xml_doc) { Nokogiri.XML Samples.xml "RdSAP-Schema-20.0.0" }
 
     context "that breaks a rule" do
       it "should reject the assessment" do

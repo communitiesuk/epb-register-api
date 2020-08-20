@@ -41,13 +41,8 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan" do
     }
   end
 
-  let(:valid_rdsap_xml) do
-    File.read File.join Dir.pwd, "spec/fixtures/samples/rdsap.xml"
-  end
-
-  let(:valid_sap_xml) do
-    File.read File.join Dir.pwd, "spec/fixtures/samples/sap.xml"
-  end
+  let(:valid_rdsap_xml) { Samples.xml "RdSAP-Schema-20.0.0" }
+  let(:valid_sap_xml) { Samples.xml "SAP-Schema-18.0.0" }
 
   def green_deal_plan_without(key, root = nil)
     if root

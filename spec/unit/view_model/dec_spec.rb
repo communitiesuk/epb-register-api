@@ -5,21 +5,31 @@ describe ViewModel::DecWrapper do
   supported_schema = [
     {
       schema_name: "CEPC-8.0.0",
-      xml_file: "spec/fixtures/samples/dec.xml",
+      xml: Samples.xml("CEPC-8.0.0", "dec"),
       unsupported_fields: [],
       different_fields: {},
     },
     {
       schema_name: "CEPC-NI-8.0.0",
-      xml_file: "spec/fixtures/samples/dec-ni.xml",
+      xml: Samples.xml("CEPC-NI-8.0.0", "dec"),
       unsupported_fields: [],
       different_fields: {},
     },
     {
       schema_name: "CEPC-7.1",
-      xml_file: "api/schemas/xml/examples/CEPC-7.1(DEC).xml",
+      xml: Samples.xml("CEPC-7.1", "dec"),
       unsupported_fields: [],
-      different_fields: {},
+      different_fields: {
+        address: {
+          address_id: "000000000001",
+          address_line1: "2 Lonely Street",
+          address_line2: nil,
+          address_line3: nil,
+          address_line4: nil,
+          town: "Post-Town1",
+          postcode: "A0 0AA",
+        },
+      },
     },
   ].freeze
 

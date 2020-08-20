@@ -3,10 +3,6 @@
 describe "Acceptance::Assessment::LodgementType" do
   include RSpecRegisterApiServiceMixin
 
-  def sample(name)
-    File.read File.join Dir.pwd, "spec/fixtures/samples/" + name + ".xml"
-  end
-
   def vcr(filename, expected_response, folder = "responses", filetype = ".json")
     path = "spec/fixtures/" + folder + "/" + filename + filetype
     if File.file?(path)
@@ -31,7 +27,7 @@ describe "Acceptance::Assessment::LodgementType" do
   def get_lodgement(xml_name, response_code, schema_name)
     JSON.parse(
       lodge_assessment(
-        assessment_body: sample(xml_name),
+        assessment_body: Samples.xml(schema_name.to_s, xml_name),
         accepted_responses: response_code,
         auth_data: { scheme_ids: [scheme_id] },
         schema_name: schema_name.to_s,
@@ -44,22 +40,34 @@ describe "Acceptance::Assessment::LodgementType" do
     assessments = {
       "RdSAP-Schema-NI-20.0.0": {
         "valid_rdsap": {
-          xml: "rdsap-ni", assessor_qualification: { domesticRdSap: "ACTIVE" }
+          xml: "epc",
+          expected_lodgement_responses: { "0000-0000-0000-0000-0000": "rdsap" },
+          assessor_qualification: { domesticRdSap: "ACTIVE" },
         },
       },
       "RdSAP-Schema-20.0.0": {
         "valid_rdsap": {
-          xml: "rdsap", assessor_qualification: { domesticRdSap: "ACTIVE" }
+          xml: "epc",
+          expected_lodgement_responses: {
+            "0000-0000-0000-0000-0000": "rdsap-ni",
+          },
+          assessor_qualification: { domesticRdSap: "ACTIVE" },
         },
       },
       "SAP-Schema-NI-18.0.0": {
         "valid_sap": {
-          xml: "sap-ni", assessor_qualification: { domesticSap: "ACTIVE" }
+          xml: "epc",
+          expected_lodgement_responses: {
+            "0000-0000-0000-0000-0000": "sap-ni",
+          },
+          assessor_qualification: { domesticSap: "ACTIVE" },
         },
       },
       "SAP-Schema-18.0.0": {
         "valid_sap": {
-          xml: "sap", assessor_qualification: { domesticSap: "ACTIVE" }
+          xml: "epc",
+          expected_lodgement_responses: { "0000-0000-0000-0000-0000": "sap" },
+          assessor_qualification: { domesticSap: "ACTIVE" },
         },
       },
       "CEPC-8.0.0": {
@@ -124,7 +132,7 @@ describe "Acceptance::Assessment::LodgementType" do
       },
       "CEPC-NI-8.0.0": {
         "valid_cepc": {
-          xml: "cepc-ni",
+          xml: "cepc",
           assessor_qualification: {
             nonDomesticNos3: "ACTIVE",
             nonDomesticNos4: "ACTIVE",
@@ -132,7 +140,7 @@ describe "Acceptance::Assessment::LodgementType" do
           },
         },
         "valid_cepc+rr": {
-          xml: "cepc+rr-ni",
+          xml: "cepc+rr",
           assessor_qualification: {
             nonDomesticNos3: "ACTIVE",
             nonDomesticNos4: "ACTIVE",
@@ -145,10 +153,10 @@ describe "Acceptance::Assessment::LodgementType" do
           },
         },
         "valid_dec": {
-          xml: "dec-ni", assessor_qualification: { nonDomesticDec: "ACTIVE" }
+          xml: "dec", assessor_qualification: { nonDomesticDec: "ACTIVE" }
         },
         "valid_dec+rr": {
-          xml: "dec+rr-ni",
+          xml: "dec+rr",
           assessor_qualification: { nonDomesticDec: "ACTIVE" },
           expected_response: "dual_lodgement",
           expected_lodgement_responses: {
@@ -157,7 +165,7 @@ describe "Acceptance::Assessment::LodgementType" do
           },
         },
         "valid_rr": {
-          xml: "cepc-rr-ni",
+          xml: "cepc-rr",
           assessor_qualification: {
             nonDomesticNos3: "ACTIVE",
             nonDomesticNos4: "ACTIVE",
@@ -165,15 +173,13 @@ describe "Acceptance::Assessment::LodgementType" do
           },
         },
         "valid_ac-report": {
-          xml: "ac-report-ni",
-          assessor_qualification: { nonDomesticSp3: "ACTIVE" },
+          xml: "ac-report", assessor_qualification: { nonDomesticSp3: "ACTIVE" }
         },
         "valid_ac-cert": {
-          xml: "ac-cert-ni",
-          assessor_qualification: { nonDomesticCc4: "ACTIVE" },
+          xml: "ac-cert", assessor_qualification: { nonDomesticCc4: "ACTIVE" }
         },
         "valid_ac-cert+ac-report": {
-          xml: "ac-cert+ac-report-ni",
+          xml: "ac-cert+ac-report",
           assessor_qualification: {
             nonDomesticCc4: "ACTIVE", nonDomesticSp3: "ACTIVE"
           },

@@ -9,13 +9,8 @@ describe "Acceptance::Assessment::Lodge" do
     )
   end
 
-  let(:valid_rdsap_xml) do
-    File.read File.join Dir.pwd, "spec/fixtures/samples/rdsap.xml"
-  end
-
-  let(:valid_cepc_rr_xml) do
-    File.read File.join Dir.pwd, "spec/fixtures/samples/cepc+rr.xml"
-  end
+  let(:valid_rdsap_xml) { Samples.xml "RdSAP-Schema-20.0.0" }
+  let(:valid_cepc_rr_xml) { Samples.xml "CEPC-8.0.0", "cepc+rr" }
 
   context "when lodging an energy assessment (post)" do
     it "rejects an assessment with a schema that does not exist" do
@@ -417,14 +412,7 @@ describe "Acceptance::Assessment::Lodge" do
   end
 
   context "when lodging an assessment with the override flag set to true" do
-    let(:valid_cepc_xml) do
-      File.read File.join Dir.pwd, "spec/fixtures/samples/cepc.xml"
-    end
-
-    let(:cepc_xml_doc) do
-      cepc_xml_doc = Nokogiri.XML(valid_cepc_xml)
-      cepc_xml_doc
-    end
+    let(:cepc_xml_doc) { Nokogiri.XML(valid_cepc_rr_xml) }
 
     it "will lodge the assessment and log the events to the overidden_lodgement_events table" do
       scheme_id = add_scheme_and_get_id

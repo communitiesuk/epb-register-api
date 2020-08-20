@@ -5,19 +5,19 @@ describe ViewModel::DecRrWrapper do
     supported_schema = [
       {
         schema_name: "CEPC-8.0.0",
-        xml_file: "spec/fixtures/samples/dec-rr.xml",
+        xml: Samples.xml("CEPC-8.0.0", "dec-rr"),
         unsupported_fields: [],
         different_fields: {},
       },
       {
         schema_name: "CEPC-NI-8.0.0",
-        xml_file: "spec/fixtures/samples/dec-rr-ni.xml",
+        xml: Samples.xml("CEPC-NI-8.0.0", "dec-rr"),
         unsupported_fields: [],
         different_fields: {},
       },
       {
         schema_name: "CEPC-7.1",
-        xml_file: "api/schemas/xml/examples/CEPC-7.1(DEC_RR).xml",
+        xml: Samples.xml("CEPC-7.1", "dec-rr"),
         unsupported_fields: [],
         different_fields: {},
       },

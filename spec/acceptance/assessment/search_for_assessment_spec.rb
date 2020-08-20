@@ -11,18 +11,16 @@ describe "Acceptance::Assessment::SearchForAssessments" do
       ),
     )
 
-    rdsap = File.read File.join Dir.pwd, "spec/fixtures/samples/rdsap.xml"
-    cepc = File.read File.join Dir.pwd, "spec/fixtures/samples/cepc+rr.xml"
     if non_domestic
       lodge_assessment(
-        assessment_body: cepc,
+        assessment_body: Samples.xml("CEPC-8.0.0", "cepc+rr"),
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
         schema_name: "CEPC-8.0.0",
       )
     else
       lodge_assessment(
-        assessment_body: rdsap,
+        assessment_body: Samples.xml("RdSAP-Schema-20.0.0"),
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
       )

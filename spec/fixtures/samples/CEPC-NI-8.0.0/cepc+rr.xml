@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CEPC:Reports
-  xmlns:CEPC="https://epbr.digital.communities.gov.uk/xsd/cepc"
+  xmlns:CEPC="https://epbr.digital.communities.gov.uk/xsd/cepc-ni"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/cepc  ../../../api/schemas/xml/CEPC-8.0.0/Reports/CEPC-Reports.xsd"
+  xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/cepc-ni  ../../../../api/schemas/xml/CEPC-NI-8.0.0/Reports/CEPC-Reports.xsd"
 >
   <CEPC:Report>
     <CEPC:Report-Header>
@@ -10,22 +10,20 @@
       <CEPC:Issue-Date>2020-05-14</CEPC:Issue-Date>
       <CEPC:Report-Type>3</CEPC:Report-Type>
       <CEPC:Valid-Until>2026-05-04</CEPC:Valid-Until>
-      <CEPC:Related-RRN>4192-1535-8427-8844-6702</CEPC:Related-RRN>
+      <CEPC:Related-RRN>0000-0000-0000-0000-0001</CEPC:Related-RRN>
       <CEPC:Inspection-Date>2020-05-04</CEPC:Inspection-Date>
       <CEPC:Registration-Date>2020-05-04</CEPC:Registration-Date>
       <CEPC:Status>entered</CEPC:Status>
       <CEPC:Language-Code>1</CEPC:Language-Code>
       <CEPC:Energy-Assessor>
         <CEPC:Certificate-Number>SPEC000000</CEPC:Certificate-Number>
-        <CEPC:Name>TEST NAME BOI</CEPC:Name>
-        <CEPC:Accreditation-Scheme-Name>TESTSCHEME</CEPC:Accreditation-Scheme-Name>
+        <CEPC:Name>Name1</CEPC:Name>
+        <CEPC:Accreditation-Scheme-Name>Information not available</CEPC:Accreditation-Scheme-Name>
         <CEPC:Accreditation-Scheme-Website>Information not available</CEPC:Accreditation-Scheme-Website>
         <CEPC:Trading-Address>123 My Street, My City, AB3 4CD</CEPC:Trading-Address>
         <CEPC:Company-Name>Joe Bloggs Ltd</CEPC:Company-Name>
         <CEPC:Qualifications>NOS5</CEPC:Qualifications>
         <CEPC:Status>Registered</CEPC:Status>
-        <CEPC:E-Mail>test@testscheme.com</CEPC:E-Mail>
-        <CEPC:Telephone-Number>012345</CEPC:Telephone-Number>
       </CEPC:Energy-Assessor>
       <CEPC:Building-Complexity>Level 3</CEPC:Building-Complexity>
       <CEPC:Property-Details>
@@ -236,56 +234,6 @@
         </CEPC:HVAC-Systems>
       </CEPC:Building-Data>
     </CEPC:Summary-Of-Performance>
-    <CEPC:OR-Operational-Rating>
-      <CEPC:OR-Assessment-Start-Date>2020-05-14</CEPC:OR-Assessment-Start-Date>
-      <CEPC:OR-Assessment-End-Date>2030-05-14</CEPC:OR-Assessment-End-Date>
-      <CEPC:Building-Category></CEPC:Building-Category>
-      <CEPC:OR-Building-Data>
-        <CEPC:HVAC-System>Yes</CEPC:HVAC-System>
-        <CEPC:Other-HVAC-System>Yes</CEPC:Other-HVAC-System>
-        <CEPC:Internal-Environment>Yes</CEPC:Internal-Environment>
-        <CEPC:Assessment-Period-Alignment>Yes</CEPC:Assessment-Period-Alignment>
-      </CEPC:OR-Building-Data>
-      <CEPC:OR-Usable-Floor-Area>
-        <CEPC:UFA-1>
-          <CEPC:Floor-Area>100</CEPC:Floor-Area>
-        </CEPC:UFA-1>
-      </CEPC:OR-Usable-Floor-Area>
-      <CEPC:OR-Previous-Data></CEPC:OR-Previous-Data>
-      <CEPC:OR-Benchmark-Data>
-        <CEPC:Main-Benchmark></CEPC:Main-Benchmark>
-        <CEPC:Benchmarks>
-          <CEPC:Benchmark>
-            <CEPC:Area-Metric></CEPC:Area-Metric>
-            <CEPC:Benchmark></CEPC:Benchmark>
-            <CEPC:Benchmark-ID>1</CEPC:Benchmark-ID>
-            <CEPC:Floor-Area>403</CEPC:Floor-Area>
-            <CEPC:Name></CEPC:Name>
-            <CEPC:Occupancy-Level></CEPC:Occupancy-Level>
-            <CEPC:Special-Uses-Area></CEPC:Special-Uses-Area>
-            <CEPC:Total-Equivalent></CEPC:Total-Equivalent>
-            <CEPC:TUFA></CEPC:TUFA>
-          </CEPC:Benchmark>
-        </CEPC:Benchmarks>
-      </CEPC:OR-Benchmark-Data>
-      <CEPC:OR-Energy-Consumption>
-        <CEPC:Anthracite>
-          <CEPC:Consumption>12.6</CEPC:Consumption>
-          <CEPC:End-Date>2030-12-25</CEPC:End-Date>
-          <CEPC:Estimate>3</CEPC:Estimate>
-          <CEPC:Start-Date>2019-12-25</CEPC:Start-Date>
-        </CEPC:Anthracite>
-      </CEPC:OR-Energy-Consumption>
-      <CEPC:Renewable-Energy-Source>
-        <CEPC:Energy-Source>
-          <CEPC:Start-Date>2019-12-25</CEPC:Start-Date>
-          <CEPC:End-Date>2030-12-25</CEPC:End-Date>
-          <CEPC:Name>Solar panel</CEPC:Name>
-          <CEPC:Generation>20</CEPC:Generation>
-          <CEPC:Energy-Type>2</CEPC:Energy-Type>
-        </CEPC:Energy-Source>
-      </CEPC:Renewable-Energy-Source>
-    </CEPC:OR-Operational-Rating>
     <CEPC:Insurance-Details>
       <CEPC:Insurer>Insurance</CEPC:Insurer>
       <CEPC:Policy-No>0001</CEPC:Policy-No>
@@ -329,7 +277,6 @@
         <CEPC:Building-Environment>Air Conditioning</CEPC:Building-Environment>
         <CEPC:Floor-Area>403</CEPC:Floor-Area>
         <CEPC:Building-Level>3</CEPC:Building-Level>
-        <CEPC:OR-Availability-Date>2020-01-04</CEPC:OR-Availability-Date>
       </CEPC:Technical-Information>
       <CEPC:AC-Questionnaire>
         <CEPC:AC-Present>No</CEPC:AC-Present>
@@ -339,5 +286,70 @@
         <CEPC:AC-Inspection-Commissioned>4</CEPC:AC-Inspection-Commissioned>
       </CEPC:AC-Questionnaire>
     </CEPC:Energy-Performance-Certificate>
+  </CEPC:Report>
+  <CEPC:Report>
+    <CEPC:Report-Header>
+      <CEPC:RRN>0000-0000-0000-0000-0001</CEPC:RRN>
+      <CEPC:Issue-Date>2020-05-04</CEPC:Issue-Date>
+      <CEPC:Report-Type>4</CEPC:Report-Type>
+      <CEPC:Valid-Until>2026-05-04</CEPC:Valid-Until>
+      <CEPC:Related-RRN>0000-0000-0000-0000-0000</CEPC:Related-RRN>
+      <CEPC:Inspection-Date>2020-05-04</CEPC:Inspection-Date>
+      <CEPC:Registration-Date>2020-05-04</CEPC:Registration-Date>
+      <CEPC:Status>cancelled</CEPC:Status>
+      <CEPC:Language-Code>1</CEPC:Language-Code>
+      <CEPC:Energy-Assessor>
+        <CEPC:Certificate-Number>SPEC000000</CEPC:Certificate-Number>
+        <CEPC:Name>Name0</CEPC:Name>
+        <CEPC:Accreditation-Scheme-Name>Accreditation-Scheme-Name0</CEPC:Accreditation-Scheme-Name>
+        <CEPC:Related-Party-Disclosure>Related to the owner</CEPC:Related-Party-Disclosure>
+      </CEPC:Energy-Assessor>
+      <CEPC:Property-Details>
+        <CEPC:UPRN>UPRN-000000000000</CEPC:UPRN>
+        <CEPC:Property-Address>
+          <CEPC:Address-Line-1>1 Lonely Street</CEPC:Address-Line-1>
+          <CEPC:Post-Town>Post-Town0</CEPC:Post-Town>
+          <CEPC:Postcode>A0 0AA</CEPC:Postcode>
+        </CEPC:Property-Address>
+        <CEPC:Property-Type>Property-Type0</CEPC:Property-Type>
+      </CEPC:Property-Details>
+      <CEPC:Calculation-Details>
+        <CEPC:Calculation-Tool>Calculation-Tool0</CEPC:Calculation-Tool>
+      </CEPC:Calculation-Details>
+    </CEPC:Report-Header>
+    <CEPC:Formatted-Report>ZGVmYXVsdA==</CEPC:Formatted-Report>
+    <CEPC:Recommendations-Report>
+      <CEPC:RR-Recommendations>
+        <CEPC:Short-Payback>
+          <CEPC:Recommendation-Code>1</CEPC:Recommendation-Code>
+          <CEPC:Recommendation>Consider replacing T8 lamps with retrofit T5 conversion kit.</CEPC:Recommendation>
+          <CEPC:CO2-Impact>HIGH</CEPC:CO2-Impact>
+        </CEPC:Short-Payback>
+        <CEPC:Short-Payback>
+          <CEPC:Recommendation-Code>3</CEPC:Recommendation-Code>
+          <CEPC:Recommendation>Introduce HF (high frequency) ballasts for fluorescent tubes: Reduced number of fittings required.</CEPC:Recommendation>
+          <CEPC:CO2-Impact>LOW</CEPC:CO2-Impact>
+        </CEPC:Short-Payback>
+        <CEPC:Medium-Payback>
+          <CEPC:Recommendation-Code>2</CEPC:Recommendation-Code>
+          <CEPC:Recommendation>Add optimum start/stop to the heating system.</CEPC:Recommendation>
+          <CEPC:CO2-Impact>MEDIUM</CEPC:CO2-Impact>
+        </CEPC:Medium-Payback>
+        <CEPC:Long-Payback>
+          <CEPC:Recommendation-Code>3</CEPC:Recommendation-Code>
+          <CEPC:Recommendation>Consider installing an air source heat pump.</CEPC:Recommendation>
+          <CEPC:CO2-Impact>HIGH</CEPC:CO2-Impact>
+        </CEPC:Long-Payback>
+        <CEPC:Other-Payback>
+          <CEPC:Recommendation-Code>4</CEPC:Recommendation-Code>
+          <CEPC:Recommendation>Consider installing PV.</CEPC:Recommendation>
+          <CEPC:CO2-Impact>HIGH</CEPC:CO2-Impact>
+        </CEPC:Other-Payback>
+      </CEPC:RR-Recommendations>
+      <CEPC:Technical-Information>
+        <CEPC:Floor-Area>10</CEPC:Floor-Area>
+        <CEPC:Building-Environment>Natural Ventilation Only</CEPC:Building-Environment>
+      </CEPC:Technical-Information>
+    </CEPC:Recommendations-Report>
   </CEPC:Report>
 </CEPC:Reports>

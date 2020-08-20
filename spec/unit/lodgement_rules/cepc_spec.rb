@@ -3,16 +3,13 @@ describe LodgementRules::NonDomestic do
     [
       {
         xml_doc:
-          Nokogiri.XML(
-            File.read(File.join(Dir.pwd, "spec/fixtures/samples/cepc.xml")),
-          ).remove_namespaces!,
+          Nokogiri.XML(Samples.xml("CEPC-8.0.0", "cepc")).remove_namespaces!,
         schema_name: "CEPC-8.0.0",
       },
       {
         xml_doc:
-          Nokogiri.XML(
-            File.read(File.join(Dir.pwd, "spec/fixtures/samples/cepc-ni.xml")),
-          ).remove_namespaces!,
+          Nokogiri.XML(Samples.xml("CEPC-NI-8.0.0", "cepc"))
+            .remove_namespaces!,
         schema_name: "CEPC-NI-8.0.0",
       },
     ]
