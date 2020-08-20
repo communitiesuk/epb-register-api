@@ -56,9 +56,11 @@ task :import_address_base do
       end
     end
 
+    puts "   Size of contents is: #{csv_contents.size}"
     next unless csv_contents.size.positive?
 
     csv_contents = CSV.parse(csv_contents)
+    puts "   Parsed CSV contents..."
     csv_contents.each_slice(10_000) do |inserts|
       query = []
       inserts.map do |row|
