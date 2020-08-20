@@ -8,6 +8,8 @@ describe "Acceptance::Assessment::LodgementType" do
     if File.file?(path)
       JSON.parse((File.read File.join Dir.pwd, path), symbolize_names: true)
     else
+      Dir.mkdir File.dirname path unless Dir.exists? File.dirname path
+
       File.write(path, expected_response.to_json)
 
       vcr(filename, expected_response, folder, filetype)
@@ -24,13 +26,15 @@ describe "Acceptance::Assessment::LodgementType" do
     )
   end
 
-  def get_lodgement(xml_name, response_code, schema_name)
+  def get_lodgement(xml_name, response_code, schema_name, migrate = nil)
     JSON.parse(
       lodge_assessment(
         assessment_body: Samples.xml(schema_name.to_s, xml_name),
         accepted_responses: response_code,
         auth_data: { scheme_ids: [scheme_id] },
         schema_name: schema_name.to_s,
+        scopes: (migrate.nil? ? %w[assessment:lodge] : %w[assessment:lodge migrate:assessment]),
+        migrated: migrate,
       ).body,
       symbolize_names: true,
     )
@@ -69,6 +73,64 @@ describe "Acceptance::Assessment::LodgementType" do
           expected_lodgement_responses: { "0000-0000-0000-0000-0000": "sap" },
           assessor_qualification: { domesticSap: "ACTIVE" },
         },
+      },
+      "CEPC-7.1": {
+          "valid_cepc": {
+              xml: "cepc",
+              assessor_qualification: {
+                  nonDomesticNos3: "ACTIVE",
+                  nonDomesticNos4: "ACTIVE",
+                  nonDomesticNos5: "ACTIVE",
+              },
+              migrate: true,
+              expected_lodgement_responses: {
+                  "0000-0000-0000-0000-0000": "CEPC-7.1/cepc",
+              },
+          },
+          "valid_cepc+rr": {
+              xml: "cepc+rr",
+              assessor_qualification: {
+                  nonDomesticNos3: "ACTIVE",
+                  nonDomesticNos4: "ACTIVE",
+                  nonDomesticNos5: "ACTIVE",
+              },
+              expected_response: "dual_lodgement",
+              expected_lodgement_responses: {
+                  "0000-0000-0000-0000-0000": "CEPC-7.1/cepc-dual",
+                  "0000-0000-0000-0000-0001": "CEPC-7.1/cepc-rr-dual",
+              },
+              migrate: true,
+          },
+          "valid_dec": {
+              xml: "dec",
+              assessor_qualification: { nonDomesticDec: "ACTIVE" },
+              expected_lodgement_responses: {
+                  "0000-0000-0000-0000-0000": "CEPC-7.1/dec",
+              },
+              migrate: true,
+          },
+          "valid_dec+rr": {
+              xml: "dec+rr",
+              assessor_qualification: { nonDomesticDec: "ACTIVE" },
+              expected_response: "dual_lodgement",
+              expected_lodgement_responses: {
+                  "0000-0000-0000-0000-0000": "CEPC-7.1/dec-dual",
+                  "0000-0000-0000-0000-0001": "CEPC-7.1/dec-rr-dual",
+              },
+              migrate: true,
+          },
+          "valid_rr": {
+              xml: "cepc-rr",
+              assessor_qualification: {
+                  nonDomesticNos3: "ACTIVE",
+                  nonDomesticNos4: "ACTIVE",
+                  nonDomesticNos5: "ACTIVE",
+              },
+              expected_lodgement_responses: {
+                  "0000-0000-0000-0000-0000": "CEPC-7.1/cepc-rr",
+              },
+              migrate: true,
+          },
       },
       "CEPC-8.0.0": {
         "valid_cepc": {
@@ -219,6 +281,7 @@ describe "Acceptance::Assessment::LodgementType" do
                 assessment_settings[:xml],
                 assessment_settings[:response_code],
                 schema_name,
+                assessment_settings[:migrate] || nil,
               )
 
             if assessment_settings[:expected_response]
