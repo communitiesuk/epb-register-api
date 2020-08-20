@@ -69,7 +69,9 @@ describe ViewModel::DecRrWrapper do
         { code: "5", text: "Add a big wind turbine", cO2Impact: "HIGH" },
       ],
       technical_information: {
-        building_environment: "Air Conditioning", floor_area: "10"
+        building_environment: "Air Conditioning",
+        floor_area: "10",
+        occupier: "Primary School",
       },
       related_rrn: "0000-0000-0000-0000-1111",
     }.freeze

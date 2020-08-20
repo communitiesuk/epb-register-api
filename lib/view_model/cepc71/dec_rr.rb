@@ -38,6 +38,10 @@ module ViewModel
       def related_rrn
         xpath(%w[Related-RRN])
       end
+
+      def occupier
+        xpath(%w[Occupier])
+      end
     end
   end
 end
