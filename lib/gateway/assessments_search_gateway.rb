@@ -16,12 +16,14 @@ module Gateway
     SQL
 
     def search_by_postcode(postcode, assessment_types = [])
-      sql = ASSESSMENT_SEARCH_INDEX_SELECT + <<-SQL
+      sql =
+        ASSESSMENT_SEARCH_INDEX_SELECT +
+        <<-SQL
         WHERE postcode = $1
         AND cancelled_at IS NULL
         AND not_for_issue_at IS NULL
         AND opt_out = false
-      SQL
+        SQL
 
       binds = [
         ActiveRecord::Relation::QueryAttribute.new(
@@ -67,52 +69,54 @@ module Gateway
     def search_by_street_name_and_town(
       street_name, town, assessment_type, restrictive = true
     )
-      sql = ASSESSMENT_SEARCH_INDEX_SELECT + <<-SQL
+      sql =
+        ASSESSMENT_SEARCH_INDEX_SELECT +
+        <<-SQL
         WHERE (#{
-        Helper::LevenshteinSqlHelper.levenshtein(
-          'address_line1',
-          '$1',
-          Helper::LevenshteinSqlHelper::STREET_PERMISSIVENESS,
-        )
-      } OR #{
-        Helper::LevenshteinSqlHelper.levenshtein(
-          'address_line2',
-          '$1',
-          Helper::LevenshteinSqlHelper::STREET_PERMISSIVENESS,
-        )
-      } OR #{
-        Helper::LevenshteinSqlHelper.levenshtein(
-          'address_line3',
-          '$1',
-          Helper::LevenshteinSqlHelper::STREET_PERMISSIVENESS,
-        )
-      })
+            Helper::LevenshteinSqlHelper.levenshtein(
+              'address_line1',
+              '$1',
+              Helper::LevenshteinSqlHelper::STREET_PERMISSIVENESS,
+            )
+          } OR #{
+            Helper::LevenshteinSqlHelper.levenshtein(
+              'address_line2',
+              '$1',
+              Helper::LevenshteinSqlHelper::STREET_PERMISSIVENESS,
+            )
+          } OR #{
+            Helper::LevenshteinSqlHelper.levenshtein(
+              'address_line3',
+              '$1',
+              Helper::LevenshteinSqlHelper::STREET_PERMISSIVENESS,
+            )
+          })
                 AND (#{
-        Helper::LevenshteinSqlHelper.levenshtein(
-          'town',
-          '$2',
-          Helper::LevenshteinSqlHelper::TOWN_PERMISSIVENESS,
-        )
-      } OR #{
-        Helper::LevenshteinSqlHelper.levenshtein(
-          'address_line2',
-          '$2',
-          Helper::LevenshteinSqlHelper::TOWN_PERMISSIVENESS,
-        )
-      } OR #{
-        Helper::LevenshteinSqlHelper.levenshtein(
-          'address_line3',
-          '$2',
-          Helper::LevenshteinSqlHelper::TOWN_PERMISSIVENESS,
-        )
-      } OR #{
-        Helper::LevenshteinSqlHelper.levenshtein(
-          'address_line4',
-          '$2',
-          Helper::LevenshteinSqlHelper::TOWN_PERMISSIVENESS,
-        )
-      })
-      SQL
+            Helper::LevenshteinSqlHelper.levenshtein(
+              'town',
+              '$2',
+              Helper::LevenshteinSqlHelper::TOWN_PERMISSIVENESS,
+            )
+          } OR #{
+            Helper::LevenshteinSqlHelper.levenshtein(
+              'address_line2',
+              '$2',
+              Helper::LevenshteinSqlHelper::TOWN_PERMISSIVENESS,
+            )
+          } OR #{
+            Helper::LevenshteinSqlHelper.levenshtein(
+              'address_line3',
+              '$2',
+              Helper::LevenshteinSqlHelper::TOWN_PERMISSIVENESS,
+            )
+          } OR #{
+            Helper::LevenshteinSqlHelper.levenshtein(
+              'address_line4',
+              '$2',
+              Helper::LevenshteinSqlHelper::TOWN_PERMISSIVENESS,
+            )
+          })
+        SQL
 
       binds = [
         ActiveRecord::Relation::QueryAttribute.new(
@@ -162,11 +166,13 @@ module Gateway
     def search_by_assessment_id(
       assessment_id, restrictive = true, assessment_type = []
     )
-      sql = ASSESSMENT_SEARCH_INDEX_SELECT + <<-SQL
+      sql =
+        ASSESSMENT_SEARCH_INDEX_SELECT +
+        <<-SQL
         WHERE assessment_id = '#{
-          ActiveRecord::Base.sanitize_sql(assessment_id)
-        }'
-      SQL
+            ActiveRecord::Base.sanitize_sql(assessment_id)
+          }'
+        SQL
 
       if restrictive
         sql += " AND cancelled_at IS NULL"
