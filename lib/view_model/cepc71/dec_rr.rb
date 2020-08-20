@@ -34,6 +34,10 @@ module ViewModel
       def building_environment
         xpath(%w[Advisory-Report Technical-Information Building-Environment])
       end
+
+      def related_rrn
+        xpath(%w[Related-RRN])
+      end
     end
   end
 end

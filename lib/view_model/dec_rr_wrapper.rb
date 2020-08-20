@@ -43,6 +43,7 @@ module ViewModel
           building_environment: @view_model.building_environment,
           floor_area: @view_model.floor_area,
         },
+        related_rrn: @view_model.related_rrn,
       }
     end
 

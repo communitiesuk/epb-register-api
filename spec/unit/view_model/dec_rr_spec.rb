@@ -71,6 +71,7 @@ describe ViewModel::DecRrWrapper do
       technical_information: {
         building_environment: "Air Conditioning", floor_area: "10"
       },
+      related_rrn: "0000-0000-0000-0000-1111",
     }.freeze
 
     it "should read the appropriate values from the XML doc" do
