@@ -29,6 +29,7 @@
         <Property-Type>University campus</Property-Type>
       </Property-Details>
       <Calculation-Details>
+        <Inspection-Type>Physical</Inspection-Type>
         <Calculation-Tool>DCLG, ORCalc, v3.6.2</Calculation-Tool>
       </Calculation-Details>
     </Report-Header>

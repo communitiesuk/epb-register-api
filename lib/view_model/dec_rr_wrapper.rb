@@ -49,6 +49,7 @@ module ViewModel
           discounted_energy: @view_model.discounted_energy,
           date_of_issue: @view_model.date_of_issue,
           calculation_tool: @view_model.calculation_tool,
+          inspection_type: @view_model.inspection_type,
         },
         related_rrn: @view_model.related_rrn,
       }

@@ -78,6 +78,7 @@ describe ViewModel::DecRrWrapper do
         discounted_energy: "Special discount",
         date_of_issue: "2020-05-04",
         calculation_tool: "DCLG, ORCalc, v3.6.2",
+        inspection_type: "Physical",
       },
       related_rrn: "0000-0000-0000-0000-1111",
     }.freeze

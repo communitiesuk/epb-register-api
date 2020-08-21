@@ -119,6 +119,10 @@ module ViewModel
       def calculation_tool
         xpath(%w[Calculation-Details Calculation-Tool])
       end
+
+      def inspection_type
+        xpath(%w[Calculation-Details Inspection-Type])
+      end
     end
   end
 end
