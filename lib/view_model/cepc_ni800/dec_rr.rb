@@ -50,6 +50,10 @@ module ViewModel
       def renewable_sources
         xpath(%w[Renewable-Sources])
       end
+
+      def discounted_energy
+        xpath(%w[Special-Energy-Uses])
+      end
     end
   end
 end

@@ -74,6 +74,7 @@ describe ViewModel::DecRrWrapper do
         occupier: "Primary School",
         property_type: "University campus",
         renewable_sources: "Renewable source",
+        discounted_energy: "Special discount",
       },
       related_rrn: "0000-0000-0000-0000-1111",
     }.freeze
