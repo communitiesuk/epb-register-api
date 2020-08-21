@@ -76,6 +76,7 @@ describe ViewModel::DecRrWrapper do
         property_type: "University campus",
         renewable_sources: "Renewable source",
         discounted_energy: "Special discount",
+        date_of_issue: "2020-05-04",
       },
       related_rrn: "0000-0000-0000-0000-1111",
     }.freeze

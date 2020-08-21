@@ -47,6 +47,7 @@ module ViewModel
           property_type: @view_model.property_type,
           renewable_sources: @view_model.renewable_sources,
           discounted_energy: @view_model.discounted_energy,
+          date_of_issue: @view_model.date_of_issue,
         },
         related_rrn: @view_model.related_rrn,
       }
