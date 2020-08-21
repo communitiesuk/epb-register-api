@@ -77,6 +77,7 @@ describe ViewModel::DecRrWrapper do
         renewable_sources: "Renewable source",
         discounted_energy: "Special discount",
         date_of_issue: "2020-05-04",
+        calculation_tool: "DCLG, ORCalc, v3.6.2",
       },
       related_rrn: "0000-0000-0000-0000-1111",
     }.freeze

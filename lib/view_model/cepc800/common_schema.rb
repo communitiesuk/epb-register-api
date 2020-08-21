@@ -115,6 +115,10 @@ module ViewModel
       def or_assessment_end_date
         xpath(%w[OR-Operational-Rating OR-Assessment-End-Date])
       end
+
+      def calculation_tool
+        xpath(%w[Calculation-Details Calculation-Tool])
+      end
     end
   end
 end
