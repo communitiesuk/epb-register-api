@@ -11,6 +11,25 @@ module ViewModel
         end
       end
 
+      def site_services(service)
+        {
+          description: @xml_doc.at("Site-Services/#{service}/Description").content,
+          quantity: @xml_doc.at("Site-Services/#{service}/Quantity").content,
+        }
+      end
+
+      def site_service_one
+        site_services("Service-1")
+      end
+
+      def site_service_two
+        site_services("Service-2")
+      end
+
+      def site_service_three
+        site_services("Service-3")
+      end
+
       def short_payback_recommendations
         recommendations("Short-Payback")
       end

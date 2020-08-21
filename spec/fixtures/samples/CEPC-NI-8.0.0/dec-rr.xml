@@ -70,15 +70,15 @@
       </Technical-Information>
       <Site-Services>
         <Service-1>
-          <Description>Description0</Description>
-          <Quantity>0</Quantity>
+          <Description>Electricity</Description>
+          <Quantity>751445</Quantity>
         </Service-1>
         <Service-2>
-          <Description>Description1</Description>
-          <Quantity>0</Quantity>
+          <Description>Gas</Description>
+          <Quantity>72956</Quantity>
         </Service-2>
         <Service-3>
-          <Description>Description2</Description>
+          <Description>Not used</Description>
           <Quantity>0</Quantity>
         </Service-3>
       </Site-Services>
