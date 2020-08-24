@@ -16,6 +16,7 @@ module UseCase
       end
 
       def add_data!(hash)
+        registered_by!(hash)
         related_cert_energy_band!(hash)
         hash
       end

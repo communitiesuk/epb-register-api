@@ -37,6 +37,16 @@ describe ViewModel::DecRrWrapper do
         town: "Post-Town0",
         postcode: "A0 0AA",
       },
+      assessor: {
+        scheme_assessor_id: "SPEC000000",
+        name: "Mrs Report Writer",
+        company_details: {
+          name: "Joe Bloggs Ltd", address: "123 My Street, My City, AB3 4CD"
+        },
+        contact_details: {
+          email: "person@person.com", telephone: "010199991010101"
+        },
+      },
       short_payback_recommendations: [
         {
           code: "1",

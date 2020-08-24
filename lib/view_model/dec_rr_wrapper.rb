@@ -34,6 +34,17 @@ module ViewModel
           town: @view_model.town,
           postcode: @view_model.postcode,
         },
+        assessor: {
+          scheme_assessor_id: @view_model.scheme_assessor_id,
+          name: @view_model.assessor_name,
+          company_details: {
+            name: @view_model.company_name, address: @view_model.company_address
+          },
+          contact_details: {
+            email: @view_model.assessor_email,
+            telephone: @view_model.assessor_telephone,
+          },
+        },
         short_payback_recommendations:
           @view_model.short_payback_recommendations,
         medium_payback_recommendations:
