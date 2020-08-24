@@ -13,7 +13,8 @@ module ViewModel
 
       def site_services(service)
         {
-          description: @xml_doc.at("Site-Services/#{service}/Description").content,
+          description:
+            @xml_doc.at("Site-Services/#{service}/Description").content,
           quantity: @xml_doc.at("Site-Services/#{service}/Quantity").content,
         }
       end

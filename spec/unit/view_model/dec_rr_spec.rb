@@ -90,18 +90,9 @@ describe ViewModel::DecRrWrapper do
         calculation_tool: "DCLG, ORCalc, v3.6.2",
         inspection_type: "Physical",
       },
-      site_service_one: {
-        description: "Electricity",
-        quantity: "751445",
-      },
-      site_service_two: {
-        description: "Gas",
-        quantity: "72956",
-      },
-      site_service_three: {
-        description: "Not used",
-        quantity: "0",
-      },
+      site_service_one: { description: "Electricity", quantity: "751445" },
+      site_service_two: { description: "Gas", quantity: "72956" },
+      site_service_three: { description: "Not used", quantity: "0" },
       related_rrn: "0000-0000-0000-0000-1111",
     }.freeze
 
