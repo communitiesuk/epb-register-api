@@ -1,0 +1,55 @@
+[{
+  "key": "header",
+  "path": ["Report", "Report_Header"]
+}, {
+  "key": "assessment_id",
+  "root": "header",
+  "path": ["RRN"]
+}, {
+  "key": "assessment_type",
+  "root": "header",
+  "path": ["Report_Type"],
+  "cast": "map",
+  "map": {
+    "1": "DEC",
+    "2": "DEC-RR",
+    "3": "CEPC",
+    "4": "CEPC-RR",
+    "5": "AC-REPORT",
+    "6": "AC-CERT"
+  }
+}, {
+  "key": "assessor_id",
+  "root": "header",
+  "path": ["Energy_Assessor", "Certificate_Number"]
+}, {
+  "key": "building_complexity",
+  "root": "header",
+  "path": ["Building_Complexity"]
+}, {
+  "key": "address_id",
+  "path": ["Report", "Report_Header", "Property_Details", "UPRN"]
+}, {
+  "key": "address",
+  "path": ["Report", "Report_Header", "Property_Details", "Property_Address"]
+}, {
+  "key": "address_line_one",
+  "root": "address",
+  "path": ["Address_Line_1"]
+}, {
+  "key": "address_line_two",
+  "root": "address",
+  "path": ["Address_Line_2"]
+}, {
+  "key": "address_line_three",
+  "root": "address",
+  "path": ["Address_Line_3"]
+}, {
+  "key": "town",
+  "root": "address",
+  "path": ["Post_Town"]
+}, {
+  "key": "postcode",
+  "root": "address",
+  "path": ["Postcode"]
+}]
