@@ -86,19 +86,6 @@ module UseCase
           xml: data[:raw_data],
         )
 
-      if assessment.is_type?(Domain::RdsapAssessment) ||
-          assessment.is_type?(Domain::SapAssessment)
-        assessment.set(:lighting_cost_current, data[:lighting_cost_current])
-        assessment.set(:heating_cost_current, data[:heating_cost_current])
-        assessment.set(:hot_water_cost_current, data[:hot_water_cost_current])
-        assessment.set(:lighting_cost_potential, data[:lighting_cost_potential])
-        assessment.set(:heating_cost_potential, data[:heating_cost_potential])
-        assessment.set(
-          :hot_water_cost_potential,
-          data[:hot_water_cost_potential],
-        )
-      end
-
       @assessments_gateway.insert_or_update assessment
 
       @assessments_xml_gateway.send_to_db(
