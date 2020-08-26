@@ -20,7 +20,6 @@ module Domain
       address_line3: nil,
       address_line4: nil,
       town: nil,
-      property_age_band: nil,
       cancelled_at: nil,
       not_for_issue_at: nil,
       scheme_assessor_id: nil,

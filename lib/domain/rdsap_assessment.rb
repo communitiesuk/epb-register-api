@@ -14,7 +14,6 @@ module Domain
       migrated: nil,
       date_of_assessment: nil,
       date_registered: nil,
-      tenure: nil,
       type_of_assessment: nil,
       assessment_id: nil,
       assessor: nil,
@@ -49,7 +48,6 @@ module Domain
         else
           ""
         end
-      @tenure = tenure
       @type_of_assessment = type_of_assessment
       @assessment_id = assessment_id
       @assessor = assessor
@@ -87,7 +85,6 @@ module Domain
         migrated: @migrated,
         date_of_assessment: @date_of_assessment,
         date_registered: @date_registered,
-        tenure: @tenure,
         type_of_assessment: @type_of_assessment,
         assessment_id: @assessment_id,
         scheme_assessor_id: @assessor.scheme_assessor_id,

@@ -13,7 +13,6 @@ module Domain
       migrated: nil,
       date_of_assessment: nil,
       date_registered: nil,
-      tenure: nil,
       type_of_assessment: nil,
       assessment_id: nil,
       assessor: nil,
