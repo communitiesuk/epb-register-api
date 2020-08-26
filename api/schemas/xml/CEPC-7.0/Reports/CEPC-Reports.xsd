@@ -11,7 +11,6 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-	<xs:element name="Report" type="Report"/>
 	<xs:complexType name="Report">
 		<xs:sequence>
 			<xs:element name="Report-Header" type="Report-Header"/>
