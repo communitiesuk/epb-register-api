@@ -32,7 +32,7 @@ module UseCase
       check_assessor_qualification data, assessor unless migrated
 
       data[:improvements] =
-        data[:improvements].map do |improvement|
+        data[:improvements]&.map do |improvement|
           improvement[:assessment_id] = assessment_id
           Domain::RecommendedImprovement.new(improvement)
         end
