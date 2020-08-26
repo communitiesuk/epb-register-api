@@ -31,7 +31,9 @@ describe ViewModel::AcCertWrapper do
         postcode: "A0 0AA",
       },
       technical_information: {
-        date_of_assessment: "2020-05-20", building_complexity: "Level 3"
+        date_of_assessment: "2020-05-20",
+        building_complexity: "Level 3",
+        calculation_tool: "Sterling Accreditation, Sterling e-Volve, v1.2",
       },
     }.freeze
 

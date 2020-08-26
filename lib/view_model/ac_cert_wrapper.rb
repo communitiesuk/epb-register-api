@@ -36,6 +36,7 @@ module ViewModel
         technical_information: {
           date_of_assessment: @view_model.date_of_assessment,
           building_complexity: @view_model.building_complexity,
+          calculation_tool: @view_model.calculation_tool,
         },
       }
     end
