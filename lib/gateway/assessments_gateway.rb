@@ -4,8 +4,6 @@ module Gateway
   class AssessmentsGateway
     class Assessment < ActiveRecord::Base; end
 
-    class DomesticEpcEnergyImprovement < ActiveRecord::Base; end
-
     class InvalidAssessmentType < StandardError; end
 
     def insert_or_update(assessment)
@@ -35,10 +33,6 @@ module Gateway
             DELETE FROM assessments_xml WHERE assessment_id = $1
           SQL
 
-          delete_improvements = <<-SQL
-            DELETE FROM domestic_epc_energy_improvements WHERE assessment_id = $1
-          SQL
-
           green_deal_plan_id = <<-SQL
             SELECT green_deal_plan_id FROM green_deal_assessments WHERE assessment_id = $1
           SQL
@@ -60,10 +54,6 @@ module Gateway
           ]
 
           ActiveRecord::Base.connection.exec_query delete_xml, "SQL", binds
-
-          ActiveRecord::Base.connection.exec_query delete_improvements,
-                                                   "SQL",
-                                                   binds
 
           results =
             ActiveRecord::Base.connection.exec_query green_deal_plan_id,
@@ -98,10 +88,6 @@ module Gateway
         else
           Assessment.create assessment.to_record
 
-          assessment.get(:recommended_improvements)&.map(&:to_record)
-            &.each do |improvement|
-            DomesticEpcEnergyImprovement.create improvement
-          end
         end
       end
     end
