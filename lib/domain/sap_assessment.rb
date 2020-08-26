@@ -30,7 +30,6 @@ module Domain
       address_line4: nil,
       town: nil,
       recommended_improvements: nil,
-      property_summary: [],
       property_age_band: nil,
       cancelled_at: nil,
       not_for_issue_at: nil,
@@ -72,7 +71,6 @@ module Domain
       @address_line4 = address_line4
       @town = town
       @recommended_improvements = recommended_improvements
-      @property_summary = property_summary
       @property_age_band = property_age_band
       @cancelled_at =
         (Date.strptime(cancelled_at.to_s, "%Y-%m-%d") unless cancelled_at.nil?)
@@ -105,7 +103,6 @@ module Domain
         address_line3: @address_line3,
         address_line4: @address_line4,
         town: @town,
-        property_summary: @property_summary,
         property_age_band: @property_age_band,
       }
     end

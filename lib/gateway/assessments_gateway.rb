@@ -127,7 +127,6 @@ module Gateway
 
     def row_to_domain(row)
       row.symbolize_keys!
-      row[:property_summary] = JSON.parse(row[:property_summary])
       Domain::Assessment.new(row)
     end
 

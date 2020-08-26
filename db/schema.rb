@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_20_101620) do
+ActiveRecord::Schema.define(version: 2020_08_26_162333) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -40,7 +40,6 @@ ActiveRecord::Schema.define(version: 2020_08_20_101620) do
     t.string "town"
     t.string "scheme_assessor_id", null: false
     t.boolean "opt_out", default: false
-    t.jsonb "property_summary", default: []
     t.string "address_id"
     t.boolean "migrated", default: false
     t.datetime "cancelled_at"
