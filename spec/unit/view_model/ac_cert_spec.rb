@@ -34,6 +34,7 @@ describe ViewModel::AcCertWrapper do
         date_of_assessment: "2020-05-20",
         building_complexity: "Level 3",
         calculation_tool: "Sterling Accreditation, Sterling e-Volve, v1.2",
+        f_gas_compliant_date: "00/00/,,00",
       },
     }.freeze
 
