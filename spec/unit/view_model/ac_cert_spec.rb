@@ -30,6 +30,7 @@ describe ViewModel::AcCertWrapper do
         town: "Post-Town1",
         postcode: "A0 0AA",
       },
+      date_of_assessment: "2020-05-20"
     }.freeze
 
     it "should read the appropriate values from the XML doc" do

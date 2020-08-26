@@ -33,6 +33,7 @@ module ViewModel
           town: @view_model.town,
           postcode: @view_model.postcode,
         },
+        date_of_assessment: @view_model.date_of_assessment,
       }
     end
 
