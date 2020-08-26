@@ -210,7 +210,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
           loftInsulation: false,
           spaceHeating: 30.0,
           waterHeating: 60.0,
-          secondaryHeating: nil,
+          secondaryHeating: "Electric heater",
           energyEfficiency: {
             currentRating: 50,
             currentBand: "e",
@@ -313,28 +313,6 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
       let(:assessment) { Nokogiri.XML valid_sap_xml }
       let(:assessment_id) { assessment.at "RRN" }
 
-      let(:secondary_heating) do
-        assessment.at "Secondary-Heating/Energy-Efficiency-Rating"
-      end
-
-      let(:secondary_heating_description) do
-        Nokogiri::XML::Node.new "Description", assessment
-      end
-
-      let(:hot_water) { assessment.at "Hot-Water/Energy-Efficiency-Rating" }
-
-      let(:hot_water_description) do
-        Nokogiri::XML::Node.new "Description", assessment
-      end
-
-      let(:main_heating) do
-        assessment.at "Main-Heating/Energy-Efficiency-Rating"
-      end
-
-      let(:main_heating_description) do
-        Nokogiri::XML::Node.new "Description", assessment
-      end
-
       let(:response) do
         JSON.parse(
           fetch_renewable_heat_incentive("0000-0000-0000-0000-0001").body,
@@ -344,15 +322,6 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
 
       before do
         assessment_id.children = "0000-0000-0000-0000-0001"
-
-        main_heating_description.content = "Gas-fired central heating"
-        main_heating.add_next_sibling main_heating_description
-
-        secondary_heating_description.content = "Electric bar heater"
-        secondary_heating.add_next_sibling secondary_heating_description
-
-        hot_water_description.content = "Electrical immersion heater"
-        hot_water.add_next_sibling hot_water_description
 
         lodge_assessment assessment_body: assessment.to_xml,
                          accepted_responses: [201],
@@ -376,7 +345,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
           loftInsulation: false,
           spaceHeating: 30.0,
           waterHeating: 60.0,
-          secondaryHeating: "Electric bar heater",
+          secondaryHeating: "Electric heater",
           energyEfficiency: {
             currentRating: 50,
             currentBand: "e",

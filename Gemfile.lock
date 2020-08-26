@@ -21,6 +21,9 @@ GEM
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     database_cleaner (1.8.5)
+    debase (0.2.4.1)
+      debase-ruby_core_source (>= 0.10.2)
+    debase-ruby_core_source (0.10.9)
     diff-lcs (1.4.4)
     epb-auth-tools (1.0.5)
       jwt (~> 2.2)
@@ -148,6 +151,7 @@ PLATFORMS
 
 DEPENDENCIES
   database_cleaner!
+  debase!
   epb-auth-tools (~> 1.0.4)!
   geocoder (~> 1.6.2)!
   json-schema (~> 2.8)!

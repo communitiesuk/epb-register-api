@@ -90,6 +90,7 @@ module ViewModel
             environmental_efficiency_rating:
               xpath(%w[Environmental-Efficiency-Rating], node).to_i,
             name: node.name.underscore,
+            description: xpath(%w[Description], node),
           }
         }.compact
       end

@@ -13,9 +13,7 @@ module Gateway
       sql = <<-SQL
         SELECT
           assessments.assessment_id, scheme_assessor_id,
-           type_of_assessment,
-           cancelled_at,
-           property_summary, not_for_issue_at,
+           type_of_assessment, cancelled_at, not_for_issue_at,
           string_agg(improvement_type, ', ') AS improvement_type
         FROM assessments
         LEFT JOIN domestic_epc_energy_improvements deei
@@ -69,8 +67,8 @@ module Gateway
           assessment_summary[:heat_demand][:current_water_heating_demand],
         secondary_heating:
           fetch_property_description(
-            row["property_summary"],
-            "secondary_heating",
+              assessment_summary[:property_summary],
+              "secondary_heating",
           ),
         energy_efficiency: {
           current_rating: assessment_summary[:current_energy_efficiency_rating],
@@ -100,11 +98,9 @@ module Gateway
       ].compact.join(" ")
     end
 
-    def fetch_property_description(property, name)
-      summary = JSON.parse property
-
-      summary.each do |field|
-        return field["description"] if field["name"] == name
+    def fetch_property_description(summary, name)
+      summary.each do |feature|
+        return feature[:description] if feature[:name] == name
       end
 
       nil
