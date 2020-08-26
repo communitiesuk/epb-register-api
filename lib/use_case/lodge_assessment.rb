@@ -45,21 +45,16 @@ module UseCase
       end
 
       assessment =
-        Domain::Assessment.new(
+        Domain::AssessmentIndexRecord.new(
           migrated: migrated,
           date_of_assessment: data[:inspection_date],
           date_registered: data[:registration_date],
-          tenure: data[:tenure],
-          dwelling_type: data[:dwelling_type],
           type_of_assessment: data[:assessment_type],
-          total_floor_area: data[:total_floor_area],
           assessment_id: data[:assessment_id],
           assessor: assessor,
           current_energy_efficiency_rating: data[:current_energy_rating].to_i,
           potential_energy_efficiency_rating:
             data[:potential_energy_rating].to_i,
-          current_carbon_emission: data[:current_carbon_emission],
-          potential_carbon_emission: data[:potential_carbon_emission],
           postcode: data[:postcode],
           date_of_expiry: data[:date_of_expiry] || expiry_date,
           address_id: data[:address_id] || nil,
@@ -68,21 +63,6 @@ module UseCase
           address_line3: data[:address_line_three] || "",
           address_line4: "",
           town: data[:town],
-          current_space_heating_demand:
-            data[:space_heating] || data[:new_space_heating],
-          current_water_heating_demand:
-            data[:water_heating] || data[:new_water_heating],
-          impact_of_loft_insulation: data[:impact_of_loft_insulation],
-          impact_of_cavity_insulation: data[:impact_of_cavity_insulation],
-          impact_of_solid_wall_insulation:
-            data[:impact_of_solid_wall_insulation],
-          related_party_disclosure_number:
-            data[:related_party_disclosure_number],
-          related_party_disclosure_text: data[:related_party_disclosure_text],
-          calculation_tool:
-            data[:technical_information_calculation_tool] || nil,
-          property_summary: data[:property_summary],
-          property_age_band: data[:property_age_band],
           xml: data[:raw_data],
         )
 
