@@ -78,16 +78,6 @@ module ViewModel
         expires_at.to_s
       end
 
-      def company_name; end
-
-      def company_address; end
-
-      def construction_year; end
-
-      def construction_age_band; end
-
-      def building_part_number; end
-
       def property_summary
         @xml_doc.search("Energy-Assessment Property-Summary").children.select(
           &:element?
@@ -176,18 +166,6 @@ module ViewModel
       def estimated_energy_cost
         xpath(%w[Estimated-Energy-Cost])
       end
-
-      def water_heating; end
-
-      def new_water_heating; end
-
-      def space_heating; end
-
-      def new_space_heating; end
-
-      def registration_date; end
-
-      def inspection_date; end
 
       def total_floor_area
         xpath(%w[Total-Floor-Area]).to_f
