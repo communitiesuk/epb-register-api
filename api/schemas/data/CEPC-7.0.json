@@ -23,6 +23,22 @@
   "root": "header",
   "path": ["Energy_Assessor", "Certificate_Number"]
 }, {
+  "key": "inspection_date",
+  "root": "header",
+  "path": ["Inspection_Date"]
+}, {
+  "key": "date_of_expiry",
+  "root": "header",
+  "path": ["Valid_Until"]
+}, {
+  "key": "registration_date",
+  "root": "header",
+  "path": ["Registration_Date"]
+}, {
+  "key": "date_of_assessment",
+  "root": "header",
+  "path": ["Issue_Date"]
+}, {
   "key": "building_complexity",
   "root": "header",
   "path": ["Building_Complexity"]
