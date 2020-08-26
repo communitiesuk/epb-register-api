@@ -31,12 +31,6 @@ module UseCase
 
       check_assessor_qualification data, assessor unless migrated
 
-      data[:improvements] =
-        data[:improvements]&.map do |improvement|
-          improvement[:assessment_id] = assessment_id
-          Domain::RecommendedImprovement.new(improvement)
-        end
-
       if data[:property_details].is_a? Array
         data[:property_details].each do |building|
           next unless building[:building_part_number] == 1
@@ -82,7 +76,6 @@ module UseCase
           impact_of_cavity_insulation: data[:impact_of_cavity_insulation],
           impact_of_solid_wall_insulation:
             data[:impact_of_solid_wall_insulation],
-          recommended_improvements: data[:improvements],
           related_party_disclosure_number:
             data[:related_party_disclosure_number],
           related_party_disclosure_text: data[:related_party_disclosure_text],
