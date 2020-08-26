@@ -8,25 +8,6 @@ module Gateway
 
     class InvalidAssessmentType < StandardError; end
 
-    def row_to_energy_improvement(row)
-      Domain::RecommendedImprovement.new(
-        assessment_id: row[:assessment_id],
-        sequence: row[:sequence],
-        improvement_code: row[:improvement_code],
-        indicative_cost: row[:indicative_cost],
-        typical_saving: row[:typical_saving],
-        improvement_category: row[:improvement_category],
-        improvement_type: row[:improvement_type],
-        improvement_title: row[:improvement_title],
-        improvement_description: row[:improvement_description],
-        energy_performance_rating_improvement:
-          row[:energy_performance_rating_improvement],
-        environmental_impact_rating_improvement:
-          row[:environmental_impact_rating_improvement],
-        green_deal_category_code: row[:green_deal_category_code],
-      )
-    end
-
     def insert_or_update(assessment)
       check_valid_energy_ratings assessment
       send_to_db assessment
