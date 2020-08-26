@@ -92,11 +92,6 @@ module Gateway
       end
     end
 
-    def row_to_domain(row)
-      row.symbolize_keys!
-      Domain::Assessment.new(row)
-    end
-
     def check_valid_energy_ratings(assessment)
       if %w[CEPC RdSAP SAP].include? assessment.get(:type_of_assessment)
         current = assessment.get(:current_energy_efficiency_rating)
