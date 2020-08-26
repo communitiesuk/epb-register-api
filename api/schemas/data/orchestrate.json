@@ -58,5 +58,10 @@
     "schema_path": "api/schemas/xml/CEPC-NI-8.0.0/Reports/CEPC-Reports.xsd",
     "data_path": "api/schemas/data/CEPC-NI-8.0.0.json",
     "root_tag": "Report"
+  },
+  "CEPC-7.0": {
+    "schema_path": "api/schemas/xml/CEPC-7.0/Reports/CEPC-Reports.xsd",
+    "data_path": "api/schemas/data/CEPC-7.0.json",
+    "root_tag": "Report"
   }
 }

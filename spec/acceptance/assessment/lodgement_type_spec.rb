@@ -81,6 +81,64 @@ describe "Acceptance::Assessment::LodgementType" do
           assessor_qualification: { domesticSap: "ACTIVE" },
         },
       },
+      "CEPC-7.0": {
+          "valid_cepc": {
+              xml: "cepc",
+              assessor_qualification: {
+                  nonDomesticNos3: "ACTIVE",
+                  nonDomesticNos4: "ACTIVE",
+                  nonDomesticNos5: "ACTIVE",
+              },
+              migrate: true,
+              expected_lodgement_responses: {
+                  "0000-0000-0000-0000-0000": "CEPC-7.0/cepc",
+              },
+          },
+          "valid_cepc+rr": {
+              xml: "cepc+rr",
+              assessor_qualification: {
+                  nonDomesticNos3: "ACTIVE",
+                  nonDomesticNos4: "ACTIVE",
+                  nonDomesticNos5: "ACTIVE",
+              },
+              expected_response: "dual_lodgement",
+              expected_lodgement_responses: {
+                  "0000-0000-0000-0000-0000": "CEPC-7.0/cepc-dual",
+                  "0000-0000-0000-0000-0001": "CEPC-7.0/cepc-rr-dual",
+              },
+              migrate: true,
+          },
+          "valid_dec": {
+              xml: "dec",
+              assessor_qualification: { nonDomesticDec: "ACTIVE" },
+              expected_lodgement_responses: {
+                  "0000-0000-0000-0000-0000": "CEPC-7.0/dec",
+              },
+              migrate: true,
+          },
+          "valid_dec+rr": {
+              xml: "dec+rr",
+              assessor_qualification: { nonDomesticDec: "ACTIVE" },
+              expected_response: "dual_lodgement",
+              expected_lodgement_responses: {
+                  "0000-0000-0000-0000-0000": "CEPC-7.0/dec-dual",
+                  "0000-0000-0000-0000-0001": "CEPC-7.0/dec-rr-dual",
+              },
+              migrate: true,
+          },
+          "valid_rr": {
+              xml: "cepc-rr",
+              assessor_qualification: {
+                  nonDomesticNos3: "ACTIVE",
+                  nonDomesticNos4: "ACTIVE",
+                  nonDomesticNos5: "ACTIVE",
+              },
+              expected_lodgement_responses: {
+                  "0000-0000-0000-0000-0000": "CEPC-7.0/cepc-rr",
+              },
+              migrate: true,
+          },
+      },
       "CEPC-7.1": {
         "valid_cepc": {
           xml: "cepc",
