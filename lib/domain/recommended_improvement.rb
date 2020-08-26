@@ -32,24 +32,6 @@ module Domain
       @green_deal_category_code = green_deal_category_code
     end
 
-    def to_hash
-      {
-        sequence: @sequence,
-        improvement_code: @improvement_code,
-        indicative_cost: @indicative_cost,
-        typical_saving: @typical_saving,
-        improvement_category: @improvement_category,
-        improvement_type: @improvement_type,
-        improvement_title: @improvement_title,
-        improvement_description: @improvement_description,
-        energy_performance_rating_improvement:
-          @energy_performance_rating_improvement,
-        environmental_impact_rating_improvement:
-          @environmental_impact_rating_improvement,
-        green_deal_category_code: @green_deal_category_code,
-      }
-    end
-
     def to_record
       {
         sequence: @sequence,
