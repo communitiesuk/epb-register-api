@@ -139,10 +139,13 @@ module Gateway
           raise ArgumentError, "Invalid current energy rating"
         end
 
-        potential = assessment.get(:potential_energy_efficiency_rating)
+        if %w[RdSAP SAP].include? assessment.get(:type_of_assessment)
+          potential = assessment.get(:potential_energy_efficiency_rating)
 
-        unless potential.is_a?(Integer) && potential.positive?
-          raise ArgumentError, "Invalid potential energy rating"
+
+          unless potential.is_a?(Integer) && potential.positive?
+            raise ArgumentError, "Invalid potential energy rating"
+          end
         end
       end
     end
