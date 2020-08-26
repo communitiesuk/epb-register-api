@@ -41,7 +41,7 @@ module Domain
         typical_saving: @typical_saving,
         improvement_category: @improvement_category,
         improvement_type: @improvement_type,
-        improvement_title: @improvement_title,
+        improvement_title: "GONE!!!",
         improvement_description: @improvement_description,
         energy_performance_rating_improvement:
           @energy_performance_rating_improvement,

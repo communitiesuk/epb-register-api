@@ -13,11 +13,8 @@ module Gateway
       sql = <<-SQL
         SELECT
           assessments.assessment_id, scheme_assessor_id,
-           type_of_assessment, cancelled_at, not_for_issue_at,
-          string_agg(improvement_type, ', ') AS improvement_type
+           type_of_assessment, cancelled_at, not_for_issue_at
         FROM assessments
-        LEFT JOIN domestic_epc_energy_improvements deei
-          ON assessments.assessment_id = deei.assessment_id
         WHERE assessments.assessment_id = $1
           AND type_of_assessment IN('RdSAP', 'SAP')
         GROUP BY 1
@@ -59,8 +56,8 @@ module Gateway
         property_age_band: assessment_summary[:property_age_band],
         tenure: TENURE[assessment_summary[:tenure]],
         total_floor_area: assessment_summary[:total_floor_area],
-        cavity_wall_insulation: insulation?("B", row),
-        loft_insulation: insulation?("A", row),
+        cavity_wall_insulation: insulation?("B", assessment_summary),
+        loft_insulation: insulation?("A", assessment_summary),
         space_heating:
           assessment_summary[:heat_demand][:current_space_heating_demand],
         water_heating:
@@ -80,11 +77,12 @@ module Gateway
       )
     end
 
-    def insulation?(type, row)
-      unless row["type_of_assessment"] == "SAP" || row["improvement_type"].nil?
-        return row["improvement_type"].include?(type)
+    def insulation?(type, summary)
+      unless summary[:type_of_assessment] != "RdSAP" || summary[:type_of_assessment].nil?
+        return !summary[:recommended_improvements]
+                       .select { |i| i[:improvement_type] == type }
+                       .empty?
       end
-
       false
     end
 
