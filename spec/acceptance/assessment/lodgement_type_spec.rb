@@ -379,6 +379,8 @@ describe "Acceptance::Assessment::LodgementType" do
                     "{schemeId}"
                 end
 
+                File.delete "spec/fixtures/responses/#{filename}.json"
+
                 expected_fetch_endpoint_response =
                   vcr(filename, fetch_endpoint_response)
 
