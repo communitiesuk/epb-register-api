@@ -12,6 +12,10 @@ module ViewModel
       def ac_rated_output
         xpath(%w[AC-Rated-Output AC-kW-Rating])
       end
+
+      def treated_floor_area
+        xpath(%w[Air-Conditioning-Inspection-Certificate Treated-Floor-Area])
+      end
     end
   end
 end
