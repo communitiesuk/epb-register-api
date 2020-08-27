@@ -39,6 +39,7 @@ module ViewModel
           calculation_tool: @view_model.calculation_tool,
           f_gas_compliant_date: @view_model.f_gas_compliant_date,
           ac_rated_output: @view_model.ac_rated_output,
+          random_sampling: @view_model.random_sampling,
           treated_floor_area: @view_model.treated_floor_area,
           ac_system_metered: @view_model.ac_system_metered,
         },

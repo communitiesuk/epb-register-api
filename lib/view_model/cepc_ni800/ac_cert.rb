@@ -13,6 +13,10 @@ module ViewModel
         xpath(%w[AC-Rated-Output AC-kW-Rating])
       end
 
+      def random_sampling
+        xpath(%w[Air-Conditioning-Inspection-Certificate Random-Sampling-Flag])
+      end
+
       def treated_floor_area
         xpath(%w[Air-Conditioning-Inspection-Certificate Treated-Floor-Area])
       end
