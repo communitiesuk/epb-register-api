@@ -22,11 +22,15 @@ module ViewModel
       end
 
       def ac_system_metered
-        xpath(%w[Air-Conditioning-Inspection-Certificate AC-System-Metered-Flag])
+        xpath(
+          %w[Air-Conditioning-Inspection-Certificate AC-System-Metered-Flag],
+        )
       end
 
       def refrigerant_charge
-        xpath(%w[Air-Conditioning-Inspection-Certificate Refrigerant-Charge-Total])
+        xpath(
+          %w[Air-Conditioning-Inspection-Certificate Refrigerant-Charge-Total],
+        )
       end
 
       def related_rrn

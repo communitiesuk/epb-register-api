@@ -3,9 +3,7 @@ module UseCase
     class AcCertSupplement < UseCase::AssessmentSummary::Supplement
       def related_party_disclosure!(hash)
         related_report =
-          UseCase::AssessmentSummary::Fetch.new.execute(
-            hash[:related_rrn],
-          )
+          UseCase::AssessmentSummary::Fetch.new.execute(hash[:related_rrn])
 
         hash[:related_party_disclosure] =
           (related_report[:related_party_disclosure] if related_report)
