@@ -30,6 +30,7 @@ describe ViewModel::AcReportWrapper do
         town: "Post-Town1",
         postcode: "A0 0AA",
       },
+      related_party_disclosure: "1",
     }.freeze
 
     it "should read the appropriate values from the XML doc" do

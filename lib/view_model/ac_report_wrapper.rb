@@ -33,6 +33,7 @@ module ViewModel
           town: @view_model.town,
           postcode: @view_model.postcode,
         },
+        related_party_disclosure: @view_model.related_party_disclosure,
       }
     end
 
