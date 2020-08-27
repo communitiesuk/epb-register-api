@@ -41,6 +41,7 @@ describe ViewModel::AcCertWrapper do
         ac_system_metered: "0",
         refrigerant_charge: "50",
       },
+      related_rrn: "0000-0000-0000-0000-0001",
     }.freeze
 
     it "should read the appropriate values from the XML doc" do

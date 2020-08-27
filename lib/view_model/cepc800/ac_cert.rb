@@ -28,6 +28,10 @@ module ViewModel
       def refrigerant_charge
         xpath(%w[Air-Conditioning-Inspection-Certificate Refrigerant-Charge-Total])
       end
+
+      def related_rrn
+        xpath(%w[Related-RRN])
+      end
     end
   end
 end

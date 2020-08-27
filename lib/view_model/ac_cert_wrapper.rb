@@ -44,6 +44,7 @@ module ViewModel
           ac_system_metered: @view_model.ac_system_metered,
           refrigerant_charge: @view_model.refrigerant_charge,
         },
+        related_rrn: @view_model.related_rrn,
       }
     end
 
