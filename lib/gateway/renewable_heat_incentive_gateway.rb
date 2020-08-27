@@ -64,8 +64,8 @@ module Gateway
           assessment_summary[:heat_demand][:current_water_heating_demand],
         secondary_heating:
           fetch_property_description(
-              assessment_summary[:property_summary],
-              "secondary_heating",
+            assessment_summary[:property_summary],
+            "secondary_heating",
           ),
         energy_efficiency: {
           current_rating: assessment_summary[:current_energy_efficiency_rating],
@@ -78,10 +78,13 @@ module Gateway
     end
 
     def insulation?(type, summary)
-      unless summary[:type_of_assessment] != "RdSAP" || summary[:type_of_assessment].nil?
-        return !summary[:recommended_improvements]
-                       .select { |i| i[:improvement_type] == type }
-                       .empty?
+      unless summary[:type_of_assessment] != "RdSAP" ||
+          summary[:type_of_assessment].nil?
+        return(
+          !summary[:recommended_improvements].select { |i|
+            i[:improvement_type] == type
+          }.empty?
+        )
       end
       false
     end
