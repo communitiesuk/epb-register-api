@@ -37,6 +37,7 @@ describe ViewModel::AcCertWrapper do
         f_gas_compliant_date: "00/00/,,00",
         ac_rated_output: "40",
         treated_floor_area: "1876",
+        ac_system_metered: "0",
       },
     }.freeze
 

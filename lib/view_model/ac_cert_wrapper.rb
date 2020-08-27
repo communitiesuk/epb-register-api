@@ -40,6 +40,7 @@ module ViewModel
           f_gas_compliant_date: @view_model.f_gas_compliant_date,
           ac_rated_output: @view_model.ac_rated_output,
           treated_floor_area: @view_model.treated_floor_area,
+          ac_system_metered: @view_model.ac_system_metered,
         },
       }
     end
