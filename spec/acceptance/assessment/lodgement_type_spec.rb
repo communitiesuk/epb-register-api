@@ -10,7 +10,7 @@ describe "Acceptance::Assessment::LodgementType" do
     else
       Dir.mkdir File.dirname path unless Dir.exist? File.dirname path
 
-      File.write(path, expected_response.to_json)
+      File.write(path, JSON.pretty_generate(expected_response))
 
       vcr(filename, expected_response, folder, filetype)
     end
@@ -378,8 +378,6 @@ describe "Acceptance::Assessment::LodgementType" do
                   ] =
                     "{schemeId}"
                 end
-
-                File.delete "spec/fixtures/responses/#{filename}.json"
 
                 expected_fetch_endpoint_response =
                   vcr(filename, fetch_endpoint_response)
