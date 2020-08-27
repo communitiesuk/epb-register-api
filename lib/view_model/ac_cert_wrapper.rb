@@ -38,6 +38,7 @@ module ViewModel
           building_complexity: @view_model.building_complexity,
           calculation_tool: @view_model.calculation_tool,
           f_gas_compliant_date: @view_model.f_gas_compliant_date,
+          ac_rated_output: @view_model.ac_rated_output,
         },
       }
     end

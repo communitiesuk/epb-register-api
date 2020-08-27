@@ -35,6 +35,7 @@ describe ViewModel::AcCertWrapper do
         building_complexity: "Level 3",
         calculation_tool: "Sterling Accreditation, Sterling e-Volve, v1.2",
         f_gas_compliant_date: "00/00/,,00",
+        ac_rated_output: "40",
       },
     }.freeze
 

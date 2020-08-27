@@ -39,7 +39,7 @@
       <Building-Name>Building-Name0</Building-Name>
       <F-Gas-Compliant-Date>00/00/,,00</F-Gas-Compliant-Date>
       <AC-Rated-Output>
-        <AC-Rating-Unknown-Flag>false</AC-Rating-Unknown-Flag>
+        <AC-kW-Rating>40</AC-kW-Rating>
       </AC-Rated-Output>
       <Random-Sampling-Flag>Y</Random-Sampling-Flag>
       <Treated-Floor-Area>50</Treated-Floor-Area>
