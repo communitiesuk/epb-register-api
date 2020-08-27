@@ -81,7 +81,7 @@
       <Random-Sampling-Flag>Y</Random-Sampling-Flag>
       <Treated-Floor-Area>1876</Treated-Floor-Area>
       <AC-System-Metered-Flag>0</AC-System-Metered-Flag>
-      <Refrigerant-Charge-Total>12</Refrigerant-Charge-Total>
+      <Refrigerant-Charge-Total>50</Refrigerant-Charge-Total>
       <AC-Sub-Systems>
         <AC-Sub-System>
           <Sub-System-Number>VOL001/SYS001 R410A Inverter Split Systems to Sales Area</Sub-System-Number>

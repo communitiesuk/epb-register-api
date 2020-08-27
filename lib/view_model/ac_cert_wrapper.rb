@@ -42,6 +42,7 @@ module ViewModel
           random_sampling: @view_model.random_sampling,
           treated_floor_area: @view_model.treated_floor_area,
           ac_system_metered: @view_model.ac_system_metered,
+          refrigerant_charge: @view_model.refrigerant_charge,
         },
       }
     end

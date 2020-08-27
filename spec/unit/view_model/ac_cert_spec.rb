@@ -39,6 +39,7 @@ describe ViewModel::AcCertWrapper do
         random_sampling: "Y",
         treated_floor_area: "1876",
         ac_system_metered: "0",
+        refrigerant_charge: "50",
       },
     }.freeze
 
