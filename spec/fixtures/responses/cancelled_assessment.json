@@ -1,1 +1,7 @@
-{"data":{"status":"CANCELLED"},"meta":{}}
+{
+  "data": {
+    "status": "CANCELLED"
+  },
+  "meta": {
+  }
+}

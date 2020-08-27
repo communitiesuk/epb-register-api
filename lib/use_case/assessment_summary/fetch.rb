@@ -43,6 +43,8 @@ module UseCase
 
         full_summary =
           case lodged_values.type
+          when :AC_CERT
+            AcCertSupplement.new.add_data!(lodged_values.to_hash)
           when :CEPC
             CepcSupplement.new.add_data!(lodged_values.to_hash)
           when :CEPC_RR

@@ -1,1 +1,57 @@
-{"data":{"typeOfAssessment":"CEPC","assessmentId":"0000-0000-0000-0000-0000","dateOfExpiry":"2026-05-04","reportType":"3","dateOfAssessment":"2020-05-04","dateOfRegistration":"2020-05-04","address":{"addressId":"UPRN-000000000001","addressLine1":"2 Lonely Street","addressLine2":null,"addressLine3":null,"addressLine4":null,"town":"Post-Town1","postcode":"A0 0AA"},"technicalInformation":{"mainHeatingFuel":"Natural Gas","buildingEnvironment":"Air Conditioning","floorArea":"403","buildingLevel":"3"},"buildingEmissionRate":"67.09","primaryEnergyUse":"413.22","relatedRrn":"4192-1535-8427-8844-6702","newBuildRating":"28","newBuildBand":"b","existingBuildRating":"81","existingBuildBand":"d","energyEfficiencyRating":"80","assessor":{"schemeAssessorId":"SPEC000000","name":"TEST NAME BOI","contactDetails":{"email":"test@testscheme.com","telephone":"012345"},"companyDetails":{"name":"Joe Bloggs Ltd","address":"123 My Street, My City, AB3 4CD"},"registeredBy":{"name":"test scheme","schemeId":"{schemeId}"}},"relatedPartyDisclosure":"1","currentEnergyEfficiencyBand":"d","propertyType":"B1 Offices and Workshop businesses","relatedAssessments":[]},"meta":{}}
+{
+  "data": {
+    "typeOfAssessment": "CEPC",
+    "assessmentId": "0000-0000-0000-0000-0000",
+    "dateOfExpiry": "2026-05-04",
+    "reportType": "3",
+    "dateOfAssessment": "2020-05-04",
+    "dateOfRegistration": "2020-05-04",
+    "address": {
+      "addressId": "UPRN-000000000001",
+      "addressLine1": "2 Lonely Street",
+      "addressLine2": null,
+      "addressLine3": null,
+      "addressLine4": null,
+      "town": "Post-Town1",
+      "postcode": "A0 0AA"
+    },
+    "technicalInformation": {
+      "mainHeatingFuel": "Natural Gas",
+      "buildingEnvironment": "Air Conditioning",
+      "floorArea": "403",
+      "buildingLevel": "3"
+    },
+    "buildingEmissionRate": "67.09",
+    "primaryEnergyUse": "413.22",
+    "relatedRrn": "4192-1535-8427-8844-6702",
+    "newBuildRating": "28",
+    "newBuildBand": "b",
+    "existingBuildRating": "81",
+    "existingBuildBand": "d",
+    "energyEfficiencyRating": "80",
+    "assessor": {
+      "schemeAssessorId": "SPEC000000",
+      "name": "TEST NAME BOI",
+      "contactDetails": {
+        "email": "test@testscheme.com",
+        "telephone": "012345"
+      },
+      "companyDetails": {
+        "name": "Joe Bloggs Ltd",
+        "address": "123 My Street, My City, AB3 4CD"
+      },
+      "registeredBy": {
+        "name": "test scheme",
+        "schemeId": "{schemeId}"
+      }
+    },
+    "relatedPartyDisclosure": "1",
+    "currentEnergyEfficiencyBand": "d",
+    "propertyType": "B1 Offices and Workshop businesses",
+    "relatedAssessments": [
+
+    ]
+  },
+  "meta": {
+  }
+}

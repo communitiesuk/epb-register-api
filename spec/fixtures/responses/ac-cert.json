@@ -1,1 +1,31 @@
-{"data":{"typeOfAssessment":"AC-CERT","assessmentId":"0000-0000-0000-0000-0000","reportType":"6","dateOfExpiry":"2024-05-04","address":{"addressLine1":"2 Lonely Street","addressLine2":null,"addressLine3":null,"addressLine4":null,"town":"Post-Town1","postcode":"A0 0AA"},"technicalInformation":{"dateOfAssessment":"2020-05-20","buildingComplexity":"Level 3","calculationTool":"Sterling Accreditation, Sterling e-Volve, v1.2","fGasCompliantDate":"00/00/,,00","acRatedOutput":"40","randomSampling":"Y","treatedFloorArea":"1876","acSystemMetered":"0","refrigerantCharge":"50"},"relatedRrn":"0000-0000-0000-0000-0001"},"meta":{}}
+{
+  "data": {
+    "typeOfAssessment": "AC-CERT",
+    "assessmentId": "0000-0000-0000-0000-0000",
+    "reportType": "6",
+    "dateOfExpiry": "2024-05-04",
+    "address": {
+      "addressLine1": "2 Lonely Street",
+      "addressLine2": null,
+      "addressLine3": null,
+      "addressLine4": null,
+      "town": "Post-Town1",
+      "postcode": "A0 0AA"
+    },
+    "technicalInformation": {
+      "dateOfAssessment": "2020-05-20",
+      "buildingComplexity": "Level 3",
+      "calculationTool": "Sterling Accreditation, Sterling e-Volve, v1.2",
+      "fGasCompliantDate": "00/00/,,00",
+      "acRatedOutput": "40",
+      "randomSampling": "Y",
+      "treatedFloorArea": "1876",
+      "acSystemMetered": "0",
+      "refrigerantCharge": "50"
+    },
+    "relatedRrn": "0000-0000-0000-0000-0001",
+    "relatedPartyDisclosure": null
+  },
+  "meta": {
+  }
+}

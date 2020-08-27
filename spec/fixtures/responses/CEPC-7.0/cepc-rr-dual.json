@@ -1,1 +1,80 @@
-{"data":{"typeOfAssessment":"CEPC-RR","assessmentId":"0000-0000-0000-0000-0001","reportType":"4","dateOfExpiry":"2026-05-04","dateOfRegistration":"2020-05-05","relatedCertificate":"0000-0000-0000-0000-0000","address":{"addressId":"000000000000","addressLine1":"1 Lonely Street","addressLine2":null,"addressLine3":null,"addressLine4":null,"town":"Post-Town0","postcode":"A0 0AA"},"assessor":{"schemeAssessorId":"SPEC000000","name":"Name0","companyDetails":{"name":null,"address":null},"contactDetails":{"email":"person@person.com","telephone":"010199991010101"},"registeredBy":{"name":"test scheme","schemeId":"{schemeId}"}},"shortPaybackRecommendations":[{"code":"1","text":"Consider replacing T8 lamps with retrofit T5 conversion kit.","cO2Impact":"HIGH"},{"code":"3","text":"Introduce HF (high frequency) ballasts for fluorescent tubes: Reduced number of fittings required.","cO2Impact":"LOW"}],"mediumPaybackRecommendations":[{"code":"2","text":"Add optimum start/stop to the heating system.","cO2Impact":"MEDIUM"}],"longPaybackRecommendations":[{"code":"3","text":"Consider installing an air source heat pump.","cO2Impact":"HIGH"}],"otherRecommendations":[{"code":"4","text":"Consider installing PV.","cO2Impact":"HIGH"}],"technicalInformation":{"floorArea":"10","buildingEnvironment":"Natural Ventilation Only","calculationTool":"Calculation-Tool0"},"relatedPartyDisclosure":"Related to the owner","relatedAssessments":[],"energyBandFromRelatedCertificate":"d"},"meta":{}}
+{
+  "data": {
+    "typeOfAssessment": "CEPC-RR",
+    "assessmentId": "0000-0000-0000-0000-0001",
+    "reportType": "4",
+    "dateOfExpiry": "2026-05-04",
+    "dateOfRegistration": "2020-05-05",
+    "relatedCertificate": "0000-0000-0000-0000-0000",
+    "address": {
+      "addressId": "000000000000",
+      "addressLine1": "1 Lonely Street",
+      "addressLine2": null,
+      "addressLine3": null,
+      "addressLine4": null,
+      "town": "Post-Town0",
+      "postcode": "A0 0AA"
+    },
+    "assessor": {
+      "schemeAssessorId": "SPEC000000",
+      "name": "Name0",
+      "companyDetails": {
+        "name": null,
+        "address": null
+      },
+      "contactDetails": {
+        "email": "person@person.com",
+        "telephone": "010199991010101"
+      },
+      "registeredBy": {
+        "name": "test scheme",
+        "schemeId": "{schemeId}"
+      }
+    },
+    "shortPaybackRecommendations": [
+      {
+        "code": "1",
+        "text": "Consider replacing T8 lamps with retrofit T5 conversion kit.",
+        "cO2Impact": "HIGH"
+      },
+      {
+        "code": "3",
+        "text": "Introduce HF (high frequency) ballasts for fluorescent tubes: Reduced number of fittings required.",
+        "cO2Impact": "LOW"
+      }
+    ],
+    "mediumPaybackRecommendations": [
+      {
+        "code": "2",
+        "text": "Add optimum start/stop to the heating system.",
+        "cO2Impact": "MEDIUM"
+      }
+    ],
+    "longPaybackRecommendations": [
+      {
+        "code": "3",
+        "text": "Consider installing an air source heat pump.",
+        "cO2Impact": "HIGH"
+      }
+    ],
+    "otherRecommendations": [
+      {
+        "code": "4",
+        "text": "Consider installing PV.",
+        "cO2Impact": "HIGH"
+      }
+    ],
+    "technicalInformation": {
+      "floorArea": "10",
+      "buildingEnvironment": "Natural Ventilation Only",
+      "calculationTool": "Calculation-Tool0"
+    },
+    "relatedPartyDisclosure": "Related to the owner",
+    "relatedAssessments": [
+
+    ],
+    "energyBandFromRelatedCertificate": "d"
+  },
+  "meta": {
+  }
+}
