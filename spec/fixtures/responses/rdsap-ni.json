@@ -197,12 +197,7 @@
     "optOut": false,
     "status": "ENTERED",
     "relatedAssessments": [
-      {
-        "assessmentExpiryDate": "2030-05-04",
-        "assessmentId": "0000-0000-0000-0000-0000",
-        "assessmentStatus": "ENTERED",
-        "assessmentType": "RdSAP"
-      }
+
     ]
   },
   "meta": {
