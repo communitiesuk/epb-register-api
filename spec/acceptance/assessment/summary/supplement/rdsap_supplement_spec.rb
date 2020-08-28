@@ -29,6 +29,13 @@ describe "Acceptance::AssessmentSummary::Supplement::RdSAP" do
         scheme = summary.dig(:data, :assessor, :registeredBy)
         expect(scheme).to eq({ name: "test scheme", schemeId: scheme_id })
       end
+
+      it "Returns lodged email and phone values by default" do
+        contact_details = summary.dig(:data, :assessor, :contactDetails)
+        expect(contact_details).to eq(
+          { telephoneNumber: "0921-19037", email: "a@b.c" },
+        )
+      end
     end
   end
 end
