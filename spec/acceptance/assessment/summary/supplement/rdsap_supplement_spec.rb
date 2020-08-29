@@ -26,7 +26,7 @@ describe "Acceptance::AssessmentSummary::Supplement::RdSAP" do
     rdsap_without_contacts.at("Telephone").remove
     rdsap_without_contacts.at("RRN").content = "0000-0000-0000-0000-0001"
     lodge_rdsap(rdsap_without_contacts.to_xml, scheme_id)
-    @no_contacts_summary =
+    @second_summary =
       JSON.parse(
         fetch_assessment_summary("0000-0000-0000-0000-0001").body,
         symbolize_names: true,
@@ -48,7 +48,7 @@ describe "Acceptance::AssessmentSummary::Supplement::RdSAP" do
     end
 
     it "Overrides missing assessor email and phone values with DB values" do
-      expect(@no_contacts_summary.dig(:data, :assessor, :contactDetails)).to eq(
+      expect(@second_summary.dig(:data, :assessor, :contactDetails)).to eq(
         { email: "person@person.com", telephoneNumber: "010199991010101" },
       )
     end
@@ -60,7 +60,7 @@ describe "Acceptance::AssessmentSummary::Supplement::RdSAP" do
     end
 
     it "Returns assessments lodged against the same address" do
-      related_assessments = @no_contacts_summary.dig(:data, :relatedAssessments)
+      related_assessments = @second_summary.dig(:data, :relatedAssessments)
       expect(related_assessments.count).to eq(1)
       expect(related_assessments[0][:assessmentId]).to eq(
         "0000-0000-0000-0000-0000",
@@ -70,7 +70,7 @@ describe "Acceptance::AssessmentSummary::Supplement::RdSAP" do
 
   context "when getting the green deal plan" do
     it "does not add a green deal plan when there isn't one" do
-      expect(@no_contacts_summary.dig(:data, :greenDealPlan)).to be_nil
+      expect(@second_summary.dig(:data, :greenDealPlan)).to be_nil
     end
 
     it "adds a green deal plan when there is one" do
