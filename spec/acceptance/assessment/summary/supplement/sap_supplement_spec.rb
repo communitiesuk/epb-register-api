@@ -24,6 +24,13 @@ describe "Acceptance::AssessmentSummary::Supplement::SAP" do
       expect(scheme[:name]).to eq("test scheme")
       expect(scheme[:schemeId]).to be_a(Integer)
     end
+
+    it "Returns the assessor contact details from the database" do
+      contact_details = @regular_summary.dig(:data, :assessor, :contactDetails)
+      expect(contact_details).to eq(
+        { telephoneNumber: "010199991010101", email: "person@person.com" },
+      )
+    end
   end
 end
 
