@@ -20,6 +20,8 @@
         <Company-Name>Joe Bloggs Ltd</Company-Name>
         <Qualifications>NOS5</Qualifications>
         <Status>Registered</Status>
+        <E-Mail>a@b.c</E-Mail>
+        <Telephone-Number>0921-19037</Telephone-Number>
       </Energy-Assessor>
       <Building-Complexity>Level 3</Building-Complexity>
       <Property-Details>
