@@ -16,6 +16,16 @@ describe "Acceptance::AssessmentSummary::Supplement::SAP" do
         fetch_assessment_summary("0000-0000-0000-0000-0000").body,
         symbolize_names: true,
       )
+
+    second_assessment = Nokogiri.XML(Samples.xml("SAP-Schema-18.0.0"))
+    second_assessment.at("RRN").content = "0000-0000-0000-0000-0001"
+    lodge_sap(second_assessment.to_xml, scheme_id)
+    @second_summary =
+        JSON.parse(
+            fetch_assessment_summary("0000-0000-0000-0000-0001").body,
+            symbolize_names: true,
+            )
+
   end
 
   context "when getting the assessor data supplement" do
@@ -30,6 +40,20 @@ describe "Acceptance::AssessmentSummary::Supplement::SAP" do
       expect(contact_details).to eq(
         { telephoneNumber: "010199991010101", email: "person@person.com" },
       )
+    end
+  end
+
+  context "when getting the related certificates" do
+    it "Returns an empty list when there are no related certificates" do
+      expect(@regular_summary.dig(:data, :relatedAssessments)).to eq([])
+    end
+
+    it "Returns assessments lodged against the same address" do
+      related_assessments = @second_summary.dig(:data, :relatedAssessments)
+      expect(related_assessments.count).to eq(1)
+      expect(related_assessments[0][:assessmentId]).to eq(
+                                                           "0000-0000-0000-0000-0000",
+                                                           )
     end
   end
 end
