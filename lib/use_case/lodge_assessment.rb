@@ -31,19 +31,6 @@ module UseCase
 
       check_assessor_qualification data, assessor unless migrated
 
-      if data[:property_details].is_a? Array
-        data[:property_details].each do |building|
-          next unless building[:building_part_number] == 1
-
-          data[:property_age_band] =
-            if building[:construction_age_band] && building[:construction_year]
-              building[:construction_year]
-            else
-              building[:construction_age_band] || building[:construction_year]
-            end
-        end
-      end
-
       assessment =
         Domain::AssessmentIndexRecord.new(
           migrated: migrated,
