@@ -43,9 +43,7 @@ describe ViewModel::DecRrWrapper do
         company_details: {
           name: "Joe Bloggs Ltd", address: "123 My Street, My City, AB3 4CD"
         },
-        contact_details: {
-          email: "person@person.com", telephone: "010199991010101"
-        },
+        contact_details: { email: "a@b.c", telephone: "0921-19037" },
       },
       short_payback_recommendations: [
         {

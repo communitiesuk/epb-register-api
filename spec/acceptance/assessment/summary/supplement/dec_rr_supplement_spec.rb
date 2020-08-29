@@ -1,4 +1,4 @@
-describe "Acceptance::AssessmentSummary::Supplement::DEC" do
+describe "Acceptance::AssessmentSummary::Supplement::DECRR" do
   include RSpecRegisterApiServiceMixin
 
   before(:all) do
@@ -6,18 +6,18 @@ describe "Acceptance::AssessmentSummary::Supplement::DEC" do
     assessor = AssessorStub.new.fetch_request_body(nonDomesticDec: "ACTIVE")
     add_assessor(scheme_id, "SPEC000000", assessor)
 
-    lodge_dec(Samples.xml("CEPC-8.0.0", "dec"), scheme_id)
+    lodge_dec_rr(Samples.xml("CEPC-8.0.0", "dec-rr"), scheme_id)
     @regular_summary =
       JSON.parse(
         fetch_assessment_summary("0000-0000-0000-0000-0000").body,
         symbolize_names: true,
       )
 
-    second_assessment = Nokogiri.XML(Samples.xml("CEPC-8.0.0", "dec"))
+    second_assessment = Nokogiri.XML(Samples.xml("CEPC-8.0.0", "dec-rr"))
     second_assessment.at("RRN").content = "0000-0000-0000-0000-0001"
     second_assessment.at("E-Mail").remove
     second_assessment.at("Telephone-Number").remove
-    lodge_dec(second_assessment.to_xml, scheme_id)
+    lodge_dec_rr(second_assessment.to_xml, scheme_id)
     @second_summary =
       JSON.parse(
         fetch_assessment_summary("0000-0000-0000-0000-0001").body,
@@ -43,23 +43,9 @@ describe "Acceptance::AssessmentSummary::Supplement::DEC" do
       )
     end
   end
-
-  context "when getting the related certificates" do
-    it "Returns an empty list when there are no related certificates" do
-      expect(@regular_summary.dig(:data, :relatedAssessments)).to eq([])
-    end
-
-    it "Returns assessments lodged against the same address" do
-      related_assessments = @second_summary.dig(:data, :relatedAssessments)
-      expect(related_assessments.count).to eq(1)
-      expect(related_assessments[0][:assessmentId]).to eq(
-        "0000-0000-0000-0000-0000",
-      )
-    end
-  end
 end
 
-def lodge_dec(xml, scheme_id)
+def lodge_dec_rr(xml, scheme_id)
   lodge_assessment(
     assessment_body: xml,
     auth_data: { scheme_ids: [scheme_id] },
