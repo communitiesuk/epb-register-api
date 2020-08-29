@@ -15,6 +15,7 @@ describe "Acceptance::AssessmentSummary::Supplement::DECRR" do
 
     second_assessment = Nokogiri.XML(Samples.xml("CEPC-8.0.0", "dec-rr"))
     second_assessment.at("RRN").content = "0000-0000-0000-0000-0001"
+    second_assessment.at("UPRN").content = "RRN-0000-0000-0000-0000-0000"
     second_assessment.at("E-Mail").remove
     second_assessment.at("Telephone-Number").remove
     lodge_dec_rr(second_assessment.to_xml, scheme_id)
@@ -41,6 +42,12 @@ describe "Acceptance::AssessmentSummary::Supplement::DECRR" do
       expect(@second_summary.dig(:data, :assessor, :contactDetails)).to eq(
         { email: "person@person.com", telephone: "010199991010101" },
       )
+    end
+  end
+
+  context "when getting the related certificates" do
+    it "Returns an empty list when there are no related certificates" do
+      expect(@regular_summary.dig(:data, :relatedAssessments)).to eq([])
     end
   end
 end
