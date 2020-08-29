@@ -53,6 +53,12 @@ describe "Acceptance::AssessmentSummary::Supplement::RdSAP" do
           .to eq("0000-0000-0000-0000-0000")
     end
   end
+
+  context "when getting the green deal plan" do
+    it "does not add a green deal plan when there isn't one" do
+      expect(@no_contacts_summary.dig(:data, :greenDealPlan)).to be_nil
+    end
+  end
 end
 
 def lodge_rdsap(xml, scheme_id)
