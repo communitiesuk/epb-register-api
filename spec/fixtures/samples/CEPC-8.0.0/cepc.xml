@@ -24,7 +24,7 @@
         <CEPC:Company-Name>Joe Bloggs Ltd</CEPC:Company-Name>
         <CEPC:Qualifications>NOS5</CEPC:Qualifications>
         <CEPC:Status>Registered</CEPC:Status>
-        <CEPC:E-Mail>test@testscheme.com</CEPC:E-Mail>
+        <CEPC:E-Mail>a@b.c</CEPC:E-Mail>
         <CEPC:Telephone-Number>012345</CEPC:Telephone-Number>
       </CEPC:Energy-Assessor>
       <CEPC:Building-Complexity>Level 3</CEPC:Building-Complexity>

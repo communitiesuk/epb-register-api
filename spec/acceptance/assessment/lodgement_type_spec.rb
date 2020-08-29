@@ -50,14 +50,6 @@ describe "Acceptance::Assessment::LodgementType" do
   context "when lodging all assessment types" do
     assessments = {
       "CEPC-8.0.0": {
-        "valid_cepc": {
-          xml: "cepc",
-          assessor_qualification: {
-            nonDomesticNos3: "ACTIVE",
-            nonDomesticNos4: "ACTIVE",
-            nonDomesticNos5: "ACTIVE",
-          },
-        },
         "valid_cepc+rr": {
           xml: "cepc+rr",
           assessor_qualification: {
@@ -98,14 +90,6 @@ describe "Acceptance::Assessment::LodgementType" do
         },
       },
       "CEPC-NI-8.0.0": {
-        "valid_cepc": {
-          xml: "cepc",
-          assessor_qualification: {
-            nonDomesticNos3: "ACTIVE",
-            nonDomesticNos4: "ACTIVE",
-            nonDomesticNos5: "ACTIVE",
-          },
-        },
         "valid_cepc+rr": {
           xml: "cepc+rr",
           assessor_qualification: {
