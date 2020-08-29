@@ -49,22 +49,6 @@ describe "Acceptance::Assessment::LodgementType" do
 
   context "when lodging all assessment types" do
     assessments = {
-      "RdSAP-Schema-NI-20.0.0": {
-        "valid_rdsap": {
-          xml: "epc",
-          expected_lodgement_responses: { "0000-0000-0000-0000-0000": "rdsap" },
-          assessor_qualification: { domesticRdSap: "ACTIVE" },
-        },
-      },
-      "RdSAP-Schema-20.0.0": {
-        "valid_rdsap": {
-          xml: "epc",
-          expected_lodgement_responses: {
-            "0000-0000-0000-0000-0000": "rdsap-ni",
-          },
-          assessor_qualification: { domesticRdSap: "ACTIVE" },
-        },
-      },
       "SAP-Schema-NI-18.0.0": {
         "valid_sap": {
           xml: "epc",
