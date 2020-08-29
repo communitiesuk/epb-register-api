@@ -49,22 +49,6 @@ describe "Acceptance::Assessment::LodgementType" do
 
   context "when lodging all assessment types" do
     assessments = {
-      "SAP-Schema-NI-18.0.0": {
-        "valid_sap": {
-          xml: "epc",
-          expected_lodgement_responses: {
-            "0000-0000-0000-0000-0000": "sap-ni",
-          },
-          assessor_qualification: { domesticSap: "ACTIVE" },
-        },
-      },
-      "SAP-Schema-18.0.0": {
-        "valid_sap": {
-          xml: "epc",
-          expected_lodgement_responses: { "0000-0000-0000-0000-0000": "sap" },
-          assessor_qualification: { domesticSap: "ACTIVE" },
-        },
-      },
       "CEPC-8.0.0": {
         "valid_cepc": {
           xml: "cepc",

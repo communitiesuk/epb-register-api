@@ -21,11 +21,10 @@ describe "Acceptance::AssessmentSummary::Supplement::SAP" do
     second_assessment.at("RRN").content = "0000-0000-0000-0000-0001"
     lodge_sap(second_assessment.to_xml, scheme_id)
     @second_summary =
-        JSON.parse(
-            fetch_assessment_summary("0000-0000-0000-0000-0001").body,
-            symbolize_names: true,
-            )
-
+      JSON.parse(
+        fetch_assessment_summary("0000-0000-0000-0000-0001").body,
+        symbolize_names: true,
+      )
   end
 
   context "when getting the assessor data supplement" do
@@ -52,8 +51,8 @@ describe "Acceptance::AssessmentSummary::Supplement::SAP" do
       related_assessments = @second_summary.dig(:data, :relatedAssessments)
       expect(related_assessments.count).to eq(1)
       expect(related_assessments[0][:assessmentId]).to eq(
-                                                           "0000-0000-0000-0000-0000",
-                                                           )
+        "0000-0000-0000-0000-0000",
+      )
     end
   end
 end
