@@ -10,7 +10,7 @@
       <Issue-Date>2020-05-14</Issue-Date>
       <Report-Type>1</Report-Type>
       <Valid-Until>2026-05-04</Valid-Until>
-      <Related-RRN>4192-1535-8427-8844-6702</Related-RRN>
+      <Related-RRN>0000-0000-0000-0000-0001</Related-RRN>
       <Inspection-Date>2020-05-04</Inspection-Date>
       <Registration-Date>2020-05-04</Registration-Date>
       <Status>entered</Status>
@@ -319,7 +319,7 @@
       <RRN>0000-0000-0000-0000-0001</RRN>
       <Issue-Date>2020-05-04</Issue-Date>
       <Report-Type>2</Report-Type>
-      <Related-RRN>0000-0000-0000-0000-1111</Related-RRN>
+      <Related-RRN>0000-0000-0000-0000-0000</Related-RRN>
       <Valid-Until>2028-05-03</Valid-Until>
       <Inspection-Date>2020-05-04</Inspection-Date>
       <Registration-Date>2020-05-05</Registration-Date>
@@ -329,6 +329,8 @@
         <Certificate-Number>SPEC000000</Certificate-Number>
         <Name>Name0</Name>
         <Accreditation-Scheme-Name>Accreditation-Scheme-Name0</Accreditation-Scheme-Name>
+        <E-Mail>a@b.c</E-Mail>
+        <Telephone-Number>0921-19037</Telephone-Number>
       </Energy-Assessor>
       <Property-Details>
         <UPRN>RRN-0000-0000-0000-0000-0000</UPRN>

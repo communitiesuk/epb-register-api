@@ -12,6 +12,7 @@ module UseCase
             end
           )
       rescue StandardError => e
+        pp e
         hash[:energy_band_from_related_certificate] = nil
       end
 
