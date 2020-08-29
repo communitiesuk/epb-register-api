@@ -71,9 +71,6 @@ describe "Acceptance::Assessment::LodgementType" do
             "0000-0000-0000-0000-0001": "cepc-rr-dual",
           },
         },
-        "valid_dec": {
-          xml: "dec", assessor_qualification: { nonDomesticDec: "ACTIVE" }
-        },
         "valid_dec+rr": {
           xml: "dec+rr",
           assessor_qualification: { nonDomesticDec: "ACTIVE" },
@@ -130,9 +127,6 @@ describe "Acceptance::Assessment::LodgementType" do
             "0000-0000-0000-0000-0000": "cepc-ni-dual",
             "0000-0000-0000-0000-0001": "cepc-rr-ni-dual",
           },
-        },
-        "valid_dec": {
-          xml: "dec", assessor_qualification: { nonDomesticDec: "ACTIVE" }
         },
         "valid_dec+rr": {
           xml: "dec+rr",

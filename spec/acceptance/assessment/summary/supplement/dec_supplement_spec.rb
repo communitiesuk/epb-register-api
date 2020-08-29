@@ -43,6 +43,20 @@ describe "Acceptance::AssessmentSummary::Supplement::RdSAP" do
       )
     end
   end
+
+  context "when getting the related certificates" do
+    it "Returns an empty list when there are no related certificates" do
+      expect(@regular_summary.dig(:data, :relatedAssessments)).to eq([])
+    end
+
+    it "Returns assessments lodged against the same address" do
+      related_assessments = @second_summary.dig(:data, :relatedAssessments)
+      expect(related_assessments.count).to eq(1)
+      expect(related_assessments[0][:assessmentId]).to eq(
+                                                           "0000-0000-0000-0000-0000",
+                                                           )
+    end
+  end
 end
 
 def lodge_dec(xml, scheme_id)
