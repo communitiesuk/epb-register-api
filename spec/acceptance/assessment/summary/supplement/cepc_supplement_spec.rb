@@ -46,7 +46,7 @@ describe "Acceptance::AssessmentSummary::Supplement::CEPC" do
   end
 
   context "when getting the related reports" do
-    it "Returns an empty list when there are no related reporst" do
+    it "Returns an empty list when there are no related reports" do
       expect(@regular_summary.dig(:data, :relatedAssessments)).to eq([])
     end
   end
