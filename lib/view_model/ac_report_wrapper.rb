@@ -8,6 +8,8 @@ module ViewModel
         @view_model = ViewModel::Cepc800::AcReport.new xml
       when "CEPC-NI-8.0.0"
         @view_model = ViewModel::CepcNi800::AcReport.new xml
+      when "CEPC-7.1"
+        @view_model = ViewModel::Cepc71::AcReport.new xml
       when "CEPC-7.0"
         @view_model = ViewModel::Cepc70::AcReport.new xml
       else

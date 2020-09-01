@@ -15,6 +15,12 @@ describe ViewModel::AcReportWrapper do
         unsupported_fields: [],
         different_fields: {},
       },
+      {
+        schema_name: "CEPC-7.1",
+        xml: Samples.xml("CEPC-7.1", "ac-report"),
+        unsupported_fields: [],
+        different_fields: {},
+      },
     ].freeze
 
     asserted_keys = {
