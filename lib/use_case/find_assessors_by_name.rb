@@ -1,6 +1,5 @@
 module UseCase
   class FindAssessorsByName
-    # class TooManyResults < StandardError; end
     class OnlyFirstNameGiven < StandardError; end
 
     def initialize
