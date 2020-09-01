@@ -65,6 +65,14 @@ describe "Searching for an assessor by name" do
       expect(response["data"]["assessors"].size).to eq(1)
     end
 
+    it "raises an error if only one name is given" do
+      add_scheme_then_assessor(valid_assessor_request)
+      search_response = assessors_search_by_name("Person", [400])
+      response = JSON.parse(search_response.body)
+
+      expect(response.key?("errors")).to eq(true)
+    end
+
     it "lets you search for half names" do
       add_scheme_then_assessor(valid_assessor_request)
       search_response = assessors_search_by_name("Per%20Some")

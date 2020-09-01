@@ -1,6 +1,7 @@
 module UseCase
   class FindAssessorsByName
-    class TooManyResults < StandardError; end
+    # class TooManyResults < StandardError; end
+    class OnlyFirstNameGiven < StandardError; end
 
     def initialize
       @assessor_gateway = Gateway::AssessorsGateway.new
@@ -8,6 +9,8 @@ module UseCase
     end
 
     def execute(name, max_response_size = 20)
+      raise OnlyFirstNameGiven if name.split.size < 2
+
       schemes = []
 
       @schemes_gateway.all.each do |scheme|

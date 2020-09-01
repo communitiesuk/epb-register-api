@@ -161,6 +161,12 @@ module Controller
           "INVALID_REQUEST",
           "The requested postcode is not valid",
         )
+      when UseCase::FindAssessorsByName::OnlyFirstNameGiven
+        error_response(
+          400,
+          "INVALID_REQUEST",
+          "Both a first name and last name must be provided",
+        )
       when ArgumentError
         error_response(400, "INVALID_QUERY", e.message)
       else
