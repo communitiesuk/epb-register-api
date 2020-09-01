@@ -57,9 +57,7 @@ describe ViewModel::CepcRrWrapper do
         company_details: {
           name: "Joe Bloggs Ltd", address: "123 My Street, My City, AB3 4CD"
         },
-        contact_details: {
-          email: "a@b.c", telephone: "012345"
-        },
+        contact_details: { email: "a@b.c", telephone: "012345" },
       },
       short_payback_recommendations: [
         {

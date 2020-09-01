@@ -8,10 +8,10 @@ describe "Acceptance::AssessmentSummary::Supplement::CEPC_RR" do
 
     lodge_cepc_rr(Samples.xml("CEPC-8.0.0", "cepc+rr"), scheme_id)
     @regular_summary =
-        JSON.parse(
-            fetch_assessment_summary("0000-0000-0000-0000-0001").body,
-            symbolize_names: true,
-            )
+      JSON.parse(
+        fetch_assessment_summary("0000-0000-0000-0000-0001").body,
+        symbolize_names: true,
+      )
 
     second_assessment = Nokogiri.XML(Samples.xml("CEPC-8.0.0", "cepc-rr"))
     second_assessment.at("//CEPC:RRN").content = "0000-0000-0000-0000-0002"
@@ -20,10 +20,10 @@ describe "Acceptance::AssessmentSummary::Supplement::CEPC_RR" do
     second_assessment.at("//CEPC:Telephone-Number").remove
     lodge_cepc_rr(second_assessment.to_xml, scheme_id)
     @second_summary =
-        JSON.parse(
-            fetch_assessment_summary("0000-0000-0000-0000-0002").body,
-            symbolize_names: true,
-            )
+      JSON.parse(
+        fetch_assessment_summary("0000-0000-0000-0000-0002").body,
+        symbolize_names: true,
+      )
   end
 
   context "when getting the assessor data supplement" do
@@ -40,8 +40,8 @@ describe "Acceptance::AssessmentSummary::Supplement::CEPC_RR" do
 
     it "Overrides missing assessor email and phone values with DB values" do
       expect(@second_summary.dig(:data, :assessor, :contactDetails)).to eq(
-                                                                            { email: "person@person.com", telephone: "010199991010101" },
-                                                                            )
+        { email: "person@person.com", telephone: "010199991010101" },
+      )
     end
   end
 
@@ -54,22 +54,22 @@ describe "Acceptance::AssessmentSummary::Supplement::CEPC_RR" do
   context "when getting the related certificate energy band" do
     it "Returns empty when there is no dual lodgement" do
       expect(
-          @second_summary.dig(:data, :energyBandFromRelatedCertificate),
-          ).to be_nil
+        @second_summary.dig(:data, :energyBandFromRelatedCertificate),
+      ).to be_nil
     end
 
     it "Returns the energy band from the dual lodged certificate" do
       expect(
-          @regular_summary.dig(:data, :energyBandFromRelatedCertificate),
-          ).to eq("d")
+        @regular_summary.dig(:data, :energyBandFromRelatedCertificate),
+      ).to eq("d")
     end
   end
 end
 
 def lodge_cepc_rr(xml, scheme_id)
   lodge_assessment(
-      assessment_body: xml,
-      auth_data: { scheme_ids: [scheme_id] },
-      schema_name: "CEPC-8.0.0",
-      )
+    assessment_body: xml,
+    auth_data: { scheme_ids: [scheme_id] },
+    schema_name: "CEPC-8.0.0",
+  )
 end
