@@ -70,7 +70,9 @@ describe "Searching for an assessor by name" do
       search_response = assessors_search_by_name("Person", [400])
       response = JSON.parse(search_response.body)
 
-      expect(response.key?("errors")).to eq(true)
+      expect(response["errors"][0]["title"]).to eq(
+        "Both a first name and last name must be provided",
+      )
     end
 
     it "lets you search for half names" do
