@@ -16,7 +16,7 @@ module ViewModel
     end
 
     def type
-      :AC_CERT
+      :AC_REPORT
     end
 
     def to_hash
