@@ -22,8 +22,8 @@
         <CEPC:Trading-Address>123 My Street, My City, AB3 4CD</CEPC:Trading-Address>
         <CEPC:Company-Name>Joe Bloggs Ltd</CEPC:Company-Name>
         <CEPC:Related-Party-Disclosure>Related to the owner</CEPC:Related-Party-Disclosure>
-        <CEPC:E-Mail>person@person.com</CEPC:E-Mail>
-        <CEPC:Telephone-Number>010199991010101</CEPC:Telephone-Number>
+        <CEPC:E-Mail>a@b.c</CEPC:E-Mail>
+        <CEPC:Telephone-Number>012345</CEPC:Telephone-Number>
       </CEPC:Energy-Assessor>
       <CEPC:Property-Details>
         <CEPC:UPRN>UPRN-000000000000</CEPC:UPRN>
