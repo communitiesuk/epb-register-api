@@ -50,27 +50,6 @@ describe "Acceptance::Assessment::LodgementType" do
   context "when lodging all assessment types" do
     assessments = {
       "CEPC-8.0.0": {
-        "valid_cepc+rr": {
-          xml: "cepc+rr",
-          assessor_qualification: {
-            nonDomesticNos3: "ACTIVE",
-            nonDomesticNos4: "ACTIVE",
-            nonDomesticNos5: "ACTIVE",
-          },
-          expected_response: "dual_lodgement",
-          expected_lodgement_responses: {
-            "0000-0000-0000-0000-0000": "cepc-dual",
-            "0000-0000-0000-0000-0001": "cepc-rr-dual",
-          },
-        },
-        "valid_rr": {
-          xml: "cepc-rr",
-          assessor_qualification: {
-            nonDomesticNos3: "ACTIVE",
-            nonDomesticNos4: "ACTIVE",
-            nonDomesticNos5: "ACTIVE",
-          },
-        },
         "valid_ac-report": {
           xml: "ac-report", assessor_qualification: { nonDomesticSp3: "ACTIVE" }
         },
@@ -90,27 +69,6 @@ describe "Acceptance::Assessment::LodgementType" do
         },
       },
       "CEPC-NI-8.0.0": {
-        "valid_cepc+rr": {
-          xml: "cepc+rr",
-          assessor_qualification: {
-            nonDomesticNos3: "ACTIVE",
-            nonDomesticNos4: "ACTIVE",
-            nonDomesticNos5: "ACTIVE",
-          },
-          expected_response: "dual_lodgement",
-          expected_lodgement_responses: {
-            "0000-0000-0000-0000-0000": "cepc-ni-dual",
-            "0000-0000-0000-0000-0001": "cepc-rr-ni-dual",
-          },
-        },
-        "valid_rr": {
-          xml: "cepc-rr",
-          assessor_qualification: {
-            nonDomesticNos3: "ACTIVE",
-            nonDomesticNos4: "ACTIVE",
-            nonDomesticNos5: "ACTIVE",
-          },
-        },
         "valid_ac-report": {
           xml: "ac-report", assessor_qualification: { nonDomesticSp3: "ACTIVE" }
         },

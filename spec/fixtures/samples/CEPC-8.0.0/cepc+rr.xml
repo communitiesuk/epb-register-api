@@ -10,7 +10,7 @@
       <CEPC:Issue-Date>2020-05-14</CEPC:Issue-Date>
       <CEPC:Report-Type>3</CEPC:Report-Type>
       <CEPC:Valid-Until>2026-05-04</CEPC:Valid-Until>
-      <CEPC:Related-RRN>4192-1535-8427-8844-6702</CEPC:Related-RRN>
+      <CEPC:Related-RRN>0000-0000-0000-0000-0001</CEPC:Related-RRN>
       <CEPC:Inspection-Date>2020-05-04</CEPC:Inspection-Date>
       <CEPC:Registration-Date>2020-05-04</CEPC:Registration-Date>
       <CEPC:Status>entered</CEPC:Status>
@@ -24,7 +24,7 @@
         <CEPC:Company-Name>Joe Bloggs Ltd</CEPC:Company-Name>
         <CEPC:Qualifications>NOS5</CEPC:Qualifications>
         <CEPC:Status>Registered</CEPC:Status>
-        <CEPC:E-Mail>test@testscheme.com</CEPC:E-Mail>
+        <CEPC:E-Mail>a@b.c</CEPC:E-Mail>
         <CEPC:Telephone-Number>012345</CEPC:Telephone-Number>
       </CEPC:Energy-Assessor>
       <CEPC:Building-Complexity>Level 3</CEPC:Building-Complexity>
@@ -356,6 +356,8 @@
         <CEPC:Name>Name0</CEPC:Name>
         <CEPC:Accreditation-Scheme-Name>Accreditation-Scheme-Name0</CEPC:Accreditation-Scheme-Name>
         <CEPC:Related-Party-Disclosure>Related to the owner</CEPC:Related-Party-Disclosure>
+        <CEPC:E-Mail>a@b.c</CEPC:E-Mail>
+        <CEPC:Telephone-Number>012345</CEPC:Telephone-Number>
       </CEPC:Energy-Assessor>
       <CEPC:Property-Details>
         <CEPC:UPRN>UPRN-000000000000</CEPC:UPRN>

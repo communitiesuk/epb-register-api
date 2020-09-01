@@ -6,10 +6,10 @@ describe "Acceptance::AssessmentSummary::Supplement::CEPC_RR" do
     assessor = AssessorStub.new.fetch_request_body(nonDomesticNos3: "ACTIVE")
     add_assessor(scheme_id, "SPEC000000", assessor)
 
-    lodge_cepc_rr(Samples.xml("CEPC-8.0.0", "cepc-rr"), scheme_id)
+    lodge_cepc_rr(Samples.xml("CEPC-8.0.0", "cepc+rr"), scheme_id)
     @regular_summary =
         JSON.parse(
-            fetch_assessment_summary("0000-0000-0000-0000-0000").body,
+            fetch_assessment_summary("0000-0000-0000-0000-0001").body,
             symbolize_names: true,
             )
 
@@ -48,6 +48,20 @@ describe "Acceptance::AssessmentSummary::Supplement::CEPC_RR" do
   context "when getting the related reports" do
     it "Returns an empty list when there are no related reports" do
       expect(@regular_summary.dig(:data, :relatedAssessments)).to eq([])
+    end
+  end
+
+  context "when getting the related certificate energy band" do
+    it "Returns empty when there is no dual lodgement" do
+      expect(
+          @second_summary.dig(:data, :energyBandFromRelatedCertificate),
+          ).to be_nil
+    end
+
+    it "Returns the energy band from the dual lodged certificate" do
+      expect(
+          @regular_summary.dig(:data, :energyBandFromRelatedCertificate),
+          ).to eq("d")
     end
   end
 end
