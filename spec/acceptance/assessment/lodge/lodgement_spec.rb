@@ -104,6 +104,23 @@ describe "Acceptance::Assessment::Lodge" do
           response_body["errors"][0]["title"],
           ).to include "Invalid attribute name: <<Property-Summary>"
     end
+
+    it "rejects a dual lodgement when related RRNs dont match" do
+      register_assessor
+      xml = Nokogiri.XML valid_cepc_rr_xml
+      xml.at("//CEPC:Related-RRN").content  = "0000-0000-0000-0000-0002"
+
+      response = JSON.parse(lodge_assessment(
+          assessment_body: xml.to_xml,
+          accepted_responses: [400],
+          auth_data: {scheme_ids: [scheme_id]},
+          schema_name: "CEPC-8.0.0",
+          override: "true",
+          ).body, symbolize_names: true)
+
+      expect(response[:errors][0][:title])
+          .to eq("Related RRNs must reference each other")
+    end
   end
 
   context "when lodging and overriding the rules" do

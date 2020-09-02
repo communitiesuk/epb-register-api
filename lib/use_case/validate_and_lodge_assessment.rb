@@ -6,6 +6,7 @@ module UseCase
     class ValidationErrorException < StandardError; end
     class UnauthorisedToLodgeAsThisSchemeException < StandardError; end
     class SchemaNotSupportedException < StandardError; end
+    class RelatedReportError < StandardError; end
     class SchemaNotDefined < StandardError; end
     class LodgementRulesException < StandardError
       attr_reader :errors
@@ -39,6 +40,10 @@ module UseCase
         Helper::SchemaListHelper.new(schema_name).schema_path,
       )
         raise ValidationErrorException
+      end
+
+      unless reports_refer_to_each_other?(xml)
+        raise RelatedReportError, "Related RRNs must reference each other"
       end
 
       unless migrated
@@ -100,6 +105,29 @@ module UseCase
         scheme_assessor_id,
         scheme_ids,
       )
+    end
+
+    def reports_refer_to_each_other?(xml)
+      xml = Nokogiri.XML(xml)
+      xml.remove_namespaces!
+      reports = xml.search("Report")
+
+      if reports.count == 2
+        report1 = reports[0]
+        report2 = reports[1]
+
+        assessment_id1 = report1.at("RRN").content
+        assessment_id2 = report2.at("RRN").content
+
+        related_assessment_id1 = report1.at("Related-RRN").content
+        related_assessment_id2 = report2.at("Related-RRN").content
+
+        assessment_id1 == related_assessment_id2 &&
+            assessment_id2 == related_assessment_id1
+      else
+        true
+      end
+
     end
   end
 end
