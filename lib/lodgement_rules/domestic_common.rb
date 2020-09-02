@@ -118,6 +118,23 @@ module LodgementRules
           true
         end,
       },
+      {
+          name: "SAP_FLOOR_AREA_RANGE",
+          title:
+              '"Total-Floor-Area" within "SAP-Floor-Dimension" must be greater than 0 and less than or equal to 3000',
+          test: lambda do |adapter|
+            sap_floor_dimensions = method_or_nil(adapter, :all_sap_floor_dimensions)
+
+            sap_floor_dimensions
+                .compact
+                .map{|dimension| dimension[:total_floor_area]}
+                .compact
+                .map(&:to_i)
+                .select { |area| area == 0}
+                .empty?
+          end,
+      },
+
     ].freeze
 
     def validate(xml_adaptor)

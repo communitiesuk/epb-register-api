@@ -174,7 +174,7 @@
         </ACI-Cooling-Plant-Inspection>
         <ACI-Cooling-Plant-Sizing>
           <Total-Occupants>0</Total-Occupants>
-          <Total-Floor-Area>0</Total-Floor-Area>
+          <Total-Floor-Area>1</Total-Floor-Area>
           <Occupant-Density>0</Occupant-Density>
           <Upper-Heat-Gain>0</Upper-Heat-Gain>
           <Installed-Capacity>0</Installed-Capacity>
@@ -263,7 +263,7 @@
         </ACI-Cooling-Plant-Inspection>
         <ACI-Cooling-Plant-Sizing>
           <Total-Occupants>0</Total-Occupants>
-          <Total-Floor-Area>0</Total-Floor-Area>
+          <Total-Floor-Area>1</Total-Floor-Area>
           <Occupant-Density>0</Occupant-Density>
           <Upper-Heat-Gain>0</Upper-Heat-Gain>
           <Installed-Capacity>0</Installed-Capacity>

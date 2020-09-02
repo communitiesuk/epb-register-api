@@ -144,4 +144,19 @@ describe LodgementRules::DomesticCommon do
       )
     end
   end
+
+  context "SAP_FLOOR_AREA_RANGE" do
+    let(:error) do
+      {
+          "code": "SAP_FLOOR_AREA_RANGE",
+          "title":
+              '"Total-Floor-Area" within "SAP-Floor-Dimension" must be greater than 0 and less than or equal to 3000',
+      }.freeze
+    end
+
+    it "returns an error if the floor area is 0" do
+      assert_errors("SAP-Floor-Dimension/Total-Floor-Area", "0", [error])
+    end
+
+  end
 end
