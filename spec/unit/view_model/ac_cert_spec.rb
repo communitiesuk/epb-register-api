@@ -19,37 +19,13 @@ describe ViewModel::AcCertWrapper do
         schema_name: "CEPC-7.1",
         xml: Samples.xml("CEPC-7.1", "ac-cert"),
         unsupported_fields: [],
-        different_fields: {
-          technical_information: {
-            date_of_assessment: "2020-05-20",
-            building_complexity: "Level 3",
-            calculation_tool: "Sterling Accreditation, Sterling e-Volve, v1.2",
-            f_gas_compliant_date: "Not Provided",
-            ac_rated_output: "40",
-            random_sampling: "Y",
-            treated_floor_area: "1876",
-            ac_system_metered: "0",
-            refrigerant_charge: "12",
-          },
-        },
+        different_fields: {},
       },
       {
         schema_name: "CEPC-7.0",
         xml: Samples.xml("CEPC-7.0", "ac-cert"),
         unsupported_fields: [],
-        different_fields: {
-          technical_information: {
-            date_of_assessment: "2020-05-20",
-            building_complexity: "Level 3",
-            calculation_tool: "Sterling Accreditation, Sterling e-Volve, v1.2",
-            f_gas_compliant_date: "Not Provided",
-            ac_rated_output: "40",
-            random_sampling: "Y",
-            treated_floor_area: "1876",
-            ac_system_metered: "0",
-            refrigerant_charge: "12",
-          },
-        },
+        different_fields: {},
       },
     ].freeze
 
