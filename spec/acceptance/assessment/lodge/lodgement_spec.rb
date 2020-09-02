@@ -331,33 +331,34 @@ describe "Acceptance::Assessment::Lodge" do
                          migrated: true
       end
     end
+  end
 
-    context "security" do
-      it "returns 401 with no authentication" do
-        lodge_assessment(
-            assessment_body: "body", accepted_responses: [401], authenticate: false,
-            )
-      end
+  context "security" do
+    it "returns 401 with no authentication" do
+      lodge_assessment(
+          assessment_body: "body", accepted_responses: [401], authenticate: false,
+          )
+    end
 
-      it "returns 403 with incorrect scopes" do
-        lodge_assessment(
-            assessment_body: "body",
-            accepted_responses: [403],
-            auth_data: {scheme_ids: {}},
-            scopes: %w[wrong:scope],
-            )
-      end
+    it "returns 403 with incorrect scopes" do
+      lodge_assessment(
+          assessment_body: "body",
+          accepted_responses: [403],
+          auth_data: {scheme_ids: {}},
+          scopes: %w[wrong:scope],
+          )
+    end
 
-      it "returns 403 if it is being lodged by the wrong scheme" do
-        add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
-        different_scheme_id = add_scheme_and_get_id("BADSCHEME")
+    it "returns 403 if it is being lodged by the wrong scheme" do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
+      different_scheme_id = add_scheme_and_get_id("BADSCHEME")
 
-        lodge_assessment(
-            assessment_body: valid_rdsap_xml,
-            accepted_responses: [403],
-            auth_data: {scheme_ids: [different_scheme_id]},
-            )
-      end
+      lodge_assessment(
+          assessment_body: valid_rdsap_xml,
+          accepted_responses: [403],
+          auth_data: {scheme_ids: [different_scheme_id]},
+          )
     end
   end
 end
