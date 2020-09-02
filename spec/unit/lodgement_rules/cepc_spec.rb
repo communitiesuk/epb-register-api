@@ -111,10 +111,10 @@ describe LodgementRules::NonDomestic do
     end
   end
 
-  context "FLOOR_AREA_CANT_BE_LESS_THAN_ZERO" do
+  context "FLOOR_AREA_MUST_BE_MORE_THAN_ZERO" do
     let(:error) do
       {
-        "code": "FLOOR_AREA_CANT_BE_LESS_THAN_ZERO",
+        "code": "FLOOR_AREA_MUST_BE_MORE_THAN_ZERO",
         "title": '"Floor-Area" must be greater than 0',
       }.freeze
     end
