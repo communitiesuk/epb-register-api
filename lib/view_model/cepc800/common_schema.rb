@@ -100,10 +100,6 @@ module ViewModel
         @xml_doc.search("Start-Date").map(&:content)
       end
 
-      def all_floor_areas
-        @xml_doc.search("Floor-Area").map(&:content)
-      end
-
       def all_energy_types
         @xml_doc.search("Energy-Type").map(&:content)
       end

@@ -134,6 +134,10 @@ describe LodgementRules::NonDomestic do
     it "returns an error if any floor area is equal to zero" do
       assert_errors("Technical-Information/Floor-Area", "0", [error])
     end
+
+    it "does not return an error if the floor area is not in the technical information section" do
+      assert_errors("Benchmark/Floor-Area", "0", [])
+    end
   end
 
   context "EMISSION_RATINGS_MUST_NOT_BE_NEGATIVE" do

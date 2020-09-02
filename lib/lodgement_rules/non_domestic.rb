@@ -42,7 +42,8 @@ module LodgementRules
         name: "FLOOR_AREA_CANT_BE_LESS_THAN_ZERO",
         title: '"Floor-Area" must be greater than 0',
         test: lambda do |adapter|
-          adapter.all_floor_areas.map(&:to_i).all?(&:positive?)
+          floor_area = method_or_nil(adapter, :floor_area)
+          floor_area.nil? || floor_area.to_i.positive?
         end,
       },
       {
