@@ -53,6 +53,7 @@ module ViewModel
           {
             number: xpath(%w[Sub-System-Number], node),
             description: xpath(%w[Sub-System-Description], node),
+            age: xpath(%w[Sub-System-Age], node),
           }
         }.compact
       end

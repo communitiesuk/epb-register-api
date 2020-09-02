@@ -59,6 +59,7 @@ describe ViewModel::AcCertWrapper do
           number: "VOL001/SYS001 R410A Inverter Split Systems to Sales Area",
           description:
             "This sub system comprised of; 4Nr 10kW R410A Mitsubishi Heavy Industries inverter driven split AC condensers interconnected to indoor cassette units within the Sales Area dating from circa 2014.",
+          age: "2014",
         },
       ],
     }.freeze
