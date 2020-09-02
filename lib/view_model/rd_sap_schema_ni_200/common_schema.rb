@@ -170,7 +170,7 @@ module ViewModel
       end
 
       def total_floor_area
-        xpath(%w[Total-Floor-Area]).to_f
+        xpath(%w[Property-Summary Total-Floor-Area]).to_f
       end
 
       def dwelling_type
