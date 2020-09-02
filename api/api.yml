@@ -757,7 +757,7 @@ paths:
             - 'report:assessor:status'
       parameters:
         - in: query
-          name: reportDate
+          name: date
           required: true
           description: The date of the report
           schema:
