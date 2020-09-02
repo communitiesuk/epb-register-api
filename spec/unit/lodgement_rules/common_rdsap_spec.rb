@@ -162,5 +162,9 @@ describe LodgementRules::DomesticCommon do
       assert_errors("SAP-Floor-Dimension/Total-Floor-Area", "-6", [error])
     end
 
+    it "returns an error if the floor area is more than 3000" do
+      assert_errors("SAP-Floor-Dimension/Total-Floor-Area", "3001", [error])
+    end
+
   end
 end
