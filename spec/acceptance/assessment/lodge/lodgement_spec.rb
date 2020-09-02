@@ -42,33 +42,6 @@ describe "Acceptance::Assessment::Lodge" do
       end
     end
 
-    it "returns 401 with no authentication" do
-      lodge_assessment(
-        assessment_body: "body", accepted_responses: [401], authenticate: false,
-      )
-    end
-
-    it "returns 403 with incorrect scopes" do
-      lodge_assessment(
-        assessment_body: "body",
-        accepted_responses: [403],
-        auth_data: { scheme_ids: {} },
-        scopes: %w[wrong:scope],
-      )
-    end
-
-    it "returns 403 if it is being lodged by the wrong scheme" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
-      different_scheme_id = add_scheme_and_get_id("BADSCHEME")
-
-      lodge_assessment(
-        assessment_body: valid_rdsap_xml,
-        accepted_responses: [403],
-        auth_data: { scheme_ids: [different_scheme_id] },
-      )
-    end
-
     it "returns the correct response" do
       scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
@@ -439,6 +412,35 @@ describe "Acceptance::Assessment::Lodge" do
       expect(overidden_lodgement_event["rule_triggers"]).to eq(
         "[{\"code\": \"DATES_CANT_BE_IN_FUTURE\", \"title\": \"Inspection-Date\\\", \\\"Registration-Date\\\", \\\"Issue-Date\\\", \\\"Effective-Date\\\", \\\"OR-Availability-Date\\\", \\\"Start-Date\\\" and \\\"OR-Assessment-Start-Date\\\" must not be in the future\"}]",
       )
+    end
+  end
+
+  context "security" do
+    it "returns 401 with no authentication" do
+      lodge_assessment(
+          assessment_body: "body", accepted_responses: [401], authenticate: false,
+          )
+    end
+
+    it "returns 403 with incorrect scopes" do
+      lodge_assessment(
+          assessment_body: "body",
+          accepted_responses: [403],
+          auth_data: { scheme_ids: {} },
+          scopes: %w[wrong:scope],
+          )
+    end
+
+    it "returns 403 if it is being lodged by the wrong scheme" do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
+      different_scheme_id = add_scheme_and_get_id("BADSCHEME")
+
+      lodge_assessment(
+          assessment_body: valid_rdsap_xml,
+          accepted_responses: [403],
+          auth_data: { scheme_ids: [different_scheme_id] },
+          )
     end
   end
 end
