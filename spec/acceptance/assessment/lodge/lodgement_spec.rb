@@ -139,37 +139,6 @@ describe "Acceptance::Assessment::Lodge" do
     end
   end
 
-  context "when an unauthenticated migration request is made" do
-    let(:scheme_id) { add_scheme_and_get_id }
-
-    let(:response) do
-      JSON.parse(
-          lodge_assessment(
-              assessment_body: valid_rdsap_xml,
-              accepted_responses: [403],
-              auth_data: {scheme_ids: [scheme_id]},
-              migrated: "true",
-          ).body,
-          symbolize_names: true,
-      )
-    end
-
-    before { add_assessor scheme_id, "SPEC000000", valid_assessor_request_body }
-
-    it "shows the correct error response" do
-      expect(response).to eq(
-                              {
-                                  errors: [
-                                      {
-                                          code: "UNAUTHORISED",
-                                          title: "You are not authorised to perform this request",
-                                      },
-                                  ],
-                              },
-                          )
-    end
-  end
-
   context "when lodging an assessment with the override flag set to true" do
     let(:cepc_xml_doc) { Nokogiri.XML(valid_cepc_rr_xml) }
 
@@ -229,7 +198,7 @@ describe "Acceptance::Assessment::Lodge" do
     end
   end
 
-  context "when migrating an assessmewnt" do
+  context "when migrating an assessment" do
     let(:scheme_id) { add_scheme_and_get_id }
 
     let(:migrated_column) do
@@ -288,6 +257,15 @@ describe "Acceptance::Assessment::Lodge" do
                          auth_data: {scheme_ids: [scheme_id]},
                          migrated: true
       end
+    end
+
+    it "rejects a migration from a client without migration role" do
+      lodge_assessment(
+          assessment_body: valid_rdsap_xml,
+          accepted_responses: [403],
+          auth_data: {scheme_ids: [scheme_id]},
+          migrated: "true",
+          )
     end
   end
 
