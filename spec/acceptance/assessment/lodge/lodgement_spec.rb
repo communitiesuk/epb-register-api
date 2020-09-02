@@ -170,48 +170,6 @@ describe "Acceptance::Assessment::Lodge" do
     end
   end
 
-  context "when lodging two energy assessments" do
-    let(:scheme_id) { add_scheme_and_get_id }
-
-    let(:response) do
-      JSON.parse(
-          lodge_assessment(
-              assessment_body: valid_cepc_rr_xml,
-              accepted_responses: [201],
-              auth_data: {scheme_ids: [scheme_id]},
-              schema_name: "CEPC-8.0.0",
-              ).body,
-          symbolize_names: true,
-          )
-    end
-
-    before do
-      add_assessor scheme_id,
-                   "SPEC000000",
-                   AssessorStub.new.fetch_request_body(
-                       nonDomesticNos3: "ACTIVE",
-                       )
-    end
-
-    it "returns the correct response" do
-      expect(response).to eq(
-                              {
-                                  data: {
-                                      assessments: %w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001],
-                                  },
-                                  meta: {
-                                      links: {
-                                          assessments: %w[
-                /api/assessments/0000-0000-0000-0000-0000
-                /api/assessments/0000-0000-0000-0000-0001
-              ],
-                                      },
-                                  },
-                              },
-                              )
-    end
-  end
-
   context "when lodging an assessment with the override flag set to true" do
     let(:cepc_xml_doc) { Nokogiri.XML(valid_cepc_rr_xml) }
 
