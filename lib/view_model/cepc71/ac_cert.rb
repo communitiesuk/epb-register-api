@@ -1,6 +1,18 @@
 module ViewModel
   module Cepc71
     class AcCert < ViewModel::Cepc71::CommonSchema
+
+      def xpath(queries, node = @xml_doc)
+        queries.each do |query|
+          if node
+            node = node.at query
+          else
+            return nil
+          end
+        end
+        node ? node.content : nil
+      end
+
       def building_complexity
         xpath(%w[Building-Complexity])
       end
@@ -35,6 +47,14 @@ module ViewModel
 
       def related_rrn
         xpath(%w[Related-RRN])
+      end
+
+      def subsystems
+        @xml_doc.search("AC-Sub-System").select(
+            &:element?
+        ).map { |node|
+          { number: xpath(%w[Sub-System-Number], node) }
+        }.compact
       end
     end
   end

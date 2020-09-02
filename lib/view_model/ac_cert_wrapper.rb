@@ -47,6 +47,7 @@ module ViewModel
           refrigerant_charge: @view_model.refrigerant_charge,
         },
         related_rrn: @view_model.related_rrn,
+        subsystems: @view_model.subsystems
       }
     end
 

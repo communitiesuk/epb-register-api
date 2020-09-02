@@ -54,6 +54,7 @@ describe ViewModel::AcCertWrapper do
         refrigerant_charge: "50",
       },
       related_rrn: "0000-0000-0000-0000-0001",
+      subsystems: [{number: "VOL001/SYS001 R410A Inverter Split Systems to Sales Area"}]
     }.freeze
 
     it "should read the appropriate values from the XML doc" do
