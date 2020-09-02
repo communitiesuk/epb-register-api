@@ -139,10 +139,10 @@ describe "Acceptance::Assessment::Lodge" do
     end
   end
 
-  context "when lodging an assessment with the override flag set to true" do
+  context "when lodging and overriding the rules" do
     let(:cepc_xml_doc) { Nokogiri.XML(valid_cepc_rr_xml) }
 
-    it "will lodge the assessment and log the events to the overidden_lodgement_events table" do
+    it "logs the events to the overidden_lodgement_events table" do
       scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
 
