@@ -1,7 +1,6 @@
 module ViewModel
   module Cepc70
     class AcCert < ViewModel::Cepc70::CommonSchema
-
       def xpath(queries, node = @xml_doc)
         queries.each do |query|
           if node
@@ -50,10 +49,11 @@ module ViewModel
       end
 
       def subsystems
-        @xml_doc.search("AC-Sub-System").select(
-            &:element?
-        ).map { |node|
-          { number: xpath(%w[Sub-System-Number], node) }
+        @xml_doc.search("AC-Sub-System").select(&:element?).map { |node|
+          {
+            number: xpath(%w[Sub-System-Number], node),
+            description: xpath(%w[Sub-System-Description], node),
+          }
         }.compact
       end
     end

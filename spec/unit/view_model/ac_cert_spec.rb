@@ -54,7 +54,13 @@ describe ViewModel::AcCertWrapper do
         refrigerant_charge: "50",
       },
       related_rrn: "0000-0000-0000-0000-0001",
-      subsystems: [{number: "VOL001/SYS001 R410A Inverter Split Systems to Sales Area"}]
+      subsystems: [
+        {
+          number: "VOL001/SYS001 R410A Inverter Split Systems to Sales Area",
+          description:
+            "This sub system comprised of; 4Nr 10kW R410A Mitsubishi Heavy Industries inverter driven split AC condensers interconnected to indoor cassette units within the Sales Area dating from circa 2014.",
+        },
+      ],
     }.freeze
 
     it "should read the appropriate values from the XML doc" do
