@@ -69,27 +69,28 @@ describe "Acceptance::Assessment::Lodge" do
           )
     end
 
+    it "rejects an assessment with an invalid XML element" do
+      register_assessor
+
+      doc = Nokogiri.XML valid_rdsap_xml
+
+      node = doc.at("Address")
+      node.children = "<Postcode>invalid</Postcode>"
+      response_body =
+          JSON.parse(
+              lodge_assessment(
+                  assessment_body: doc.to_xml,
+                  accepted_responses: [400],
+                  auth_data: {scheme_ids: [scheme_id]},
+                  ).body,
+              )
+
+      expect(
+          response_body["errors"][0]["title"],
+          ).to include "This element is not expected."
+    end
+
     context "when rejecting an assessment" do
-      it "rejects an assessment with an incorrect element" do
-        add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
-
-        doc = Nokogiri.XML valid_rdsap_xml
-
-        scheme_assessor_id = doc.at("Address")
-        scheme_assessor_id.children = "<Postcode>invalid</Postcode>"
-
-        response_body =
-            JSON.parse(
-                lodge_assessment(
-                    assessment_body: doc.to_xml, accepted_responses: [400],
-                ).body,
-            )
-
-        expect(
-            response_body["errors"][0]["title"],
-        ).to include "This element is not expected."
-      end
-
       it "rejects an assessment with invalid XML" do
         xml = valid_rdsap_xml
 
