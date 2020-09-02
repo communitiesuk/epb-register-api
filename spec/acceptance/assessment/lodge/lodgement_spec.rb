@@ -13,6 +13,8 @@ describe "Acceptance::Assessment::Lodge" do
   let(:valid_cepc_rr_xml) { Samples.xml "CEPC-8.0.0", "cepc+rr" }
 
   context "rejecting lodgements" do
+    let(:scheme_id) { add_scheme_and_get_id }
+
     it "rejects an assessment with a schema that does not exist" do
       lodge_assessment(
           assessment_body: valid_rdsap_xml,
@@ -21,57 +23,31 @@ describe "Acceptance::Assessment::Lodge" do
       )
     end
 
-    context "when an assessor is not registered" do
-      it "returns status 400" do
-        lodge_assessment(
-            assessment_body: valid_rdsap_xml, accepted_responses: [400],
-        )
-      end
+    it "rejects an assessment from an unregistered assessor" do
+      response =
+          JSON.parse(
+              lodge_assessment(
+                  assessment_body: valid_rdsap_xml, accepted_responses: [400],
+                  ).body,
+              )
 
-      it "returns status 400 with the correct error response" do
-        response =
-            JSON.parse(
-                lodge_assessment(
-                    assessment_body: valid_rdsap_xml, accepted_responses: [400],
-                ).body,
-            )
-
-        expect(response["errors"][0]["title"]).to eq(
-                                                      "Assessor is not registered.",
-                                                  )
-      end
+      expect(response["errors"][0]["title"]).to eq(
+                                                    "Assessor is not registered.",
+                                                    )
     end
 
-    context "when schema is not supported" do
-      let(:scheme_id) { add_scheme_and_get_id }
-      let(:doc) { Nokogiri.XML valid_rdsap_xml }
+    it "rejects an assessment with an unsupported schema" do
+      response =
+          JSON.parse(
+              lodge_assessment(
+                  assessment_body: valid_cepc_rr_xml,
+                  accepted_responses: [400],
+                  auth_data: {scheme_ids: [scheme_id]},
+                  schema_name: "unsupported",
+                  ).body,
+              )
 
-      before do
-        add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
-      end
-
-      it "returns status 400" do
-        lodge_assessment(
-            assessment_body: doc.to_xml,
-            accepted_responses: [400],
-            auth_data: {scheme_ids: [scheme_id]},
-            schema_name: "unsupported",
-        )
-      end
-
-      it "returns the correct error message" do
-        response =
-            JSON.parse(
-                lodge_assessment(
-                    assessment_body: doc.to_xml,
-                    accepted_responses: [400],
-                    auth_data: {scheme_ids: [scheme_id]},
-                    schema_name: "unsupported",
-                ).body,
-            )
-
-        expect(response["errors"][0]["title"]).to eq("Schema is not supported.")
-      end
+      expect(response["errors"][0]["title"]).to eq("Schema is not supported.")
     end
 
     context "when saving an assessment" do
