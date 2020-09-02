@@ -60,6 +60,7 @@ describe ViewModel::AcCertWrapper do
           description:
             "This sub system comprised of; 4Nr 10kW R410A Mitsubishi Heavy Industries inverter driven split AC condensers interconnected to indoor cassette units within the Sales Area dating from circa 2014.",
           age: "2014",
+          refrigerantType: "R410A",
         },
       ],
     }.freeze
