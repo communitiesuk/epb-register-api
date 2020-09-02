@@ -12,7 +12,7 @@ describe "Acceptance::Assessment::Lodge" do
   let(:valid_rdsap_xml) { Samples.xml "RdSAP-Schema-20.0.0" }
   let(:valid_cepc_rr_xml) { Samples.xml "CEPC-8.0.0", "cepc+rr" }
 
-  context "when lodging an energy assessment (post)" do
+  context "rejecting lodgements" do
     it "rejects an assessment with a schema that does not exist" do
       lodge_assessment(
           assessment_body: valid_rdsap_xml,
