@@ -90,22 +90,19 @@ describe "Acceptance::Assessment::Lodge" do
           ).to include "This element is not expected."
     end
 
-    context "when rejecting an assessment" do
-      it "rejects an assessment with invalid XML" do
-        xml = valid_rdsap_xml
+    it "rejects an assessment with XML that doesnt parse" do
+      xml = valid_rdsap_xml
+      xml = xml.gsub("<Energy-Assessment>", "<Energy-Assessment")
 
-        xml = xml.gsub("<Energy-Assessment>", "<Energy-Assessment")
+      response_body =
+          JSON.parse(
+              lodge_assessment(assessment_body: xml, accepted_responses: [400])
+                  .body,
+              )
 
-        response_body =
-            JSON.parse(
-                lodge_assessment(assessment_body: xml, accepted_responses: [400])
-                    .body,
-            )
-
-        expect(
-            response_body["errors"][0]["title"],
-        ).to include "Invalid attribute name: <<Property-Summary>"
-      end
+      expect(
+          response_body["errors"][0]["title"],
+          ).to include "Invalid attribute name: <<Property-Summary>"
     end
   end
 
