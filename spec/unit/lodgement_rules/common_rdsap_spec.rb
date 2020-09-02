@@ -158,5 +158,9 @@ describe LodgementRules::DomesticCommon do
       assert_errors("SAP-Floor-Dimension/Total-Floor-Area", "0", [error])
     end
 
+    it "returns an error if the floor area is negative" do
+      assert_errors("SAP-Floor-Dimension/Total-Floor-Area", "-6", [error])
+    end
+
   end
 end
