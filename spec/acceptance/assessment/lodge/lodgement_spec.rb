@@ -14,6 +14,8 @@ describe "Acceptance::Assessment::Lodge" do
 
   context "rejecting lodgements" do
     let(:scheme_id) { add_scheme_and_get_id }
+    let(:doc) { Nokogiri.XML valid_rdsap_xml }
+    let(:register_assessor) { add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body) }
 
     it "rejects an assessment with a schema that does not exist" do
       lodge_assessment(
@@ -27,7 +29,9 @@ describe "Acceptance::Assessment::Lodge" do
       response =
           JSON.parse(
               lodge_assessment(
-                  assessment_body: valid_rdsap_xml, accepted_responses: [400],
+                  assessment_body: valid_rdsap_xml,
+                  accepted_responses: [400],
+                  auth_data: {scheme_ids: [scheme_id]},
                   ).body,
               )
 
@@ -50,34 +54,23 @@ describe "Acceptance::Assessment::Lodge" do
       expect(response["errors"][0]["title"]).to eq("Schema is not supported.")
     end
 
-    context "when saving an assessment" do
-      let(:scheme_id) { add_scheme_and_get_id }
-      let(:doc) { Nokogiri.XML valid_rdsap_xml }
-
-      before do
-        add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
-      end
-
-      context "when an assessment already exists with the same assessment id" do
-        it "returns status 409" do
-          lodge_assessment(
-              assessment_body: doc.to_xml,
-              accepted_responses: [201],
-              auth_data: {scheme_ids: [scheme_id]},
+    it "rejects an assessment where the ID already exists" do
+      register_assessor
+      lodge_assessment(
+          assessment_body: doc.to_xml,
+          accepted_responses: [201],
+          auth_data: {scheme_ids: [scheme_id]},
           )
 
-          lodge_assessment(
-              assessment_body: doc.to_xml,
-              accepted_responses: [409],
-              auth_data: {scheme_ids: [scheme_id]},
+      lodge_assessment(
+          assessment_body: doc.to_xml,
+          accepted_responses: [409],
+          auth_data: {scheme_ids: [scheme_id]},
           )
-        end
-      end
     end
 
     context "when rejecting an assessment" do
       it "rejects an assessment with an incorrect element" do
-        scheme_id = add_scheme_and_get_id
         add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
 
         doc = Nokogiri.XML valid_rdsap_xml
