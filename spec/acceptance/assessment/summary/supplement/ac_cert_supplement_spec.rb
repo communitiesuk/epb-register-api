@@ -12,7 +12,7 @@ describe "Acceptance::AssessmentSummary::Supplement::AC_CERT" do
     lodge_ac_cert(Samples.xml("CEPC-8.0.0", "ac-cert+ac-report"), scheme_id)
     @regular_summary =
       JSON.parse(
-        fetch_assessment_summary("0000-0000-0000-0000-0001").body,
+        fetch_assessment_summary("0000-0000-0000-0000-0000").body,
         symbolize_names: true,
       )
 
