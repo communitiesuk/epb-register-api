@@ -10,12 +10,12 @@ module UseCase
           scheme_id: assessor[:registered_by][:scheme_id],
         }
 
-        if hash.dig(:assessor, :contact_details, :email).nil?
+        if hash.dig(:assessor, :contact_details, :email).blank?
           hash[:assessor][:contact_details][:email] =
             assessor[:contact_details][:email]
         end
 
-        if hash.dig(:assessor, :contact_details, :telephone).nil?
+        if hash.dig(:assessor, :contact_details, :telephone).blank?
           hash[:assessor][:contact_details][:telephone] =
             assessor[:contact_details][:telephone_number]
         end
@@ -25,12 +25,12 @@ module UseCase
         assessor_id = hash[:assessor][:scheme_assessor_id]
         assessor = Gateway::AssessorsGateway.new.fetch(assessor_id).to_hash
 
-        unless hash.dig(:assessor, :contact_details, :email).nil?
+        unless hash.dig(:assessor, :contact_details, :email).blank?
           assessor[:contact_details][:email] =
             hash.dig(:assessor, :contact_details, :email)
         end
 
-        unless hash.dig(:assessor, :contact_details, :telephone).nil?
+        unless hash.dig(:assessor, :contact_details, :telephone).blank?
           assessor[:contact_details][:telephone_number] =
             hash.dig(:assessor, :contact_details, :telephone)
         end
