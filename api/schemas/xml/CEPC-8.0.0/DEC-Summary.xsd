@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns="DCLG-CEPC"
+<xs:schema xmlns="https://epbr.digital.communities.gov.uk/xsd/dec-summary"
            xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           targetNamespace="DCLG-CEPC"
+           targetNamespace="https://epbr.digital.communities.gov.uk/xsd/dec-summary"
            elementFormDefault="qualified"
            attributeFormDefault="unqualified"
            version="CEPC-8.0.0">
