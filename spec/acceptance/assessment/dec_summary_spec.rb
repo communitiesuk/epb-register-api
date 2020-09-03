@@ -18,6 +18,25 @@ describe "Acceptance::DECSummary" do
   let(:valid_dec_xml) { Samples.xml "CEPC-8.0.0", "dec" }
   let(:valid_cepc_xml) { Samples.xml "CEPC-8.0.0", "cepc" }
 
+  context "when getting a DEC" do
+    it "returns valid XML" do
+      lodge_assessment(
+        assessment_body: valid_dec_xml,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] },
+        schema_name: "CEPC-8.0.0",
+      )
+
+      response =
+        JSON.parse(
+          fetch_dec_summary("0000-0000-0000-0000-0000", [200]).body,
+          symbolize_names: true,
+        )
+
+      expect(response[:data]).to eq(Samples.xml("CEPC-8.0.0", "dec"))
+    end
+  end
+
   context "an assessment that is not a DEC" do
     it "returns error 403, assessment is not a DEC" do
       lodge_assessment(
@@ -66,7 +85,7 @@ describe "Acceptance::DECSummary" do
   context "when assessment has been cancelled" do
     it "returns error 410, assessment not for issue" do
       lodge_assessment(
-        assessment_body: valid_cepc_xml,
+        assessment_body: valid_dec_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
         schema_name: "CEPC-8.0.0",

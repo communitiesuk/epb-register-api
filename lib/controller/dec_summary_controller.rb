@@ -1,7 +1,10 @@
 module Controller
   class DecSummaryController < Controller::BaseController
     get "/api/dec_summary/:assessment_id", jwt_auth: %w[dec_summary:fetch] do
-      UseCase::FetchDecSummary.new.execute(params[:assessment_id])
+      json_api_response(
+        code: 200,
+        data: UseCase::FetchDecSummary.new.execute(params[:assessment_id]),
+      )
     rescue StandardError => e
       case e
       when UseCase::FetchDecSummary::AssessmentNotFound

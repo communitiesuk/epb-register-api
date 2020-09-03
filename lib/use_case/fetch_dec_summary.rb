@@ -6,6 +6,7 @@ module UseCase
 
     def initialize
       @assessment_gateway = Gateway::AssessmentsSearchGateway.new
+      @assessments_xml_gateway = Gateway::AssessmentsXmlGateway.new
     end
 
     def execute(assessment_id)
@@ -21,6 +22,8 @@ module UseCase
       end
 
       raise AssessmentNotDec if result.to_hash[:type_of_assessment] != "DEC"
+
+      @assessments_xml_gateway.fetch(assessment_id)[:xml]
     end
   end
 end
