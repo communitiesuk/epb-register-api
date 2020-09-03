@@ -723,6 +723,56 @@ paths:
         500:
           description: Server error
 
+  /dec_summary/{assessmentId}:
+    get:
+      tags:
+        - Manage Assessments
+      summary: Get XML from DEC that can be used by AECOM software
+      security:
+        -oauth:
+          - 'dec_summary:fetch'
+      parameters:
+        - in: path
+          name: assessmentId
+          required: true
+          description: 'The ID of the assessment being requested, usually RRN'
+          schema:
+            $ref: '#/components/schemas/AssessmentId'
+      responses:
+        200:
+          description: Energy Performance Assessment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empty'
+        404:
+          description: Assessment not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Assessment is not a DEC
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        400:
+          description: Bad request - The assessmentId parameter is badly formatted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        410:
+          description: >-
+            Assessment no long accessible
+            (could have been cancelled or marked not for issue)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Server error
 
   /assessments/{assessmentId}/status:
     post:
