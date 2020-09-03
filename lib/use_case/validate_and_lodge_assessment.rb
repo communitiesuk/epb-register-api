@@ -42,9 +42,7 @@ module UseCase
         raise ValidationErrorException
       end
 
-      unless reports_refer_to_each_other?(xml)
-        raise RelatedReportError
-      end
+      raise RelatedReportError unless reports_refer_to_each_other?(xml)
 
       unless migrated
         wrapper = ViewModel::Factory.new.create(xml, schema_name, false)

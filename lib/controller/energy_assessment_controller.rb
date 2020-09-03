@@ -175,7 +175,11 @@ module Controller
       when UseCase::LodgeAssessment::DuplicateAssessmentIdException
         error_response(409, "INVALID_REQUEST", "Assessment ID already exists.")
       when UseCase::ValidateAndLodgeAssessment::RelatedReportError
-        error_response(400, "INVALID_REQUEST", "Related RRNs must reference each other.")
+        error_response(
+          400,
+          "INVALID_REQUEST",
+          "Related RRNs must reference each other.",
+        )
       when REXML::ParseException
         error_response(400, "INVALID_REQUEST", e.message)
       when UseCase::ValidateAndLodgeAssessment::LodgementRulesException
