@@ -22,7 +22,7 @@ module ViewModel
     end
 
     def to_xml
-      <<~DEC_SUMMARY
+      <<~XML
         <Reports
           xmlns="https://epbr.digital.communities.gov.uk/xsd/dec-summary"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -30,9 +30,9 @@ module ViewModel
         >
           <Report>
             <Report-Header>
-              <Report-Type>1</Report-Type>
+              <Report-Type>#{@view_model.report_type}</Report-Type>
               <Property-Details>
-                <UPRN>UPRN-000000000001</UPRN>
+                <UPRN>#{@view_model.address_id}</UPRN>
               </Property-Details>
               <Calculation-Details>
                 <Output-Engine>MWW-91.1.1</Output-Engine>
@@ -98,7 +98,7 @@ module ViewModel
             </Display-Certificate>
           </Report>
         </Reports>
-      DEC_SUMMARY
+      XML
     end
 
     def get_view_model
