@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2006 rel. 3 U (http://www.altova.com) by Jim Bowery (Landmark Information Group Ltd.) -->
+<xs:schema xmlns="http://www.epcregister.com/xsd/rdsap" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="http://www.epcregister.com/xsd/rdsap" elementFormDefault="qualified"
+    attributeFormDefault="unqualified" version="LIG-19.0">
+    <xs:include schemaLocation="./AssessorManagement.xsd"/>
+    <xs:include schemaLocation="../UDT/EPC-Domains.xsd"/>
+
+    <xs:element name="ReportList">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Report-Summary" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:all>
+                            <xs:element name="RRN" type="RRNType"/>
+                            <xs:element name="Inspection-Date" type="xs:date"/>
+                            <xs:element name="HI-Name" type="PersonNameType"/>
+                            <xs:element name="HI-Certificate" type="CertificateNumberType"/>
+                            <xs:element name="Report-Status" type="ReportStatusCode"/>
+                        </xs:all>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

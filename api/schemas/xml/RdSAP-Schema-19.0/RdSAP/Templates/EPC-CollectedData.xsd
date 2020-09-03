@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns="https://epbr.digital.communities.gov.uk/xsd/rdsap" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="https://epbr.digital.communities.gov.uk/xsd/rdsap" elementFormDefault="qualified" attributeFormDefault="unqualified" version="19.0">
+<!-- edited with XMLSpy v2006 rel. 3 U (http://www.altova.com) by Jim Bowery (Landmark Information Group Ltd.) -->
+<xs:schema xmlns="http://www.epcregister.com/xsd/rdsap" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.epcregister.com/xsd/rdsap" elementFormDefault="qualified" attributeFormDefault="unqualified" version="LIG-19.0">
+	<xs:annotation>
+		<xs:documentation>© Department of Communities and Local Government. © Crown copyright, 2007. The Home Condition Report logo and associated wording is a registered trade mark - any unlicensed use is not permitted. Copyright in the typographical arrangement of this document rests with the Crown. This publication, excluding logos, may be reproduced free of charge in any format or medium for research, private study, for internal circulation within an organisation or by registered scheme users. This is subject to it being reproduced accurately and not used in a misleading context.</xs:documentation>
+	</xs:annotation>
 	<xs:include schemaLocation="../UDT/SAP-Domains.xsd"/>
 	<xs:element name="SAP-Data" type="SAP-Data"/>
 	<xs:complexType name="SAP-Data">
@@ -48,7 +52,7 @@ Together with the Property Type, the Build Form produces a structured descriptio
 			</xs:element>
 			<xs:element name="Habitable-Room-Count" type="Count">
 				<xs:annotation>
-					<xs:documentation>Count of the number of habitable rooms within the property.
+					<xs:documentation>Count of the number of habitable rooms within the property. 
 
 This is the number of Reception Rooms (including Living Rooms, Sitting Rooms, Dining Rooms), Bedrooms, Study and similar rooms but excludes hall, stairs, kitchen, utility rooms, bathrooms, cloakrooms, en-suites and similar rooms.</xs:documentation>
 				</xs:annotation>
@@ -449,7 +453,7 @@ For the purpose of calculating the overall Energy Assessment for the property de
 			<xs:element name="Storage-WWHRS" type="Storage-WWHRS" minOccurs="0"/>
 			<xs:element name="Community-DHW-Network-Index-Number" type="xs:positiveInteger" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>index number of heat network, if applicable, community water heating only.</xs:documentation>
+					<xs:documentation>index number of heat network, if applicable, community water heating oniy.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:all>

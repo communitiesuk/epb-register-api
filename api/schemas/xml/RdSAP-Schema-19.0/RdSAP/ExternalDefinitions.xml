@@ -1055,6 +1055,12 @@
     </Transaction-Type>
     <Transaction-Type>
       <Display-Order>10</Display-Order>
+      <Transaction-Code>14</Transaction-Code>
+      <Transaction-Text>Stock condition survey</Transaction-Text>
+      <In-RdSAP>true</In-RdSAP>
+    </Transaction-Type>
+    <Transaction-Type>
+      <Display-Order>11</Display-Order>
       <Transaction-Code>5</Transaction-Code>
       <Transaction-Text>None of the above</Transaction-Text>
       <In-RdSAP>true</In-RdSAP>
