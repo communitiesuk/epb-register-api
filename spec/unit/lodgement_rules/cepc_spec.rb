@@ -115,12 +115,20 @@ describe LodgementRules::NonDomestic do
     let(:error) do
       {
         "code": "FLOOR_AREA_CANT_BE_LESS_THAN_ZERO",
-        "title": '"Floor-Area" cannot be less than 0',
+        "title": '"Floor-Area" must be greater than 0',
       }.freeze
     end
 
     it "returns an error if technical information / floor area is less than zero" do
       assert_errors("Technical-Information/Floor-Area", "-1", [error])
+    end
+
+    it "returns an error if technical information / floor area is zero" do
+      assert_errors("Technical-Information/Floor-Area", "0", [error])
+    end
+
+    it "does not returns an error if technical information / floor area is just above 0" do
+      assert_errors("Technical-Information/Floor-Area", "0.00001", [])
     end
 
     it "does not return an error if the floor area is not in the technical information section" do
