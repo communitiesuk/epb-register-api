@@ -124,7 +124,7 @@ describe "Acceptance::Assessment::Lodge" do
         )
 
       expect(response[:errors][0][:title]).to eq(
-        "Related RRNs must reference each other",
+        "Related RRNs must reference each other.",
       )
     end
   end

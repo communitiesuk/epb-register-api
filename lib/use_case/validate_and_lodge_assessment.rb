@@ -43,7 +43,7 @@ module UseCase
       end
 
       unless reports_refer_to_each_other?(xml)
-        raise RelatedReportError, "Related RRNs must reference each other"
+        raise RelatedReportError
       end
 
       unless migrated
