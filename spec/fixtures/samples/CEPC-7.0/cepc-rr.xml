@@ -18,8 +18,8 @@
         <Trading-Address>123 My Street, My City, AB3 4CD</Trading-Address>
         <Company-Name>Joe Bloggs Ltd</Company-Name>
         <Related-Party-Disclosure>Related to the owner</Related-Party-Disclosure>
-        <E-Mail>person@person.com</E-Mail>
-        <Telephone-Number>010199991010101</Telephone-Number>
+        <E-Mail>a@b.c</E-Mail>
+        <Telephone-Number>012345</Telephone-Number>
       </Energy-Assessor>
       <Property-Details>
         <UPRN>000000000000</UPRN>
