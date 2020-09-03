@@ -31,7 +31,7 @@ module ViewModel
         "c"
       when 81..91
         "b"
-      when 92..1_000
+      else
         "a"
       end
     end
@@ -114,7 +114,14 @@ module ViewModel
           ),
         property_age_band: @view_model.property_age_band,
         property_summary: @view_model.property_summary,
-        recommended_improvements: @view_model.improvements,
+        recommended_improvements:
+          @view_model.improvements.map do |improvement|
+            improvement[:energy_performance_band_improvement] =
+              get_energy_rating_band(
+                improvement[:energy_performance_rating_improvement],
+              )
+            improvement
+          end,
         related_party_disclosure_number:
           @view_model.related_party_disclosure_number,
         related_party_disclosure_text:

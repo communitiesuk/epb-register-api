@@ -25,6 +25,7 @@ describe ViewModel::SapWrapper do
           {
             energy_performance_rating_improvement: 50,
             environmental_impact_rating_improvement: 50,
+            energy_performance_band_improvement: "e",
             green_deal_category_code: nil,
             improvement_category: "1",
             improvement_code: "5",
@@ -38,6 +39,7 @@ describe ViewModel::SapWrapper do
           {
             energy_performance_rating_improvement: 60,
             environmental_impact_rating_improvement: 64,
+            energy_performance_band_improvement: "d",
             green_deal_category_code: nil,
             improvement_category: "2",
             improvement_code: "1",
@@ -73,6 +75,7 @@ describe ViewModel::SapWrapper do
           {
             energy_performance_rating_improvement: 50,
             environmental_impact_rating_improvement: 50,
+            energy_performance_band_improvement: "e",
             green_deal_category_code: nil,
             improvement_category: "1",
             improvement_code: "5",
@@ -86,6 +89,7 @@ describe ViewModel::SapWrapper do
           {
             energy_performance_rating_improvement: 60,
             environmental_impact_rating_improvement: 64,
+            energy_performance_band_improvement: "d",
             green_deal_category_code: nil,
             improvement_category: "2",
             improvement_code: "1",
@@ -242,6 +246,7 @@ describe ViewModel::SapWrapper do
     recommended_improvements: [
       {
         energy_performance_rating_improvement: 50,
+        energy_performance_band_improvement: "e",
         environmental_impact_rating_improvement: 50,
         green_deal_category_code: "1",
         improvement_category: "6",
@@ -255,6 +260,7 @@ describe ViewModel::SapWrapper do
       },
       {
         energy_performance_rating_improvement: 60,
+        energy_performance_band_improvement: "d",
         environmental_impact_rating_improvement: 64,
         green_deal_category_code: "3",
         improvement_category: "2",

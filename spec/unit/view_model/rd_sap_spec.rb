@@ -171,6 +171,7 @@ describe ViewModel::RdSapWrapper do
       recommended_improvements: [
         {
           energy_performance_rating_improvement: 50,
+          energy_performance_band_improvement: "e",
           environmental_impact_rating_improvement: 50,
           green_deal_category_code: "1",
           improvement_category: "6",
@@ -184,6 +185,7 @@ describe ViewModel::RdSapWrapper do
         },
         {
           energy_performance_rating_improvement: 60,
+          energy_performance_band_improvement: "d",
           environmental_impact_rating_improvement: 64,
           green_deal_category_code: "3",
           improvement_category: "2",
