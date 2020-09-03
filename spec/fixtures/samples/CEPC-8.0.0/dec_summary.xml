@@ -7,15 +7,15 @@
     <Report-Header>
       <Report-Type>1</Report-Type>
       <Property-Details>
-        <UPRN>UPRN-365925150000</UPRN>
+        <UPRN>UPRN-000000000001</UPRN>
       </Property-Details>
       <Calculation-Details>
-        <Output-Engine>ORGen v3.7.0</Output-Engine>
+        <Output-Engine>MWW-91.1.1</Output-Engine>
       </Calculation-Details>
     </Report-Header>
     <OR-Operational-Rating>
-      <OR-Assessment-Start-Date>2007-01-18</OR-Assessment-Start-Date>
-      <OR-Assessment-End-Date>2008-01-18</OR-Assessment-End-Date>
+      <OR-Assessment-Start-Date>2020-05-01</OR-Assessment-Start-Date>
+      <OR-Assessment-End-Date>2020-05-01</OR-Assessment-End-Date>
       <OR-Benchmark-Data>
         <Benchmarks>
           <Benchmark>
@@ -59,12 +59,12 @@
         <Typical-Thermal-Use>279</Typical-Thermal-Use>
         <Typical-Electrical-Use>79</Typical-Electrical-Use>
       </DEC-Annual-Energy-Summary>
-      <DEC-Status>0</DEC-Status>
+      <DEC-Status>1</DEC-Status>
       <This-Assessment>
-        <Nominated-Date>2008-01-18</Nominated-Date>
-        <Energy-Rating>114</Energy-Rating>
-        <Electricity-CO2>232</Electricity-CO2>
-        <Heating-CO2>68</Heating-CO2>
+        <Nominated-Date>2020-01-01</Nominated-Date>
+        <Energy-Rating>1</Energy-Rating>
+        <Electricity-CO2>7</Electricity-CO2>
+        <Heating-CO2>3</Heating-CO2>
         <Renewables-CO2>0</Renewables-CO2>
       </This-Assessment>
       <Technical-Information>
