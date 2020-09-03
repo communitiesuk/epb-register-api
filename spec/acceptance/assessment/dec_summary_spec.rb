@@ -33,7 +33,7 @@ describe "Acceptance::DECSummary" do
           symbolize_names: true,
         )
 
-      expect(response[:data]).to eq(Samples.xml("CEPC-8.0.0", "dec"))
+      expect(response[:data]).to eq(Samples.xml("CEPC-8.0.0", "dec_summary"))
     end
   end
 
