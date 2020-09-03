@@ -12,6 +12,8 @@ module UseCase
       end
 
       def add_data!(hash)
+        registered_by!(hash)
+
         related_party_disclosure!(hash)
 
         hash
