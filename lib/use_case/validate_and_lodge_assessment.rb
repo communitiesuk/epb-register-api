@@ -123,11 +123,10 @@ module UseCase
         related_assessment_id2 = report2.at("Related-RRN").content
 
         assessment_id1 == related_assessment_id2 &&
-            assessment_id2 == related_assessment_id1
+          assessment_id2 == related_assessment_id1
       else
         true
       end
-
     end
   end
 end
