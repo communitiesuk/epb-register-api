@@ -17,7 +17,7 @@ module Controller
       when UseCase::AssessmentSummary::Fetch::AssessmentGone
         gone_error("Assessment not for issue")
       else
-        server_error(e.message)
+        server_error(e)
       end
     end
   end
