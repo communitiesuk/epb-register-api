@@ -31,6 +31,22 @@ describe ViewModel::CepcWrapper do
         },
       },
     },
+    {
+      schema_name: "CEPC-7.0",
+      xml: Samples.xml("CEPC-7.0", "cepc"),
+      unsupported_fields: [:primary_energy_use],
+      different_fields: {
+        address: {
+          address_id: "000000000001",
+          address_line1: "2 Lonely Street",
+          address_line2: nil,
+          address_line3: nil,
+          address_line4: nil,
+          town: "Post-Town1",
+          postcode: "A0 0AA",
+        },
+      },
+    },
   ].freeze
 
   # You should only need to add to this list to test new fields on all CEPC schema
