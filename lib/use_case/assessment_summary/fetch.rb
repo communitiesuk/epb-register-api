@@ -41,7 +41,6 @@ module UseCase
             assessment_id,
           )
 
-        full_summary =
           case lodged_values.type
           when :AC_CERT
             AcCertSupplement.new.add_data!(lodged_values.to_hash)
@@ -60,8 +59,6 @@ module UseCase
           else
             lodged_values.to_hash
           end
-
-        full_summary
       end
     end
   end
