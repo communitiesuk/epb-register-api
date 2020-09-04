@@ -34,7 +34,7 @@ describe ViewModel::CepcWrapper do
     {
       schema_name: "CEPC-7.0",
       xml: Samples.xml("CEPC-7.0", "cepc"),
-      unsupported_fields: [:primary_energy_use],
+      unsupported_fields: %i[primary_energy_use],
       different_fields: {
         address: {
           address_id: "000000000001",
