@@ -14,6 +14,7 @@ module Controller
       @json_helper = Helper::JsonHelper.new
       @toggles = toggles || Toggles.new
       @logger = Logger.new(STDOUT)
+      @logger.level = Logger::ERROR
       @events = Helper::LogHelper.new
     end
 
@@ -105,7 +106,7 @@ module Controller
         error[:backtrace] = exception.backtrace
       end
 
-      logger.error(JSON.generate(error))
+      @logger.error JSON.generate(error)
 
       ActiveRecord::Base.clear_active_connections!
 
