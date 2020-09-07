@@ -75,6 +75,19 @@ describe ViewModel::AcReportWrapper do
               town: "Cardiff",
               postcode: "CF15 1FD",
           }
+      },
+      equipment_operator: {
+          responsible_person: "Chief engineer",
+          telephone: "44321",
+          organisation: "Air Con Ltd",
+          address: {
+              address_line1: "12 Commercial St",
+              address_line2: nil,
+              address_line3: nil,
+              address_line4: nil,
+              town: "Coventry",
+              postcode: "CV12 3FG",
+          }
       }
     }.freeze
 
