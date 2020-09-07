@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns="DCLG-CEPC" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:UDT="DCLG-CEPC" xmlns:CEPC="DCLG-CEPC" targetNamespace="DCLG-CEPC" version="LIG-CEPC-6.0">
+<xs:schema xmlns="DCLG-CEPC" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:UDT="DCLG-CEPC" xmlns:CEPC="DCLG-CEPC" elementFormDefault="qualified" targetNamespace="DCLG-CEPC" version="LIG-CEPC-6.0">
 	<xs:include schemaLocation="./Report-Header.xsd"/>
 	<xs:include schemaLocation="../Reports/BaseDataTypes.xsd"/>
 	<xs:element name="Report-Data" type="Report-Data"/>
@@ -467,7 +467,7 @@
 	<xs:element name="Air-Conditioning-Inspection-Report" type="Air-Conditioning-Inspection-Report"/>
 	<xs:complexType name="Air-Conditioning-Inspection-Report">
 		<xs:annotation>
-			<xs:documentation>The primary aim of the report is to give the building owner or operator information about the performance of the systems and plant and to identify opportunities to save energy and cut operating costs. 
+			<xs:documentation>The primary aim of the report is to give the building owner or operator information about the performance of the systems and plant and to identify opportunities to save energy and cut operating costs.
 
 The report identifies any operating anomalies; no-cost/low-cost savings and capital investment opportunities; the size and appropriateness of refrigeration plant in relation to cooling loads and the effectiveness of current maintenance regimes. </xs:documentation>
 		</xs:annotation>
@@ -726,7 +726,7 @@ If Flag = "Yes" then Note must be populated else Note is empty.</xs:documentatio
 			</xs:element>
 			<xs:element name="Airflow-Obstructions" type="Flag_With_Note">
 				<xs:annotation>
-					<xs:documentation>Are there any obstructions to airflow through the outdoor and indoor unit heat exchangers? 
+					<xs:documentation>Are there any obstructions to airflow through the outdoor and indoor unit heat exchangers?
 
 If Flag = "Yes" then Note must be populated else Note is empty.</xs:documentation>
 				</xs:annotation>
@@ -865,7 +865,7 @@ If Flag = "Yes" then Note conatins Meter Reading else Note is empty.</xs:documen
 	<xs:element name="PCS-Equipment-Details" type="PCS-Equipment-Details"/>
 	<xs:complexType name="PCS-Equipment-Details">
 		<xs:annotation>
-			<xs:documentation>Details of the system inspected. 
+			<xs:documentation>Details of the system inspected.
 
 There is one of these for each system inspected as defined in Number-Of-Systems in containing block.</xs:documentation>
 		</xs:annotation>
@@ -1491,7 +1491,7 @@ If "Yes" provide comment regarding the incident and how it has been rectified</x
 	<xs:element name="SCCS-Cooling-Plant-Chillers" type="SCCS-Cooling-Plant-Chillers"/>
 	<xs:complexType name="SCCS-Cooling-Plant-Chillers">
 		<xs:annotation>
-			<xs:documentation>If the refrigeration equipment includes water cooled chillers check that adequate water flows are available through the cooling towers or evaporative condensers to achieve efficient heat transfer. Also check that the water pressure drops across them are in accordance with design or commissioning data if gauges or test points are available and accessible.  
+			<xs:documentation>If the refrigeration equipment includes water cooled chillers check that adequate water flows are available through the cooling towers or evaporative condensers to achieve efficient heat transfer. Also check that the water pressure drops across them are in accordance with design or commissioning data if gauges or test points are available and accessible.
 
 Check to ensure that the water is treated and regularly checked to ensure that there is no Legionella risk.  See HSE L8
 </xs:documentation>
