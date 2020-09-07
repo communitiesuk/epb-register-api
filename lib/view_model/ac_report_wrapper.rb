@@ -47,6 +47,7 @@ module ViewModel
             name: @view_model.company_name, address: @view_model.company_address
           },
         },
+        executive_summary: @view_model.executive_summary
       }
     end
 
