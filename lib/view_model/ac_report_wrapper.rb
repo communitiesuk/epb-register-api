@@ -76,9 +76,9 @@ module ViewModel
         },
         key_recommendations: {
             efficiency: @view_model.key_recommendations_efficiency,
-            maintenance: [],
-            control: [],
-            management: []
+            maintenance: @view_model.key_recommendations_maintenance,
+            control: @view_model.key_recommendations_control,
+            management: @view_model.key_recommendations_management,
         },
       }
     end

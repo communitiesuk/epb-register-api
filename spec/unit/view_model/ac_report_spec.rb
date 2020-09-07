@@ -100,9 +100,18 @@ describe ViewModel::AcReportWrapper do
                   text: "A second way to improve efficiency"
               },
           ],
-          maintenance: [],
-          control: [],
-          management: []
+          maintenance: [{
+                            sequence: "0",
+                            text: "Text2"
+                        }],
+          control: [{
+                        sequence: "0",
+                        text: "Text4"
+                    }],
+          management: [{
+                           sequence: "0",
+                           text: "Text6"
+                       }]
       }
     }.freeze
 

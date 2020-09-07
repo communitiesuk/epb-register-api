@@ -94,6 +94,19 @@ module ViewModel
         extract_aci_recommendations(@xml_doc
                                         .search("ACI-Key-Recommendations/Sub-System-Efficiency-Capacity-Cooling-Loads/ACI-Recommendation"))
       end
+
+      def key_recommendations_maintenance
+        extract_aci_recommendations(@xml_doc
+                                        .search("ACI-Key-Recommendations/Improvement-Options/ACI-Recommendation"))
+      end
+      def key_recommendations_control
+        extract_aci_recommendations(@xml_doc
+                                        .search("ACI-Key-Recommendations/Alternative-Solutions/ACI-Recommendation"))
+      end
+      def key_recommendations_management
+        extract_aci_recommendations(@xml_doc
+                                        .search("ACI-Key-Recommendations/Other-Recommendations/ACI-Recommendation"))
+      end
     end
   end
 end
