@@ -72,8 +72,14 @@ module ViewModel
                 address_line4: @view_model.operator_address_line4,
                 town: @view_model.operator_town,
                 postcode: @view_model.operator_postcode,
-            }
-        }
+            },
+        },
+        key_recommendations: {
+            efficiency: @view_model.key_recommendations_efficiency,
+            maintenance: [],
+            control: [],
+            management: []
+        },
       }
     end
 

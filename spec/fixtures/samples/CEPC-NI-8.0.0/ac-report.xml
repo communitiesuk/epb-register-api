@@ -74,12 +74,12 @@
           <ACI-Recommendation>
             <Seq-Number>0</Seq-Number>
             <Code>OTHER</Code>
-            <Text>Text0</Text>
+            <Text>A way to improve your efficiency</Text>
           </ACI-Recommendation>
           <ACI-Recommendation>
-            <Seq-Number>0</Seq-Number>
+            <Seq-Number>1</Seq-Number>
             <Code>OTHER</Code>
-            <Text>Text1</Text>
+            <Text>A second way to improve efficiency</Text>
           </ACI-Recommendation>
         </Sub-System-Efficiency-Capacity-Cooling-Loads>
         <Improvement-Options>

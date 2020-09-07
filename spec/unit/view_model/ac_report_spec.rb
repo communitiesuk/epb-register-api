@@ -88,6 +88,21 @@ describe ViewModel::AcReportWrapper do
               town: "Coventry",
               postcode: "CV12 3FG",
           }
+      },
+      key_recommendations: {
+          efficiency: [
+              {
+                  sequence: "0",
+                  text: "A way to improve your efficiency"
+              },
+              {
+                  sequence: "1",
+                  text: "A second way to improve efficiency"
+              },
+          ],
+          maintenance: [],
+          control: [],
+          management: []
       }
     }.freeze
 

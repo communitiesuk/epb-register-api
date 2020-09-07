@@ -80,6 +80,20 @@ module ViewModel
       def operator_postcode
         xpath(%w[Equipment-Operator Registered-Address Postcode])
       end
+
+      def extract_aci_recommendations(nodes)
+        nodes.map do |node|
+          {
+              sequence: node.at("Seq-Number").content,
+              text: node.at("Text").content,
+          }
+        end
+      end
+
+      def key_recommendations_efficiency
+        extract_aci_recommendations(@xml_doc
+                                        .search("ACI-Key-Recommendations/Sub-System-Efficiency-Capacity-Cooling-Loads/ACI-Recommendation"))
+      end
     end
   end
 end

@@ -80,19 +80,14 @@
       <ACI-Key-Recommendations>
         <Sub-System-Efficiency-Capacity-Cooling-Loads>
           <ACI-Recommendation>
+            <Seq-Number>0</Seq-Number>
+            <Code>OTHER</Code>
+            <Text>A way to improve your efficiency</Text>
+          </ACI-Recommendation>
+          <ACI-Recommendation>
             <Seq-Number>1</Seq-Number>
             <Code>OTHER</Code>
-            <Text>AC SYSTEM’S:</Text>
-          </ACI-Recommendation>
-          <ACI-Recommendation>
-            <Seq-Number>2</Seq-Number>
-            <Code>OTHER</Code>
-            <Text>•	The installed AC Systems on site were inverter driven systems - this type of AC equipment would be considered suitably efficient by current standards as the systems do not use more energy than required due their inverter technology.</Text>
-          </ACI-Recommendation>
-          <ACI-Recommendation>
-            <Seq-Number>3</Seq-Number>
-            <Code>OTHER</Code>
-            <Text>•	The installed AC Systems on site contained and operated using R410A refrigerant – this refrigerant is considered satisfactory and not presently proposed to be banned or phased out.</Text>
+            <Text>A second way to improve efficiency</Text>
           </ACI-Recommendation>
         </Sub-System-Efficiency-Capacity-Cooling-Loads>
         <Improvement-Options>
