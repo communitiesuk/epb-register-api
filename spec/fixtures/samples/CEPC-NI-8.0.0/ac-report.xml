@@ -88,11 +88,6 @@
             <Code>OTHER</Code>
             <Text>Text2</Text>
           </ACI-Recommendation>
-          <ACI-Recommendation>
-            <Seq-Number>0</Seq-Number>
-            <Code>OTHER</Code>
-            <Text>Text3</Text>
-          </ACI-Recommendation>
         </Improvement-Options>
         <Alternative-Solutions>
           <ACI-Recommendation>
@@ -100,22 +95,12 @@
             <Code>OTHER</Code>
             <Text>Text4</Text>
           </ACI-Recommendation>
-          <ACI-Recommendation>
-            <Seq-Number>0</Seq-Number>
-            <Code>OTHER</Code>
-            <Text>Text5</Text>
-          </ACI-Recommendation>
         </Alternative-Solutions>
         <Other-Recommendations>
           <ACI-Recommendation>
             <Seq-Number>0</Seq-Number>
             <Code>OTHER</Code>
             <Text>Text6</Text>
-          </ACI-Recommendation>
-          <ACI-Recommendation>
-            <Seq-Number>0</Seq-Number>
-            <Code>OTHER</Code>
-            <Text>Text7</Text>
           </ACI-Recommendation>
         </Other-Recommendations>
       </ACI-Key-Recommendations>

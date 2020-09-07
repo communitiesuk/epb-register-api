@@ -92,38 +92,23 @@
         </Sub-System-Efficiency-Capacity-Cooling-Loads>
         <Improvement-Options>
           <ACI-Recommendation>
-            <Seq-Number>1</Seq-Number>
+            <Seq-Number>0</Seq-Number>
             <Code>OTHER</Code>
-            <Text>AC SYSTEM’S:</Text>
-          </ACI-Recommendation>
-          <ACI-Recommendation>
-            <Seq-Number>2</Seq-Number>
-            <Code>OTHER</Code>
-            <Text>•	Generally the installed outdoor units appeared in satisfactory condition and maintained. However no maintenance records were held/reviewed for the site. It would be recommended that copies of maintenance and F Gas schedules be kept onsite for review during any future inspections.</Text>
+            <Text>Text2</Text>
           </ACI-Recommendation>
         </Improvement-Options>
         <Alternative-Solutions>
           <ACI-Recommendation>
-            <Seq-Number>1</Seq-Number>
+            <Seq-Number>0</Seq-Number>
             <Code>OTHER</Code>
-            <Text>AC SYSTEM’S:</Text>
-          </ACI-Recommendation>
-          <ACI-Recommendation>
-            <Seq-Number>2</Seq-Number>
-            <Code>OTHER</Code>
-            <Text>•	Control of the Sales Area systems was via local Mitsubishi controllers which were linked to a central BMS controller which was set and monitored offsite. It was not possible to adjust the settings at the local controllers due to these being set through the BMS controller centrally by head office. This was considered satisfactory to ensure set temperatures were suitably set.</Text>
+            <Text>Text4</Text>
           </ACI-Recommendation>
         </Alternative-Solutions>
         <Other-Recommendations>
           <ACI-Recommendation>
-            <Seq-Number>1</Seq-Number>
+            <Seq-Number>0</Seq-Number>
             <Code>OTHER</Code>
-            <Text>•	Consider installing energy sub meters.</Text>
-          </ACI-Recommendation>
-          <ACI-Recommendation>
-            <Seq-Number>2</Seq-Number>
-            <Code>OTHER</Code>
-            <Text>•	Ensure maintenance records/files and Operating &amp; Maintenance records/files for the systems are kept in a safe location onsite.</Text>
+            <Text>Text6</Text>
           </ACI-Recommendation>
         </Other-Recommendations>
       </ACI-Key-Recommendations>
