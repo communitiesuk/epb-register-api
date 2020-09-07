@@ -4,7 +4,13 @@
 	<xs:include schemaLocation="./Performance-Summary.xsd"/>
 	<xs:include schemaLocation="./Report-Header.xsd"/>
 	<xs:include schemaLocation="./Input-Data.xsd"/>
-	<xs:element name="Report" type="Report"/>
+  <xs:element name="Reports">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Report" type="Report" maxOccurs="2"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 	<xs:complexType name="Report">
 		<xs:sequence>
 			<xs:element name="Report-Header" type="Report-Header"/>
