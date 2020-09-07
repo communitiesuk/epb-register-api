@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="DCLG-CEPC" xmlns:CEPC="DCLG-CEPC" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:UDT="DCLG-CEPC" targetNamespace="DCLG-CEPC" elementFormDefault="qualified" version="LIG-CEPC-6.0">
+	<xs:include schemaLocation="../Reports/BaseDataTypes.xsd"/>
+	<xs:element name="Property-Details" type="Property-Details"/>
+	<xs:complexType name="Property-Details">
+		<xs:all>
+			<xs:element name="Location-Description" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A list of floors and rooms that describes the Building-Part being assessed b y this report.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="UPRN" type="UPRNType">
+				<xs:annotation>
+					<xs:documentation>Unique Property Reference Number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Property-Address" type="AddressType">
+				<xs:annotation>
+					<xs:documentation>The Address of the Property that the Report covers</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Property-Type" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Describes the type of Property that is being inspected. This should be the same as the Property-Type recorded in the Property-Details section.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Occupier" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The name of the Organisation that occupies the Building Part being inspected</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Is-Heritage-Site" type="Flag" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indicates whether the Property is a Heritage Sitre ("Y") or not.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Owner" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The name of the Organisation that owns the Building Part being inspected</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Energy-Assessor" type="Energy-Assessor"/>
+	<xs:complexType name="Energy-Assessor">
+		<xs:annotation>
+			<xs:documentation>A Energy-Assessor is a person certified by a Accrediation Scheme as being qualified to carry out an Energy Assessment and produce an Energy Performance Certificate. 
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Certificate-Number" type="CertificateNumberType">
+				<xs:annotation>
+					<xs:documentation>The unique identifier assigned to the Energy Assessor by the Accreditation Scheme by which they can be identified throughout their membership of the scheme. The Certificate Number is included in the EPC.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Assessor-Name" type="PersonNameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The name by which the Energy Assessor is registered. This is a structured name containing prefix, first name, surname and suffix.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The name by which the Energy Assessor is registered. This is a structured name containing prefix, first name + surname.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Accreditation-Scheme-Name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The name of the Accreditation Scheme that certified the Energy Assessor.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Trading-Address" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The address that any written correspondence can be sent to. This is not the same as the Registered Address because it may, of course, be a Post Office Box.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Company-Name" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The Name of the Company that the Energy Assessor is empolyed by.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Related-Party-Disclosure" type="Sentence" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Any statement that the Energy Assessor might want to make about potential conflicts of interest or commercial relationships with other parties.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Qualifications" type="AssessorQualificationsCode" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Status" type="EAStatusCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The Status of the Energy Assessor - at the time of producing and lodging a report this shoudl be "Registered" but any of the values can be present on the  EA Register itself.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="E-Mail" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Optional e-mail address for the Energy Assessor</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Telephone-Number" type="xs:string" minOccurs="0"/>
+			<xs:element name="Base-Postcode-Location" type="PostcodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The full postcode that the Energy Assessor works from.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Date-Of-Birth" type="xs:date" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="EATypeCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>Energy Assessor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="Calculation-Details" type="Calculation-Details"/>
+	<xs:complexType name="Calculation-Details">
+		<xs:all>
+			<xs:element name="Methodology" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Methodology</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Calculation-Tool" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Calculation Tool used</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Reading-Type" type="ConsumptionReadingType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indicates whether Estimated or actual readings were used to perform the energy calculations</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Assessor-Knowledge" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Description of any knowledge the Energy Assessor had of the building prior to inspection.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Inspection-Type" type="InspectionTypeCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The type oif inspection that was carried out e.g. Physical or Desk-Based</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Output-Engine" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Output engine and version used</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:simpleType name="EAStatusCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Inactive">
+				<xs:annotation>
+					<xs:documentation>Inactive</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Registered">
+				<xs:annotation>
+					<xs:documentation>Registered</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Struck-Off">
+				<xs:annotation>
+					<xs:documentation>Struck Off</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Suspended">
+				<xs:annotation>
+					<xs:documentation>Suspended</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ConsumptionReadingType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Estimated"/>
+			<xs:enumeration value="Actual"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="InspectionTypeCode">
+		<xs:annotation>
+			<xs:documentation>Indicates the type of inspection the Energy Assessor carrioed out to poroduce the report e.g. Physical inspection or Desk-Based (off-plan) inspection</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Physical">
+				<xs:annotation>
+					<xs:documentation>A Physical Inspection was carried out</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Desk">
+				<xs:annotation>
+					<xs:documentation>A desk-based (off-plan) inspection was carried out</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PostcodeType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{1,2}[0-9R][0-9A-Z]? [0-9][A-Z]{2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="UPRNType">
+		<xs:annotation>
+			<xs:documentation>Unique Property Reference Number</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]{12}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AssessorQualificationsCode">
+		<xs:annotation>
+			<xs:documentation>The types of qualificatiosn the Energy assessor may have - these indicates the types and complexity of reports the EA may produce.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="DEC">
+				<xs:annotation>
+					<xs:documentation>Display Energy Certificate</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NOS3">
+				<xs:annotation>
+					<xs:documentation>Display Energy Certificate NOS level 3 </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NOS4">
+				<xs:annotation>
+					<xs:documentation>Display Energy Certificate NOS level 4</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NOS5">
+				<xs:annotation>
+					<xs:documentation>Display Energy Certificate NOS level 5</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SP3">
+				<xs:annotation>
+					<xs:documentation>Simple Packaged level 3</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CC4">
+				<xs:annotation>
+					<xs:documentation>Complexed Central level 4</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ReportTypeCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>Display Energy Certificate</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>Advisory Report</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>Energy Performance Certificate</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>Recommendations Report</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="5">
+				<xs:annotation>
+					<xs:documentation>Air Conditioning Report</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ReportStatusCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="cancelled">
+				<xs:annotation>
+					<xs:documentation>Cancelled</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="entered">
+				<xs:annotation>
+					<xs:documentation>entered on the register</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="appeal">
+				<xs:annotation>
+					<xs:documentation>under appeal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="removed">
+				<xs:annotation>
+					<xs:documentation>removed</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="rejected">
+				<xs:annotation>
+					<xs:documentation>rejected</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BuildingComplexityType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Level 3">
+				<xs:annotation>
+					<xs:documentation>Building Level = 3</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Level 4">
+				<xs:annotation>
+					<xs:documentation>Building Level = 4</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Level 5">
+				<xs:annotation>
+					<xs:documentation>Building Level = 5</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="ReportKeyFields" type="ReportKeyFields"/>
+	<xs:complexType name="ReportKeyFields">
+		<xs:annotation>
+			<xs:documentation>Primary Key Fields definition for a Report - used when a message requires a reference tio a report to be passed.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RRN" type="RRNType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="PropertyTypeCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Airport terminals"/>
+			<xs:enumeration value="Bus station/train station/seaport terminal"/>
+			<xs:enumeration value="Community/day centre"/>
+			<xs:enumeration value="Crown and county courts"/>
+			<xs:enumeration value="Dwelling"/>
+			<xs:enumeration value="Emergency services"/>
+			<xs:enumeration value="Further education universities"/>
+			<xs:enumeration value="Hospital"/>
+			<xs:enumeration value="Hotel"/>
+			<xs:enumeration value="Industrial process building"/>
+			<xs:enumeration value="Launderette"/>
+			<xs:enumeration value="Libraries/museums/galleries"/>
+			<xs:enumeration value="Miscellaneous 24hr activities"/>
+			<xs:enumeration value="Nursing residential homes and hostels"/>
+			<xs:enumeration value="Office"/>
+			<xs:enumeration value="Primary health care buildings"/>
+			<xs:enumeration value="Primary school"/>
+			<xs:enumeration value="Prisons"/>
+			<xs:enumeration value="Restaurant/public house"/>
+			<xs:enumeration value="Retail warehouses"/>
+			<xs:enumeration value="Retail"/>
+			<xs:enumeration value="Secondary School"/>
+			<xs:enumeration value="Social clubs"/>
+			<xs:enumeration value="Sports centre/leisure centre"/>
+			<xs:enumeration value="Sports ground arena"/>
+			<xs:enumeration value="Telephone exchanges"/>
+			<xs:enumeration value="Theatres/cinemas/music halls and auditoria"/>
+			<xs:enumeration value="Warehouse and storage"/>
+			<xs:enumeration value="Workshops/maintenance depot"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="AddressType" type="AddressType"/>
+	<xs:complexType name="AddressType">
+		<xs:annotation>
+			<xs:documentation>An address is composed of a number of structured elements such as Postcode, Post-Town, Street etc.
+
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Address-Line-1" type="xs:string" minOccurs="0"/>
+			<xs:element name="Address-Line-2" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The District part of the Address.
+
+A District is an optional sub-part of the Post Town e.g. "Kings Heath" in "Birmingham" or "Ellington" in London.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Address-Line-3" type="xs:string" minOccurs="0"/>
+			<xs:element name="Address-Line-4" type="xs:string" minOccurs="0"/>
+			<xs:element name="Post-Town" type="xs:string"/>
+			<xs:element name="Postcode" type="PostcodeType">
+				<xs:annotation>
+					<xs:documentation>The Postcode for the Address
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Report-Header" type="Report-Header"/>
+	<xs:complexType name="Report-Header">
+		<xs:annotation>
+			<xs:documentation>Report Header contains all the identification and searchable details for the Report.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="RRN" type="RRNType">
+				<xs:annotation>
+					<xs:documentation>Report Reference Number is the unique report Identifier that the report will be publicly known by.
+
+The RRN is allocated to the Report at the point that it is registered and will be algorithmically derived from the natural key characteristics of the Energy Performance Certificate.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Issue-Date" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>The date that the Energy Assessor completed and issued the report. This will be after the Inspection Date but generally before the Registration Date.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Report-Type" type="ReportTypeCode">
+				<xs:annotation>
+					<xs:documentation>The type of Energy Assessment that was carried out.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Valid-Until" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Valid Until</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Related-RRN" type="RRNType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The RRN of the related report. For an Energy Performance Certificate this is the RRN of the Recommendations Report that was generated at the same time and for a Recommendations Report this is the related Energy Performance Certificate RRN.
+For a Display Energy Certificate this is the Advisory Report RRN that was initially created with the Display Energy Certificate.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Inspection-Date" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>The date that the inspection was actually carried out by the Energy Assessor</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Registration-Date" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>The date that the report was submitted for lodging in the EPC Register.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Status" type="ReportStatusCode">
+				<xs:annotation>
+					<xs:documentation>The Status of the Report.
+
+A Report can have a number of distinct states depending on whereabouts in its overall lifecycle the report is. The initial state in the register is always "registered" but there may be states prior to this depending on the origin of the report.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Language-Code" type="LanguageCode">
+				<xs:annotation>
+					<xs:documentation>The language that the report is written in. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Building-Complexity" type="BuildingComplexityType" minOccurs="0"/>
+			<xs:element name="Energy-Assessor" type="Energy-Assessor"/>
+			<xs:element name="Property-Details" type="Property-Details"/>
+			<xs:element name="Calculation-Details" type="Calculation-Details"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:simpleType name="PhoneNumberType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9\-\.\)\(\+ ]+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CertificateNumberType">
+		<xs:annotation>
+			<xs:documentation>The Certificate Number is a 10-character fixed-length alphanumeric code consisting of 4 characters identifying the Accreditation Scheme and a 6-digit zero-padded identifier for each Energy Assessor certified by that Accreditation Scheme. For example ABCD987654, XYZ_123456 etc.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="10"/>
+			<xs:maxLength value="10"/>
+			<xs:pattern value="[A-Z/_]{4}[0-9]{6}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="PersonNameType" type="PersonNameType"/>
+	<xs:complexType name="PersonNameType">
+		<xs:annotation>
+			<xs:documentation>A Person Name is a complex structure to capture the separate components of the name for a Person, consisting of:
+*	A prefix e.g. "Mr", "Mrs", "Dr" etc.
+*	First Name e.g. "John"
+*	Middle Initial 
+*	Surname e.g. "Smith"
+*	Suffix e.g. "PhD", "FRICS" 
+The First Name and Surname are the only mandatory elements of a name.
+
+The name elements can then be combined in a number of different ways to produce different formats appropriate to the output context.
+
+Note that all parts of the Persons Name should be stored as uppercase strings because this makes it easier to search and index the names but some components may be converted to mixed case for printing on reports and such like.
+</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Prefix" type="xs:string" minOccurs="0"/>
+			<xs:element name="First-Name" type="xs:string" minOccurs="0"/>
+			<xs:element name="Surname" type="xs:string" minOccurs="0"/>
+			<xs:element name="Suffix" type="xs:string" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+</xs:schema>
