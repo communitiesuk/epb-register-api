@@ -47,7 +47,20 @@ module ViewModel
             name: @view_model.company_name, address: @view_model.company_address
           },
         },
-        executive_summary: @view_model.executive_summary
+        executive_summary: @view_model.executive_summary,
+        equipment_owner: {
+            name: @view_model.equipment_owner_name,
+            telephone: @view_model.equipment_owner_telephone,
+            organisation: @view_model.equipment_owner_organisation,
+            address: {
+                address_line1: @view_model.equipment_owner_address_line1,
+                address_line2: @view_model.equipment_owner_address_line2,
+                address_line3: @view_model.equipment_owner_address_line3,
+                address_line4: @view_model.equipment_owner_address_line4,
+                town: @view_model.equipment_owner_town,
+                postcode: @view_model.equipment_owner_postcode,
+            }
+        }
       }
     end
 

@@ -62,7 +62,20 @@ describe ViewModel::AcReportWrapper do
           address: "111 Twotwotwo Street, Mytown,, MT7 1AA",
         },
       },
-      executive_summary: expected_summary
+      executive_summary: expected_summary,
+      equipment_owner: {
+          name: "Manager",
+          telephone: "012345",
+          organisation: "Shop Ltd",
+          address: {
+              address_line1: "Shop Ltd",
+              address_line2: "PO BOX 123",
+              address_line3: nil,
+              address_line4: nil,
+              town: "Cardiff",
+              postcode: "CF15 1FD",
+          }
+      }
     }.freeze
 
     it "should read the appropriate values from the XML doc" do

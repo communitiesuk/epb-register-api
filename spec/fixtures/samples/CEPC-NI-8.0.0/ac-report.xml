@@ -44,7 +44,8 @@
         <Telephone-Number>012345</Telephone-Number>
         <Organisation-Name>Shop Ltd</Organisation-Name>
         <Registered-Address>
-          <Address-Line-1>PO BOX 123</Address-Line-1>
+          <Address-Line-1>Shop Ltd</Address-Line-1>
+          <Address-Line-2>PO BOX 123</Address-Line-2>
           <Post-Town>Cardiff</Post-Town>
           <Postcode>CF15 1FD</Postcode>
         </Registered-Address>
