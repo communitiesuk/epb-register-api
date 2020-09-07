@@ -84,28 +84,42 @@ module ViewModel
       def extract_aci_recommendations(nodes)
         nodes.map do |node|
           {
-              sequence: node.at("Seq-Number").content,
-              text: node.at("Text").content,
+            sequence: node.at("Seq-Number").content,
+            text: node.at("Text").content,
           }
         end
       end
 
       def key_recommendations_efficiency
-        extract_aci_recommendations(@xml_doc
-                                        .search("ACI-Key-Recommendations/Sub-System-Efficiency-Capacity-Cooling-Loads/ACI-Recommendation"))
+        extract_aci_recommendations(
+          @xml_doc.search(
+            "ACI-Key-Recommendations/Sub-System-Efficiency-Capacity-Cooling-Loads/ACI-Recommendation",
+          ),
+        )
       end
 
       def key_recommendations_maintenance
-        extract_aci_recommendations(@xml_doc
-                                        .search("ACI-Key-Recommendations/Improvement-Options/ACI-Recommendation"))
+        extract_aci_recommendations(
+          @xml_doc.search(
+            "ACI-Key-Recommendations/Improvement-Options/ACI-Recommendation",
+          ),
+        )
       end
+
       def key_recommendations_control
-        extract_aci_recommendations(@xml_doc
-                                        .search("ACI-Key-Recommendations/Alternative-Solutions/ACI-Recommendation"))
+        extract_aci_recommendations(
+          @xml_doc.search(
+            "ACI-Key-Recommendations/Alternative-Solutions/ACI-Recommendation",
+          ),
+        )
       end
+
       def key_recommendations_management
-        extract_aci_recommendations(@xml_doc
-                                        .search("ACI-Key-Recommendations/Other-Recommendations/ACI-Recommendation"))
+        extract_aci_recommendations(
+          @xml_doc.search(
+            "ACI-Key-Recommendations/Other-Recommendations/ACI-Recommendation",
+          ),
+        )
       end
     end
   end
