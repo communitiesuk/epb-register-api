@@ -14,8 +14,15 @@
       <Language-Code>1</Language-Code>
       <Energy-Assessor>
         <Certificate-Number>SPEC000000</Certificate-Number>
-        <Name>Name1</Name>
-        <Accreditation-Scheme-Name>Accreditation-Scheme-Name1</Accreditation-Scheme-Name>
+        <Name>Test Assessor Name</Name>
+        <Accreditation-Scheme-Name>Some Accreditation Limited</Accreditation-Scheme-Name>
+        <Accreditation-Scheme-Website>www.example.com</Accreditation-Scheme-Website>
+        <Trading-Address>111 Twotwotwo Street, Mytown,, MT7 1AA</Trading-Address>
+        <Company-Name>Assess Energy Limited</Company-Name>
+        <Qualifications>SP3</Qualifications>
+        <Qualifications>CC4</Qualifications>
+        <E-Mail>test@example.com</E-Mail>
+        <Telephone-Number>07555 666777</Telephone-Number>
       </Energy-Assessor>
       <Property-Details>
         <UPRN>RRN-0000-0000-0000-0000-0000</UPRN>

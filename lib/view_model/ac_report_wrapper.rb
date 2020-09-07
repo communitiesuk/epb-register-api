@@ -36,6 +36,17 @@ module ViewModel
           postcode: @view_model.postcode,
         },
         related_party_disclosure: @view_model.related_party_disclosure,
+        assessor: {
+            scheme_assessor_id: @view_model.scheme_assessor_id,
+            name: @view_model.assessor_name,
+            contact_details: {
+                email: @view_model.assessor_email,
+                telephone: @view_model.assessor_telephone,
+            },
+            company_details: {
+                name: @view_model.company_name, address: @view_model.company_address
+            },
+        },
       }
     end
 

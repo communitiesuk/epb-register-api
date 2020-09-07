@@ -43,6 +43,17 @@ describe ViewModel::AcReportWrapper do
         postcode: "A0 0AA",
       },
       related_party_disclosure: "1",
+      assessor: {
+          scheme_assessor_id: "SPEC000000",
+          name: "Test Assessor Name",
+          contact_details: {
+              email: "test@example.com", telephone: "07555 666777"
+          },
+          company_details: {
+              name: "Assess Energy Limited",
+              address: "111 Twotwotwo Street, Mytown,, MT7 1AA",
+          },
+      },
     }.freeze
 
     it "should read the appropriate values from the XML doc" do
