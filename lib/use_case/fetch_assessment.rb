@@ -7,8 +7,6 @@ module UseCase
     def initialize
       @assessments_gateway = Gateway::AssessmentsSearchGateway.new
       @assessors_gateway = Gateway::AssessorsGateway.new
-      @green_deal_plan_gateway = Gateway::GreenDealPlansGateway.new
-      @related_assessments_gateway = Gateway::RelatedAssessmentsGateway.new
       @assessments_xml_gateway = Gateway::AssessmentsXmlGateway.new
     end
 
