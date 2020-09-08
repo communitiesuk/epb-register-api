@@ -6,6 +6,12 @@ def test_xml_doc(supported_schema, asserted_keys)
 
     asserted_keys.each do |key, value|
       result = view_model[key]
+
+      if schema.key?(:different_buried_fields) &&
+          schema[:different_buried_fields].key?(key)
+        value = value.merge(schema[:different_buried_fields][key])
+      end
+
       if schema[:unsupported_fields].include? key
         expect(result).to be_nil,
                           "Failed on #{schema[:schema_name]}:#{key}\n" \
