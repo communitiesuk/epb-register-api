@@ -200,10 +200,10 @@ module Controller
 
       xml = (request.env["HTTP_ACCEPT"] == "application/xml")
 
-      auth_scheme_id = env[:jwt_auth].supplemental("scheme_ids")
+      auth_scheme_ids = env[:jwt_auth].supplemental("scheme_ids")
 
       result =
-        UseCase::FetchAssessment.new.execute(assessment_id, auth_scheme_id)
+        UseCase::FetchAssessment.new.execute(assessment_id, auth_scheme_ids)
 
       if xml
         xml_response(200, result)

@@ -12,7 +12,7 @@ module UseCase
       @assessments_xml_gateway = Gateway::AssessmentsXmlGateway.new
     end
 
-    def execute(assessment_id, auth_scheme_id)
+    def execute(assessment_id, auth_scheme_ids)
       assessment_id = Helper::RrnHelper.normalise_rrn_format(assessment_id)
       assessments =
         @assessments_gateway.search_by_assessment_id assessment_id, false
@@ -30,7 +30,7 @@ module UseCase
         @assessors_gateway.fetch(assessement_scheme_assessor_id)
       scheme_id = assessor_details.registered_by_id
 
-      raise SchemeIdsDoesNotMatch unless auth_scheme_id.include?(scheme_id)
+      raise SchemeIdsDoesNotMatch unless auth_scheme_ids.include?(scheme_id)
 
       @assessments_xml_gateway.fetch(assessment_id)[:xml]
     end
