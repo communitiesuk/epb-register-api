@@ -121,6 +121,25 @@ module ViewModel
           ),
         )
       end
+
+      def sub_systems
+        @xml_doc
+            .search("ACI-Sub-Systems/ACI-Sub-System")
+            .map do |node|
+          {
+              volume_definitions: node.at("Sub-System-Volume-Definitions")&.content,
+              id: node.at("Sub-System-ID")&.content,
+              description: node.at("Sub-System-Description")&.content,
+              cooling_output: node.at("Sub-System-Cooling-Output")&.content,
+              area_served: node.at("Sub-System-Area-Served-Description")&.content,
+              inspection_date: node.at("Sub-System-Inspection-Date")&.content,
+              cooling_plant_count: node.at("Sub-System-Cooling-Plant-Count")&.content,
+              ahu_count: node.at("Sub-System-AHU-Count")&.content,
+              terminal_units_count: node.at("Sub-System-Terminal-Units-Count")&.content,
+              controls_count: node.at("Sub-System-Controls-Count")&.content,
+          }
+        end
+      end
     end
   end
 end

@@ -99,6 +99,18 @@ describe ViewModel::AcReportWrapper do
         control: [{ sequence: "0", text: "Text4" }],
         management: [{ sequence: "0", text: "Text6" }],
       },
+      sub_systems: [
+          volume_definitions: "VOL001 The Shop",
+          id: "VOL001/SYS001 R410A Inverter Split Systems to Sales Area",
+          description: "This sub system comprised of; 4Nr 10kW R410A Mitsubishi Heavy Industries inverter driven split AC condensers.",
+          cooling_output: "40",
+          area_served: "Sales Area",
+          inspection_date: "2019-05-20",
+          cooling_plant_count: "4",
+          ahu_count: "0",
+          terminal_units_count: "4",
+          controls_count: "5"
+      ]
     }.freeze
 
     it "should read the appropriate values from the XML doc" do

@@ -80,6 +80,7 @@ module ViewModel
           control: @view_model.key_recommendations_control,
           management: @view_model.key_recommendations_management,
         },
+        sub_systems: @view_model.sub_systems,
       }
     end
 

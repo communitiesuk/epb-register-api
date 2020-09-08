@@ -106,24 +106,16 @@
       </ACI-Key-Recommendations>
       <ACI-Sub-Systems>
         <ACI-Sub-System>
-          <Sub-System-Volume-Definitions>Sub-System-Volume-Definitions0</Sub-System-Volume-Definitions>
-          <Sub-System-ID>Sub-System-ID0</Sub-System-ID>
-          <Sub-System-Description>Sub-System-Description0</Sub-System-Description>
-          <Sub-System-Cooling-Output>50</Sub-System-Cooling-Output>
-          <Sub-System-Area-Served-Description>Sub-System-Area-Served-Description0</Sub-System-Area-Served-Description>
-          <Sub-System-Inspection-Date>2020-05-04</Sub-System-Inspection-Date>
-          <Sub-System-Cooling-Plant-Count>50</Sub-System-Cooling-Plant-Count>
-          <Sub-System-Controls-Count>50</Sub-System-Controls-Count>
-        </ACI-Sub-System>
-        <ACI-Sub-System>
-          <Sub-System-Volume-Definitions>Sub-System-Volume-Definitions1</Sub-System-Volume-Definitions>
-          <Sub-System-ID>Sub-System-ID1</Sub-System-ID>
-          <Sub-System-Description>Sub-System-Description1</Sub-System-Description>
-          <Sub-System-Cooling-Output>50</Sub-System-Cooling-Output>
-          <Sub-System-Area-Served-Description>Sub-System-Area-Served-Description1</Sub-System-Area-Served-Description>
-          <Sub-System-Inspection-Date>2020-05-04</Sub-System-Inspection-Date>
-          <Sub-System-Cooling-Plant-Count>50</Sub-System-Cooling-Plant-Count>
-          <Sub-System-Controls-Count>50</Sub-System-Controls-Count>
+          <Sub-System-Volume-Definitions>VOL001 The Shop</Sub-System-Volume-Definitions>
+          <Sub-System-ID>VOL001/SYS001 R410A Inverter Split Systems to Sales Area</Sub-System-ID>
+          <Sub-System-Description>This sub system comprised of; 4Nr 10kW R410A Mitsubishi Heavy Industries inverter driven split AC condensers.</Sub-System-Description>
+          <Sub-System-Cooling-Output>40</Sub-System-Cooling-Output>
+          <Sub-System-Area-Served-Description>Sales Area</Sub-System-Area-Served-Description>
+          <Sub-System-Inspection-Date>2019-05-20</Sub-System-Inspection-Date>
+          <Sub-System-Cooling-Plant-Count>4</Sub-System-Cooling-Plant-Count>
+          <Sub-System-AHU-Count>0</Sub-System-AHU-Count>
+          <Sub-System-Terminal-Units-Count>4</Sub-System-Terminal-Units-Count>
+          <Sub-System-Controls-Count>5</Sub-System-Controls-Count>
         </ACI-Sub-System>
       </ACI-Sub-Systems>
       <ACI-Pre-Inspection-Information>
