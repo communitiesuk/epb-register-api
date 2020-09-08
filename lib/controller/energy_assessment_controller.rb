@@ -216,7 +216,7 @@ module Controller
         not_found_error("Assessment not found")
       when UseCase::FetchAssessment::AssessmentGone
         gone_error("Assessment not for issue")
-      when UseCase::FetchAssessment::SchemeIdsDoesNotMatch
+      when UseCase::FetchAssessment::SchemeIdsDoNotMatch
         forbidden(
           "UNAUTHORISED",
           "You are not authorised to view this scheme's lodged data",

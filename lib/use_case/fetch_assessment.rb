@@ -2,7 +2,7 @@ module UseCase
   class FetchAssessment
     class NotFoundException < StandardError; end
     class AssessmentGone < StandardError; end
-    class SchemeIdsDoesNotMatch < StandardError; end
+    class SchemeIdsDoNotMatch < StandardError; end
 
     def initialize
       @assessments_gateway = Gateway::AssessmentsSearchGateway.new
@@ -30,7 +30,7 @@ module UseCase
         @assessors_gateway.fetch(assessement_scheme_assessor_id)
       scheme_id = assessor_details.registered_by_id
 
-      raise SchemeIdsDoesNotMatch unless auth_scheme_ids.include?(scheme_id)
+      raise SchemeIdsDoNotMatch unless auth_scheme_ids.include?(scheme_id)
 
       @assessments_xml_gateway.fetch(assessment_id)[:xml]
     end
