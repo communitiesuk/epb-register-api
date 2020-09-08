@@ -67,4 +67,8 @@
   "key": "postcode",
   "root": "address",
   "path": ["Postcode"]
+}, {
+  "key": "current_energy_rating",
+  "path": ["Report", "Energy_Performance_Certificate", "EPC_Rating", "Asset_Rating"],
+  "default": "99"
 }]
