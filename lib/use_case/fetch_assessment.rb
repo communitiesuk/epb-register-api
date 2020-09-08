@@ -2,6 +2,7 @@ module UseCase
   class FetchAssessment
     class NotFoundException < StandardError; end
     class AssessmentGone < StandardError; end
+    class SchemeIdsDoesNotMatch < StandardError; end
 
     def initialize
       @assessments_gateway = Gateway::AssessmentsSearchGateway.new
@@ -11,7 +12,7 @@ module UseCase
       @assessments_xml_gateway = Gateway::AssessmentsXmlGateway.new
     end
 
-    def execute(assessment_id)
+    def execute(assessment_id, auth_scheme_id)
       assessment_id = Helper::RrnHelper.normalise_rrn_format(assessment_id)
       assessments =
         @assessments_gateway.search_by_assessment_id assessment_id, false
@@ -23,6 +24,13 @@ module UseCase
       if %w[CANCELLED NOT_FOR_ISSUE].include? assessment.to_hash[:status]
         raise AssessmentGone
       end
+
+      assessement_scheme_assessor_id = assessment.get(:scheme_assessor_id)
+      assessor_details =
+        @assessors_gateway.fetch(assessement_scheme_assessor_id)
+      scheme_id = assessor_details.registered_by_id
+
+      raise SchemeIdsDoesNotMatch unless auth_scheme_id.include?(scheme_id)
 
       @assessments_xml_gateway.fetch(assessment_id)[:xml]
     end

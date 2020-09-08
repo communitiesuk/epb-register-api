@@ -84,8 +84,14 @@ describe "Acceptance::Assessment" do
 
     context "when requesting an assessments XML" do
       let(:response) do
-        fetch_assessment "0000-0000-0000-0000-0000",
-                         headers: { "Accept": "application/xml" }
+        fetch_assessment(
+          "0000-0000-0000-0000-0000",
+          [200],
+          true,
+          { 'scheme_ids': [scheme_id] },
+          %w[assessment:fetch],
+          headers: { "Accept": "application/xml" },
+        )
       end
 
       it "returns the XML as expected" do
@@ -93,6 +99,36 @@ describe "Acceptance::Assessment" do
           "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + response.body,
         ).to eq(sanitised_sap_xml)
       end
+    end
+  end
+
+  context "When schemes attempt to download data lodged by another scheme" do
+    let(:scheme_id) { add_scheme_and_get_id }
+    let(:other_scheme_id) { add_scheme_and_get_id("another one") }
+    let(:response) do
+      JSON.parse fetch_assessment("0000-0000-0000-0000-0000").body
+    end
+
+    before do
+      add_assessor scheme_id,
+                   "SPEC000000",
+                   fetch_assessor_stub.fetch_request_body(domesticSap: "ACTIVE")
+
+      lodge_assessment assessment_body: valid_sap_xml,
+                       accepted_responses: [201],
+                       auth_data: { scheme_ids: [scheme_id] },
+                       schema_name: "SAP-Schema-18.0.0"
+    end
+
+    it "will not allow another scheme to download another schemes lodeged data" do
+      fetch_assessment(
+        "0000-0000-0000-0000-0000",
+        [403],
+        true,
+        { 'scheme_ids': [other_scheme_id] },
+        %w[assessment:fetch],
+        headers: { "Accept": "application/xml" },
+      )
     end
   end
 end

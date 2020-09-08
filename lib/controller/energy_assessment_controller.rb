@@ -200,7 +200,10 @@ module Controller
 
       xml = (request.env["HTTP_ACCEPT"] == "application/xml")
 
-      result = UseCase::FetchAssessment.new.execute(assessment_id)
+      auth_scheme_id = env[:jwt_auth].supplemental("scheme_ids")
+
+      result =
+        UseCase::FetchAssessment.new.execute(assessment_id, auth_scheme_id)
 
       if xml
         xml_response(200, result)
@@ -213,6 +216,11 @@ module Controller
         not_found_error("Assessment not found")
       when UseCase::FetchAssessment::AssessmentGone
         gone_error("Assessment not for issue")
+      when UseCase::FetchAssessment::SchemeIdsDoesNotMatch
+        forbidden(
+          "UNAUTHORISED",
+          "You are not authorised to view this scheme's lodged data",
+        )
       when Helper::RrnHelper::RrnNotValid
         error_response(
           400,
