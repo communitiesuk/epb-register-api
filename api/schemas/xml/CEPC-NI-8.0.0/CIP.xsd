@@ -4,7 +4,7 @@
   elementFormDefault="qualified"
   targetNamespace="https://epbr.digital.communities.gov.uk/nondomestic/cip"
   xmlns:cip="https://epbr.digital.communities.gov.uk/nondomestic/cip"
-  version="1.0"
+  version="1.1.0"
 >
   <xs:element name="CIP">
     <xs:complexType>
@@ -32,7 +32,15 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="AccreditingBody" type="xs:string"/>
+  <xs:element name="AccreditingBody">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="codes" type="xs:string" />
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="CarbonIntensities">
     <xs:complexType>
       <xs:sequence>
