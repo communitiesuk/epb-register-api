@@ -19,17 +19,8 @@ describe ViewModel::RdSapWrapper do
       schema_name: "RdSAP-Schema-19.0",
       xml: Samples.xml("RdSAP-Schema-19.0"),
       unsupported_fields: [],
-      different_fields: {
-        address: {
-          address_id: "0000000000",
-          address_line1: "1 Some Street",
-          address_line2: "",
-          address_line3: "",
-          address_line4: "",
-          town: "Post-Town1",
-          postcode: "A0 0AA",
-        },
-      },
+      different_fields: {},
+      different_buried_fields: { address: { address_id: "0000000000" } },
     },
     {
       schema_name: "RdSAP-Schema-NI-19.0",

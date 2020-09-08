@@ -19,33 +19,15 @@ describe ViewModel::CepcWrapper do
       schema_name: "CEPC-7.1",
       xml: Samples.xml("CEPC-7.1", "cepc"),
       unsupported_fields: [],
-      different_fields: {
-        address: {
-          address_id: "000000000001",
-          address_line1: "2 Lonely Street",
-          address_line2: nil,
-          address_line3: nil,
-          address_line4: nil,
-          town: "Post-Town1",
-          postcode: "A0 0AA",
-        },
-      },
+      different_fields: {},
+      different_buried_fields: { address: { address_id: "LPRN-000000000001" } },
     },
     {
       schema_name: "CEPC-7.0",
       xml: Samples.xml("CEPC-7.0", "cepc"),
       unsupported_fields: %i[primary_energy_use],
-      different_fields: {
-        address: {
-          address_id: "000000000001",
-          address_line1: "2 Lonely Street",
-          address_line2: nil,
-          address_line3: nil,
-          address_line4: nil,
-          town: "Post-Town1",
-          postcode: "A0 0AA",
-        },
-      },
+      different_fields: {},
+      different_buried_fields: { address: { address_id: "LPRN-000000000001" } },
     },
   ].freeze
 

@@ -19,33 +19,15 @@ describe ViewModel::DecWrapper do
       schema_name: "CEPC-7.1",
       xml: Samples.xml("CEPC-7.1", "dec"),
       unsupported_fields: [],
-      different_fields: {
-        address: {
-          address_id: "000000000001",
-          address_line1: "2 Lonely Street",
-          address_line2: nil,
-          address_line3: nil,
-          address_line4: nil,
-          town: "Post-Town1",
-          postcode: "A0 0AA",
-        },
-      },
+      different_fields: {},
+      different_buried_fields: { address: { address_id: "LPRN-000000000001" } },
     },
     {
       schema_name: "CEPC-7.0",
       xml: Samples.xml("CEPC-7.0", "dec"),
       unsupported_fields: [],
-      different_fields: {
-        address: {
-          address_id: "000000000001",
-          address_line1: "2 Lonely Street",
-          address_line2: nil,
-          address_line3: nil,
-          address_line4: nil,
-          town: "Post-Town1",
-          postcode: "A0 0AA",
-        },
-      },
+      different_fields: {},
+      different_buried_fields: { address: { address_id: "LPRN-000000000001" } },
     },
   ].freeze
 
