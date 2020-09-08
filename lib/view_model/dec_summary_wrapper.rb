@@ -35,7 +35,7 @@ module ViewModel
                 <UPRN>#{@view_model.address_id}</UPRN>
               </Property-Details>
               <Calculation-Details>
-                <Output-Engine>MWW-91.1.1</Output-Engine>
+                <Output-Engine>#{@view_model.output_engine}</Output-Engine>
               </Calculation-Details>
             </Report-Header>
             <OR-Operational-Rating>
