@@ -5,7 +5,12 @@ task :generate_schemes do
 
   ActiveRecord::Base.logger = nil
 
-  names = ["CIBSE Certification Limited", "ECMK", "Elmhurst", "Sterling", "Stroma", "Quidos"]
+  names = ["CIBSE Certification Limited",
+           "ECMK",
+           "Elmhurst Energy Systems",
+           "Sterling Accreditation Ltd",
+           "Stroma Accreditation Ltd",
+           "Quidos Limited"]
 
   names.each do |name|
     query = "INSERT INTO schemes (name) VALUES('#{name}')"
