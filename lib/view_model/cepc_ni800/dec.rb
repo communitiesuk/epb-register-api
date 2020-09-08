@@ -112,6 +112,10 @@ module ViewModel
       def related_rrn
         xpath(%w[Related-RRN])
       end
+
+      def output_engine
+        xpath(%w[Output-Engine])
+      end
     end
   end
 end
