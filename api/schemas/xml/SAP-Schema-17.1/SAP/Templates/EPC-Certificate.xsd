@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns="https://epbr.digital.communities.gov.uk/xsd/sap" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="https://epbr.digital.communities.gov.uk/xsd/sap" elementFormDefault="qualified" attributeFormDefault="unqualified" version="17.1">
+<!-- edited with XMLSpy v2006 rel. 3 U (http://www.altova.com) by Jim Bowery (Landmark Information Group Ltd.) -->
+<xs:schema xmlns="http://www.epcregister.com/xsd/sap" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.epcregister.com/xsd/sap" elementFormDefault="qualified" attributeFormDefault="unqualified" version="LIG-17.1">
 	<xs:include schemaLocation="../UDT/EPC-Domains.xsd"/>
 	<xs:include schemaLocation="../UDT/SAP-Domains.xsd"/>
 	<xs:element name="LZC-Energy-Sources" type="LZC-Energy-Sources"/>
@@ -23,7 +24,7 @@
 	<xs:element name="Energy-Assessment" type="Energy-Assessment"/>
 	<xs:complexType name="Energy-Assessment">
 		<xs:annotation>
-			<xs:documentation>Energy Efficiency Assessment Report is an inspection report whose purpose is to assess the energy efficiency of the inspected property and provide energy ratings for the significant heat-loss features of the property.
+			<xs:documentation>Energy Efficiency Assessment Report is an inspection report whose purpose is to assess the energy efficiency of the inspected property and provide energy ratings for the significant heat-loss features of the property. 
 
 The report also identifies a number of potential improvements that may be made to the property in order to increase the energy efficiency.
 </xs:documentation>
@@ -295,7 +296,7 @@ The Improved Energy Ratings that result from carrying out a Suggested Improvemen
 			</xs:element>
 			<xs:element name="Energy-Efficiency-Rating" type="EnergyEfficiencySummaryCode">
 				<xs:annotation>
-					<xs:documentation>Overall summary of the energy efficiency of the property feature.</xs:documentation>
+					<xs:documentation>Overall summary of the energy effiocuemcy of the property feature.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Environmental-Efficiency-Rating" type="EnergyEfficiencySummaryCode">
