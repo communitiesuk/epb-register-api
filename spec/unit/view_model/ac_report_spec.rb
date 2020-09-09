@@ -151,7 +151,19 @@ describe ViewModel::AcReportWrapper do
         {
           system_number: "",
           identifier: "",
-          equipment: {},
+          equipment: {
+            cooling_capacity: "10",
+            description: "Single Split",
+            location: "Externally on roof",
+            manufacturer: "Mitsubishi",
+            model_reference: "FDC100VN",
+            refrigerant_charge: "3",
+            refrigerant_type: {
+              ecfgasregulation: nil, ecozoneregulation: nil, type: "R410A"
+            },
+            serial_number: "not visible",
+            year_installed: "2014",
+          },
           inspection: {},
           sizing: {},
           refrigeration: {},
@@ -162,7 +174,19 @@ describe ViewModel::AcReportWrapper do
         {
           system_number: "",
           identifier: "",
-          equipment: {},
+          equipment: {
+            cooling_capacity: "10",
+            description: "Single Split",
+            location: "Externally on roof",
+            manufacturer: "Mitsubishi",
+            model_reference: "FDC100VN",
+            refrigerant_charge: "3",
+            refrigerant_type: {
+              ecfgasregulation: nil, ecozoneregulation: nil, type: "R410A"
+            },
+            serial_number: "not visible",
+            year_installed: "2014",
+          },
           inspection: {},
           sizing: {},
           refrigeration: {},

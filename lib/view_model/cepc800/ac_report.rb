@@ -143,20 +143,10 @@ module ViewModel
       end
 
       def cooling_plants
+        extraction_helper = Helper::AcReportExtraction.new
+
         @xml_doc.search("Air-Conditioning-Inspection-Report/ACI-Cooling-Plant")
-          .map do |_node|
-          {
-            system_number: "",
-            identifier: "",
-            equipment: {},
-            inspection: {},
-            sizing: {},
-            refrigeration: {},
-            maintenance: {},
-            metering: {},
-            humidity_control: {},
-          }
-        end
+          .map { |node| extraction_helper.cooling_plant(node) }
       end
 
       def checklist_values(checklist)
