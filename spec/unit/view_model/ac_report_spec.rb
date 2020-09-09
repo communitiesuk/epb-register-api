@@ -44,8 +44,6 @@ describe ViewModel::AcReportWrapper do
           related_party_disclosure: "No related Party",
           sub_systems: [],
           pre_inspection_checklist: {},
-          related_party_disclosure: "No related Party",
-          sub_systems: [],
           cooling_plants: [],
         },
       },
