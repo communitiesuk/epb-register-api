@@ -116,6 +116,33 @@ module ViewModel
       def output_engine
         xpath(%w[Output-Engine])
       end
+
+      def or_assessment_start_date
+        xpath(%w[OR-Operational-Rating OR-Assessment-Start-Date])
+      end
+
+      def benchmarks
+        @xml_doc.search("Benchmarks/Benchmark").map do |node|
+          {
+            name: xpath(%w[Name], node),
+            id: xpath(%w[Benchmark-ID], node),
+            tufa: xpath(%w[TUFA], node),
+          }
+        end
+      end
+
+      def or_energy_consumption
+        @xml_doc.search("OR-Energy-Consumption").children.select(&:element?)
+          .map do |node|
+          {
+            consumption: xpath(%w[Consumption], node),
+            start_date: xpath(%w[Start-Date], node),
+            end_date: xpath(%w[End-Date], node),
+            estimate: xpath(%w[Estimate], node),
+            name: node.name,
+          }
+        end
+      end
     end
   end
 end

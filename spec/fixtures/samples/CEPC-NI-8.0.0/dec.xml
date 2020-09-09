@@ -262,7 +262,20 @@
           </Benchmark>
         </Benchmarks>
       </OR-Benchmark-Data>
-      <OR-Energy-Consumption></OR-Energy-Consumption>
+      <OR-Energy-Consumption>
+        <Electricity>
+          <Consumption>422480</Consumption>
+          <Start-Date>2007-01-31</Start-Date>
+          <End-Date>2008-01-31</End-Date>
+          <Estimate>1</Estimate>
+        </Electricity>
+        <Gas>
+          <Consumption>310400</Consumption>
+          <Start-Date>2007-01-18</Start-Date>
+          <End-Date>2007-12-18</End-Date>
+          <Estimate>0</Estimate>
+        </Gas>
+      </OR-Energy-Consumption>
     </OR-Operational-Rating>
     <Insurance-Details>
       <Insurer>Insurance</Insurer>
