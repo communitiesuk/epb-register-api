@@ -1,6 +1,6 @@
 module ViewModel
   class Factory
-    TYPES_OF_CEPC = %w[CEPC-8.0.0 CEPC-NI-8.0.0 CEPC-7.1 CEPC-7.0].freeze
+    TYPES_OF_CEPC = %w[CEPC-8.0.0 CEPC-NI-8.0.0 CEPC-7.1 CEPC-7.0 CEPC-6.0].freeze
     TYPES_OF_RD_SAP = %w[
       RdSAP-Schema-20.0.0
       RdSAP-Schema-NI-20.0.0
