@@ -58,6 +58,7 @@ describe ViewModel::SapWrapper do
       xml: Samples.xml("SAP-Schema-17.1"),
       unsupported_fields: [],
       different_fields: {
+        address_id: "0000000000",
         address: {
           address_id: "0000000000",
           address_line1: "1 Some Street",
@@ -123,6 +124,13 @@ describe ViewModel::SapWrapper do
     date_of_assessment: "2020-05-04",
     date_of_registration: "2020-05-04",
     date_registered: "2020-05-04",
+    address_id: "UPRN-000000000000",
+    address_line1: "1 Some Street",
+    address_line2: "",
+    address_line3: "",
+    address_line4: "",
+    town: "Post-Town1",
+    postcode: "A0 0AA",
     address: {
       address_id: "UPRN-000000000000",
       address_line1: "1 Some Street",
