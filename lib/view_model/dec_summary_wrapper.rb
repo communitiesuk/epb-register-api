@@ -25,64 +25,76 @@ module ViewModel
 
     def to_xml
       <<~XML
-                    <Reports
-                      xmlns="https://epbr.digital.communities.gov.uk/xsd/dec-summary"
-                      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                      xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/dec-summary  ../../../../api/schemas/xml/CEPC-8.0.0/DEC-Summary.xsd"
-                    >
-                      <Report>
-                        <Report-Header>
-                          <Report-Type>#{@view_model.report_type}</Report-Type>
-                          <Property-Details>
-                            <UPRN>#{@view_model.address_id}</UPRN>
-                          </Property-Details>
-                          <Calculation-Details>
-                            <Output-Engine>#{
+                      <Reports
+                        xmlns="https://epbr.digital.communities.gov.uk/xsd/dec-summary"
+                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                        xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/dec-summary  ../../../../api/schemas/xml/CEPC-8.0.0/DEC-Summary.xsd"
+                      >
+                        <Report>
+                          <Report-Header>
+                            <Report-Type>#{@view_model.report_type}</Report-Type>
+                            <Property-Details>
+                              <UPRN>#{@view_model.address_id}</UPRN>
+                            </Property-Details>
+                            <Calculation-Details>
+                              <Output-Engine>#{
           @view_model.output_engine
         }</Output-Engine>
-                          </Calculation-Details>
-                        </Report-Header>
-                        <OR-Operational-Rating>
-                          <OR-Assessment-Start-Date>#{
+                            </Calculation-Details>
+                          </Report-Header>
+                          <OR-Operational-Rating>
+                            <OR-Assessment-Start-Date>#{
           @view_model.or_assessment_start_date
         }</OR-Assessment-Start-Date>
-                          <OR-Assessment-End-Date>#{
+                            <OR-Assessment-End-Date>#{
           @view_model.or_assessment_end_date
         }</OR-Assessment-End-Date>
-                          <OR-Benchmark-Data>
-                            <Benchmarks>
-                    #{
+                            <OR-Benchmark-Data>
+                              <Benchmarks>
+                      #{
           get_benchmark_xml(@view_model.benchmarks)
         }        </Benchmarks>
-                          </OR-Benchmark-Data>
-                          <OR-Energy-Consumption>
-                    #{
+                            </OR-Benchmark-Data>
+                            <OR-Energy-Consumption>
+                      #{
           get_or_energy_consumption_xml(@view_model.or_energy_consumption)
         }      </OR-Energy-Consumption>
-                        </OR-Operational-Rating>
-                        <Display-Certificate>
-                          <DEC-Annual-Energy-Summary>
-                            <Annual-Energy-Use-Electrical>156</Annual-Energy-Use-Electrical>
-                            <Annual-Energy-Use-Fuel-Thermal>129</Annual-Energy-Use-Fuel-Thermal>
-                            <Renewables-Fuel-Thermal>0</Renewables-Fuel-Thermal>
-                            <Renewables-Electrical>0</Renewables-Electrical>
-                            <Typical-Thermal-Use>279</Typical-Thermal-Use>
-                            <Typical-Electrical-Use>79</Typical-Electrical-Use>
-                          </DEC-Annual-Energy-Summary>
-                          <DEC-Status>1</DEC-Status>
-                          <This-Assessment>
-                            <Nominated-Date>2020-01-01</Nominated-Date>
-                            <Energy-Rating>1</Energy-Rating>
-                            <Electricity-CO2>7</Electricity-CO2>
-                            <Heating-CO2>3</Heating-CO2>
-                            <Renewables-CO2>0</Renewables-CO2>
-                          </This-Assessment>
-                          <Technical-Information>
-                            <Main-Heating-Fuel>Natural Gas</Main-Heating-Fuel>
-                          </Technical-Information>
-                        </Display-Certificate>
-                      </Report>
-                    </Reports>
+                          </OR-Operational-Rating>
+                          <Display-Certificate>
+                            <DEC-Annual-Energy-Summary>
+                              <Annual-Energy-Use-Electrical>#{
+          @view_model.annual_energy_summary[:electrical]
+        }</Annual-Energy-Use-Electrical>
+                              <Annual-Energy-Use-Fuel-Thermal>#{
+          @view_model.annual_energy_summary[:fuel_thermal]
+        }</Annual-Energy-Use-Fuel-Thermal>
+                              <Renewables-Fuel-Thermal>#{
+          @view_model.annual_energy_summary[:renewables_fuel_thermal]
+        }</Renewables-Fuel-Thermal>
+                              <Renewables-Electrical>#{
+          @view_model.annual_energy_summary[:renewables_electrical]
+        }</Renewables-Electrical>
+                              <Typical-Thermal-Use>#{
+          @view_model.annual_energy_summary[:typical_thermal_use]
+        }</Typical-Thermal-Use>
+                              <Typical-Electrical-Use>#{
+          @view_model.annual_energy_summary[:typical_electrical_use]
+        }</Typical-Electrical-Use>
+                            </DEC-Annual-Energy-Summary>
+                            <DEC-Status>1</DEC-Status>
+                            <This-Assessment>
+                              <Nominated-Date>2020-01-01</Nominated-Date>
+                              <Energy-Rating>1</Energy-Rating>
+                              <Electricity-CO2>7</Electricity-CO2>
+                              <Heating-CO2>3</Heating-CO2>
+                              <Renewables-CO2>0</Renewables-CO2>
+                            </This-Assessment>
+                            <Technical-Information>
+                              <Main-Heating-Fuel>Natural Gas</Main-Heating-Fuel>
+                            </Technical-Information>
+                          </Display-Certificate>
+                        </Report>
+                      </Reports>
       XML
     end
 

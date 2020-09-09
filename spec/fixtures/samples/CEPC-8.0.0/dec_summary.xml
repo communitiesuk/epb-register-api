@@ -42,12 +42,12 @@
     </OR-Operational-Rating>
     <Display-Certificate>
       <DEC-Annual-Energy-Summary>
-        <Annual-Energy-Use-Electrical>156</Annual-Energy-Use-Electrical>
-        <Annual-Energy-Use-Fuel-Thermal>129</Annual-Energy-Use-Fuel-Thermal>
-        <Renewables-Fuel-Thermal>0</Renewables-Fuel-Thermal>
-        <Renewables-Electrical>0</Renewables-Electrical>
-        <Typical-Thermal-Use>279</Typical-Thermal-Use>
-        <Typical-Electrical-Use>79</Typical-Electrical-Use>
+        <Annual-Energy-Use-Electrical>1</Annual-Energy-Use-Electrical>
+        <Annual-Energy-Use-Fuel-Thermal>1</Annual-Energy-Use-Fuel-Thermal>
+        <Renewables-Fuel-Thermal>1</Renewables-Fuel-Thermal>
+        <Renewables-Electrical>1</Renewables-Electrical>
+        <Typical-Thermal-Use>1</Typical-Thermal-Use>
+        <Typical-Electrical-Use>1</Typical-Electrical-Use>
       </DEC-Annual-Energy-Summary>
       <DEC-Status>1</DEC-Status>
       <This-Assessment>

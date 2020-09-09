@@ -143,6 +143,18 @@ module ViewModel
           }
         end
       end
+
+      def annual_energy_summary
+        summary = @xml_doc.search("DEC-Annual-Energy-Summary")
+        {
+          electrical: xpath(%w[Annual-Energy-Use-Electrical], summary),
+          fuel_thermal: xpath(%w[Annual-Energy-Use-Fuel-Thermal], summary),
+          renewables_fuel_thermal: xpath(%w[Renewables-Fuel-Thermal], summary),
+          renewables_electrical: xpath(%w[Renewables-Electrical], summary),
+          typical_thermal_use: xpath(%w[Typical-Thermal-Use], summary),
+          typical_electrical_use: xpath(%w[Typical-Electrical-Use], summary),
+        }
+      end
     end
   end
 end
