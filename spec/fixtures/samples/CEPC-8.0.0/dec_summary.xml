@@ -23,16 +23,6 @@
             <Benchmark-ID>1</Benchmark-ID>
             <TUFA>1840</TUFA>
           </Benchmark>
-          <Benchmark>
-            <Name>Offices - cellular, naturally ventilated</Name>
-            <Benchmark-ID>2</Benchmark-ID>
-            <TUFA>682.5</TUFA>
-          </Benchmark>
-          <Benchmark>
-            <Name>Cafe</Name>
-            <Benchmark-ID>3</Benchmark-ID>
-            <TUFA>187</TUFA>
-          </Benchmark>
         </Benchmarks>
       </OR-Benchmark-Data>
       <OR-Energy-Consumption>

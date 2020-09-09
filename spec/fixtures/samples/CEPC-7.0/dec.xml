@@ -250,11 +250,11 @@
           <Benchmark>
             <Area-Metric></Area-Metric>
             <Benchmark></Benchmark>
-            <Benchmark-ID>45</Benchmark-ID>
+            <Benchmark-ID>1</Benchmark-ID>
             <Floor-Area>15</Floor-Area>
-            <Name></Name>
+            <Name>Library</Name>
             <Special-Uses-Area></Special-Uses-Area>
-            <TUFA></TUFA>
+            <TUFA>1840</TUFA>
           </Benchmark>
         </Benchmarks>
       </OR-Benchmark-Data>
