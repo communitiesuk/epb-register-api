@@ -100,7 +100,9 @@ module ViewModel
       }</Renewables-CO2>
                             </This-Assessment>
                             <Technical-Information>
-                              <Main-Heating-Fuel>Natural Gas</Main-Heating-Fuel>
+                              <Main-Heating-Fuel>#{
+      @view_model.main_heating_fuel
+      }</Main-Heating-Fuel>
                             </Technical-Information>
                           </Display-Certificate>
                         </Report>
