@@ -41,7 +41,9 @@ describe ViewModel::AcReportWrapper do
         xml: Samples.xml("CEPC-6.0", "ac-report"),
         unsupported_fields: [],
         different_fields: {
-          related_party_disclosure: "No related Party", sub_systems: []
+          related_party_disclosure: "No related Party",
+          sub_systems: [],
+          cooling_plants: [],
         },
       },
     ].freeze
@@ -121,7 +123,7 @@ describe ViewModel::AcReportWrapper do
         controls_count: "5",
       ],
       pre_inspection_checklist: {},
-      cooling_plants: [],
+      cooling_plants: [{}, {}],
     }.freeze
 
     it "should read the appropriate values from the XML doc" do

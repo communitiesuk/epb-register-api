@@ -84,7 +84,7 @@ module ViewModel
         },
         sub_systems: @view_model.sub_systems,
         pre_inspection_checklist: {},
-        cooling_plants: []
+        cooling_plants: @view_model.cooling_plants,
       }
     end
 
