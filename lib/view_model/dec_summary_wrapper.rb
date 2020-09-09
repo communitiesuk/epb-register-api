@@ -83,11 +83,21 @@ module ViewModel
                             </DEC-Annual-Energy-Summary>
                             <DEC-Status>1</DEC-Status>
                             <This-Assessment>
-                              <Nominated-Date>2020-01-01</Nominated-Date>
-                              <Energy-Rating>1</Energy-Rating>
-                              <Electricity-CO2>7</Electricity-CO2>
-                              <Heating-CO2>3</Heating-CO2>
-                              <Renewables-CO2>0</Renewables-CO2>
+                              <Nominated-Date>#{
+      @view_model.current_assessment_date
+      }</Nominated-Date>
+                              <Energy-Rating>#{
+      @view_model.energy_efficiency_rating
+      }</Energy-Rating>
+                              <Electricity-CO2>#{
+      @view_model.current_electricity_co2
+      }</Electricity-CO2>
+                              <Heating-CO2>#{
+      @view_model.current_heating_co2
+      }</Heating-CO2>
+                              <Renewables-CO2>#{
+      @view_model.current_renewables_co2
+      }</Renewables-CO2>
                             </This-Assessment>
                             <Technical-Information>
                               <Main-Heating-Fuel>Natural Gas</Main-Heating-Fuel>
