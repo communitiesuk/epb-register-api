@@ -8,8 +8,7 @@ module ViewModel
         @xml_doc = Nokogiri.XML xml
       end
 
-      def xpath(queries)
-        node = @xml_doc
+      def xpath(queries, node = @xml_doc)
         queries.each do |query|
           if node
             node = node.at query
