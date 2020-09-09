@@ -32,7 +32,7 @@ describe ViewModel::AcReportWrapper do
       },
       {
         schema_name: "CEPC-7.0",
-        xml: Samples.xml("CEPC-7.1", "ac-report"),
+        xml: Samples.xml("CEPC-7.0", "ac-report"),
         unsupported_fields: [],
         different_fields: {},
       },
