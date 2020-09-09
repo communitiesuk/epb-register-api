@@ -17,6 +17,7 @@ module ViewModel
       SAP-Schema-18.0.0
       SAP-Schema-NI-18.0.0
       SAP-Schema-17.1
+      SAP-Schema-17.0
       SAP-Schema-NI-17.1
     ].freeze
     def create(xml = nil, schema_type = nil, filter_results_for = nil)
