@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Reports xmlns="DCLG-CEPC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="DCLG-CEPC  ../../../../api/schemas/xml/CEPC-6.0/Reports/CEPC-Reports.xsd">
+  <Report>
+    <Report-Header>
+      <RRN>0000-0000-0000-0000-0000</RRN>
+      <Issue-Date>2020-06-02</Issue-Date>
+      <Report-Type>5</Report-Type>
+      <Valid-Until>2030-05-04</Valid-Until>
+      <Related-RRN>0000-0000-0000-0000-0001</Related-RRN>
+      <Inspection-Date>2020-05-20</Inspection-Date>
+      <Registration-Date>2020-05-20</Registration-Date>
+      <Status>entered</Status>
+      <Language-Code>1</Language-Code>
+      <Building-Complexity>Level 3</Building-Complexity>
+      <Energy-Assessor>
+        <Certificate-Number>SPEC000000</Certificate-Number>
+        <Name>Test Assessor Name</Name>
+        <Accreditation-Scheme-Name>Some Accreditation Limited</Accreditation-Scheme-Name>
+        <Trading-Address>111 Twotwotwo Street, Mytown,, MT7 1AA</Trading-Address>
+        <Company-Name>Assess Energy Limited</Company-Name>
+        <Related-Party-Disclosure>No related Party</Related-Party-Disclosure>
+        <Qualifications>SP3</Qualifications>
+        <Qualifications>CC4</Qualifications>
+        <E-Mail>test@example.com</E-Mail>
+        <Telephone-Number>07555 666777</Telephone-Number>
+      </Energy-Assessor>
+      <Property-Details>
+        <UPRN>432167890000</UPRN>
+        <Property-Address>
+          <Address-Line-1>2 Lonely Street</Address-Line-1>
+          <Post-Town>Post-Town1</Post-Town>
+          <Postcode>A0 0AA</Postcode>
+        </Property-Address>
+        <Property-Type />
+        <Is-Heritage-Site>N</Is-Heritage-Site>
+      </Property-Details>
+      <Calculation-Details>
+        <Calculation-Tool>Sterling Accreditation, Sterling e-Volve, v1.2</Calculation-Tool>
+      </Calculation-Details>
+    </Report-Header>
+    <Formatted-Report />
+    <Insurance-Details>
+      <Insurer>Assessor Underwriting Limited</Insurer>
+      <Policy-No>AB1234567CD</Policy-No>
+      <Effective-Date>2023-02-01</Effective-Date>
+      <Expiry-Date>2018-01-31</Expiry-Date>
+      <PI-Limit>2000000</PI-Limit>
+    </Insurance-Details>
+    <Air-Conditioning-Reports>
+      <Content-Type>3</Content-Type>
+      <Air-Conditioning-Inspection-Report>
+      <Executive-Summary>The objective and intention of the inspection and this report is to provide the client/end user with information relating to the installed Air Conditioning/Comfort Cooling systems (AC) and Ventilation Systems and endeavour to provide ideas and recommendations for the site to reduce its CO2 emissions, lower energy consumption and save money on energy bills.
+
+        BUILDING TYPE/DETAILS:
+
+        The site inspected was; A Shop located in London. The site was inspected on the 20th May 2019. The estimated total floor area provided with air conditioning/comfort cooling (AC) on site was circa; 1876m2.
+
+      </Executive-Summary>
+        <ACI-System-Components>
+          <System-Documentation>Yes</System-Documentation>
+          <Refrigeration-Plant>Yes</Refrigeration-Plant>
+          <Heat-Rejection-Equipment>Yes</Heat-Rejection-Equipment>
+          <Waterborne-Air-Conditioning>No</Waterborne-Air-Conditioning>
+          <Airborne-Air-Conditioning>Yes</Airborne-Air-Conditioning>
+          <Airborne-Air-Handling-Units>Yes</Airborne-Air-Handling-Units>
+          <Outdoor-Inlets>Yes</Outdoor-Inlets>
+          <System-Controls>Yes</System-Controls>
+        </ACI-System-Components>
+        <ACI-Recommendations>
+          <System-Efficiency>
+            <ACI-Recommendation>
+              <Seq-Number>0</Seq-Number>
+              <Code>OTHER</Code>
+              <Text>A way to improve your efficiency</Text>
+            </ACI-Recommendation>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text>A second way to improve efficiency</Text>
+            </ACI-Recommendation>
+          </System-Efficiency>
+          <Improvement-Options>
+            <ACI-Recommendation>
+              <Seq-Number>0</Seq-Number>
+              <Code>OTHER</Code>
+              <Text>Text2</Text>
+            </ACI-Recommendation>
+          </Improvement-Options>
+          <Alternative-Solutions>
+            <ACI-Recommendation>
+              <Seq-Number>0</Seq-Number>
+              <Code>OTHER</Code>
+              <Text>Text4</Text>
+            </ACI-Recommendation>
+          </Alternative-Solutions>
+          <Other-Recommendations>
+            <ACI-Recommendation>
+              <Seq-Number>0</Seq-Number>
+              <Code>OTHER</Code>
+              <Text>Text6</Text>
+            </ACI-Recommendation>
+          </Other-Recommendations>
+        </ACI-Recommendations>
+      </Air-Conditioning-Inspection-Report>
+      <Equipment-Operator>
+        <Responsible-Person>Chief engineer</Responsible-Person>
+        <Telephone-Number>44321</Telephone-Number>
+        <Organisation-Name>Air Con Ltd</Organisation-Name>
+        <Registered-Address>
+          <Address-Line-1>12 Commercial St</Address-Line-1>
+          <Post-Town>Coventry</Post-Town>
+          <Postcode>CV12 3FG</Postcode>
+        </Registered-Address>
+      </Equipment-Operator>
+      <Equipment-Owner>
+        <Equipment-Owner-Name>Manager</Equipment-Owner-Name>
+        <Telephone-Number>012345</Telephone-Number>
+        <Organisation-Name>Shop Ltd</Organisation-Name>
+        <Registered-Address>
+          <Address-Line-1>Shop Ltd</Address-Line-1>
+          <Address-Line-2>PO BOX 123</Address-Line-2>
+          <Post-Town>Cardiff</Post-Town>
+          <Postcode>CF15 1FD</Postcode>
+        </Registered-Address>
+      </Equipment-Owner>
+    </Air-Conditioning-Reports>
+  </Report>
+</Reports>
