@@ -120,6 +120,8 @@ describe ViewModel::AcReportWrapper do
         terminal_units_count: "4",
         controls_count: "5",
       ],
+      pre_inspection_checklist: {},
+      cooling_plants: [],
     }.freeze
 
     it "should read the appropriate values from the XML doc" do
