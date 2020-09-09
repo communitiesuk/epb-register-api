@@ -83,7 +83,7 @@ module ViewModel
           management: @view_model.key_recommendations_management,
         },
         sub_systems: @view_model.sub_systems,
-        pre_inspection_checklist: {},
+        pre_inspection_checklist: @view_model.pre_inspection_checklist,
         cooling_plants: @view_model.cooling_plants,
       }
     end

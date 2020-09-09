@@ -146,6 +146,10 @@ module ViewModel
         @xml_doc.search("Air-Conditioning-Inspection-Report/ACI-Cooling-Plant")
           .map { |_node| {} }
       end
+
+      def pre_inspection_checklist
+        {}
+      end
     end
   end
 end

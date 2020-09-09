@@ -121,25 +121,25 @@
       <ACI-Pre-Inspection-Information>
         <ACI-Pre-Inspection-Essential>
           <List-Of-Systems>Yes</List-Of-Systems>
-          <Cooling-Capacities>Yes</Cooling-Capacities>
-          <Control-Zones>Yes</Control-Zones>
-          <Temperature-Controls>Yes</Temperature-Controls>
-          <Operation-Controls>Yes</Operation-Controls>
-          <Schematics>Yes</Schematics>
+          <Cooling-Capacities>No</Cooling-Capacities>
+          <Control-Zones>No</Control-Zones>
+          <Temperature-Controls>No</Temperature-Controls>
+          <Operation-Controls>No</Operation-Controls>
+          <Schematics>No</Schematics>
         </ACI-Pre-Inspection-Essential>
         <ACI-Pre-Inspection-Desirable>
-          <Previous-Reports>Yes</Previous-Reports>
-          <Refrigeration-Maintenance>Yes</Refrigeration-Maintenance>
-          <Delivery-System-Maintenance>Yes</Delivery-System-Maintenance>
-          <Control-System-Maintenance>Yes</Control-System-Maintenance>
-          <Consumption-Records>Yes</Consumption-Records>
-          <Commissioning-Results>Yes</Commissioning-Results>
+          <Previous-Reports>No</Previous-Reports>
+          <Refrigeration-Maintenance>No</Refrigeration-Maintenance>
+          <Delivery-System-Maintenance>No</Delivery-System-Maintenance>
+          <Control-System-Maintenance>No</Control-System-Maintenance>
+          <Consumption-Records>No</Consumption-Records>
+          <Commissioning-Results>No</Commissioning-Results>
         </ACI-Pre-Inspection-Desirable>
         <ACI-Pre-Inspection-Optional>
-          <Cooling-Load-Estimate>Yes</Cooling-Load-Estimate>
-          <Complaint-Records>Yes</Complaint-Records>
-          <BMS-Capability>Yes</BMS-Capability>
-          <Monitoring-Capability>Yes</Monitoring-Capability>
+          <Cooling-Load-Estimate>No</Cooling-Load-Estimate>
+          <Complaint-Records>No</Complaint-Records>
+          <BMS-Capability>No</BMS-Capability>
+          <Monitoring-Capability>No</Monitoring-Capability>
         </ACI-Pre-Inspection-Optional>
       </ACI-Pre-Inspection-Information>
       <ACI-Cooling-Plant>

@@ -128,7 +128,7 @@
       </ACI-Sub-Systems>
       <ACI-Pre-Inspection-Information>
         <ACI-Pre-Inspection-Essential>
-          <List-Of-Systems>No</List-Of-Systems>
+          <List-Of-Systems>Yes</List-Of-Systems>
           <Cooling-Capacities>No</Cooling-Capacities>
           <Control-Zones>No</Control-Zones>
           <Temperature-Controls>No</Temperature-Controls>

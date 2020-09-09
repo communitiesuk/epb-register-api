@@ -142,6 +142,29 @@ module ViewModel
         end
       end
 
+      def checklist_values(checklist)
+        results = checklist
+                      &.element_children
+                      &.map{|node|
+                        checklist_item = node.name.underscore.to_sym
+                        value = node.content == "Yes"
+                        {checklist_item => value}
+                      }&.inject(&:merge)
+
+        results.nil? ? {} : results
+      end
+
+      def pre_inspection_checklist
+        {
+            essential: checklist_values(@xml_doc
+                                            .at("ACI-Pre-Inspection-Information/ACI-Pre-Inspection-Essential")),
+            desirable: checklist_values(@xml_doc
+                                            .at("ACI-Pre-Inspection-Information/ACI-Pre-Inspection-Desirable")),
+            optional: checklist_values(@xml_doc
+                                           .at("ACI-Pre-Inspection-Information/ACI-Pre-Inspection-Optional")),
+        }
+      end
+
       def cooling_plants
         @xml_doc.search("Air-Conditioning-Inspection-Report/ACI-Cooling-Plant")
           .map do |_node|

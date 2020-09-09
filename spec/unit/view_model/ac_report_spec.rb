@@ -43,6 +43,9 @@ describe ViewModel::AcReportWrapper do
         different_fields: {
           related_party_disclosure: "No related Party",
           sub_systems: [],
+          pre_inspection_checklist: {},
+          related_party_disclosure: "No related Party",
+          sub_systems: [],
           cooling_plants: [],
         },
       },
@@ -122,7 +125,11 @@ describe ViewModel::AcReportWrapper do
         terminal_units_count: "4",
         controls_count: "5",
       ],
-      pre_inspection_checklist: {},
+      pre_inspection_checklist: {
+          essential: {control_zones: false, cooling_capacities: false, list_of_systems: true, operation_controls: false, schematics: false, temperature_controls: false},
+          desirable: {commissioning_results: false, consumption_records: false, control_system_maintenance: false, delivery_system_maintenance: false, previous_reports: false, refrigeration_maintenance: false},
+          optional: {bms_capability: false, complaint_records: false, cooling_load_estimate: false, monitoring_capability: false},
+      },
       cooling_plants: [
         {
           system_number: "",
