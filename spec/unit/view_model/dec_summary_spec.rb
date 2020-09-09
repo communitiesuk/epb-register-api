@@ -15,6 +15,11 @@ describe ViewModel::DecSummaryWrapper do
       xml: Samples.xml("CEPC-7.0", "dec"),
       replace: { "UPRN-000000000001": "LPRN-000000000001" },
     },
+    {
+      schema_name: "CEPC-6.0",
+      xml: Samples.xml("CEPC-6.0", "dec"),
+      replace: { "UPRN-000000000001": "LPRN-000000000001" },
+    },
   ].freeze
 
   let(:sample_response) { Samples.xml("CEPC-8.0.0", "dec_summary") }
