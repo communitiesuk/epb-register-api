@@ -25,82 +25,94 @@ module ViewModel
 
     def to_xml
       <<~XML
-              <Reports
-                xmlns="https://epbr.digital.communities.gov.uk/xsd/dec-summary"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/dec-summary  ../../../../api/schemas/xml/CEPC-8.0.0/DEC-Summary.xsd"
-              >
-                <Report>
-                  <Report-Header>
-                    <Report-Type>#{@view_model.report_type}</Report-Type>
-                    <Property-Details>
-                      <UPRN>#{@view_model.address_id}</UPRN>
-                    </Property-Details>
-                    <Calculation-Details>
-                      <Output-Engine>#{@view_model.output_engine}</Output-Engine>
-                    </Calculation-Details>
-                  </Report-Header>
-                  <OR-Operational-Rating>
-                    <OR-Assessment-Start-Date>#{
+                    <Reports
+                      xmlns="https://epbr.digital.communities.gov.uk/xsd/dec-summary"
+                      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                      xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/dec-summary  ../../../../api/schemas/xml/CEPC-8.0.0/DEC-Summary.xsd"
+                    >
+                      <Report>
+                        <Report-Header>
+                          <Report-Type>#{@view_model.report_type}</Report-Type>
+                          <Property-Details>
+                            <UPRN>#{@view_model.address_id}</UPRN>
+                          </Property-Details>
+                          <Calculation-Details>
+                            <Output-Engine>#{
+          @view_model.output_engine
+        }</Output-Engine>
+                          </Calculation-Details>
+                        </Report-Header>
+                        <OR-Operational-Rating>
+                          <OR-Assessment-Start-Date>#{
           @view_model.or_assessment_start_date
         }</OR-Assessment-Start-Date>
-                    <OR-Assessment-End-Date>#{
+                          <OR-Assessment-End-Date>#{
           @view_model.or_assessment_end_date
         }</OR-Assessment-End-Date>
-                    <OR-Benchmark-Data>
-                      <Benchmarks>#{
-          @view_model.benchmarks.map { |benchmark|
-            "
-          <Benchmark>
-            <Name>#{benchmark[:name]}</Name>
-            <Benchmark-ID>#{benchmark[:id]}</Benchmark-ID>
-            <TUFA>#{benchmark[:tufa]}</TUFA>
-          </Benchmark>"
-          }.join
-        }
-                      </Benchmarks>
-                    </OR-Benchmark-Data>
-                    <OR-Energy-Consumption>#{
-          @view_model.or_energy_consumption.map { |energy_consumption|
-            "
-        <#{energy_consumption[:name]}>
-          <Consumption>#{energy_consumption[:consumption]}</Consumption>
-          <Start-Date>#{energy_consumption[:start_date]}</Start-Date>
-          <End-Date>#{energy_consumption[:end_date]}</End-Date>
-          <Estimate>#{energy_consumption[:estimate]}</Estimate>
-        </#{energy_consumption[:name]}>"
-          }.join
-        }
-                    </OR-Energy-Consumption>
-                  </OR-Operational-Rating>
-                  <Display-Certificate>
-                    <DEC-Annual-Energy-Summary>
-                      <Annual-Energy-Use-Electrical>156</Annual-Energy-Use-Electrical>
-                      <Annual-Energy-Use-Fuel-Thermal>129</Annual-Energy-Use-Fuel-Thermal>
-                      <Renewables-Fuel-Thermal>0</Renewables-Fuel-Thermal>
-                      <Renewables-Electrical>0</Renewables-Electrical>
-                      <Typical-Thermal-Use>279</Typical-Thermal-Use>
-                      <Typical-Electrical-Use>79</Typical-Electrical-Use>
-                    </DEC-Annual-Energy-Summary>
-                    <DEC-Status>1</DEC-Status>
-                    <This-Assessment>
-                      <Nominated-Date>2020-01-01</Nominated-Date>
-                      <Energy-Rating>1</Energy-Rating>
-                      <Electricity-CO2>7</Electricity-CO2>
-                      <Heating-CO2>3</Heating-CO2>
-                      <Renewables-CO2>0</Renewables-CO2>
-                    </This-Assessment>
-                    <Technical-Information>
-                      <Main-Heating-Fuel>Natural Gas</Main-Heating-Fuel>
-                    </Technical-Information>
-                  </Display-Certificate>
-                </Report>
-              </Reports>
+                          <OR-Benchmark-Data>
+                            <Benchmarks>
+                    #{
+          get_benchmark_xml(@view_model.benchmarks)
+        }        </Benchmarks>
+                          </OR-Benchmark-Data>
+                          <OR-Energy-Consumption>
+                    #{
+          get_or_energy_consumption_xml(@view_model.or_energy_consumption)
+        }      </OR-Energy-Consumption>
+                        </OR-Operational-Rating>
+                        <Display-Certificate>
+                          <DEC-Annual-Energy-Summary>
+                            <Annual-Energy-Use-Electrical>156</Annual-Energy-Use-Electrical>
+                            <Annual-Energy-Use-Fuel-Thermal>129</Annual-Energy-Use-Fuel-Thermal>
+                            <Renewables-Fuel-Thermal>0</Renewables-Fuel-Thermal>
+                            <Renewables-Electrical>0</Renewables-Electrical>
+                            <Typical-Thermal-Use>279</Typical-Thermal-Use>
+                            <Typical-Electrical-Use>79</Typical-Electrical-Use>
+                          </DEC-Annual-Energy-Summary>
+                          <DEC-Status>1</DEC-Status>
+                          <This-Assessment>
+                            <Nominated-Date>2020-01-01</Nominated-Date>
+                            <Energy-Rating>1</Energy-Rating>
+                            <Electricity-CO2>7</Electricity-CO2>
+                            <Heating-CO2>3</Heating-CO2>
+                            <Renewables-CO2>0</Renewables-CO2>
+                          </This-Assessment>
+                          <Technical-Information>
+                            <Main-Heating-Fuel>Natural Gas</Main-Heating-Fuel>
+                          </Technical-Information>
+                        </Display-Certificate>
+                      </Report>
+                    </Reports>
       XML
     end
 
     def get_view_model
       @view_model
+    end
+
+    def get_benchmark_xml(data)
+      data.map { |benchmark|
+        <<-XML
+          <Benchmark>
+            <Name>#{benchmark[:name]}</Name>
+            <Benchmark-ID>#{benchmark[:id]}</Benchmark-ID>
+            <TUFA>#{benchmark[:tufa]}</TUFA>
+          </Benchmark>
+        XML
+      }.join
+    end
+
+    def get_or_energy_consumption_xml(data)
+      data.map { |energy_consumption|
+        <<-XML
+        <#{energy_consumption[:name]}>
+          <Consumption>#{energy_consumption[:consumption]}</Consumption>
+          <Start-Date>#{energy_consumption[:start_date]}</Start-Date>
+          <End-Date>#{energy_consumption[:end_date]}</End-Date>
+          <Estimate>#{energy_consumption[:estimate]}</Estimate>
+        </#{energy_consumption[:name]}>
+        XML
+      }.join
     end
   end
 end
