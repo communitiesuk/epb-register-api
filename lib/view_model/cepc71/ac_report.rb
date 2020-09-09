@@ -143,8 +143,19 @@ module ViewModel
       end
 
       def cooling_plants
-        @xml_doc.search("Air-Conditioning-Inspection-Report/ACI-Cooling-Plant").map do |node|
-          {}
+        @xml_doc.search("Air-Conditioning-Inspection-Report/ACI-Cooling-Plant")
+          .map do |_node|
+          {
+            system_number: "",
+            identifier: "",
+            equipment: {},
+            inspection: {},
+            sizing: {},
+            refrigeration: {},
+            maintenance: {},
+            metering: {},
+            humidity_control: {},
+          }
         end
       end
     end

@@ -123,7 +123,30 @@ describe ViewModel::AcReportWrapper do
         controls_count: "5",
       ],
       pre_inspection_checklist: {},
-      cooling_plants: [{}, {}],
+      cooling_plants: [
+        {
+          system_number: "",
+          identifier: "",
+          equipment: {},
+          inspection: {},
+          sizing: {},
+          refrigeration: {},
+          maintenance: {},
+          metering: {},
+          humidity_control: {},
+        },
+        {
+          system_number: "",
+          identifier: "",
+          equipment: {},
+          inspection: {},
+          sizing: {},
+          refrigeration: {},
+          maintenance: {},
+          metering: {},
+          humidity_control: {},
+        },
+      ],
     }.freeze
 
     it "should read the appropriate values from the XML doc" do
