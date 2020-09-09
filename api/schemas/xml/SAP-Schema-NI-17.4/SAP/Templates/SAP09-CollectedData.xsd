@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns="https://epbr.digital.communities.gov.uk/xsd/sap" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="https://epbr.digital.communities.gov.uk/xsd/sap" elementFormDefault="qualified" version="NI-17.4">
+<!-- edited with XMLSpy v2006 rel. 3 U (http://www.altova.com) by Jim Bowery (Landmark Information Group Ltd.) -->
+<xs:schema xmlns="http://www.epbniregister.com/xsd/sap" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.epbniregister.com/xsd/sap" elementFormDefault="qualified" version="LIG-NI-17.4">
 	<xs:include schemaLocation="../UDT/BaseDataTypes.xsd"/>
 	<xs:include schemaLocation="../UDT/SharedDomains.xsd"/>
 	<xs:include schemaLocation="../UDT/SAP09-Domains.xsd"/>

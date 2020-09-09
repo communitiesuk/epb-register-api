@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="https://epbr.digital.communities.gov.uk/xsd/sap"
-	targetNamespace="https://epbr.digital.communities.gov.uk/xsd/sap" elementFormDefault="qualified"
-	version="NI-17.4">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.epbniregister.com/xsd/sap"
+	targetNamespace="http://www.epbniregister.com/xsd/sap" elementFormDefault="qualified"
+	version="LIG-NI-17.4">
 	<xs:annotation>
 		<xs:documentation>Enumerated Domains (EnumeratedDomains.xsd) are explicit lists of pre-defined values that may be assigned to a data-item and any value assigned to an instance of that data-item must be a member of that defined list. 
 
