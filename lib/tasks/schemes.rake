@@ -7,7 +7,7 @@ task :generate_schemes do
 
   names = ["CIBSE Certification Limited",
            "ECMK",
-           "Elmhurst Energy Systems",
+           "Elmhurst Energy Systems Ltd",
            "Sterling Accreditation Ltd",
            "Stroma Accreditation Ltd",
            "Quidos Limited"]
