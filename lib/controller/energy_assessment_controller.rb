@@ -198,18 +198,12 @@ module Controller
     get "/api/assessments/:assessment_id", jwt_auth: %w[assessment:fetch] do
       assessment_id = params[:assessment_id]
 
-      xml = (request.env["HTTP_ACCEPT"] == "application/xml")
-
       auth_scheme_ids = env[:jwt_auth].supplemental("scheme_ids")
 
       result =
         UseCase::FetchAssessment.new.execute(assessment_id, auth_scheme_ids)
 
-      if xml
-        xml_response(200, result)
-      else
-        json_api_response(code: 200, data: result)
-      end
+      return xml_response(200, result)
     rescue StandardError => e
       case e
       when UseCase::FetchAssessment::NotFoundException
