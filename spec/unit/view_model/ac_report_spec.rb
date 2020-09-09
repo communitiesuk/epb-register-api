@@ -41,8 +41,7 @@ describe ViewModel::AcReportWrapper do
         xml: Samples.xml("CEPC-6.0", "ac-report"),
         unsupported_fields: [],
         different_fields: {
-          related_party_disclosure: "No related Party",
-          sub_systems: [],
+          related_party_disclosure: "No related Party", sub_systems: []
         },
       },
     ].freeze
