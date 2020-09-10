@@ -182,6 +182,26 @@ module ViewModel
             ),
         }
       end
+
+      def air_handling_systems
+        @xml_doc
+            .search("ACI-Air-Handling-System")
+            .map do |node|
+          {
+              equipment: {
+                  unit: node.at("System-Number")&.content,
+                  component: node.at("System-Component-Identifier")&.content,
+                  systems_served: node.at("ACI-Air-Handling-System-Equipment/Systems-Served")&.content,
+                  manufacturer: node.at("ACI-Air-Handling-System-Equipment/Manufacturer")&.content,
+                  year_installed: node.at("ACI-Air-Handling-System-Equipment/Year-Installed")&.content,
+                  location: node.at("ACI-Air-Handling-System-Equipment/Location")&.content,
+                  areas_served: node.at("ACI-Air-Handling-System-Equipment/Area-Served")&.content,
+                  discrepancy: node.at("ACI-Air-Handling-System-Equipment/Discrepancy-Note")&.content,
+              }
+          }
+        end
+      end
+
     end
   end
 end

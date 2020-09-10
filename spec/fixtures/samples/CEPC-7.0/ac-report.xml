@@ -778,6 +778,64 @@
           </Humidity-Control>
         </ACI-Cooling-Plant-Humidity-Control>
       </ACI-Cooling-Plant>
+      <ACI-Air-Handling-System>
+        <System-Number>123</System-Number>
+        <System-Component-Identifier>VENT1 Heat recovery</System-Component-Identifier>
+        <ACI-Air-Handling-System-Equipment>
+          <Systems-Served>Corridor</Systems-Served>
+          <Manufacturer>NUAIRE</Manufacturer>
+          <Year-Installed>2016</Year-Installed>
+          <Location>Above corridor ceiling</Location>
+          <Area-Served>Corridor</Area-Served>
+          <Discrepancy-Note>None</Discrepancy-Note>
+        </ACI-Air-Handling-System-Equipment>
+        <ACI-Air-Handling-System-Filters>
+          <Filter-Condition-OK>
+            <Flag>Yes</Flag>
+          </Filter-Condition-OK>
+          <Filter-Change-Frequency-OK>
+            <Flag>No</Flag>
+          </Filter-Change-Frequency-OK>
+          <Differential-Pressure-Gauge-OK>
+            <Flag>No</Flag>
+          </Differential-Pressure-Gauge-OK>
+        </ACI-Air-Handling-System-Filters>
+        <ACI-Air-Handling-System-Fan-Power>
+          <Fan-Power-OK>
+            <Flag>Yes</Flag>
+          </Fan-Power-OK>
+          <SFP-Calculation>464 watts x 70% - 0.311/400 = 8.12 w/ltr.</SFP-Calculation>
+        </ACI-Air-Handling-System-Fan-Power>
+        <ACI-Air-Handling-System-Fan-Condition>
+          <Fan-Rotation-OK>
+            <Flag>Yes</Flag>
+          </Fan-Rotation-OK>
+          <Fan-Modulation-OK>
+            <Flag>Yes</Flag>
+          </Fan-Modulation-OK>
+        </ACI-Air-Handling-System-Fan-Condition>
+        <ACI-Air-Handling-System-Notes>
+          <Heat-Exchangers-OK>
+            <Flag>Yes</Flag>
+          </Heat-Exchangers-OK>
+          <Refrigeration-Leak>
+            <Flag>Yes</Flag>
+          </Refrigeration-Leak>
+          <Fan-Control-Setting>
+            <Note></Note>
+          </Fan-Control-Setting>
+          <Energy-Conservation-Features>
+            <Note></Note>
+          </Energy-Conservation-Features>
+          <Air-Leakage>
+            <Note></Note>
+          </Air-Leakage>
+          <Outdoor-Air-Inlets>
+            <Note></Note>
+          </Outdoor-Air-Inlets>
+        </ACI-Air-Handling-System-Notes>
+      </ACI-Air-Handling-System>
+
       <ACI-Terminal-Unit>
         <System-Number>VOL001/SYS001 R410A Inverter Split Systems to Sales Area</System-Number>
         <System-Identifier>Indoor cassette unit</System-Identifier>

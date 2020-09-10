@@ -150,6 +150,10 @@ module ViewModel
       def pre_inspection_checklist
         {}
       end
+
+      def air_handling_systems
+        []
+      end
     end
   end
 end
