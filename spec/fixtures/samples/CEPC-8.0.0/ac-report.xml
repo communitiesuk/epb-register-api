@@ -791,7 +791,15 @@
         </ACI-Air-Handling-System-Equipment>
         <ACI-Air-Handling-System-Filters>
           <Filter-Condition-OK>
+            <Note>Quite good condition</Note>
             <Flag>Yes</Flag>
+            <Guidance>
+              <ACI-Recommendation>
+                <Seq-Number>0</Seq-Number>
+                <Code>OTHER</Code>
+                <Text>Give it a good scrub</Text>
+              </ACI-Recommendation>
+            </Guidance>
           </Filter-Condition-OK>
           <Filter-Change-Frequency-OK>
             <Flag>No</Flag>

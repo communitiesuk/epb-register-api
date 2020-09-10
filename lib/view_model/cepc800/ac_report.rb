@@ -183,6 +183,14 @@ module ViewModel
         }
       end
 
+      def extract_yn_flag(node)
+        {
+            flag: node&.at("Flag")&.content == "Yes",
+            note: node&.at("Note")&.content,
+            recommendations: extract_aci_recommendations(node.search("ACI-Recommendation"))
+        }
+      end
+
       def air_handling_systems
         @xml_doc.search("ACI-Air-Handling-System").map do |node|
           {
@@ -207,6 +215,11 @@ module ViewModel
                 node.at("ACI-Air-Handling-System-Equipment/Discrepancy-Note")
                   &.content,
             },
+            inspection: {
+                filters: {
+                    filter_condition: extract_yn_flag(node.at("Filter-Condition-OK"))
+                }
+            }
           }
         end
       end
