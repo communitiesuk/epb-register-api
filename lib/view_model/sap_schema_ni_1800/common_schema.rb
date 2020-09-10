@@ -200,15 +200,15 @@ module ViewModel
       end
 
       def impact_of_cavity_insulation
-        xpath(%w[Impact-Of-Cavity-Insulation]).to_i
+        nil
       end
 
       def impact_of_loft_insulation
-        xpath(%w[Impact-Of-Loft-Insulation]).to_i
+        nil
       end
 
       def impact_of_solid_wall_insulation
-        xpath(%w[Impact-Of-Solid-Wall-Insulation]).to_i
+        nil
       end
 
       def all_sap_floor_dimensions

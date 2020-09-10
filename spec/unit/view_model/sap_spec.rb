@@ -17,9 +17,9 @@ describe ViewModel::SapWrapper do
         heat_demand: {
           current_space_heating_demand: 30.0,
           current_water_heating_demand: 60.0,
-          impact_of_cavity_insulation: 0,
-          impact_of_loft_insulation: 0,
-          impact_of_solid_wall_insulation: 0,
+          impact_of_cavity_insulation: nil,
+          impact_of_loft_insulation: nil,
+          impact_of_solid_wall_insulation: nil,
         },
         recommended_improvements: [
           {
@@ -105,9 +105,9 @@ describe ViewModel::SapWrapper do
         heat_demand: {
           current_space_heating_demand: 30.0,
           current_water_heating_demand: 60.0,
-          impact_of_cavity_insulation: 0,
-          impact_of_loft_insulation: 0,
-          impact_of_solid_wall_insulation: 0,
+          impact_of_cavity_insulation: nil,
+          impact_of_loft_insulation: nil,
+          impact_of_solid_wall_insulation: nil,
         },
         recommended_improvements: [
           {
@@ -159,9 +159,9 @@ describe ViewModel::SapWrapper do
         heat_demand: {
           current_space_heating_demand: 30.0,
           current_water_heating_demand: 60.0,
-          impact_of_cavity_insulation: 0,
-          impact_of_loft_insulation: 0,
-          impact_of_solid_wall_insulation: 0,
+          impact_of_cavity_insulation: nil,
+          impact_of_loft_insulation: nil,
+          impact_of_solid_wall_insulation: nil,
         },
         recommended_improvements: [
           {
@@ -203,9 +203,9 @@ describe ViewModel::SapWrapper do
         heat_demand: {
           current_space_heating_demand: 30.0,
           current_water_heating_demand: 60.0,
-          impact_of_cavity_insulation: 0,
-          impact_of_loft_insulation: 0,
-          impact_of_solid_wall_insulation: 0,
+          impact_of_cavity_insulation: nil,
+          impact_of_loft_insulation: nil,
+          impact_of_solid_wall_insulation: nil,
         },
         recommended_improvements: [
           {
