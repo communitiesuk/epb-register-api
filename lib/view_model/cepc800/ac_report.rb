@@ -185,9 +185,10 @@ module ViewModel
 
       def extract_yn_flag(node)
         {
-            flag: node&.at("Flag")&.content == "Yes",
-            note: node&.at("Note")&.content,
-            recommendations: extract_aci_recommendations(node.search("ACI-Recommendation"))
+          flag: node&.at("Flag")&.content == "Yes",
+          note: node&.at("Note")&.content,
+          recommendations:
+            extract_aci_recommendations(node.search("ACI-Recommendation")),
         }
       end
 
@@ -216,10 +217,11 @@ module ViewModel
                   &.content,
             },
             inspection: {
-                filters: {
-                    filter_condition: extract_yn_flag(node.at("Filter-Condition-OK"))
-                }
-            }
+              filters: {
+                filter_condition:
+                  extract_yn_flag(node.at("Filter-Condition-OK")),
+              },
+            },
           }
         end
       end

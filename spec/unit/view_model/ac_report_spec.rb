@@ -209,14 +209,16 @@ describe ViewModel::AcReportWrapper do
             year_installed: "2016",
           },
           inspection: {
-              filters: {
-                  filter_condition: {
-                      flag: true,
-                      note: "Quite good condition",
-                      recommendations: [{sequence: "0", text: "Give it a good scrub"}]
-                  }
-              }
-          }
+            filters: {
+              filter_condition: {
+                flag: true,
+                note: "Quite good condition",
+                recommendations: [
+                  { sequence: "0", text: "Give it a good scrub" },
+                ],
+              },
+            },
+          },
         },
       ],
     }.freeze
