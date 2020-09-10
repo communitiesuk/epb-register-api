@@ -220,6 +220,10 @@ module ViewModel
               filters: {
                 filter_condition:
                   extract_yn_flag(node.at("Filter-Condition-OK")),
+                change_frequency:
+                  extract_yn_flag(node.at("Filter-Change-Frequency-OK")),
+                differential_pressure_gauge:
+                  extract_yn_flag(node.at("Differential-Pressure-Gauge-OK")),
               },
             },
           }

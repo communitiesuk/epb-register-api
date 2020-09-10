@@ -217,6 +217,10 @@ describe ViewModel::AcReportWrapper do
                   { sequence: "0", text: "Give it a good scrub" },
                 ],
               },
+              change_frequency: { flag: false, note: nil, recommendations: [] },
+              differential_pressure_gauge: {
+                flag: false, note: nil, recommendations: []
+              },
             },
           },
         },
