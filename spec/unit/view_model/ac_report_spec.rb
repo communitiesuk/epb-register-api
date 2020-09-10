@@ -45,7 +45,7 @@ describe ViewModel::AcReportWrapper do
           sub_systems: [],
           pre_inspection_checklist: {},
           cooling_plants: [],
-          air_handling_systems: []
+          air_handling_systems: [],
         },
       },
     ].freeze
@@ -197,15 +197,19 @@ describe ViewModel::AcReportWrapper do
         },
       ],
       air_handling_systems: [
-          {equipment: {areas_served: "Corridor",
-                       component: "VENT1 Heat recovery",
-                       discrepancy: "None",
-                       location: "Above corridor ceiling",
-                       manufacturer: "NUAIRE",
-                       systems_served: "Corridor",
-                       unit: "123",
-                       year_installed: "2016"}}
-      ]
+        {
+          equipment: {
+            areas_served: "Corridor",
+            component: "VENT1 Heat recovery",
+            discrepancy: "None",
+            location: "Above corridor ceiling",
+            manufacturer: "NUAIRE",
+            systems_served: "Corridor",
+            unit: "123",
+            year_installed: "2016",
+          },
+        },
+      ],
     }.freeze
 
     it "should read the appropriate values from the XML doc" do
