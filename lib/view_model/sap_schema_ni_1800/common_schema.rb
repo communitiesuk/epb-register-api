@@ -221,7 +221,7 @@ module ViewModel
         date_of_expiry < Time.now ? "EXPIRED" : "ENTERED"
       end
 
-      private
+    private
 
       def convert_to_big_decimal(node)
         return unless xpath(node)
