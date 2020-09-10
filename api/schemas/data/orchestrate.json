@@ -1,14 +1,4 @@
 {
-  "RdSAP-Schema-19.0": {
-    "schema_path":
-      "api/schemas/xml/RdSAP-Schema-19.0/RdSAP/Templates/RdSAP-Report.xsd",
-    "data_path": "api/schemas/data/RdSAP-Schema-19.0.json"
-  },
-  "RdSAP-Schema-NI-19.0": {
-    "schema_path":
-      "api/schemas/xml/RdSAP-Schema-NI-19.0/RdSAP/Templates/RdSAP-Report.xsd",
-    "data_path": "api/schemas/data/RdSAP-Schema-NI-19.0.json"
-  },
   "SAP-Schema-17.1": {
     "schema_path":
       "api/schemas/xml/SAP-Schema-17.1/SAP/Templates/SAP-Report.xsd",
@@ -29,16 +19,6 @@
       "api/schemas/xml/SAP-Schema-NI-17.3/SAP/Templates/SAP-Report.xsd",
     "data_path": "api/schemas/data/SAP-Schema-NI-17.3.json"
   },
-  "CEPC-7.1": {
-    "schema_path": "api/schemas/xml/CEPC-7.1/Reports/CEPC-Reports.xsd",
-    "data_path": "api/schemas/data/CEPC-7.1.json",
-    "root_tag": "Report"
-  },
-  "CEPC-NI-7.1": {
-    "schema_path": "api/schemas/xml/CEPC-NI-7.1/Reports/CEPC-Reports.xsd",
-    "data_path": "api/schemas/data/CEPC-NI-7.1.json",
-    "root_tag": "Report"
-  },
   "RdSAP-Schema-20.0.0": {
     "schema_path":
     "api/schemas/xml/RdSAP-Schema-20.0.0/RdSAP/Templates/RdSAP-Report.xsd",
@@ -48,6 +28,21 @@
     "schema_path":
     "api/schemas/xml/RdSAP-Schema-NI-20.0.0/RdSAP/Templates/RdSAP-Report.xsd",
     "data_path": "api/schemas/data/RdSAP-Schema-NI-20.0.0.json"
+  },
+  "RdSAP-Schema-19.0": {
+    "schema_path":
+    "api/schemas/xml/RdSAP-Schema-19.0/RdSAP/Templates/RdSAP-Report.xsd",
+    "data_path": "api/schemas/data/RdSAP-Schema-19.0.json"
+  },
+  "RdSAP-Schema-NI-19.0": {
+    "schema_path":
+    "api/schemas/xml/RdSAP-Schema-NI-19.0/RdSAP/Templates/RdSAP-Report.xsd",
+    "data_path": "api/schemas/data/RdSAP-Schema-NI-19.0.json"
+  },
+  "RdSAP-Schema-18.0": {
+    "schema_path":
+    "api/schemas/xml/RdSAP-Schema-18.0/RdSAP/Templates/RdSAP-Report.xsd",
+    "data_path": "api/schemas/data/RdSAP-Schema-18.0.json"
   },
   "SAP-Schema-18.0.0": {
     "schema_path":
@@ -67,6 +62,16 @@
   "CEPC-NI-8.0.0": {
     "schema_path": "api/schemas/xml/CEPC-NI-8.0.0/Reports/CEPC-Reports.xsd",
     "data_path": "api/schemas/data/CEPC-NI-8.0.0.json",
+    "root_tag": "Report"
+  },
+  "CEPC-7.1": {
+    "schema_path": "api/schemas/xml/CEPC-7.1/Reports/CEPC-Reports.xsd",
+    "data_path": "api/schemas/data/CEPC-7.1.json",
+    "root_tag": "Report"
+  },
+  "CEPC-NI-7.1": {
+    "schema_path": "api/schemas/xml/CEPC-NI-7.1/Reports/CEPC-Reports.xsd",
+    "data_path": "api/schemas/data/CEPC-NI-7.1.json",
     "root_tag": "Report"
   },
   "CEPC-7.0": {

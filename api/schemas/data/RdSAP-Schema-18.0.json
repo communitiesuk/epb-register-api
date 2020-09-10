@@ -1,0 +1,64 @@
+[{
+  "key": "report_header",
+  "path": ["RdSAP_Report", "Report_Header"]
+}, {
+  "key": "assessment_id",
+  "root": "report_header",
+  "path": ["RRN"]
+}, {
+  "key": "assessment_type",
+  "path": ["_"],
+  "default": "RdSAP"
+}, {
+  "key": "assessor_id",
+  "root": "report_header",
+  "path": ["Energy_Assessor", "Identification_Number", "Certificate_Number"]
+}, {
+  "key": "property",
+  "path": ["RdSAP_Report", "Energy_Assessment", "Property_Summary"]
+}, {
+  "key": "energy_use",
+  "path": ["RdSAP_Report", "Energy_Assessment", "Energy_Use"]
+}, {
+  "key": "address_id",
+  "path": ["RdSAP_Report", "Report_Header", "Property", "UPRN"]
+}, {
+  "key": "address",
+  "path": ["RdSAP_Report", "Report_Header", "Property", "Address"]
+}, {
+  "key": "inspection_date",
+  "root": "report_header",
+  "path": ["Inspection_Date"]
+}, {
+  "key": "registration_date",
+  "root": "report_header",
+  "path": ["Registration_Date"]
+}, {
+  "key": "current_energy_rating",
+  "root": "energy_use",
+  "path": ["Energy_Rating_Current"]
+}, {
+  "key": "potential_energy_rating",
+  "root": "energy_use",
+  "path": ["Energy_Rating_Potential"]
+}, {
+  "key": "address_line_one",
+  "root": "address",
+  "path": ["Address_Line_1"]
+}, {
+  "key": "address_line_two",
+  "root": "address",
+  "path": ["Address_Line_2"]
+}, {
+  "key": "address_line_three",
+  "root": "address",
+  "path": ["Address_Line_3"]
+}, {
+  "key": "town",
+  "root": "address",
+  "path": ["Post_Town"]
+}, {
+  "key": "postcode",
+  "root": "address",
+  "path": ["Postcode"]
+}]
