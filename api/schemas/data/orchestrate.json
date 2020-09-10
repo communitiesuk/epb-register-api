@@ -49,6 +49,11 @@
     "api/schemas/xml/RdSAP-Schema-17.1/RdSAP/Templates/RdSAP-Report.xsd",
     "data_path": "api/schemas/data/RdSAP-Schema-17.1.json"
   },
+  "RdSAP-Schema-17.0": {
+    "schema_path":
+    "api/schemas/xml/RdSAP-Schema-17.0/RdSAP/Templates/RdSAP-Report.xsd",
+    "data_path": "api/schemas/data/RdSAP-Schema-17.0.json"
+  },
   "SAP-Schema-18.0.0": {
     "schema_path":
     "api/schemas/xml/SAP-Schema-18.0.0/SAP/Templates/SAP-Report.xsd",
