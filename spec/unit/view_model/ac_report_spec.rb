@@ -195,6 +195,9 @@ describe ViewModel::AcReportWrapper do
           humidity_control: {},
         },
       ],
+      air_handling_systems: [
+
+      ]
     }.freeze
 
     it "should read the appropriate values from the XML doc" do
