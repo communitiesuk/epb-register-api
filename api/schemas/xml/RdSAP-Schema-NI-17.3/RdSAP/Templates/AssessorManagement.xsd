@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2006 rel. 3 U (http://www.altova.com) by Jim Bowery (Landmark Information Group Ltd.) -->
+<xs:schema xmlns="http://www.epbniregister.com/xsd/rdsap" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.epbniregister.com/xsd/rdsap" elementFormDefault="qualified" version="LIG-NI-17.3">
+	<xs:annotation>
+		<xs:documentation>© Department of Communities and Local Government. © Crown copyright, 2007. The Home Condition Report logo and associated wording is a registered trade mark - any unlicensed use is not permitted. Copyright in the typographical arrangement of this document rests with the Crown. This publication, excluding logos, may be reproduced free of charge in any format or medium for research, private study, for internal circulation within an organisation or by registered scheme users. This is subject to it being reproduced accurately and not used in a misleading context.</xs:documentation>
+	</xs:annotation>
+	<xs:include schemaLocation="../UDT/SAP-Domains.xsd"/>
+	<xs:include schemaLocation="../Templates/Property.xsd"/>
+	<!--
+	<xs:include schemaLocation="../Templates/Property.xsd"/>
+-->
+	<xs:element name="Energy-Assessor" type="Energy-Assessor"/>
+	<xs:complexType name="Energy-Assessor">
+		<xs:annotation>
+			<xs:documentation>An Energy Assessor is certified by a Certification Scheme as being qualified to carry out a SAP assessment and/or an RdSAP assessment.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The name by which the Home Inspector is registered. This is a structured name containing prefix, first name + surname.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Notify-Lodgement" type="Flag" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indicates whether the assessor wants to be notified that a the report has been lodged in the register</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Contact-Address" type="AddressType">
+				<xs:annotation>
+					<xs:documentation>The address that any written correspondence can be sent to. This is not the same as the Registered Address because it may, of course, be a Post Office Box.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Web-Site" type="xs:string" minOccurs="0"/>
+			<xs:element name="E-Mail" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>the E-Mail address that the Authorised User can be contacted at.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Fax" type="PhoneNumberType" minOccurs="0"/>
+			<xs:element name="Telephone" type="PhoneNumberType" minOccurs="0"/>
+			<xs:element name="Company-Name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The Name of the Company that the assessor is employed by.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Scheme-Name" type="xs:string"/>
+			<xs:element name="Scheme-Web-Site" type="xs:string"/>
+			<xs:element name="Identification-Number">
+				<xs:complexType>
+					<xs:choice>
+						<xs:element name="Certificate-Number" type="CertificateNumberType">
+							<xs:annotation>
+								<xs:documentation>The unique identifier assigned to the assessor by the scheme by which they can be identified throughout their membership of the scheme.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="Membership-Number" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>For Scottish DEAs only</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:simpleType name="PhoneNumberType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9\-\.\)\(\+ ]+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CertificateNumberType">
+		<xs:annotation>
+			<xs:documentation>The Certificate Number is a 10-character fixed-length alphanumeric code consisting of 4 characters identifying the Certification Scheme and a 6-digit zero-padded identifier for each Home Inspector certified by that Certification Scheme. For example ABCD987654, XYZ_123456 etc.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="10"/>
+			<xs:maxLength value="10"/>
+			<xs:pattern value="[A-Z/_]{4}[0-9]{6}"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
