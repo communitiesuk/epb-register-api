@@ -58,6 +58,13 @@ describe ViewModel::SapWrapper do
       xml: Samples.xml("SAP-Schema-17.1"),
       unsupported_fields: [],
       different_fields: {
+        heat_demand: {
+          current_space_heating_demand: 30.0,
+          current_water_heating_demand: 60.0,
+          impact_of_cavity_insulation: nil,
+          impact_of_loft_insulation: nil,
+          impact_of_solid_wall_insulation: nil,
+        },
         address_id: "0000000000",
         address: {
           address_id: "0000000000",
