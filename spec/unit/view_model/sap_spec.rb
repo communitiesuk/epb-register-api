@@ -10,6 +10,40 @@ describe ViewModel::SapWrapper do
       different_fields: {},
     },
     {
+      schema_name: "SAP-Schema-17.1",
+      xml: Samples.xml("SAP-Schema-17.1"),
+      unsupported_fields: [],
+      different_fields: {
+        address_id: "0000000000",
+        address: {
+          address_id: "0000000000",
+          address_line1: "1 Some Street",
+          address_line2: "",
+          address_line3: "",
+          address_line4: "",
+          postcode: "A0 0AA",
+          town: "Post-Town1",
+        },
+      },
+    },
+    {
+      schema_name: "SAP-Schema-17.0",
+      xml: Samples.xml("SAP-Schema-17.0"),
+      unsupported_fields: [],
+      different_fields: {
+        address_id: "0000000000",
+        address: {
+          address_id: "0000000000",
+          address_line1: "1 Some Street",
+          address_line2: "",
+          address_line3: "",
+          address_line4: "",
+          postcode: "A0 0AA",
+          town: "Post-Town1",
+        },
+      },
+    },
+    {
       schema_name: "SAP-Schema-NI-18.0.0",
       xml: Samples.xml("SAP-Schema-NI-18.0.0"),
       unsupported_fields: [],
@@ -54,51 +88,17 @@ describe ViewModel::SapWrapper do
       },
     },
     {
-      schema_name: "SAP-Schema-17.1",
-      xml: Samples.xml("SAP-Schema-17.1"),
-      unsupported_fields: [],
-      different_fields: {
-        heat_demand: {
-          current_space_heating_demand: 30.0,
-          current_water_heating_demand: 60.0,
-          impact_of_cavity_insulation: nil,
-          impact_of_loft_insulation: nil,
-          impact_of_solid_wall_insulation: nil,
-        },
-        address_id: "0000000000",
-        address: {
-          address_id: "0000000000",
-          address_line1: "1 Some Street",
-          address_line2: "",
-          address_line3: "",
-          address_line4: "",
-          postcode: "A0 0AA",
-          town: "Post-Town1",
-        },
-      },
-    },
-    {
-      schema_name: "SAP-Schema-17.0",
-      xml: Samples.xml("SAP-Schema-17.0"),
-      unsupported_fields: [],
-      different_fields: {
-        address_id: "0000000000",
-        address: {
-          address_id: "0000000000",
-          address_line1: "1 Some Street",
-          address_line2: "",
-          address_line3: "",
-          address_line4: "",
-          postcode: "A0 0AA",
-          town: "Post-Town1",
-        },
-      },
-    },
-    {
       schema_name: "SAP-Schema-NI-17.4",
       xml: Samples.xml("SAP-Schema-NI-17.4"),
       unsupported_fields: [],
       different_fields: {
+        heat_demand: {
+          current_space_heating_demand: 30.0,
+          current_water_heating_demand: 60.0,
+          impact_of_cavity_insulation: nil,
+          impact_of_loft_insulation: nil,
+          impact_of_solid_wall_insulation: nil,
+        },
         address_id: "0000000000",
         address: {
           address_id: "0000000000",
@@ -108,13 +108,6 @@ describe ViewModel::SapWrapper do
           address_line4: "",
           postcode: "A0 0AA",
           town: "Post-Town1",
-        },
-        heat_demand: {
-          current_space_heating_demand: 30.0,
-          current_water_heating_demand: 60.0,
-          impact_of_cavity_insulation: nil,
-          impact_of_loft_insulation: nil,
-          impact_of_solid_wall_insulation: nil,
         },
         recommended_improvements: [
           {
@@ -153,6 +146,13 @@ describe ViewModel::SapWrapper do
       xml: Samples.xml("SAP-Schema-NI-17.3"),
       unsupported_fields: [],
       different_fields: {
+        heat_demand: {
+          current_space_heating_demand: 30.0,
+          current_water_heating_demand: 60.0,
+          impact_of_cavity_insulation: nil,
+          impact_of_loft_insulation: nil,
+          impact_of_solid_wall_insulation: nil,
+        },
         address_id: "0000000000",
         address: {
           address_id: "0000000000",
@@ -162,13 +162,6 @@ describe ViewModel::SapWrapper do
           address_line4: "",
           postcode: "A0 0AA",
           town: "Post-Town1",
-        },
-        heat_demand: {
-          current_space_heating_demand: 30.0,
-          current_water_heating_demand: 60.0,
-          impact_of_cavity_insulation: nil,
-          impact_of_loft_insulation: nil,
-          impact_of_solid_wall_insulation: nil,
         },
         recommended_improvements: [
           {
