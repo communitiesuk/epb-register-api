@@ -49,6 +49,11 @@
     "api/schemas/xml/RdSAP-Schema-NI-18.0/RdSAP/Templates/RdSAP-Report.xsd",
     "data_path": "api/schemas/data/RdSAP-Schema-NI-18.0.json"
   },
+  "RdSAP-Schema-NI-17.4": {
+    "schema_path":
+    "api/schemas/xml/RdSAP-Schema-NI-17.4/RdSAP/Templates/RdSAP-Report.xsd",
+    "data_path": "api/schemas/data/RdSAP-Schema-NI-17.4.json"
+  },
   "RdSAP-Schema-17.1": {
     "schema_path":
     "api/schemas/xml/RdSAP-Schema-17.1/RdSAP/Templates/RdSAP-Report.xsd",
