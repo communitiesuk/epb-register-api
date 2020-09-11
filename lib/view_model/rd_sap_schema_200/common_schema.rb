@@ -150,11 +150,11 @@ module ViewModel
       end
 
       def potential_carbon_emission
-        xpath(%w[CO2-Emissions-Potential]).to_f
+        convert_to_big_decimal(%w[CO2-Emissions-Potential])
       end
 
       def current_carbon_emission
-        xpath(%w[CO2-Emissions-Current]).to_f
+        convert_to_big_decimal(%w[CO2-Emissions-Current])
       end
 
       def potential_energy_rating
@@ -170,7 +170,7 @@ module ViewModel
       end
 
       def total_floor_area
-        xpath(%w[Property-Summary Total-Floor-Area]).to_f
+        convert_to_big_decimal(%w[Property-Summary Total-Floor-Area])
       end
 
       def dwelling_type
@@ -188,11 +188,11 @@ module ViewModel
       end
 
       def current_space_heating_demand
-        xpath(%w[Space-Heating-Existing-Dwelling]).to_f
+        convert_to_big_decimal(%w[Space-Heating-Existing-Dwelling])
       end
 
       def current_water_heating_demand
-        xpath(%w[Water-Heating]).to_f
+        convert_to_big_decimal(%w[Water-Heating])
       end
 
       def impact_of_cavity_insulation
@@ -271,6 +271,14 @@ module ViewModel
         @xml_doc.search("SAP-Floor-Dimension").select(&:element?).map { |node|
           { total_floor_area: xpath(%w[Total-Floor-Area], node).to_i }
         }.compact
+      end
+
+    private
+
+      def convert_to_big_decimal(node)
+        return unless xpath(node)
+
+        BigDecimal(xpath(node))
       end
     end
   end
