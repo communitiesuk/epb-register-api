@@ -9,8 +9,9 @@ module ViewModel
     ].freeze
     TYPES_OF_RD_SAP = %w[
       RdSAP-Schema-20.0.0
-      RdSAP-Schema-NI-20.0.0
       RdSAP-Schema-19.0
+      RdSAP-Schema-18.0
+      RdSAP-Schema-NI-20.0.0
       RdSAP-Schema-NI-19.0
     ].freeze
     TYPES_OF_SAP = %w[

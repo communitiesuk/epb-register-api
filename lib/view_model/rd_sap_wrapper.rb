@@ -6,10 +6,12 @@ module ViewModel
       case schema_type
       when "RdSAP-Schema-20.0.0"
         @view_model = ViewModel::RdSapSchema200::CommonSchema.new xml
-      when "RdSAP-Schema-NI-20.0.0"
-        @view_model = ViewModel::RdSapSchemaNi200::CommonSchema.new xml
       when "RdSAP-Schema-19.0"
         @view_model = ViewModel::RdSapSchema190::CommonSchema.new xml
+      when "RdSAP-Schema-18.0"
+        @view_model = ViewModel::RdSapSchema180::CommonSchema.new xml
+      when "RdSAP-Schema-NI-20.0.0"
+        @view_model = ViewModel::RdSapSchemaNi200::CommonSchema.new xml
       when "RdSAP-Schema-NI-19.0"
         @view_model = ViewModel::RdSapSchemaNi190::CommonSchema.new xml
       else

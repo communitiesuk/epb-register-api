@@ -10,17 +10,24 @@ describe ViewModel::RdSapWrapper do
       different_fields: {},
     },
     {
-      schema_name: "RdSAP-Schema-NI-20.0.0",
-      xml: Samples.xml("RdSAP-Schema-NI-20.0.0"),
-      unsupported_fields: [],
-      different_fields: {},
-    },
-    {
       schema_name: "RdSAP-Schema-19.0",
       xml: Samples.xml("RdSAP-Schema-19.0"),
       unsupported_fields: [],
       different_fields: {},
       different_buried_fields: { address: { address_id: "0000000000" } },
+    },
+    {
+      schema_name: "RdSAP-Schema-18.0",
+      xml: Samples.xml("RdSAP-Schema-18.0"),
+      unsupported_fields: [],
+      different_fields: {},
+      different_buried_fields: { address: { address_id: "0000000000" } },
+    },
+    {
+      schema_name: "RdSAP-Schema-NI-20.0.0",
+      xml: Samples.xml("RdSAP-Schema-NI-20.0.0"),
+      unsupported_fields: [],
+      different_fields: {},
     },
     {
       schema_name: "RdSAP-Schema-NI-19.0",
