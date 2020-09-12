@@ -222,6 +222,16 @@ describe ViewModel::AcReportWrapper do
                 flag: false, note: nil, recommendations: []
               },
             },
+            heat_exchangers: {
+                condition: { flag: true, note: nil, recommendations: [] }
+            },
+            refrigeration: {
+                leaks: { flag: true, note: nil, recommendations: [] }
+            },
+            fan_rotation: {
+                direction: {flag: true, note: nil, recommendations: []},
+                modulation: {flag: true, note: nil, recommendations: []},
+            }
           },
         },
       ],

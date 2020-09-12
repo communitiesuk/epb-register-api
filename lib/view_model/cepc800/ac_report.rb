@@ -225,6 +225,16 @@ module ViewModel
                 differential_pressure_gauge:
                   extract_yn_flag(node.at("Differential-Pressure-Gauge-OK")),
               },
+              heat_exchangers: {
+                  condition: extract_yn_flag(node.at("Heat-Exchangers-OK"))
+              },
+              refrigeration: {
+                  leaks: extract_yn_flag(node.at("Refrigeration-Leak"))
+              },
+              fan_rotation: {
+                  direction: extract_yn_flag(node.at("Fan-Rotation-OK")),
+                  modulation: extract_yn_flag(node.at("Fan-Modulation-OK")),
+              }
             },
           }
         end
