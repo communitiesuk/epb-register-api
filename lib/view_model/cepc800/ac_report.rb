@@ -183,13 +183,19 @@ module ViewModel
         }
       end
 
-      def extract_yn_flag(node)
-        {
-          flag: node&.at("Flag")&.content == "Yes",
+      def extract_inspection_item(node)
+        inspection_item = {
           note: node&.at("Note")&.content,
           recommendations:
             extract_aci_recommendations(node.search("ACI-Recommendation")),
         }
+
+        flag = node.at("Flag")
+
+        if flag
+          inspection_item[:flag] = flag.content == "Yes"
+        end
+        inspection_item
       end
 
       def air_handling_systems
@@ -219,21 +225,21 @@ module ViewModel
             inspection: {
               filters: {
                 filter_condition:
-                  extract_yn_flag(node.at("Filter-Condition-OK")),
+                  extract_inspection_item(node.at("Filter-Condition-OK")),
                 change_frequency:
-                  extract_yn_flag(node.at("Filter-Change-Frequency-OK")),
+                  extract_inspection_item(node.at("Filter-Change-Frequency-OK")),
                 differential_pressure_gauge:
-                  extract_yn_flag(node.at("Differential-Pressure-Gauge-OK")),
+                  extract_inspection_item(node.at("Differential-Pressure-Gauge-OK")),
               },
               heat_exchangers: {
-                  condition: extract_yn_flag(node.at("Heat-Exchangers-OK"))
+                  condition: extract_inspection_item(node.at("Heat-Exchangers-OK"))
               },
               refrigeration: {
-                  leaks: extract_yn_flag(node.at("Refrigeration-Leak"))
+                  leaks: extract_inspection_item(node.at("Refrigeration-Leak"))
               },
               fan_rotation: {
-                  direction: extract_yn_flag(node.at("Fan-Rotation-OK")),
-                  modulation: extract_yn_flag(node.at("Fan-Modulation-OK")),
+                  direction: extract_inspection_item(node.at("Fan-Rotation-OK")),
+                  modulation: extract_inspection_item(node.at("Fan-Modulation-OK")),
               }
             },
           }
