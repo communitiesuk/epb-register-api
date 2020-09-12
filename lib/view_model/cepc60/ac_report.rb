@@ -154,6 +154,10 @@ module ViewModel
       def air_handling_systems
         []
       end
+
+      def terminal_units
+        []
+      end
     end
   end
 end

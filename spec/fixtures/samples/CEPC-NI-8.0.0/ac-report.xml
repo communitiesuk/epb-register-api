@@ -835,6 +835,57 @@
           </Outdoor-Air-Inlets>
         </ACI-Air-Handling-System-Notes>
       </ACI-Air-Handling-System>
+      <ACI-Terminal-Unit>
+        <System-Number>VOL1/SYS1</System-Number>
+        <System-Identifier>VOL1/SYS1/a</System-Identifier>
+        <System-Component-Identifier>Indoor wall type split which is part of a multi system with 5 indoor units.</System-Component-Identifier>
+        <ACI-Terminal-Unit-Inspection>
+          <Systems-Served>Cooling system</Systems-Served>
+          <Manufacturer>Mitsubishi Electric</Manufacturer>
+          <Year-Installed>2011</Year-Installed>
+          <Location>ICT Suite wall</Location>
+          <Area-Served>ICT Suite</Area-Served>
+          <Discrepancy-Note>None</Discrepancy-Note>
+        </ACI-Terminal-Unit-Inspection>
+        <ACI-Terminal-Unit-Notes>
+          <Pipe-Insulation-OK>
+            <Flag>Yes</Flag>
+          </Pipe-Insulation-OK>
+          <Ductwork-Insulated-OK>
+            <Flag>No</Flag>
+          </Ductwork-Insulated-OK>
+        </ACI-Terminal-Unit-Notes>
+        <ACI-Terminal-Unit-Condition>
+          <Unit-Condition-OK>
+            <Flag>Yes</Flag>
+          </Unit-Condition-OK>
+        </ACI-Terminal-Unit-Condition>
+        <ACI-Terminal-Unit-Grilles>
+          <Air-Flow-Distribution-OK>
+            <Flag>Yes</Flag>
+          </Air-Flow-Distribution-OK>
+          <Air-Flow-Tampering-Issues>
+            <Flag>Yes</Flag>
+          </Air-Flow-Tampering-Issues>
+          <Water-Supply-OK>
+            <Flag>No</Flag>
+          </Water-Supply-OK>
+          <Air-Flow-Issues>
+            <Flag>No</Flag>
+          </Air-Flow-Issues>
+        </ACI-Terminal-Unit-Grilles>
+        <ACI-Terminal-Unit-Diffuser>
+          <Diffuser-Positions-Issues>
+            <Flag>Yes</Flag>
+          </Diffuser-Positions-Issues>
+          <Partitioning-Issues>
+            <Flag>No</Flag>
+          </Partitioning-Issues>
+          <Control-Operation-OK>
+            <Flag>Yes</Flag>
+          </Control-Operation-OK>
+        </ACI-Terminal-Unit-Diffuser>
+      </ACI-Terminal-Unit>
       <ACI-System-Control>
         <Sub-System-ID>Sub-System-ID2</Sub-System-ID>
         <System-Component-Identifier>System-Component-Identifier2</System-Component-Identifier>

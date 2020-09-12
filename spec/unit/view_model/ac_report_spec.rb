@@ -46,6 +46,7 @@ describe ViewModel::AcReportWrapper do
           pre_inspection_checklist: {},
           cooling_plants: [],
           air_handling_systems: [],
+          terminal_units: [],
         },
       },
     ].freeze
@@ -223,23 +224,66 @@ describe ViewModel::AcReportWrapper do
               },
             },
             heat_exchangers: {
-                condition: { flag: true, note: nil, recommendations: [] }
+              condition: { flag: true, note: nil, recommendations: [] },
             },
             refrigeration: {
-                leaks: { flag: true, note: nil, recommendations: [] }
+              leaks: { flag: true, note: nil, recommendations: [] },
             },
             fan_rotation: {
-                direction: {flag: true, note: nil, recommendations: []},
-                modulation: {flag: true, note: nil, recommendations: []},
+              direction: { flag: true, note: nil, recommendations: [] },
+              modulation: { flag: true, note: nil, recommendations: [] },
             },
-            air_leakage: {condition: {note: "No leaks", recommendations: []}},
-            heat_recovery: {energy_conservation: {note: "None", recommendations: []}},
-            outdoor_inlets: {condition: {note: "Diffusers clean", recommendations: []}},
-            fan_control: {setting: {note: "No dampers", recommendations: []}},
+            air_leakage: {
+              condition: { note: "No leaks", recommendations: [] },
+            },
+            heat_recovery: {
+              energy_conservation: { note: "None", recommendations: [] },
+            },
+            outdoor_inlets: {
+              condition: { note: "Diffusers clean", recommendations: [] },
+            },
+            fan_control: {
+              setting: { note: "No dampers", recommendations: [] },
+            },
             fan_power: {
-                condition: {note: nil, flag: true, recommendations: []},
-                sfp_calculation: "464 watts x 70% - 0.311/400 = 8.12 w/ltr."
-            }
+              condition: { note: nil, flag: true, recommendations: [] },
+              sfp_calculation: "464 watts x 70% - 0.311/400 = 8.12 w/ltr.",
+            },
+          },
+        },
+      ],
+      terminal_units: [
+        {
+          equipment: {
+            unit: "VOL1/SYS1",
+            component:
+              "Indoor wall type split which is part of a multi system with 5 indoor units.",
+            description: "VOL1/SYS1/a",
+            cooling_plant: "Cooling system",
+            manufacturer: "Mitsubishi Electric",
+            year_installed: "2011",
+            area_served: "ICT Suite",
+            discrepancy: "None",
+          },
+          inspection: {
+            insulation: {
+              pipework: { note: nil, recommendations: [], flag: true },
+              ductwork: { note: nil, recommendations: [], flag: false },
+            },
+            unit: { condition: { note: nil, recommendations: [], flag: true } },
+            grilles_air_flow: {
+              distribution: { note: nil, recommendations: [], flag: true },
+              tampering: { note: nil, recommendations: [], flag: true },
+              water_supply: { note: nil, recommendations: [], flag: false },
+              complaints: { note: nil, recommendations: [], flag: false },
+            },
+            diffuser_positions: {
+              position_issues: { note: nil, recommendations: [], flag: true },
+              partitioning_issues: {
+                note: nil, recommendations: [], flag: false
+              },
+              control_operation: { note: nil, recommendations: [], flag: true },
+            },
           },
         },
       ],

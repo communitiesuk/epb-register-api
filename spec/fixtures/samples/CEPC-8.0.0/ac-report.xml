@@ -844,264 +844,53 @@
         </ACI-Air-Handling-System-Notes>
       </ACI-Air-Handling-System>
       <ACI-Terminal-Unit>
-        <System-Number>VOL001/SYS001 R410A Inverter Split Systems to Sales Area</System-Number>
-        <System-Identifier>Indoor cassette unit</System-Identifier>
-        <System-Component-Identifier>VOL001/SYS001/TU1 Sales Area Unit 1</System-Component-Identifier>
+        <System-Number>VOL1/SYS1</System-Number>
+        <System-Identifier>VOL1/SYS1/a</System-Identifier>
+        <System-Component-Identifier>Indoor wall type split which is part of a multi system with 5 indoor units.</System-Component-Identifier>
         <ACI-Terminal-Unit-Inspection>
-          <Systems-Served>VOL001/SYS001/CP1 Sampled R410A Inverter Split Area (1)</Systems-Served>
-          <Manufacturer>Mitsubishi</Manufacturer>
-          <Year-Installed>2014</Year-Installed>
-          <Location>Warehouse Area</Location>
-          <Area-Served>Sales Area Unit 1</Area-Served>
-          <Discrepancy-Note>No discrepancy noted between information provided and site observations.</Discrepancy-Note>
+          <Systems-Served>Cooling system</Systems-Served>
+          <Manufacturer>Mitsubishi Electric</Manufacturer>
+          <Year-Installed>2011</Year-Installed>
+          <Location>ICT Suite wall</Location>
+          <Area-Served>ICT Suite</Area-Served>
+          <Discrepancy-Note>None</Discrepancy-Note>
         </ACI-Terminal-Unit-Inspection>
         <ACI-Terminal-Unit-Notes>
           <Pipe-Insulation-OK>
-            <Note>Pipework insulation was considered satisfactory.</Note>
             <Flag>Yes</Flag>
           </Pipe-Insulation-OK>
           <Ductwork-Insulated-OK>
-            <Note>N/A Unit is not ducted type.</Note>
             <Flag>No</Flag>
           </Ductwork-Insulated-OK>
-          <Guidance>
-            <ACI-Recommendation>
-              <Seq-Number>1</Seq-Number>
-              <Code>OTHER</Code>
-              <Text>No recommendation required for the thermal insulation.</Text>
-            </ACI-Recommendation>
-            <ACI-Recommendation>
-              <Seq-Number>2</Seq-Number>
-              <Code>OTHER</Code>
-              <Text>no recommendation required</Text>
-            </ACI-Recommendation>
-          </Guidance>
         </ACI-Terminal-Unit-Notes>
         <ACI-Terminal-Unit-Condition>
           <Unit-Condition-OK>
-            <Note>Filter completely blocked.</Note>
-            <Flag>No</Flag>
-            <Guidance>
-              <ACI-Recommendation>
-                <Seq-Number>1</Seq-Number>
-                <Code>OTHER</Code>
-                <Text>Check PPM maintenance and ensure filters are cleaned during maintenance.
-
-                  Clean filter ASAP.</Text>
-              </ACI-Recommendation>
-            </Guidance>
+            <Flag>Yes</Flag>
           </Unit-Condition-OK>
         </ACI-Terminal-Unit-Condition>
         <ACI-Terminal-Unit-Grilles>
           <Air-Flow-Distribution-OK>
-            <Note>Unit is considered to be suitably located and air distribution from the unit is also considered satisfactory.</Note>
             <Flag>Yes</Flag>
-            <Guidance>
-              <ACI-Recommendation>
-                <Seq-Number>1</Seq-Number>
-                <Code>OTHER</Code>
-                <Text>No recommendation required.</Text>
-              </ACI-Recommendation>
-            </Guidance>
           </Air-Flow-Distribution-OK>
           <Air-Flow-Tampering-Issues>
-            <Note>There were no signs that any opening had been tampered with and the unit appeared satisfactory.</Note>
-            <Flag>No</Flag>
-            <Guidance>
-              <ACI-Recommendation>
-                <Seq-Number>1</Seq-Number>
-                <Code>OTHER</Code>
-                <Text>No recommendation required.</Text>
-              </ACI-Recommendation>
-            </Guidance>
+            <Flag>Yes</Flag>
           </Air-Flow-Tampering-Issues>
           <Water-Supply-OK>
-            <Note>N/A the unit is not of the chilled water type.</Note>
             <Flag>No</Flag>
-            <Guidance>
-              <ACI-Recommendation>
-                <Seq-Number>1</Seq-Number>
-                <Code>OTHER</Code>
-                <Text>No recommendation required.</Text>
-              </ACI-Recommendation>
-            </Guidance>
           </Water-Supply-OK>
           <Air-Flow-Issues>
-            <Note>no records were located onsite to this affect.</Note>
             <Flag>No</Flag>
-            <Guidance>
-              <ACI-Recommendation>
-                <Seq-Number>1</Seq-Number>
-                <Code>OTHER</Code>
-                <Text>Any complaints if they occur should be logged within an operating and maintenance manual for the system.</Text>
-              </ACI-Recommendation>
-            </Guidance>
           </Air-Flow-Issues>
         </ACI-Terminal-Unit-Grilles>
         <ACI-Terminal-Unit-Diffuser>
           <Diffuser-Positions-Issues>
-            <Note>The unit is of the standard manufacturers type and is designed to ensure short circuiting does not occur.</Note>
-            <Flag>No</Flag>
-            <Guidance>
-              <ACI-Recommendation>
-                <Seq-Number>1</Seq-Number>
-                <Code>OTHER</Code>
-                <Text>No recommendation required.</Text>
-              </ACI-Recommendation>
-            </Guidance>
+            <Flag>Yes</Flag>
           </Diffuser-Positions-Issues>
           <Partitioning-Issues>
-            <Note>No partitioning would be considered to be affecting the unit or its perfomrance.</Note>
             <Flag>No</Flag>
-            <Guidance>
-              <ACI-Recommendation>
-                <Seq-Number>1</Seq-Number>
-                <Code>OTHER</Code>
-                <Text>No recommendation required.</Text>
-              </ACI-Recommendation>
-            </Guidance>
           </Partitioning-Issues>
           <Control-Operation-OK>
-            <Note>The control and operation of the unit would be considered satisfactory.</Note>
             <Flag>Yes</Flag>
-            <Guidance>
-              <ACI-Recommendation>
-                <Seq-Number>1</Seq-Number>
-                <Code>OTHER</Code>
-                <Text>No recommendation required.</Text>
-              </ACI-Recommendation>
-            </Guidance>
-          </Control-Operation-OK>
-        </ACI-Terminal-Unit-Diffuser>
-      </ACI-Terminal-Unit>
-      <ACI-Terminal-Unit>
-        <System-Number>VOL001/SYS001 R410A Inverter Split Systems to Sales Area</System-Number>
-        <System-Identifier>Indoor cassette unit</System-Identifier>
-        <System-Component-Identifier>VOL001/SYS001/TU2 Sales Area Unit 2</System-Component-Identifier>
-        <ACI-Terminal-Unit-Inspection>
-          <Systems-Served>VOL001/SYS001/CP2 Sampled R410A Inverter Split Area (2)</Systems-Served>
-          <Manufacturer>Mitsubishi</Manufacturer>
-          <Year-Installed>2014</Year-Installed>
-          <Location>Sales Area Unit 2</Location>
-          <Area-Served>Sales Area Unit 2</Area-Served>
-          <Discrepancy-Note>No discrepancy noted between information provided and site observations.</Discrepancy-Note>
-        </ACI-Terminal-Unit-Inspection>
-        <ACI-Terminal-Unit-Notes>
-          <Pipe-Insulation-OK>
-            <Note>Pipework insulation was considered satisfactory.</Note>
-            <Flag>Yes</Flag>
-          </Pipe-Insulation-OK>
-          <Ductwork-Insulated-OK>
-            <Note>N/A Unit is not ducted type.</Note>
-            <Flag>No</Flag>
-          </Ductwork-Insulated-OK>
-          <Guidance>
-            <ACI-Recommendation>
-              <Seq-Number>1</Seq-Number>
-              <Code>OTHER</Code>
-              <Text>No recommendation required for the thermal insulation.</Text>
-            </ACI-Recommendation>
-            <ACI-Recommendation>
-              <Seq-Number>2</Seq-Number>
-              <Code>OTHER</Code>
-              <Text>no recommendation required</Text>
-            </ACI-Recommendation>
-          </Guidance>
-        </ACI-Terminal-Unit-Notes>
-        <ACI-Terminal-Unit-Condition>
-          <Unit-Condition-OK>
-            <Note>Filter completely blocked.</Note>
-            <Flag>No</Flag>
-            <Guidance>
-              <ACI-Recommendation>
-                <Seq-Number>1</Seq-Number>
-                <Code>OTHER</Code>
-                <Text>Check PPM maintenance and ensure filters are cleaned during maintenance.
-
-                  Clean filter ASAP.</Text>
-              </ACI-Recommendation>
-            </Guidance>
-          </Unit-Condition-OK>
-        </ACI-Terminal-Unit-Condition>
-        <ACI-Terminal-Unit-Grilles>
-          <Air-Flow-Distribution-OK>
-            <Note>Unit is considered to be suitably located and air distribution from the unit is also considered satisfactory.</Note>
-            <Flag>Yes</Flag>
-            <Guidance>
-              <ACI-Recommendation>
-                <Seq-Number>1</Seq-Number>
-                <Code>OTHER</Code>
-                <Text>No recommendation required.</Text>
-              </ACI-Recommendation>
-            </Guidance>
-          </Air-Flow-Distribution-OK>
-          <Air-Flow-Tampering-Issues>
-            <Note>There were no signs that any opening had been tampered with and the unit appeared satisfactory.</Note>
-            <Flag>No</Flag>
-            <Guidance>
-              <ACI-Recommendation>
-                <Seq-Number>1</Seq-Number>
-                <Code>OTHER</Code>
-                <Text>No recommendation required.</Text>
-              </ACI-Recommendation>
-            </Guidance>
-          </Air-Flow-Tampering-Issues>
-          <Water-Supply-OK>
-            <Note>N/A the unit is not of the chilled water type.</Note>
-            <Flag>No</Flag>
-            <Guidance>
-              <ACI-Recommendation>
-                <Seq-Number>1</Seq-Number>
-                <Code>OTHER</Code>
-                <Text>No recommendation required.</Text>
-              </ACI-Recommendation>
-            </Guidance>
-          </Water-Supply-OK>
-          <Air-Flow-Issues>
-            <Note>no records were located onsite to this affect.</Note>
-            <Flag>No</Flag>
-            <Guidance>
-              <ACI-Recommendation>
-                <Seq-Number>1</Seq-Number>
-                <Code>OTHER</Code>
-                <Text>Any complaints if they occur should be logged within an operating and maintenance manual for the system.</Text>
-              </ACI-Recommendation>
-            </Guidance>
-          </Air-Flow-Issues>
-        </ACI-Terminal-Unit-Grilles>
-        <ACI-Terminal-Unit-Diffuser>
-          <Diffuser-Positions-Issues>
-            <Note>The unit is of the standard manufacturers type and is designed to ensure short circuiting does not occur.</Note>
-            <Flag>No</Flag>
-            <Guidance>
-              <ACI-Recommendation>
-                <Seq-Number>1</Seq-Number>
-                <Code>OTHER</Code>
-                <Text>No recommendation required.</Text>
-              </ACI-Recommendation>
-            </Guidance>
-          </Diffuser-Positions-Issues>
-          <Partitioning-Issues>
-            <Note>No partitioning would be considered to be affecting the unit or its perfomrance.</Note>
-            <Flag>No</Flag>
-            <Guidance>
-              <ACI-Recommendation>
-                <Seq-Number>1</Seq-Number>
-                <Code>OTHER</Code>
-                <Text>No recommendation required.</Text>
-              </ACI-Recommendation>
-            </Guidance>
-          </Partitioning-Issues>
-          <Control-Operation-OK>
-            <Note>The control and operation of the unit would be considered satisfactory.</Note>
-            <Flag>Yes</Flag>
-            <Guidance>
-              <ACI-Recommendation>
-                <Seq-Number>1</Seq-Number>
-                <Code>OTHER</Code>
-                <Text>No recommendation required.</Text>
-              </ACI-Recommendation>
-            </Guidance>
           </Control-Operation-OK>
         </ACI-Terminal-Unit-Diffuser>
       </ACI-Terminal-Unit>

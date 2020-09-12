@@ -86,6 +86,7 @@ module ViewModel
         pre_inspection_checklist: @view_model.pre_inspection_checklist,
         cooling_plants: @view_model.cooling_plants,
         air_handling_systems: @view_model.air_handling_systems,
+        terminal_units: @view_model.terminal_units,
       }
     end
 

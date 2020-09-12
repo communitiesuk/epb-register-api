@@ -185,79 +185,132 @@ module ViewModel
 
       def extract_inspection_item(node)
         inspection_item = {
-            note: node&.at("Note")&.content,
-            recommendations:
-                extract_aci_recommendations(node.search("ACI-Recommendation")),
+          note: node&.at("Note")&.content,
+          recommendations:
+            extract_aci_recommendations(node.search("ACI-Recommendation")),
         }
 
         flag = node.at("Flag")
 
-        if flag
-          inspection_item[:flag] = flag.content == "Yes"
-        end
+        inspection_item[:flag] = flag.content == "Yes" if flag
         inspection_item
       end
 
       def air_handling_systems
         @xml_doc.search("ACI-Air-Handling-System").map do |node|
           {
-              equipment: {
-                  unit: node.at("System-Number")&.content,
-                  component: node.at("System-Component-Identifier")&.content,
-                  systems_served:
-                      node.at("ACI-Air-Handling-System-Equipment/Systems-Served")
-                          &.content,
-                  manufacturer:
-                      node.at("ACI-Air-Handling-System-Equipment/Manufacturer")
-                          &.content,
-                  year_installed:
-                      node.at("ACI-Air-Handling-System-Equipment/Year-Installed")
-                          &.content,
-                  location:
-                      node.at("ACI-Air-Handling-System-Equipment/Location")&.content,
-                  areas_served:
-                      node.at("ACI-Air-Handling-System-Equipment/Area-Served")
-                          &.content,
-                  discrepancy:
-                      node.at("ACI-Air-Handling-System-Equipment/Discrepancy-Note")
-                          &.content,
+            equipment: {
+              unit: node.at("System-Number")&.content,
+              component: node.at("System-Component-Identifier")&.content,
+              systems_served:
+                node.at("ACI-Air-Handling-System-Equipment/Systems-Served")
+                  &.content,
+              manufacturer:
+                node.at("ACI-Air-Handling-System-Equipment/Manufacturer")
+                  &.content,
+              year_installed:
+                node.at("ACI-Air-Handling-System-Equipment/Year-Installed")
+                  &.content,
+              location:
+                node.at("ACI-Air-Handling-System-Equipment/Location")&.content,
+              areas_served:
+                node.at("ACI-Air-Handling-System-Equipment/Area-Served")
+                  &.content,
+              discrepancy:
+                node.at("ACI-Air-Handling-System-Equipment/Discrepancy-Note")
+                  &.content,
+            },
+            inspection: {
+              filters: {
+                filter_condition:
+                  extract_inspection_item(node.at("Filter-Condition-OK")),
+                change_frequency:
+                  extract_inspection_item(
+                    node.at("Filter-Change-Frequency-OK"),
+                  ),
+                differential_pressure_gauge:
+                  extract_inspection_item(
+                    node.at("Differential-Pressure-Gauge-OK"),
+                  ),
               },
-              inspection: {
-                  filters: {
-                      filter_condition:
-                          extract_inspection_item(node.at("Filter-Condition-OK")),
-                      change_frequency:
-                          extract_inspection_item(node.at("Filter-Change-Frequency-OK")),
-                      differential_pressure_gauge:
-                          extract_inspection_item(node.at("Differential-Pressure-Gauge-OK")),
-                  },
-                  heat_exchangers: {
-                      condition: extract_inspection_item(node.at("Heat-Exchangers-OK"))
-                  },
-                  refrigeration: {
-                      leaks: extract_inspection_item(node.at("Refrigeration-Leak"))
-                  },
-                  fan_rotation: {
-                      direction: extract_inspection_item(node.at("Fan-Rotation-OK")),
-                      modulation: extract_inspection_item(node.at("Fan-Modulation-OK")),
-                  },
-                  fan_control: {
-                      setting: extract_inspection_item(node.at("Fan-Control-Setting"))
-                  },
-                  heat_recovery: {
-                      energy_conservation: extract_inspection_item(node.at("Energy-Conservation-Features"))
-                  },
-                  air_leakage: {
-                      condition: extract_inspection_item(node.at("Air-Leakage"))
-                  },
-                  outdoor_inlets: {
-                      condition: extract_inspection_item(node.at("Outdoor-Air-Inlets"))
-                  },
-                  fan_power: {
-                      condition: extract_inspection_item(node.at("Fan-Power-OK")),
-                      sfp_calculation: xpath(%w[SFP-Calculation], node)
-                  }
+              heat_exchangers: {
+                condition:
+                  extract_inspection_item(node.at("Heat-Exchangers-OK")),
               },
+              refrigeration: {
+                leaks: extract_inspection_item(node.at("Refrigeration-Leak")),
+              },
+              fan_rotation: {
+                direction: extract_inspection_item(node.at("Fan-Rotation-OK")),
+                modulation:
+                  extract_inspection_item(node.at("Fan-Modulation-OK")),
+              },
+              fan_control: {
+                setting: extract_inspection_item(node.at("Fan-Control-Setting")),
+              },
+              heat_recovery: {
+                energy_conservation:
+                  extract_inspection_item(
+                    node.at("Energy-Conservation-Features"),
+                  ),
+              },
+              air_leakage: {
+                condition: extract_inspection_item(node.at("Air-Leakage")),
+              },
+              outdoor_inlets: {
+                condition:
+                  extract_inspection_item(node.at("Outdoor-Air-Inlets")),
+              },
+              fan_power: {
+                condition: extract_inspection_item(node.at("Fan-Power-OK")),
+                sfp_calculation: xpath(%w[SFP-Calculation], node),
+              },
+            },
+          }
+        end
+      end
+
+      def terminal_units
+        @xml_doc.search("ACI-Terminal-Unit").map do |node|
+          {
+            equipment: {
+              unit: node.at("System-Number")&.content,
+              component: node.at("System-Component-Identifier")&.content,
+              description: node.at("System-Identifier")&.content,
+              cooling_plant: node.at("Systems-Served")&.content,
+              manufacturer: node.at("Manufacturer")&.content,
+              year_installed: node.at("Year-Installed")&.content,
+              area_served: node.at("Area-Served")&.content,
+              discrepancy: node.at("Discrepancy-Note")&.content,
+            },
+            inspection: {
+              insulation: {
+                pipework:
+                  extract_inspection_item(node.at("Pipe-Insulation-OK")),
+                ductwork:
+                  extract_inspection_item(node.at("Ductwork-Insulated-OK")),
+              },
+              unit: {
+                condition: extract_inspection_item(node.at("Unit-Condition-OK")),
+              },
+              grilles_air_flow: {
+                distribution:
+                  extract_inspection_item(node.at("Air-Flow-Distribution-OK")),
+                tampering:
+                  extract_inspection_item(node.at("Air-Flow-Tampering-Issues")),
+                water_supply:
+                  extract_inspection_item(node.at("Water-Supply-OK")),
+                complaints: extract_inspection_item(node.at("Air-Flow-Issues")),
+              },
+              diffuser_positions: {
+                position_issues:
+                  extract_inspection_item(node.at("Diffuser-Positions-Issues")),
+                partitioning_issues:
+                  extract_inspection_item(node.at("Partitioning-Issues")),
+                control_operation:
+                  extract_inspection_item(node.at("Control-Operation-OK")),
+              },
+            },
           }
         end
       end
