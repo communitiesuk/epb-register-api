@@ -830,16 +830,16 @@
             <Flag>Yes</Flag>
           </Refrigeration-Leak>
           <Fan-Control-Setting>
-            <Note></Note>
+            <Note>No dampers</Note>
           </Fan-Control-Setting>
           <Energy-Conservation-Features>
-            <Note></Note>
+            <Note>None</Note>
           </Energy-Conservation-Features>
           <Air-Leakage>
-            <Note></Note>
+            <Note>No leaks</Note>
           </Air-Leakage>
           <Outdoor-Air-Inlets>
-            <Note></Note>
+            <Note>Diffusers clean</Note>
           </Outdoor-Air-Inlets>
         </ACI-Air-Handling-System-Notes>
       </ACI-Air-Handling-System>

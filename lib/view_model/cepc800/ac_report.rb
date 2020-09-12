@@ -240,6 +240,18 @@ module ViewModel
               fan_rotation: {
                   direction: extract_inspection_item(node.at("Fan-Rotation-OK")),
                   modulation: extract_inspection_item(node.at("Fan-Modulation-OK")),
+              },
+              fan_control: {
+                  setting: extract_inspection_item(node.at("Fan-Control-Setting"))
+              },
+              heat_recovery: {
+                  energy_conservation: extract_inspection_item(node.at("Energy-Conservation-Features"))
+              },
+              air_leakage: {
+                  condition: extract_inspection_item(node.at("Air-Leakage"))
+              },
+              outdoor_inlets: {
+                  condition: extract_inspection_item(node.at("Outdoor-Air-Inlets"))
               }
             },
           }

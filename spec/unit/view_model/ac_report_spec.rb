@@ -231,7 +231,11 @@ describe ViewModel::AcReportWrapper do
             fan_rotation: {
                 direction: {flag: true, note: nil, recommendations: []},
                 modulation: {flag: true, note: nil, recommendations: []},
-            }
+            },
+            air_leakage: {condition: {note: "No leaks", recommendations: []}},
+            heat_recovery: {energy_conservation: {note: "None", recommendations: []}},
+            outdoor_inlets: {condition: {note: "Diffusers clean", recommendations: []}},
+            fan_control: {setting: {note: "No dampers", recommendations: []}},
           },
         },
       ],
