@@ -252,6 +252,10 @@ module ViewModel
                   },
                   outdoor_inlets: {
                       condition: extract_inspection_item(node.at("Outdoor-Air-Inlets"))
+                  },
+                  fan_power: {
+                      condition: extract_inspection_item(node.at("Fan-Power-OK")),
+                      sfp_calculation: xpath(%w[SFP-Calculation], node)
                   }
               },
           }

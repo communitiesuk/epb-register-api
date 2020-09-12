@@ -236,6 +236,10 @@ describe ViewModel::AcReportWrapper do
             heat_recovery: {energy_conservation: {note: "None", recommendations: []}},
             outdoor_inlets: {condition: {note: "Diffusers clean", recommendations: []}},
             fan_control: {setting: {note: "No dampers", recommendations: []}},
+            fan_power: {
+                condition: {note: nil, flag: true, recommendations: []},
+                sfp_calculation: "464 watts x 70% - 0.311/400 = 8.12 w/ltr."
+            }
           },
         },
       ],
