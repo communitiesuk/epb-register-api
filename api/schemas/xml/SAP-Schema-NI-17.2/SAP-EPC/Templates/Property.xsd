@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="DCLG-SAP09" xmlns:SAP09="DCLG-SAP09" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="DCLG-SAP09" elementFormDefault="qualified" version="LIG-NI-17.2">
+	<xs:element name="Property" type="Property"/>
+	<xs:complexType name="Property">
+		<xs:annotation>
+			<xs:documentation>A discrete identifiable possession, such as a piece of real-estate, to which its owner has legal title. For the Home Information Pack legislation the types of property are restricted to residential properties. 
+
+It should be observed that "a property is a property is a property" and all real-estate properties, whether residential or commercial or whether being sold for the first or the nth time will have a very similar conceptual structure and similar rules and constraints. 
+
+As such the broad description of a Property can be regarded as a framework, containing a set of extension points, that can be expanded as necessary to cover additional detail.
+</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Address" type="AddressType">
+				<xs:annotation>
+					<xs:documentation>Address for the property.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="UPRN" type="UPRNType">
+				<xs:annotation>
+					<xs:documentation>Unique Property Reference Number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="AddressType" type="AddressType"/>
+	<xs:complexType name="AddressType">
+		<xs:annotation>
+			<xs:documentation>An address is composed of a number of structured elements such as Postcode, Post-Town, Street etc.
+
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Address-Line-1" type="xs:string" minOccurs="0"/>
+			<xs:element name="Address-Line-2" type="xs:string" minOccurs="0"/>
+			<xs:element name="Address-Line-3" type="xs:string" minOccurs="0"/>
+			<xs:element name="Post-Town" type="xs:string"/>
+			<xs:element name="Postcode" type="PostcodeType">
+				<xs:annotation>
+					<xs:documentation>The Postcode for the Address
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="UPRNType">
+		<xs:annotation>
+			<xs:documentation>Unique Property Reference Number - a 10-digit numeric string unmiquely identifuying each Property that may have a HCR registered against it.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]{10}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PostcodeType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{1,2}[0-9R][0-9A-Z]? [0-9][A-Z]{2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="PropertyKeyFields" type="PropertyKeyFields"/>
+	<xs:complexType name="PropertyKeyFields">
+		<xs:annotation>
+			<xs:documentation>This is the primary key definition for the Property class - used when a message requires a reference to a Property to be passed rather than the details.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="UPRN" type="UPRNType"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

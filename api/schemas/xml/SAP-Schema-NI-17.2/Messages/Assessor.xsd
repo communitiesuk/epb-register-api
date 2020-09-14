@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:HIP="DCLG-HIP"
+	xmlns="http://www.epbniregister.com" targetNamespace="http://www.epbniregister.com"
+	elementFormDefault="qualified" version="LIG-NI-17.2">
+	<xs:annotation>
+		<xs:documentation>© Department of Communities and Local Government. © Crown copyright, 2007. The Home Condition Report logo and associated wording is a registered trade mark - any unlicensed use is not permitted. Copyright in the typographical arrangement of this document rests with the Crown. This publication, excluding logos, may be reproduced free of charge in any format or medium for research, private study, for internal circulation within an organisation or by registered scheme users. This is subject to it being reproduced accurately and not used in a misleading context.</xs:documentation>
+	</xs:annotation>
+	<xs:import namespace="DCLG-HIP" schemaLocation="../Templates/UserManagement.xsd"/>
+	<xs:element name="Assessor" type="Assessor"/>
+	<xs:element name="Assessors" type="Assessors"/>
+	<xs:element name="Upload" type="Upload"/>
+	<xs:complexType name="Assessor">
+		<xs:sequence>
+			<xs:element name="Name" type="Name"/>
+			<xs:element name="Display-Name" type="xs:string" minOccurs="0"/>
+			<xs:element name="Address" type="HIP:AddressType"/>
+			<xs:element name="Date-Of-Birth" type="xs:date"/>
+			<xs:element name="E-Mail" type="xs:string"/>
+			<xs:element name="Telephone" type="HIP:PhoneNumberType"/>
+			<xs:element name="Assessor-ID" type="AssessorIDType"/>
+			<xs:element name="Qualifications" type="Qualifications"/>
+			<xs:element name="Company" type="Company" minOccurs="0"/>
+			<xs:element name="Base-Postcode-Location" type="HIP:PostcodeType" minOccurs="0"/>
+			<xs:element name="Postcode-Coverage" type="Postcode-Coverage" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Assessors">
+		<xs:sequence>
+			<xs:element name="Assessor" type="Assessor" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Name">
+		<xs:sequence>
+			<xs:element name="Prefix" type="xs:string" minOccurs="0"/>
+			<xs:element name="First-Name">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Middle-Names">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Surname">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="1"/>
+						<xs:whiteSpace value="collapse"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Suffix" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Qualification">
+		<xs:sequence>
+			<xs:element name="Type" type="QualificationTypeCode"/>
+			<xs:element name="Status" type="AssessorStatusCode"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Qualifications">
+		<xs:sequence>
+			<xs:element name="Qualification" type="Qualification" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Company">
+		<xs:sequence>
+			<xs:element name="Name" type="xs:string" minOccurs="0"/>
+			<xs:element name="Registration-Number" type="xs:string" minOccurs="0"/>
+			<xs:element name="Address" type="HIP:AddressType" minOccurs="0"/>
+			<xs:element name="Web-Site" type="xs:string" minOccurs="0"/>
+			<xs:element name="E-Mail" type="xs:string" minOccurs="0"/>
+			<xs:element name="Fax" type="HIP:PhoneNumberType" minOccurs="0"/>
+			<xs:element name="Telephone" type="HIP:PhoneNumberType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Postcode-Coverage">
+		<xs:sequence>
+			<xs:element name="Postcode-District" type="Postcode-District" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="Postcode-District">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{1,2}[0-9]{0,2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AssessorStatusCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Inactive">
+				<xs:annotation>
+					<xs:documentation>Inactive</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Registered">
+				<xs:annotation>
+					<xs:documentation>Registered</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Struck-Off">
+				<xs:annotation>
+					<xs:documentation>Struck Off</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Suspended">
+				<xs:annotation>
+					<xs:documentation>Suspended</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AssessorIDType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="10"/>
+			<xs:maxLength value="10"/>
+			<xs:pattern value="[A-Z/_]{4}[0-9]{6}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="QualificationTypeCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="RdSAP">
+				<xs:annotation>
+					<xs:documentation>RdSAP</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SAP">
+				<xs:annotation>
+					<xs:documentation>SAP</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="Upload">
+		<xs:sequence>
+			<xs:element name="Upload-ID" type="xs:long"/>
+			<xs:element name="Status" type="xs:string"/>
+			<xs:element name="Start-Date-Time" type="xs:dateTime"/>
+			<xs:element name="End-Date-Time" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Upload-Count" type="xs:int" minOccurs="0"/>
+			<xs:element name="Intact-Count" type="xs:int" minOccurs="0"/>
+			<xs:element name="Insert-Count" type="xs:int" minOccurs="0"/>
+			<xs:element name="Update-Count" type="xs:int" minOccurs="0"/>
+			<xs:element name="Delete-Count" type="xs:int" minOccurs="0"/>
+			<xs:element name="Error" type="Upload-Error" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Upload-Error">
+		<xs:sequence>
+			<xs:element name="Assessor-ID" type="AssessorIDType" minOccurs="0"/>
+			<xs:element name="Line-Number" type="xs:int" minOccurs="0"/>
+			<xs:element name="Column-Number" type="xs:int" minOccurs="0"/>
+			<xs:element name="Message" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
