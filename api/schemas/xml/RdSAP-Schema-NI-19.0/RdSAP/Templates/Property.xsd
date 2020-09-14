@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns="https://epbr.digital.communities.gov.uk/xsd/rdsap" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="https://epbr.digital.communities.gov.uk/xsd/rdsap" elementFormDefault="qualified" version="NI-19.0">
+<xs:schema xmlns="http://www.epbniregister.com/xsd/rdsap" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.epbniregister.com/xsd/rdsap" elementFormDefault="qualified" attributeFormDefault="unqualified" version="LIG-NI-19.0">
 	<xs:element name="Property" type="Property"/>
 	<xs:complexType name="Property">
 		<xs:annotation>
@@ -50,7 +50,7 @@ A District is an optional sub-part of the Post Town e.g. "Kings Heath" in "Birmi
 			<xs:documentation>Unique Property Reference Number</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:pattern value="UPRN-[0-9]{10,12}|RRN-[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}"/>
+			<xs:pattern value="[0-9]{10}"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="PostcodeType">
