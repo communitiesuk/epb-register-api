@@ -334,6 +334,13 @@ describe ViewModel::AcReportWrapper do
               ],
               flag: true,
             },
+            set_temperature: {
+                note: "The set temperature on local controller; 18 deg C",
+                recommendations: [
+                    {sequence: "1",
+                     text: "Ensure staff are educated to run AC systems for comfort and efficiency by setting the AC system temperature to circa 22 deg C +/- 1 deg C."}
+                ]
+            },
             dead_band: {
               note:
                 "System dead-bands for the indoor unit are set at manufacture stage, these are considered satisfactory.",

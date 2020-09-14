@@ -327,6 +327,7 @@ module ViewModel
               timer_shortfall:
                 extract_inspection_item(node.at("Timer-Shortfall")),
               sensors: extract_inspection_item(node.at("Sensors-Appropriate")),
+              set_temperature: extract_inspection_item(node.at("Set-Temperature")),
               dead_band: extract_inspection_item(node.at("Dead-Band-Set")),
               capacity: extract_inspection_item(node.at("Equipment-Capacity")),
               airflow: extract_inspection_item(node.at("Airflow-Modulation")),
