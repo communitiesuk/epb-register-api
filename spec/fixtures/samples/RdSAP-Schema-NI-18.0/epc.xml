@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RdSAP-Report xmlns="https://epbr.digital.communities.gov.uk/xsd/rdsap" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/rdsap ../../../../api/schemas/xml/RdSAP-Schema-NI-18.0/RdSAP/Templates/RdSAP-Report.xsd">
+<RdSAP-Report xmlns="http://www.epbniregister.com/xsd/rdsap"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://www.epbniregister.com/xsd/rdsap ../../../../api/schemas/xml/RdSAP-Schema-NI-18.0/RdSAP/Templates/RdSAP-Report.xsd">
     <Calculation-Software-Name>Calculation-Software-Name0</Calculation-Software-Name>
     <Calculation-Software-Version>Calculation-Software-Version0</Calculation-Software-Version>
     <User-Interface-Name>User-Interface-Name0</User-Interface-Name>
@@ -7,10 +9,6 @@
     <Schema-Version-Original>Schema-Version-Original0</Schema-Version-Original>
     <SAP-Version>9.80</SAP-Version>
     <PCDF-Revision-Number>PCDF-Revision-Number0</PCDF-Revision-Number>
-    <Previous-EPC-Check>
-        <Previous-EPC-Checked>Y</Previous-EPC-Checked>
-        <Previous-EPC-Exists>Y</Previous-EPC-Exists>
-    </Previous-EPC-Check>
     <Energy-Assessment>
         <Property-Summary>
             <Wall>
@@ -282,7 +280,7 @@
                 <Post-Town>Post-Town1</Post-Town>
                 <Postcode>A0 0AA</Postcode>
             </Address>
-            <UPRN>UPRN-000000000000</UPRN>
+            <UPRN>0000000000</UPRN>
         </Property>
         <Related-Party-Disclosure>
           <Related-Party-Disclosure-Text>Related-Party-Disclosure-Text0</Related-Party-Disclosure-Text>
