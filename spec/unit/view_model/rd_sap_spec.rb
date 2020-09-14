@@ -24,6 +24,13 @@ describe ViewModel::RdSapWrapper do
       different_buried_fields: { address: { address_id: "0000000000" } },
     },
     {
+      schema_name: "RdSAP-Schema-17.1",
+      xml: Samples.xml("RdSAP-Schema-17.1"),
+      unsupported_fields: [],
+      different_fields: {},
+      different_buried_fields: { address: { address_id: "0000000000" } },
+    },
+    {
       schema_name: "RdSAP-Schema-17.0",
       xml: Samples.xml("RdSAP-Schema-17.0"),
       unsupported_fields: [],

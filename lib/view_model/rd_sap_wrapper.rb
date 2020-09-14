@@ -10,6 +10,8 @@ module ViewModel
         @view_model = ViewModel::RdSapSchema190::CommonSchema.new xml
       when "RdSAP-Schema-18.0"
         @view_model = ViewModel::RdSapSchema180::CommonSchema.new xml
+      when "RdSAP-Schema-17.1"
+        @view_model = ViewModel::RdSapSchema171::CommonSchema.new xml
       when "RdSAP-Schema-17.0"
         @view_model = ViewModel::RdSapSchema170::CommonSchema.new xml
       when "RdSAP-Schema-NI-20.0.0"
