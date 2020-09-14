@@ -17,6 +17,7 @@ module ViewModel
       RdSAP-Schema-NI-19.0
       RdSAP-Schema-NI-18.0
       RdSAP-Schema-NI-17.4
+      RdSAP-Schema-NI-17.3
     ].freeze
     TYPES_OF_SAP = %w[
       SAP-Schema-18.0.0

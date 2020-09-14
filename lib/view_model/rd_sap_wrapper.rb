@@ -22,6 +22,8 @@ module ViewModel
         @view_model = ViewModel::RdSapSchemaNi180::CommonSchema.new xml
       when "RdSAP-Schema-NI-17.4"
         @view_model = ViewModel::RdSapSchemaNi174::CommonSchema.new xml
+      when "RdSAP-Schema-NI-17.3"
+        @view_model = ViewModel::RdSapSchemaNi173::CommonSchema.new xml
       else
         raise ArgumentError, "Unsupported schema type"
       end
