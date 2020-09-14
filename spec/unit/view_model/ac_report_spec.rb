@@ -47,6 +47,7 @@ describe ViewModel::AcReportWrapper do
           cooling_plants: [],
           air_handling_systems: [],
           terminal_units: [],
+          system_controls: [],
         },
       },
     ].freeze
@@ -287,6 +288,7 @@ describe ViewModel::AcReportWrapper do
           },
         },
       ],
+      system_controls: [{:sub_system_id=>"VOL001/SYS001 R410A Inverter Split Systems to Sales Area", :component=>"VOL001/SYS001/SC1 AC Local Controller to Sales Area Unit 1", :inspection=>{:zoning=>{:note=>"Local Controller\n\n            Zoning is considered satisfactory as systems are linked to single controller.", :recommendations=>[{:sequence=>"1", :text=>"Where an area/room has more than one AC system installed that have separate controllers; it should be ensured that AC systems are set to the same set point temperature and mode (heating/cooling/auto)."}], :flag=>true}, :time=>{:note=>"Time/date on the local controller is not used as Central controller timeclock controls the units.", :recommendations=>[{:sequence=>"1", :text=>"No recommendation required."}]}, :set_on_period=>{:note=>"N/A Central controller timeclock controls the units.", :recommendations=>[{:sequence=>"1", :text=>"No recommendation required"}]}, :timer_shortfall=>{:note=>"There is no shortfall in controller capabilities.", :recommendations=>[{:sequence=>"1", :text=>"No recommendation required."}], :flag=>false}, :sensors=>{:note=>"Sensors are considered satisfactory.", :recommendations=>[{:sequence=>"1", :text=>"No recommendation required."}], :flag=>true}, :dead_band=>{:note=>"System dead-bands for the indoor unit are set at manufacture stage, these are considered satisfactory.", :recommendations=>[{:sequence=>"1", :text=>"There were LPHW ceiling heaters within the same zones as AC systems and it was unclear from the BMS panel whether interlocks were provided between the systems to prevent both operating simultaneously. This should be investigated at head office were the BMS is set from and ensure that the AC systems do not operate at the same time as the heating and that adequate dead-bands are configured between the systems."}]}, :capacity=>{:note=>"", :recommendations=>[{:sequence=>"1", :text=>"No recommendation required."}], :flag=>true}, :airflow=>{:note=>"N/A Unit is not ducted type", :recommendations=>[{:sequence=>"1", :text=>"Considered satisfactory, no recommendation required."}]}, :guidance_controls=>{:note=>"Provision of Guidance notices would be useful.", :recommendations=>[{:sequence=>"1", :text=>"Consider providing ‘Good Practise Guideline’ notices (laminated sheet adjacent each AC controller) including ‘simple step’ recommendations on how to operate the systems efficiently."}], :flag=>false}}}],
     }.freeze
 
     it "should read the appropriate values from the XML doc" do

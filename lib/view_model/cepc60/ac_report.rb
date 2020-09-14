@@ -158,6 +158,10 @@ module ViewModel
       def terminal_units
         []
       end
+
+      def system_controls
+        []
+      end
     end
   end
 end

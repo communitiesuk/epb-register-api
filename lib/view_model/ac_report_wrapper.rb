@@ -87,6 +87,7 @@ module ViewModel
         cooling_plants: @view_model.cooling_plants,
         air_handling_systems: @view_model.air_handling_systems,
         terminal_units: @view_model.terminal_units,
+        system_controls: @view_model.system_controls,
       }
     end
 

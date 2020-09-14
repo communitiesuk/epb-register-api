@@ -887,66 +887,115 @@
         </ACI-Terminal-Unit-Diffuser>
       </ACI-Terminal-Unit>
       <ACI-System-Control>
-        <Sub-System-ID>Sub-System-ID2</Sub-System-ID>
-        <System-Component-Identifier>System-Component-Identifier2</System-Component-Identifier>
+        <Sub-System-ID>VOL001/SYS001 R410A Inverter Split Systems to Sales Area</Sub-System-ID>
+        <System-Component-Identifier>VOL001/SYS001/SC1 AC Local Controller to Sales Area Unit 1</System-Component-Identifier>
         <Zoning-Assessment>
+          <Note>Local Controller
+
+            Zoning is considered satisfactory as systems are linked to single controller.</Note>
           <Flag>Yes</Flag>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text>Where an area/room has more than one AC system installed that have separate controllers; it should be ensured that AC systems are set to the same set point temperature and mode (heating/cooling/auto).</Text>
+            </ACI-Recommendation>
+          </Guidance>
         </Zoning-Assessment>
         <Current-Indicated-Time>
-          <Note>Note2</Note>
+          <Note>Time/date on the local controller is not used as Central controller timeclock controls the units.</Note>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text>No recommendation required.</Text>
+            </ACI-Recommendation>
+          </Guidance>
         </Current-Indicated-Time>
         <Set-On-Period>
-          <Note>Note3</Note>
+          <Note>N/A Central controller timeclock controls the units.</Note>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text>No recommendation required</Text>
+            </ACI-Recommendation>
+          </Guidance>
         </Set-On-Period>
         <Timer-Shortfall>
-          <Flag>Yes</Flag>
+          <Note>There is no shortfall in controller capabilities.</Note>
+          <Flag>No</Flag>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text>No recommendation required.</Text>
+            </ACI-Recommendation>
+          </Guidance>
         </Timer-Shortfall>
         <Sensors-Appropriate>
+          <Note>Sensors are considered satisfactory.</Note>
           <Flag>Yes</Flag>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text>No recommendation required.</Text>
+            </ACI-Recommendation>
+          </Guidance>
         </Sensors-Appropriate>
         <Set-Temperature>
-          <Note>Note4</Note>
+          <Note>The set temperature on local controller; 18 deg C</Note>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text>Ensure staff are educated to run AC systems for comfort and efficiency by setting the AC system temperature to circa 22 deg C +/- 1 deg C.</Text>
+            </ACI-Recommendation>
+          </Guidance>
         </Set-Temperature>
         <Use-Guidance-Or-Controls>
-          <Flag>Yes</Flag>
+          <Note>Provision of Guidance notices would be useful.</Note>
+          <Flag>No</Flag>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text>Consider providing ‘Good Practise Guideline’ notices (laminated sheet adjacent each AC controller) including ‘simple step’ recommendations on how to operate the systems efficiently.</Text>
+            </ACI-Recommendation>
+          </Guidance>
         </Use-Guidance-Or-Controls>
         <Dead-Band-Set>
-          <Note>Note5</Note>
+          <Note>System dead-bands for the indoor unit are set at manufacture stage, these are considered satisfactory.</Note>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text>There were LPHW ceiling heaters within the same zones as AC systems and it was unclear from the BMS panel whether interlocks were provided between the systems to prevent both operating simultaneously. This should be investigated at head office were the BMS is set from and ensure that the AC systems do not operate at the same time as the heating and that adequate dead-bands are configured between the systems.</Text>
+            </ACI-Recommendation>
+          </Guidance>
         </Dead-Band-Set>
         <Equipment-Capacity>
+          <Note />
           <Flag>Yes</Flag>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text>No recommendation required.</Text>
+            </ACI-Recommendation>
+          </Guidance>
         </Equipment-Capacity>
-      </ACI-System-Control>
-      <ACI-System-Control>
-        <Sub-System-ID>Sub-System-ID3</Sub-System-ID>
-        <System-Component-Identifier>System-Component-Identifier3</System-Component-Identifier>
-        <Zoning-Assessment>
-          <Flag>Yes</Flag>
-        </Zoning-Assessment>
-        <Current-Indicated-Time>
-          <Note>Note6</Note>
-        </Current-Indicated-Time>
-        <Set-On-Period>
-          <Note>Note7</Note>
-        </Set-On-Period>
-        <Timer-Shortfall>
-          <Flag>Yes</Flag>
-        </Timer-Shortfall>
-        <Sensors-Appropriate>
-          <Flag>Yes</Flag>
-        </Sensors-Appropriate>
-        <Set-Temperature>
-          <Note>Note8</Note>
-        </Set-Temperature>
-        <Use-Guidance-Or-Controls>
-          <Flag>Yes</Flag>
-        </Use-Guidance-Or-Controls>
-        <Dead-Band-Set>
-          <Note>Note9</Note>
-        </Dead-Band-Set>
-        <Equipment-Capacity>
-          <Flag>Yes</Flag>
-        </Equipment-Capacity>
+        <Airflow-Modulation>
+          <Note>N/A Unit is not ducted type</Note>
+          <Guidance>
+            <ACI-Recommendation>
+              <Seq-Number>1</Seq-Number>
+              <Code>OTHER</Code>
+              <Text>Considered satisfactory, no recommendation required.</Text>
+            </ACI-Recommendation>
+          </Guidance>
+        </Airflow-Modulation>
       </ACI-System-Control>
     </Air-Conditioning-Inspection-Report>
   </Report>
