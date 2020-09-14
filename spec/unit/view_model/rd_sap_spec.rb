@@ -56,6 +56,13 @@ describe ViewModel::RdSapWrapper do
       different_fields: {},
       different_buried_fields: { address: { address_id: "0000000000" } },
     },
+    {
+      schema_name: "RdSAP-Schema-NI-17.4",
+      xml: Samples.xml("RdSAP-Schema-NI-17.4"),
+      unsupported_fields: [],
+      different_fields: {},
+      different_buried_fields: { address: { address_id: "0000000000" } },
+    },
   ].freeze
 
   # You should only need to add to this list to test new fields on all CEPC schema
