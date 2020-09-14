@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="DCLG-HIP" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pfdt="DCLG-HIP/BaseDataTypes" xmlns:HIP="DCLG-HIP" targetNamespace="DCLG-HIP" elementFormDefault="qualified" version="LIG-16.3">
+	<xs:annotation>
+		<xs:documentation>© Department of Communities and Local Government. © Crown copyright, 2007. The Home Condition Report logo and associated wording is a registered trade mark - any unlicensed use is not permitted. Copyright in the typographical arrangement of this document rests with the Crown. This publication, excluding logos, may be reproduced free of charge in any format or medium for research, private study, for internal circulation within an organisation or by registered scheme users. This is subject to it being reproduced accurately and not used in a misleading context. </xs:documentation>
+	</xs:annotation>
+	<xs:import namespace="DCLG-HIP/BaseDataTypes" schemaLocation="../UDT/BaseDataTypes.xsd"/>
+	<xs:include schemaLocation="../UDT/SharedDomains.xsd"/>
+	<xs:include schemaLocation="../UDT/HCR-Domains.xsd"/>
+	<xs:element name="Property-Details" type="Property-Details"/>
+	<xs:complexType name="Property-Details">
+		<xs:all>
+			<xs:element name="Building-Condition" type="BuildingConditionCode">
+				<xs:annotation>
+					<xs:documentation>Identifies the condition of the building at the time of inspection</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Built-Form" type="BuiltFormCode">
+				<xs:annotation>
+					<xs:documentation>The building type of the Property e.g. Detached, Semi-Detached, Terrace etc.
+
+Together with the Property Type, the Build Form produces a structured description of the property.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Conservation-Area" type="ConservationAreaTypeCode">
+				<xs:annotation>
+					<xs:documentation>Indicates that the Property is in a conservation area. 
+
+Within a conservation area restrictions may be imposed on a property so that the property remains in keeping with other properties in the surrounding area.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Construction-Year" type="xs:gYear">
+				<xs:annotation>
+					<xs:documentation>The original construction date of the property. This should generally be the construction date of the Main Building but can be earlier in some cases where the main building has been reconstructed.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Conversion-Year" type="xs:gYear" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The Year that the Property was converted to residential use.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Converted-Property" type="pfdt:Flag">
+				<xs:annotation>
+					<xs:documentation>Indicates that the Property was been converted to residential use.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Furnishing" type="FurnishedCode">
+				<xs:annotation>
+					<xs:documentation>Indicates how the Property is (or was) furnished at the time the inspection took place.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Identifier" type="xs:string" minOccurs="0"/>
+			<xs:element name="Floor-Area" type="pfdt:Measurement">
+				<xs:annotation>
+					<xs:documentation>The gross floor area of the habitable area measured in square metres. For a House or Bungalow this is the external floor area of the main building and for a Flat or Maisonette this is the internal floor area.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Listed-Grade" type="ListedGradeCode">
+				<xs:annotation>
+					<xs:documentation>Grade of listed building. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Measurement-Type" type="MeasurementTypeCode">
+				<xs:annotation>
+					<xs:documentation>Indicates the type of measurements taken to calculate floor areas e.g. "Internal" or "External"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Occupancy" type="OccupancyCode">
+				<xs:annotation>
+					<xs:documentation>Identifies the type of occupancy (if any) of the Property at the time of inspection.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Property-Type" type="PropertyTypeCode">
+				<xs:annotation>
+					<xs:documentation>Describes the type of property such as House, Flat, Mansion, Maisonette etc.
+
+This is actually the type differentiator for Property but only a limited number of property types, notably Apartment and Apartment Block, have any specific characteristics and warrant their own definition.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Tenancy-Area" type="pfdt:Flag">
+				<xs:annotation>
+					<xs:documentation>Indicates that the Property is located in an area occupied primarily by Tenants rather than Property Owners.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Tenant-Occupied" type="TenancyOccupancyCode">
+				<xs:annotation>
+					<xs:documentation>Indicates that there are indications of tenants living in the property.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Reinstatement-Estimate" type="pfdt:Money">
+				<xs:annotation>
+					<xs:documentation>The estimated cost of rebuilding the Property.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Flat-Details" type="Flat-Details" minOccurs="0"/>
+			<xs:element name="Accommodation" type="Accommodation"/>
+			<xs:element name="Building-Parts" type="Building-Parts"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Further-Investigations" type="Further-Investigations"/>
+	<xs:complexType name="Further-Investigations">
+		<xs:annotation>
+			<xs:documentation>Part of a Home Condition Report describing further investigations that the Home Inspector believes should be carried out in order to resolve issues and concerns the Home Inspector has regarding the condition of the property. 
+
+May be the result of not being able to inspect some part of the property, such as unable to gain access to the roof space or water supply was turned off, whose condition is significant for valuing the property.
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="Investigation" type="Investigation" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Flat-Details" type="Flat-Details"/>
+	<xs:complexType name="Flat-Details">
+		<xs:all>
+			<xs:element name="Purpose-Built" type="pfdt:Flag">
+				<xs:annotation>
+					<xs:documentation>Was the Apartment Block purpose built or was it converted.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Flat-Location" type="BlockStoreyCode">
+				<xs:annotation>
+					<xs:documentation>Identifies the storey within the block that the entrance to the flat is located on</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Storey-Count" type="pfdt:Count">
+				<xs:annotation>
+					<xs:documentation>The number of Storeys in the Apartment Block.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Total-Apartments" type="pfdt:Count">
+				<xs:annotation>
+					<xs:documentation>Number of Apartments in the Apartment Block</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Lift-Exists" type="pfdt:Flag">
+				<xs:annotation>
+					<xs:documentation>Indicates that a Lift is installed in the Apartment Block</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Access-Location" type="FlatAccessLocationTypeCode">
+				<xs:annotation>
+					<xs:documentation>The location of the access to the flat within the block of flats.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Access-Type" type="FlatAccessTypeCode"/>
+			<xs:element name="Shared-Facilities" type="pfdt:Flag">
+				<xs:annotation>
+					<xs:documentation>Indicates whether there are shared leisure facilities within the block of flats</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Commercial-Use-Exists" type="pfdt:Flag">
+				<xs:annotation>
+					<xs:documentation>Indicates that part of all of the Apartment Block is used for commercial purposes</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Commercial-Use-Percent" type="CommercialUseCode">
+				<xs:annotation>
+					<xs:documentation>Estimated range of the percentage of the Apartment Block put over to commercial use.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Commercial-Use-Sector" type="CommercialUseSectorCode">
+				<xs:annotation>
+					<xs:documentation>The Storey within the Apartment Block where the commercial enterprise is located. If there are multiple locations then each distinct storey is recorded.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Commercial-Use-Type" type="CommercialUseTypeCode">
+				<xs:annotation>
+					<xs:documentation>Identifies the general type of commercial use present in the block of flats e.g. shops or industrial units</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Structural-Concerns" type="Structural-Concerns"/>
+	<xs:complexType name="Structural-Concerns">
+		<xs:annotation>
+			<xs:documentation>A summary, at the very highest level, of the Home Inspectors overall opinion about the condition of the inspected Property and any remarks the Home Inspector wishes to make about condition, defects, subsidence etc.</xs:documentation>
+		</xs:annotation>
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="Trees-On-Clay" type="Trees-On-Clay" minOccurs="0"/>
+			<xs:element name="Structural-Repair" type="Structural-Repair" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Structural-Movement" type="Structural-Movement" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:element name="Building-Part" type="Building-Part"/>
+	<xs:complexType name="Building-Part">
+		<xs:annotation>
+			<xs:documentation>A permanent structure that forms part of the Property and is built primarily for human habitation. A Building is usually made up of one or more Storey's and may contain a number of Internal Structural Features. An extension would be a Building Part.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Building-Type" type="BuildingTypeCode">
+				<xs:annotation>
+					<xs:documentation>Indicates the type of building e.g. Main Building, Extension etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Identifier" type="pfdt:IDString">
+				<xs:annotation>
+					<xs:documentation>Identifier for the Building part - generally only required if there are more that one Building Parts of the same type e.g. "West Wing" and "East Wing" Extensions</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Construction-Year" type="xs:gYear">
+				<xs:annotation>
+					<xs:documentation>The approximate date the building was erected as a 4-digit year e.g. 1900  etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Roof-Type" type="RoofTypeCode">
+				<xs:annotation>
+					<xs:documentation>Describes the type of roof on the Building Part e.g. Flat, Sloping</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Roof-Construction" type="RoofConstructionCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Describes the material that the roof of the Building Part is constructed from e.g. Tile, Slate etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Wall-Construction" type="WallConstructionCode"/>
+			<xs:element name="Single-Leaf-Present" type="pfdt:Flag">
+				<xs:annotation>
+					<xs:documentation>Indicates that 100 mm Single Leaf Brickwork is present in the Building Part.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Floor-Construction" type="FloorConstructionCode"/>
+			<xs:element name="Window-Construction" type="WindowConstructionCode"/>
+			<xs:element name="System-Name" type="ConstructionSystemCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Describes the name of the system used to build the Property. This is only required if the Wall-Construction is "System Built" otherwise not populated.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Is-Defective-System" type="pfdt:Flag" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indicates that the type of system used to construct the property is designated as being defective under the "Housing Defects Act 1984". Only required if System-Name is populated.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Storey" type="Storey"/>
+	<xs:complexType name="Storey">
+		<xs:annotation>
+			<xs:documentation>A structure consisting of a room or set of rooms comprising a single level of a multilevel building; </xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Bathroom-Count" type="pfdt:Count">
+				<xs:annotation>
+					<xs:documentation>Number of Bathrooms in this Storey of the Property</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Bedroom-Count" type="pfdt:Count">
+				<xs:annotation>
+					<xs:documentation>Number of Bedrooms in the Property Storey</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Conservatory-Count" type="pfdt:Count">
+				<xs:annotation>
+					<xs:documentation>Number of Conservatories in the Property Storey</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Kitchen-Count" type="pfdt:Count">
+				<xs:annotation>
+					<xs:documentation>Number of Kitchens in the Property Storey</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Other-Room-Count" type="pfdt:Count">
+				<xs:annotation>
+					<xs:documentation>Number of Other Rooms in the Property Storey i.e. rooms not classified as one of the defined types.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Other-Room-Name" type="pfdt:Sentence" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Descriptive Name of the Other Room Type identifying its apparent use e.g. "Laundry Room". Where there are multiple Other Rooms (Count &gt; 1) then the room types are entered as a comma separated list e.g. "Laundry Room, Sauna, Gymnasium".
+
+Being nouns the Room Types should of course be entered in the language that the overall report is being presented in.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Reception-Room-Count" type="pfdt:Count">
+				<xs:annotation>
+					<xs:documentation>Number of Reception Rooms in the Property Storey - Reception Rooms are general purpose living rooms including Dining Rooms.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Storey-Type" type="StoreyFloorCode">
+				<xs:annotation>
+					<xs:documentation>Indicates the type of Storey in the building</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Utility-Room-Count" type="pfdt:Count">
+				<xs:annotation>
+					<xs:documentation>Number of Utility Rooms in the Property Storey</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="WC-Count" type="pfdt:Count">
+				<xs:annotation>
+					<xs:documentation>Number of WC's in the Property Storey</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Structural-Movement" type="Structural-Movement"/>
+	<xs:complexType name="Structural-Movement">
+		<xs:all>
+			<xs:element name="Movement-Type" type="StructuralMovementCode"/>
+			<xs:element name="Affected-Feature" type="StructuralMovementFeatureCode">
+				<xs:annotation>
+					<xs:documentation>The property feature affected by the structural movement</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Ongoing" type="StructuralMovementOngoingCode">
+				<xs:annotation>
+					<xs:documentation>indicates that the structural movement is ongoing.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Structural-Repair" type="Structural-Repair"/>
+	<xs:complexType name="Structural-Repair">
+		<xs:all>
+			<xs:element name="Repair-Type" type="StructuralRepairCode">
+				<xs:annotation>
+					<xs:documentation>The type of structural repair that has been made to the property.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Other-Repair-Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>Description of other Structural Repair if Repair-Type is "ongoing"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Location" type="StructuralRepairLocationCode"/>
+			<xs:element name="Ongoing" type="pfdt:Flag">
+				<xs:annotation>
+					<xs:documentation>Indicates whether the Home Inspector believes that further investigation is required.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Trees-On-Clay" type="Trees-On-Clay"/>
+	<xs:complexType name="Trees-On-Clay">
+		<xs:all>
+			<xs:element name="Investigate" type="pfdt:Flag">
+				<xs:annotation>
+					<xs:documentation>Indicates whether the Home Inspector believes that further investigation is required.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Multiple-Trees" type="pfdt:Flag">
+				<xs:annotation>
+					<xs:documentation>Indicates whether there are multiple trees affected by ythe problem.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Accommodation" type="Accommodation"/>
+	<xs:complexType name="Accommodation">
+		<xs:sequence>
+			<xs:element name="Storey" type="Storey" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Building-Parts" type="Building-Parts"/>
+	<xs:complexType name="Building-Parts">
+		<xs:annotation>
+			<xs:documentation>Details of the significant building parts that comprise the main habitable building in the property. The main habitable area generally consists of a single main building but can over time be extended to include extensions such as new wings and additional storeys.
+
+For the purpose of calculating the overall Energy Assessment for the property details of each distinct Building Part, such as its construction, have to be gathered because different materials have different insulation ratings (obviously) which affects the overall rating.
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Building-Part" type="Building-Part" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Investigation" type="Investigation"/>
+	<xs:complexType name="Investigation">
+		<xs:all>
+			<xs:element name="Investigation-Code" type="InvestigationCode"/>
+			<xs:element name="Remarks" type="pfdt:Sentence" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Any relevant remarks that the Home Inspector wishes to make about any recommended further investigation such as his justification for the recommendation, notes on access requirements etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Other-Description" type="pfdt:Sentence" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A description of the further investigation requirements when Investigation-Code = {Other}</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+</xs:schema>
