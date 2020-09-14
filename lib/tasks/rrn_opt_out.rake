@@ -39,7 +39,6 @@ task :update_rrn_opt_out do
 
   ActiveRecord::Base.transaction do
     ordered_opt_outs.each do |node|
-
       query = "UPDATE assessments SET opt_out = '#{node[:opt_out]}' WHERE assessment_id = '#{node[:rrn]}'"
 
       ActiveRecord::Base.connection.execute(query)
