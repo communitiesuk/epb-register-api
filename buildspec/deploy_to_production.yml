@@ -17,6 +17,9 @@ env:
     JWT_ISSUER: "epbr-jwt-issuer-production"
     JWT_SECRET: "epbr-jwt-secret-production"
     NEW_RELIC_LICENSE_KEY: "epb-register-api-newrelic-licence"
+    RRN_OPT_OUT_URL: "epbr-api-rrn-opt-out-url"
+    RRN_OPT_OUT_PASSWORD: "epbr-api-rrn-opt-out-password"
+    RRN_OPT_OUT_USERNAME: "epbr-api-rrn-opt-out-username"
 
 phases:
   install:
