@@ -91,7 +91,8 @@ module Gateway
            WHERE
              cancelled_at IS NULL
            AND not_for_issue_at IS NULL
-           AND (assessment_id = $1 OR address_id = CONCAT('RRN-', $1))",
+           AND (assessment_id = $1 OR address_id = CONCAT('RRN-', $1))
+           ORDER BY assessment_id",
           "SQL",
           [
             ActiveRecord::Relation::QueryAttribute.new(
