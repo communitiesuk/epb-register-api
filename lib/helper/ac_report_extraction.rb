@@ -13,8 +13,8 @@ module Helper
 
     def cooling_plant(node)
       {
-        system_number: "",
-        identifier: "",
+        system_number: xpath(%w[System-Number], node),
+        identifier: xpath(%w[System-Component-Identifier], node),
         equipment: {
           manufacturer: xpath(%w[Manufacturer], node),
           description: xpath(%w[Description], node),
@@ -29,6 +29,8 @@ module Helper
           },
           refrigerant_charge: xpath(%w[Refrigerant-Charge], node),
           location: xpath(%w[Location], node),
+          area_served: xpath(%w[Area-Served], node),
+          discrepancy_note: xpath(%w[Discrepancy-Note], node),
         },
         inspection: {},
         sizing: {},
