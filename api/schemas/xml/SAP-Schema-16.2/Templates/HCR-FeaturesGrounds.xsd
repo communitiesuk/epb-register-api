@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="DCLG-HIP" xmlns:HIP="DCLG-HIP" xmlns:pfdt="DCLG-HIP/BaseDataTypes" targetNamespace="DCLG-HIP" elementFormDefault="qualified" version="LIG-16.2">
+	<xs:import namespace="DCLG-HIP/BaseDataTypes" schemaLocation="../UDT/BaseDataTypes.xsd"/>
+	<xs:include schemaLocation="../UDT/HCR-Domains.xsd"/>
+	<xs:element name="Garden" type="Garden"/>
+	<xs:complexType name="Garden">
+		<xs:all>
+			<xs:element name="Location" type="GardenLocationCode">
+				<xs:annotation>
+					<xs:documentation>The location of the garden relative to the main building of the Property - taken from a pre-defined list of values.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Garden-Type" type="GardenTypeCode">
+				<xs:annotation>
+					<xs:documentation>The type of garden attached to the property</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Grounds-Feature" type="Grounds-Feature"/>
+	<xs:complexType name="Grounds-Feature">
+		<xs:annotation>
+			<xs:documentation>A tract of land, forming part of the Property, that has been cleared or developed for a particular purpose such as a Garden or Garage.
+
+Each Grounds Feature provides a summary of the general condition of any garden walls, fences, and permanent outbuildings. Conservatories with translucent or clear roofs attached to the main buildings are treated as outbuildings, as are garages and permanent store sheds. 
+
+Buildings containing swimming pools and sports facilities are also treated as outbuildings, but the Home Inspector does not report on the leisure facilities, such as the pool itself and its equipment. 
+
+To inspect these areas the Home Inspector walked around the grounds. </xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Identifier" type="pfdt:IDString"/>
+			<xs:element name="Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>A description - taken from the Preferred Text statements - of the individual Property Feature being inspected.
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Justification" type="pfdt:Sentence"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Gardens" type="Gardens"/>
+	<xs:complexType name="Gardens">
+		<xs:sequence>
+			<xs:element name="Identifier" type="pfdt:IDString"/>
+			<xs:element name="Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>A description - taken from the Preferred Text statements - of the individual Property Feature being inspected.
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Justification" type="pfdt:Sentence"/>
+			<xs:element name="OverOneAcre" type="pfdt:Flag">
+				<xs:annotation>
+					<xs:documentation>Indicates whether the total gardens are in excess of one acre or not.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Garden" type="Garden" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Paved-Area" type="Paved-Area"/>
+	<xs:complexType name="Paved-Area">
+		<xs:all>
+			<xs:element name="Identifier" type="pfdt:IDString"/>
+			<xs:element name="Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>A description - taken from the Preferred Text statements - of the individual Property Feature being inspected.
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Justification" type="pfdt:Sentence"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Car-Port" type="Car-Port"/>
+	<xs:complexType name="Car-Port">
+		<xs:all>
+			<xs:element name="Identifier" type="pfdt:IDString"/>
+			<xs:element name="Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>A description - taken from the Preferred Text statements - of the individual Property Feature being inspected.
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Justification" type="pfdt:Sentence"/>
+			<xs:element name="Carport-Type" type="CarPortTypeCode">
+				<xs:annotation>
+					<xs:documentation>The type of car parking allocated to the property</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Allocated-Spaces" type="GarageSizeTypeCode">
+				<xs:annotation>
+					<xs:documentation>Number of car parking spaces within the car port allocated to the Property. A car Port may be shared by two or more properties therefore not all available spaces may be for the sole use of the Property.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Location" type="CarPortLocationCode">
+				<xs:annotation>
+					<xs:documentation>Describes the location of the Car Port e.g. attached to Property, detached etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Garage" type="Garage"/>
+	<xs:complexType name="Garage">
+		<xs:all>
+			<xs:element name="Identifier" type="pfdt:IDString"/>
+			<xs:element name="Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>A description - taken from the Preferred Text statements - of the individual Property Feature being inspected.
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Justification" type="pfdt:Sentence"/>
+			<xs:element name="Garage-Size" type="GarageSizeTypeCode">
+				<xs:annotation>
+					<xs:documentation>The nominal size of the garage expressed as the number of vehicles it will contain e.g. "single", "double" etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Location" type="GarageLocationCode">
+				<xs:annotation>
+					<xs:documentation>The location of the garage relative to the main building e.g. attached or detached</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Outbuilding" type="Outbuilding"/>
+	<xs:complexType name="Outbuilding">
+		<xs:annotation>
+			<xs:documentation>Any other non-Habitable Building that is associated with, but separate from, the main building such as a store-room. Excludes Garages and Conservatories which are separately detailed.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Identifier" type="pfdt:IDString"/>
+			<xs:element name="Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>A description - taken from the Preferred Text statements - of the individual Property Feature being inspected.
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Justification" type="pfdt:Sentence"/>
+			<xs:element name="Outbuilding-Count" type="pfdt:Count">
+				<xs:annotation>
+					<xs:documentation>Number of outbuilding present in the property grounds</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Outbuilding-Use" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>Describes the type of each Outbuilding identifying its apparent use e.g. "Playhouse". Where there are multiple Other Outbuildings then the Outbuilding Types are entered as a comma separated list e.g. "Playhouse, Swimming Pool".
+
+Being nouns the Outbuilding Types should of course be entered in the language that the overall report is being presented in.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Shared-Facility" type="Shared-Facility"/>
+	<xs:complexType name="Shared-Facility">
+		<xs:all>
+			<xs:element name="Identifier" type="pfdt:IDString"/>
+			<xs:element name="Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>A description - taken from the Preferred Text statements - of the individual Property Feature being inspected.
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Justification" type="pfdt:Sentence"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Boundary-Wall" type="Boundary-Wall"/>
+	<xs:complexType name="Boundary-Wall">
+		<xs:annotation>
+			<xs:documentation>Details of boundary and retaining walls that may be present in the Property.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Identifier" type="pfdt:IDString"/>
+			<xs:element name="Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>A description - taken from the Preferred Text statements - of the individual Property Feature being inspected.
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Justification" type="pfdt:Sentence"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Other-Grounds" type="Other-Grounds"/>
+	<xs:complexType name="Other-Grounds">
+		<xs:all>
+			<xs:element name="Identifier" type="pfdt:IDString"/>
+			<xs:element name="Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>A description - taken from the Preferred Text statements - of the individual Property Feature being inspected.
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Justification" type="pfdt:Sentence"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Detached-Conservatory" type="Detached-Conservatory"/>
+	<xs:complexType name="Detached-Conservatory">
+		<xs:all>
+			<xs:element name="Identifier" type="pfdt:IDString"/>
+			<xs:element name="Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>A description - taken from the Preferred Text statements - of the individual Property Feature being inspected.
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Justification" type="pfdt:Sentence"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Grounds" type="Grounds"/>
+	<xs:complexType name="Grounds">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="Boundary-Wall" type="Boundary-Wall"/>
+			<xs:element name="Car-Port" type="Car-Port"/>
+			<xs:element name="Detached-Conservatory" type="Detached-Conservatory"/>
+			<xs:element name="Garage" type="Garage"/>
+			<xs:element name="Other-Grounds" type="Other-Grounds"/>
+			<xs:element name="Outbuilding" type="Outbuilding"/>
+			<xs:element name="Paved-Area" type="Paved-Area"/>
+			<xs:element name="Shared-Facility" type="Shared-Facility"/>
+			<xs:element name="Gardens" type="Gardens"/>
+		</xs:choice>
+	</xs:complexType>
+</xs:schema>

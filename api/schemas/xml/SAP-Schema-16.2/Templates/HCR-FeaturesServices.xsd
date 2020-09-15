@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="DCLG-HIP" xmlns:pfdt="DCLG-HIP/BaseDataTypes" xmlns:HIP="DCLG-HIP" targetNamespace="DCLG-HIP" elementFormDefault="qualified" version="LIG-16.2">
+	<xs:import namespace="DCLG-HIP/BaseDataTypes" schemaLocation="../UDT/BaseDataTypes.xsd"/>
+	<xs:include schemaLocation="../UDT/SharedDomains.xsd"/>
+	<xs:include schemaLocation="../UDT/HCR-Domains.xsd"/>
+	<xs:element name="Utility-Service" type="Utility-Service"/>
+	<xs:complexType name="Utility-Service">
+		<xs:annotation>
+			<xs:documentation>A commodity or essential service, such as electricity, gas or water that is provided by a public or private company under government regulation. </xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Identifier" type="pfdt:IDString">
+				<xs:annotation>
+					<xs:documentation>Unique identifier for the property feature being reported on.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Condition" type="ConditionCode">
+				<xs:annotation>
+					<xs:documentation>The code describing the condition of the inspected feature.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Justification" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>The Home Inspectors justification for the Condition Code they have assigned to the feature. 
+
+If Condition Code is "Not Inspected" (NI) then the Justification is an explanation for why they could not inspect the feature.
+
+If the feature is "Not Present" (NP) then the Justification should say "Not present" though if the feature is not present then the value is actually not used in the HCR so can be ignored. 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>A description - taken from the Preferred Text statements - of the individual Property Feature being inspected.
+
+If the feature is "Not Present" (NP) then the Description should say "Not present" though if the feature is not present then the value is actually not used in the HCR so can be ignored. 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Gas" type="Gas"/>
+	<xs:complexType name="Gas">
+		<xs:annotation>
+			<xs:documentation>Details of the main Gas supply to the Property.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Identifier" type="pfdt:IDString">
+				<xs:annotation>
+					<xs:documentation>Unique identifier for the property feature being reported on.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Condition" type="ConditionCode">
+				<xs:annotation>
+					<xs:documentation>The code describing the condition of the inspected feature.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Justification" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>The Home Inspectors justification for the Condition Code they have assigned to the feature. 
+
+If Condition Code is "Not Inspected" (NI) then the Justification is an explanation for why they could not inspect the feature.
+
+If the feature is "Not Present" (NP) then the Justification should say "Not present" though if the feature is not present then the value is actually not used in the HCR so can be ignored. 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>A description - taken from the Preferred Text statements - of the individual Property Feature being inspected.
+
+If the feature is "Not Present" (NP) then the Description should say "Not present" though if the feature is not present then the value is actually not used in the HCR so can be ignored. 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Service-Provider" type="UtilityServiceProviderCode">
+				<xs:annotation>
+					<xs:documentation>Indicates whether, for a particular service, a mains service is connected to the property</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Water" type="Water"/>
+	<xs:complexType name="Water">
+		<xs:annotation>
+			<xs:documentation>Details of the main Water supply to the Property. This will generally be a managed service provided by a Water Utility (regulated by Government body) but may include an alternative service particular to the Property.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Identifier" type="pfdt:IDString">
+				<xs:annotation>
+					<xs:documentation>Unique identifier for the property feature being reported on.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Condition" type="ConditionCode">
+				<xs:annotation>
+					<xs:documentation>The code describing the condition of the inspected feature.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Justification" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>The Home Inspectors justification for the Condition Code they have assigned to the feature. 
+
+If Condition Code is "Not Inspected" (NI) then the Justification is an explanation for why they could not inspect the feature.
+
+If the feature is "Not Present" (NP) then the Justification should say "Not present" though if the feature is not present then the value is actually not used in the HCR so can be ignored. 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>A description - taken from the Preferred Text statements - of the individual Property Feature being inspected.
+
+If the feature is "Not Present" (NP) then the Description should say "Not present" though if the feature is not present then the value is actually not used in the HCR so can be ignored. 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Service-Provider" type="UtilityServiceProviderCode">
+				<xs:annotation>
+					<xs:documentation>Indicates whether, for a particular service, a mains service is connected to the property</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Owner" type="WaterOwnerCode">
+				<xs:annotation>
+					<xs:documentation>Identifies the owner of the water supply.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Water-Risk" type="pfdt:Flag">
+				<xs:annotation>
+					<xs:documentation>Indicates whether the Home Inspector believes that there is a some risk to the Property Owner relating to the local water supply (including Sewerage).
+
+For example there might be a sewer run under the property that the local water board has a right to access for maintenance purposes. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Location" type="WaterLocationCode">
+				<xs:annotation>
+					<xs:documentation>Identifies the location of the water supply</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Drainage" type="Drainage"/>
+	<xs:complexType name="Drainage">
+		<xs:annotation>
+			<xs:documentation>Details of the Drainage and Sewerage facilities for the Property.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Identifier" type="pfdt:IDString">
+				<xs:annotation>
+					<xs:documentation>Unique identifier for the property feature being reported on.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Condition" type="ConditionCode">
+				<xs:annotation>
+					<xs:documentation>The code describing the condition of the inspected feature.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Justification" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>The Home Inspectors justification for the Condition Code they have assigned to the feature. 
+
+If Condition Code is "Not Inspected" (NI) then the Justification is an explanation for why they could not inspect the feature.
+
+If the feature is "Not Present" (NP) then the Justification should say "Not present" though if the feature is not present then the value is actually not used in the HCR so can be ignored. 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>A description - taken from the Preferred Text statements - of the individual Property Feature being inspected.
+
+If the feature is "Not Present" (NP) then the Description should say "Not present" though if the feature is not present then the value is actually not used in the HCR so can be ignored. 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Drainage-Risk" type="pfdt:Flag">
+				<xs:annotation>
+					<xs:documentation>Indicates whether the Home Inspector believes that there is a some risk to the Property Owner relating to the drainage of the property.
+
+For example there might be a main drain or manhole on the property that the local water board has a right to access for maintenance purposes. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Service-Provider" type="UtilityServiceProviderCode">
+				<xs:annotation>
+					<xs:documentation>Indicates whether, for a particular service, a mains service is connected to the property</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Owner" type="DrainageOwnerCode">
+				<xs:annotation>
+					<xs:documentation>Identifies the ownership of the drainage system</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Location" type="DrainageLocationCode">
+				<xs:annotation>
+					<xs:documentation>Identifies the location of the drainage system</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Watercourse-Discharge" type="pfdt:Flag">
+				<xs:annotation>
+					<xs:documentation>Indicates that the drainage system may discharge into a local watercourse.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Drainage-Method" type="DrainageMethodCode">
+				<xs:annotation>
+					<xs:documentation>Identifies the method use for drainage and sewerage if not mains provided</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Electricity" type="Electricity"/>
+	<xs:complexType name="Electricity">
+		<xs:annotation>
+			<xs:documentation>Details of the main Electricity supply to the Property.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Identifier" type="pfdt:IDString">
+				<xs:annotation>
+					<xs:documentation>Unique identifier for the property feature being reported on.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Condition" type="ConditionCode">
+				<xs:annotation>
+					<xs:documentation>The code describing the condition of the inspected feature.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Justification" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>The Home Inspectors justification for the Condition Code they have assigned to the feature. 
+
+If Condition Code is "Not Inspected" (NI) then the Justification is an explanation for why they could not inspect the feature.
+
+If the feature is "Not Present" (NP) then the Justification should say "Not present" though if the feature is not present then the value is actually not used in the HCR so can be ignored. 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>A description - taken from the Preferred Text statements - of the individual Property Feature being inspected.
+
+If the feature is "Not Present" (NP) then the Description should say "Not present" though if the feature is not present then the value is actually not used in the HCR so can be ignored. 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Service-Provider" type="UtilityServiceProviderCode">
+				<xs:annotation>
+					<xs:documentation>Indicates whether, for a particular service, a mains service is connected to the property</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Heating" type="Heating"/>
+	<xs:complexType name="Heating">
+		<xs:annotation>
+			<xs:documentation>Details of the means by which the Main Building is heated.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Identifier" type="pfdt:IDString">
+				<xs:annotation>
+					<xs:documentation>Unique identifier for the property feature being reported on.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Condition" type="ConditionCode">
+				<xs:annotation>
+					<xs:documentation>The code describing the condition of the inspected feature.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Justification" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>The Home Inspectors justification for the Condition Code they have assigned to the feature. 
+
+If Condition Code is "Not Inspected" (NI) then the Justification is an explanation for why they could not inspect the feature.
+
+If the feature is "Not Present" (NP) then the Justification should say "Not present" though if the feature is not present then the value is actually not used in the HCR so can be ignored. 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>A description - taken from the Preferred Text statements - of the individual Property Feature being inspected.
+
+If the feature is "Not Present" (NP) then the Description should say "Not present" though if the feature is not present then the value is actually not used in the HCR so can be ignored. 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Heating-Scope" type="HeatingScopeCode">
+				<xs:annotation>
+					<xs:documentation>Identifies the scope of the central heating e.g. Full or Partial heating.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Main-Heating-Type" type="HeatingTypeCode">
+				<xs:annotation>
+					<xs:documentation>The main type of heating system present in the Property e.g. Central Heating, Under-Floor etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Fuel-Type" type="HeatingFuelTypeCode">
+				<xs:annotation>
+					<xs:documentation>The type of fuel used to power the central heating e.g. Gas, Electricity</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Utility-Services" type="Utility-Services"/>
+	<xs:complexType name="Utility-Services">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="Heating" type="Heating"/>
+			<xs:element name="Electricity" type="Electricity"/>
+			<xs:element name="Gas" type="Gas"/>
+			<xs:element name="Water" type="Water"/>
+			<xs:element name="Drainage" type="Drainage"/>
+		</xs:choice>
+	</xs:complexType>
+</xs:schema>
