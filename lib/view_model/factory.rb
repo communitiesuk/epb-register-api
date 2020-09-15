@@ -23,6 +23,7 @@ module ViewModel
       SAP-Schema-18.0.0
       SAP-Schema-17.1
       SAP-Schema-17.0
+      SAP-Schema-16.3
       SAP-Schema-NI-18.0.0
       SAP-Schema-NI-17.4
       SAP-Schema-NI-17.3
