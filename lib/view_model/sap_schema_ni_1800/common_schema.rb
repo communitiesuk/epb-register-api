@@ -221,6 +221,18 @@ module ViewModel
         date_of_expiry < Time.now ? "EXPIRED" : "ENTERED"
       end
 
+      def level
+        xpath(%w[Level])
+      end
+
+      def building_part_number
+        xpath(%w[Building-Part-Number])
+      end
+
+      def floor_heat_loss
+        xpath(%w[Floor-Heat-Loss])
+      end
+
       def type_of_assessment
         "SAP"
       end

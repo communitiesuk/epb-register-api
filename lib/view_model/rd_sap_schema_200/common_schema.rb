@@ -279,7 +279,19 @@ module ViewModel
         }.compact
       end
 
-    private
+      def level
+        xpath(%w[Level])
+      end
+
+      def building_part_number
+        xpath(%w[Building-Part-Number])
+      end
+
+      def floor_heat_loss
+        xpath(%w[Floor-Heat-Loss])
+      end
+
+      private
 
       def convert_to_big_decimal(node)
         return unless xpath(node)

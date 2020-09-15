@@ -133,6 +133,18 @@ module LodgementRules
           }.empty?
         end,
       },
+      {
+        name: "GROUND_FLOOR_HEAT_LOSS_ON_UPPER_FLOOR",
+        title:
+          'If "Level" is greater than 1 and "Building-Part-Number" is equal to 1 then "Floor-Heat-Loss" must not be equal to 7',
+        test: lambda do |adapter|
+          level = method_or_nil(adapter, :level)
+          building_part_number = method_or_nil(adapter, :building_part_number)
+          floor_heat_loss = method_or_nil(adapter, :floor_heat_loss)
+
+          !(level.to_i > 1 && building_part_number == "1" && floor_heat_loss == "7")
+        end,
+      },
     ].freeze
 
     def validate(xml_adaptor)

@@ -170,6 +170,12 @@
       <Open-Fireplaces-Count>0</Open-Fireplaces-Count>
       <Solar-Water-Heating>N</Solar-Water-Heating>
       <Conservatory-Type>1</Conservatory-Type>
+      <SAP-Flat-Details>
+        <Flat-Location>01</Flat-Location>
+        <Level>1</Level>
+        <Top-Storey>N</Top-Storey>
+        <Heat-Loss-Corridor>2</Heat-Loss-Corridor>
+      </SAP-Flat-Details>
       <SAP-Building-Parts>
         <SAP-Building-Part>
           <Building-Part-Number>1</Building-Part-Number>
