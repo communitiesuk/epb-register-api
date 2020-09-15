@@ -31,7 +31,6 @@ module Gateway
             cancelled_at IS NULL
           AND not_for_issue_at IS NULL
           AND postcode = $1
-            postcode = $1
       SQL
 
       binds = [
