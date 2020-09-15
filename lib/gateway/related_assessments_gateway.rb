@@ -11,9 +11,11 @@ module Gateway
                     WHEN a.not_for_issue_at IS NOT NULL THEN 'NOT_FOR_ISSUE'
                     WHEN a.date_of_expiry < CURRENT_DATE THEN 'EXPIRED'
                     ELSE 'ENTERED'
-                   END AS assessment_status
+                   END AS assessment_status,
+              a.opt_out
         FROM assessments a
-        WHERE address_id = $1
+        WHERE address_id = $1 AND
+              opt_out = false
         ORDER BY date_of_expiry DESC, assessment_id DESC
       SQL
 
