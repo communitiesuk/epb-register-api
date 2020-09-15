@@ -73,7 +73,7 @@ module ViewModel
       end
 
       def date_of_expiry
-        expires_at = Date.parse(date_of_registration) >> 12 * 10
+        expires_at = Date.parse(date_of_assessment) >> 12 * 10
 
         expires_at.to_s
       end
@@ -291,7 +291,7 @@ module ViewModel
         xpath(%w[Floor-Heat-Loss])
       end
 
-      private
+    private
 
       def convert_to_big_decimal(node)
         return unless xpath(node)
