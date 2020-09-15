@@ -6,7 +6,8 @@ module Gateway
     }.freeze
 
     def search_by_postcode(postcode, building_name_number, address_type)
-      postcode = postcode.downcase.delete " "
+      postcode = postcode.insert(-4, " ") if postcode[-4] != " "
+
       sql =
         "SELECT
             assessment_id,
@@ -22,12 +23,12 @@ module Gateway
           WHERE
             cancelled_at IS NULL
           AND not_for_issue_at IS NULL
-          AND LOWER(REPLACE(postcode, ' ', '')) = $1"
+          AND postcode = $1"
 
       binds = [
         ActiveRecord::Relation::QueryAttribute.new(
           "postcode",
-          postcode,
+          postcode.upcase,
           ActiveRecord::Type::String.new,
         ),
       ]
