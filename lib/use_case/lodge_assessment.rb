@@ -23,9 +23,16 @@ module UseCase
         end
       end
 
-      scheme_assessor_id = data[:assessor_id].nil? ? data[:assessor][:scheme_assessor_id] : data[:assessor_id]
+      scheme_assessor_id =
+        if data[:assessor_id].nil?
+          data[:assessor][:scheme_assessor_id]
+        else
+          data[:assessor_id]
+        end
 
-      expiry_date = data[:date_of_expiry] || Date.parse(data[:date_of_assessment]).next_year(10).to_s
+      expiry_date =
+        data[:date_of_expiry] ||
+        Date.parse(data[:date_of_assessment]).next_year(10).to_s
 
       assessor = @assessors_gateway.fetch scheme_assessor_id
 
@@ -39,7 +46,8 @@ module UseCase
           date_registered: data[:date_of_registration],
           date_of_expiry: expiry_date,
           assessor: assessor,
-          current_energy_efficiency_rating: data[:current_energy_efficiency_rating].to_i,
+          current_energy_efficiency_rating:
+            data[:current_energy_efficiency_rating].to_i,
           potential_energy_efficiency_rating:
             data[:potential_energy_efficiency_rating].to_i,
           address_id: data[:address][:address_id] || nil,

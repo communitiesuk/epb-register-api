@@ -9,7 +9,7 @@ module Gateway
       postcode = postcode.insert(-4, " ") if postcode[-4] != " "
 
       sql =
-        "SELECT
+        'SELECT
             assessment_id,
             date_of_expiry,
             type_of_assessment,
@@ -23,7 +23,7 @@ module Gateway
           WHERE
             cancelled_at IS NULL
           AND not_for_issue_at IS NULL
-          AND postcode = $1"
+          AND postcode = $1'
 
       binds = [
         ActiveRecord::Relation::QueryAttribute.new(

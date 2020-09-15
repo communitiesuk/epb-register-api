@@ -20,7 +20,7 @@ task :update_rrn_opt_out do
 
   reformatted_opt_outs = []
   parsed_opt_outs.each do |node|
-    opt_out = node["OPT_OUT"] == "Y" ? true : false
+    opt_out = node["OPT_OUT"] == "Y"
     reformatted_opt_outs << { date_time: node["REQUEST_TIMESTAMP"], rrn: node["RRN"], opt_out: opt_out }
   end
 

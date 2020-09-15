@@ -25,13 +25,16 @@ module Domain
         rrns = xml.xpath("//RRN").map(&:text)
 
         rrns.each do |rrn|
-          report = ViewModel::Factory.new.create(@raw_data, @schema_name.to_s, rrn).to_hash
+          report =
+            ViewModel::Factory.new.create(@raw_data, @schema_name.to_s, rrn)
+              .to_hash
           report[:raw_data] = @raw_data
 
           data << report
         end
       else
-        report = ViewModel::Factory.new.create(@raw_data, @schema_name.to_s).to_hash
+        report =
+          ViewModel::Factory.new.create(@raw_data, @schema_name.to_s).to_hash
 
         report[:raw_data] = @raw_data
 
