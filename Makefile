@@ -35,9 +35,7 @@ deploy-app: ## Deploys the app to PaaS
 	cf set-env "${DEPLOY_APPNAME}" JWT_SECRET "${JWT_SECRET}"
 	cf set-env "${DEPLOY_APPNAME}" STAGE "${PAAS_SPACE}"
 	cf set-env "${DEPLOY_APPNAME}" EPB_UNLEASH_URI "${EPB_UNLEASH_URI}"
-	cf set-env "${DEPLOY_APPNAME}" RRN_OPT_OUT_USERNAME "${RRN_OPT_OUT_USERNAME}"
-	cf set-env "${DEPLOY_APPNAME}" RRN_OPT_OUT_PASSWORD "${RRN_OPT_OUT_PASSWORD}"
-	cf set-env "${DEPLOY_APPNAME}" RRN_OPT_OUT_URL "${RRN_OPT_OUT_URL}"
+	cf set-env "${DEPLOY_APPNAME}" NEW_RELIC_LICENSE_KEY "${NEW_RELIC_LICENSE_KEY}"
 
 	cf v3-zdt-push "${DEPLOY_APPNAME}" --wait-for-deploy-complete
 
