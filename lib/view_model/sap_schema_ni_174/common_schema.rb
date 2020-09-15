@@ -215,6 +215,10 @@ module ViewModel
         date_of_expiry < Time.now ? "EXPIRED" : "ENTERED"
       end
 
+      def type_of_assessment
+        "SAP"
+      end
+
     private
 
       def convert_to_big_decimal(node)

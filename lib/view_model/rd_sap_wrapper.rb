@@ -1,7 +1,5 @@
 module ViewModel
   class RdSapWrapper
-    TYPE_OF_ASSESSMENT = "RD_SAP".freeze
-
     def initialize(xml, schema_type)
       case schema_type
       when "RdSAP-Schema-20.0.0"

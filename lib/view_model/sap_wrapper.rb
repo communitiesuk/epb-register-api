@@ -1,7 +1,5 @@
 module ViewModel
   class SapWrapper
-    TYPE_OF_ASSESSMENT = "SAP".freeze
-
     def initialize(xml, schema_type)
       case schema_type
       when "SAP-Schema-18.0.0"
@@ -57,7 +55,7 @@ module ViewModel
         )
 
       {
-        type_of_assessment: TYPE_OF_ASSESSMENT,
+        type_of_assessment: @view_model.type_of_assessment,
         assessment_id: @view_model.assessment_id,
         date_of_expiry: @view_model.date_of_expiry,
         date_of_assessment: @view_model.date_of_assessment,

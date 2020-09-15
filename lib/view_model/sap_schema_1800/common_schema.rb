@@ -222,6 +222,10 @@ module ViewModel
         }.compact
       end
 
+      def type_of_assessment
+        "SAP"
+      end
+
     private
 
       def convert_to_big_decimal(node)
