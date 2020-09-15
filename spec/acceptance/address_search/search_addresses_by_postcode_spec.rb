@@ -750,11 +750,6 @@ describe "Acceptance::AddressSearch::ByPostcode" do
                   assessmentStatus: "ENTERED",
                   assessmentType: "RdSAP",
                 },
-                {
-                  assessmentId: "0000-0000-0000-0000-0001",
-                  assessmentStatus: "CANCELLED",
-                  assessmentType: "RdSAP",
-                },
               ],
             },
           )
@@ -816,12 +811,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
                   assessmentId: "0000-0000-0000-0000-0000",
                   assessmentStatus: "ENTERED",
                   assessmentType: "RdSAP",
-                },
-                {
-                  assessmentId: "0000-0000-0000-0000-0001",
-                  assessmentStatus: "NOT_FOR_ISSUE",
-                  assessmentType: "RdSAP",
-                },
+                }
               ],
             },
           )
