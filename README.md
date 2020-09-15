@@ -13,7 +13,7 @@
 
 Ensure you have Postgres 11 installed. If you are working on a Mac, [this tutorial](https://www.codementor.io/engineerapart/getting-started-with-postgresql-on-mac-osx-are8jcopb) will take you through the process.
 
-You will need to have a user with the role name postgres, which has permission to create a database.
+You will need to have a user with the role name postgres, which has the `Create DB` and `Superuser` permissions to create databases and install the `fuzzystrmatch` extension.
 
 Once you have set this up, run the command
 
