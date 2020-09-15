@@ -14,28 +14,17 @@ module Domain
     end
 
     def fetch_data
-      schema = Helper::SchemaListHelper.new @schema_name
-
       data = []
 
-      if schema.fetch_root
-        xml = Nokogiri.XML @raw_data
-        xml.remove_namespaces!
+      xml = Nokogiri.XML @raw_data
+      xml.remove_namespaces!
 
-        rrns = xml.xpath("//RRN").map(&:text)
+      rrns = xml.xpath("//RRN").map(&:text)
 
-        rrns.each do |rrn|
-          report =
-            ViewModel::Factory.new.create(@raw_data, @schema_name.to_s, rrn)
-              .to_hash
-          report[:raw_data] = @raw_data
-
-          data << report
-        end
-      else
+      rrns.each do |rrn|
         report =
-          ViewModel::Factory.new.create(@raw_data, @schema_name.to_s).to_hash
-
+          ViewModel::Factory.new.create(@raw_data, @schema_name.to_s, rrn)
+            .to_hash
         report[:raw_data] = @raw_data
 
         data << report
