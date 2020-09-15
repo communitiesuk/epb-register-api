@@ -85,7 +85,8 @@ module UseCase
         if data[:building_complexity]
           level = data[:building_complexity][-1]
 
-          if assessor.send(:"non_domestic_nos#{level}_qualification") != active_status
+          if assessor.send(:"non_domestic_nos#{level}_qualification") !=
+              active_status
             raise InactiveAssessorException
           end
         end

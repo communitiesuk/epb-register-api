@@ -152,7 +152,8 @@ describe ViewModel::AcReportWrapper do
       },
       cooling_plants: [
         {
-          system_number: "VOL001/SYS001 R410A Inverter Split Systems to Sales Area",
+          system_number:
+            "VOL001/SYS001 R410A Inverter Split Systems to Sales Area",
           identifier: "VOL001/SYS001/CP1 Sampled R410A Inverter Split Area (1)",
           equipment: {
             cooling_capacity: "10",
@@ -167,7 +168,8 @@ describe ViewModel::AcReportWrapper do
             serial_number: "not visible",
             year_installed: "2014",
             area_served: "Sales Area",
-            discrepancy_note: "Brief details of the installed equipment onsite were provided prior to the inspection however a full and comprehensive asset schedule was not available; it should be considered to prepare a full and comprehensive asset schedule for the site. This should include: system identification/reference numbers to enable determination of which condensers serve which indoor units and detail system model numbers, serial numbers, kW capacities, refrigerant charge, etc for each system. No discrepancy noted between information provided and site observations.",
+            discrepancy_note:
+              "Brief details of the installed equipment onsite were provided prior to the inspection however a full and comprehensive asset schedule was not available; it should be considered to prepare a full and comprehensive asset schedule for the site. This should include: system identification/reference numbers to enable determination of which condensers serve which indoor units and detail system model numbers, serial numbers, kW capacities, refrigerant charge, etc for each system. No discrepancy noted between information provided and site observations.",
           },
           inspection: {},
           sizing: {},
@@ -177,7 +179,8 @@ describe ViewModel::AcReportWrapper do
           humidity_control: {},
         },
         {
-          system_number: "VOL001/SYS001 R410A Inverter Split Systems to Sales Area",
+          system_number:
+            "VOL001/SYS001 R410A Inverter Split Systems to Sales Area",
           identifier: "VOL001/SYS001/CP2 Sampled R410A Inverter Split Area (2)",
           equipment: {
             cooling_capacity: "10",
@@ -192,7 +195,8 @@ describe ViewModel::AcReportWrapper do
             serial_number: "not visible",
             year_installed: "2014",
             area_served: "",
-            discrepancy_note: "No discrepancy noted between information provided and site observations.",
+            discrepancy_note:
+              "No discrepancy noted between information provided and site observations.",
           },
           inspection: {},
           sizing: {},
@@ -339,11 +343,14 @@ describe ViewModel::AcReportWrapper do
               flag: true,
             },
             set_temperature: {
-                note: "The set temperature on local controller; 18 deg C",
-                recommendations: [
-                    {sequence: "1",
-                     text: "Ensure staff are educated to run AC systems for comfort and efficiency by setting the AC system temperature to circa 22 deg C +/- 1 deg C."}
-                ]
+              note: "The set temperature on local controller; 18 deg C",
+              recommendations: [
+                {
+                  sequence: "1",
+                  text:
+                    "Ensure staff are educated to run AC systems for comfort and efficiency by setting the AC system temperature to circa 22 deg C +/- 1 deg C.",
+                },
+              ],
             },
             dead_band: {
               note:

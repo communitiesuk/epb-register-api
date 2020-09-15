@@ -318,22 +318,23 @@ module ViewModel
       def system_controls
         @xml_doc.search("ACI-System-Control").map do |node|
           {
-              sub_system_id: xpath(%w[Sub-System-ID], node),
-              component: xpath(%w[System-Component-Identifier], node),
-              inspection: {
-                  zoning: extract_inspection_item(node.at("Zoning-Assessment")),
-                  time: extract_inspection_item(node.at("Current-Indicated-Time")),
-                  set_on_period: extract_inspection_item(node.at("Set-On-Period")),
-                  timer_shortfall:
-                      extract_inspection_item(node.at("Timer-Shortfall")),
-                  sensors: extract_inspection_item(node.at("Sensors-Appropriate")),
-                  set_temperature: extract_inspection_item(node.at("Set-Temperature")),
-                  dead_band: extract_inspection_item(node.at("Dead-Band-Set")),
-                  capacity: extract_inspection_item(node.at("Equipment-Capacity")),
-                  airflow: extract_inspection_item(node.at("Airflow-Modulation")),
-                  guidance_controls:
-                      extract_inspection_item(node.at("Use-Guidance-Or-Controls")),
-              },
+            sub_system_id: xpath(%w[Sub-System-ID], node),
+            component: xpath(%w[System-Component-Identifier], node),
+            inspection: {
+              zoning: extract_inspection_item(node.at("Zoning-Assessment")),
+              time: extract_inspection_item(node.at("Current-Indicated-Time")),
+              set_on_period: extract_inspection_item(node.at("Set-On-Period")),
+              timer_shortfall:
+                extract_inspection_item(node.at("Timer-Shortfall")),
+              sensors: extract_inspection_item(node.at("Sensors-Appropriate")),
+              set_temperature:
+                extract_inspection_item(node.at("Set-Temperature")),
+              dead_band: extract_inspection_item(node.at("Dead-Band-Set")),
+              capacity: extract_inspection_item(node.at("Equipment-Capacity")),
+              airflow: extract_inspection_item(node.at("Airflow-Modulation")),
+              guidance_controls:
+                extract_inspection_item(node.at("Use-Guidance-Or-Controls")),
+            },
           }
         end
       end
