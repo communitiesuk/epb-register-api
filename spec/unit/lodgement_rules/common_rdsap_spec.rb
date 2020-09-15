@@ -12,17 +12,14 @@ describe LodgementRules::DomesticCommon do
     ]
   end
 
-  def assert_errors(key, value, expected_errors, values= nil)
+  def assert_errors(key, value, expected_errors, values = nil)
     docs_under_test.each do |doc|
-
       xml_doc = doc[:xml_doc]
 
       if values.nil?
         xml_doc.at(key).children = value
       else
-        values.each do |k, v|
-          xml_doc.at(k).children = v
-        end
+        values.each { |k, v| xml_doc.at(k).children = v }
       end
 
       wrapper =
@@ -178,21 +175,19 @@ describe LodgementRules::DomesticCommon do
   context "GROUND_FLOOR_HEAT_LOSS_ON_UPPER_FLOOR" do
     let(:error) do
       {
-          "code": "GROUND_FLOOR_HEAT_LOSS_ON_UPPER_FLOOR",
-          "title":
-              'If "Level" is greater than 1 and "Building-Part-Number" is equal to 1 then "Floor-Heat-Loss" must not be equal to 7',
+        "code": "GROUND_FLOOR_HEAT_LOSS_ON_UPPER_FLOOR",
+        "title":
+          'If "Level" is greater than 1 and "Building-Part-Number" is equal to 1 then "Floor-Heat-Loss" must not be equal to 7',
       }.freeze
     end
 
     it "returns an error when the described scenario is triggered" do
-      assert_errors( nil, nil, [error], {
-          "Level": "2",
-          "Building-Part-Number": "1",
-          "Floor-Heat-Loss": "7"
-      })
+      assert_errors(
+        nil,
+        nil,
+        [error],
+        { "Level": "2", "Building-Part-Number": "1", "Floor-Heat-Loss": "7" },
+      )
     end
-
-
   end
-
 end

@@ -142,7 +142,10 @@ module LodgementRules
           building_part_number = method_or_nil(adapter, :building_part_number)
           floor_heat_loss = method_or_nil(adapter, :floor_heat_loss)
 
-          !(level.to_i > 1 && building_part_number == "1" && floor_heat_loss == "7")
+          !(
+            level.to_i > 1 && building_part_number == "1" &&
+              floor_heat_loss == "7"
+          )
         end,
       },
     ].freeze
