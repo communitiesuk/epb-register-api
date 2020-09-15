@@ -54,6 +54,18 @@ describe "Acceptance::AssessmentSummary::Supplement::SAP" do
         "0000-0000-0000-0000-0000",
       )
     end
+
+    it "does not return opted out related assessments" do
+      opt_out_assessment("0000-0000-0000-0000-0000")
+
+      @second_summary =
+        JSON.parse(
+          fetch_assessment_summary("0000-0000-0000-0000-0001").body,
+          symbolize_names: true,
+        )
+
+      expect(@second_summary.dig(:data, :relatedAssessments)).to eq([])
+    end
   end
 end
 
