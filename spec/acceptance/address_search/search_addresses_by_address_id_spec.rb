@@ -59,7 +59,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
       )
     end
 
-    it "returns the address with the associated reports" do
+    xit "returns the address with the associated reports" do
       expect(response[:data]).to eq(
         {
           addresses: [
@@ -116,7 +116,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
         )
       end
 
-      it "returns the cancelled assessment in existing assessments" do
+      xit "returns the cancelled assessment in existing assessments" do
         expect(response[:data][:addresses][0][:existingAssessments]).to eq(
           [
             {
@@ -156,7 +156,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
         expect(response[:data][:addresses].length).to eq 1
       end
 
-      it "returns the expected address with the most recent assessment as the id" do
+      xit "returns the expected address with the most recent assessment as the id" do
         expect(response[:data][:addresses][0]).to eq(
           {
             addressId: "RRN-0000-0000-0000-0000-0001",
