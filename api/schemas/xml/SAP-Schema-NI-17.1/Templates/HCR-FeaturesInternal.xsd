@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="DCLG-HIP" xmlns:pfdt="DCLG-HIP/BaseDataTypes" xmlns:HIP="DCLG-HIP" targetNamespace="DCLG-HIP" elementFormDefault="qualified" version="LIG-NI-17.1">
+	<xs:import namespace="DCLG-HIP/BaseDataTypes" schemaLocation="../UDT/BaseDataTypes.xsd"/>
+	<xs:include schemaLocation="../UDT/HCR-Domains.xsd"/>
+	<xs:element name="Built-In-Fitting" type="Built-In-Fitting"/>
+	<xs:complexType name="Built-In-Fitting">
+		<xs:annotation>
+			<xs:documentation>Details of built-in kitchen or other fittings but excluding appliances.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Identifier" type="pfdt:IDString"/>
+			<xs:element name="Condition" type="ConditionCode"/>
+			<xs:element name="Justification" type="pfdt:Sentence"/>
+			<xs:element name="Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>A description - taken from the Preferred Text statements - of the individual Property Feature being inspected.
+
+If the feature is "Not Present" (NP) then the Description should say "Not present" though if the feature is not present then the value is actually not used in the HCR so can be ignored. 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Internal-Feature" type="Internal-Feature"/>
+	<xs:complexType name="Internal-Feature" abstract="true">
+		<xs:annotation>
+			<xs:documentation>Any Structural Feature that is inside, and part of, one of the Habitable Areas.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Identifier" type="pfdt:IDString"/>
+			<xs:element name="Condition" type="ConditionCode"/>
+			<xs:element name="Justification" type="pfdt:Sentence"/>
+			<xs:element name="Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>A description - taken from the Preferred Text statements - of the individual Property Feature being inspected.
+
+If the feature is "Not Present" (NP) then the Description should say "Not present" though if the feature is not present then the value is actually not used in the HCR so can be ignored. 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Floor" type="Floor"/>
+	<xs:complexType name="Floor">
+		<xs:all>
+			<xs:element name="Identifier" type="pfdt:IDString"/>
+			<xs:element name="Condition" type="ConditionCode"/>
+			<xs:element name="Justification" type="pfdt:Sentence"/>
+			<xs:element name="Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>A description - taken from the Preferred Text statements - of the individual Property Feature being inspected.
+
+If the feature is "Not Present" (NP) then the Description should say "Not present" though if the feature is not present then the value is actually not used in the HCR so can be ignored. 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Fireplace" type="Fireplace"/>
+	<xs:complexType name="Fireplace">
+		<xs:annotation>
+			<xs:documentation>Details of Fireplaces, Chimney Breasts and the outside of flues.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Identifier" type="pfdt:IDString"/>
+			<xs:element name="Condition" type="ConditionCode"/>
+			<xs:element name="Justification" type="pfdt:Sentence"/>
+			<xs:element name="Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>A description - taken from the Preferred Text statements - of the individual Property Feature being inspected.
+
+If the feature is "Not Present" (NP) then the Description should say "Not present" though if the feature is not present then the value is actually not used in the HCR so can be ignored. 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Dampness" type="Dampness"/>
+	<xs:complexType name="Dampness">
+		<xs:all>
+			<xs:element name="Identifier" type="pfdt:IDString"/>
+			<xs:element name="Condition" type="ConditionCode"/>
+			<xs:element name="Justification" type="pfdt:Sentence"/>
+			<xs:element name="Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>A description - taken from the Preferred Text statements - of the individual Property Feature being inspected.
+
+If the feature is "Not Present" (NP) then the Description should say "Not present" though if the feature is not present then the value is actually not used in the HCR so can be ignored. 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Other-Internal-Detail" type="Other-Internal-Detail"/>
+	<xs:complexType name="Other-Internal-Detail">
+		<xs:all>
+			<xs:element name="Identifier" type="pfdt:IDString"/>
+			<xs:element name="Condition" type="ConditionCode"/>
+			<xs:element name="Justification" type="pfdt:Sentence"/>
+			<xs:element name="Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>A description - taken from the Preferred Text statements - of the individual Property Feature being inspected.
+
+If the feature is "Not Present" (NP) then the Description should say "Not present" though if the feature is not present then the value is actually not used in the HCR so can be ignored. 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Ceiling" type="Ceiling"/>
+	<xs:complexType name="Ceiling">
+		<xs:all>
+			<xs:element name="Identifier" type="pfdt:IDString"/>
+			<xs:element name="Condition" type="ConditionCode"/>
+			<xs:element name="Justification" type="pfdt:Sentence"/>
+			<xs:element name="Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>A description - taken from the Preferred Text statements - of the individual Property Feature being inspected.
+
+If the feature is "Not Present" (NP) then the Description should say "Not present" though if the feature is not present then the value is actually not used in the HCR so can be ignored. 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Roof-Structure" type="Roof-Structure"/>
+	<xs:complexType name="Roof-Structure">
+		<xs:all>
+			<xs:element name="Identifier" type="pfdt:IDString"/>
+			<xs:element name="Condition" type="ConditionCode"/>
+			<xs:element name="Justification" type="pfdt:Sentence"/>
+			<xs:element name="Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>A description - taken from the Preferred Text statements - of the individual Property Feature being inspected.
+
+If the feature is "Not Present" (NP) then the Description should say "Not present" though if the feature is not present then the value is actually not used in the HCR so can be ignored. 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Internal-Woodwork" type="Internal-Woodwork"/>
+	<xs:complexType name="Internal-Woodwork">
+		<xs:all>
+			<xs:element name="Identifier" type="pfdt:IDString"/>
+			<xs:element name="Condition" type="ConditionCode"/>
+			<xs:element name="Justification" type="pfdt:Sentence"/>
+			<xs:element name="Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>A description - taken from the Preferred Text statements - of the individual Property Feature being inspected.
+
+If the feature is "Not Present" (NP) then the Description should say "Not present" though if the feature is not present then the value is actually not used in the HCR so can be ignored. 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Internal-Wall" type="Internal-Wall"/>
+	<xs:complexType name="Internal-Wall">
+		<xs:all>
+			<xs:element name="Identifier" type="pfdt:IDString"/>
+			<xs:element name="Condition" type="ConditionCode"/>
+			<xs:element name="Justification" type="pfdt:Sentence"/>
+			<xs:element name="Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>A description - taken from the Preferred Text statements - of the individual Property Feature being inspected.
+
+If the feature is "Not Present" (NP) then the Description should say "Not present" though if the feature is not present then the value is actually not used in the HCR so can be ignored. 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Bathroom-Fitting" type="Bathroom-Fitting"/>
+	<xs:complexType name="Bathroom-Fitting">
+		<xs:all>
+			<xs:element name="Identifier" type="pfdt:IDString"/>
+			<xs:element name="Condition" type="ConditionCode"/>
+			<xs:element name="Justification" type="pfdt:Sentence"/>
+			<xs:element name="Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>A description - taken from the Preferred Text statements - of the individual Property Feature being inspected.
+
+If the feature is "Not Present" (NP) then the Description should say "Not present" though if the feature is not present then the value is actually not used in the HCR so can be ignored. 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Internal-Features" type="Internal-Features"/>
+	<xs:complexType name="Internal-Features">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="Roof-Structure" type="Roof-Structure"/>
+			<xs:element name="Ceiling" type="Ceiling"/>
+			<xs:element name="Internal-Wall" type="Internal-Wall"/>
+			<xs:element name="Floor" type="Floor"/>
+			<xs:element name="Fireplace" type="Fireplace"/>
+			<xs:element name="Built-In-Fitting" type="Built-In-Fitting"/>
+			<xs:element name="Internal-Woodwork" type="Internal-Woodwork"/>
+			<xs:element name="Bathroom-Fitting" type="Bathroom-Fitting"/>
+			<xs:element name="Dampness" type="Dampness"/>
+			<xs:element name="Other-Internal-Detail" type="Other-Internal-Detail"/>
+		</xs:choice>
+	</xs:complexType>
+</xs:schema>
