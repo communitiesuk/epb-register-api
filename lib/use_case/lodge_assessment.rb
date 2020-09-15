@@ -23,9 +23,9 @@ module UseCase
         end
       end
 
-      scheme_assessor_id = data[:assessor_id]
+      scheme_assessor_id = data[:assessor_id].nil? ? data[:assessor][:scheme_assessor_id] : data[:assessor_id]
 
-      expiry_date = Date.parse(data[:inspection_date]).next_year(10).to_s
+      expiry_date = data[:date_of_expiry] || Date.parse(data[:date_of_assessment]).next_year(10).to_s
 
       assessor = @assessors_gateway.fetch scheme_assessor_id
 
@@ -33,24 +33,24 @@ module UseCase
 
       assessment =
         Domain::AssessmentIndexRecord.new(
-          migrated: migrated,
-          date_of_assessment: data[:inspection_date],
-          date_registered: data[:registration_date],
-          type_of_assessment: data[:assessment_type],
           assessment_id: data[:assessment_id],
+          type_of_assessment: data[:type_of_assessment],
+          date_of_assessment: data[:date_of_assessment],
+          date_registered: data[:date_of_registration],
+          date_of_expiry: expiry_date,
           assessor: assessor,
-          current_energy_efficiency_rating: data[:current_energy_rating].to_i,
+          current_energy_efficiency_rating: data[:current_energy_efficiency_rating].to_i,
           potential_energy_efficiency_rating:
-            data[:potential_energy_rating].to_i,
-          postcode: data[:postcode],
-          date_of_expiry: data[:date_of_expiry] || expiry_date,
-          address_id: data[:address_id] || nil,
-          address_line1: data[:address_line_one],
-          address_line2: data[:address_line_two] || "",
-          address_line3: data[:address_line_three] || "",
-          address_line4: "",
-          town: data[:town],
+            data[:potential_energy_efficiency_rating].to_i,
+          address_id: data[:address][:address_id] || nil,
+          address_line1: data[:address][:address_line1],
+          address_line2: data[:address][:address_line2] || "",
+          address_line3: data[:address][:address_line3] || "",
+          address_line4: data[:address][:address_line4],
+          town: data[:address][:town],
+          postcode: data[:address][:postcode],
           xml: data[:raw_data],
+          migrated: migrated,
         )
 
       @assessments_gateway.insert_or_update assessment
@@ -71,17 +71,17 @@ module UseCase
     def check_assessor_qualification(data, assessor)
       active_status = "ACTIVE"
 
-      if data[:assessment_type] == "RdSAP" &&
+      if data[:type_of_assessment] == "RdSAP" &&
           assessor.domestic_rd_sap_qualification != active_status
         raise InactiveAssessorException
       end
 
-      if data[:assessment_type] == "SAP" &&
+      if data[:type_of_assessment] == "SAP" &&
           assessor.domestic_sap_qualification != active_status
         raise InactiveAssessorException
       end
 
-      if %w[CEPC CEPC-RR].include?(data[:assessment_type])
+      if %w[CEPC CEPC-RR].include?(data[:type_of_assessment])
         if data[:building_complexity]
           level = data[:building_complexity][-1]
 
@@ -98,17 +98,17 @@ module UseCase
         end
       end
 
-      if %w[DEC DEC-RR].include?(data[:assessment_type]) &&
+      if %w[DEC DEC-RR].include?(data[:type_of_assessment]) &&
           assessor.non_domestic_dec_qualification != active_status
         raise InactiveAssessorException
       end
 
-      if data[:assessment_type] == "AC-REPORT" &&
+      if data[:type_of_assessment] == "AC-REPORT" &&
           assessor.non_domestic_sp3_qualification != active_status
         raise InactiveAssessorException
       end
 
-      if data[:assessment_type] == "AC-CERT" &&
+      if data[:type_of_assessment] == "AC-CERT" &&
           assessor.non_domestic_cc4_qualification != active_status
         raise InactiveAssessorException
       end

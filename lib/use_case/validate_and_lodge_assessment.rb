@@ -79,7 +79,7 @@ module UseCase
 
       ActiveRecord::Base.transaction do
         lodgement.fetch_data.each do |lodgement_data|
-          unless assessor_can_lodge?(lodgement_data[:assessor_id], scheme_ids)
+          unless assessor_can_lodge?(lodgement_data[:assessor][:scheme_assessor_id], scheme_ids)
             raise UnauthorisedToLodgeAsThisSchemeException
           end
 

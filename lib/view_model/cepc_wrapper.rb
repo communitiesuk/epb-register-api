@@ -75,6 +75,7 @@ module ViewModel
         existing_build_rating: @view_model.existing_build_rating,
         existing_build_band:
           get_energy_rating_band(@view_model.existing_build_rating.to_i),
+        current_energy_efficiency_rating: @view_model.energy_efficiency_rating,
         energy_efficiency_rating: @view_model.energy_efficiency_rating,
         assessor: {
           scheme_assessor_id: @view_model.scheme_assessor_id,
@@ -91,6 +92,7 @@ module ViewModel
         current_energy_efficiency_band:
           get_energy_rating_band(@view_model.energy_efficiency_rating.to_i),
         property_type: @view_model.property_type,
+        building_complexity: @view_model.building_level,
       }
     end
 

@@ -28,6 +28,7 @@ module ViewModel
         type_of_assessment: TYPE_OF_ASSESSMENT,
         assessment_id: @view_model.assessment_id,
         report_type: @view_model.report_type,
+        date_of_assessment: @view_model.date_of_assessment,
         date_of_expiry: @view_model.date_of_expiry,
         address: {
           address_id: @view_model.address_id,

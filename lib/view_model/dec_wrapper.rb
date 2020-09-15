@@ -26,6 +26,7 @@ module ViewModel
     def to_hash
       {
         assessment_id: @view_model.assessment_id,
+        date_of_assessment: @view_model.date_of_assessment,
         date_of_expiry: @view_model.date_of_expiry,
         address: {
           address_id: @view_model.address_id,

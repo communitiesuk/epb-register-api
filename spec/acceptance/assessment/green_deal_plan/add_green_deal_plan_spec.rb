@@ -409,7 +409,7 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan" do
     context "when a Green Deal Plan is added to an expired RdSAP assessment" do
       let(:scheme_id) { add_scheme_and_get_id }
       let(:doc) { Nokogiri.XML valid_rdsap_xml }
-      let(:assessment_date) { doc.at("Inspection-Date") }
+      let(:assessment_date) { doc.at("Registration-Date") }
 
       before do
         add_assessor scheme_id,
@@ -417,7 +417,9 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan" do
                      AssessorStub.new.fetch_request_body(
                        domesticRdSap: "ACTIVE",
                      )
+
         assessment_date.children = Date.today.prev_year(11).strftime("%Y-%m-%d")
+
         lodge_assessment assessment_body: doc.to_xml,
                          accepted_responses: [201],
                          auth_data: { scheme_ids: [scheme_id] }

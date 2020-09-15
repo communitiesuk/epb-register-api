@@ -14,38 +14,28 @@ module Domain
     end
 
     def fetch_data
-      schema = Helper::SchemaListHelper.new(@schema_name)
+      schema = Helper::SchemaListHelper.new @schema_name
 
       data = []
 
       if schema.fetch_root
-        unless @data.first[1][schema.fetch_root].is_a? Array
-          @data.first[1][schema.fetch_root] = [
-            @data.first[1][schema.fetch_root],
-          ]
-        end
-        @data.first[1][schema.fetch_root].each do |inner_data|
-          cad_data =
-            Helper::DataExtractorHelper.new.fetch_data(
-              { schema.fetch_root => inner_data },
-              schema.fetch_data_structure,
-              "",
-            )
+        xml = Nokogiri.XML @raw_data
+        xml.remove_namespaces!
 
-          cad_data[:raw_data] = @raw_data
+        rrns = xml.xpath("//RRN").map(&:text)
 
-          data.push(cad_data)
+        rrns.each do |rrn|
+          report = ViewModel::Factory.new.create(@raw_data, @schema_name.to_s, rrn).to_hash
+          report[:raw_data] = @raw_data
+
+          data << report
         end
       else
-        cad_data =
-          Helper::DataExtractorHelper.new.fetch_data(
-            @data,
-            schema.fetch_data_structure,
-            "",
-          )
-        cad_data[:raw_data] = @raw_data
+        report = ViewModel::Factory.new.create(@raw_data, @schema_name.to_s).to_hash
 
-        data.push(cad_data)
+        report[:raw_data] = @raw_data
+
+        data << report
       end
 
       data

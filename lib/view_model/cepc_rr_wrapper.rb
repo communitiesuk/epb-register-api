@@ -28,6 +28,7 @@ module ViewModel
         type_of_assessment: TYPE_OF_ASSESSMENT,
         assessment_id: @view_model.assessment_id,
         report_type: @view_model.report_type,
+        date_of_assessment: @view_model.date_of_assessment,
         date_of_expiry: @view_model.date_of_expiry,
         date_of_registration: @view_model.date_of_registration,
         related_certificate: @view_model.related_certificate,
@@ -63,6 +64,7 @@ module ViewModel
           calculation_tool: @view_model.calculation_tools,
         },
         related_party_disclosure: @view_model.related_party_disclosure,
+        building_complexity: @view_model.building_level,
       }
     end
 

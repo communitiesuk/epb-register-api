@@ -10,7 +10,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
     let(:expired_assessment) { Nokogiri.XML Samples.xml "RdSAP-Schema-20.0.0" }
     let(:address_id) { assessment.at("UPRN") }
     let(:assessment_id) { assessment.at("RRN") }
-    let(:assessment_date) { assessment.at("Inspection-Date") }
+    let(:assessment_date) { assessment.at("Registration-Date") }
     let(:address_line_one) { assessment.search("Address-Line-1")[1] }
     let(:address_line_two) do
       Nokogiri::XML::Node.new "Address-Line-2", assessment

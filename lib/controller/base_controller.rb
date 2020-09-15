@@ -97,6 +97,8 @@ module Controller
     end
 
     def server_error(exception)
+      raise exception
+
       message =
         exception.methods.include?(:message) ? exception.message : exception
 

@@ -122,6 +122,10 @@ module ViewModel
       def inspection_type
         xpath(%w[Calculation-Details Inspection-Type])
       end
+
+      def building_level
+        xpath(%w[Building-Level])
+      end
     end
   end
 end

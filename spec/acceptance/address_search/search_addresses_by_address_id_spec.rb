@@ -5,7 +5,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
     assessment = Nokogiri.XML Samples.xml "RdSAP-Schema-20.0.0"
     address_id_node = assessment.at("UPRN")
     assessment_id_node = assessment.at("RRN")
-    assessment_date_node = assessment.at("Inspection-Date")
+    assessment_date_node = assessment.at("Registration-Date")
 
     assessment_id_node.children = assessment_id
     address_id_node.children = address_id
