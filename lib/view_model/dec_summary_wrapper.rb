@@ -83,7 +83,9 @@ module ViewModel
           @view_model.annual_energy_summary[:typical_electrical_use]
         }</Typical-Electrical-Use>
                                       </DEC-Annual-Energy-Summary>
-                                      <DEC-Status>1</DEC-Status>
+                                      <DEC-Status>#{
+          @view_model.dec_status
+        }</DEC-Status>
                                       <This-Assessment>
                                         <Nominated-Date>#{
           @view_model.current_assessment_date

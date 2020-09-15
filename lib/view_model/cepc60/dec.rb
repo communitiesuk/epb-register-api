@@ -101,6 +101,10 @@ module ViewModel
         xpath(%w[DEC-Annual-Energy-Summary Renewables-Electrical])
       end
 
+      def dec_status
+        xpath(%w[DEC-Status])
+      end
+
       def dec_related_party_disclosure
         xpath(%w[DEC-Related-Party-Disclosure])
       end
