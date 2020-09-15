@@ -14,22 +14,12 @@ module Helper
       @schema_active = schema_variations[@schema_name]
     end
 
-    def fetch_data_structure
-      data = File.read File.join Dir.pwd, @schema_active[:data_path]
-
-      JSON.parse(data)
-    end
-
     def schema_exists?
       @schema_active != nil
     end
 
     def schema_path
       @schema_active[:schema_path]
-    end
-
-    def fetch_root
-      @schema_active[:root_tag].to_sym if @schema_active[:root_tag]
     end
   end
 end
