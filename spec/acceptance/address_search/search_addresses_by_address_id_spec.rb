@@ -59,12 +59,12 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
       )
     end
 
-    xit "returns the address with the associated reports" do
+    it "returns the address with the associated reports" do
       expect(response[:data]).to eq(
         {
           addresses: [
             {
-              addressId: "RRN-0000-0000-0000-0000-0001",
+              addressId: "RRN-0000-0000-0000-0000-0002",
               line1: "1 Some Street",
               line2: nil,
               line3: nil,
@@ -74,22 +74,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
               source: "PREVIOUS_ASSESSMENT",
               existingAssessments: [
                 {
-                  assessmentId: "0000-0000-0000-0000-0001",
-                  assessmentStatus: "ENTERED",
-                  assessmentType: "RdSAP",
-                },
-                {
                   assessmentId: "0000-0000-0000-0000-0002",
-                  assessmentStatus: "ENTERED",
-                  assessmentType: "RdSAP",
-                },
-                {
-                  assessmentId: "0000-0000-0000-0000-0003",
-                  assessmentStatus: "ENTERED",
-                  assessmentType: "RdSAP",
-                },
-                {
-                  assessmentId: "0000-0000-0000-0000-0000",
                   assessmentStatus: "ENTERED",
                   assessmentType: "RdSAP",
                 },
@@ -116,27 +101,12 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
         )
       end
 
-      xit "returns the cancelled assessment in existing assessments" do
+      it "returns the cancelled assessment in existing assessments" do
         expect(response[:data][:addresses][0][:existingAssessments]).to eq(
           [
             {
-              assessmentId: "0000-0000-0000-0000-0001",
-              assessmentStatus: "ENTERED",
-              assessmentType: "RdSAP",
-            },
-            {
               assessmentId: "0000-0000-0000-0000-0002",
               assessmentStatus: "ENTERED",
-              assessmentType: "RdSAP",
-            },
-            {
-              assessmentId: "0000-0000-0000-0000-0003",
-              assessmentStatus: "NOT_FOR_ISSUE",
-              assessmentType: "RdSAP",
-            },
-            {
-              assessmentId: "0000-0000-0000-0000-0000",
-              assessmentStatus: "CANCELLED",
               assessmentType: "RdSAP",
             },
           ],
@@ -156,10 +126,10 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
         expect(response[:data][:addresses].length).to eq 1
       end
 
-      xit "returns the expected address with the most recent assessment as the id" do
+      it "returns the expected address with the most recent assessment as the id" do
         expect(response[:data][:addresses][0]).to eq(
           {
-            addressId: "RRN-0000-0000-0000-0000-0001",
+            addressId: "RRN-0000-0000-0000-0000-0000",
             line1: "1 Some Street",
             line2: nil,
             line3: nil,
@@ -169,22 +139,12 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
             source: "PREVIOUS_ASSESSMENT",
             existingAssessments: [
               {
-                assessmentId: "0000-0000-0000-0000-0001",
-                assessmentStatus: "ENTERED",
-                assessmentType: "RdSAP",
-              },
-              {
-                assessmentId: "0000-0000-0000-0000-0002",
-                assessmentStatus: "ENTERED",
-                assessmentType: "RdSAP",
-              },
-              {
-                assessmentId: "0000-0000-0000-0000-0003",
-                assessmentStatus: "ENTERED",
-                assessmentType: "RdSAP",
-              },
-              {
                 assessmentId: "0000-0000-0000-0000-0000",
+                assessmentStatus: "ENTERED",
+                assessmentType: "RdSAP",
+              },
+              {
+                assessmentId: "0000-0000-0000-0000-0001",
                 assessmentStatus: "ENTERED",
                 assessmentType: "RdSAP",
               },

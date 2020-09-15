@@ -811,7 +811,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
                   assessmentId: "0000-0000-0000-0000-0000",
                   assessmentStatus: "ENTERED",
                   assessmentType: "RdSAP",
-                }
+                },
               ],
             },
           )

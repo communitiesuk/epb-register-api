@@ -68,39 +68,41 @@ module Gateway
     end
 
     def search_by_rrn(rrn)
-      parse_results ActiveRecord::Base.connection.exec_query(
-        "SELECT
-           assessment_id,
-           date_of_expiry,
-           type_of_assessment,
-           address_line1,
-           address_line2,
-           address_line3,
-           address_line4,
-           town,
-           postcode,
-           address_id,
-           type_of_assessment,
-           CASE WHEN cancelled_at IS NOT NULL THEN 'CANCELLED'
-                    WHEN not_for_issue_at IS NOT NULL THEN 'NOT_FOR_ISSUE'
-                    WHEN date_of_expiry < CURRENT_DATE THEN 'EXPIRED'
-                    ELSE 'ENTERED'
-                   END AS assessment_status
-         FROM assessments
-         WHERE
-           cancelled_at IS NULL
-         AND not_for_issue_at IS NULL
-         AND assessment_id = $1",
-        "SQL",
-        [
-          ActiveRecord::Relation::QueryAttribute.new(
-            "rrn",
-            rrn,
-            ActiveRecord::Type::String.new,
-          ),
-        ],
-      ),
-                    nil
+      parse_results(
+        ActiveRecord::Base.connection.exec_query(
+          "SELECT
+             assessment_id,
+             date_of_expiry,
+             type_of_assessment,
+             address_line1,
+             address_line2,
+             address_line3,
+             address_line4,
+             town,
+             postcode,
+             address_id,
+             type_of_assessment,
+             CASE WHEN cancelled_at IS NOT NULL THEN 'CANCELLED'
+                      WHEN not_for_issue_at IS NOT NULL THEN 'NOT_FOR_ISSUE'
+                      WHEN date_of_expiry < CURRENT_DATE THEN 'EXPIRED'
+                      ELSE 'ENTERED'
+                     END AS assessment_status
+           FROM assessments
+           WHERE
+             cancelled_at IS NULL
+           AND not_for_issue_at IS NULL
+           AND (assessment_id = $1 OR address_id = CONCAT('RRN-', $1))",
+          "SQL",
+          [
+            ActiveRecord::Relation::QueryAttribute.new(
+              "rrn",
+              rrn,
+              ActiveRecord::Type::String.new,
+            ),
+          ],
+        ),
+        nil,
+      )
     end
 
     def search_by_street_and_town(street, town, address_type)
