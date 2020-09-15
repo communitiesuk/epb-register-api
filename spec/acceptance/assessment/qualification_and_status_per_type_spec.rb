@@ -125,7 +125,17 @@ describe "Acceptance::Assessment::QualificationAndStatusPerType" do
 
           if assessment_settings[:dont_check_incorrect_assessor].nil?
             it "gives error 400 when lodging with insufficient qualification" do
-              create_assessor({})
+              create_assessor({
+                                  nonDomesticNos3: "INACTIVE",
+                                   nonDomesticNos4: "SUSPENDED",
+                                   nonDomesticNos5: "INACTIVE",
+                                   nonDomesticDec: "SUSPENDED",
+                                   domesticRdSap: "INACTIVE",
+                                   domesticSap: "SUSPENDED",
+                                   nonDomesticSp3: "INACTIVE",
+                                   nonDomesticCc4: "INACTIVE",
+                                   gda: "INACTIVE"
+                              })
 
               lodgement_response =
                 get_lodgement(assessment_settings[:xml], [400], schema_name)

@@ -69,13 +69,15 @@ module UseCase
   private
 
     def check_assessor_qualification(data, assessor)
+      active_status = "ACTIVE"
+
       if data[:assessment_type] == "RdSAP" &&
-          assessor.domestic_rd_sap_qualification == "INACTIVE"
+          assessor.domestic_rd_sap_qualification != active_status
         raise InactiveAssessorException
       end
 
       if data[:assessment_type] == "SAP" &&
-          assessor.domestic_sap_qualification == "INACTIVE"
+          assessor.domestic_sap_qualification != active_status
         raise InactiveAssessorException
       end
 
@@ -83,31 +85,30 @@ module UseCase
         if data[:building_complexity]
           level = data[:building_complexity][-1]
 
-          if assessor.send(:"non_domestic_nos#{level}_qualification") ==
-              "INACTIVE"
+          if assessor.send(:"non_domestic_nos#{level}_qualification") != active_status
             raise InactiveAssessorException
           end
         end
 
-        if assessor.non_domestic_nos3_qualification == "INACTIVE" &&
-            assessor.non_domestic_nos4_qualification == "INACTIVE" &&
-            assessor.non_domestic_nos5_qualification == "INACTIVE"
+        if assessor.non_domestic_nos3_qualification != active_status &&
+            assessor.non_domestic_nos4_qualification != active_status &&
+            assessor.non_domestic_nos5_qualification != active_status
           raise InactiveAssessorException
         end
       end
 
       if %w[DEC DEC-RR].include?(data[:assessment_type]) &&
-          assessor.non_domestic_dec_qualification == "INACTIVE"
+          assessor.non_domestic_dec_qualification != active_status
         raise InactiveAssessorException
       end
 
       if data[:assessment_type] == "AC-REPORT" &&
-          assessor.non_domestic_sp3_qualification == "INACTIVE"
+          assessor.non_domestic_sp3_qualification != active_status
         raise InactiveAssessorException
       end
 
       if data[:assessment_type] == "AC-CERT" &&
-          assessor.non_domestic_cc4_qualification == "INACTIVE"
+          assessor.non_domestic_cc4_qualification != active_status
         raise InactiveAssessorException
       end
     end

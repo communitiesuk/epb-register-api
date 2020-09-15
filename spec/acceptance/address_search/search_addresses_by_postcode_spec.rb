@@ -72,8 +72,16 @@ describe "Acceptance::AddressSearch::ByPostcode" do
               )",
       )
 
-      add_assessor(scheme_id, "SPEC000000", VALID_ASSESSOR_REQUEST_BODY)
-
+      add_assessor(scheme_id, "SPEC000000", AssessorStub.new.fetch_request_body(    nonDomesticNos3: "ACTIVE",
+                                                                                    nonDomesticNos4: "ACTIVE",
+                                                                                    nonDomesticNos5: "ACTIVE",
+                                                                                    nonDomesticDec: "ACTIVE",
+                                                                                    domesticRdSap: "ACTIVE",
+                                                                                    domesticSap: "ACTIVE",
+                                                                                    nonDomesticSp3: "ACTIVE",
+                                                                                    nonDomesticCc4: "ACTIVE",
+                                                                                    gda: "ACTIVE"
+      ))
       expired_assessment.at("UPRN").remove
 
       lodge_assessment(
