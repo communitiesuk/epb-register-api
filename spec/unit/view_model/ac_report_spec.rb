@@ -77,6 +77,7 @@ describe ViewModel::AcReportWrapper do
           address: "111 Twotwotwo Street, Mytown,, MT7 1AA",
         },
       },
+      related_rrn: "0000-0000-0000-0000-0001",
       executive_summary: expected_summary,
       equipment_owner: {
         name: "Manager",

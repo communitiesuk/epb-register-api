@@ -142,6 +142,10 @@ module ViewModel
         end
       end
 
+      def related_rrn
+        xpath(%w[Related-RRN])
+      end
+
       def cooling_plants
         @xml_doc.search("Air-Conditioning-Inspection-Report/ACI-Cooling-Plant")
           .map { |_node| {} }

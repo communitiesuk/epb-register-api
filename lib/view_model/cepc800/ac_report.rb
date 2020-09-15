@@ -81,6 +81,10 @@ module ViewModel
         xpath(%w[Equipment-Operator Registered-Address Postcode])
       end
 
+      def related_rrn
+        xpath(%w[Related-RRN])
+      end
+
       def extract_aci_recommendations(nodes)
         nodes.map do |node|
           {

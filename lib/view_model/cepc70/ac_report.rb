@@ -183,6 +183,10 @@ module ViewModel
           .map { |node| extraction_helper.cooling_plant(node) }
       end
 
+      def related_rrn
+        xpath(%w[Related-RRN])
+      end
+
       def extract_inspection_item(node)
         inspection_item = {
           note: node&.at("Note")&.content,

@@ -183,6 +183,10 @@ module ViewModel
         }
       end
 
+      def related_rrn
+        xpath(%w[Related-RRN])
+      end
+
       def extract_inspection_item(node)
         inspection_item = {
           note: node&.at("Note")&.content,
