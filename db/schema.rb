@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_15_081959) do
+ActiveRecord::Schema.define(version: 2020_09_16_235959) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -45,6 +45,8 @@ ActiveRecord::Schema.define(version: 2020_09_15_081959) do
     t.datetime "cancelled_at"
     t.datetime "not_for_issue_at"
     t.index ["address_id"], name: "index_assessments_on_address_id"
+    t.index ["address_line1"], name: "index_assessments_on_address_line1"
+    t.index ["address_line2"], name: "index_assessments_on_address_line2"
     t.index ["cancelled_at"], name: "index_assessments_on_cancelled_at"
     t.index ["not_for_issue_at"], name: "index_assessments_on_not_for_issue_at"
     t.index ["postcode"], name: "index_assessments_on_postcode"
