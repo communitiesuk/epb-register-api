@@ -65,7 +65,7 @@ module UseCase
 
       @green_deal_plan_gateway.add green_deal_plan, assessment_id
 
-      @green_deal_plan_gateway.fetch assessment_id
+      @green_deal_plan_gateway.fetch(assessment_id).first
     end
   end
 end

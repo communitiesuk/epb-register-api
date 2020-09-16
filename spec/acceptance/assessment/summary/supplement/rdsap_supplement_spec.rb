@@ -86,7 +86,7 @@ describe "Acceptance::AssessmentSummary::Supplement::RdSAP" do
     end
 
     it "adds a green deal plan when there is one" do
-      green_deal_plan = @regular_summary.dig(:data, :greenDealPlan)
+      green_deal_plan = @regular_summary.dig(:data, :greenDealPlan).first
       expect(green_deal_plan[:ccaRegulated]).to be_truthy
       expect(green_deal_plan[:chargeUplift]).to eq(
         { amount: "1.25", date: "2025-03-29" },

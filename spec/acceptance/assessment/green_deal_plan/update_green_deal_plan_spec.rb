@@ -135,43 +135,47 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan" do
       end
 
       let(:expected_response) do
-        {
-          greenDealPlanId: "ABC123456DEF",
-          startDate: "2020-02-28",
-          endDate: "2030-03-30",
-          providerDetails: {
-            name: "The New Bank",
-            telephone: "0900 0000000",
-            email: "lender@example.io",
+        [
+          {
+            greenDealPlanId: "ABC123456DEF",
+            startDate: "2020-02-28",
+            endDate: "2030-03-30",
+            providerDetails: {
+              name: "The New Bank",
+              telephone: "0900 0000000",
+              email: "lender@example.io",
+            },
+            interest: { rate: 12.5, fixed: false },
+            chargeUplift: { amount: 0.25, date: "2025-04-29" },
+            ccaRegulated: false,
+            structureChanged: true,
+            measuresRemoved: true,
+            measures: [
+              {
+                sequence: 0,
+                measureType: "Cavity Wall",
+                product: "ColdHome lagging stuff (TM)",
+                repaidDate: "2025-04-29",
+              },
+            ],
+            charges: [
+              {
+                sequence: 0,
+                startDate: "2020-04-29",
+                endDate: "2030-04-29",
+                dailyCharge: 0.35,
+              },
+            ],
+            savings: [
+              { fuelCode: "39", fuelSaving: 23_253, standingChargeFraction: 0 },
+              {
+                fuelCode: "40", fuelSaving: -6331, standingChargeFraction: -0.9
+              },
+              { fuelCode: "41", fuelSaving: -15_561, standingChargeFraction: 0 },
+            ],
+            estimatedSavings: 1566,
           },
-          interest: { rate: 12.5, fixed: false },
-          chargeUplift: { amount: 0.25, date: "2025-04-29" },
-          ccaRegulated: false,
-          structureChanged: true,
-          measuresRemoved: true,
-          measures: [
-            {
-              sequence: 0,
-              measureType: "Cavity Wall",
-              product: "ColdHome lagging stuff (TM)",
-              repaidDate: "2025-04-29",
-            },
-          ],
-          charges: [
-            {
-              sequence: 0,
-              startDate: "2020-04-29",
-              endDate: "2030-04-29",
-              dailyCharge: 0.35,
-            },
-          ],
-          savings: [
-            { fuelCode: "39", fuelSaving: 23_253, standingChargeFraction: 0 },
-            { fuelCode: "40", fuelSaving: -6331, standingChargeFraction: -0.9 },
-            { fuelCode: "41", fuelSaving: -15_561, standingChargeFraction: 0 },
-          ],
-          estimatedSavings: 1566,
-        }
+        ]
       end
 
       before do
@@ -189,7 +193,7 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan" do
       end
 
       it "returns the expected response" do
-        expect(response[:data]).to eq expected_response
+        expect(response[:data]).to eq expected_response.first
       end
 
       context "when updating a Green Deal Plan" do
@@ -206,8 +210,8 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan" do
         end
 
         it "returns the expected Green Deal Plan from assessment" do
-          expected_response[:interest][:rate] = "12.5"
-          expected_response[:chargeUplift][:amount] = "0.25"
+          expected_response[0][:interest][:rate] = "12.5"
+          expected_response[0][:chargeUplift][:amount] = "0.25"
 
           expect(response[:data][:greenDealPlan]).to eq expected_response
         end

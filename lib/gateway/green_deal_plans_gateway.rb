@@ -91,7 +91,7 @@ module Gateway
 
         green_deal_hash = Domain::GreenDealPlan.new(row)
 
-        return green_deal_hash
+        result.push(green_deal_hash)
       end
 
       result
