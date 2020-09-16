@@ -84,12 +84,6 @@ module Gateway
               '$1',
               Helper::LevenshteinSqlHelper::STREET_PERMISSIVENESS,
             )
-          } OR #{
-            Helper::LevenshteinSqlHelper.levenshtein(
-              'address_line3',
-              '$1',
-              Helper::LevenshteinSqlHelper::STREET_PERMISSIVENESS,
-            )
           })
                 AND (#{
             Helper::LevenshteinSqlHelper.levenshtein(
@@ -100,18 +94,6 @@ module Gateway
           } OR #{
             Helper::LevenshteinSqlHelper.levenshtein(
               'address_line2',
-              '$2',
-              Helper::LevenshteinSqlHelper::TOWN_PERMISSIVENESS,
-            )
-          } OR #{
-            Helper::LevenshteinSqlHelper.levenshtein(
-              'address_line3',
-              '$2',
-              Helper::LevenshteinSqlHelper::TOWN_PERMISSIVENESS,
-            )
-          } OR #{
-            Helper::LevenshteinSqlHelper.levenshtein(
-              'address_line4',
               '$2',
               Helper::LevenshteinSqlHelper::TOWN_PERMISSIVENESS,
             )
