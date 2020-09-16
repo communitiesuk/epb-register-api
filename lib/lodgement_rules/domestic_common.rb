@@ -169,7 +169,9 @@ module LodgementRules
           fuel_type = method_or_nil(adapter, :main_fuel_type)
           boiler_flue_type = method_or_nil(adapter, :boiler_flue_type)
 
-          !(heating_category == "2" && fuel_type == "17" && boiler_flue_type.nil?)
+          relevant_fuel_types = %w[17 18]
+
+          !(heating_category == "2" && relevant_fuel_types.include?(fuel_type) && boiler_flue_type.nil?)
 
         end,
       },

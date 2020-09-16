@@ -228,5 +228,12 @@ describe LodgementRules::DomesticCommon do
         { "Main-Heating-Category": "2", "Boiler-Flue-Type": :delete, "Main-Fuel-Type": "17" },
       )
     end
+
+    it "returns an error when Main Fuel Type is 18" do
+      assert_errors(
+        [error],
+        { "Main-Heating-Category": "2", "Boiler-Flue-Type": :delete, "Main-Fuel-Type": "18" },
+      )
+    end
   end
 end
