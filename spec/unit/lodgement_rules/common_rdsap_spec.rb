@@ -207,7 +207,7 @@ describe LodgementRules::DomesticCommon do
     end
 
     it "returns an error when boiler flue type is missing" do
-      relevant_fuel_types = %w[17 18]
+      relevant_fuel_types = %w[17 18 26 27 28 34 35 36 37 51]
 
       relevant_fuel_types.each do |fuel_type|
         assert_errors(
