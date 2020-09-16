@@ -16,11 +16,13 @@ describe LodgementRules::DomesticCommon do
     docs_under_test.each do |doc|
       xml_doc = doc[:xml_doc]
 
-      if values.nil?
-        xml_doc.at(key).children = value
-      else
-        values.each { |k, v| xml_doc.at(k).children = v }
-      end
+      values.each { |k, v|
+        if v == :delete
+          xml_doc.at(k).remove
+        else
+        xml_doc.at(k).children = v
+        end
+      }
 
       wrapper =
         ViewModel::Factory.new.create(
@@ -200,6 +202,30 @@ describe LodgementRules::DomesticCommon do
       assert_errors(
         [error],
         { "Water-Heating-Code": "903", "Immersion-Heating-Type": "NA" },
+      )
+    end
+  end
+
+  context "SUPPLY_BOILER_FLUE_TYPE" do
+    let(:error) do
+      {
+        "code": "SUPPLY_BOILER_FLUE_TYPE",
+        "title":
+          'If "Main-Heating-Category" is equal to 2 and "Main-Fuel-Type" is equal to 17, 18, 26, 27, 28, 34, 35, 36, 37 or 51 then "Boiler-Flue-Type" must be supplied'
+      }.freeze
+    end
+
+    it "returns no errors when main fuel type is 17 but boiler flue type is present" do
+      assert_errors(
+          [],
+          { "Main-Heating-Category": "2", "Main-Fuel-Type": "17" },
+          )
+    end
+
+    it "returns an error when Main Fuel Type is 17" do
+      assert_errors(
+        [error],
+        { "Main-Heating-Category": "2", "Boiler-Flue-Type": :delete, "Main-Fuel-Type": "17" },
       )
     end
   end

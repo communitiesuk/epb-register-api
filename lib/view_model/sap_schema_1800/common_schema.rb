@@ -246,7 +246,20 @@ module ViewModel
         xpath(%w[Immersion-Heating-Type])
       end
 
-    private
+      def main_heating_category
+        xpath(%w[Main-Heating-Category])
+      end
+
+      def main_fuel_type
+        xpath(%w[Main-Fuel-Type])
+      end
+
+      def boiler_flue_type
+        xpath(%w[Boiler-Flue-Type])
+      end
+
+
+      private
 
       def convert_to_big_decimal(node)
         return unless xpath(node)

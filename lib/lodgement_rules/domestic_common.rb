@@ -159,6 +159,20 @@ module LodgementRules
           !(water_heating_code == "903" && immersion_heating_type == "NA")
         end,
       },
+      {
+        name: "SUPPLY_BOILER_FLUE_TYPE",
+        title:
+            'If "Main-Heating-Category" is equal to 2 and "Main-Fuel-Type" is equal to 17, 18, 26, 27, 28, 34, 35, 36, 37 or 51 then "Boiler-Flue-Type" must be supplied',
+        test: lambda do |adapter|
+
+          heating_category = method_or_nil(adapter, :main_heating_category)
+          fuel_type = method_or_nil(adapter, :main_fuel_type)
+          boiler_flue_type = method_or_nil(adapter, :boiler_flue_type)
+
+          !(heating_category == "2" && fuel_type == "17" && boiler_flue_type.nil?)
+
+        end,
+      },
     ].freeze
 
     def validate(xml_adaptor)
