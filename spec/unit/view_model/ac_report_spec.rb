@@ -286,7 +286,18 @@ describe ViewModel::AcReportWrapper do
               note: "Yes system appears in good order for age.", state: true
             },
           },
-          metering: {},
+          metering: {
+            bem_installed: {
+              note: "The system is linked to a Central Controller.", state: true
+            },
+            excessive_use: { note: "No details available.", state: false },
+            metering_installed: { note: "", state: false },
+            usage_records: {
+              note:
+                "There were no records of air conditioning plant usage or sub-metered energy consumption with expected hours of use per year for the plant or systems located on site.",
+              state: false,
+            },
+          },
           humidity_control: {
             note: "N/A no humidity control installed to this system",
             state: false,
@@ -425,7 +436,18 @@ describe ViewModel::AcReportWrapper do
               note: "Yes system appears in good order for age.", state: true
             },
           },
-          metering: {},
+          metering: {
+            bem_installed: {
+              note: "The system is linked to a Central Controller.", state: true
+            },
+            excessive_use: { note: "No details available.", state: false },
+            metering_installed: { note: "", state: false },
+            usage_records: {
+              note:
+                "There were no records of air conditioning plant usage or sub-metered energy consumption with expected hours of use per year for the plant or systems located on site.",
+              state: false,
+            },
+          },
           humidity_control: {
             note: "N/A no humidity control installed to this system",
             state: false,

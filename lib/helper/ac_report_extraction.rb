@@ -118,7 +118,7 @@ module Helper
             ],
           guidance: guidance(node.at("ACI-Cooling-Plant-Maintenance/Guidance")),
         },
-        metering: {},
+        metering: checklist_values(node.at("ACI-Cooling-Plant-Metering")),
         humidity_control:
           checklist_values(node.at("ACI-Cooling-Plant-Humidity-Control"))[
             :humidity_control
