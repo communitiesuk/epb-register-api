@@ -91,9 +91,9 @@ module ViewModel
 
           {
             energy_efficiency_rating:
-                xpath(%w[Energy-Efficiency-Rating], node).to_i,
+              xpath(%w[Energy-Efficiency-Rating], node).to_i,
             environmental_efficiency_rating:
-                xpath(%w[Environmental-Efficiency-Rating], node).to_i,
+              xpath(%w[Environmental-Efficiency-Rating], node).to_i,
             name: node.name.underscore,
             description: xpath(%w[Description], node),
           }
@@ -112,13 +112,13 @@ module ViewModel
         @xml_doc.search("Suggested-Improvements Improvement").map do |node|
           {
             energy_performance_rating_improvement:
-                xpath(%w[Energy-Performance-Rating], node).to_i,
+              xpath(%w[Energy-Performance-Rating], node).to_i,
             environmental_impact_rating_improvement:
-                  xpath(%w[Environmental-Impact-Rating], node).to_i,
+              xpath(%w[Environmental-Impact-Rating], node).to_i,
             green_deal_category_code: xpath(%w[Green-Deal-Category], node),
             improvement_category: xpath(%w[Improvement-Category], node),
             improvement_code:
-                  xpath(%w[Improvement-Details Improvement-Number], node),
+              xpath(%w[Improvement-Details Improvement-Number], node),
             improvement_description: xpath(%w[Improvement-Description], node),
             improvement_title: xpath(%w[Improvement-Title], node),
             improvement_type: xpath(%w[Improvement-Type], node),

@@ -225,61 +225,47 @@ describe LodgementRules::DomesticCommon do
   context "DATES_IN_RANGE" do
     let(:error) do
       {
-          "code": "DATES_IN_RANGE",
-          "title":
-              '"Inspection-Date", "Registration-Date" and "Completion-Date" must not be in the future and must not be more than 18 months ago',
+        "code": "DATES_IN_RANGE",
+        "title":
+          '"Inspection-Date", "Registration-Date" and "Completion-Date" must not be in the future and must not be more than 18 months ago',
       }.freeze
     end
 
     it "Allows an inspection date that is today" do
-      assert_errors(
-          [],
-          { "Inspection-Date": Date.today.to_s },
-          )
+      assert_errors([], { "Inspection-Date": Date.today.to_s })
     end
 
     it "returns an error when inspection date is in the future" do
-      assert_errors(
-          [error],
-          { "Inspection-Date": Date.tomorrow.to_s },
-          )
+      assert_errors([error], { "Inspection-Date": Date.tomorrow.to_s })
     end
 
     it "returns an error when inspection date is more than 18 months ago" do
       assert_errors(
-          [error],
-          { "Inspection-Date": Date.today.prev_month(19).to_s },
-          )
+        [error],
+        { "Inspection-Date": Date.today.prev_month(19).to_s },
+      )
     end
 
     it "returns an error when registration date is in the future" do
-      assert_errors(
-          [error],
-          { "Registration-Date": Date.tomorrow.to_s },
-          )
+      assert_errors([error], { "Registration-Date": Date.tomorrow.to_s })
     end
 
     it "returns an error when registration date is more than 18 months ago" do
       assert_errors(
-          [error],
-          { "Registration-Date": Date.today.prev_month(19).to_s },
-          )
+        [error],
+        { "Registration-Date": Date.today.prev_month(19).to_s },
+      )
     end
 
     it "returns an error when completion date is in the future" do
-      assert_errors(
-          [error],
-          { "Completion-Date": Date.tomorrow.to_s },
-          )
+      assert_errors([error], { "Completion-Date": Date.tomorrow.to_s })
     end
 
     it "returns an error when completion date is more than 18 months ago" do
       assert_errors(
-          [error],
-          { "Completion-Date": Date.today.prev_month(19).to_s },
-          )
+        [error],
+        { "Completion-Date": Date.today.prev_month(19).to_s },
+      )
     end
-
   end
-
 end
