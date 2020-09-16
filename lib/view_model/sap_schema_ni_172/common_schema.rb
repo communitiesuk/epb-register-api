@@ -222,7 +222,14 @@ module ViewModel
       end
 
       def type_of_assessment
-        "SAP"
+        case xpath(%w[Report-Type]).to_i
+        when 1
+          "HCR"
+        when 2
+          "RdSAP"
+        when 3
+          "SAP"
+        end
       end
 
     private
