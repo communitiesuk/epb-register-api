@@ -52,17 +52,17 @@ module ViewModel
         [
           xpath(%w[Home-Inspector Name Prefix]),
           xpath(%w[Home-Inspector Name First-Name]),
-          xpath(%w[Home-Inspector Name Last-Name]),
+          xpath(%w[Home-Inspector Name Surname]),
           xpath(%w[Home-Inspector Name Suffix]),
         ].reject { |e| e.to_s.empty? }.join(" ")
       end
 
       def assessor_email
-        xpath(%w[Home-Inspector/E-Mail])
+        xpath(%w[Home-Inspector E-Mail])
       end
 
       def assessor_telephone
-        xpath(%w[Home-Inspector/Telephone-Number])
+        xpath(%w[Home-Inspector Telephone])
       end
 
       def date_of_assessment
@@ -91,9 +91,9 @@ module ViewModel
 
           {
             energy_efficiency_rating:
-              xpath(%w[Energy-Efficiency-Rating], node).to_i,
+                xpath(%w[Energy-Efficiency-Rating], node).to_i,
             environmental_efficiency_rating:
-              xpath(%w[Environmental-Efficiency-Rating], node).to_i,
+                xpath(%w[Environmental-Efficiency-Rating], node).to_i,
             name: node.name.underscore,
             description: xpath(%w[Description], node),
           }
@@ -112,13 +112,13 @@ module ViewModel
         @xml_doc.search("Suggested-Improvements Improvement").map do |node|
           {
             energy_performance_rating_improvement:
-              xpath(%w[Energy-Performance-Rating], node).to_i,
+                xpath(%w[Energy-Performance-Rating], node).to_i,
             environmental_impact_rating_improvement:
-              xpath(%w[Environmental-Impact-Rating], node).to_i,
+                  xpath(%w[Environmental-Impact-Rating], node).to_i,
             green_deal_category_code: xpath(%w[Green-Deal-Category], node),
             improvement_category: xpath(%w[Improvement-Category], node),
             improvement_code:
-              xpath(%w[Improvement-Details Improvement-Number], node),
+                  xpath(%w[Improvement-Details Improvement-Number], node),
             improvement_description: xpath(%w[Improvement-Description], node),
             improvement_title: xpath(%w[Improvement-Title], node),
             improvement_type: xpath(%w[Improvement-Type], node),
@@ -200,15 +200,21 @@ module ViewModel
       end
 
       def impact_of_cavity_insulation
-        nil
+        if xpath(%w[Impact-Of-Cavity-Insulation])
+          xpath(%w[Impact-Of-Cavity-Insulation]).to_i
+        end
       end
 
       def impact_of_loft_insulation
-        nil
+        if xpath(%w[Impact-Of-Loft-Insulation])
+          xpath(%w[Impact-Of-Loft-Insulation]).to_i
+        end
       end
 
       def impact_of_solid_wall_insulation
-        nil
+        if xpath(%w[Impact-Of-Solid-Wall-Insulation])
+          xpath(%w[Impact-Of-Solid-Wall-Insulation]).to_i
+        end
       end
 
       def status
