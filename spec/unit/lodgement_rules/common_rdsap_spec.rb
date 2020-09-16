@@ -12,7 +12,7 @@ describe LodgementRules::DomesticCommon do
     ]
   end
 
-  def assert_errors(key, value, expected_errors, values = nil)
+  def assert_errors(expected_errors, values = nil)
     docs_under_test.each do |doc|
       xml_doc = doc[:xml_doc]
 
@@ -58,15 +58,15 @@ describe LodgementRules::DomesticCommon do
     end
 
     it "returns an error if the habitable room count is not an integer" do
-      assert_errors("Habitable-Room-Count", "6.2", [error])
+      assert_errors([error], { "Habitable-Room-Count": "6.2" })
     end
 
     it "returns an error if the habitable room count is zero" do
-      assert_errors("Habitable-Room-Count", "0", [error])
+      assert_errors([error], { "Habitable-Room-Count": "0" })
     end
 
     it "returns an error if the habitable room count is negative" do
-      assert_errors("Habitable-Room-Count", "-2", [error])
+      assert_errors([error], { "Habitable-Room-Count": "-2" })
     end
   end
 
@@ -80,19 +80,19 @@ describe LodgementRules::DomesticCommon do
     end
 
     it "returns an error if Energy Rating Current is 0" do
-      assert_errors("Energy-Rating-Current", "0", [error])
+      assert_errors([error], { "Energy-Rating-Current": "0" })
     end
 
     it "returns an error if Energy Rating Potential is 0" do
-      assert_errors("Energy-Rating-Potential", "0", [error])
+      assert_errors([error], { "Energy-Rating-Potential": "0" })
     end
 
     it "returns an error if Environmental-Impact-Current is 0" do
-      assert_errors("Environmental-Impact-Current", "0", [error])
+      assert_errors([error], { "Environmental-Impact-Current": "0" })
     end
 
     it "returns an error if Environmental-Impact-Potential is 0" do
-      assert_errors("Environmental-Impact-Potential", "0", [error])
+      assert_errors([error], { "Environmental-Impact-Potential": "0" })
     end
   end
 
@@ -106,46 +106,44 @@ describe LodgementRules::DomesticCommon do
     end
 
     it "returns an error if Wall has a description of wall" do
-      assert_errors("Wall/Description", "wall", [error])
+      assert_errors([error], { "Wall/Description": "wall" })
     end
 
     it "returns an error if Roof has a description of roof" do
-      assert_errors("Roof/Description", "roof", [error])
+      assert_errors([error], { "Roof/Description": "roof" })
     end
 
     it "returns an error if Floor has a description of floor" do
-      assert_errors("Floor/Description", "floor", [error])
+      assert_errors([error], { "Floor/Description": "floor" })
     end
 
     it "returns an error if Window has a description of window" do
-      assert_errors("Window/Description", "window", [error])
+      assert_errors([error], { "Window/Description": "window" })
     end
 
     it "returns an error if Main-Heating has a description of main-heating" do
-      assert_errors("Main-Heating/Description", "main-heating", [error])
+      assert_errors([error], { "Main-Heating/Description": "main-heating" })
     end
 
     it "returns an error if Main-Heating-Controls has a description of main-heating-controls" do
       assert_errors(
-        "Main-Heating-Controls/Description",
-        "main-heating-controls",
         [error],
+        { "Main-Heating-Controls/Description": "main-heating-controls" },
       )
     end
 
     it "returns an error if Hot-Water has a description of hot-water" do
-      assert_errors("Hot-Water/Description", "hot-water", [error])
+      assert_errors([error], { "Hot-Water/Description": "hot-water" })
     end
 
     it "returns an error if Lighting has a description of lighting" do
-      assert_errors("Lighting/Description", "lighting", [error])
+      assert_errors([error], { "Lighting/Description": "lighting" })
     end
 
     it "returns an error if Secondary-Heating has a description of secondary-heating" do
       assert_errors(
-        "Secondary-Heating/Description",
-        "secondary-heating",
         [error],
+        { "Secondary-Heating/Description": "secondary-heating" },
       )
     end
   end
@@ -160,15 +158,15 @@ describe LodgementRules::DomesticCommon do
     end
 
     it "returns an error if the floor area is 0" do
-      assert_errors("SAP-Floor-Dimension/Total-Floor-Area", "0", [error])
+      assert_errors([error], { "SAP-Floor-Dimension/Total-Floor-Area": "0" })
     end
 
     it "returns an error if the floor area is negative" do
-      assert_errors("SAP-Floor-Dimension/Total-Floor-Area", "-6", [error])
+      assert_errors([error], { "SAP-Floor-Dimension/Total-Floor-Area": "-6" })
     end
 
     it "returns an error if the floor area is more than 3000" do
-      assert_errors("SAP-Floor-Dimension/Total-Floor-Area", "3001", [error])
+      assert_errors([error], { "SAP-Floor-Dimension/Total-Floor-Area": "3001" })
     end
   end
 
@@ -183,8 +181,6 @@ describe LodgementRules::DomesticCommon do
 
     it "returns an error when the described scenario is triggered" do
       assert_errors(
-        nil,
-        nil,
         [error],
         { "Level": "2", "Building-Part-Number": "1", "Floor-Heat-Loss": "7" },
       )
