@@ -196,13 +196,16 @@ module LodgementRules
       {
         name: "INVALID_HEATING_FOR_SINGLE_METER",
         title:
-            'If "Meter-Type" is equal to 2 then "SAP-Main-Heating-Code" must not be equal to 401, 402, 404, 408, 409, 421 or 422',
+          'If "Meter-Type" is equal to 2 then "SAP-Main-Heating-Code" must not be equal to 401, 402, 404, 408, 409, 421 or 422',
         test: lambda do |adapter|
           relevant_heating_codes = %w[401 402 404 408 409 421 422]
           meter_type = method_or_nil(adapter, :meter_type)
           sap_main_heating_code = method_or_nil(adapter, :sap_main_heating_code)
 
-          !(meter_type == "2" && relevant_heating_codes.include?(sap_main_heating_code))
+          !(
+            meter_type == "2" &&
+              relevant_heating_codes.include?(sap_main_heating_code)
+          )
         end,
       },
     ].freeze

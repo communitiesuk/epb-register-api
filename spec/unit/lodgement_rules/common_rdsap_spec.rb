@@ -281,12 +281,11 @@ describe LodgementRules::DomesticCommon do
     it "Rejects single meter with invalid  heating code" do
       relevant_heating_codes = %w[401 402 404 408 409 421 422]
 
-      relevant_heating_codes.each do | heating_code|
-        assert_errors([error],
-                      {
-                          "Meter-Type": "2",
-                          "SAP-Main-Heating-Code": heating_code
-                      })
+      relevant_heating_codes.each do |heating_code|
+        assert_errors(
+          [error],
+          { "Meter-Type": "2", "SAP-Main-Heating-Code": heating_code },
+        )
       end
     end
   end

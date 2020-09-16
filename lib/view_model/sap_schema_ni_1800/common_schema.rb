@@ -269,7 +269,7 @@ module ViewModel
         xpath(%w[SAP-Main-Heating-Code])
       end
 
-      private
+    private
 
       def convert_to_big_decimal(node)
         return unless xpath(node)
