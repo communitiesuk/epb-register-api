@@ -11,17 +11,22 @@ module Helper
       node ? node.content : nil
     end
 
-    def checklist_values(checklist)
+    def checklist_values(checklist, skip_state = false)
       results =
         checklist&.element_children&.map { |node|
-          next if xpath(%w[Flag], node).nil?
+          next if xpath(%w[Flag], node).nil? && skip_state == false
 
           checklist_item = node.name.underscore.to_sym
-          {
-            checklist_item => {
-              state: xpath(%w[Flag], node) == "Yes", note: xpath(%w[Note], node)
-            },
-          }
+          if skip_state
+            { checklist_item => { note: xpath(%w[Note], node) } }
+          else
+            {
+              checklist_item => {
+                state: xpath(%w[Flag], node) == "Yes",
+                note: xpath(%w[Note], node),
+              },
+            }
+          end
         }&.compact.inject(&:merge)
 
       results.nil? ? {} : results
@@ -92,7 +97,9 @@ module Helper
               node,
             ),
           compressor_control:
-            xpath(%w[ACI-Cooling-Plant-Refrigeration/Compressor-Control], node),
+            checklist_values(node.at("ACI-Cooling-Plant-Refrigeration"), true)[
+              :compressor_control
+            ],
           refrigerant_leak:
             checklist_values(node.at("ACI-Cooling-Plant-Refrigeration"))[
               :refrigerant_leak
@@ -116,6 +123,12 @@ module Helper
           checklist_values(node.at("ACI-Cooling-Plant-Humidity-Control"))[
             :humidity_control
           ],
+        chillers:
+          if xpath(%w[ACI-Cooling-Plant-Chillers], node).nil?
+            {}
+          else
+            checklist_values(node.at("ACI-Cooling-Plant-Chillers"))
+          end,
       }
     end
   end

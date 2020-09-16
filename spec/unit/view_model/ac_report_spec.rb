@@ -247,8 +247,7 @@ describe ViewModel::AcReportWrapper do
           refrigeration: {
             acceptable_temperature: "0",
             ambient: "13",
-            compressor_control:
-              "\n            The capacity control is inverter.\n            \n              \n                1\n                OTHER\n                This would be considered suitably efficient by current standards as the system does not use more energy than required.\n              \n            \n          ",
+            compressor_control: { note: "The capacity control is inverter." },
             f_gas_inspection: {
               note:
                 "The system operated using refrigerant which is not banned.",
@@ -291,6 +290,15 @@ describe ViewModel::AcReportWrapper do
           humidity_control: {
             note: "N/A no humidity control installed to this system",
             state: false,
+          },
+          chillers: {
+            water_cooled: {
+              note: "N/A no cooling towers installed to this system",
+              state: false,
+            },
+            water_treatment: {
+              note: "N/A no cooling towers installed to this site", state: false
+            },
           },
         },
         {
@@ -378,8 +386,7 @@ describe ViewModel::AcReportWrapper do
           refrigeration: {
             acceptable_temperature: "0",
             ambient: "13",
-            compressor_control:
-              "\n            The capacity control is inverter.\n            \n              \n                1\n                OTHER\n                This would be considered suitably efficient by current standards as the system does not use more energy than required.\n              \n            \n          ",
+            compressor_control: { note: "The capacity control is inverter." },
             f_gas_inspection: {
               note:
                 "The system operated using refrigerant which is not banned.",
@@ -422,6 +429,15 @@ describe ViewModel::AcReportWrapper do
           humidity_control: {
             note: "N/A no humidity control installed to this system",
             state: false,
+          },
+          chillers: {
+            water_cooled: {
+              note: "N/A no cooling towers installed to this system",
+              state: false,
+            },
+            water_treatment: {
+              note: "N/A no cooling towers installed to this site", state: false
+            },
           },
         },
       ],
