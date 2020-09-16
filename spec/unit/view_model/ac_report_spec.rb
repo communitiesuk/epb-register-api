@@ -244,7 +244,32 @@ describe ViewModel::AcReportWrapper do
             total_occupants: "40",
             upper_heat_gain: "140.0",
           },
-          refrigeration: {},
+          refrigeration: {
+            acceptable_temperature: "0",
+            ambient: "13",
+            compressor_control:
+              "\n            The capacity control is inverter.\n            \n              \n                1\n                OTHER\n                This would be considered suitably efficient by current standards as the system does not use more energy than required.\n              \n            \n          ",
+            f_gas_inspection:
+              "\n            The system operated using refrigerant which is not banned.\n            Yes\n            \n              \n                1\n                OTHER\n                This refrigerant is considered satisfactory and not presently proposed to be banned or phased out. However the refrigerant is covered by the F Gas regulations and as such should be included on an F Gas Register which should be located on site.\n              \n            \n          ",
+            guidance: [
+              {
+                code: "OTHER",
+                seq_number: "1",
+                text:
+                  "Access to the pre and post compressor for this type of system is difficult with a visual inspection; therefore the air on/room temperature and air off temperatures were taken from the indoor unit. (Pre Compressor temperature detailed is therefore the room temperature).",
+              },
+              {
+                code: "OTHER",
+                seq_number: "2",
+                text: "No recommendation required.",
+              },
+            ],
+            post_processor: "7",
+            pre_compressor: "22",
+            refrigerant_leak:
+              "\n            There were no visible signs of a leak observed during the inspection.\n            No\n            \n              \n                1\n                OTHER\n                Ensure a site F Gas Register is always in place on site in accordance with current legislation and complete the register any time refrigerant is added/removed from a system.\n              \n            \n          ",
+            refrigerant_name: "R410A",
+          },
           maintenance: {},
           metering: {},
           humidity_control: {},
@@ -331,7 +356,32 @@ describe ViewModel::AcReportWrapper do
             total_occupants: "40",
             upper_heat_gain: "140.0",
           },
-          refrigeration: {},
+          refrigeration: {
+            acceptable_temperature: "0",
+            ambient: "13",
+            compressor_control:
+              "\n            The capacity control is inverter.\n            \n              \n                1\n                OTHER\n                This would be considered suitably efficient by current standards as the system does not use more energy than required.\n              \n            \n          ",
+            f_gas_inspection:
+              "\n            The system operated using refrigerant which is not banned.\n            Yes\n            \n              \n                1\n                OTHER\n                This refrigerant is considered satisfactory and not presently proposed to be banned or phased out. However the refrigerant is covered by the F Gas regulations and as such should be included on an F Gas Register which should be located on site.\n              \n            \n          ",
+            guidance: [
+              {
+                code: "OTHER",
+                seq_number: "1",
+                text:
+                  "Access to the pre and post compressor for this type of system is difficult with a visual inspection.",
+              },
+              {
+                code: "OTHER",
+                seq_number: "2",
+                text: "No recommendation required.",
+              },
+            ],
+            post_processor: "8",
+            pre_compressor: "22",
+            refrigerant_leak:
+              "\n            There were no visible signs of a leak observed during the inspection.\n            No\n            \n              \n                1\n                OTHER\n                Ensure a site F Gas Register is always in place on site in accordance with current legislation and complete the register any time refrigerant is added/removed from a system.\n              \n            \n          ",
+            refrigerant_name: "R410A",
+          },
           maintenance: {},
           metering: {},
           humidity_control: {},

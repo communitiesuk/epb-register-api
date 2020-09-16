@@ -72,7 +72,28 @@ module Helper
             xpath(%w[ACI-Cooling-Plant-Sizing/Acceptable-Installed-Size], node),
           guidance: guidance(node.at("ACI-Cooling-Plant-Sizing/Guidance")),
         },
-        refrigeration: {},
+        refrigeration: {
+          refrigerant_name:
+            xpath(%w[ACI-Cooling-Plant-Refrigeration/Refrigerant-Name], node),
+          f_gas_inspection:
+            xpath(%w[ACI-Cooling-Plant-Refrigeration/F-Gas-Inspection], node),
+          pre_compressor:
+            xpath(%w[ACI-Cooling-Plant-Refrigeration/Pre-Compressor], node),
+          post_processor:
+            xpath(%w[ACI-Cooling-Plant-Refrigeration/Post-Processor], node),
+          ambient: xpath(%w[ACI-Cooling-Plant-Refrigeration/Ambient], node),
+          acceptable_temperature:
+            xpath(
+              %w[ACI-Cooling-Plant-Refrigeration/Acceptable-Temperature],
+              node,
+            ),
+          compressor_control:
+            xpath(%w[ACI-Cooling-Plant-Refrigeration/Compressor-Control], node),
+          refrigerant_leak:
+            xpath(%w[ACI-Cooling-Plant-Refrigeration/Refrigerant-Leak], node),
+          guidance:
+            guidance(node.at("ACI-Cooling-Plant-Refrigeration/Guidance")),
+        },
         maintenance: {},
         metering: {},
         humidity_control: {},
