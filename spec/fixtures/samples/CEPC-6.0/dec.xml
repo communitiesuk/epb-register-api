@@ -294,6 +294,7 @@
       <Technical-Information>
         <Building-Environment>Heating and Natural Ventilation</Building-Environment>
         <Floor-Area>99</Floor-Area>
+        <Main-Heating-Fuel>Natural Gas</Main-Heating-Fuel>
       </Technical-Information>
       <AC-Questionnaire>
         <AC-Present>Yes</AC-Present>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Reports xmlns="DCLG-CEPC">
+<Reports xmlns="DCLG-CEPC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="DCLG-CEPC  ../../../../api/schemas/xml/CEPC-7.1/Reports/CEPC-Reports.xsd">
   <Report>
     <Report-Header>
       <RRN>0000-0000-0000-0000-0000</RRN>
@@ -295,6 +295,7 @@
       <Technical-Information>
         <Building-Environment>Heating and Natural Ventilation</Building-Environment>
         <Floor-Area>99</Floor-Area>
+        <Main-Heating-Fuel>Natural Gas</Main-Heating-Fuel>
       </Technical-Information>
       <AC-Questionnaire>
         <AC-Present>Yes</AC-Present>

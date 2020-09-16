@@ -62,7 +62,7 @@ module ViewModel
       end
 
       def main_heating_fuel
-        xpath(%w[HVAC-Systems HVAC-System-Data Fuel-Type])
+        xpath(%w[Technical-Information Main-Heating-Fuel])
       end
 
       def building_environment
