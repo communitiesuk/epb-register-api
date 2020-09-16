@@ -387,42 +387,35 @@ describe LodgementRules::DomesticCommon do
   context "SUPPLY_MULTIPLE_BUILDING_PARTS" do
     let(:error) do
       {
-          "code": "SUPPLY_MULTIPLE_BUILDING_PARTS",
-          "title":
-              'If "Roof-Room-Connected" is equal to \'Y\' or \'y\' then more than one "SAP-Building-Part" must be supplied',
+        "code": "SUPPLY_MULTIPLE_BUILDING_PARTS",
+        "title":
+          'If "Roof-Room-Connected" is equal to \'Y\' or \'y\' then more than one "SAP-Building-Part" must be supplied',
       }.freeze
     end
 
-      let(:building_part_xml) do
-        %{
+    let(:building_part_xml) do
+      '
         <SAP-Building-Part>
         <Building-Part-Number>1</Building-Part-Number>
           <Roof-Insulation-Location>2</Roof-Insulation-Location>
        </SAP-Building-Part>
-       }
+       '
     end
 
     it "returns no errors when roof room connected is y and more than one building part supplied" do
       assert_errors(
-          [],
-          { "Roof-Room-Connected": "Y"},
-          [{selector: "SAP-Building-Part", xml: building_part_xml}]
-          )
+        [],
+        { "Roof-Room-Connected": "Y" },
+        [{ selector: "SAP-Building-Part", xml: building_part_xml }],
+      )
     end
 
     it "returns no errors when roof room connected is n and only building part supplied" do
-      assert_errors(
-          [],
-          { "Roof-Room-Connected": "N"},
-          )
+      assert_errors([], { "Roof-Room-Connected": "N" })
     end
 
     it "returns error when roof room connected is y and only building part supplied" do
-      assert_errors(
-          [error],
-          { "Roof-Room-Connected": "Y"},
-          )
+      assert_errors([error], { "Roof-Room-Connected": "Y" })
     end
   end
-
 end

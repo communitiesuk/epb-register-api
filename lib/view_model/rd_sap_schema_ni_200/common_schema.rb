@@ -292,16 +292,18 @@ module ViewModel
       end
 
       def all_building_parts
-        @xml_doc
-            .search("SAP-Building-Parts/SAP-Building-Part")
-            .map do |part|
+        @xml_doc.search("SAP-Building-Parts/SAP-Building-Part").map do |part|
           {
-              roof_insulation_thickness: xpath(%w[Roof-Insulation-Thickness], part),
-              rafter_insulation_thickness: xpath(%w[Rafter-Insulation-Thickness], part),
-              flat_roof_insulation_thickness: xpath(%w[Flat-Roof-Insulation-Thickness], part),
-              sloping_ceiling_insulation_thickness: xpath(%w[Sloping-Ceiling-Insulation-Thickness], part),
-              roof_u_value: xpath(%w[Roof-U-Value], part),
-              roof_room_connected: xpath(%w[Roof-Room-Connected], part),
+            roof_insulation_thickness:
+              xpath(%w[Roof-Insulation-Thickness], part),
+            rafter_insulation_thickness:
+              xpath(%w[Rafter-Insulation-Thickness], part),
+            flat_roof_insulation_thickness:
+              xpath(%w[Flat-Roof-Insulation-Thickness], part),
+            sloping_ceiling_insulation_thickness:
+              xpath(%w[Sloping-Ceiling-Insulation-Thickness], part),
+            roof_u_value: xpath(%w[Roof-U-Value], part),
+            roof_room_connected: xpath(%w[Roof-Room-Connected], part),
           }
         end
       end
