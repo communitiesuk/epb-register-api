@@ -220,6 +220,7 @@
             <Main-Fuel-Type>26</Main-Fuel-Type>
             <Main-Heating-Control>2106</Main-Heating-Control>
             <Main-Heating-Data-Source>1</Main-Heating-Data-Source>
+            <SAP-Main-Heating-Code>101</SAP-Main-Heating-Code>
             <Main-Heating-Index-Number>017507</Main-Heating-Index-Number>
             <Boiler-Flue-Type>2</Boiler-Flue-Type>
             <Fan-Flue-Present>N</Fan-Flue-Present>

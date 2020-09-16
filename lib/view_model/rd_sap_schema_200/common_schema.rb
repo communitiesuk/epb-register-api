@@ -315,6 +315,14 @@ module ViewModel
         xpath(%w[Boiler-Flue-Type])
       end
 
+      def meter_type
+        xpath(%w[Meter-Type])
+      end
+
+      def sap_main_heating_code
+        xpath(%w[SAP-Main-Heating-Code])
+      end
+
     private
 
       def convert_to_big_decimal(node)

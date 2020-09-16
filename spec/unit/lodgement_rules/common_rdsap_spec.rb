@@ -268,4 +268,22 @@ describe LodgementRules::DomesticCommon do
       )
     end
   end
+
+  context "INVALID_HEATING_FOR_SINGLE_METER" do
+    let(:error) do
+      {
+        "code": "INVALID_HEATING_FOR_SINGLE_METER",
+        "title":
+          'If "Meter-Type" is equal to 2 then "SAP-Main-Heating-Code" must not be equal to 401, 402, 404, 408, 409, 421 or 422',
+      }.freeze
+    end
+
+    it "Rejects single meter with heating code 401" do
+      assert_errors([error],
+                    {
+                        "Meter-Type": "2",
+                        "SAP-Main-Heating-Code": "401"
+                    })
+    end
+  end
 end
