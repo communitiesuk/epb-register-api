@@ -25,6 +25,16 @@ module Helper
       results.nil? ? {} : results
     end
 
+    def guidance(guidance_elements)
+      guidance_elements&.element_children&.map do |element|
+        {
+          seq_number: xpath(%w[Seq-Number], element),
+          code: xpath(%w[Code], element),
+          text: xpath(%w[Text], element),
+        }
+      end
+    end
+
     def cooling_plant(node)
       {
         system_number: xpath(%w[System-Number], node),
@@ -47,7 +57,21 @@ module Helper
           discrepancy_note: xpath(%w[Discrepancy-Note], node),
         },
         inspection: checklist_values(node.at("ACI-Cooling-Plant-Inspection")),
-        sizing: {},
+        sizing: {
+          total_occupants:
+            xpath(%w[ACI-Cooling-Plant-Sizing/Total-Occupants], node),
+          total_floor_area:
+            xpath(%w[ACI-Cooling-Plant-Sizing/Total-Floor-Area], node),
+          occupant_density:
+            xpath(%w[ACI-Cooling-Plant-Sizing/Occupant-Density], node),
+          upper_heat_gain:
+            xpath(%w[ACI-Cooling-Plant-Sizing/Upper-Heat-Gain], node),
+          installed_capacity:
+            xpath(%w[ACI-Cooling-Plant-Sizing/Installed-Capacity], node),
+          acceptable_installed_size:
+            xpath(%w[ACI-Cooling-Plant-Sizing/Acceptable-Installed-Size], node),
+          guidance: guidance(node.at("ACI-Cooling-Plant-Sizing/Guidance")),
+        },
         refrigeration: {},
         maintenance: {},
         metering: {},

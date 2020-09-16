@@ -212,7 +212,38 @@ describe ViewModel::AcReportWrapper do
               state: true,
             },
           },
-          sizing: {},
+          sizing: {
+            acceptable_installed_size: "1",
+            guidance: [
+              {
+                code: "OTHER",
+                seq_number: "1",
+                text:
+                  "This occupancy is based on information obtained from site",
+              },
+              {
+                code: "OTHER",
+                seq_number: "2",
+                text:
+                  "No recommendation required; occupancy level appears appropriate.",
+              },
+              {
+                code: "OTHER",
+                seq_number: "3",
+                text: "Floor area was measured whilst on site.",
+              },
+              {
+                code: "OTHER",
+                seq_number: "4",
+                text: "No recommendation required.",
+              },
+            ],
+            installed_capacity: "10.0",
+            occupant_density: "8.93",
+            total_floor_area: "357",
+            total_occupants: "40",
+            upper_heat_gain: "140.0",
+          },
           refrigeration: {},
           maintenance: {},
           metering: {},
@@ -278,7 +309,28 @@ describe ViewModel::AcReportWrapper do
               state: true,
             },
           },
-          sizing: {},
+          sizing: {
+            acceptable_installed_size: "1",
+            guidance: [
+              {
+                code: "OTHER",
+                seq_number: "1",
+                text:
+                  "This occupancy is based on information obtained from site",
+              },
+              {
+                code: "OTHER",
+                seq_number: "2",
+                text:
+                  "No recommendation required; occupancy level appears appropriate.",
+              },
+            ],
+            installed_capacity: "10.0",
+            occupant_density: "8.93",
+            total_floor_area: "357",
+            total_occupants: "40",
+            upper_heat_gain: "140.0",
+          },
           refrigeration: {},
           maintenance: {},
           metering: {},
