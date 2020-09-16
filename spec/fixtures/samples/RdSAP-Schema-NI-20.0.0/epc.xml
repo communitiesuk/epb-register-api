@@ -210,6 +210,12 @@
           <Wall-Dry-Lined>N</Wall-Dry-Lined>
           <Wall-Insulation-Thickness>NI</Wall-Insulation-Thickness>
           <Party-Wall-Construction>0</Party-Wall-Construction>
+          <SAP-Room-In-Roof>
+            <Floor-Area>100</Floor-Area>
+            <Construction-Age-Band>B</Construction-Age-Band>
+            <Insulation>AB</Insulation>
+            <Roof-Room-Connected>N</Roof-Room-Connected>
+          </SAP-Room-In-Roof>
         </SAP-Building-Part>
       </SAP-Building-Parts>
       <SAP-Heating>

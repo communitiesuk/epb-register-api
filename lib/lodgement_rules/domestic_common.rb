@@ -226,6 +226,20 @@ module LodgementRules
           }.empty?
         end,
       },
+      {
+        name: "SUPPLY_MULTIPLE_BUILDING_PARTS",
+        title:
+            'If "Roof-Room-Connected" is equal to \'Y\' or \'y\' then more than one "SAP-Building-Part" must be supplied',
+        test: lambda do |adapter|
+          building_parts = method_or_nil(adapter, :all_building_parts)
+          roof_room_connected = ! building_parts.map do |part|
+            part[:roof_room_connected]
+            end.select do |flag|
+            flag&.upcase == 'Y'
+          end.empty?
+          !(roof_room_connected && building_parts.length <= 1)
+        end,
+      },
     ].freeze
 
     def validate(xml_adaptor)
