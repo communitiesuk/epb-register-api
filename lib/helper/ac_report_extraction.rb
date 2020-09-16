@@ -11,6 +11,20 @@ module Helper
       node ? node.content : nil
     end
 
+    def checklist_values(checklist)
+      results =
+        checklist&.element_children&.map { |node|
+          checklist_item = node.name.underscore.to_sym
+          {
+            checklist_item => {
+              state: xpath(%w[Flag], node) == "Yes", note: xpath(%w[Note], node)
+            },
+          }
+        }&.inject(&:merge)
+
+      results.nil? ? {} : results
+    end
+
     def cooling_plant(node)
       {
         system_number: xpath(%w[System-Number], node),
@@ -32,7 +46,7 @@ module Helper
           area_served: xpath(%w[Area-Served], node),
           discrepancy_note: xpath(%w[Discrepancy-Note], node),
         },
-        inspection: {},
+        inspection: checklist_values(node.at("ACI-Cooling-Plant-Inspection")),
         sizing: {},
         refrigeration: {},
         maintenance: {},

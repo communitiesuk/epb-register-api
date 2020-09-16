@@ -172,7 +172,46 @@ describe ViewModel::AcReportWrapper do
             discrepancy_note:
               "Brief details of the installed equipment onsite were provided prior to the inspection however a full and comprehensive asset schedule was not available; it should be considered to prepare a full and comprehensive asset schedule for the site. This should include: system identification/reference numbers to enable determination of which condensers serve which indoor units and detail system model numbers, serial numbers, kW capacities, refrigerant charge, etc for each system. No discrepancy noted between information provided and site observations.",
           },
-          inspection: {},
+          inspection: {
+            air_recirculation: {
+              note: "The condenser was considered suitably located.",
+              state: true,
+            },
+            chiller_placement_ok: {
+              note: "The condenser is considered suitably located.", state: true
+            },
+            chiller_plant_area_clear: {
+              note: "Area appeared clear and satisfactory.", state: true
+            },
+            chiller_plant_ok: {
+              note: "General condition of the plant appeared satisfactory.",
+              state: true,
+            },
+            chiller_plant_operational: {
+              note: "System appeared to operate satisfactorily.", state: true
+            },
+            compressors_operational: {
+              note:
+                "The compressor appeared to operate satisfactorily with the air off temperatures as expected.",
+              state: true,
+            },
+            heat_exchanger_ok: {
+              note: "Heat exchangers appeared satisfactory and clean.",
+              state: true,
+            },
+            heat_rejection_area_clear: {
+              note: "The area was clear and appeared satisfactory.", state: true
+            },
+            heat_rejection_operational: {
+              note: "Heat rejection plant appeared to operate as expected.",
+              state: true,
+            },
+            pipe_insulation_ok: {
+              note:
+                "Thermal insulation appeared in good order and well fitted.",
+              state: true,
+            },
+          },
           sizing: {},
           refrigeration: {},
           maintenance: {},
@@ -199,7 +238,46 @@ describe ViewModel::AcReportWrapper do
             discrepancy_note:
               "No discrepancy noted between information provided and site observations.",
           },
-          inspection: {},
+          inspection: {
+            air_recirculation: {
+              note: "The condenser was considered suitably located.",
+              state: true,
+            },
+            chiller_placement_ok: {
+              note: "The condenser is considered suitably located.", state: true
+            },
+            chiller_plant_area_clear: {
+              note: "Area appeared clear and satisfactory.", state: true
+            },
+            chiller_plant_ok: {
+              note: "General condition of the plant appeared satisfactory.",
+              state: true,
+            },
+            chiller_plant_operational: {
+              note: "System appeared to operate satisfactorily.", state: true
+            },
+            compressors_operational: {
+              note:
+                "The compressor appeared to operate satisfactorily with the air off temperatures as expected.",
+              state: true,
+            },
+            heat_exchanger_ok: {
+              note: "Heat exchangers appeared satisfactory and clean.",
+              state: true,
+            },
+            heat_rejection_area_clear: {
+              note: "The area was clear and appeared satisfactory.", state: true
+            },
+            heat_rejection_operational: {
+              note: "Heat rejection plant appeared to operate as expected.",
+              state: true,
+            },
+            pipe_insulation_ok: {
+              note:
+                "Thermal insulation appeared in good order and well fitted.",
+              state: true,
+            },
+          },
           sizing: {},
           refrigeration: {},
           maintenance: {},
