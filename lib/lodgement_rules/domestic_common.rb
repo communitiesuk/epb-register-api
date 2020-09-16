@@ -222,6 +222,7 @@ module LodgementRules
                 part[:rafter_insulation_thickness],
                 part[:flat_roof_insulation_thickness],
                 part[:sloping_ceiling_insulation_thickness],
+                part[:roof_u_value]
             ].reject(&:nil?).length > 1
 
             }.empty?

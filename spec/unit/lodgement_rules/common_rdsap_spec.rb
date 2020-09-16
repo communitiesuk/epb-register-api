@@ -330,6 +330,7 @@ describe LodgementRules::DomesticCommon do
               }
           ])
     end
+
     it "Rejects assessment where roof and sloping ceiling insulation are supplied" do
       assert_errors(
           [error],
@@ -338,6 +339,18 @@ describe LodgementRules::DomesticCommon do
               {
                   selector: "Roof-Insulation-Thickness",
                   xml: "<Sloping-Ceiling-Insulation-Thickness>2</Sloping-Ceiling-Insulation-Thickness>"
+              }
+          ])
+    end
+
+    it "Rejects assessment where roof and roof u value are supplied" do
+      assert_errors(
+          [error],
+          {},
+          [
+              {
+                  selector: "Roof-Insulation-Thickness",
+                  xml: "<Roof-U-Value>2</Roof-U-Value>"
               }
           ])
     end
