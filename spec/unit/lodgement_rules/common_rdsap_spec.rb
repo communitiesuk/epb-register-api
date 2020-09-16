@@ -252,6 +252,20 @@ describe LodgementRules::DomesticCommon do
           )
     end
 
+    it "returns an error when registration date is in the future" do
+      assert_errors(
+          [error],
+          { "Registration-Date": Date.tomorrow.to_s },
+          )
+    end
+
+    it "returns an error when registration date is more than 18 months ago" do
+      assert_errors(
+          [error],
+          { "Registration-Date": Date.today.prev_month(19).to_s },
+          )
+    end
+
   end
 
 end
