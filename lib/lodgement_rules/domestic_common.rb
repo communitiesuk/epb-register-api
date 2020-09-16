@@ -177,6 +177,16 @@ module LodgementRules
           )
         end,
       },
+      {
+        name: "DATES_IN_RANGE",
+        title:
+          '"Inspection-Date", "Registration-Date" and "Completion-Date" must not be in the future and must not be more than 18 months ago',
+        test: lambda do |adapter|
+          inspection_date = Date.parse(method_or_nil(adapter, :date_of_assessment))
+
+          !(inspection_date.after? Date.today)
+        end,
+      },
     ].freeze
 
     def validate(xml_adaptor)
