@@ -484,8 +484,8 @@ describe "Acceptance::AddressSearch::ByPostcode" do
           it "returns the expected previous assessment address" do
             expect(response[:data][:addresses][3]).to eq(
               {
-                addressId: "RRN-0000-0000-0000-0000-0001",
-                line1: "2 Some Street",
+                addressId: "RRN-0000-0000-0000-0000-0002",
+                line1: "3 Other Street",
                 line2: nil,
                 line3: nil,
                 line4: nil,
@@ -494,9 +494,9 @@ describe "Acceptance::AddressSearch::ByPostcode" do
                 source: "PREVIOUS_ASSESSMENT",
                 existingAssessments: [
                   {
-                    assessmentId: "0000-0000-0000-0000-0001",
+                    assessmentId: "0000-0000-0000-0000-0002",
                     assessmentStatus: "ENTERED",
-                    assessmentType: "RdSAP",
+                    assessmentType: "CEPC",
                   },
                 ],
               },
@@ -541,9 +541,9 @@ describe "Acceptance::AddressSearch::ByPostcode" do
           it "returns the expected previous assessment address" do
             expect(response[:data][:addresses][4]).to eq(
               {
-                addressId: "RRN-0000-0000-0000-0000-0003",
-                line1: "The House",
-                line2: "123 Test Street",
+                addressId: "RRN-0000-0000-0000-0000-0000",
+                line1: "1 Some Street",
+                line2: nil,
                 line3: nil,
                 line4: nil,
                 town: "Post-Town1",
@@ -551,12 +551,12 @@ describe "Acceptance::AddressSearch::ByPostcode" do
                 source: "PREVIOUS_ASSESSMENT",
                 existingAssessments: [
                   {
-                    assessmentId: "0000-0000-0000-0000-0003",
-                    assessmentStatus: "EXPIRED",
+                    assessmentId: "0000-0000-0000-0000-0000",
+                    assessmentStatus: "ENTERED",
                     assessmentType: "RdSAP",
                   },
                   {
-                    assessmentId: "0000-0000-0000-0000-0004",
+                    assessmentId: "0000-0000-0000-0000-0001",
                     assessmentStatus: "ENTERED",
                     assessmentType: "RdSAP",
                   },
