@@ -1,20 +1,11 @@
 describe LodgementRules::DomesticCommon do
   let(:docs_under_test) do
-    [
-      {
-        xml_doc: Nokogiri.XML(Samples.xml("RdSAP-Schema-20.0.0")),
-        schema_name: "RdSAP-Schema-20.0.0",
-      },
-      {
-        xml_doc: Nokogiri.XML(Samples.xml("RdSAP-Schema-NI-20.0.0")),
-        schema_name: "RdSAP-Schema-NI-20.0.0",
-      },
-    ]
+    %w[RdSAP-Schema-20.0.0 RdSAP-Schema-NI-20.0.0]
   end
 
   def assert_errors(expected_errors, values = nil)
     docs_under_test.each do |doc|
-      xml_doc = doc[:xml_doc]
+      xml_doc = Nokogiri.XML(Samples.xml(doc))
 
       values.each { |k, v|
         if v == :delete
@@ -27,7 +18,7 @@ describe LodgementRules::DomesticCommon do
       wrapper =
         ViewModel::Factory.new.create(
           xml_doc.to_xml,
-          "RdSAP-Schema-20.0.0",
+          doc,
           false,
         )
       adapter = wrapper.get_view_model
@@ -40,8 +31,8 @@ describe LodgementRules::DomesticCommon do
     docs_under_test.each do |doc|
       wrapper =
         ViewModel::Factory.new.create(
-          doc[:xml_doc].to_xml,
-          doc[:schema_name],
+            Nokogiri.XML(Samples.xml(doc)).to_xml,
+      doc,
           false,
         )
       adapter = wrapper.get_view_model
@@ -222,18 +213,21 @@ describe LodgementRules::DomesticCommon do
           )
     end
 
-    it "returns an error when Main Fuel Type is 17" do
-      assert_errors(
-        [error],
-        { "Main-Heating-Category": "2", "Boiler-Flue-Type": :delete, "Main-Fuel-Type": "17" },
-      )
+
+    it "returns an error when boiler flue type is missing" do
+      relevant_fuel_types = %w[17 18]
+
+      relevant_fuel_types.each{|fuel_type|
+        assert_errors(
+            [error],
+            {
+                "Main-Heating-Category": "2",
+                "Boiler-Flue-Type": :delete,
+                "Main-Fuel-Type": fuel_type
+            },
+            )
+      }
     end
 
-    it "returns an error when Main Fuel Type is 18" do
-      assert_errors(
-        [error],
-        { "Main-Heating-Category": "2", "Boiler-Flue-Type": :delete, "Main-Fuel-Type": "18" },
-      )
-    end
   end
 end
