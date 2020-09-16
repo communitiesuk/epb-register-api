@@ -244,6 +244,14 @@ describe LodgementRules::DomesticCommon do
           { "Inspection-Date": Date.tomorrow.to_s },
           )
     end
+
+    it "returns an error when inspection date is more than 18 months ago" do
+      assert_errors(
+          [error],
+          { "Inspection-Date": Date.today.prev_month(19).to_s },
+          )
+    end
+
   end
 
 end

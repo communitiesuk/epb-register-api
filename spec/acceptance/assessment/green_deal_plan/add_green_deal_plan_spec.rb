@@ -422,7 +422,8 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan" do
 
         lodge_assessment assessment_body: doc.to_xml,
                          accepted_responses: [201],
-                         auth_data: { scheme_ids: [scheme_id] }
+                         auth_data: { scheme_ids: [scheme_id] },
+                         override: true
       end
 
       it "returns status 410 with the correct error message" do

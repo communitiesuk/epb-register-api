@@ -184,7 +184,7 @@ module LodgementRules
         test: lambda do |adapter|
           inspection_date = Date.parse(method_or_nil(adapter, :date_of_assessment))
 
-          !(inspection_date.after? Date.today)
+          inspection_date.between?(Date.today.prev_month(18), Date.today)
         end,
       },
     ].freeze

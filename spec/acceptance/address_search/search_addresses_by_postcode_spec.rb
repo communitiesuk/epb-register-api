@@ -93,6 +93,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
         assessment_body: expired_assessment.to_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
+        override: true
       )
 
       assessment_id.children = "0000-0000-0000-0000-0001"
@@ -104,6 +105,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
         assessment_body: doc.to_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
+        override: true
       )
 
       cepc_assessment_id.children = "0000-0000-0000-0000-0002"
@@ -130,6 +132,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
         assessment_body: doc.to_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
+        override: true
       )
 
       assessment_id.children = "0000-0000-0000-0000-0004"
@@ -140,6 +143,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
         assessment_body: doc.to_xml,
         accepted_responses: [201],
         auth_data: { scheme_ids: [scheme_id] },
+        override: true
       )
     end
 
