@@ -151,10 +151,11 @@ module LodgementRules
       {
         name: "SUPPLY_IMMERSION_HEATER_TYPE",
         title:
-            'If "Water-Heating-Code" is equal to 903 then "Immersion-Heating-Type" must not be equal to \'NA\'',
+          'If "Water-Heating-Code" is equal to 903 then "Immersion-Heating-Type" must not be equal to \'NA\'',
         test: lambda do |adapter|
           water_heating_code = method_or_nil(adapter, :water_heating_code)
-          immersion_heating_type = method_or_nil(adapter, :immersion_heating_type)
+          immersion_heating_type =
+            method_or_nil(adapter, :immersion_heating_type)
 
           !(water_heating_code == "903" && immersion_heating_type == "NA")
         end,
@@ -162,17 +163,18 @@ module LodgementRules
       {
         name: "SUPPLY_BOILER_FLUE_TYPE",
         title:
-            'If "Main-Heating-Category" is equal to 2 and "Main-Fuel-Type" is equal to 17, 18, 26, 27, 28, 34, 35, 36, 37 or 51 then "Boiler-Flue-Type" must be supplied',
+          'If "Main-Heating-Category" is equal to 2 and "Main-Fuel-Type" is equal to 17, 18, 26, 27, 28, 34, 35, 36, 37 or 51 then "Boiler-Flue-Type" must be supplied',
         test: lambda do |adapter|
-
           heating_category = method_or_nil(adapter, :main_heating_category)
           fuel_type = method_or_nil(adapter, :main_fuel_type)
           boiler_flue_type = method_or_nil(adapter, :boiler_flue_type)
 
           relevant_fuel_types = %w[17 18]
 
-          !(heating_category == "2" && relevant_fuel_types.include?(fuel_type) && boiler_flue_type.nil?)
-
+          !(
+            heating_category == "2" &&
+              relevant_fuel_types.include?(fuel_type) && boiler_flue_type.nil?
+          )
         end,
       },
     ].freeze

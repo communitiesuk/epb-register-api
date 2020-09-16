@@ -258,8 +258,7 @@ module ViewModel
         xpath(%w[Boiler-Flue-Type])
       end
 
-
-      private
+    private
 
       def convert_to_big_decimal(node)
         return unless xpath(node)

@@ -1,26 +1,19 @@
 describe LodgementRules::DomesticCommon do
-  let(:docs_under_test) do
-    %w[RdSAP-Schema-20.0.0 RdSAP-Schema-NI-20.0.0]
-  end
+  let(:docs_under_test) { %w[RdSAP-Schema-20.0.0 RdSAP-Schema-NI-20.0.0] }
 
   def assert_errors(expected_errors, values = nil)
     docs_under_test.each do |doc|
       xml_doc = Nokogiri.XML(Samples.xml(doc))
 
-      values.each { |k, v|
+      values.each do |k, v|
         if v == :delete
           xml_doc.at(k).remove
         else
-        xml_doc.at(k).children = v
+          xml_doc.at(k).children = v
         end
-      }
+      end
 
-      wrapper =
-        ViewModel::Factory.new.create(
-          xml_doc.to_xml,
-          doc,
-          false,
-        )
+      wrapper = ViewModel::Factory.new.create(xml_doc.to_xml, doc, false)
       adapter = wrapper.get_view_model
       errors = described_class.new.validate(adapter)
       expect(errors).to match_array(expected_errors)
@@ -31,8 +24,8 @@ describe LodgementRules::DomesticCommon do
     docs_under_test.each do |doc|
       wrapper =
         ViewModel::Factory.new.create(
-            Nokogiri.XML(Samples.xml(doc)).to_xml,
-      doc,
+          Nokogiri.XML(Samples.xml(doc)).to_xml,
+          doc,
           false,
         )
       adapter = wrapper.get_view_model
@@ -202,32 +195,30 @@ describe LodgementRules::DomesticCommon do
       {
         "code": "SUPPLY_BOILER_FLUE_TYPE",
         "title":
-          'If "Main-Heating-Category" is equal to 2 and "Main-Fuel-Type" is equal to 17, 18, 26, 27, 28, 34, 35, 36, 37 or 51 then "Boiler-Flue-Type" must be supplied'
+          'If "Main-Heating-Category" is equal to 2 and "Main-Fuel-Type" is equal to 17, 18, 26, 27, 28, 34, 35, 36, 37 or 51 then "Boiler-Flue-Type" must be supplied',
       }.freeze
     end
 
     it "returns no errors when main fuel type is 17 but boiler flue type is present" do
       assert_errors(
-          [],
-          { "Main-Heating-Category": "2", "Main-Fuel-Type": "17" },
-          )
+        [],
+        { "Main-Heating-Category": "2", "Main-Fuel-Type": "17" },
+      )
     end
-
 
     it "returns an error when boiler flue type is missing" do
       relevant_fuel_types = %w[17 18]
 
-      relevant_fuel_types.each{|fuel_type|
+      relevant_fuel_types.each do |fuel_type|
         assert_errors(
-            [error],
-            {
-                "Main-Heating-Category": "2",
-                "Boiler-Flue-Type": :delete,
-                "Main-Fuel-Type": fuel_type
-            },
-            )
-      }
+          [error],
+          {
+            "Main-Heating-Category": "2",
+            "Boiler-Flue-Type": :delete,
+            "Main-Fuel-Type": fuel_type,
+          },
+        )
+      end
     end
-
   end
 end
