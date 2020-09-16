@@ -3,6 +3,7 @@ module Gateway
     class Assessment < ActiveRecord::Base; end
 
     def by_address_id(address_id)
+      address_id = address_id.gsub("LPRN-", "")
       sql = <<-SQL
         SELECT a.assessment_id,
                a.type_of_assessment AS assessment_type,
