@@ -22,7 +22,7 @@ module Helper
               state: xpath(%w[Flag], node) == "Yes", note: xpath(%w[Note], node)
             },
           }
-        }&.inject(&:merge)
+        }&.compact.inject(&:merge)
 
       results.nil? ? {} : results
     end
@@ -78,7 +78,9 @@ module Helper
           refrigerant_name:
             xpath(%w[ACI-Cooling-Plant-Refrigeration/Refrigerant-Name], node),
           f_gas_inspection:
-            xpath(%w[ACI-Cooling-Plant-Refrigeration/F-Gas-Inspection], node),
+            checklist_values(node.at("ACI-Cooling-Plant-Refrigeration"))[
+              :f_gas_inspection
+            ],
           pre_compressor:
             xpath(%w[ACI-Cooling-Plant-Refrigeration/Pre-Compressor], node),
           post_processor:
@@ -92,7 +94,9 @@ module Helper
           compressor_control:
             xpath(%w[ACI-Cooling-Plant-Refrigeration/Compressor-Control], node),
           refrigerant_leak:
-            xpath(%w[ACI-Cooling-Plant-Refrigeration/Refrigerant-Leak], node),
+            checklist_values(node.at("ACI-Cooling-Plant-Refrigeration"))[
+              :refrigerant_leak
+            ],
           guidance:
             guidance(node.at("ACI-Cooling-Plant-Refrigeration/Guidance")),
         },

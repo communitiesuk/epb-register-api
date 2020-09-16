@@ -249,8 +249,11 @@ describe ViewModel::AcReportWrapper do
             ambient: "13",
             compressor_control:
               "\n            The capacity control is inverter.\n            \n              \n                1\n                OTHER\n                This would be considered suitably efficient by current standards as the system does not use more energy than required.\n              \n            \n          ",
-            f_gas_inspection:
-              "\n            The system operated using refrigerant which is not banned.\n            Yes\n            \n              \n                1\n                OTHER\n                This refrigerant is considered satisfactory and not presently proposed to be banned or phased out. However the refrigerant is covered by the F Gas regulations and as such should be included on an F Gas Register which should be located on site.\n              \n            \n          ",
+            f_gas_inspection: {
+              note:
+                "The system operated using refrigerant which is not banned.",
+              state: true,
+            },
             guidance: [
               {
                 code: "OTHER",
@@ -266,8 +269,11 @@ describe ViewModel::AcReportWrapper do
             ],
             post_processor: "7",
             pre_compressor: "22",
-            refrigerant_leak:
-              "\n            There were no visible signs of a leak observed during the inspection.\n            No\n            \n              \n                1\n                OTHER\n                Ensure a site F Gas Register is always in place on site in accordance with current legislation and complete the register any time refrigerant is added/removed from a system.\n              \n            \n          ",
+            refrigerant_leak: {
+              note:
+                "There were no visible signs of a leak observed during the inspection.",
+              state: false,
+            },
             refrigerant_name: "R410A",
           },
           maintenance: {
@@ -371,8 +377,11 @@ describe ViewModel::AcReportWrapper do
             ambient: "13",
             compressor_control:
               "\n            The capacity control is inverter.\n            \n              \n                1\n                OTHER\n                This would be considered suitably efficient by current standards as the system does not use more energy than required.\n              \n            \n          ",
-            f_gas_inspection:
-              "\n            The system operated using refrigerant which is not banned.\n            Yes\n            \n              \n                1\n                OTHER\n                This refrigerant is considered satisfactory and not presently proposed to be banned or phased out. However the refrigerant is covered by the F Gas regulations and as such should be included on an F Gas Register which should be located on site.\n              \n            \n          ",
+            f_gas_inspection: {
+              note:
+                "The system operated using refrigerant which is not banned.",
+              state: true,
+            },
             guidance: [
               {
                 code: "OTHER",
@@ -388,8 +397,11 @@ describe ViewModel::AcReportWrapper do
             ],
             post_processor: "8",
             pre_compressor: "22",
-            refrigerant_leak:
-              "\n            There were no visible signs of a leak observed during the inspection.\n            No\n            \n              \n                1\n                OTHER\n                Ensure a site F Gas Register is always in place on site in accordance with current legislation and complete the register any time refrigerant is added/removed from a system.\n              \n            \n          ",
+            refrigerant_leak: {
+              note:
+                "There were no visible signs of a leak observed during the inspection.",
+              state: false,
+            },
             refrigerant_name: "R410A",
           },
           maintenance: {
