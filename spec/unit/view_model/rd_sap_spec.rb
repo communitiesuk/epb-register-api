@@ -48,6 +48,7 @@ describe ViewModel::RdSapWrapper do
       xml: Samples.xml("RdSAP-Schema-NI-19.0"),
       unsupported_fields: [],
       different_fields: {},
+      different_buried_fields: { address: { address_id: "0000000000" } },
     },
     {
       schema_name: "RdSAP-Schema-NI-18.0",
