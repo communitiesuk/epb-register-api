@@ -217,11 +217,11 @@ module LodgementRules
           building_parts = method_or_nil(adapter, :all_building_parts)
 
           building_parts.select {  | part |
-
             [
                 part[:roof_insulation_thickness],
                 part[:rafter_insulation_thickness],
                 part[:flat_roof_insulation_thickness],
+                part[:sloping_ceiling_insulation_thickness],
             ].reject(&:nil?).length > 1
 
             }.empty?
