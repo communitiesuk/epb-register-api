@@ -68,6 +68,10 @@ module ViewModel
         xpath(%w[Registration-Date])
       end
 
+      def date_of_completion
+        xpath(%w[Completion-Date])
+      end
+
       def address_id
         xpath(%w[UPRN])
       end

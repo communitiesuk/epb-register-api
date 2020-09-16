@@ -183,7 +183,8 @@ module LodgementRules
           '"Inspection-Date", "Registration-Date" and "Completion-Date" must not be in the future and must not be more than 18 months ago',
         test: lambda do |adapter|
           dates = [Date.parse(method_or_nil(adapter, :date_of_assessment)),
-                   Date.parse(method_or_nil(adapter, :date_of_registration))
+                   Date.parse(method_or_nil(adapter, :date_of_registration)),
+                   Date.parse(method_or_nil(adapter, :date_of_completion))
           ]
 
           dates
