@@ -52,32 +52,6 @@ module ViewModel
           },
         },
         executive_summary: @view_model.executive_summary,
-        equipment_owner: {
-          name: @view_model.equipment_owner_name,
-          telephone: @view_model.equipment_owner_telephone,
-          organisation: @view_model.equipment_owner_organisation,
-          address: {
-            address_line1: @view_model.equipment_owner_address_line1,
-            address_line2: @view_model.equipment_owner_address_line2,
-            address_line3: @view_model.equipment_owner_address_line3,
-            address_line4: @view_model.equipment_owner_address_line4,
-            town: @view_model.equipment_owner_town,
-            postcode: @view_model.equipment_owner_postcode,
-          },
-        },
-        equipment_operator: {
-          responsible_person: @view_model.operator_responsible_person,
-          telephone: @view_model.operator_telephone,
-          organisation: @view_model.operator_organisation,
-          address: {
-            address_line1: @view_model.operator_address_line1,
-            address_line2: @view_model.operator_address_line2,
-            address_line3: @view_model.operator_address_line3,
-            address_line4: @view_model.operator_address_line4,
-            town: @view_model.operator_town,
-            postcode: @view_model.operator_postcode,
-          },
-        },
         key_recommendations: {
           efficiency: @view_model.key_recommendations_efficiency,
           maintenance: @view_model.key_recommendations_maintenance,

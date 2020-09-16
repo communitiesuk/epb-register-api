@@ -79,32 +79,6 @@ describe ViewModel::AcReportWrapper do
       },
       related_rrn: "0000-0000-0000-0000-0001",
       executive_summary: expected_summary,
-      equipment_owner: {
-        name: "Manager",
-        telephone: "012345",
-        organisation: "Shop Ltd",
-        address: {
-          address_line1: "Shop Ltd",
-          address_line2: "PO BOX 123",
-          address_line3: nil,
-          address_line4: nil,
-          town: "Cardiff",
-          postcode: "CF15 1FD",
-        },
-      },
-      equipment_operator: {
-        responsible_person: "Chief engineer",
-        telephone: "44321",
-        organisation: "Air Con Ltd",
-        address: {
-          address_line1: "12 Commercial St",
-          address_line2: nil,
-          address_line3: nil,
-          address_line4: nil,
-          town: "Coventry",
-          postcode: "CV12 3FG",
-        },
-      },
       key_recommendations: {
         efficiency: [
           { sequence: "0", text: "A way to improve your efficiency" },
