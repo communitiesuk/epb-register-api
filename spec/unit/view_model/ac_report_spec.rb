@@ -288,7 +288,10 @@ describe ViewModel::AcReportWrapper do
             },
           },
           metering: {},
-          humidity_control: {},
+          humidity_control: {
+            note: "N/A no humidity control installed to this system",
+            state: false,
+          },
         },
         {
           system_number:
@@ -416,7 +419,10 @@ describe ViewModel::AcReportWrapper do
             },
           },
           metering: {},
-          humidity_control: {},
+          humidity_control: {
+            note: "N/A no humidity control installed to this system",
+            state: false,
+          },
         },
       ],
       air_handling_systems: [
