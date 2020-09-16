@@ -5,11 +5,9 @@ module Helper
 
     def self.levenshtein(property, bind, permissiveness = nil)
       levenshtein =
-        "LEVENSHTEIN_LESS_EQUAL(LOWER(#{property}), LOWER(#{
-          bind
-        }), 5)::decimal / GREATEST(length(#{property}), length(#{bind}))"
+        "LEVENSHTEIN_LESS_EQUAL(LOWER(#{property}), LOWER(#{bind}), 5)"
 
-      levenshtein << " < #{permissiveness}" if permissiveness
+      levenshtein << " < 5" if permissiveness
 
       levenshtein
     end
