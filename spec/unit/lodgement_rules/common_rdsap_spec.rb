@@ -318,5 +318,17 @@ describe LodgementRules::DomesticCommon do
               }
           ])
     end
+
+    it "Rejects assessment where roof and flat roof insulation are supplied" do
+      assert_errors(
+          [error],
+          {},
+          [
+              {
+                  selector: "Roof-Insulation-Thickness",
+                  xml: "<Flat-Roof-Insulation-Thickness>2</Flat-Roof-Insulation-Thickness>"
+              }
+          ])
+    end
   end
 end

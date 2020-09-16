@@ -220,7 +220,8 @@ module LodgementRules
 
             [
                 part[:roof_insulation_thickness],
-                part[:rafter_insulation_thickness]
+                part[:rafter_insulation_thickness],
+                part[:flat_roof_insulation_thickness],
             ].reject(&:nil?).length > 1
 
             }.empty?
