@@ -270,7 +270,17 @@ describe ViewModel::AcReportWrapper do
               "\n            There were no visible signs of a leak observed during the inspection.\n            No\n            \n              \n                1\n                OTHER\n                Ensure a site F Gas Register is always in place on site in accordance with current legislation and complete the register any time refrigerant is added/removed from a system.\n              \n            \n          ",
             refrigerant_name: "R410A",
           },
-          maintenance: {},
+          maintenance: {
+            competent_person: {
+              note:
+                "Maintenance contract advised as being in place and would appear satisfactory due to unit condition.",
+              state: true,
+            },
+            guidance: nil,
+            records_kept: {
+              note: "Yes system appears in good order for age.", state: true
+            },
+          },
           metering: {},
           humidity_control: {},
         },
@@ -382,7 +392,17 @@ describe ViewModel::AcReportWrapper do
               "\n            There were no visible signs of a leak observed during the inspection.\n            No\n            \n              \n                1\n                OTHER\n                Ensure a site F Gas Register is always in place on site in accordance with current legislation and complete the register any time refrigerant is added/removed from a system.\n              \n            \n          ",
             refrigerant_name: "R410A",
           },
-          maintenance: {},
+          maintenance: {
+            competent_person: {
+              note:
+                "Maintenance contract advised as being in place and would appear satisfactory due to unit condition.",
+              state: true,
+            },
+            guidance: nil,
+            records_kept: {
+              note: "Yes system appears in good order for age.", state: true
+            },
+          },
           metering: {},
           humidity_control: {},
         },

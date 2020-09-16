@@ -14,6 +14,8 @@ module Helper
     def checklist_values(checklist)
       results =
         checklist&.element_children&.map { |node|
+          next if xpath(%w[Flag], node).nil?
+
           checklist_item = node.name.underscore.to_sym
           {
             checklist_item => {
@@ -94,7 +96,17 @@ module Helper
           guidance:
             guidance(node.at("ACI-Cooling-Plant-Refrigeration/Guidance")),
         },
-        maintenance: {},
+        maintenance: {
+          records_kept:
+            checklist_values(node.at("ACI-Cooling-Plant-Maintenance"))[
+              :records_kept
+            ],
+          competent_person:
+            checklist_values(node.at("ACI-Cooling-Plant-Maintenance"))[
+              :competent_person
+            ],
+          guidance: guidance(node.at("ACI-Cooling-Plant-Maintenance/Guidance")),
+        },
         metering: {},
         humidity_control: {},
       }
