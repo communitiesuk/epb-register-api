@@ -354,5 +354,25 @@ describe LodgementRules::DomesticCommon do
               }
           ])
     end
+
+    it "Rejects assessment with more than 2 types of roof insulation" do
+      assert_errors(
+          [error],
+          {},
+          [
+              {
+                  selector: "Roof-Insulation-Thickness",
+                  xml: "<Roof-U-Value>2</Roof-U-Value>"
+              },
+              {
+                  selector: "Roof-Insulation-Thickness",
+                  xml: "<Sloping-Ceiling-Insulation-Thickness>2</Sloping-Ceiling-Insulation-Thickness>"
+              },
+              {
+                  selector: "Roof-Insulation-Thickness",
+                  xml: "<Rafter-Insulation-Thickness>2</Rafter-Insulation-Thickness>"
+              },
+          ])
+    end
   end
 end
