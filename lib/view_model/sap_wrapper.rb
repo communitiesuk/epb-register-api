@@ -16,6 +16,8 @@ module ViewModel
         @view_model = ViewModel::SapSchemaNi174::CommonSchema.new xml
       when "SAP-Schema-NI-17.3"
         @view_model = ViewModel::SapSchemaNi173::CommonSchema.new xml
+      when "SAP-Schema-NI-17.2"
+        @view_model = ViewModel::SapSchemaNi172::CommonSchema.new xml
       when "SAP-Schema-NI-17.1"
         @view_model = ViewModel::SapSchemaNi171::CommonSchema.new xml
       else

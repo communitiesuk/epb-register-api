@@ -219,6 +219,28 @@ describe ViewModel::SapWrapper do
       },
     },
     {
+      schema_name: "SAP-Schema-NI-17.2",
+      xml: Samples.xml("SAP-Schema-NI-17.2"),
+      unsupported_fields: [],
+      different_fields: {
+        address_id: "0000000000",
+        address: {
+          address_id: "0000000000",
+          address_line1: "1 Some Street",
+          address_line2: "",
+          address_line3: "",
+          address_line4: "",
+          postcode: "A0 0AA",
+          town: "Post-Town1",
+        },
+        assessor: {
+          scheme_assessor_id: "SPEC000000",
+          name: "Mr Test Boi",
+          contact_details: { email: "a@b.c", telephone: "111222333" },
+        },
+      },
+    },
+    {
       schema_name: "SAP-Schema-NI-17.1",
       xml: Samples.xml("SAP-Schema-NI-17.1"),
       unsupported_fields: [],
