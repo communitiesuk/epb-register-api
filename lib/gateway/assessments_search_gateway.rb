@@ -130,9 +130,14 @@ module Gateway
 
       sql +=
         " ORDER BY
-                #{
+                LEAST(
+                  #{
           Helper::LevenshteinSqlHelper.levenshtein('address_line1', '$1')
         },
+                  #{
+          Helper::LevenshteinSqlHelper.levenshtein('address_line2', '$1')
+        }
+                ),
                 #{Helper::LevenshteinSqlHelper.levenshtein('town', '$2')},
                 address_line1,
                 assessment_id"

@@ -45,11 +45,10 @@ module Gateway
 
       if building_name_number
         sql <<
-          "#{
-            Helper::LevenshteinSqlHelper.levenshtein('address_line1', '$2')
-          }, #{
-            Helper::LevenshteinSqlHelper.levenshtein('address_line2', '$2')
-          }, "
+          "LEAST(
+            #{Helper::LevenshteinSqlHelper.levenshtein('address_line1', '$2')},
+            #{Helper::LevenshteinSqlHelper.levenshtein('address_line2', '$2')}
+          ), "
 
         binds <<
           ActiveRecord::Relation::QueryAttribute.new(
@@ -189,9 +188,14 @@ module Gateway
 
       sql <<
         " ORDER BY
-                #{
+                LEAST(
+                  #{
           Helper::LevenshteinSqlHelper.levenshtein('address_line1', '$1')
         },
+                  #{
+          Helper::LevenshteinSqlHelper.levenshtein('address_line2', '$1')
+        }
+                ),
                 #{Helper::LevenshteinSqlHelper.levenshtein('town', '$2')},
                 address_line1,
                 assessment_id"
