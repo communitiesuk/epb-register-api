@@ -13,9 +13,9 @@ describe LodgementRules::DomesticCommon do
         end
       end
 
-      new_nodes.each  do | node |
+      new_nodes.each do |node|
         xml_doc.at(node[:selector]).add_next_sibling(node[:xml])
-    end
+      end
 
       wrapper = ViewModel::Factory.new.create(xml_doc.to_xml, doc, false)
       adapter = wrapper.get_view_model
@@ -309,70 +309,78 @@ describe LodgementRules::DomesticCommon do
 
     it "Rejects assessment where rafter and roof insulation are supplied" do
       assert_errors(
-          [error],
-          {},
-          [
-              {
-                  selector: "Roof-Insulation-Thickness",
-                  xml: "<Rafter-Insulation-Thickness>2</Rafter-Insulation-Thickness>"
-              }
-          ])
+        [error],
+        {},
+        [
+          {
+            selector: "Roof-Insulation-Thickness",
+            xml: "<Rafter-Insulation-Thickness>2</Rafter-Insulation-Thickness>",
+          },
+        ],
+      )
     end
 
     it "Rejects assessment where roof and flat roof insulation are supplied" do
       assert_errors(
-          [error],
-          {},
-          [
-              {
-                  selector: "Roof-Insulation-Thickness",
-                  xml: "<Flat-Roof-Insulation-Thickness>2</Flat-Roof-Insulation-Thickness>"
-              }
-          ])
+        [error],
+        {},
+        [
+          {
+            selector: "Roof-Insulation-Thickness",
+            xml:
+              "<Flat-Roof-Insulation-Thickness>2</Flat-Roof-Insulation-Thickness>",
+          },
+        ],
+      )
     end
 
     it "Rejects assessment where roof and sloping ceiling insulation are supplied" do
       assert_errors(
-          [error],
-          {},
-          [
-              {
-                  selector: "Roof-Insulation-Thickness",
-                  xml: "<Sloping-Ceiling-Insulation-Thickness>2</Sloping-Ceiling-Insulation-Thickness>"
-              }
-          ])
+        [error],
+        {},
+        [
+          {
+            selector: "Roof-Insulation-Thickness",
+            xml:
+              "<Sloping-Ceiling-Insulation-Thickness>2</Sloping-Ceiling-Insulation-Thickness>",
+          },
+        ],
+      )
     end
 
     it "Rejects assessment where roof and roof u value are supplied" do
       assert_errors(
-          [error],
-          {},
-          [
-              {
-                  selector: "Roof-Insulation-Thickness",
-                  xml: "<Roof-U-Value>2</Roof-U-Value>"
-              }
-          ])
+        [error],
+        {},
+        [
+          {
+            selector: "Roof-Insulation-Thickness",
+            xml: "<Roof-U-Value>2</Roof-U-Value>",
+          },
+        ],
+      )
     end
 
     it "Rejects assessment with more than 2 types of roof insulation" do
       assert_errors(
-          [error],
-          {},
-          [
-              {
-                  selector: "Roof-Insulation-Thickness",
-                  xml: "<Roof-U-Value>2</Roof-U-Value>"
-              },
-              {
-                  selector: "Roof-Insulation-Thickness",
-                  xml: "<Sloping-Ceiling-Insulation-Thickness>2</Sloping-Ceiling-Insulation-Thickness>"
-              },
-              {
-                  selector: "Roof-Insulation-Thickness",
-                  xml: "<Rafter-Insulation-Thickness>2</Rafter-Insulation-Thickness>"
-              },
-          ])
+        [error],
+        {},
+        [
+          {
+            selector: "Roof-Insulation-Thickness",
+            xml: "<Roof-U-Value>2</Roof-U-Value>",
+          },
+          {
+            selector: "Roof-Insulation-Thickness",
+            xml:
+              "<Sloping-Ceiling-Insulation-Thickness>2</Sloping-Ceiling-Insulation-Thickness>",
+          },
+          {
+            selector: "Roof-Insulation-Thickness",
+            xml: "<Rafter-Insulation-Thickness>2</Rafter-Insulation-Thickness>",
+          },
+        ],
+      )
     end
   end
 end

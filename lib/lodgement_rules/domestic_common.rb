@@ -208,7 +208,6 @@ module LodgementRules
           )
         end,
       },
-
       {
         name: "SUPPLY_ROOF_U_VALUE_OR_INSULATION_THICKNESS",
         title:
@@ -216,17 +215,15 @@ module LodgementRules
         test: lambda do |adapter|
           building_parts = method_or_nil(adapter, :all_building_parts)
 
-          building_parts.select {  | part |
+          building_parts.select { |part|
             [
-                part[:roof_insulation_thickness],
-                part[:rafter_insulation_thickness],
-                part[:flat_roof_insulation_thickness],
-                part[:sloping_ceiling_insulation_thickness],
-                part[:roof_u_value]
+              part[:roof_insulation_thickness],
+              part[:rafter_insulation_thickness],
+              part[:flat_roof_insulation_thickness],
+              part[:sloping_ceiling_insulation_thickness],
+              part[:roof_u_value],
             ].reject(&:nil?).length > 1
-
-            }.empty?
-
+          }.empty?
         end,
       },
     ].freeze
