@@ -208,6 +208,25 @@ module LodgementRules
           )
         end,
       },
+
+      {
+        name: "SUPPLY_ROOF_U_VALUE_OR_INSULATION_THICKNESS",
+        title:
+          'Only one of "Roof-Insulation-Thickness", "Rafter-Insulation-Thickness", "Flat-Roof-Insulation-Thickness", "Sloping-Ceiling-Insulation-Thickness" or "Roof-U-Value" may be supplied',
+        test: lambda do |adapter|
+          building_parts = method_or_nil(adapter, :all_building_parts)
+
+          building_parts.select {  | part |
+
+            [
+                part[:roof_insulation_thickness],
+                part[:rafter_insulation_thickness]
+            ].reject(&:nil?).length > 1
+
+            }.empty?
+
+        end,
+      },
     ].freeze
 
     def validate(xml_adaptor)

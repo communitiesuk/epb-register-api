@@ -1,7 +1,7 @@
 describe LodgementRules::DomesticCommon do
   let(:docs_under_test) { %w[RdSAP-Schema-20.0.0 RdSAP-Schema-NI-20.0.0] }
 
-  def assert_errors(expected_errors, values = nil)
+  def assert_errors(expected_errors, values = nil, new_nodes = [])
     docs_under_test.each do |doc|
       xml_doc = Nokogiri.XML(Samples.xml(doc))
 
@@ -12,6 +12,10 @@ describe LodgementRules::DomesticCommon do
           xml_doc.at(k).children = v
         end
       end
+
+      new_nodes.each  do | node |
+        xml_doc.at(node[:selector]).add_next_sibling(node[:xml])
+    end
 
       wrapper = ViewModel::Factory.new.create(xml_doc.to_xml, doc, false)
       adapter = wrapper.get_view_model
@@ -287,6 +291,32 @@ describe LodgementRules::DomesticCommon do
           { "Meter-Type": "2", "SAP-Main-Heating-Code": heating_code },
         )
       end
+    end
+  end
+
+  context "SUPPLY_ROOF_U_VALUE_OR_INSULATION_THICKNESS" do
+    let(:error) do
+      {
+        "code": "SUPPLY_ROOF_U_VALUE_OR_INSULATION_THICKNESS",
+        "title":
+          'Only one of "Roof-Insulation-Thickness", "Rafter-Insulation-Thickness", "Flat-Roof-Insulation-Thickness", "Sloping-Ceiling-Insulation-Thickness" or "Roof-U-Value" may be supplied',
+      }.freeze
+    end
+
+    it "Accepts assessment where only one value is supplied" do
+      assert_errors([], {})
+    end
+
+    it "Rejects assessment where rafter and roof insulation are supplied" do
+      assert_errors(
+          [error],
+          {},
+          [
+              {
+                  selector: "Roof-Insulation-Thickness",
+                  xml: "<Rafter-Insulation-Thickness>2</Rafter-Insulation-Thickness>"
+              }
+          ])
     end
   end
 end
