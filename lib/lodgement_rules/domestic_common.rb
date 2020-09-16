@@ -148,6 +148,17 @@ module LodgementRules
           )
         end,
       },
+      {
+        name: "SUPPLY_IMMERSION_HEATER_TYPE",
+        title:
+            'If "Water-Heating-Code" is equal to 903 then "Immersion-Heating-Type" must not be equal to \'NA\'',
+        test: lambda do |adapter|
+          water_heating_code = method_or_nil(adapter, :water_heating_code)
+          immersion_heating_type = method_or_nil(adapter, :immersion_heating_type)
+
+          !(water_heating_code == "903" && immersion_heating_type == "NA")
+        end,
+      },
     ].freeze
 
     def validate(xml_adaptor)

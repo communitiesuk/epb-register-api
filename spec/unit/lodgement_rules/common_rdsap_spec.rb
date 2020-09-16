@@ -186,4 +186,21 @@ describe LodgementRules::DomesticCommon do
       )
     end
   end
+
+  context "SUPPLY_IMMERSION_HEATER_TYPE" do
+    let(:error) do
+      {
+        "code": "SUPPLY_IMMERSION_HEATER_TYPE",
+        "title":
+          'If "Water-Heating-Code" is equal to 903 then "Immersion-Heating-Type" must not be equal to \'NA\'',
+      }.freeze
+    end
+
+    it "returns an error when the described scenario is triggered" do
+      assert_errors(
+        [error],
+        { "Water-Heating-Code": "903", "Immersion-Heating-Type": "NA" },
+      )
+    end
+  end
 end

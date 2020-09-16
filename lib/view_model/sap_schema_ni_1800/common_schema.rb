@@ -237,7 +237,15 @@ module ViewModel
         "SAP"
       end
 
-    private
+      def water_heating_code
+        xpath(%w[Water-Heating-Code])
+      end
+
+      def immersion_heating_type
+        xpath(%w[Immersion-Heating-Type])
+      end
+
+      private
 
       def convert_to_big_decimal(node)
         return unless xpath(node)
