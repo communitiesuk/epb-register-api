@@ -60,7 +60,7 @@ describe ViewModel::SapWrapper do
         },
         assessor: {
           scheme_assessor_id: "SPEC000000",
-          name: "Name0",
+          name: "Mr Test Boi",
           contact_details: { email: "a@b.c", telephone: "111222333" },
         },
         tenure: nil,
