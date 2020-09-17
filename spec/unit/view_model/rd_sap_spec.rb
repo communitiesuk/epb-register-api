@@ -73,7 +73,7 @@ describe ViewModel::RdSapWrapper do
     },
   ].freeze
 
-  # You should only need to add to this list to test new fields on all CEPC schema
+  # You should only need to add to this list to test new fields on all RdSAP schemas
   asserted_keys =
     asserted_keys = {
       type_of_assessment: "RdSAP",
@@ -124,6 +124,7 @@ describe ViewModel::RdSapWrapper do
       potential_energy_efficiency_band: "e",
       potential_energy_efficiency_rating: 50,
       potential_energy_saving: "174.83",
+      primary_energy_use: "0",
       property_age_band: "K",
       property_summary: [
         {

@@ -526,7 +526,7 @@ describe ViewModel::SapWrapper do
     },
   ].freeze
 
-  # You should only need to add to this list to test new fields on all CEPC schema
+  # You should only need to add to this list to test new fields on all SAP schema
   asserted_keys = {
     type_of_assessment: "SAP",
     assessment_id: "0000-0000-0000-0000-0000",
@@ -577,6 +577,7 @@ describe ViewModel::SapWrapper do
     potential_energy_efficiency_band: "e",
     potential_energy_efficiency_rating: 50,
     potential_energy_saving: "174.83",
+    primary_energy_use: "0",
     property_age_band: "1750",
     property_summary: [
       {

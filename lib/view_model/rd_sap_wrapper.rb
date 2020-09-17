@@ -121,6 +121,7 @@ module ViewModel
             @view_model.lighting_cost_potential,
             estimated_energy_cost,
           ),
+        primary_energy_use: @view_model.primary_energy_use,
         property_age_band: @view_model.property_age_band,
         property_summary: @view_model.property_summary,
         recommended_improvements:
