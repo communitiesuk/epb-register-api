@@ -39,6 +39,11 @@
       "api/schemas/xml/SAP-Schema-NI-17.1/Messages/ConditionReportCreateRequest_1.xsd",
     "data_path": "api/schemas/data/SAP-Schema-NI-17.1.json"
   },
+  "SAP-Schema-NI-17.0": {
+    "schema_path":
+      "api/schemas/xml/SAP-Schema-NI-17.0/Messages/ConditionReportCreateRequest_1.xsd",
+    "data_path": "api/schemas/data/SAP-Schema-NI-17.0.json"
+  },
   "RdSAP-Schema-20.0.0": {
     "schema_path":
     "api/schemas/xml/RdSAP-Schema-20.0.0/RdSAP/Templates/RdSAP-Report.xsd",

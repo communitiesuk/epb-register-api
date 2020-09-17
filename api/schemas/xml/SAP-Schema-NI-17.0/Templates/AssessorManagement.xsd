@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2006 rel. 3 U (http://www.altova.com) by Jim Bowery (Landmark Information Group Ltd.) -->
+<xs:schema xmlns="DCLG-SAP" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pfdt="DCLG-HIP/BaseDataTypes" xmlns:HIP="DCLG-HIP" targetNamespace="DCLG-SAP" elementFormDefault="qualified" version="LIG-NI-17.0">
+	<xs:annotation>
+		<xs:documentation>© Department of Communities and Local Government. © Crown copyright, 2007. The Home Condition Report logo and associated wording is a registered trade mark - any unlicensed use is not permitted. Copyright in the typographical arrangement of this document rests with the Crown. This publication, excluding logos, may be reproduced free of charge in any format or medium for research, private study, for internal circulation within an organisation or by registered scheme users. This is subject to it being reproduced accurately and not used in a misleading context.</xs:documentation>
+	</xs:annotation>
+	<xs:import namespace="DCLG-HIP/BaseDataTypes" schemaLocation="../UDT/BaseDataTypes.xsd"/>
+	<xs:import namespace="DCLG-HIP" schemaLocation="../Templates/Property.xsd"/>
+	<!--
+	<xs:include schemaLocation="../Templates/Property.xsd"/>
+-->
+	<xs:element name="Home-Inspector" type="Home-Inspector"/>
+	<xs:complexType name="Home-Inspector">
+		<xs:annotation>
+			<xs:documentation>A Certified Home Inspector is a person certified by a Certification Scheme - that is they exist on the Home Inspector Register - as being qualified to carry out a Home Inspection and produce a Home Condition Report. 
+
+The exact criteria for fit + proper are laid down in regulations and the Business Standards and it is the responsibility of the Certification Scheme to carry out sufficient checks to ensure those criteria are adhered to. 
+
+Although covered by a different regulatory regime a Home Inspector and Energy Assessor serve synonymous roles in the product of a Home Condition Report or Energy Performance Certificate respectively.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The name by which the Home Inspector is registered. This is a structured name containing prefix, first name + surname.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Notify-Lodgement" type="pfdt:Flag" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indicates whether the assessor wants to be notified that a the report has been lodged in the register</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Contact-Address" type="HIP:AddressType">
+				<xs:annotation>
+					<xs:documentation>The address that any written correspondence can be sent to. This is not the same as the Registered Address because it may, of course, be a Post Office Box.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Web-Site" type="xs:string" minOccurs="0"/>
+			<xs:element name="E-Mail" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>the E-Mail address that the Authorised User can be contacted at.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Fax" type="PhoneNumberType" minOccurs="0"/>
+			<xs:element name="Telephone" type="PhoneNumberType" minOccurs="0"/>
+			<xs:element name="Company-Name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The Name of the Company that the assessor is employed by.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Scheme-Name" type="xs:string"/>
+			<xs:element name="Scheme-Web-Site" type="xs:string"/>
+			<xs:element name="Identification-Number">
+				<xs:complexType>
+					<xs:choice>
+						<xs:element name="Certificate-Number" type="CertificateNumberType">
+							<xs:annotation>
+								<xs:documentation>The unique identifier assigned to the assessor by the scheme by which they can be identified throughout their membership of the scheme.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="Membership-Number" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>For Scottish DEAs only</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:simpleType name="InspectorTypeCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>Domestic Energy Assessor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="Mortgage-Lender" type="Mortgage-Lender"/>
+	<xs:complexType name="Mortgage-Lender">
+		<xs:annotation>
+			<xs:documentation>A Mortgage Lender is an organisation that may lend money to the Buyer for the purpose of purchasing the Property. 
+
+As part of this decision making the Mortgage Lender may use an Automated Valuation Model (AVM) to value the Property and requires access to the underlying data in the Home Condition Report or the content of the Energy Performance Certificate in order to complete this valuation.</xs:documentation>
+		</xs:annotation>
+		<xs:all/>
+	</xs:complexType>
+	<xs:simpleType name="HomeInspectorStatusCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Inactive">
+				<xs:annotation>
+					<xs:documentation>Inactive</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Registered">
+				<xs:annotation>
+					<xs:documentation>Registered</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Struck-Off">
+				<xs:annotation>
+					<xs:documentation>Struck Off</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Suspended">
+				<xs:annotation>
+					<xs:documentation>Suspended</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Postcode-CoverageType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="500"/>
+			<xs:pattern value="[A-Z]{1,2}[0-9]{0,2}(,[A-Z]{1,2}[0-9]{0,2})*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="InspectorKeyFields" type="InspectorKeyFields"/>
+	<xs:complexType name="InspectorKeyFields">
+		<xs:annotation>
+			<xs:documentation>Key field definition for the Home Inspector class - used when a message requires a reference to a Home Inspexctor to be passed rather than the details.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Certificate-Number" type="CertificateNumberType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Certification-Scheme" type="Certification-Scheme"/>
+	<xs:complexType name="Certification-Scheme">
+		<xs:annotation>
+			<xs:documentation>The Certification Scheme is the "regulatory" body responsible for regulating the activities of the Home Inspectors. 
+
+A Certification Scheme will carry out certain primary functions in accordance with the standards, focussed around certifying, managing and regulating Home Inspectors and registering Home Condition Reports.
+
+Although covered by a different regulatory regime a Certification Scheme is synonymous with the role of an Accreditation Body in the production of an Energy Performance Certificate.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Scheme-Name" type="xs:string"/>
+			<xs:element name="Complaints-Address" type="HIP:AddressType">
+				<xs:annotation>
+					<xs:documentation>The address to which any complaints should be sent.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Contact-Address" type="HIP:AddressType">
+				<xs:annotation>
+					<xs:documentation>The address that any written correspondence can be sent to. This is not the same as the Registered Address because it may, of course, be a Post Office Box.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Web-Site" type="xs:string"/>
+			<xs:element name="E-Mail" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>the E-Mail address that the Authorised User can be contacted at.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Registered-Name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The public name by which the Authorised User is known by - this is either a personal name (e.g. "Mr John Smith") built up from the components of the Person Name if the Authorised User is an individual such as a Home Inspector or a Company Name if the Authorised User is an organisation.
+
+In the case of a individual the name may not be unique (e.g. there may be many thousands of people called "Mr John Smith") so this is information about the Authorised User rather than an identifier.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Fax" type="PhoneNumberType"/>
+			<xs:element name="Telephone" type="PhoneNumberType"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="PersonNameType" type="PersonNameType"/>
+	<xs:complexType name="PersonNameType">
+		<xs:annotation>
+			<xs:documentation>A Person Name is a complex structure to capture the separate components of the name for a Person, consisting of:
+*	A prefix e.g. "Mr", "Mrs", "Dr" etc.
+*	First Name e.g. "John"
+*	Middle Initial 
+*	Surname e.g. "Smith"
+*	Suffix e.g. "PhD", "FRICS" 
+The First Name and Surname are the only mandatory elements of a name.
+
+The name elements can then be combined in a number of different ways to produce different formats appropriate to the output context.
+
+Note that all parts of the Persons Name should be stored as uppercase strings because this makes it easier to search and index the names but some components may be converted to mixed case for printing on reports and such like.
+</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Prefix" type="xs:string"/>
+			<xs:element name="First-Name" type="xs:string"/>
+			<xs:element name="Surname" type="xs:string"/>
+			<xs:element name="Suffix" type="xs:string"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="CertificationSchemeKeyFields" type="CertificationSchemeKeyFields"/>
+	<xs:complexType name="CertificationSchemeKeyFields">
+		<xs:annotation>
+			<xs:documentation>Key field definition for the Certification Scheme class.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Registered-Name" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="PhoneNumberType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9\-\.\)\(\+ ]+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CertificateNumberType">
+		<xs:annotation>
+			<xs:documentation>The Certificate Number is a 10-character fixed-length alphanumeric code consisting of 4 characters identifying the Certification Scheme and a 6-digit zero-padded identifier for each Home Inspector certified by that Certification Scheme. For example ABCD987654, XYZ_123456 etc.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="10"/>
+			<xs:maxLength value="10"/>
+			<xs:pattern value="[A-Z/_]{4}[0-9]{6}"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
