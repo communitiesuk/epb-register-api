@@ -241,6 +241,10 @@ module ViewModel
         xpath(%w[Environmental-Impact-Potential])
       end
 
+      def primary_energy_use
+        xpath(%w[Energy-Consumption-Current])
+      end
+
       def all_wall_descriptions
         @xml_doc.search("Wall/Description").map(&:content)
       end
