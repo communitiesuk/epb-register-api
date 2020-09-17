@@ -26,6 +26,7 @@ module ViewModel
       SAP-Schema-16.3
       SAP-Schema-16.2
       SAP-Schema-16.1
+      SAP-Schema-16.0
       SAP-Schema-NI-18.0.0
       SAP-Schema-NI-17.4
       SAP-Schema-NI-17.3
