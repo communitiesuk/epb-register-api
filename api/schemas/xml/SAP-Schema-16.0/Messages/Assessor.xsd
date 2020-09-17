@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:HIP="DCLG-HIP" xmlns="http://www.epcregister.com" targetNamespace="http://www.epcregister.com" elementFormDefault="qualified" version="LIG-16.0" >
+	<xs:annotation>
+		<xs:documentation>© Department of Communities and Local Government. © Crown copyright, 2007. The Home Condition Report logo and associated wording is a registered trade mark - any unlicensed use is not permitted. Copyright in the typographical arrangement of this document rests with the Crown. This publication, excluding logos, may be reproduced free of charge in any format or medium for research, private study, for internal circulation within an organisation or by registered scheme users. This is subject to it being reproduced accurately and not used in a misleading context.</xs:documentation>
+	</xs:annotation>
+	<xs:import namespace="DCLG-HIP" schemaLocation="../Templates/UserManagement.xsd"/>
+	<xs:element name="Assessor" type="Assessor"/>
+	<xs:element name="Assessors" type="Assessors"/>
+	<xs:element name="Upload" type="Upload"/>
+	<xs:complexType name="Assessor">
+		<xs:annotation>
+			<xs:documentation>An assessor is a person certified by a certification scheme to conduct the assessments for which they hold a valid qualification. 
+			The exact criteria for fit and proper persons are laid down in regulations and the business standards and it is the responsibility of the certification scheme to carry out sufficient checks to	ensure those criteria are adhered to. 
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Name" type="Name">
+				<xs:annotation>
+					<xs:documentation>The name by which the Assessor is registered.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Assessor-ID" type="AssessorIDType">
+				<xs:annotation>
+					<xs:documentation>The unique identifier assigned to the assessor by the certification scheme by which they can be identified throughout their membership of the certification scheme. The certificate number is included in the report.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Date-Of-Birth" type="xs:date"/>
+			<xs:element name="Base-Postcode-Location" type="HIP:PostcodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The full postcode that the assessor works from.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Postcode-Coverage" type="Postcode-Coverage" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A list of postcode areas and/or postcode outcodes that the assessor covers - for example: NN, PE18, LE27. This is used by the general public as part of the assessor search to find assessors that take work in a particular area. An empty list means that the assessor does not cover any specific areas (which would be the case if they did not take privately commissioned work) and hence would not match on any postcode based search.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Contact" type="Contact"/>
+			<xs:element name="Qualifications" type="Qualifications"/>
+		</xs:sequence>
+	</xs:complexType>
+    <xs:complexType name="Assessors">
+        <xs:sequence>
+            <xs:element name="Assessor" type="Assessor" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+	<xs:complexType name="Name">
+		<xs:annotation>
+			<xs:documentation>An Assessor Name is a complex structure to capture the separate components of the name for an assessor, consisting of:
+*	A prefix e.g. "Mr", "Mrs", "Dr" etc.
+*	First Name e.g. "John"
+*	Surname e.g. "Smith"
+*	Suffix e.g. "OBE"
+The first name and surname are the only mandatory elements of a name.
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Prefix" type="xs:string" minOccurs="0"/>
+			<xs:element name="First-Name" type="xs:string"/>
+			<xs:element name="Surname" type="xs:string"/>
+			<xs:element name="Suffix" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Qualification">
+		<xs:annotation>
+			<xs:documentation>A relevant qualification held by the assessor that qualifies them to create a relevant report</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Type" type="QualificationTypeCode">
+				<xs:annotation>
+					<xs:documentation>The qualification held</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Status" type="AssessorStatusCode">
+				<xs:annotation>
+					<xs:documentation>The status of the assessor's qualification</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Qualifications">
+		<xs:annotation>
+			<xs:documentation>A list of qualifications that indicate what reports the assessor/inspector is allowed to lodge</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Qualification" type="Qualification" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Contact">
+		<xs:annotation>
+			<xs:documentation>Assessor contact information</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Company-Name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The Name of the Company that the Home Inspector is employed by.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Address" type="HIP:AddressType">
+				<xs:annotation>
+					<xs:documentation>The address that any written correspondence can be sent to.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Web-Site" type="xs:string" minOccurs="0"/>
+			<xs:element name="E-Mail" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>the email address that the assessor can be contacted at.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Fax" type="HIP:PhoneNumberType" minOccurs="0"/>
+			<xs:element name="Telephone" type="HIP:PhoneNumberType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Postcode-Coverage">
+		<xs:annotation>
+			<xs:documentation>A list of postcodes covered for the assessor</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Postcode-District" type="Postcode-District" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="Postcode-District">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z]{1,2}[0-9]{0,2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AssessorStatusCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Inactive">
+				<xs:annotation>
+					<xs:documentation>Inactive</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Registered">
+				<xs:annotation>
+					<xs:documentation>Registered</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Struck-Off">
+				<xs:annotation>
+					<xs:documentation>Struck Off</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Suspended">
+				<xs:annotation>
+					<xs:documentation>Suspended</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AssessorIDType">
+		<xs:annotation>
+			<xs:documentation>The assessor ID is a 10-character fixed-length alphanumeric code consisting of 4 characters identifying the certification scheme and a 6-digit zero-padded identifier for each assessor certified by that certification scheme. For example ABCD987654, XYZ_123456 etc.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="10"/>
+			<xs:maxLength value="10"/>
+			<xs:pattern value="[A-Z/_]{4}[0-9]{6}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="QualificationTypeCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="HCR">
+				<xs:annotation>
+					<xs:documentation>HCR</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RdSAP">
+				<xs:annotation>
+					<xs:documentation>RdSAP</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SAP">
+				<xs:annotation>
+					<xs:documentation>SAP</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+    <xs:complexType name="Upload">
+        <xs:sequence>
+            <xs:element name="Upload-ID" type="xs:long"/>
+            <xs:element name="Status" type="xs:string"/>
+            <xs:element name="Start-Date-Time" type="xs:dateTime"/>
+            <xs:element name="End-Date-Time" type="xs:dateTime" minOccurs="0"/>
+            <xs:element name="Upload-Count" type="xs:int" minOccurs="0"/>
+            <xs:element name="Intact-Count" type="xs:int" minOccurs="0"/>
+            <xs:element name="Insert-Count" type="xs:int" minOccurs="0"/>
+            <xs:element name="Update-Count" type="xs:int" minOccurs="0"/>
+            <xs:element name="Delete-Count" type="xs:int" minOccurs="0"/>
+            <xs:element name="Error" type="Upload-Error" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Upload-Error">
+        <xs:sequence>
+			<xs:element name="Assessor-ID" type="AssessorIDType" minOccurs="0"/>
+            <xs:element name="Line-Number" type="xs:int" minOccurs="0"/>
+            <xs:element name="Column-Number" type="xs:int" minOccurs="0"/>
+            <xs:element name="Message" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
