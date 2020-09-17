@@ -220,10 +220,10 @@ module Gateway
 
     def set_expiration_date(symbolised_keys)
       date_registered = symbolised_keys[:date_registered]
-      date_of_expiry = symbolised_keys[:date_of_expiry]
       type_of_assessment = symbolised_keys[:type_of_assessment]
 
       if type_of_assessment == "RdSAP" || type_of_assessment == "SAP"
+
         new_date_registered = date_registered.next_year(10)
 
         updated_date_registered = { date_of_expiry: new_date_registered }

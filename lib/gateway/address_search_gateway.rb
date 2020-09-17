@@ -21,12 +21,7 @@ module Gateway
             town,
             postcode,
             address_id,
-            type_of_assessment,
-            CASE WHEN cancelled_at IS NOT NULL THEN 'CANCELLED'
-                    WHEN not_for_issue_at IS NOT NULL THEN 'NOT_FOR_ISSUE'
-                    WHEN date_of_expiry < CURRENT_DATE THEN 'EXPIRED'
-                    ELSE 'ENTERED'
-                   END AS assessment_status
+            type_of_assessment
           FROM assessments
           WHERE
             cancelled_at IS NULL
@@ -61,7 +56,7 @@ module Gateway
 
       sql << "assessment_id"
 
-      result = parse_results(
+      parse_results(
         ActiveRecord::Base.connection.exec_query(sql, "SQL", binds),
         address_type,
       )
@@ -73,6 +68,7 @@ module Gateway
           "SELECT
              assessment_id,
              date_of_expiry,
+             date_registered,
              type_of_assessment,
              address_line1,
              address_line2,
@@ -81,12 +77,7 @@ module Gateway
              town,
              postcode,
              address_id,
-             type_of_assessment,
-             CASE WHEN cancelled_at IS NOT NULL THEN 'CANCELLED'
-                      WHEN not_for_issue_at IS NOT NULL THEN 'NOT_FOR_ISSUE'
-                      WHEN date_of_expiry < CURRENT_DATE THEN 'EXPIRED'
-                      ELSE 'ENTERED'
-                     END AS assessment_status
+             type_of_assessment
            FROM assessments
            WHERE
              cancelled_at IS NULL
@@ -111,6 +102,7 @@ module Gateway
         "SELECT
           assessment_id,
           date_of_expiry,
+          date_registered,
           type_of_assessment,
           address_line1,
           address_line2,
@@ -119,12 +111,7 @@ module Gateway
           town,
           postcode,
           address_id,
-          type_of_assessment,
-          CASE WHEN cancelled_at IS NOT NULL THEN 'CANCELLED'
-                    WHEN not_for_issue_at IS NOT NULL THEN 'NOT_FOR_ISSUE'
-                    WHEN date_of_expiry < CURRENT_DATE THEN 'EXPIRED'
-                    ELSE 'ENTERED'
-                   END AS assessment_status
+          type_of_assessment
         FROM assessments
         WHERE
           cancelled_at IS NULL
@@ -233,7 +220,7 @@ module Gateway
           result["existing_assessments"].push(
             {
               assessmentId: sib_data["assessment_id"],
-              assessmentStatus: sib_data["assessment_status"],
+              assessmentStatus: update_expiry_and_status(sib_data),
               assessmentType: sib_data["type_of_assessment"],
             },
           )
@@ -263,16 +250,7 @@ module Gateway
           next
         end
 
-        result["existing_assessments"].map do |row|
-          pp row
-        end
-
-        if result["type_of_assessment"] == "RdSAP" || result["type_of_assessment"] == "SAP"
-          new_date = result["date_registered"].next_year(10)
-          updated_date_registered = { date_of_expiry: new_date }
-
-          result = result.merge(updated_date_registered)
-        end
+        result["assessment_status"] = update_expiry_and_status(result)
 
         record_to_address_domain(result)
       }.compact
@@ -288,6 +266,17 @@ module Gateway
                           postcode: row["postcode"],
                           source: "PREVIOUS_ASSESSMENT",
                           existing_assessments: row["existing_assessments"]
+    end
+
+    # EPBR-511: Needs to be removed after fixing the database data
+    def update_expiry_and_status(result)
+      if result["type_of_assessment"] == "RdSAP" || result["type_of_assessment"] == "SAP"
+        result["date_of_expiry"] = result["date_registered"].next_year(10)
+      end
+
+      # In the previous SQL queries we only select NULL cancelled_at and not_for_issue_at
+      expiry_helper = Gateway::AssessmentExpiryHelper.new(result["cancelled_at"], result["not_for_issue_at"], result["date_of_expiry"])
+      expiry_helper.assessment_status
     end
 
   end

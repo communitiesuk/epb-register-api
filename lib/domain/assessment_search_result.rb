@@ -74,6 +74,7 @@ module Domain
     end
 
     def to_hash
+      expiry_helper = Gateway::AssessmentExpiryHelper.new(@cancelled_at, @not_for_issue_at, @date_of_expiry)
       {
         date_of_assessment: @date_of_assessment.strftime("%Y-%m-%d"),
         type_of_assessment: @type_of_assessment,
@@ -90,16 +91,7 @@ module Domain
         town: @town,
         current_energy_efficiency_band:
           get_energy_rating_band(@current_energy_efficiency_rating),
-        status:
-          if !@cancelled_at.nil?
-            "CANCELLED"
-          elsif !@not_for_issue_at.nil?
-            "NOT_FOR_ISSUE"
-          elsif @date_of_expiry < Time.now
-            "EXPIRED"
-          else
-            "ENTERED"
-          end,
+        status: expiry_helper.assessment_status
       }
     end
 

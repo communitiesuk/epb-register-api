@@ -5,11 +5,13 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
     assessment = Nokogiri.XML Samples.xml "RdSAP-Schema-20.0.0"
     address_id_node = assessment.at("UPRN")
     assessment_id_node = assessment.at("RRN")
-    assessment_date_node = assessment.at("Registration-Date")
+    assessment_registration_node = assessment.at("Registration-Date")
+    assessment_inspection_node = assessment.at("Inspection-Date")
 
     assessment_id_node.children = assessment_id
     address_id_node.children = address_id
-    assessment_date_node.children = date
+    assessment_inspection_node.children = date
+    assessment_registration_node.children = date
 
     lodge_assessment(
       assessment_body: assessment.to_xml,
@@ -218,6 +220,8 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
         "UPRN-000000000001",
         Date.today.prev_day(50).strftime("%Y-%m-%d"),
       )
+
+      pp response[:data]
 
       expect(response[:data]).to eq(
         {
