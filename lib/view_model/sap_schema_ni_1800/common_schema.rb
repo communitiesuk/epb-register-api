@@ -82,7 +82,7 @@ module ViewModel
       end
 
       def date_of_expiry
-        expires_at = Date.parse(date_of_assessment) >> 12 * 10
+        expires_at = Date.parse(date_of_registration)
 
         expires_at.to_s
       end

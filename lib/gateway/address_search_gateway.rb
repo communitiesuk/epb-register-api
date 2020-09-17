@@ -12,6 +12,7 @@ module Gateway
         SELECT
             assessment_id,
             date_of_expiry,
+            date_registered,
             type_of_assessment,
             address_line1,
             address_line2,
@@ -60,7 +61,7 @@ module Gateway
 
       sql << "assessment_id"
 
-      parse_results(
+      result = parse_results(
         ActiveRecord::Base.connection.exec_query(sql, "SQL", binds),
         address_type,
       )
@@ -262,6 +263,17 @@ module Gateway
           next
         end
 
+        result["existing_assessments"].map do |row|
+          pp row
+        end
+
+        if result["type_of_assessment"] == "RdSAP" || result["type_of_assessment"] == "SAP"
+          new_date = result["date_registered"].next_year(10)
+          updated_date_registered = { date_of_expiry: new_date }
+
+          result = result.merge(updated_date_registered)
+        end
+
         record_to_address_domain(result)
       }.compact
     end
@@ -277,5 +289,6 @@ module Gateway
                           source: "PREVIOUS_ASSESSMENT",
                           existing_assessments: row["existing_assessments"]
     end
+
   end
 end

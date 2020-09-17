@@ -8,6 +8,7 @@ module Domain
       opt_out: false,
       postcode: nil,
       date_of_expiry: nil,
+      date_registered: nil,
       address_id: nil,
       address_line1: nil,
       address_line2: nil,
@@ -32,6 +33,7 @@ module Domain
       @opt_out = opt_out
       @current_energy_efficiency_rating = current_energy_efficiency_rating
       @postcode = postcode
+      @date_registered = date_registered
       @date_of_expiry =
         if !date_of_expiry.nil?
           Date.strptime(date_of_expiry.to_s, "%Y-%m-%d")

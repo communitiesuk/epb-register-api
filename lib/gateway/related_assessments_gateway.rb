@@ -8,12 +8,8 @@ module Gateway
         SELECT a.assessment_id,
                a.type_of_assessment AS assessment_type,
                a.date_of_expiry,
-               CASE WHEN a.cancelled_at IS NOT NULL THEN 'CANCELLED'
-                    WHEN a.not_for_issue_at IS NOT NULL THEN 'NOT_FOR_ISSUE'
-                    WHEN a.date_of_expiry < CURRENT_DATE THEN 'EXPIRED'
-                    ELSE 'ENTERED'
-                   END AS assessment_status,
-              a.opt_out
+               a.date_registered,
+               a.opt_out
         FROM assessments a
         WHERE address_id = $1 AND
               opt_out = false
@@ -35,6 +31,7 @@ module Gateway
 
       output =
         results.map do |result|
+          determine_status(result)
           Domain::RelatedAssessment.new(
             assessment_id: result["assessment_id"],
             assessment_status: result["assessment_status"],
@@ -42,8 +39,24 @@ module Gateway
             assessment_expiry_date: result["date_of_expiry"],
           )
         end
-
       output.compact
     end
-  end
+
+    def determine_status(result)
+      if result["assessment_type"] == "RdSAP" || result["assessment_type"] == "SAP"
+        result["date_of_expiry"] = result["date_registered"].next_year(10)
+      end
+
+      if !result["cancelled_at"].nil?
+        result["assessment_status"] = "CANCELLED"
+      elsif !result["not_for_issue_at"].nil?
+        result["assessment_status"] = "NOT_FOR_ISSUE"
+      elsif result["date_of_expiry"] < Date.today.to_time
+        result["assessment_status"] = "EXPIRED"
+      else
+        result["assessment_status"] = "ENTERED"
+      end
+    end
+
+    end
 end

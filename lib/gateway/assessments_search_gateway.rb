@@ -9,7 +9,7 @@ module Gateway
     ASSESSMENT_SEARCH_INDEX_SELECT = <<-SQL
         SELECT
             assessment_id, date_of_assessment,type_of_assessment,
-            current_energy_efficiency_rating, opt_out, postcode, date_of_expiry,
+            current_energy_efficiency_rating, opt_out, postcode, date_of_expiry, date_registered,
             address_line1, address_line2, address_line3, address_line4, town,
             cancelled_at, not_for_issue_at, address_id, scheme_assessor_id
         FROM assessments
@@ -212,8 +212,25 @@ module Gateway
     end
 
     def row_to_domain(row)
-      row.symbolize_keys!
-      Domain::AssessmentSearchResult.new(row)
+      symbolised_keys = row.symbolize_keys!
+      updated_symbolised_keys = set_expiration_date(symbolised_keys)
+
+      Domain::AssessmentSearchResult.new(updated_symbolised_keys)
+    end
+
+    def set_expiration_date(symbolised_keys)
+      date_registered = symbolised_keys[:date_registered]
+      date_of_expiry = symbolised_keys[:date_of_expiry]
+      type_of_assessment = symbolised_keys[:type_of_assessment]
+
+      if type_of_assessment == "RdSAP" || type_of_assessment == "SAP"
+        new_date_registered = date_registered.next_year(10)
+
+        updated_date_registered = { date_of_expiry: new_date_registered }
+        symbolised_keys = symbolised_keys.merge(updated_date_registered)
+      end
+
+      symbolised_keys
     end
   end
 end

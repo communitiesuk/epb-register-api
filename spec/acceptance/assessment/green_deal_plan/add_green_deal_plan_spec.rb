@@ -413,7 +413,7 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan" do
     context "when a Green Deal Plan is added to an expired RdSAP assessment" do
       let(:scheme_id) { add_scheme_and_get_id }
       let(:doc) { Nokogiri.XML valid_rdsap_xml }
-      let(:assessment_date) { doc.at("Inspection-Date") }
+      let(:assessment_date) { doc.at("Registration-Date") }
 
       before do
         add_assessor scheme_id,
