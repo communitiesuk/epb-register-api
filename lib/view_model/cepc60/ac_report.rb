@@ -79,8 +79,38 @@ module ViewModel
           .map { |_node| {} }
       end
 
+      def checklist_values(checklist)
+        results =
+            checklist&.element_children&.map { |node|
+              checklist_item = node.name.underscore.to_sym
+              value = node.content == "Yes"
+              { checklist_item => value }
+            }&.inject(&:merge)
+
+        results.nil? ? {} : results
+      end
+
       def pre_inspection_checklist
-        {}
+        {
+            essential:
+                checklist_values(
+                    @xml_doc.at(
+                        "SCCS-Pre-Inspection-Information/SCCS-Pre-Inspection-Essential",
+                        ),
+                    ),
+            desirable:
+                checklist_values(
+                    @xml_doc.at(
+                        "SCCS-Pre-Inspection-Information/SCCS-Pre-Inspection-Desirable",
+                        ),
+                    ),
+            optional:
+                checklist_values(
+                    @xml_doc.at(
+                        "SCCS-Pre-Inspection-Information/SCCS-Pre-Inspection-Optional",
+                        ),
+                    ),
+        }
       end
 
       def air_handling_systems

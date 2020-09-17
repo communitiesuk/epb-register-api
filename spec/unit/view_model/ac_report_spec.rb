@@ -43,7 +43,7 @@ describe ViewModel::AcReportWrapper do
         different_fields: {
           related_party_disclosure: "No related Party",
           sub_systems: [],
-          pre_inspection_checklist: {},
+          pre_inspection_checklist: {:essential=>{:list_of_systems=>true, :cooling_capacities=>true, :control_zones=>true, :temperature_controls=>true, :operation_controls=>true, :schematics=>false}, :desirable=>{:previous_reports=>true, :refrigeration_maintenance=>false, :delivery_system_maintenance=>true, :control_system_maintenance=>true, :consumption_records=>true, :commissioning_results=>true}, :optional=>{:cooling_load_estimate=>true, :complaint_records=>true, :bms_capability=>true, :monitoring_capability=>true}},
           cooling_plants: [],
           air_handling_systems: [],
           terminal_units: [],
