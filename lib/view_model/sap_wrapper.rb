@@ -20,6 +20,8 @@ module ViewModel
         @view_model = ViewModel::SapSchema150::CommonSchema.new xml
       when "SAP-Schema-14.2"
         @view_model = ViewModel::SapSchema142::CommonSchema.new xml
+      when "SAP-Schema-14.1"
+        @view_model = ViewModel::SapSchema141::CommonSchema.new xml
       when "SAP-Schema-NI-18.0.0"
         @view_model = ViewModel::SapSchemaNi1800::CommonSchema.new xml
       when "SAP-Schema-NI-17.4"
