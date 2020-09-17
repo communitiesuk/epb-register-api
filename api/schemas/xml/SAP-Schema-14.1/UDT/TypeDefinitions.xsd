@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="DCLG-HIP" xmlns:HIP="DCLG-HIP" xmlns:pfdt="DCLG-HIP/BaseDataTypes" targetNamespace="DCLG-HIP" elementFormDefault="qualified" version="LIG-14.1">
+	<xs:annotation>
+		<xs:documentation>© Department of Communities and Local Government. © Crown copyright, 2007. The Home Condition Report logo and associated wording is a registered trade mark - any unlicensed use is not permitted. Copyright in the typographical arrangement of this document rests with the Crown. This publication, excluding logos, may be reproduced free of charge in any format or medium for research, private study, for internal circulation within an organisation or by registered scheme users. This is subject to it being reproduced accurately and not used in a misleading context. 
+
+Type Definitions (TypeDefinitions.xsd) are constrained variants of a primitive datatype whose allowed values must meet some predefined rules 
+
+Exactly what is a type definition is a bit subjective because it is generally up to the data modeller to make the decision between what is a Value-Type and what is an Entity-Type. 
+
+For example in some contexts an Address (House Number, Street, Town, Postcode) may be declared as a composite datatype where the value of each Address is recorded against the Addressable Entity but in another context the Address (where there are details to be gathered about the Address itself) it could be a defined referenced Business Entity instead.
+
+However, even allowing for some fuzziness at the boundary, a general rule of thumb is that a Type Definition is a data-item that is generally defined outside of the domain and it is not within the domains authority to extend or redefine. There is also only ever one definition in force at any time.
+</xs:documentation>
+	</xs:annotation>
+	<xs:element name="UValue" type="UValue"/>
+	<xs:complexType name="UValue">
+		<xs:sequence/>
+	</xs:complexType>
+</xs:schema>
