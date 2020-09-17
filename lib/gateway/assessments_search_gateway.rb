@@ -98,18 +98,18 @@ module Gateway
               Helper::LevenshteinSqlHelper::TOWN_PERMISSIVENESS,
             )
           } OR #{
-          Helper::LevenshteinSqlHelper.levenshtein(
-            'address_line3',
-            '$2',
-            Helper::LevenshteinSqlHelper::TOWN_PERMISSIVENESS,
-          )
-        } OR #{
-          Helper::LevenshteinSqlHelper.levenshtein(
-            'address_line4',
-            '$2',
-            Helper::LevenshteinSqlHelper::TOWN_PERMISSIVENESS,
-          )
-        })
+            Helper::LevenshteinSqlHelper.levenshtein(
+              'address_line3',
+              '$2',
+              Helper::LevenshteinSqlHelper::TOWN_PERMISSIVENESS,
+            )
+          } OR #{
+            Helper::LevenshteinSqlHelper.levenshtein(
+              'address_line4',
+              '$2',
+              Helper::LevenshteinSqlHelper::TOWN_PERMISSIVENESS,
+            )
+          })
         SQL
 
       binds = [
@@ -163,9 +163,7 @@ module Gateway
           Helper::LevenshteinSqlHelper.levenshtein('address_line4', '$2')
         },
 
-                  #{
-          Helper::LevenshteinSqlHelper.levenshtein('town', '$2')
-        }
+                  #{Helper::LevenshteinSqlHelper.levenshtein('town', '$2')}
                 ),
                 address_line1,
                 assessment_id"

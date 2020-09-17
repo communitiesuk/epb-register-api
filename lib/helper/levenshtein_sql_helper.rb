@@ -5,7 +5,9 @@ module Helper
 
     def self.levenshtein(property, bind, permissiveness = nil)
       if permissiveness
-        "LEVENSHTEIN_LESS_EQUAL(LOWER(#{property}), LOWER(#{bind}), #{permissiveness.to_s}) < #{(permissiveness.to_i + 1).to_s}"
+        "LEVENSHTEIN_LESS_EQUAL(LOWER(#{property}), LOWER(#{bind}), #{
+          permissiveness
+        }) < #{(permissiveness.to_i + 1)}"
       else
         "LEVENSHTEIN(LOWER(#{property}), LOWER(#{bind}))"
       end
