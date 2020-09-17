@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven
+Built-By: aallen
+Build-Jdk: 1.6.0_25
+Specification-Title: Domestic Northern Ireland Schema
+Specification-Version: 16.1.003
+Specification-Vendor: Landmark Solutions
+Implementation-Title: Domestic Northern Ireland Schema
+Implementation-Version: 16.1.003
+Implementation-Vendor-Id: uk.co.landmark.solutions.register
+Implementation-Vendor: Landmark Solutions
+Build-Timestamp: 1343643610069
+Source-Repository: scm:svn:http://svnsolutions/svn/svnrepo/Solutions/D
+ evelopmentTeam/Projects/Registers/registers/tags/domestic-northernire
+ land-schema-16.1.003
+Source-Revision: 16133
+

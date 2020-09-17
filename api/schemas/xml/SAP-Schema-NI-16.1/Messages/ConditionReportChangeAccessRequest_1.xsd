@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:CS="DCLG-HIP/CommonStructures" xmlns:ERR="DCLG-HIP/Exceptions" xmlns:HIP="DCLG-HIP" xmlns:REG="http://www.epbniregister.com" xmlns="DCLG-HIP" targetNamespace="http://www.epbniregister.com" elementFormDefault="qualified" attributeFormDefault="unqualified" version="LIG-NI-16.1">
+	<!--
+	© Department of Communities and Local Government. © Crown copyright, 2007. The Home Condition Report logo and associated wording is a registered trade mark - any unlicensed use is not permitted. Copyright in the typographical arrangement of this document rests with the Crown. This publication, excluding logos, may be reproduced free of charge in any format or medium for research, private study, for internal circulation within an organisation or by registered scheme users. This is subject to it being reproduced accurately and not used in a misleading context. 
+
+-->
+	<!--***************************************************************************
+	Imports and Inclusions
+	*************************************************************************** -->
+	<!-- Common Structures contains the standard domain-wide declarations of the infrastructure elements such as IdentifyingBlock -->
+	<xs:import namespace="DCLG-HIP/CommonStructures" schemaLocation="../CommonFiles/CommonStructures.xsd"/>
+	<xs:import namespace="DCLG-HIP/Exceptions" schemaLocation="../CommonFiles/Exceptions.xsd"/>
+	<!-- Include templates for all Business Entities used by the message -->
+	<xs:import namespace="DCLG-HIP" schemaLocation="../Templates/HIP-Reports.xsd"/>
+	<!--***************************************************************************
+	Message Definition
+	*************************************************************************** -->
+	<xs:element name="ConditionReportChangeAccessRequest_1">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Identification">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="CS:DefaultIdBlock">
+								<xs:sequence>
+									<xs:element name="Identifier" type="HIP:ReportKeyFields"/>
+								</xs:sequence>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Configuration" type="CS:UpdateRequestConfigBlock"/>
+				<xs:element name="Content">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="OldCode" type="HIP:RestrictedAccessCode"/>
+							<xs:element name="NewCode" type="HIP:RestrictedAccessCode"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
