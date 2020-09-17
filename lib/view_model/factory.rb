@@ -30,6 +30,7 @@ module ViewModel
       SAP-Schema-NI-17.3
       SAP-Schema-NI-17.2
       SAP-Schema-NI-17.1
+      SAP-Schema-NI-17.0
     ].freeze
     def create(xml = nil, schema_type = nil, filter_results_for = nil)
       xml_doc = Nokogiri.XML(xml).remove_namespaces!
