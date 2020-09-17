@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2006 rel. 3 U (http://www.altova.com) by Jim Bowery (Landmark Information Group Ltd.) -->
+<xs:schema xmlns="DCLG-HIP" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pfdt="DCLG-HIP/BaseDataTypes" xmlns:HIP="DCLG-HIP" targetNamespace="DCLG-HIP" elementFormDefault="qualified" attributeFormDefault="unqualified" version="LIG-NI-16.0">
+	<xs:annotation>
+		<xs:documentation>© Department of Communities and Local Government. © Crown copyright, 2007. The Home Condition Report logo and associated wording is a registered trade mark - any unlicensed use is not permitted. Copyright in the typographical arrangement of this document rests with the Crown. This publication, excluding logos, may be reproduced free of charge in any format or medium for research, private study, for internal circulation within an organisation or by registered scheme users. This is subject to it being reproduced accurately and not used in a misleading context.</xs:documentation>
+	</xs:annotation>
+	<xs:import namespace="DCLG-HIP/BaseDataTypes" schemaLocation="../UDT/BaseDataTypes.xsd"/>
+	<xs:include schemaLocation="../UDT/SAP-Domains.xsd"/>
+	<xs:include schemaLocation="../UDT/EPC-Domains.xsd"/>
+	<xs:simpleType name="EnergyRatingType">
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="0"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="Energy-Assessment" type="Energy-Assessment"/>
+	<xs:complexType name="Energy-Assessment">
+		<xs:annotation>
+			<xs:documentation>Energy Efficiency Assessment Report is an inspection report whose purpose is to assess the energy efficiency of the inspected property and provide energy ratings for the significant heat-loss features of the property. 
+
+The report also identifies a number of potential improvements that may be made to the property in order to increase the energy efficiency.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Property-Summary" type="Property-Summary"/>
+			<xs:element name="Energy-Use" type="Energy-Use"/>
+			<xs:element name="Suggested-Improvements" type="Suggested-Improvements" minOccurs="0"/>
+			<xs:element name="LZC-Energy-Sources" type="LZC-Energy-Sources" minOccurs="0"/>
+			<xs:element name="Addendum" type="Addendum" minOccurs="0"/>
+			<xs:element name="Renewable-Heat-Incentive" type="Renewable-Heat-Incentive" minOccurs="0"/>
+			<xs:element name="Green-Deal-Package" type="Green-Deal-Package" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Improvements that can form a Green Deal package</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Alternative-Improvements" type="Suggested-Improvements" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Alternative improvements to some of those given in Suggested-Improvements</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Property-Summary" type="Property-Summary"/>
+	<xs:complexType name="Property-Summary">
+		<xs:sequence>
+			<xs:element name="Wall" type="PropertySummaryType" maxOccurs="unbounded"/>
+			<xs:element name="Roof" type="PropertySummaryType" maxOccurs="unbounded"/>
+			<xs:element name="Floor" type="PropertySummaryType" maxOccurs="unbounded"/>
+			<xs:element name="Window" type="PropertySummaryType"/>
+			<xs:element name="Main-Heating" type="PropertySummaryType" maxOccurs="2"/>
+			<xs:element name="Main-Heating-Controls" type="PropertySummaryType" maxOccurs="2"/>
+			<xs:element name="Hot-Water" type="PropertySummaryType"/>
+			<xs:element name="Lighting" type="PropertySummaryType"/>
+			<xs:element name="Secondary-Heating" type="PropertySummaryType"/>
+			<xs:element name="Has-Hot-Water-Cylinder" type="xs:boolean" default="false" minOccurs="0"/>
+			<xs:element name="Has-Heated-Separate-Conservatory" type="xs:boolean" default="false" minOccurs="0"/>
+			<xs:element name="Dwelling-Type" type="pfdt:Sentence" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A string such as Detached house or Top-floor flat </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Total-Floor-Area" type="xs:positiveInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A number such as 125</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Has-Fixed-Air-Conditioning" type="xs:boolean" default="false" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Energy-Use" type="Energy-Use"/>
+	<xs:complexType name="Energy-Use">
+		<xs:annotation>
+			<xs:documentation>Part of an Energy Report summarising the results of the various energy calculations made by the Home Inspector.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Energy-Rating-Current" type="EnergyRatingType">
+				<xs:annotation>
+					<xs:documentation>The Current Energy Rating of the Property</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Energy-Rating-Potential" type="EnergyRatingType">
+				<xs:annotation>
+					<xs:documentation>The overall Energy Rating for the Property being assessed.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Energy-Rating-Average" type="EnergyRatingType">
+				<xs:annotation>
+					<xs:documentation>Average SAP rating for the country concerned.  0 if unknown or not applicable</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Environmental-Impact-Current" type="EnergyRatingType">
+				<xs:annotation>
+					<xs:documentation>The estimated current Environmental Impact Rating of the property</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Environmental-Impact-Potential" type="EnergyRatingType">
+				<xs:annotation>
+					<xs:documentation>The estimated potential Environmental Impact Rating of the property</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Energy-Consumption-Current" type="pfdt:Measurement">
+				<xs:annotation>
+					<xs:documentation>Estimated total energy consumption for the Property in a 12 month period. Value is Kilowatt Hours per Square Metre (kWh/m2)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Energy-Consumption-Potential" type="pfdt:Measurement">
+				<xs:annotation>
+					<xs:documentation>Estimated total energy consumption for the Property in a 12 month period. Value is Kilowatt Hours per Square Metre (kWh/m2)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CO2-Emissions-Current" type="pfdt:Measurement">
+				<xs:annotation>
+					<xs:documentation>CO2 emissions per year in tonnes/year.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CO2-Emissions-Current-Per-Floor-Area" type="pfdt:Measurement">
+				<xs:annotation>
+					<xs:documentation>CO2 emissions per square metre floor area per year in kg/m².</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CO2-Emissions-Potential" type="pfdt:Measurement">
+				<xs:annotation>
+					<xs:documentation>Estimated value in Tonnes per Year of the total CO2 emissions produced by the Property in 12 month period.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Lighting-Cost-Current" type="pfdt:Money">
+				<xs:annotation>
+					<xs:documentation>The current estimated cost of Lighting for the property</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Lighting-Cost-Potential" type="pfdt:Money">
+				<xs:annotation>
+					<xs:documentation>The current estimated cost of Lighting for the property</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Heating-Cost-Current" type="pfdt:Money">
+				<xs:annotation>
+					<xs:documentation>The current estimated cost of Heating for the property</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Heating-Cost-Potential" type="pfdt:Money">
+				<xs:annotation>
+					<xs:documentation>The current estimated cost of Heating for the property</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Hot-Water-Cost-Current" type="pfdt:Money">
+				<xs:annotation>
+					<xs:documentation>|The current estimated cost of Hot Water for the property</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Hot-Water-Cost-Potential" type="pfdt:Money">
+				<xs:annotation>
+					<xs:documentation>|The current estimated cost of Hot Water for the property</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Suggested-Improvements" type="Suggested-Improvements"/>
+	<xs:complexType name="Suggested-Improvements">
+		<xs:annotation>
+			<xs:documentation>Part of an Energy Report that describes the a set of improvements that the Home Inspector considers would contribute to the overall energy rating of the property.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Improvement" type="Improvement" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Improvement" type="Improvement"/>
+	<xs:complexType name="Improvement">
+		<xs:all>
+			<xs:element name="Sequence" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>Sequence of the Suggested Improvements within the set of Suggested Improvements. This is used to order the Recommendations on the output HCR / EPC so that the cumulative Ratings make sense.
+
+The Improved Energy Ratings that result from carrying out a Suggested Improvement are cumulative and assume that the improvements have been installed in the order they appear in the list. Hence they must be sequenced.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Improvement-Category" type="RecommendationCategoryCode">
+				<xs:annotation>
+					<xs:documentation>The category of improvement. This identifies where on the report the recommendation is printed.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Improvement-Type" type="SAP-ImprovementMeasureCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Suggested work to be carried out on the Property to improve its energy efficiency.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Typical-Saving" type="pfdt:Money">
+				<xs:annotation>
+					<xs:documentation>Typical savings (in British Pounds) per year if the suggested improvement is carried out. 0 if not assessed</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Energy-Performance-Rating" type="EnergyRatingType">
+				<xs:annotation>
+					<xs:documentation>The estimated Energy performance rating of the Property after the Suggested Improvement has been carried out providing any preceding Suggested Improvement has also been carried out. 0 if not assessed</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Environmental-Impact-Rating" type="EnergyRatingType">
+				<xs:annotation>
+					<xs:documentation>The estimated Environmental Impact rating of the Property after the Suggested Improvement has been carried out providing any preceding Suggested Improvement has also been carried out. 0 if not assessed</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Improvement-Details">
+				<xs:complexType>
+					<xs:choice>
+						<xs:element name="Improvement-Texts" type="ImprovementTexts">
+							<xs:annotation>
+								<xs:documentation>For backward compatibility only</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="Improvement-Number" type="RecommendationSummaryCode"/>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Indicative-Cost" type="xs:string" minOccurs="0"/>
+			<xs:element name="Green-Deal-Category" type="GreenDealCategoryCode" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="PropertySummaryType" type="PropertySummaryType"/>
+	<xs:complexType name="PropertySummaryType">
+		<xs:all>
+			<xs:element name="Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>Overall description of the property feature</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Energy-Efficiency-Rating" type="EnergyEfficiencySummaryCode">
+				<xs:annotation>
+					<xs:documentation>Overall summary of the energy effiocuemcy of the property feature.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Environmental-Efficiency-Rating" type="EnergyEfficiencySummaryCode">
+				<xs:annotation>
+					<xs:documentation>Summary of the environmental efficiency of the property feature</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Addendum" type="Addendum"/>
+	<xs:complexType name="Addendum">
+		<xs:sequence>
+			<xs:element name="Addendum-Number" type="AddendumCode" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Cavity-Fill-Recommended" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Cavity fill is recommended</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Stone-Walls" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Stone walls present, not insulated</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="System-Build" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>System build present</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Access-Issues" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Dwelling has access issues for cavity wall insulation. Include only when at least one of Cavity-Fill-Recommended, Stone-Walls, System-Build is also present</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="High-Exposure" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Dwelling may be exposed to wind-driven rain. Include only when at least one of Cavity-Fill-Recommended, Stone-Walls, System-Build is also present</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Narrow-Cavities" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Dwelling may have narrow cavities. Include only when Cavity-Fill-Recommended is also present</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="LZC-Energy-Sources" type="LZC-Energy-Sources"/>
+	<xs:complexType name="LZC-Energy-Sources">
+		<xs:sequence>
+			<xs:element name="LZC-Energy-Source" type="SAP-LZCEnergySourceCode" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Low and zero carbon energy source(s) for the property.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ImprovementTexts" type="ImprovementTexts"/>
+	<xs:complexType name="ImprovementTexts">
+		<xs:sequence>
+			<xs:element name="Improvement-Summary" type="pfdt:Sentence" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>A short description of the suggested improvement.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Improvement-Heading" type="pfdt:Sentence" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Text to precede the improvement description. If this field is not provided the 'Improvement-Summary' is used instead.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Improvement-Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>Detailed description of the suggested improvement.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Renewable-Heat-Incentive" type="Renewable-Heat-Incentive">
+		<xs:annotation>
+			<xs:documentation>Data for RHI.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="Renewable-Heat-Incentive">
+		<xs:all>
+			<xs:element name="Space-Heating-Existing-Dwelling" type="pfdt:Measurement">
+				<xs:annotation>
+					<xs:documentation>Space heating requirement for existing dwelling.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Space-Heating-With-Loft-Insulation" type="pfdt:Measurement" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Space heating requirement after implementation of loft insulation recommendation, omit if loft insulation not recommended. For backwards compatibility only, do not use</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Space-Heating-With-Cavity-Insulation" type="pfdt:Measurement" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Space heating requirement after implementation of cavity insulation recommendation, omit if cavity insulation not recommended. For backwards compatibility only, do not use</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Space-Heating-With-Loft-And-Cavity-Insulation" type="pfdt:Measurement" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Space heating requirement after implementation of loft and cavity insulation recommendations, same as existing dwelling if neither is recommended. For backwards compatibility only, do not use</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Water-Heating" type="pfdt:Measurement">
+				<xs:annotation>
+					<xs:documentation>Water heating requirement.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Impact-Of-Loft-Insulation" type="xs:nonPositiveInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Reduction in space heating requirement with loft insulation (as negative value). Omit if not applicable</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Impact-Of-Cavity-Insulation" type="xs:nonPositiveInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Reduction in space heating requirement with cavity insulation (as negative value). Omit if not applicable</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Impact-Of-Solid-Wall-Insulation" type="xs:nonPositiveInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Reduction in space heating requirement with solid wall insulation (as negative value). Omit if not applicable</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Green-Deal-Package"/>
+	<xs:complexType name="Green-Deal-Package">
+		<xs:sequence>
+			<xs:element name="Green-Deal-Improvement" type="Green-Deal-Improvement" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Improvements from Suggested-Improvements in the Green Deal package</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Electricity-Saving" type="pfdt:Money">
+				<xs:annotation>
+					<xs:documentation>Total electricity saving for the package</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Gas-Saving" type="pfdt:Money">
+				<xs:annotation>
+					<xs:documentation>Total gas saving for the package</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Other-Fuel-Saving" type="pfdt:Money">
+				<xs:annotation>
+					<xs:documentation>Total other saving for the package</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Green-Deal-Improvement"/>
+	<xs:complexType name="Green-Deal-Improvement">
+		<xs:sequence>
+			<xs:element name="Improvement-Type" type="SAP-ImprovementMeasureCode"/>
+			<xs:element name="Improvement-Number" type="RecommendationSummaryCode"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

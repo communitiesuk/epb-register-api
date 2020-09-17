@@ -1,0 +1,3007 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="DCLG-SAP05" xmlns:SAP05="DCLG-SAP05" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="DCLG-SAP05" elementFormDefault="qualified" version="LIG-NI-16.0">
+	<xs:simpleType name="SAP-StoreyFloorCode">
+		<xs:annotation>
+			<xs:documentation>Code which identifies a particular storey in a building part.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="-1">
+				<xs:annotation>
+					<xs:documentation>Lower ground</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="0">
+				<xs:annotation>
+					<xs:documentation>Ground</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>1st</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>2nd</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>3rd</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>4th</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="5">
+				<xs:annotation>
+					<xs:documentation>5th</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="6">
+				<xs:annotation>
+					<xs:documentation>6th</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="99">
+				<xs:annotation>
+					<xs:documentation>Roof rooms</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-ImprovementMeasureCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates an improvement measure for a property.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="A">
+				<xs:annotation>
+					<xs:documentation>Loft insulation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="B">
+				<xs:annotation>
+					<xs:documentation>Cavity wall insulation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="C">
+				<xs:annotation>
+					<xs:documentation>Hot water cylinder insulation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="D">
+				<xs:annotation>
+					<xs:documentation>Draughtproofing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="E">
+				<xs:annotation>
+					<xs:documentation>Low energy lights</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F">
+				<xs:annotation>
+					<xs:documentation>Cylinder thermostat</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="G">
+				<xs:annotation>
+					<xs:documentation>Heating controls for wet central heating system</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="H">
+				<xs:annotation>
+					<xs:documentation>Heating controls for warm air system</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="I">
+				<xs:annotation>
+					<xs:documentation>Upgrade boiler, same fuel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="J">
+				<xs:annotation>
+					<xs:documentation>Biomass boiler</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="K">
+				<xs:annotation>
+					<xs:documentation>Biomass room heater with boiler</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="L">
+				<xs:annotation>
+					<xs:documentation>New or replacement storage heaters</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="M">
+				<xs:annotation>
+					<xs:documentation>Replacement warm-air unit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="N">
+				<xs:annotation>
+					<xs:documentation>Solar water heating</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="O">
+				<xs:annotation>
+					<xs:documentation>Double glazing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="P">
+				<xs:annotation>
+					<xs:documentation>Secondary glazing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Q">
+				<xs:annotation>
+					<xs:documentation>Solid wall insulation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="R">
+				<xs:annotation>
+					<xs:documentation>Condensing oil boiler</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="S">
+				<xs:annotation>
+					<xs:documentation>Change heating to Band A gas condensing boiler (no fuel switch)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="T">
+				<xs:annotation>
+					<xs:documentation>Change heating to Band A gas condensing boiler (fuel switch)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="U">
+				<xs:annotation>
+					<xs:documentation>Photovoltaics</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="V">
+				<xs:annotation>
+					<xs:documentation>Wind turbine</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-WaterHeatingCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the type of heating system, as defined in SAP table 4a (codes 901-999).</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:positiveInteger">
+			<xs:maxInclusive value="999"/>
+			<xs:minInclusive value="901"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-LZCEnergySourceCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates a particular low or zero carbon energy source.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>Biomass main heating</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>Biomass community heating</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>Biomass community heating for some of heat generation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>Biomass secondary heating</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="5">
+				<xs:annotation>
+					<xs:documentation>Geothermal heat source</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="6">
+				<xs:annotation>
+					<xs:documentation>Combined heat and power</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="7">
+				<xs:annotation>
+					<xs:documentation>Ground source heat pump</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="8">
+				<xs:annotation>
+					<xs:documentation>Water source heat pump</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="9">
+				<xs:annotation>
+					<xs:documentation>Air source heat pump</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="10">
+				<xs:annotation>
+					<xs:documentation>Solar water heating</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11">
+				<xs:annotation>
+					<xs:documentation>Solar photovoltaics</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="12">
+				<xs:annotation>
+					<xs:documentation>Wind turbine</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13">
+				<xs:annotation>
+					<xs:documentation>Community heat pump</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FlueTypeCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the type of flue.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>open flue</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>balanced flue</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>chimney</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>omitted (boiler is in an outhouse, so its flue arrangements are not relevant)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="5">
+				<xs:annotation>
+					<xs:documentation>unknown (there is a flue, but its type could not be determined)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-GlazingGapTypeCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>6 mm</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>12 mm</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>16 mm or more</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-DataTypeCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the type of SAP data.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>new dwelling as designed</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>new dwelling as built</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>new extension to existing dwelling</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>new dwelling created by change of use</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="5">
+				<xs:annotation>
+					<xs:documentation>existing dwelling</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="6">
+				<xs:annotation>
+					<xs:documentation>other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-VersionCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the SAP version.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="9.80">
+				<xs:annotation>
+					<xs:documentation>SAP 2005 version 9.80, dated October 2005</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="9.81">
+				<xs:annotation>
+					<xs:documentation>SAP version 9.81, dated January 2008</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="9.82">
+				<xs:annotation>
+					<xs:documentation>SAP version 9.82, dated Jun 2008</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="9.83">
+				<xs:annotation>
+					<xs:documentation>SAP version 9.83, dated Jun 2009</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-FloorTypeCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the type of floor (exposure).</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>basement floor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>ground floor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>upper floor (if heat loss area &gt; 0, this area is an exposed floor)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="UKCountryCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the country within the UK, taken from BS 6879.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="EAW">
+				<xs:annotation>
+					<xs:documentation>England and Wales</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SCT">
+				<xs:annotation>
+					<xs:documentation>Scotland</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NIR">
+				<xs:annotation>
+					<xs:documentation>Northern Ireland</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="UKRegionCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the region within the UK.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>Borders</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>East Anglia</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>East Pennines</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>East Scotland</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="5">
+				<xs:annotation>
+					<xs:documentation>Highland</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="6">
+				<xs:annotation>
+					<xs:documentation>Midlands</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="7">
+				<xs:annotation>
+					<xs:documentation>North East England</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="8">
+				<xs:annotation>
+					<xs:documentation>North East Scotland</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="9">
+				<xs:annotation>
+					<xs:documentation>North West England / South West Scotland</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="10">
+				<xs:annotation>
+					<xs:documentation>Northern Ireland</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11">
+				<xs:annotation>
+					<xs:documentation>Orkney</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="12">
+				<xs:annotation>
+					<xs:documentation>Severn Valley</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13">
+				<xs:annotation>
+					<xs:documentation>Shetland</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="14">
+				<xs:annotation>
+					<xs:documentation>South East England</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="15">
+				<xs:annotation>
+					<xs:documentation>South West England</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="16">
+				<xs:annotation>
+					<xs:documentation>Southern England</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="17">
+				<xs:annotation>
+					<xs:documentation>Thames Valley</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="18">
+				<xs:annotation>
+					<xs:documentation>Wales</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="19">
+				<xs:annotation>
+					<xs:documentation>West Pennines</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="20">
+				<xs:annotation>
+					<xs:documentation>West Scotland</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="21">
+				<xs:annotation>
+					<xs:documentation>Western Isles</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="22">
+				<xs:annotation>
+					<xs:documentation>Jersey</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23">
+				<xs:annotation>
+					<xs:documentation>Guernsey</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="24">
+				<xs:annotation>
+					<xs:documentation>Isle of Man</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-ExposedWallTypeCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the type of wall (exposure).</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>basement wall</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>exposed wall</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>sheltered wall</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-ThermalBridgeCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates how the thermal bridge data has been recorded.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>default</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>2002 regulations</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>accredited</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>user defined (global y-value)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="5">
+				<xs:annotation>
+					<xs:documentation>user defined (individual values)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-ThermalBridgeTypeCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates a particular type of thermal bridge.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>Steel lintel with perforated steel base plate</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>Other lintels (including other steel lintels)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>Sill</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>Jamb</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="5">
+				<xs:annotation>
+					<xs:documentation>Ground floor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="6">
+				<xs:annotation>
+					<xs:documentation>Intermediate floor within a dwelling</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="7">
+				<xs:annotation>
+					<xs:documentation>Intermediate floor between dwellings</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="8">
+				<xs:annotation>
+					<xs:documentation>Balcony within a dwelling</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="9">
+				<xs:annotation>
+					<xs:documentation>Balcony between dwellings</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="10">
+				<xs:annotation>
+					<xs:documentation>Eaves (insulation at ceiling level)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11">
+				<xs:annotation>
+					<xs:documentation>Eaves (insulation at rafter level)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="12">
+				<xs:annotation>
+					<xs:documentation>Gable (insulation at ceiling level)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13">
+				<xs:annotation>
+					<xs:documentation>Gable (insulation at rafter level)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="14">
+				<xs:annotation>
+					<xs:documentation>Corner (normal)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="15">
+				<xs:annotation>
+					<xs:documentation>Corner (inverted)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="16">
+				<xs:annotation>
+					<xs:documentation>Party wall between dwellings</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="17">
+				<xs:annotation>
+					<xs:documentation>other type 1</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="18">
+				<xs:annotation>
+					<xs:documentation>other type 2</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-OrientationCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the compass direction.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="0">
+				<xs:annotation>
+					<xs:documentation>unknown or unspecified</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>North</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>North East</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>East</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>South East</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="5">
+				<xs:annotation>
+					<xs:documentation>South</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="6">
+				<xs:annotation>
+					<xs:documentation>South West</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="7">
+				<xs:annotation>
+					<xs:documentation>West</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="8">
+				<xs:annotation>
+					<xs:documentation>North West</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="9">
+				<xs:annotation>
+					<xs:documentation>Horizontal (windows and roof windows only)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-OpeningDataSourceCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the source of opening data.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>manufacturer declaration</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>SAP table</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>BFRC data</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-OpeningTypeCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the type of opening.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>solid door</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>half glazed door</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>door to corridor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>window</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="5">
+				<xs:annotation>
+					<xs:documentation>roof window</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HeatEmitterCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the type of heating emitter.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>radiators</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>underfloor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>both</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-GlazingTypeCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the type of glazing; if U-value is from BFRC or manufacturer declaration, give as one of
+- single
+- double
+- triple.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>not applicable (non-glazed door)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>single</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>double</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>double low-E hard 0.2</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="5">
+				<xs:annotation>
+					<xs:documentation>double low-E hard 0.15</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="6">
+				<xs:annotation>
+					<xs:documentation>double low-E soft 0.1</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="7">
+				<xs:annotation>
+					<xs:documentation>double low-E soft 0.05</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="8">
+				<xs:annotation>
+					<xs:documentation>triple</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="9">
+				<xs:annotation>
+					<xs:documentation>triple low-E hard 0.2</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="10">
+				<xs:annotation>
+					<xs:documentation>triple low-E hard 0.15</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11">
+				<xs:annotation>
+					<xs:documentation>triple low-E soft 0.1</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="12">
+				<xs:annotation>
+					<xs:documentation>triple low-E soft 0.05</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13">
+				<xs:annotation>
+					<xs:documentation>secondary glazing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-FrameTypeCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the type of opening frame.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>wood</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>PVC</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>metal no break</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>metal 4 mm break</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="5">
+				<xs:annotation>
+					<xs:documentation>metal 8 mm break</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="6">
+				<xs:annotation>
+					<xs:documentation>metal 12 mm break</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="7">
+				<xs:annotation>
+					<xs:documentation>metal 20 mm break</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="8">
+				<xs:annotation>
+					<xs:documentation>metal 32 mm break</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-WindowOvershadingCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the amount of window overshading.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>very little</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>average or unknown</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>more than average</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>heavy</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-ConservatoryTypeCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the type of conservatory.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>no conservatory</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>separated unheated conservatory</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>separated heated conservatory</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>not separated</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-PressureTestCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates whether a pressure test has been done, or whether an assumed value is used.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>yes (measured value)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>yes (design value)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>assumed value</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>no</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-CommunityHeatingUseCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates what kind of heating a community heating system is used for.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>space heating only</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>water heating only</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>space and water heating</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-FlatLevelCode">
+		<xs:annotation>
+			<xs:documentation>Codes which indicates where a flat is located within a building.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>ground floor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>mid floor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>top floor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-FloorConstructionCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the type of floor construction.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>not suspended timber</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>suspended timber, sealed</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>suspended timber, unsealed</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-WallConstructionCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the type of wall construction.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>steel or timber frame</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-SpaceHeatingCode-Enumerated">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the type of heating system, as defined in SAP tables 4a/4b (codes 101 to 899).</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="151">
+				<xs:annotation>
+					<xs:documentation>CENTRAL HEATING SYSTEMS WITH RADIATORS OR UNDERFLOOR HEATING: Solid fuel boilers: Manual feed boiler in heated space (mineral or wood)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="152">
+				<xs:annotation>
+					<xs:documentation>CENTRAL HEATING SYSTEMS WITH RADIATORS OR UNDERFLOOR HEATING: Solid fuel boilers: Manual feed boiler in unheated space (mineral or wood)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="153">
+				<xs:annotation>
+					<xs:documentation>CENTRAL HEATING SYSTEMS WITH RADIATORS OR UNDERFLOOR HEATING: Solid fuel boilers: Auto (gravity) feed boiler in heated space </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="154">
+				<xs:annotation>
+					<xs:documentation>CENTRAL HEATING SYSTEMS WITH RADIATORS OR UNDERFLOOR HEATING: Solid fuel boilers: Auto (gravity) feed boiler in unheated space</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="155">
+				<xs:annotation>
+					<xs:documentation>CENTRAL HEATING SYSTEMS WITH RADIATORS OR UNDERFLOOR HEATING: Solid fuel boilers: Wood chip/pellet independent boiler</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="156">
+				<xs:annotation>
+					<xs:documentation>CENTRAL HEATING SYSTEMS WITH RADIATORS OR UNDERFLOOR HEATING: Solid fuel boilers: Open fire with back boiler to radiators, trapezium grate</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="157">
+				<xs:annotation>
+					<xs:documentation>CENTRAL HEATING SYSTEMS WITH RADIATORS OR UNDERFLOOR HEATING: Solid fuel boilers: Open fire with back boiler to radiators, rectangular grate</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="158">
+				<xs:annotation>
+					<xs:documentation>CENTRAL HEATING SYSTEMS WITH RADIATORS OR UNDERFLOOR HEATING: Solid fuel boilers: Closed roomheater with boiler to radiators</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="159">
+				<xs:annotation>
+					<xs:documentation>CENTRAL HEATING SYSTEMS WITH RADIATORS OR UNDERFLOOR HEATING: Solid fuel boilers: Stove (pellet-fired) with boiler to radiators</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="160">
+				<xs:annotation>
+					<xs:documentation>CENTRAL HEATING SYSTEMS WITH RADIATORS OR UNDERFLOOR HEATING: Solid fuel boilers: Range cooker boiler (integral oven and boiler)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="161">
+				<xs:annotation>
+					<xs:documentation>CENTRAL HEATING SYSTEMS WITH RADIATORS OR UNDERFLOOR HEATING: Solid fuel boilers: Range cooker boiler (independent oven and boiler)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="191">
+				<xs:annotation>
+					<xs:documentation>CENTRAL HEATING SYSTEMS WITH RADIATORS OR UNDERFLOOR HEATING: Electric boilers: Direct acting electric boiler</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="192">
+				<xs:annotation>
+					<xs:documentation>CENTRAL HEATING SYSTEMS WITH RADIATORS OR UNDERFLOOR HEATING: Electric boilers: Electric CPSU in heated space</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="193">
+				<xs:annotation>
+					<xs:documentation>CENTRAL HEATING SYSTEMS WITH RADIATORS OR UNDERFLOOR HEATING: Electric boilers: Dry core storage boiler in heated space</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="194">
+				<xs:annotation>
+					<xs:documentation>CENTRAL HEATING SYSTEMS WITH RADIATORS OR UNDERFLOOR HEATING: Electric boilers: Dry core storage boiler in unheated space</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="195">
+				<xs:annotation>
+					<xs:documentation>CENTRAL HEATING SYSTEMS WITH RADIATORS OR UNDERFLOOR HEATING: Electric boilers: Water storage boiler in heated space</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="196">
+				<xs:annotation>
+					<xs:documentation>CENTRAL HEATING SYSTEMS WITH RADIATORS OR UNDERFLOOR HEATING: Electric boilers: Water storage boiler in unheated space</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="201">
+				<xs:annotation>
+					<xs:documentation>CENTRAL HEATING SYSTEMS WITH RADIATORS OR UNDERFLOOR HEATING: Heat pumps: Ground-to-water heat pump (electric)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="202">
+				<xs:annotation>
+					<xs:documentation>CENTRAL HEATING SYSTEMS WITH RADIATORS OR UNDERFLOOR HEATING: Heat pumps: Ground-to-water heat pump with auxiliary heater (electric)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="203">
+				<xs:annotation>
+					<xs:documentation>CENTRAL HEATING SYSTEMS WITH RADIATORS OR UNDERFLOOR HEATING: Heat pumps: Water-to-water heat pump (electric)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="204">
+				<xs:annotation>
+					<xs:documentation>CENTRAL HEATING SYSTEMS WITH RADIATORS OR UNDERFLOOR HEATING: Heat pumps: Air-to-water heat pump (electric)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="205">
+				<xs:annotation>
+					<xs:documentation>CENTRAL HEATING SYSTEMS WITH RADIATORS OR UNDERFLOOR HEATING: Heat pumps: Gas-fired, ground source</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="206">
+				<xs:annotation>
+					<xs:documentation>CENTRAL HEATING SYSTEMS WITH RADIATORS OR UNDERFLOOR HEATING: Heat pumps: Gas-fired, water source</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="207">
+				<xs:annotation>
+					<xs:documentation>CENTRAL HEATING SYSTEMS WITH RADIATORS OR UNDERFLOOR HEATING: Heat pumps: Gas-fired, air source</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="301">
+				<xs:annotation>
+					<xs:documentation>COMMUNITY HEATING SCHEMES: Community boilers only</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="302">
+				<xs:annotation>
+					<xs:documentation>COMMUNITY HEATING SCHEMES: Community CHP and boilers</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="303">
+				<xs:annotation>
+					<xs:documentation>COMMUNITY HEATING SCHEMES: Community waste heat from power station and boilers</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="304">
+				<xs:annotation>
+					<xs:documentation>COMMUNITY HEATING SCHEMES: Community heat pump</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="305">
+				<xs:annotation>
+					<xs:documentation>COMMUNITY HEATING SCHEMES: Community geothermal heat source and boilers</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="401">
+				<xs:annotation>
+					<xs:documentation>ELECTRIC STORAGE SYSTEMS: Old (large volume) storage heaters</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="402">
+				<xs:annotation>
+					<xs:documentation>ELECTRIC STORAGE SYSTEMS: Modern (slimline) storage heaters</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="403">
+				<xs:annotation>
+					<xs:documentation>ELECTRIC STORAGE SYSTEMS: Convector storage heaters</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="404">
+				<xs:annotation>
+					<xs:documentation>ELECTRIC STORAGE SYSTEMS: Fan storage heaters</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="405">
+				<xs:annotation>
+					<xs:documentation>ELECTRIC STORAGE SYSTEMS: Modern (slimline) storage heaters with Celect-type control</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="406">
+				<xs:annotation>
+					<xs:documentation>ELECTRIC STORAGE SYSTEMS: Convector storage heaters with Celect-type control</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="407">
+				<xs:annotation>
+					<xs:documentation>ELECTRIC STORAGE SYSTEMS: Fan storage heaters with Celect-type control</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="408">
+				<xs:annotation>
+					<xs:documentation>ELECTRIC STORAGE SYSTEMS: Integrated storage/direct acting heater</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="421">
+				<xs:annotation>
+					<xs:documentation>ELECTRIC UNDERFLOOR HEATING: In concrete slab (off-peak only)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="422">
+				<xs:annotation>
+					<xs:documentation>ELECTRIC UNDERFLOOR HEATING: Integrated (storage/direct acting)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="423">
+				<xs:annotation>
+					<xs:documentation>ELECTRIC UNDERFLOOR HEATING: Integrated (storage/direct acting) with low (off-peak) tariff control</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="424">
+				<xs:annotation>
+					<xs:documentation>ELECTRIC UNDERFLOOR HEATING: In thin screed (45-60 mm)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="425">
+				<xs:annotation>
+					<xs:documentation>ELECTRIC UNDERFLOOR HEATING: In timber floor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="501">
+				<xs:annotation>
+					<xs:documentation>WARM AIR SYSTEMS: Gas-fired warm air with fan-assisted flue: Ducted, on-off control, pre 1998</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="502">
+				<xs:annotation>
+					<xs:documentation>WARM AIR SYSTEMS: Gas-fired warm air with fan-assisted flue: Ducted, on-off control, 1998 or later</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="503">
+				<xs:annotation>
+					<xs:documentation>WARM AIR SYSTEMS: Gas-fired warm air with fan-assisted flue: Ducted, modulating control, pre 1998</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="504">
+				<xs:annotation>
+					<xs:documentation>WARM AIR SYSTEMS: Gas-fired warm air with fan-assisted flue: Ducted, modulating control, 1998 or later</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="505">
+				<xs:annotation>
+					<xs:documentation>WARM AIR SYSTEMS: Gas-fired warm air with fan-assisted flue: Roomheater, with in-floor ducts</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="506">
+				<xs:annotation>
+					<xs:documentation>WARM AIR SYSTEMS: Gas fired warm air with balanced or open flue: Ducted or stub-ducted. on-off control, pre 1998</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="507">
+				<xs:annotation>
+					<xs:documentation>WARM AIR SYSTEMS: Gas fired warm air with balanced or open flue: Ducted or stub-ducted. on-off control, 1998 or later</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="508">
+				<xs:annotation>
+					<xs:documentation>WARM AIR SYSTEMS: Gas fired warm air with balanced or open flue: Ducted or stub-ducted, modulating control, pre 1998</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="509">
+				<xs:annotation>
+					<xs:documentation>WARM AIR SYSTEMS: Gas fired warm air with balanced or open flue: Ducted or stub-ducted, modulating control, 1998 or later</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="510">
+				<xs:annotation>
+					<xs:documentation>WARM AIR SYSTEMS: Gas fired warm air with balanced or open flue: Ducted or stub-ducted with flue heat recovery</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="511">
+				<xs:annotation>
+					<xs:documentation>WARM AIR SYSTEMS: Gas fired warm air with balanced or open flue: Condensing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="512">
+				<xs:annotation>
+					<xs:documentation>WARM AIR SYSTEMS: Oil-fired warm air: Ducted output (on/off control)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="513">
+				<xs:annotation>
+					<xs:documentation>WARM AIR SYSTEMS: Oil-fired warm air: Ducted output (modulating control)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="514">
+				<xs:annotation>
+					<xs:documentation>WARM AIR SYSTEMS: Oil-fired warm air: Stub duct system</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="515">
+				<xs:annotation>
+					<xs:documentation>WARM AIR SYSTEMS: Electric warm air: Electricaire system</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="521">
+				<xs:annotation>
+					<xs:documentation>WARM AIR SYSTEMS: Heat pumps: Ground-to-air heat pump (electric)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="522">
+				<xs:annotation>
+					<xs:documentation>WARM AIR SYSTEMS: Heat pumps: Ground-to-air heat pump with auxiliary heater (electric)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="523">
+				<xs:annotation>
+					<xs:documentation>WARM AIR SYSTEMS: Heat pumps: Water-to-air heat pump (electric)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="524">
+				<xs:annotation>
+					<xs:documentation>WARM AIR SYSTEMS: Heat pumps: Air-to-air heat pump (electric)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="525">
+				<xs:annotation>
+					<xs:documentation>WARM AIR SYSTEMS: Heat pumps: Gas-fired, ground source</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="526">
+				<xs:annotation>
+					<xs:documentation>WARM AIR SYSTEMS: Heat pumps: Gas-fired, water source</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="527">
+				<xs:annotation>
+					<xs:documentation>WARM AIR SYSTEMS: Heat pumps: Gas-fired, air source</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="601">
+				<xs:annotation>
+					<xs:documentation>ROOM HEATERS: Gas (including LPG) room heaters: Gas fire, open flue, pre-1980 (open fronted)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="602">
+				<xs:annotation>
+					<xs:documentation>ROOM HEATERS: Gas (including LPG) room heaters: Gas fire, open flue, pre-1980 (open fronted), with back boiler unit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="603">
+				<xs:annotation>
+					<xs:documentation>ROOM HEATERS: Gas (including LPG) room heaters: Gas fire, open flue, 1980 or later (open fronted), sitting proud of, and sealed to, fireplace opening</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="604">
+				<xs:annotation>
+					<xs:documentation>ROOM HEATERS: Gas (including LPG) room heaters: Gas fire, open flue, 1980 or later (open fronted), sitting proud of, and sealed to, fireplace opening, with back boiler unit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="605">
+				<xs:annotation>
+					<xs:documentation>ROOM HEATERS: Gas (including LPG) room heaters: Flush fitting Live Fuel Effect gas fire (open fronted), sealed to fireplace opening</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="606">
+				<xs:annotation>
+					<xs:documentation>ROOM HEATERS: Gas (including LPG) room heaters: Flush fitting Live Fuel Effect gas fire (open fronted), sealed to fireplace opening, with back boiler unit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="607">
+				<xs:annotation>
+					<xs:documentation>ROOM HEATERS: Gas (including LPG) room heaters: Flush fitting Live Fuel Effect gas fire (open fronted), fan assisted, sealed to fireplace opening</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="609">
+				<xs:annotation>
+					<xs:documentation>ROOM HEATERS: Gas (including LPG) room heaters: Gas fire or wall heater, balanced flue</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="610">
+				<xs:annotation>
+					<xs:documentation>ROOM HEATERS: Gas (including LPG) room heaters: Gas fire, closed fronted, fan assisted</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="611">
+				<xs:annotation>
+					<xs:documentation>ROOM HEATERS: Gas (including LPG) room heaters: Condensing gas fire</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="612">
+				<xs:annotation>
+					<xs:documentation>ROOM HEATERS: Gas (including LPG) room heaters: Decorative Fuel Effect gas fire, open to chimney</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="613">
+				<xs:annotation>
+					<xs:documentation>ROOM HEATERS: Gas (including LPG) room heaters: Flueless gas fire, secondary heating only</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="621">
+				<xs:annotation>
+					<xs:documentation>ROOM HEATERS: Oil room heaters: Room heater, pre 2000</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="622">
+				<xs:annotation>
+					<xs:documentation>ROOM HEATERS: Oil room heaters: Room heater, pre 2000, with boiler (no radiators)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="623">
+				<xs:annotation>
+					<xs:documentation>ROOM HEATERS: Oil room heaters: Room heater, 2000 or later</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="624">
+				<xs:annotation>
+					<xs:documentation>ROOM HEATERS: Oil room heaters: Room heater, 2000 or later with boiler (no radiators)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="631">
+				<xs:annotation>
+					<xs:documentation>ROOM HEATERS: Solid fuel room heaters: Open fire in grate</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="632">
+				<xs:annotation>
+					<xs:documentation>ROOM HEATERS: Solid fuel room heaters: Open fire with back boiler (no radiators)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="633">
+				<xs:annotation>
+					<xs:documentation>ROOM HEATERS: Solid fuel room heaters: Closed room heater</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="634">
+				<xs:annotation>
+					<xs:documentation>ROOM HEATERS: Solid fuel room heaters: Closed room heater with boiler (no radiators)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="635">
+				<xs:annotation>
+					<xs:documentation>ROOM HEATERS: Solid fuel room heaters: Stove (pellet fired)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="636">
+				<xs:annotation>
+					<xs:documentation>ROOM HEATERS: Solid fuel room heaters: Stove (pellet fired) with boiler (no radiators)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="691">
+				<xs:annotation>
+					<xs:documentation>ROOM HEATERS: Electric (direct acting) room heaters: Panel, convector or radiant heaters</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="692">
+				<xs:annotation>
+					<xs:documentation>ROOM HEATERS: Electric (direct acting) room heaters: Fan heaters</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="693">
+				<xs:annotation>
+					<xs:documentation>ROOM HEATERS: Electric (direct acting) room heaters: Portable electric heaters</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="701">
+				<xs:annotation>
+					<xs:documentation>OTHER SPACE HEATING SYSTEMS: Electric ceiling heating</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="101">
+				<xs:annotation>
+					<xs:documentation>Gas boilers (including LPG) 1998 or later: Regular non-condensing with automatic ignition</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="102">
+				<xs:annotation>
+					<xs:documentation>Gas boilers (including LPG) 1998 or later: Regular condensing with automatic ignition</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="103">
+				<xs:annotation>
+					<xs:documentation>Gas boilers (including LPG) 1998 or later: Non-condensing combi with automatic ignition</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="104">
+				<xs:annotation>
+					<xs:documentation>Gas boilers (including LPG) 1998 or later: Condensing combi with automatic ignition</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="105">
+				<xs:annotation>
+					<xs:documentation>Gas boilers (including LPG) 1998 or later: Regular non-condensing with permanent pilot light</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="106">
+				<xs:annotation>
+					<xs:documentation>Gas boilers (including LPG) 1998 or later: Regular condensing with permanent pilot light</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="107">
+				<xs:annotation>
+					<xs:documentation>Gas boilers (including LPG) 1998 or later: Non-condensing combi with permanent pilot light</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="108">
+				<xs:annotation>
+					<xs:documentation>Gas boilers (including LPG) 1998 or later: Condensing combi with permanent pilot light</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="109">
+				<xs:annotation>
+					<xs:documentation>Gas boilers (including LPG) 1998 or later: Back boiler</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="110">
+				<xs:annotation>
+					<xs:documentation>Gas boilers (including LPG) pre-1998, with fan-assisted flue: Low thermal capacity</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="111">
+				<xs:annotation>
+					<xs:documentation>Gas boilers (including LPG) pre-1998, with fan-assisted flue: High or unknown thermal capacity</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="112">
+				<xs:annotation>
+					<xs:documentation>Gas boilers (including LPG) pre-1998, with fan-assisted flue: Combi</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="113">
+				<xs:annotation>
+					<xs:documentation>Gas boilers (including LPG) pre-1998, with fan-assisted flue: Condensing combi</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="114">
+				<xs:annotation>
+					<xs:documentation>Gas boilers (including LPG) pre-1998, with fan-assisted flue: Condensing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="115">
+				<xs:annotation>
+					<xs:documentation>Gas boilers (including LPG) pre-1998, with balanced or open flue: Wall mounted</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="116">
+				<xs:annotation>
+					<xs:documentation>Gas boilers (including LPG) pre-1998, with balanced or open flue: Floor mounted, pre 1979</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="117">
+				<xs:annotation>
+					<xs:documentation>Gas boilers (including LPG) pre-1998, with balanced or open flue: Floor mounted, 1979 to 1997</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="118">
+				<xs:annotation>
+					<xs:documentation>Gas boilers (including LPG) pre-1998, with balanced or open flue: Combi</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="119">
+				<xs:annotation>
+					<xs:documentation>Gas boilers (including LPG) pre-1998, with balanced or open flue: Back boiler</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="120">
+				<xs:annotation>
+					<xs:documentation>Combined Primary Storage Units (CPSU) (mains gas and LPG): With automatic ignition (non-condensing)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="121">
+				<xs:annotation>
+					<xs:documentation>Combined Primary Storage Units (CPSU) (mains gas and LPG): With automatic ignition (condensing)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="122">
+				<xs:annotation>
+					<xs:documentation>Combined Primary Storage Units (CPSU) (mains gas and LPG): With permanent pilot (non-condensing)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="123">
+				<xs:annotation>
+					<xs:documentation>Combined Primary Storage Units (CPSU) (mains gas and LPG): With permanent pilot (condensing)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="124">
+				<xs:annotation>
+					<xs:documentation>Oil boilers: Standard oil boiler pre-1985</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="125">
+				<xs:annotation>
+					<xs:documentation>Oil boilers: Standard oil boiler 1985 to 1997</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="126">
+				<xs:annotation>
+					<xs:documentation>Oil boilers: Standard oil boiler, 1998 or later</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="127">
+				<xs:annotation>
+					<xs:documentation>Oil boilers: Condensing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="128">
+				<xs:annotation>
+					<xs:documentation>Oil boilers: Combi, pre-1998</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="129">
+				<xs:annotation>
+					<xs:documentation>Oil boilers: Combi, 1998 or later</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="130">
+				<xs:annotation>
+					<xs:documentation>Oil boilers: Condensing combi</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="131">
+				<xs:annotation>
+					<xs:documentation>Oil boilers: Oil room heater with boiler to radiators, pre 2000</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="132">
+				<xs:annotation>
+					<xs:documentation>Oil boilers: Oil room heater with boiler to radiators, 2000 or later</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="133">
+				<xs:annotation>
+					<xs:documentation>Range cooker boilers (mains gas and LPG): Single burner with permanent pilot</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="134">
+				<xs:annotation>
+					<xs:documentation>Range cooker boilers (mains gas and LPG): Single burner with automatic ignition</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="135">
+				<xs:annotation>
+					<xs:documentation>Range cooker boilers (mains gas and LPG): Twin burner with permanent pilot (non-condensing) pre 1998</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="136">
+				<xs:annotation>
+					<xs:documentation>Range cooker boilers (mains gas and LPG): Twin burner with automatic ignition (non-condensing) pre 1998</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="137">
+				<xs:annotation>
+					<xs:documentation>Range cooker boilers (mains gas and LPG): Twin burner with permanent pilot (non-condensing) 1998 or later</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="138">
+				<xs:annotation>
+					<xs:documentation>Range cooker boilers (mains gas and LPG): Twin burner with automatic ignition (non-condensing) 1998 or later</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="139">
+				<xs:annotation>
+					<xs:documentation>Range cooker boilers (oil): Single burner </xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="140">
+				<xs:annotation>
+					<xs:documentation>Range cooker boilers (oil): Twin burner (non-condensing) pre 1998</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="141">
+				<xs:annotation>
+					<xs:documentation>Range cooker boilers (oil): Twin burner (non-condensing) 1998 or later</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-VentilationTypeCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the type of ventilation.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>natural with intermittent extract fans</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>natural with passive vents</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>positive input from loft</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>positive input from outside</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="5">
+				<xs:annotation>
+					<xs:documentation>mechanical extract, centralised (MEV c)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="6">
+				<xs:annotation>
+					<xs:documentation>mechanical extract, decentralised (MEV dc)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="7">
+				<xs:annotation>
+					<xs:documentation>balanced without heat recovery (MV)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="8">
+				<xs:annotation>
+					<xs:documentation>balanced with heat recovery (MVHR)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="9">
+				<xs:annotation>
+					<xs:documentation>natural with intermittent extract fans and/or passive vents</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-DataSourceCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the source of SAP data.  Applies to both ventilation and heating.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>from database</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>from manufacturer declaration</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>from SAP table</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-DuctTypeCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the type of duct.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>flexible</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>rigid</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-DuctInsulationCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the type of duct insulation.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>not insulated</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>insulated</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-GasOrOilBoilerTypeCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the type of boiler for the case where the fuel is gas or oil.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>regular</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>combi</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>CPSU</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>range cooker</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-CombiBoilerTypeCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the type of combi boiler.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>instantaneous, no store or keep hot</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>primary storage</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>secondary storage</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>CPSU</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="5">
+				<xs:annotation>
+					<xs:documentation>untimed keep-hot by fuel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="6">
+				<xs:annotation>
+					<xs:documentation>timed keep hot by fuel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="7">
+				<xs:annotation>
+					<xs:documentation>untimed keep-hot by electricity</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="8">
+				<xs:annotation>
+					<xs:documentation>timed keep hot by electricity</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="9">
+				<xs:annotation>
+					<xs:documentation>untimed keep-hot by fuel and electricity</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="10">
+				<xs:annotation>
+					<xs:documentation>timed keep hot by fuel and electricity</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-HeatingControlCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the type of heating control, as described in SAP table 4e.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:positiveInteger">
+			<xs:maxInclusive value="2999"/>
+			<xs:minInclusive value="2001"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="UnderfloorHeatEmitterCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the type of underfloor heat emitter.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>in concrete slab</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>in thin screed</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>in timber floor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-BoilerFuelFeedCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the type of boiler fuel feed.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>gravity</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>manual</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>screw</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-NonDatabaseSourceCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the source of SAP data.  Like "SAP-DataSourceCode", but without the "database" option.  This is why the enumeration doesn't start at "1".</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>from manufacturer declaration</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>from SAP table</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-ThermalStoreCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the type of thermal store.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>none</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>hot water only</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>integrated</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-HeatingDistributionCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the type of heating distribution system.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>Piping system &lt;= 1990, not pre-ins, medium/high temp, full flow</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>Piping system &lt;= 1990, pre-insulated, low temp, full flow</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>Piping system &gt;= 1991, pre-insulated, medium temp, variable flow</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>Piping system &gt;= 1991, pre-insulated, low temp, variable flow</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HeatLossCorridorCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="0">
+				<xs:annotation>
+					<xs:documentation>no corridor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>heated corridor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>unheated corridor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-WaterHeatingCode-Enumeration">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the type of heating system, as defined in SAP table 4a (codes 901-999).</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="901">
+				<xs:annotation>
+					<xs:documentation>HOT WATER SYSTEMS: From main heating system</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="902">
+				<xs:annotation>
+					<xs:documentation>HOT WATER SYSTEMS: From secondary heater</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="903">
+				<xs:annotation>
+					<xs:documentation>HOT WATER SYSTEMS: Electric immersion (on-peak or off-peak)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="904">
+				<xs:annotation>
+					<xs:documentation>HOT WATER SYSTEMS: Back boiler (hot water only), gas</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="905">
+				<xs:annotation>
+					<xs:documentation>HOT WATER SYSTEMS: From a circulator built into a gas warm air system, pre 1998</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="906">
+				<xs:annotation>
+					<xs:documentation>HOT WATER SYSTEMS: From a circulator built into a gas warm air system, 1998 or later</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="907">
+				<xs:annotation>
+					<xs:documentation>HOT WATER SYSTEMS: Single-point gas water heater (instantaneous at point of use)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="908">
+				<xs:annotation>
+					<xs:documentation>HOT WATER SYSTEMS: Multi-point gas water heater (instantaneous serving several taps)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="909">
+				<xs:annotation>
+					<xs:documentation>HOT WATER SYSTEMS: Electric instantaneous at point of use</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="910">
+				<xs:annotation>
+					<xs:documentation>HOT WATER SYSTEMS: From hot-water only community scheme</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-HeatingControlCode-Enumeration">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the type of heating control, as described in SAP table 4e.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="2101">
+				<xs:annotation>
+					<xs:documentation>BOILER SYSTEMS WITH RADIATORS OR UNDERFLOOR HEATING: No time or thermostatic control of room temperature</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2102">
+				<xs:annotation>
+					<xs:documentation>BOILER SYSTEMS WITH RADIATORS OR UNDERFLOOR HEATING: Programmer, no room thermostat</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2103">
+				<xs:annotation>
+					<xs:documentation>BOILER SYSTEMS WITH RADIATORS OR UNDERFLOOR HEATING: Room thermostat only</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2104">
+				<xs:annotation>
+					<xs:documentation>BOILER SYSTEMS WITH RADIATORS OR UNDERFLOOR HEATING: Programmer and room thermostat</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2105">
+				<xs:annotation>
+					<xs:documentation>BOILER SYSTEMS WITH RADIATORS OR UNDERFLOOR HEATING: Programmer and at least two room thermostats</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2106">
+				<xs:annotation>
+					<xs:documentation>BOILER SYSTEMS WITH RADIATORS OR UNDERFLOOR HEATING: Programmer, room thermostat and TRVs</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2107">
+				<xs:annotation>
+					<xs:documentation>BOILER SYSTEMS WITH RADIATORS OR UNDERFLOOR HEATING: Programmer,  TRVs and bypass</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2108">
+				<xs:annotation>
+					<xs:documentation>BOILER SYSTEMS WITH RADIATORS OR UNDERFLOOR HEATING: Programmer, TRVs and flow switch</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2109">
+				<xs:annotation>
+					<xs:documentation>BOILER SYSTEMS WITH RADIATORS OR UNDERFLOOR HEATING: Programmer, TRVs and boiler energy manager</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2110">
+				<xs:annotation>
+					<xs:documentation>BOILER SYSTEMS WITH RADIATORS OR UNDERFLOOR HEATING: Time and temperature zone control</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2201">
+				<xs:annotation>
+					<xs:documentation>HEAT PUMPS: No time or thermostatic control of room temperature</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2202">
+				<xs:annotation>
+					<xs:documentation>HEAT PUMPS: Programmer, no room thermostat</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2203">
+				<xs:annotation>
+					<xs:documentation>HEAT PUMPS: Room thermostat only</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2204">
+				<xs:annotation>
+					<xs:documentation>HEAT PUMPS: Programmer and room thermostat</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2205">
+				<xs:annotation>
+					<xs:documentation>HEAT PUMPS: Programmer and at least two room thermostats</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2206">
+				<xs:annotation>
+					<xs:documentation>HEAT PUMPS: Programmer, TRVs and bypass</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2207">
+				<xs:annotation>
+					<xs:documentation>HEAT PUMPS: Time and temperature zone control</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2301">
+				<xs:annotation>
+					<xs:documentation>COMMUNITY HEATING SCHEMES: Flat rate charging, no thermostatic control of room temperature</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2302">
+				<xs:annotation>
+					<xs:documentation>COMMUNITY HEATING SCHEMES: Flat rate charging, programmer, no room thermostat</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2303">
+				<xs:annotation>
+					<xs:documentation>COMMUNITY HEATING SCHEMES: Flat rate charging, room thermostat only</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2304">
+				<xs:annotation>
+					<xs:documentation>COMMUNITY HEATING SCHEMES: Flat rate charging, programmer and room thermostat</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2305">
+				<xs:annotation>
+					<xs:documentation>COMMUNITY HEATING SCHEMES: Flat rate charging, programmer and TRVs</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2306">
+				<xs:annotation>
+					<xs:documentation>COMMUNITY HEATING SCHEMES: Charging system linked to use of community system, programmer, and TRVs</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2401">
+				<xs:annotation>
+					<xs:documentation>ELECTRIC STORAGE SYSTEMS: Manual charge control</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2402">
+				<xs:annotation>
+					<xs:documentation>ELECTRIC STORAGE SYSTEMS: Automatic charge control</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2403">
+				<xs:annotation>
+					<xs:documentation>ELECTRIC STORAGE SYSTEMS: Celect-type controls</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2501">
+				<xs:annotation>
+					<xs:documentation>WARM AIR SYSTEMS (including heat pumps with warm air distribution): No thermostatic control of room temperature</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2502">
+				<xs:annotation>
+					<xs:documentation>WARM AIR SYSTEMS (including heat pumps with warm air distribution): Programmer, no room thermostat</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2503">
+				<xs:annotation>
+					<xs:documentation>WARM AIR SYSTEMS (including heat pumps with warm air distribution): Room thermostat only</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2504">
+				<xs:annotation>
+					<xs:documentation>WARM AIR SYSTEMS (including heat pumps with warm air distribution): Programmer and room thermostat</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2505">
+				<xs:annotation>
+					<xs:documentation>WARM AIR SYSTEMS (including heat pumps with warm air distribution): Programmer and at least two room thermostats</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2506">
+				<xs:annotation>
+					<xs:documentation>WARM AIR SYSTEMS (including heat pumps with warm air distribution): Time and temperature zone control</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2601">
+				<xs:annotation>
+					<xs:documentation>ROOM HEATER SYSTEMS: No thermostatic control of room temperature</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2602">
+				<xs:annotation>
+					<xs:documentation>ROOM HEATER SYSTEMS: Appliance thermostats</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2603">
+				<xs:annotation>
+					<xs:documentation>ROOM HEATER SYSTEMS: Programmer and appliance thermostats</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2604">
+				<xs:annotation>
+					<xs:documentation>ROOM HEATER SYSTEMS: Room thermostats only</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2605">
+				<xs:annotation>
+					<xs:documentation>ROOM HEATER SYSTEMS: Programmer and room thermostats</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2701">
+				<xs:annotation>
+					<xs:documentation>OTHER SYSTEMS: No thermostatic control of room temperature</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2702">
+				<xs:annotation>
+					<xs:documentation>OTHER SYSTEMS: Programmer, no room thermostat</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2703">
+				<xs:annotation>
+					<xs:documentation>OTHER SYSTEMS: Room thermostat only</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2704">
+				<xs:annotation>
+					<xs:documentation>OTHER SYSTEMS: Programmer and room thermostat</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2705">
+				<xs:annotation>
+					<xs:documentation>OTHER SYSTEMS: Temperature zone control</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2706">
+				<xs:annotation>
+					<xs:documentation>OTHER SYSTEMS: Time and temperature zone control</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-BuiltFormCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the form in which a property is built.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>Detached</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>Semi-Detached</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>End-Terrace</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>Mid-Terrace</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="5">
+				<xs:annotation>
+					<xs:documentation>Enclosed End-Terrace</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="6">
+				<xs:annotation>
+					<xs:documentation>Enclosed Mid-Terrace</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-SolarCollectorTypeCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the type of solar collector.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>unglazed</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>flat panel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>evacuated tube</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-SolarCollectorDataSourceCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the source of solar collector data.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>default</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>declared values</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-CompassDirectionCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the compass direction.  Like SAP-OrientationCode, but without the "unknown" and "horizontal" options.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>North</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>North East</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>East</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>South East</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="5">
+				<xs:annotation>
+					<xs:documentation>South</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="6">
+				<xs:annotation>
+					<xs:documentation>South West</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="7">
+				<xs:annotation>
+					<xs:documentation>West</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="8">
+				<xs:annotation>
+					<xs:documentation>North West</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-VerticalPitchCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the vertical pitch (angle).</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>horizontal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>30 degrees</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>45 degrees</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>60 degrees</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="5">
+				<xs:annotation>
+					<xs:documentation>vertical</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-SolarCollectorOvershadingCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the amount of solar collector overshading.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>none or very little</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>modest</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>significant</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>heavy</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HotWaterStoreInsulationTypeCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the type of hot water storage insulation.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>factory-applied</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>loose jacket</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HeatingFuelTypeCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the type of heating fuel, as defined in SAP table 12.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>Gas: mains gas</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>Gas: bulk LPG</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>Gas: bottled LPG</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>Oil: heating oil</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="10">
+				<xs:annotation>
+					<xs:documentation>Solid fuel: dual fuel appliance (mineral and wood)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11">
+				<xs:annotation>
+					<xs:documentation>Solid fuel: house coal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="12">
+				<xs:annotation>
+					<xs:documentation>Solid fuel: manufactured smokeless fuel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="15">
+				<xs:annotation>
+					<xs:documentation>Solid fuel: anthracite</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="20">
+				<xs:annotation>
+					<xs:documentation>Solid fuel: wood logs</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="21">
+				<xs:annotation>
+					<xs:documentation>Solid fuel: wood chips</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="22">
+				<xs:annotation>
+					<xs:documentation>Solid fuel: wood pellets (in bags, for secondary heating)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23">
+				<xs:annotation>
+					<xs:documentation>Solid fuel: wood pellets (bulk supply in bags, for main heating)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="36">
+				<xs:annotation>
+					<xs:documentation>Electricity: electricity sold to grid</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="37">
+				<xs:annotation>
+					<xs:documentation>Electricity: electricity displaced from grid</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="39">
+				<xs:annotation>
+					<xs:documentation>Electricity: electricity, unspecified tariff</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="41">
+				<xs:annotation>
+					<xs:documentation>Community heating schemes: heat from heat pump</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="42">
+				<xs:annotation>
+					<xs:documentation>Community heating schemes: heat from boilers - waste combustion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="43">
+				<xs:annotation>
+					<xs:documentation>Community heating schemes: heat from boilers - biomass</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="44">
+				<xs:annotation>
+					<xs:documentation>Community heating schemes: heat from boilers - biogas</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="45">
+				<xs:annotation>
+					<xs:documentation>Community heating schemes: waste heat from power stations</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="46">
+				<xs:annotation>
+					<xs:documentation>Community heating schemes: geothermal heat source</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="48">
+				<xs:annotation>
+					<xs:documentation>Community heating schemes: heat from CHP</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="49">
+				<xs:annotation>
+					<xs:documentation>Community heating schemes: electricity generated by CHP</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ImmersionHeatingTypeCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the type of immersion heater.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>Dual</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>Single</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-SpaceHeatingCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the type of heating system, as defined in SAP tables 4a/4b (codes 101 to 899).</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:positiveInteger">
+			<xs:maxInclusive value="899"/>
+			<xs:minInclusive value="101"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-TerrainTypeCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the type of terrain.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>urban</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>suburban</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>rural</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-ElectricityTariffCode">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the type of electricity tariff.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>standard tariff</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>off-peak 7 hour</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>off-peak 10 hour</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>24 hour</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HeatLossFloorCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>exposed floor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>semi-exposed upper floor to unheated space</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>semi-exposed upper floor to partially heated space</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-MainHeatingCategoryCode">
+		<xs:annotation>
+			<xs:documentation>Codes used to indicate a category of main heating system.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>none</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>boiler with radiators or underfloor heating</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>micro-cogeneration</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>heat pump with radiators or underfloor heating</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="5">
+				<xs:annotation>
+					<xs:documentation>heat pump with warm air distribution</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="6">
+				<xs:annotation>
+					<xs:documentation>community heating system</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="7">
+				<xs:annotation>
+					<xs:documentation>electric storage heaters</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="8">
+				<xs:annotation>
+					<xs:documentation>electric underfloor heating</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="9">
+				<xs:annotation>
+					<xs:documentation>warm air system (not heat pump)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="10">
+				<xs:annotation>
+					<xs:documentation>room heaters</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11">
+				<xs:annotation>
+					<xs:documentation>other system</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-SecondaryHeatingCategoryCode">
+		<xs:annotation>
+			<xs:documentation>Codes used to indicate a category of secondary heating system.  Codes are aligned with those of 'SAP-MainHeatingCategoryCode'.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>none</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="10">
+				<xs:annotation>
+					<xs:documentation>room heaters</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-SolidFuelBoilerType">
+		<xs:annotation>
+			<xs:documentation>Code which indicates the type of boiler for the case where the fuel is solid.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>independent</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>open fire</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>closed room heater</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ConstructionDateCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="A">
+				<xs:annotation>
+					<xs:documentation>England and Wales: before 1900;
+Scotland: before 1919;
+Northern Ireland: before 1919</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="B">
+				<xs:annotation>
+					<xs:documentation>England and Wales: 1900-1929;
+Scotland: 1919-1929;
+Northern Ireland: 1919-1929</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="C">
+				<xs:annotation>
+					<xs:documentation>England and Wales: 1930-1949;
+Scotland: 1930-1949;
+Northern Ireland: 1930-1949</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="D">
+				<xs:annotation>
+					<xs:documentation>England and Wales: 1950-1966;
+Scotland: 1950-1964;
+Northern Ireland: 1950-1973</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="E">
+				<xs:annotation>
+					<xs:documentation>England and Wales: 1967-1975;
+Scotland: 1965-1975;
+Northern Ireland: 1974-1977</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F">
+				<xs:annotation>
+					<xs:documentation>England and Wales: 1976-1982;
+Scotland: 1976-1983;
+Northern Ireland: 1978-1985</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="G">
+				<xs:annotation>
+					<xs:documentation>England and Wales: 1983-1990;
+Scotland: 1984-1991;
+Northern Ireland: 1986-1991</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="H">
+				<xs:annotation>
+					<xs:documentation>England and Wales: 1991-1995;
+Scotland: 1992-1998;
+Northern Ireland: 1992-1999</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="I">
+				<xs:annotation>
+					<xs:documentation>England and Wales: 1996-2002;
+Scotland: 1999-2002;
+Northern Ireland: 2000-2006</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="J">
+				<xs:annotation>
+					<xs:documentation>England and Wales: 2003-2006;
+Scotland: 2003-2007;
+Northern Ireland: not applicable</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="K">
+				<xs:annotation>
+					<xs:documentation>England and Wales: 2007 onwards;
+Scotland: 2008 onwards;
+Northern Ireland: 2007 onwards</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-WindTurbinesCount">
+		<xs:restriction base="xs:integer">
+			<xs:maxInclusive value="1"/>
+			<xs:minInclusive value="0"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SAP-HasLoadOrWeatherCompensation">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="0">
+				<xs:annotation>
+					<xs:documentation>none</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>load compensation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>weather compensation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
