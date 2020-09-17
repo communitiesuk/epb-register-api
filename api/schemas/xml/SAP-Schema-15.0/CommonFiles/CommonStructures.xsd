@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CS="DCLG-HIP/CommonStructures" xmlns:pfdt="DCLG-HIP/BaseDataTypes" targetNamespace="DCLG-HIP/CommonStructures" elementFormDefault="qualified" attributeFormDefault="unqualified" version="LIG-15.0">
+	<!--
+	© Department of Communities and Local Government. © Crown copyright, 2007. The Home Condition Report logo and associated wording is a registered trade mark - any unlicensed use is not permitted. Copyright in the typographical arrangement of this document rests with the Crown. This publication, excluding logos, may be reproduced free of charge in any format or medium for research, private study, for internal circulation within an organisation or by registered scheme users. This is subject to it being reproduced accurately and not used in a misleading context. 
+
+-->
+	<!-- ***************************************************************************
+	Simple Type declarations for Identification Block property values
+	 *************************************************************************** -->
+	<xs:import namespace="DCLG-HIP/BaseDataTypes" schemaLocation="../UDT/BaseDataTypes.xsd"/>
+	<!-- ***************************************************************************
+	Simple Type declarations for Identification Block property values
+	 *************************************************************************** -->
+	<xs:simpleType name="ServiceNameType">
+		<xs:annotation>
+			<xs:documentation source="Service Name is a string label that uniquely identifies each service within the domain."/>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+		<!-- Should include validation of allowed Service Name constraints such as allowed charcaters etc. -->
+	</xs:simpleType>
+	<xs:simpleType name="OperationType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Create"/>
+			<xs:enumeration value="Retrieve"/>
+			<xs:enumeration value="Update"/>
+			<xs:enumeration value="Delete"/>
+			<xs:enumeration value="Retire"/>
+			<xs:enumeration value="Search"/>
+			<xs:enumeration value="Execute"/>
+			<xs:enumeration value="Describe"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="IdentifierValue">
+		<xs:annotation>
+			<xs:documentation source="Public Identifier datatype is the public identifier by which an instance of a Business Entity can be identified. It's called Public Form Identiier rather then Content Form Identifier for historic reasons as a result of confusion over definitions of terms."/>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="IdentifierTypeDomain" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation source="Public Form Identifier datatype is the public identifier by which an instance of a Content Form can be identified. It's called Public Form Identiier rather then Content Form Identifier for historic reasons as a result of confusion over definitions of terms."/>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="ReportRetrievalType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="List"/>
+			<xs:enumeration value="Data"/>
+			<xs:enumeration value="PDF"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- ***************************************************************************
+	 Standard Identifying Block declarations
+
+	The Identification block contains standard data needed to identify an individual instance of a
+	particular service such as the service name, service provider, execution date.
+
+	Because there can be significant delays between the invocation of a service and the equivalent
+	response it is essential that each individual service request can be recognised. An individual
+	requestor may concurrently initiate many requests so the Identification blocks provide a
+	standard means of pairing the response to the particular request.
+
+	These data-items can be considered standard across all messages of a particular type but may be
+	extended by an individual service to include service specific parameters.
+
+	 *************************************************************************** -->
+	<!-- Standard Identification Message _________________________________________________ -->
+	<!--
+	This standard identification block then needs to be extended with an Identifier element
+	defining the allowed key attributes particular to the Business Entity retrieve via the service.
+	This is done on a message by message basis, for example:
+
+				<xs:element name="Identification">
+					<xs:complexType>
+						 <xs:complexContent>
+							<xs:extension base="CS:DefaultIDBlock">
+								<xs:sequence>
+									<xs:element name="Identifier" type="[IdentifierKeyFieldsType]"/>
+								</xs:sequence>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+
+-->
+	<xs:complexType name="DefaultIdBlock">
+		<xs:annotation>
+			<xs:documentation source="The standard Identifying Block for all messages."/>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ServiceName" type="CS:ServiceNameType"/>
+			<xs:element name="Operation">
+				<xs:simpleType>
+					<xs:restriction base="CS:OperationType"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="TransactionDetails">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="OriginatingID" type="xs:string"/>
+						<xs:element name="RecipientID" type="xs:string"/>
+						<xs:element name="Timestamp" type="xs:dateTime"/>
+						<xs:element name="TransactionID" type="xs:string" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="TermsAndConditions" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="pfdt:Flag"/>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- ***************************************************************************
+	 Standard Configuration declarations
+
+	The Configuration block contains standard data required by the service to carry out its designated
+	task such as details of the parties / organisations involved in the transaction or operating
+	directions.
+
+	These are the configuration parameters that can be considered standard across all messages of a
+	particular type but may be extended by an individual service to include service specific
+	parameters.
+
+	Not all service types may need a Configuration block.
+	*************************************************************************** -->
+	<xs:complexType name="UpdateRequestConfigBlock">
+		<xs:sequence>
+			<xs:element name="StopOnFirstError" type="xs:string" minOccurs="0"/>
+			<xs:element name="ReasonForChange" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CreateRequestConfigBlock">
+		<xs:sequence>
+			<xs:element name="StopOnFirstError" type="xs:string" minOccurs="0"/>
+			<xs:element name="ReasonForChange" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RetrieveRequestConfigBlock">
+		<xs:sequence>
+			<xs:element name="StartDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="Language" type="pfdt:LanguageCode" minOccurs="0"/>
+			<xs:element name="ResponseFormat" type="CS:ReportRetrievalType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SearchRequestConfigBlock">
+		<xs:sequence>
+			<xs:element name="RecordsToRetrieve" type="xs:long" minOccurs="0"/>
+			<xs:element name="StartRecord" type="xs:long" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SearchResponseConfigBlock">
+		<xs:sequence>
+			<xs:element name="MoreRecords" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="MoreThanMaxRecords" type="xs:boolean" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

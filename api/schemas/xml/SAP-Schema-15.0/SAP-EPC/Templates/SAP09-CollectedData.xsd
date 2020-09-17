@@ -1,0 +1,1326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="DCLG-SAP09" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bdt="DCLG-SAP09/BaseDataTypes" xmlns:SAP="DCLG-SAP09" targetNamespace="DCLG-SAP09" elementFormDefault="qualified" attributeFormDefault="unqualified" version="LIG-15.0">
+	<xs:import namespace="DCLG-SAP09/BaseDataTypes" schemaLocation="../UDT/BaseDataTypes.xsd"/>
+	<xs:include schemaLocation="../UDT/SharedDomains.xsd"/>
+	<xs:include schemaLocation="../UDT/SAP09-Domains.xsd"/>
+	<xs:element name="SAP-Deselected-Improvements" type="SAP-Deselected-Improvements"/>
+	<xs:complexType name="SAP-Deselected-Improvements">
+		<xs:annotation>
+			<xs:documentation>There are 22 possible improvement measures, designated from A to V. This must record measures deselected by DEA
+(A to V is the full set, only E, N, U and V are considered at the moment for new build).</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Deselected-Improvement-Measure" type="SAP-ImprovementMeasureCode" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SAP-Wall" type="SAP-Wall"/>
+	<xs:complexType name="SAP-Wall">
+		<xs:annotation>
+			<xs:documentation>Various measurements for each wall of a particular storey.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Unique name which identifies this wall within its storey.  Can be just a number, e.g. "1".  However, a wall cannot have the same name as an opening or a roof.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Description" type="bdt:Sentence" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Descriptive notes about the wall.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Wall-Type" type="SAP-WallTypeCode">
+				<xs:annotation>
+					<xs:documentation>Type of wall (exposure).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Total-Wall-Area" type="bdt:Measurement">
+				<xs:annotation>
+					<xs:documentation>Total wall area in square metres, inclusive of any openings.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="U-Value" type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>Exposed wall U-value.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Is-Curtain-Walling" type="xs:boolean" default="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Whether the wall is curtain walling, i.e. a facade construction consisting of a frame of aluminium vertical and horizontal members, infilled with glazing units and opaque panels.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Kappa-Value" type="xs:decimal" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Heat capacity per unit area in kJ/m²K.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="SAP-Roof" type="SAP-Roof"/>
+	<xs:complexType name="SAP-Roof">
+		<xs:annotation>
+			<xs:documentation>Various measurements for each exposed roof that makes up a particular Building-Part.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Unique name which identifies this roof.  Can be just a number, e.g. "1".  However, a roof cannot have the same name as a wall.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Description" type="bdt:Sentence" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Descriptive notes about the roof.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Roof-Type" type="SAP-RoofTypeCode"/>
+			<xs:element name="Total-Roof-Area" type="bdt:Measurement">
+				<xs:annotation>
+					<xs:documentation>Total roof area in square metres, inclusive of any openings.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="U-Value" type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>Exposed roof U-value.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Kappa-Value" type="xs:decimal" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Heat capacity per unit area in kJ/m²K.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="SAP-Community-Heating-Systems" type="SAP-Community-Heating-Systems"/>
+	<xs:complexType name="SAP-Community-Heating-Systems">
+		<xs:annotation>
+			<xs:documentation>Community heating systems used by the property.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SAP-Community-Heating-System" type="SAP-Community-Heating-System" maxOccurs="2"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SAP-Thermal-Bridge" type="SAP-Thermal-Bridge"/>
+	<xs:complexType name="SAP-Thermal-Bridge">
+		<xs:annotation>
+			<xs:documentation>Various measurements for each thermal bridge that makes up a particular Building-Part.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Thermal-Bridge-Type" type="SAP-ThermalBridgeTypeCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Code to indicate a particular type of thermal bridge; only if thermal bridge code is: user defined (individual values).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Length" type="bdt:Measurement" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Length of the thermal bridge in metres; only if thermal bridge code is: user defined (individual values).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Psi-Value" type="bdt:Measurement" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Linear thermal transmittance (psi-value); only if thermal bridging is user defined individual values.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Psi-Value-Source" type="PsiValueSourceCode" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="SAP-Opening" type="SAP-Opening"/>
+	<xs:complexType name="SAP-Opening">
+		<xs:annotation>
+			<xs:documentation>Various measurements for each exposed opening that makes up a particular Building-Part.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Unique name which identifies this opening.  Can be just a number, e.g. "1".  However, an opening cannot have the same name as a wall.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Type" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The name of the SAP-Opening-Type for this opening.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Location" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Name of the wall or roof which contains the opening.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Orientation" type="SAP-OrientationCode">
+				<xs:annotation>
+					<xs:documentation>Compass direction in which the opening faces.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Width" type="bdt:Measurement">
+				<xs:annotation>
+					<xs:documentation>The width of the opening in metres.  If the Width field is used to record the opening area, set the Height to 1.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Height" type="bdt:Measurement">
+				<xs:annotation>
+					<xs:documentation>The height of the opening in metres.  If the Height field is used to record the opening area, set the Width to 1.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="SAP-Openings" type="SAP-Openings"/>
+	<xs:complexType name="SAP-Openings">
+		<xs:annotation>
+			<xs:documentation>Exposed openings that make up a particular Building-Part.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SAP-Opening" type="SAP-Opening" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SAP-Roofs" type="SAP-Roofs"/>
+	<xs:complexType name="SAP-Roofs">
+		<xs:annotation>
+			<xs:documentation>Exposed roofs that make up a particular Building-Part.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SAP-Roof" type="SAP-Roof" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SAP-Community-Heating-System" type="SAP-Community-Heating-System"/>
+	<xs:complexType name="SAP-Community-Heating-System">
+		<xs:annotation>
+			<xs:documentation>Details of a community system which heats the Main Building.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Community-Heating-Use" type="SAP-CommunityHeatingUseCode">
+				<xs:annotation>
+					<xs:documentation>Specifies what kind of heating the community system is used for.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Is-Community-Heating-Cylinder-In-Dwelling" type="xs:boolean" default="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Community heating, hot water cylinder in dwelling? </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Community-Heating-Distribution-Type" type="SAP-HeatingDistributionCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Community heating distribution</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Community-Heat-Sources" type="Community-Heat-Sources"/>
+			<xs:element name="Community-Heating-Distribution-Loss-Factor" type="xs:decimal" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Used when Community-Heating-Distribution-Type is calculated.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Charging-Linked-To-Heat-Use" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Used for hot-water-only systems.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="SAP-Floor-Dimensions" type="SAP-Floor-Dimensions"/>
+	<xs:complexType name="SAP-Floor-Dimensions">
+		<xs:annotation>
+			<xs:documentation>Storeys that make up a particular Building-Part.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SAP-Floor-Dimension" type="SAP-Floor-Dimension" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SAP-Thermal-Bridges" type="SAP-Thermal-Bridges"/>
+	<xs:complexType name="SAP-Thermal-Bridges">
+		<xs:annotation>
+			<xs:documentation>Thermal bridges that make up a particular Building-Part.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Thermal-Bridge-Code" type="SAP-ThermalBridgeCode">
+				<xs:annotation>
+					<xs:documentation>Code which indicates how the thermal bridge data has been recorded.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="User-Defined-Y-Value" type="bdt:Measurement" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Global y-value for all thermal bridges in watts per square metre per kelvin; only if thermal bridge code is: user defined (global y-value)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Calculation-Reference" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Reference to the details of the calculation of the global y-value; only if thermal bridging is user defined global y-value.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SAP-Thermal-Bridge" type="SAP-Thermal-Bridge" minOccurs="0" maxOccurs="25"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SAP-Walls" type="SAP-Walls"/>
+	<xs:complexType name="SAP-Walls">
+		<xs:annotation>
+			<xs:documentation>Exposed walls that make up a particular Storey.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SAP-Wall" type="SAP-Wall" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SAP-Opening-Type" type="SAP-Opening-Type"/>
+	<xs:complexType name="SAP-Opening-Type">
+		<xs:annotation>
+			<xs:documentation>Various measurements for a particular type of exposed opening that makes up a particular property.  Opening types are used to capture common features shared by multiple openings, to avoid having to record the same data explicitly for each opening.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Unique name which identifies this opening type.  Can be just a number, e.g. "1".</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Description" type="bdt:Sentence" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Descriptive notes about the opening type.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Data-Source" type="SAP-OpeningDataSourceCode">
+				<xs:annotation>
+					<xs:documentation>The source of the data for this type of opening.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Type" type="SAP-OpeningTypeCode">
+				<xs:annotation>
+					<xs:documentation>The (physical) type of opening that this opening type represents.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Glazing-Type" type="SAP-GlazingTypeCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The type of glazing; if U-value is from BFRC or manufacturer declaration, give as one of
+- single
+- double
+- triple.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Glazing-Gap" type="SAP-GlazingGapTypeCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Gap between glass panes; only if SAP table and double or triple glazed.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IsArgonFilled" type="xs:boolean" default="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Is the opening argon-filled?  Only if SAP table.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Frame-Type" type="SAP-FrameTypeCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The type of frame, only if data source is SAP table and it is a window, roof window or half-glazed door.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Solar-Transmittance" type="xs:decimal" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The solar transmittance; not if a door.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Frame-Factor" type="xs:decimal" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The frame factor; not if BFRC data and not if a door.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="U-Value" type="xs:decimal" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>U-value; only if BFRC or manufacturer declaration.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="SAP-Opening-Types" type="SAP-Opening-Types"/>
+	<xs:complexType name="SAP-Opening-Types">
+		<xs:annotation>
+			<xs:documentation>Types of exposed openings that make up a particular property.  Opening types are used to capture common features shared by multiple openings, to avoid having to record the same data explicitly for each opening.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SAP-Opening-Type" type="SAP-Opening-Type" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SAP-Ventilation" type="SAP-Ventilation"/>
+	<xs:complexType name="SAP-Ventilation">
+		<xs:annotation>
+			<xs:documentation>Details of the means by which the building is ventilated</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Open-Fireplaces-Count" type="bdt:Count">
+				<xs:annotation>
+					<xs:documentation>The number of Open Fireplaces in the Property.
+
+An Open Fireplace is a fireplace that still allows air to pass between the inside of the Property and the outside.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Open-Flues-Count" type="bdt:Count">
+				<xs:annotation>
+					<xs:documentation>The number of Open Flues in the Property.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Fans-Vents-Count" type="bdt:Count" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>For backward compatibility only, do not use.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Flueless-Gas-Fires-Count" type="bdt:Count">
+				<xs:annotation>
+					<xs:documentation>The number of flueless gas fires in the Property.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Pressure-Test" type="SAP-PressureTestCode">
+				<xs:annotation>
+					<xs:documentation>Whether there has been a pressure test, or whether an assumed value is used for the air permeability.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Air-Permeability" type="xs:decimal" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Air permeability; only if pressure test (yes or assumed).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Ground-Floor-Type" type="SAP-FloorConstructionCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The type of ground floor; nly if no pressure test.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Wall-Type" type="SAP-WallConstructionCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The construction of the walls; only if no pressure test.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Has-Draught-Lobby" type="xs:boolean" default="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Is there a draft lobby?  Only if no pressure test.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DraughtStripping" type="bdt:Percentage" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Draughtstripping percentage; only if no pressure test.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Sheltered-Sides-Count" type="bdt:Count">
+				<xs:annotation>
+					<xs:documentation>The number of sheltered sides in the Property.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Ventilation-Type" type="SAP-VentilationTypeCode">
+				<xs:annotation>
+					<xs:documentation>The type of ventilation.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Mechanical-Ventilation-Data-Source" type="SAP-DataSourceCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Source of mechanical ventilation data; only if mechanical ventilation.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Mechanical-Vent-System-Index-Number" type="xs:nonNegativeInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Mechanical vent system index number; if mechanical vent data from database (MEV c, MEV dc, MV, MVHR).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Mechanical-Vent-System-Make-Model" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Mechanical ventilation system make and model; if mech vent system data is manufacturer declaration.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Wet-Rooms-Count" type="bdt:Count" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Number of wet rooms; if mech vent data from manufacturer declaration or database (MEV c, MV, MVHR).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Mechanical-Vent-Specific-Fan-Power" type="bdt:Measurement" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Mechanical vent specific fan power in watts per (litres per second); if mechanical vent data from manufacturer declaration (MEV c, MV, MVHR).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Mechanical-Vent-Heat-Recovery-Efficiency" type="bdt:Percentage" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Mechanical vent heat recovery efficiency percentage; if mechanical vent data from manufacturer declaration (MVHR).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Mechanical-Vent-Duct-Type" type="SAP-DuctTypeCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Mechanical vent duct type; if MEV c, MV or MVHR.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Mechanical-Vent-Duct-Insulation" type="SAP-DuctInsulationCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Mechanical vent duct insulation; if MVHR.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Kitchen-Room-Fans-Count" type="bdt:Count" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>MEV dc, number of fans in room, kitchen; if mechanical vent data from database or manufacturer declaration (MEV dc).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Kitchen-Room-Fans-Specific-Power" type="bdt:Measurement" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>MEV dc, specific fan power of fans in room, kitchen, in watts per (litres per second); if mechanical vent data from manufacturer declaration (MEV dc).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Non-Kitchen-Room-Fans-Count" type="bdt:Count" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>MEV dc, number of fans in room, rooms other than kitchen; if mechanical vent data from database or manufacturer declaration (MEV dc).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Non-Kitchen-Room-Fans-Specific-Power" type="bdt:Measurement" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>MEV dc, specific fan power of fans in room, rooms other than kitchen, in watts per (litres per second); if mechanical vent data from manufacturer declaration (MEV dc).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Kitchen-Duct-Fans-Count" type="bdt:Count" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>MEV dc, number of fans via duct, kitchen; if mechanical vent data from database or manufacturer declaration (MEV dc).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Kitchen-Duct-Fans-Specific-Power" type="bdt:Measurement" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>MEV dc, specific fan power of fans via duct, kitchen, in watts per (litres per second); if mechanical vent data from manufacturer declaration (MEV dc).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Non-Kitchen-Duct-Fans-Count" type="bdt:Count" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>MEV dc, number of fans via duct, rooms other than kitchen; if mechanical vent data from database or manufacturer declaration (MEV dc).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Non-Kitchen-Duct-Fans-Specific-Power" type="bdt:Measurement" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>MEV dc, specific fan power of fans via duct, rooms other than kitchen, in watts per (litres per second); if mechanical vent data from manufacturer declaration (MEV dc).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Kitchen-Wall-Fans-Count" type="bdt:Count" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>MEV dc, number of fans through wall, kitchen; if mechanical vent data from database or manufacturer declaration (MEV dc).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Kitchen-Wall-Fans-Specific-Power" type="bdt:Measurement" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>MEV dc, specific fan power of fans through wall, kitchen, in watts per (litres per second); if mechanical vent data from manufacturer declaration (MEV dc).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Non-Kitchen-Wall-Fans-Count" type="bdt:Count" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>MEV dc, number of fans through wall, rooms other than kitchen; if mechanical vent data from database or manufacturer declaration (MEV dc).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Non-Kitchen-Wall-Fans-Specific-Power" type="bdt:Measurement" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>MEV dc, specific fan power of fans through wall, rooms other than kitchen, in watts per (litres per second); if mechanical vent data from manufacturer declaration (MEV dc).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Extract-Fans-Count" type="bdt:Count" minOccurs="0"/>
+			<xs:element name="PSV-Count" type="bdt:Count" minOccurs="0"/>
+			<xs:element name="Is-Mechanical-Vent-Approved-Installer-Scheme" type="xs:boolean" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="SAP09-Data" type="SAP09-Data"/>
+	<xs:complexType name="SAP09-Data">
+		<xs:annotation>
+			<xs:documentation>These are the specific data-items collected by the HI / EA needed to perform the SAP calculation.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Data-Type" type="SAP-DataTypeCode">
+				<xs:annotation>
+					<xs:documentation>Type of SAP data that has been collected.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Schema-Version" type="xs:string" minOccurs="0"/>
+			<xs:element name="SAP-Property-Details" type="SAP-Property-Details"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="SAP-Property-Details" type="SAP-Property-Details"/>
+	<xs:complexType name="SAP-Property-Details">
+		<xs:annotation>
+			<xs:documentation>Various measurements a particular Property.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Property-Type" type="PropertyTypeCode">
+				<xs:annotation>
+					<xs:documentation>The type of Property, such as House, Flat, Mansion, Maisonette etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Built-Form" type="SAP-BuiltFormCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The building type of the Property e.g. Detached, Semi-Detached, Terrace etc.
+
+Together with the Property Type, the Built Form provides a structured description of the property.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Living-Area" type="bdt:Measurement">
+				<xs:annotation>
+					<xs:documentation>The size of the living area in square metres.  The living area is the room marked on a plan as the lounge or living room, or the largest public room (irrespective of usage by particular occupants), together with any rooms not separated from the lounge or living room by doors, and including any cupboards directly accessed from the lounge or living room. Living area does not, however, extend over more than one storey, even when stairs enter the living area directly.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Orientation" type="SAP-OrientationCode">
+				<xs:annotation>
+					<xs:documentation>The orientation of the front of the property.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Conservatory-Type" type="SAP-ConservatoryTypeCode">
+				<xs:annotation>
+					<xs:documentation>Type of conservatory.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Has-Special-Feature" type="xs:boolean" default="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>For backwards compatibility only, do not use.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Special-Feature-Description" type="bdt:Sentence" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>For backwards compatibility only, do not use.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Energy-Saved-Or-Generated" type="bdt:Measurement" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>For backwards compatibility only, do not use.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Saved-Or-Generated-Fuel" type="HeatingFuelTypeCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>For backwards compatibility only, do not use.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Energy-Used" type="bdt:Measurement" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>For backwards compatibility only, do not use.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Energy-Used-Fuel" type="HeatingFuelTypeCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>For backwards compatibility only, do not use.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Is-In-Smoke-Control-Area" type="bdt:ExtendedBoolean">
+				<xs:annotation>
+					<xs:documentation>Is property in a smoke control area?  Only if a solid fuel appliance is used.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Additional-Allowable-Electricity-Generation" type="bdt:Measurement" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Additional allowable electricity generation applicable to this dwelling in kWh per square metre; only if Zero Carbon Home assessment.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SAP-Heating" type="SAP-Heating" minOccurs="0"/>
+			<xs:element name="SAP-Energy-Source" type="SAP-Energy-Source" minOccurs="0"/>
+			<xs:element name="SAP-Building-Parts" type="SAP-Building-Parts"/>
+			<xs:element name="SAP-Opening-Types" type="SAP-Opening-Types" minOccurs="0"/>
+			<xs:element name="SAP-Ventilation" type="SAP-Ventilation" minOccurs="0"/>
+			<xs:element name="SAP-Deselected-Improvements" type="SAP-Deselected-Improvements" minOccurs="0"/>
+			<xs:element name="SAP-Flat-Details" type="SAP-Flat-Details" minOccurs="0"/>
+			<xs:element name="SAP-Special-Features" type="SAP-Special-Features" minOccurs="0"/>
+			<xs:element name="Design-Water-Use" type="DesignWaterUseCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Design limit for total water use.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SAP-Cooling" type="SAP-Cooling" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="SAP-Flat-Details" type="SAP-Flat-Details"/>
+	<xs:complexType name="SAP-Flat-Details">
+		<xs:all>
+			<xs:element name="Level" type="SAP-FlatLevelCode">
+				<xs:annotation>
+					<xs:documentation>Indication of where a flat is located in a building.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="SAP-Floor-Dimension" type="SAP-Floor-Dimension"/>
+	<xs:complexType name="SAP-Floor-Dimension">
+		<xs:annotation>
+			<xs:documentation>Various measurements for the floor of a particular storey.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Storey" type="SAP-StoreyFloorCode">
+				<xs:annotation>
+					<xs:documentation>Building storey on which the floor is located.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Description" type="bdt:Sentence" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Descriptive notes about the floor.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Floor-Type" type="SAP-FloorTypeCode">
+				<xs:annotation>
+					<xs:documentation>Type of floor (exposure).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Total-Floor-Area" type="bdt:Measurement">
+				<xs:annotation>
+					<xs:documentation>The total floor area of the storey in square metres.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Storey-Height" type="bdt:Measurement">
+				<xs:annotation>
+					<xs:documentation>Average height of the storey in metres.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Heat-Loss-Area" type="bdt:Measurement">
+				<xs:annotation>
+					<xs:documentation>The estimated total heat loss area for the floor in square metres.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="U-Value" type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>Heat loss floor U-value.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Kappa-Value" type="xs:decimal" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Heat capacity of floor per unit area in kJ/m²K.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Kappa-Value-From-Below" type="xs:decimal" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Heat capacity of ceiling below.  Applies to the non-heat-loss area of an upper floor.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="SAP-Building-Parts" type="SAP-Building-Parts"/>
+	<xs:complexType name="SAP-Building-Parts">
+		<xs:annotation>
+			<xs:documentation>Details of the significant building parts that comprise the main habitable building in the property. The main habitable area generally consists of a single main building but can over time be extended to include extensions such as new wings and additional storeys.
+
+For the purpose of calculating the overall Energy Assessment for the property details of each distinct Building Part, such as its construction, have to be gathered because different materials have different insulation ratings (obviously) which affects the overall rating.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SAP-Building-Part" type="SAP-Building-Part" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SAP-Building-Part" type="SAP-Building-Part"/>
+	<xs:complexType name="SAP-Building-Part">
+		<xs:annotation>
+			<xs:documentation>A permanent structure that forms part of the Property and is built primarily for human habitation. A Building Part is usually made up of one or more Storey's and may contain a number of Internal Structural Features. An extension is also a Building Part.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Building-Part-Number" type="xs:positiveInteger">
+				<xs:annotation>
+					<xs:documentation>An integer value which uniquely identifies the building part in the property.  The value "1" must be assigned to the main dwelling.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Identifier" type="bdt:IDString" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Identifier for the Building part - generally only required if there are more that one Building Parts of the same type e.g. "West Wing" and "East Wing" Extensions</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Construction-Year" type="xs:nonNegativeInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The year when this building part was constructed.  Not used if 'Construction-Age-Band' is used.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Construction-Age-Band" type="ConstructionDateCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The age band when this building part was constructed.  Not used if 'Construction-Year' is used.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Overshading" type="SAP-WindowOvershadingCode">
+				<xs:annotation>
+					<xs:documentation>Amount of overshading of windows.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SAP-Openings" type="SAP-Openings" minOccurs="0"/>
+			<xs:element name="SAP-Roofs" type="SAP-Roofs" minOccurs="0"/>
+			<xs:element name="SAP-Floor-Dimensions" type="SAP-Floor-Dimensions" minOccurs="0"/>
+			<xs:element name="SAP-Thermal-Bridges" type="SAP-Thermal-Bridges" minOccurs="0"/>
+			<xs:element name="SAP-Walls" type="SAP-Walls" minOccurs="0"/>
+			<xs:element name="Thermal-Mass-Parameter" type="xs:decimal" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Thermal Mass Parameter in kJ/m²K. If omitted it is calculated using the kappa values of each element.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="SAP-Energy-Source" type="SAP-Energy-Source"/>
+	<xs:complexType name="SAP-Energy-Source">
+		<xs:annotation>
+			<xs:documentation>Details of the main Electricity supply to the Property.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="PV-Arrays" type="PV-Arrays" minOccurs="0"/>
+			<xs:element name="Wind-Turbines-Count" type="bdt:Count">
+				<xs:annotation>
+					<xs:documentation>Number of wind turbines; 0 if none.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Wind-Turbine-Rotor-Diameter" type="bdt:Measurement" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Wind turbine rotor diameter in metres; only if wind turbine.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Wind-Turbine-Hub-Height" type="bdt:Measurement" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Wind turbine hub height above building in metres; only if wind turbine.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Wind-Turbine-Terrain-Type" type="SAP-TerrainTypeCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Terrain type; only if wind turbine.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Fixed-Lighting-Outlets-Count" type="bdt:Count" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Number of fixed lighting outlets.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Low-Energy-Fixed-Lighting-Outlets-Count" type="bdt:Count" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Number of low-energy fixed lighting outlets.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Low-Energy-Fixed-Lighting-Outlets-Percentage" type="bdt:Percentage" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>% of fixed lighting outlets that are low-energy to nearest whole %.  This is given in addition to the total and low-energy lighting count.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Electricity-Tariff" type="SAP-ElectricityTariffCode">
+				<xs:annotation>
+					<xs:documentation>Type of electricity tariff.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Hydro-Electric-Generation" type="xs:decimal" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Electricity generated by hydro-electric generator, in kWh/year</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="SAP-Heating" type="SAP-Heating"/>
+	<xs:complexType name="SAP-Heating">
+		<xs:annotation>
+			<xs:documentation>Details of the means by which the Main Building is heated.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Water-Heating-Code" type="SAP-WaterHeatingCode">
+				<xs:annotation>
+					<xs:documentation>The type of Water Heating present in the Property.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Water-Fuel-Type" type="HeatingFuelTypeCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The type of fuel used to power the central heating e.g. Gas, Electricity.  Not used if water system is main or secondary system.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Has-Hot-Water-Cylinder" type="xs:boolean" default="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Hot water cylinder?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Secondary-Heating-Category" type="SAP-SecondaryHeatingCategoryCode">
+				<xs:annotation>
+					<xs:documentation>Category of heating system for the secondary heating system.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Secondary-Heating-Data-Source" type="SAP-NonDatabaseSourceCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Source of secondary heating system data; only if secondary heating system.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Secondary-Heating-Code" type="SAP-SpaceHeatingCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Type of secondary heating present in the property; only if required and if heating data source is SAP table.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Secondary-Fuel-Type" type="HeatingFuelTypeCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The type of fuel used to power the secondary heating e.g. Gas, Electricity; only if required.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Secondary-Heating-Efficiency" type="bdt:Percentage" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Secondary heater efficiency; only if secondary efficiency is manufacturer declaration.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Secondary-Heating-Make-Model" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Secondary heater make and model (text); only if secondary efficiency is manufacturer declaration.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Secondary-Heating-Test-Method" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Secondary heater BS test method, e.g. BS EN 13278; only if secondary efficiency is manufacturer declaration.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Secondary-Heating-Flue-Type" type="FlueTypeCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Secondary flue type; only if secondary efficiency is manufacturer declaration and if there is a flue.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Thermal-Store" type="SAP-ThermalStoreCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The type of thermal store; not used if main heating system is community heating scheme.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Has-Fixed-Air-Conditioning" type="xs:boolean" default="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Fixed air conditioning?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Immersion-Heating-Type" type="ImmersionHeatingTypeCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The type of immersion heating; only if immersion.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Is-Heat-Pump-Assisted-By-Immersion" type="xs:boolean" default="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Heat pump assisted by immersion?  Only if main heating is heat pump and water heating from heat pump.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Is-Immersion-For-Summer-Use" type="xs:boolean" default="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Immersion for summer use?  Only if main heating is solid fuel fire or room heater with boiler.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Is-Secondary-Heating-HETAS-Approved" type="xs:boolean" default="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Secondary heating appliance is HETAS approved?  Only if solid fuel.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Hot-Water-Store-Size" type="bdt:Measurement" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Hot water store size in litres; if there is a hot water store.  Store refers to hot water store type which can be cylinder (if thermal store is "none"), hot-water only thermal store or integrated thermal store.  Not applicable if (a) combi boiler whose data source database or (b) instantaneous combi boiler or (c) combi boiler from SAP table or (d) instantaneous water heater.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Hot-Water-Store-Heat-Transfer-Area" type="xs:decimal" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Used when a heat pump is associated with a separate and specified hot water vessel.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Hot-Water-Store-Heat-Loss-Source" type="SAP-NonDatabaseSourceCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The source of the hot water store heat loss information; if there is a hot water store.  Not applicable if (a) combi boiler whose data source database or (b) instantaneous combi boiler or (c) combi boiler from SAP table or (d) instantaneous water heater.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Hot-Water-Store-Heat-Loss" type="bdt:Measurement" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Hot water store declared loss in kWh/day; only if there is a hot water store and if manufacturer declared loss.  Not applicable if (a) combi boiler whose data source database or (b) instantaneous combi boiler or (c) combi boiler from SAP table or (d) instantaneous water heater.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Hot-Water-Store-Insulation-Type" type="HotWaterStoreInsulationTypeCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Hot water store insulation; only if there is a hot water store and if loss from SAP table.  Not applicable if (a) combi boiler whose data source database or (b) instantaneous combi boiler or (c) combi boiler from SAP table or (d) instantaneous water heater.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Hot-Water-Store-Insulation-Thickness" type="bdt:Measurement" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Hot water store insulation thickness in mm; only if there is a hot water store and if loss from SAP table.  Not applicable if (a) combi boiler whose data source database or (b) instantaneous combi boiler or (c) combi boiler from SAP table or (d) instantaneous water heater.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Is-Thermal-Store-Near-Boiler" type="xs:boolean" default="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Thermal store connected to boiler by no more than 1.5 m of insulated pipework?  Only if thermal store.  Not applicable if combi boiler or instantaneous water heater.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Is-Thermal-Store-Or-CPSU-In-Airing-Cupboard" type="xs:boolean" default="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Thermal store or CPSU in airing cupboard?  Only if (a) boiler with integrated or hot-water-only thermal store, or (b) main heating is CPSU.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Is-Primary-Pipework-Insulated" type="xs:boolean" default="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Primary pipework insulated?  Not applicable if combi boiler or instantaneous water heater.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Has-Cylinder-Thermostat" type="xs:boolean" default="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Hot water cylinder thermostat?  Not applicable if combi boiler or instantaneous water heater.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Is-Cylinder-In-Heated-Space" type="xs:boolean" default="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Hot water cylinder in heated space?  Not applicable if combi boiler or instantaneous water heater.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Is-Hot-Water-Separately-Timed" type="xs:boolean" default="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Hot water separately timed?  Not applicable if combi boiler or instantaneous water heater.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Has-Solar-Panel" type="xs:boolean" default="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Solar panel?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Solar-Panel-Aperture-Area" type="bdt:Measurement" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Panel aperture area in square metres; only if solar panel.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Solar-Panel-Collector-Type" type="SAP-SolarCollectorTypeCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The type of solar panel collector; only if solar panel.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Solar-Panel-Collector-Data-Source" type="SAP-SolarCollectorDataSourceCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The source of solar panel collector data; only if solar panel.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Solar-Panel-Collector-Zero-Loss-Efficiency" type="bdt:Percentage" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Collector zero-loss efficiency; only if solar panel and declared values.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Solar-Panel-Collector-Heat-Loss-Rate" type="xs:decimal" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Collector heat loss rate; only if solar panel and declared values.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Solar-Panel-Collector-Orientation" type="SAP-CompassDirectionCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Collector orientation; only if solar panel.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Solar-Panel-Collector-Pitch" type="SAP-VerticalPitchCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Collector pitch; only if solar panel.
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Solar-Panel-Collector-Overshading" type="SAP-SolarCollectorOvershadingCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Collector overshading; only if solar panel.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Has-Solar-Powered-Pump" type="xs:boolean" default="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Solar powered pump?  Only if solar panel.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Is-Solar-Store-Combined-Cylinder" type="xs:boolean" default="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Combined cylinder?  If combined cylinder the hot water cylinder size is inclusive of the dedicated solar volume.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Solar-Store-Volume" type="bdt:Measurement" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Dedicated solar store volume in litres; only if solar panel.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SAP-Community-Heating-Systems" type="SAP-Community-Heating-Systems" minOccurs="0"/>
+			<xs:element name="Main-Heating-Details" type="Main-Heating-Details"/>
+			<xs:element name="SAP-Heating-Design-Water-Use" type="DesignWaterUseCode" minOccurs="0"/>
+			<xs:element name="Has-WWHRS" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Waste Water Heat Recovery System.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="WWHRS-Index-Number1" type="xs:nonNegativeInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>WWHRS-1 index number; only if WWHRS.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="WWHRS-Index-Number2" type="xs:nonNegativeInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>WWHRS-2 index number; only if WWHRS.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Rooms-With-Bath-And-Or-Shower" type="bdt:Count" minOccurs="0"/>
+			<xs:element name="Mixer-Showers-With-System1-With-Bath" type="bdt:Count" minOccurs="0"/>
+			<xs:element name="Mixer-Showers-With-System1-Without-Bath" type="bdt:Count" minOccurs="0"/>
+			<xs:element name="Mixer-Showers-With-System2-With-Bath" type="bdt:Count" minOccurs="0"/>
+			<xs:element name="Mixer-Showers-With-System2-Without-Bath" type="bdt:Count" minOccurs="0"/>
+			<xs:element name="Main-Heating-Systems-Interaction" type="MainHeatingSystemsInteraction" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="SAP-Special-Feature" type="SAP-Special-Feature"/>
+	<xs:complexType name="SAP-Special-Feature">
+		<xs:all>
+			<xs:element name="Description" type="xs:string"/>
+			<xs:element name="Energy-Saved-Or-Generated" type="bdt:Measurement">
+				<xs:annotation>
+					<xs:documentation>Energy saved or generated in kWh/year.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Saved-Or-Generated-Fuel" type="HeatingFuelTypeCode" minOccurs="0"/>
+			<xs:element name="Energy-Used" type="bdt:Measurement">
+				<xs:annotation>
+					<xs:documentation>Energy used in kWh/year.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Energy-Used-Fuel" type="HeatingFuelTypeCode" minOccurs="0"/>
+			<xs:element name="Air-Change-Rates" type="Air-Change-Rates" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>For Appendix Q procedure that provides air change rates. Only one Special Feature can have data on air change rates.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="SAP-Special-Features" type="SAP-Special-Features"/>
+	<xs:complexType name="SAP-Special-Features">
+		<xs:sequence>
+			<xs:element name="SAP-Special-Feature" type="SAP-Special-Feature" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SAP-Cooling" type="SAP-Cooling"/>
+	<xs:complexType name="SAP-Cooling">
+		<xs:all>
+			<xs:element name="Cooled-Area" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="Cooling-System-Data-Source" type="SAP-DataSourceCode" minOccurs="0"/>
+			<xs:element name="Cooling-System-Type" type="SAP-CoolingSystemTypeCode" minOccurs="0"/>
+			<xs:element name="Cooling-System-Class" type="SAP-CoolingSystemClassCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Data set includes either class or EER, not both.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Cooling-System-EER" type="xs:decimal" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Energy Efficiency Ratio.  Data set includes either class or EER, not both.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Cooling-System-Control" type="SAP-CoolingSystemControlCode" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Main-Heating" type="Main-Heating"/>
+	<xs:complexType name="Main-Heating">
+		<xs:all>
+			<xs:element name="Main-Heating-Number">
+				<xs:annotation>
+					<xs:documentation>Identifies the main heating as system 1 or system 2.  System 1 must always be present, system 2 is included only when there are two systems.</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="1"/>
+						<xs:maxInclusive value="2"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Main-Heating-Category" type="SAP-MainHeatingCategoryCode">
+				<xs:annotation>
+					<xs:documentation>Category of heating system for the main heating system.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Main-Heating-Data-Source" type="SAP-DataSourceCode">
+				<xs:annotation>
+					<xs:documentation>Source of main heating system data.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Boiler-Index-Number" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The ID of the heating system from the product database, if system from database.  Use for all relevant systems, not only boilers e.g. micro-CHP, heat pump.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Main-Heating-Make-Model" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Main heating make and model (text); if main heating data is manufacturer declaration.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Main-Heating-Test-Method" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Main heater BS test method, e.g. BS EN 13278; only if main heating data source is manufacturer declaration and it is a room heater.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Main-Heating-Efficiency" type="xs:decimal" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Main heating efficiency, to be used if main heating data is manufacturer declaration and Efficiency-Type is not winter and summer.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Is-Condensing-Boiler" type="xs:boolean" default="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Is the boiler a condensing boiler?  If boiler efficiency is manufacturer declaration.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Gas-Or-Oil-Boiler-Type" type="SAP-GasOrOilBoilerTypeCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Boiler type; if boiler efficiency is manufacturer declaration and fuel is gas or oil.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Combi-Boiler-Type" type="SAP-CombiBoilerTypeCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Combi boiler type; if it is a combi boiler and boiler efficiency is manufacturer declaration.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Case-Heat-Emission" type="bdt:Measurement" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Case heat emission at full load in kW; if it is a range cooker boiler and boiler efficiency is manufacturer declaration.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Heat-Transfer-To-Water" type="bdt:Measurement" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Heat transfer to water at full load in kW; if it is a range cooker boiler and boiler efficiency is manufacturer declaration.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Solid-Fuel-Boiler-Type" type="SAP-SolidFuelBoilerType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Boiler type; if boiler efficiency is manufacturer declaration and fuel is solid.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Main-Heating-Code" type="SAP-SpaceHeatingCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Main heating code; when heating data source is SAP table.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Main-Fuel-Type" type="HeatingFuelTypeCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The type of fuel used to power the central heating e.g. Gas, Electricity; not used if main heating system is community heating scheme.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Main-Heating-Control" type="SAP-HeatingControlCode">
+				<xs:annotation>
+					<xs:documentation>Type of Main Control for the Heating System.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Heat-Emitter-Type" type="HeatEmitterCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Identifies the means by which the central heating system (if present) emits heat; only when wet system (radiators or underfloor).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Underfloor-Heat-Emitter-Type" type="UnderfloorHeatEmitterCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Means by which an underfloor heating system (if present) emits heat; only when wet system (underfloor).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Main-Heating-Flue-Type" type="FlueTypeCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The type of main heating flue; only if flued appliance.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Is-Flue-Fan-Present" type="xs:boolean" default="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indicates whether the heating system contains a fan flue; only if boiler.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Is-Central-Heating-Pump-In-Heated-Space" type="xs:boolean" default="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Central heating pump in heated space?  Only when wet system (radiators or underfloor).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Is-Oil-Pump-In-Heated-Space" type="xs:boolean" default="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Oil pump in heated space?  Only if oil boiler.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Is-Interlocked-System" type="xs:boolean" default="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Interlocked system?  Only when wet system (radiators or underfloor).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Has-Delayed-Start-Thermostat" type="xs:boolean" default="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Delayed start thermostat?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Has-Load-Or-Weather-Compensation" type="xs:boolean" default="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This is for backwards compatibility only. If possible use Load-Or-Weather-Compensation instead</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Boiler-Fuel-Feed" type="SAP-BoilerFuelFeedCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The type of boiler fuel feed; only if solid fuel boiler with manufacturer declaration.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Is-Main-Heating-HETAS-Approved" type="xs:boolean" default="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Main heating appliance is HETAS approved?  Only if solid fuel.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Electric-CPSU-Operating-Temperature" type="bdt:Measurement" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Electric CPSU operating temperature in Celcius; only if main heating is electric CPSU.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Load-Or-Weather-Compensation" type="SAP-HasLoadOrWeatherCompensation" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Has load or weather compensation?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Main-Heating-Fraction" type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>Fraction of main heating provided by this system, is 1 if only one main system.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Burner-Control" type="SAP-BurnerControlCode" minOccurs="0"/>
+			<xs:element name="Efficiency-Type" type="SAP-EfficiencyTypeCode" minOccurs="0"/>
+			<xs:element name="Main-Heating-Efficiency-Winter" type="xs:decimal" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>To be used if main heating data is manufacturer declaration and Efficiency-Type is winter and summer.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Main-Heating-Efficiency-Summer" type="xs:decimal" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>To be used if main heating data is manufacturer declaration and Efficiency-Type is winter and summer.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Has-FGHRS" type="xs:boolean" default="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Flue Gas Heat Recovery System.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FGHRS-Index-Number" type="xs:nonNegativeInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>FGHRS index number; only if FGHRS.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FGHRS-Energy-Source" type="SAP-Energy-Source" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Main-Heating-Details" type="Main-Heating-Details"/>
+	<xs:complexType name="Main-Heating-Details">
+		<xs:sequence>
+			<xs:element name="Main-Heating" type="Main-Heating" maxOccurs="2"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Community-Heat-Source" type="Community-Heat-Source"/>
+	<xs:complexType name="Community-Heat-Source">
+		<xs:all>
+			<xs:element name="Heat-Source-Type" type="SAP-HeatSourceTypeCode"/>
+			<xs:element name="Heat-Fraction" type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>Fraction of heat for the system provided by this heat source.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Fuel-Type" type="HeatingFuelTypeCode"/>
+			<xs:element name="Efficiency" type="xs:decimal"/>
+			<xs:element name="CHP-Heat-To-Power-Ratio" type="xs:decimal" minOccurs="0"/>
+			<xs:element name="Description" type="xs:string" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Community-Heat-Sources" type="Community-Heat-Sources"/>
+	<xs:complexType name="Community-Heat-Sources">
+		<xs:sequence>
+			<xs:element name="Community-Heat-Source" type="Community-Heat-Source" maxOccurs="5"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Air-Change-Rates" type="Air-Change-Rates"/>
+	<xs:complexType name="Air-Change-Rates">
+		<xs:sequence>
+			<xs:element name="Air-Change-Rate" type="Air-Change-Rate" minOccurs="12" maxOccurs="12"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Air-Change-Rate" type="Air-Change-Rate"/>
+	<xs:complexType name="Air-Change-Rate">
+		<xs:all>
+			<xs:element name="Air-Change-Rate-Month" type="AirChangeRateMonth"/>
+			<xs:element name="Air-Change-Rate-Value" type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>Air change rate in month.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="PV-Array" type="PV-Array"/>
+	<xs:complexType name="PV-Array">
+		<xs:all>
+			<xs:element name="Peak-Power" type="bdt:Measurement">
+				<xs:annotation>
+					<xs:documentation>Peak kW of photovoltaics (PVs) (kWp); 0.0 if none.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Orientation" type="SAP-CompassDirectionCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>PV orientation; only if peak kWp &gt; 0.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Pitch" type="SAP-VerticalPitchCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>PV pitch; only if peak kWp &gt; 0.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Overshading" type="SAP-SolarCollectorOvershadingCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>PV overshading; only if peak kWp &gt; 0.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="PV-Arrays" type="PV-Arrays"/>
+	<xs:complexType name="PV-Arrays">
+		<xs:sequence>
+			<xs:element name="PV-Array" type="PV-Array" maxOccurs="2"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
