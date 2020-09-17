@@ -221,8 +221,6 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
         Date.today.prev_day(50).strftime("%Y-%m-%d"),
       )
 
-      pp response[:data]
-
       expect(response[:data]).to eq(
         {
           addresses: [
