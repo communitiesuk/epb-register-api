@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="DCLG-SAP05" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bdt="DCLG-SAP05/BaseDataTypes" xmlns:SAP05="DCLG-SAP05" targetNamespace="DCLG-SAP05" elementFormDefault="qualified" version="LIG-14.2">
+	<xs:import namespace="DCLG-SAP05/BaseDataTypes" schemaLocation="../UDT/BaseDataTypes.xsd"/>
+	<xs:include schemaLocation="../UDT/SharedDomains.xsd"/>
+	<xs:include schemaLocation="../UDT/SAP05-Domains.xsd"/>
+	<xs:include schemaLocation="../Templates/UserManagement.xsd"/>
+	<xs:include schemaLocation="../Templates/Property.xsd"/>
+	<xs:include schemaLocation="../Templates/SAP05-CollectedData.xsd"/>
+	<xs:include schemaLocation="../Templates/EPC-Certificate.xsd"/>
+	<xs:element name="Energy-Performance-Certificate" type="Energy-Performance-Certificate"/>
+	<xs:complexType name="Energy-Performance-Certificate">
+		<xs:sequence>
+			<xs:element name="SAP-Version" type="SAP-VersionCode">
+				<xs:annotation>
+					<xs:documentation>SAP version that was used for the assessment.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BEDF-Revision-Number" type="xs:nonNegativeInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>BEDF Revision Number from SEDBUK database if boiler details retrieved from database (as on the $001 line in bedf2005.dat); if boiler or other data (mechanical vent system, PFGHRD) from database.  This must be included if any item is from database. At the moment it can be
+- boilers
+- mech vent system
+but others things will be added in future revisions.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Calculation-Software-Name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Name of the software used to perform the SAP calculation.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Calculation-Software-Version" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Version of the software used to perform the SAP calculation.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Report-Header" type="Report-Header"/>
+			<xs:element name="Energy-Assessment" type="Energy-Assessment"/>
+			<xs:element name="SAP05-Data" type="SAP05-Data"/>
+			<xs:element name="PDF" type="xs:base64Binary"/>
+			<xs:element name="Insurance-Details" type="Insurance-Details" minOccurs="0"/>
+			<xs:element name="ExternalDefinitions-Revision-Number" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>A number indicating the version of related ExternalDefinitions.xsd</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ReportKeyFields" type="ReportKeyFields"/>
+	<xs:complexType name="ReportKeyFields">
+		<xs:annotation>
+			<xs:documentation>Primary Key Fields definition for a Report - used when a message requires a reference tio a report to be passed.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RRN" type="bdt:RRNType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Insurance-Details" type="Insurance-Details"/>
+	<xs:complexType name="Insurance-Details">
+		<xs:annotation>
+			<xs:documentation>Details of the Professional Indemnity Insurance policy used to provide cover against a compensation claim against any particular Home Condition Report.
+
+A particular Home Condition Report may be covered by an Professional Indemnity Insurance policy in one of three different ways:
+*	The Home Inspector has personal Professional Indemnity Insurance and the Home Condition Report is covered by this.
+*	The Home Condition Report is covered by an umbrella Professional Indemnity Insurance policy held by the Home Condition Report Supplier that assigned the inspection to the Home Inspector.
+*	An individual insurance policy is taken out to cover the individual report such as the case where the property is unusual and falls outside the Home Inspectors normal Professional Indemnity Insurance policy.
+
+A Home Inspector may use any or all of these methods to providing Professional Indemnity Insurance for a Home Condition Report on a case-by-case basis.
+</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Insurer" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The name of the insurance company that underwrites / issued the insurance policy</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Policy-No" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The policy number of the insurance policy</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Effective-Date" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>The date that the insurance policy becomes effective (commences cover)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Expiry-Date" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>The date that the insurance policy is supposed to expire.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PI-Limit" type="bdt:Money">
+				<xs:annotation>
+					<xs:documentation>The upper limit of the Professional Indemnity cover provided by the insurance policy.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Report-Header" type="Report-Header"/>
+	<xs:complexType name="Report-Header">
+		<xs:annotation>
+			<xs:documentation>Report Header contains all the identification and searchable details for the Report.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RRN" type="bdt:RRNType">
+				<xs:annotation>
+					<xs:documentation>Report Reference Number is the unique report Identifier that the report will be publicly known by.
+
+The RRN is allocated to the Report at the point that it is registered and will be algorithmically derived from the natural key characteristics of the Home Condition Report i.e. The Unique Property Reference Number (UPRN) and Inspection Date.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Inspection-Date" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>The date that the inspection was actually carried out by the Home Inspector.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Report-Type" type="ReportTypeCode">
+				<xs:annotation>
+					<xs:documentation>The type of Home Inspection that was carried out.
+
+Initially the only allowed type will be a Home Condition Report inspection but this may be extended in the future to cover Energy Assessment Only inspections.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Completion-Date" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>The date that the Home Inspector completed the report. This will be after the Inspection Date but generally before the Registration Date.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Registration-Date" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>The date that the report was submitted to the HCR Registration Organisation for lodging in the HCR Register.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Status" type="ReportStatusCode">
+				<xs:annotation>
+					<xs:documentation>The Status of the Report.
+
+A Home Condition Report can have a number of distinct states depending on whereabouts in its overall lifecycle the HCR is - see Home Condition Report Statechart for more details.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Language-Code" type="bdt:LanguageCode">
+				<xs:annotation>
+					<xs:documentation>The language that the report is written in. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Restricted-Access" type="RestrictedAccessCode">
+				<xs:annotation>
+					<xs:documentation>Indicates that the Seller wants to restrict access to the Home Condition Report to General Public / Unregistered Users only.
+
+Some members of the public have a moral / religious objection to money lending and hence may not want to let Mortgage Lenders have access to the data. When set to "Yes" retrieval of the structured (XML) data will be blocked.
+
+However anyone with access to the Report Reference Number (RRN) can retrieve the PDF version of the Home Condition Report via the public access mechanism which cannot be restricted in this way.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Transaction-Type" type="TransactionType"/>
+			<xs:element name="Seller-Commission-Report" type="bdt:Flag">
+				<xs:annotation>
+					<xs:documentation>Indicates that the HCR was commissioned by the Seller of the Property or their Agent. This is required in order to differentiate these reports from Buyer commisioned reports  which are not eligible for inclusion in a Home Information Pack</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Property-Type" type="PropertyTypeCode">
+				<xs:annotation>
+					<xs:documentation>Describes the type of Property that is being inspected. This should be the same as the Property-Type recorded in the Property-Details section.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Home-Inspector" type="Home-Inspector"/>
+			<xs:element name="Property" type="Property"/>
+			<xs:element name="Region-Code" type="UKRegionCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Region within the UK.  This field is optional.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Country-Code" type="UKCountryCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Country within the UK.  This field is optional.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Related-Party-Disclosure">
+				<xs:complexType>
+					<xs:choice>
+						<xs:element name="Related-Party-Disclosure-Text" type="bdt:Sentence">
+							<xs:annotation>
+								<xs:documentation>For backward compatibility only.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="Related-Party-Disclosure-Number" type="DisclosureCode">
+							<xs:annotation>
+								<xs:documentation>Code indicating any potential conflicts of interest or commercial relationships with other parties.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
