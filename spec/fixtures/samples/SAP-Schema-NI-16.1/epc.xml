@@ -125,7 +125,7 @@
           <HIP:Energy-Rating-Potential>50</HIP:Energy-Rating-Potential>
           <HIP:Environmental-Impact-Current>66</HIP:Environmental-Impact-Current>
           <HIP:Environmental-Impact-Potential>78</HIP:Environmental-Impact-Potential>
-          <HIP:Energy-Consumption-Current quantity="kWh/m2 per year">232</HIP:Energy-Consumption-Current>
+          <HIP:Energy-Consumption-Current quantity="kWh/m2 per year">0</HIP:Energy-Consumption-Current>
           <HIP:Energy-Consumption-Potential quantity="kWh/m2 per year">150</HIP:Energy-Consumption-Potential>
           <HIP:CO2-Emissions-Current quantity="tonnes per year">2.4</HIP:CO2-Emissions-Current>
           <HIP:CO2-Emissions-Potential quantity="tonnes per year">1.4</HIP:CO2-Emissions-Potential>
