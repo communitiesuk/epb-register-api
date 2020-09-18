@@ -1,0 +1,751 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="DCLG-HIP" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="DCLG-HIP" version="LIG-14.2">
+	<xs:annotation>
+		<xs:documentation>© Department of Communities and Local Government. © Crown copyright, 2007. The Home Condition Report logo and associated wording is a registered trade mark - any unlicensed use is not permitted. Copyright in the typographical arrangement of this document rests with the Crown. This publication, excluding logos, may be reproduced free of charge in any format or medium for research, private study, for internal circulation within an organisation or by registered scheme users. This is subject to it being reproduced accurately and not used in a misleading context. 
+</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="EnergyEfficiencySummaryCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="0">
+				<xs:annotation>
+					<xs:documentation>N/A</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>Very Poor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>Poor</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>Average</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>Good</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="5">
+				<xs:annotation>
+					<xs:documentation>Very Good</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RecommendationCategoryCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>Lower cost</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>Higher cost</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>Further measure</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>Deselected.  This is for backwards compatibility only and should not be used.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AddendumCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>1. Wall type does not correspond to options available in RdSAP</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>2. Room heater specified for water heating instead of a range cooker</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>3. Space heating from individual system and water heating from community system</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>4. Dwelling has a swimming pool</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="5">
+				<xs:annotation>
+					<xs:documentation>5. Dwelling has micro-CHP</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="6">
+				<xs:annotation>
+					<xs:documentation>6. Storage heater or dual immersion, and single electric meter</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="7">
+				<xs:annotation>
+					<xs:documentation>7. Heating controlled by TRVs only</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="8">
+				<xs:annotation>
+					<xs:documentation>8. PVs or wind turbine present on the property (England, Wales or Scotland)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RecommendationSummaryCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>Insulate hot water cylinder with 80 mm jacket</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>Increase hot water cylinder insulation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>Add additional 80 mm jacket to hot water cylinder</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>Hot water cylinder thermostat</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="5">
+				<xs:annotation>
+					<xs:documentation>Increase loft insulation to 270 mm</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="6">
+				<xs:annotation>
+					<xs:documentation>Cavity wall insulation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="7">
+				<xs:annotation>
+					<xs:documentation>50 mm internal or external wall insulation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="8">
+				<xs:annotation>
+					<xs:documentation>Replace single glazed windows with low-E double glazing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="9">
+				<xs:annotation>
+					<xs:documentation>Secondary glazing to single glazed windows</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="10">
+				<xs:annotation>
+					<xs:documentation>Draughtproof single-glazed windows</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11">
+				<xs:annotation>
+					<xs:documentation>Upgrade heating controls (programmer, room thermostat and thermostatic radiator valves)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="12">
+				<xs:annotation>
+					<xs:documentation>Upgrade heating controls (room thermostat and thermostatic radiator valves)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13">
+				<xs:annotation>
+					<xs:documentation>Upgrading heating controls (thermostatic radiator valves)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="14">
+				<xs:annotation>
+					<xs:documentation>Upgrade heating controls (room thermostat)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="15">
+				<xs:annotation>
+					<xs:documentation>Upgrade heating controls (time and temperature zone control)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="16">
+				<xs:annotation>
+					<xs:documentation>Time and temperature zone control</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="17">
+				<xs:annotation>
+					<xs:documentation>Upgrade heating controls (programmer and room thermostat)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="18">
+				<xs:annotation>
+					<xs:documentation>Upgrade heating controls (room thermostat)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="19">
+				<xs:annotation>
+					<xs:documentation>Solar water heating</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="20">
+				<xs:annotation>
+					<xs:documentation>Replace boiler with new condensing boiler</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="21">
+				<xs:annotation>
+					<xs:documentation>Replace boiler with new condensing boiler</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="22">
+				<xs:annotation>
+					<xs:documentation>Replace boiler with biomass boiler</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23">
+				<xs:annotation>
+					<xs:documentation>Wood pellet stove with boiler and radiators</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="24">
+				<xs:annotation>
+					<xs:documentation>Fan assisted storage heaters and dual immersion cylinder</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="25">
+				<xs:annotation>
+					<xs:documentation>Fan assisted storage heaters</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="26">
+				<xs:annotation>
+					<xs:documentation>Replacement warm air unit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="28">
+				<xs:annotation>
+					<xs:documentation>Condensing oil boiler with radiators</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="29">
+				<xs:annotation>
+					<xs:documentation>Change heating to gas condensing boiler</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="30">
+				<xs:annotation>
+					<xs:documentation>Fan assisted storage heaters and dual immersion cylinder</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="31">
+				<xs:annotation>
+					<xs:documentation>Fan-assisted storage heaters</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="32">
+				<xs:annotation>
+					<xs:documentation>Change heating to gas condensing boiler</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="34">
+				<xs:annotation>
+					<xs:documentation>Solar photovoltaic panels, 2.5 kWp</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="35">
+				<xs:annotation>
+					<xs:documentation>Low energy lighting for all fixed outlets</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="36">
+				<xs:annotation>
+					<xs:documentation>Replace heating unit with condensing unit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="37">
+				<xs:annotation>
+					<xs:documentation>Install condensing boiler</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="38">
+				<xs:annotation>
+					<xs:documentation>Install condensing boiler</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="39">
+				<xs:annotation>
+					<xs:documentation>Wood pellet stove with boiler and radiators</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="40">
+				<xs:annotation>
+					<xs:documentation>Change room heaters to condensing boiler</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="41">
+				<xs:annotation>
+					<xs:documentation>Change room heaters to condensing boiler</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="42">
+				<xs:annotation>
+					<xs:documentation>Replace heating unit with mains gas condensing unit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="43">
+				<xs:annotation>
+					<xs:documentation>Condensing oil boiler with radiators</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="44">
+				<xs:annotation>
+					<xs:documentation>Wind turbine</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RecommendationHeadingCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>Hot water cylinder insulation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>Hot water cylinder insulation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>Hot water cylinder insulation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>Cylinder thermostat</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="5">
+				<xs:annotation>
+					<xs:documentation>Loft insulation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="6">
+				<xs:annotation>
+					<xs:documentation>Cavity wall insulation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="7">
+				<xs:annotation>
+					<xs:documentation>Internal or external wall insulation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="8">
+				<xs:annotation>
+					<xs:documentation>Double glazing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="9">
+				<xs:annotation>
+					<xs:documentation>Secondary glazing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="10">
+				<xs:annotation>
+					<xs:documentation>Draughtproofing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11">
+				<xs:annotation>
+					<xs:documentation>Heating controls (programmer, room thermostat and thermostatic radiator valves)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="12">
+				<xs:annotation>
+					<xs:documentation>Heating controls (room thermostat and thermostatic radiator valves)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13">
+				<xs:annotation>
+					<xs:documentation>Heating controls (thermostatic radiator valves)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="14">
+				<xs:annotation>
+					<xs:documentation>Heating controls (room thermostat)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="15">
+				<xs:annotation>
+					<xs:documentation>Heating controls (time and temperature zone control)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="16">
+				<xs:annotation>
+					<xs:documentation>Heating controls (time and temperature zone control)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="17">
+				<xs:annotation>
+					<xs:documentation>Heating controls (programmer and room thermostat)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="18">
+				<xs:annotation>
+					<xs:documentation>Heating controls (room thermostat)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="19">
+				<xs:annotation>
+					<xs:documentation>Solar water heating</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="20">
+				<xs:annotation>
+					<xs:documentation>New condensing boiler</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="21">
+				<xs:annotation>
+					<xs:documentation>New condensing boiler</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="22">
+				<xs:annotation>
+					<xs:documentation>Biomass boiler</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23">
+				<xs:annotation>
+					<xs:documentation>Biomass stove with boiler</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="24">
+				<xs:annotation>
+					<xs:documentation>Fan assisted storage heaters</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="25">
+				<xs:annotation>
+					<xs:documentation>Fan assisted storage heaters</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="26">
+				<xs:annotation>
+					<xs:documentation>Replacement warm air unit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="28">
+				<xs:annotation>
+					<xs:documentation>Condensing oil boiler</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="29">
+				<xs:annotation>
+					<xs:documentation>Gas condensing boiler</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="30">
+				<xs:annotation>
+					<xs:documentation>Fan assisted storage heaters</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="31">
+				<xs:annotation>
+					<xs:documentation>Fan assisted storage heaters</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="32">
+				<xs:annotation>
+					<xs:documentation>Gas condensing boiler</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="34">
+				<xs:annotation>
+					<xs:documentation>Solar photovoltaic (PV) panels</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="35">
+				<xs:annotation>
+					<xs:documentation>Low energy lighting</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="36">
+				<xs:annotation>
+					<xs:documentation>Install condensing heating unit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="37">
+				<xs:annotation>
+					<xs:documentation>Install condensing boiler (separate from the range cooker)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="38">
+				<xs:annotation>
+					<xs:documentation>Install condensing boiler (separate from the range cooker)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="39">
+				<xs:annotation>
+					<xs:documentation>Biomass stove with boiler</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="40">
+				<xs:annotation>
+					<xs:documentation>Condensing boiler</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="41">
+				<xs:annotation>
+					<xs:documentation>Condensing boiler</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="42">
+				<xs:annotation>
+					<xs:documentation>Mains gas condensing heating unit</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="43">
+				<xs:annotation>
+					<xs:documentation>Condensing oil boiler</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="44">
+				<xs:annotation>
+					<xs:documentation>Wind turbine</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RecommendationDescriptionCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>Installing an 80 mm thick cylinder jacket around the hot water cylinder will help to maintain the water at the required temperature; this will reduce the amount of energy used and lower fuel bills. A cylinder jacket is a layer of insulation that is fitted around the hot water cylinder. The jacket should be fitted over any thermostat clamped to the cylinder. Hot water pipes from the hot water cylinder should also be insulated, using pre-formed pipe insulation of up to 50 mm thickness, or to suit the space available, for as far as they can be accessed to reduce losses in summer. All these materials can be purchased from DIY stores and installed by a competent DIY enthusiast.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>Increasing the thickness of existing insulation around the hot water cylinder will help to maintain the water at the required temperature; this will reduce the amount of energy used and lower fuel bills. An additional cylinder jacket or other suitable insulation layer can be used. The insulation should be fitted over any thermostat clamped to the cylinder. Hot water pipes from the hot water cylinder should also be insulated, using pre-formed pipe insulation of up to 50 mm thickness, or to suit the space available, for as far as they can be accessed to reduce losses in summer. All these materials can be purchased from DIY stores and installed by a competent DIY enthusiast.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>Increasing the thickness of existing insulation by adding an 80 mm cylinder jacket around the hot water cylinder will help maintain the water at the required temperature; this will reduce the amount of energy used and lower fuel bills. The jacket should be fitted over the top of the existing foam insulation and over any thermostat clamped to the cylinder. Hot water pipes from the hot water cylinder should also be insulated, using pre-formed pipe insulation of up to 50 mm thickness, or to suit the space available, for as far as they can be accessed to reduce losses in summer. All these materials can be purchased from DIY stores and installed by a competent DIY enthusiast.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>A hot water cylinder thermostat enables the boiler to switch off when the water in the cylinder reaches the required temperature; this minimises the amount of energy that is used and lowers fuel bills. The thermostat is a temperature sensor that sends a signal to the boiler when the required temperature is reached. To be fully effective it needs to be sited in the correct position and hard wired in place, so it should be installed by a competent plumber or heating engineer.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="5">
+				<xs:annotation>
+					<xs:documentation>Loft insulation laid in the loft space or between roof rafters to a depth of at least 270 mm will significantly reduce heat loss through the roof; this will improve levels of comfort, reduce energy use and lower fuel bills. Insulation should not be placed below any cold water storage tank, any such tank should also be insulated on its sides and top, and there should be boarding on battens over the insulation to provide safe access between the loft hatch and the cold water tank. The insulation can be installed by professional contractors but also by a capable DIY enthusiast. Loose granules may be used instead of insulation quilt; this form of loft insulation can be blown into place and can be useful where access is difficult. The loft space must have adequate ventilation to prevent dampness; seek advice about this if unsure. Further information about loft insulation and details of local contractors can be obtained from the National Insulation Association (www.nationalinsulationassociation.org.uk).</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="6">
+				<xs:annotation>
+					<xs:documentation>Cavity wall insulation, to fill the gap between the inner and outer layers of external walls with an insulating material, reduces heat loss; this will improve levels of comfort, reduce energy use and lower fuel bills. The insulation material is pumped into the gap through small holes that are drilled into the outer walls, and the holes are made good afterwards. As specialist machinery is used to fill the cavity, a professional installation company should carry out this work, and they should carry out a thorough survey before commencing work to ensure that this type of insulation is suitable for this home. They should also provide a guarantee for the work and handle any building control issues. Further information about cavity wall insulation and details of local installers can be obtained from the National Insulation Association (www.nationalinsulationassociation.org.uk).</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="7">
+				<xs:annotation>
+					<xs:documentation>Solid wall insulation involves adding a layer of insulation to either the inside or the outside surface of the external walls, which reduces heat loss and lowers fuel bills. As it is more expensive than cavity wall insulation it is only recommended for walls without a cavity, or where for technical reasons a cavity cannot be filled. Internal insulation, known as dry-lining, is where a layer of insulation is fixed to the inside surface of external walls; this type of insulation is best applied when rooms require redecorating and can be installed by a competent DIY enthusiast. External solid wall insulation is the application of an insulant and a weather-protective finish to the outside of the wall. This may improve the look of the home, particularly where existing brickwork or rendering is poor, and will provide long-lasting weather protection. Further information can be obtained from the National Insulation Association (www.nationalinsulationassociation.org.uk). It should be noted that planning permission might be required.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="8">
+				<xs:annotation>
+					<xs:documentation>Double glazing is the term given to a system where two panes of glass are made up into a sealed unit. Replacing existing single-glazed windows with double glazing will improve comfort in the home by reducing draughts and cold spots near windows. Double-glazed windows may also reduce noise, improve security and combat problems with condensation. Building Regulations apply to this work, so either use a contractor who is registered with a competent persons scheme¹ or obtain advice from your local authority building control department.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="9">
+				<xs:annotation>
+					<xs:documentation>Secondary glazing is the addition of a second pane of glass inside the existing window. Adding secondary glazing will improve comfort in the home by reducing draughts and cold spots near windows. It may also reduce noise and combat problems with condensation. Installation can be carried out by a competent DIY enthusiast.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="10">
+				<xs:annotation>
+					<xs:documentation>Fitting draughtproofing, strips of insulation around windows and doors, will improve the comfort in the home. A contractor can be employed but draughtproofing can be installed by a competent DIY enthusiast.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="11">
+				<xs:annotation>
+					<xs:documentation>The heating system would benefit from a programmer and room thermostat to enable the boiler to switch off when no heat is required; this will reduce the amount of energy used and lower fuel bills. Thermostatic radiator valves should also be installed, to allow the temperature of each room to be controlled to suit individual needs, adding to comfort and reducing heating bills. For example, they can be set to be warmer in the living room and bathroom than in the bedrooms. Ask a competent heating engineer to install radiator valves and a fully pumped system with the pump and the boiler turned off by the room thermostat. Radiator valves should be fitted to every radiator except one ? the radiator in the same room as the room thermostat. Remember the room thermostat is needed as well as the thermostatic radiator valves, to enable the boiler to switch off when no heat is required.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="12">
+				<xs:annotation>
+					<xs:documentation>A room thermostat will increase the efficiency of the heating system by enabling the boiler to switch off when no heat is required; this will reduce the amount of energy used and lower fuel bills. Thermostatic radiator valves should also be installed, to allow the temperature of each room to be controlled to suit individual needs, adding to comfort and reducing heating bills provided internal doors are kept closed. For example, they can be set to be warmer in the living room and bathroom than in the bedrooms. Ask a competent heating engineer to install thermostatic radiator valves and a fully pumped system with the pump and the boiler turned off by the room thermostat. Thermostatic radiator valves should be fitted to every radiator except for the radiator in the same room as the room thermostat. Remember the room thermostat is needed as well as the thermostatic radiator valves, to enable the boiler to switch off when no heat is required.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13">
+				<xs:annotation>
+					<xs:documentation>Thermostatic radiator valves allow the temperature of each room to be controlled to suit individual needs, adding to comfort and reducing heating bills provided internal doors are kept closed. For example, they can be set to be warmer in the living room and bathroom than in the bedrooms. Ask a competent heating engineer to install thermostatic radiator valves. Thermostatic radiator valves should be fitted to every radiator except the radiator in the same room as the room thermostat. Remember the room thermostat is needed as well as the thermostatic radiator valves, to enable the boiler to switch off when no heat is required.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="14">
+				<xs:annotation>
+					<xs:documentation>The heating system should have a room thermostat to enable the boiler to switch off when no heat is required. A competent heating engineer should be asked to do this work. Insist that the thermostat switches off the boiler as well as the pump and that the thermostatic radiator valve is removed from any radiator in the same room as the thermostat.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="15">
+				<xs:annotation>
+					<xs:documentation>The heating system would benefit from a programmer to provide better comfort through automatic control of the system. A modern programmer can provide different time programmes for heating and hot water, allowing different time periods to be set for each; seven-day programmers also allow different heating and/or hot water patterns to be set for weekdays and weekends and holidays. Thermostatic radiator valves should also be installed, to allow the temperature of each room to be controlled to suit individual needs, adding to comfort and reducing heating bills provided internal doors are kept closed. For example, they can be set to be warmer in the living room and bathroom than in the bedrooms. Ask a competent heating engineer to install thermostatic radiator valves and a fully pumped system with the pump and the boiler turned off by the room thermostat. Thermostatic radiator valves should be fitted to every radiator except for the radiator in the same room as the room thermostat. Remember the room thermostat is needed as well as the thermostatic radiator valves, to enable the boiler to switch off when no heat is required.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="16">
+				<xs:annotation>
+					<xs:documentation>The heating system controls should be improved so that both the temperature and time of heating can be set differently in separate areas of your house; this will reduce the amount of energy used and lower fuel bills. For example, it is possible to have cooler temperatures in the bedrooms than in the living room provided internal doors are kept closed, and to have a longer heating period for the living room. A competent heating engineer should be asked to do this work.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="17">
+				<xs:annotation>
+					<xs:documentation>The warm air heating system would benefit from the addition of a programmer and room thermostat so that it switches off when no heat is required; this will reduce the amount of energy used and lower fuel bills. Insist that the thermostat switches off the warm air burner as well as the blower. A modern programmer can provide different time programmes for heating and hot water, allowing different time periods to be set for each; seven-day programmers also allow different heating patterns to be set for weekdays and weekends and holidays. A competent heating engineer should be asked to do this work.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="18">
+				<xs:annotation>
+					<xs:documentation>The warm air heating system in this home would benefit from the addition of a room thermostat so that it switches off when no heat is required; this will reduce the amount of energy used and lower fuel bills. Insist that the thermostat switches off the warm air burner as well as the blower. A competent heating engineer should be asked to do this work.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="19">
+				<xs:annotation>
+					<xs:documentation>A solar water heating panel, usually fixed to the roof, uses the sun to pre-heat the hot water supply. This will significantly reduce the demand on the heating system to provide hot water and hence save fuel and money. The Solar Trade Association has up-to-date information on local installers and any grant that may be available.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="20">
+				<xs:annotation>
+					<xs:documentation>A condensing boiler is capable of much higher efficiencies than other types of boiler, meaning it will burn less fuel to heat this property. This improvement is most appropriate when the existing central heating boiler needs repair or replacement, but there may be exceptional circumstances making this impractical. Condensing boilers need a drain for the condensate which limits their location; remember this when considering remodelling the room containing the existing boiler even if the latter is to be retained for the time being (for example a kitchen makeover). Building Regulations apply to this work, so your local authority building control department should be informed, unless the installer is registered with a competent persons scheme¹, and can therefore self-certify the work for Building Regulation compliance. Ask a qualified heating engineer to explain the options.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="21">
+				<xs:annotation>
+					<xs:documentation>A condensing boiler is capable of much higher efficiencies than other types of boiler, meaning it will burn less fuel to heat this property. This improvement is most appropriate when the existing central heating boiler needs repair or replacement, but there may be exceptional circumstances making this impractical. Condensing boilers need a drain for the condensate which limits their location; remember this when considering remodelling the room containing the existing boiler even if the latter is to be retained for the time being (for example a kitchen makeover). Building Regulations apply to this work, so your local authority building control department should be informed, unless the installer is registered with a competent persons scheme¹, and can therefore self-certify the work for Building Regulation compliance. Ask a qualified heating engineer to explain the options.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="22">
+				<xs:annotation>
+					<xs:documentation>Modern boilers are cleaner burning and more efficient than the boiler in this home and cost less to run. A biomass boiler burns renewable fuel such as wood logs or pellets and therefore is less damaging to the environment. This improvement is most appropriate when the existing heating system needs repair or replacement. Building Regulations and provisions under the Clean Air Act apply to this work, so your local authority building control department should be informed, unless the installer is registered with a competent persons scheme¹, and can therefore self-certify the work for Building Regulation compliance. Ask a qualified heating engineer to explain the options.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="23">
+				<xs:annotation>
+					<xs:documentation>A closed-in solid fuel stove (also called a room heater) is about twice as efficient as an open fire. Modern heaters with glass doors are clean, easy to use and provide an attractive source of heating. A biomass boiler burns renewable fuel such as wood pellets and therefore is much less damaging to the environment. This improvement is most appropriate when the existing heating system needs repair or replacement. Building Regulations and provisions under the Clean Air Act apply to this work, so your local authority building control department should be informed, unless the installer is registered with a competent persons scheme¹, and can therefore self-certify the work for Building Regulation compliance. Ask a qualified heating engineer to explain the options.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="24">
+				<xs:annotation>
+					<xs:documentation>Modern storage heaters are smaller and easier to control than the older type in the property. Ask for a quotation for new, fan-assisted heaters with automatic charge control. A dual-immersion cylinder, which can be installed at the same time, will provide cheaper hot water than the system currently installed. As installations should be in accordance with the current regulations covering electrical wiring, only a qualified electrician should carry out the installation. Building Regulations apply to this work, so your local authority building control department should be informed, unless the installer is registered with a competent persons scheme¹, and can therefore self-certify the work for Building Regulation compliance. Ask a qualified electrical heating engineer to explain the options, which might also include switching to other forms of electric heating.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="25">
+				<xs:annotation>
+					<xs:documentation>Modern storage heaters are smaller and easier to control than the older type in the property. Ask for a quotation for new, fan-assisted heaters with automatic charge control. As installations should be in accordance with the current regulations covering electrical wiring, only a qualified electrician should carry out the installation. Building Regulations apply to this work, so your local authority building control department should be informed, unless the installer is registered with a competent persons scheme¹, and can therefore self-certify the work for Building Regulation compliance. Ask a qualified electrical heating engineer to explain the options which might also include switching to other forms of electric heating.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="26">
+				<xs:annotation>
+					<xs:documentation>A modern warm air unit is capable of higher efficiency than older types, meaning it will burn less fuel for heating and (if fitted) the hot water system in your property. This improvement is most appropriate when the existing central heating warm air unit or hot water service needs repair or replacement. Building Regulations apply to this work, so your local authority building control department should be informed, unless the installer is registered with a competent persons scheme¹, and can therefore self-certify the work for Building Regulation compliance. Ask a qualified heating engineer to explain the options.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="28">
+				<xs:annotation>
+					<xs:documentation>Condensing boilers have a much higher efficiency than other types of heating appliance, meaning they will burn less fuel to heat the property. This option is best taken up when the present warm air unit requires repair or replacement. Building Regulations apply to this work and require replacement oil boilers to be of the condensing type unless there are exceptional circumstances, so your local authority building control department should be informed unless the installer is registered with a competent persons scheme¹, and can therefore self-certify the work for Building Regulation compliance. Ask a qualified heating engineer to explain the options.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="29">
+				<xs:annotation>
+					<xs:documentation>Changing the heating to use a mains gas boiler that provides both space and water heating will save money, as mains gas is currently cheaper than the fuel being used at present. A condensing boiler is capable of much higher efficiencies than other types of boiler, meaning it will burn less fuel to heat the property, but there may be exceptional circumstances making this impractical. Condensing boilers need a drain for the condensate which limits their location; remember this when considering remodelling the room containing the existing boiler even if the latter is to be retained for the time being (for example a kitchen makeover). This improvement is most appropriate when the existing heating system needs repair or replacement. Building Regulations apply to this work, so your local authority building control department should be informed, unless the installer is registered with a competent persons scheme¹, and can therefore self-certify the work for Building Regulation compliance. Ask a qualified heating engineer to explain the options.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="30">
+				<xs:annotation>
+					<xs:documentation>Modern storage heaters are much less expensive to run than the direct acting, on-peak heating system in the property. A dual-rate electricity supply is required to provide the off-peak electricity that these heaters use; this is easily obtained by contacting the energy supplier. Ask for a quotation for fan-assisted heaters with automatic charge control. A dual-immersion cylinder, which can be installed at the same time, will provide cheaper hot water than the system currently installed. As installations should be in accordance with the national wiring standards, only a qualified electrician should carry out the installation. Building Regulations apply to this work, so Building Control should be informed, unless the installer is registered with a competent persons scheme¹, and can therefore self-certify the work for Building Regulation compliance. Ask a qualified electrical heating engineer to explain the options, which might also include switching to other forms of electric heating.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="31">
+				<xs:annotation>
+					<xs:documentation>Modern storage heaters are much less expensive to run than the direct acting, on-peak heating system in the property. A dual-rate electricity supply is required to provide the off-peak electricity that these heaters use; this is easily obtained by contacting the energy supplier. Ask for a quotation for fan-assisted heaters with automatic charge control. As installations should be in accordance with the national wiring standards, only a qualified electrician should carry out the installation. Building Regulations apply to this work, so Building Control should be informed, unless the installer is registered with a competent persons scheme¹, and can therefore self-certify the work for Building Regulation compliance. Ask a qualified electrical heating engineer to explain the options, which might also include switching to other forms of electric heating.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="32">
+				<xs:annotation>
+					<xs:documentation>Changing the heating to use a mains gas boiler that provides both space and water heating will save money, as mains gas is currently cheaper than the fuel being used at present. A condensing boiler is capable of much higher efficiencies than other types of boiler, meaning it will burn less fuel to heat the property but there may be exceptional circumstances making this impractical. Condensing boilers need a drain for the condensate which limits their location. Remember this when considering remodelling the room containing the existing boiler even if the latter is to be retained for the time being (for example a kitchen makeover). This improvement is most appropriate when the existing heating system needs repair or replacement. Building Regulations apply to this work, so your local authority building control department should be informed, unless the installer is registered with a competent persons scheme¹, and can therefore self-certify the work for Building Regulation compliance. Ask a qualified heating engineer to explain the options.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="34">
+				<xs:annotation>
+					<xs:documentation>A solar PV system is one which converts light directly into electricity via panels placed on the roof with no waste and no emissions. This electricity is used throughout the home in the same way as the electricity purchased from an energy supplier. The British Photovoltaic Association has up-to-date information on local installers who are qualified electricians and on any grant that may be available. Planning restrictions may apply in certain neighbourhoods and you should check this with the local authority. Building Regulations apply to this work, so your local authority building control department should be informed, unless the installer is appropriately qualified and registered as such with a competent persons scheme¹, and can therefore self-certify the work for Building Regulation compliance. The assessment does not include the effect of any feed-in tariff, which could appreciably increase the savings that are shown on this EPC for solar photovoltaic panels.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="35">
+				<xs:annotation>
+					<xs:documentation>Replacement of traditional light bulbs with energy saving recommended ones will reduce lighting costs over the lifetime of the bulb, and they last up to 12 times longer than ordinary light bulbs. Also consider selecting low energy light fittings when redecorating; contact the Lighting Association for your nearest stockist of Domestic Energy Efficient Lighting Scheme fittings.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="36">
+				<xs:annotation>
+					<xs:documentation>A condensing unit is capable of much higher efficiencies than other types, meaning it will burn less fuel to heat this property but there may be exceptional circumstances making this impractical. Condensing boilers need a drain for the condensate which limits their location. Remember this when considering remodelling the room containing the existing boiler even if the latter is to be retained for the time being (for example a kitchen makeover). This improvement is most appropriate when the existing central heating unit needs repair or replacement. Building Regulations apply to this work, so your local authority building control department should be informed, unless the installer is registered with a competent persons scheme¹, and can therefore self-certify the work for Building Regulation compliance. Ask a qualified heating engineer to explain the options.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="37">
+				<xs:annotation>
+					<xs:documentation>A condensing boiler is capable of much higher efficiencies than other types of boiler, meaning it will burn less fuel to heat the property. It is recommended to install a separate condensing boiler, independent of the range cooker, but there may be exceptional circumstances making this impractical. Condensing boilers need a drain for the condensate which limits their location. Building Regulations apply to this work, so your local authority building control department should be informed, unless the installer is registered with a competent persons scheme¹, and can therefore self-certify the work for Building Regulation compliance. Ask a qualified heating engineer to explain the options.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="38">
+				<xs:annotation>
+					<xs:documentation>A condensing boiler is capable of much higher efficiencies than other types of boiler, meaning it will burn less fuel to heat the property. It is recommended to install a separate condensing boiler, independent of the range cooker, but there may be exceptional circumstances making this impractical. Condensing boilers need a drain for the condensate which limits their location. Building Regulations apply to this work, so your local authority building control department should be informed, unless the installer is registered with a competent persons scheme¹, and can therefore self-certify the work for Building Regulation compliance. Ask a qualified heating engineer to explain the options.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="39">
+				<xs:annotation>
+					<xs:documentation>A biomass stove (also called a room heater) burns renewable fuel such as wood pellets and therefore is less damaging to the environment than the solid fuel room heater in this home. This improvement is most appropriate when the existing heating system needs repair or replacement. Building Regulations and provisions under the Clean Air Act apply to this work, so your local authority building control department should be informed, unless the installer is registered with a competent persons scheme¹, and can therefore self-certify the work for Building Regulation compliance. Ask a qualified heating engineer to explain the options.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="40">
+				<xs:annotation>
+					<xs:documentation>A full central heating system using a condensing boiler will provide space and water heating at greater efficiency than gas room heaters, meaning it will burn less fuel to heat this property, but there may be exceptional circumstances making this impractical. Condensing boilers need a drain for the condensate which limits their location. Remember this when considering remodelling the room containing the existing boiler even if the latter is to be retained for the time being (for example a kitchen makeover). Building Regulations apply to this work, so your local authority building control department should be informed, unless the installer is registered with a competent persons scheme¹, and can therefore self-certify the work for Building Regulation compliance. Ask a qualified heating engineer to explain the options.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="41">
+				<xs:annotation>
+					<xs:documentation>A full central heating system using a condensing boiler will provide space and water heating at greater efficiency than gas room heaters, meaning it will burn less fuel to heat this property, but there may be exceptional circumstances making this impractical. Condensing boilers need a drain for the condensate which limits their location. Remember this when considering remodelling the room containing the existing boiler even if the latter is to be retained for the time being (for example a kitchen makeover). Building Regulations apply to this work, so your local authority building control department should be informed, unless the installer is registered with a competent persons scheme¹, and can therefore self-certify the work for Building Regulation compliance. Ask a qualified heating engineer to explain the options.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="42">
+				<xs:annotation>
+					<xs:documentation>Changing the heating to use a mains gas heating unit will save money, as mains gas is currently cheaper than the fuel being used at present. A condensing unit is capable of much higher efficiencies than other types, meaning it will burn less fuel to heat this property, but there may be exceptional circumstances making this impractical. Condensing units need a drain for the condensate which limits their location. Remember this when considering remodelling the room containing the existing boiler even if the latter is to be retained for the time being (for example a kitchen makeover). This improvement is most appropriate when the existing central heating unit needs repair or replacement. Building Regulations apply to this work, so your local authority building control department should be informed, unless the installer is registered with a competent persons scheme¹, and can therefore self-certify the work for Building Regulation compliance. Ask a qualified heating engineer to explain the options.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="43">
+				<xs:annotation>
+					<xs:documentation>Condensing boilers have a much higher efficiency than other types of heating appliance, meaning they will burn less fuel to heat the property, but there may be exceptional circumstances making this impractical. Condensing boilers need a drain for the condensate which limits their location. Remember this when considering remodelling the room containing the existing boiler even if the latter is to be retained for the time being (for example a kitchen makeover). This option is best taken up when the present warm air unit requires repair or replacement. Building Regulations apply to this work, so your local authority building control department should be informed, unless the installer is registered with a competent persons scheme¹, and can therefore self-certify the work for Building Regulation compliance. Ask a qualified heating engineer to explain the options.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="44">
+				<xs:annotation>
+					<xs:documentation>A wind turbine provides electricity from wind energy. This electricity is used throughout the home in the same way as the electricity purchased from an energy supplier. The British Wind Energy Association has up-to-date information on suppliers of small-scale wind systems and any grant that may be available. Planning restrictions may apply and you should check this with the local authority. Building Regulations apply to this work, so your local authority building control department should be informed, unless the installer is appropriately qualified and registered as such with a competent persons scheme¹, and can therefore self-certify the work for Building Regulation compliance. Wind turbines are not suitable for all properties. The system's effectiveness depends on local wind speeds and the presence of nearby obstructions, and a site survey should be undertaken by an accredited installer. The assessment does not include the effect of any feed-in tariff, which could appreciably increase the savings that are shown on this EPC for a wind turbine.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

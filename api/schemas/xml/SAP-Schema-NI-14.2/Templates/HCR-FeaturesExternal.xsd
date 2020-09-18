@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="DCLG-HIP" xmlns:pfdt="DCLG-HIP/BaseDataTypes" xmlns:HIP="DCLG-HIP" targetNamespace="DCLG-HIP" elementFormDefault="qualified" version="LIG-14.2">
+	<xs:import namespace="DCLG-HIP/BaseDataTypes" schemaLocation="../UDT/BaseDataTypes.xsd"/>
+	<xs:include schemaLocation="../UDT/SAP-Domains.xsd"/>
+	<xs:include schemaLocation="../UDT/HCR-Domains.xsd"/>
+	<xs:element name="External-Feature" type="External-Feature"/>
+	<xs:complexType name="External-Feature">
+		<xs:annotation>
+			<xs:documentation>Any Structural Feature that is outside, but part of, one of the Habitable Areas such as a Window or Door or Chimney Stack. Does not cover the grounds of the property.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Identifier" type="pfdt:IDString"/>
+			<xs:element name="Condition" type="ConditionCode"/>
+			<xs:element name="Justification" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>The Home Inspectors justification for the Condition Code they have assigned to the feature. 
+
+If Condition Code is "Not Inspected" (NI) then the Justification is an explanation for why they could not inspect the feature.
+
+If the feature is "Not Present" (NP) then the Justification should say "Not present" though if the feature is not present then the value is actually not used in the HCR so can be ignored. 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>A description - taken from the Preferred Text statements - of the individual Property Feature being inspected.
+
+If the feature is "Not Present" (NP) then the Description should say "Not present" though if "Not Present" then the value is actually not used in the HCR so can be ignored. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="External-Door" type="External-Door"/>
+	<xs:complexType name="External-Door">
+		<xs:all>
+			<xs:element name="Identifier" type="pfdt:IDString"/>
+			<xs:element name="Condition" type="ConditionCode"/>
+			<xs:element name="Justification" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>The Home Inspectors justification for the Condition Code they have assigned to the feature. 
+
+If Condition Code is "Not Inspected" (NI) then the Justification is an explanation for why they could not inspect the feature.
+
+If the feature is "Not Present" (NP) then the Justification should say "Not present" though if the feature is not present then the value is actually not used in the HCR so can be ignored. 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>A description - taken from the Preferred Text statements - of the individual Property Feature being inspected.
+
+If the feature is "Not Present" (NP) then the Description should say "Not present" though if "Not Present" then the value is actually not used in the HCR so can be ignored. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Roof-Covering" type="Roof-Covering"/>
+	<xs:complexType name="Roof-Covering">
+		<xs:all>
+			<xs:element name="Identifier" type="pfdt:IDString"/>
+			<xs:element name="Condition" type="ConditionCode"/>
+			<xs:element name="Justification" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>The Home Inspectors justification for the Condition Code they have assigned to the feature. 
+
+If Condition Code is "Not Inspected" (NI) then the Justification is an explanation for why they could not inspect the feature.
+
+If the feature is "Not Present" (NP) then the Justification should say "Not present" though if the feature is not present then the value is actually not used in the HCR so can be ignored. 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>A description - taken from the Preferred Text statements - of the individual Property Feature being inspected.
+
+If the feature is "Not Present" (NP) then the Description should say "Not present" though if "Not Present" then the value is actually not used in the HCR so can be ignored. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Main-Wall" type="Main-Wall"/>
+	<xs:complexType name="Main-Wall">
+		<xs:all>
+			<xs:element name="Identifier" type="pfdt:IDString"/>
+			<xs:element name="Condition" type="ConditionCode"/>
+			<xs:element name="Justification" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>The Home Inspectors justification for the Condition Code they have assigned to the feature. 
+
+If Condition Code is "Not Inspected" (NI) then the Justification is an explanation for why they could not inspect the feature.
+
+If the feature is "Not Present" (NP) then the Justification should say "Not present" though if the feature is not present then the value is actually not used in the HCR so can be ignored. 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>A description - taken from the Preferred Text statements - of the individual Property Feature being inspected.
+
+If the feature is "Not Present" (NP) then the Description should say "Not present" though if "Not Present" then the value is actually not used in the HCR so can be ignored. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Other-Detail" type="Other-Detail"/>
+	<xs:complexType name="Other-Detail">
+		<xs:all>
+			<xs:element name="Identifier" type="pfdt:IDString"/>
+			<xs:element name="Condition" type="ConditionCode"/>
+			<xs:element name="Justification" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>The Home Inspectors justification for the Condition Code they have assigned to the feature. 
+
+If Condition Code is "Not Inspected" (NI) then the Justification is an explanation for why they could not inspect the feature.
+
+If the feature is "Not Present" (NP) then the Justification should say "Not present" though if the feature is not present then the value is actually not used in the HCR so can be ignored. 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>A description - taken from the Preferred Text statements - of the individual Property Feature being inspected.
+
+If the feature is "Not Present" (NP) then the Description should say "Not present" though if "Not Present" then the value is actually not used in the HCR so can be ignored. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Other-Woodwork" type="Other-Woodwork"/>
+	<xs:complexType name="Other-Woodwork">
+		<xs:all>
+			<xs:element name="Identifier" type="pfdt:IDString"/>
+			<xs:element name="Condition" type="ConditionCode"/>
+			<xs:element name="Justification" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>The Home Inspectors justification for the Condition Code they have assigned to the feature. 
+
+If Condition Code is "Not Inspected" (NI) then the Justification is an explanation for why they could not inspect the feature.
+
+If the feature is "Not Present" (NP) then the Justification should say "Not present" though if the feature is not present then the value is actually not used in the HCR so can be ignored. 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>A description - taken from the Preferred Text statements - of the individual Property Feature being inspected.
+
+If the feature is "Not Present" (NP) then the Description should say "Not present" though if "Not Present" then the value is actually not used in the HCR so can be ignored. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Decoration" type="Decoration"/>
+	<xs:complexType name="Decoration">
+		<xs:all>
+			<xs:element name="Identifier" type="pfdt:IDString"/>
+			<xs:element name="Condition" type="ConditionCode"/>
+			<xs:element name="Justification" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>The Home Inspectors justification for the Condition Code they have assigned to the feature. 
+
+If Condition Code is "Not Inspected" (NI) then the Justification is an explanation for why they could not inspect the feature.
+
+If the feature is "Not Present" (NP) then the Justification should say "Not present" though if the feature is not present then the value is actually not used in the HCR so can be ignored. 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>A description - taken from the Preferred Text statements - of the individual Property Feature being inspected.
+
+If the feature is "Not Present" (NP) then the Description should say "Not present" though if "Not Present" then the value is actually not used in the HCR so can be ignored. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Rainwater-Fittings" type="Rainwater-Fittings"/>
+	<xs:complexType name="Rainwater-Fittings">
+		<xs:all>
+			<xs:element name="Identifier" type="pfdt:IDString"/>
+			<xs:element name="Condition" type="ConditionCode"/>
+			<xs:element name="Justification" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>The Home Inspectors justification for the Condition Code they have assigned to the feature. 
+
+If Condition Code is "Not Inspected" (NI) then the Justification is an explanation for why they could not inspect the feature.
+
+If the feature is "Not Present" (NP) then the Justification should say "Not present" though if the feature is not present then the value is actually not used in the HCR so can be ignored. 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>A description - taken from the Preferred Text statements - of the individual Property Feature being inspected.
+
+If the feature is "Not Present" (NP) then the Description should say "Not present" though if "Not Present" then the value is actually not used in the HCR so can be ignored. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Window" type="Window"/>
+	<xs:complexType name="Window">
+		<xs:all>
+			<xs:element name="Identifier" type="pfdt:IDString"/>
+			<xs:element name="Condition" type="ConditionCode"/>
+			<xs:element name="Justification" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>The Home Inspectors justification for the Condition Code they have assigned to the feature. 
+
+If Condition Code is "Not Inspected" (NI) then the Justification is an explanation for why they could not inspect the feature.
+
+If the feature is "Not Present" (NP) then the Justification should say "Not present" though if the feature is not present then the value is actually not used in the HCR so can be ignored. 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>A description - taken from the Preferred Text statements - of the individual Property Feature being inspected.
+
+If the feature is "Not Present" (NP) then the Description should say "Not present" though if "Not Present" then the value is actually not used in the HCR so can be ignored. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Area" type="pfdt:Measurement">
+				<xs:annotation>
+					<xs:documentation>Estimated area of the window</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Glazing-Age" type="SAP-GlazingTypeCode">
+				<xs:annotation>
+					<xs:documentation>Describes the type of glazing in the window.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Location" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>Describes the location of the window</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Glazing-Type" type="GlazingTypeCode">
+				<xs:annotation>
+					<xs:documentation>Indentifies the type of Glazing installed in the window</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Chimney-Stack" type="Chimney-Stack"/>
+	<xs:complexType name="Chimney-Stack">
+		<xs:all>
+			<xs:element name="Identifier" type="pfdt:IDString"/>
+			<xs:element name="Condition" type="ConditionCode"/>
+			<xs:element name="Justification" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>The Home Inspectors justification for the Condition Code they have assigned to the feature. 
+
+If Condition Code is "Not Inspected" (NI) then the Justification is an explanation for why they could not inspect the feature.
+
+If the feature is "Not Present" (NP) then the Justification should say "Not present" though if the feature is not present then the value is actually not used in the HCR so can be ignored. 
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Description" type="pfdt:Sentence">
+				<xs:annotation>
+					<xs:documentation>A description - taken from the Preferred Text statements - of the individual Property Feature being inspected.
+
+If the feature is "Not Present" (NP) then the Description should say "Not present" though if "Not Present" then the value is actually not used in the HCR so can be ignored. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="External-Features" type="External-Features"/>
+	<xs:complexType name="External-Features">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="Chimney-Stack" type="Chimney-Stack"/>
+			<xs:element name="Decoration" type="Decoration"/>
+			<xs:element name="External-Door" type="External-Door"/>
+			<xs:element name="Rainwater-Fittings" type="Rainwater-Fittings"/>
+			<xs:element name="Main-Wall" type="Main-Wall"/>
+			<xs:element name="Other-Detail" type="Other-Detail"/>
+			<xs:element name="Other-Woodwork" type="Other-Woodwork"/>
+			<xs:element name="Window" type="Window"/>
+			<xs:element name="Roof-Covering" type="Roof-Covering"/>
+		</xs:choice>
+	</xs:complexType>
+</xs:schema>
