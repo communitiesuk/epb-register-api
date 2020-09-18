@@ -13,7 +13,6 @@ module Gateway
             assessment_id,
             date_of_expiry,
             date_registered,
-            type_of_assessment,
             address_line1,
             address_line2,
             address_line3,
@@ -69,7 +68,6 @@ module Gateway
              assessment_id,
              date_of_expiry,
              date_registered,
-             type_of_assessment,
              address_line1,
              address_line2,
              address_line3,
@@ -103,7 +101,6 @@ module Gateway
           assessment_id,
           date_of_expiry,
           date_registered,
-          type_of_assessment,
           address_line1,
           address_line2,
           address_line3,
@@ -270,14 +267,19 @@ module Gateway
 
     # EPBR-511: Needs to be removed after fixing the database data
     def update_expiry_and_status(result)
-      if result["type_of_assessment"] == "RdSAP" || result["type_of_assessment"] == "SAP"
+      if result["type_of_assessment"] == "RdSAP" ||
+          result["type_of_assessment"] == "SAP"
         result["date_of_expiry"] = result["date_registered"].next_year(10)
       end
 
       # In the previous SQL queries we only select NULL cancelled_at and not_for_issue_at
-      expiry_helper = Gateway::AssessmentExpiryHelper.new(result["cancelled_at"], result["not_for_issue_at"], result["date_of_expiry"])
+      expiry_helper =
+        Gateway::AssessmentExpiryHelper.new(
+          result["cancelled_at"],
+          result["not_for_issue_at"],
+          result["date_of_expiry"],
+        )
       expiry_helper.assessment_status
     end
-
   end
 end
