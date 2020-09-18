@@ -48,15 +48,16 @@ module Gateway
         result["date_of_expiry"] = result["date_registered"].next_year(10)
       end
 
-      result["assessment_status"] = if !result["cancelled_at"].nil?
-                                      "CANCELLED"
-                                    elsif !result["not_for_issue_at"].nil?
-                                      "NOT_FOR_ISSUE"
-                                    elsif result["date_of_expiry"] < Date.today.to_time
-                                      "EXPIRED"
-                                    else
-                                      "ENTERED"
-                                    end
+      result["assessment_status"] =
+        if !result["cancelled_at"].nil?
+          "CANCELLED"
+        elsif !result["not_for_issue_at"].nil?
+          "NOT_FOR_ISSUE"
+        elsif result["date_of_expiry"] < Date.today.to_time
+          "EXPIRED"
+        else
+          "ENTERED"
+        end
     end
   end
 end
