@@ -70,7 +70,22 @@ task :import_green_deal_plans do
   end
   ActiveRecord::Base.transaction do
     plans["GREEN_DEAL_PLANS"].each do |row|
+      has_some_assessments = false
+
       assessment_ids[row["PLAN_KEY"]].each do |assessment_id|
+        has_own_assessment = false
+        checker_query = "
+        SELECT
+          assessment_id
+        FROM assessments
+        WHERE
+          assessment_id = '#{ActiveRecord::Base.sanitize_sql(assessment_id)}'"
+        ActiveRecord::Base.connection.execute(checker_query).each do
+          has_own_assessment = has_some_assessments = true
+        end
+
+        next unless has_own_assessment
+
         green_deal_assessments_query = "INSERT INTO
               green_deal_assessments
               (
@@ -83,6 +98,8 @@ task :import_green_deal_plans do
               )"
         ActiveRecord::Base.connection.execute(green_deal_assessments_query)
       end
+
+      next unless has_some_assessments
 
       query = "INSERT INTO
               green_deal_plans
