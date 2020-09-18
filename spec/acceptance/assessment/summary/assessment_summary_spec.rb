@@ -9,6 +9,10 @@ describe "Acceptance::AssessmentSummary" do
     fetch_assessment_summary("0000-0000-0000-0000-0000", [404])
   end
 
+  it "returns 400 for an assessment id that is not valid" do
+    fetch_assessment_summary("0000-0000-0000-0000-0000%23", [400])
+  end
+
   context "security" do
     it "rejects a request that is not authenticated" do
       fetch_assessment_summary("123", [401], false)

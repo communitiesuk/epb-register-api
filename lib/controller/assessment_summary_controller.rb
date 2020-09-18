@@ -16,6 +16,8 @@ module Controller
         error_response(400, "INVALID_QUERY", e.message)
       when UseCase::AssessmentSummary::Fetch::AssessmentGone
         gone_error("Assessment not for issue")
+      when Helper::RrnHelper::RrnNotValid
+        error_response(400, "INVALID_QUERY", "Assessment ID not valid")
       else
         server_error(e)
       end
