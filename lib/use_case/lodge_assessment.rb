@@ -111,12 +111,8 @@ module UseCase
         raise InactiveAssessorException
       end
 
-      if data[:type_of_assessment] == "AC-REPORT" &&
-          assessor.non_domestic_sp3_qualification != active_status
-        raise InactiveAssessorException
-      end
-
-      if data[:type_of_assessment] == "AC-CERT" &&
+      if %w[AC-CERT AC-REPORT].include?(data[:type_of_assessment]) &&
+          assessor.non_domestic_sp3_qualification != active_status &&
           assessor.non_domestic_cc4_qualification != active_status
         raise InactiveAssessorException
       end

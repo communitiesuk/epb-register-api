@@ -80,10 +80,16 @@ describe "Acceptance::Assessment::QualificationAndStatusPerType" do
           },
         },
         "valid_ac-report": {
-          xml: "ac-report", assessor_qualification: { nonDomesticSp3: "ACTIVE" }
+          xml: "ac-report",
+          assessor_qualification: {
+            nonDomesticSp3: "ACTIVE", nonDomesticCc4: "ACTIVE"
+          },
         },
         "valid_ac-cert": {
-          xml: "ac-cert", assessor_qualification: { nonDomesticCc4: "ACTIVE" }
+          xml: "ac-cert",
+          assessor_qualification: {
+            nonDomesticSp3: "ACTIVE", nonDomesticCc4: "ACTIVE"
+          },
         },
         "valid_ac-cert+ac-report": {
           xml: "ac-cert+ac-report",
