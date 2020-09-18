@@ -156,6 +156,25 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan" do
 
           expect(response[:data][:greenDealPlan]).to eq expected_response
         end
+
+        it "can handle more than one green deal plan" do
+          special_valid_green_deal_plan_request_body =
+            valid_green_deal_plan_request_body
+
+          special_valid_green_deal_plan_request_body[:greenDealPlanId] =
+            "SECONDGREEND"
+
+          add_green_deal_plan assessment_id: "0000-0000-0000-0000-0000",
+                              body: special_valid_green_deal_plan_request_body,
+                              accepted_responses: [201]
+
+          expected_response[0][:interest][:rate] = "12.3"
+          expected_response[0][:chargeUplift][:amount] = "1.25"
+          expected_response[1] = expected_response[0].dup
+          expected_response[1][:greenDealPlanId] = "SECONDGREEND"
+
+          expect(response[:data][:greenDealPlan]).to eq expected_response
+        end
       end
 
       context "with an invalid Green Deal Plan ID" do

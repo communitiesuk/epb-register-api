@@ -75,16 +75,19 @@ module Gateway
             VALUES ($1, $2)
           SQL
 
-          binds <<
-            ActiveRecord::Relation::QueryAttribute.new(
-              "green_deal_plan_id",
-              results.map { |result| result["green_deal_plan_id"] }.reduce,
-              ActiveRecord::Type::String.new,
-            )
+          results.map do |result|
+            inner_bind = binds
+            inner_bind <<
+              ActiveRecord::Relation::QueryAttribute.new(
+                "green_deal_plan_id",
+                result["green_deal_plan_id"],
+                ActiveRecord::Type::String.new,
+              )
 
-          ActiveRecord::Base.connection.exec_query add_green_deal_plan,
-                                                   "SQL",
-                                                   binds
+            ActiveRecord::Base.connection.exec_query add_green_deal_plan,
+                                                     "SQL",
+                                                     inner_bind
+          end
         else
           Assessment.create assessment.to_record
         end
