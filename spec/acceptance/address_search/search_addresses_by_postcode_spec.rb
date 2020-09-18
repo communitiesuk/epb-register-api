@@ -149,14 +149,21 @@ describe "Acceptance::AddressSearch::ByPostcode" do
 
     describe "searching by postcode" do
       context "when an invalid postcode is provided" do
-        it "returns an unprocessable entity response" do
-          assertive_get(
-            "/api/search/addresses?postcode=INVALID_POSTCODE",
-            [422],
-            true,
-            {},
-            %w[address:search],
+        let(:response) do
+          JSON.parse(
+            assertive_get(
+              "/api/search/addresses?postcode=EH353NDMD",
+              [200],
+              true,
+              {},
+              %w[address:search],
+            ).body,
+            symbolize_names: true,
           )
+        end
+
+        it "returns no addresses" do
+          expect(response[:data][:addresses].length).to eq 0
         end
       end
 

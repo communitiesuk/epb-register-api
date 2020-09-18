@@ -15,9 +15,7 @@ module Controller
           type: "object",
           required: %w[postcode],
           properties: {
-            postcode: {
-              type: "string", pattern: Helper::RegexHelper::POSTCODE
-            },
+            postcode: { type: "string" },
             buildingNameNumber: { type: "string" },
             addressType: { type: "string", enum: %w[DOMESTIC COMMERCIAL] },
           },
