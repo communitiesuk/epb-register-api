@@ -9,7 +9,7 @@ task :generate_schemes do
            "ECMK",
            "Elmhurst Energy Systems Ltd",
            "Sterling Accreditation Ltd",
-           "Stroma Accreditation Ltd",
+           "Stroma Certification Ltd",
            "Quidos Limited"]
 
   names.each do |name|
