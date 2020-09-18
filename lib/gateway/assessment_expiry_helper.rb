@@ -1,6 +1,5 @@
 module Gateway
   class AssessmentExpiryHelper
-
     def initialize(cancelled_at, not_for_issue_at, date_of_expiry)
       @cancelled_at = cancelled_at
       @not_for_issue_at = not_for_issue_at
@@ -18,7 +17,5 @@ module Gateway
         "ENTERED"
       end
     end
-
   end
 end
-
