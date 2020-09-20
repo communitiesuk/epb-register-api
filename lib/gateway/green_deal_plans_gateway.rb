@@ -78,6 +78,7 @@ module Gateway
           green_deal_plans b ON a.green_deal_plan_id = b.green_deal_plan_id
         WHERE
           assessment_id = '#{ActiveRecord::Base.sanitize_sql(assessment_id)}'
+        ORDER BY b.green_deal_plan_id
       SQL
       response = GreenDealPlan.connection.execute(sql)
       result = []
