@@ -114,7 +114,8 @@ module Controller
     end
 
     def not_found_error(message)
-      error_response(404, "NOT_FOUND", message)
+      @@not_found_message = message
+      status 404
     end
 
     def gone_error(message)
@@ -127,6 +128,10 @@ module Controller
 
     def boolean_parameter_true?(key)
       params[key].blank? || params[key] == "true" if params.key?(key)
+    end
+
+    not_found do
+      error_response(404, "NOT_FOUND", defined?(@@not_found_message) ? @@not_found_message : "Method not found")
     end
   end
 end
