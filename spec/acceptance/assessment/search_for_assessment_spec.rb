@@ -1,8 +1,9 @@
 describe "Acceptance::Assessment::SearchForAssessments" do
   include RSpecRegisterApiServiceMixin
 
+  let(:scheme_id) { add_scheme_and_get_id }
+
   def setup_scheme_and_lodge(non_domestic = false)
-    scheme_id = add_scheme_and_get_id
     add_assessor(
       scheme_id,
       "SPEC000000",
@@ -220,6 +221,38 @@ describe "Acceptance::Assessment::SearchForAssessments" do
                                      nil,
                                      %w[assessment:search],
                                      %w[rdap]
+    end
+
+    it "will sort the results" do
+      setup_scheme_and_lodge
+
+      second_xml = Nokogiri.XML(Samples.xml("RdSAP-Schema-20.0.0"))
+      second_xml.at("RRN").content = "0000-0000-0000-0000-0001"
+      second_xml.at("Property Address Post-Town").content = "Londres"
+
+      lodge_assessment(
+        assessment_body: second_xml.to_xml,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] },
+      )
+
+      response =
+        assessments_search_by_postcode(
+          "A0 0AA",
+          [200],
+          true,
+          nil,
+          %w[assessment:search],
+          %w[RdSAP],
+        )
+      response_json = JSON.parse(response.body, symbolize_names: true)
+
+      expect(response_json[:data][:assessments][0][:assessmentId]).to eq(
+        "0000-0000-0000-0000-0001",
+      )
+      expect(response_json[:data][:assessments][1][:assessmentId]).to eq(
+        "0000-0000-0000-0000-0000",
+      )
     end
   end
 
