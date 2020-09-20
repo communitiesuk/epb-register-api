@@ -231,7 +231,7 @@ module ViewModel
           "HCR"
         when 2
           "RdSAP"
-        when 3
+        else
           "SAP"
         end
       end

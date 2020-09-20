@@ -67,7 +67,7 @@ module ViewModel
     end
 
     def type
-      :SAP
+      @view_model.type_of_assessment.to_sym
     end
 
     def to_hash
@@ -77,7 +77,6 @@ module ViewModel
           @view_model.hot_water_cost_current,
           @view_model.lighting_cost_current,
         )
-
       {
         type_of_assessment: @view_model.type_of_assessment,
         assessment_id: @view_model.assessment_id,
