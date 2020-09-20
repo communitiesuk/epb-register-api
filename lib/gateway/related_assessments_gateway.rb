@@ -13,8 +13,8 @@ module Gateway
         FROM assessments a
         WHERE address_id = $1 AND
               opt_out = false AND
-              not_for_issue_at IS NOT NULL AND
-              cancelled_at IS NOT NULL
+              not_for_issue_at IS NULL AND
+              cancelled_at IS NULL
         ORDER BY date_of_expiry DESC, assessment_id DESC
       SQL
 
