@@ -12,7 +12,9 @@ module Gateway
                a.opt_out
         FROM assessments a
         WHERE address_id = $1 AND
-              opt_out = false
+              opt_out = false AND
+              not_for_issue_at IS NULL AND
+              cancelled_at IS NULL
         ORDER BY date_of_expiry DESC, assessment_id DESC
       SQL
 
