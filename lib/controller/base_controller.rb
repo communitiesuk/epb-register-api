@@ -131,7 +131,11 @@ module Controller
     end
 
     not_found do
-      error_response(404, "NOT_FOUND", defined?(@@not_found_message) ? @@not_found_message : "Method not found")
+      error_response(
+        404,
+        "NOT_FOUND",
+        defined?(@@not_found_message) ? @@not_found_message : "Method not found",
+      )
     end
   end
 end

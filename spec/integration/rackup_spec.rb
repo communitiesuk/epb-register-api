@@ -32,7 +32,8 @@ describe "Integration::Rackup" do
       end
 
       it "return a status of Method not found" do
-        req = Net::HTTP::Get.new("/energy-certificate/:%0000-0000-0000-0000-0000")
+        req =
+          Net::HTTP::Get.new("/energy-certificate/:%0000-0000-0000-0000-0000")
         response = request.request(req)
         json_response = JSON.parse(response.body, symbolize_names: true)
         expect(json_response[:errors][0][:title]).to eq("Method not found")
