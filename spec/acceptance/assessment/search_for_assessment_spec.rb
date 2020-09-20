@@ -442,5 +442,43 @@ describe "Acceptance::Assessment::SearchForAssessments" do
         "0000-0000-0000-0000-0000",
       )
     end
+
+    it "will sort the results" do
+      setup_scheme_and_lodge
+
+      second_xml = Nokogiri.XML(Samples.xml("RdSAP-Schema-20.0.0"))
+      second_xml.at("RRN").content = "0000-0000-0000-0000-0001"
+      second_xml.at("Property Address Address-Line-1").content =
+        "2a Some Street"
+
+      third_xml = Nokogiri.XML(Samples.xml("RdSAP-Schema-20.0.0"))
+      third_xml.at("RRN").content = "0000-0000-0000-0000-0002"
+      third_xml.at("Property Address Address-Line-1").content = "3, Some Street"
+
+      lodge_assessment(
+        assessment_body: second_xml.to_xml,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] },
+      )
+
+      lodge_assessment(
+        assessment_body: third_xml.to_xml,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] },
+      )
+
+      response =
+        assessments_search_by_street_name_and_town("Some Street", "Post-Town")
+
+      response_json = JSON.parse(response.body, symbolize_names: true)
+
+      expect(
+        response_json[:data][:assessments].map { |a| a[:assessmentId] },
+      ).to eq %w[
+        0000-0000-0000-0000-0000
+        0000-0000-0000-0000-0001
+        0000-0000-0000-0000-0002
+      ]
+    end
   end
 end

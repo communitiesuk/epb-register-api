@@ -16,6 +16,8 @@ module UseCase
           assessment_type,
         )
 
+      Helper::NaturalSort.sort!(result)
+
       { data: result.map(&:to_hash), search_query: [street_name, town] }
     end
   end
