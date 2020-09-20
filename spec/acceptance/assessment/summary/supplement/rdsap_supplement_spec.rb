@@ -82,7 +82,7 @@ describe "Acceptance::AssessmentSummary::Supplement::RdSAP" do
 
   context "when getting the green deal plan" do
     it "does not add a green deal plan when there isn't one" do
-      expect(@second_summary.dig(:data, :greenDealPlan)).to be_nil
+      expect(@second_summary.dig(:data, :greenDealPlan)).to eq([])
     end
 
     it "adds a green deal plan when there is one" do

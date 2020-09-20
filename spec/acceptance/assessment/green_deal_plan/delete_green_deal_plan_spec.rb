@@ -103,7 +103,7 @@ describe "Acceptance::Assessment::GreenDealPlan:DeleteGreenDealPlan" do
         delete_green_deal_plan plan_id: "ABC123456DEF",
                                accepted_responses: [204]
 
-        expect(response["data"]["greenDealPlan"]).to be_nil
+        expect(response["data"]["greenDealPlan"]).to eq([])
       end
     end
   end

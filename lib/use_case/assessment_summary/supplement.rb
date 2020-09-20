@@ -41,10 +41,8 @@ module UseCase
       def add_green_deal!(hash)
         assessment_id = hash[:assessment_id]
 
-        green_deal_data =
+        hash[:green_deal_plan] =
           Gateway::GreenDealPlansGateway.new.fetch(assessment_id)
-
-        hash[:green_deal_plan] = green_deal_data unless green_deal_data == []
       end
 
       def related_assessments!(hash)
