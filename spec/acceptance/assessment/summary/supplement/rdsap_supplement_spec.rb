@@ -31,6 +31,16 @@ describe "Acceptance::AssessmentSummary::Supplement::RdSAP" do
         fetch_assessment_summary("0000-0000-0000-0000-0001").body,
         symbolize_names: true,
       )
+
+    rdsap_without_uprn = Nokogiri.XML(Samples.xml("RdSAP-Schema-20.0.0"))
+    rdsap_without_uprn.at("RRN").content = "0000-0000-0000-0000-0002"
+    rdsap_without_uprn.at("UPRN").remove
+    lodge_rdsap(rdsap_without_uprn.to_xml, scheme_id)
+    @third_summary =
+      JSON.parse(
+        fetch_assessment_summary("0000-0000-0000-0000-0002").body,
+        symbolize_names: true,
+      )
   end
 
   context "when getting the assessor data supplement" do
@@ -55,7 +65,7 @@ describe "Acceptance::AssessmentSummary::Supplement::RdSAP" do
   end
 
   context "when getting the related certificates" do
-    it "Returns an empty list when there are no related certificates" do
+    it "returns an empty list when there are no related certificates" do
       expect(@regular_summary.dig(:data, :relatedAssessments)).to eq([])
     end
 
@@ -77,6 +87,12 @@ describe "Acceptance::AssessmentSummary::Supplement::RdSAP" do
         )
 
       expect(@second_summary.dig(:data, :relatedAssessments)).to eq([])
+    end
+
+    context "when there is no UPRN field" do
+      it "returns an empty list when there are no related assessments" do
+        expect(@third_summary.dig(:data, :relatedAssessments)).to eq([])
+      end
     end
   end
 

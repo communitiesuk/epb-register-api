@@ -3,9 +3,8 @@ module Gateway
     class Assessment < ActiveRecord::Base; end
 
     def by_address_id(address_id)
-      if address_id.nil? or address_id.empty?
-        return {}
-      end
+      return [] if address_id.blank?
+
       address_id = address_id.gsub("LPRN-", "")
       sql = <<-SQL
         SELECT a.assessment_id,
