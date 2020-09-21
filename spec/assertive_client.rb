@@ -255,7 +255,9 @@ def lodge_assessment(
       "api/assessments"
     end
 
-  header "Content-type", "application/xml+" + schema_name unless schema_name.nil?
+  unless schema_name.nil?
+    header "Content-type", "application/xml+" + schema_name
+  end
 
   headers.each { |key, value| header key.to_s, value.to_s }
 
