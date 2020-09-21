@@ -97,6 +97,7 @@ module Controller
             client_id: env[:jwt_auth].sub,
             correlation_id: correlation_id,
             assessment_id: result.get(:assessment_id),
+            schema: xml_schema_type,
           },
           true,
         )
@@ -150,6 +151,12 @@ module Controller
           correlation_id: correlation_id,
           client_id: env[:jwt_auth]&.sub,
           error_message: e.to_s,
+          schema:
+            if xml_schema_type.nil?
+              "Schema not defined"
+            else
+              xml_schema_type
+            end,
         },
         true,
       )
