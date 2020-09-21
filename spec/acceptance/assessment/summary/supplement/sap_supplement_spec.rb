@@ -25,6 +25,16 @@ describe "Acceptance::AssessmentSummary::Supplement::SAP" do
         fetch_assessment_summary("0000-0000-0000-0000-0001").body,
         symbolize_names: true,
       )
+
+    third_assessment = Nokogiri.XML(Samples.xml("SAP-Schema-18.0.0"))
+    third_assessment.at("RRN").content = "0000-0000-0000-0000-0002"
+    third_assessment.at("UPRN").remove
+    lodge_sap(third_assessment.to_xml, scheme_id)
+    @third_summary =
+      JSON.parse(
+        fetch_assessment_summary("0000-0000-0000-0000-0002").body,
+        symbolize_names: true,
+      )
   end
 
   context "when getting the assessor data supplement" do
@@ -43,11 +53,11 @@ describe "Acceptance::AssessmentSummary::Supplement::SAP" do
   end
 
   context "when getting the related certificates" do
-    it "Returns an empty list when there are no related certificates" do
+    it "returns an empty list when there are no related certificates" do
       expect(@regular_summary.dig(:data, :relatedAssessments)).to eq([])
     end
 
-    it "Returns assessments lodged against the same address" do
+    it "returns assessments lodged against the same address" do
       related_assessments = @second_summary.dig(:data, :relatedAssessments)
       expect(related_assessments.count).to eq(1)
       expect(related_assessments[0][:assessmentId]).to eq(
@@ -65,6 +75,12 @@ describe "Acceptance::AssessmentSummary::Supplement::SAP" do
         )
 
       expect(@second_summary.dig(:data, :relatedAssessments)).to eq([])
+    end
+
+    context "when there is no UPRN field" do
+      it "returns an empty list when there are no related assessments" do
+        expect(@third_summary.dig(:data, :relatedAssessments)).to eq([])
+      end
     end
   end
 end
