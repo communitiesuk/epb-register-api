@@ -6,7 +6,11 @@ module Gateway
     }.freeze
 
     def search_by_postcode(postcode, building_name_number, address_type)
-      postcode = postcode.insert(-4, " ") if postcode[-4] != " "
+      if postcode.length <= 3
+        postcode
+      else
+        postcode = postcode.insert(-4, " ") if postcode[-4] != " "
+      end
 
       sql = <<-SQL
         SELECT

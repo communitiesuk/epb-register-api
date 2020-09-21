@@ -167,6 +167,25 @@ describe "Acceptance::AddressSearch::ByPostcode" do
         end
       end
 
+      context "when a postcode is less than 3 characters long" do
+        let(:response) do
+          JSON.parse(
+            assertive_get(
+              "/api/search/addresses?postcode=HA",
+              [200],
+              true,
+              {},
+              %w[address:search],
+            ).body,
+            symbolize_names: true,
+          )
+        end
+
+        it "returns no addresses" do
+          expect(response[:data][:addresses].length).to eq 0
+        end
+      end
+
       context "when a valid postcode is provided" do
         context "with an expired assessment" do
           let(:response) do
