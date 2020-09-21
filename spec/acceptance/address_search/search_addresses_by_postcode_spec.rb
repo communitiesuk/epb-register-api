@@ -183,12 +183,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
 
         it "returns the expected error response" do
           expect(response[:errors]).to eq(
-            [
-              {
-                code: "INVALID_REQUEST",
-                title: "Postcode not valid",
-              },
-            ],
+            [{ code: "INVALID_REQUEST", title: "Postcode not valid" }],
           )
         end
       end
