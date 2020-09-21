@@ -56,6 +56,22 @@ describe "Acceptance::Assessment::Lodge" do
       expect(response["errors"][0]["title"]).to eq("Schema is not supported.")
     end
 
+    it "rejects an assessment with a missing content-type" do
+      response =
+        JSON.parse(
+          lodge_assessment(
+            assessment_body: valid_cepc_rr_xml,
+            accepted_responses: [400],
+            auth_data: { scheme_ids: [scheme_id] },
+            schema_name: nil,
+          ).body,
+        )
+
+      expect(response["errors"][0]["title"]).to eq(
+        'Schema is not defined. Set content-type on the request to "application/xml+RdSAP-Schema-19.0" for example.',
+      )
+    end
+
     it "rejects an assessment where the ID already exists" do
       register_assessor
       lodge_assessment(
