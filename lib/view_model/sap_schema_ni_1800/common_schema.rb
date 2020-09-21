@@ -200,7 +200,8 @@ module ViewModel
       end
 
       def current_space_heating_demand
-        convert_to_big_decimal(%w[Space-Heating-Existing-Dwelling])
+        convert_to_big_decimal(%w[Space-Heating]) or
+          convert_to_big_decimal(%w[Space-Heating-Existing-Dwelling])
       end
 
       def current_water_heating_demand
