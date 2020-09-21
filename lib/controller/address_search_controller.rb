@@ -59,6 +59,8 @@ module Controller
                         meta: { filters: filters }
     rescue StandardError => e
       case e
+      when Helper::ValidatePostcodeHelper::PostcodeNotValid
+        error_response 400, "INVALID_REQUEST", "Postcode not valid"
       when JSON::Schema::ValidationError
         error_response 422, "INVALID_REQUEST", e.message
       else

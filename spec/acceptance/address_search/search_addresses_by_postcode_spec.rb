@@ -172,7 +172,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
           JSON.parse(
             assertive_get(
               "/api/search/addresses?postcode=HA",
-              [200],
+              [400],
               true,
               {},
               %w[address:search],
@@ -181,8 +181,15 @@ describe "Acceptance::AddressSearch::ByPostcode" do
           )
         end
 
-        it "returns no addresses" do
-          expect(response[:data][:addresses].length).to eq 0
+        it "returns the expected error response" do
+          expect(response[:errors]).to eq(
+            [
+              {
+                code: "INVALID_REQUEST",
+                title: "Postcode not valid",
+              },
+            ],
+          )
         end
       end
 

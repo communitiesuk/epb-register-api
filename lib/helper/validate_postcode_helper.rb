@@ -1,10 +1,12 @@
 module Helper
   class ValidatePostcodeHelper
+    class PostcodeNotValid < StandardError; end
+
     def validate_postcode(postcode)
       if postcode.length < 4
-        postcode
+        raise PostcodeNotValid
       else
-        postcode = postcode.insert(-4, " ") if postcode[-4] != " "
+        postcode = postcode.insert(-4, " ") unless postcode[-4] == " "
       end
 
       postcode.upcase
