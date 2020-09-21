@@ -14,11 +14,7 @@ module UseCase
 
       raise ParameterMissing if postcode.blank?
 
-      if postcode.length <= 3
-        postcode
-      else
-        postcode = postcode.insert(-4, " ") if postcode[-4] != " "
-      end
+      postcode = Helper::ValidatePostcodeHelper.new.validate_postcode(postcode)
 
       unless Regexp.new(Helper::RegexHelper::POSTCODE, Regexp::IGNORECASE)
                .match(postcode)

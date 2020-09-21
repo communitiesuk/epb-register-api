@@ -6,11 +6,7 @@ module Gateway
     }.freeze
 
     def search_by_postcode(postcode, building_name_number, address_type)
-      if postcode.length <= 3
-        postcode
-      else
-        postcode = postcode.insert(-4, " ") if postcode[-4] != " "
-      end
+      postcode = Helper::ValidatePostcodeHelper.new.validate_postcode(postcode)
 
       sql = <<-SQL
         SELECT
