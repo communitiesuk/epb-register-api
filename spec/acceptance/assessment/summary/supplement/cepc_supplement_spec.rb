@@ -24,6 +24,16 @@ describe "Acceptance::AssessmentSummary::Supplement::CEPC" do
         fetch_assessment_summary("0000-0000-0000-0000-0002").body,
         symbolize_names: true,
       )
+
+    third_assessment = Nokogiri.XML(Samples.xml("CEPC-8.0.0", "cepc"))
+    third_assessment.at("//CEPC:RRN").content = "0000-0000-0000-0000-0003"
+    third_assessment.at("//CEPC:UPRN").remove
+    lodge_cepc(third_assessment.to_xml, scheme_id)
+    @third_summary =
+      JSON.parse(
+        fetch_assessment_summary("0000-0000-0000-0000-0003").body,
+        symbolize_names: true,
+      )
   end
 
   context "when getting the assessor data supplement" do
@@ -46,8 +56,14 @@ describe "Acceptance::AssessmentSummary::Supplement::CEPC" do
   end
 
   context "when getting the related reports" do
-    it "Returns an empty list when there are no related reports" do
+    it "returns an empty list when there are no related reports" do
       expect(@regular_summary.dig(:data, :relatedAssessments)).to eq([])
+    end
+
+    context "when there is no UPRN field" do
+      it "returns an empty list when there are no related assessments" do
+        expect(@third_summary.dig(:data, :relatedAssessments)).to eq([])
+      end
     end
   end
 end
