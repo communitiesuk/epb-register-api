@@ -61,9 +61,9 @@ describe "Acceptance::SearchForAssessor" do
     end
   end
 
-  context "when a search postcode is invalid" do
-    it "returns status 400 for a get" do
-      assessors_search("73334", "domesticRdSap", [400])
+  context "when a search postcode is not found" do
+    it "returns status 404 for a get" do
+      assessors_search("73334", "domesticRdSap", [404])
     end
   end
 

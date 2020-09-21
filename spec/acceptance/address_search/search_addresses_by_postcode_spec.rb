@@ -172,7 +172,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
           JSON.parse(
             assertive_get(
               "/api/search/addresses?postcode=HA",
-              [400],
+              [422],
               true,
               {},
               %w[address:search],
@@ -183,7 +183,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
 
         it "returns the expected error response" do
           expect(response[:errors]).to eq(
-            [{ code: "INVALID_REQUEST", title: "Postcode not valid" }],
+            [{ code: "INVALID_REQUEST", title: "The property '#/' of type object did not match any of the required schemas" }],
           )
         end
       end

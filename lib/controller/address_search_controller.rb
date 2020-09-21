@@ -15,7 +15,7 @@ module Controller
           type: "object",
           required: %w[postcode],
           properties: {
-            postcode: { type: "string" },
+            postcode: { type: "string", pattern: Helper::RegexHelper::POSTCODE },
             buildingNameNumber: { type: "string" },
             addressType: { type: "string", enum: %w[DOMESTIC COMMERCIAL] },
           },
@@ -59,8 +59,6 @@ module Controller
                         meta: { filters: filters }
     rescue StandardError => e
       case e
-      when Helper::ValidatePostcodeHelper::PostcodeNotValid
-        error_response 400, "INVALID_REQUEST", "Postcode not valid"
       when JSON::Schema::ValidationError
         error_response 422, "INVALID_REQUEST", e.message
       else
