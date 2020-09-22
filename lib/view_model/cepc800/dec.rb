@@ -1,6 +1,21 @@
 module ViewModel
   module Cepc800
     class Dec < ViewModel::Cepc800::CommonSchema
+      def date_of_expiry
+        floor_area =
+          xpath(%w[Display-Certificate Technical-Information Floor-Area])
+
+        expiry_date = Date.parse(date_of_registration)
+
+        expiry_date = if floor_area.to_i < 1000
+                        expiry_date.next_year 10
+                      else
+                        expiry_date.next_year 1
+                      end
+
+        expiry_date.strftime("%F")
+      end
+
       def energy_efficiency_rating
         xpath(%w[This-Assessment Energy-Rating])
       end

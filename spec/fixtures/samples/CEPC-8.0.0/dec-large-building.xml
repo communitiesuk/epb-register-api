@@ -1,8 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <Reports
-  xmlns="https://epbr.digital.communities.gov.uk/xsd/cepc-ni"
+  xmlns="https://epbr.digital.communities.gov.uk/xsd/cepc"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/cepc-ni  ../../../../api/schemas/xml/CEPC-NI-8.0.0/Reports/CEPC-Reports.xsd"
+  xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/cepc  ../../../../api/schemas/xml/CEPC-8.0.0/Reports/CEPC-Reports.xsd"
 >
   <Report>
     <Report-Header>
@@ -298,8 +297,8 @@
       </DEC-Annual-Energy-Summary>
       <Technical-Information>
         <Building-Environment>Heating and Natural Ventilation</Building-Environment>
-        <Floor-Area>99</Floor-Area>
         <Main-Heating-Fuel>Natural Gas</Main-Heating-Fuel>
+        <Floor-Area>9000</Floor-Area>
       </Technical-Information>
       <AC-Questionnaire>
         <AC-Present>Yes</AC-Present>
