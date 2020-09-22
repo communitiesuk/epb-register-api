@@ -10,6 +10,17 @@ describe ViewModel::DecRrWrapper do
         different_fields: {},
       },
       {
+        schema_name: "CEPC-8.0.0",
+        xml: Samples.xml("CEPC-8.0.0", "dec-rr-large-building"),
+        unsupported_fields: [],
+        different_fields: {
+          date_of_expiry: "2027-05-05",
+        },
+        different_buried_fields: {
+          technical_information: { floor_area: "8000" },
+        },
+      },
+      {
         schema_name: "CEPC-NI-8.0.0",
         xml: Samples.xml("CEPC-NI-8.0.0", "dec-rr"),
         unsupported_fields: [],
@@ -48,7 +59,7 @@ describe ViewModel::DecRrWrapper do
       assessment_id: "0000-0000-0000-0000-0000",
       report_type: "2",
       type_of_assessment: "DEC-RR",
-      date_of_expiry: "2028-05-03",
+      date_of_expiry: "2030-05-05",
       address: {
         address_id: "RRN-0000-0000-0000-0000-0000",
         address_line1: "1 Lonely Street",
