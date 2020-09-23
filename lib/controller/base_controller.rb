@@ -114,8 +114,7 @@ module Controller
     end
 
     def not_found_error(message)
-      @@not_found_message = message
-      status 404
+      error_response(404, "NOT_FOUND", message)
     end
 
     def gone_error(message)
@@ -130,12 +129,9 @@ module Controller
       params[key].blank? || params[key] == "true" if params.key?(key)
     end
 
-    not_found do
-      error_response(
-        404,
-        "NOT_FOUND",
-        defined?(@@not_found_message) ? @@not_found_message : "Method not found",
-      )
+    error Sinatra::NotFound do
+      content_type :text
+      error_response(404, "NOT_FOUND", "Method not found")
     end
   end
 end
