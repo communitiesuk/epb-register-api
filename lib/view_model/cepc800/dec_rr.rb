@@ -2,16 +2,16 @@ module ViewModel
   module Cepc800
     class DecRr < ViewModel::Cepc800::CommonSchema
       def date_of_expiry
-        floor_area =
-          xpath(%w[Advisory-Report Technical-Information Floor-Area])
+        floor_area = xpath(%w[Advisory-Report Technical-Information Floor-Area])
 
         expiry_date = Date.parse(date_of_registration)
 
-        expiry_date = if floor_area.to_i < 1000
-                        expiry_date.next_year 10
-                      else
-                        expiry_date.next_year 7
-                      end
+        expiry_date =
+          if floor_area.to_i < 1000
+            expiry_date.next_year 10
+          else
+            expiry_date.next_year 7
+          end
 
         expiry_date.strftime("%F")
       end

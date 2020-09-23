@@ -17,7 +17,9 @@ describe Helper::RegexHelper do
     context "with an invalid postcode" do
       describe "OVERTENCHARACTERS" do
         it "does not validate" do
-          expect("OVERTENCHARACTERS").not_to match Regexp.new described_class::POSTCODE
+          expect(
+            "OVERTENCHARACTERS",
+          ).not_to match Regexp.new described_class::POSTCODE
         end
       end
 

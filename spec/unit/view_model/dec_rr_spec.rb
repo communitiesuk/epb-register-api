@@ -13,9 +13,7 @@ describe ViewModel::DecRrWrapper do
         schema_name: "CEPC-8.0.0",
         xml: Samples.xml("CEPC-8.0.0", "dec-rr-large-building"),
         unsupported_fields: [],
-        different_fields: {
-          date_of_expiry: "2027-05-05",
-        },
+        different_fields: { date_of_expiry: "2027-05-05" },
         different_buried_fields: {
           technical_information: { floor_area: "8000" },
         },

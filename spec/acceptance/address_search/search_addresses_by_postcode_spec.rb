@@ -183,7 +183,13 @@ describe "Acceptance::AddressSearch::ByPostcode" do
 
         it "returns the expected error response" do
           expect(response[:errors]).to eq(
-            [{ code: "INVALID_REQUEST", title: "The property '#/' of type object did not match any of the required schemas" }],
+            [
+              {
+                code: "INVALID_REQUEST",
+                title:
+                  "The property '#/' of type object did not match any of the required schemas",
+              },
+            ],
           )
         end
       end

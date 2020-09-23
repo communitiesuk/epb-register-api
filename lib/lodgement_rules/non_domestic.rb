@@ -110,7 +110,7 @@ module LodgementRules
           return true unless current_nominated_date && or_end_date
 
           latest_nominated_date = Date.parse(or_end_date) >> 3
-          Date.parse(current_nominated_date) <= (latest_nominated_date)
+          Date.parse(current_nominated_date) <= latest_nominated_date
         end,
       },
     ].freeze
