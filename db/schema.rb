@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_21_152957) do
+ActiveRecord::Schema.define(version: 2020_09_24_235959) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -45,13 +45,15 @@ ActiveRecord::Schema.define(version: 2020_09_21_152957) do
     t.datetime "cancelled_at"
     t.datetime "not_for_issue_at"
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
+    t.index "lower((address_line1)::text)", name: "index_assessments_on_address_line1"
+    t.index "lower((address_line2)::text)", name: "index_assessments_on_address_line2"
+    t.index "lower((address_line3)::text)", name: "index_assessments_on_address_line3"
+    t.index "lower((address_line4)::text)", name: "index_assessments_on_address_line4"
+    t.index "lower((town)::text)", name: "index_assessments_on_town"
     t.index ["address_id"], name: "index_assessments_on_address_id"
-    t.index ["address_line1"], name: "index_assessments_on_address_line1"
-    t.index ["address_line2"], name: "index_assessments_on_address_line2"
     t.index ["cancelled_at"], name: "index_assessments_on_cancelled_at"
     t.index ["not_for_issue_at"], name: "index_assessments_on_not_for_issue_at"
     t.index ["postcode"], name: "index_assessments_on_postcode"
-    t.index ["town"], name: "index_assessments_on_town"
     t.index ["type_of_assessment"], name: "index_assessments_on_type_of_assessment"
   end
 

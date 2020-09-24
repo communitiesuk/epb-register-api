@@ -82,13 +82,13 @@ module Gateway
       sql +=
         <<-SQL
             (
-              UPPER(town) = $2
+              LOWER(town) = $2
               OR
-              UPPER(address_line2) = $2
+              LOWER(address_line2) = $2
               OR
-              UPPER(address_line3) = $2
+              LOWER(address_line3) = $2
               OR
-              UPPER(address_line4) = $2
+              LOWER(address_line4) = $2
             )
             AND
             (
@@ -106,7 +106,7 @@ module Gateway
         ),
         ActiveRecord::Relation::QueryAttribute.new(
           "town",
-          town.upcase,
+          town.downcase,
           ActiveRecord::Type::String.new,
         ),
       ]

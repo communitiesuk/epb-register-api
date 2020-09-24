@@ -114,32 +114,31 @@ module Gateway
           cancelled_at IS NULL
         AND not_for_issue_at IS NULL
         AND (
-              address_line1 ILIKE $1
+              LOWER(town) LIKE $2
               OR
-              address_line2 ILIKE $1
+              LOWER(address_line2) LIKE $2
               OR
-              address_line3 ILIKE $1
+              LOWER(address_line3) LIKE $2
+              OR
+              LOWER(address_line4) LIKE $2
         )
         AND (
-              town ILIKE $2
+              LOWER(address_line1) LIKE $1
               OR
-              address_line2 ILIKE $2
+              LOWER(address_line2) LIKE $1
               OR
-              address_line3 ILIKE $2
-              OR
-              address_line4 ILIKE $2
-        )
-        LIMIT 200'
+              LOWER(address_line3) LIKE $1
+        )'
 
       binds = [
         ActiveRecord::Relation::QueryAttribute.new(
           "street",
-          "%" + street + "%",
+          "%" + street.downcase + "%",
           ActiveRecord::Type::String.new,
         ),
         ActiveRecord::Relation::QueryAttribute.new(
           "town",
-          "%" + town + "%",
+          town.downcase,
           ActiveRecord::Type::String.new,
         ),
       ]
