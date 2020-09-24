@@ -102,11 +102,11 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
     end
 
     describe "searching by street and town" do
-      context "when street is slightly misspelled" do
+      context "when street is missing some letters" do
         let(:response) do
           JSON.parse(
             assertive_get(
-              "/api/search/addresses?street=Seom%20Street&town=Post-Town1",
+              "/api/search/addresses?street=Some%20Stre&town=Post-Town1",
               [200],
               true,
               {},
@@ -143,11 +143,11 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
         end
       end
 
-      context "when town is slightly misspelled" do
+      context "when town is missing letters" do
         let(:response) do
           JSON.parse(
             assertive_get(
-              "/api/search/addresses?street=Some%20Street&town=Psot-Town1",
+              "/api/search/addresses?street=Some%20Street&town=Post-Town",
               [200],
               true,
               {},

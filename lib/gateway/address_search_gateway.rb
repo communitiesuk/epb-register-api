@@ -97,7 +97,7 @@ module Gateway
 
     def search_by_street_and_town(street, town, address_type)
       sql =
-        "SELECT
+        'SELECT
           assessment_id,
           date_of_expiry,
           date_registered,
@@ -113,77 +113,36 @@ module Gateway
         WHERE
           cancelled_at IS NULL
         AND not_for_issue_at IS NULL
-        AND (#{
-          Helper::LevenshteinSqlHelper.levenshtein(
-            'address_line1',
-            '$1',
-            Helper::LevenshteinSqlHelper::STREET_PERMISSIVENESS,
-          )
-        } OR #{
-          Helper::LevenshteinSqlHelper.levenshtein(
-            'address_line2',
-            '$1',
-            Helper::LevenshteinSqlHelper::STREET_PERMISSIVENESS,
-          )
-        } OR #{
-          Helper::LevenshteinSqlHelper.levenshtein(
-            'address_line3',
-            '$1',
-            Helper::LevenshteinSqlHelper::STREET_PERMISSIVENESS,
-          )
-        })
-        AND (#{
-          Helper::LevenshteinSqlHelper.levenshtein(
-            'town',
-            '$2',
-            Helper::LevenshteinSqlHelper::TOWN_PERMISSIVENESS,
-          )
-        } OR #{
-          Helper::LevenshteinSqlHelper.levenshtein(
-            'address_line2',
-            '$2',
-            Helper::LevenshteinSqlHelper::TOWN_PERMISSIVENESS,
-          )
-        } OR #{
-          Helper::LevenshteinSqlHelper.levenshtein(
-            'address_line3',
-            '$2',
-            Helper::LevenshteinSqlHelper::TOWN_PERMISSIVENESS,
-          )
-        } OR #{
-          Helper::LevenshteinSqlHelper.levenshtein(
-            'address_line4',
-            '$2',
-            Helper::LevenshteinSqlHelper::TOWN_PERMISSIVENESS,
-          )
-        })"
+        AND (
+              address_line1 ILIKE $1
+              OR
+              address_line2 ILIKE $1
+              OR
+              address_line3 ILIKE $1
+        )
+        AND (
+              town ILIKE $2
+              OR
+              address_line2 ILIKE $2
+              OR
+              address_line3 ILIKE $2
+              OR
+              address_line4 ILIKE $2
+        )
+        LIMIT 200'
 
       binds = [
         ActiveRecord::Relation::QueryAttribute.new(
           "street",
-          street,
+          "%" + street + "%",
           ActiveRecord::Type::String.new,
         ),
         ActiveRecord::Relation::QueryAttribute.new(
           "town",
-          town,
+          "%" + town + "%",
           ActiveRecord::Type::String.new,
         ),
       ]
-
-      sql <<
-        " ORDER BY
-                LEAST(
-                  #{
-          Helper::LevenshteinSqlHelper.levenshtein('address_line1', '$1')
-        },
-                  #{
-          Helper::LevenshteinSqlHelper.levenshtein('address_line2', '$1')
-        }
-                ),
-                #{Helper::LevenshteinSqlHelper.levenshtein('town', '$2')},
-                address_line1,
-                assessment_id"
 
       parse_results(
         ActiveRecord::Base.connection.exec_query(sql, "SQL", binds),
