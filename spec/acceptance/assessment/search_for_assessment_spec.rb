@@ -383,30 +383,30 @@ describe "Acceptance::Assessment::SearchForAssessments" do
       expect(response_json["data"]["assessments"][0]).to eq(expected_response)
     end
 
-    it "returns matching assessments with slightly misspelled street" do
+    it "returns matching assessments with missing letters in street" do
       setup_scheme_and_lodge
       response =
-        assessments_search_by_street_name_and_town("Sum Street", "Post-Town1")
+        assessments_search_by_street_name_and_town("ome Street", "Post-Town1")
 
       response_json = JSON.parse(response.body)
 
       expect(response_json["data"]["assessments"][0]).to eq(expected_response)
     end
 
-    it "returns matching assessments with slightly misspelled town" do
+    it "returns matching assessments with missing letters in town" do
       setup_scheme_and_lodge
       response =
-        assessments_search_by_street_name_and_town("Some Street", "Post-Twn1")
+        assessments_search_by_street_name_and_town("Some Street", "Post-To")
 
       response_json = JSON.parse(response.body)
 
       expect(response_json["data"]["assessments"][0]).to eq(expected_response)
     end
 
-    it "returns matching assessments with slightly misspelled street & town" do
+    it "returns matching assessments with missing letters in street name and town" do
       setup_scheme_and_lodge
       response =
-        assessments_search_by_street_name_and_town("Sum Street", "Post-Twn1")
+        assessments_search_by_street_name_and_town("Some Stre", "Post-Tow")
 
       response_json = JSON.parse(response.body)
 

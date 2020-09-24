@@ -72,55 +72,32 @@ module Gateway
       sql =
         ASSESSMENT_SEARCH_INDEX_SELECT +
         <<-SQL
-        WHERE (#{
-            Helper::LevenshteinSqlHelper.levenshtein(
-              'address_line1',
-              '$1',
-              Helper::LevenshteinSqlHelper::STREET_PERMISSIVENESS,
+        WHERE 
+            (
+              address_line1 ILIKE $1
+              OR
+              address_line2 ILIKE $1
             )
-          } OR #{
-            Helper::LevenshteinSqlHelper.levenshtein(
-              'address_line2',
-              '$1',
-              Helper::LevenshteinSqlHelper::STREET_PERMISSIVENESS,
+            AND (
+              town ILIKE $2
+              OR
+              address_line2 ILIKE $2
+              OR
+              address_line3 ILIKE $2
+              OR
+              address_line4 ILIKE $2
             )
-          })
-                AND (#{
-            Helper::LevenshteinSqlHelper.levenshtein(
-              'town',
-              '$2',
-              Helper::LevenshteinSqlHelper::TOWN_PERMISSIVENESS,
-            )
-          } OR #{
-            Helper::LevenshteinSqlHelper.levenshtein(
-              'address_line2',
-              '$2',
-              Helper::LevenshteinSqlHelper::TOWN_PERMISSIVENESS,
-            )
-          } OR #{
-            Helper::LevenshteinSqlHelper.levenshtein(
-              'address_line3',
-              '$2',
-              Helper::LevenshteinSqlHelper::TOWN_PERMISSIVENESS,
-            )
-          } OR #{
-            Helper::LevenshteinSqlHelper.levenshtein(
-              'address_line4',
-              '$2',
-              Helper::LevenshteinSqlHelper::TOWN_PERMISSIVENESS,
-            )
-          })
         SQL
 
       binds = [
         ActiveRecord::Relation::QueryAttribute.new(
           "street",
-          street_name,
+          "%" + street_name + "%",
           ActiveRecord::Type::String.new,
         ),
         ActiveRecord::Relation::QueryAttribute.new(
           "town",
-          town,
+          "%" + town + "%",
           ActiveRecord::Type::String.new,
         ),
       ]
@@ -139,34 +116,6 @@ module Gateway
               AND not_for_issue_at IS NULL
               AND opt_out = false'
       end
-
-      sql +=
-        " ORDER BY
-                LEAST(
-                  #{
-          Helper::LevenshteinSqlHelper.levenshtein('address_line1', '$1')
-        },
-                  #{
-          Helper::LevenshteinSqlHelper.levenshtein('address_line2', '$1')
-        }
-                ) +
-                LEAST(
-                  #{
-          Helper::LevenshteinSqlHelper.levenshtein('address_line2', '$2')
-        },
-
-                  #{
-          Helper::LevenshteinSqlHelper.levenshtein('address_line3', '$2')
-        },
-
-                  #{
-          Helper::LevenshteinSqlHelper.levenshtein('address_line4', '$2')
-        },
-
-                  #{Helper::LevenshteinSqlHelper.levenshtein('town', '$2')}
-                ),
-                address_line1,
-                assessment_id"
 
       response = Assessment.connection.exec_query sql, "SQL", binds
 
