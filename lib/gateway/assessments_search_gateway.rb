@@ -69,46 +69,47 @@ module Gateway
     def search_by_street_name_and_town(
       street_name, town, assessment_type, restrictive = true
     )
-      sql =
-        ASSESSMENT_SEARCH_INDEX_SELECT +
-        <<-SQL
-        WHERE 
-            (
-              address_line1 ILIKE $1
-              OR
-              address_line2 ILIKE $1
-            )
-            AND (
-              town ILIKE $2
-              OR
-              address_line2 ILIKE $2
-              OR
-              address_line3 ILIKE $2
-              OR
-              address_line4 ILIKE $2
-            )
-        SQL
-
-      binds = [
-        ActiveRecord::Relation::QueryAttribute.new(
-          "street",
-          "%" + street_name + "%",
-          ActiveRecord::Type::String.new,
-        ),
-        ActiveRecord::Relation::QueryAttribute.new(
-          "town",
-          "%" + town + "%",
-          ActiveRecord::Type::String.new,
-        ),
-      ]
+      sql = ASSESSMENT_SEARCH_INDEX_SELECT + " WHERE "
 
       unless assessment_type.nil? || assessment_type.empty?
         ins = []
         assessment_type.each do |type|
           ins.push("'" + ActiveRecord::Base.sanitize_sql(type) + "'")
         end
-        sql += " AND type_of_assessment IN(" + ins.join(", ") + ")"
+        sql += "type_of_assessment IN(" + ins.join(", ") + ") AND "
       end
+
+      sql +=
+        <<-SQL
+            (
+              UPPER(town) = $2
+              OR
+              UPPER(address_line2) = $2
+              OR
+              UPPER(address_line3) = $2
+              OR
+              UPPER(address_line4) = $2
+            )
+            AND
+            (
+              LOWER(address_line1) LIKE $1
+              OR
+              LOWER(address_line2) LIKE $1
+            )
+        SQL
+
+      binds = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "street",
+          "%" + street_name.downcase + "%",
+          ActiveRecord::Type::String.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "town",
+          town.upcase,
+          ActiveRecord::Type::String.new,
+        ),
+      ]
 
       if restrictive
         sql +=
@@ -116,6 +117,8 @@ module Gateway
               AND not_for_issue_at IS NULL
               AND opt_out = false'
       end
+
+      sql += " LIMIT 200"
 
       response = Assessment.connection.exec_query sql, "SQL", binds
 

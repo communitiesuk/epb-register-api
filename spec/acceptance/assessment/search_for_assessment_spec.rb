@@ -393,26 +393,6 @@ describe "Acceptance::Assessment::SearchForAssessments" do
       expect(response_json["data"]["assessments"][0]).to eq(expected_response)
     end
 
-    it "returns matching assessments with missing letters in town" do
-      setup_scheme_and_lodge
-      response =
-        assessments_search_by_street_name_and_town("Some Street", "Post-To")
-
-      response_json = JSON.parse(response.body)
-
-      expect(response_json["data"]["assessments"][0]).to eq(expected_response)
-    end
-
-    it "returns matching assessments with missing letters in street name and town" do
-      setup_scheme_and_lodge
-      response =
-        assessments_search_by_street_name_and_town("Some Stre", "Post-Tow")
-
-      response_json = JSON.parse(response.body)
-
-      expect(response_json["data"]["assessments"][0]).to eq(expected_response)
-    end
-
     it "does not return opted out assessments" do
       setup_scheme_and_lodge
       opt_out_assessment("0000-0000-0000-0000-0000")
@@ -468,7 +448,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
       )
 
       response =
-        assessments_search_by_street_name_and_town("Some Street", "Post-Town")
+        assessments_search_by_street_name_and_town("Some Street", "Post-Town1")
 
       response_json = JSON.parse(response.body, symbolize_names: true)
 
