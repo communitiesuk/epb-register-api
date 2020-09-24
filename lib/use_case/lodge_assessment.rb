@@ -30,10 +30,6 @@ module UseCase
           data[:assessor_id]
         end
 
-      expiry_date =
-        data[:date_of_expiry] ||
-        Date.parse(data[:date_of_assessment]).next_year(10).to_s
-
       assessor = @assessors_gateway.fetch scheme_assessor_id
 
       check_assessor_qualification data, assessor unless migrated
@@ -44,7 +40,7 @@ module UseCase
           type_of_assessment: data[:type_of_assessment],
           date_of_assessment: data[:date_of_assessment],
           date_registered: data[:date_of_registration],
-          date_of_expiry: expiry_date,
+          date_of_expiry: data[:date_of_expiry],
           assessor: assessor,
           current_energy_efficiency_rating:
             data[:current_energy_efficiency_rating].to_i,

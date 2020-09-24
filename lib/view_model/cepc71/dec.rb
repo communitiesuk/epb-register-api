@@ -5,7 +5,7 @@ module ViewModel
         floor_area =
           xpath(%w[Display-Certificate Technical-Information Floor-Area])
 
-        expiry_date = Date.parse(date_of_registration)
+        expiry_date = Date.parse(current_assessment_date)
 
         expiry_date =
           if floor_area.to_i < 1000
