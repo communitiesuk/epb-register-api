@@ -19,15 +19,22 @@ task :reindex_dec do
       a.type_of_assessment = 'DEC'")
 
   decs.each do |dec|
-    report = ViewModel::Factory.new.create(dec["xml"], dec["schema_type"], dec["assessment_id"]).to_hash
+    report_model = ViewModel::Factory.new.create(dec["xml"], dec["schema_type"], dec["assessment_id"])
 
-    ActiveRecord::Base.connection.execute("
-      UPDATE
-        assessments
-      SET
-        date_of_expiry = " + ActiveRecord::Base.connection.quote(report[:date_of_expiry]) + "
-      WHERE
-        assessment_id = " + ActiveRecord::Base.connection.quote(dec["assessment_id"]) + "
-    ")
+    if report_model.nil?
+      puts dec["assessment_id"]
+      puts dec["schema_type"]
+    else
+      report = report_model.to_hash
+
+      ActiveRecord::Base.connection.execute("
+        UPDATE
+          assessments
+        SET
+          date_of_expiry = " + ActiveRecord::Base.connection.quote(report[:date_of_expiry]) + "
+        WHERE
+          assessment_id = " + ActiveRecord::Base.connection.quote(dec["assessment_id"]) + "
+      ")
+    end
   end
 end
