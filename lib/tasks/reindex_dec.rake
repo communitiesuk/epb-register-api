@@ -1,6 +1,7 @@
 desc "Reindex DEC to get correct date_of_expiry"
 
 task :reindex_dec do
+  require "nokogiri"
   require "zeitwerk"
 
   loader = Zeitwerk::Loader.new
