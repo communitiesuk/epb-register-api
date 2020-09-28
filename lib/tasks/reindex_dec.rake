@@ -25,7 +25,7 @@ task :reindex_dec do
       UPDATE
         assessments
       SET
-        date_of_expiry = " + ActiveRecord::Base.connection.quote(report["date_of_expiry"]) + "
+        date_of_expiry = " + ActiveRecord::Base.connection.quote(report[:date_of_expiry]) + "
       WHERE
         assessment_id = " + ActiveRecord::Base.connection.quote(dec["assessment_id"]) + "
     ")
