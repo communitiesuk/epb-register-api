@@ -1,11 +1,16 @@
+require 'csv'
+
 desc "Update rrn opt-out data"
 
 task :update_rrn_opt_out do
+
   internal_url = ENV["url"]
+
   puts "Reading opt-out file from: #{internal_url}"
+
   uri = URI(internal_url)
 
-  raw_opt_outs = Net::HTTP.start(
+  opt_out_rrn_csv = Net::HTTP.start(
     uri.host,
     uri.port,
     use_ssl: uri.scheme == "https",
@@ -16,32 +21,29 @@ task :update_rrn_opt_out do
 
     http.request request
   end
-  parsed_opt_outs = JSON.parse(raw_opt_outs.body)
 
-  reformatted_opt_outs = []
-  parsed_opt_outs.each do |node|
-    opt_out = node["OPT_OUT"] == "Y"
-    reformatted_opt_outs << { date_time: node["REQUEST_TIMESTAMP"], rrn: node["RRN"], opt_out: opt_out }
-  end
-
-  ordered_opt_outs = reformatted_opt_outs.sort_by { |node| node[:date_time] }
-  ordered_opt_outs.reverse!
-
-  ordered_opt_outs.each do |node|
-    first_rrn = node[:rrn]
-    first_date = node[:date_time]
-    ordered_opt_outs.each do |second_node|
-      if first_rrn == second_node[:rrn] && first_date > second_node[:date_time]
-        ordered_opt_outs.delete(second_node)
-      end
-    end
-  end
+  puts 'Starting reset opt out query...'
 
   ActiveRecord::Base.transaction do
-    ordered_opt_outs.each do |node|
-      query = "UPDATE assessments SET opt_out = #{node[:opt_out]} WHERE assessment_id = '#{node[:rrn]}'"
+      query = "UPDATE assessments SET opt_out = 'f' WHERE opt_out = 't'"
+      ActiveRecord::Base.connection.execute(query)
+  end
+
+  puts 'Opt out set to false on all assessments'
+
+  opt_out_rrns = CSV.parse(opt_out_rrn_csv.body).flatten!
+
+  puts "#{opt_out_rrns.count} opt outs have been collected from the csv"
+
+  puts "Starting opt out update query... "
+
+  ActiveRecord::Base.transaction do
+    opt_out_rrns.each do |rrn|
+      query = "UPDATE assessments SET opt_out = 't' WHERE assessment_id = '#{rrn}'"
 
       ActiveRecord::Base.connection.execute(query)
     end
   end
+
+  puts "Opt out query is complete! :-)"
 end
