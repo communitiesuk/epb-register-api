@@ -1,9 +1,8 @@
-require 'csv'
+require "csv"
 
 desc "Update rrn opt-out data"
 
 task :update_rrn_opt_out do
-
   internal_url = ENV["url"]
 
   puts "Reading opt-out file from: #{internal_url}"
@@ -22,14 +21,14 @@ task :update_rrn_opt_out do
     http.request request
   end
 
-  puts 'Starting reset opt out query...'
+  puts "Starting reset opt out query..."
 
   ActiveRecord::Base.transaction do
-      query = "UPDATE assessments SET opt_out = 'f' WHERE opt_out = 't'"
-      ActiveRecord::Base.connection.execute(query)
+    query = "UPDATE assessments SET opt_out = 'f' WHERE opt_out = 't'"
+    ActiveRecord::Base.connection.execute(query)
   end
 
-  puts 'Opt out set to false on all assessments'
+  puts "Opt out set to false on all assessments"
 
   opt_out_rrns = CSV.parse(opt_out_rrn_csv.body).flatten!
 
@@ -38,11 +37,9 @@ task :update_rrn_opt_out do
   puts "Starting opt out update query... "
 
   ActiveRecord::Base.transaction do
-    opt_out_rrns.each do |rrn|
-      query = "UPDATE assessments SET opt_out = 't' WHERE assessment_id = '#{rrn}'"
+    query = "UPDATE assessments SET opt_out = 't' WHERE assessment_id IN(#{(opt_out_rrns.join(", "))})"
 
-      ActiveRecord::Base.connection.execute(query)
-    end
+    ActiveRecord::Base.connection.execute(query)
   end
 
   puts "Opt out query is complete! :-)"
