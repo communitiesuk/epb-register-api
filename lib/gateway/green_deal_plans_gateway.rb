@@ -77,7 +77,7 @@ module Gateway
         INNER JOIN
           green_deal_plans b ON a.green_deal_plan_id = b.green_deal_plan_id
         WHERE
-          assessment_id = '#{ActiveRecord::Base.sanitize_sql(assessment_id)}'
+          assessment_id = #{ActiveRecord::Base.connection.quote(assessment_id)}
         ORDER BY b.green_deal_plan_id
       SQL
       response = GreenDealPlan.connection.execute(sql)
@@ -100,9 +100,9 @@ module Gateway
 
     def delete(plan_id)
       sql =
-        "DELETE FROM green_deal_plans WHERE green_deal_plan_id = '#{
-          ActiveRecord::Base.sanitize_sql(plan_id)
-        }'"
+        "DELETE FROM green_deal_plans WHERE green_deal_plan_id = #{
+          ActiveRecord::Base.connection.quote(plan_id)
+        }"
 
       GreenDealPlan.connection.execute(sql)
     end

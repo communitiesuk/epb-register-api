@@ -49,12 +49,12 @@ module Gateway
               raise InvalidAssessmentType
             end
 
-            ActiveRecord::Base.sanitize_sql(assessment_type)
+            ActiveRecord::Base.connection.quote(assessment_type)
           end
 
         sql +=
-          " AND type_of_assessment IN('" +
-          sanitized_assessment_types.join("', '") + "')"
+          " AND type_of_assessment IN(" +
+          sanitized_assessment_types.join(", ") + ")"
       end
 
       response = Assessment.connection.exec_query sql, "SQL", binds
@@ -74,7 +74,7 @@ module Gateway
       unless assessment_type.nil? || assessment_type.empty?
         ins = []
         assessment_type.each do |type|
-          ins.push("'" + ActiveRecord::Base.sanitize_sql(type) + "'")
+          ins.push(ActiveRecord::Base.connection.quote(type))
         end
         sql += "type_of_assessment IN(" + ins.join(", ") + ") AND "
       end
@@ -134,9 +134,9 @@ module Gateway
       sql =
         ASSESSMENT_SEARCH_INDEX_SELECT +
         <<-SQL
-        WHERE assessment_id = '#{
-            ActiveRecord::Base.sanitize_sql(assessment_id)
-          }'
+        WHERE assessment_id = #{
+            ActiveRecord::Base.connection.quote(assessment_id)
+          }
         SQL
 
       if restrictive
@@ -147,7 +147,7 @@ module Gateway
       unless assessment_type.empty?
         ins = []
         assessment_type.each do |type|
-          ins.push("'" + ActiveRecord::Base.sanitize_sql(type) + "'")
+          ins.push(ActiveRecord::Base.connection.quote(type))
         end
         sql += " AND type_of_assessment IN(" + ins.join(", ") + ")"
       end

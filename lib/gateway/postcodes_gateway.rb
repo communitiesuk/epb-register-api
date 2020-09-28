@@ -22,9 +22,9 @@ module Gateway
 
     def db_response(code = "postcode", table = "postcode_geolocation", postcode)
       ActiveRecord::Base.connection.execute(
-        "SELECT #{code}, latitude, longitude FROM #{table} WHERE #{code} = '#{
-          ActiveRecord::Base.sanitize_sql(postcode)
-        }'",
+        "SELECT #{code}, latitude, longitude FROM #{table} WHERE #{code} = #{
+          ActiveRecord::Base.connection.quote(postcode)
+        }",
       )
     end
 

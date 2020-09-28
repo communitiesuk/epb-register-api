@@ -14,9 +14,10 @@ module Gateway
     def update_field(assessment_id, field, value)
       sql =
         "UPDATE assessments SET " +
-        ActiveRecord::Base.connection.quote_column_name(field) + " = '" +
-        ActiveRecord::Base.sanitize_sql(value) + "' WHERE assessment_id = '" +
-        ActiveRecord::Base.sanitize_sql(assessment_id) + "'"
+        ActiveRecord::Base.connection.quote_column_name(field) + " = " +
+        ActiveRecord::Base.connection.quote(value) +
+        " WHERE assessment_id = " +
+        ActiveRecord::Base.connection.quote(assessment_id) + ""
 
       Assessment.connection.execute(sql)
     end
