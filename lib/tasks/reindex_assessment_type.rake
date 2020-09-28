@@ -16,7 +16,7 @@ task :reindex_assessment_type do
     JOIN assessments_xml b
       ON(a.assessment_id = b.assessment_id)
     WHERE
-      a.type_of_assessment = '" + ActiveRecord::Base.connection.quote(ENV["type_of_assessment"]) + "'")
+      a.type_of_assessment = " + ActiveRecord::Base.connection.quote(ENV["type_of_assessment"]) + "")
 
   successes = 0
   errors = []
