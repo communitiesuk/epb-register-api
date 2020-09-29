@@ -29,23 +29,35 @@ task :reindex_assessment_type do
         {
           assessment_id: assessment["assessment_id"],
           schema_type: assessment["schema_type"],
-        }
+        },
       )
     else
       report = report_model.to_hash
 
-      ActiveRecord::Base.connection.execute("
-        UPDATE
-          assessments
-        SET
-          #{ActiveRecord::Base.connection.quote_column_name(ENV["column"])}
-            =
-          " + ActiveRecord::Base.connection.quote(report[ENV["value_location"].to_sym]) + "
-        WHERE
-          assessment_id = " + ActiveRecord::Base.connection.quote(assessment["assessment_id"]) + "
-      ")
+      value = report[ENV["value_location"].to_sym]
 
-      successes += 1
+      if !value.nil?
+        ActiveRecord::Base.connection.execute("
+          UPDATE
+            assessments
+          SET
+            #{ActiveRecord::Base.connection.quote_column_name(ENV['column'])}
+              =
+            " + ActiveRecord::Base.connection.quote(value) + "
+          WHERE
+            assessment_id = " + ActiveRecord::Base.connection.quote(assessment["assessment_id"]) + "
+        ")
+
+        successes += 1
+      else
+        errors.push(
+          {
+            assessment_id: assessment["assessment_id"],
+            schema_type: assessment["schema_type"],
+            value: value,
+          },
+        )
+      end
     end
   end
 
