@@ -14,9 +14,9 @@ describe ViewModel::SapWrapper do
       xml: Samples.xml("SAP-Schema-17.1"),
       unsupported_fields: [],
       different_fields: {
-        address_id: "0000000000",
+        address_id: "LPRN-0000000000",
         address: {
-          address_id: "0000000000",
+          address_id: "LPRN-0000000000",
           address_line1: "1 Some Street",
           address_line2: "",
           address_line3: "",
@@ -31,9 +31,9 @@ describe ViewModel::SapWrapper do
       xml: Samples.xml("SAP-Schema-17.0"),
       unsupported_fields: [],
       different_fields: {
-        address_id: "0000000000",
+        address_id: "LPRN-0000000000",
         address: {
-          address_id: "0000000000",
+          address_id: "LPRN-0000000000",
           address_line1: "1 Some Street",
           address_line2: "",
           address_line3: "",
@@ -48,9 +48,9 @@ describe ViewModel::SapWrapper do
       xml: Samples.xml("SAP-Schema-16.3"),
       unsupported_fields: [],
       different_fields: {
-        address_id: "0000000000",
+        address_id: "LPRN-0000000000",
         address: {
-          address_id: "0000000000",
+          address_id: "LPRN-0000000000",
           address_line1: "1 Some Street",
           address_line2: "",
           address_line3: "",
@@ -71,9 +71,9 @@ describe ViewModel::SapWrapper do
       xml: Samples.xml("SAP-Schema-16.2"),
       unsupported_fields: [],
       different_fields: {
-        address_id: "0000000000",
+        address_id: "LPRN-0000000000",
         address: {
-          address_id: "0000000000",
+          address_id: "LPRN-0000000000",
           address_line1: "1 Some Street",
           address_line2: "",
           address_line3: "",
@@ -94,9 +94,9 @@ describe ViewModel::SapWrapper do
       xml: Samples.xml("SAP-Schema-16.1"),
       unsupported_fields: [],
       different_fields: {
-        address_id: "0000000000",
+        address_id: "LPRN-0000000000",
         address: {
-          address_id: "0000000000",
+          address_id: "LPRN-0000000000",
           address_line1: "1 Some Street",
           address_line2: "",
           address_line3: "",
@@ -154,9 +154,9 @@ describe ViewModel::SapWrapper do
       xml: Samples.xml("SAP-Schema-16.0"),
       unsupported_fields: [],
       different_fields: {
-        address_id: "0000000000",
+        address_id: "LPRN-0000000000",
         address: {
-          address_id: "0000000000",
+          address_id: "LPRN-0000000000",
           address_line1: "1 Some Street",
           address_line2: "",
           address_line3: "",
@@ -214,9 +214,9 @@ describe ViewModel::SapWrapper do
       xml: Samples.xml("SAP-Schema-15.0"),
       unsupported_fields: [],
       different_fields: {
-        address_id: "0000000000",
+        address_id: "LPRN-0000000000",
         address: {
-          address_id: "0000000000",
+          address_id: "LPRN-0000000000",
           address_line1: "1 Some Street",
           address_line2: "",
           address_line3: "",
@@ -275,9 +275,9 @@ describe ViewModel::SapWrapper do
       unsupported_fields: [],
       different_fields: {
         property_age_band: nil,
-        address_id: "0000000000",
+        address_id: "LPRN-0000000000",
         address: {
-          address_id: "0000000000",
+          address_id: "LPRN-0000000000",
           address_line1: "1 Some Street",
           address_line2: "",
           address_line3: "",
@@ -336,9 +336,9 @@ describe ViewModel::SapWrapper do
       unsupported_fields: [],
       different_fields: {
         property_age_band: nil,
-        address_id: "0000000000",
+        address_id: "LPRN-0000000000",
         address: {
-          address_id: "0000000000",
+          address_id: "LPRN-0000000000",
           address_line1: "1 Some Street",
           address_line2: "",
           address_line3: "",
@@ -447,9 +447,9 @@ describe ViewModel::SapWrapper do
           impact_of_loft_insulation: nil,
           impact_of_solid_wall_insulation: nil,
         },
-        address_id: "0000000000",
+        address_id: "LPRN-0000000000",
         address: {
-          address_id: "0000000000",
+          address_id: "LPRN-0000000000",
           address_line1: "1 Some Street",
           address_line2: "",
           address_line3: "",
@@ -501,9 +501,9 @@ describe ViewModel::SapWrapper do
           impact_of_loft_insulation: nil,
           impact_of_solid_wall_insulation: nil,
         },
-        address_id: "0000000000",
+        address_id: "LPRN-0000000000",
         address: {
-          address_id: "0000000000",
+          address_id: "LPRN-0000000000",
           address_line1: "1 Some Street",
           address_line2: "",
           address_line3: "",
@@ -548,9 +548,9 @@ describe ViewModel::SapWrapper do
       xml: Samples.xml("SAP-Schema-NI-17.2"),
       unsupported_fields: [],
       different_fields: {
-        address_id: "0000000000",
+        address_id: "LPRN-0000000000",
         address: {
-          address_id: "0000000000",
+          address_id: "LPRN-0000000000",
           address_line1: "1 Some Street",
           address_line2: "",
           address_line3: "",
@@ -570,9 +570,9 @@ describe ViewModel::SapWrapper do
       xml: Samples.xml("SAP-Schema-NI-17.1"),
       unsupported_fields: [],
       different_fields: {
-        address_id: "0000000000",
+        address_id: "LPRN-0000000000",
         address: {
-          address_id: "0000000000",
+          address_id: "LPRN-0000000000",
           address_line1: "1 Some Street",
           address_line2: "",
           address_line3: "",
@@ -592,9 +592,9 @@ describe ViewModel::SapWrapper do
       xml: Samples.xml("SAP-Schema-NI-17.0"),
       unsupported_fields: [],
       different_fields: {
-        address_id: "0000000000",
+        address_id: "LPRN-0000000000",
         address: {
-          address_id: "0000000000",
+          address_id: "LPRN-0000000000",
           address_line1: "1 Some Street",
           address_line2: "",
           address_line3: "",
@@ -652,9 +652,9 @@ describe ViewModel::SapWrapper do
       unsupported_fields: [],
       different_fields: {
         property_age_band: nil,
-        address_id: "0000000000",
+        address_id: "LPRN-0000000000",
         address: {
-          address_id: "0000000000",
+          address_id: "LPRN-0000000000",
           address_line1: "1 Some Street",
           address_line2: "",
           address_line3: "",
@@ -713,9 +713,9 @@ describe ViewModel::SapWrapper do
       different_fields: {
         tenure: nil,
         property_age_band: nil,
-        address_id: "0000000000",
+        address_id: "LPRN-0000000000",
         address: {
-          address_id: "0000000000",
+          address_id: "LPRN-0000000000",
           address_line1: "1 Some Street",
           address_line2: "",
           address_line3: "",
@@ -774,9 +774,9 @@ describe ViewModel::SapWrapper do
       different_fields: {
         tenure: nil,
         property_age_band: nil,
-        address_id: "0000000000",
+        address_id: "LPRN-0000000000",
         address: {
-          address_id: "0000000000",
+          address_id: "LPRN-0000000000",
           address_line1: "1 Some Street",
           address_line2: "",
           address_line3: "",
@@ -835,9 +835,9 @@ describe ViewModel::SapWrapper do
       different_fields: {
         tenure: nil,
         property_age_band: nil,
-        address_id: "0000000000",
+        address_id: "LPRN-0000000000",
         address: {
-          address_id: "0000000000",
+          address_id: "LPRN-0000000000",
           address_line1: "1 Some Street",
           address_line2: "",
           address_line3: "",

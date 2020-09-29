@@ -69,7 +69,7 @@ module ViewModel
       end
 
       def address_id
-        xpath(%w[UPRN])
+        "LPRN-" + xpath(%w[UPRN])
       end
 
       def date_of_expiry
