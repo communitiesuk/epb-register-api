@@ -192,8 +192,8 @@ module LodgementRules
             Date.parse(method_or_nil(adapter, :date_of_completion)),
           ]
 
-          dates.select { |date|
-            !date.between?(Date.today.prev_month(18), Date.today)
+          dates.reject { |date|
+            date.between?(Date.today.prev_month(18), Date.today)
           }.empty?
         end,
       },
@@ -221,7 +221,13 @@ module LodgementRules
 
           building_parts.select { |part|
             [
-              (part[:roof_insulation_thickness] unless check_roof_insulation_thickness part[:roof_insulation_thickness]),
+              (
+                unless check_roof_insulation_thickness(
+                  part[:roof_insulation_thickness],
+                )
+                  part[:roof_insulation_thickness]
+                end
+              ),
               part[:rafter_insulation_thickness],
               part[:flat_roof_insulation_thickness],
               part[:sloping_ceiling_insulation_thickness],
