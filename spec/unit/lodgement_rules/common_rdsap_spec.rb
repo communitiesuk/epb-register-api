@@ -158,6 +158,14 @@ describe LodgementRules::DomesticCommon do
     it "returns an error if the floor area is more than 3000" do
       assert_errors([error], { "SAP-Floor-Dimension/Total-Floor-Area": "3001" })
     end
+
+    it "returns no errors if floor area is 100" do
+      assert_errors([], { "SAP-Floor-Dimension/Total-Floor-Area": "100" })
+    end
+
+    it "returns no errors if floor area is 0.45" do
+      assert_errors([], { "SAP-Floor-Dimension/Total-Floor-Area": "0.45" })
+    end
   end
 
   context "GROUND_FLOOR_HEAT_LOSS_ON_UPPER_FLOOR" do

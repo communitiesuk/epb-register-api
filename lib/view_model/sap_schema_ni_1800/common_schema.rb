@@ -222,7 +222,7 @@ module ViewModel
 
       def all_sap_floor_dimensions
         @xml_doc.search("SAP-Floor-Dimension").select(&:element?).map { |node|
-          { total_floor_area: xpath(%w[Total-Floor-Area], node).to_i }
+          { total_floor_area: xpath(%w[Total-Floor-Area], node).to_f }
         }.compact
       end
 
