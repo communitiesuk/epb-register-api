@@ -15,10 +15,16 @@ module UseCase
 
       def related_party_disclosure!(hash)
         related_certificate =
-          UseCase::AssessmentSummary::Fetch.new.execute(hash[:related_certificate])
+          UseCase::AssessmentSummary::Fetch.new.execute(
+            hash[:related_certificate],
+          )
 
         hash[:related_party_disclosure] =
-          (related_certificate[:related_party_disclosure] if related_certificate)
+          (
+            if related_certificate
+              related_certificate[:related_party_disclosure]
+            end
+          )
       rescue StandardError => e
         hash[:related_party_disclosure] = nil
       end

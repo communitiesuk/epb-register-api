@@ -38,7 +38,8 @@ describe "Acceptance::AssessmentSummary::Supplement::CEPC_RR" do
 
   context "when getting the related party disclosure" do
     it "adds the associated EPC related party disclosure" do
-      related_party_disclosure = @regular_summary.dig(:data, :relatedPartyDisclosure)
+      related_party_disclosure =
+        @regular_summary.dig(:data, :relatedPartyDisclosure)
 
       expect(related_party_disclosure).to eq "1"
     end
