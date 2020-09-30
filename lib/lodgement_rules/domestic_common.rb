@@ -6,6 +6,10 @@ module LodgementRules
       nil
     end
 
+    def self.check_roof_insulation_thickness(property)
+      property.nil? ? nil : property.upcase == "ND"
+    end
+
     RULES = [
       {
         name: "MUST_HAVE_HABITABLE_ROOMS",
@@ -217,7 +221,7 @@ module LodgementRules
 
           building_parts.select { |part|
             [
-              part[:roof_insulation_thickness],
+              (part[:roof_insulation_thickness] unless check_roof_insulation_thickness part[:roof_insulation_thickness]),
               part[:rafter_insulation_thickness],
               part[:flat_roof_insulation_thickness],
               part[:sloping_ceiling_insulation_thickness],
