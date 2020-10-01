@@ -99,11 +99,15 @@ module Gateway
       if %w[CEPC RdSAP SAP].include? assessment.get(:type_of_assessment)
         current = assessment.get(:current_energy_efficiency_rating)
 
-        unless current.is_a?(Integer) && current.positive?
+        unless current.is_a? Integer
           raise ArgumentError, "Invalid current energy rating"
         end
 
         if %w[RdSAP SAP].include? assessment.get(:type_of_assessment)
+          unless current.positive?
+            raise ArgumentError, "Invalid current energy rating"
+          end
+
           potential = assessment.get(:potential_energy_efficiency_rating)
 
           unless potential.is_a?(Integer) && potential.positive?

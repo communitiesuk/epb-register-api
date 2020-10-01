@@ -177,6 +177,8 @@ describe "Acceptance::Assessment::Lodge" do
   end
 
   context "when lodging a valid assessment" do
+    let(:cepc_xml_doc) { Nokogiri.XML(valid_cepc_rr_xml) }
+
     it "returns the correct response" do
       scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
@@ -200,6 +202,20 @@ describe "Acceptance::Assessment::Lodge" do
             },
           },
         },
+      )
+    end
+
+    it "accepts negative current energy rating values for CEPC" do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
+
+      cepc_xml_doc.at("//CEPC:Asset-Rating").children = "-50"
+
+      lodge_assessment(
+        assessment_body: cepc_xml_doc.to_xml,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] },
+        schema_name: "CEPC-8.0.0",
       )
     end
   end

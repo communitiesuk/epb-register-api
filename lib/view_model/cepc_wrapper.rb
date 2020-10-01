@@ -20,7 +20,7 @@ module ViewModel
 
     def get_energy_rating_band(number)
       case number
-      when number < 0
+      when -Float::INFINITY...0
         "a+"
       when 0..25
         "a"
