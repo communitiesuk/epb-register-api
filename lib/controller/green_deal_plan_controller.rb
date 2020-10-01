@@ -166,6 +166,30 @@ module Controller
       end
     end
 
+    get "/api/greendeal/assessments/:assessment_id/xml",
+        jwt_auth: %w[greendeal:plans] do
+      assessment_id = params[:assessment_id]
+
+      body UseCase::FetchRedactedAssessment.new.execute(assessment_id)
+    rescue StandardError => e
+      case e
+      when UseCase::FetchRedactedAssessment::NotAnRdsap
+        forbidden("ASSESSMENT_NOT_RDSAP", "Assessment is not an RdSAP")
+      when UseCase::FetchRedactedAssessment::NotFoundException
+        not_found_error("Assessment not found")
+      when UseCase::FetchRedactedAssessment::AssessmentGone
+        gone_error("Assessment not for issue")
+      when Helper::RrnHelper::RrnNotValid
+        error_response(
+          400,
+          "INVALID_REQUEST",
+          "The requested assessment id is not valid",
+        )
+      else
+        server_error(e)
+      end
+    end
+
     delete "/api/greendeal/disclosure/plans/:plan_id",
            jwt_auth: %w[greendeal:plans] do
       plan_id = params[:plan_id]

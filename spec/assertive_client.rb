@@ -234,6 +234,22 @@ def delete_green_deal_plan(
   )
 end
 
+def fetch_green_deal_assessment_xml(
+  assessment_id:,
+  accepted_responses: [200],
+  authenticate: true,
+  auth_data: nil,
+  scopes: %w[greendeal:plans]
+)
+  assertive_get(
+    "/api/greendeal/assessments/#{assessment_id}/xml",
+    accepted_responses,
+    authenticate,
+    auth_data,
+    scopes,
+  )
+end
+
 def lodge_assessment(
   assessment_body: "",
   accepted_responses: [201],
