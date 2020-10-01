@@ -243,7 +243,9 @@
         <Assessment-Period-Alignment></Assessment-Period-Alignment>
       </OR-Building-Data>
       <OR-Usable-Floor-Area></OR-Usable-Floor-Area>
-      <OR-Previous-Data></OR-Previous-Data>
+      <OR-Previous-Data>
+        <Asset-Rating>100</Asset-Rating>
+      </OR-Previous-Data>
       <OR-Benchmark-Data>
         <Main-Benchmark></Main-Benchmark>
         <Benchmarks>

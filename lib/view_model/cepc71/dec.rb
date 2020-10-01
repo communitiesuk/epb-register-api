@@ -90,7 +90,7 @@ module ViewModel
       end
 
       def asset_rating
-        xpath(%w[This-Assessment Energy-Rating])
+        xpath(%w[OR-Previous-Data Asset-Rating])
       end
 
       def annual_energy_use_fuel_thermal
