@@ -132,9 +132,7 @@ module LodgementRules
 
           sap_floor_dimensions.compact.map { |dimension|
             dimension[:total_floor_area]
-          }.compact.select { |area|
-            area <= 0 || area > 3000
-          }.empty?
+          }.compact.select { |area| area <= 0 || area > 3000 }.empty?
         end,
       },
       {
