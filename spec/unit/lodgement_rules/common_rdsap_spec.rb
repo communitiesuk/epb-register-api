@@ -316,20 +316,22 @@ describe LodgementRules::DomesticCommon do
     end
 
     it "accepts assessment where Roof-Insulation-Thickness is supplied inside SAP-Room-In-Roof as well" do
-      assert_errors(
-        [],
-        { "SAP-Building-Part Roof-Insulation-Thickness": :delete },
-        [
-          {
-            selector: "Roof-Insulation-Location",
-            xml: "<Rafter-Insulation-Thickness>AB</Rafter-Insulation-Thickness>",
-          },
-          {
-            selector: "Roof-Room-Connected",
-            xml: "<Roof-Insulation-Thickness>ND</Roof-Insulation-Thickness>",
-          },
-        ],
-      )
+      %w[12mm 25mm 50mm 75mm 100mm 150mm 200mm 250mm 270mm 300mm 350mm 400mm ND].each do |value|
+        assert_errors(
+          [],
+          { "SAP-Building-Part Roof-Insulation-Thickness": :delete },
+          [
+            {
+              selector: "Roof-Insulation-Location",
+              xml: "<Rafter-Insulation-Thickness>AB</Rafter-Insulation-Thickness>",
+            },
+            {
+              selector: "Roof-Room-Connected",
+              xml: "<Roof-Insulation-Thickness>#{value}</Roof-Insulation-Thickness>",
+            },
+          ],
+        )
+      end
     end
 
     it "Rejects assessment where rafter and roof insulation are supplied" do

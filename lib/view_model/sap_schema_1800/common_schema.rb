@@ -247,7 +247,7 @@ module ViewModel
         @xml_doc.search("SAP-Building-Parts/SAP-Building-Part").map do |part|
           {
             roof_insulation_thickness:
-              xpath(%w[Roof-Insulation-Thickness], part),
+              part.xpath("Roof-Insulation-Thickness").empty? ? nil : part.xpath("Roof-Insulation-Thickness").text,
             rafter_insulation_thickness:
               xpath(%w[Rafter-Insulation-Thickness], part),
             flat_roof_insulation_thickness:
