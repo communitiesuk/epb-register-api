@@ -170,6 +170,7 @@ module Controller
         jwt_auth: %w[greendeal:plans] do
       assessment_id = params[:assessment_id]
 
+      content_type :xml
       body UseCase::FetchRedactedAssessment.new.execute(assessment_id)
     rescue StandardError => e
       case e
