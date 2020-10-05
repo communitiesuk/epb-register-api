@@ -218,6 +218,20 @@ describe "Acceptance::Assessment::Lodge" do
         schema_name: "CEPC-8.0.0",
       )
     end
+
+    it "accepts large current energy efficiency rating values for CEPC" do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
+
+      cepc_xml_doc.at("//CEPC:Asset-Rating").children = "-267654"
+
+      lodge_assessment(
+        assessment_body: cepc_xml_doc.to_xml,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] },
+        schema_name: "CEPC-8.0.0",
+      )
+    end
   end
 
   context "when migrating an assessment" do
