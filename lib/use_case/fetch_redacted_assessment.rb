@@ -56,7 +56,7 @@ module UseCase
         assessment_xml.search(".//#{redacted_tag}").remove
       end
 
-      assessment_xml.to_xml
+      assessment_xml.to_xml(:encoding => 'utf-8')
     end
   end
 end

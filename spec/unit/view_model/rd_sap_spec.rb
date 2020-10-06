@@ -223,7 +223,7 @@ describe ViewModel::RdSapWrapper do
           improvement_description: nil,
           improvement_title: nil,
           improvement_type: "Z3",
-          indicative_cost: "5",
+          indicative_cost: "£100 - £350",
           sequence: 0,
           typical_saving: "0.0",
         },
