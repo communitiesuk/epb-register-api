@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_05_133700) do
+ActiveRecord::Schema.define(version: 2020_10_05_145253) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -156,12 +156,14 @@ ActiveRecord::Schema.define(version: 2020_10_05_133700) do
     t.string "postcode"
     t.decimal "latitude"
     t.decimal "longitude"
+    t.string "region"
   end
 
   create_table "postcode_outcode_geolocations", force: :cascade do |t|
     t.string "outcode"
     t.decimal "latitude"
     t.decimal "longitude"
+    t.string "region"
   end
 
   create_table "schemes", primary_key: "scheme_id", force: :cascade do |t|
