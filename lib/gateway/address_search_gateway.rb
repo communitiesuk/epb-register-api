@@ -212,11 +212,38 @@ module Gateway
     end
 
     def record_to_address_domain(row)
+      address_line1 = row["address_line1"]
+      address_line2 = row["address_line2"]
+      address_line3 = row["address_line3"]
+
+      if address_line1.blank?
+        address_line1 = row["address_line2"]
+        if address_line2.blank?
+          address_line1 = row["address_line3"]
+          address_line1 = row["address_line4"] if address_line3.blank?
+        end
+      end
+
       Domain::Address.new address_id: "RRN-#{row['assessment_id']}",
-                          line1: row["address_line1"],
-                          line2: row["address_line2"].presence,
-                          line3: row["address_line3"].presence,
-                          line4: row["address_line4"].presence,
+                          line1: address_line1,
+                          line2:
+                            (
+                              unless address_line1 == row["address_line2"]
+                                row["address_line2"].presence
+                              end
+                            ),
+                          line3:
+                            (
+                              unless address_line1 == row["address_line3"]
+                                row["address_line3"].presence
+                              end
+                            ),
+                          line4:
+                            (
+                              unless address_line1 == row["address_line4"]
+                                row["address_line4"].presence
+                              end
+                            ),
                           town: row["town"],
                           postcode: row["postcode"],
                           source: "PREVIOUS_ASSESSMENT",

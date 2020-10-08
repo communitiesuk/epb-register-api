@@ -246,4 +246,56 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
       )
     end
   end
+
+  context "when address_line1 is blank" do
+    let(:scheme_id) { add_scheme_and_get_id }
+
+    it "populates with address line 3" do
+      assessment = Nokogiri.XML Samples.xml "CEPC-8.0.0", "cepc"
+      address_id = assessment.at("//CEPC:UPRN")
+      assessment_id = assessment.at("//CEPC:RRN")
+
+      address_line_one = assessment.at("//CEPC:Address-Line-1")
+      address_line_two = Nokogiri::XML::Node.new "Address-Line-2", assessment
+      address_line_three = Nokogiri::XML::Node.new "Address-Line-3", assessment
+      address_line_four = Nokogiri::XML::Node.new "Address-Line-4", assessment
+
+      address_line_one.content = ""
+      address_line_two.content = ""
+      address_line_three.content = "This is Address line 3"
+
+      address_line_one.add_next_sibling address_line_two
+      address_line_two.add_next_sibling address_line_three
+
+      assessment_id.children = "0000-0000-0000-0000-0000"
+      address_id.children = "RRN-0000-0000-0000-0000-0000"
+
+      add_assessor(
+        scheme_id,
+        "SPEC000000",
+        AssessorStub.new.fetch_request_body(
+          nonDomesticNos3: "ACTIVE",
+          nonDomesticNos4: "ACTIVE",
+          nonDomesticNos5: "ACTIVE",
+        ),
+      )
+
+      lodge_assessment(
+        assessment_body: assessment.to_xml,
+        accepted_responses: [201],
+        schema_name: "CEPC-8.0.0",
+        auth_data: { scheme_ids: [scheme_id] },
+      )
+
+      response =
+        JSON.parse(
+          address_search_by_id("RRN-0000-0000-0000-0000-0000").body,
+          symbolize_names: true,
+        )
+
+      expect(response[:data][:addresses][0][:line1]).to eq(
+        "This is Address line 3",
+      )
+    end
+  end
 end
