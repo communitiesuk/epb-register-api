@@ -212,17 +212,7 @@ module Gateway
     end
 
     def record_to_address_domain(row)
-      address_line1 = row["address_line1"]
-      address_line2 = row["address_line2"]
-      address_line3 = row["address_line3"]
-
-      if address_line1.blank?
-        address_line1 = row["address_line2"]
-        if address_line2.blank?
-          address_line1 = row["address_line3"]
-          address_line1 = row["address_line4"] if address_line3.blank?
-        end
-      end
+      address_line1 = populate_address_line1(row)
 
       Domain::Address.new address_id: "RRN-#{row['assessment_id']}",
                           line1: address_line1,
@@ -248,6 +238,23 @@ module Gateway
                           postcode: row["postcode"],
                           source: "PREVIOUS_ASSESSMENT",
                           existing_assessments: row["existing_assessments"]
+    end
+
+    def populate_address_line1(row)
+      address_line1 = row["address_line1"]
+      address_line2 = row["address_line2"]
+      address_line3 = row["address_line3"]
+
+      if address_line1.blank?
+        address_line1 = row["address_line2"]
+
+        if address_line2.blank?
+          address_line1 = row["address_line3"]
+          address_line1 = row["address_line4"] if address_line3.blank?
+        end
+      end
+
+      address_line1
     end
 
     # EPBR-511: Needs to be removed after fixing the database data
