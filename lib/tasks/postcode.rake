@@ -66,6 +66,9 @@ task :import_postcode do
     lat = row["lat"]
     long = row["long"]
     region = region_codes[row["eer"].to_sym]
+
+    postcode = postcode.insert(-4, " ") if postcode[-4] != " "
+
     next if region.nil?
 
     results << [db.quote(postcode), lat, long, db.quote(region)].join(", ")
