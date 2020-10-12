@@ -3,6 +3,7 @@ require "sinatra/cross_origin"
 require "epb-auth-tools"
 require "nokogiri"
 require "sinatra/activerecord"
+require "csv"
 
 module Controller
   class BaseController < Sinatra::Base
