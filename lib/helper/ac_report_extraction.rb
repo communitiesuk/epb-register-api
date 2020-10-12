@@ -14,7 +14,7 @@ module Helper
     def checklist_values(checklist, skip_state = false)
       results =
         checklist&.element_children&.map { |node|
-          next if xpath(%w[Flag], node).nil? && skip_state == false
+          next if xpath(%w[Flag], node).nil? && !skip_state
 
           checklist_item = node.name.underscore.to_sym
           if skip_state
