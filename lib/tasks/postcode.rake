@@ -57,7 +57,7 @@ task :import_postcode do
     t.string :region
   end
 
-  puts "New update postcode table created"
+  puts "New update postcode table created, number of postcodes in total: #{postcode_table.size}"
 
   results = []
 
