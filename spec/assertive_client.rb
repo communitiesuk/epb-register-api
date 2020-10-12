@@ -526,3 +526,22 @@ def address_search_by_id(
     scopes,
   )
 end
+
+def get_assessment_report(
+  start_date:,
+  end_date:,
+  accepted_responses: [200],
+  authenticate: true,
+  auth_data: {},
+  scopes: %w[reporting]
+)
+  assertive_get(
+    "/api/reports/assessments/region-and-type?start_date=#{
+      start_date
+    }&end_date=#{end_date}",
+    accepted_responses,
+    authenticate,
+    auth_data,
+    scopes,
+  )
+end
