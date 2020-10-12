@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment" do
+describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessmentXml" do
   include RSpecRegisterApiServiceMixin
 
   let(:scheme_id) { add_scheme_and_get_id }
