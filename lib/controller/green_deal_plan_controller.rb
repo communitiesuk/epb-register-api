@@ -203,6 +203,12 @@ module Controller
           "INVALID_REQUEST",
           "The assessmentId parameter is badly formatted",
         )
+      when UseCase::FetchGreenDealAssessment::UnauthorisedToFetchThisAssessment
+        error_response(
+          403,
+          "UNAUTHORISED",
+          "Not authorised to perform this request",
+        )
       else
         server_error(e)
       end

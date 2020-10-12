@@ -1,6 +1,8 @@
 module UseCase
   class FetchGreenDealAssessment
     class AssessmentIdIsBadlyFormatted < StandardError; end
+    class UnauthorisedToFetchThisAssessment < StandardError; end
+
     VALID_RRN = "^(\\d{4}-){4}\\d{4}$".freeze
 
     def execute(assessment_id)

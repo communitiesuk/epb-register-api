@@ -46,4 +46,21 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment" do
       ).to eq("The assessmentId parameter is badly formatted")
     end
   end
+
+  context "when getting an assessment without the correct permissions" do
+    it "will return error 403" do
+      add_assessment_with_green_deal("RdSAP")
+
+      error_response =
+        fetch_green_deal_assessment(
+          assessment_id: "0000-0000-0000-0000-0000",
+          accepted_responses: [403],
+          scopes: %w[not_allowed_to_access:plans],
+        ).body
+
+      expect(
+        JSON.parse(error_response, symbolize_names: true)[:errors].first[:title],
+      ).to eq("You are not authorised to perform this request")
+    end
+  end
 end
