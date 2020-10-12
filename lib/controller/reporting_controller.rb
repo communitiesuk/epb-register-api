@@ -9,6 +9,9 @@ module Controller
           Date.parse(params["end_date"]),
         )
 
+      content_type "text/csv"
+      attachment params["start_date"] + "_to_" + params["end_date"] + ".csv"
+
       body CSV.generate(
         write_headers: true, headers: raw_data.first.keys,
       ) { |csv| raw_data.each { |row| csv << row } }
