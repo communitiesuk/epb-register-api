@@ -191,6 +191,20 @@ module Controller
       end
     end
 
+    get "/api/greendeal/assessments/:assessment_id",
+        jwt_auth: %w[greendeal:plans] do
+      assessment_id = params[:assessment_id]
+      result = UseCase::FetchGreenDealAssessment.new.execute(assessment_id)
+
+    rescue StandardError => e
+      case e
+      when UseCase::FetchGreenDealAssessment::AssessmentIdIsBadlyFormatted
+        error_response(400, "INVALID_REQUEST", "The assessmentId parameter is badly formatted")
+      else
+        server_error(e)
+      end
+    end
+
     delete "/api/greendeal/disclosure/plans/:plan_id",
            jwt_auth: %w[greendeal:plans] do
       plan_id = params[:plan_id]

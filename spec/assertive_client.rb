@@ -250,6 +250,22 @@ def fetch_green_deal_assessment_xml(
   )
 end
 
+def fetch_green_deal_assessment(
+  assessment_id:,
+  accepted_responses: [200],
+  authenticate: true,
+  auth_data: nil,
+  scopes: %w[greendeal:plans]
+)
+  assertive_get(
+    "/api/greendeal/assessments/#{assessment_id}",
+    accepted_responses,
+    authenticate,
+    auth_data,
+    scopes,
+  )
+end
+
 def lodge_assessment(
   assessment_body: "",
   accepted_responses: [201],
