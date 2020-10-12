@@ -191,40 +191,58 @@ describe ViewModel::AcReportWrapper do
             air_recirculation: {
               note: "The condenser was considered suitably located.",
               state: true,
+              guidance: "No recommendation required.",
             },
             chiller_placement_ok: {
-              note: "The condenser is considered suitably located.", state: true
+              note: "The condenser is considered suitably located.",
+              state: true,
+              guidance: "No recommendation required.",
             },
             chiller_plant_area_clear: {
-              note: "Area appeared clear and satisfactory.", state: true
+              note: "Area appeared clear and satisfactory.",
+              state: true,
+              guidance: "No recommendation required.",
             },
             chiller_plant_ok: {
               note: "General condition of the plant appeared satisfactory.",
               state: true,
+              guidance:
+                "Ensure the system is regularly maintained to extend the useful life of the equipment.",
             },
             chiller_plant_operational: {
-              note: "System appeared to operate satisfactorily.", state: true
+              note: "System appeared to operate satisfactorily.",
+              state: true,
+              guidance:
+                "Ensure the system is regularly maintained to extend the useful life of the equipment.",
             },
             compressors_operational: {
               note:
                 "The compressor appeared to operate satisfactorily with the air off temperatures as expected.",
               state: true,
+              guidance:
+                "No recommendation required other than ensuring the system refrigerant charge is checked in accordance with manufacturers recommendations to ensure the unit continues to operate satisfactorily.",
             },
             heat_exchanger_ok: {
               note: "Heat exchangers appeared satisfactory and clean.",
               state: true,
+              guidance:
+                "No recommendation required other than recommending maintenance regime continues.",
             },
             heat_rejection_area_clear: {
-              note: "The area was clear and appeared satisfactory.", state: true
+              note: "The area was clear and appeared satisfactory.",
+              state: true,
+              guidance: "No recommendation required.",
             },
             heat_rejection_operational: {
               note: "Heat rejection plant appeared to operate as expected.",
               state: true,
+              guidance: "Not recommendation required.",
             },
             pipe_insulation_ok: {
               note:
                 "Thermal insulation appeared in good order and well fitted.",
               state: true,
+              guidance: "No recommendation required.",
             },
           },
           sizing: {
@@ -351,39 +369,56 @@ describe ViewModel::AcReportWrapper do
             air_recirculation: {
               note: "The condenser was considered suitably located.",
               state: true,
+              guidance: "No recommendation required.",
             },
             chiller_placement_ok: {
-              note: "The condenser is considered suitably located.", state: true
+              note: "The condenser is considered suitably located.",
+              state: true,
+              guidance: "No recommendation required.",
             },
             chiller_plant_area_clear: {
-              note: "Area appeared clear and satisfactory.", state: true
+              note: "Area appeared clear and satisfactory.",
+              state: true,
+              guidance: "No recommendation required.",
             },
             chiller_plant_ok: {
               note: "General condition of the plant appeared satisfactory.",
               state: true,
+              guidance:
+                "Ensure the system is regularly maintained to extend the useful life of the equipment.",
             },
             chiller_plant_operational: {
-              note: "System appeared to operate satisfactorily.", state: true
+              note: "System appeared to operate satisfactorily.",
+              state: true,
+              guidance:
+                "Ensure the system is regularly maintained to extend the useful life of the equipment.",
             },
             compressors_operational: {
               note:
                 "The compressor appeared to operate satisfactorily with the air off temperatures as expected.",
               state: true,
+              guidance: "No recommendation required.",
             },
             heat_exchanger_ok: {
               note: "Heat exchangers appeared satisfactory and clean.",
               state: true,
+              guidance:
+                "No recommendation required other than recommending maintenance regime continues.",
             },
             heat_rejection_area_clear: {
-              note: "The area was clear and appeared satisfactory.", state: true
+              note: "The area was clear and appeared satisfactory.",
+              state: true,
+              guidance: "No recommendation required.",
             },
             heat_rejection_operational: {
               note: "Heat rejection plant appeared to operate as expected.",
+              guidance: "No recommendation required.",
               state: true,
             },
             pipe_insulation_ok: {
               note:
                 "Thermal insulation appeared in good order and well fitted.",
+              guidance: "No recommendation required.",
               state: true,
             },
           },

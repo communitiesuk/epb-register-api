@@ -32,6 +32,25 @@ module Helper
       results.nil? ? {} : results
     end
 
+    def checklist_values_with_guidance(checklist)
+      results =
+        checklist&.element_children&.map { |node|
+          next if xpath(%w[Flag], node).nil?
+
+          checklist_item = node.name.underscore.to_sym
+
+          {
+            checklist_item => {
+              state: xpath(%w[Flag], node) == "Yes",
+              note: xpath(%w[Note], node),
+              guidance: xpath(%w[Text], node),
+            },
+          }
+        }&.compact.inject(&:merge)
+
+      results.nil? ? {} : results
+    end
+
     def guidance(guidance_elements)
       guidance_elements&.element_children&.map do |element|
         {
@@ -63,7 +82,10 @@ module Helper
           area_served: xpath(%w[Area-Served], node),
           discrepancy_note: xpath(%w[Discrepancy-Note], node),
         },
-        inspection: checklist_values(node.at("ACI-Cooling-Plant-Inspection")),
+        inspection:
+          checklist_values_with_guidance(
+            node.at("ACI-Cooling-Plant-Inspection"),
+          ),
         sizing: {
           total_occupants:
             xpath(%w[ACI-Cooling-Plant-Sizing/Total-Occupants], node),
