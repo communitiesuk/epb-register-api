@@ -209,6 +209,8 @@ module Controller
           "UNAUTHORISED",
           "Not authorised to perform this request",
         )
+      when UseCase::FetchGreenDealAssessment::NotFoundException
+        not_found_error("Assessment not found")
       else
         server_error(e)
       end

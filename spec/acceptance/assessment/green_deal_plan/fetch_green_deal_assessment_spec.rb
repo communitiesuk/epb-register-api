@@ -63,4 +63,17 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment" do
       ).to eq("You are not authorised to perform this request")
     end
   end
+
+  context "when getting an assessment that does not exist" do
+    it "will return error 404" do
+      error_response =
+        fetch_green_deal_assessment(
+          assessment_id: "0000-0000-0000-0000-0000", accepted_responses: [404],
+        ).body
+
+      expect(
+        JSON.parse(error_response, symbolize_names: true)[:errors].first[:title],
+      ).to eq("Assessment not found")
+    end
+  end
 end
