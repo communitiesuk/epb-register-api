@@ -37,6 +37,7 @@ module UseCase
         lodgement_date: result.date_of_registration,
         status: result.status,
         main_fuel_type: result.main_fuel_type,
+        secondary_fuel_type: result.secondary_fuel_type,
       }
     end
   end

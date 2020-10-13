@@ -336,6 +336,10 @@ module ViewModel
         xpath(%w[Main-Fuel-Type])
       end
 
+      def secondary_fuel_type
+        xpath(%w[Secondary-Fuel-Type])
+      end
+
       def boiler_flue_type
         xpath(%w[Boiler-Flue-Type])
       end

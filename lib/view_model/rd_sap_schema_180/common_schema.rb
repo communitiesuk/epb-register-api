@@ -285,6 +285,10 @@ module ViewModel
         xpath(%w[Main-Fuel-Type])
       end
 
+      def secondary_fuel_type
+        xpath(%w[Secondary-Fuel-Type])
+      end
+
     private
 
       def convert_to_big_decimal(node)

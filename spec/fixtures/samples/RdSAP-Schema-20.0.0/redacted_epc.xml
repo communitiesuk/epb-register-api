@@ -243,6 +243,7 @@
           <Rooms-With-Mixer-Shower-No-Bath>0</Rooms-With-Mixer-Shower-No-Bath>
           <Rooms-With-Bath-And-Mixer-Shower>0</Rooms-With-Bath-And-Mixer-Shower>
         </Instantaneous-WWHRS>
+        <Secondary-Fuel-Type>25</Secondary-Fuel-Type>
       </SAP-Heating>
       <SAP-Energy-Source>
         <Meter-Type>2</Meter-Type>
