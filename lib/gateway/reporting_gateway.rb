@@ -43,9 +43,8 @@ module Gateway
 
       results = ActiveRecord::Base.connection.exec_query sql, "SQL", binds
 
-      results.map do |result|
-        result
-      end || [{number_of_assessments: "", "type_of_assessment": "", region: ""}]
+      results.map { |result| result } ||
+        [{ number_of_assessments: "", "type_of_assessment": "", region: "" }]
     end
   end
 end

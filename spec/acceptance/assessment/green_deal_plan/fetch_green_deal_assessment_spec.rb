@@ -95,14 +95,16 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment" do
       add_assessment_with_green_deal type: "RdSAP"
 
       update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
-                               assessment_status_body: { "status": "CANCELLED" },
+                               assessment_status_body: {
+                                 "status": "CANCELLED",
+                               },
                                accepted_responses: [200],
                                auth_data: { scheme_ids: [scheme_id] }
 
-      error_response = fetch_green_deal_assessment(
-        assessment_id: "0000-0000-0000-0000-0000",
-        accepted_responses: [410],
-      ).body
+      error_response =
+        fetch_green_deal_assessment(
+          assessment_id: "0000-0000-0000-0000-0000", accepted_responses: [410],
+        ).body
 
       expect(
         JSON.parse(error_response, symbolize_names: true)[:errors].first[:title],

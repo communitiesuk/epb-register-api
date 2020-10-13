@@ -8,22 +8,20 @@ module UseCase
       @assessments_gateway = Gateway::AssessmentsSearchGateway.new
       @assessments_xml_gateway = Gateway::AssessmentsXmlGateway.new
       @related_assessments_gateway = Gateway::RelatedAssessmentsGateway.new
-      @search_address_by_address_id_use_case = UseCase::SearchAddressesByAddressId.new
+      @search_address_by_address_id_use_case =
+        UseCase::SearchAddressesByAddressId.new
     end
 
     def execute(assessment_id)
       assessment_id = Helper::RrnHelper.normalise_rrn_format(assessment_id)
-      assessment = @assessments_gateway.search_by_assessment_id(assessment_id, false).first
+      assessment =
+        @assessments_gateway.search_by_assessment_id(assessment_id, false).first
 
-      unless assessment
-        raise NotFoundException
-      end
+      raise NotFoundException unless assessment
 
       status = assessment.to_hash[:status]
 
-      if %w[CANCELLED NOT_FOR_ISSUE].include? status
-        raise AssessmentGone
-      end
+      raise AssessmentGone if %w[CANCELLED NOT_FOR_ISSUE].include? status
 
       assessment_xml = @assessments_xml_gateway.fetch(assessment_id)
       xml = assessment_xml[:xml]
@@ -31,7 +29,8 @@ module UseCase
       type = ViewModel::RdSapWrapper.new(xml, schema_type).type.to_s
       result = ViewModel::RdSapWrapper.new(xml, schema_type).get_view_model
 
-      related_assessments = @related_assessments_gateway.by_address_id result.address_id
+      related_assessments =
+        @related_assessments_gateway.by_address_id result.address_id
       related_assessment = related_assessments.first.to_hash
 
       latest_assessment_flag = true
@@ -39,7 +38,9 @@ module UseCase
         latest_assessment_flag = false
       end
 
-      address = @search_address_by_address_id_use_case.execute address_id: result.address_id
+      address =
+        @search_address_by_address_id_use_case.execute address_id:
+                                                         result.address_id
       source = address.first.to_hash[:source]
 
       {

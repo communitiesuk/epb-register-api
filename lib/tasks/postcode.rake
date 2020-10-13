@@ -78,7 +78,7 @@ task :import_postcode do
       outcodes[outcode] = {
         latitude: [],
         longitude: [],
-        region: []
+        region: [],
       }
     end
 
@@ -113,7 +113,7 @@ task :import_postcode do
     db.drop_table :postcode_geolocation_legacy
     puts "Previous postcode table dropped"
 
-    if ENV["import_outcodes"]=="yes"
+    if ENV["import_outcodes"] == "yes"
       db.create_table :postcode_outcode_geolocations_tmp, force: :cascade do |t|
         t.string :outcode
         t.decimal :latitude
@@ -126,7 +126,7 @@ task :import_postcode do
           db.quote(outcode),
           (data[:latitude].reduce(:+) / data[:latitude].size.to_f),
           (data[:longitude].reduce(:+) / data[:longitude].size.to_f),
-          db.quote(data[:region].max_by { |i| data[:region].count(i) })
+          db.quote(data[:region].max_by { |i| data[:region].count(i) }),
         ].join(", ")
       end
 
