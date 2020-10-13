@@ -27,6 +27,8 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment" do
     assessment_id_node.children = assessment_id
     date = xml.at("Registration-Date")
     date.children = registration_date
+    address_id = xml.at("UPRN")
+    address_id.children = "RRN-0000-0000-0000-0000-0000"
 
     assessor = AssessorStub.new.fetch_request_body(assessor_qualifications)
     add_assessor(scheme_id, "SPEC000000", assessor)
@@ -126,6 +128,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment" do
         {
           typeOfAssessment: "RdSAP",
           address: {
+            source: "PREVIOUS_ASSESSMENT",
             line1: "1 Some Street",
             line2: "",
             line3: "",
@@ -133,7 +136,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment" do
             postcode: "A0 0AA",
             town: "Post-Town1",
           },
-          addressId: "UPRN-000000000000",
+          addressId: "RRN-0000-0000-0000-0000-0000",
           countryCode: "EAW",
           inspectionDate: "2020-05-04",
           lodgementDate: "2020-05-04",

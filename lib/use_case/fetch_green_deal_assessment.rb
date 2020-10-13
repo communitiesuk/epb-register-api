@@ -8,6 +8,7 @@ module UseCase
       @assessments_gateway = Gateway::AssessmentsSearchGateway.new
       @assessments_xml_gateway = Gateway::AssessmentsXmlGateway.new
       @related_assessments_gateway = Gateway::RelatedAssessmentsGateway.new
+      @search_address_by_address_id_use_case = UseCase::SearchAddressesByAddressId.new
     end
 
     def execute(assessment_id)
@@ -30,17 +31,21 @@ module UseCase
       type = ViewModel::RdSapWrapper.new(xml, schema_type).type.to_s
       result = ViewModel::RdSapWrapper.new(xml, schema_type).get_view_model
 
-      related_assessment = @related_assessments_gateway.by_address_id(result.address_id).first.to_hash
+      related_assessments = @related_assessments_gateway.by_address_id result.address_id
+      related_assessment = related_assessments.first.to_hash
 
       latest_assessment_flag = true
-
       unless related_assessment[:assessment_id] == assessment_id
         latest_assessment_flag = false
       end
 
+      address = @search_address_by_address_id_use_case.execute address_id: result.address_id
+      source = address.first.to_hash[:source]
+
       {
         type_of_assessment: type,
         address: {
+          source: source,
           line1: result.address_line1,
           line2: result.address_line2,
           line3: result.address_line3,
