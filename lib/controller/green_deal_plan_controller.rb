@@ -207,6 +207,10 @@ module Controller
         )
       when UseCase::FetchGreenDealAssessment::NotFoundException
         not_found_error("Assessment not found")
+      when Helper::RrnHelper::RrnNotValid
+        error_response 400,
+                       "INVALID_REQUEST",
+                       "The requested assessment ID is not valid"
       else
         server_error(e)
       end

@@ -64,6 +64,19 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment" do
     end
   end
 
+  context "when assessment ID is not valid" do
+    it "will return error 400" do
+      error_response =
+        fetch_green_deal_assessment(
+          assessment_id: "abcd", accepted_responses: [400],
+        ).body
+
+      expect(
+        JSON.parse(error_response, symbolize_names: true)[:errors].first[:title],
+      ).to eq("The requested assessment ID is not valid")
+    end
+  end
+
   context "when getting a valid RDSAP assessment" do
     it "will return the assessments details" do
       add_assessment_with_green_deal("RdSAP")
