@@ -34,6 +34,7 @@ describe ViewModel::AcCertWrapper do
       report_type: "6",
       type_of_assessment: "AC-CERT",
       date_of_expiry: "2024-05-04",
+      date_of_registration: "2020-05-20",
       address: {
         address_line1: "2 Lonely Street",
         address_line2: nil,

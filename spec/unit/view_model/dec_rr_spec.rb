@@ -58,6 +58,7 @@ describe ViewModel::DecRrWrapper do
       report_type: "2",
       type_of_assessment: "DEC-RR",
       date_of_expiry: "2030-05-04",
+      date_of_registration: "2020-05-04",
       address: {
         address_id: "RRN-0000-0000-0000-0000-0000",
         address_line1: "1 Lonely Street",

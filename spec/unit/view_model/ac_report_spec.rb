@@ -98,6 +98,7 @@ describe ViewModel::AcReportWrapper do
       report_type: "5",
       type_of_assessment: "AC-REPORT",
       date_of_expiry: "2030-05-04",
+      date_of_registration: "2020-05-20",
       address: {
         address_line1: "2 Lonely Street",
         address_line2: nil,
