@@ -85,6 +85,8 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment" do
             postcode: "A0 0AA",
             town: "Post-Town1",
           },
+          addressId: nil,
+          countryCode: "EAW",
         },
       )
     end

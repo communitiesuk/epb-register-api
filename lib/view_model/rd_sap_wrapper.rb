@@ -140,6 +140,7 @@ module ViewModel
         total_floor_area: @view_model.total_floor_area,
         opt_out: false,
         status: @view_model.status,
+        country_code: @view_model.country_code,
       }
     end
 

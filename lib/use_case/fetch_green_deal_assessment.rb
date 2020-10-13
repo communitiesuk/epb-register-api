@@ -31,6 +31,8 @@ module UseCase
           town: result[:town],
           postcode: result[:postcode],
         },
+        address_id: result[:address_id],
+        country_code: result[:country_code],
       }
     end
   end

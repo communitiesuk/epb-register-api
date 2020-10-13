@@ -277,6 +277,10 @@ module ViewModel
         @xml_doc.search("Secondary-Heating/Description").map(&:content)
       end
 
+      def country_code
+        xpath(%w[Country-Code])
+      end
+
     private
 
       def convert_to_big_decimal(node)

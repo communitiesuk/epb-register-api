@@ -348,6 +348,10 @@ module ViewModel
         xpath(%w[SAP-Main-Heating-Code])
       end
 
+      def country_code
+        xpath(%w[Country-Code])
+      end
+
     private
 
       def convert_to_big_decimal(node)
