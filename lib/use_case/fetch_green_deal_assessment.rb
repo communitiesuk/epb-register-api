@@ -10,11 +10,11 @@ module UseCase
     def execute(assessment_id)
       assessment_id = Helper::RrnHelper.normalise_rrn_format(assessment_id)
 
-      unless assessment_xml = @assessments_xml_gateway.fetch(assessment_id)
+      assessment_xml = @assessments_xml_gateway.fetch(assessment_id)
+
+      unless assessment_xml
         raise NotFoundException
       end
-
-      assessments_xml = @assessments_xml_gateway.fetch(assessment_id)
 
       xml = assessment_xml[:xml]
       schema_type = assessment_xml[:schema_type]
