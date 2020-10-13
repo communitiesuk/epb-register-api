@@ -89,6 +89,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment" do
           countryCode: "EAW",
           inspectionDate: "2020-05-04",
           lodgementDate: "2020-05-04",
+          status: "ENTERED",
         },
       )
     end
