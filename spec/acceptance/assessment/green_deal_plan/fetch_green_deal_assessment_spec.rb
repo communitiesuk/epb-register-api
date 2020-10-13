@@ -87,6 +87,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment" do
           },
           addressId: nil,
           countryCode: "EAW",
+          inspectionDate: "2020-05-04",
         },
       )
     end

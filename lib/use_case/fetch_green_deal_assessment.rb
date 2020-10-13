@@ -33,6 +33,7 @@ module UseCase
         },
         address_id: result[:address_id],
         country_code: result[:country_code],
+        inspection_date: result[:date_of_assessment],
       }
     end
   end
