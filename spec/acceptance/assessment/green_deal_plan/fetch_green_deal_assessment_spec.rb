@@ -77,6 +77,26 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment" do
     end
   end
 
+  context "when assessment status is cancelled or not for issue" do
+    it "will return error 410" do
+      add_assessment_with_green_deal("RdSAP")
+
+      update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
+                               assessment_status_body: { "status": "CANCELLED" },
+                               accepted_responses: [200],
+                               auth_data: { scheme_ids: [scheme_id] }
+
+      error_response = fetch_green_deal_assessment(
+        assessment_id: "0000-0000-0000-0000-0000",
+        accepted_responses: [410],
+      ).body
+
+      expect(
+        JSON.parse(error_response, symbolize_names: true)[:errors].first[:title],
+      ).to eq("Assessment not for issue")
+    end
+  end
+
   context "when getting a valid RDSAP assessment" do
     it "will return the assessments details" do
       add_assessment_with_green_deal("RdSAP")

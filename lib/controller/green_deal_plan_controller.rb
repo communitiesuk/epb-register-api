@@ -211,6 +211,8 @@ module Controller
         error_response 400,
                        "INVALID_REQUEST",
                        "The requested assessment ID is not valid"
+      when UseCase::FetchGreenDealAssessment::AssessmentGone
+        gone_error("Assessment not for issue")
       else
         server_error(e)
       end
