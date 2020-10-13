@@ -70,14 +70,6 @@ def get_valid_jwt(scopes = [], sup = {})
   token.encode ENV["JWT_SECRET"]
 end
 
-def opt_out_assessment(assessment_id)
-  ActiveRecord::Base.connection.execute(
-    "UPDATE assessments SET opt_out = true WHERE assessment_id = '#{
-      assessment_id
-    }'",
-  )
-end
-
 RSpec.configure do |config|
   config.include Rack::Test::Methods
   config.order = :random

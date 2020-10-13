@@ -235,5 +235,14 @@ module Controller
         server_error(e)
       end
     end
+
+    put "/api/assessments/:assessment_id/opt-out",
+        jwt_auth: %w[admin:opt_out] do
+      ActiveRecord::Base.connection.execute(
+        "UPDATE assessments SET opt_out = true WHERE assessment_id = '#{
+          params[:assessment_id]
+        }'",
+      )
+    end
   end
 end

@@ -545,3 +545,20 @@ def get_assessment_report(
     scopes,
   )
 end
+
+def opt_out_assessment(
+  assessment_id,
+  accepted_responses = [200],
+  authenticate = true,
+  auth_data = {},
+  scopes = %w[admin:opt_out]
+)
+  assertive_put(
+    "/api/assessments/#{assessment_id}/opt-out",
+    "",
+    accepted_responses,
+    authenticate,
+    auth_data,
+    scopes,
+  )
+end
