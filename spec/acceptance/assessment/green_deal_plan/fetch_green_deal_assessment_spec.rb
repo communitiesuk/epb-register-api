@@ -132,8 +132,9 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment" do
       add_non_domestic_assessment
 
       error_response =
-        fetch_green_deal_assessment(assessment_id: "0000-0000-0000-0000-0000", accepted_responses: [403])
-            .body
+        fetch_green_deal_assessment(
+          assessment_id: "0000-0000-0000-0000-0000", accepted_responses: [403],
+        ).body
 
       expect(
         JSON.parse(error_response, symbolize_names: true)[:errors].first[:title],
