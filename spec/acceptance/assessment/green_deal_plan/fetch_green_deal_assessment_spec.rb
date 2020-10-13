@@ -128,7 +128,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment" do
   end
 
   context "when getting a valid CEPC assessment" do
-    it "will return error 400" do
+    it "will return error 403" do
       add_non_domestic_assessment
 
       error_response =
@@ -142,7 +142,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment" do
     end
   end
 
-  context "when getting a valid RDSAP assessment" do
+  context "when getting a valid RdSAP assessment" do
     it "will return the assessments details" do
       add_assessment_with_green_deal type: "RdSAP"
       add_assessment_with_green_deal type: "RdSAP",
