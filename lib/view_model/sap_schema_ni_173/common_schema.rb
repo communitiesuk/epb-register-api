@@ -220,6 +220,22 @@ module ViewModel
         date_of_expiry < Time.now ? "EXPIRED" : "ENTERED"
       end
 
+      def country_code
+        xpath(%w[Country-Code])
+      end
+
+      def main_fuel_type
+        xpath(%w[Main-Fuel-Type])
+      end
+
+      def secondary_fuel_type
+        xpath(%w[Secondary-Fuel-Type])
+      end
+
+      def water_heating_fuel
+        xpath(%w[Water-Fuel-Type])
+      end
+
       def type_of_assessment
         "SAP"
       end

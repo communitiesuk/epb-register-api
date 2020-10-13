@@ -41,6 +41,7 @@
             </Address>
             <UPRN>UPRN-000000000000</UPRN>
         </Property>
+        <Country-Code>EAW</Country-Code>
         <Related-Party-Disclosure>
             <Related-Party-Disclosure-Number>1</Related-Party-Disclosure-Number>
         </Related-Party-Disclosure>
@@ -190,12 +191,15 @@
             <Is-In-Smoke-Control-Area>false</Is-In-Smoke-Control-Area>
             <SAP-Heating>
                 <Water-Heating-Code>950</Water-Heating-Code>
+                <Water-Fuel-Type>99</Water-Fuel-Type>
                 <Secondary-Heating-Category>1</Secondary-Heating-Category>
+                <Secondary-Fuel-Type>37</Secondary-Fuel-Type>
                 <Main-Heating-Details>
                     <Main-Heating>
                         <Main-Heating-Number>2</Main-Heating-Number>
                         <Main-Heating-Category>1</Main-Heating-Category>
                         <Main-Heating-Data-Source>1</Main-Heating-Data-Source>
+                        <Main-Fuel-Type>36</Main-Fuel-Type>
                         <Main-Heating-Control>2500</Main-Heating-Control>
                         <Main-Heating-Fraction>0</Main-Heating-Fraction>
                         <Emitter-Temperature>0</Emitter-Temperature>

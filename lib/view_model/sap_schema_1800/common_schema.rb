@@ -283,6 +283,14 @@ module ViewModel
         xpath(%w[Main-Fuel-Type])
       end
 
+      def secondary_fuel_type
+        xpath(%w[Secondary-Fuel-Type])
+      end
+
+      def water_heating_fuel
+        xpath(%w[Water-Fuel-Type])
+      end
+
       def boiler_flue_type
         xpath(%w[Boiler-Flue-Type])
       end
@@ -293,6 +301,10 @@ module ViewModel
 
       def sap_main_heating_code
         xpath(%w[SAP-Main-Heating-Code])
+      end
+
+      def country_code
+        xpath(%w[Country-Code])
       end
 
     private

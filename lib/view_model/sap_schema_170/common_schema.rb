@@ -225,6 +225,22 @@ module ViewModel
         "SAP"
       end
 
+      def country_code
+        xpath(%w[Country-Code])
+      end
+
+      def main_fuel_type
+        xpath(%w[Main-Fuel-Type])
+      end
+
+      def secondary_fuel_type
+        xpath(%w[Secondary-Fuel-Type])
+      end
+
+      def water_heating_fuel
+        xpath(%w[Water-Fuel-Type])
+      end
+
     private
 
       def convert_to_big_decimal(node)

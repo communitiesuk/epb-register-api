@@ -26,8 +26,8 @@ module UseCase
       assessment_xml = @assessments_xml_gateway.fetch(assessment_id)
       xml = assessment_xml[:xml]
       schema_type = assessment_xml[:schema_type]
-      type = ViewModel::RdSapWrapper.new(xml, schema_type).type.to_s
-      result = ViewModel::RdSapWrapper.new(xml, schema_type).get_view_model
+      type = ViewModel::Factory.new.create(xml, schema_type).type.to_s
+      result = ViewModel::Factory.new.create(xml, schema_type).get_view_model
 
       related_assessments =
         @related_assessments_gateway.by_address_id result.address_id
