@@ -289,6 +289,10 @@ module ViewModel
         xpath(%w[Secondary-Fuel-Type])
       end
 
+      def water_heating_fuel
+        xpath(%w[Water-Heating-Fuel])
+      end
+
     private
 
       def convert_to_big_decimal(node)

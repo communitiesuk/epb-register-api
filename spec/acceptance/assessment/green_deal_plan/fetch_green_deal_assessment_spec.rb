@@ -92,6 +92,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment" do
           status: "ENTERED",
           mainFuelType: "26",
           secondaryFuelType: "25",
+          waterHeatingFuel: "26",
         },
       )
     end

@@ -340,6 +340,10 @@ module ViewModel
         xpath(%w[Secondary-Fuel-Type])
       end
 
+      def water_heating_fuel
+        xpath(%w[Water-Heating-Fuel])
+      end
+
       def boiler_flue_type
         xpath(%w[Boiler-Flue-Type])
       end

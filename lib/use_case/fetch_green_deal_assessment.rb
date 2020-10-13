@@ -38,6 +38,7 @@ module UseCase
         status: result.status,
         main_fuel_type: result.main_fuel_type,
         secondary_fuel_type: result.secondary_fuel_type,
+        water_heating_fuel: result.water_heating_fuel,
       }
     end
   end
