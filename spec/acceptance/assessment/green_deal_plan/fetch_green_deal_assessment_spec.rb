@@ -85,7 +85,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment" do
             postcode: "A0 0AA",
             town: "Post-Town1",
           },
-          addressId: nil,
+          addressId: "UPRN-000000000000",
           countryCode: "EAW",
           inspectionDate: "2020-05-04",
           lodgementDate: "2020-05-04",
