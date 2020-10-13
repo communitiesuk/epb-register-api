@@ -5,7 +5,12 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment" do
 
   let(:scheme_id) { add_scheme_and_get_id }
 
-  def add_assessment_with_green_deal(type = "RdSAP")
+  def add_assessment_with_green_deal(
+    type: "RdSAP",
+    assessment_id: "0000-0000-0000-0000-0000",
+    registration_date: "2020-05-04",
+    green_deal_plan_id: "ABC123456DEF"
+  )
     case type
     when "RdSAP"
       assessor_qualifications = { domesticRdSap: "ACTIVE" }
@@ -17,26 +22,32 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment" do
       xml_schema = "CEPC-8.0.0"
     end
 
+    xml = Nokogiri.XML xml
+    assessment_id_node = xml.at("RRN")
+    assessment_id_node.children = assessment_id
+    date = xml.at("Registration-Date")
+    date.children = registration_date
+
     assessor = AssessorStub.new.fetch_request_body(assessor_qualifications)
     add_assessor(scheme_id, "SPEC000000", assessor)
 
     lodge_assessment(
-      assessment_body: xml,
+      assessment_body: xml.to_xml,
       auth_data: { scheme_ids: [scheme_id] },
       schema_name: xml_schema,
     )
 
     if type == "RdSAP"
       add_green_deal_plan(
-        assessment_id: "0000-0000-0000-0000-0000",
-        body: GreenDealPlanStub.new.request_body,
+        assessment_id: assessment_id,
+        body: GreenDealPlanStub.new.request_body(green_deal_plan_id),
       )
     end
   end
 
   context "when getting an assessment without the correct permissions" do
     it "will return error 403" do
-      add_assessment_with_green_deal("RdSAP")
+      add_assessment_with_green_deal type: "RdSAP"
 
       error_response =
         fetch_green_deal_assessment(
@@ -79,7 +90,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment" do
 
   context "when assessment status is cancelled or not for issue" do
     it "will return error 410" do
-      add_assessment_with_green_deal("RdSAP")
+      add_assessment_with_green_deal type: "RdSAP"
 
       update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
                                assessment_status_body: { "status": "CANCELLED" },
@@ -99,7 +110,11 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment" do
 
   context "when getting a valid RDSAP assessment" do
     it "will return the assessments details" do
-      add_assessment_with_green_deal("RdSAP")
+      add_assessment_with_green_deal type: "RdSAP"
+      add_assessment_with_green_deal type: "RdSAP",
+                                     assessment_id: "0000-0000-0000-0000-1111",
+                                     registration_date: "2020-10-10",
+                                     green_deal_plan_id: "ABC654321DEF"
 
       response =
         fetch_green_deal_assessment(assessment_id: "0000-0000-0000-0000-0000")
@@ -122,6 +137,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment" do
           countryCode: "EAW",
           inspectionDate: "2020-05-04",
           lodgementDate: "2020-05-04",
+          isLatestAssessmentForAddress: false,
           status: "ENTERED",
           mainFuelType: "26",
           secondaryFuelType: "25",

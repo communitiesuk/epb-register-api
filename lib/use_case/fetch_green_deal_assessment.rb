@@ -7,6 +7,7 @@ module UseCase
     def initialize
       @assessments_gateway = Gateway::AssessmentsSearchGateway.new
       @assessments_xml_gateway = Gateway::AssessmentsXmlGateway.new
+      @related_assessments_gateway = Gateway::RelatedAssessmentsGateway.new
     end
 
     def execute(assessment_id)
@@ -29,6 +30,14 @@ module UseCase
       type = ViewModel::RdSapWrapper.new(xml, schema_type).type.to_s
       result = ViewModel::RdSapWrapper.new(xml, schema_type).get_view_model
 
+      related_assessment = @related_assessments_gateway.by_address_id(result.address_id).first.to_hash
+
+      latest_assessment_flag = true
+
+      unless related_assessment[:assessment_id] == assessment_id
+        latest_assessment_flag = false
+      end
+
       {
         type_of_assessment: type,
         address: {
@@ -43,6 +52,7 @@ module UseCase
         country_code: result.country_code,
         inspection_date: result.date_of_assessment,
         lodgement_date: result.date_of_registration,
+        is_latest_assessment_for_address: latest_assessment_flag,
         status: status,
         main_fuel_type: result.main_fuel_type,
         secondary_fuel_type: result.secondary_fuel_type,

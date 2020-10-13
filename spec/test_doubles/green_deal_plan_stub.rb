@@ -1,7 +1,7 @@
 class GreenDealPlanStub
-  def request_body
+  def request_body(green_deal_plan_id = "ABC123456DEF")
     {
-      greenDealPlanId: "ABC123456DEF",
+      greenDealPlanId: green_deal_plan_id,
       startDate: "2020-01-30",
       endDate: "2030-02-28",
       providerDetails: {
