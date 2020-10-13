@@ -36,6 +36,7 @@ module UseCase
         inspection_date: result.date_of_assessment,
         lodgement_date: result.date_of_registration,
         status: result.status,
+        main_fuel_type: result.main_fuel_type,
       }
     end
   end

@@ -90,6 +90,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment" do
           inspectionDate: "2020-05-04",
           lodgementDate: "2020-05-04",
           status: "ENTERED",
+          mainFuelType: "26",
         },
       )
     end

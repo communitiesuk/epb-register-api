@@ -281,6 +281,10 @@ module ViewModel
         xpath(%w[Country-Code])
       end
 
+      def main_fuel_type
+        xpath(%w[Main-Fuel-Type])
+      end
+
     private
 
       def convert_to_big_decimal(node)
