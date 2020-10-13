@@ -34,19 +34,6 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment" do
     end
   end
 
-  context "when getting an assessment with a malformed RRN" do
-    it "will return error 400, assessment id not valid" do
-      error_response =
-        fetch_green_deal_assessment(
-          assessment_id: "randomly-wrong-rrn", accepted_responses: [400],
-        ).body
-
-      expect(
-        JSON.parse(error_response, symbolize_names: true)[:errors].first[:title],
-      ).to eq("The assessmentId parameter is badly formatted")
-    end
-  end
-
   context "when getting an assessment without the correct permissions" do
     it "will return error 403" do
       add_assessment_with_green_deal("RdSAP")
@@ -74,6 +61,32 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment" do
       expect(
         JSON.parse(error_response, symbolize_names: true)[:errors].first[:title],
       ).to eq("Assessment not found")
+    end
+  end
+
+  context "when getting a valid RDSAP assessment" do
+    it "will return the assessments details" do
+      add_assessment_with_green_deal("RdSAP")
+
+      response =
+        fetch_green_deal_assessment(assessment_id: "0000-0000-0000-0000-0000")
+          .body
+
+      expect(
+        JSON.parse(response, symbolize_names: true)[:data][:assessment],
+      ).to eq(
+        {
+          typeOfAssessment: "RdSAP",
+          address: {
+            line1: "1 Some Street",
+            line2: "",
+            line3: "",
+            line4: "",
+            postcode: "A0 0AA",
+            town: "Post-Town1",
+          },
+        },
+      )
     end
   end
 end

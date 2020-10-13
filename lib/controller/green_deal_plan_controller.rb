@@ -195,14 +195,10 @@ module Controller
         jwt_auth: %w[greendeal:plans] do
       assessment_id = params[:assessment_id]
       result = UseCase::FetchGreenDealAssessment.new.execute(assessment_id)
+
+      json_api_response code: 200, data: { assessment: result }
     rescue StandardError => e
       case e
-      when UseCase::FetchGreenDealAssessment::AssessmentIdIsBadlyFormatted
-        error_response(
-          400,
-          "INVALID_REQUEST",
-          "The assessmentId parameter is badly formatted",
-        )
       when UseCase::FetchGreenDealAssessment::UnauthorisedToFetchThisAssessment
         error_response(
           403,
