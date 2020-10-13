@@ -3,6 +3,7 @@ module UseCase
     class UnauthorisedToFetchThisAssessment < StandardError; end
     class NotFoundException < StandardError; end
     class AssessmentGone < StandardError; end
+    class InvalidAssessmentTypeException < StandardError; end
 
     def initialize
       @assessments_gateway = Gateway::AssessmentsSearchGateway.new
@@ -13,7 +14,7 @@ module UseCase
     end
 
     def execute(assessment_id)
-      assessment_id = Helper::RrnHelper.normalise_rrn_format(assessment_id)
+      assessment_id = Helper::RrnHelper.normalise_rrn_format assessment_id
       assessment =
         @assessments_gateway.search_by_assessment_id(assessment_id, false).first
 
@@ -23,10 +24,14 @@ module UseCase
 
       raise AssessmentGone if %w[CANCELLED NOT_FOR_ISSUE].include? status
 
-      assessment_xml = @assessments_xml_gateway.fetch(assessment_id)
+      assessment_xml = @assessments_xml_gateway.fetch assessment_id
       xml = assessment_xml[:xml]
       schema_type = assessment_xml[:schema_type]
-      type = ViewModel::Factory.new.create(xml, schema_type).type.to_s
+
+      type = assessment.to_hash[:type_of_assessment]
+
+      raise InvalidAssessmentTypeException unless %w[RdSAP SAP].include? type
+
       result = ViewModel::Factory.new.create(xml, schema_type).get_view_model
 
       related_assessments =

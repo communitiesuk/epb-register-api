@@ -213,6 +213,8 @@ module Controller
                        "The requested assessment ID is not valid"
       when UseCase::FetchGreenDealAssessment::AssessmentGone
         gone_error("Assessment not for issue")
+      when UseCase::FetchGreenDealAssessment::InvalidAssessmentTypeException
+        forbidden("UNAUTHORISED", "Assessment is not an RdSAP/SAP")
       else
         server_error(e)
       end
