@@ -1,6 +1,5 @@
 module UseCase
   class FetchGreenDealAssessment
-    class UnauthorisedToFetchThisAssessment < StandardError; end
     class NotFoundException < StandardError; end
     class AssessmentGone < StandardError; end
     class InvalidAssessmentTypeException < StandardError; end

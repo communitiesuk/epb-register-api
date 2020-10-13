@@ -199,12 +199,6 @@ module Controller
       json_api_response code: 200, data: { assessment: result }
     rescue StandardError => e
       case e
-      when UseCase::FetchGreenDealAssessment::UnauthorisedToFetchThisAssessment
-        error_response(
-          403,
-          "UNAUTHORISED",
-          "Not authorised to perform this request",
-        )
       when UseCase::FetchGreenDealAssessment::NotFoundException
         not_found_error("Assessment not found")
       when Helper::RrnHelper::RrnNotValid
