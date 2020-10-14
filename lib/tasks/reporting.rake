@@ -22,6 +22,8 @@ task :extract_reporting do
         assessment_id, xml, schema_type
       FROM
         assessments_xml
+      ORDER BY
+        assessment_id
       LIMIT
         " + ENV["batch"] + "
       OFFSET
