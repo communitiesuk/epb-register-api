@@ -15,21 +15,25 @@ task :import_address_base do
 
   iterations = ENV["iterations"] ? ENV["iterations"].to_i : 1
 
-  ActiveRecord::Base.connection.execute("DROP TABLE IF EXISTS address_base_tmp")
-  ActiveRecord::Base.connection.execute("CREATE TABLE IF NOT EXISTS address_base_tmp (
-     uprn VARCHAR (255),
-     postcode VARCHAR (255),
-     address_line1 VARCHAR (255),
-     address_line2 VARCHAR (255),
-     address_line3 VARCHAR (255),
-     address_line4 VARCHAR (255),
-     town VARCHAR (255)
-  );")
-  puts "Created table address_base_tmp"
+  db = ActiveRecord::Base.connection
+
+  puts "Starting extraction at #{Time.now}"
+
+  db.execute("DROP TABLE IF EXISTS address_base_tmp")
+
+  db.create_table "address_base_tmp", primary_key: "uprn", id: :string, force: :cascade do |t|
+    t.string "postcode"
+    t.string "address_line1"
+    t.string "address_line2"
+    t.string "address_line3"
+    t.string "address_line4"
+    t.string "town"
+  end
+
+  puts "address_base_tmp table created at #{Time.now}"
 
   iterations.times do |iteration|
     internal_url = ENV["url"].gsub("{iteration}", sprintf("%.2d", (iteration + 1)))
-    puts "Reading AddressBase file from: #{internal_url}"
     uri = URI(internal_url)
 
     raw_address_base = Net::HTTP.start(
@@ -44,23 +48,29 @@ task :import_address_base do
       http.request request
     end
 
+    puts "Read CSV from #{internal_url} at #{Time.now}"
+
     csv_contents = raw_address_base.body
-    puts "   Got CSV contents..."
 
     if ENV["url"].to_s.include?(".zip")
       Zip::InputStream.open(StringIO.new(csv_contents)) do |io|
         io.get_next_entry
 
         csv_contents = io.read
-        puts "   Unzipped CSV contents..."
+
+        puts "Unzipped folder and read first file at #{Time.now}"
       end
     end
 
-    puts "   Size of contents is: #{csv_contents.size}"
+
+    puts "Size of CSV is #{csv_contents.size}, read at #{Time.now}"
+
     next unless csv_contents.size.positive?
 
     csv_contents = CSV.parse(csv_contents)
-    puts "   Parsed CSV contents..."
+
+    puts "Parsed CSV at #{Time.now}"
+
     csv_contents.each_slice(10_000) do |inserts|
       query = []
       inserts.map do |row|
@@ -135,15 +145,39 @@ task :import_address_base do
               )")
       end
 
+      puts "Created array to insert at #{Time.now}"
+
       ActiveRecord::Base.connection.execute("INSERT INTO address_base_tmp VALUES " + query.join(", "))
+
+      puts "Inserted batch at #{Time.now}"
     end
 
-    puts "Inserted file " + iteration.to_s + " out of " + iterations.to_s
+    puts "Inserted file #{iteration.to_s} out of #{iterations.to_s} at #{Time.now}"
+  end
+
+  number_of_rows = db.execute("SELECT COUNT(uprn) AS number_of_addresses FROM address_base_tmp").first["number_of_addresses"]
+
+  puts "Results batched and added to new table, number of results in table #{number_of_rows} at #{Time.now}"
+
+  if number_of_rows == ENV["expected_number_of_rows"].to_i
+    db.rename_table :address_base, :address_base_legacy
+
+    puts "Renamed old address base at #{Time.now}"
+
+    db.rename_table :address_base_tmp, :address_base
+
+    puts "Put new address base table in place at #{Time.now}"
+
+    db.drop_table :address_base_legacy
+
+    puts "Dropped old address base table at #{Time.now}"
+
+    db.execute("CREATE INDEX index_address_base_on_postcode ON address_base (postcode)")
+
+    puts "Create address base postcode index at #{Time.now}"
+  else
+    puts "Number of addresses to import doesn't match, you said #{ENV['expected_number_of_rows']} and we found #{number_of_rows}"
   end
 rescue StandardError => e
-  puts "Error importing AddreessBase: #{e}"
-
-  # ActiveRecord::Base.connection.execute("INSERT INTO address_base SELECT * FROM address_base_tmp ON CONFLICT DO NOTHING")
-  # ActiveRecord::Base.connection.execute("TRUNCATE TABLE address_base_tmp")
-  # ActiveRecord::Base.connection.execute("DROP TABLE address_base_tmp")
+  puts "Error importing AddressBase: #{e}"
 end
