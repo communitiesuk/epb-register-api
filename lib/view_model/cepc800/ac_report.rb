@@ -119,7 +119,11 @@ module ViewModel
         inspection_item = {
           note: node&.at("Note")&.content,
           recommendations:
-            extract_aci_recommendations(node.search("ACI-Recommendation")),
+            if node.respond_to?(:search)
+              extract_aci_recommendations(node.search("ACI-Recommendation"))
+            else
+              []
+            end,
         }
 
         flag = node.at("Flag")
