@@ -3,48 +3,6 @@
 describe "Acceptance::Reports::GetAssessmentCountByRegionAndType" do
   include RSpecRegisterApiServiceMixin
 
-  def add_postcodes(
-    postcode, latitude = 0, longitude = 0, region = nil, clean = true
-  )
-    db = ActiveRecord::Base
-
-    truncate(postcode) if clean
-
-    db.connection.execute(
-      "INSERT INTO postcode_geolocation (postcode, latitude, longitude, region) VALUES('#{
-        postcode
-      }', #{latitude.to_f}, #{longitude.to_f}, #{
-        region.nil? ? 'NULL' : (db.connection.quote region)
-      })",
-    )
-  end
-
-  def add_outcodes(
-    outcode, latitude = 0, longitude = 0, region = nil, clean = true
-  )
-    db = ActiveRecord::Base
-
-    truncate(outcode) if clean
-
-    db.connection.execute(
-      "INSERT INTO postcode_outcode_geolocations (outcode, latitude, longitude, region) VALUES('#{
-        db.sanitize_sql(outcode)
-      }', #{latitude.to_f}, #{longitude.to_f}, '#{region}')",
-    )
-  end
-
-  def truncate(postcode)
-    if postcode == Regexp.new(Helper::RegexHelper::POSTCODE, Regexp::IGNORECASE)
-      ActiveRecord::Base.connection.execute(
-        "TRUNCATE TABLE postcode_geolocation",
-      )
-    else
-      ActiveRecord::Base.connection.execute(
-        "TRUNCATE TABLE postcode_outcode_geolocations",
-      )
-    end
-  end
-
   let(:valid_assessor_request_body) do
     AssessorStub.new.fetch_request_body(
       nonDomesticNos3: "ACTIVE",

@@ -25,42 +25,6 @@ describe "Acceptance::SearchForAssessor" do
     }
   end
 
-  def add_postcodes(postcode, latitude = 0, longitude = 0, clean = true)
-    db = ActiveRecord::Base
-
-    truncate(postcode) if clean
-
-    db.connection.execute(
-      "INSERT INTO postcode_geolocation (postcode, latitude, longitude) VALUES('#{
-        db.sanitize_sql(postcode)
-      }', #{latitude.to_f}, #{longitude.to_f})",
-    )
-  end
-
-  def add_outcodes(outcode, latitude = 0, longitude = 0, clean = true)
-    db = ActiveRecord::Base
-
-    truncate(outcode) if clean
-
-    db.connection.execute(
-      "INSERT INTO postcode_outcode_geolocations (outcode, latitude, longitude) VALUES('#{
-        db.sanitize_sql(outcode)
-      }', #{latitude.to_f}, #{longitude.to_f})",
-    )
-  end
-
-  def truncate(postcode)
-    if postcode == Regexp.new(Helper::RegexHelper::POSTCODE, Regexp::IGNORECASE)
-      ActiveRecord::Base.connection.execute(
-        "TRUNCATE TABLE postcode_geolocation",
-      )
-    else
-      ActiveRecord::Base.connection.execute(
-        "TRUNCATE TABLE postcode_outcode_geolocations",
-      )
-    end
-  end
-
   context "when a search postcode is not found" do
     it "returns status 404 for a get" do
       assessors_search("73334", "domesticRdSap", [404])
