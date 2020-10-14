@@ -8,7 +8,11 @@ task :extract_reporting do
   loader.push_dir("#{__dir__}/../")
   loader.setup
 
+  puts "Starting extraction at #{Time.now}"
+
   number_of_assessments = ActiveRecord::Base.connection.execute("SELECT COUNT(assessment_id) AS number_of_assessments FROM assessments").first["number_of_assessments"]
+
+  puts "Done getting number of assessments. #{number_of_assessments} in total at #{Time.now}"
 
   start = 0
 
@@ -23,6 +27,8 @@ task :extract_reporting do
       OFFSET
         " + start.to_s + "
     ")
+
+    puts "Done getting batch #{start} from DB at #{Time.now}"
 
     data = []
 
@@ -51,6 +57,8 @@ task :extract_reporting do
       )
     end
 
+    puts "Done preparing array for CSV at #{Time.now}"
+
     internal_url = ENV["url"]
 
     uri = URI(internal_url)
@@ -70,8 +78,10 @@ task :extract_reporting do
       http.request request
     end
 
+    puts "Done sending the request at #{Time.now}"
+
     if response.body != "DONE"
-      puts "FAILED ON BATCH " + start.to_s + " with " + response.body
+      puts "Failed batch " + start.to_s + " with error " + response.body
     end
 
     start += ENV["batch"].to_i
