@@ -12,9 +12,15 @@ module Controller
       content_type "text/csv"
       attachment params["start_date"] + "_to_" + params["end_date"] + ".csv"
 
-      body CSV.generate(
-        write_headers: true, headers: raw_data.first.keys,
-      ) { |csv| raw_data.each { |row| csv << row } }
+      if raw_data.empty?
+        json_response(200, { data: "No lodgements during this time frame" })
+      else
+        content_type "text/csv"
+        attachment params["start_date"] + "_to_" + params["end_date"] + ".csv"
+        body CSV.generate(
+          write_headers: true, headers: raw_data.first.keys,
+        ) { |csv| raw_data.each { |row| csv << row } }
+      end
     end
   end
 end
