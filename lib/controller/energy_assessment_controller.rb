@@ -238,11 +238,11 @@ module Controller
 
     put "/api/assessments/:assessment_id/opt-out",
         jwt_auth: %w[admin:opt_out] do
-      ActiveRecord::Base.connection.execute(
-        "UPDATE assessments SET opt_out = true WHERE assessment_id = '#{
-          params[:assessment_id]
-        }'",
-      )
+      assessment_id = params[:assessment_id]
+
+      UseCase::OptOutAssessment.new.execute(assessment_id)
+
+      json_api_response(code: 200, data: "Your opt out request was successful")
     end
   end
 end
