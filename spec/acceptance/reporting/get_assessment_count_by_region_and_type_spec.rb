@@ -304,7 +304,7 @@ describe "Acceptance::Reports::GetAssessmentCountByRegionAndType" do
               .body
 
       expect(response).to eq(
-                              "number_of_assessments,type_of_assessment,region\n1,CEPC,London\n1,AC_CERT,London\n1,CEPC-RR,London\n1,DEC,London\n1,DEC-RR,London\n1,RdSAP,London\n1,SAP,London\n",
+                              "number_of_assessments,type_of_assessment,region\n1,AC-CERT,London\n1,AC-REPORT,London\n1,CEPC,London\n1,CEPC-RR,London\n1,DEC,London\n1,DEC-RR,London\n1,RdSAP,London\n1,SAP,London\n",
                               )
     end
   end
