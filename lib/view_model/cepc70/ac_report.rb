@@ -126,9 +126,12 @@ module ViewModel
             end,
         }
 
-        flag = node.at("Flag")
+        if node.respond_to?(:at)
+          if node.at("Flag")
+            inspection_item[:flag] = node.at("Flag").content == "Yes"
+          end
+        end
 
-        inspection_item[:flag] = flag.content == "Yes" if flag
         inspection_item
       end
 
