@@ -43,4 +43,10 @@ describe "Acceptance::OptOut" do
       opt_out_assessment("0000-0000-0000-0000-0000", [404])
     end
   end
+
+  context "when opting out an assessment id that is not valid" do
+    it "returns 400" do
+      opt_out_assessment("0000-0000-0000-0000-0000%23", [400])
+    end
+  end
 end

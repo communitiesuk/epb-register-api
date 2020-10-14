@@ -247,6 +247,8 @@ module Controller
       case e
       when UseCase::OptOutAssessment::AssessmentNotFound
         not_found_error("Assessment not found")
+      when Helper::RrnHelper::RrnNotValid
+        error_response(400, "INVALID_QUERY", "Assessment ID not valid")
       else
         server_error(e.message)
       end
