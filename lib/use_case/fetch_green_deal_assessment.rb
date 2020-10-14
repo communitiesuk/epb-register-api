@@ -43,8 +43,15 @@ module UseCase
       end
 
       address =
-        @search_address_by_address_id_use_case.execute address_id:
-                                                         result.address_id
+        if result.address_id.start_with? "LPRN"
+          @search_address_by_address_id_use_case.execute address_id:
+                                                           "RRN-" +
+                                                             assessment_id
+        else
+          @search_address_by_address_id_use_case.execute address_id:
+                                                           result.address_id
+        end
+
       source = address.first.to_hash[:source]
 
       {

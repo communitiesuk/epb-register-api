@@ -9,13 +9,15 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment" do
     type: "RdSAP",
     assessment_id: "0000-0000-0000-0000-0000",
     registration_date: "2020-05-04",
-    green_deal_plan_id: "ABC123456DEF"
+    green_deal_plan_id: "ABC123456DEF",
+    address_id: "RRN-0000-0000-0000-0000-0000",
+    schema_version: "RdSAP-Schema-20.0.0"
   )
     case type
     when "RdSAP"
       assessor_qualifications = { domesticRdSap: "ACTIVE" }
-      xml = Samples.xml("RdSAP-Schema-20.0.0")
-      xml_schema = "RdSAP-Schema-20.0.0"
+      xml = Samples.xml(schema_version)
+      xml_schema = schema_version
     when "SAP"
       assessor_qualifications = { domesticSap: "ACTIVE" }
       xml = Samples.xml("SAP-Schema-18.0.0")
@@ -27,8 +29,8 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment" do
     assessment_id_node.children = assessment_id
     date = xml.at("Registration-Date")
     date.children = registration_date
-    address_id = xml.at("UPRN")
-    address_id.children = "RRN-0000-0000-0000-0000-0000"
+    address_id_node = xml.at("UPRN")
+    address_id_node.children = address_id
 
     assessor = AssessorStub.new.fetch_request_body assessor_qualifications
     add_assessor scheme_id, "SPEC000000", assessor
@@ -217,6 +219,50 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment" do
           mainFuelType: "36",
           secondaryFuelType: "37",
           waterHeatingFuel: "99",
+        },
+      )
+    end
+  end
+
+  context "with an LPRN address ID" do
+    it "will return the assessments details" do
+      add_assessment_with_green_deal type: "RdSAP",
+                                     address_id: "1234567890",
+                                     schema_version: "RdSAP-Schema-19.0"
+      add_assessment_with_green_deal type: "RdSAP",
+                                     assessment_id: "0000-0000-0000-0000-1111",
+                                     registration_date: "2020-10-10",
+                                     green_deal_plan_id: "ABC654321DEF",
+                                     address_id: "1234567890",
+                                     schema_version: "RdSAP-Schema-19.0"
+
+      response =
+        fetch_green_deal_assessment(assessment_id: "0000-0000-0000-0000-0000")
+            .body
+
+      expect(
+        JSON.parse(response, symbolize_names: true)[:data][:assessment],
+      ).to eq(
+        {
+          typeOfAssessment: "RdSAP",
+          address: {
+            source: "PREVIOUS_ASSESSMENT",
+            line1: "1 Some Street",
+            line2: "",
+            line3: "",
+            line4: "",
+            postcode: "A0 0AA",
+            town: "Post-Town1",
+          },
+          addressId: "LPRN-1234567890",
+          countryCode: "EAW",
+          inspectionDate: "2020-05-04",
+          lodgementDate: "2020-05-04",
+          isLatestAssessmentForAddress: false,
+          status: "ENTERED",
+          mainFuelType: "26",
+          secondaryFuelType: "25",
+          waterHeatingFuel: "26",
         },
       )
     end

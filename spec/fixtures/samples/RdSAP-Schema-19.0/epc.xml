@@ -207,6 +207,7 @@
           </SAP-Building-Part>
         </SAP-Building-Parts>
         <SAP-Heating>
+          <Secondary-Fuel-Type>25</Secondary-Fuel-Type>
           <Main-Heating-Details>
             <Main-Heating>
               <Main-Heating-Number>1</Main-Heating-Number>
