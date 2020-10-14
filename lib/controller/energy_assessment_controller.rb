@@ -243,6 +243,13 @@ module Controller
       UseCase::OptOutAssessment.new.execute(assessment_id)
 
       json_api_response(code: 200, data: "Your opt out request was successful")
+    rescue StandardError => e
+      case e
+      when UseCase::OptOutAssessment::AssessmentNotFound
+        not_found_error("Assessment not found")
+      else
+        server_error(e.message)
+      end
     end
   end
 end

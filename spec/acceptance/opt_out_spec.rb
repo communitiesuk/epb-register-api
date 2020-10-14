@@ -37,4 +37,10 @@ describe "Acceptance::OptOut" do
       expect(response[:data][:assessments].length).to eq 0
     end
   end
+
+  context "when opting out an assessment that doesnt exist" do
+    it "returns 404" do
+      opt_out_assessment("0000-0000-0000-0000-0000", [404])
+    end
+  end
 end
