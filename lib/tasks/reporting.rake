@@ -88,7 +88,7 @@ task :extract_reporting do
 
     start += ENV["batch"].to_i
 
-    if ENV["max_runs"] && ENV["max_runs"].to_i >= start
+    if ENV["max_runs"] && ENV["max_runs"].to_i <= start
       puts "Exiting as max runs was reached"
       break
     end
