@@ -238,7 +238,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment" do
 
       response =
         fetch_green_deal_assessment(assessment_id: "0000-0000-0000-0000-0000")
-            .body
+          .body
 
       expect(
         JSON.parse(response, symbolize_names: true)[:data][:assessment],
