@@ -138,7 +138,7 @@ module Gateway
       end
     end
 
-    def search(latitude, longitude, qualifications, entries = 10)
+    def search(latitude, longitude, qualifications, entries = 20)
       qualification_selector =
         qualification_columns_to_sql(
           qualifications.map { |q| qualification_to_column(q) },
