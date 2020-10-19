@@ -62,7 +62,6 @@ task :import_address_base do
       end
     end
 
-
     puts "Size of CSV is #{csv_contents.size}, read at #{Time.now}"
 
     next unless csv_contents.size.positive?
@@ -152,7 +151,7 @@ task :import_address_base do
       puts "Inserted batch at #{Time.now}"
     end
 
-    puts "Inserted file #{iteration.to_s} out of #{iterations.to_s} at #{Time.now}"
+    puts "Inserted file #{iteration} out of #{iterations} at #{Time.now}"
   end
 
   number_of_rows = db.execute("SELECT COUNT(uprn) AS number_of_addresses FROM address_base_tmp").first["number_of_addresses"]
