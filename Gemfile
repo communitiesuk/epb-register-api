@@ -14,7 +14,7 @@ source "https://rubygems.org" do
     gem "pry", "~> 0.13.1"
     gem "rack-test", "~> 1.1.0"
     gem "rspec", "~>3.0"
-    gem "webmock", "~> 3.7"
+    gem "webmock", "~> 3.9"
   end
 
   gem "epb-auth-tools", "~> 1.0.4"
