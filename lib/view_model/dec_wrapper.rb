@@ -75,6 +75,7 @@ module ViewModel
           main_heating_fuel: @view_model.main_heating_fuel,
           building_environment: @view_model.building_environment,
           floor_area: @view_model.floor_area,
+          occupier: @view_model.occupier,
           asset_rating: @view_model.asset_rating,
           annual_energy_use_fuel_thermal:
             @view_model.annual_energy_use_fuel_thermal,

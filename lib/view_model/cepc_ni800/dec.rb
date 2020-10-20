@@ -141,6 +141,10 @@ module ViewModel
         xpath(%w[OR-Operational-Rating OR-Assessment-Start-Date])
       end
 
+      def occupier
+        xpath(%w[Occupier])
+      end
+
       def benchmarks
         @xml_doc.search("Benchmarks/Benchmark").map do |node|
           {
