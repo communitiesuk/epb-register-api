@@ -61,6 +61,7 @@ module UseCase
           postcode: result.postcode,
         },
         address_id: result.address_id,
+        address_identifiers: [result.address_id],
         country_code: result.country_code,
         inspection_date: result.date_of_assessment,
         lodgement_date: result.date_of_registration,
