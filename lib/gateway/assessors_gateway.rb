@@ -174,16 +174,18 @@ module Gateway
            non_domestic_nos3_qualification, non_domestic_nos4_qualification,
            non_domestic_nos5_qualification, gda_qualification,
             (
-              sqrt(abs(POWER(69.1 * (a.latitude - $1 ), 2) +
-              POWER(69.1 * (a.longitude - $2) * cos( $1 / 57.3), 2)))
+              sqrt(abs(POWER(69.1 * (coalesce(a.latitude, d.latitude) - $1), 2) +
+                       POWER(69.1 * (coalesce(a.longitude, d.longitude) - $2) *
+                    cos($1 / 57.3), 2)))
             ) AS distance
-          FROM postcode_geolocation a
-          INNER JOIN assessors b ON(b.search_results_comparison_postcode = a.postcode)
+          FROM assessors b
+          LEFT JOIN postcode_geolocation a ON (b.search_results_comparison_postcode = a.postcode)
+          LEFT JOIN postcode_outcode_geolocations d ON (substring(b.search_results_comparison_postcode from '[^ ]+'::text) = d.outcode)
           LEFT JOIN schemes c ON(b.registered_by = c.scheme_id)
           WHERE
             (#{qualification_selector})
-            AND a.latitude BETWEEN ($1 - 1) AND ($1 + 1)
-            AND a.longitude BETWEEN ($2 - 1) AND ($2 + 1)
+            AND coalesce(a.latitude, d.latitude) BETWEEN ($1 - 1) AND ($1 + 1)
+            AND coalesce(a.longitude, d.longitude) BETWEEN ($2 - 1) AND ($2 + 1)
             AND c.active = true
           ORDER BY distance LIMIT $3",
           "SQL",

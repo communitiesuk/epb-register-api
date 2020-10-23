@@ -67,6 +67,19 @@ describe "Acceptance::SearchForAssessor" do
       expect(response_json["data"]["assessors"].length).to eq 1
     end
 
+    it "will search using an outcode if we dont know the postcode" do
+      add_outcodes("SE1")
+      scheme_id = add_scheme_and_get_id
+      add_assessor scheme_id,
+                   "ASSESSOR999",
+                   valid_assessor_with_contact_request_body
+
+      response = assessors_search("SE1 7EZ", "domesticRdSap", [200])
+      response_json = JSON.parse(response.body)
+
+      expect(response_json["data"]["assessors"].length).to eq 1
+    end
+
     it "allows searching using a postcode with excessive spaces" do
       add_postcodes("SE1 7EZ")
       scheme_id = add_scheme_and_get_id
