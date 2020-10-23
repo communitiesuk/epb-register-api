@@ -7,7 +7,7 @@ module ViewModel
         expiry_date = Date.parse(date_of_issue)
 
         expiry_date =
-          if floor_area.to_f <= 1000
+          if floor_area.to_f <= 1000 && !postcode.start_with?("BT")
             expiry_date.next_year 10
           else
             expiry_date.next_year 7

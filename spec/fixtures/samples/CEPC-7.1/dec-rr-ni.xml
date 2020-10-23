@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Reports xmlns="DCLG-CEPC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="DCLG-CEPC  ../../../../api/schemas/xml/CEPC-7.1/Reports/CEPC-Reports.xsd">
+  <Report>
+    <Report-Header>
+          <RRN>0000-0000-0000-0000-0000</RRN>
+          <Issue-Date>2020-05-04</Issue-Date>
+          <Report-Type>2</Report-Type>
+          <Related-RRN>0000-0000-0000-0000-1111</Related-RRN>
+          <Valid-Until>2028-05-03</Valid-Until>
+          <Inspection-Date>2020-05-04</Inspection-Date>
+          <Registration-Date>2020-05-04</Registration-Date>
+          <Status>entered</Status>
+          <Language-Code>1</Language-Code>
+          <Energy-Assessor>
+              <Certificate-Number>SPEC000000</Certificate-Number>
+              <Name>Mrs Report Writer</Name>
+              <Accreditation-Scheme-Name>Accreditation-Scheme-Name0</Accreditation-Scheme-Name>
+              <Trading-Address>123 My Street, My City, AB3 4CD</Trading-Address>
+              <Company-Name>Joe Bloggs Ltd</Company-Name>
+              <E-Mail>a@b.c</E-Mail>
+              <Telephone-Number>0921-19037</Telephone-Number>
+          </Energy-Assessor>
+          <Property-Details>
+              <UPRN>000000000001</UPRN>
+              <Property-Address>
+                  <Address-Line-1>1 Lonely Street</Address-Line-1>
+                  <Post-Town>Post-Town0</Post-Town>
+                  <Postcode>BT0 0AA</Postcode>
+              </Property-Address>
+              <Occupier>Primary School</Occupier>
+              <Property-Type>University campus</Property-Type>
+          </Property-Details>
+          <Calculation-Details>
+              <Inspection-Type>Physical</Inspection-Type>
+              <Calculation-Tool>DCLG, ORCalc, v3.6.2</Calculation-Tool>
+          </Calculation-Details>
+      </Report-Header>
+      <Formatted-Report>ZGVmYXVsdA==</Formatted-Report>
+      <Advisory-Report>
+          <AR-Recommendations>
+            <Short-Payback>
+              <Recommendation-Code>1</Recommendation-Code>
+              <Recommendation>Consider thinking about maybe possibly getting a solar panel but only one.</Recommendation>
+              <CO2-Impact>MEDIUM</CO2-Impact>
+            </Short-Payback>
+            <Short-Payback>
+              <Recommendation-Code>2</Recommendation-Code>
+              <Recommendation>Consider introducing variable speed drives (VSD) for fans, pumps and compressors.</Recommendation>
+              <CO2-Impact>LOW</CO2-Impact>
+            </Short-Payback>
+            <Medium-Payback>
+              <Recommendation-Code>3</Recommendation-Code>
+              <Recommendation>Engage experts to propose specific measures to reduce hot waterwastage and plan to carry this out.</Recommendation>
+              <CO2-Impact>LOW</CO2-Impact>
+            </Medium-Payback>
+            <Long-Payback>
+              <Recommendation-Code>4</Recommendation-Code>
+              <Recommendation>Consider replacing or improving glazing</Recommendation>
+              <CO2-Impact>LOW</CO2-Impact>
+            </Long-Payback>
+            <Other-Payback>
+              <Recommendation-Code>5</Recommendation-Code>
+              <Recommendation>Add a big wind turbine</Recommendation>
+              <CO2-Impact>HIGH</CO2-Impact>
+            </Other-Payback>
+          </AR-Recommendations>
+          <Technical-Information>
+              <Renewable-Sources>Renewable source</Renewable-Sources>
+              <Special-Energy-Uses>Special discount</Special-Energy-Uses>
+              <Building-Environment>Air Conditioning</Building-Environment>
+              <Floor-Area>10</Floor-Area>
+          </Technical-Information>
+          <Site-Services>
+              <Service-1>
+                  <Description>Electricity</Description>
+                  <Quantity>751445</Quantity>
+              </Service-1>
+              <Service-2>
+                  <Description>Gas</Description>
+                  <Quantity>72956</Quantity>
+              </Service-2>
+              <Service-3>
+                  <Description>Not used</Description>
+                  <Quantity>0</Quantity>
+              </Service-3>
+          </Site-Services>
+      </Advisory-Report>
+  </Report>
+</Reports>
