@@ -22,7 +22,7 @@ describe ViewModel::DecRrWrapper do
         schema_name: "CEPC-NI-8.0.0",
         xml: Samples.xml("CEPC-NI-8.0.0", "dec-rr"),
         unsupported_fields: [],
-        different_fields: {},
+        different_fields: { date_of_expiry: "2027-05-04" },
       },
       {
         schema_name: "CEPC-7.1",
