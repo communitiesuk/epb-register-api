@@ -2,7 +2,8 @@
 
 module Controller
   class ReportingController < Controller::BaseController
-    get "/api/reports/assessments/region-and-type", jwt_auth: %w[reporting] do
+    get "/api/reports/assessments/region-and-type",
+        jwt_auth: %w[reporting:assessment_by_type_and_region] do
       raw_data =
         body UseCase::GetAssessmentCountByRegionAndType.new.execute(
           Date.parse(params["start_date"]),
@@ -23,7 +24,8 @@ module Controller
       end
     end
 
-    get "/api/reports/assessments/scheme-and-type", jwt_auth: %w[reporting] do
+    get "/api/reports/assessments/scheme-and-type",
+        jwt_auth: %w[reporting:assessment_by_scheme_and_type] do
       raw_data =
         body UseCase::GetAssessmentCountBySchemeNameAndType.new.execute(
           Date.parse(params["start_date"]),

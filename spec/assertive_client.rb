@@ -534,8 +534,11 @@ def get_assessment_report(
   accepted_responses: [200],
   authenticate: true,
   auth_data: {},
-  scopes: %w[reporting]
+  scopes: %w[reporting:assessment_by_type_and_region]
 )
+  if type == "scheme-and-type"
+    scopes = %w[reporting:assessment_by_scheme_and_type]
+  end
   assertive_get(
     "/api/reports/assessments/#{type}?start_date=#{start_date}&end_date=#{
       end_date
