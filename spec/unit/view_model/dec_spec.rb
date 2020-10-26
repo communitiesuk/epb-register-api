@@ -14,7 +14,7 @@ describe ViewModel::DecWrapper do
       xml: Samples.xml("CEPC-8.0.0", "dec-large-building"),
       unsupported_fields: [],
       different_fields: {
-        date_of_expiry: "2021-01-01",
+        date_of_expiry: "2020-12-31",
         technical_information: {
           main_heating_fuel: "Natural Gas",
           building_environment: "Heating and Natural Ventilation",
@@ -62,7 +62,7 @@ describe ViewModel::DecWrapper do
   # You should only need to add to this list to test new fields on all CEPC schema
   asserted_keys = {
     assessment_id: "0000-0000-0000-0000-0000",
-    date_of_expiry: "2030-01-01",
+    date_of_expiry: "2029-12-31",
     date_of_registration: "2020-05-04",
     address: {
       address_id: "UPRN-000000000001",

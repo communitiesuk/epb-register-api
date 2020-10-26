@@ -8,9 +8,9 @@ module ViewModel
 
         expiry_date =
           if floor_area.to_f <= 1000 && !postcode.start_with?("BT")
-            expiry_date.next_year 10
+            (expiry_date - 1).next_year 10
           else
-            expiry_date.next_year 7
+            (expiry_date - 1).next_year 7
           end
 
         expiry_date.strftime("%F")

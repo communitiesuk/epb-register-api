@@ -895,7 +895,7 @@ describe ViewModel::SapWrapper do
   asserted_keys = {
     type_of_assessment: "SAP",
     assessment_id: "0000-0000-0000-0000-0000",
-    date_of_expiry: "2030-05-04",
+    date_of_expiry: "2030-05-03",
     date_of_assessment: "2020-05-04",
     date_of_registration: "2020-05-04",
     date_registered: "2020-05-04",

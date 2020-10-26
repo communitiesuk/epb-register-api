@@ -2,7 +2,7 @@ module ViewModel
   module CepcNi800
     class DecRr < ViewModel::CepcNi800::CommonSchema
       def date_of_expiry
-        expiry_date = Date.parse(date_of_issue).next_year 7
+        expiry_date = (Date.parse(date_of_issue) - 1).next_year 7
 
         expiry_date.strftime("%F")
       end
