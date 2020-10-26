@@ -8,17 +8,25 @@ task :reindex_assessment_type do
   loader.push_dir("#{__dir__}/../")
   loader.setup
 
-  assessments = ActiveRecord::Base.connection.execute("
+  sql = "
     SELECT
-      a.assessment_id, b.xml, b.schema_type
+      a.assessment_id, b.xml, b.schema_type, a." + ENV["column"] + " AS column_value
     FROM
       assessments a
     JOIN assessments_xml b
       ON(a.assessment_id = b.assessment_id)
-    WHERE
-      a.type_of_assessment = " + ActiveRecord::Base.connection.quote(ENV["type_of_assessment"]) + "")
+    WHERE "
+
+  if ENV["type_of_assessment"]
+    sql << "a.type_of_assessment = " + ActiveRecord::Base.connection.quote(ENV["type_of_assessment"])
+  elsif ENV["schema_type"]
+    sql << "b.schema_type = " + ActiveRecord::Base.connection.quote(ENV["schema_type"])
+  end
+
+  assessments = ActiveRecord::Base.connection.execute(sql)
 
   successes = 0
+  skipped = 0
   errors = []
 
   assessments.each do |assessment|
@@ -36,7 +44,9 @@ task :reindex_assessment_type do
 
       value = report[ENV["value_location"].to_sym]
 
-      if !value.nil?
+      if value == assessment["column_value"]
+        skipped += 1
+      elsif !value.nil?
         ActiveRecord::Base.connection.execute("
           UPDATE
             assessments
@@ -62,6 +72,7 @@ task :reindex_assessment_type do
   end
 
   p "Successfully reindexed: #{successes}"
+  p "Skipped: #{skipped}"
   p "Failed to reindexed: #{errors.count}"
   pp errors
 end
