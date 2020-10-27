@@ -230,14 +230,7 @@ module Gateway
                           existing_assessments: row["existing_assessments"]
     end
 
-    # EPBR-511: Needs to be removed after fixing the database data
     def update_expiry_and_status(result)
-      if result["type_of_assessment"] == "RdSAP" ||
-          result["type_of_assessment"] == "SAP"
-        result["date_of_expiry"] = result["date_registered"].next_year(10)
-      end
-
-      # In the previous SQL queries we only select NULL cancelled_at and not_for_issue_at
       expiry_helper =
         Gateway::AssessmentExpiryHelper.new(
           result["cancelled_at"],
