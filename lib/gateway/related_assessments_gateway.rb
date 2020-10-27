@@ -46,11 +46,6 @@ module Gateway
     end
 
     def determine_status(result)
-      if result["assessment_type"] == "RdSAP" ||
-          result["assessment_type"] == "SAP"
-        result["date_of_expiry"] = result["date_registered"].next_year(10)
-      end
-
       result["assessment_status"] =
         if !result["cancelled_at"].nil?
           "CANCELLED"
