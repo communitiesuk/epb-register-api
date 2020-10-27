@@ -212,49 +212,22 @@ module Gateway
     end
 
     def record_to_address_domain(row)
-      address_line1 = populate_address_line1(row)
+      address_lines = [
+        row["address_line1"],
+        row["address_line2"],
+        row["address_line3"],
+        row["address_line4"],
+      ].compact.reject { |a| a.to_s.strip.chomp.empty? }
 
       Domain::Address.new address_id: "RRN-#{row['assessment_id']}",
-                          line1: address_line1,
-                          line2:
-                            (
-                              unless address_line1 == row["address_line2"]
-                                row["address_line2"].presence
-                              end
-                            ),
-                          line3:
-                            (
-                              unless address_line1 == row["address_line3"]
-                                row["address_line3"].presence
-                              end
-                            ),
-                          line4:
-                            (
-                              unless address_line1 == row["address_line4"]
-                                row["address_line4"].presence
-                              end
-                            ),
+                          line1: address_lines[0],
+                          line2: address_lines[1],
+                          line3: address_lines[2],
+                          line4: address_lines[3],
                           town: row["town"],
                           postcode: row["postcode"],
                           source: "PREVIOUS_ASSESSMENT",
                           existing_assessments: row["existing_assessments"]
-    end
-
-    def populate_address_line1(row)
-      address_line1 = row["address_line1"]
-      address_line2 = row["address_line2"]
-      address_line3 = row["address_line3"]
-
-      if address_line1.blank?
-        address_line1 = row["address_line2"]
-
-        if address_line2.blank?
-          address_line1 = row["address_line3"]
-          address_line1 = row["address_line4"] if address_line3.blank?
-        end
-      end
-
-      address_line1
     end
 
     # EPBR-511: Needs to be removed after fixing the database data
