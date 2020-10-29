@@ -34,25 +34,11 @@ describe "Acceptance::AssessmentSummary::Supplement::RdSAP" do
 
     rdsap_without_uprn = Nokogiri.XML(Samples.xml("RdSAP-Schema-20.0.0"))
     rdsap_without_uprn.at("RRN").content = "0000-0000-0000-0000-0002"
-    rdsap_without_uprn.at("UPRN").content = "UPRN-123456789101"
+    rdsap_without_uprn.at("UPRN").remove
     lodge_rdsap(rdsap_without_uprn.to_xml, scheme_id)
-    ActiveRecord::Base.connection.execute(
-      "INSERT INTO assessments_address_id
-      VALUES('0000-0000-0000-0000-0001', 'UPRN-123456789101', 'random_insert')",
-    )
     @third_summary =
       JSON.parse(
         fetch_assessment_summary("0000-0000-0000-0000-0002").body,
-        symbolize_names: true,
-      )
-
-    rdsap_without_uprn = Nokogiri.XML(Samples.xml("RdSAP-Schema-20.0.0"))
-    rdsap_without_uprn.at("RRN").content = "0000-0000-0000-0000-0003"
-    rdsap_without_uprn.at("UPRN").remove
-    lodge_rdsap(rdsap_without_uprn.to_xml, scheme_id)
-    @fourth_summary =
-      JSON.parse(
-        fetch_assessment_summary("0000-0000-0000-0000-0003").body,
         symbolize_names: true,
       )
   end
@@ -105,13 +91,7 @@ describe "Acceptance::AssessmentSummary::Supplement::RdSAP" do
 
     context "when there is no UPRN field" do
       it "returns an empty list when there are no related assessments" do
-        expect(@fourth_summary.dig(:data, :relatedAssessments)).to eq([])
-      end
-
-      context "and there is a replacement address id" do
-        it "returns a both related certificates" do
-          expect(@third_summary.dig(:data, :relatedAssessments).count).to eq(1)
-        end
+        expect(@third_summary.dig(:data, :relatedAssessments)).to eq([])
       end
     end
   end

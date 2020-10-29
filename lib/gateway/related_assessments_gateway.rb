@@ -12,7 +12,7 @@ module Gateway
                a.date_registered,
                a.opt_out
         FROM assessments a
-        WHERE (address_id = $1 OR assessment_id IN(SELECT assessment_id FROM assessments_address_id WHERE address_id = $1)) AND
+        WHERE address_id = $1 AND
               opt_out = false AND
               not_for_issue_at IS NULL AND
               cancelled_at IS NULL
