@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_05_145253) do
+ActiveRecord::Schema.define(version: 2020_10_29_103910) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -55,6 +55,12 @@ ActiveRecord::Schema.define(version: 2020_10_05_145253) do
     t.index ["not_for_issue_at"], name: "index_assessments_on_not_for_issue_at"
     t.index ["postcode"], name: "index_assessments_on_postcode"
     t.index ["type_of_assessment"], name: "index_assessments_on_type_of_assessment"
+  end
+
+  create_table "assessments_address_id", primary_key: "assessment_id", id: :string, force: :cascade do |t|
+    t.string "address_id"
+    t.string "source"
+    t.index ["address_id"], name: "index_assessments_address_id_on_address_id"
   end
 
   create_table "assessments_xml", primary_key: "assessment_id", id: :string, default: "", force: :cascade do |t|
