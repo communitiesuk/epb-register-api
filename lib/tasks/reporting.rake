@@ -10,7 +10,21 @@ task :extract_reporting do
 
   puts "Starting extraction at #{Time.now}"
 
-  number_of_assessments = ActiveRecord::Base.connection.execute("SELECT COUNT(assessment_id) AS number_of_assessments FROM assessments").first["number_of_assessments"]
+  where = "a.opt_out = false AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL"
+
+  if ENV["type_of_assessment"]
+    where << " AND a.type_of_assessment = " + ActiveRecord::Base.connection.quote(ENV["type_of_assessment"])
+  end
+
+  if ENV["schema_type"]
+    where << " AND b.schema_type = " + ActiveRecord::Base.connection.quote(ENV["schema_type"])
+  end
+
+  if ENV["from_date"] && ENV["to_date"]
+    where << " AND a.date_registered BETWEEN " + ActiveRecord::Base.connection.quote(ENV["from_date"]) + " AND " + ActiveRecord::Base.connection.quote(ENV["to_date"])
+  end
+
+  number_of_assessments = ActiveRecord::Base.connection.execute("SELECT COUNT(assessment_id) AS number_of_assessments FROM assessments a WHERE #{where}").first["number_of_assessments"]
 
   puts "Done getting number of assessments. #{number_of_assessments} in total at #{Time.now}"
 
@@ -19,11 +33,16 @@ task :extract_reporting do
   while start <= number_of_assessments
     assessments = ActiveRecord::Base.connection.execute("
       SELECT
-        assessment_id, xml, schema_type
+        a.assessment_id, b.xml, b.schema_type
       FROM
-        assessments_xml
+        assessments a
+      LEFT JOIN
+        assessments_xml b
+      ON(a.assessment_id = b.assessment_id)
+      WHERE
+        #{where}
       ORDER BY
-        assessment_id
+        a.date_registered
       LIMIT
         " + ENV["batch"] + "
       OFFSET
