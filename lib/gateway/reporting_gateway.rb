@@ -60,6 +60,8 @@ module Gateway
         ON(b.registered_by = c.scheme_id)
         WHERE
           date_registered BETWEEN $1 AND $2
+        AND
+          migrated IS NULL
         GROUP BY c.name, a.type_of_assessment
       SQL
 
