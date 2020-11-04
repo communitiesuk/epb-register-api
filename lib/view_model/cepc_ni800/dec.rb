@@ -6,9 +6,10 @@ module ViewModel
           xpath(%w[Display-Certificate Technical-Information Floor-Area])
 
         expiry_date = Date.parse(current_assessment_date)
+        postcode_outcode = postcode[0..1].upcase
 
         expiry_date =
-          if floor_area.to_i <= 1000
+          if floor_area.to_i <= 1000 && postcode_outcode != "BT"
             (expiry_date - 1).next_year 10
           else
             (expiry_date - 1).next_year 1

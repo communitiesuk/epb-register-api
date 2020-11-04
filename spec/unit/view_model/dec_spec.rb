@@ -44,6 +44,15 @@ describe ViewModel::DecWrapper do
       different_buried_fields: { address: { address_id: "LPRN-000000000001" } },
     },
     {
+        schema_name: "CEPC-7.1",
+        xml: Samples.xml("CEPC-7.1", "dec-ni"),
+        unsupported_fields: [],
+        different_fields: { date_of_expiry: "2020-12-31" },
+        different_buried_fields: {
+            address: { address_id: "LPRN-000000000001", postcode: "BT0 0AA" },
+        },
+    },
+    {
       schema_name: "CEPC-7.0",
       xml: Samples.xml("CEPC-7.0", "dec"),
       unsupported_fields: [],
