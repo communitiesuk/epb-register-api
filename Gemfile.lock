@@ -1,12 +1,12 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    activemodel (6.0.3.3)
-      activesupport (= 6.0.3.3)
-    activerecord (6.0.3.3)
-      activemodel (= 6.0.3.3)
-      activesupport (= 6.0.3.3)
-    activesupport (6.0.3.3)
+    activemodel (6.0.3.4)
+      activesupport (= 6.0.3.4)
+    activerecord (6.0.3.4)
+      activemodel (= 6.0.3.4)
+      activesupport (= 6.0.3.4)
+    activesupport (6.0.3.4)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
@@ -119,7 +119,7 @@ GEM
       rack (~> 2.2)
       rack-protection (= 2.1.0)
       tilt (~> 2.0)
-    sinatra-activerecord (2.0.18)
+    sinatra-activerecord (2.0.21)
       activerecord (>= 4.1)
       sinatra (>= 1.0)
     sinatra-contrib (2.1.0)
@@ -162,7 +162,7 @@ DEPENDENCIES
   rubocop-govuk (~> 3.17)!
   rubyzip (~> 2.3.0)!
   sinatra (~> 2.0, >= 2.0.7)!
-  sinatra-activerecord (~> 2.0.14)!
+  sinatra-activerecord (~> 2.0.21)!
   sinatra-contrib!
   sinatra-cross_origin (~> 0.4.0)!
   unleash (~> 3.2.1)!
