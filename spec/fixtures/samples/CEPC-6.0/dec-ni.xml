@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Reports
-  xmlns="https://epbr.digital.communities.gov.uk/xsd/cepc-ni"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/cepc-ni  ../../../../api/schemas/xml/CEPC-NI-8.0.0/Reports/CEPC-Reports.xsd"
->
+<Reports xmlns="DCLG-CEPC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="DCLG-CEPC  ../../../../api/schemas/xml/CEPC-6.0/Reports/CEPC-Reports.xsd">
   <Report>
     <Report-Header>
       <RRN>0000-0000-0000-0000-0000</RRN>
@@ -19,7 +15,6 @@
         <Certificate-Number>SPEC000000</Certificate-Number>
         <Name>Name1</Name>
         <Accreditation-Scheme-Name>Information not available</Accreditation-Scheme-Name>
-        <Accreditation-Scheme-Website>Information not available</Accreditation-Scheme-Website>
         <Trading-Address>123 My Street, My City, AB3 4CD</Trading-Address>
         <Company-Name>Joe Bloggs Ltd</Company-Name>
         <Qualifications>NOS5</Qualifications>
@@ -29,7 +24,7 @@
       </Energy-Assessor>
       <Building-Complexity>Level 3</Building-Complexity>
       <Property-Details>
-        <UPRN>UPRN-000000000001</UPRN>
+        <UPRN>000000000001</UPRN>
         <Property-Address>
           <Address-Line-1>2 Lonely Street</Address-Line-1>
           <Post-Town>Post-Town1</Post-Town>
