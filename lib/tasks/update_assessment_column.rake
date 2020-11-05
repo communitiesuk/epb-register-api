@@ -37,6 +37,7 @@ task :update_assessment_column do
       JOIN assessments_xml b
         ON(a.assessment_id = b.assessment_id)
       WHERE " + where + "
+      ORDER BY a.assessment_id
       LIMIT " + ENV["batch"] + "
       OFFSET " + start.to_s
 
