@@ -34,6 +34,10 @@ module Gateway
             DELETE FROM assessments_xml WHERE assessment_id = $1
           SQL
 
+          delete_address_id = <<-SQL
+            DELETE FROM assessments_address_id WHERE assessment_id = $1
+          SQL
+
           green_deal_plan_id = <<-SQL
             SELECT green_deal_plan_id FROM green_deal_assessments WHERE assessment_id = $1
           SQL
@@ -66,6 +70,10 @@ module Gateway
                                                    binds
 
           ActiveRecord::Base.connection.exec_query delete_assessment,
+                                                   "SQL",
+                                                   binds
+
+          ActiveRecord::Base.connection.exec_query delete_address_id,
                                                    "SQL",
                                                    binds
 

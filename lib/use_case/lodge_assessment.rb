@@ -11,6 +11,7 @@ module UseCase
       @assessments_search_gateway = Gateway::AssessmentsSearchGateway.new
       @assessors_gateway = Gateway::AssessorsGateway.new
       @assessments_xml_gateway = Gateway::AssessmentsXmlGateway.new
+      @assessments_address_id_gateway = Gateway::AssessmentsAddressIdGateway.new
     end
 
     def execute(data, migrated, schema_name)
@@ -58,6 +59,14 @@ module UseCase
         )
 
       @assessments_gateway.insert_or_update assessment
+
+      @assessments_address_id_gateway.send_to_db(
+        {
+          assessment_id: data[:assessment_id],
+          address_id: data[:address][:address_id],
+          source: "lodgement",
+        },
+      )
 
       @assessments_xml_gateway.send_to_db(
         {
