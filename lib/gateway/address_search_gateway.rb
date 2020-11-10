@@ -212,12 +212,13 @@ module Gateway
     end
 
     def record_to_address_domain(row)
-      address_lines = [
-        row["address_line1"],
-        row["address_line2"],
-        row["address_line3"],
-        row["address_line4"],
-      ].compact.reject { |a| a.to_s.strip.chomp.empty? }
+      address_lines =
+        [
+          row["address_line1"],
+          row["address_line2"],
+          row["address_line3"],
+          row["address_line4"],
+        ].compact.reject { |a| a.to_s.strip.chomp.empty? }
 
       Domain::Address.new address_id: "RRN-#{row['assessment_id']}",
                           line1: address_lines[0],

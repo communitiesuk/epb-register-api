@@ -8,7 +8,7 @@ module ViewModel
         expiry_date = Date.parse(current_assessment_date)
 
         expiry_date =
-            if floor_area.to_i <= 1000 && !postcode.start_with?("BT")
+          if floor_area.to_i <= 1000 && !postcode.start_with?("BT")
             (expiry_date - 1).next_year 10
           else
             (expiry_date - 1).next_year 1

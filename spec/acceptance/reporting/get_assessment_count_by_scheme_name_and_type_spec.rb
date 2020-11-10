@@ -53,16 +53,16 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
       doc.at("RRN").content = "0000-0000-0000-0000-0001"
 
       lodge_assessment(
-          assessment_body: doc.to_xml,
-          accepted_responses: [201],
-          scopes: %w[assessment:lodge migrate:assessment],
-          auth_data: { scheme_ids: [scheme_id] },
-          migrated: true,
-          )
+        assessment_body: doc.to_xml,
+        accepted_responses: [201],
+        scopes: %w[assessment:lodge migrate:assessment],
+        auth_data: { scheme_ids: [scheme_id] },
+        migrated: true,
+      )
 
       expect(response).to eq(
-                              "number_of_assessments,scheme_name,type_of_assessment\n1,test scheme,RdSAP\n",
-                              )
+        "number_of_assessments,scheme_name,type_of_assessment\n1,test scheme,RdSAP\n",
+      )
     end
 
     it "returns only assessments registered during the given time frame" do
