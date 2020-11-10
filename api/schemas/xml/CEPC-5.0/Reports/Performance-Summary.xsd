@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="DCLG-CEPC" xmlns="DCLG-CEPC" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="LIG-CEPC-5.0">
+	<xs:element name="Summary-Of-Performance" type="Summary-Of-Performance"/>
+	<xs:complexType name="Summary-Of-Performance">
+		<xs:sequence>
+			<xs:element name="Building-Data" type="Building-Data" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Building-Data" type="Building-Data"/>
+	<xs:complexType name="Building-Data">
+		<xs:annotation>
+			<xs:documentation>
+For an EPC created using EPC-Gen Building-Data is fixed at four, which are:- Actual Building, Notional  Building, Reference Building and Typical Buidling
+
+The type of Building Data is indicated by7 the Analysis-Type field.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Analysis-Type" type="AnalysisTypeCode" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Area" type="xs:float" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Area-Exterior" type="xs:float" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Q50-Infiltration" type="xs:float" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Weather" type="xs:string" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Building-W-K" type="xs:float" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Building-W-M2K" type="xs:float" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Building-Alpha" type="xs:float" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="HVAC-Systems" type="HVAC-Systems" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Global-Performance" type="Global-Performance" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Activities" type="Activities" minOccurs="1" maxOccurs="1"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Activity" type="Activity"/>
+	<xs:complexType name="Activity">
+		<xs:all>
+			<xs:element name="ID" type="xs:long" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Area" type="xs:float" minOccurs="1" maxOccurs="1"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Activities" type="Activities"/>
+	<xs:complexType name="Activities">
+		<xs:sequence>
+			<xs:element name="Activity" type="Activity" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="HVAC-System-Data" type="HVAC-System-Data"/>
+	<xs:complexType name="HVAC-System-Data">
+		<xs:all>
+			<xs:element name="Area" type="xs:float" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Heat-Source" type="xs:string" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Type" type="xs:string" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Fuel-Type" type="xs:string" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Cooling-Gen-SEER" type="xs:float" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Cooling-SSEER" type="xs:float" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Heating-Gen-SEFF" type="xs:float" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Heating-SSEFF" type="xs:float" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="KWH-M2-Auxiliary" type="xs:float" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="KWH-M2-Cooling" type="xs:float" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="KWH-M2-Heating" type="xs:float" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="MJ-M2-Heating-Dem" type="xs:float" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="MJ-M2-Cooling-Dem" type="xs:float" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Activities" type="Activities" minOccurs="1" maxOccurs="1"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Global-Performance" type="Global-Performance"/>
+	<xs:complexType name="Global-Performance">
+		<xs:all>
+			<xs:element name="KWH-M2-Cooling" type="xs:float" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="KWH-M2-Heating" type="xs:float" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="KWH-M2-Auxiliary" type="xs:float" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="KWH-M2-Lighting" type="xs:float" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="KWH-M2-DHW" type="xs:float" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="KWH-M2-Equipment" type="xs:float" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="KWH-M2-Natural-Gas" type="xs:float" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="KWH-M2-Biogas" type="xs:float" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="KWH-M2-LPG" type="xs:float" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="KWH-M2-Coal" type="xs:float" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="KWH-M2-Oil" type="xs:float" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="KWH-M2-Anthracite" type="xs:float" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="KWH-M2-Smokeless" type="xs:float" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="KWH-M2-Biomass" type="xs:float" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="KWH-M2-Dual-Fuel" type="xs:float" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="KWH-M2-Supplied" type="xs:float" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="KWH-M2-Waste-Heat" type="xs:float" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="KWH-M2-Displaced" type="xs:float" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="KWH-M2-PVS" type="xs:float" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="KWH-M2-CHP" type="xs:float" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="KWH-M2-SES" type="xs:float" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="KWH-M2-Wind" type="xs:float" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="KWH-M2-District-Heating" type="xs:float" minOccurs="1" maxOccurs="1"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="HVAC-Systems" type="HVAC-Systems"/>
+	<xs:complexType name="HVAC-Systems">
+		<xs:sequence>
+			<xs:element name="HVAC-System-Data" type="HVAC-System-Data" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="AnalysisTypeCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ACTUAL"/>
+			<xs:enumeration value="NOTIONAL"/>
+			<xs:enumeration value="REFERENCE"/>
+			<xs:enumeration value="TYPICAL"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

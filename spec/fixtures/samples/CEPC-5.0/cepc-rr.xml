@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Reports xmlns="DCLG-CEPC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="DCLG-CEPC  ../../../../api/schemas/xml/CEPC-5.0/Reports/CEPC-Reports.xsd">
+  <Report>
+    <Report-Header>
+      <RRN>0000-0000-0000-0000-0000</RRN>
+      <Issue-Date>2020-05-14</Issue-Date>
+      <Report-Type>4</Report-Type>
+      <Valid-Until>2021-05-03</Valid-Until>
+      <Related-RRN>0000-0000-0000-0000-0001</Related-RRN>
+      <Inspection-Date>2020-05-04</Inspection-Date>
+      <Registration-Date>2020-05-05</Registration-Date>
+      <Status>cancelled</Status>
+      <Language-Code>1</Language-Code>
+      <Energy-Assessor>
+        <Certificate-Number>SPEC000000</Certificate-Number>
+        <Name>Mrs Report Writer</Name>
+        <Accreditation-Scheme-Name>Accreditation-Scheme-Name0</Accreditation-Scheme-Name>
+        <Trading-Address>123 My Street, My City, AB3 4CD</Trading-Address>
+        <Company-Name>Joe Bloggs Ltd</Company-Name>
+        <Related-Party-Disclosure>Related to the owner</Related-Party-Disclosure>
+        <E-Mail>a@b.c</E-Mail>
+        <Telephone-Number>012345</Telephone-Number>
+      </Energy-Assessor>
+      <Property-Details>
+        <UPRN>000000000000</UPRN>
+        <Property-Address>
+          <Address-Line-1>1 Lonely Street</Address-Line-1>
+          <Post-Town>Post-Town0</Post-Town>
+          <Postcode>A0 0AA</Postcode>
+        </Property-Address>
+        <Property-Type>Property-Type0</Property-Type>
+      </Property-Details>
+      <Calculation-Details>
+        <Calculation-Tool>Calculation-Tool0</Calculation-Tool>
+      </Calculation-Details>
+    </Report-Header>
+    <Formatted-Report>ZGVmYXVsdA==</Formatted-Report>
+    <Recommendations-Report>
+      <RR-Recommendations>
+        <Short-Payback>
+          <Recommendation-Code>1</Recommendation-Code>
+          <Recommendation>Consider replacing T8 lamps with retrofit T5 conversion kit.</Recommendation>
+          <CO2-Impact>HIGH</CO2-Impact>
+        </Short-Payback>
+        <Short-Payback>
+          <Recommendation-Code>3</Recommendation-Code>
+          <Recommendation>Introduce HF (high frequency) ballasts for fluorescent tubes: Reduced number of fittings required.</Recommendation>
+          <CO2-Impact>LOW</CO2-Impact>
+        </Short-Payback>
+        <Medium-Payback>
+          <Recommendation-Code>2</Recommendation-Code>
+          <Recommendation>Add optimum start/stop to the heating system.</Recommendation>
+          <CO2-Impact>MEDIUM</CO2-Impact>
+        </Medium-Payback>
+        <Long-Payback>
+          <Recommendation-Code>3</Recommendation-Code>
+          <Recommendation>Consider installing an air source heat pump.</Recommendation>
+          <CO2-Impact>HIGH</CO2-Impact>
+        </Long-Payback>
+        <Other-Payback>
+          <Recommendation-Code>4</Recommendation-Code>
+          <Recommendation>Consider installing PV.</Recommendation>
+          <CO2-Impact>HIGH</CO2-Impact>
+        </Other-Payback>
+      </RR-Recommendations>
+      <Technical-Information>
+        <Floor-Area>10</Floor-Area>
+        <Building-Environment>Natural Ventilation Only</Building-Environment>
+      </Technical-Information>
+    </Recommendations-Report>
+  </Report>
+</Reports>

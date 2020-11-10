@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:CS="DCLG-CEPC/CommonStructures" targetNamespace="DCLG-CEPC/CommonStructures" elementFormDefault="qualified" attributeFormDefault="unqualified" version="LIG-CEPC-5.0">
+	<!-- ***************************************************************************
+	Simple Type declarations for Identification Block property values
+	 *************************************************************************** -->
+	<xs:simpleType name="ReportRetrievalType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="List"/>
+			<xs:enumeration value="Data"/>
+			<xs:enumeration value="PDF"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="MessageIdentifier" type="CS:MessageIdentifier"/>
+	<xs:complexType name="MessageIdentifier">
+		<xs:annotation>
+			<xs:documentation source="The standard Identifying Block for all messages."/>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ClientID" type="xs:string" minOccurs="0"/>
+			<xs:element name="TransactionID" type="xs:string"/>
+			<xs:element name="Timestamp" type="xs:dateTime"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
