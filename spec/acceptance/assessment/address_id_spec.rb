@@ -41,9 +41,7 @@ describe "Acceptance::AssessmentAddressId" do
 
       cepc_xml_doc.at("//CEPC:UPRN").children = "UPRN-000000000001"
 
-      ActiveRecord::Base.connection.execute(
-        "INSERT INTO address_base (uprn) VALUES(1)",
-      )
+      add_address_base(uprn: "1")
 
       lodge_assessment(
         assessment_body: cepc_xml_doc.to_xml,

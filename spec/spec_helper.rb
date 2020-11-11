@@ -110,6 +110,13 @@ def truncate(postcode)
   end
 end
 
+def add_address_base(uprn:)
+  ActiveRecord::Base.connection.execute(
+    "INSERT INTO address_base (uprn) VALUES(" +
+      ActiveRecord::Base.connection.quote(uprn) + ")",
+  )
+end
+
 RSpec.configure do |config|
   config.include Rack::Test::Methods
   config.order = :random
