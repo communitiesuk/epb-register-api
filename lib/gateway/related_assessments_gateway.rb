@@ -5,23 +5,9 @@ module Gateway
     def by_address_id(address_id)
       return [] if address_id.blank?
 
-      sql = <<-SQL
-        SELECT a.assessment_id,
-               a.type_of_assessment AS assessment_type,
-               a.date_of_expiry,
-               a.date_registered,
-               a.opt_out
-        FROM assessments a
-        WHERE address_id = $1 AND
-              opt_out = false AND
-              not_for_issue_at IS NULL AND
-              cancelled_at IS NULL
-        ORDER BY date_of_expiry DESC, assessment_id DESC
-      SQL
-
-      results =
+      assessment_ids =
         ActiveRecord::Base.connection.exec_query(
-          sql,
+          "SELECT assessment_id FROM assessments_address_id WHERE address_id = $1",
           "SQL",
           [
             ActiveRecord::Relation::QueryAttribute.new(
@@ -30,7 +16,27 @@ module Gateway
               ActiveRecord::Type::String.new,
             ),
           ],
-        )
+        ).map do |assessment_id|
+          ActiveRecord::Base.connection.quote(assessment_id["assessment_id"])
+        end
+
+      return [] if assessment_ids.empty?
+
+      sql = <<-SQL
+        SELECT assessment_id,
+               type_of_assessment AS assessment_type,
+               date_of_expiry,
+               date_registered,
+               opt_out
+        FROM assessments
+        WHERE assessment_id IN(#{assessment_ids.join(', ')}) AND
+              opt_out = false AND
+              not_for_issue_at IS NULL AND
+              cancelled_at IS NULL
+        ORDER BY date_of_expiry DESC, assessment_id DESC
+      SQL
+
+      results = ActiveRecord::Base.connection.execute(sql)
 
       output =
         results.map do |result|

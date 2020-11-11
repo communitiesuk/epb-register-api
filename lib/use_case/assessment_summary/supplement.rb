@@ -47,9 +47,7 @@ module UseCase
 
       def related_assessments!(hash)
         related_assessments =
-          Gateway::RelatedAssessmentsGateway.new.by_address_id hash[:address][
-                                                                 :address_id
-                                                               ]
+          Gateway::RelatedAssessmentsGateway.new.by_address_id hash[:address_id]
 
         other_assessments_without_self =
           related_assessments.filter do |assessment|

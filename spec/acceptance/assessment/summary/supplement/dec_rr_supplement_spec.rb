@@ -6,6 +6,8 @@ describe "Acceptance::AssessmentSummary::Supplement::DECRR" do
     assessor = AssessorStub.new.fetch_request_body(nonDomesticDec: "ACTIVE")
     add_assessor(scheme_id, "SPEC000000", assessor)
 
+    add_address_base(uprn: "1")
+
     lodge_dec_rr(Samples.xml("CEPC-8.0.0", "dec+rr"), scheme_id)
     @regular_summary =
       JSON.parse(

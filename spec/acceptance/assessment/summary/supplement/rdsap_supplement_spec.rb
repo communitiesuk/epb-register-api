@@ -10,6 +10,8 @@ describe "Acceptance::AssessmentSummary::Supplement::RdSAP" do
     assessor = AssessorStub.new.fetch_request_body(domesticRdSap: "ACTIVE")
     add_assessor(scheme_id, "SPEC000000", assessor)
 
+    add_address_base(uprn: "0")
+
     lodge_rdsap(Samples.xml("RdSAP-Schema-20.0.0"), scheme_id)
     add_green_deal_plan(
       assessment_id: "0000-0000-0000-0000-0000",

@@ -10,6 +10,8 @@ describe "Acceptance::AssessmentSummary::Supplement::SAP" do
     assessor = AssessorStub.new.fetch_request_body(domesticSap: "ACTIVE")
     add_assessor(scheme_id, "SPEC000000", assessor)
 
+    add_address_base(uprn: "0")
+
     lodge_sap(Samples.xml("SAP-Schema-18.0.0"), scheme_id)
     @regular_summary =
       JSON.parse(

@@ -8,21 +8,23 @@ module Gateway
 
     ASSESSMENT_SEARCH_INDEX_SELECT = <<-SQL
         SELECT
-            assessment_id, date_of_assessment,type_of_assessment,
-            current_energy_efficiency_rating, opt_out, postcode, date_of_expiry, date_registered,
-            address_line1, address_line2, address_line3, address_line4, town,
-            cancelled_at, not_for_issue_at, address_id, scheme_assessor_id
-        FROM assessments
+            a.assessment_id, a.date_of_assessment, a.type_of_assessment,
+            a.current_energy_efficiency_rating, a.opt_out, a.postcode, a.date_of_expiry, a.date_registered,
+            a.address_line1, a.address_line2, a.address_line3, a.address_line4, a.town,
+            a.cancelled_at, a.not_for_issue_at, b.address_id, a.scheme_assessor_id
+        FROM assessments a
+        LEFT JOIN assessments_address_id b
+            ON(a.assessment_id = b.assessment_id)
     SQL
 
     def search_by_postcode(postcode, assessment_types = [])
       sql =
         ASSESSMENT_SEARCH_INDEX_SELECT +
         <<-SQL
-        WHERE postcode = $1
-        AND cancelled_at IS NULL
-        AND not_for_issue_at IS NULL
-        AND opt_out = false
+        WHERE a.postcode = $1
+        AND a.cancelled_at IS NULL
+        AND a.not_for_issue_at IS NULL
+        AND a.opt_out = false
         SQL
 
       binds = [
@@ -76,25 +78,25 @@ module Gateway
         assessment_type.each do |type|
           ins.push(ActiveRecord::Base.connection.quote(type))
         end
-        sql += "type_of_assessment IN(" + ins.join(", ") + ") AND "
+        sql += "a.type_of_assessment IN(" + ins.join(", ") + ") AND "
       end
 
       sql +=
         <<-SQL
             (
-              LOWER(town) = $2
+              LOWER(a.town) = $2
               OR
-              LOWER(address_line2) = $2
+              LOWER(a.address_line2) = $2
               OR
-              LOWER(address_line3) = $2
+              LOWER(a.address_line3) = $2
               OR
-              LOWER(address_line4) = $2
+              LOWER(a.address_line4) = $2
             )
             AND
             (
-              LOWER(address_line1) LIKE $1
+              LOWER(a.address_line1) LIKE $1
               OR
-              LOWER(address_line2) LIKE $1
+              LOWER(a.address_line2) LIKE $1
             )
         SQL
 
@@ -113,9 +115,9 @@ module Gateway
 
       if restrictive
         sql +=
-          ' AND cancelled_at IS NULL
-              AND not_for_issue_at IS NULL
-              AND opt_out = false'
+          ' AND a.cancelled_at IS NULL
+              AND a.not_for_issue_at IS NULL
+              AND a.opt_out = false'
       end
 
       sql += " LIMIT 200"
@@ -134,14 +136,14 @@ module Gateway
       sql =
         ASSESSMENT_SEARCH_INDEX_SELECT +
         <<-SQL
-        WHERE assessment_id = #{
+        WHERE a.assessment_id = #{
             ActiveRecord::Base.connection.quote(assessment_id)
           }
         SQL
 
       if restrictive
-        sql += " AND cancelled_at IS NULL"
-        sql += " AND not_for_issue_at IS NULL"
+        sql += " AND a.cancelled_at IS NULL"
+        sql += " AND a.not_for_issue_at IS NULL"
       end
 
       unless assessment_type.empty?
@@ -149,7 +151,7 @@ module Gateway
         assessment_type.each do |type|
           ins.push(ActiveRecord::Base.connection.quote(type))
         end
-        sql += " AND type_of_assessment IN(" + ins.join(", ") + ")"
+        sql += " AND a.type_of_assessment IN(" + ins.join(", ") + ")"
       end
 
       response = Assessment.connection.execute(sql)
