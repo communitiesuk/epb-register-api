@@ -41,26 +41,32 @@ module UseCase
             assessment_id,
           )
 
-        case lodged_values.type
-        when :AC_CERT
-          AcCertSupplement.new.add_data!(lodged_values.to_hash)
-        when :AC_REPORT
-          AcReportSupplement.new.add_data!(lodged_values.to_hash)
-        when :CEPC
-          CepcSupplement.new.add_data!(lodged_values.to_hash)
-        when :CEPC_RR
-          CepcRrSupplement.new.add_data!(lodged_values.to_hash)
-        when :DEC
-          DecSupplement.new.add_data!(lodged_values.to_hash)
-        when :DEC_RR
-          DecRrSupplement.new.add_data!(lodged_values.to_hash)
-        when :SAP
-          SapSupplement.new.add_data!(lodged_values.to_hash)
-        when :RdSAP
-          RdSapSupplement.new.add_data!(lodged_values.to_hash)
-        else
-          lodged_values.to_hash
-        end
+        lodged_data = lodged_values.to_hash
+        lodged_data[:address_id] = assessment.to_hash[:address_id]
+
+        summary =
+          case lodged_values.type
+          when :AC_CERT
+            AcCertSupplement.new.add_data!(lodged_data)
+          when :AC_REPORT
+            AcReportSupplement.new.add_data!(lodged_data)
+          when :CEPC
+            CepcSupplement.new.add_data!(lodged_data)
+          when :CEPC_RR
+            CepcRrSupplement.new.add_data!(lodged_data)
+          when :DEC
+            DecSupplement.new.add_data!(lodged_data)
+          when :DEC_RR
+            DecRrSupplement.new.add_data!(lodged_data)
+          when :SAP
+            SapSupplement.new.add_data!(lodged_data)
+          when :RdSAP
+            RdSapSupplement.new.add_data!(lodged_data)
+          else
+            lodged_data
+          end
+
+        summary
       end
     end
   end
