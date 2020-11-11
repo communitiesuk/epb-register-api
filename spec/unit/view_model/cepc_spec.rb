@@ -37,11 +37,11 @@ describe ViewModel::CepcWrapper do
       different_buried_fields: { address: { address_id: "LPRN-000000000001" } },
     },
     {
-        schema_name: "CEPC-5.0",
-        xml: Samples.xml("CEPC-5.0", "cepc"),
-        unsupported_fields: %i[primary_energy_use],
-        different_fields: {},
-        different_buried_fields: { address: { address_id: "LPRN-000000000001" } },
+      schema_name: "CEPC-5.0",
+      xml: Samples.xml("CEPC-5.0", "cepc"),
+      unsupported_fields: %i[primary_energy_use],
+      different_fields: {},
+      different_buried_fields: { address: { address_id: "LPRN-000000000001" } },
     },
   ].freeze
 
