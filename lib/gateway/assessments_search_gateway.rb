@@ -164,24 +164,7 @@ module Gateway
     end
 
     def row_to_domain(row)
-      symbolised_keys = row.symbolize_keys!
-      updated_symbolised_keys = set_expiration_date(symbolised_keys)
-
-      Domain::AssessmentSearchResult.new(updated_symbolised_keys)
-    end
-
-    def set_expiration_date(symbolised_keys)
-      date_registered = symbolised_keys[:date_registered]
-      type_of_assessment = symbolised_keys[:type_of_assessment]
-
-      if type_of_assessment == "RdSAP" || type_of_assessment == "SAP"
-        new_date_registered = date_registered.next_year(10)
-
-        updated_date_registered = { date_of_expiry: new_date_registered }
-        symbolised_keys = symbolised_keys.merge(updated_date_registered)
-      end
-
-      symbolised_keys
+      Domain::AssessmentSearchResult.new(row.symbolize_keys)
     end
   end
 end
