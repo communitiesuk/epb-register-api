@@ -26,7 +26,9 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
 
   let(:response) do
     get_assessment_report(
-      start_date: "2020-05-04", end_date: "2020-05-05", type: "scheme-and-type",
+      start_date: Date.yesterday.strftime("%F"),
+      end_date: Date.tomorrow.strftime("%F"),
+      type: "scheme-and-type",
     ).body
   end
 
@@ -58,21 +60,6 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
         scopes: %w[assessment:lodge migrate:assessment],
         auth_data: { scheme_ids: [scheme_id] },
         migrated: true,
-      )
-
-      expect(response).to eq(
-        "number_of_assessments,scheme_name,type_of_assessment\n1,test scheme,RdSAP\n",
-      )
-    end
-
-    it "returns only assessments registered during the given time frame" do
-      doc = Nokogiri.XML valid_rdsap_xml
-      doc.at("RRN").content = "0000-0000-0000-0000-0001"
-      doc.at("Registration-Date").content = "2020-03-04"
-      lodge_assessment(
-        assessment_body: doc.to_xml,
-        accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
       )
 
       expect(response).to eq(
@@ -156,8 +143,8 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
 
       response =
         get_assessment_report(
-          start_date: "2020-05-04",
-          end_date: "2020-06-20",
+          start_date: Date.yesterday.strftime("%F"),
+          end_date: Date.tomorrow.strftime("%F"),
           type: "scheme-and-type",
         ).body
 
