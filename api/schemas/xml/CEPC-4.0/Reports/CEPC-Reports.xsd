@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="DCLG-CEPC" xmlns="DCLG-CEPC" xmlns:CEPC="DCLG-CEPC" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="LIG-CEPC-4.0">
+	<xs:include schemaLocation="Reported-Data.xsd"/>
+	<xs:include schemaLocation="Performance-Summary.xsd"/>
+	<xs:include schemaLocation="Report-Header.xsd"/>
+	<xs:include schemaLocation="Input-Data.xsd"/>
+  <xs:element name="Reports">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Report" type="Report" maxOccurs="2"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+	<xs:complexType name="Report">
+		<xs:sequence>
+			<xs:element name="Report-Header" type="Report-Header" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Summary-Of-Performance" type="Summary-Of-Performance" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="Formatted-Report" type="xs:base64Binary" minOccurs="0"/>
+			<xs:choice minOccurs="1" maxOccurs="1">
+				<xs:element name="OR-Operational-Rating" type="OR-Operational-Rating" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="AR-Questions" type="AR-Questions" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="Unstructured-Data" type="Unstructured-Data" minOccurs="0" maxOccurs="1"/>
+			</xs:choice>
+			<xs:element name="Insurance-Details" type="Insurance-Details" minOccurs="0" maxOccurs="1"/>
+			<xs:choice minOccurs="1" maxOccurs="1">
+				<xs:element name="Advisory-Report" type="Advisory-Report" minOccurs="1" maxOccurs="1"/>
+				<xs:element name="Display-Certificate" type="Display-Certificate" minOccurs="1" maxOccurs="1"/>
+				<xs:element name="Energy-Performance-Certificate" type="Energy-Performance-Certificate" minOccurs="1" maxOccurs="1"/>
+				<xs:element name="Recommendations-Report" type="Recommendations-Report" minOccurs="1" maxOccurs="1"/>
+				<xs:element name="Air-Conditioning-Reports" type="Air-Conditioning-Reports" minOccurs="1" maxOccurs="1"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Insurance-Details" type="Insurance-Details"/>
+	<xs:complexType name="Insurance-Details">
+		<xs:annotation>
+			<xs:documentation>Details of the Professional Indemnity Insurance policy used to provide cover against a compensation claim against any particular Report.
+
+A Report may be covered by an Professional Indemnity Insurance policy in one of three different ways:
+*	The Energy Assessor has personal Professional Indemnity Insurance and the Report is covered by this.
+*	The Report is covered by an umbrella Professional Indemnity Insurance policy held by the Report Supplier (the employer of the Energy Assessor) that assigned the inspection to the Energy Assessor.
+*	An individual insurance policy is taken out to cover the individual report such as the case where the property is unusual and falls outside the Energy Assessors normal Professional Indemnity Insurance policy.
+
+A Energy Assessor may use any or all of these methods to providing Professional Indemnity Insurance for a Report on a case-by-case basis.
+</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Insurer" type="xs:string" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The name of the insurance company that underwrites / issued the insurance policy</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Policy-No" type="xs:string" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The policy number of the insurance policy</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Effective-Date" type="xs:date" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The date that the insurance policy becomes effective (commences cover)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Expiry-Date" type="xs:date" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The date that the insurance policy is supposed to expire.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PI-Limit" type="xs:decimal" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The upper limit of the Professional Indemnity cover provided by the insurance policy.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+</xs:schema>

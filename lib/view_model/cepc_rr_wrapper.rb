@@ -18,6 +18,8 @@ module ViewModel
         @view_model = ViewModel::Cepc51::CepcRr.new xml
       when "CEPC-5.0"
         @view_model = ViewModel::Cepc50::CepcRr.new xml
+      when "CEPC-4.0"
+        @view_model = ViewModel::Cepc40::CepcRr.new xml
       else
         raise ArgumentError, "Unsupported schema type"
       end

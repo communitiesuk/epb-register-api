@@ -146,6 +146,61 @@ describe ViewModel::AcReportWrapper do
           system_controls: [],
         },
       },
+      {
+          schema_name: "CEPC-4.0",
+          xml: Samples.xml("CEPC-4.0", "ac-report"),
+          unsupported_fields: [],
+          different_fields: {
+              related_party_disclosure: "No related Party",
+              sub_systems: [],
+              pre_inspection_checklist: {
+                  pcs: {
+                      essential: {
+                          list_of_systems: false,
+                          temperature_control_method: false,
+                          operation_control_method: false,
+                      },
+                      desirable: {
+                          previous_reports: false,
+                          maintenance_records: false,
+                          calibration_records: false,
+                          consumption_records: false,
+                      },
+                      optional: {
+                          cooling_load_estimate: false, complaint_records: false
+                      },
+                  },
+                  sccs: {
+                      essential: {
+                          list_of_systems: true,
+                          cooling_capacities: true,
+                          control_zones: true,
+                          temperature_controls: true,
+                          operation_controls: true,
+                          schematics: false,
+                      },
+                      desirable: {
+                          previous_reports: true,
+                          refrigeration_maintenance: false,
+                          delivery_system_maintenance: true,
+                          control_system_maintenance: true,
+                          consumption_records: true,
+                          commissioning_results: true,
+                      },
+                      optional: {
+                          cooling_load_estimate: true,
+                          complaint_records: true,
+                          bms_capability: true,
+                          monitoring_capability: true,
+                      },
+                  },
+              },
+              cooling_plants: [],
+              air_handling_systems: [],
+              terminal_units: [],
+              system_controls: [],
+          },
+      },
     ].freeze
 
     asserted_keys = {

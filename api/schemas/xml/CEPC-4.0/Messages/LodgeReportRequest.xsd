@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:CS="DCLG-CEPC/CommonStructures" xmlns:ERR="DCLG-CEPC/Exceptions" xmlns:UDT="DCLG-CEPC/BaseDataTypes" xmlns:CEPC="DCLG-CEPC" elementFormDefault="qualified" attributeFormDefault="unqualified" version="LIG-CEPC-4.0">
+	<xs:import namespace="DCLG-CEPC" schemaLocation="../Reports/CEPC-Reports.xsd"/>
+	<xs:import namespace="DCLG-CEPC/CommonStructures" schemaLocation="../CommonFiles/CommonStructures.xsd"/>
+	<xs:element name="LodgeReportRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="MessageIdentifier" type="CS:MessageIdentifier"/>
+				<xs:element name="Report" type="CEPC:Report" maxOccurs="2"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
