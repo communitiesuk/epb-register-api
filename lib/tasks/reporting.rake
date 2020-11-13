@@ -33,12 +33,15 @@ task :extract_reporting do
   while start <= number_of_assessments
     assessments = ActiveRecord::Base.connection.execute("
       SELECT
-        a.assessment_id, b.xml, b.schema_type
+        a.assessment_id, b.xml, b.schema_type, c.address_id
       FROM
         assessments a
       LEFT JOIN
         assessments_xml b
       ON(a.assessment_id = b.assessment_id)
+      LEFT JOIN
+        assessments_address_id c
+      ON(a.assessment_id = c.assessment_id)
       WHERE
         #{where}
       ORDER BY
@@ -66,7 +69,7 @@ task :extract_reporting do
           report_type: hash[:report_type],
           date_of_assessment: hash[:date_of_assessment],
           date_of_registration: hash[:date_of_registration],
-          address_id: hash[:address][:address_id],
+          address_id: assessment["address_id"],
           address_line1: hash[:address][:address_line1],
           address_line2: hash[:address][:address_line2],
           address_line3: hash[:address][:address_line3],
