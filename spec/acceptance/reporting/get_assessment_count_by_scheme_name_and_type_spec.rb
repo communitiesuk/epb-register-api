@@ -148,9 +148,17 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
           type: "scheme-and-type",
         ).body
 
-      expect(response).to eq(
-        "number_of_assessments,scheme_name,type_of_assessment\n1,test scheme,AC-CERT\n1,test scheme,AC-REPORT\n1,test scheme,CEPC\n1,test scheme,CEPC-RR\n1,test scheme,DEC\n1,test scheme,DEC-RR\n1,test scheme,RdSAP\n1,test scheme,SAP\n",
-      )
+      expect(response).to eq <<-CSV
+number_of_assessments,scheme_name,type_of_assessment
+1,test scheme,AC-CERT
+1,test scheme,AC-REPORT
+1,test scheme,CEPC
+1,test scheme,CEPC-RR
+1,test scheme,DEC
+1,test scheme,DEC-RR
+1,test scheme,RdSAP
+1,test scheme,SAP
+      CSV
     end
   end
 end
