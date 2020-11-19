@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_29_103910) do
+ActiveRecord::Schema.define(version: 2020_11_17_162600) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -150,6 +150,12 @@ ActiveRecord::Schema.define(version: 2020_10_29_103910) do
     t.jsonb "measures", default: "[]", null: false
     t.jsonb "charges", default: "[]", null: false
     t.jsonb "savings", default: "[]", null: false
+  end
+
+  create_table "lprn_to_rrn", primary_key: "lprn", id: :string, force: :cascade do |t|
+    t.string "rrn", null: false
+    t.datetime "created_at", null: false
+    t.index ["rrn"], name: "index_lprn_to_rrn_on_rrn"
   end
 
   create_table "overidden_lodgement_events", id: false, force: :cascade do |t|
