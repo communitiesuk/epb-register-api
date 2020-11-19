@@ -31,4 +31,5 @@ source "https://rubygems.org" do
   gem "sinatra-cross_origin", "~> 0.4.0"
   gem "unleash", "~> 3.2.1"
   gem "zeitwerk", "~> 2.4.1"
+  gem "aws-sdk-s3", "~> 1.75"
 end
