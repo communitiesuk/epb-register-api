@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema xmlns="DCLG-CEPC" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="DCLG-CEPC" attributeFormDefault="unqualified" elementFormDefault="qualified" version="LIG-CEPC-3.1">
+	<xs:include schemaLocation="./BaseDataTypes.xsd"/>
+	<xs:element name="Report-Data" type="Report-Data"/>
+	<xs:complexType name="Report-Data" abstract="true">
+		<xs:all/>
+	</xs:complexType>
+	<xs:element name="Technical-Information" type="Technical-Information"/>
+	<xs:complexType name="Technical-Information">
+		<xs:all>
+			<xs:element name="Main-Heating-Fuel" type="HeatingFuelTypeCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Main Heating Fuel used in the building. This is onl;y required for a Display Energy Certificate or Energy Performance Certificate and doesn't appear on the Recommendations Report or Advisory Report.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Other-Fuel-Description" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Text description of unspecified fuel type if Other is selected for Main-Heating-Fuel.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Building-Environment" type="BuildingEnvironmentCode">
+				<xs:annotation>
+					<xs:documentation>Services</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Floor-Area" type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>Total Useful Floor Area (M^2)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Building-Level" type="xs:int" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Building Complexity Level. This is onl;y required for an Energy Performance Certificate and doesn't appear on the Recommendations Report or Advisory Report or Display Energy Certificate.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Special-Energy-Uses" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Special energy uses discounted. This only appears on the advisory Report.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Renewable-Sources" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>On-site renewable energy sources. This only appears on the Advisory Report.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OR-Availability-Date" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The date that the Operational Rating will be available if its not already.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:simpleType name="BuildingEnvironmentCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Air Conditioning">
+				<xs:annotation>
+					<xs:documentation>Air Conditioned</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Heating and Natural Ventilation"/>
+			<xs:enumeration value="Heating and Mechanical Ventilation"/>
+			<xs:enumeration value="Mixed-mode with Natural Ventilation"/>
+			<xs:enumeration value="Mixed-mode with Mechanical Ventilation"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="DEC-Annual-Energy-Summary" type="DEC-Annual-Energy-Summary"/>
+	<xs:complexType name="DEC-Annual-Energy-Summary">
+		<xs:all>
+			<xs:element name="Annual-Energy-Use-Fuel-Thermal" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>Annual Energy Use (kWh/m2 p.a)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Annual-Energy-Use-Electrical" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>Annual Energy Use (kWh/m2 p.a)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Renewables-Fuel-Thermal" type="Percentage">
+				<xs:annotation>
+					<xs:documentation>Energy from on-site renewable sources</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Renewables-Electrical" type="Percentage">
+				<xs:annotation>
+					<xs:documentation>Energy from on-site renewable sources</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Typical-Thermal-Use" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>Benchmark (kWh/m2 p.a)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Typical-Electrical-Use" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>Benchmark (kWh/m2 p.a)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="EPC-Rating" type="EPC-Rating"/>
+	<xs:complexType name="EPC-Rating">
+		<xs:all>
+			<xs:element name="Asset-Rating" type="EnergyRatingType">
+				<xs:annotation>
+					<xs:documentation>Asset Rating</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="New-Build-Benchmark" type="EnergyRatingType">
+				<xs:annotation>
+					<xs:documentation>The Benchmark value if the Building was newly built.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Existing-Stock-Benchmark" type="EnergyRatingType">
+				<xs:annotation>
+					<xs:documentation>The Benchmark value of existing stock for this type of Building </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="AR-Recommendation" type="AR-Recommendation"/>
+	<xs:complexType name="AR-Recommendation">
+		<xs:all>
+			<xs:element name="Recommendation-Code" type="xs:string"/>
+			<xs:element name="Recommendation" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Recommendation</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CO2-Impact" type="CO2ImpactCode">
+				<xs:annotation>
+					<xs:documentation>Potential impact on CO2 emmissions if the change is carried out.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Advisory-Report" type="Advisory-Report"/>
+	<xs:complexType name="Advisory-Report">
+		<xs:all>
+			<xs:element name="AR-Recommendations" type="AR-Recommendations" minOccurs="0"/>
+			<xs:element name="Technical-Information" type="Technical-Information"/>
+			<xs:element name="Site-Services" type="Site-Services"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="AR-Recommendations" type="AR-Recommendations"/>
+	<xs:complexType name="AR-Recommendations">
+		<xs:sequence>
+			<xs:element name="Short-Payback" type="AR-Recommendation" minOccurs="0" maxOccurs="15">
+				<xs:annotation>
+					<xs:documentation>Short Payback Recommendations</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Medium-Payback" type="AR-Recommendation" minOccurs="0" maxOccurs="10">
+				<xs:annotation>
+					<xs:documentation>Medium Payback Recommendations</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Long-Payback" type="AR-Recommendation" minOccurs="0" maxOccurs="5">
+				<xs:annotation>
+					<xs:documentation>Long Payback Recommendations</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Other-Payback" type="AR-Recommendation" minOccurs="0" maxOccurs="10">
+				<xs:annotation>
+					<xs:documentation>Other Payback Recommendations</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="CO2ImpactCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="HIGH"/>
+			<xs:enumeration value="MEDIUM"/>
+			<xs:enumeration value="LOW"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="Site-Services" type="Site-Services"/>
+	<xs:complexType name="Site-Services">
+		<xs:all>
+			<xs:element name="Service-1" type="Site-Service">
+				<xs:annotation>
+					<xs:documentation>Details of Site Services 1</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Service-2" type="Site-Service">
+				<xs:annotation>
+					<xs:documentation>Details of Site Services 2</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Service-3" type="Site-Service">
+				<xs:annotation>
+					<xs:documentation>Details of Site Services 3</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Site-Service" type="Site-Service"/>
+	<xs:complexType name="Site-Service">
+		<xs:all>
+			<xs:element name="Description" type="xs:string"/>
+			<xs:element name="Quantity" type="xs:int"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="DEC-Energy-Assessment" type="DEC-Energy-Assessment"/>
+	<xs:complexType name="DEC-Energy-Assessment">
+		<xs:all>
+			<xs:element name="Nominated-Date" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Nominated date for DEC 1. Display as MMM-YYYY.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Energy-Rating" type="EnergyRatingType">
+				<xs:annotation>
+					<xs:documentation>Energy-Rating
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Electricity-CO2" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>Total CO2 emissions from Electricity</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Heating-CO2" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>Total CO2 emissions from Heating</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Renewables-CO2" type="xs:int" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Total CO2 emissions from Renewable sources</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Display-Certificate" type="Display-Certificate"/>
+	<xs:complexType name="Display-Certificate">
+		<xs:all>
+			<xs:element name="This-Assessment" type="DEC-Energy-Assessment"/>
+			<xs:element name="Technical-Information" type="Technical-Information"/>
+			<xs:element name="DEC-Annual-Energy-Summary" type="DEC-Annual-Energy-Summary"/>
+			<xs:element name="Year1-Assessment" type="DEC-Energy-Assessment" minOccurs="0"/>
+			<xs:element name="Year2-Assessment" type="DEC-Energy-Assessment" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:simpleType name="EnergyRatingType">
+		<xs:restriction base="xs:int"/>
+	</xs:simpleType>
+	<xs:element name="Energy-Performance-Certificate" type="Energy-Performance-Certificate"/>
+	<xs:complexType name="Energy-Performance-Certificate">
+		<xs:all>
+			<xs:element name="EPC-Rating-Scale" type="EPC-Rating-Scale"/>
+			<xs:element name="Technical-Information" type="Technical-Information"/>
+			<xs:element name="EPC-Rating" type="EPC-Rating"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="EPC-Rating-Scale" type="EPC-Rating-Scale"/>
+	<xs:complexType name="EPC-Rating-Scale">
+		<xs:annotation>
+			<xs:documentation>Defines the banded values for the Energy rating scale on the EPC. </xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Upper-Number-A-Scale" type="EnergyRatingType">
+				<xs:annotation>
+					<xs:documentation>Upper number on A scale</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Lower-Number-B-Scale" type="EnergyRatingType">
+				<xs:annotation>
+					<xs:documentation>Lower number on B scale</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Upper-Number-B-Scale" type="EnergyRatingType">
+				<xs:annotation>
+					<xs:documentation>Upper number on B scale</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Lower-Number-C-Scale" type="EnergyRatingType">
+				<xs:annotation>
+					<xs:documentation>Lower number on C scale</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Upper-Number-C-Scale" type="EnergyRatingType">
+				<xs:annotation>
+					<xs:documentation>Upper number on C scale</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Lower-Number-D-Scale" type="EnergyRatingType">
+				<xs:annotation>
+					<xs:documentation>Lower number on D scale</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Upper-Number-D-Scale" type="EnergyRatingType">
+				<xs:annotation>
+					<xs:documentation>Upper number on D scale</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Lower-Number-E-Scale" type="EnergyRatingType">
+				<xs:annotation>
+					<xs:documentation>Lower number on E scale</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Upper-Number-E-Scale" type="EnergyRatingType">
+				<xs:annotation>
+					<xs:documentation>Upper number on E scale</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Lower-Number-F-Scale" type="EnergyRatingType">
+				<xs:annotation>
+					<xs:documentation>Lower number on F scale</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Upper-Number-F-Scale" type="EnergyRatingType">
+				<xs:annotation>
+					<xs:documentation>Upper number on F scale</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Lowest-Number-G-Scale" type="EnergyRatingType">
+				<xs:annotation>
+					<xs:documentation>Lowest number on G scale</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="RR-Recommendation" type="RR-Recommendation"/>
+	<xs:complexType name="RR-Recommendation">
+		<xs:all>
+			<xs:element name="Recommendation-Code" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>The Recommendation Code that identifis this particular recommendation</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Recommendation" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Recommendation selected by the energy assessor</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CO2-Impact" type="CO2ImpactCode"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="RR-Recommendations" type="RR-Recommendations"/>
+	<xs:complexType name="RR-Recommendations">
+		<xs:sequence>
+			<xs:element name="Short-Payback" type="RR-Recommendation" minOccurs="0" maxOccurs="15">
+				<xs:annotation>
+					<xs:documentation>Short Payback Recommendations</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Medium-Payback" type="RR-Recommendation" minOccurs="0" maxOccurs="10">
+				<xs:annotation>
+					<xs:documentation>Medium Payback Recommendations</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Long-Payback" type="RR-Recommendation" minOccurs="0" maxOccurs="5">
+				<xs:annotation>
+					<xs:documentation>Long Payback Recommendations</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Other-Payback" type="RR-Recommendation" minOccurs="0" maxOccurs="10">
+				<xs:annotation>
+					<xs:documentation>Other Payback Recommendations</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Recommendations-Report" type="Recommendations-Report"/>
+	<xs:complexType name="Recommendations-Report">
+		<xs:all>
+			<xs:element name="RR-Recommendations" type="RR-Recommendations" minOccurs="0"/>
+			<xs:element name="Technical-Information" type="Technical-Information"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:simpleType name="HeatingFuelTypeCode">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Natural Gas"/>
+			<xs:enumeration value="LPG">
+				<xs:annotation>
+					<xs:documentation>LPG</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Biogas">
+				<xs:annotation>
+					<xs:documentation>biogas - landfill</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Oil">
+				<xs:annotation>
+					<xs:documentation>oil</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Coal">
+				<xs:annotation>
+					<xs:documentation>house coal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Anthracite">
+				<xs:annotation>
+					<xs:documentation>anthracite</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Smokeless Fuel (inc Coke)">
+				<xs:annotation>
+					<xs:documentation>Smokeless Fuel including Coke</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Dual Fuel Appliances (Mineral + Wood)">
+				<xs:annotation>
+					<xs:documentation>dual fuel - mineral + wood</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Biomass">
+				<xs:annotation>
+					<xs:documentation>biomass</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Grid Supplied Electricity">
+				<xs:annotation>
+					<xs:documentation>Mains Electricity</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Grid Displaced Electricity"/>
+			<xs:enumeration value="Waste Heat"/>
+			<xs:enumeration value="District Cooling"/>
+			<xs:enumeration value="District Heating"/>
+			<xs:enumeration value="Other"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

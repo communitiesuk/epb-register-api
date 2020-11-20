@@ -114,6 +114,24 @@ describe ViewModel::DecRrWrapper do
           address: { address_id: "LPRN-000000000001", postcode: "BT0 0AA" },
         },
       },
+      {
+        schema_name: "CEPC-3.1",
+        xml: Samples.xml("CEPC-3.1", "dec-rr"),
+        unsupported_fields: [],
+        different_fields: {},
+        different_buried_fields: {
+          address: { address_id: "LPRN-000000000001" },
+        },
+      },
+      {
+        schema_name: "CEPC-3.1",
+        xml: Samples.xml("CEPC-3.1", "dec-rr-ni"),
+        unsupported_fields: [],
+        different_fields: { date_of_expiry: "2027-05-03" },
+        different_buried_fields: {
+          address: { address_id: "LPRN-000000000001", postcode: "BT0 0AA" },
+        },
+      },
     ].freeze
 
     asserted_keys = {

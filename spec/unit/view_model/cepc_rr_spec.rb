@@ -53,14 +53,24 @@ describe ViewModel::CepcRrWrapper do
         },
       },
       {
-          schema_name: "CEPC-4.0",
-          xml: Samples.xml("CEPC-4.0", "cepc-rr"),
-          unsupported_fields: [],
-          different_fields: {},
-          different_buried_fields: {
-              address: { address_id: "LPRN-000000000000" },
-              technical_information: { building_environment: "Air Conditioning" },
-          },
+        schema_name: "CEPC-4.0",
+        xml: Samples.xml("CEPC-4.0", "cepc-rr"),
+        unsupported_fields: [],
+        different_fields: {},
+        different_buried_fields: {
+          address: { address_id: "LPRN-000000000000" },
+          technical_information: { building_environment: "Air Conditioning" },
+        },
+      },
+      {
+        schema_name: "CEPC-3.1",
+        xml: Samples.xml("CEPC-3.1", "cepc-rr"),
+        unsupported_fields: [],
+        different_fields: {},
+        different_buried_fields: {
+          address: { address_id: "LPRN-000000000000" },
+          technical_information: { building_environment: "Air Conditioning" },
+        },
       },
     ].freeze
 

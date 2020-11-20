@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Reports xmlns="DCLG-CEPC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="DCLG-CEPC  ../../../../api/schemas/xml/CEPC-3.1/Reports/CEPC-Reports.xsd">
+  <Report>
+    <Report-Header>
+      <RRN>0000-0000-0000-0000-0000</RRN>
+      <Issue-Date>2020-05-14</Issue-Date>
+      <Valid-Until>2026-05-04</Valid-Until>
+      <Report-Type>1</Report-Type>
+      <Inspection-Date>2020-05-04</Inspection-Date>
+      <Registration-Date>2020-05-04</Registration-Date>
+      <Status>entered</Status>
+      <Related-RRN>4192-1535-8427-8844-6702</Related-RRN>
+      <Language-Code>1</Language-Code>
+      <Energy-Assessor>
+        <Certificate-Number>SPEC000000</Certificate-Number>
+        <Name>Name1</Name>
+        <Accreditation-Scheme-Name>Information not available</Accreditation-Scheme-Name>
+        <Trading-Address>123 My Street, My City, AB3 4CD</Trading-Address>
+        <Company-Name>Joe Bloggs Ltd</Company-Name>
+        <Related-Party-Disclosure>4</Related-Party-Disclosure>
+        <Status>Registered</Status>
+        <E-Mail>a@b.c</E-Mail>
+        <Telephone-Number>0921-19037</Telephone-Number>
+      </Energy-Assessor>
+      <Property-Details>
+        <UPRN>000000000001</UPRN>
+        <Property-Address>
+          <Address-Line-1>2 Lonely Street</Address-Line-1>
+          <Post-Town>Post-Town1</Post-Town>
+          <Postcode>BT0 0AA</Postcode>
+        </Property-Address>
+        <Occupier>Primary School</Occupier>
+        <Property-Type>B1 Offices and Workshop businesses</Property-Type>
+        <Is-Heritage-Site>N</Is-Heritage-Site>
+      </Property-Details>
+      <Calculation-Details>
+        <Calculation-Tool>DCLG, ORCalc, v3.6.3</Calculation-Tool>
+      </Calculation-Details>
+    </Report-Header>
+    <Insurance-Details>
+      <Insurer>Insurance</Insurer>
+      <Policy-No>0001</Policy-No>
+      <Effective-Date>2020-08-01</Effective-Date>
+      <Expiry-Date>2021-07-31</Expiry-Date>
+      <PI-Limit>500000</PI-Limit>
+    </Insurance-Details>
+    <Display-Certificate>
+      <DEC-Annual-Energy-Summary>
+        <Annual-Energy-Use-Electrical>1</Annual-Energy-Use-Electrical>
+        <Annual-Energy-Use-Fuel-Thermal>1</Annual-Energy-Use-Fuel-Thermal>
+        <Renewables-Fuel-Thermal>1</Renewables-Fuel-Thermal>
+        <Renewables-Electrical>1</Renewables-Electrical>
+        <Typical-Thermal-Use>1</Typical-Thermal-Use>
+        <Typical-Electrical-Use>1</Typical-Electrical-Use>
+      </DEC-Annual-Energy-Summary>
+      <This-Assessment>
+        <Nominated-Date>2020-01-01</Nominated-Date>
+        <Energy-Rating>1</Energy-Rating>
+        <Electricity-CO2>7</Electricity-CO2>
+        <Heating-CO2>3</Heating-CO2>
+        <Renewables-CO2>0</Renewables-CO2>
+      </This-Assessment>
+      <Year1-Assessment>
+        <Nominated-Date>2019-01-01</Nominated-Date>
+        <Energy-Rating>24</Energy-Rating>
+        <Electricity-CO2>10</Electricity-CO2>
+        <Heating-CO2>5</Heating-CO2>
+        <Renewables-CO2>1</Renewables-CO2>
+      </Year1-Assessment>
+      <Year2-Assessment>
+        <Nominated-Date>2018-01-01</Nominated-Date>
+        <Energy-Rating>40</Energy-Rating>
+        <Electricity-CO2>15</Electricity-CO2>
+        <Heating-CO2>10</Heating-CO2>
+        <Renewables-CO2>2</Renewables-CO2>
+      </Year2-Assessment>
+      <Technical-Information>
+        <Main-Heating-Fuel>Natural Gas</Main-Heating-Fuel>
+        <Building-Environment>Heating and Natural Ventilation</Building-Environment>
+        <Floor-Area>99</Floor-Area>
+      </Technical-Information>
+    </Display-Certificate>
+    <OR-Operational-Rating>
+      <OR-Assessment-Start-Date>2020-05-01</OR-Assessment-Start-Date>
+      <OR-Assessment-End-Date>2020-05-01</OR-Assessment-End-Date>
+      <Building-Category></Building-Category>
+      <OR-Building-Data>
+        <Internal-Environment></Internal-Environment>
+        <Assessment-Period-Alignment></Assessment-Period-Alignment>
+        <HVAC-System></HVAC-System>
+      </OR-Building-Data>
+      <OR-Benchmark-Data>
+        <Main-Benchmark></Main-Benchmark>
+        <Benchmark-1>
+          <Name></Name>
+          <Area-Metric></Area-Metric>
+          <Floor-Area>10</Floor-Area>
+          <Special-Uses-Area></Special-Uses-Area>
+          <TUFA></TUFA>
+          <Benchmark>General office</Benchmark>
+          <Occupancy-Level>Extended Occupancy</Occupancy-Level>
+          <Total-Equivalent>3000</Total-Equivalent>
+        </Benchmark-1>
+      </OR-Benchmark-Data>
+      <OR-Energy-Consumption>
+        <Electricity>
+          <Consumption>422480</Consumption>
+          <Start-Date>2007-01-31</Start-Date>
+          <End-Date>2008-07-31</End-Date>
+          <Estimate>1</Estimate>
+        </Electricity>
+        <Gas>
+          <Consumption>310400</Consumption>
+          <Start-Date>2007-01-18</Start-Date>
+          <End-Date>2007-12-18</End-Date>
+          <Estimate>0</Estimate>
+        </Gas>
+      </OR-Energy-Consumption>
+      <OR-Usable-Floor-Area/>
+      <OR-Previous-Data>
+        <Asset-Rating>100</Asset-Rating>
+      </OR-Previous-Data>
+    </OR-Operational-Rating>
+    <Formatted-Report/>
+  </Report>
+</Reports>

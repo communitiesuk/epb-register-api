@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2006 rel. 3 U (http://www.altova.com) by Jim Bowery (Landmark Information Group Ltd.) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:CS="DCLG-CEPC/CommonStructures" xmlns:ERR="DCLG-CEPC/Exceptions" xmlns:UDT="DCLG-CEPC/BaseDataTypes" xmlns:CEPC="DCLG-CEPC" elementFormDefault="qualified" attributeFormDefault="unqualified" version="LIG-CEPC-3.1">
+	<xs:import namespace="DCLG-CEPC" schemaLocation="../Reports/CEPC-Reports.xsd"/>
+	<xs:import namespace="DCLG-CEPC/Exceptions" schemaLocation="../CommonFiles/Exceptions.xsd"/>
+	<xs:import namespace="DCLG-CEPC/CommonStructures" schemaLocation="../CommonFiles/CommonStructures.xsd"/>
+	<xs:element name="UpdateEARegisterResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="MessageIdentifier" type="CS:MessageIdentifier"/>
+				<xs:element name="Success" type="CEPC:Flag"/>
+				<xs:element name="ExceptionList" type="ERR:ExceptionList" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

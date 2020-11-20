@@ -145,5 +145,8 @@
   },
   "CEPC-4.0": {
     "schema_path": "api/schemas/xml/CEPC-4.0/Reports/CEPC-Reports.xsd"
+  },
+  "CEPC-3.1": {
+    "schema_path": "api/schemas/xml/CEPC-3.1/Reports/CEPC-Reports.xsd"
   }
 }
