@@ -203,9 +203,17 @@ describe "Acceptance::Reports::GetAssessmentCountByRegionAndType" do
         get_assessment_report(start_date: "2020-05-04", end_date: "2020-06-20")
           .body
 
-      expect(response).to eq(
-        "number_of_assessments,type_of_assessment,region\n1,AC-CERT,London\n1,AC-REPORT,London\n1,CEPC,London\n1,CEPC-RR,London\n1,DEC,London\n1,DEC-RR,London\n1,RdSAP,London\n1,SAP,London\n",
-      )
+      expect(response).to eq <<~CSV
+        number_of_assessments,type_of_assessment,region
+        1,AC-CERT,London
+        1,AC-REPORT,London
+        1,CEPC,London
+        1,CEPC-RR,London
+        1,DEC,London
+        1,DEC-RR,London
+        1,RdSAP,London
+        1,SAP,London
+      CSV
     end
   end
 end

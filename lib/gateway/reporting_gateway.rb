@@ -26,6 +26,7 @@ module Gateway
             cancelled_at NOT BETWEEN $1 AND $2
           )
         GROUP BY type_of_assessment, COALESCE(b.region, c.region)
+        ORDER BY type_of_assessment, COALESCE(b.region, c.region)
       SQL
 
       binds = [
@@ -63,6 +64,7 @@ module Gateway
         AND
           migrated IS NULL
         GROUP BY c.name, a.type_of_assessment
+        ORDER BY c.name, a.type_of_assessment
       SQL
 
       binds = [
