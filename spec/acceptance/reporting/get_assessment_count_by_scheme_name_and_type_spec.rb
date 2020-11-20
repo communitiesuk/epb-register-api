@@ -19,10 +19,13 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
   let(:valid_sap_xml) { Samples.xml "SAP-Schema-18.0.0" }
   let(:valid_cepc_xml) { Samples.xml "CEPC-8.0.0", "cepc" }
   let(:valid_cepc_rr_xml) { Samples.xml "CEPC-8.0.0", "cepc-rr" }
+  let(:valid_cepc_and_cepc_rr_xml) { Samples.xml "CEPC-8.0.0", "cepc+rr" }
   let(:valid_dec_xml) { Samples.xml "CEPC-8.0.0", "dec" }
+  let(:valid_dec_and_rr_xml) { Samples.xml "CEPC-8.0.0", "dec+rr" }
   let(:valid_dec_rr_xml) { Samples.xml "CEPC-8.0.0", "dec-rr" }
   let(:valid_ac_cert_xml) { Samples.xml "CEPC-8.0.0", "ac-cert" }
   let(:valid_ac_report_xml) { Samples.xml "CEPC-8.0.0", "ac-report" }
+  let(:valid_ac_cert_and_ac_report_xml) { Samples.xml "CEPC-8.0.0", "ac-cert+ac-report" }
 
   let(:response) do
     get_assessment_report(
@@ -45,12 +48,23 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
       )
     end
     it "returns a CSV with headers and data included" do
-      expect(response).to eq(
-        "number_of_assessments,scheme_name,type_of_assessment\n1,test scheme,RdSAP\n",
-      )
+      expect(response).to eq <<~CSV
+        number_of_assessments,scheme_name,type_of_assessment
+        0,test scheme,AC-CERT
+        0,test scheme,AC-REPORT
+        0,test scheme,AC-REPORT+CERT
+        0,test scheme,CEPC
+        0,test scheme,CEPC+RR
+        0,test scheme,CEPC-RR
+        0,test scheme,DEC
+        0,test scheme,DEC+RR
+        0,test scheme,DEC-RR
+        1,test scheme,RdSAP
+        0,test scheme,SAP
+      CSV
     end
 
-    it "only returns none migrated results" do
+    it "does not count migrated assessments" do
       doc = Nokogiri.XML valid_rdsap_xml
       doc.at("RRN").content = "0000-0000-0000-0000-0001"
 
@@ -62,9 +76,20 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
         migrated: true,
       )
 
-      expect(response).to eq(
-        "number_of_assessments,scheme_name,type_of_assessment\n1,test scheme,RdSAP\n",
-      )
+      expect(response).to eq <<~CSV
+        number_of_assessments,scheme_name,type_of_assessment
+        0,test scheme,AC-CERT
+        0,test scheme,AC-REPORT
+        0,test scheme,AC-REPORT+CERT
+        0,test scheme,CEPC
+        0,test scheme,CEPC+RR
+        0,test scheme,CEPC-RR
+        0,test scheme,DEC
+        0,test scheme,DEC+RR
+        0,test scheme,DEC-RR
+        1,test scheme,RdSAP
+        0,test scheme,SAP
+      CSV
     end
 
     it "returns an empty object if there are no lodgements in the time frame " do
@@ -105,6 +130,19 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
         schema_name: "CEPC-8.0.0",
       )
 
+      doc = Nokogiri.XML valid_cepc_and_cepc_rr_xml
+      doc.xpath("//CEPC:RRN")[0].content = "0000-0000-0000-0000-3000"
+      doc.xpath("//CEPC:RRN")[1].content = "0000-0000-0000-0000-3001"
+      doc.xpath("//CEPC:Related-RRN")[0].content = "0000-0000-0000-0000-3001"
+      doc.xpath("//CEPC:Related-RRN")[1].content = "0000-0000-0000-0000-3000"
+
+      lodge_assessment(
+        assessment_body: doc.to_xml,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] },
+        schema_name: "CEPC-8.0.0",
+      )
+
       doc = Nokogiri.XML valid_dec_xml
       doc.at("RRN").content = "0000-0000-0000-0000-0003"
       lodge_assessment(
@@ -116,6 +154,19 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
 
       doc = Nokogiri.XML valid_dec_rr_xml
       doc.at("RRN").content = "0000-0000-0000-0000-0004"
+      lodge_assessment(
+        assessment_body: doc.to_xml,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] },
+        schema_name: "CEPC-8.0.0",
+      )
+
+      doc = Nokogiri.XML valid_dec_and_rr_xml
+      doc.css("RRN")[0].content = "0000-0000-0000-0000-1000"
+      doc.css("RRN")[1].content = "0000-0000-0000-0000-1001"
+      doc.css("Related-RRN")[0].content = "0000-0000-0000-0000-1001"
+      doc.css("Related-RRN")[1].content = "0000-0000-0000-0000-1000"
+
       lodge_assessment(
         assessment_body: doc.to_xml,
         accepted_responses: [201],
@@ -141,6 +192,19 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
         schema_name: "CEPC-8.0.0",
       )
 
+      doc = Nokogiri.XML valid_ac_cert_and_ac_report_xml
+      doc.css("RRN")[0].content = "0000-0000-0000-0000-2000"
+      doc.css("RRN")[1].content = "0000-0000-0000-0000-2001"
+      doc.css("Related-RRN")[0].content = "0000-0000-0000-0000-2001"
+      doc.css("Related-RRN")[1].content = "0000-0000-0000-0000-2000"
+
+      lodge_assessment(
+        assessment_body: doc.to_xml,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] },
+        schema_name: "CEPC-8.0.0",
+      )
+
       response =
         get_assessment_report(
           start_date: Date.yesterday.strftime("%F"),
@@ -148,16 +212,19 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
           type: "scheme-and-type",
         ).body
 
-      expect(response).to eq <<-CSV
-number_of_assessments,scheme_name,type_of_assessment
-1,test scheme,AC-CERT
-1,test scheme,AC-REPORT
-1,test scheme,CEPC
-1,test scheme,CEPC-RR
-1,test scheme,DEC
-1,test scheme,DEC-RR
-1,test scheme,RdSAP
-1,test scheme,SAP
+      expect(response).to eq <<~CSV
+        number_of_assessments,scheme_name,type_of_assessment
+        1,test scheme,AC-CERT
+        1,test scheme,AC-REPORT
+        1,test scheme,AC-REPORT+CERT
+        1,test scheme,CEPC
+        1,test scheme,CEPC+RR
+        1,test scheme,CEPC-RR
+        1,test scheme,DEC
+        1,test scheme,DEC+RR
+        1,test scheme,DEC-RR
+        1,test scheme,RdSAP
+        1,test scheme,SAP
       CSV
     end
   end

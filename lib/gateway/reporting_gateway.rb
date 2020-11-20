@@ -48,23 +48,14 @@ module Gateway
 
     def assessments_by_scheme_and_type(start_date, end_date)
       sql = <<~SQL
-        SELECT
-          COUNT(a.type_of_assessment) AS number_of_assessments,
-          c.name AS scheme_name,
-          a.type_of_assessment
+        SELECT a.assessment_id,
+               c.name AS scheme_name,
+               a.type_of_assessment
         FROM assessments a
-        LEFT JOIN
-          assessors b
-        ON(a.scheme_assessor_id = b.scheme_assessor_id)
-        LEFT JOIN
-          schemes c
-        ON(b.registered_by = c.scheme_id)
-        WHERE
-          created_at BETWEEN $1 AND $2
-        AND
-          migrated IS NULL
-        GROUP BY c.name, a.type_of_assessment
-        ORDER BY c.name, a.type_of_assessment
+        LEFT JOIN assessors b ON a.scheme_assessor_id = b.scheme_assessor_id
+        LEFT JOIN schemes c ON b.registered_by = c.scheme_id
+        WHERE a.created_at BETWEEN $1 AND $2
+        AND (a.migrated IS NULL OR a.migrated IS FALSE)
       SQL
 
       binds = [

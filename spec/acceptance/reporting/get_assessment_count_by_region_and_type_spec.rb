@@ -133,7 +133,7 @@ describe "Acceptance::Reports::GetAssessmentCountByRegionAndType" do
       )
     end
 
-    it "returns an array of different assessment types " do
+    it "returns a csv of different assessment types " do
       add_postcodes("A0 0AA", 51.5045, 0.0865, "London")
 
       doc = Nokogiri.XML valid_sap_xml
