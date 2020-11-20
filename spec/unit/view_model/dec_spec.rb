@@ -8,6 +8,11 @@ describe ViewModel::DecWrapper do
       xml: Samples.xml("CEPC-8.0.0", "dec"),
       unsupported_fields: [],
       different_fields: {},
+      different_buried_fields: {
+        administrative_information: {
+          related_rrn: nil,
+        },
+      },
     },
     {
       schema_name: "CEPC-8.0.0",
