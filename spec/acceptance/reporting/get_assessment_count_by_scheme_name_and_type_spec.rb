@@ -35,74 +35,33 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
     ).body
   end
 
-  context "when getting a report on the number of lodged assessments" do
-    before do
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
-    end
-
-    before do
-      lodge_assessment(
-        assessment_body: valid_rdsap_xml,
-        accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
-      )
-    end
-    it "returns a CSV with headers and data included" do
-      expect(response).to eq <<~CSV
-        number_of_assessments,scheme_name,type_of_assessment
-        0,test scheme,AC-CERT
-        0,test scheme,AC-REPORT
-        0,test scheme,AC-REPORT+CERT
-        0,test scheme,CEPC
-        0,test scheme,CEPC+RR
-        0,test scheme,CEPC-RR
-        0,test scheme,DEC
-        0,test scheme,DEC+RR
-        0,test scheme,DEC-RR
-        1,test scheme,RdSAP
-        0,test scheme,SAP
-      CSV
-    end
-
-    it "does not count migrated assessments" do
-      doc = Nokogiri.XML valid_rdsap_xml
-      doc.at("RRN").content = "0000-0000-0000-0000-0001"
-
-      lodge_assessment(
-        assessment_body: doc.to_xml,
-        accepted_responses: [201],
-        scopes: %w[assessment:lodge migrate:assessment],
-        auth_data: { scheme_ids: [scheme_id] },
-        migrated: true,
-      )
-
-      expect(response).to eq <<~CSV
-        number_of_assessments,scheme_name,type_of_assessment
-        0,test scheme,AC-CERT
-        0,test scheme,AC-REPORT
-        0,test scheme,AC-REPORT+CERT
-        0,test scheme,CEPC
-        0,test scheme,CEPC+RR
-        0,test scheme,CEPC-RR
-        0,test scheme,DEC
-        0,test scheme,DEC+RR
-        0,test scheme,DEC-RR
-        1,test scheme,RdSAP
-        0,test scheme,SAP
-      CSV
-    end
-
+  context "when there are no lodgements" do
     it "returns an empty object if there are no lodgements in the time frame " do
       response =
         get_assessment_report(start_date: "2020-09-04", end_date: "2020-09-05")
-          .body
+            .body
 
       expect(JSON.parse(response, symbolize_names: true)).to eq(
         { data: "No lodgements during this time frame" },
       )
     end
+  end
 
-    it "returns an array of different assessment types " do
+  context "when there are lodgements" do
+    before do
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
+    end
+
+    it "returns a report with the correct numbers of lodgements" do
+      doc = Nokogiri.XML valid_rdsap_xml
+      doc.at("RRN").content = "0000-0000-0000-0000-0000"
+      lodge_assessment(
+        assessment_body: doc.to_xml,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] },
+        schema_name: "RdSAP-Schema-20.0.0",
+      )
+
       doc = Nokogiri.XML valid_sap_xml
       doc.at("RRN").content = "0000-0000-0000-0000-0001"
       lodge_assessment(
@@ -226,6 +185,25 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
         1,test scheme,RdSAP
         1,test scheme,SAP
       CSV
+    end
+
+    context "when some lodgements are migrated" do
+      it "does not include these in the report" do
+        doc = Nokogiri.XML valid_rdsap_xml
+        doc.at("RRN").content = "0000-0000-0000-0000-0001"
+
+        lodge_assessment(
+          assessment_body: doc.to_xml,
+          accepted_responses: [201],
+          scopes: %w[assessment:lodge migrate:assessment],
+          auth_data: { scheme_ids: [scheme_id] },
+          migrated: true,
+        )
+
+        expect(JSON.parse(response, symbolize_names: true)).to eq(
+          { data: "No lodgements during this time frame" },
+        )
+      end
     end
   end
 end
