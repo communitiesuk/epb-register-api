@@ -20,7 +20,7 @@ phases:
     commands:
       - gem install bundler:2.0.2
       - bundle install
-      - docker run -d -p 5432:5432 --name postgres-test -e POSTGRES_PASSWORD=$DOCKER_POSTGRES_PASSWORD postgres:11
+      - docker run -d -p 5432:5432 --name postgres-test -e POSTGRES_PASSWORD=$DOCKER_POSTGRES_PASSWORD 689681667086.dkr.ecr.eu-west-2.amazonaws.com/codebuild-image-postgres:latest
       - until docker run --rm --link postgres-test:pg postgres:11 pg_isready -U postgres -h pg; do sleep 1; done
   build:
     commands:
