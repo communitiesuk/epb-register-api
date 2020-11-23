@@ -14,6 +14,7 @@ phases:
     runtime-versions:
       ruby: 2.6
     commands:
+      - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
       - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2&
       - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
   pre_build:
