@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ConditionReportCreateRequest_1 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                xmlns="http://www.hcrregister.com"
+                                xmlns:CS="DCLG-HIP/CommonStructures"
+                                xsi:schemaLocation="http://www.hcrregister.com ../../../../api/schemas/xml/SAP-Schema-14.0/Messages/ConditionReportCreateRequest_1.xsd">
+  <Identification>
+    <CS:ServiceName>CreateReport</CS:ServiceName>
+    <CS:Operation>Create</CS:Operation>
+    <CS:TransactionDetails>
+      <CS:OriginatingID>NES</CS:OriginatingID>
+      <CS:RecipientID>Landmark</CS:RecipientID>
+      <CS:Timestamp>2014-02-12T12:31:00</CS:Timestamp>
+      <CS:TransactionID>string</CS:TransactionID>
+    </CS:TransactionDetails>
+    <CS:TermsAndConditions>Y</CS:TermsAndConditions>
+  </Identification>
+  <Configuration/>
+  <Content>
+    <SAP-EPC-Data>
+      <SAP-Version>9.83</SAP-Version>
+      <BEDF-Revision-Number>353</BEDF-Revision-Number>
+      <Calculation-Software-Name>NHER Plan Assessor</Calculation-Software-Name>
+      <Calculation-Software-Version>5.4</Calculation-Software-Version>
+      <Report-Header>
+        <RRN>0000-0000-0000-0000-0000</RRN>
+        <Inspection-Date>2020-05-04</Inspection-Date>
+        <Report-Type>3</Report-Type>
+        <Completion-Date>2020-05-04</Completion-Date>
+        <Registration-Date>2020-05-04</Registration-Date>
+        <Status>entered</Status>
+        <Language-Code>1</Language-Code>
+        <Restricted-Access>0</Restricted-Access>
+        <Transaction-Type>1</Transaction-Type>
+        <Seller-Commission-Report>Y</Seller-Commission-Report>
+        <Property-Type>0</Property-Type>
+        <Home-Inspector>
+          <Name>
+            <Prefix>Mr</Prefix>
+            <First-Name>Test</First-Name>
+            <Surname>Boi</Surname>
+            <Suffix/>
+          </Name>
+          <Certification-Date>2020-05-04</Certification-Date>
+          <Status>Registered</Status>
+          <Company-Name>SPEC</Company-Name>
+          <E-Mail>a@b.c</E-Mail>
+          <Telephone>111222333</Telephone>
+          <Certification-Scheme>
+            <Scheme-Name>SPEC</Scheme-Name>
+            <Complaints-Address>
+              <Address-Line-1>2 Some Street</Address-Line-1>
+              <Post-Town>Post-Town1</Post-Town>
+              <Postcode>A0 0AA</Postcode>
+            </Complaints-Address>
+            <Contact-Address>
+              <Address-Line-1>3 Some Street</Address-Line-1>
+              <Post-Town>Post-Town0</Post-Town>
+              <Postcode>A0 0AA</Postcode>
+            </Contact-Address>
+            <Web-Site>Scheme-Web-Site0</Web-Site>
+            <E-Mail>d@e.f</E-Mail>
+            <Registered-Name>Name0</Registered-Name>
+            <Fax>000000</Fax>
+            <Telephone>0000000</Telephone>
+          </Certification-Scheme>
+          <Identification-Number>
+            <Certificate-Number>SPEC000000</Certificate-Number>
+          </Identification-Number>
+          <Inspector-Report-Types>
+            <Report-Type>3</Report-Type>
+          </Inspector-Report-Types>
+        </Home-Inspector>
+        <Property>
+          <Address>
+            <Address-Line-1>1 Some Street</Address-Line-1>
+            <Post-Town>Post-Town1</Post-Town>
+            <Postcode>A0 0AA</Postcode>
+          </Address>
+          <UPRN>0000000000</UPRN>
+        </Property>
+        <Region-Code>2</Region-Code>
+        <Country-Code>EAW</Country-Code>
+        <Related-Party-Disclosure>
+          <Related-Party-Disclosure-Number>1</Related-Party-Disclosure-Number>
+        </Related-Party-Disclosure>
+      </Report-Header>
+      <Energy-Assessment>
+        <Assessment-Date>2014-02-12</Assessment-Date>
+        <Property-Summary>
+          <Walls>
+            <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+            <Description>Brick walls</Description>
+            <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+          </Walls>
+          <Walls>
+            <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+            <Description>Brick walls</Description>
+            <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+          </Walls>
+          <Roof>
+            <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+            <Description>Slate roof</Description>
+            <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+          </Roof>
+          <Roof>
+            <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+            <Description>slate roof</Description>
+            <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+          </Roof>
+          <Floor>
+            <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+            <Description>Tiled floor</Description>
+            <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+          </Floor>
+          <Floor>
+            <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+            <Description>Tiled floor</Description>
+            <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+          </Floor>
+          <Windows>
+            <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+            <Description>Glass window</Description>
+            <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+          </Windows>
+          <Main-Heating>
+            <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+            <Description>Gas boiler</Description>
+            <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+          </Main-Heating>
+          <Main-Heating>
+            <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+            <Description>Gas boiler</Description>
+            <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+          </Main-Heating>
+          <Main-Heating-Controls>
+            <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+            <Description>Thermostat</Description>
+            <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+          </Main-Heating-Controls>
+          <Main-Heating-Controls>
+            <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+            <Description>Thermostat</Description>
+            <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+          </Main-Heating-Controls>
+          <Secondary-Heating>
+            <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+            <Description>Electric heater</Description>
+            <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+          </Secondary-Heating>
+          <Hot-Water>
+            <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+            <Description>Gas boiler</Description>
+            <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+          </Hot-Water>
+          <Lighting>
+            <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+            <Description>Energy saving bulbs</Description>
+            <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+          </Lighting>
+          <Dwelling-Type>Dwelling-Type0</Dwelling-Type>
+          <Total-Floor-Area>10</Total-Floor-Area>
+          <Is-Zero-Carbon-Home>true</Is-Zero-Carbon-Home>
+        </Property-Summary>
+        <Energy-Use>
+          <Energy-Rating-Current>50</Energy-Rating-Current>
+          <Energy-Rating-Potential>50</Energy-Rating-Potential>
+          <Environmental-Impact-Current>93</Environmental-Impact-Current>
+          <Environmental-Impact-Potential>93</Environmental-Impact-Potential>
+          <Energy-Consumption-Current>0</Energy-Consumption-Current>
+          <Energy-Consumption-Potential>43</Energy-Consumption-Potential>
+          <CO2-Emissions-Current>2.4</CO2-Emissions-Current>
+          <CO2-Emissions-Current-Per-Floor-Area>8</CO2-Emissions-Current-Per-Floor-Area>
+          <CO2-Emissions-Potential>1.4</CO2-Emissions-Potential>
+          <Lighting-Cost-Current>123.45</Lighting-Cost-Current>
+          <Lighting-Cost-Potential>84.23</Lighting-Cost-Potential>
+          <Heating-Cost-Current>365.98</Heating-Cost-Current>
+          <Heating-Cost-Potential>250.34</Heating-Cost-Potential>
+          <Hot-Water-Cost-Current>200.40</Hot-Water-Cost-Current>
+          <Hot-Water-Cost-Potential>180.43</Hot-Water-Cost-Potential>
+        </Energy-Use>
+        <Suggested-Improvements>
+          <Improvement>
+            <Sequence>0</Sequence>
+            <Improvement-Category>1</Improvement-Category>
+            <Improvement-Type>A</Improvement-Type>
+            <Typical-Saving>0.0</Typical-Saving>
+            <Energy-Performance-Rating>50</Energy-Performance-Rating>
+            <Environmental-Impact-Rating>50</Environmental-Impact-Rating>
+            <Improvement-Details>
+              <Improvement-Number>5</Improvement-Number>
+            </Improvement-Details>
+          </Improvement>
+          <Improvement>
+            <Sequence>1</Sequence>
+            <Improvement-Category>2</Improvement-Category>
+            <Improvement-Type>B</Improvement-Type>
+            <Typical-Saving>0.1</Typical-Saving>
+            <Energy-Performance-Rating>60</Energy-Performance-Rating>
+            <Environmental-Impact-Rating>64</Environmental-Impact-Rating>
+            <Improvement-Details>
+              <Improvement-Number>1</Improvement-Number>
+            </Improvement-Details>
+          </Improvement>
+        </Suggested-Improvements>
+        <LZC-Energy-Sources>
+          <LZC-Energy-Source>11</LZC-Energy-Source>
+        </LZC-Energy-Sources>
+      </Energy-Assessment>
+      <SAP05-Data>
+        <Data-Type>2</Data-Type>
+        <SAP-Property-Details>
+          <Property-Type>2</Property-Type>
+          <Living-Area>24.78</Living-Area>
+          <Orientation>0</Orientation>
+          <Conservatory-Type>1</Conservatory-Type>
+          <Is-In-Smoke-Control-Area>unknown</Is-In-Smoke-Control-Area>
+          <SAP-Building-Parts>
+            <SAP-Building-Part>
+              <Building-Part-Number>1</Building-Part-Number>
+              <Overshading>2</Overshading>
+            </SAP-Building-Part>
+          </SAP-Building-Parts>
+        </SAP-Property-Details>
+      </SAP05-Data>
+      <PDF/>
+      <ExternalDefinitions-Revision-Number>4.7</ExternalDefinitions-Revision-Number>
+    </SAP-EPC-Data>
+    <PDF/>
+  </Content>
+</ConditionReportCreateRequest_1>
