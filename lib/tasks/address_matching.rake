@@ -17,7 +17,7 @@ task :import_address_matching do
     s3_client = Aws::S3::Client::new
   else
     vcap = JSON.parse(ENV['VCAP_SERVICES'])
-    s3_bucket_configs = vcap['VCAP_SERVICES']['aws-s3-bucket']
+    s3_bucket_configs = vcap['aws-s3-bucket']
     s3_bucket_config = s3_bucket_configs.detect { |bucket| bucket['credentials']['bucket_name'] == ENV['bucket_name']}
     aws_credentials = Aws::Credentials::new(s3_bucket_config['credentials']['aws_access_key_id'], s3_bucket_config['credentials']['aws_secret_access_key'])
     s3_client = Aws::S3::Client::new(region: s3_bucket_config['credentials']['aws_region'], credentials: aws_credentials)
