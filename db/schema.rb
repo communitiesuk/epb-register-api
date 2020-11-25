@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_17_162600) do
+ActiveRecord::Schema.define(version: 2020_11_25_105700) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -61,6 +61,12 @@ ActiveRecord::Schema.define(version: 2020_11_17_162600) do
     t.string "address_id"
     t.string "source"
     t.index ["address_id"], name: "index_assessments_address_id_on_address_id"
+  end
+
+  create_table "assessments_address_id_backup", primary_key: "assessment_id", id: :string, force: :cascade do |t|
+    t.string "address_id"
+    t.string "source"
+    t.index ["address_id"], name: "index_assessments_address_id_backup_on_address_id"
   end
 
   create_table "assessments_xml", primary_key: "assessment_id", id: :string, default: "", force: :cascade do |t|
@@ -150,12 +156,6 @@ ActiveRecord::Schema.define(version: 2020_11_17_162600) do
     t.jsonb "measures", default: "[]", null: false
     t.jsonb "charges", default: "[]", null: false
     t.jsonb "savings", default: "[]", null: false
-  end
-
-  create_table "lprn_to_rrn", primary_key: "lprn", id: :string, force: :cascade do |t|
-    t.string "rrn", null: false
-    t.datetime "created_at", null: false
-    t.index ["rrn"], name: "index_lprn_to_rrn_on_rrn"
   end
 
   create_table "overidden_lodgement_events", id: false, force: :cascade do |t|
