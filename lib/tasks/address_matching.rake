@@ -31,10 +31,17 @@ task :import_address_matching do
   csv_contents.each do |csv_line|
     lprn = csv_line[0]
     rrn = csv_line[1]
-    created_at = '2019-09-24 20:10:58.977914' # csv_line[2]
 
-    ActiveRecord::Base.connection.execute("INSERT INTO lprn_to_rrn VALUES ('#{lprn}', '#{rrn}', '#{created_at}')"\
-    " ON CONFLICT ON CONSTRAINT lprn_to_rrn_pkey DO UPDATE SET rrn = EXCLUDED.rrn, created_at = EXCLUDED.created_at ;")
+    ActiveRecord::Base.connection.execute("INSERT INTO assessments_address_id_backup " \
+    "SELECT aa.* FROM assessments_address_id aa " \
+    "INNER JOIN assessments a USING (assessment_id) " \
+    "WHERE a.address_id = '#{lprn}' AND aa.source = 'lprn_without_os_uprn'")
+
+    ActiveRecord::Base.connection.execute("UPDATE assessments_address_id " \
+    "SET address_id = '#{rrn}' " \
+    "WHERE assessment_id IN (SELECT assessment_id from assessments WHERE address_id = '#{lprn}') " \
+    "AND source = 'lprn_without_os_uprn'")
   end
+  puts "Finished processing CSV file at #{Time.now}"
 
 end
