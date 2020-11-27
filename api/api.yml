@@ -677,7 +677,7 @@ paths:
         - Manage Assessments
       summary: Get assessment details in use by frontend in JSON format
       security:
-        -oauth:
+        - oauth:
           - 'assessment:fetch'
       parameters:
         - in: path
@@ -725,7 +725,7 @@ paths:
         - Manage Assessments
       summary: Get XML from DEC that can be used by AECOM software
       security:
-        -oauth:
+        - oauth:
           - 'dec_summary:fetch'
       parameters:
         - in: path
