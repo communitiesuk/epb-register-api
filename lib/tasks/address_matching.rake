@@ -41,7 +41,8 @@ task :import_address_matching do
     ActiveRecord::Base.connection.execute("INSERT INTO assessments_address_id_backup " \
     "SELECT aa.* FROM assessments_address_id aa " \
     "INNER JOIN assessments a USING (assessment_id) " \
-    "WHERE a.address_id = '#{lprn}' AND aa.source = 'lprn_without_os_uprn'")
+    "WHERE a.address_id = '#{lprn}' AND aa.source = 'lprn_without_os_uprn'" \
+    "ON CONFLICT DO NOTHING")
 
     ActiveRecord::Base.connection.execute("UPDATE assessments_address_id " \
     "SET address_id = '#{rrn}' " \
