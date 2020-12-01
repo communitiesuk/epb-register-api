@@ -23,12 +23,18 @@ task :import_address_matching do
     s3_client = Aws::S3::Client::new(region: s3_bucket_config['credentials']['aws_region'], credentials: aws_credentials)
   end
 
+  puts "Starting downloading CSV file #{ENV['file_name']} at #{Time.now}"
   file_response = s3_client.get_object(bucket: ENV['bucket_name'], key: ENV['file_name'])
   file_content = file_response.body.string
   csv_contents = CSV.parse(file_content)
-  puts "Size of CSV is #{csv_contents.size}, read at #{Time.now}"
+  puts "Finished downloading CSV file, #{csv_contents.size} LPRNs to process"
 
+  i = 0
   csv_contents.each do |csv_line|
+    i += 1
+    if i == 1
+      puts "Starting processing CSV file at #{Time.now}"
+    end
     lprn = csv_line[0]
     rrn = csv_line[1]
 
@@ -41,7 +47,14 @@ task :import_address_matching do
     "SET address_id = '#{rrn}' " \
     "WHERE assessment_id IN (SELECT assessment_id from assessments WHERE address_id = '#{lprn}') " \
     "AND source = 'lprn_without_os_uprn'")
+
+    i += 1
+    if i % 10000 == 0
+      puts "Processed #{i} LPRNs from CSV file at #{Time.now}"
+    end
   end
   puts "Finished processing CSV file at #{Time.now}"
 
+rescue StandardError => e
+  puts "Error while downloading or processing CSV file: #{e}"
 end
