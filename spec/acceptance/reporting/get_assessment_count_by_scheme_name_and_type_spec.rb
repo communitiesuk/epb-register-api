@@ -217,7 +217,7 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
       ).body
 
       expect(JSON.parse(response, symbolize_names: true)).to eq(
-        { errors: [{ code: "INVALID_REQUEST", title: "The property '#/start_date' Must be date in format YYYY-MM-DD" }] },
+        { errors: [{ code: "INVALID_REQUEST", title: "The property '#/startDate' Must be date in format YYYY-MM-DD" }] },
       )
     end
 
@@ -230,7 +230,7 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
       ).body
 
       expect(JSON.parse(response, symbolize_names: true)).to eq(
-        { errors: [{ code: "INVALID_REQUEST", title: "The property '#/end_date' Must be date in format YYYY-MM-DD" }] },
+        { errors: [{ code: "INVALID_REQUEST", title: "The property '#/endDate' Must be date in format YYYY-MM-DD" }] },
       )
     end
   end

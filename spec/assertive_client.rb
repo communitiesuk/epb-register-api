@@ -540,7 +540,7 @@ def get_assessment_report(
     scopes = %w[reporting:assessment_by_scheme_and_type]
   end
   assertive_get(
-    "/api/reports/assessments/#{type}?start_date=#{start_date}&end_date=#{
+    "/api/reports/assessments/#{type}?startDate=#{start_date}&endDate=#{
       end_date
     }",
     accepted_responses,

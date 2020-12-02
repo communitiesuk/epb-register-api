@@ -1381,6 +1381,23 @@ paths:
       security:
         - oauth:
             - 'reporting:assessment_by_type_and_region'
+      parameters:
+        - in: path
+          name: startDate
+          required: true
+          description: 'The start date of the range'
+          schema:
+            type: string
+            format: date
+            example: '2020-11-01'
+        - in: path
+          name: endDate
+          required: true
+          description: 'The end date of the range'
+          schema:
+            type: string
+            format: date
+            example: '2020-12-01'
       responses:
         200:
           description: ONS postcodes
