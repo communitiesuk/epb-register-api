@@ -1380,7 +1380,7 @@ paths:
       summary: 'Gets the data regarding matching postcodes to regions'
       security:
         - oauth:
-            - 'reporting'
+            - 'reporting:assessment_by_type_and_region'
       responses:
         200:
           description: ONS postcodes
