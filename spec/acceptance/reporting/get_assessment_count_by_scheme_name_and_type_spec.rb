@@ -206,4 +206,32 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
       end
     end
   end
+
+  context "when the start_date or end_date are not dates" do
+    it "returns a validation error for the start_date" do
+      response = get_assessment_report(
+        start_date: "wrong-format",
+        end_date: Date.tomorrow.strftime("%F"),
+        type: "scheme-and-type",
+        accepted_responses: [422],
+      ).body
+
+      expect(JSON.parse(response, symbolize_names: true)).to eq(
+        { errors: [{ code: "INVALID_REQUEST", title: "The property '#/start_date' Must be date in format YYYY-MM-DD" }] },
+      )
+    end
+
+    it "returns a validation error for the end_date" do
+      response = get_assessment_report(
+        start_date: Date.yesterday.strftime("%F"),
+        end_date: "wrong-format",
+        type: "scheme-and-type",
+        accepted_responses: [422],
+      ).body
+
+      expect(JSON.parse(response, symbolize_names: true)).to eq(
+        { errors: [{ code: "INVALID_REQUEST", title: "The property '#/end_date' Must be date in format YYYY-MM-DD" }] },
+      )
+    end
+  end
 end
