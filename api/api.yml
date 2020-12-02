@@ -1395,6 +1395,58 @@ paths:
         500:
           description: Server error
 
+  /reports/assessments/scheme-and-type:
+    get:
+      tags:
+        - Reporting
+      summary: >-
+        Creates a report of the number of assessments lodged between
+        two dates broken down by assessment type and lodging scheme
+      security:
+        - oauth:
+            - 'reporting:assessment_by_scheme_and_type'
+      parameters:
+        - in: path
+          name: start_date
+          required: true
+          description: 'The start date of the range'
+          schema:
+            type: string
+            format: date
+            example: '2020-11-01'
+        - in: path
+          name: end_date
+          required: true
+          description: 'The end date of the range'
+          schema:
+            type: string
+            format: date
+            example: '2020-12-01'
+      responses:
+        200:
+          content:
+            text/csv: >-
+              number_of_assessments,scheme_name,type_of_assessment
+              1,test scheme,AC-CERT
+              1,test scheme,AC-REPORT
+              1,test scheme,AC-REPORT+CERT
+              1,test scheme,CEPC
+              1,test scheme,CEPC+RR
+              1,test scheme,CEPC-RR
+              1,test scheme,DEC
+              1,test scheme,DEC+RR
+              1,test scheme,DEC-RR
+              1,test scheme,RdSAP
+              1,test scheme,SAP
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Server error
+
 components:
   securitySchemes:
     oauth:
