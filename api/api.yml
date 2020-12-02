@@ -1407,7 +1407,7 @@ paths:
             - 'reporting:assessment_by_scheme_and_type'
       parameters:
         - in: path
-          name: start_date
+          name: startDate
           required: true
           description: 'The start date of the range'
           schema:
@@ -1415,7 +1415,7 @@ paths:
             format: date
             example: '2020-11-01'
         - in: path
-          name: end_date
+          name: endDate
           required: true
           description: 'The end date of the range'
           schema:

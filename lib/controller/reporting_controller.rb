@@ -4,11 +4,11 @@ module Controller
   class ReportingController < Controller::BaseController
     DATE_RANGE_SCHEMA = {
       type: "object",
-      required: %w[start_date end_date],
+      required: %w[startDate endDate],
       properties: {
-        start_date: { type: "string", format: "iso-date" },
-        end_date: { type: "string", format: "iso-date" },
-      }
+        startDate: { type: "string", format: "iso-date" },
+        endDate: { type: "string", format: "iso-date" },
+      },
     }.freeze
 
     get "/api/reports/assessments/region-and-type",
@@ -40,15 +40,15 @@ module Controller
 
       raw_data =
         body UseCase::GetAssessmentCountBySchemeNameAndType.new.execute(
-          Date.parse(params[:start_date]),
-          Date.parse(params[:end_date]),
+          Date.parse(params[:startDate]),
+          Date.parse(params[:endDate]),
         )
 
       if raw_data.empty?
         json_response(200, { data: "No lodgements during this time frame" })
       else
         content_type "text/csv"
-        attachment params[:start_date] + "_to_" + params[:end_date] + ".csv"
+        attachment params[:startDate] + "_to_" + params[:endDate] + ".csv"
         body CSV.generate(
           write_headers: true, headers: raw_data.first.keys,
         ) { |csv| raw_data.each { |row| csv << row } }
