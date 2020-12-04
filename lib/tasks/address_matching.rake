@@ -69,7 +69,7 @@ task :import_address_matching do
     end
   end
 
-  puts "Finished processing CSV file at #{Time.now}"
+  puts "[#{Time.now}] Finished processing CSV file"
 
 rescue StandardError => e
   catch(:sigint) do
