@@ -25,7 +25,7 @@ phases:
     commands:
       - echo ">>>>>>>> DEPLOY TO PRODUCTION ENV"
       - cf login -a $PAAS_API -u $PAAS_LOGIN -p "$PAAS_PW" -o $PAAS_ORG -s $PAAS_SPACE
-      - cf v3-cancel-zdt-push ${DEPLOY_APPNAME} || true
+      - cf cancel-deployment ${DEPLOY_APPNAME} || true
   build:
     commands:
       - make deploy-app

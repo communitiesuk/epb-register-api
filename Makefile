@@ -28,7 +28,7 @@ deploy-app: ## Deploys the app to PaaS
 
 	@$(MAKE) generate-manifest
 
-	cf v3-apply-manifest -f manifest.yml
+	cf apply-manifest -f manifest.yml
 
 	cf set-env "${DEPLOY_APPNAME}" BUNDLE_WITHOUT "test"
 	cf set-env "${DEPLOY_APPNAME}" JWT_ISSUER "${JWT_ISSUER}"
@@ -36,7 +36,7 @@ deploy-app: ## Deploys the app to PaaS
 	cf set-env "${DEPLOY_APPNAME}" STAGE "${PAAS_SPACE}"
 	cf set-env "${DEPLOY_APPNAME}" EPB_UNLEASH_URI "${EPB_UNLEASH_URI}"
 
-	cf v3-zdt-push "${DEPLOY_APPNAME}" --wait-for-deploy-complete
+	cf push "${DEPLOY_APPNAME}" --strategy rolling
 
 .PHONY: setup-db
 setup-db:
