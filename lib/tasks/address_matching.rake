@@ -1,23 +1,25 @@
-require 'json'
-require 'csv'
-require 'aws-sdk-s3'
+require "json"
+require "csv"
+require "aws-sdk-s3"
 
-desc 'Import address matching data from an S3 bucket'
+desc "Import address matching data from an S3 bucket"
 
 task :import_address_matching do
+
   Signal.trap('INT') { throw :sigint }
   Signal.trap('TERM') { throw :sigterm }
 
   if ENV['bucket_name'].nil?
     abort('Please set the bucket_name environment variable') if ENV['bucket_name'].nil?
+
   end
-  if ENV['file_name'].nil?
-    abort('Please set the file_name environment variable') if ENV['file_name'].nil?
+  if ENV["file_name"].nil?
+    abort("Please set the file_name environment variable") if ENV["file_name"].nil?
   end
 
-  if ENV['VCAP_SERVICES'].nil?
+  if ENV["VCAP_SERVICES"].nil?
     puts "No VCAP_SERVICES environment variable found, using local credentials"
-    s3_client = Aws::S3::Client::new
+    s3_client = Aws::S3::Client.new
   else
     vcap = JSON.parse(ENV['VCAP_SERVICES'])
     s3_bucket_configs = vcap['aws-s3-bucket']
@@ -30,7 +32,7 @@ task :import_address_matching do
   skipped = 0
 
   puts "Starting downloading CSV file #{ENV['file_name']} at #{Time.now}"
-  file_response = s3_client.get_object(bucket: ENV['bucket_name'], key: ENV['file_name'])
+  file_response = s3_client.get_object(bucket: ENV["bucket_name"], key: ENV["file_name"])
   file_content = file_response.body.string
   csv_contents = CSV.parse(file_content)
   puts "Finished downloading CSV file, #{csv_contents.size} LPRNs to process"

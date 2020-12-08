@@ -9,9 +9,7 @@ describe ViewModel::DecWrapper do
       unsupported_fields: [],
       different_fields: {},
       different_buried_fields: {
-        administrative_information: {
-          related_rrn: nil,
-        },
+        administrative_information: { related_rrn: nil },
       },
     },
     {

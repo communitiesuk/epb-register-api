@@ -29,7 +29,8 @@ module UseCase
     end
 
     def execute(start_date, end_date)
-      assessments = @reporting_gateway.assessments_by_scheme_and_type start_date, end_date
+      assessments =
+        @reporting_gateway.assessments_by_scheme_and_type start_date, end_date
 
       assessments_by_scheme_and_type = {}
 
@@ -46,18 +47,22 @@ module UseCase
           assessments_by_scheme_and_type[scheme][type] += 1
         else
           assessment_xml = Gateway::AssessmentsXmlGateway.new.fetch rrn
-          view_model = ViewModel::Factory.new.create(
-            assessment_xml[:xml],
-            assessment_xml[:schema_type],
-            rrn,
-          ).get_view_model
+          view_model =
+            ViewModel::Factory.new.create(
+              assessment_xml[:xml],
+              assessment_xml[:schema_type],
+              rrn,
+            ).get_view_model
 
           related = view_model.method(COMBINED_TYPES[type][:related]).call
 
           if related.nil?
             assessments_by_scheme_and_type[scheme][type] += 1
           elsif rrn > related
-            assessments_by_scheme_and_type[scheme][COMBINED_TYPES[type][:combined]] += 1
+            assessments_by_scheme_and_type[scheme][
+              COMBINED_TYPES[type][:combined]
+            ] +=
+              1
           end
         end
       end
@@ -66,11 +71,12 @@ module UseCase
 
       assessments_by_scheme_and_type.each do |scheme, types|
         types.each do |type, count|
-          assessments_invoicing << {
-            number_of_assessments: count,
-            scheme_name: scheme,
-            type_of_assessment: type,
-          }
+          assessments_invoicing <<
+            {
+              number_of_assessments: count,
+              scheme_name: scheme,
+              type_of_assessment: type,
+            }
         end
       end
 

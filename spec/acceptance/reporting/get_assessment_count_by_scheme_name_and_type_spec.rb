@@ -25,7 +25,9 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
   let(:valid_dec_rr_xml) { Samples.xml "CEPC-8.0.0", "dec-rr" }
   let(:valid_ac_cert_xml) { Samples.xml "CEPC-8.0.0", "ac-cert" }
   let(:valid_ac_report_xml) { Samples.xml "CEPC-8.0.0", "ac-report" }
-  let(:valid_ac_cert_and_ac_report_xml) { Samples.xml "CEPC-8.0.0", "ac-cert+ac-report" }
+  let(:valid_ac_cert_and_ac_report_xml) do
+    Samples.xml "CEPC-8.0.0", "ac-cert+ac-report"
+  end
 
   let(:response) do
     get_assessment_report(
@@ -39,7 +41,7 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
     it "returns an empty object if there are no lodgements in the time frame " do
       response =
         get_assessment_report(start_date: "2020-09-04", end_date: "2020-09-05")
-            .body
+          .body
 
       expect(JSON.parse(response, symbolize_names: true)).to eq(
         { data: "No lodgements during this time frame" },
@@ -209,28 +211,46 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
 
   context "when the start_date or end_date are not dates" do
     it "returns a validation error for the start_date" do
-      response = get_assessment_report(
-        start_date: "wrong-format",
-        end_date: Date.tomorrow.strftime("%F"),
-        type: "scheme-and-type",
-        accepted_responses: [422],
-      ).body
+      response =
+        get_assessment_report(
+          start_date: "wrong-format",
+          end_date: Date.tomorrow.strftime("%F"),
+          type: "scheme-and-type",
+          accepted_responses: [422],
+        ).body
 
       expect(JSON.parse(response, symbolize_names: true)).to eq(
-        { errors: [{ code: "INVALID_REQUEST", title: "The property '#/startDate' Must be date in format YYYY-MM-DD" }] },
+        {
+          errors: [
+            {
+              code: "INVALID_REQUEST",
+              title:
+                "The property '#/startDate' Must be date in format YYYY-MM-DD",
+            },
+          ],
+        },
       )
     end
 
     it "returns a validation error for the end_date" do
-      response = get_assessment_report(
-        start_date: Date.yesterday.strftime("%F"),
-        end_date: "wrong-format",
-        type: "scheme-and-type",
-        accepted_responses: [422],
-      ).body
+      response =
+        get_assessment_report(
+          start_date: Date.yesterday.strftime("%F"),
+          end_date: "wrong-format",
+          type: "scheme-and-type",
+          accepted_responses: [422],
+        ).body
 
       expect(JSON.parse(response, symbolize_names: true)).to eq(
-        { errors: [{ code: "INVALID_REQUEST", title: "The property '#/endDate' Must be date in format YYYY-MM-DD" }] },
+        {
+          errors: [
+            {
+              code: "INVALID_REQUEST",
+              title:
+                "The property '#/endDate' Must be date in format YYYY-MM-DD",
+            },
+          ],
+        },
       )
     end
   end

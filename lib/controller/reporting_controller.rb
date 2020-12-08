@@ -13,7 +13,6 @@ module Controller
 
     get "/api/reports/assessments/region-and-type",
         jwt_auth: %w[reporting:assessment_by_type_and_region] do
-
       params = params_body DATE_RANGE_SCHEMA
 
       raw_data =
@@ -31,7 +30,6 @@ module Controller
           write_headers: true, headers: raw_data.first.keys,
         ) { |csv| raw_data.each { |row| csv << row } }
       end
-
     rescue StandardError => e
       case e
       when JSON::Schema::ValidationError
@@ -43,7 +41,6 @@ module Controller
 
     get "/api/reports/assessments/scheme-and-type",
         jwt_auth: %w[reporting:assessment_by_scheme_and_type] do
-
       params = params_body DATE_RANGE_SCHEMA
 
       raw_data =
@@ -61,7 +58,6 @@ module Controller
           write_headers: true, headers: raw_data.first.keys,
         ) { |csv| raw_data.each { |row| csv << row } }
       end
-
     rescue StandardError => e
       case e
       when JSON::Schema::ValidationError
