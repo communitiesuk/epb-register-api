@@ -155,6 +155,9 @@ module Gateway
       address_id = {}
 
       results.enum_for(:each_with_index).map do |res, i|
+        if res["address_id"].nil?
+          res["address_id"] = "RRN-#{res['assessment_id']}"
+        end
         unless address_id.key?(res["address_id"])
           address_id[res["address_id"]] = []
         end
