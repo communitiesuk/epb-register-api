@@ -7,6 +7,11 @@ end
 module Gateway
   class AssessmentsAddressIdGateway
     class AssessmentsAddressId < ActiveRecord::Base; end
+
+    def fetch(assessment_id)
+      AssessmentsAddressId.find(assessment_id).as_json.symbolize_keys
+    end
+
     def send_to_db(record)
       if record[:address_id].nil?
         record[:address_id] = "RRN-" + record[:assessment_id]

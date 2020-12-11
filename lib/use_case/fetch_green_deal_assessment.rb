@@ -10,6 +10,7 @@ module UseCase
       @related_assessments_gateway = Gateway::RelatedAssessmentsGateway.new
       @search_address_by_address_id_use_case =
         UseCase::SearchAddressesByAddressId.new
+      @assessments_address_id_gateway = Gateway::AssessmentsAddressIdGateway.new
     end
 
     def execute(assessment_id)
@@ -35,12 +36,14 @@ module UseCase
 
       related_assessments =
         @related_assessments_gateway.by_address_id result.address_id
-      related_assessment = related_assessments.first.to_hash
+      related_assessment = related_assessments.first&.to_hash
 
       latest_assessment_flag = true
-      unless related_assessment[:assessment_id] == assessment_id
+      unless related_assessment && related_assessment[:assessment_id] == assessment_id
         latest_assessment_flag = false
       end
+
+      canonical_address = @assessments_address_id_gateway.fetch assessment_id
 
       source =
         if result.address_id.start_with? "UPRN"
@@ -61,7 +64,10 @@ module UseCase
           postcode: result.postcode,
         },
         address_id: result.address_id,
-        address_identifiers: [result.address_id],
+        address_identifiers: [
+          canonical_address[:address_id],
+          result.address_id,
+        ].uniq,
         country_code: result.country_code,
         inspection_date: result.date_of_assessment,
         lodgement_date: result.date_of_registration,
