@@ -17,6 +17,7 @@ source "https://rubygems.org" do
     gem "webmock", "~> 3.10"
   end
 
+  gem "aws-sdk-s3", "~> 1.75"
   gem "epb-auth-tools", "~> 1.0.4"
   gem "geocoder", "~> 1.6.4"
   gem "json-schema", "~> 2.8"
@@ -31,5 +32,4 @@ source "https://rubygems.org" do
   gem "sinatra-cross_origin", "~> 0.4.0"
   gem "unleash", "~> 3.2.1"
   gem "zeitwerk", "~> 2.4.1"
-  gem "aws-sdk-s3", "~> 1.75"
 end

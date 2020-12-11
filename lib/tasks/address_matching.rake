@@ -5,12 +5,11 @@ require "aws-sdk-s3"
 desc "Import address matching data from an S3 bucket"
 
 task :import_address_matching do
+  Signal.trap("INT") { throw :sigint }
+  Signal.trap("TERM") { throw :sigterm }
 
-  Signal.trap('INT') { throw :sigint }
-  Signal.trap('TERM') { throw :sigterm }
-
-  if ENV['bucket_name'].nil?
-    abort('Please set the bucket_name environment variable') if ENV['bucket_name'].nil?
+  if ENV["bucket_name"].nil?
+    abort("Please set the bucket_name environment variable") if ENV["bucket_name"].nil?
 
   end
   if ENV["file_name"].nil?
@@ -21,11 +20,11 @@ task :import_address_matching do
     puts "No VCAP_SERVICES environment variable found, using local credentials"
     s3_client = Aws::S3::Client.new
   else
-    vcap = JSON.parse(ENV['VCAP_SERVICES'])
-    s3_bucket_configs = vcap['aws-s3-bucket']
-    s3_bucket_config = s3_bucket_configs.detect { |bucket| bucket['credentials']['bucket_name'] == ENV['bucket_name'] }
-    aws_credentials = Aws::Credentials::new(s3_bucket_config['credentials']['aws_access_key_id'], s3_bucket_config['credentials']['aws_secret_access_key'])
-    s3_client = Aws::S3::Client::new(region: s3_bucket_config['credentials']['aws_region'], credentials: aws_credentials)
+    vcap = JSON.parse(ENV["VCAP_SERVICES"])
+    s3_bucket_configs = vcap["aws-s3-bucket"]
+    s3_bucket_config = s3_bucket_configs.detect { |bucket| bucket["credentials"]["bucket_name"] == ENV["bucket_name"] }
+    aws_credentials = Aws::Credentials.new(s3_bucket_config["credentials"]["aws_access_key_id"], s3_bucket_config["credentials"]["aws_secret_access_key"])
+    s3_client = Aws::S3::Client.new(region: s3_bucket_config["credentials"]["aws_region"], credentials: aws_credentials)
   end
 
   i = 0
@@ -66,7 +65,7 @@ task :import_address_matching do
       skipped += 1
     end
 
-    if i % 10000 == 0
+    if i % 10_000 == 0
       puts "[#{Time.now}] Processed #{i} LPRNs from CSV file, skipped #{skipped} present in backup table"
     end
   end

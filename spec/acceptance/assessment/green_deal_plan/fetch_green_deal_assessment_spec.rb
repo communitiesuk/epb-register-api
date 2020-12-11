@@ -187,7 +187,8 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment" do
     context "and that assessment was lodged with an LPRN" do
       before do
         add_assessment_with_green_deal type: "RdSAP",
-                                       assessment_id: "0000-0000-0000-0000-0000",
+                                       assessment_id:
+                                         "0000-0000-0000-0000-0000",
                                        address_id: "1234567890",
                                        green_deal_plan_id: "ABC654321DEF",
                                        schema_version: "RdSAP-Schema-19.0"
@@ -196,10 +197,14 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment" do
       context "where the address has not been matched to another id" do
         it "will return the LPRN as lodged" do
           response =
-            fetch_green_deal_assessment(assessment_id: "0000-0000-0000-0000-0000")
-              .body
+            fetch_green_deal_assessment(
+              assessment_id: "0000-0000-0000-0000-0000",
+            ).body
 
-          address_ids = JSON.parse(response, symbolize_names: true)[:data][:assessment][:addressIdentifiers]
+          address_ids =
+            JSON.parse(response, symbolize_names: true)[:data][:assessment][
+              :addressIdentifiers
+            ]
 
           expect(address_ids).to include "LPRN-1234567890"
         end
@@ -216,10 +221,14 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment" do
 
         it "will return the matched UPRN and the LPRN as lodged" do
           response =
-            fetch_green_deal_assessment(assessment_id: "0000-0000-0000-0000-0000")
-              .body
+            fetch_green_deal_assessment(
+              assessment_id: "0000-0000-0000-0000-0000",
+            ).body
 
-          address_ids = JSON.parse(response, symbolize_names: true)[:data][:assessment][:addressIdentifiers]
+          address_ids =
+            JSON.parse(response, symbolize_names: true)[:data][:assessment][
+              :addressIdentifiers
+            ]
 
           expect(address_ids[0]).to eq "UPRN-129308571212"
           expect(address_ids[1]).to eq "LPRN-1234567890"
