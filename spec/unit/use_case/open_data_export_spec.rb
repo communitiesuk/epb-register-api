@@ -55,9 +55,14 @@ describe UseCase::OpenDataExport do
       it "populates the database with the expected values" do
 
         open_data_export = described_class.new
-        response = open_data_export.execute({ number_of_assessments: '3', max_runs: '3', batch: '2' })
+        response = open_data_export.execute({ number_of_assessments: '3', max_runs: '3', batch: '3' })
 
-        expect(response).to eq "CEPC,0000-0000-0000-0000-0002,2026-05-04,3,2020-05-04,2020-05-04,RRN-0000-0000-0000-0000-0002,2 Lonely Street,,,,Post-Town1,A0 0AA,SPEC000000\n"
+        expect(response[0]).to eq <<~CSV
+            type_of_assessment,assessment_id,date_of_expiry,report_type,date_of_assessment,date_of_registration,address_id,address_line1,address_line2,address_line3,address_line4,town,postcode,scheme_assessor_id
+            RdSAP,0000-0000-0000-0000-0000,2030-05-03,,2020-05-04,2020-05-04,RRN-0000-0000-0000-0000-0000,1 Some Street,"","","",Post-Town1,A0 0AA,SPEC000000
+            RdSAP,0000-0000-0000-0000-0001,2030-05-03,,2020-05-04,2020-05-04,RRN-0000-0000-0000-0000-0001,1 Some Street,"","","",Post-Town1,A0 0AA,SPEC000000
+            CEPC,0000-0000-0000-0000-0002,2026-05-04,3,2020-05-04,2020-05-04,RRN-0000-0000-0000-0000-0002,2 Lonely Street,,,,Post-Town1,A0 0AA,SPEC000000
+          CSV
       end
     end
   end

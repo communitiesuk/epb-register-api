@@ -18,7 +18,7 @@ module UseCase
 
 
 
-      puts "Starting extraction at #{Time.now}"
+      # puts "Starting extraction at #{Time.now}"
 
       where = "a.opt_out = false AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL"
 
@@ -36,10 +36,10 @@ module UseCase
 
       # number_of_assessments = ActiveRecord::Base.connection.execute("SELECT COUNT(assessment_id) AS number_of_assessments FROM assessments a WHERE #{where}").first["number_of_assessments"]
 
-      puts "Done getting number of assessments. #{number_of_assessments} in total at #{Time.now}"
+      # puts "Done getting number of assessments. #{number_of_assessments} in total at #{Time.now}"
 
       start = 0
-
+      results = []
       while start <= number_of_assessments.to_i
         assessments = ActiveRecord::Base.connection.execute("
       SELECT
@@ -61,7 +61,7 @@ module UseCase
       OFFSET
         " + start.to_s + "
         ")
-        puts "Done getting batch #{start} from DB at #{Time.now}"
+        # puts "Done getting batch #{start} from DB at #{Time.now}"
 
         data = []
 
@@ -90,16 +90,16 @@ module UseCase
               )
         end
 
-        puts "Done preparing array for CSV at #{Time.now}"
+        # puts "Done preparing array for CSV at #{Time.now}"
 
-        results = CSV.generate(
+        results << CSV.generate(
             write_headers: (start == 0), headers: data.first ? data.first.keys : [],
             ) { |csv| data.each { |row| csv << row } }
 
         start += batch.to_i
 
         if max_runs && max_runs.to_i <= start
-          puts "Exiting as max runs was reached"
+          # puts "Exiting as max runs was reached"
           break
         end
       end
