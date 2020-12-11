@@ -34,12 +34,16 @@ module UseCase
 
       result = ViewModel::Factory.new.create(xml, schema_type).get_view_model
 
+      canonical_address_id =
+        @assessments_address_id_gateway.fetch(assessment_id)[:address_id]
+
       related_assessments =
-        @related_assessments_gateway.by_address_id result.address_id
+        @related_assessments_gateway.by_address_id canonical_address_id
       related_assessment = related_assessments.first&.to_hash
 
       latest_assessment_flag = true
-      unless related_assessment && related_assessment[:assessment_id] == assessment_id
+      unless related_assessment &&
+          related_assessment[:assessment_id] == assessment_id
         latest_assessment_flag = false
       end
 
