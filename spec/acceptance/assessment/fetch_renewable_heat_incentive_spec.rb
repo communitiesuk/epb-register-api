@@ -384,5 +384,50 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
         expect(response[:data][:assessment][:cavityWallInsulation]).to eq false
       end
     end
+
+    context "when a later assessment exists for the property" do
+      let(:scheme_id) { add_scheme_and_get_id }
+
+      let(:response) do
+        JSON.parse(
+          fetch_renewable_heat_incentive("0000-0000-0000-0000-0001", [200])
+            .body,
+          symbolize_names: true,
+        )
+      end
+
+      before do
+        add_assessor scheme_id,
+                     "SPEC000000",
+                     AssessorStub.new.fetch_request_body(
+                       domesticRdSap: "ACTIVE", domesticSap: "ACTIVE",
+                     )
+        first_assessment = Nokogiri.XML(valid_sap_xml)
+        first_assessment.at("RRN").content = "0000-0000-0000-0000-0001"
+        first_assessment.at("UPRN").content = "RRN-0000-0000-0000-0000-0001"
+
+        lodge_assessment assessment_body: first_assessment.to_xml,
+                         accepted_responses: [201],
+                         schema_name: "SAP-Schema-18.0.0",
+                         auth_data: { scheme_ids: [scheme_id] }
+
+        second_assessment = Nokogiri.XML(valid_rdsap_xml)
+        second_assessment.at("RRN").content = "0000-0000-0000-0000-0002"
+        second_assessment.at("UPRN").content = "RRN-0000-0000-0000-0000-0001"
+        second_assessment.at("Inspection-Date").content = "2020-10-04"
+        second_assessment.at("Completion-Date").content = "2020-10-04"
+        second_assessment.at("Registration-Date").content = "2020-10-04"
+
+        lodge_assessment assessment_body: second_assessment.to_xml,
+                         accepted_responses: [201],
+                         auth_data: { scheme_ids: [scheme_id] }
+      end
+
+      it "returns the information for the most recent assessment" do
+        expect(
+          response[:data][:assessment][:epcRrn],
+        ).to eq "0000-0000-0000-0000-0002"
+      end
+    end
   end
 end
