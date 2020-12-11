@@ -66,11 +66,11 @@ describe UseCase::OpenDataExport do
           )
 
         expect(response[0]).to eq <<~CSV
-          type_of_assessment,assessment_id,date_of_expiry,report_type,date_of_assessment,date_of_registration,address_id,address_line1,address_line2,address_line3,address_line4,town,postcode,scheme_assessor_id
-          RdSAP,0000-0000-0000-0000-0000,2027-05-03,,2020-05-04,2017-05-04,RRN-0000-0000-0000-0000-0000,1 Some Street,"","","",Post-Town1,A0 0AA,SPEC000000
-          RdSAP,0000-0000-0000-0000-0001,2028-05-03,,2020-05-04,2018-05-04,RRN-0000-0000-0000-0000-0001,1 Some Street,"","","",Post-Town1,A0 0AA,SPEC000000
-          CEPC,0000-0000-0000-0000-0002,2026-05-04,3,2020-05-04,2019-05-04,RRN-0000-0000-0000-0000-0002,2 Lonely Street,,,,Post-Town1,A0 0AA,SPEC000000
-        CSV
+            REPORT_TYPE,RRN,INSPECTION_DATE,LODGEMENT_DATE,BUILDING_REFERENCE_NUMBER,ADDRESS1,ADDRESS2,ADDRESS3,ADDRESS4,POSTTOWN,POSTCODE
+            RdSAP,0000-0000-0000-0000-0000,2020-05-04,2017-05-04,RRN-0000-0000-0000-0000-0000,1 Some Street,"","","",Post-Town1,A0 0AA
+            RdSAP,0000-0000-0000-0000-0001,2020-05-04,2018-05-04,RRN-0000-0000-0000-0000-0001,1 Some Street,"","","",Post-Town1,A0 0AA
+            CEPC,0000-0000-0000-0000-0002,2020-05-04,2019-05-04,RRN-0000-0000-0000-0000-0002,2 Lonely Street,,,,Post-Town1,A0 0AA
+          CSV
       end
     end
   end
