@@ -87,6 +87,50 @@ describe "Acceptance::Assessment::Lodge" do
       )
     end
 
+    it "rejects an assessment where the ID already exists but is cancelled" do
+      register_assessor
+      lodge_assessment(
+        assessment_body: doc.to_xml,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] },
+      )
+
+      update_assessment_status(
+        assessment_id: "0000-0000-0000-0000-0000",
+        assessment_status_body: { status: "CANCELLED" },
+        auth_data: { scheme_ids: [scheme_id] },
+        accepted_responses: [200],
+      )
+
+      lodge_assessment(
+        assessment_body: doc.to_xml,
+        accepted_responses: [409],
+        auth_data: { scheme_ids: [scheme_id] },
+      )
+    end
+
+    it "rejects an assessment where the ID already exists but is not for issue" do
+      register_assessor
+      lodge_assessment(
+        assessment_body: doc.to_xml,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [scheme_id] },
+      )
+
+      update_assessment_status(
+        assessment_id: "0000-0000-0000-0000-0000",
+        assessment_status_body: { status: "NOT_FOR_ISSUE" },
+        auth_data: { scheme_ids: [scheme_id] },
+        accepted_responses: [200],
+      )
+
+      lodge_assessment(
+        assessment_body: doc.to_xml,
+        accepted_responses: [409],
+        auth_data: { scheme_ids: [scheme_id] },
+      )
+    end
+
     it "rejects an assessment with an invalid XML element" do
       register_assessor
 

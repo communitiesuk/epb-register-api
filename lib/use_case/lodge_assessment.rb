@@ -18,8 +18,10 @@ module UseCase
       assessment_id = data[:assessment_id]
 
       unless migrated
-        if @assessments_search_gateway.search_by_assessment_id(assessment_id)
-             .first
+        if @assessments_search_gateway.search_by_assessment_id(
+          assessment_id,
+          restrictive = false,
+        ).first
           raise DuplicateAssessmentIdException
         end
       end
