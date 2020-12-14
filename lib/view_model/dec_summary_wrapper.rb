@@ -35,7 +35,7 @@ module ViewModel
                         <Report-Type>#{@view_model.report_type}</Report-Type>
                         <Property-Details>
                           <UPRN>#{
-          @view_model.address_id.include?('LPRN-') ? '' : @view_model.address_id
+          @view_model.address_id&.include?('LPRN-') ? '' : @view_model.address_id
         }</UPRN>
                         </Property-Details>
                         <Calculation-Details>

@@ -19,6 +19,34 @@ describe "Acceptance::DECSummary" do
   let(:valid_cepc_xml) { Samples.xml "CEPC-8.0.0", "cepc" }
 
   context "when getting a DEC" do
+    context "when the DEC does not have a UPRN field" do
+      before do
+        xml = Nokogiri.XML valid_dec_xml.dup
+
+        xml.css("UPRN").map(&:remove)
+
+        lodge_assessment(
+          assessment_body: xml.to_s,
+          accepted_responses: [201],
+          auth_data: { scheme_ids: [scheme_id] },
+          schema_name: "CEPC-8.0.0",
+        )
+      end
+
+      it "returns valid XML" do
+        response =
+          JSON.parse(
+            fetch_dec_summary("0000-0000-0000-0000-0000", [200]).body,
+            symbolize_names: true,
+          )
+
+        expected_without_uprn = Samples.xml "CEPC-8.0.0", "dec_summary"
+        expected_without_uprn.sub! "UPRN-000000000001", ""
+
+        expect(response[:data]).to eq expected_without_uprn
+      end
+    end
+
     it "returns valid XML" do
       lodge_assessment(
         assessment_body: valid_dec_xml,
