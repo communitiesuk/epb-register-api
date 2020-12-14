@@ -10,7 +10,6 @@ module UseCase
       @related_assessments_gateway = Gateway::RelatedAssessmentsGateway.new
       @search_address_by_address_id_use_case =
         UseCase::SearchAddressesByAddressId.new
-      @assessments_address_id_gateway = Gateway::AssessmentsAddressIdGateway.new
     end
 
     def execute(assessment_id)
@@ -32,10 +31,9 @@ module UseCase
 
       raise InvalidAssessmentTypeException unless %w[RdSAP SAP].include? type
 
-      result = ViewModel::Factory.new.create(xml, schema_type).get_view_model
+      assessment_view = ViewModel::Factory.new.create(xml, schema_type).get_view_model
 
-      canonical_address_id =
-        @assessments_address_id_gateway.fetch(assessment_id)[:address_id]
+      canonical_address_id = assessment.to_hash[:address_id]
 
       related_assessments =
         @related_assessments_gateway.by_address_id canonical_address_id
@@ -47,10 +45,8 @@ module UseCase
         latest_assessment_flag = false
       end
 
-      canonical_address = @assessments_address_id_gateway.fetch assessment_id
-
       source =
-        if result.address_id.start_with? "UPRN"
+        if assessment_view.address_id.start_with? "UPRN"
           "GAZETEER"
         else
           "PREVIOUS_ASSESSMENT"
@@ -60,26 +56,26 @@ module UseCase
         type_of_assessment: type,
         address: {
           source: source,
-          line1: result.address_line1,
-          line2: result.address_line2,
-          line3: result.address_line3,
-          line4: result.address_line4,
-          town: result.town,
-          postcode: result.postcode,
+          line1: assessment_view.address_line1,
+          line2: assessment_view.address_line2,
+          line3: assessment_view.address_line3,
+          line4: assessment_view.address_line4,
+          town: assessment_view.town,
+          postcode: assessment_view.postcode,
         },
-        address_id: result.address_id,
+        address_id: assessment_view.address_id,
         address_identifiers: [
-          canonical_address[:address_id],
-          result.address_id,
+          canonical_address_id,
+          assessment_view.address_id,
         ].uniq,
-        country_code: result.country_code,
-        inspection_date: result.date_of_assessment,
-        lodgement_date: result.date_of_registration,
+        country_code: assessment_view.country_code,
+        inspection_date: assessment_view.date_of_assessment,
+        lodgement_date: assessment_view.date_of_registration,
         is_latest_assessment_for_address: latest_assessment_flag,
         status: status,
-        main_fuel_type: result.main_fuel_type,
-        secondary_fuel_type: result.secondary_fuel_type,
-        water_heating_fuel: result.water_heating_fuel,
+        main_fuel_type: assessment_view.main_fuel_type,
+        secondary_fuel_type: assessment_view.secondary_fuel_type,
+        water_heating_fuel: assessment_view.water_heating_fuel,
       }
     end
   end
