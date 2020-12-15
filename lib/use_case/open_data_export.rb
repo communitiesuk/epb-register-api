@@ -84,19 +84,19 @@ module UseCase
           hash = report_model.to_hash
 
           data.push(
-              {
-                  REPORT_TYPE: hash[:type_of_assessment],
-                  RRN: hash[:assessment_id],
-                  INSPECTION_DATE: hash[:date_of_assessment],
-                  LODGEMENT_DATE: hash[:date_of_registration],
-                  BUILDING_REFERENCE_NUMBER: assessment["address_id"],
-                  ADDRESS1: hash[:address][:address_line1],
-                  ADDRESS2: hash[:address][:address_line2],
-                  ADDRESS3: hash[:address][:address_line3],
-                  ADDRESS4: hash[:address][:address_line4],
-                  POSTTOWN: hash[:address][:town],
-                  POSTCODE: hash[:address][:postcode],
-              },
+            {
+              REPORT_TYPE: hash[:type_of_assessment],
+              RRN: hash[:assessment_id],
+              INSPECTION_DATE: hash[:date_of_assessment],
+              LODGEMENT_DATE: hash[:date_of_registration],
+              BUILDING_REFERENCE_NUMBER: assessment["address_id"],
+              ADDRESS1: hash[:address][:address_line1],
+              ADDRESS2: hash[:address][:address_line2],
+              ADDRESS3: hash[:address][:address_line3],
+              ADDRESS4: hash[:address][:address_line4],
+              POSTTOWN: hash[:address][:town],
+              POSTCODE: hash[:address][:postcode],
+            },
           )
         end
 
