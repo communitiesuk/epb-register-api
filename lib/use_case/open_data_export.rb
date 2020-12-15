@@ -96,6 +96,10 @@ module UseCase
               ADDRESS4: hash[:address][:address_line4],
               POSTTOWN: hash[:address][:town],
               POSTCODE: hash[:address][:postcode],
+              CURRENT_ENERGY_EFFICIENCY: hash[:current_energy_efficiency_rating],
+              CURRENT_ENERGY_RATING: hash[:current_energy_efficiency_band],
+              POTENTIAL_ENERGY_EFFICIENCY: hash[:potential_energy_efficiency_rating],
+
             },
           )
         end
