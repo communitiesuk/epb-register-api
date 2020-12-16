@@ -986,6 +986,7 @@ describe ViewModel::SapWrapper do
     current_energy_efficiency_rating: 50,
     dwelling_type: "Dwelling-Type0",
     estimated_energy_cost: "689.83",
+    main_fuel_type: '36',
     heat_demand: {
       current_space_heating_demand: 30.0,
       current_water_heating_demand: 60.0,

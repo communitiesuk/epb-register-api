@@ -99,7 +99,21 @@ module UseCase
               CURRENT_ENERGY_EFFICIENCY: hash[:current_energy_efficiency_rating],
               CURRENT_ENERGY_RATING: hash[:current_energy_efficiency_band],
               POTENTIAL_ENERGY_EFFICIENCY: hash[:potential_energy_efficiency_rating],
-
+              POTENTIAL_ENERGY_RATING: hash[:potential_energy_efficiency_band],
+              CONSTRUCTION_AGE_BAND: hash[:property_age_band],
+              PROPERTY_TYPE: hash[:dwelling_type],
+              TENURE: hash[:tenure],
+              ENERGY_CONSUMPTION_CURRENT: hash[:primary_energy_use],
+              CO2_EMISSIONS_CURRENT: hash[:current_carbon_emission],
+              CO2_EMISSIONS_POTENTIAL: hash[:potential_carbon_emission],
+              LIGHTING_COST_CURRENT: hash[:lighting_cost_current],
+              LIGHTING_COST_POTENTIAL: hash[:lighting_cost_potential],
+              HEATING_COST_CURRENT: hash[:heating_cost_current],
+              HEATING_COST_POTENTIAL: hash[:heating_cost_potential],
+              HOT_WATER_COST_CURRENT: hash[:hot_water_cost_current],
+              HOT_WATER_COST_POTENTIAL: hash[:hot_water_cost_potential],
+              TOTAL_FLOOR_AREA: hash[:total_floor_area],
+              MAIN_FUEL: hash[:main_fuel_type],
             },
           )
         end

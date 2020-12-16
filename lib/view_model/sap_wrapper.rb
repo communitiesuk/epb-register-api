@@ -116,6 +116,7 @@ module ViewModel
         current_energy_efficiency_rating: @view_model.current_energy_rating,
         dwelling_type: @view_model.dwelling_type,
         estimated_energy_cost: estimated_energy_cost,
+        main_fuel_type: @view_model.main_fuel_type,
         heat_demand: {
           current_space_heating_demand:
             @view_model.current_space_heating_demand,

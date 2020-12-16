@@ -275,7 +275,7 @@
                 <HIP:Main-Heating-Fraction>1</HIP:Main-Heating-Fraction>
                 <HIP:Main-Heating-Data-Source>1</HIP:Main-Heating-Data-Source>
                 <HIP:Boiler-Index-Number>008191</HIP:Boiler-Index-Number>
-                <HIP:Main-Fuel-Type>28</HIP:Main-Fuel-Type>
+                <HIP:Main-Fuel-Type>36</HIP:Main-Fuel-Type>
                 <HIP:Main-Heating-Control>2107</HIP:Main-Heating-Control>
                 <HIP:Boiler-Flue-Type>2</HIP:Boiler-Flue-Type>
                 <HIP:Fan-Flue-Present>Y</HIP:Fan-Flue-Present>

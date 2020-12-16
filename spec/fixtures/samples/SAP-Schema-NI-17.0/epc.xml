@@ -265,7 +265,7 @@
                 <SAP:Main-Heating-Category>2</SAP:Main-Heating-Category>
                 <SAP:Main-Heating-Data-Source>1</SAP:Main-Heating-Data-Source>
                 <SAP:Boiler-Index-Number>016685</SAP:Boiler-Index-Number>
-                <SAP:Main-Fuel-Type>1</SAP:Main-Fuel-Type>
+                <SAP:Main-Fuel-Type>36</SAP:Main-Fuel-Type>
                 <SAP:Main-Heating-Control>2106</SAP:Main-Heating-Control>
                 <SAP:Heat-Emitter-Type>1</SAP:Heat-Emitter-Type>
                 <SAP:Main-Heating-Flue-Type>2</SAP:Main-Heating-Flue-Type>

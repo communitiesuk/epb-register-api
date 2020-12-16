@@ -201,6 +201,20 @@
   <SAP09-Data>
     <Data-Type>1</Data-Type>
     <SAP-Property-Details>
+      <SAP-Heating>
+        <Water-Heating-Code>1</Water-Heating-Code>
+        <Secondary-Heating-Category>1</Secondary-Heating-Category>
+        <Main-Heating-Details>
+          <Main-Heating>
+            <Main-Heating-Number>1</Main-Heating-Number>
+            <Main-Heating-Category>1</Main-Heating-Category>
+            <Main-Heating-Data-Source>1</Main-Heating-Data-Source>
+            <Main-Fuel-Type>36</Main-Fuel-Type>
+            <Main-Heating-Control>3</Main-Heating-Control>
+            <Main-Heating-Fraction>1</Main-Heating-Fraction>
+          </Main-Heating>
+        </Main-Heating-Details>
+      </SAP-Heating>
       <Property-Type>0</Property-Type>
       <Living-Area>0</Living-Area>
       <Orientation>0</Orientation>

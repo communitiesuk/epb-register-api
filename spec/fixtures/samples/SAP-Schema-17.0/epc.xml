@@ -196,6 +196,7 @@
                         <Main-Heating-Number>2</Main-Heating-Number>
                         <Main-Heating-Category>1</Main-Heating-Category>
                         <Main-Heating-Data-Source>1</Main-Heating-Data-Source>
+                        <Main-Fuel-Type>36</Main-Fuel-Type>
                         <Main-Heating-Control>2500</Main-Heating-Control>
                         <Main-Heating-Fraction>0</Main-Heating-Fraction>
                         <Emitter-Temperature>0</Emitter-Temperature>

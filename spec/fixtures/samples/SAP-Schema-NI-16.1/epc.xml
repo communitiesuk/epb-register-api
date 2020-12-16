@@ -200,7 +200,7 @@
               <HIP:Main-Heating>
                 <HIP:Main-Heating-Data-Source>1</HIP:Main-Heating-Data-Source>
                 <HIP:Main-Heating-Category>2</HIP:Main-Heating-Category>
-                <HIP:Main-Fuel-Type>26</HIP:Main-Fuel-Type>
+                <HIP:Main-Fuel-Type>36</HIP:Main-Fuel-Type>
                 <HIP:Main-Heating-Control>2106</HIP:Main-Heating-Control>
                 <HIP:Boiler-Index-Number>016137</HIP:Boiler-Index-Number>
                 <HIP:Heat-Emitter-Type>1</HIP:Heat-Emitter-Type>

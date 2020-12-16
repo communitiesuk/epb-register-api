@@ -72,63 +72,115 @@ describe UseCase::OpenDataExport do
       end
 
       it "returns the REPORT TYPE in the CSV" do
-        expect(@table.by_col[0]).to eq(["RdSAP", "RdSAP", "SAP"])
+        expect(@table.by_col["REPORT_TYPE"]).to eq(["RdSAP", "RdSAP", "SAP"])
       end
 
       it "returns the RRN in the CSV" do
-        expect(@table.by_col[1]).to eq(["0000-0000-0000-0000-0000", "0000-0000-0000-0000-0001", "0000-0000-0000-0000-0003"])
+        expect(@table.by_col["RRN"]).to eq(["0000-0000-0000-0000-0000", "0000-0000-0000-0000-0001", "0000-0000-0000-0000-0003"])
       end
 
       it "returns the INSPECTION_DATE in the CSV" do
-        expect(@table.by_col[2]).to eq(["2020-05-04", "2020-05-04", "2020-05-04"])
+        expect(@table.by_col["INSPECTION_DATE"]).to eq(["2020-05-04", "2020-05-04", "2020-05-04"])
       end
 
       it "returns the LODGEMENT_DATE in the CSV" do
-        expect(@table.by_col[3]).to eq(["2017-05-04", "2018-05-04", "2020-05-04"])
-      end
-
-      it "returns the LODGEMENT_DATE in the CSV" do
-        expect(@table.by_col[3]).to eq(["2017-05-04", "2018-05-04", "2020-05-04"])
+        expect(@table.by_col["LODGEMENT_DATE"]).to eq(["2017-05-04", "2018-05-04", "2020-05-04"])
       end
 
       it "returns the BUILDING_REFERENCE_NUMBER in the CSV" do
-        expect(@table.by_col[4]).to eq(["RRN-0000-0000-0000-0000-0000", "RRN-0000-0000-0000-0000-0001", "RRN-0000-0000-0000-0000-0003"])
+        expect(@table.by_col["BUILDING_REFERENCE_NUMBER"]).to eq(["RRN-0000-0000-0000-0000-0000", "RRN-0000-0000-0000-0000-0001", "RRN-0000-0000-0000-0000-0003"])
       end
 
       it "returns the ADDRESS1 in the CSV" do
-        expect(@table.by_col[5]).to eq( ["1 Some Street", "1 Some Street", "1 Some Street"])
+        expect(@table.by_col["ADDRESS1"]).to eq( ["1 Some Street", "1 Some Street", "1 Some Street"])
       end
 
       it "returns the ADDRESS2 in the CSV" do
-        expect(@table.by_col[6]).to eq(["", "", ""])
+        expect(@table.by_col["ADDRESS2"]).to eq(["", "", ""])
       end
 
       it "returns the ADDRESS3 in the CSV" do
-        expect(@table.by_col[7]).to eq(["", "", ""])
+        expect(@table.by_col["ADDRESS3"]).to eq(["", "", ""])
       end
 
       it "returns the ADDRESS4 in the CSV" do
-        expect(@table.by_col[8]).to eq(["", "", ""])
+        expect(@table.by_col["ADDRESS4"]).to eq(["", "", ""])
       end
 
       it "returns the POSTTOWN in the CSV" do
-        expect(@table.by_col[9]).to eq(["Post-Town1", "Post-Town1", "Post-Town1"])
+        expect(@table.by_col["POSTTOWN"]).to eq(["Post-Town1", "Post-Town1", "Post-Town1"])
       end
 
       it "returns the POSTCODE in the CSV" do
-        expect(@table.by_col[10]).to eq(["A0 0AA", "A0 0AA", "A0 0AA"])
+        expect(@table.by_col["POSTCODE"]).to eq(["A0 0AA", "A0 0AA", "A0 0AA"])
       end
 
       it "returns the CURRENT_ENERGY_EFFICIENCY in the CSV" do
-        expect(@table.by_col[11]).to eq(["50", "50", "50"])
+        expect(@table.by_col["CURRENT_ENERGY_EFFICIENCY"]).to eq(["50", "50", "50"])
       end
 
       it "returns the CURRENT_ENERGY_RATING in the CSV" do
-        expect(@table.by_col[12]).to eq(["e", "e", "e"])
+        expect(@table.by_col["CURRENT_ENERGY_RATING"]).to eq(["e", "e", "e"])
       end
 
       it "returns the POTENTIAL_ENERGY_EFFICIENCY in the CSV" do
-        expect(@table.by_col[13]).to eq(["50", "50", "50"])
+        expect(@table.by_col["POTENTIAL_ENERGY_EFFICIENCY"]).to eq(["50", "50", "50"])
+      end
+
+      it "returns the POTENTIAL_ENERGY_RATING in the CSV" do
+        expect(@table.by_col["POTENTIAL_ENERGY_RATING"]).to eq(["e", "e", "e"])
+      end
+
+      it "returns the CONSTRUCTION_AGE_BAND in the CSV" do
+        expect(@table.by_col["CONSTRUCTION_AGE_BAND"]).to eq(["K", "K", "1750"])
+      end
+
+      it "returns the PROPERTY_TYPE in the CSV" do
+        expect(@table.by_col["PROPERTY_TYPE"]).to eq(["Dwelling-Type0", "Dwelling-Type0", "Dwelling-Type0"])
+      end
+
+      it "returns the TENURE in the CSV" do
+        expect(@table.by_col["TENURE"]).to eq(["1", "1", "1"])
+      end
+
+      it "returns the ENERGY_CONSUMPTION_CURRENTin the CSV" do
+        expect(@table.by_col["ENERGY_CONSUMPTION_CURRENT"]).to eq(["0", "0", "0"])
+      end
+
+      it "returns the CO2_EMISSIONS_CURRENT in the CSV" do
+        expect(@table.by_col["CO2_EMISSIONS_CURRENT"]).to eq(["2.4", "2.4", "2.4"])
+      end
+
+      it "returns the LIGHTING_COST_CURRENT in the CSV" do
+        expect(@table.by_col["LIGHTING_COST_CURRENT"]).to eq(["123.45", "123.45", "123.45"])
+      end
+
+      it "returns the LIGHTING_COST_POTENTIAL in the CSV" do
+        expect(@table.by_col["LIGHTING_COST_POTENTIAL"]).to eq(["84.23", "84.23", "84.23"])
+      end
+
+      it "returns the HEATING_COST_CURRENT in the CSV" do
+        expect(@table.by_col["HEATING_COST_CURRENT"]).to eq(["365.98", "365.98", "365.98"])
+      end
+
+      it "returns the HEATING_COST_POTENTIAL in the CSV" do
+        expect(@table.by_col["HEATING_COST_POTENTIAL"]).to eq(["250.34", "250.34", "250.34"])
+      end
+
+      it "returns the HOT_WATER_COST_CURRENT in the CSV" do
+        expect(@table.by_col["HOT_WATER_COST_CURRENT"]).to eq(["200.40", "200.40", "200.40"])
+      end
+
+      it "returns the HOT_WATER_COST_POTENTIAL in the CSV" do
+        expect(@table.by_col["HOT_WATER_COST_POTENTIAL"]).to eq(["180.43", "180.43", "180.43"])
+      end
+
+      it "returns the TOTAL_FLOOR_AREA in the CSV" do
+        expect(@table.by_col["TOTAL_FLOOR_AREA"]).to eq(["1.0", "1.0", "10.0"])
+      end
+
+      it "returns the MAIN_FUEL in the CSV" do
+        expect(@table.by_col["MAIN_FUEL"]).to eq(["26", "26", "36"])
       end
     end
   end
