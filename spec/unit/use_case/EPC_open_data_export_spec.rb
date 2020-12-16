@@ -1,4 +1,4 @@
-describe UseCase::OpenDataExport do
+describe UseCase::EpcOpenDataExport do
   include RSpecRegisterApiServiceMixin
 
   context "when creating the open data reporting release" do

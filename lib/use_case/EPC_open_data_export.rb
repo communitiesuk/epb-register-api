@@ -1,7 +1,7 @@
 require "nokogiri"
 
 module UseCase
-  class OpenDataExport
+  class EpcOpenDataExport
     def initialize; end
 
     def execute(args = {})
