@@ -115,6 +115,7 @@ module UseCase
               TOTAL_FLOOR_AREA: hash[:total_floor_area],
               MAIN_FUEL: hash[:main_fuel_type],
               TRANSACTION_TYPE: hash[:transaction_type],
+              ENVIRONMENT_IMPACT_CURRENT: hash[:environmental_impact_current],
             },
           )
         end

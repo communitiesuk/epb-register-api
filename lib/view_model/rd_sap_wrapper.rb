@@ -143,6 +143,7 @@ module ViewModel
         opt_out: false,
         status: @view_model.status,
         country_code: @view_model.country_code,
+        environmental_impact_current: @view_model.environmental_impact_current,
       }
     end
 

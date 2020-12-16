@@ -164,6 +164,7 @@ module ViewModel
         total_floor_area: @view_model.total_floor_area,
         opt_out: false,
         status: @view_model.status,
+        environmental_impact_current: @view_model.environmental_impact_current,
       }
     end
 

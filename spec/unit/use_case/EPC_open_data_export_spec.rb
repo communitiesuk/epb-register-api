@@ -180,6 +180,10 @@ describe UseCase::EpcOpenDataExport do
       it "returns the TRANSACTION_TYPE in the CSV" do
         expect(@table.by_col["TRANSACTION_TYPE"]).to eq(["1", "1", "1"])
       end
+
+      it "returns the ENVIRONMENT_IMPACT_CURRENT in the CSV" do
+        expect(@table.by_col["ENVIRONMENT_IMPACT_CURRENT"]).to eq(["50", "50", "50"])
+      end
     end
   end
 end

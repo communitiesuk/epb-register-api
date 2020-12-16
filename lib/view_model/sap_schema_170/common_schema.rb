@@ -245,6 +245,10 @@ module ViewModel
         xpath(%w[Water-Fuel-Type])
       end
 
+      def environmental_impact_current
+        xpath(%w[Environmental-Impact-Current])
+      end
+
     private
 
       def convert_to_big_decimal(node)

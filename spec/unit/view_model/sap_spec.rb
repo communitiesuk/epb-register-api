@@ -1129,6 +1129,7 @@ describe ViewModel::SapWrapper do
     total_floor_area: 10.0,
     opt_out: false,
     status: "ENTERED",
+    environmental_impact_current: '50',
   }.freeze
   it "should read the appropriate values from the XML doc" do
     test_xml_doc(supported_schema, asserted_keys)
