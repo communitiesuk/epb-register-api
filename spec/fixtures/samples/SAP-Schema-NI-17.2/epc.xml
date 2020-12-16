@@ -201,8 +201,7 @@
           <SAP:Energy-Consumption-Current>0</SAP:Energy-Consumption-Current>
           <SAP:Energy-Consumption-Potential>0</SAP:Energy-Consumption-Potential>
           <SAP:CO2-Emissions-Current>2.4</SAP:CO2-Emissions-Current>
-          <SAP:CO2-Emissions-Current-Per-Floor-Area>8
-          </SAP:CO2-Emissions-Current-Per-Floor-Area>
+          <SAP:CO2-Emissions-Current-Per-Floor-Area>0</SAP:CO2-Emissions-Current-Per-Floor-Area>
           <SAP:CO2-Emissions-Potential>1.4</SAP:CO2-Emissions-Potential>
           <SAP:Lighting-Cost-Current>123.45</SAP:Lighting-Cost-Current>
           <SAP:Lighting-Cost-Potential>84.23</SAP:Lighting-Cost-Potential>

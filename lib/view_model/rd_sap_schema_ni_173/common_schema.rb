@@ -301,6 +301,10 @@ module ViewModel
         xpath(%w[Water-Heating-Fuel])
       end
 
+      def co2_emissions_current_per_floor_area
+        xpath(%w[CO2-Emissions-Current-Per-Floor-Area])
+      end
+
     private
 
       def convert_to_big_decimal(node)

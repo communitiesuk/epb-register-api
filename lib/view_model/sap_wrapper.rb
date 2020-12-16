@@ -167,6 +167,7 @@ module ViewModel
         status: @view_model.status,
         environmental_impact_current: @view_model.environmental_impact_current,
         environmental_impact_potential: @view_model.environmental_impact_potential,
+        co2_emissions_current_per_floor_area: @view_model.co2_emissions_current_per_floor_area,
       }
     end
 

@@ -169,7 +169,7 @@
           <HIP:Energy-Consumption-Potential>0</HIP:Energy-Consumption-Potential>
           <HIP:CO2-Emissions-Current>2.4</HIP:CO2-Emissions-Current>
           <HIP:CO2-Emissions-Potential>1.4</HIP:CO2-Emissions-Potential>
-          <HIP:CO2-Emissions-Current-Per-Floor-Area>38</HIP:CO2-Emissions-Current-Per-Floor-Area>
+          <HIP:CO2-Emissions-Current-Per-Floor-Area>0</HIP:CO2-Emissions-Current-Per-Floor-Area>
           <HIP:Lighting-Cost-Current currency="GBP">123.45</HIP:Lighting-Cost-Current>
           <HIP:Lighting-Cost-Potential currency="GBP">84.23</HIP:Lighting-Cost-Potential>
           <HIP:Heating-Cost-Current currency="GBP">365.98</HIP:Heating-Cost-Current>

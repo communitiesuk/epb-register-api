@@ -322,6 +322,10 @@ module ViewModel
         xpath(%w[Environmental-Impact-Potential])
       end
 
+      def co2_emissions_current_per_floor_area
+        xpath(%w[CO2-Emissions-Current-Per-Floor-Area])
+      end
+
 
     private
 

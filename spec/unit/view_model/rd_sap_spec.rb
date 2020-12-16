@@ -252,6 +252,7 @@ describe ViewModel::RdSapWrapper do
       opt_out: false,
       status: "ENTERED",
       environmental_impact_current: '50',
+      co2_emissions_current_per_floor_area: '0',
     }.freeze
 
   it "should read the appropriate values from the XML doc" do
