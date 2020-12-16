@@ -116,6 +116,7 @@ module UseCase
               MAIN_FUEL: hash[:main_fuel_type],
               TRANSACTION_TYPE: hash[:transaction_type],
               ENVIRONMENT_IMPACT_CURRENT: hash[:environmental_impact_current],
+              ENVIRONMENT_IMPACT_POTENTIAL: hash[:environmental_impact_potential],
             },
           )
         end

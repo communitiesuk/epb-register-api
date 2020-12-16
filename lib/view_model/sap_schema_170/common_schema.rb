@@ -249,6 +249,10 @@ module ViewModel
         xpath(%w[Environmental-Impact-Current])
       end
 
+      def environmental_impact_potential
+        xpath(%w[Environmental-Impact-Potential])
+      end
+
     private
 
       def convert_to_big_decimal(node)

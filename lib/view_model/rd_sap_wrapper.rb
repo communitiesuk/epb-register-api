@@ -144,6 +144,7 @@ module ViewModel
         status: @view_model.status,
         country_code: @view_model.country_code,
         environmental_impact_current: @view_model.environmental_impact_current,
+        environmental_impact_potential: @view_model.environmental_impact_potential,
       }
     end
 
