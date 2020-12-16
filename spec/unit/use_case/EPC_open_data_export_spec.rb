@@ -13,12 +13,6 @@ describe UseCase::EpcOpenDataExport do
       let(:domestic_sap_assessment_id) { domestic_sap_xml.at("RRN") }
       let(:domestic_sap_assessment_date) { domestic_sap_xml.at("Registration-Date") }
 
-      let(:non_domestic_xml) { Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc") }
-      let(:non_domestic_assessment_id) { non_domestic_xml.at("//CEPC:RRN") }
-      let(:non_domestic_assessment_date) do
-        non_domestic_xml.at("//CEPC:Registration-Date")
-      end
-
       before do
         add_assessor(
           scheme_id,
@@ -181,6 +175,10 @@ describe UseCase::EpcOpenDataExport do
 
       it "returns the MAIN_FUEL in the CSV" do
         expect(@table.by_col["MAIN_FUEL"]).to eq(["26", "26", "36"])
+      end
+
+      it "returns the TRANSACTION_TYPE in the CSV" do
+        expect(@table.by_col["TRANSACTION_TYPE"]).to eq(["1", "1", "1"])
       end
     end
   end

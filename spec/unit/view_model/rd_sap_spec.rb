@@ -246,6 +246,7 @@ describe ViewModel::RdSapWrapper do
       related_party_disclosure_number: nil,
       related_party_disclosure_text: "Related-Party-Disclosure-Text0",
       tenure: "1",
+      transaction_type: "1",
       total_floor_area: 1.0,
       opt_out: false,
       status: "ENTERED",

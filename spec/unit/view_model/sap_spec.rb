@@ -64,6 +64,7 @@ describe ViewModel::SapWrapper do
           contact_details: { email: "a@b.c", telephone: "111222333" },
         },
         tenure: nil,
+        transaction_type: '1',
       },
     },
     {

@@ -191,6 +191,10 @@ module ViewModel
         xpath(%w[Tenure])
       end
 
+      def transaction_type
+        xpath(%w[Transaction-Type])
+      end
+
       def current_space_heating_demand
         convert_to_big_decimal(%w[Space-Heating-Existing-Dwelling])
       end

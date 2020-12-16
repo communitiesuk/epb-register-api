@@ -114,6 +114,7 @@ module UseCase
               HOT_WATER_COST_POTENTIAL: hash[:hot_water_cost_potential],
               TOTAL_FLOOR_AREA: hash[:total_floor_area],
               MAIN_FUEL: hash[:main_fuel_type],
+              TRANSACTION_TYPE: hash[:transaction_type],
             },
           )
         end
