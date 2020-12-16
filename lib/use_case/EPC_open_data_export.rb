@@ -104,6 +104,7 @@ module UseCase
               PROPERTY_TYPE: hash[:dwelling_type],
               TENURE: hash[:tenure],
               ENERGY_CONSUMPTION_CURRENT: hash[:primary_energy_use],
+              ENERGY_CONSUMPTION_POTENTIAL: hash[:energy_consumption_potential],
               CO2_EMISSIONS_CURRENT: hash[:current_carbon_emission],
               CO2_EMISSIONS_POTENTIAL: hash[:potential_carbon_emission],
               LIGHTING_COST_CURRENT: hash[:lighting_cost_current],

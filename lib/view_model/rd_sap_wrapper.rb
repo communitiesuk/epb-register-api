@@ -123,6 +123,7 @@ module ViewModel
             estimated_energy_cost,
           ),
         primary_energy_use: @view_model.primary_energy_use,
+        energy_consumption_potential: @view_model.energy_consumption_potential,
         property_age_band: @view_model.property_age_band,
         property_summary: @view_model.property_summary,
         recommended_improvements:

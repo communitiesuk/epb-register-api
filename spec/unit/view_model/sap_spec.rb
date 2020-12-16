@@ -1006,6 +1006,7 @@ describe ViewModel::SapWrapper do
     potential_energy_efficiency_rating: 50,
     potential_energy_saving: "174.83",
     primary_energy_use: "0",
+    energy_consumption_potential: "0",
     property_age_band: "1750",
     property_summary: [
       {

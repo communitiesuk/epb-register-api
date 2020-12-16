@@ -188,6 +188,10 @@ describe UseCase::EpcOpenDataExport do
       it "returns the ENVIRONMENT_IMPACT_POTENTIAL in the CSV" do
         expect(@table.by_col["ENVIRONMENT_IMPACT_POTENTIAL"]).to eq(["50", "50", "50"])
       end
+
+      it "returns the ENERGY_CONSUMPTION_POTENTIAL in the CSV" do
+        expect(@table.by_col["ENERGY_CONSUMPTION_POTENTIAL"]).to eq(["0", "0", "0"])
+      end
     end
   end
 end

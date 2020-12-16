@@ -172,6 +172,10 @@ module ViewModel
         xpath(%w[Energy-Consumption-Current])
       end
 
+      def energy_consumption_potential
+        xpath(%w[Energy-Consumption-Potential])
+      end
+
       def estimated_energy_cost
         xpath(%w[Estimated-Energy-Cost])
       end
