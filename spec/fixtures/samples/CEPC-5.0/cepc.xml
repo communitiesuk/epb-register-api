@@ -315,6 +315,7 @@
         <Floor-Area>403</Floor-Area>
         <Building-Level>3</Building-Level>
         <OR-Availability-Date>2020-01-04</OR-Availability-Date>
+        <Other-Fuel-Description>Test</Other-Fuel-Description>
       </Technical-Information>
       <AC-Questionnaire>
         <AC-Present>No</AC-Present>

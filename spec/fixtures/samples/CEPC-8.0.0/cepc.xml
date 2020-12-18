@@ -327,13 +327,14 @@
         <CEPC:Main-Heating-Fuel>Natural Gas</CEPC:Main-Heating-Fuel>
         <CEPC:Building-Environment>Air Conditioning</CEPC:Building-Environment>
         <CEPC:Floor-Area>403</CEPC:Floor-Area>
+        <CEPC:Other-Fuel-Description>Test</CEPC:Other-Fuel-Description>
         <CEPC:Building-Level>3</CEPC:Building-Level>
         <CEPC:OR-Availability-Date>2020-01-04</CEPC:OR-Availability-Date>
       </CEPC:Technical-Information>
       <CEPC:AC-Questionnaire>
         <CEPC:AC-Present>No</CEPC:AC-Present>
         <CEPC:AC-Rated-Output>
-          <CEPC:AC-Rating-Unknown-Flag>1</CEPC:AC-Rating-Unknown-Flag>
+          <CEPC:AC-kW-Rating>100</CEPC:AC-kW-Rating>
         </CEPC:AC-Rated-Output>
         <CEPC:AC-Inspection-Commissioned>4</CEPC:AC-Inspection-Commissioned>
       </CEPC:AC-Questionnaire>

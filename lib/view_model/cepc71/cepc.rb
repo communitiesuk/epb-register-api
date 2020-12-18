@@ -48,6 +48,31 @@ module ViewModel
       def property_type
         xpath(%w[Property-Type])
       end
+
+      def ac_present
+        xpath(%w[AC-Present])
+      end
+
+      def ac_rated_output
+        xpath(%w[AC-Rated-Output])
+      end
+
+      def transaction_type
+        xpath(%w[Transaction-Type])
+      end
+
+      def other_fuel_description
+        xpath(%w[Other-Fuel-Description])
+      end
+
+      def target_emissions
+        xpath(%w[TER])
+      end
+
+      def typical_emissions
+        xpath(%w[TYR])
+      end
+
     end
   end
 end

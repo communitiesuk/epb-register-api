@@ -489,7 +489,6 @@
 	<xs:complexType name="Air-Conditioning-Inspection-Report">
 		<xs:annotation>
 			<xs:documentation>The primary aim of the report is to give the building owner or operator information about the performance of the systems and plant and to identify opportunities to save energy and cut operating costs.
-
 The report identifies any operating anomalies; no-cost/low-cost savings and capital investment opportunities; the size and appropriateness of refrigeration plant in relation to cooling loads and the effectiveness of current maintenance regimes. </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>

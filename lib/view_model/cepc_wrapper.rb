@@ -52,7 +52,9 @@ module ViewModel
     end
 
     def to_hash
+
       {
+
         type_of_assessment: TYPE_OF_ASSESSMENT,
         assessment_id: @view_model.assessment_id,
         date_of_expiry: @view_model.date_of_expiry,
@@ -73,6 +75,7 @@ module ViewModel
           building_environment: @view_model.building_environment,
           floor_area: @view_model.floor_area,
           building_level: @view_model.building_level,
+          other_fuel_description: @view_model.other_fuel_description,
         },
         building_emission_rate: @view_model.building_emission_rate,
         primary_energy_use: @view_model.primary_energy_use,
@@ -101,7 +104,12 @@ module ViewModel
           get_energy_rating_band(@view_model.energy_efficiency_rating.to_i),
         property_type: @view_model.property_type,
         building_complexity: @view_model.building_level,
-      }
+        ac_present: @view_model.ac_present,
+        transaction_type: @view_model.transaction_type,
+        target_emissions: @view_model.target_emissions,
+        typical_emissions:  @view_model.typical_emissions,
+
+        }
     end
 
     def get_view_model

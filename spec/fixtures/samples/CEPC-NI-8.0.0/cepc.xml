@@ -120,6 +120,7 @@
         <Floor-Area>403</Floor-Area>
         <Building-Level>3</Building-Level>
         <OR-Availability-Date>2020-01-04</OR-Availability-Date>
+        <Other-Fuel-Description>Test</Other-Fuel-Description>
       </Technical-Information>
       <EPC-Rating>
         <Asset-Rating>80</Asset-Rating>
@@ -136,7 +137,7 @@
         </Energy-Use>
       </Energy-Assessment>
       <AC-Questionnaire>
-        <AC-Present>Yes</AC-Present>
+        <AC-Present>No</AC-Present>
         <AC-Rated-Output>
           <AC-Rating-Unknown-Flag>false</AC-Rating-Unknown-Flag>
         </AC-Rated-Output>

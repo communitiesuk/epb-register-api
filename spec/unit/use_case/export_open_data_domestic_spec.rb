@@ -57,8 +57,7 @@ describe UseCase::ExportOpenDataDomestic do
         )
 
         open_data_export = described_class.new
-        response =
-          open_data_export.execute(
+        response =open_data_export.execute(
             { number_of_assessments: "3", max_runs: "3", batch: "3" },
             )
         @table = CSV.parse(response[0], headers:true)

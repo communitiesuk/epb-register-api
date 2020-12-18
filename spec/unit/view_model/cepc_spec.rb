@@ -1,6 +1,9 @@
 require_relative "xml_view_test_helper"
 
 describe ViewModel::CepcWrapper do
+
+
+
   # You should only need to add to this list to test new CEPC schema
   supported_schema = [
     {
@@ -33,29 +36,38 @@ describe ViewModel::CepcWrapper do
       schema_name: "CEPC-6.0",
       xml: Samples.xml("CEPC-6.0", "cepc"),
       unsupported_fields: %i[primary_energy_use],
-      different_fields: {},
-      different_buried_fields: { address: { address_id: "LPRN-000000000001" } },
+      different_fields: { other_fuel_description: "Test", },
+      different_buried_fields: { address: { address_id: "LPRN-000000000001" },  technical_information: { other_fuel_description: nil }},
     },
     {
       schema_name: "CEPC-5.0",
       xml: Samples.xml("CEPC-5.0", "cepc"),
       unsupported_fields: %i[primary_energy_use],
       different_fields: {},
-      different_buried_fields: { address: { address_id: "LPRN-000000000001" } },
+      different_buried_fields: { address: { address_id: "LPRN-000000000001" }, technical_information: { other_fuel_description: nil } },
     },
     {
       schema_name: "CEPC-4.0",
       xml: Samples.xml("CEPC-4.0", "cepc"),
       unsupported_fields: %i[primary_energy_use],
-      different_fields: { building_emission_rate: nil },
-      different_buried_fields: { address: { address_id: "LPRN-000000000001" } },
+      different_fields: { building_emission_rate: nil,
+                          transaction_type: nil,
+                          target_emissions: nil,
+                          typical_emissions: nil,
+                            },
+      different_buried_fields: { address: { address_id: "LPRN-000000000001" }, technical_information: { other_fuel_description: nil }  },
     },
     {
       schema_name: "CEPC-3.1",
       xml: Samples.xml("CEPC-3.1", "cepc"),
       unsupported_fields: %i[primary_energy_use],
-      different_fields: { building_emission_rate: nil },
-      different_buried_fields: { address: { address_id: "LPRN-000000000001" } },
+      different_fields: { building_emission_rate: nil,
+                          ac_present: nil,
+                          transaction_type: nil,
+                          target_emissions: nil,
+                          typical_emissions: nil,
+      },
+      different_buried_fields: { address: { address_id: "LPRN-000000000001" }, technical_information: { other_fuel_description: nil }  },
     },
   ].freeze
 
@@ -77,6 +89,7 @@ describe ViewModel::CepcWrapper do
       building_environment: "Air Conditioning",
       floor_area: "403",
       building_level: "3",
+      other_fuel_description: "Test",
     },
     building_emission_rate: "67.09",
     primary_energy_use: "413.22",
@@ -101,6 +114,12 @@ describe ViewModel::CepcWrapper do
     date_of_registration: "2020-05-04",
     related_party_disclosure: "1",
     property_type: "B1 Offices and Workshop businesses",
+    ac_present: "No",
+    transaction_type: "1",
+    target_emissions: "23.2",
+    typical_emissions: "67.98",
+
+
   }.freeze
 
   it "should read the appropriate values from the XML doc" do

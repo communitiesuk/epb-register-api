@@ -80,6 +80,20 @@ module ViewModel
       def transaction_type
         xpath(%w[Transaction-Type])
       end
+
+      def ac_present
+        xpath(%w[AC-Present])
+      end
+
+
+
+      def other_fuel_description
+        xpath(%w[Other-Fuel-Description])
+      end
+
+      # def renewable_energy_source
+      #   xpath(%w[Renewable-Energy-Source])
+      # end
     end
   end
 end
