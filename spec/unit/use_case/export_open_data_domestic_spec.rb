@@ -1,4 +1,4 @@
-describe UseCase::EpcOpenDataExport do
+describe UseCase::ExportOpenDataDomestic do
   include RSpecRegisterApiServiceMixin
 
   context "when creating the open data reporting release" do
@@ -195,6 +195,10 @@ describe UseCase::EpcOpenDataExport do
 
       it "returns the CO2_EMISS_CURR_PER_FLOOR_AREA in the CSV" do
         expect(@table.by_col["CO2_EMISS_CURR_PER_FLOOR_AREA"]).to eq(["0", "0", "0"])
+      end
+
+      it "returns the MAINS_GAS_FLAG in the CSV" do
+        expect(@table.by_col["MAINS_GAS_FLAG"]).to eq(["Y", "Y", nil])
       end
     end
   end

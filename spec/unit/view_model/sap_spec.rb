@@ -1132,6 +1132,7 @@ describe ViewModel::SapWrapper do
     status: "ENTERED",
     environmental_impact_current: '50',
     co2_emissions_current_per_floor_area: '0',
+    mains_gas: nil,
   }.freeze
   it "should read the appropriate values from the XML doc" do
     test_xml_doc(supported_schema, asserted_keys)

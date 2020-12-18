@@ -326,6 +326,10 @@ module ViewModel
         xpath(%w[CO2-Emissions-Current-Per-Floor-Area])
       end
 
+      def mains_gas
+        nil
+      end
+
 
     private
 
