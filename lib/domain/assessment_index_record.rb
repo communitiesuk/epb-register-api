@@ -31,7 +31,8 @@ module Domain
       not_for_issue_at: nil,
       scheme_assessor_id: nil,
       xml: nil,
-      related_assessments: nil
+      related_assessments: nil,
+      related_rrn: nil
     )
       @migrated = migrated
       @date_of_assessment =
@@ -74,6 +75,7 @@ module Domain
       @scheme_assessor_id = scheme_assessor_id
       @xml = xml
       @related_assessments = related_assessments
+      @related_rrn = related_rrn
     end
 
     def to_record

@@ -50,6 +50,10 @@ module Gateway
             DELETE FROM assessments WHERE assessment_id = $1
           SQL
 
+          delete_linked_assessment = <<-SQL
+            DELETE FROM linked_assessments WHERE assessment_id = $1
+          SQL
+
           binds = [
             ActiveRecord::Relation::QueryAttribute.new(
               "id",
@@ -60,7 +64,7 @@ module Gateway
 
           ActiveRecord::Base.connection.exec_query delete_xml, "SQL", binds
 
-          results =
+          green_deal_plan_ids =
             ActiveRecord::Base.connection.exec_query green_deal_plan_id,
                                                      "SQL",
                                                      binds
@@ -77,28 +81,20 @@ module Gateway
                                                    "SQL",
                                                    binds
 
+          ActiveRecord::Base.connection.exec_query delete_linked_assessment,
+                                                   "SQL",
+                                                   binds
+
           Assessment.create assessment.to_record
 
-          add_green_deal_plan = <<-SQL
-            INSERT INTO green_deal_assessments (assessment_id, green_deal_plan_id)
-            VALUES ($1, $2)
-          SQL
+          reattach_green_deal_plans(green_deal_plan_ids, binds)
 
-          results.map do |result|
-            inner_bind = binds
-            inner_bind <<
-              ActiveRecord::Relation::QueryAttribute.new(
-                "green_deal_plan_id",
-                result["green_deal_plan_id"],
-                ActiveRecord::Type::String.new,
-              )
-
-            ActiveRecord::Base.connection.exec_query add_green_deal_plan,
-                                                     "SQL",
-                                                     inner_bind
-          end
         else
           Assessment.create assessment.to_record
+        end
+
+        unless assessment.get(:related_rrn).nil?
+          add_linked_assessment assessment
         end
       end
     end
@@ -124,5 +120,51 @@ module Gateway
         end
       end
     end
+
+    def reattach_green_deal_plans(green_deal_plan_ids, binds)
+      add_green_deal_plan = <<-SQL
+            INSERT INTO green_deal_assessments (assessment_id, green_deal_plan_id)
+            VALUES ($1, $2)
+      SQL
+
+      green_deal_plan_ids.map do |result|
+        inner_bind = binds
+        inner_bind <<
+          ActiveRecord::Relation::QueryAttribute.new(
+            "green_deal_plan_id",
+            result["green_deal_plan_id"],
+            ActiveRecord::Type::String.new,
+            )
+
+        ActiveRecord::Base.connection.exec_query add_green_deal_plan,
+                                                 "SQL",
+                                                 inner_bind
+      end
+    end
+
+    def add_linked_assessment(assessment)
+      add_linked_assessment = <<-SQL
+            INSERT INTO linked_assessments (assessment_id, linked_assessment_id)
+            VALUES ($1, $2)
+      SQL
+
+      linked_assessment_binds = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "assessment_id",
+          assessment.get(:assessment_id),
+          ActiveRecord::Type::String.new,
+          ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "linked_assessment_id",
+          assessment.get(:related_rrn),
+          ActiveRecord::Type::String.new,
+          ),
+      ]
+
+      ActiveRecord::Base.connection.exec_query add_linked_assessment,
+                                               "SQL",
+                                               linked_assessment_binds
+    end
+
   end
 end

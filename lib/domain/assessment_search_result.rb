@@ -18,7 +18,8 @@ module Domain
       cancelled_at: nil,
       not_for_issue_at: nil,
       date_of_assessment: nil,
-      scheme_assessor_id: nil
+      scheme_assessor_id: nil,
+      linked_assessment_id: nil
     )
       @migrated = migrated
       @date_of_assessment =
@@ -52,6 +53,7 @@ module Domain
         unless not_for_issue_at.nil?
           Date.strptime(not_for_issue_at.to_s, "%Y-%m-%d")
         end
+      @related_rrn = linked_assessment_id
     end
 
     def get_energy_rating_band(number)

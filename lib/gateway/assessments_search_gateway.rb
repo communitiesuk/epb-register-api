@@ -11,10 +11,10 @@ module Gateway
             a.assessment_id, a.date_of_assessment, a.type_of_assessment,
             a.current_energy_efficiency_rating, a.opt_out, a.postcode, a.date_of_expiry, a.date_registered,
             a.address_line1, a.address_line2, a.address_line3, a.address_line4, a.town,
-            a.cancelled_at, a.not_for_issue_at, b.address_id, a.scheme_assessor_id
+            a.cancelled_at, a.not_for_issue_at, b.address_id, a.scheme_assessor_id, la.linked_assessment_id
         FROM assessments a
-        LEFT JOIN assessments_address_id b
-            ON(a.assessment_id = b.assessment_id)
+        INNER JOIN assessments_address_id b USING(assessment_id)
+        LEFT JOIN linked_assessments la USING(assessment_id)
     SQL
 
     def search_by_postcode(postcode, assessment_types = [])

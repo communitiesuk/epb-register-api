@@ -58,6 +58,7 @@ module UseCase
           postcode: data[:address][:postcode],
           xml: data[:raw_data],
           migrated: migrated,
+          related_rrn: data[:related_rrn] || data[:related_certificate],
         )
 
       @assessments_gateway.insert_or_update assessment
