@@ -305,6 +305,12 @@
               <HIP:Percent-Roof-Area>0</HIP:Percent-Roof-Area>
             </HIP:Photovoltaic-Supply>
           </HIP:SAP-Energy-Source>
+          <HIP:SAP-Flat-Details>
+            <HIP:Flat-Location>00</HIP:Flat-Location>
+            <HIP:Heat-Loss-Corridor>0</HIP:Heat-Loss-Corridor>
+            <HIP:Level>1</HIP:Level>
+            <HIP:Top-Storey>N</HIP:Top-Storey>
+          </HIP:SAP-Flat-Details>
         </HIP:SAP-Property-Details>
       </SAP:SAP-Data>
       <SAP:ExternalDefinitions-Revision-Number>3.9c</SAP:ExternalDefinitions-Revision-Number>

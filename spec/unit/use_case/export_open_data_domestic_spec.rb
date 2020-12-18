@@ -199,6 +199,10 @@ describe UseCase::ExportOpenDataDomestic do
       it "returns the MAINS_GAS_FLAG in the CSV" do
         expect(@table.by_col["MAINS_GAS_FLAG"]).to eq(["Y", "Y", nil])
       end
+
+      it "returns the LEVEL in the CSV" do
+        expect(@table.by_col["LEVEL"]).to eq(["1", "1", "1"])
+      end
     end
   end
 end

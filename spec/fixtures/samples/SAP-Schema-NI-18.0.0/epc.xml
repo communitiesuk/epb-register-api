@@ -232,6 +232,9 @@
                     <Overshading>1</Overshading>
                 </SAP-Building-Part>
             </SAP-Building-Parts>
+          <SAP-Flat-Details>
+            <Level>1</Level>
+          </SAP-Flat-Details>
         </SAP-Property-Details>
     </SAP09-Data>
     <ExternalDefinitions-Revision-Number>ExternalDefinitions-Revision-Number0</ExternalDefinitions-Revision-Number>

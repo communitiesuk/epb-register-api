@@ -265,6 +265,10 @@ module ViewModel
         nil
       end
 
+      def level
+        xpath(%w[Level])
+      end
+
     private
 
       def convert_to_big_decimal(node)

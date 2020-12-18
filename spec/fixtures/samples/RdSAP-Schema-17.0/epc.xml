@@ -141,6 +141,13 @@
     </Energy-Assessment>
     <SAP-Data>
       <SAP-Property-Details>
+        <SAP-Flat-Details>
+          <Level>1</Level>
+          <Flat-Location>01</Flat-Location>
+          <Heat-Loss-Corridor>1</Heat-Loss-Corridor>
+          <Storey-Count>3</Storey-Count>
+          <Top-Storey>N</Top-Storey>
+        </SAP-Flat-Details>
         <Property-Type>0</Property-Type>
         <Built-Form>2</Built-Form>
         <Extensions-Count>0</Extensions-Count>

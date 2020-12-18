@@ -226,6 +226,9 @@
                     <Overshading>1</Overshading>
                 </SAP-Building-Part>
             </SAP-Building-Parts>
+          <SAP-Flat-Details>
+            <Level>1</Level>
+          </SAP-Flat-Details>
         </SAP-Property-Details>
     </SAP2012-Data>
     <PDF>SGVsbG8=</PDF>

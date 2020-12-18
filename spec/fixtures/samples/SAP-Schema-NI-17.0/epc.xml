@@ -457,7 +457,7 @@
             </SAP:Is-Mechanical-Vent-Approved-Installer-Scheme>
           </SAP:SAP-Ventilation>
           <SAP:SAP-Flat-Details>
-            <SAP:Level>2</SAP:Level>
+            <SAP:Level>1</SAP:Level>
           </SAP:SAP-Flat-Details>
           <SAP:Design-Water-Use>1</SAP:Design-Water-Use>
         </SAP:SAP-Property-Details>

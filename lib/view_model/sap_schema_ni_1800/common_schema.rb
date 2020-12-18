@@ -330,6 +330,9 @@ module ViewModel
         nil
       end
 
+      def level
+        xpath(%w[Level])
+      end
 
     private
 

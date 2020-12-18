@@ -309,6 +309,9 @@ module ViewModel
         xpath(%w[Mains-Gas])
       end
 
+      def level
+        xpath(%w[Level])
+      end
 
     private
 
