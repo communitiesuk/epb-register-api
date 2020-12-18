@@ -58,7 +58,7 @@ module UseCase
           postcode: data[:address][:postcode],
           xml: data[:raw_data],
           migrated: migrated,
-          related_rrn: data[:related_rrn] || data[:related_certificate],
+          related_rrn: find_related_rrn(data),
         )
 
       @assessments_gateway.insert_or_update assessment
@@ -125,5 +125,19 @@ module UseCase
         raise InactiveAssessorException
       end
     end
+
+    def find_related_rrn(wrapper_hash)
+      related_rrn = nil
+      # related-rrn: AC-CERT AC-REPORT CEPC DEC-RR
+      related_rrn = wrapper_hash[:related_rrn] unless wrapper_hash[:related_rrn].nil?
+      # related_certificate: CEPC-RR
+      related_rrn = wrapper_hash[:related_certificate] unless wrapper_hash[:related_certificate].nil?
+      # administrative_information->related_rrn: DEC
+      if related_rrn.nil? && !wrapper_hash.dig(:administrative_information, :related_rrn).nil?
+        related_rrn = wrapper_hash[:administrative_information][:related_rrn]
+      end
+      related_rrn
+    end
+
   end
 end

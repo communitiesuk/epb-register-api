@@ -5,12 +5,14 @@ describe "Acceptance::Assessment::Lodge" do
 
   let(:valid_assessor_request_body) do
     AssessorStub.new.fetch_request_body(
-      domesticRdSap: "ACTIVE", nonDomesticNos3: "ACTIVE",
+      domesticRdSap: "ACTIVE", nonDomesticNos3: "ACTIVE", nonDomesticDec: "ACTIVE", nonDomesticCc4: "ACTIVE", nonDomesticSp3: "ACTIVE"
     )
   end
 
   let(:valid_rdsap_xml) { Samples.xml "RdSAP-Schema-20.0.0" }
   let(:valid_cepc_rr_xml) { Samples.xml "CEPC-8.0.0", "cepc+rr" }
+  let(:valid_dec_rr_xml) { Samples.xml "CEPC-8.0.0", "dec+rr" }
+  let(:valid_ac_cert_report_xml) { Samples.xml "CEPC-8.0.0", "ac-cert+ac-report" }
 
   context "rejecting lodgements" do
     let(:scheme_id) { add_scheme_and_get_id }
@@ -221,9 +223,8 @@ describe "Acceptance::Assessment::Lodge" do
   end
 
   context "when lodging a valid assessment" do
-    let(:cepc_xml_doc) { Nokogiri.XML(valid_cepc_rr_xml) }
 
-    it "returns the correct response" do
+    it "returns the correct response for RdSAP" do
       scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
 
@@ -249,10 +250,92 @@ describe "Acceptance::Assessment::Lodge" do
       )
     end
 
+    it "returns the correct response for CEPC+RR" do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
+
+      response =
+        JSON.parse(
+          lodge_assessment(
+            assessment_body: valid_cepc_rr_xml,
+            accepted_responses: [201],
+            auth_data: { scheme_ids: [scheme_id] },
+            schema_name: "CEPC-8.0.0"
+            ).body,
+          symbolize_names: true,
+          )
+
+      expect(response).to eq(
+        {
+          data: { assessments: %w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001] },
+          meta: {
+            links: {
+              assessments: %w[/api/assessments/0000-0000-0000-0000-0000 /api/assessments/0000-0000-0000-0000-0001],
+            },
+          },
+        },
+      )
+    end
+
+    it "returns the correct response for DEC+RR" do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
+
+      response =
+        JSON.parse(
+          lodge_assessment(
+            assessment_body: valid_dec_rr_xml,
+            accepted_responses: [201],
+            auth_data: { scheme_ids: [scheme_id] },
+            schema_name: "CEPC-8.0.0"
+          ).body,
+          symbolize_names: true,
+          )
+
+      expect(response).to eq(
+        {
+          data: { assessments: %w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001] },
+          meta: {
+            links: {
+              assessments: %w[/api/assessments/0000-0000-0000-0000-0000 /api/assessments/0000-0000-0000-0000-0001],
+            },
+          },
+        },
+      )
+    end
+
+    it "returns the correct response for AC-CERT+AC-REPORT" do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
+
+      response =
+        JSON.parse(
+          lodge_assessment(
+            assessment_body: valid_ac_cert_report_xml,
+            accepted_responses: [201],
+            auth_data: { scheme_ids: [scheme_id] },
+            schema_name: "CEPC-8.0.0"
+          ).body,
+          symbolize_names: true,
+          )
+
+      expect(response).to eq(
+        {
+          data: { assessments: %w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001] },
+          meta: {
+            links: {
+              assessments: %w[/api/assessments/0000-0000-0000-0000-0000 /api/assessments/0000-0000-0000-0000-0001],
+            },
+          },
+        },
+      )
+    end
+
     it "accepts negative current energy rating values for CEPC" do
       scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
 
+      cepc_xml_doc = Nokogiri.XML(valid_cepc_rr_xml)
       cepc_xml_doc.at("//CEPC:Asset-Rating").children = "-50"
 
       lodge_assessment(
@@ -267,6 +350,7 @@ describe "Acceptance::Assessment::Lodge" do
       scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
 
+      cepc_xml_doc = Nokogiri.XML(valid_cepc_rr_xml)
       cepc_xml_doc.at("//CEPC:Asset-Rating").children = "-267654"
 
       lodge_assessment(
