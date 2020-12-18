@@ -4,13 +4,11 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
   include RSpecRegisterApiServiceMixin
 
   let(:valid_assessor_request_body) do
-    AssessorStub.new.fetch_request_body(
-      nonDomesticNos3: "ACTIVE",
-      nonDomesticDec: "ACTIVE",
-      domesticRdSap: "ACTIVE",
-      domesticSap: "ACTIVE",
-      nonDomesticSp3: "ACTIVE",
-    )
+    AssessorStub.new.fetch_request_body nonDomesticNos3: "ACTIVE",
+                                        nonDomesticDec: "ACTIVE",
+                                        domesticRdSap: "ACTIVE",
+                                        domesticSap: "ACTIVE",
+                                        nonDomesticSp3: "ACTIVE"
   end
 
   let(:scheme_id) { add_scheme_and_get_id }

@@ -50,12 +50,15 @@ module Gateway
       sql = <<~SQL
         SELECT a.assessment_id,
                c.name AS scheme_name,
-               a.type_of_assessment
+               a.type_of_assessment,
+               la.linked_assessment_id AS linked
         FROM assessments a
         LEFT JOIN assessors b ON a.scheme_assessor_id = b.scheme_assessor_id
         LEFT JOIN schemes c ON b.registered_by = c.scheme_id
+        LEFT JOIN linked_assessments la ON la.assessment_id = a.assessment_id
         WHERE a.created_at BETWEEN $1 AND $2
-        AND (a.migrated IS NULL OR a.migrated IS FALSE)
+          AND (a.migrated IS NULL OR a.migrated IS FALSE)
+          AND (la.assessment_id IS NULL OR a.assessment_id > la.linked_assessment_id)
       SQL
 
       binds = [

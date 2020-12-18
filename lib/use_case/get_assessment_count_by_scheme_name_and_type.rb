@@ -1,12 +1,12 @@
 module UseCase
   class GetAssessmentCountBySchemeNameAndType
     COMBINED_TYPES = {
-      "AC-CERT" => { combined: "AC-REPORT+CERT", related: :related_rrn },
-      "AC-REPORT" => { combined: "AC-REPORT+CERT", related: :related_rrn },
-      "CEPC" => { combined: "CEPC+RR", related: :related_rrn },
-      "CEPC-RR" => { combined: "CEPC+RR", related: :related_certificate },
-      "DEC" => { combined: "DEC+RR", related: :related_rrn },
-      "DEC-RR" => { combined: "DEC+RR", related: :related_rrn },
+      "AC-CERT" => "AC-REPORT+CERT",
+      "AC-REPORT" => "AC-REPORT+CERT",
+      "CEPC" => "CEPC+RR",
+      "CEPC-RR" => "CEPC+RR",
+      "DEC" => "DEC+RR",
+      "DEC-RR" => "DEC+RR",
     }.freeze
 
     DEFAULT_COUNTS = {
@@ -35,36 +35,17 @@ module UseCase
       assessments_by_scheme_and_type = {}
 
       assessments.each do |data|
-        rrn = data["assessment_id"]
         type = data["type_of_assessment"]
         scheme = data["scheme_name"]
+        linked = data["linked"]
 
         if assessments_by_scheme_and_type[scheme].nil?
           assessments_by_scheme_and_type[scheme] = DEFAULT_COUNTS.dup
         end
 
-        if COMBINED_TYPES[type].nil?
-          assessments_by_scheme_and_type[scheme][type] += 1
-        else
-          assessment_xml = Gateway::AssessmentsXmlGateway.new.fetch rrn
-          view_model =
-            ViewModel::Factory.new.create(
-              assessment_xml[:xml],
-              assessment_xml[:schema_type],
-              rrn,
-            ).get_view_model
+        type = COMBINED_TYPES[type] unless COMBINED_TYPES[type].nil? || linked.nil?
 
-          related = view_model.method(COMBINED_TYPES[type][:related]).call
-
-          if related.nil?
-            assessments_by_scheme_and_type[scheme][type] += 1
-          elsif rrn > related
-            assessments_by_scheme_and_type[scheme][
-              COMBINED_TYPES[type][:combined]
-            ] +=
-              1
-          end
-        end
+        assessments_by_scheme_and_type[scheme][type] += 1
       end
 
       assessments_invoicing = []
