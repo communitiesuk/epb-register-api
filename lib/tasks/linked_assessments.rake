@@ -15,10 +15,9 @@ task :linked_assessments do
   puts "[#{Time.now}] Starting processing linked assessment"
 
   find_assessments_sql = <<-SQL
-    SELECT a.assessment_id, b.xml, b.schema_type
-    FROM assessments a
-    INNER JOIN assessments_xml b USING (assessment_id)
-    WHERE a.date_registered >= #{ActiveRecord::Base.connection.quote(ENV["from_date"])}
+    SELECT assessment_id
+    FROM assessments
+    WHERE date_registered >= #{ActiveRecord::Base.connection.quote(ENV["from_date"])}
   SQL
 
   assessment_types = []
@@ -37,7 +36,8 @@ task :linked_assessments do
     existing_assessment = ActiveRecord::Base.connection.exec_query("SELECT 1 FROM linked_assessments WHERE assessment_id = '#{assessment_id}'")
 
     if existing_assessment.empty?
-      report_model = ViewModel::Factory.new.create(assessment["xml"], assessment["schema_type"], assessment["assessment_id"])
+      assessment_xml = ActiveRecord::Base.connection.exec_query("SELECT xml, schema_type FROM assessments_xml WHERE assessment_id = '#{assessment_id}'")
+      report_model = ViewModel::Factory.new.create(assessment_xml["xml"], assessment_xml["schema_type"], assessment_id)
       related_rrn = find_related_rrn(report_model.to_hash)
 
       if related_rrn.nil?
