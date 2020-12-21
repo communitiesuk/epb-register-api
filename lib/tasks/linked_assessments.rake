@@ -15,16 +15,18 @@ task :linked_assessments do
   puts "[#{Time.now}] Starting processing linked assessment"
 
   find_assessments_sql = <<-SQL
-    SELECT assessment_id
-    FROM assessments
-    WHERE date_registered >= #{ActiveRecord::Base.connection.quote(ENV["from_date"])}
+    SELECT a.assessment_id
+    FROM assessments a
+    LEFT JOIN linked_assessments la USING (assessment_id)
+    WHERE a.date_registered >= #{ActiveRecord::Base.connection.quote(ENV["from_date"])}
+    AND la.assessment_id IS NULL
   SQL
 
   assessment_types = []
   %w[DEC DEC-RR CEPC CEPC-RR AC-REPORT AC-CERT].each do |type|
     assessment_types.push(ActiveRecord::Base.connection.quote(type))
   end
-  find_assessments_sql += " AND type_of_assessment IN(" + assessment_types.join(", ") + ")"
+  find_assessments_sql += " AND a.type_of_assessment IN(" + assessment_types.join(", ") + ")"
 
   assessments = ActiveRecord::Base.connection.exec_query find_assessments_sql
   puts "Found #{assessments.length} assessments to process"
@@ -33,23 +35,17 @@ task :linked_assessments do
   skipped = 0
   assessments.each do |assessment|
     assessment_id = assessment['assessment_id']
-    existing_assessment = ActiveRecord::Base.connection.exec_query("SELECT 1 FROM linked_assessments WHERE assessment_id = '#{assessment_id}'")
+    assessment_xml = ActiveRecord::Base.connection.exec_query("SELECT xml, schema_type FROM assessments_xml WHERE assessment_id = '#{assessment_id}'").first
+    report_model = ViewModel::Factory.new.create(assessment_xml["xml"], assessment_xml["schema_type"], assessment_id)
+    related_rrn = find_related_rrn(report_model.to_hash)
 
-    if existing_assessment.empty?
-      assessment_xml = ActiveRecord::Base.connection.exec_query("SELECT xml, schema_type FROM assessments_xml WHERE assessment_id = '#{assessment_id}'").first
-      report_model = ViewModel::Factory.new.create(assessment_xml["xml"], assessment_xml["schema_type"], assessment_id)
-      related_rrn = find_related_rrn(report_model.to_hash)
-
-      if related_rrn.nil?
-        skipped += 1
-      else
-        ActiveRecord::Base.connection.exec_query("INSERT INTO linked_assessments VALUES('#{assessment_id}','#{related_rrn}')")
-        inserted += 1
-      end
-
-    else
+    if related_rrn.nil?
       skipped += 1
+    else
+      ActiveRecord::Base.connection.exec_query("INSERT INTO linked_assessments VALUES('#{assessment_id}','#{related_rrn}')")
+      inserted += 1
     end
+
   end
   puts "[#{Time.now}] Finished processing linked assessment, skipped:#{skipped} inserted:#{inserted}"
 end
