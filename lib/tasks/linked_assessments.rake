@@ -32,25 +32,27 @@ task :linked_assessments do
 
   inserted = 0
   skipped = 0
-  assessments.each do |assessment|
-    report_model = ViewModel::Factory.new.create(assessment["xml"], assessment["schema_type"], assessment["assessment_id"])
+  assessments.delete_if do |assessment|
     assessment_id = assessment["assessment_id"]
-    related_rrn = find_related_rrn(report_model.to_hash)
+    existing_assessment = ActiveRecord::Base.connection.exec_query("SELECT 1 FROM linked_assessments WHERE assessment_id = '#{assessment_id}'")
 
-    if related_rrn.nil?
-      skipped += 1
-    else
-      existing_backup = ActiveRecord::Base.connection.exec_query("SELECT 1 FROM linked_assessments " \
-        "WHERE assessment_id = '#{assessment_id}' AND linked_assessment_id = '#{related_rrn}'")
-      if existing_backup.empty?
+    if existing_assessment.empty?
+      report_model = ViewModel::Factory.new.create(assessment["xml"], assessment["schema_type"], assessment["assessment_id"])
+      related_rrn = find_related_rrn(report_model.to_hash)
+
+      if related_rrn.nil?
+        skipped += 1
+      else
         ActiveRecord::Base.connection.exec_query("INSERT INTO linked_assessments VALUES('#{assessment_id}','#{related_rrn}')")
         inserted += 1
-      else
-        skipped += 1
       end
-    end
-  end
 
+    else
+      skipped += 1
+    end
+
+    true
+  end
   puts "[#{Time.now}] Finished processing linked assessment, skipped:#{skipped} inserted:#{inserted}"
 end
 
