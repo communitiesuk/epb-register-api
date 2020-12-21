@@ -36,16 +36,20 @@ task :linked_assessments do
   assessments.each do |assessment|
     assessment_id = assessment['assessment_id']
     assessment_xml = ActiveRecord::Base.connection.exec_query("SELECT xml, schema_type FROM assessments_xml WHERE assessment_id = '#{assessment_id}'").first
-    report_model = ViewModel::Factory.new.create(assessment_xml["xml"], assessment_xml["schema_type"], assessment_id)
-    related_rrn = find_related_rrn(report_model.to_hash)
-
-    if related_rrn.nil?
+    if assessment_xml.nil?
+      puts "[#{Time.now}] Could not read XML for assessment #{assessment_id}"
       skipped += 1
     else
-      ActiveRecord::Base.connection.exec_query("INSERT INTO linked_assessments VALUES('#{assessment_id}','#{related_rrn}')")
-      inserted += 1
-    end
+      report_model = ViewModel::Factory.new.create(assessment_xml["xml"], assessment_xml["schema_type"], assessment_id)
+      related_rrn = find_related_rrn(report_model.to_hash)
 
+      if related_rrn.nil?
+        skipped += 1
+      else
+        ActiveRecord::Base.connection.exec_query("INSERT INTO linked_assessments VALUES('#{assessment_id}','#{related_rrn}')")
+        inserted += 1
+      end
+    end
   end
   puts "[#{Time.now}] Finished processing linked assessment, skipped:#{skipped} inserted:#{inserted}"
 end
