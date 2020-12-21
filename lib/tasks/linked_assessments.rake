@@ -26,13 +26,12 @@ task :linked_assessments do
   end
   find_assessments_sql += " AND type_of_assessment IN(" + assessment_types.join(", ") + ")"
 
-  assessments = ActiveRecord::Base.connection.exec_query find_assessments_sql
-  puts "Found #{assessments.length} assessments to process"
+  assessment_ids = ActiveRecord::Base.connection.exec_query find_assessments_sql
+  puts "Found #{assessment_ids.length} assessments to process"
 
   inserted = 0
   skipped = 0
-  assessments.each do |assessment|
-    assessment_id = assessment["assessment_id"]
+  assessment_ids.each do |assessment_id|
     existing_assessment = ActiveRecord::Base.connection.exec_query("SELECT 1 FROM linked_assessments WHERE assessment_id = '#{assessment_id}'")
 
     if existing_assessment.empty?
