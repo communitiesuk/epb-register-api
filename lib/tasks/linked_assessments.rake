@@ -32,7 +32,7 @@ task :linked_assessments do
 
   inserted = 0
   skipped = 0
-  assessments.delete_if do |assessment|
+  assessments.each do |assessment|
     assessment_id = assessment["assessment_id"]
     existing_assessment = ActiveRecord::Base.connection.exec_query("SELECT 1 FROM linked_assessments WHERE assessment_id = '#{assessment_id}'")
 
@@ -50,8 +50,6 @@ task :linked_assessments do
     else
       skipped += 1
     end
-
-    true
   end
   puts "[#{Time.now}] Finished processing linked assessment, skipped:#{skipped} inserted:#{inserted}"
 end
