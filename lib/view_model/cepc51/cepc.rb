@@ -61,6 +61,13 @@ module ViewModel
         nil
       end
 
+      def target_emissions
+        xpath(%w[TER])
+      end
+
+      def typical_emissions
+        xpath(%w[TYR])
+      end
     end
   end
 end
