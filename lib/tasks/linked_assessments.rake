@@ -43,7 +43,7 @@ task :linked_assessments do
       existing_backup = ActiveRecord::Base.connection.exec_query("SELECT 1 FROM linked_assessments " \
         "WHERE assessment_id = '#{assessment_id}' AND linked_assessment_id = '#{related_rrn}'")
       if existing_backup.empty?
-        ActiveRecord::Base.connection.exec_query("INSERT INTO linked_assessments VALUES('#{assessment_id}','#{related_rrn}'")
+        ActiveRecord::Base.connection.exec_query("INSERT INTO linked_assessments VALUES('#{assessment_id}','#{related_rrn}')")
         inserted += 1
       else
         skipped += 1
