@@ -46,15 +46,16 @@ module Gateway
       results.map { |result| result }
     end
 
-    def assessments_by_scheme_and_type(start_date, end_date)
+    def assessments_by_scheme_and_type(start_date, end_date, scheme_id = nil)
       sql = <<~SQL
         SELECT a.assessment_id,
                c.name AS scheme_name,
                a.type_of_assessment,
+               a.created_at,
                la.linked_assessment_id AS linked
         FROM assessments a
-        LEFT JOIN assessors b ON a.scheme_assessor_id = b.scheme_assessor_id
-        LEFT JOIN schemes c ON b.registered_by = c.scheme_id
+        INNER JOIN assessors b ON a.scheme_assessor_id = b.scheme_assessor_id
+        INNER JOIN schemes c ON b.registered_by = c.scheme_id
         LEFT JOIN linked_assessments la ON la.assessment_id = a.assessment_id
         WHERE a.created_at BETWEEN $1 AND $2
           AND (a.migrated IS NULL OR a.migrated IS FALSE)
@@ -73,6 +74,18 @@ module Gateway
           ActiveRecord::Type::String.new,
         ),
       ]
+
+      unless scheme_id.nil?
+        sql << " AND c.scheme_id = $3"
+
+        binds << ActiveRecord::Relation::QueryAttribute.new(
+          "scheme_id",
+          scheme_id,
+          ActiveRecord::Type::String.new,
+        )
+      end
+
+      sql << " ORDER BY a.created_at"
 
       results = ActiveRecord::Base.connection.exec_query sql, "SQL", binds
       results.map { |result| result }

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
+describe "Acceptance::Reports::GetAssessmentRRNsBySchemeNameAndType" do
   include RSpecRegisterApiServiceMixin
 
   let(:valid_assessor_request_body) do
@@ -31,7 +31,7 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
     get_assessment_report(
       start_date: Date.yesterday.strftime("%F"),
       end_date: Date.tomorrow.strftime("%F"),
-      type: "scheme-and-type",
+      type: "scheme-and-type/rrn",
     ).body
   end
 
@@ -41,7 +41,7 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
         get_assessment_report(
           start_date: "2020-09-04",
           end_date: "2020-09-05",
-          type: "scheme-and-type",
+          type: "scheme-and-type/rrn",
         ).body
 
       expect(JSON.parse(response, symbolize_names: true)).to eq(
@@ -53,9 +53,7 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
   context "when there are lodgements" do
     before do
       add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
-    end
 
-    it "returns a report with the correct numbers of lodgements" do
       doc = Nokogiri.XML valid_rdsap_xml
       doc.at("RRN").content = "0000-0000-0000-0000-0000"
       lodge_assessment(
@@ -167,33 +165,70 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
         schema_name: "CEPC-8.0.0",
       )
 
+      @second_scheme = add_scheme_and_get_id("test scheme two")
+
+      add_assessor(
+        @second_scheme,
+        "SPEC000010",
+        valid_assessor_request_body,
+      )
+
+      doc = Nokogiri.XML valid_rdsap_xml
+      doc.at("RRN").content = "1100-0000-0000-0000-0011"
+      doc.at("Certificate-Number").content = "SPEC000010"
+      lodge_assessment(
+        assessment_body: doc.to_xml,
+        accepted_responses: [201],
+        auth_data: { scheme_ids: [@second_scheme] },
+        schema_name: "RdSAP-Schema-20.0.0",
+      )
+    end
+
+    it "returns a report for a single scheme" do
       response =
         get_assessment_report(
           start_date: Date.yesterday.strftime("%F"),
           end_date: Date.tomorrow.strftime("%F"),
-          type: "scheme-and-type",
+          scheme_id: @second_scheme,
+          type: "scheme-and-type/rrn",
         ).body
 
-      expect(response).to eq <<~CSV
-        number_of_assessments,scheme_name,type_of_assessment
-        1,test scheme,AC-CERT
-        1,test scheme,AC-REPORT
-        1,test scheme,AC-REPORT+CERT
-        1,test scheme,CEPC
-        1,test scheme,CEPC+RR
-        1,test scheme,CEPC-RR
-        1,test scheme,DEC
-        1,test scheme,DEC+RR
-        1,test scheme,DEC-RR
-        1,test scheme,RdSAP
-        1,test scheme,SAP
-      CSV
+      lodged_date = Date.today.strftime("%F")
+
+      expect(response).to include "rrn,scheme_name,type_of_assessment,related_rrn,lodged_at"
+      expect(response).to include "1100-0000-0000-0000-0011,test scheme two,RdSAP,,#{lodged_date}"
+      expect(response).not_to include "0000-0000-0000-0000-0000,test scheme,RdSAP,,#{lodged_date}"
+    end
+
+    it "returns a report with the correct numbers of lodgements" do
+      response =
+        get_assessment_report(
+          start_date: Date.yesterday.strftime("%F"),
+          end_date: Date.tomorrow.strftime("%F"),
+          type: "scheme-and-type/rrn",
+        ).body
+
+      lodged_date = Date.today.strftime("%F")
+
+      expect(response).to include "rrn,scheme_name,type_of_assessment,related_rrn,lodged_at"
+      expect(response).to include "0000-0000-0000-0000-0000,test scheme,RdSAP,,#{lodged_date}"
+      expect(response).to include "0000-0000-0000-0000-0001,test scheme,SAP,,#{lodged_date}"
+      expect(response).to include "0000-0000-0000-0000-0002,test scheme,CEPC,,#{lodged_date}"
+      expect(response).to include "0000-0000-0000-0000-0009,test scheme,CEPC-RR,,#{lodged_date}"
+      expect(response).to include "0000-0000-0000-0000-3001,test scheme,CEPC+RR,0000-0000-0000-0000-3000,#{lodged_date}"
+      expect(response).to include "0000-0000-0000-0000-0003,test scheme,DEC,,#{lodged_date}"
+      expect(response).to include "0000-0000-0000-0000-0004,test scheme,DEC-RR,,#{lodged_date}"
+      expect(response).to include "0000-0000-0000-0000-1001,test scheme,DEC+RR,0000-0000-0000-0000-1000,#{lodged_date}"
+      expect(response).to include "0000-0000-0000-0000-0005,test scheme,AC-CERT,,#{lodged_date}"
+      expect(response).to include "0000-0000-0000-0000-0006,test scheme,AC-REPORT,,#{lodged_date}"
+      expect(response).to include "0000-0000-0000-0000-2001,test scheme,AC-REPORT+CERT,0000-0000-0000-0000-2000,#{lodged_date}"
+      expect(response).to include "1100-0000-0000-0000-0011,test scheme two,RdSAP,,#{lodged_date}"
     end
 
     context "when some lodgements are migrated" do
       it "does not include these in the report" do
         doc = Nokogiri.XML valid_rdsap_xml
-        doc.at("RRN").content = "0000-0000-0000-0000-0001"
+        doc.at("RRN").content = "1111-0000-0000-0000-0001"
 
         lodge_assessment(
           assessment_body: doc.to_xml,
@@ -203,9 +238,7 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
           migrated: true,
         )
 
-        expect(JSON.parse(response, symbolize_names: true)).to eq(
-          { data: "No lodgements during this time frame" },
-        )
+        expect(response).not_to include "1111-0000-0000-0000-0001"
       end
     end
   end
@@ -216,7 +249,7 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
         get_assessment_report(
           start_date: "wrong-format",
           end_date: Date.tomorrow.strftime("%F"),
-          type: "scheme-and-type",
+          type: "scheme-and-type/rrn",
           accepted_responses: [422],
         ).body
 
@@ -238,7 +271,7 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
         get_assessment_report(
           start_date: Date.yesterday.strftime("%F"),
           end_date: "wrong-format",
-          type: "scheme-and-type",
+          type: "scheme-and-type/rrn",
           accepted_responses: [422],
         ).body
 

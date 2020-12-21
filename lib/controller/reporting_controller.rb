@@ -66,5 +66,34 @@ module Controller
         server_error(e.message)
       end
     end
+
+    get "/api/reports/assessments/scheme-and-type/rrn",
+        jwt_auth: %w[reporting:assessment_by_scheme_and_type] do
+      parsed_params = params_body DATE_RANGE_SCHEMA
+
+      raw_data =
+        body UseCase::GetAssessmentRrnsBySchemeNameAndType.new.execute(
+          Date.parse(parsed_params[:start_date]),
+          Date.parse(parsed_params[:end_date]),
+          params[:scheme_id],
+        )
+
+      if raw_data.empty?
+        json_response(200, { data: "No lodgements during this time frame" })
+      else
+        content_type "text/csv"
+        attachment parsed_params[:start_date] + "_to_" + parsed_params[:end_date] + ".csv"
+        body CSV.generate(
+          write_headers: true, headers: raw_data.first.keys,
+        ) { |csv| raw_data.each { |row| csv << row } }
+      end
+    rescue StandardError => e
+      case e
+      when JSON::Schema::ValidationError
+        error_response(422, "INVALID_REQUEST", e.message)
+      else
+        server_error(e.message)
+      end
+    end
   end
 end

@@ -530,19 +530,23 @@ end
 def get_assessment_report(
   start_date:,
   end_date:,
+  scheme_id:nil,
   type: "region-and-type",
   accepted_responses: [200],
   authenticate: true,
   auth_data: {},
   scopes: %w[reporting:assessment_by_type_and_region]
 )
-  if type == "scheme-and-type"
+  if type.include? "scheme-and-type"
     scopes = %w[reporting:assessment_by_scheme_and_type]
   end
+
+  url = "/api/reports/assessments/#{type}?startDate=#{start_date}&endDate=#{end_date}"
+
+  url << "&scheme_id=#{scheme_id}" unless scheme_id.nil?
+
   assertive_get(
-    "/api/reports/assessments/#{type}?startDate=#{start_date}&endDate=#{
-      end_date
-    }",
+    url,
     accepted_responses,
     authenticate,
     auth_data,
