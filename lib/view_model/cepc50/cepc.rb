@@ -58,7 +58,7 @@ module ViewModel
       end
 
       def other_fuel_description
-        nil
+        xpath(%w[Other-Fuel-Description])
       end
 
       def target_emissions
@@ -69,6 +69,29 @@ module ViewModel
         xpath(%w[TYR])
       end
 
+      def ac_kw_rating
+        xpath(%w[AC-kW-Rating])
+      end
+
+      def estimated_ac_kw_rating
+        xpath(%w[AC-Estimated-Output])
+      end
+
+      def special_energy_uses
+        xpath(%w[Special-Energy-Uses])
+      end
+
+      def standard_emissions
+        nil
+      end
+
+      def ac_inpsection_commissioned
+        xpath(%w[AC-Inspection-Commissioned])
+      end
+
+      def primary_energy_use
+        nil
+      end
     end
   end
 end

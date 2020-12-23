@@ -45,6 +45,14 @@ module ViewModel
         xpath(%w[Related-Party-Disclosure])
       end
 
+      def building_emission
+        nil
+      end
+
+      def building_emission_rate
+        nil
+      end
+
       def property_type
         xpath(%w[Property-Type])
       end
@@ -66,6 +74,30 @@ module ViewModel
       end
 
       def typical_emissions
+        nil
+      end
+
+      def ac_kw_rating
+        nil
+      end
+
+      def estimated_ac_kw_rating
+        nil
+      end
+
+      def special_energy_uses
+        xpath(%w[Special-Energy-Uses])
+      end
+
+      def standard_emissions
+        nil
+      end
+
+      def ac_inpsection_commissioned
+        nil
+      end
+
+      def primary_energy_use
         nil
       end
     end

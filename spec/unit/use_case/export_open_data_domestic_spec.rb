@@ -62,6 +62,8 @@ describe UseCase::ExportOpenDataDomestic do
             )
         @table = CSV.parse(response[0], headers:true)
 
+
+
       end
 
       it "returns the REPORT TYPE in the CSV" do

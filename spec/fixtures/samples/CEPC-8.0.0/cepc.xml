@@ -292,6 +292,7 @@
       <CEPC:Expiry-Date>2021-07-31</CEPC:Expiry-Date>
       <CEPC:PI-Limit>500000</CEPC:PI-Limit>
     </CEPC:Insurance-Details>
+
     <CEPC:Energy-Performance-Certificate>
       <CEPC:Transaction-Type>1</CEPC:Transaction-Type>
       <CEPC:EPC-Related-Party-Disclosure>1</CEPC:EPC-Related-Party-Disclosure>
@@ -328,6 +329,7 @@
         <CEPC:Building-Environment>Air Conditioning</CEPC:Building-Environment>
         <CEPC:Floor-Area>403</CEPC:Floor-Area>
         <CEPC:Other-Fuel-Description>Test</CEPC:Other-Fuel-Description>
+        <CEPC:Special-Energy-Uses>Test sp</CEPC:Special-Energy-Uses>
         <CEPC:Building-Level>3</CEPC:Building-Level>
         <CEPC:OR-Availability-Date>2020-01-04</CEPC:OR-Availability-Date>
       </CEPC:Technical-Information>
@@ -336,8 +338,12 @@
         <CEPC:AC-Rated-Output>
           <CEPC:AC-kW-Rating>100</CEPC:AC-kW-Rating>
         </CEPC:AC-Rated-Output>
-        <CEPC:AC-Inspection-Commissioned>4</CEPC:AC-Inspection-Commissioned>
+        <CEPC:AC-Estimated-Output>3</CEPC:AC-Estimated-Output>
+
+        <CEPC:AC-Inspection-Commissioned>1</CEPC:AC-Inspection-Commissioned>
       </CEPC:AC-Questionnaire>
+
     </CEPC:Energy-Performance-Certificate>
+
   </CEPC:Report>
 </CEPC:Reports>

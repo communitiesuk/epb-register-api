@@ -21,6 +21,10 @@ module ViewModel
         nil
       end
 
+      def building_emission
+        nil
+      end
+
       def primary_energy_use
         xpath(%w[Energy-Consumption-Current])
       end
@@ -58,14 +62,46 @@ module ViewModel
       end
 
       def other_fuel_description
-        nil
+        xpath(%w[Other-Fuel-Description])
       end
 
       def target_emissions
         nil
       end
 
+      def transaction_type
+        nil
+      end
+
       def typical_emissions
+        nil
+      end
+
+      def ac_kw_rating
+        xpath(%w[AC-kW-Rating])
+      end
+
+      def estimated_ac_kw_rating
+        xpath(%w[AC-Estimated-Output])
+      end
+
+      def special_energy_uses
+        xpath(%w[Special-Energy-Uses])
+      end
+
+      def building_environment
+        xpath(%w[Building-Environment])
+      end
+
+      def standard_emissions
+        nil
+      end
+
+      def ac_inpsection_commissioned
+        xpath(%w[AC-Inspection-Commissioned])
+      end
+
+      def primary_energy_use
         nil
       end
 

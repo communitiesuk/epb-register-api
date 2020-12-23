@@ -46,6 +46,10 @@ module ViewModel
       def related_party_disclosure
         xpath(%w[Related-Party-Disclosure])
       end
+
+      def special_energy_uses
+        xpath(%w[Special-Energy-Uses])
+      end
     end
   end
 end

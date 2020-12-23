@@ -64,6 +64,7 @@
             <Benchmark></Benchmark>
             <Benchmark-ID>1</Benchmark-ID>
             <Floor-Area>403</Floor-Area>
+
             <Name></Name>
             <Occupancy-Level></Occupancy-Level>
             <Special-Uses-Area></Special-Uses-Area>
@@ -121,6 +122,7 @@
         <Building-Level>3</Building-Level>
         <OR-Availability-Date>2020-01-04</OR-Availability-Date>
         <Other-Fuel-Description>Test</Other-Fuel-Description>
+        <Special-Energy-Uses>Test sp</Special-Energy-Uses>
       </Technical-Information>
       <EPC-Rating>
         <Asset-Rating>80</Asset-Rating>
@@ -139,9 +141,10 @@
       <AC-Questionnaire>
         <AC-Present>No</AC-Present>
         <AC-Rated-Output>
-          <AC-Rating-Unknown-Flag>false</AC-Rating-Unknown-Flag>
+          <AC-kW-Rating>100</AC-kW-Rating>
         </AC-Rated-Output>
         <AC-Inspection-Commissioned>1</AC-Inspection-Commissioned>
+        <AC-Estimated-Output>3</AC-Estimated-Output>
       </AC-Questionnaire>
     </Energy-Performance-Certificate>
   </Report>

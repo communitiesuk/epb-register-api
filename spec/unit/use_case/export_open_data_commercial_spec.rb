@@ -1,6 +1,10 @@
 describe UseCase::ExportOpenDataCommercial do
   include RSpecRegisterApiServiceMixin
 
+  def convert_to_typed_array(array, int = true)
+    array.map{|string| int ? string.to_i : string.to_f}
+  end
+
   context "when creating the open data reporting release" do
     describe "for the commercial certificates and reports" do
       let(:scheme_id) { add_scheme_and_get_id }
@@ -51,11 +55,11 @@ describe UseCase::ExportOpenDataCommercial do
 
 
         open_data_export = described_class.new
-        response =open_data_export.execute(
-        {
-          number_of_assessments: number_assments_to_test, max_runs: "3", batch: "3" },
-        )
-        @table = CSV.parse(response[0], headers:true)
+        response = open_data_export.execute(
+          { number_of_assessments: "3", max_runs: "3", batch: "3" },
+          )
+        @table = CSV.parse(response, headers: true)
+
 
       end
 
@@ -89,7 +93,7 @@ describe UseCase::ExportOpenDataCommercial do
       end
 
       it "returns the BUILDING_REFERENCE_NUMBER in the CSV" do
-        expect(@table["BUILDING_REFERENCE_NUMBER"]).to eq(["RRN-0000-0000-0000-0000-0000", "RRN-0000-0000-0000-0000-0001"])
+        expect(@table["BUILDING_REFERENCE_NUMBER"]).to eq(["UPRN-000000000001", "UPRN-000000000001"])
       end
 
       it "returns the ASSET_RATING in the CSV" do
@@ -132,51 +136,60 @@ describe UseCase::ExportOpenDataCommercial do
         expect(@table["MAIN_HEATING_FUEL"]).to eq(["Natural Gas", "Natural Gas"])
       end
 
-       it "returns the OTHER_FUEL_DESC in the CSV" do
-         expect(@table["OTHER_FUEL_DESC"]).to eq(["Test", "Test"])
+      it "returns the special_energy_uses in the CSV" do
+        expect(@table["OTHER_FUEL_DESC"]).to eq(["Test", "Test"])
+      end
+
+      it "returns the SPECIAL_ENERGY_USES in the CSV" do
+         expect(@table["SPECIAL_ENERGY_USES"]).to eq(["Test sp", "Test sp"])
       end
 
       it "returns the FLOOR_AREA in the CSV" do
-        array = @table["FLOOR_AREA"].map{|string| string.to_i}
-        expect(array).to eq([403, 403])
+        expect(convert_to_typed_array(@table["FLOOR_AREA"])).to eq([403, 403])
       end
 
       it "returns the STANDARD_EMISSIONS in the CSV" do
-        array = @table["STANDARD_EMISSIONS"].map{|string| string.to_f}
-        expect(array).to eq([67.09, 67.09])
+        expect(convert_to_typed_array(@table["STANDARD_EMISSIONS"], false)).to eq([42.07, 42.07])
       end
 
       it "returns the TARGET_EMISSIONS in the CSV" do
-        array = @table["TARGET_EMISSIONS"].map{|string| string.to_f}
-        expect(array).to eq([23.2, 23.2])
+        expect(convert_to_typed_array(@table["TARGET_EMISSIONS"], false)).to eq([23.2, 23.2])
       end
 
        it "returns the TYPICAL_EMISSIONS in the CSV" do
-         array = @table["TYPICAL_EMISSIONS"].map{|string| string.to_f}
-         expect(array).to eq([67.98, 67.98])
+         expect(convert_to_typed_array(@table["TYPICAL_EMISSIONS"], false)).to eq([67.98, 67.98])
        end
 
       it "returns the BUILDING_EMISSIONS in the CSV as floats" do
-        array = @table["BUILDING_EMISSIONS"].map{|string| string.to_f}
-        expect(array).to eq([67.09, 67.09])
+        expect(convert_to_typed_array(@table["BUILDING_EMISSIONS"], false)).to eq([67.09, 67.09])
       end
 
       it "returns the AIRCON_PRESENT in the CSV" do
         expect(@table["AIRCON_PRESENT"]).to eq(["N", "N"])
       end
 
+      it "returns the AIRCON_KW_RATING in the CSV" do
+        expect(convert_to_typed_array(@table["AIRCON_KW_RATING"])).to eq([100, 100])
+      end
+
+      it "returns the ESTIMATED_AIRCON_KW_RATING in the CSV" do
+        expect(convert_to_typed_array(@table["ESTIMATED_AIRCON_KW_RATING"])).to eq([3, 3])
+      end
+
+      # it "returns the AC_INSPECTION_COMMISSIONED in the CSV" do
+      #   expect(convert_to_typed_array(@table["AC_INSPECTION_COMMISSIONED"])).to eq([1, 1])
+      # end
+
       it "returns the BUILDING_ENVIRONMENT in the CSV" do
         expect(@table["BUILDING_ENVIRONMENT"]).to eq(["Air Conditioning", "Air Conditioning"])
       end
 
       it "returns the PRIMARY_ENERGY in the CSV as floats" do
-        array = @table["PRIMARY_ENERGY"].map{|string| string.to_f}
-        expect(array).to eq([413.22, 413.22])
+        expect(convert_to_typed_array(@table["PRIMARY_ENERGY"], false)).to eq([413.22, 413.22])
       end
 
       it "returns the REPORT_TYPE in the CSV as integers" do
-        array = @table["REPORT_TYPE"].map{|string| string.to_i}
-        expect(array).to eq([3, 3])
+        expect(convert_to_typed_array(@table["REPORT_TYPE"])).to eq([3, 3])
       end
 
     end

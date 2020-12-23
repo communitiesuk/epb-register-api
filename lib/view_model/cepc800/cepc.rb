@@ -85,10 +85,24 @@ module ViewModel
         xpath(%w[AC-Present])
       end
 
+      def ac_kw_rating
+        xpath(%w[AC-kW-Rating])
+      end
 
+      def estimated_ac_kw_rating
+        xpath(%w[AC-Estimated-Output])
+      end
 
       def other_fuel_description
         xpath(%w[Other-Fuel-Description])
+      end
+
+      def special_energy_uses
+        xpath(%w[Special-Energy-Uses])
+      end
+
+      def ac_inpsection_commissioned
+        xpath(%w[AC-Inspection-Commissioned])
       end
 
       # def renewable_energy_source

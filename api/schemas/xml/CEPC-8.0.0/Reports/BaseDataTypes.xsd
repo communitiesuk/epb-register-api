@@ -231,7 +231,7 @@ It is formatted as five blocks of four digits i.e. 9999-9999-9999-9999-9999 and 
 			<xs:element name="AC-Rating-Unknown-Flag" type="xs:boolean"/>
 		</xs:choice>
 	</xs:complexType>
-	<xs:simpleType name="ACEstimatedOutput">
+  <xs:simpleType name="ACEstimatedOutput">
 		<xs:restriction base="xs:int">
 			<xs:enumeration value="1">
 				<xs:annotation>

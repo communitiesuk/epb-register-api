@@ -22,7 +22,7 @@ module ViewModel
       end
 
       def primary_energy_use
-        xpath(%w[Energy-Consumption-Current])
+        nil
       end
 
       def related_rrn
@@ -68,6 +68,30 @@ module ViewModel
 
       def typical_emissions
         xpath(%w[TYR])
+      end
+
+      def ac_kw_rating
+        xpath(%w[AC-kW-Rating])
+      end
+
+      def estimated_ac_kw_rating
+        xpath(%w[AC-Estimated-Output])
+      end
+
+      def other_fuel_description
+        xpath(%w[Other-Fuel-Description])
+      end
+
+      def special_energy_uses
+        xpath(%w[Special-Energy-Uses])
+      end
+
+      def standard_emissions
+        xpath(%w[SER])
+      end
+
+      def ac_inpsection_commissioned
+        xpath(%w[AC-Inspection-Commissioned])
       end
 
     end

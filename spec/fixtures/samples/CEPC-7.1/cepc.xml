@@ -327,13 +327,15 @@
         <Building-Level>3</Building-Level>
         <OR-Availability-Date>2020-01-04</OR-Availability-Date>
         <Other-Fuel-Description>Test</Other-Fuel-Description>
+        <Special-Energy-Uses>Test sp</Special-Energy-Uses>
       </Technical-Information>
       <AC-Questionnaire>
         <AC-Present>No</AC-Present>
         <AC-Rated-Output>
-          <AC-Rating-Unknown-Flag>1</AC-Rating-Unknown-Flag>
+          <AC-kW-Rating>100</AC-kW-Rating>
         </AC-Rated-Output>
-        <AC-Inspection-Commissioned>4</AC-Inspection-Commissioned>
+        <AC-Inspection-Commissioned>1</AC-Inspection-Commissioned>
+        <AC-Estimated-Output>3</AC-Estimated-Output>
       </AC-Questionnaire>
     </Energy-Performance-Certificate>
   </Report>

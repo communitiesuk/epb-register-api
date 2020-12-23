@@ -68,6 +68,15 @@ module ViewModel
       def typical_emissions
         xpath(%w[TYR])
       end
+
+      def ac_inpsection_commissioned
+        xpath(%w[AC-Inspection-Commissioned])
+      end
+
+      def primary_energy_use
+        nil
+      end
+
     end
   end
 end

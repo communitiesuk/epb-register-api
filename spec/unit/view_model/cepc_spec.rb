@@ -1,75 +1,12 @@
 require_relative "xml_view_test_helper"
 
+
+
+
 describe ViewModel::CepcWrapper do
 
-
-
   # You should only need to add to this list to test new CEPC schema
-  supported_schema = [
-    {
-      schema_name: "CEPC-8.0.0",
-      xml: Samples.xml("CEPC-8.0.0", "cepc"),
-      unsupported_fields: [],
-      different_fields: { related_rrn: nil },
-    },
-    {
-      schema_name: "CEPC-NI-8.0.0",
-      xml: Samples.xml("CEPC-NI-8.0.0", "cepc"),
-      unsupported_fields: [],
-      different_fields: {},
-    },
-    {
-      schema_name: "CEPC-7.1",
-      xml: Samples.xml("CEPC-7.1", "cepc"),
-      unsupported_fields: [],
-      different_fields: {},
-      different_buried_fields: { address: { address_id: "LPRN-000000000001" } },
-    },
-    {
-      schema_name: "CEPC-7.0",
-      xml: Samples.xml("CEPC-7.0", "cepc"),
-      unsupported_fields: %i[primary_energy_use],
-      different_fields: {},
-      different_buried_fields: { address: { address_id: "LPRN-000000000001" } },
-    },
-    {
-      schema_name: "CEPC-6.0",
-      xml: Samples.xml("CEPC-6.0", "cepc"),
-      unsupported_fields: %i[primary_energy_use],
-      different_fields: { other_fuel_description: "Test", },
-      different_buried_fields: { address: { address_id: "LPRN-000000000001" },  technical_information: { other_fuel_description: nil }},
-    },
-    {
-      schema_name: "CEPC-5.0",
-      xml: Samples.xml("CEPC-5.0", "cepc"),
-      unsupported_fields: %i[primary_energy_use],
-      different_fields: {},
-      different_buried_fields: { address: { address_id: "LPRN-000000000001" }, technical_information: { other_fuel_description: nil } },
-    },
-    {
-      schema_name: "CEPC-4.0",
-      xml: Samples.xml("CEPC-4.0", "cepc"),
-      unsupported_fields: %i[primary_energy_use],
-      different_fields: { building_emission_rate: nil,
-                          transaction_type: nil,
-                          target_emissions: nil,
-                          typical_emissions: nil,
-                            },
-      different_buried_fields: { address: { address_id: "LPRN-000000000001" }, technical_information: { other_fuel_description: nil }  },
-    },
-    {
-      schema_name: "CEPC-3.1",
-      xml: Samples.xml("CEPC-3.1", "cepc"),
-      unsupported_fields: %i[primary_energy_use],
-      different_fields: { building_emission_rate: nil,
-                          ac_present: nil,
-                          transaction_type: nil,
-                          target_emissions: nil,
-                          typical_emissions: nil,
-      },
-      different_buried_fields: { address: { address_id: "LPRN-000000000001" }, technical_information: { other_fuel_description: nil }  },
-    },
-  ].freeze
+  supported_schema = set_supported_schema
 
   # You should only need to add to this list to test new fields on all CEPC schema
   asserted_keys = {
@@ -89,7 +26,6 @@ describe ViewModel::CepcWrapper do
       building_environment: "Air Conditioning",
       floor_area: "403",
       building_level: "3",
-      other_fuel_description: "Test",
     },
     building_emission_rate: "67.09",
     primary_energy_use: "413.22",
@@ -114,16 +50,53 @@ describe ViewModel::CepcWrapper do
     date_of_registration: "2020-05-04",
     related_party_disclosure: "1",
     property_type: "B1 Offices and Workshop businesses",
-    ac_present: "No",
-    transaction_type: "1",
-    target_emissions: "23.2",
-    typical_emissions: "67.98",
-
-
   }.freeze
 
-  it "should read the appropriate values from the XML doc" do
+
+
+  it "should read the appropriate values from the XML doc against the to hash method " do
     test_xml_doc(supported_schema, asserted_keys)
+  end
+
+  it "should read the appropriate values from the XML doc against the to report method " do
+    hash_to_test = {
+      rrn: "0000-0000-0000-0000-0000",
+      address1: "2 Lonely Street",
+      address2: nil,
+      address3: nil,
+      address4: nil,
+      posttown: "Post-Town1",
+      postcode: "A0 0AA",
+      building_reference_number: "UPRN-000000000001",
+      asset_rating: "80",
+      asset_rating_band: "d",
+      property_type: "B1 Offices and Workshop businesses",
+      inspection_date: "2020-05-04",
+      lodgement_date: "2020-05-04",
+      transaction_type: "1",
+      new_build_benchmark: "28",
+      existing_stock_benchmark: "81",
+      standard_emissions: "42.07",
+      building_emissions: "67.09",
+      main_heating_fuel: "Natural Gas",
+      building_level: "3",
+      floor_area: "403",
+      other_fuel_description: "Test",
+      special_energy_uses: "Test sp",
+      aircon_present: "N",
+      aircon_kw_rating: "100",
+      estimated_aircon_kw_rating: "3",
+      ac_inpsection_commissioned: "1",
+      target_emissions: "23.2",
+      typical_emissions: "67.98",
+      building_environment: "Air Conditioning",
+      primary_energy: "413.22",
+      report_type: "3",
+    }
+
+    update_schema_for_report(supported_schema)
+
+    test_xml_doc(supported_schema, hash_to_test, true)
   end
 
   it "returns the expect error without a valid schema type" do

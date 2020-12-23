@@ -266,6 +266,7 @@
         <Floor-Area>403</Floor-Area>
         <Building-Level>3</Building-Level>
         <OR-Availability-Date>2020-01-04</OR-Availability-Date>
+        <Special-Energy-Uses>Test sp</Special-Energy-Uses>
       </Technical-Information>
     </Energy-Performance-Certificate>
   </Report>
