@@ -8,7 +8,9 @@ module UseCase
       @view_model_array = []
     end
 
+    # @TODO: use argument signature of this method
     def execute(args = {})
+
       ##use gateway to make db calls
       # call gateway to get data set
       assessments = @gateway.assessments_for_open_data(args)
@@ -17,9 +19,11 @@ module UseCase
         xml_data = @assement_gateway.fetch(assessment["assessment_id"])
         view_model = ViewModel::Factory.new.create(xml_data[:xml], xml_data[:schema_type], assessment["assessment_id"])
         @view_model_array << view_model.to_report
+        # @TODO:update log table
       end
       #call method to return data as csv
-      to_csv
+      #to_csv
+      @view_model_array
     end
 
   private

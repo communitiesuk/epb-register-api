@@ -4,7 +4,6 @@ def test_xml_doc(supported_schema, asserted_keys, test_report = false)
     # test either to has or to report
     view_model = test_report ? view_model.to_report : view_model.to_hash
 
-
     asserted_keys.each do |key, value|
       result = view_model[key]
 
@@ -93,7 +92,6 @@ def set_supported_schema
 end
 
 
-
 def lprn_test_value
   "LPRN-000000000001"
 end
@@ -102,63 +100,4 @@ def uprn_test_value
   lprn_test_value.gsub('LPRN', "UPRN")
 end
 
-def different_fields
-  {
-    building_reference_number: lprn_test_value,
-    transaction_type: nil,
-    target_emissions: nil,
-    typical_emissions: nil,
-    building_emission_rate: nil,
-    building_emission: nil,
-    standard_emissions: nil,
-    building_emissions:nil,
-    primary_energy: nil,
 
-  }
-end
-
-def different_fields_spec_3
-  my_hash = different_fields
-  my_hash[:other_fuel_description] = nil
-  my_hash[:aircon_kw_rating] = nil
-  my_hash[:estimated_aircon_kw_rating] = nil
-  my_hash[:ac_inpsection_commissioned] = nil
-  my_hash
-end
-
-def update_schema_for_report(schema)
-
-
-  schema.select { |hash|  !hash[:schema_name].include?("8") }
-        .map { |selected_hash|
-          selected_hash[:different_fields][:building_reference_number] =lprn_test_value
-        }
-
-  schema.select { |hash|  !hash[:schema_name].include?("8") }
-        .map { |selected_hash|
-          selected_hash[:different_fields][:building_reference_number] =lprn_test_value
-        }
-
-  schema.select { |hash|  hash[:schema_name].include?("5") }
-        .map { |selected_hash|
-          selected_hash[:different_fields] =
-            {
-              building_reference_number: lprn_test_value,
-              standard_emissions: nil,
-              primary_energy: nil,
-            }
-        }
-
-  schema.select { |hash|  hash[:schema_name].include?("4") }
-        .map { |selected_hash|
-          selected_hash[:different_fields] =
-            different_fields
-        }
-
-  schema.select { |hash|  hash[:schema_name].include?("3") }
-        .map { |selected_hash|
-          selected_hash[:different_fields] = different_fields_spec_3
-          }
-
-
-end

@@ -109,15 +109,13 @@ module Gateway
 
 
       sql = <<~SQL
-        SELECT  a.assessment_id, b.xml, b.schema_type, c.address_id
+        SELECT  a.assessment_id, b.schema_type, c.address_id
          FROM assessments a
          INNER JOIN assessments_xml b ON(a.assessment_id = b.assessment_id)
          INNER JOIN assessments_address_id c  ON(a.assessment_id = c.assessment_id)
          WHERE a.opt_out = false AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
          ORDER BY a.date_registered
       SQL
-
-
 
       binds = [
         ActiveRecord::Relation::QueryAttribute.new(

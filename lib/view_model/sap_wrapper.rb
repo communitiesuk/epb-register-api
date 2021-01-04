@@ -173,6 +173,10 @@ module ViewModel
       }
     end
 
+    def to_report
+
+    end
+
     def get_view_model
       @view_model
     end

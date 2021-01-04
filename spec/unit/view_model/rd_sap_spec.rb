@@ -257,8 +257,16 @@ describe ViewModel::RdSapWrapper do
       level: '1',
     }.freeze
 
-  it "should read the appropriate values from the XML doc" do
+  it "should read the appropriate values from the XML doc using the to_hash method" do
     test_xml_doc(supported_schema, asserted_keys)
+  end
+
+  it "should read the appropriate values from the XML doc using the to_report method" do
+    report_hash = {
+      rrn: asserted_keys[:assessment_id]
+    }
+
+    test_xml_doc(supported_schema, report_hash, true)
   end
 
   it "returns the expect error without a valid schema type" do

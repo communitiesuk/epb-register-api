@@ -169,6 +169,7 @@ ActiveRecord::Schema.define(version: 2020_12_17_153000) do
     t.datetime "created_at", precision: 6, null: false
   end
 
+  # @TODO update table to hold LOCAL_AUTHORITY, CONSTITUENCY, COUNTY
   create_table "postcode_geolocation", force: :cascade do |t|
     t.string "postcode"
     t.decimal "latitude"

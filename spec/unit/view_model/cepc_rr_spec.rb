@@ -137,9 +137,19 @@ describe ViewModel::CepcRrWrapper do
       related_party_disclosure: "Related to the owner",
     }.freeze
 
-    it "should read the appropriate values from the XML doc" do
+    it "should read the appropriate values from the XML doc using the to hash method" do
       test_xml_doc(supported_schema, asserted_keys)
     end
+
+    it "should read the appropriate values from the XML doc using the to report method" do
+      report_keys = {
+        rrn: asserted_keys[:assessment_id],
+        payback_type: "",
+      }
+
+      test_xml_doc(supported_schema, report_keys, true)
+    end
+
 
     it "returns the expect error without a valid schema type" do
       expect {

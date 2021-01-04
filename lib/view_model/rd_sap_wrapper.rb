@@ -152,6 +152,13 @@ module ViewModel
       }
     end
 
+    def to_report
+      {
+        rrn: @view_model.assessment_id,
+
+      }
+    end
+
     def get_view_model
       @view_model
     end

@@ -206,9 +206,11 @@ describe ViewModel::DecRrWrapper do
       related_rrn: "0000-0000-0000-0000-1111",
     }.freeze
 
-    it "should read the appropriate values from the XML doc" do
+    it "should read the appropriate values from the XML doc  using the to hash method" do
       test_xml_doc(supported_schema, asserted_keys)
     end
+
+
 
     it "returns the expect error without a valid schema type" do
       expect {
