@@ -54,7 +54,7 @@ GEM
       addressable (>= 2.4)
     jwt (2.2.2)
     method_source (1.0.0)
-    mini_portile2 (2.4.0)
+    mini_portile2 (2.5.0)
     minitest (5.14.2)
     multi_json (1.15.0)
     multi_xml (0.6.0)
@@ -62,8 +62,9 @@ GEM
     murmurhash3 (0.1.6)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
-    nokogiri (1.10.10)
-      mini_portile2 (~> 2.4.0)
+    nokogiri (1.11.0)
+      mini_portile2 (~> 2.5.0)
+      racc (~> 1.4)
     oauth2 (1.4.4)
       faraday (>= 0.8, < 2.0)
       jwt (>= 1.0, < 3.0)
@@ -82,6 +83,7 @@ GEM
       coderay (~> 1.1)
       method_source (~> 1.0)
     public_suffix (4.0.6)
+    racc (1.5.2)
     rack (2.2.3)
     rack-protection (2.1.0)
       rack
@@ -170,7 +172,7 @@ DEPENDENCIES
   epb-auth-tools (~> 1.0.4)!
   geocoder (~> 1.6.4)!
   json-schema (~> 2.8)!
-  nokogiri (~> 1.10.10)!
+  nokogiri (~> 1.11.0)!
   ougai (~> 1.8)!
   pg!
   prettier (~> 1.0.1)!
