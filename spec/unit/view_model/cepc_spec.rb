@@ -1,6 +1,6 @@
 require_relative "xml_view_test_helper"
 
-require_relative "../cepc_test_helper"
+require_relative "../cepc_view_model_test_helper"
 
 describe ViewModel::CepcWrapper do
 

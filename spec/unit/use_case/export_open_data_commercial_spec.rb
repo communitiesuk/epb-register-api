@@ -1,7 +1,7 @@
 describe UseCase::ExportOpenDataCommercial do
   include RSpecRegisterApiServiceMixin
 
-  require_relative "../cecp_test_helper"
+  require_relative "../cepc_view_model_test_helper"
 
   context "when creating the open data reporting release" do
     describe "for the commercial certificates and reports" do
@@ -12,8 +12,6 @@ describe UseCase::ExportOpenDataCommercial do
        non_domestic_assessment_id = non_domestic_xml.at("//CEPC:RRN")
        non_domestic_assessment_date=  non_domestic_xml.at("//CEPC:Registration-Date")
 
-
-       #pp "I run for every...."
         add_assessor(
           scheme_id,
           "SPEC000000",
