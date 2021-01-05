@@ -247,6 +247,12 @@ module ViewModel
         xpath(%w[Level])
       end
 
+      def top_storey
+        flat_level_code = xpath(%w[Level])
+        flat_level_code == "3" ? "Y": "N"
+      end
+
+
       def building_part_number
         xpath(%w[Building-Part-Number])
       end

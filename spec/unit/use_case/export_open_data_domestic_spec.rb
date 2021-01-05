@@ -12,6 +12,7 @@ describe UseCase::ExportOpenDataDomestic do
       let(:domestic_sap_xml) { Nokogiri.XML Samples.xml("SAP-Schema-18.0.0") }
       let(:domestic_sap_assessment_id) { domestic_sap_xml.at("RRN") }
       let(:domestic_sap_assessment_date) { domestic_sap_xml.at("Registration-Date") }
+      let(:domestic_sap_assessment_level) { domestic_sap_xml.at("Level") }
 
       before do
         add_assessor(
@@ -48,6 +49,7 @@ describe UseCase::ExportOpenDataDomestic do
 
         domestic_sap_assessment_date.children = "2020-05-04"
         domestic_sap_assessment_id.children = "0000-0000-0000-0000-0003"
+        domestic_sap_assessment_level.children = "3"
         lodge_assessment(
           assessment_body: domestic_sap_xml.to_xml,
           accepted_responses: [201],
@@ -203,7 +205,11 @@ describe UseCase::ExportOpenDataDomestic do
       end
 
       it "returns the LEVEL in the CSV" do
-        expect(@table.by_col["LEVEL"]).to eq(["1", "1", "1"])
+        expect(@table.by_col["LEVEL"]).to eq(["1", "1", "3"])
+      end
+
+      it "returns the FLAT_TOP_STOREY in the CSV" do
+        expect(@table.by_col["FLAT_TOP_STOREY"]).to eq(["N", "N", "Y"])
       end
     end
   end

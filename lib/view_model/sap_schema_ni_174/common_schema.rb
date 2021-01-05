@@ -268,6 +268,11 @@ module ViewModel
         xpath(%w[Level])
       end
 
+      def top_storey
+        flat_level_code = xpath(%w[Level])
+        flat_level_code == "3" ? "Y": "N"
+      end
+
     private
 
       def convert_to_big_decimal(node)

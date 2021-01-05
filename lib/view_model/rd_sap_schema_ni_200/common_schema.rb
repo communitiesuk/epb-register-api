@@ -299,6 +299,10 @@ module ViewModel
         xpath(%w[Level])
       end
 
+      def top_storey
+        xpath(%w[Top-Storey])
+      end
+
       def building_part_number
         xpath(%w[Building-Part-Number])
       end

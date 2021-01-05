@@ -120,7 +120,8 @@ module UseCase
               ENVIRONMENT_IMPACT_POTENTIAL: hash[:environmental_impact_potential],
               CO2_EMISS_CURR_PER_FLOOR_AREA: hash[:co2_emissions_current_per_floor_area],
               MAINS_GAS_FLAG: hash[:mains_gas],
-              LEVEL: hash[:level]
+              LEVEL: hash[:level],
+              FLAT_TOP_STOREY: hash[:top_storey]
             },
           )
         end
