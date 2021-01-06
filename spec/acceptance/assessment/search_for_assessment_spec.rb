@@ -414,7 +414,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
       setup_scheme_and_lodge(true)
       response =
         assessments_search_by_street_name_and_town(
-          "2 Lonely Street",
+          "1 Lonely Street",
           "Post-Town1",
           [200],
           %w[CEPC],

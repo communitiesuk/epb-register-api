@@ -8,7 +8,9 @@ describe "Acceptance::AssessmentSummary::Supplement::DECRR" do
 
     add_address_base(uprn: "1")
 
-    lodge_dec_rr(Samples.xml("CEPC-8.0.0", "dec+rr"), scheme_id)
+    regular_assessment = Nokogiri.XML(Samples.xml("CEPC-8.0.0", "dec+rr"))
+    regular_assessment.css("UPRN").each { |id| id.content = "RRN-0000-0000-0000-0000-0200" }
+    lodge_dec_rr(regular_assessment.to_xml, scheme_id)
     @regular_summary =
       JSON.parse(
         fetch_assessment_summary("0000-0000-0000-0000-0001").body,
@@ -17,7 +19,7 @@ describe "Acceptance::AssessmentSummary::Supplement::DECRR" do
 
     second_assessment = Nokogiri.XML(Samples.xml("CEPC-8.0.0", "dec-rr"))
     second_assessment.at("RRN").content = "0000-0000-0000-0000-0002"
-    second_assessment.at("UPRN").content = "RRN-0000-0000-0000-0000-0000"
+    second_assessment.at("UPRN").content = "RRN-0000-0000-0000-0000-0010"
     second_assessment.at("E-Mail").remove
     second_assessment.at("Telephone-Number").remove
     lodge_dec_rr(second_assessment.to_xml, scheme_id)
@@ -58,7 +60,7 @@ describe "Acceptance::AssessmentSummary::Supplement::DECRR" do
   end
 
   context "when getting the related reports" do
-    it "returns an empty list when there are no related reporst" do
+    it "returns an empty list when there are no related assessments" do
       expect(@regular_summary.dig(:data, :relatedAssessments)).to eq([])
     end
 

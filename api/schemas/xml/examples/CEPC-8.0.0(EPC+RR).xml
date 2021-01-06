@@ -304,9 +304,9 @@
         <CEPC:Accreditation-Scheme-Name>Accreditation-Scheme-Name0</CEPC:Accreditation-Scheme-Name>
       </CEPC:Energy-Assessor>
       <CEPC:Property-Details>
-        <CEPC:UPRN>UPRN-000000000000</CEPC:UPRN>
+        <CEPC:UPRN>UPRN-000000000001</CEPC:UPRN>
         <CEPC:Property-Address>
-          <CEPC:Address-Line-1>1 Lonely Street</CEPC:Address-Line-1>
+          <CEPC:Address-Line-1>2 Lonely Street</CEPC:Address-Line-1>
           <CEPC:Post-Town>Post-Town0</CEPC:Post-Town>
           <CEPC:Postcode>A0 0AA</CEPC:Postcode>
         </CEPC:Property-Address>

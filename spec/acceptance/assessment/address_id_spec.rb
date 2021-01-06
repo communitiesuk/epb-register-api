@@ -19,8 +19,6 @@ describe "Acceptance::AssessmentAddressId" do
       scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
 
-      cepc_xml_doc.at("//CEPC:UPRN").children = "UPRN-000000000000"
-
       lodge_assessment(
         assessment_body: cepc_xml_doc.to_xml,
         accepted_responses: [201],

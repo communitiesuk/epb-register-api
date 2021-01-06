@@ -195,6 +195,28 @@ describe "Acceptance::Assessment::Lodge" do
         "Related RRNs must reference each other.",
       )
     end
+
+    it "rejects a dual lodgement when the address ids do not match" do
+      register_assessor
+      xml = Nokogiri.XML valid_cepc_rr_xml
+      xml.at("//CEPC:UPRN").content = "UPRN-111111111111"
+
+      response =
+        JSON.parse(
+          lodge_assessment(
+            assessment_body: xml.to_xml,
+            accepted_responses: [400],
+            auth_data: { scheme_ids: [scheme_id] },
+            schema_name: "CEPC-8.0.0",
+            override: "true",
+          ).body,
+          symbolize_names: true,
+        )
+
+      expect(response[:errors][0][:title]).to eq(
+        "Both parts of a dual lodgement must share the same address id.",
+      )
+    end
   end
 
   context "when lodging and overriding the rules" do

@@ -23,7 +23,7 @@ module UseCase
 
       def set_assessor!(hash)
         assessor_id = hash[:assessor][:scheme_assessor_id]
-        assessor = Gateway::AssessorsGateway.new.fetch(assessor_id).to_hash
+        assessor = Gateway::AssessorsGateway.new.fetch(assessor_id)&.to_hash
 
         unless hash.dig(:assessor, :contact_details, :email).blank?
           assessor[:contact_details][:email] =
@@ -51,7 +51,10 @@ module UseCase
 
         other_assessments_without_self =
           related_assessments.filter do |assessment|
-            assessment.to_hash[:assessment_id] != hash[:assessment_id]
+            related = assessment.to_hash
+
+            related[:assessment_type] == hash[:type_of_assessment] &&
+              related[:assessment_id] != hash[:assessment_id]
           end
 
         hash[:related_assessments] = other_assessments_without_self

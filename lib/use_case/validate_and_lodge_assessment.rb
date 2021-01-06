@@ -7,6 +7,7 @@ module UseCase
     class UnauthorisedToLodgeAsThisSchemeException < StandardError; end
     class SchemaNotSupportedException < StandardError; end
     class RelatedReportError < StandardError; end
+    class AddressIdsDoNotMatch < StandardError; end
     class SchemaNotDefined < StandardError; end
     class LodgementRulesException < StandardError
       attr_reader :errors
@@ -34,6 +35,10 @@ module UseCase
       unless Helper::SchemaListHelper.new(schema_name).schema_exists?
         raise SchemaNotSupportedException
       end
+
+      lodgement_data = lodgement.fetch_data
+
+      raise AddressIdsDoNotMatch unless address_ids_match?(lodgement_data)
 
       unless @validate_assessment_use_case.execute(
         xml,
@@ -78,9 +83,9 @@ module UseCase
       responses = []
 
       ActiveRecord::Base.transaction do
-        lodgement.fetch_data.each do |lodgement_data|
+        lodgement_data.each do |assessment_data|
           unless assessor_can_lodge?(
-            lodgement_data[:assessor][:scheme_assessor_id],
+            assessment_data[:assessor][:scheme_assessor_id],
             scheme_ids,
           )
             raise UnauthorisedToLodgeAsThisSchemeException
@@ -88,7 +93,7 @@ module UseCase
 
           responses.push(
             @lodge_assessment_use_case.execute(
-              lodgement_data,
+              assessment_data,
               migrated,
               schema_name,
             ),
@@ -106,6 +111,10 @@ module UseCase
         scheme_assessor_id,
         scheme_ids,
       )
+    end
+
+    def address_ids_match?(lodgement)
+      lodgement.map { |assessment| assessment[:address][:address_id] }.uniq.length <= 1
     end
 
     def reports_refer_to_each_other?(xml)

@@ -190,6 +190,12 @@ module Controller
           "INVALID_REQUEST",
           "Related RRNs must reference each other.",
         )
+      when UseCase::ValidateAndLodgeAssessment::AddressIdsDoNotMatch
+        error_response(
+          400,
+          "INVALID_REQUEST",
+          "Both parts of a dual lodgement must share the same address id.",
+        )
       when REXML::ParseException
         error_response(400, "INVALID_REQUEST", e.message)
       when UseCase::ValidateAndLodgeAssessment::LodgementRulesException
