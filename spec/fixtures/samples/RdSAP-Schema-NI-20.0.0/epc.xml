@@ -172,6 +172,7 @@
       <Conservatory-Type>1</Conservatory-Type>
       <SAP-Flat-Details>
         <Flat-Location>01</Flat-Location>
+        <Storey-Count>3</Storey-Count>
         <Level>1</Level>
         <Top-Storey>N</Top-Storey>
         <Heat-Loss-Corridor>2</Heat-Loss-Corridor>

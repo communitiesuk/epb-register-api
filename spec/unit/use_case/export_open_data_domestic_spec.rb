@@ -208,8 +208,8 @@ describe UseCase::ExportOpenDataDomestic do
         expect(@table.by_col["LEVEL"]).to eq(["1", "1", "3"])
       end
 
-      it "returns the FLAT_TOP_STOREY in the CSV" do
-        expect(@table.by_col["FLAT_TOP_STOREY"]).to eq(["N", "N", "Y"])
+      it "returns the FLAT_STOREY_COUNT in the CSV" do
+        expect(@table.by_col["FLAT_STOREY_COUNT"]).to eq(["3", "3", nil])
       end
     end
   end

@@ -171,6 +171,7 @@ module ViewModel
         mains_gas: @view_model.mains_gas,
         level: @view_model.level,
         top_storey: @view_model.top_storey,
+        storey_count: @view_model.storey_count,
       }
     end
 

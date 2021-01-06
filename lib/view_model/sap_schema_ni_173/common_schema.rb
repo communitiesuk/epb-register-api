@@ -273,6 +273,10 @@ module ViewModel
         flat_level_code == "3" ? "Y": "N"
       end
 
+      def storey_count
+        nil
+      end
+
     private
 
       def convert_to_big_decimal(node)

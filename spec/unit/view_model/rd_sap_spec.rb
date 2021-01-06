@@ -255,7 +255,8 @@ describe ViewModel::RdSapWrapper do
       co2_emissions_current_per_floor_area: '0',
       mains_gas: 'Y',
       level: '1',
-      top_storey: 'N'
+      top_storey: 'N',
+      storey_count: '3',
     }.freeze
 
   it "should read the appropriate values from the XML doc using the to_hash method" do

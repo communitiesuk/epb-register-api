@@ -252,6 +252,9 @@ module ViewModel
         flat_level_code == "3" ? "Y": "N"
       end
 
+      def storey_count
+        nil
+      end
 
       def building_part_number
         xpath(%w[Building-Part-Number])

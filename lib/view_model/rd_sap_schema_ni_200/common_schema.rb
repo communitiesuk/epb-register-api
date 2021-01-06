@@ -303,6 +303,10 @@ module ViewModel
         xpath(%w[Top-Storey])
       end
 
+      def storey_count
+        xpath(%w[Storey-Count])
+      end
+
       def building_part_number
         xpath(%w[Building-Part-Number])
       end

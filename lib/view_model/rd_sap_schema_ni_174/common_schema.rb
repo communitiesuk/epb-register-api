@@ -316,6 +316,10 @@ module ViewModel
       def top_storey
         xpath(%w[Top-Storey])
       end
+
+      def storey_count
+        xpath(%w[Storey-Count])
+      end
     private
 
       def convert_to_big_decimal(node)
