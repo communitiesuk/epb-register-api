@@ -139,6 +139,7 @@ def report_test_hash
     special_energy_uses: "special",
     renewable_sources: "1",
     total_floor_area: "99",
+    occupancy_level: "level",
     typical_thermal_use: "1",
     annual_electrical_fuel_usage: "1",
     typical_electrical_fuel_usage: "1",
@@ -189,6 +190,7 @@ def update_schema_for_report
       different_fields[:aircon_present] = "N"
       different_fields[:aircon_kw_rating] = nil
       different_fields[:ac_inpsection_commissioned] = nil
+      different_fields[:occupancy_level] = "Extended Occupancy"
     end
 
     if index[:different_buried_fields]

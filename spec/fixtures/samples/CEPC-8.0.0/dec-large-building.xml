@@ -259,6 +259,7 @@
             <Benchmark-ID>1</Benchmark-ID>
             <Floor-Area>15</Floor-Area>
             <Name>Library</Name>
+            <Occupancy-Level>level</Occupancy-Level>
             <Special-Uses-Area></Special-Uses-Area>
             <TUFA>1840</TUFA>
           </Benchmark>

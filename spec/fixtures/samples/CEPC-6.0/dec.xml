@@ -256,6 +256,7 @@
             <Floor-Area>15</Floor-Area>
             <Name>Library</Name>
             <Special-Uses-Area></Special-Uses-Area>
+            <Occupancy-Level>level</Occupancy-Level>
             <TUFA>1840</TUFA>
           </Benchmark>
         </Benchmarks>

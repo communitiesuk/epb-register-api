@@ -89,6 +89,10 @@ module ViewModel
         xpath(%w[Technical-Information Floor-Area])
       end
 
+      def occupancy_level
+        xpath(%w[Benchmarks Benchmark Occupancy-Level])
+      end
+
       def special_energy_uses
         xpath(%w[Technical-Information Special-Energy-Uses])
       end

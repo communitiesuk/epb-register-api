@@ -194,6 +194,10 @@ module ViewModel
         xpath(%w[AC-Present])
       end
 
+      def occupancy_level
+        xpath(%w[Occupancy-Level])
+      end
+
       def ac_kw_rating
         xpath(%w[AC-kW-Rating])
       end

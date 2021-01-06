@@ -93,6 +93,10 @@ module ViewModel
         xpath(%w[Technical-Information Special-Energy-Uses])
       end
 
+      def occupancy_level
+        xpath(%w[Benchmarks Benchmark Occupancy-Level])
+      end
+
       def asset_rating
         xpath(%w[OR-Previous-Data Asset-Rating])
       end

@@ -254,6 +254,7 @@
           <Floor-Area>10</Floor-Area>
           <Name></Name>
           <Special-Uses-Area></Special-Uses-Area>
+          <Occupancy-Level>level</Occupancy-Level>
           <TUFA></TUFA>
         </Benchmark-1>
       </OR-Benchmark-Data>

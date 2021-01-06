@@ -81,6 +81,10 @@ module ViewModel
         xpath(%w[Year2-Assessment Energy-Rating])
       end
 
+      def occupancy_level
+        xpath(%w[Benchmarks Benchmark Occupancy-Level])
+      end
+
       def main_heating_fuel
         xpath(%w[Technical-Information Main-Heating-Fuel])
       end

@@ -192,6 +192,11 @@ module ViewModel
         xpath(%w[Technical-Information Special-Energy-Uses])
       end
 
+      def occupancy_level
+        xpath(%w[Benchmarks Benchmark Occupancy-Level])
+      end
+
+
       def ac_inpsection_commissioned
         xpath(%w[AC-Inspection-Commissioned])
       end
