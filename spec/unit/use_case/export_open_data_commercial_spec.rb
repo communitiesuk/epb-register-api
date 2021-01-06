@@ -54,7 +54,7 @@ describe UseCase::ExportOpenDataCommercial do
           )
       end
       # test data does not need to be set for every assertion
-      expected_values = hash_to_test()
+      expected_values = report_test_hash
       #
       # number_assments_to_test = 2
 
@@ -63,14 +63,15 @@ describe UseCase::ExportOpenDataCommercial do
       end
 
       # 1st row to test
-      keys_to_test = hash_to_test
+      keys_to_test = report_test_hash
       # write at test for each key in test hash
-      hash_to_test.keys.each{|index|
+      keys_to_test.keys.each{|index|
         expected = update_test_hash({rrn: "0000-0000-0000-0000-0001", lodgement_date: "2018-05-04", })
         it "returns the #{index} that matches the test data for the 1st row" do
           expect(@data[0][index.to_sym]).to eq(expected[index.to_sym])
         end
       }
+
 
       # 2nd row to test
       keys_to_test.keys.each{|index|

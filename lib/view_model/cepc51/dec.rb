@@ -73,6 +73,10 @@ module ViewModel
         xpath(%w[Year2-Assessment Renewables-CO2])
       end
 
+      def special_energy_uses
+        xpath(%w[Technical-Information Special-Energy-Uses])
+      end
+
       def year2_energy_efficiency_rating
         xpath(%w[Year2-Assessment Energy-Rating])
       end

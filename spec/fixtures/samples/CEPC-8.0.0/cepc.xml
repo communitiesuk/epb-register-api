@@ -260,7 +260,7 @@
             <CEPC:Benchmark-ID>1</CEPC:Benchmark-ID>
             <CEPC:Floor-Area>403</CEPC:Floor-Area>
             <CEPC:Name></CEPC:Name>
-            <CEPC:Occupancy-Level></CEPC:Occupancy-Level>
+            <CEPC:Occupancy-Level>O</CEPC:Occupancy-Level>
             <CEPC:Special-Uses-Area></CEPC:Special-Uses-Area>
             <CEPC:Total-Equivalent></CEPC:Total-Equivalent>
             <CEPC:TUFA></CEPC:TUFA>
@@ -339,11 +339,8 @@
           <CEPC:AC-kW-Rating>100</CEPC:AC-kW-Rating>
         </CEPC:AC-Rated-Output>
         <CEPC:AC-Estimated-Output>3</CEPC:AC-Estimated-Output>
-
         <CEPC:AC-Inspection-Commissioned>1</CEPC:AC-Inspection-Commissioned>
       </CEPC:AC-Questionnaire>
-
     </CEPC:Energy-Performance-Certificate>
-
   </CEPC:Report>
 </CEPC:Reports>

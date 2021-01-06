@@ -204,6 +204,7 @@ describe ViewModel::DecRrWrapper do
       site_service_two: { description: "Gas", quantity: "72956" },
       site_service_three: { description: "Not used", quantity: "0" },
       related_rrn: "0000-0000-0000-0000-1111",
+
     }.freeze
 
     it "should read the appropriate values from the XML doc  using the to hash method" do

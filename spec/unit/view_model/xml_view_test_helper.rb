@@ -31,65 +31,7 @@ def test_xml_doc(supported_schema, asserted_keys, test_report = false)
   end
 end
 
-def set_supported_schema
-    [
-    {
-      schema_name: "CEPC-8.0.0",
-      xml: Samples.xml("CEPC-8.0.0", "cepc"),
-      unsupported_fields: [],
-      different_fields: { related_rrn: nil },
-    },
-    {
-      schema_name: "CEPC-NI-8.0.0",
-      xml: Samples.xml("CEPC-NI-8.0.0", "cepc"),
-      unsupported_fields: [],
-      different_fields: {},
-    },
-    {
-      schema_name: "CEPC-7.1",
-      xml: Samples.xml("CEPC-7.1", "cepc"),
-      unsupported_fields: [],
-      different_fields: {},
-      different_buried_fields: { address: { address_id: lprn_test_value } },
-    },
-    {
-      schema_name: "CEPC-7.0",
-      xml: Samples.xml("CEPC-7.0", "cepc"),
-      unsupported_fields: %i[primary_energy_use],
-      different_fields: {primary_energy: nil,},
-      different_buried_fields: { address: { address_id: lprn_test_value } },
-    },
-    {
-      schema_name: "CEPC-6.0",
-      xml: Samples.xml("CEPC-6.0", "cepc"),
-      unsupported_fields: %i[primary_energy_use],
-      different_fields: { other_fuel_description: "Test", primary_energy: nil,},
-      different_buried_fields: { address: { address_id: lprn_test_value }},
-    },
-    {
-      schema_name: "CEPC-5.0",
-      xml: Samples.xml("CEPC-5.0", "cepc"),
-      unsupported_fields: %i[primary_energy_use],
-      different_fields: { },
-      different_buried_fields: { address: { address_id: lprn_test_value } },
-    },
-    {
-      schema_name: "CEPC-4.0",
-      xml: Samples.xml("CEPC-4.0", "cepc"),
-      unsupported_fields: %i[primary_energy_use],
-      different_fields: { building_emission_rate: nil, },
-      different_buried_fields: { address: { address_id: lprn_test_value }  },
-    },
-    {
-      schema_name: "CEPC-3.1",
-      xml: Samples.xml("CEPC-3.1", "cepc"),
-      unsupported_fields: %i[primary_energy_use],
-      different_fields: { building_emission_rate: nil,  },
-      different_buried_fields: { address: { address_id: lprn_test_value }  },
-    },
-  ]
 
-end
 
 
 def lprn_test_value

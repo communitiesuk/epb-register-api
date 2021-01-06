@@ -37,6 +37,10 @@ module ViewModel
         xpath(%w[This-Assessment Renewables-CO2])
       end
 
+      def current_renewables_co2
+        xpath(%w[This-Assessment Renewables-CO2])
+      end
+
       def year1_assessment_date
         xpath(%w[Year1-Assessment Nominated-Date])
       end
@@ -94,7 +98,7 @@ module ViewModel
       end
 
       def annual_energy_use_fuel_thermal
-        xpath(%w[DEC-Annual-Energy-Summary Annual-Energy-Use-Fuel-Thermal])
+        xpath(%w[Annual-Energy-Use-Fuel-Thermal])
       end
 
       def annual_energy_use_electrical
@@ -141,6 +145,7 @@ module ViewModel
         xpath(%w[OR-Operational-Rating OR-Assessment-Start-Date])
       end
 
+
       def occupier
         xpath(%w[Occupier])
       end
@@ -179,6 +184,49 @@ module ViewModel
           typical_electrical_use: xpath(%w[Typical-Electrical-Use], summary),
         }
       end
+
+
+      def property_type
+        xpath(%w[Property-Type])
+      end
+
+      def main_benchmark
+        xpath(%w[OR-Benchmark-Data Main-Benchmark])
+
+      end
+
+      def other_fuel
+        xpath(%w[Technical-Information Other-Fuel-Description])
+      end
+
+      def special_energy_uses
+        xpath(%w[Technical-Information Special-Energy-Uses])
+      end
+
+      def occupancy_level
+        xpath(%w[Benchmarks Benchmark Occupancy-Level])
+      end
+
+      def ac_inpsection_commissioned
+        xpath(%w[AC-Inspection-Commissioned])
+      end
+
+      def ac_present
+        xpath(%w[AC-Present])
+      end
+
+      def ac_kw_rating
+        xpath(%w[AC-kW-Rating])
+      end
+
+      def estimated_ac_kw_rating
+        xpath(%w[AC-Estimated-Output])
+      end
+
+      def building_category
+        xpath(%w[Building-Category])
+      end
+
     end
   end
 end

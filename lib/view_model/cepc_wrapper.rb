@@ -105,9 +105,9 @@ module ViewModel
 
         }
     end
-
+    # create hash for data requested by Open Data Communities
+    # hash keys will be turned into columns for expected csv
     def to_report
-
       {
         type_of_assessment: TYPE_OF_ASSESSMENT,
         rrn: @view_model.assessment_id,
@@ -137,6 +137,7 @@ module ViewModel
         typical_emissions:  @view_model.typical_emissions,
         building_emissions: @view_model.building_emission_rate,
         building_environment: @view_model.building_environment,
+        # open data request for return value to be Y OR N
         aircon_present:  @view_model.ac_present != nil && @view_model.ac_present.upcase == "YES" ? "Y" : "N",
         aircon_kw_rating: @view_model.ac_kw_rating,
         estimated_aircon_kw_rating: @view_model.estimated_ac_kw_rating,

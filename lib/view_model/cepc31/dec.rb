@@ -149,6 +149,14 @@ module ViewModel
         []
       end
 
+      def ac_kw_rating
+        nil
+      end
+
+      def ac_inpsection_commissioned
+        nil
+      end
+
       def or_energy_consumption
         @xml_doc.search("OR-Energy-Consumption").children.select(&:element?)
           .map do |node|
@@ -173,6 +181,11 @@ module ViewModel
           typical_electrical_use: xpath(%w[Typical-Electrical-Use], summary),
         }
       end
+
+      def building_category
+        xpath(%w[Building-Category])
+      end
+
     end
   end
 end

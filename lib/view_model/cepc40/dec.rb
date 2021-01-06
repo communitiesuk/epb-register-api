@@ -173,6 +173,39 @@ module ViewModel
           typical_electrical_use: xpath(%w[Typical-Electrical-Use], summary),
         }
       end
+
+      def property_type
+        xpath(%w[Property-Type])
+      end
+
+      def main_benchmark
+        xpath(%w[OR-Benchmark-Data Main-Benchmark])
+      end
+
+      def special_energy_uses
+        xpath(%w[Technical-Information Special-Energy-Uses])
+      end
+
+      def ac_inpsection_commissioned
+        xpath(%w[AC-Inspection-Commissioned])
+      end
+
+      def ac_present
+        xpath(%w[AC-Present])
+      end
+
+      def ac_kw_rating
+        xpath(%w[AC-kW-Rating])
+      end
+
+      def estimated_ac_kw_rating
+        xpath(%w[AC-Estimated-Output])
+      end
+
+      def building_category
+        xpath(%w[Building-Category])
+      end
+
     end
   end
 end

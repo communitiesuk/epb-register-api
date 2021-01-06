@@ -89,6 +89,8 @@ module ViewModel
       def discounted_energy
         xpath(%w[Special-Energy-Uses])
       end
+
+
     end
   end
 end

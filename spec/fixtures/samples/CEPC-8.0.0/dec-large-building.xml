@@ -240,7 +240,7 @@
     <OR-Operational-Rating>
       <OR-Assessment-Start-Date>2020-05-01</OR-Assessment-Start-Date>
       <OR-Assessment-End-Date>2020-05-01</OR-Assessment-End-Date>
-      <Building-Category></Building-Category>
+      <Building-Category>C1</Building-Category>
       <OR-Building-Data>
         <HVAC-System></HVAC-System>
         <Internal-Environment></Internal-Environment>
@@ -302,6 +302,7 @@
         <Building-Environment>Heating and Natural Ventilation</Building-Environment>
         <Main-Heating-Fuel>Natural Gas</Main-Heating-Fuel>
         <Floor-Area>9000</Floor-Area>
+        <Special-Energy-Uses>special</Special-Energy-Uses>
       </Technical-Information>
       <AC-Questionnaire>
         <AC-Present>Yes</AC-Present>
@@ -309,6 +310,7 @@
           <AC-kW-Rating>1</AC-kW-Rating>
         </AC-Rated-Output>
         <AC-Inspection-Commissioned>1</AC-Inspection-Commissioned>
+        <AC-Estimated-Output>100</AC-Estimated-Output>
       </AC-Questionnaire>
       <This-Assessment>
         <Nominated-Date>2020-01-01</Nominated-Date>

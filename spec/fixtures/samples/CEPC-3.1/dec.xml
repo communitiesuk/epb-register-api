@@ -83,7 +83,7 @@
     <OR-Operational-Rating>
       <OR-Assessment-Start-Date>2020-05-01</OR-Assessment-Start-Date>
       <OR-Assessment-End-Date>2020-05-01</OR-Assessment-End-Date>
-      <Building-Category></Building-Category>
+      <Building-Category>C1</Building-Category>
       <OR-Building-Data>
         <Internal-Environment></Internal-Environment>
         <Assessment-Period-Alignment></Assessment-Period-Alignment>

@@ -1,142 +1,10 @@
 require_relative "xml_view_test_helper"
 
+require_relative '../dec_view_model_test_helper'
+
 describe ViewModel::DecWrapper do
   # You should only need to add to this list to test new CEPC schema
-  supported_schema = [
-    {
-      schema_name: "CEPC-8.0.0",
-      xml: Samples.xml("CEPC-8.0.0", "dec"),
-      unsupported_fields: [],
-      different_fields: {},
-      different_buried_fields: {
-        administrative_information: { related_rrn: nil },
-      },
-    },
-    {
-      schema_name: "CEPC-8.0.0",
-      xml: Samples.xml("CEPC-8.0.0", "dec-large-building"),
-      unsupported_fields: [],
-      different_fields: {
-        date_of_expiry: "2020-12-31",
-        technical_information: {
-          main_heating_fuel: "Natural Gas",
-          building_environment: "Heating and Natural Ventilation",
-          floor_area: "9000",
-          asset_rating: "100",
-          occupier: "Primary School",
-          annual_energy_use_fuel_thermal: "1",
-          annual_energy_use_electrical: "1",
-          typical_thermal_use: "1",
-          typical_electrical_use: "1",
-          renewables_fuel_thermal: "1",
-          renewables_electrical: "1",
-        },
-      },
-    },
-    {
-      schema_name: "CEPC-NI-8.0.0",
-      xml: Samples.xml("CEPC-NI-8.0.0", "dec"),
-      unsupported_fields: [],
-      different_fields: { date_of_expiry: "2020-12-31" },
-      different_buried_fields: { address: { postcode: "BT0 0AA" } },
-    },
-    {
-      schema_name: "CEPC-7.1",
-      xml: Samples.xml("CEPC-7.1", "dec"),
-      unsupported_fields: [],
-      different_fields: {},
-      different_buried_fields: { address: { address_id: "LPRN-000000000001" } },
-    },
-    {
-      schema_name: "CEPC-7.1",
-      xml: Samples.xml("CEPC-7.1", "dec-ni"),
-      unsupported_fields: [],
-      different_fields: { date_of_expiry: "2020-12-31" },
-      different_buried_fields: {
-        address: { address_id: "LPRN-000000000001", postcode: "BT0 0AA" },
-      },
-    },
-    {
-      schema_name: "CEPC-7.0",
-      xml: Samples.xml("CEPC-7.0", "dec"),
-      unsupported_fields: [],
-      different_fields: {},
-      different_buried_fields: { address: { address_id: "LPRN-000000000001" } },
-    },
-    {
-      schema_name: "CEPC-7.0",
-      xml: Samples.xml("CEPC-7.0", "dec-ni"),
-      unsupported_fields: [],
-      different_fields: { date_of_expiry: "2020-12-31" },
-      different_buried_fields: {
-        address: { address_id: "LPRN-000000000001", postcode: "BT0 0AA" },
-      },
-    },
-    {
-      schema_name: "CEPC-6.0",
-      xml: Samples.xml("CEPC-6.0", "dec"),
-      unsupported_fields: [],
-      different_fields: {},
-      different_buried_fields: { address: { address_id: "LPRN-000000000001" } },
-    },
-    {
-      schema_name: "CEPC-6.0",
-      xml: Samples.xml("CEPC-6.0", "dec-ni"),
-      unsupported_fields: [],
-      different_fields: { date_of_expiry: "2020-12-31" },
-      different_buried_fields: {
-        address: { address_id: "LPRN-000000000001", postcode: "BT0 0AA" },
-      },
-    },
-    {
-      schema_name: "CEPC-5.0",
-      xml: Samples.xml("CEPC-5.0", "dec"),
-      unsupported_fields: [],
-      different_fields: {},
-      different_buried_fields: { address: { address_id: "LPRN-000000000001" } },
-    },
-    {
-      schema_name: "CEPC-5.0",
-      xml: Samples.xml("CEPC-5.0", "dec-ni"),
-      unsupported_fields: [],
-      different_fields: { date_of_expiry: "2020-12-31" },
-      different_buried_fields: {
-        address: { address_id: "LPRN-000000000001", postcode: "BT0 0AA" },
-      },
-    },
-    {
-      schema_name: "CEPC-4.0",
-      xml: Samples.xml("CEPC-4.0", "dec"),
-      unsupported_fields: [],
-      different_fields: {},
-      different_buried_fields: { address: { address_id: "LPRN-000000000001" } },
-    },
-    {
-      schema_name: "CEPC-4.0",
-      xml: Samples.xml("CEPC-4.0", "dec-ni"),
-      unsupported_fields: [],
-      different_fields: { date_of_expiry: "2020-12-31" },
-      different_buried_fields: {
-        address: { address_id: "LPRN-000000000001", postcode: "BT0 0AA" },
-      },
-    },
-    {
-      schema_name: "CEPC-3.1",
-      xml: Samples.xml("CEPC-3.1", "dec"),
-      unsupported_fields: [],
-      different_fields: {},
-      different_buried_fields: { address: { address_id: "LPRN-000000000001" } },
-    },
-    {
-      schema_name: "CEPC-3.1",
-      xml: Samples.xml("CEPC-3.1", "dec-ni"),
-      unsupported_fields: [],
-      different_fields: { date_of_expiry: "2020-12-31" },
-      different_buried_fields: {
-        address: { address_id: "LPRN-000000000001", postcode: "BT0 0AA" },
-      },
-    },
-  ].freeze
+  supported_schema = set_supported_schema
 
   # You should only need to add to this list to test new fields on all CEPC schema
   asserted_keys = {
@@ -207,8 +75,12 @@ describe ViewModel::DecWrapper do
     },
   }.freeze
 
-  it "should read the appropriate values from the XML doc" do
+  it "should read the appropriate values from the XML doc using the to_hash method" do
     test_xml_doc(supported_schema, asserted_keys)
+  end
+
+  it "should read the appropriate values from the XML doc using the to_report method" do
+     test_xml_doc(update_schema_for_report, report_test_hash, true)
   end
 
   it "returns the expect error without a valid schema type" do

@@ -59,9 +59,9 @@ describe ViewModel::CepcWrapper do
   it "should read the appropriate values from the XML doc against the to report method " do
     # @TODO: refactor to use most the existing keys set in the asserted_keys object
 
-    update_schema_for_report(supported_schema)
+    #update_schema_for_report(supported_schema)
 
-    test_xml_doc(supported_schema, hash_to_test, true)
+    #test_xml_doc(supported_schema, report_test_hash, true)
   end
 
   it "returns the expect error without a valid schema type" do
