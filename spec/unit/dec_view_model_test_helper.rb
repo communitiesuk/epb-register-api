@@ -136,6 +136,7 @@ def report_test_hash
     lodgement_datetime: "",
     main_benchmark: "",
     main_heating_fuel: "Natural Gas",
+    special_energy_uses: "special",
     renewable_sources: "1",
     total_floor_area: "99",
     typical_thermal_use: "1",

@@ -89,6 +89,10 @@ module ViewModel
         xpath(%w[Technical-Information Floor-Area])
       end
 
+      def special_energy_uses
+        xpath(%w[Technical-Information Special-Energy-Uses])
+      end
+
       def asset_rating
         xpath(%w[OR-Previous-Data Asset-Rating])
       end
