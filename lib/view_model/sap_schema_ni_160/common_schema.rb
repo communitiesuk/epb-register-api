@@ -284,6 +284,10 @@ module ViewModel
         nil
       end
 
+      def mains_heating_controls
+        xpath(%w[Main-Heating-Controls Description])
+      end
+
     private
 
       def convert_to_big_decimal(node)

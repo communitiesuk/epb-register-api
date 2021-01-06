@@ -1136,6 +1136,7 @@ describe ViewModel::SapWrapper do
     level: '1',
     top_storey: 'N',
     storey_count: nil,
+    mains_heating_controls: 'Thermostat',
   }.freeze
   it "should read the appropriate values from the XML doc" do
     test_xml_doc(supported_schema, asserted_keys)

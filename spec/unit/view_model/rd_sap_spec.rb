@@ -257,6 +257,7 @@ describe ViewModel::RdSapWrapper do
       level: '1',
       top_storey: 'N',
       storey_count: '3',
+      mains_heating_controls: 'Description9',
     }.freeze
 
   it "should read the appropriate values from the XML doc using the to_hash method" do

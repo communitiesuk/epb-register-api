@@ -122,7 +122,8 @@ module UseCase
               MAINS_GAS_FLAG: hash[:mains_gas],
               LEVEL: hash[:level],
               FLAT_TOP_STOREY: hash[:top_storey],
-              FLAT_STOREY_COUNT: hash[:storey_count]
+              FLAT_STOREY_COUNT: hash[:storey_count],
+              MAIN_HEATING_CONTROLS: hash[:mains_heating_controls]
             },
           )
         end

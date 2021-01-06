@@ -211,6 +211,10 @@ describe UseCase::ExportOpenDataDomestic do
       it "returns the FLAT_STOREY_COUNT in the CSV" do
         expect(@table.by_col["FLAT_STOREY_COUNT"]).to eq(["3", "3", nil])
       end
+
+      it "returns the MAIN_HEATING_CONTROLS in the CSV" do
+        expect(@table.by_col["MAIN_HEATING_CONTROLS"]).to eq(["Description9", "Description9", "Thermostat"])
+      end
     end
   end
 end
