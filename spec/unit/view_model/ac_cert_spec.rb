@@ -8,24 +8,44 @@ describe ViewModel::AcCertWrapper do
         xml: Samples.xml("CEPC-8.0.0", "ac-cert"),
         unsupported_fields: [],
         different_fields: { related_rrn: nil },
+        different_buried_fields: {
+          address: {
+            address_id: "UPRN-432167890000",
+          },
+        },
       },
       {
         schema_name: "CEPC-NI-8.0.0",
         xml: Samples.xml("CEPC-8.0.0", "ac-cert"),
         unsupported_fields: [],
         different_fields: { related_rrn: nil },
+        different_buried_fields: {
+          address: {
+            address_id: "UPRN-432167890000",
+          },
+        },
       },
       {
         schema_name: "CEPC-7.1",
         xml: Samples.xml("CEPC-7.1", "ac-cert"),
         unsupported_fields: [],
         different_fields: {},
+        different_buried_fields: {
+          address: {
+            address_id: "LPRN-432167890000",
+          },
+        },
       },
       {
         schema_name: "CEPC-7.0",
         xml: Samples.xml("CEPC-7.0", "ac-cert"),
         unsupported_fields: [],
         different_fields: {},
+        different_buried_fields: {
+          address: {
+            address_id: "LPRN-432167890000",
+          },
+        },
       },
     ].freeze
 
@@ -36,6 +56,7 @@ describe ViewModel::AcCertWrapper do
       date_of_expiry: "2024-05-04",
       date_of_registration: "2020-05-20",
       address: {
+        address_id: "UPRN-432167890000",
         address_line1: "2 Lonely Street",
         address_line2: nil,
         address_line3: nil,
