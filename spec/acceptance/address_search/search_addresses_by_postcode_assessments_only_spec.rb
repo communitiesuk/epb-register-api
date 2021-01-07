@@ -1,7 +1,7 @@
-describe "Acceptance::AddressSearch::ByPostcode" do
+describe "Acceptance::AddressSearch::ByPostcode::AssessmentSource" do
   include RSpecRegisterApiServiceMixin
 
-  context "No addressBase addresses at a postcode" do
+  context "when there are no address base entries for a postcode" do
     let(:domestic_xml) { Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0") }
     let(:non_domestic_xml) { Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc") }
 
@@ -38,9 +38,12 @@ describe "Acceptance::AddressSearch::ByPostcode" do
       )
     end
 
-    it "returns addresses when an assessment is expired" do
+    it "returns addresses from expired assessments" do
       domestic_xml.at("Registration-Date").content =
         Date.today.prev_year(11).strftime("%Y-%m-%d")
+
+      domestic_xml.at("UPRN").remove
+
       lodge_assessment(
         assessment_body: domestic_xml.to_xml,
         accepted_responses: [201],
@@ -71,7 +74,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
       )
     end
 
-    it "returns addresses when the assessment doesn't have an address_id" do
+    it "returns addresses from entered assessments" do
       non_domestic_xml.at(
         "//CEPC:UPRN",
         "CEPC" => "https://epbr.digital.communities.gov.uk/xsd/cepc",

@@ -8,24 +8,58 @@ module Gateway
     def search_by_postcode(postcode, building_name_number, address_type)
       postcode = Helper::ValidatePostcodeHelper.new.validate_postcode(postcode)
 
-      sql = <<-SQL
-        SELECT
-            assessment_id,
-            date_of_expiry,
-            date_registered,
-            address_line1,
-            address_line2,
-            address_line3,
-            address_line4,
-            town,
-            postcode,
-            address_id,
-            type_of_assessment
-          FROM assessments
-          WHERE
-            cancelled_at IS NULL
-          AND not_for_issue_at IS NULL
-          AND postcode = $1
+      ranking_sql = <<~SQL
+        ,
+        ((1 - TS_RANK_CD(
+          TO_TSVECTOR('english', LOWER(address_line1 || ' ' || address_line2 || ' ' || address_line3)),
+          TO_TSQUERY('english', LOWER($2))
+        )) * 100) AS matched_rank,
+        LEVENSHTEIN(
+          LOWER($2),
+          LOWER(address_line1 || ' ' || address_line2 || ' ' || address_line3),
+          0, 1, 1
+        ) AS matched_difference
+      SQL
+
+      sql_assessments = <<~SQL
+        SELECT aai.address_id,
+               address_line1,
+               address_line2,
+               address_line3,
+               address_line4,
+               town,
+               postcode,
+               a.assessment_id,
+               date_of_expiry,
+               date_registered,
+               type_of_assessment,
+               linked_assessment_id
+               #{ranking_sql if building_name_number}
+        FROM assessments a
+                 LEFT JOIN linked_assessments la ON a.assessment_id = la.assessment_id
+                 INNER JOIN assessments_address_id aai on a.assessment_id = aai.assessment_id
+        WHERE postcode = $1
+      SQL
+
+      if address_type
+        list_of_types = ADDRESS_TYPES[address_type.to_sym].map { |n| "'#{n}'" }
+
+        sql_assessments << <<~SQL_TYPE_OF_ASSESSMENT
+          AND type_of_assessment IN(#{list_of_types.join(',')})
+        SQL_TYPE_OF_ASSESSMENT
+      end
+
+      sql_address_base = <<~SQL
+        SELECT CONCAT('UPRN-', LPAD(uprn, 12, '0')) AS address_id,
+               address_line1,
+               address_line2,
+               address_line3,
+               address_line4,
+               town,
+               postcode
+               #{ranking_sql if building_name_number}
+        FROM address_base
+        WHERE postcode = $1
       SQL
 
       binds = [
@@ -36,28 +70,20 @@ module Gateway
         ),
       ]
 
-      sql << " ORDER BY "
-
       if building_name_number
-        sql <<
-          "LEAST(
-            #{Helper::LevenshteinSqlHelper.levenshtein('address_line1', '$2')},
-            #{Helper::LevenshteinSqlHelper.levenshtein('address_line2', '$2')}
-          ), "
-
         binds <<
           ActiveRecord::Relation::QueryAttribute.new(
             "building_name_number",
-            building_name_number,
+            building_name_number.split(" ").join(" & "),
             ActiveRecord::Type::String.new,
           )
       end
 
-      sql << "assessment_id"
-
-      parse_results(
-        ActiveRecord::Base.connection.exec_query(sql, "SQL", binds),
-        address_type,
+      new_parse_results(
+        [
+          ActiveRecord::Base.connection.exec_query(sql_address_base, "SQL", binds),
+          ActiveRecord::Base.connection.exec_query(sql_assessments, "SQL", binds),
+        ].flatten,
       )
     end
 
@@ -151,6 +177,62 @@ module Gateway
 
   private
 
+    def new_parse_results(results)
+      address_ids = {}
+
+      results.enum_for(:each_with_index).map do |res, i|
+        address_id = res["address_id"]
+
+        if !res["linked_assessment_id"].nil? &&
+            res["address_id"].start_with?("RRN-") &&
+            res["linked_assessment_id"].to_s > res["address_id"].to_s
+          address_id = res["linked_assessment_id"]
+        end
+
+        address_ids[address_id] = [] unless address_ids.key? address_id
+        address_ids[address_id].push i
+      end
+
+      addresses = address_ids.keys.map do |address_id|
+        entries = address_ids[address_id]
+
+        existing_assessments = entries.map { |entry| results[entry] }.map do |res|
+          next if res["assessment_id"].nil?
+
+          {
+            assessmentId: res["assessment_id"],
+            assessmentStatus: update_expiry_and_status(res),
+            assessmentType: res["type_of_assessment"],
+          }
+        end
+
+        {
+          address_id: address_id,
+          address_line1: results[entries.first]["address_line1"],
+          address_line2: results[entries.first]["address_line2"],
+          address_line3: results[entries.first]["address_line3"],
+          address_line4: results[entries.first]["address_line4"],
+          town: results[entries.first]["town"],
+          postcode: results[entries.first]["postcode"],
+          existing_assessments: existing_assessments.compact,
+          matched_rank: results[entries.first]["matched_rank"],
+          matched_difference: results[entries.first]["matched_difference"],
+        }.deep_stringify_keys
+      end
+
+      addresses.sort_by! do |address|
+        [
+          address["matched_rank"],
+          address["matched_difference"],
+          compact_address(address),
+        ]
+      end
+
+      addresses.map do |address|
+        new_record_to_address_domain(address)
+      end
+    end
+
     def parse_results(results, address_type)
       address_id = {}
 
@@ -236,6 +318,26 @@ module Gateway
                           existing_assessments: row["existing_assessments"]
     end
 
+    def new_record_to_address_domain(row)
+      address_lines =
+        [
+          row["address_line1"],
+          row["address_line2"],
+          row["address_line3"],
+          row["address_line4"],
+        ].compact.reject { |a| a.to_s.strip.chomp.empty? }
+
+      Domain::Address.new address_id: row["address_id"],
+                          line1: address_lines[0],
+                          line2: address_lines[1],
+                          line3: address_lines[2],
+                          line4: address_lines[3],
+                          town: row["town"],
+                          postcode: row["postcode"],
+                          source: row["address_id"].include?("UPRN-") ? "GAZETTEER" : "PREVIOUS_ASSESSMENT",
+                          existing_assessments: row["existing_assessments"]
+    end
+
     def update_expiry_and_status(result)
       expiry_helper =
         Gateway::AssessmentExpiryHelper.new(
@@ -244,6 +346,19 @@ module Gateway
           result["date_of_expiry"],
         )
       expiry_helper.assessment_status
+    end
+
+    def compact_address(address)
+      stringified = address.deep_stringify_keys
+
+      [
+        stringified["address_line1"],
+        stringified["address_line2"],
+        stringified["address_line3"],
+        stringified["address_line4"],
+        stringified["town"],
+        stringified["postcode"],
+      ].compact.reject { |a| a.to_s.strip.chomp.empty? }.join(" ")
     end
   end
 end

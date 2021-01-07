@@ -1,4 +1,4 @@
-describe "Acceptance::AddressSearch::ByPostcode" do
+describe "Acceptance::AddressSearch::ByPostcode::AdditionalParams" do
   include RSpecRegisterApiServiceMixin
 
   let(:scheme_id) { add_scheme_and_get_id }
@@ -135,42 +135,28 @@ describe "Acceptance::AddressSearch::ByPostcode" do
         expect(response[:data][:addresses].length).to eq 7
       end
 
-      it "returns the address from address_base" do
-        expect(response[:data][:addresses][0]).to eq(
-          {
-            line1: "The Cottage",
-            line2: "345 Skewit Road",
-            line3: nil,
-            line4: nil,
-            postcode: "A0 0AA",
-            town: "London",
-            addressId: "UPRN-000073546595",
-            source: "GAZETTEER",
-            existingAssessments: [],
-          },
-        )
+      it "returns the most relevant entries near the top" do
+        address_line1 = response[:data][:addresses].map do |address|
+          address[:line1]
+        end
+
+        expect(address_line1).to eq [
+          "The House",
+          "The house Grimal Place",
+          "The Cottage",
+          "1 Some Street",
+          "2 Grimal Place",
+          "2 Lonely Street",
+          "5 Grimal Place",
+        ]
       end
 
-      it "returns the expected previous assessment address" do
-        expect(response[:data][:addresses][4]).to eq(
-          {
-            addressId: "RRN-0000-0000-0000-0000-0003",
-            line1: "The House",
-            line2: nil,
-            line3: nil,
-            line4: nil,
-            town: "Post-Town1",
-            postcode: "A0 0AA",
-            source: "PREVIOUS_ASSESSMENT",
-            existingAssessments: [
-              {
-                assessmentId: "0000-0000-0000-0000-0003",
-                assessmentStatus: "ENTERED",
-                assessmentType: "RdSAP",
-              },
-            ],
-          },
-        )
+      it "returns the expected previous assessment address entry" do
+        address_ids = response[:data][:addresses].map do |address|
+          address[:addressId]
+        end
+
+        expect(address_ids).to include "RRN-0000-0000-0000-0000-0003"
       end
     end
 
@@ -192,43 +178,28 @@ describe "Acceptance::AddressSearch::ByPostcode" do
         expect(response[:data][:addresses].length).to eq 7
       end
 
-      it "returns the address from address_base" do
-        expect(response[:data][:addresses][0]).to eq(
-          {
-            line1: "2 Grimal Place",
-            line2: "Skewit Road",
-            line3: nil,
-            line4: nil,
-            postcode: "A0 0AA",
-            town: "London",
-            addressId: "UPRN-000073546795",
-            source: "GAZETTEER",
-            existingAssessments: [],
-          },
-        )
+      it "returns the most relevant entries near the top" do
+        address_line1 = response[:data][:addresses].map do |address|
+          address[:line1]
+        end
+
+        expect(address_line1).to eq [
+          "2 Grimal Place",
+          "2 Lonely Street",
+          "1 Some Street",
+          "5 Grimal Place",
+          "The Cottage",
+          "The House",
+          "The house Grimal Place",
+        ]
       end
 
-      # AT DO This needs to be revisited as part of a review of ordering
-      it "returns the expected previous assessment address" do
-        expect(response[:data][:addresses][4]).to eq(
-          {
-            addressId: "RRN-0000-0000-0000-0000-0000",
-            line1: "1 Some Street",
-            line2: nil,
-            line3: nil,
-            line4: nil,
-            town: "Post-Town1",
-            postcode: "A0 0AA",
-            source: "PREVIOUS_ASSESSMENT",
-            existingAssessments: [
-              {
-                assessmentId: "0000-0000-0000-0000-0000",
-                assessmentStatus: "ENTERED",
-                assessmentType: "RdSAP",
-              },
-            ],
-          },
-        )
+      it "returns the expected previous assessment address entry" do
+        address_ids = response[:data][:addresses].map do |address|
+          address[:addressId]
+        end
+
+        expect(address_ids).to include "RRN-0000-0000-0000-0000-0003"
       end
     end
 
@@ -250,42 +221,28 @@ describe "Acceptance::AddressSearch::ByPostcode" do
         expect(response[:data][:addresses].length).to eq 7
       end
 
-      it "returns the address from address_base" do
-        expect(response[:data][:addresses][0]).to eq(
-          {
-            line1: "The Cottage",
-            line2: "345 Skewit Road",
-            line3: nil,
-            line4: nil,
-            postcode: "A0 0AA",
-            town: "London",
-            addressId: "UPRN-000073546595",
-            source: "GAZETTEER",
-            existingAssessments: [],
-          },
-        )
+      it "returns the most relevant entries near the top" do
+        address_line1 = response[:data][:addresses].map do |address|
+          address[:line1]
+        end
+
+        expect(address_line1).to eq [
+          "The Cottage",
+          "5 Grimal Place",
+          "1 Some Street",
+          "2 Grimal Place",
+          "2 Lonely Street",
+          "The House",
+          "The house Grimal Place",
+        ]
       end
 
-      it "returns the expected previous assessment address" do
-        expect(response[:data][:addresses][4]).to eq(
-          {
-            addressId: "RRN-0000-0000-0000-0000-0000",
-            line1: "1 Some Street",
-            line2: nil,
-            line3: nil,
-            line4: nil,
-            town: "Post-Town1",
-            postcode: "A0 0AA",
-            source: "PREVIOUS_ASSESSMENT",
-            existingAssessments: [
-              {
-                assessmentId: "0000-0000-0000-0000-0000",
-                assessmentStatus: "ENTERED",
-                assessmentType: "RdSAP",
-              },
-            ],
-          },
-        )
+      it "returns the expected previous assessment address entry" do
+        address_ids = response[:data][:addresses].map do |address|
+          address[:addressId]
+        end
+
+        expect(address_ids).to include "RRN-0000-0000-0000-0000-0003"
       end
     end
   end

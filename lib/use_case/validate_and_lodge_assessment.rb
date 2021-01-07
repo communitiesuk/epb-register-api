@@ -67,7 +67,7 @@ module UseCase
 
           unless validation_result.empty?
             if overidden
-              lodgement.fetch_data.each do |lodgement_data|
+              lodgement_data.each do |lodgement_data|
                 Gateway::OverridenLodgmentEventsGateway.new.add(
                   lodgement_data[:assessment_id],
                   validation_result,

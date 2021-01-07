@@ -103,7 +103,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
         )
       end
 
-      it "returns the cancelled assessment in existing assessments" do
+      it "returns the entered assessments in existing assessments" do
         expect(response[:data][:addresses][0][:existingAssessments]).to eq(
           [
             {
@@ -169,10 +169,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
 
   context "when the address ID is in an invalid format" do
     it "returns a validation error" do
-      address_search_by_id(
-        address_id = "DOESNTEXIST",
-        accepted_responses = [422],
-      )
+      address_search_by_id("DOESNTEXIST", [422])
     end
   end
 
@@ -258,7 +255,6 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
       address_line_one = assessment.at("//CEPC:Address-Line-1")
       address_line_two = Nokogiri::XML::Node.new "Address-Line-2", assessment
       address_line_three = Nokogiri::XML::Node.new "Address-Line-3", assessment
-      address_line_four = Nokogiri::XML::Node.new "Address-Line-4", assessment
 
       address_line_one.content = ""
       address_line_two.content = ""

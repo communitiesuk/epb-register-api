@@ -1,7 +1,7 @@
 describe "Acceptance::AddressSearch::ByPostcode" do
   include RSpecRegisterApiServiceMixin
 
-  context "an address that has a report lodged" do
+  context "when there are existing assessments at a postcode" do
     let(:scheme_id) { add_scheme_and_get_id }
 
     let(:rdsap_schema) { Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0") }
@@ -93,12 +93,58 @@ describe "Acceptance::AddressSearch::ByPostcode" do
       )
     end
 
-    describe "searching by postcode" do
-      context "when an invalid postcode is provided" do
+    context "when an invalid postcode is provided" do
+      let(:response) do
+        JSON.parse(
+          assertive_get(
+            "/api/search/addresses?postcode=EH353NDMD",
+            [200],
+            true,
+            {},
+            %w[address:search],
+          ).body,
+          symbolize_names: true,
+        )
+      end
+
+      it "returns no addresses" do
+        expect(response[:data][:addresses].length).to eq 0
+      end
+    end
+
+    context "when a postcode is less than 3 characters long is provided" do
+      let(:response) do
+        JSON.parse(
+          assertive_get(
+            "/api/search/addresses?postcode=HA",
+            [422],
+            true,
+            {},
+            %w[address:search],
+          ).body,
+          symbolize_names: true,
+        )
+      end
+
+      it "returns the expected error response" do
+        expect(response[:errors]).to eq(
+          [
+            {
+              code: "INVALID_REQUEST",
+              title:
+                "The property '#/' of type object did not match any of the required schemas",
+            },
+          ],
+        )
+      end
+    end
+
+    context "when a valid postcode is provided" do
+      context "when there are entered assessments" do
         let(:response) do
           JSON.parse(
             assertive_get(
-              "/api/search/addresses?postcode=EH353NDMD",
+              "/api/search/addresses?postcode=A0%200AA",
               [200],
               true,
               {},
@@ -108,209 +154,189 @@ describe "Acceptance::AddressSearch::ByPostcode" do
           )
         end
 
-        it "returns no addresses" do
-          expect(response[:data][:addresses].length).to eq 0
+        it "returns the expected amount of addresses" do
+          expect(response[:data][:addresses].length).to eq 5
+        end
+
+        it "returns the expected address entries" do
+          address_ids = response[:data][:addresses].map do |address|
+            address[:addressId]
+          end
+
+          expect(address_ids).to eq %w[
+            RRN-0000-0000-0000-0000-0000
+            UPRN-000073546795
+            RRN-0000-0000-0000-0000-0002
+            UPRN-000073546792
+            UPRN-000073546793
+          ]
+        end
+
+        it "returns the expected address entry for an existing assessment" do
+          expect(response[:data][:addresses][0]).to eq(
+            {
+              addressId: "RRN-0000-0000-0000-0000-0000",
+              line1: "1 Some Street",
+              line2: nil,
+              line3: nil,
+              line4: nil,
+              town: "Post-Town1",
+              postcode: "A0 0AA",
+              source: "PREVIOUS_ASSESSMENT",
+              existingAssessments: [
+                {
+                  assessmentId: "0000-0000-0000-0000-0000",
+                  assessmentStatus: "ENTERED",
+                  assessmentType: "RdSAP",
+                },
+              ],
+            },
+          )
         end
       end
 
-      context "when a postcode is less than 3 characters long" do
-        let(:response) do
-          JSON.parse(
-            assertive_get(
-              "/api/search/addresses?postcode=HA",
-              [422],
+      context "when both parts of dual lodgement expire at the same time" do
+        let(:dual_lodgement) do
+          xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "ac-cert+ac-report")
+          xml.xpath("//*[local-name() = 'RRN']").each_with_index do |node, index|
+            node.content = "1111-0000-0000-0000-000#{index}"
+          end
+
+          xml.xpath("//*[local-name() = 'Related-RRN']").reverse.each_with_index do |node, index|
+            node.content = "1111-0000-0000-0000-000#{index}"
+          end
+
+          xml
+        end
+
+        context "when using an existing UPRN as the address id" do
+          before do
+            dual_lodgement.xpath("//*[local-name() = 'UPRN']").each do |node|
+              node.content = "UPRN-000073546792"
+            end
+
+            lodge_assessment(
+              assessment_body: dual_lodgement.to_xml,
+              accepted_responses: [201],
+              auth_data: { scheme_ids: [scheme_id] },
+              schema_name: "CEPC-8.0.0",
+            )
+          end
+
+          let(:response) do
+            JSON.parse assertive_get(
+              "/api/search/addresses?postcode=A0+0AA&address_type=COMMERCIAL",
+              [200],
               true,
               {},
               %w[address:search],
-            ).body,
-            symbolize_names: true,
-          )
+            ).body, symbolize_names: true
+          end
+
+          it "includes both assessments in the existing assessments for the address" do
+            entry = response[:data][:addresses].select { |address|
+              address[:addressId] == "UPRN-000073546792"
+            }.first
+
+            expect(entry[:existingAssessments]).to eq [
+              {
+                assessmentId: "1111-0000-0000-0000-0000",
+                assessmentStatus: "ENTERED",
+                assessmentType: "AC-CERT",
+              },
+              {
+                assessmentId: "1111-0000-0000-0000-0001",
+                assessmentStatus: "ENTERED",
+                assessmentType: "AC-REPORT",
+              },
+            ]
+          end
+        end
+      end
+    end
+
+    context "when there is no space in the postcode" do
+      let(:response) do
+        JSON.parse(
+          assertive_get(
+            "/api/search/addresses?postcode=A00AA",
+            [200],
+            true,
+            {},
+            %w[address:search],
+          ).body,
+          symbolize_names: true,
+        )
+      end
+
+      it "returns the expected amount of addresses" do
+        expect(response[:data][:addresses].length).to eq 5
+      end
+
+      it "returns the expected address base entries" do
+        address_ids = response[:data][:addresses].map do |address|
+          address[:addressId]
         end
 
-        it "returns the expected error response" do
-          expect(response[:errors]).to eq(
-            [
+        expect(address_ids).to eq %w[
+          RRN-0000-0000-0000-0000-0000
+          UPRN-000073546795
+          RRN-0000-0000-0000-0000-0002
+          UPRN-000073546792
+          UPRN-000073546793
+        ]
+      end
+    end
+
+    context "when the input postcode is not in the same case as the recorded postcode" do
+      let(:response) do
+        JSON.parse(
+          assertive_get(
+            "/api/search/addresses?postcode=a00aa",
+            [200],
+            true,
+            {},
+            %w[address:search],
+          ).body,
+          symbolize_names: true,
+        )
+      end
+
+      it "returns the expected amount of addresses" do
+        expect(response[:data][:addresses].length).to eq 5
+      end
+
+      it "returns the expected address base entries" do
+        address_ids = response[:data][:addresses].map { |address| address[:addressId] }
+        expect(address_ids).to eq %w[
+          RRN-0000-0000-0000-0000-0000
+          UPRN-000073546795
+          RRN-0000-0000-0000-0000-0002
+          UPRN-000073546792
+          UPRN-000073546793
+        ]
+      end
+
+      it "returns the expected address entry for an existing assessment" do
+        expect(response[:data][:addresses][0]).to eq(
+          {
+            addressId: "RRN-0000-0000-0000-0000-0000",
+            line1: "1 Some Street",
+            line2: nil,
+            line3: nil,
+            line4: nil,
+            town: "Post-Town1",
+            postcode: "A0 0AA",
+            source: "PREVIOUS_ASSESSMENT",
+            existingAssessments: [
               {
-                code: "INVALID_REQUEST",
-                title:
-                  "The property '#/' of type object did not match any of the required schemas",
+                assessmentId: "0000-0000-0000-0000-0000",
+                assessmentStatus: "ENTERED",
+                assessmentType: "RdSAP",
               },
             ],
-          )
-        end
-      end
-
-      context "when a valid postcode is provided" do
-        context "with an entered assessment" do
-          let(:response) do
-            JSON.parse(
-              assertive_get(
-                "/api/search/addresses?postcode=A0%200AA",
-                [200],
-                true,
-                {},
-                %w[address:search],
-              ).body,
-              symbolize_names: true,
-            )
-          end
-
-          it "returns the expected amount of addresses" do
-            expect(response[:data][:addresses].length).to eq 5
-          end
-
-          it "returns the address from address_base" do
-            expect(response[:data][:addresses][0]).to eq(
-              {
-                line1: "5 Grimal Place",
-                line2: "Skewit Road",
-                line3: nil,
-                line4: nil,
-                postcode: "A0 0AA",
-                town: "London",
-                addressId: "UPRN-000073546792",
-                source: "GAZETTEER",
-                existingAssessments: [],
-              },
-            )
-          end
-
-          it "returns the expected address" do
-            expect(response[:data][:addresses][3]).to eq(
-              {
-                addressId: "RRN-0000-0000-0000-0000-0000",
-                line1: "1 Some Street",
-                line2: nil,
-                line3: nil,
-                line4: nil,
-                town: "Post-Town1",
-                postcode: "A0 0AA",
-                source: "PREVIOUS_ASSESSMENT",
-                existingAssessments: [
-                  {
-                    assessmentId: "0000-0000-0000-0000-0000",
-                    assessmentStatus: "ENTERED",
-                    assessmentType: "RdSAP",
-                  },
-                ],
-              },
-            )
-          end
-        end
-      end
-
-      context "when there is no space in the postcode" do
-        let(:response) do
-          JSON.parse(
-            assertive_get(
-              "/api/search/addresses?postcode=A00AA",
-              [200],
-              true,
-              {},
-              %w[address:search],
-            ).body,
-            symbolize_names: true,
-          )
-        end
-
-        it "returns the expected amount of addresses" do
-          expect(response[:data][:addresses].length).to eq 5
-        end
-
-        it "returns the address from address_base" do
-          expect(response[:data][:addresses][0]).to eq(
-            {
-              line1: "5 Grimal Place",
-              line2: "Skewit Road",
-              line3: nil,
-              line4: nil,
-              postcode: "A0 0AA",
-              town: "London",
-              addressId: "UPRN-000073546792",
-              source: "GAZETTEER",
-              existingAssessments: [],
-            },
-          )
-        end
-
-        it "returns the address from previous assessments" do
-          expect(response[:data][:addresses][3]).to eq(
-            {
-              addressId: "RRN-0000-0000-0000-0000-0000",
-              line1: "1 Some Street",
-              line2: nil,
-              line3: nil,
-              line4: nil,
-              town: "Post-Town1",
-              postcode: "A0 0AA",
-              source: "PREVIOUS_ASSESSMENT",
-              existingAssessments: [
-                {
-                  assessmentId: "0000-0000-0000-0000-0000",
-                  assessmentStatus: "ENTERED",
-                  assessmentType: "RdSAP",
-                },
-              ],
-            },
-          )
-        end
-      end
-
-      context "when the input postcode is not in the same case as the recorded postcode" do
-        let(:response) do
-          JSON.parse(
-            assertive_get(
-              "/api/search/addresses?postcode=a00aa",
-              [200],
-              true,
-              {},
-              %w[address:search],
-            ).body,
-            symbolize_names: true,
-          )
-        end
-
-        it "returns the expected amount of addresses" do
-          expect(response[:data][:addresses].length).to eq 5
-        end
-
-        it "returns the address from address_base" do
-          expect(response[:data][:addresses][0]).to eq(
-            {
-              line1: "5 Grimal Place",
-              line2: "Skewit Road",
-              line3: nil,
-              line4: nil,
-              postcode: "A0 0AA",
-              town: "London",
-              addressId: "UPRN-000073546792",
-              source: "GAZETTEER",
-              existingAssessments: [],
-            },
-          )
-        end
-
-        it "returns the address from previous assessments" do
-          expect(response[:data][:addresses][3]).to eq(
-            {
-              addressId: "RRN-0000-0000-0000-0000-0000",
-              line1: "1 Some Street",
-              line2: nil,
-              line3: nil,
-              line4: nil,
-              town: "Post-Town1",
-              postcode: "A0 0AA",
-              source: "PREVIOUS_ASSESSMENT",
-              existingAssessments: [
-                {
-                  assessmentId: "0000-0000-0000-0000-0000",
-                  assessmentStatus: "ENTERED",
-                  assessmentType: "RdSAP",
-                },
-              ],
-            },
-          )
-        end
+          },
+        )
       end
     end
   end

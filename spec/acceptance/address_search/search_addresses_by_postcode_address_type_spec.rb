@@ -1,4 +1,4 @@
-describe "Acceptance::AddressSearch::ByPostcode" do
+describe "Acceptance::AddressSearch::ByPostcode::WithAddressType" do
   include RSpecRegisterApiServiceMixin
 
   let(:scheme_id) { add_scheme_and_get_id }
@@ -76,6 +76,8 @@ describe "Acceptance::AddressSearch::ByPostcode" do
       ),
     )
 
+    domestic_xml.at("UPRN").remove
+
     lodge_assessment(
       assessment_body: domestic_xml.to_xml,
       accepted_responses: [201],
@@ -84,6 +86,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
     )
 
     non_domestic_assessment_id.children = "0000-0000-0000-0000-0002"
+    non_domestic_xml.at("[local-name() = 'UPRN']").remove
     lodge_assessment(
       assessment_body: non_domestic_xml.to_xml,
       accepted_responses: [201],
@@ -124,7 +127,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
       end
 
       it "returns the address from address_base" do
-        expect(response[:data][:addresses][0]).to eq(
+        expect(response[:data][:addresses][2]).to eq(
           {
             line1: "5 Grimal Place",
             line2: "Skewit Road",
@@ -140,7 +143,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
       end
 
       it "returns the expected previous assessment address" do
-        expect(response[:data][:addresses][3]).to eq(
+        expect(response[:data][:addresses][0]).to eq(
           {
             addressId: "RRN-0000-0000-0000-0000-0000",
             line1: "1 Some Street",
@@ -180,8 +183,8 @@ describe "Acceptance::AddressSearch::ByPostcode" do
         expect(response[:data][:addresses].length).to eq 4
       end
 
-      it "returns the address from address_base" do
-        expect(response[:data][:addresses][0]).to eq(
+      it "returns the address from address base" do
+        expect(response[:data][:addresses][2]).to eq(
           {
             line1: "5 Grimal Place",
             line2: "Skewit Road",
@@ -197,7 +200,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
       end
 
       it "returns the expected previous assessment address" do
-        expect(response[:data][:addresses][3]).to eq(
+        expect(response[:data][:addresses][1]).to eq(
           {
             addressId: "RRN-0000-0000-0000-0000-0002",
             line1: "2 Lonely Street",
