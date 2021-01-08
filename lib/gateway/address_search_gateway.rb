@@ -212,8 +212,10 @@ module Gateway
 
     def new_parse_results(results)
       address_ids = {}
+      address_hashes = {}
+      remapped_addresses = []
 
-      results.enum_for(:each_with_index).map do |res, i|
+      results.enum_for(:each_with_index).each do |res, i|
         address_id = res["address_id"]
 
         if !res["linked_assessment_id"].nil? &&
@@ -224,12 +226,37 @@ module Gateway
 
         address_ids[address_id] = [] unless address_ids.key? address_id
         address_ids[address_id].push i
+
+        address_hash = compact_address(res).hash
+        address_hashes[address_hash] = [] unless address_hashes.key? address_hash
+        address_hashes[address_hash].push i
+      end
+
+      address_ids.each do |_, entries|
+        root_entry = results[entries.first]
+        entries_sharing_hash = address_hashes[compact_address(root_entry).hash]
+
+        (entries_sharing_hash - entries).each do |result_to_update|
+          next if remapped_addresses.include? result_to_update
+          next if results[result_to_update]["address_id"].start_with? "UPRN"
+
+          remapped_addresses.push result_to_update
+          results[result_to_update]["address_id"] = root_entry["address_id"]
+        end
+      end
+
+      address_ids = {}
+      results.enum_for(:each_with_index).each do |res, i|
+        address_id = res["address_id"]
+        address_ids[address_id] = [] unless address_ids.key? address_id
+        address_ids[address_id].push i
       end
 
       addresses = address_ids.keys.map do |address_id|
         entries = address_ids[address_id]
 
-        existing_assessments = entries.map { |entry| results[entry] }.map do |res|
+        existing_assessments = entries.map do |entry|
+          res = results[entry]
           next if res["assessment_id"].nil?
 
           {

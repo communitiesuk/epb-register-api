@@ -115,18 +115,6 @@ describe "Acceptance::AddressSearch::ByPostcode::AssessmentSource" do
                 assessmentStatus: "ENTERED",
                 assessmentType: "CEPC",
               },
-            ],
-          },
-          {
-            line1: "2 Lonely Street",
-            line2: nil,
-            line3: nil,
-            line4: nil,
-            postcode: "A0 0AA",
-            town: "Post-Town1",
-            addressId: "RRN-0000-0000-0000-0000-0002",
-            source: "PREVIOUS_ASSESSMENT",
-            existingAssessments: [
               {
                 assessmentId: "0000-0000-0000-0000-0002",
                 assessmentStatus: "ENTERED",

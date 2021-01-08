@@ -80,23 +80,11 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
                   assessmentStatus: "ENTERED",
                   assessmentType: "RdSAP",
                 },
-              ],
-            },
-            {
-              addressId: "RRN-0000-0000-0000-0000-0001",
-              line1: "1 Some Street",
-              line2: nil,
-              line3: nil,
-              line4: nil,
-              postcode: "A0 0AA",
-              source: "PREVIOUS_ASSESSMENT",
-              town: "Post-Town1",
-              existingAssessments: [
                 {
                   assessmentId: "0000-0000-0000-0000-0002",
                   assessmentStatus: "ENTERED",
                   assessmentType: "RdSAP",
-                }
+                },
               ],
             },
           ],
@@ -125,6 +113,11 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
           [
             {
               assessmentId: "0000-0000-0000-0000-0001",
+              assessmentStatus: "ENTERED",
+              assessmentType: "RdSAP",
+            },
+            {
+              assessmentId: "0000-0000-0000-0000-0002",
               assessmentStatus: "ENTERED",
               assessmentType: "RdSAP",
             },
