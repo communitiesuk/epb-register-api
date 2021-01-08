@@ -57,7 +57,7 @@ end
 
 def lodge_test_ac_report(scheme_id, schema_name, xml = nil)
   xml = Samples.xml(schema_name, "ac-report") if xml.nil?
-  pp xml
+
   lodge_assessment(
     assessment_body: xml,
     auth_data: { scheme_ids: [scheme_id] },
