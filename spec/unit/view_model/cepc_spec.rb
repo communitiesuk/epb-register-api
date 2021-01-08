@@ -1,11 +1,11 @@
 require_relative "xml_view_test_helper"
 
-require_relative "../cepc_view_model_test_helper"
+
 
 describe ViewModel::CepcWrapper do
 
   # You should only need to add to this list to test new CEPC schema
-  supported_schema = set_supported_schema
+  supported_schema = Samples::ViewModels::Cepc.supported_schema
 
   # You should only need to add to this list to test new fields on all CEPC schema
   asserted_keys = {
@@ -57,11 +57,8 @@ describe ViewModel::CepcWrapper do
   end
 
   it "should read the appropriate values from the XML doc against the to report method " do
-    # @TODO: refactor to use most the existing keys set in the asserted_keys object
-
-    #update_schema_for_report(supported_schema)
-
-    #test_xml_doc(supported_schema, report_test_hash, true)
+    Samples::ViewModels::Cepc.update_schema_for_report(supported_schema)
+    test_xml_doc(supported_schema, Samples::ViewModels::Cepc.report_test_hash, true)
   end
 
   it "returns the expect error without a valid schema type" do

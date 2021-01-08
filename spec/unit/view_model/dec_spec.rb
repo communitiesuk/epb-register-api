@@ -4,7 +4,7 @@ require_relative '../dec_view_model_test_helper'
 
 describe ViewModel::DecWrapper do
   # You should only need to add to this list to test new CEPC schema
-  supported_schema = set_supported_schema
+  supported_schema = Samples::ViewModels::Dec.supported_schema
 
   # You should only need to add to this list to test new fields on all CEPC schema
   asserted_keys = {
@@ -80,7 +80,7 @@ describe ViewModel::DecWrapper do
   end
 
   it "should read the appropriate values from the XML doc using the to_report method" do
-     test_xml_doc(update_schema_for_report, report_test_hash, true)
+     test_xml_doc(Samples::ViewModels::Dec.update_schema_for_report, Samples::ViewModels::Dec.report_test_hash, true)
   end
 
   it "returns the expect error without a valid schema type" do

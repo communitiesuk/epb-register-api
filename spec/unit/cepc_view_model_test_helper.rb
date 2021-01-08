@@ -1,63 +1,5 @@
 
-def set_supported_schema
-  [
-    {
-      schema_name: "CEPC-8.0.0",
-      xml: Samples.xml("CEPC-8.0.0", "cepc"),
-      unsupported_fields: [],
-      different_fields: { related_rrn: nil },
-    },
-    {
-      schema_name: "CEPC-NI-8.0.0",
-      xml: Samples.xml("CEPC-NI-8.0.0", "cepc"),
-      unsupported_fields: [],
-      different_fields: {},
-    },
-    {
-      schema_name: "CEPC-7.1",
-      xml: Samples.xml("CEPC-7.1", "cepc"),
-      unsupported_fields: [],
-      different_fields: {},
-      different_buried_fields: { address: { address_id: lprn_test_value } },
-    },
-    {
-      schema_name: "CEPC-7.0",
-      xml: Samples.xml("CEPC-7.0", "cepc"),
-      unsupported_fields: %i[primary_energy_use],
-      different_fields: {primary_energy: nil,},
-      different_buried_fields: { address: { address_id: lprn_test_value } },
-    },
-    {
-      schema_name: "CEPC-6.0",
-      xml: Samples.xml("CEPC-6.0", "cepc"),
-      unsupported_fields: %i[primary_energy_use],
-      different_fields: { other_fuel_description: "Test", primary_energy: nil,},
-      different_buried_fields: { address: { address_id: lprn_test_value }},
-    },
-    {
-      schema_name: "CEPC-5.0",
-      xml: Samples.xml("CEPC-5.0", "cepc"),
-      unsupported_fields: %i[primary_energy_use],
-      different_fields: { },
-      different_buried_fields: { address: { address_id: lprn_test_value } },
-    },
-    {
-      schema_name: "CEPC-4.0",
-      xml: Samples.xml("CEPC-4.0", "cepc"),
-      unsupported_fields: %i[primary_energy_use],
-      different_fields: { building_emission_rate: nil, },
-      different_buried_fields: { address: { address_id: lprn_test_value }  },
-    },
-    {
-      schema_name: "CEPC-3.1",
-      xml: Samples.xml("CEPC-3.1", "cepc"),
-      unsupported_fields: %i[primary_energy_use],
-      different_fields: { building_emission_rate: nil,  },
-      different_buried_fields: { address: { address_id: lprn_test_value }  },
-    },
-  ]
 
-end
 
 
 def different_fields
@@ -90,8 +32,6 @@ def update_schema_for_report(schema)
         .map { |selected_hash|
           selected_hash[:different_fields][:building_reference_number] =lprn_test_value
         }
-
-
 
   schema.select { |hash|  hash[:schema_name].include?("5") }
         .map { |selected_hash|
@@ -156,10 +96,7 @@ end
 
 
 
-def update_test_hash(args = {})
-  hash = report_test_hash
-  hash.merge!(args)
-end
+
 
 
 
