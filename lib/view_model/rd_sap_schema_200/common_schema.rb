@@ -392,6 +392,10 @@ module ViewModel
         xpath(%w[Multiple-Glazed-Proportion])
       end
 
+      def glazed_area
+        xpath(%w[Glazed-Area])
+      end
+
     private
 
       def convert_to_big_decimal(node)

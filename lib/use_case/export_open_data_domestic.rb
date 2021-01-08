@@ -124,7 +124,8 @@ module UseCase
               FLAT_TOP_STOREY: hash[:top_storey],
               FLAT_STOREY_COUNT: hash[:storey_count],
               MAIN_HEATING_CONTROLS: hash[:mains_heating_controls],
-              MULTI_GLAZE_PROPORTION: hash[:multiple_glazed_proportion]
+              MULTI_GLAZE_PROPORTION: hash[:multiple_glazed_proportion],
+              GLAZED_AREA: hash[:glazed_area],
             },
           )
         end

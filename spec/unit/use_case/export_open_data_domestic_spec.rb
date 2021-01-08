@@ -219,6 +219,10 @@ describe UseCase::ExportOpenDataDomestic do
       it "returns the MULTI_GLAZE_PROPORTION in the CSV" do
         expect(@table.by_col["MULTI_GLAZE_PROPORTION"]).to eq(["100", "100", "50"])
       end
+
+      it "returns the GLAZED_AREA in the CSV" do
+        expect(@table.by_col["GLAZED_AREA"]).to eq(["1", "1", nil])
+      end
     end
   end
 end

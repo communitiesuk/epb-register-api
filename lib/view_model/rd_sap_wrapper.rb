@@ -153,6 +153,7 @@ module ViewModel
         storey_count: @view_model.storey_count,
         mains_heating_controls: @view_model.mains_heating_controls,
         multiple_glazed_proportion: @view_model.multiple_glazed_proportion,
+        glazed_area: @view_model.glazed_area,
       }
     end
 

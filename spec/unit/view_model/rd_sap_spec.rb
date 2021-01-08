@@ -259,6 +259,7 @@ describe ViewModel::RdSapWrapper do
       storey_count: '3',
       mains_heating_controls: 'Description9',
       multiple_glazed_proportion: '100',
+      glazed_area: "1",
     }.freeze
 
   it "should read the appropriate values from the XML doc using the to_hash method" do

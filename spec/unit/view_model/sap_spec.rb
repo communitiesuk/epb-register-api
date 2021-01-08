@@ -1141,6 +1141,7 @@ describe ViewModel::SapWrapper do
     storey_count: nil,
     mains_heating_controls: 'Thermostat',
     multiple_glazed_proportion: '50',
+    glazed_area: nil,
   }.freeze
   it "should read the appropriate values from the XML doc" do
     test_xml_doc(supported_schema, asserted_keys)

@@ -350,6 +350,11 @@ module ViewModel
       def multiple_glazed_proportion
         nil
       end
+
+      def glazed_area
+        nil
+      end
+
     private
 
       def convert_to_big_decimal(node)
