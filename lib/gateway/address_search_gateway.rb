@@ -87,37 +87,70 @@ module Gateway
       )
     end
 
-    def search_by_rrn(rrn)
-      parse_results(
-        ActiveRecord::Base.connection.exec_query(
-          "SELECT
-             assessment_id,
-             date_of_expiry,
-             date_registered,
-             address_line1,
-             address_line2,
-             address_line3,
-             address_line4,
-             town,
-             postcode,
-             address_id,
-             type_of_assessment
-           FROM assessments
-           WHERE
-             cancelled_at IS NULL
+    def search_by_address_id(address_id)
+      stripped_id = if address_id.start_with?("RRN")
+                      address_id[4..-1]
+                    elsif address_id.start_with?("UPRN")
+                      address_id[5..-1].to_i.to_s
+                    end
+
+      sql_assessments = <<~SQL
+        SELECT aai.address_id,
+               address_line1,
+               address_line2,
+               address_line3,
+               address_line4,
+               town,
+               postcode,
+               a.assessment_id,
+               date_of_expiry,
+               date_registered,
+               type_of_assessment,
+               linked_assessment_id
+         FROM assessments a
+               LEFT JOIN linked_assessments la ON a.assessment_id = la.assessment_id
+               INNER JOIN assessments_address_id aai on a.assessment_id = aai.assessment_id
+         WHERE cancelled_at IS NULL
            AND not_for_issue_at IS NULL
-           AND (assessment_id = $1 OR address_id = CONCAT('RRN-', $1))
-           ORDER BY assessment_id",
-          "SQL",
-          [
-            ActiveRecord::Relation::QueryAttribute.new(
-              "rrn",
-              rrn,
-              ActiveRecord::Type::String.new,
-            ),
-          ],
+           AND (a.assessment_id = $1 OR aai.address_id = $2)
+         ORDER BY assessment_id
+      SQL
+
+      sql_address_base = <<~SQL
+        SELECT CONCAT('UPRN-', LPAD(uprn, 12, '0')) AS address_id,
+               address_line1,
+               address_line2,
+               address_line3,
+               address_line4,
+               town,
+               postcode
+        FROM address_base
+        WHERE uprn = $1
+      SQL
+
+      binds = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "stripped_address_id",
+          stripped_id,
+          ActiveRecord::Type::String.new,
         ),
-        nil,
+      ]
+
+      new_parse_results(
+        [
+          ActiveRecord::Base.connection.exec_query(sql_address_base, "SQL", binds),
+          ActiveRecord::Base.connection.exec_query(
+            sql_assessments,
+            "SQL",
+            binds + [
+              ActiveRecord::Relation::QueryAttribute.new(
+                "address_id",
+                address_id,
+                ActiveRecord::Type::String.new,
+              ),
+            ],
+          ),
+        ].flatten,
       )
     end
 
