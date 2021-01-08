@@ -209,6 +209,7 @@
       <SAP05-Data>
         <Data-Type>2</Data-Type>
         <SAP-Property-Details>
+          <Multiple-Glazed-Proportion>50</Multiple-Glazed-Proportion>
           <SAP-Heating>
             <Main-Heating-Category>1</Main-Heating-Category>
             <Main-Heating-Data-Source>1</Main-Heating-Data-Source>

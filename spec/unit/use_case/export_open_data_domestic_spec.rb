@@ -215,6 +215,10 @@ describe UseCase::ExportOpenDataDomestic do
       it "returns the MAIN_HEATING_CONTROLS in the CSV" do
         expect(@table.by_col["MAIN_HEATING_CONTROLS"]).to eq(["Description9", "Description9", "Thermostat"])
       end
+
+      it "returns the MULTI_GLAZE_PROPORTION in the CSV" do
+        expect(@table.by_col["MULTI_GLAZE_PROPORTION"]).to eq(["100", "100", "50"])
+      end
     end
   end
 end

@@ -282,6 +282,10 @@ module ViewModel
         xpath(%w[Main-Heating-Controls Description])
       end
 
+      def multiple_glazed_proportion
+        xpath(%w[Multiple-Glazed-Percentage])
+      end
+
     private
 
       def convert_to_big_decimal(node)

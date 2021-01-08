@@ -171,6 +171,7 @@
       <SAP:SAP-Data xmlns:SAP="DCLG-SAP">
         <HIP:Schema-Version xmlns:HIP="DCLG-HIP">LIG-16.0</HIP:Schema-Version>
         <HIP:SAP-Property-Details xmlns:HIP="DCLG-HIP">
+          <HIP:Multiple-Glazed-Proportion>50</HIP:Multiple-Glazed-Proportion>
           <HIP:Habitable-Room-Count>3</HIP:Habitable-Room-Count>
           <HIP:Heated-Room-Count>3</HIP:Heated-Room-Count>
           <HIP:Conservatory-Type>1</HIP:Conservatory-Type>

@@ -458,6 +458,7 @@ describe ViewModel::SapWrapper do
       xml: Samples.xml("SAP-Schema-NI-18.0.0"),
       unsupported_fields: [],
       different_fields: {
+        multiple_glazed_proportion: nil,
         heat_demand: {
           current_space_heating_demand: 30.0,
           current_water_heating_demand: 60.0,
@@ -502,6 +503,7 @@ describe ViewModel::SapWrapper do
       xml: Samples.xml("SAP-Schema-NI-17.4"),
       unsupported_fields: [],
       different_fields: {
+        multiple_glazed_proportion: nil,
         heat_demand: {
           current_space_heating_demand: 30.0,
           current_water_heating_demand: 60.0,
@@ -556,6 +558,7 @@ describe ViewModel::SapWrapper do
       xml: Samples.xml("SAP-Schema-NI-17.3"),
       unsupported_fields: [],
       different_fields: {
+        multiple_glazed_proportion: nil,
         heat_demand: {
           current_space_heating_demand: 30.0,
           current_water_heating_demand: 60.0,
@@ -1137,6 +1140,7 @@ describe ViewModel::SapWrapper do
     top_storey: 'N',
     storey_count: nil,
     mains_heating_controls: 'Thermostat',
+    multiple_glazed_proportion: '50',
   }.freeze
   it "should read the appropriate values from the XML doc" do
     test_xml_doc(supported_schema, asserted_keys)
