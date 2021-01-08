@@ -79,7 +79,7 @@ module Gateway
           )
       end
 
-      new_parse_results(
+      parse_results(
         [
           ActiveRecord::Base.connection.exec_query(sql_address_base, "SQL", binds),
           ActiveRecord::Base.connection.exec_query(sql_assessments, "SQL", binds),
@@ -136,7 +136,7 @@ module Gateway
         ),
       ]
 
-      new_parse_results(
+      parse_results(
         [
           ActiveRecord::Base.connection.exec_query(sql_address_base, "SQL", binds),
           ActiveRecord::Base.connection.exec_query(
@@ -155,20 +155,22 @@ module Gateway
     end
 
     def search_by_street_and_town(street, town, address_type)
-      sql =
-        'SELECT
-          assessment_id,
-          date_of_expiry,
-          date_registered,
-          address_line1,
-          address_line2,
-          address_line3,
-          address_line4,
-          town,
-          postcode,
-          address_id,
-          type_of_assessment
-        FROM assessments
+      sql = <<~SQL
+        SELECT aai.address_id,
+               address_line1,
+               address_line2,
+               address_line3,
+               address_line4,
+               town,
+               postcode,
+               a.assessment_id,
+               date_of_expiry,
+               date_registered,
+               type_of_assessment,
+               linked_assessment_id
+        FROM assessments a
+               LEFT JOIN linked_assessments la ON a.assessment_id = la.assessment_id
+               INNER JOIN assessments_address_id aai on a.assessment_id = aai.assessment_id
         WHERE
           cancelled_at IS NULL
         AND not_for_issue_at IS NULL
@@ -187,7 +189,16 @@ module Gateway
               LOWER(address_line2) LIKE $1
               OR
               LOWER(address_line3) LIKE $1
-        )'
+        )
+      SQL
+
+      if address_type
+        list_of_types = ADDRESS_TYPES[address_type.to_sym].map { |n| "'#{n}'" }
+
+        sql << <<~SQL_TYPE_OF_ASSESSMENT
+          AND type_of_assessment IN(#{list_of_types.join(',')})
+        SQL_TYPE_OF_ASSESSMENT
+      end
 
       binds = [
         ActiveRecord::Relation::QueryAttribute.new(
@@ -204,13 +215,12 @@ module Gateway
 
       parse_results(
         ActiveRecord::Base.connection.exec_query(sql, "SQL", binds),
-        address_type,
       )
     end
 
   private
 
-    def new_parse_results(results)
+    def parse_results(results)
       address_ids = {}
       address_hashes = {}
       remapped_addresses = []
@@ -289,96 +299,11 @@ module Gateway
       end
 
       addresses.map do |address|
-        new_record_to_address_domain(address)
+        record_to_address_domain(address)
       end
     end
 
-    def parse_results(results, address_type)
-      address_id = {}
-
-      results
-        .enum_for(:each_with_index)
-        .map do |res, i|
-          if res["address_id"].nil?
-            res["address_id"] = "RRN-#{res['assessment_id']}"
-          end
-          unless address_id.key?(res["address_id"])
-            address_id[res["address_id"]] = []
-          end
-          address_id[res["address_id"]].push(i)
-        end
-
-      results.map { |result|
-        result["existing_assessments"] = []
-
-        skip_because_newer = false
-
-        (
-          address_id[result["address_id"]] +
-            address_id["RRN-" + result["assessment_id"]].to_a
-        ).uniq.each do |sibling|
-          sib_data = results[sibling]
-
-          result["existing_assessments"].push(
-            {
-              assessmentId: sib_data["assessment_id"],
-              assessmentStatus: update_expiry_and_status(sib_data),
-              assessmentType: sib_data["type_of_assessment"],
-            },
-          )
-
-          if !address_type.nil? &&
-              !ADDRESS_TYPES[address_type.to_sym].include?(
-                sib_data["type_of_assessment"],
-              )
-            if sib_data["date_of_expiry"] < result["date_of_expiry"]
-              result["assessment_id"] = sib_data["assessment_id"]
-            end
-          end
-
-          next unless sib_data["assessment_id"] != result["assessment_id"]
-
-          if sib_data["date_of_expiry"] <= result["date_of_expiry"]
-            skip_because_newer = true
-          end
-        end
-
-        next if skip_because_newer
-
-        if !address_type.nil? &&
-            !ADDRESS_TYPES[address_type.to_sym].include?(
-              result["type_of_assessment"],
-            )
-          next
-        end
-
-        result["assessment_status"] = update_expiry_and_status(result)
-
-        record_to_address_domain(result)
-      }.compact
-    end
-
     def record_to_address_domain(row)
-      address_lines =
-        [
-          row["address_line1"],
-          row["address_line2"],
-          row["address_line3"],
-          row["address_line4"],
-        ].compact.reject { |a| a.to_s.strip.chomp.empty? }
-
-      Domain::Address.new address_id: "RRN-#{row['assessment_id']}",
-                          line1: address_lines[0],
-                          line2: address_lines[1],
-                          line3: address_lines[2],
-                          line4: address_lines[3],
-                          town: row["town"],
-                          postcode: row["postcode"],
-                          source: "PREVIOUS_ASSESSMENT",
-                          existing_assessments: row["existing_assessments"]
-    end
-
-    def new_record_to_address_domain(row)
       address_lines =
         [
           row["address_line1"],
