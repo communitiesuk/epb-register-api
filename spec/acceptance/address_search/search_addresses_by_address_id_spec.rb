@@ -32,6 +32,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
 
     before(:each) do
       add_assessor(scheme_id, "SPEC000000", VALID_ASSESSOR_REQUEST_BODY)
+
       lodge_placeholder_assessment(
         scheme_id,
         "0000-0000-0000-0000-0000",
@@ -43,21 +44,21 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
         scheme_id,
         "0000-0000-0000-0000-0001",
         "RRN-0000-0000-0000-0000-0000",
-        Date.today.prev_day(1).strftime("%Y-%m-%d"),
+        Date.today.prev_day(40).strftime("%Y-%m-%d"),
       )
 
       lodge_placeholder_assessment(
         scheme_id,
         "0000-0000-0000-0000-0002",
         "RRN-0000-0000-0000-0000-0001",
-        Date.today.prev_day(6).strftime("%Y-%m-%d"),
+        Date.today.prev_day(30).strftime("%Y-%m-%d"),
       )
 
       lodge_placeholder_assessment(
         scheme_id,
         "0000-0000-0000-0000-0003",
         "RRN-0000-0000-0000-0000-0002",
-        Date.today.prev_day(11).strftime("%Y-%m-%d"),
+        Date.today.prev_day(20).strftime("%Y-%m-%d"),
       )
     end
 
