@@ -12,10 +12,10 @@ module ViewModel
       def extract_aci_recommendations(nodes)
         nodes.map do |node|
           {
-            sequence: node.at("Seq-Number").content,
-            text: node.at("Text").content,
+              sequence: node.at("Seq-Number").content,
+              text: node.at("Text").content,
           }
-        end
+        end.reject { |node| node[:text].nil? || node[:text].empty? }
       end
 
       def key_recommendations_efficiency

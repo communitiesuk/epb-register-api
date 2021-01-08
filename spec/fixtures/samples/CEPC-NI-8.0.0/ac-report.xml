@@ -103,6 +103,11 @@
             <Code>OTHER</Code>
             <Text>Text6</Text>
           </ACI-Recommendation>
+          <ACI-Recommendation>
+            <Seq-Number>1</Seq-Number>
+            <Code>OTHER</Code>
+            <Text/>
+          </ACI-Recommendation>
         </Other-Recommendations>
       </ACI-Key-Recommendations>
       <ACI-Sub-Systems>
