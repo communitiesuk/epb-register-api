@@ -1,6 +1,5 @@
 require_relative "xml_view_test_helper"
 
-require_relative '../dec_view_model_test_helper'
 
 describe ViewModel::DecWrapper do
   # You should only need to add to this list to test new CEPC schema

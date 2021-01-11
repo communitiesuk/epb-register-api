@@ -26,7 +26,6 @@ describe UseCase::ExportOpenDataCommercial do
 
       before(:example) do
 
-
         add_assessor(
           scheme_id,
           "SPEC000000",

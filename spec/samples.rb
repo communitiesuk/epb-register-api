@@ -70,7 +70,7 @@ class Samples
             xml: Samples.xml("CEPC-NI-8.0.0", "dec"),
             unsupported_fields: [],
             different_fields: { date_of_expiry: "2020-12-31" },
-            different_buried_fields: { address: { postcode: ni_postcode } },
+            different_buried_fields: { address: { postcode: Samples::ViewModels.NI_PostCode } },
           },
 
           {
@@ -79,7 +79,7 @@ class Samples
             unsupported_fields: [],
             different_fields: { date_of_expiry: "2020-12-31" },
             different_buried_fields: {
-              address: { address_id: lprn, postcode: ni_postcode },
+              address: { address_id: Samples::ViewModels.Lprn_code, postcode: Samples::ViewModels.NI_PostCode },
             },
           },
 
@@ -89,7 +89,7 @@ class Samples
             unsupported_fields: [],
             different_fields: { date_of_expiry: "2020-12-31" },
             different_buried_fields: {
-              address: { address_id: lprn, postcode: ni_postcode },
+              address: { address_id: Samples::ViewModels.Lprn_code, postcode: Samples::ViewModels.NI_PostCode },
             },
           },
           {
@@ -98,7 +98,7 @@ class Samples
             unsupported_fields: [],
             different_fields: { date_of_expiry: "2020-12-31" },
             different_buried_fields: {
-              address: { address_id: lprn, postcode: ni_postcode },
+              address: { address_id: Samples::ViewModels.Lprn_code, postcode: Samples::ViewModels.NI_PostCode },
             },
           },
           {
@@ -107,7 +107,7 @@ class Samples
             unsupported_fields: [],
             different_fields: { date_of_expiry: "2020-12-31" },
             different_buried_fields: {
-              address: { address_id: lprn, postcode: ni_postcode },
+              address: { address_id: Samples::ViewModels.Lprn_code, postcode: Samples::ViewModels.NI_PostCode },
             },
           },
 
@@ -117,7 +117,7 @@ class Samples
             unsupported_fields: [],
             different_fields: { date_of_expiry: "2020-12-31" },
             different_buried_fields: {
-              address: { address_id: lprn, postcode: ni_postcode },
+              address: { address_id: Samples::ViewModels.Lprn_code, postcode: Samples::ViewModels.NI_PostCode },
             },
           },
 
@@ -127,7 +127,7 @@ class Samples
             unsupported_fields: [],
             different_fields: { date_of_expiry: "2020-12-31" },
             different_buried_fields: {
-              address: { address_id: lprn, postcode: ni_postcode },
+              address: { address_id: Samples::ViewModels.Lprn_code, postcode: Samples::ViewModels.NI_PostCode },
             },
           },
         ]
@@ -261,42 +261,42 @@ class Samples
             xml: Samples.xml("CEPC-7.1", "cepc"),
             unsupported_fields: [],
             different_fields: {},
-            different_buried_fields: { address: { address_id: lprn_test_value } },
+            different_buried_fields: { address: { address_id: Samples::ViewModels.Lprn_code } },
           },
           {
             schema_name: "CEPC-7.0",
             xml: Samples.xml("CEPC-7.0", "cepc"),
             unsupported_fields: %i[primary_energy_use],
             different_fields: {primary_energy: nil,},
-            different_buried_fields: { address: { address_id: lprn_test_value } },
+            different_buried_fields: { address: { address_id: Samples::ViewModels.Lprn_code } },
           },
           {
             schema_name: "CEPC-6.0",
             xml: Samples.xml("CEPC-6.0", "cepc"),
             unsupported_fields: %i[primary_energy_use],
             different_fields: { other_fuel_description: "Test", primary_energy: nil,},
-            different_buried_fields: { address: { address_id: lprn_test_value }},
+            different_buried_fields: { address: { address_id: Samples::ViewModels.Lprn_code }},
           },
           {
             schema_name: "CEPC-5.0",
             xml: Samples.xml("CEPC-5.0", "cepc"),
             unsupported_fields: %i[primary_energy_use],
             different_fields: { },
-            different_buried_fields: { address: { address_id: lprn_test_value } },
+            different_buried_fields: { address: { address_id: Samples::ViewModels.Lprn_code } },
           },
           {
             schema_name: "CEPC-4.0",
             xml: Samples.xml("CEPC-4.0", "cepc"),
             unsupported_fields: %i[primary_energy_use],
             different_fields: { building_emission_rate: nil, },
-            different_buried_fields: { address: { address_id: lprn_test_value }  },
+            different_buried_fields: { address: { address_id: Samples::ViewModels.Lprn_code }  },
           },
           {
             schema_name: "CEPC-3.1",
             xml: Samples.xml("CEPC-3.1", "cepc"),
             unsupported_fields: %i[primary_energy_use],
             different_fields: { building_emission_rate: nil,  },
-            different_buried_fields: { address: { address_id: lprn_test_value }  },
+            different_buried_fields: { address: { address_id: Samples::ViewModels.Lprn_code }  },
           },
         ]
 
