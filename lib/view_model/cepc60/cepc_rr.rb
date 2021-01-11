@@ -3,7 +3,8 @@ module ViewModel
     class CepcRr < ViewModel::Cepc60::CommonSchema
       def recommendations(payback="")
         if (payback.empty?)
-          xpath(%w[RR-Recommendations])
+          # return an enumerable of all nodes
+          @xml_doc.xpath ("RR-Recommendations")
         else
           @xml_doc.search("RR-Recommendations/#{payback}").map do |node|
             {

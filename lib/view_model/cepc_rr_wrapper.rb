@@ -77,9 +77,27 @@ module ViewModel
     end
 
     def to_report
+      # add recommendations into a single array
+      #
+
+
+      payback_type =  []
+      payback_type << @view_model.short_payback_recommendations[0]
+      payback_type << @view_model.medium_payback_recommendations[0]
+      payback_type << @view_model.long_payback_recommendations[0]
+
+      # @TODO use recommendations method to only call xpath once and loop over nodeset
       {
         rrn: @view_model.assessment_id,
-        payback_type: @view_model.recommendations,
+        payback_type: payback_type
+
+      }
+    end
+
+    def recomendation_hash(node)
+
+      {
+        payback_type: "node"
 
       }
     end
