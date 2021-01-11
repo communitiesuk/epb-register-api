@@ -1,14 +1,18 @@
 module ViewModel
   module Cepc800
     class CepcRr < ViewModel::Cepc800::CommonSchema
-      def recommendations(payback)
-        @xml_doc.search("RR-Recommendations/#{payback}").map do |node|
-          {
-            code: node.at("Recommendation-Code").content,
-            text: node.at("Recommendation").content,
-            cO2Impact: node.at("CO2-Impact").content,
-          }
-        end
+      def recommendations(payback="")
+        if (payback.empty?)
+          xpath(%w[RR-Recommendations])
+        else
+          @xml_doc.search("RR-Recommendations/#{payback}").map do |node|
+            {
+              code: node.at("Recommendation-Code").content,
+              text: node.at("Recommendation").content,
+              cO2Impact: node.at("CO2-Impact").content,
+            }
+          end
+          end
       end
 
       def short_payback_recommendations

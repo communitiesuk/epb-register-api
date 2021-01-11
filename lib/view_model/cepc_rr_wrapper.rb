@@ -79,7 +79,7 @@ module ViewModel
     def to_report
       {
         rrn: @view_model.assessment_id,
-        payback_type: "",
+        payback_type: @view_model.recommendations,
 
       }
     end

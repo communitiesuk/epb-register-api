@@ -53,6 +53,7 @@ describe ViewModel::CepcWrapper do
 
 
   it "should read the appropriate values from the XML doc against the to hash method " do
+
     test_xml_doc(supported_schema, asserted_keys)
   end
 

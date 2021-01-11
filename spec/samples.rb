@@ -10,8 +10,9 @@ VALID_ASSESSOR_REQUEST_BODY = {
   },
 }.freeze
 
-class Samples
 
+
+class Samples
 
   def self.xml(schema, type = "epc")
     path = File.join Dir.pwd, "spec/fixtures/samples/#{schema}/#{type}.xml"
@@ -31,6 +32,7 @@ class Samples
     hash.merge!(args)
   end
 
+  # @TODO move to separate file and define as Mixin
   module ViewModels
 
     def self.NI_PostCode
