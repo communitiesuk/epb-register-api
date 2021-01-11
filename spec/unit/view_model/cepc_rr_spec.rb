@@ -138,7 +138,7 @@ describe ViewModel::CepcRrWrapper do
     }.freeze
 
     it "should read the appropriate values from the XML doc using the to hash method" do
-      test_xml_doc(supported_schema, asserted_keys)git
+      test_xml_doc(supported_schema, asserted_keys)
     end
 
     it "should read the appropriate values from the XML doc using the to report method" do
