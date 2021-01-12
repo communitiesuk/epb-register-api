@@ -1,6 +1,6 @@
 module Helper
   class Toggles
-    def self.enabled?(toggle_name, default)
+    def self.enabled?(toggle_name, default = false)
       @toggles_enabled_features ||= {}
 
       matching = @toggles_enabled_features[toggle_name]

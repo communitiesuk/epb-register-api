@@ -8,6 +8,7 @@ require "csv"
 module Controller
   class BaseController < Sinatra::Base
     attr_reader :toggles
+    @toggles = nil
 
     def initialize(toggles = false)
       super

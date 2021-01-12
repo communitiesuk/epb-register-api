@@ -1,6 +1,6 @@
 ENV["RACK_ENV"] = "test"
 ENV["STAGE"] = "test"
-ENV["EPB_UNLEASH_URI"] = "https://google.com"
+ENV["EPB_UNLEASH_URI"] = "https://test-toggle-server/api"
 
 require "assertive_client"
 require "samples"
@@ -14,13 +14,30 @@ require "sinatra/activerecord"
 require "webmock"
 require "zeitwerk"
 
-loader = Zeitwerk::Loader.new
-loader.push_dir("#{__dir__}/../lib/")
-loader.push_dir("#{__dir__}/../spec/test_doubles/")
-loader.setup
+class TestLoader
+  def self.setup
+    @loader = Zeitwerk::Loader.new
+    @loader.push_dir("#{__dir__}/../lib/")
+    @loader.push_dir("#{__dir__}/../spec/test_doubles/")
+    @loader.setup
+  end
 
-# Overrides must be loaded after Zeitwerk
-require "overrides/toggles"
+  def self.override(path)
+    load path
+  end
+end
+
+TestLoader.setup
+
+def loader_enable_override(name)
+  TestLoader.override "overrides/#{name}.rb"
+end
+
+def loader_enable_original(lib_name)
+  TestLoader.override "#{__dir__}/../lib/#{lib_name}.rb"
+end
+
+loader_enable_override "helper/toggles"
 
 ENV["JWT_ISSUER"] = "test.issuer"
 ENV["JWT_SECRET"] = "test.secret"
