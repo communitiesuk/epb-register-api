@@ -19,6 +19,9 @@ loader.push_dir("#{__dir__}/../lib/")
 loader.push_dir("#{__dir__}/../spec/test_doubles/")
 loader.setup
 
+# Overrides must be loaded after Zeitwerk
+require "overrides/toggles"
+
 ENV["JWT_ISSUER"] = "test.issuer"
 ENV["JWT_SECRET"] = "test.secret"
 ENV["SILENT_EVENTS"] = "true"

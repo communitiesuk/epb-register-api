@@ -1,4 +1,4 @@
-describe "Integration::ToggleService" do
+xdescribe "Integration::ToggleService" do
   context "when the AssessorService is instantiated with Toggles" do
     let(:service) { RegisterApiService.new(TogglesStub.new).helpers }
 

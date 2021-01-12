@@ -196,10 +196,30 @@ describe "Acceptance::Assessment::Lodge" do
       )
     end
 
+    context "when the 'lodgement-dual-force-matching-address-ids' feature is off" do
+      it "rejects a dual lodgement when the address ids do not match" do
+        register_assessor
+        xml = Nokogiri.XML valid_cepc_rr_xml
+        xml.at("//CEPC:UPRN").content = "UPRN-111111111111"
+        Helper::Toggles.set_feature "lodgement-dual-force-matching-address-ids",
+                                    false
+
+        lodge_assessment(
+          assessment_body: xml.to_xml,
+          accepted_responses: [201],
+          auth_data: { scheme_ids: [scheme_id] },
+          schema_name: "CEPC-8.0.0",
+          override: "true",
+        ).body
+      end
+    end
+
     it "rejects a dual lodgement when the address ids do not match" do
       register_assessor
       xml = Nokogiri.XML valid_cepc_rr_xml
       xml.at("//CEPC:UPRN").content = "UPRN-111111111111"
+      Helper::Toggles.set_feature "lodgement-dual-force-matching-address-ids",
+                                  true
 
       response =
         JSON.parse(

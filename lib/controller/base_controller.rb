@@ -13,7 +13,6 @@ module Controller
       super
       @xml_helper = Helper::XmlHelper.new
       @json_helper = Helper::JsonHelper.new
-      @toggles = toggles || Toggles.new
       @logger = Logger.new(STDOUT)
       @logger.level = Logger::ERROR
       @events = Helper::LogHelper.new

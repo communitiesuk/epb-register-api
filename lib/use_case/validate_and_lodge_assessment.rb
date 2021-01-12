@@ -114,6 +114,9 @@ module UseCase
     end
 
     def address_ids_match?(lodgement)
+      return true unless Helper::Toggles.enabled? "lodgement-dual-force-matching-address-ids",
+                                                  false
+
       lodgement.map { |assessment| assessment[:address][:address_id] }.uniq.length <= 1
     end
 

@@ -1,18 +1,19 @@
 require "unleash"
 
-class Toggles
-  def initialize
-    unless ENV["STAGE"] == "test"
-      Unleash.configure do |config|
-        config.url = ENV["EPB_UNLEASH_URI"]
-        config.app_name = "toggles-" + ENV["STAGE"]
+module Helper
+  class Toggles
+    def self.enabled?(toggle_name, default)
+      unless @unleash
+        Unleash.configure do |config|
+          config.url = ENV["EPB_UNLEASH_URI"]
+          config.app_name = "toggles-" + ENV["STAGE"]
+          config.log_level = Logger::DEBUG
+        end
 
         @unleash = Unleash::Client.new
       end
-    end
-  end
 
-  def state(toggle_name)
-    ENV["STAGE"] == "test" ? true : @unleash.is_enabled?(toggle_name)
+      @unleash.is_enabled? toggle_name, nil, default
+    end
   end
 end

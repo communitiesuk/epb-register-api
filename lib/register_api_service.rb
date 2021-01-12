@@ -1,4 +1,9 @@
 class RegisterApiService < Controller::BaseController
+  def initialize(toggles = nil)
+    super
+    @toggles = Helper::Toggles.new
+  end
+
   options "*" do
     response.headers["Allow"] = "HEAD,GET,PUT,DELETE,OPTIONS"
     response.headers["Access-Control-Allow-Methods"] =
