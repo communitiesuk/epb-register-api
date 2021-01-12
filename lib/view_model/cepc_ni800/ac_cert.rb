@@ -49,14 +49,18 @@ module ViewModel
       end
 
       def subsystems
-        @xml_doc.search("AC-Sub-System").select(&:element?).map { |node|
-          {
-            number: xpath(%w[Sub-System-Number], node),
-            description: xpath(%w[Sub-System-Description], node),
-            age: xpath(%w[Sub-System-Age], node),
-            refrigerantType: xpath(%w[Refrigerant-Type], node),
+        @xml_doc
+          .search("AC-Sub-System")
+          .select(&:element?)
+          .map { |node|
+            {
+              number: xpath(%w[Sub-System-Number], node),
+              description: xpath(%w[Sub-System-Description], node),
+              age: xpath(%w[Sub-System-Age], node),
+              refrigerantType: xpath(%w[Refrigerant-Type], node),
+            }
           }
-        }.compact
+          .compact
       end
     end
   end

@@ -154,10 +154,24 @@ describe ViewModel::CepcRrWrapper do
     it "should read the appropriate values from the XML doc using the to report method" do
       report_keys = {
         rrn: asserted_keys[:assessment_id],
-        payback_type: [{ code: "1", text: "Consider replacing T8 lamps with retrofit T5 conversion kit.", cO2Impact: "HIGH" },
-                       { code: "2", text: "Add optimum start/stop to the heating system.", cO2Impact: "MEDIUM" },
-                       { code: "3", text: "Consider installing an air source heat pump.", cO2Impact: "HIGH" }]
-
+        payback_type: [
+          {
+            code: "1",
+            text:
+              "Consider replacing T8 lamps with retrofit T5 conversion kit.",
+            cO2Impact: "HIGH",
+          },
+          {
+            code: "2",
+            text: "Add optimum start/stop to the heating system.",
+            cO2Impact: "MEDIUM",
+          },
+          {
+            code: "3",
+            text: "Consider installing an air source heat pump.",
+            cO2Impact: "HIGH",
+          },
+        ],
       }
       test_xml_doc(supported_schema, report_keys, true)
     end

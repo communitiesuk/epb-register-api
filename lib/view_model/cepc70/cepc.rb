@@ -57,7 +57,6 @@ module ViewModel
         xpath(%w[AC-Present])
       end
 
-
       def transaction_type
         xpath(%w[Transaction-Type])
       end
@@ -93,7 +92,6 @@ module ViewModel
       def ac_inpsection_commissioned
         xpath(%w[AC-Inspection-Commissioned])
       end
-
     end
   end
 end

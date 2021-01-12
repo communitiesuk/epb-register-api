@@ -150,16 +150,19 @@ module ViewModel
       end
 
       def or_energy_consumption
-        @xml_doc.search("OR-Energy-Consumption").children.select(&:element?)
+        @xml_doc
+          .search("OR-Energy-Consumption")
+          .children
+          .select(&:element?)
           .map do |node|
-          {
-            consumption: xpath(%w[Consumption], node),
-            start_date: xpath(%w[Start-Date], node),
-            end_date: xpath(%w[End-Date], node),
-            estimate: xpath(%w[Estimate], node),
-            name: node.name,
-          }
-        end
+            {
+              consumption: xpath(%w[Consumption], node),
+              start_date: xpath(%w[Start-Date], node),
+              end_date: xpath(%w[End-Date], node),
+              estimate: xpath(%w[Estimate], node),
+              name: node.name,
+            }
+          end
       end
 
       def annual_energy_summary
@@ -209,7 +212,6 @@ module ViewModel
       def building_category
         xpath(%w[Building-Category])
       end
-
     end
   end
 end

@@ -83,20 +83,23 @@ module ViewModel
       end
 
       def property_summary
-        @xml_doc.search("Energy-Assessment Property-Summary").children.select(
-          &:element?
-        ).map { |node|
-          next if xpath(%w[Energy-Efficiency-Rating], node).nil?
+        @xml_doc
+          .search("Energy-Assessment Property-Summary")
+          .children
+          .select(&:element?)
+          .map { |node|
+            next if xpath(%w[Energy-Efficiency-Rating], node).nil?
 
-          {
-            energy_efficiency_rating:
-              xpath(%w[Energy-Efficiency-Rating], node).to_i,
-            environmental_efficiency_rating:
-              xpath(%w[Environmental-Efficiency-Rating], node).to_i,
-            name: node.name.underscore,
-            description: xpath(%w[Description], node),
+            {
+              energy_efficiency_rating:
+                xpath(%w[Energy-Efficiency-Rating], node).to_i,
+              environmental_efficiency_rating:
+                xpath(%w[Environmental-Efficiency-Rating], node).to_i,
+              name: node.name.underscore,
+              description: xpath(%w[Description], node),
+            }
           }
-        }.compact
+          .compact
       end
 
       def related_party_disclosure_text
@@ -109,24 +112,26 @@ module ViewModel
       end
 
       def improvements
-        @xml_doc.search("Suggested-Improvements Improvement").map do |node|
-          {
-            energy_performance_rating_improvement:
-              xpath(%w[Energy-Performance-Rating], node).to_i,
-            environmental_impact_rating_improvement:
-              xpath(%w[Environmental-Impact-Rating], node).to_i,
-            green_deal_category_code: xpath(%w[Green-Deal-Category], node),
-            improvement_category: xpath(%w[Improvement-Category], node),
-            improvement_code:
-              xpath(%w[Improvement-Details Improvement-Number], node),
-            improvement_description: xpath(%w[Improvement-Description], node),
-            improvement_title: xpath(%w[Improvement-Title], node),
-            improvement_type: xpath(%w[Improvement-Type], node),
-            indicative_cost: xpath(%w[Indicative-Cost], node),
-            sequence: xpath(%w[Sequence], node).to_i,
-            typical_saving: xpath(%w[Typical-Saving], node),
-          }
-        end
+        @xml_doc
+          .search("Suggested-Improvements Improvement")
+          .map do |node|
+            {
+              energy_performance_rating_improvement:
+                xpath(%w[Energy-Performance-Rating], node).to_i,
+              environmental_impact_rating_improvement:
+                xpath(%w[Environmental-Impact-Rating], node).to_i,
+              green_deal_category_code: xpath(%w[Green-Deal-Category], node),
+              improvement_category: xpath(%w[Improvement-Category], node),
+              improvement_code:
+                xpath(%w[Improvement-Details Improvement-Number], node),
+              improvement_description: xpath(%w[Improvement-Description], node),
+              improvement_title: xpath(%w[Improvement-Title], node),
+              improvement_type: xpath(%w[Improvement-Type], node),
+              indicative_cost: xpath(%w[Indicative-Cost], node),
+              sequence: xpath(%w[Sequence], node).to_i,
+              typical_saving: xpath(%w[Typical-Saving], node),
+            }
+          end
       end
 
       def hot_water_cost_potential
@@ -290,9 +295,13 @@ module ViewModel
       end
 
       def all_sap_floor_dimensions
-        @xml_doc.search("SAP-Floor-Dimension").select(&:element?).map { |node|
-          { total_floor_area: xpath(%w[Total-Floor-Area], node).to_f }
-        }.compact
+        @xml_doc
+          .search("SAP-Floor-Dimension")
+          .select(&:element?)
+          .map { |node|
+            { total_floor_area: xpath(%w[Total-Floor-Area], node).to_f }
+          }
+          .compact
       end
 
       def level
@@ -312,24 +321,26 @@ module ViewModel
       end
 
       def all_building_parts
-        @xml_doc.search("SAP-Building-Parts/SAP-Building-Part").map do |part|
-          {
-            roof_insulation_thickness:
-              if part.xpath("Roof-Insulation-Thickness").empty?
-                nil
-              else
-                part.xpath("Roof-Insulation-Thickness").text
-              end,
-            rafter_insulation_thickness:
-              xpath(%w[Rafter-Insulation-Thickness], part),
-            flat_roof_insulation_thickness:
-              xpath(%w[Flat-Roof-Insulation-Thickness], part),
-            sloping_ceiling_insulation_thickness:
-              xpath(%w[Sloping-Ceiling-Insulation-Thickness], part),
-            roof_u_value: xpath(%w[Roof-U-Value], part),
-            roof_room_connected: xpath(%w[Roof-Room-Connected], part),
-          }
-        end
+        @xml_doc
+          .search("SAP-Building-Parts/SAP-Building-Part")
+          .map do |part|
+            {
+              roof_insulation_thickness:
+                if part.xpath("Roof-Insulation-Thickness").empty?
+                  nil
+                else
+                  part.xpath("Roof-Insulation-Thickness").text
+                end,
+              rafter_insulation_thickness:
+                xpath(%w[Rafter-Insulation-Thickness], part),
+              flat_roof_insulation_thickness:
+                xpath(%w[Flat-Roof-Insulation-Thickness], part),
+              sloping_ceiling_insulation_thickness:
+                xpath(%w[Sloping-Ceiling-Insulation-Thickness], part),
+              roof_u_value: xpath(%w[Roof-U-Value], part),
+              roof_room_connected: xpath(%w[Roof-Room-Connected], part),
+            }
+          end
       end
 
       def floor_heat_loss

@@ -1,9 +1,6 @@
 require_relative "xml_view_test_helper"
 
-
-
 describe ViewModel::CepcWrapper do
-
   # You should only need to add to this list to test new CEPC schema
   supported_schema = Samples::ViewModels::Cepc.supported_schema
 
@@ -38,7 +35,8 @@ describe ViewModel::CepcWrapper do
       scheme_assessor_id: "SPEC000000",
       name: "TEST NAME BOI",
       company_details: {
-        name: "Joe Bloggs Ltd", address: "123 My Street, My City, AB3 4CD"
+        name: "Joe Bloggs Ltd",
+        address: "123 My Street, My City, AB3 4CD",
       },
       contact_details: { email: "a@b.c", telephone: "012345" },
     },
@@ -51,15 +49,17 @@ describe ViewModel::CepcWrapper do
     property_type: "B1 Offices and Workshop businesses",
   }.freeze
 
-
   it "should read the appropriate values from the XML doc against the to hash method " do
-
     test_xml_doc(supported_schema, asserted_keys)
   end
 
   it "should read the appropriate values from the XML doc against the to report method " do
     Samples::ViewModels::Cepc.update_schema_for_report(supported_schema)
-    test_xml_doc(supported_schema, Samples::ViewModels::Cepc.report_test_hash, true)
+    test_xml_doc(
+      supported_schema,
+      Samples::ViewModels::Cepc.report_test_hash,
+      true,
+    )
   end
 
   it "returns the expect error without a valid schema type" do

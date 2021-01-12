@@ -78,11 +78,12 @@ module Gateway
       unless scheme_id.nil?
         sql << " AND c.scheme_id = $3"
 
-        binds << ActiveRecord::Relation::QueryAttribute.new(
-          "scheme_id",
-          scheme_id,
-          ActiveRecord::Type::String.new,
-        )
+        binds <<
+          ActiveRecord::Relation::QueryAttribute.new(
+            "scheme_id",
+            scheme_id,
+            ActiveRecord::Type::String.new,
+          )
       end
 
       sql << " ORDER BY a.created_at"
@@ -93,6 +94,7 @@ module Gateway
 
     def assessments_xml_for_open_data(args = {})
       args = assessments_for_open_data_defaults.merge(args)
+
       # where = " a.opt_out = false AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL"
       #
       # if args[:type_of_assessment]
@@ -106,7 +108,6 @@ module Gateway
       #     " AND b.schema_type = " +
       #       ActiveRecord::Base.connection.quote(args[:schema_type])
       # end
-
 
       sql = <<~SQL
         SELECT  a.assessment_id, b.schema_type, c.address_id
@@ -122,22 +123,22 @@ module Gateway
           "type_of_assessment",
           args[:type_of_assessment],
           ActiveRecord::Type::String.new,
-          ),
+        ),
         ActiveRecord::Relation::QueryAttribute.new(
           "schema_type",
           args[:schema_type],
           ActiveRecord::Type::String.new,
-          ),
+        ),
         ActiveRecord::Relation::QueryAttribute.new(
           "limit",
           args[:batch],
           ActiveRecord::Type::Integer.new,
-          ),
+        ),
         ActiveRecord::Relation::QueryAttribute.new(
           "start",
           args[:start],
           ActiveRecord::Type::Integer.new,
-          ),
+        ),
       ]
 
       results = ActiveRecord::Base.connection.exec_query sql
@@ -148,12 +149,12 @@ module Gateway
       args = assessments_for_open_data_defaults.merge(args)
 
       sql = <<~SQL
-         SELECT  a.assessment_id, created_at
-         FROM assessments a
-         INNER JOIN assessments_address_id c  ON(a.assessment_id = c.assessment_id)
-         INNER JOIN assessments_xml b ON(a.assessment_id = b.assessment_id)
-         WHERE a.opt_out = false AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
-         ORDER BY a.date_registered
+        SELECT  a.assessment_id, created_at
+        FROM assessments a
+        INNER JOIN assessments_address_id c  ON(a.assessment_id = c.assessment_id)
+        INNER JOIN assessments_xml b ON(a.assessment_id = b.assessment_id)
+        WHERE a.opt_out = false AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
+        ORDER BY a.date_registered
 
       SQL
 
@@ -162,12 +163,12 @@ module Gateway
           "type_of_assessment",
           args[:type_of_assessment],
           ActiveRecord::Type::String.new,
-          ),
+        ),
         ActiveRecord::Relation::QueryAttribute.new(
           "schema_type",
           args[:schema_type],
           ActiveRecord::Type::String.new,
-          ),
+        ),
       ]
 
       results = ActiveRecord::Base.connection.exec_query(sql)
@@ -177,13 +178,7 @@ module Gateway
   private
 
     def assessments_for_open_data_defaults
-      {
-        type_of_assessment: nil,
-        schema_type: nil,
-        batch: 1,
-        start: 0
-
-      }
+      { type_of_assessment: nil, schema_type: nil, batch: 1, start: 0 }
     end
   end
 end

@@ -104,7 +104,6 @@ module ViewModel
       def primary_energy_use
         nil
       end
-
     end
   end
 end

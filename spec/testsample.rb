@@ -1,7 +1,5 @@
 module Testsample
-
-def my_test
-  "a"
-end
-
+  def my_test
+    "a"
+  end
 end

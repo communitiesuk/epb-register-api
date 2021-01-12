@@ -7,11 +7,23 @@ describe UseCase::ExportOpenDataDec do
       let(:dec_xml) { Nokogiri.XML Samples.xml("CEPC-8.0.0", "dec") }
       let(:number_assessments_to_test) { 1 }
       let(:expected_values) { Samples::ViewModels::Dec.report_test_hash }
-      let(:expected_values_row_1) { Samples.update_test_hash(expected_values, { rrn: "0000-0000-0000-0000-0001", lodgement_date: "2018-05-04", }) }
+      let(:expected_values_row_1) do
+        Samples.update_test_hash(
+          expected_values,
+          { rrn: "0000-0000-0000-0000-0001", lodgement_date: "2018-05-04" },
+        )
+      end
+
       # @TODO filter data correctly for DEC
-      let(:exported_data) {
-        described_class.new.execute({ number_of_assessments: number_assessments_to_test, max_runs: "3", batch: "3" },)
-      }
+      let(:exported_data) do
+        described_class.new.execute(
+          {
+            number_of_assessments: number_assessments_to_test,
+            max_runs: "3",
+            batch: "3",
+          },
+        )
+      end
 
       before do
         add_assessor(
@@ -56,11 +68,16 @@ describe UseCase::ExportOpenDataDec do
 
       # 1st row to test
       # write at test for each key in test hash
-      Samples::ViewModels::Dec.report_test_hash.keys.each { |index|
-        it "returns the #{index} that matches the test data for the 1st row" do
-          expect(exported_data[0][index.to_sym]).to eq(expected_values[index])
+      Samples::ViewModels::Dec
+        .report_test_hash
+        .keys
+        .each do |index|
+          it "returns the #{
+               index
+             } that matches the test data for the 1st row" do
+            expect(exported_data[0][index.to_sym]).to eq(expected_values[index])
+          end
         end
-      }
     end
   end
 end

@@ -11,8 +11,6 @@ VALID_ASSESSOR_REQUEST_BODY = {
   },
 }.freeze
 
-
-
 class Samples
   def self.xml(schema, type = "epc")
     path = File.join Dir.pwd, "spec/fixtures/samples/#{schema}/#{type}.xml"
@@ -73,7 +71,9 @@ class Samples
             xml: Samples.xml("CEPC-NI-8.0.0", "dec"),
             unsupported_fields: [],
             different_fields: { date_of_expiry: "2020-12-31" },
-            different_buried_fields: { address: { postcode: Samples::ViewModels.NI_PostCode } },
+            different_buried_fields: {
+              address: { postcode: Samples::ViewModels.NI_PostCode },
+            },
           },
           {
             schema_name: "CEPC-7.1",
@@ -82,7 +82,10 @@ class Samples
             unsupported_fields: [],
             different_fields: { date_of_expiry: "2020-12-31" },
             different_buried_fields: {
-              address: { address_id: Samples::ViewModels.Lprn_code, postcode: Samples::ViewModels.NI_PostCode },
+              address: {
+                address_id: Samples::ViewModels.Lprn_code,
+                postcode: Samples::ViewModels.NI_PostCode,
+              },
             },
           },
           {
@@ -92,7 +95,10 @@ class Samples
             unsupported_fields: [],
             different_fields: { date_of_expiry: "2020-12-31" },
             different_buried_fields: {
-              address: { address_id: Samples::ViewModels.Lprn_code, postcode: Samples::ViewModels.NI_PostCode },
+              address: {
+                address_id: Samples::ViewModels.Lprn_code,
+                postcode: Samples::ViewModels.NI_PostCode,
+              },
             },
           },
           {
@@ -102,7 +108,10 @@ class Samples
             unsupported_fields: [],
             different_fields: { date_of_expiry: "2020-12-31" },
             different_buried_fields: {
-              address: { address_id: Samples::ViewModels.Lprn_code, postcode: Samples::ViewModels.NI_PostCode },
+              address: {
+                address_id: Samples::ViewModels.Lprn_code,
+                postcode: Samples::ViewModels.NI_PostCode,
+              },
             },
           },
           {
@@ -112,7 +121,10 @@ class Samples
             unsupported_fields: [],
             different_fields: { date_of_expiry: "2020-12-31" },
             different_buried_fields: {
-              address: { address_id: Samples::ViewModels.Lprn_code, postcode: Samples::ViewModels.NI_PostCode },
+              address: {
+                address_id: Samples::ViewModels.Lprn_code,
+                postcode: Samples::ViewModels.NI_PostCode,
+              },
             },
           },
           {
@@ -122,7 +134,10 @@ class Samples
             unsupported_fields: [],
             different_fields: { date_of_expiry: "2020-12-31" },
             different_buried_fields: {
-              address: { address_id: Samples::ViewModels.Lprn_code, postcode: Samples::ViewModels.NI_PostCode },
+              address: {
+                address_id: Samples::ViewModels.Lprn_code,
+                postcode: Samples::ViewModels.NI_PostCode,
+              },
             },
           },
           {
@@ -132,7 +147,10 @@ class Samples
             unsupported_fields: [],
             different_fields: { date_of_expiry: "2020-12-31" },
             different_buried_fields: {
-              address: { address_id: Samples::ViewModels.Lprn_code, postcode: Samples::ViewModels.NI_PostCode },
+              address: {
+                address_id: Samples::ViewModels.Lprn_code,
+                postcode: Samples::ViewModels.NI_PostCode,
+              },
             },
           },
           {
@@ -142,7 +160,10 @@ class Samples
             unsupported_fields: [],
             different_fields: { date_of_expiry: "2020-12-31" },
             different_buried_fields: {
-              address: { address_id: Samples::ViewModels.Lprn_code, postcode: Samples::ViewModels.NI_PostCode },
+              address: {
+                address_id: Samples::ViewModels.Lprn_code,
+                postcode: Samples::ViewModels.NI_PostCode,
+              },
             },
           },
         ]
@@ -260,7 +281,12 @@ class Samples
 
           # set hash into return array
           report_schema <<
-            get_schema(index[:schema_name], index[:schema_type], index[:xml], different_fields)
+            get_schema(
+              index[:schema_name],
+              index[:schema_type],
+              index[:xml],
+              different_fields,
+            )
         end
 
         report_schema

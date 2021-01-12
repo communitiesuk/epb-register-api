@@ -145,32 +145,36 @@ module ViewModel
         xpath(%w[OR-Operational-Rating OR-Assessment-Start-Date])
       end
 
-
       def occupier
         xpath(%w[Occupier])
       end
 
       def benchmarks
-        @xml_doc.search("Benchmarks/Benchmark").map do |node|
-          {
-            name: xpath(%w[Name], node),
-            id: xpath(%w[Benchmark-ID], node),
-            tufa: xpath(%w[TUFA], node),
-          }
-        end
+        @xml_doc
+          .search("Benchmarks/Benchmark")
+          .map do |node|
+            {
+              name: xpath(%w[Name], node),
+              id: xpath(%w[Benchmark-ID], node),
+              tufa: xpath(%w[TUFA], node),
+            }
+          end
       end
 
       def or_energy_consumption
-        @xml_doc.search("OR-Energy-Consumption").children.select(&:element?)
+        @xml_doc
+          .search("OR-Energy-Consumption")
+          .children
+          .select(&:element?)
           .map do |node|
-          {
-            consumption: xpath(%w[Consumption], node),
-            start_date: xpath(%w[Start-Date], node),
-            end_date: xpath(%w[End-Date], node),
-            estimate: xpath(%w[Estimate], node),
-            name: node.name,
-          }
-        end
+            {
+              consumption: xpath(%w[Consumption], node),
+              start_date: xpath(%w[Start-Date], node),
+              end_date: xpath(%w[End-Date], node),
+              estimate: xpath(%w[Estimate], node),
+              name: node.name,
+            }
+          end
       end
 
       def annual_energy_summary
@@ -185,14 +189,12 @@ module ViewModel
         }
       end
 
-
       def property_type
         xpath(%w[Property-Type])
       end
 
       def main_benchmark
         xpath(%w[OR-Benchmark-Data Main-Benchmark])
-
       end
 
       def other_fuel
@@ -226,7 +228,6 @@ module ViewModel
       def building_category
         xpath(%w[Building-Category])
       end
-
     end
   end
 end

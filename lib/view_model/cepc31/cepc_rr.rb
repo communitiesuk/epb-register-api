@@ -1,12 +1,14 @@
 module ViewModel
   module Cepc31
     class CepcRr < ViewModel::Cepc31::CommonSchema
-      def recommendations(payback="")
-        if (payback.empty?)
+      def recommendations(payback = "")
+        if payback.empty?
           # return an enumerable of all nodes
-          @xml_doc.xpath ("RR-Recommendations")
-          else
-            @xml_doc.search("RR-Recommendations/#{payback}").map do |node|
+          @xml_doc.xpath "RR-Recommendations"
+        else
+          @xml_doc
+            .search("RR-Recommendations/#{payback}")
+            .map do |node|
               {
                 code: node.at("Recommendation-Code").content,
                 text: node.at("Recommendation").content,
@@ -15,7 +17,6 @@ module ViewModel
             end
         end
       end
-
 
       def short_payback_recommendations
         recommendations("Short-Payback")

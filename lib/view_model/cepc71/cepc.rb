@@ -96,7 +96,6 @@ module ViewModel
       def ac_inpsection_commissioned
         xpath(%w[AC-Inspection-Commissioned])
       end
-
     end
   end
 end

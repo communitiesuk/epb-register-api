@@ -79,20 +79,23 @@ module ViewModel
       end
 
       def property_summary
-        @xml_doc.search("Energy-Assessment Property-Summary").children.select(
-          &:element?
-        ).map { |node|
-          next if xpath(%w[Energy-Efficiency-Rating], node).nil?
+        @xml_doc
+          .search("Energy-Assessment Property-Summary")
+          .children
+          .select(&:element?)
+          .map { |node|
+            next if xpath(%w[Energy-Efficiency-Rating], node).nil?
 
-          {
-            energy_efficiency_rating:
-              xpath(%w[Energy-Efficiency-Rating], node).to_i,
-            environmental_efficiency_rating:
-              xpath(%w[Environmental-Efficiency-Rating], node).to_i,
-            name: node.name.underscore,
-            description: xpath(%w[Description], node),
+            {
+              energy_efficiency_rating:
+                xpath(%w[Energy-Efficiency-Rating], node).to_i,
+              environmental_efficiency_rating:
+                xpath(%w[Environmental-Efficiency-Rating], node).to_i,
+              name: node.name.underscore,
+              description: xpath(%w[Description], node),
+            }
           }
-        }.compact
+          .compact
       end
 
       def related_party_disclosure_text
@@ -104,24 +107,26 @@ module ViewModel
       end
 
       def improvements
-        @xml_doc.search("Suggested-Improvements Improvement").map do |node|
-          {
-            energy_performance_rating_improvement:
-              xpath(%w[Energy-Performance-Rating], node).to_i,
-            environmental_impact_rating_improvement:
-              xpath(%w[Environmental-Impact-Rating], node).to_i,
-            green_deal_category_code: xpath(%w[Green-Deal-Category], node),
-            improvement_category: xpath(%w[Improvement-Category], node),
-            improvement_code:
-              xpath(%w[Improvement-Details Improvement-Number], node),
-            improvement_description: xpath(%w[Improvement-Description], node),
-            improvement_title: xpath(%w[Improvement-Title], node),
-            improvement_type: xpath(%w[Improvement-Type], node),
-            indicative_cost: xpath(%w[Indicative-Cost], node),
-            sequence: xpath(%w[Sequence], node).to_i,
-            typical_saving: xpath(%w[Typical-Saving], node),
-          }
-        end
+        @xml_doc
+          .search("Suggested-Improvements Improvement")
+          .map do |node|
+            {
+              energy_performance_rating_improvement:
+                xpath(%w[Energy-Performance-Rating], node).to_i,
+              environmental_impact_rating_improvement:
+                xpath(%w[Environmental-Impact-Rating], node).to_i,
+              green_deal_category_code: xpath(%w[Green-Deal-Category], node),
+              improvement_category: xpath(%w[Improvement-Category], node),
+              improvement_code:
+                xpath(%w[Improvement-Details Improvement-Number], node),
+              improvement_description: xpath(%w[Improvement-Description], node),
+              improvement_title: xpath(%w[Improvement-Title], node),
+              improvement_type: xpath(%w[Improvement-Type], node),
+              indicative_cost: xpath(%w[Indicative-Cost], node),
+              sequence: xpath(%w[Sequence], node).to_i,
+              typical_saving: xpath(%w[Typical-Saving], node),
+            }
+          end
       end
 
       def hot_water_cost_potential
@@ -271,7 +276,7 @@ module ViewModel
 
       def top_storey
         flat_level_code = xpath(%w[Level])
-        flat_level_code == "3" ? "Y": "N"
+        flat_level_code == "3" ? "Y" : "N"
       end
 
       def storey_count

@@ -5,7 +5,8 @@ describe "Acceptance::AssessmentSummary::Supplement::AC_CERT" do
     scheme_id = add_scheme_and_get_id
     assessor =
       AssessorStub.new.fetch_request_body(
-        nonDomesticSp3: "ACTIVE", nonDomesticCc4: "ACTIVE",
+        nonDomesticSp3: "ACTIVE",
+        nonDomesticCc4: "ACTIVE",
       )
     add_assessor(scheme_id, "SPEC000000", assessor)
 
