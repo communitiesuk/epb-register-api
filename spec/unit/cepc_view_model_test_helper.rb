@@ -1,7 +1,3 @@
-
-
-
-
 def different_fields
   {
     building_reference_number: lprn_test_value,
@@ -11,9 +7,8 @@ def different_fields
     building_emission_rate: nil,
     building_emission: nil,
     standard_emissions: nil,
-    building_emissions:nil,
+    building_emissions: nil,
     primary_energy: nil,
-
   }
 end
 
@@ -27,34 +22,32 @@ def different_fields_spec_3
 end
 
 def update_schema_for_report(schema)
+  schema
+    .select { |hash| !hash[:schema_name].include?("8") }
+    .map do |selected_hash|
+      selected_hash[:different_fields][:building_reference_number] =
+        lprn_test_value
+    end
 
-  schema.select { |hash|  !hash[:schema_name].include?("8") }
-        .map { |selected_hash|
-          selected_hash[:different_fields][:building_reference_number] =lprn_test_value
-        }
+  schema
+    .select { |hash| hash[:schema_name].include?("5") }
+    .map do |selected_hash|
+      selected_hash[:different_fields] = {
+        building_reference_number: lprn_test_value,
+        standard_emissions: nil,
+        primary_energy: nil,
+      }
+    end
 
-  schema.select { |hash|  hash[:schema_name].include?("5") }
-        .map { |selected_hash|
-          selected_hash[:different_fields] =
-            {
-              building_reference_number: lprn_test_value,
-              standard_emissions: nil,
-              primary_energy: nil,
-            }
-        }
+  schema
+    .select { |hash| hash[:schema_name].include?("4") }
+    .map { |selected_hash| selected_hash[:different_fields] = different_fields }
 
-  schema.select { |hash|  hash[:schema_name].include?("4") }
-        .map { |selected_hash|
-          selected_hash[:different_fields] =
-            different_fields
-        }
-
-  schema.select { |hash|  hash[:schema_name].include?("3") }
-        .map { |selected_hash|
-          selected_hash[:different_fields] = different_fields_spec_3
-        }
-
-
+  schema
+    .select { |hash| hash[:schema_name].include?("3") }
+    .map do |selected_hash|
+      selected_hash[:different_fields] = different_fields_spec_3
+    end
 end
 
 def report_test_hash
@@ -93,10 +86,3 @@ def report_test_hash
     report_type: "3",
   }
 end
-
-
-
-
-
-
-

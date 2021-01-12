@@ -79,6 +79,24 @@ describe ViewModel::DecRrWrapper do
         },
       },
       {
+        schema_name: "CEPC-5.1",
+        xml: Samples.xml("CEPC-6.0", "dec-rr"),
+        unsupported_fields: [],
+        different_fields: {},
+        different_buried_fields: {
+          address: { address_id: "LPRN-000000000001" },
+        },
+      },
+      {
+        schema_name: "CEPC-5.1",
+        xml: Samples.xml("CEPC-6.0", "dec-rr-ni"),
+        unsupported_fields: [],
+        different_fields: { date_of_expiry: "2027-05-03" },
+        different_buried_fields: {
+          address: { address_id: "LPRN-000000000001", postcode: "BT0 0AA" },
+        },
+      },
+      {
         schema_name: "CEPC-5.0",
         xml: Samples.xml("CEPC-5.0", "dec-rr"),
         unsupported_fields: [],
@@ -153,7 +171,8 @@ describe ViewModel::DecRrWrapper do
         scheme_assessor_id: "SPEC000000",
         name: "Mrs Report Writer",
         company_details: {
-          name: "Joe Bloggs Ltd", address: "123 My Street, My City, AB3 4CD"
+          name: "Joe Bloggs Ltd",
+          address: "123 My Street, My City, AB3 4CD",
         },
         contact_details: { email: "a@b.c", telephone: "0921-19037" },
       },
@@ -204,14 +223,11 @@ describe ViewModel::DecRrWrapper do
       site_service_two: { description: "Gas", quantity: "72956" },
       site_service_three: { description: "Not used", quantity: "0" },
       related_rrn: "0000-0000-0000-0000-1111",
-
     }.freeze
 
     it "should read the appropriate values from the XML doc  using the to hash method" do
       test_xml_doc(supported_schema, asserted_keys)
     end
-
-
 
     it "returns the expect error without a valid schema type" do
       expect {

@@ -248,15 +248,15 @@
       </OR-Previous-Data>
       <OR-Benchmark-Data>
         <Main-Benchmark></Main-Benchmark>
-          <Benchmark-1>
-            <Area-Metric></Area-Metric>
-            <Benchmark></Benchmark>
-            <Floor-Area>10</Floor-Area>
-            <Name></Name>
-            <Special-Uses-Area></Special-Uses-Area>
-            <Occupancy-Level>level</Occupancy-Level>
-            <TUFA></TUFA>
-          </Benchmark-1>
+        <Benchmark-1>
+          <Area-Metric></Area-Metric>
+          <Benchmark></Benchmark>
+          <Floor-Area>10</Floor-Area>
+          <Name></Name>
+          <Special-Uses-Area></Special-Uses-Area>
+          <Occupancy-Level>level</Occupancy-Level>
+          <TUFA></TUFA>
+        </Benchmark-1>
       </OR-Benchmark-Data>
       <OR-Energy-Consumption>
         <Electricity>

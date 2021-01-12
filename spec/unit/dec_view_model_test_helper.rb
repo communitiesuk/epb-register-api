@@ -38,7 +38,6 @@ def set_supported_schema
       different_fields: { date_of_expiry: "2020-12-31" },
       different_buried_fields: { address: { postcode: ni_postcode } },
     },
-
     {
       schema_name: "CEPC-7.1",
       xml: Samples.xml("CEPC-7.1", "dec-ni"),
@@ -48,7 +47,6 @@ def set_supported_schema
         address: { address_id: lprn, postcode: ni_postcode },
       },
     },
-
     {
       schema_name: "CEPC-7.0",
       xml: Samples.xml("CEPC-7.0", "dec-ni"),
@@ -68,6 +66,15 @@ def set_supported_schema
       },
     },
     {
+      schema_name: "CEPC-5.1",
+      xml: Samples.xml("CEPC-5.1", "dec-ni"),
+      unsupported_fields: [],
+      different_fields: { date_of_expiry: "2020-12-31" },
+      different_buried_fields: {
+        address: { address_id: lprn, postcode: ni_postcode },
+      },
+    },
+    {
       schema_name: "CEPC-5.0",
       xml: Samples.xml("CEPC-5.0", "dec-ni"),
       unsupported_fields: [],
@@ -76,7 +83,6 @@ def set_supported_schema
         address: { address_id: lprn, postcode: ni_postcode },
       },
     },
-
     {
       schema_name: "CEPC-4.0",
       xml: Samples.xml("CEPC-4.0", "dec-ni"),
@@ -86,7 +92,6 @@ def set_supported_schema
         address: { address_id: lprn, postcode: ni_postcode },
       },
     },
-
     {
       schema_name: "CEPC-3.1",
       xml: Samples.xml("CEPC-3.1", "dec-ni"),
@@ -97,10 +102,9 @@ def set_supported_schema
       },
     },
   ]
-
 end
 
-def get_schema(name, xml, different_fields={}, different_buried_fields={})
+def get_schema(name, xml, different_fields = {}, different_buried_fields = {})
   merged_different_fields = different_fields.merge(different_buried_fields)
   {
     schema_name: name,
@@ -108,7 +112,7 @@ def get_schema(name, xml, different_fields={}, different_buried_fields={})
     unsupported_fields: [],
     different_fields: merged_different_fields,
     different_buried_fields: {},
-    }
+  }
 end
 
 # set the expected hash to test to be reused by both sets of test (dec_spec & export usecase)
@@ -157,8 +161,6 @@ def report_test_hash
     building_environment: "Heating and Natural Ventilation",
     building_category: "C1",
     report_type: "1",
-
-
   }
 end
 
@@ -166,19 +168,22 @@ end
 def update_schema_for_report
   schema = set_supported_schema
   report_schema = [] # new hash to hold schema
+
   # loop over existing schema
-  schema.each do  |index|
+  schema.each do |index|
     different_fields = index[:different_fields]
+
     # check schemas and update different fields based on their types
-    if !index[:schema_name].include?("8")
-      different_fields[:building_reference_number]  = lprn
+    unless index[:schema_name].include?("8")
+      different_fields[:building_reference_number] = lprn
     end
 
     if index[:schema_name].include?("CEPC-8")
-      different_fields = { date_of_expiry: index[:different_fields][:date_of_expiry], }
+      different_fields = {
+        date_of_expiry: index[:different_fields][:date_of_expiry],
+      }
       different_fields.merge(index[:different_fields][:technical_information])
-      different_fields[:total_floor_area]= "9000"
-
+      different_fields[:total_floor_area] = "9000"
     end
 
     if index[:schema_name].include?("4.0")
@@ -195,11 +200,14 @@ def update_schema_for_report
 
     if index[:different_buried_fields]
       if index[:different_buried_fields][:address]
-        different_fields[:postcode] = index[:different_buried_fields][:address][:postcode]
+        different_fields[:postcode] =
+          index[:different_buried_fields][:address][:postcode]
       end
     end
+
     # set hash into return array
-    report_schema << get_schema(index[:schema_name], index[:xml], different_fields,)
+    report_schema <<
+      get_schema(index[:schema_name], index[:xml], different_fields)
   end
 
   report_schema
@@ -210,6 +218,3 @@ def update_test_hash(args = {})
   hash = report_test_hash
   hash.merge!(args)
 end
-
-
-

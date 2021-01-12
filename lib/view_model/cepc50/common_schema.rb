@@ -2,7 +2,7 @@ module ViewModel
   module Cepc50
     class CommonSchema
       # This class should contain fields only that are common
-      # to ALL types of CEPC-7.0 documents: CEPC, RR, DEC, AC, etc
+      # to ALL types of CEPC-5.0 documents: CEPC, RR, DEC, AC, etc
 
       def initialize(xml)
         @xml_doc = Nokogiri.XML xml

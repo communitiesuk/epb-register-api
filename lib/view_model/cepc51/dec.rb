@@ -82,7 +82,7 @@ module ViewModel
       end
 
       def occupancy_level
-        xpath(%w[Benchmarks Benchmark Occupancy-Level])
+        xpath(%w[Occupancy-Level])
       end
 
       def main_heating_fuel
@@ -158,16 +158,19 @@ module ViewModel
       end
 
       def or_energy_consumption
-        @xml_doc.search("OR-Energy-Consumption").children.select(&:element?)
+        @xml_doc
+          .search("OR-Energy-Consumption")
+          .children
+          .select(&:element?)
           .map do |node|
-          {
-            consumption: xpath(%w[Consumption], node),
-            start_date: xpath(%w[Start-Date], node),
-            end_date: xpath(%w[End-Date], node),
-            estimate: xpath(%w[Estimate], node),
-            name: node.name,
-          }
-        end
+            {
+              consumption: xpath(%w[Consumption], node),
+              start_date: xpath(%w[Start-Date], node),
+              end_date: xpath(%w[End-Date], node),
+              estimate: xpath(%w[Estimate], node),
+              name: node.name,
+            }
+          end
       end
 
       def annual_energy_summary
@@ -180,6 +183,34 @@ module ViewModel
           typical_thermal_use: xpath(%w[Typical-Thermal-Use], summary),
           typical_electrical_use: xpath(%w[Typical-Electrical-Use], summary),
         }
+      end
+
+      def property_type
+        xpath(%w[Property-Type])
+      end
+
+      def main_benchmark
+        xpath(%w[OR-Benchmark-Data Main-Benchmark])
+      end
+
+      def ac_inpsection_commissioned
+        xpath(%w[AC-Inspection-Commissioned])
+      end
+
+      def ac_present
+        xpath(%w[AC-Present])
+      end
+
+      def ac_kw_rating
+        xpath(%w[AC-kW-Rating])
+      end
+
+      def estimated_ac_kw_rating
+        xpath(%w[AC-Estimated-Output])
+      end
+
+      def building_category
+        xpath(%w[Building-Category])
       end
     end
   end

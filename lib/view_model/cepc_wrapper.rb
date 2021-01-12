@@ -73,7 +73,7 @@ module ViewModel
           building_environment: @view_model.building_environment,
           floor_area: @view_model.floor_area,
           building_level: @view_model.building_level,
-          #other_fuel_description: @view_model.other_fuel_description,
+          # other_fuel_description: @view_model.other_fuel_description,
         },
         building_emission_rate: @view_model.building_emission_rate,
         primary_energy_use: @view_model.primary_energy_use,
@@ -94,7 +94,8 @@ module ViewModel
             telephone: @view_model.assessor_telephone,
           },
           company_details: {
-            name: @view_model.company_name, address: @view_model.company_address
+            name: @view_model.company_name,
+            address: @view_model.company_address,
           },
         },
         related_party_disclosure: @view_model.epc_related_party_disclosure,
@@ -102,9 +103,9 @@ module ViewModel
           get_energy_rating_band(@view_model.energy_efficiency_rating.to_i),
         property_type: @view_model.property_type,
         building_complexity: @view_model.building_level,
-
-        }
+      }
     end
+
     # create hash for data requested by Open Data Communities
     # hash keys will be turned into columns for expected csv
     def to_report
@@ -122,7 +123,8 @@ module ViewModel
         posttown: @view_model.town,
         postcode: @view_model.postcode,
         asset_rating: @view_model.energy_efficiency_rating,
-        asset_rating_band:  get_energy_rating_band(@view_model.energy_efficiency_rating.to_i),
+        asset_rating_band:
+          get_energy_rating_band(@view_model.energy_efficiency_rating.to_i),
         property_type: @view_model.property_type,
         transaction_type: @view_model.transaction_type,
         new_build_benchmark: @view_model.new_build_rating,
@@ -134,18 +136,23 @@ module ViewModel
         floor_area: @view_model.floor_area,
         standard_emissions: @view_model.standard_emissions,
         target_emissions: @view_model.target_emissions,
-        typical_emissions:  @view_model.typical_emissions,
+        typical_emissions: @view_model.typical_emissions,
         building_emissions: @view_model.building_emission_rate,
         building_environment: @view_model.building_environment,
         # open data request for return value to be Y OR N
-        aircon_present:  @view_model.ac_present != nil && @view_model.ac_present.upcase == "YES" ? "Y" : "N",
+        aircon_present:
+          if !@view_model.ac_present.nil? &&
+              @view_model.ac_present.upcase == "YES"
+            "Y"
+          else
+            "N"
+          end,
         aircon_kw_rating: @view_model.ac_kw_rating,
         estimated_aircon_kw_rating: @view_model.estimated_ac_kw_rating,
         ac_inpsection_commissioned: @view_model.ac_inpsection_commissioned,
-        primary_energy:  @view_model.primary_energy_use,
-        other_fuel_desc: @view_model.other_fuel_description
+        primary_energy: @view_model.primary_energy_use,
+        other_fuel_desc: @view_model.other_fuel_description,
       }
-
     end
 
     def get_view_model

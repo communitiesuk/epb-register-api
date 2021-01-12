@@ -6,14 +6,14 @@ VALID_ASSESSOR_REQUEST_BODY = {
   searchResultsComparisonPostcode: "",
   qualifications: { domesticRdSap: "ACTIVE" },
   contactDetails: {
-    telephoneNumber: "010199991010101", email: "person@person.com"
+    telephoneNumber: "010199991010101",
+    email: "person@person.com",
   },
 }.freeze
 
 
 
 class Samples
-
   def self.xml(schema, type = "epc")
     path = File.join Dir.pwd, "spec/fixtures/samples/#{schema}/#{type}.xml"
 
@@ -34,7 +34,6 @@ class Samples
 
   # @TODO move to separate file and define as Mixin
   module ViewModels
-
     def self.NI_PostCode
       "BT0 0AA"
     end
@@ -48,6 +47,7 @@ class Samples
         [
           {
             schema_name: "CEPC-8.0.0",
+            schema_type: "dec-large-building",
             xml: Samples.xml("CEPC-8.0.0", "dec-large-building"),
             unsupported_fields: [],
             different_fields: {
@@ -69,14 +69,15 @@ class Samples
           },
           {
             schema_name: "CEPC-NI-8.0.0",
+            schema_type: "dec",
             xml: Samples.xml("CEPC-NI-8.0.0", "dec"),
             unsupported_fields: [],
             different_fields: { date_of_expiry: "2020-12-31" },
             different_buried_fields: { address: { postcode: Samples::ViewModels.NI_PostCode } },
           },
-
           {
             schema_name: "CEPC-7.1",
+            schema_type: "dec-ni",
             xml: Samples.xml("CEPC-7.1", "dec-ni"),
             unsupported_fields: [],
             different_fields: { date_of_expiry: "2020-12-31" },
@@ -84,9 +85,9 @@ class Samples
               address: { address_id: Samples::ViewModels.Lprn_code, postcode: Samples::ViewModels.NI_PostCode },
             },
           },
-
           {
             schema_name: "CEPC-7.0",
+            schema_type: "dec-ni",
             xml: Samples.xml("CEPC-7.0", "dec-ni"),
             unsupported_fields: [],
             different_fields: { date_of_expiry: "2020-12-31" },
@@ -96,6 +97,7 @@ class Samples
           },
           {
             schema_name: "CEPC-6.0",
+            schema_type: "dec-ni",
             xml: Samples.xml("CEPC-6.0", "dec-ni"),
             unsupported_fields: [],
             different_fields: { date_of_expiry: "2020-12-31" },
@@ -104,7 +106,18 @@ class Samples
             },
           },
           {
+            schema_name: "CEPC-5.1",
+            schema_type: "dec-ni",
+            xml: Samples.xml("CEPC-5.1", "dec-ni"),
+            unsupported_fields: [],
+            different_fields: { date_of_expiry: "2020-12-31" },
+            different_buried_fields: {
+              address: { address_id: Samples::ViewModels.Lprn_code, postcode: Samples::ViewModels.NI_PostCode },
+            },
+          },
+          {
             schema_name: "CEPC-5.0",
+            schema_type: "dec-ni",
             xml: Samples.xml("CEPC-5.0", "dec-ni"),
             unsupported_fields: [],
             different_fields: { date_of_expiry: "2020-12-31" },
@@ -112,9 +125,9 @@ class Samples
               address: { address_id: Samples::ViewModels.Lprn_code, postcode: Samples::ViewModels.NI_PostCode },
             },
           },
-
           {
             schema_name: "CEPC-4.0",
+            schema_type: "dec-ni",
             xml: Samples.xml("CEPC-4.0", "dec-ni"),
             unsupported_fields: [],
             different_fields: { date_of_expiry: "2020-12-31" },
@@ -122,9 +135,9 @@ class Samples
               address: { address_id: Samples::ViewModels.Lprn_code, postcode: Samples::ViewModels.NI_PostCode },
             },
           },
-
           {
             schema_name: "CEPC-3.1",
+            schema_type: "dec-ni",
             xml: Samples.xml("CEPC-3.1", "dec-ni"),
             unsupported_fields: [],
             different_fields: { date_of_expiry: "2020-12-31" },
@@ -133,20 +146,26 @@ class Samples
             },
           },
         ]
-
       end
 
-      def self.get_schema(name, xml, different_fields={}, different_buried_fields={})
-        merged_different_fields = different_fields.merge(different_buried_fields)
+      def self.get_schema(
+        name,
+        type,
+        xml,
+        different_fields = {},
+        different_buried_fields = {}
+      )
+        merged_different_fields =
+          different_fields.merge(different_buried_fields)
         {
           schema_name: name,
+          schema_type: type,
           xml: xml,
           unsupported_fields: [],
           different_fields: merged_different_fields,
           different_buried_fields: {},
         }
       end
-
 
       def self.report_test_hash
         {
@@ -193,27 +212,31 @@ class Samples
           building_environment: "Heating and Natural Ventilation",
           building_category: "C1",
           report_type: "1",
-
-
         }
       end
 
       def self.update_schema_for_report
-        schema = self.supported_schema
+        schema = supported_schema
         report_schema = [] # new hash to hold schema
+
         # loop over existing schema
-        schema.each do  |index|
+        schema.each do |index|
           different_fields = index[:different_fields]
+
           # check schemas and update different fields based on their types
-          if !index[:schema_name].include?("8")
-            different_fields[:building_reference_number]  = Samples::ViewModels.Lprn_code
+          unless index[:schema_name].include?("8")
+            different_fields[:building_reference_number] =
+              Samples::ViewModels.Lprn_code
           end
 
           if index[:schema_name].include?("CEPC-8")
-            different_fields = { date_of_expiry: index[:different_fields][:date_of_expiry], }
-            different_fields.merge(index[:different_fields][:technical_information])
-            different_fields[:total_floor_area]= "9000"
-
+            different_fields = {
+              date_of_expiry: index[:different_fields][:date_of_expiry],
+            }
+            different_fields.merge(
+              index[:different_fields][:technical_information],
+            )
+            different_fields[:total_floor_area] = "9000"
           end
 
           if index[:schema_name].include?("4.0")
@@ -230,78 +253,111 @@ class Samples
 
           if index[:different_buried_fields]
             if index[:different_buried_fields][:address]
-              different_fields[:postcode] = index[:different_buried_fields][:address][:postcode]
+              different_fields[:postcode] =
+                index[:different_buried_fields][:address][:postcode]
             end
           end
+
           # set hash into return array
-          report_schema << get_schema(index[:schema_name], index[:xml], different_fields,)
+          report_schema <<
+            get_schema(index[:schema_name], index[:schema_type], index[:xml], different_fields)
         end
 
         report_schema
       end
     end
 
-
     module Cepc
-
       def self.supported_schema
         [
           {
             schema_name: "CEPC-8.0.0",
+            schema_type: "cepc",
             xml: Samples.xml("CEPC-8.0.0", "cepc"),
             unsupported_fields: [],
             different_fields: { related_rrn: nil },
           },
           {
             schema_name: "CEPC-NI-8.0.0",
+            schema_type: "cepc",
             xml: Samples.xml("CEPC-NI-8.0.0", "cepc"),
             unsupported_fields: [],
             different_fields: {},
           },
           {
             schema_name: "CEPC-7.1",
+            schema_type: "cepc",
             xml: Samples.xml("CEPC-7.1", "cepc"),
             unsupported_fields: [],
             different_fields: {},
-            different_buried_fields: { address: { address_id: Samples::ViewModels.Lprn_code } },
+            different_buried_fields: {
+              address: { address_id: Samples::ViewModels.Lprn_code },
+            },
           },
           {
             schema_name: "CEPC-7.0",
+            schema_type: "cepc",
             xml: Samples.xml("CEPC-7.0", "cepc"),
             unsupported_fields: %i[primary_energy_use],
-            different_fields: {primary_energy: nil,},
-            different_buried_fields: { address: { address_id: Samples::ViewModels.Lprn_code } },
+            different_fields: { primary_energy: nil },
+            different_buried_fields: {
+              address: { address_id: Samples::ViewModels.Lprn_code },
+            },
           },
           {
             schema_name: "CEPC-6.0",
+            schema_type: "cepc",
             xml: Samples.xml("CEPC-6.0", "cepc"),
             unsupported_fields: %i[primary_energy_use],
-            different_fields: { other_fuel_description: "Test", primary_energy: nil,},
-            different_buried_fields: { address: { address_id: Samples::ViewModels.Lprn_code }},
+            different_fields: {
+              other_fuel_description: "Test",
+              primary_energy: nil,
+            },
+            different_buried_fields: {
+              address: { address_id: Samples::ViewModels.Lprn_code },
+            },
+          },
+          {
+            schema_name: "CEPC-5.1",
+            schema_type: "cepc",
+            xml: Samples.xml("CEPC-5.1", "cepc"),
+            unsupported_fields: %i[primary_energy_use],
+            different_fields: {},
+            different_buried_fields: {
+              address: { address_id: lprn_test_value },
+            },
           },
           {
             schema_name: "CEPC-5.0",
+            schema_type: "cepc",
             xml: Samples.xml("CEPC-5.0", "cepc"),
             unsupported_fields: %i[primary_energy_use],
-            different_fields: { },
-            different_buried_fields: { address: { address_id: Samples::ViewModels.Lprn_code } },
+            different_fields: {},
+            different_buried_fields: {
+              address: { address_id: Samples::ViewModels.Lprn_code },
+            },
           },
           {
             schema_name: "CEPC-4.0",
+            schema_type: "cepc",
             xml: Samples.xml("CEPC-4.0", "cepc"),
             unsupported_fields: %i[primary_energy_use],
-            different_fields: { building_emission_rate: nil, },
-            different_buried_fields: { address: { address_id: Samples::ViewModels.Lprn_code }  },
+            different_fields: { building_emission_rate: nil },
+            different_buried_fields: {
+              address: { address_id: Samples::ViewModels.Lprn_code },
+            },
           },
           {
             schema_name: "CEPC-3.1",
+            schema_type: "cepc",
             xml: Samples.xml("CEPC-3.1", "cepc"),
             unsupported_fields: %i[primary_energy_use],
-            different_fields: { building_emission_rate: nil,  },
-            different_buried_fields: { address: { address_id: Samples::ViewModels.Lprn_code }  },
+            different_fields: { building_emission_rate: nil },
+            different_buried_fields: {
+              address: { address_id: Samples::ViewModels.Lprn_code },
+            },
           },
         ]
-
       end
 
       def self.report_test_hash
@@ -343,63 +399,56 @@ class Samples
 
       def self.different_fields
         {
-          building_reference_number:  Samples::ViewModels.Lprn_code,
+          building_reference_number: Samples::ViewModels.Lprn_code,
           transaction_type: nil,
           target_emissions: nil,
           typical_emissions: nil,
           building_emission_rate: nil,
           building_emission: nil,
           standard_emissions: nil,
-          building_emissions:nil,
+          building_emissions: nil,
           primary_energy: nil,
-
         }
       end
 
-
       def self.update_schema_for_report(schema)
+        schema
+          .select { |hash| !hash[:schema_name].include?("8") }
+          .map do |selected_hash|
+            selected_hash[:different_fields][:building_reference_number] =
+              Samples::ViewModels.Lprn_code
+          end
 
-        schema.select { |hash|  !hash[:schema_name].include?("8") }
-              .map { |selected_hash|
-                selected_hash[:different_fields][:building_reference_number] =Samples::ViewModels.Lprn_code
-              }
+        schema
+          .select { |hash| hash[:schema_name].include?("5") }
+          .map do |selected_hash|
+            selected_hash[:different_fields] = {
+              building_reference_number: Samples::ViewModels.Lprn_code,
+              standard_emissions: nil,
+              primary_energy: nil,
+            }
+          end
 
-        schema.select { |hash|  hash[:schema_name].include?("5") }
-              .map { |selected_hash|
-                selected_hash[:different_fields] =
-                  {
-                    building_reference_number: Samples::ViewModels.Lprn_code,
-                    standard_emissions: nil,
-                    primary_energy: nil,
-                  }
-              }
-
-        schema.select { |hash|  hash[:schema_name].include?("4") }
-              .map { |selected_hash|
-                selected_hash[:different_fields] =
-                  different_fields
-              }
-
+        schema
+          .select { |hash| hash[:schema_name].include?("4") }
+          .map do |selected_hash|
+            selected_hash[:different_fields] = different_fields
+          end
 
         schema3_extra_different_fields = {
           other_fuel_description: nil,
           estimated_aircon_kw_rating: nil,
           ac_inpsection_commissioned: nil,
-          aircon_kw_rating:nil,
+          aircon_kw_rating: nil,
         }
 
-        schema.select { |hash|  hash[:schema_name].include?("3") }
-              .map { |selected_hash|
-                selected_hash[:different_fields] =  different_fields.merge(schema3_extra_different_fields)
-              }
-
-
+        schema
+          .select { |hash| hash[:schema_name].include?("3") }
+          .map do |selected_hash|
+            selected_hash[:different_fields] =
+              different_fields.merge(schema3_extra_different_fields)
+          end
       end
-
-
     end
-
-
   end
-
 end

@@ -53,7 +53,8 @@ module ViewModel
           scheme_assessor_id: @view_model.scheme_assessor_id,
           name: @view_model.assessor_name,
           company_details: {
-            name: @view_model.company_name, address: @view_model.company_address
+            name: @view_model.company_name,
+            address: @view_model.company_address,
           },
           contact_details: {
             email: @view_model.assessor_email,
@@ -78,9 +79,6 @@ module ViewModel
 
     def to_report
       # add recommendations into a single array
-      #
-
-
       payback_type =  []
       payback_type << @view_model.short_payback_recommendations[0]
       payback_type << @view_model.medium_payback_recommendations[0]
@@ -90,12 +88,10 @@ module ViewModel
       {
         rrn: @view_model.assessment_id,
         payback_type: payback_type
-
       }
     end
 
     def recomendation_hash(node)
-
       {
         payback_type: "node"
 

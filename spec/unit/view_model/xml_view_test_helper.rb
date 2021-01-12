@@ -1,6 +1,8 @@
 def test_xml_doc(supported_schema, asserted_keys, test_report = false)
   supported_schema.each do |schema|
-    view_model = ViewModel::Factory.new.create(schema[:xml], schema[:schema_name], nil)
+    view_model =
+      ViewModel::Factory.new.create(schema[:xml], schema[:schema_name], nil)
+
     # test either to has or to report
     view_model.class
     view_model = test_report ? view_model.to_report : view_model.to_hash
@@ -24,7 +26,7 @@ def test_xml_doc(supported_schema, asserted_keys, test_report = false)
                             "     GOT: \"#{result}\"\n"
       else
         expect(result).to eq(value),
-                          "Failed on #{schema[:schema_name]}:#{key}\n" \
+                          "Failed on #{schema[:schema_name]}:#{schema[:schema_type]}:#{key}\n" \
                             "EXPECTED: \"#{value}\"\n" \
                             "     GOT: \"#{result}\"\n"
       end
@@ -32,15 +34,10 @@ def test_xml_doc(supported_schema, asserted_keys, test_report = false)
   end
 end
 
-
-
-
 def lprn_test_value
   "LPRN-000000000001"
 end
 
 def uprn_test_value
-  lprn_test_value.gsub('LPRN', "UPRN")
+  lprn_test_value.gsub("LPRN", "UPRN")
 end
-
-

@@ -44,6 +44,15 @@ describe ViewModel::CepcRrWrapper do
         },
       },
       {
+        schema_name: "CEPC-5.1",
+        xml: Samples.xml("CEPC-5.1", "cepc-rr"),
+        unsupported_fields: [],
+        different_fields: {},
+        different_buried_fields: {
+          address: { address_id: "LPRN-000000000000" },
+        },
+      },
+      {
         schema_name: "CEPC-5.0",
         xml: Samples.xml("CEPC-5.0", "cepc-rr"),
         unsupported_fields: [],
@@ -95,7 +104,8 @@ describe ViewModel::CepcRrWrapper do
         scheme_assessor_id: "SPEC000000",
         name: "Mrs Report Writer",
         company_details: {
-          name: "Joe Bloggs Ltd", address: "123 My Street, My City, AB3 4CD"
+          name: "Joe Bloggs Ltd",
+          address: "123 My Street, My City, AB3 4CD",
         },
         contact_details: { email: "a@b.c", telephone: "012345" },
       },
