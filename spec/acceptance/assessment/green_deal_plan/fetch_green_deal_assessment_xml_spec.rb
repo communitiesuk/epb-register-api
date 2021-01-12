@@ -51,7 +51,8 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessmentXml" do
     it "will return error 400, assessment id not valid" do
       error_response =
         fetch_green_deal_assessment_xml(
-          assessment_id: "randomly-wrong-rrn", accepted_responses: [400],
+          assessment_id: "randomly-wrong-rrn",
+          accepted_responses: [400],
         ).body
 
       expect(
@@ -66,7 +67,8 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessmentXml" do
 
       error_response =
         fetch_green_deal_assessment_xml(
-          assessment_id: "0000-0000-0000-0000-0000", accepted_responses: [403],
+          assessment_id: "0000-0000-0000-0000-0000",
+          accepted_responses: [403],
         ).body
 
       expect(
@@ -79,7 +81,8 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessmentXml" do
     it "will return error 404, assessment not found" do
       error_response =
         fetch_green_deal_assessment_xml(
-          assessment_id: "0000-0000-0000-0000-0000", accepted_responses: [404],
+          assessment_id: "0000-0000-0000-0000-0000",
+          accepted_responses: [404],
         ).body
 
       expect(
@@ -101,7 +104,8 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessmentXml" do
 
       error_response =
         fetch_green_deal_assessment_xml(
-          assessment_id: "0000-0000-0000-0000-0000", accepted_responses: [410],
+          assessment_id: "0000-0000-0000-0000-0000",
+          accepted_responses: [410],
         ).body
 
       expect(
@@ -123,7 +127,8 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessmentXml" do
 
       error_response =
         fetch_green_deal_assessment_xml(
-          assessment_id: "0000-0000-0000-0000-0000", accepted_responses: [410],
+          assessment_id: "0000-0000-0000-0000-0000",
+          accepted_responses: [410],
         ).body
 
       expect(

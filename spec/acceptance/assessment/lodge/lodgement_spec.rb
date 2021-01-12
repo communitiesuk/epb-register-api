@@ -5,14 +5,20 @@ describe "Acceptance::Assessment::Lodge" do
 
   let(:valid_assessor_request_body) do
     AssessorStub.new.fetch_request_body(
-      domesticRdSap: "ACTIVE", nonDomesticNos3: "ACTIVE", nonDomesticDec: "ACTIVE", nonDomesticCc4: "ACTIVE", nonDomesticSp3: "ACTIVE"
+      domesticRdSap: "ACTIVE",
+      nonDomesticNos3: "ACTIVE",
+      nonDomesticDec: "ACTIVE",
+      nonDomesticCc4: "ACTIVE",
+      nonDomesticSp3: "ACTIVE",
     )
   end
 
   let(:valid_rdsap_xml) { Samples.xml "RdSAP-Schema-20.0.0" }
   let(:valid_cepc_rr_xml) { Samples.xml "CEPC-8.0.0", "cepc+rr" }
   let(:valid_dec_rr_xml) { Samples.xml "CEPC-8.0.0", "dec+rr" }
-  let(:valid_ac_cert_report_xml) { Samples.xml "CEPC-8.0.0", "ac-cert+ac-report" }
+  let(:valid_ac_cert_report_xml) do
+    Samples.xml "CEPC-8.0.0", "ac-cert+ac-report"
+  end
 
   context "rejecting lodgements" do
     let(:scheme_id) { add_scheme_and_get_id }
@@ -209,9 +215,12 @@ describe "Acceptance::Assessment::Lodge" do
       )
 
       overidden_lodgement_event =
-        ActiveRecord::Base.connection.execute(
-          "SELECT * FROM overidden_lodgement_events WHERE assessment_id = '0000-0000-0000-0000-0000'",
-        ).first
+        ActiveRecord::Base
+          .connection
+          .execute(
+            "SELECT * FROM overidden_lodgement_events WHERE assessment_id = '0000-0000-0000-0000-0000'",
+          )
+          .first
 
       expect(overidden_lodgement_event["assessment_id"]).to eq(
         "0000-0000-0000-0000-0000",
@@ -223,7 +232,6 @@ describe "Acceptance::Assessment::Lodge" do
   end
 
   context "when lodging a valid assessment" do
-
     it "returns the correct response for RdSAP" do
       scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
@@ -260,17 +268,22 @@ describe "Acceptance::Assessment::Lodge" do
             assessment_body: valid_cepc_rr_xml,
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "CEPC-8.0.0"
-            ).body,
+            schema_name: "CEPC-8.0.0",
+          ).body,
           symbolize_names: true,
-          )
+        )
 
       expect(response).to eq(
         {
-          data: { assessments: %w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001] },
+          data: {
+            assessments: %w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001],
+          },
           meta: {
             links: {
-              assessments: %w[/api/assessments/0000-0000-0000-0000-0000 /api/assessments/0000-0000-0000-0000-0001],
+              assessments: %w[
+                /api/assessments/0000-0000-0000-0000-0000
+                /api/assessments/0000-0000-0000-0000-0001
+              ],
             },
           },
         },
@@ -287,17 +300,22 @@ describe "Acceptance::Assessment::Lodge" do
             assessment_body: valid_dec_rr_xml,
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "CEPC-8.0.0"
+            schema_name: "CEPC-8.0.0",
           ).body,
           symbolize_names: true,
-          )
+        )
 
       expect(response).to eq(
         {
-          data: { assessments: %w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001] },
+          data: {
+            assessments: %w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001],
+          },
           meta: {
             links: {
-              assessments: %w[/api/assessments/0000-0000-0000-0000-0000 /api/assessments/0000-0000-0000-0000-0001],
+              assessments: %w[
+                /api/assessments/0000-0000-0000-0000-0000
+                /api/assessments/0000-0000-0000-0000-0001
+              ],
             },
           },
         },
@@ -314,17 +332,22 @@ describe "Acceptance::Assessment::Lodge" do
             assessment_body: valid_ac_cert_report_xml,
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] },
-            schema_name: "CEPC-8.0.0"
+            schema_name: "CEPC-8.0.0",
           ).body,
           symbolize_names: true,
-          )
+        )
 
       expect(response).to eq(
         {
-          data: { assessments: %w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001] },
+          data: {
+            assessments: %w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001],
+          },
           meta: {
             links: {
-              assessments: %w[/api/assessments/0000-0000-0000-0000-0000 /api/assessments/0000-0000-0000-0000-0001],
+              assessments: %w[
+                /api/assessments/0000-0000-0000-0000-0000
+                /api/assessments/0000-0000-0000-0000-0001
+              ],
             },
           },
         },
@@ -436,7 +459,9 @@ describe "Acceptance::Assessment::Lodge" do
   context "security" do
     it "returns 401 with no authentication" do
       lodge_assessment(
-        assessment_body: "body", accepted_responses: [401], authenticate: false,
+        assessment_body: "body",
+        accepted_responses: [401],
+        authenticate: false,
       )
     end
 

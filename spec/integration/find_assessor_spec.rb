@@ -58,7 +58,9 @@ describe "Integration::FilterAndOrderAssessorsByPostcode" do
         expect(response).to eq(
           [
             {
-              'postcode': "BF1 3AD", 'latitude': 27.7172, 'longitude': -85.3240
+              'postcode': "BF1 3AD",
+              'latitude': 27.7172,
+              'longitude': -85.3240,
             },
           ],
         )

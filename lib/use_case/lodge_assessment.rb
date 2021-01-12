@@ -128,16 +128,22 @@ module UseCase
 
     def find_related_rrn(wrapper_hash)
       related_rrn = nil
+
       # related-rrn: AC-CERT AC-REPORT CEPC DEC-RR
-      related_rrn = wrapper_hash[:related_rrn] unless wrapper_hash[:related_rrn].nil?
+      related_rrn = wrapper_hash[:related_rrn] unless wrapper_hash[:related_rrn]
+        .nil?
+
       # related_certificate: CEPC-RR
-      related_rrn = wrapper_hash[:related_certificate] unless wrapper_hash[:related_certificate].nil?
+      related_rrn = wrapper_hash[:related_certificate] unless wrapper_hash[
+        :related_certificate
+      ].nil?
+
       # administrative_information->related_rrn: DEC
-      if related_rrn.nil? && !wrapper_hash.dig(:administrative_information, :related_rrn).nil?
+      if related_rrn.nil? &&
+          !wrapper_hash.dig(:administrative_information, :related_rrn).nil?
         related_rrn = wrapper_hash[:administrative_information][:related_rrn]
       end
       related_rrn
     end
-
   end
 end

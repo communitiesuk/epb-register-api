@@ -69,6 +69,7 @@ module UseCase
               '
         ',
           )
+
         # puts "Done getting batch #{start} from DB at #{Time.now}"
 
         data = []
@@ -96,9 +97,11 @@ module UseCase
               ADDRESS4: hash[:address][:address_line4],
               POSTTOWN: hash[:address][:town],
               POSTCODE: hash[:address][:postcode],
-              CURRENT_ENERGY_EFFICIENCY: hash[:current_energy_efficiency_rating],
+              CURRENT_ENERGY_EFFICIENCY:
+                hash[:current_energy_efficiency_rating],
               CURRENT_ENERGY_RATING: hash[:current_energy_efficiency_band],
-              POTENTIAL_ENERGY_EFFICIENCY: hash[:potential_energy_efficiency_rating],
+              POTENTIAL_ENERGY_EFFICIENCY:
+                hash[:potential_energy_efficiency_rating],
               POTENTIAL_ENERGY_RATING: hash[:potential_energy_efficiency_band],
               CONSTRUCTION_AGE_BAND: hash[:property_age_band],
               PROPERTY_TYPE: hash[:dwelling_type],
@@ -117,8 +120,10 @@ module UseCase
               MAIN_FUEL: hash[:main_fuel_type],
               TRANSACTION_TYPE: hash[:transaction_type],
               ENVIRONMENT_IMPACT_CURRENT: hash[:environmental_impact_current],
-              ENVIRONMENT_IMPACT_POTENTIAL: hash[:environmental_impact_potential],
-              CO2_EMISS_CURR_PER_FLOOR_AREA: hash[:co2_emissions_current_per_floor_area],
+              ENVIRONMENT_IMPACT_POTENTIAL:
+                hash[:environmental_impact_potential],
+              CO2_EMISS_CURR_PER_FLOOR_AREA:
+                hash[:co2_emissions_current_per_floor_area],
               MAINS_GAS_FLAG: hash[:mains_gas],
               LEVEL: hash[:level],
               FLAT_TOP_STOREY: hash[:top_storey],
@@ -132,11 +137,10 @@ module UseCase
 
         # puts "Done preparing array for CSV at #{Time.now}"
 
-        results <<
-          CSV.generate(
-            write_headers: (start == 0),
-            headers: data.first ? data.first.keys : [],
-          ) { |csv| data.each { |row| csv << row } }
+        results << CSV.generate(
+          write_headers: (start == 0),
+          headers: data.first ? data.first.keys : [],
+        ) { |csv| data.each { |row| csv << row } }
 
         start += batch.to_i
 

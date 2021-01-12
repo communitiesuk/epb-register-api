@@ -11,8 +11,8 @@ describe "Acceptance::AssessmentSummary::AC-REPORT" do
         AssessorStub.new.fetch_request_body(
           nonDomesticSp3: "ACTIVE",
           nonDomesticCc4: "ACTIVE",
-            ),
-          )
+        ),
+      )
     end
 
     %w[
@@ -26,28 +26,29 @@ describe "Acceptance::AssessmentSummary::AC-REPORT" do
       CEPC-4.0
     ].each do |schema_name|
       context "when the report was lodged with schema #{schema_name}" do
-        before do
-          lodge_test_ac_report(scheme_id, schema_name)
-        end
+        before { lodge_test_ac_report(scheme_id, schema_name) }
 
         let(:summary) do
           JSON.parse(
             fetch_assessment_summary("0000-0000-0000-0000-0000").body,
             symbolize_names: true,
-              )
+          )
         end
 
         it "does not return blank recommendation entries" do
-          management_recommendations = summary[:data][:keyRecommendations][:management]
+          management_recommendations =
+            summary[:data][:keyRecommendations][:management]
 
-          empty_recommendations = management_recommendations.filter do |r|
-            r[:text].nil? || r[:text].empty?
-          end
+          empty_recommendations =
+            management_recommendations.filter do |r|
+              r[:text].nil? || r[:text].empty?
+            end
           expect(empty_recommendations).to be_empty
 
-          filled_recommendations = management_recommendations.reject do |r|
-            r[:text].nil? || r[:text].empty?
-          end
+          filled_recommendations =
+            management_recommendations.reject do |r|
+              r[:text].nil? || r[:text].empty?
+            end
           expect(filled_recommendations).not_to be_empty
         end
       end
@@ -62,5 +63,5 @@ def lodge_test_ac_report(scheme_id, schema_name, xml = nil)
     assessment_body: xml,
     auth_data: { scheme_ids: [scheme_id] },
     schema_name: schema_name,
-      )
+  )
 end

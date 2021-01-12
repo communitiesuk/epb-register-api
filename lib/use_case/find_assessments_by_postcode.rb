@@ -16,7 +16,8 @@ module UseCase
 
       postcode = Helper::ValidatePostcodeHelper.new.validate_postcode(postcode)
 
-      unless Regexp.new(Helper::RegexHelper::POSTCODE, Regexp::IGNORECASE)
+      unless Regexp
+               .new(Helper::RegexHelper::POSTCODE, Regexp::IGNORECASE)
                .match(postcode)
         raise PostcodeNotValid
       end

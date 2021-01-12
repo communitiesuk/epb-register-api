@@ -15,9 +15,13 @@ module UseCase
 
     def execute(add_assessor_request, auth_client_id)
       scheme =
-        @schemes_gateway.all.select { |scheme|
-          scheme[:scheme_id].to_s == add_assessor_request.registered_by_id.to_s
-        }.first
+        @schemes_gateway
+          .all
+          .select { |scheme|
+            scheme[:scheme_id].to_s ==
+              add_assessor_request.registered_by_id.to_s
+          }
+          .first
 
       raise SchemeNotFoundException unless scheme
 

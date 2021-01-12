@@ -13,7 +13,13 @@ module Helper
             a[:address_line4],
             b[:postcode],
             a[:town],
-          ].reverse.compact.join(" ").gsub(",", "").gsub("  ", " ").upcase
+          ]
+            .reverse
+            .compact
+            .join(" ")
+            .gsub(",", "")
+            .gsub("  ", " ")
+            .upcase
             .split(" ")
 
         address_b =
@@ -24,7 +30,13 @@ module Helper
             b[:address_line4],
             b[:postcode],
             b[:town],
-          ].reverse.compact.join(" ").gsub(",", "").gsub("  ", " ").upcase
+          ]
+            .reverse
+            .compact
+            .join(" ")
+            .gsub(",", "")
+            .gsub("  ", " ")
+            .upcase
             .split(" ")
 
         res = 0

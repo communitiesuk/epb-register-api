@@ -167,11 +167,7 @@ describe "Acceptance::Reports::GetAssessmentRRNsBySchemeNameAndType" do
 
       @second_scheme = add_scheme_and_get_id("test scheme two")
 
-      add_assessor(
-        @second_scheme,
-        "SPEC000010",
-        valid_assessor_request_body,
-      )
+      add_assessor(@second_scheme, "SPEC000010", valid_assessor_request_body)
 
       doc = Nokogiri.XML valid_rdsap_xml
       doc.at("RRN").content = "1100-0000-0000-0000-0011"
@@ -195,9 +191,19 @@ describe "Acceptance::Reports::GetAssessmentRRNsBySchemeNameAndType" do
 
       lodged_date = Date.today.strftime("%F")
 
-      expect(response).to include "rrn,scheme_name,type_of_assessment,related_rrn,lodged_at"
-      expect(response).to include "1100-0000-0000-0000-0011,test scheme two,RdSAP,,#{lodged_date}"
-      expect(response).not_to include "0000-0000-0000-0000-0000,test scheme,RdSAP,,#{lodged_date}"
+      expect(
+        response,
+      ).to include "rrn,scheme_name,type_of_assessment,related_rrn,lodged_at"
+      expect(
+        response,
+      ).to include "1100-0000-0000-0000-0011,test scheme two,RdSAP,,#{
+                lodged_date
+              }"
+      expect(
+        response,
+      ).not_to include "0000-0000-0000-0000-0000,test scheme,RdSAP,,#{
+                lodged_date
+              }"
     end
 
     it "returns a report with the correct numbers of lodgements" do
@@ -210,19 +216,59 @@ describe "Acceptance::Reports::GetAssessmentRRNsBySchemeNameAndType" do
 
       lodged_date = Date.today.strftime("%F")
 
-      expect(response).to include "rrn,scheme_name,type_of_assessment,related_rrn,lodged_at"
-      expect(response).to include "0000-0000-0000-0000-0000,test scheme,RdSAP,,#{lodged_date}"
-      expect(response).to include "0000-0000-0000-0000-0001,test scheme,SAP,,#{lodged_date}"
-      expect(response).to include "0000-0000-0000-0000-0002,test scheme,CEPC,,#{lodged_date}"
-      expect(response).to include "0000-0000-0000-0000-0009,test scheme,CEPC-RR,,#{lodged_date}"
-      expect(response).to include "0000-0000-0000-0000-3001,test scheme,CEPC+RR,0000-0000-0000-0000-3000,#{lodged_date}"
-      expect(response).to include "0000-0000-0000-0000-0003,test scheme,DEC,,#{lodged_date}"
-      expect(response).to include "0000-0000-0000-0000-0004,test scheme,DEC-RR,,#{lodged_date}"
-      expect(response).to include "0000-0000-0000-0000-1001,test scheme,DEC+RR,0000-0000-0000-0000-1000,#{lodged_date}"
-      expect(response).to include "0000-0000-0000-0000-0005,test scheme,AC-CERT,,#{lodged_date}"
-      expect(response).to include "0000-0000-0000-0000-0006,test scheme,AC-REPORT,,#{lodged_date}"
-      expect(response).to include "0000-0000-0000-0000-2001,test scheme,AC-REPORT+CERT,0000-0000-0000-0000-2000,#{lodged_date}"
-      expect(response).to include "1100-0000-0000-0000-0011,test scheme two,RdSAP,,#{lodged_date}"
+      expect(
+        response,
+      ).to include "rrn,scheme_name,type_of_assessment,related_rrn,lodged_at"
+      expect(
+        response,
+      ).to include "0000-0000-0000-0000-0000,test scheme,RdSAP,,#{lodged_date}"
+      expect(response).to include "0000-0000-0000-0000-0001,test scheme,SAP,,#{
+                lodged_date
+              }"
+      expect(response).to include "0000-0000-0000-0000-0002,test scheme,CEPC,,#{
+                lodged_date
+              }"
+      expect(
+        response,
+      ).to include "0000-0000-0000-0000-0009,test scheme,CEPC-RR,,#{
+                lodged_date
+              }"
+      expect(
+        response,
+      ).to include "0000-0000-0000-0000-3001,test scheme,CEPC+RR,0000-0000-0000-0000-3000,#{
+                lodged_date
+              }"
+      expect(response).to include "0000-0000-0000-0000-0003,test scheme,DEC,,#{
+                lodged_date
+              }"
+      expect(
+        response,
+      ).to include "0000-0000-0000-0000-0004,test scheme,DEC-RR,,#{lodged_date}"
+      expect(
+        response,
+      ).to include "0000-0000-0000-0000-1001,test scheme,DEC+RR,0000-0000-0000-0000-1000,#{
+                lodged_date
+              }"
+      expect(
+        response,
+      ).to include "0000-0000-0000-0000-0005,test scheme,AC-CERT,,#{
+                lodged_date
+              }"
+      expect(
+        response,
+      ).to include "0000-0000-0000-0000-0006,test scheme,AC-REPORT,,#{
+                lodged_date
+              }"
+      expect(
+        response,
+      ).to include "0000-0000-0000-0000-2001,test scheme,AC-REPORT+CERT,0000-0000-0000-0000-2000,#{
+                lodged_date
+              }"
+      expect(
+        response,
+      ).to include "1100-0000-0000-0000-0011,test scheme two,RdSAP,,#{
+                lodged_date
+              }"
     end
 
     context "when some lodgements are migrated" do

@@ -29,7 +29,6 @@ describe UseCase::ExportOpenDataDec do
             gda: "ACTIVE",
           ),
         )
-
         lodge_assessment(
           assessment_body: dec_xml.to_xml,
           accepted_responses: [201],

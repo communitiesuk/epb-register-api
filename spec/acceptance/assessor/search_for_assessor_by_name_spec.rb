@@ -7,7 +7,8 @@ describe "Searching for an assessor by name" do
       lastName: "Person",
       dateOfBirth: "1991-02-25",
       contactDetails: {
-        telephoneNumber: "010199991010101", email: "person@person.com"
+        telephoneNumber: "010199991010101",
+        email: "person@person.com",
       },
       searchResultsComparisonPostcode: "",
       qualifications: {

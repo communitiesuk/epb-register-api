@@ -166,8 +166,10 @@ module ViewModel
         opt_out: false,
         status: @view_model.status,
         environmental_impact_current: @view_model.environmental_impact_current,
-        environmental_impact_potential: @view_model.environmental_impact_potential,
-        co2_emissions_current_per_floor_area: @view_model.co2_emissions_current_per_floor_area,
+        environmental_impact_potential:
+          @view_model.environmental_impact_potential,
+        co2_emissions_current_per_floor_area:
+          @view_model.co2_emissions_current_per_floor_area,
         mains_gas: @view_model.mains_gas,
         level: @view_model.level,
         top_storey: @view_model.top_storey,
@@ -178,9 +180,7 @@ module ViewModel
       }
     end
 
-    def to_report
-
-    end
+    def to_report; end
 
     def get_view_model
       @view_model

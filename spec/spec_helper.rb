@@ -71,7 +71,11 @@ def get_valid_jwt(scopes = [], sup = {})
 end
 
 def add_postcodes(
-  postcode, latitude = 0, longitude = 0, region = nil, clean = true
+  postcode,
+  latitude = 0,
+  longitude = 0,
+  region = nil,
+  clean = true
 )
   db = ActiveRecord::Base
 
@@ -87,7 +91,11 @@ def add_postcodes(
 end
 
 def add_outcodes(
-  outcode, latitude = 0, longitude = 0, region = nil, clean = true
+  outcode,
+  latitude = 0,
+  longitude = 0,
+  region = nil,
+  clean = true
 )
   db = ActiveRecord::Base
 

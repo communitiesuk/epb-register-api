@@ -125,7 +125,8 @@ describe "Acceptance::Reports::GetAssessmentCountByRegionAndType" do
 
       response =
         get_assessment_report(
-          start_date: Date.yesterday, end_date: Date.tomorrow,
+          start_date: Date.yesterday,
+          end_date: Date.tomorrow,
         ).body
 
       expect(JSON.parse(response, symbolize_names: true)).to eq(

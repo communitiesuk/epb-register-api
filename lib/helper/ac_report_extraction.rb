@@ -13,40 +13,48 @@ module Helper
 
     def checklist_values(checklist, skip_state = false)
       results =
-        checklist&.element_children&.map { |node|
-          next if xpath(%w[Flag], node).nil? && !skip_state
+        checklist
+          &.element_children
+          &.map { |node|
+            next if xpath(%w[Flag], node).nil? && !skip_state
 
-          checklist_item = node.name.underscore.to_sym
-          if skip_state
-            { checklist_item => { note: xpath(%w[Note], node) } }
-          else
-            {
-              checklist_item => {
-                state: xpath(%w[Flag], node) == "Yes",
-                note: xpath(%w[Note], node),
-              },
-            }
-          end
-        }&.compact.inject(&:merge)
+            checklist_item = node.name.underscore.to_sym
+            if skip_state
+              { checklist_item => { note: xpath(%w[Note], node) } }
+            else
+              {
+                checklist_item => {
+                  state: xpath(%w[Flag], node) == "Yes",
+                  note: xpath(%w[Note], node),
+                },
+              }
+            end
+          }
+          &.compact
+          .inject(&:merge)
 
       results.nil? ? {} : results
     end
 
     def checklist_values_with_guidance(checklist)
       results =
-        checklist&.element_children&.map { |node|
-          next if xpath(%w[Flag], node).nil?
+        checklist
+          &.element_children
+          &.map { |node|
+            next if xpath(%w[Flag], node).nil?
 
-          checklist_item = node.name.underscore.to_sym
+            checklist_item = node.name.underscore.to_sym
 
-          {
-            checklist_item => {
-              state: xpath(%w[Flag], node) == "Yes",
-              note: xpath(%w[Note], node),
-              guidance: xpath(%w[Text], node),
-            },
+            {
+              checklist_item => {
+                state: xpath(%w[Flag], node) == "Yes",
+                note: xpath(%w[Note], node),
+                guidance: xpath(%w[Text], node),
+              },
+            }
           }
-        }&.compact.inject(&:merge)
+          &.compact
+          .inject(&:merge)
 
       results.nil? ? {} : results
     end

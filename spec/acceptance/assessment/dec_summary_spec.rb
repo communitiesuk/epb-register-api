@@ -8,7 +8,8 @@ describe "Acceptance::DECSummary" do
       scheme_id,
       "SPEC000000",
       fetch_assessor_stub.fetch_request_body(
-        nonDomesticDec: "ACTIVE", nonDomesticNos3: "ACTIVE",
+        nonDomesticDec: "ACTIVE",
+        nonDomesticNos3: "ACTIVE",
       ),
     )
 

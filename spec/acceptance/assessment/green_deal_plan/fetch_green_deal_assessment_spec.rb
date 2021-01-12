@@ -85,7 +85,8 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment" do
     it "will return error 404" do
       error_response =
         fetch_green_deal_assessment(
-          assessment_id: "0000-0000-0000-0000-0000", accepted_responses: [404],
+          assessment_id: "0000-0000-0000-0000-0000",
+          accepted_responses: [404],
         ).body
 
       expect(
@@ -98,7 +99,8 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment" do
     it "will return error 400" do
       error_response =
         fetch_green_deal_assessment(
-          assessment_id: "abcd", accepted_responses: [400],
+          assessment_id: "abcd",
+          accepted_responses: [400],
         ).body
 
       expect(
@@ -120,7 +122,8 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment" do
 
       error_response =
         fetch_green_deal_assessment(
-          assessment_id: "0000-0000-0000-0000-0000", accepted_responses: [410],
+          assessment_id: "0000-0000-0000-0000-0000",
+          accepted_responses: [410],
         ).body
 
       expect(
@@ -135,7 +138,8 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment" do
 
       error_response =
         fetch_green_deal_assessment(
-          assessment_id: "0000-0000-0000-0000-0000", accepted_responses: [403],
+          assessment_id: "0000-0000-0000-0000-0000",
+          accepted_responses: [403],
         ).body
 
       expect(
@@ -211,13 +215,11 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment" do
       end
 
       context "where the address has been matched to an OS address id" do
-        before do
-          ActiveRecord::Base.connection.exec_query <<~SQL
-            UPDATE assessments_address_id
-            SET address_id = 'UPRN-129308571212', source = 'os_lprn2uprn'
-            WHERE assessment_id = '0000-0000-0000-0000-0000'
-          SQL
-        end
+        before { ActiveRecord::Base.connection.exec_query <<~SQL }
+          UPDATE assessments_address_id
+          SET address_id = 'UPRN-129308571212', source = 'os_lprn2uprn'
+          WHERE assessment_id = '0000-0000-0000-0000-0000'
+        SQL
 
         it "will return the matched UPRN and the LPRN as lodged" do
           response =

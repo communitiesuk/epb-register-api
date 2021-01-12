@@ -66,7 +66,8 @@ describe ViewModel::DecWrapper do
     },
     assessor: {
       company_details: {
-        address: "123 My Street, My City, AB3 4CD", name: "Joe Bloggs Ltd"
+        address: "123 My Street, My City, AB3 4CD",
+        name: "Joe Bloggs Ltd",
       },
       name: "Name1",
       scheme_assessor_id: "SPEC000000",
@@ -79,7 +80,11 @@ describe ViewModel::DecWrapper do
   end
 
   it "should read the appropriate values from the XML doc using the to_report method" do
-     test_xml_doc(Samples::ViewModels::Dec.update_schema_for_report, Samples::ViewModels::Dec.report_test_hash, true)
+    test_xml_doc(
+      Samples::ViewModels::Dec.update_schema_for_report,
+      Samples::ViewModels::Dec.report_test_hash,
+      true,
+    )
   end
 
   it "returns the expect error without a valid schema type" do

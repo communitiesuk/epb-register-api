@@ -203,7 +203,10 @@ module Gateway
     end
 
     def search_by(
-      name: "", max_response_size: 20, loose_match: false, exclude: []
+      name: "",
+      max_response_size: 20,
+      loose_match: false,
+      exclude: []
     )
       sql = <<-SQL
         SELECT
@@ -247,8 +250,7 @@ module Gateway
           ),
         ]
 
-        sql <<
-          <<-SQL
+        sql << <<-SQL
           AND((first_name ILIKE $1 AND last_name ILIKE $2)
           OR (first_name ILIKE $2 AND last_name ILIKE $1))
         SQL
@@ -261,8 +263,7 @@ module Gateway
           ),
         ]
 
-        sql <<
-          <<-SQL
+        sql << <<-SQL
           AND CONCAT(first_name, ' ', last_name) ILIKE $1
         SQL
 

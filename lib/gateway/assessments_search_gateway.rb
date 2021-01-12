@@ -18,14 +18,12 @@ module Gateway
     SQL
 
     def search_by_postcode(postcode, assessment_types = [])
-      sql =
-        ASSESSMENT_SEARCH_INDEX_SELECT +
-        <<-SQL
+      sql = ASSESSMENT_SEARCH_INDEX_SELECT + <<-SQL
         WHERE a.postcode = $1
         AND a.cancelled_at IS NULL
         AND a.not_for_issue_at IS NULL
         AND a.opt_out = false
-        SQL
+      SQL
 
       binds = [
         ActiveRecord::Relation::QueryAttribute.new(
@@ -69,7 +67,10 @@ module Gateway
     end
 
     def search_by_street_name_and_town(
-      street_name, town, assessment_type, restrictive = true
+      street_name,
+      town,
+      assessment_type,
+      restrictive = true
     )
       sql = ASSESSMENT_SEARCH_INDEX_SELECT + " WHERE "
 
@@ -81,8 +82,7 @@ module Gateway
         sql += "a.type_of_assessment IN(" + ins.join(", ") + ") AND "
       end
 
-      sql +=
-        <<-SQL
+      sql += <<-SQL
             (
               LOWER(a.town) = $2
               OR
@@ -98,7 +98,7 @@ module Gateway
               OR
               LOWER(a.address_line2) LIKE $1
             )
-        SQL
+      SQL
 
       binds = [
         ActiveRecord::Relation::QueryAttribute.new(
@@ -131,15 +131,14 @@ module Gateway
     end
 
     def search_by_assessment_id(
-      assessment_id, restrictive = true, assessment_type = []
+      assessment_id,
+      restrictive = true,
+      assessment_type = []
     )
-      sql =
-        ASSESSMENT_SEARCH_INDEX_SELECT +
-        <<-SQL
-        WHERE a.assessment_id = #{
-            ActiveRecord::Base.connection.quote(assessment_id)
-          }
-        SQL
+      sql = ASSESSMENT_SEARCH_INDEX_SELECT + <<-SQL
+        WHERE a.assessment_id = #{ActiveRecord::Base.connection
+          .quote(assessment_id)}
+      SQL
 
       if restrictive
         sql += " AND a.cancelled_at IS NULL"

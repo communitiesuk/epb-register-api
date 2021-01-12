@@ -18,7 +18,7 @@ task :linked_assessments do
     SELECT a.assessment_id
     FROM assessments a
     LEFT JOIN linked_assessments la USING (assessment_id)
-    WHERE a.date_registered >= #{ActiveRecord::Base.connection.quote(ENV["from_date"])}
+    WHERE a.date_registered >= #{ActiveRecord::Base.connection.quote(ENV['from_date'])}
     AND la.assessment_id IS NULL
   SQL
 
@@ -34,7 +34,7 @@ task :linked_assessments do
   inserted = 0
   skipped = 0
   assessments.each do |assessment|
-    assessment_id = assessment['assessment_id']
+    assessment_id = assessment["assessment_id"]
     assessment_xml = ActiveRecord::Base.connection.exec_query("SELECT xml, schema_type FROM assessments_xml WHERE assessment_id = '#{assessment_id}'").first
     if assessment_xml.nil?
       puts "[#{Time.now}] Could not read XML for assessment #{assessment_id}"

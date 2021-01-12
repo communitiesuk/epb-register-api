@@ -94,7 +94,8 @@ module Domain
         first_name: @first_name,
         last_name: @last_name,
         registered_by: {
-          name: @registered_by_name, scheme_id: @registered_by_id
+          name: @registered_by_name,
+          scheme_id: @registered_by_id,
         },
         scheme_assessor_id: @scheme_assessor_id,
         date_of_birth:
@@ -105,7 +106,8 @@ module Domain
           end,
         contact_details:
           {
-            email: @email, telephone_number: @telephone_number
+            email: @email,
+            telephone_number: @telephone_number,
           }.reject { |_k, v| v.nil? },
         search_results_comparison_postcode: @search_results_comparison_postcode,
         address:

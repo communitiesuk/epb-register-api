@@ -18,11 +18,15 @@ describe "Integration::EndpointSecurity" do
 
   controllers_to_test.each do |controller|
     routes =
-      Controller.const_get(controller).routes.map { |method, routes|
-        routes.map { |route| route.first.to_s }.map do |route|
-          { verb: method.downcase, path: route }
-        end
-      }.map(&:first)
+      Controller
+        .const_get(controller)
+        .routes
+        .map { |method, routes|
+          routes
+            .map { |route| route.first.to_s }
+            .map { |route| { verb: method.downcase, path: route } }
+        }
+        .map(&:first)
 
     routes_to_test |= routes
   end

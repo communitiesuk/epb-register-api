@@ -59,7 +59,9 @@ describe Helper::DataExtractorHelper do
           "default" => [],
         },
         {
-          "key" => "make_an_int", "path" => %w[not_an_int], "cast" => "integer"
+          "key" => "make_an_int",
+          "path" => %w[not_an_int],
+          "cast" => "integer",
         },
         {
           "key" => "make_snake_case",

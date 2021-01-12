@@ -12,7 +12,8 @@ module UseCase
       postcode&.strip!
       postcode&.upcase!
 
-      unless Regexp.new(Helper::RegexHelper::POSTCODE, Regexp::IGNORECASE)
+      unless Regexp
+               .new(Helper::RegexHelper::POSTCODE, Regexp::IGNORECASE)
                .match(postcode)
         raise PostcodeNotValid
       end

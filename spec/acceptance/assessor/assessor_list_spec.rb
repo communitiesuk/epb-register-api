@@ -22,7 +22,8 @@ describe "Acceptance::AssessorList" do
         gda: "INACTIVE",
       },
       contact_details: {
-        email: "someone@energy.gov", telephone_number: "01234 567"
+        email: "someone@energy.gov",
+        telephone_number: "01234 567",
       },
     }
   end
@@ -39,7 +40,8 @@ describe "Acceptance::AssessorList" do
           {
             errors: [
               {
-                "code": "NOT_FOUND", title: "The requested scheme was not found"
+                "code": "NOT_FOUND",
+                title: "The requested scheme was not found",
               },
             ],
           }.to_json,
@@ -106,7 +108,8 @@ describe "Acceptance::AssessorList" do
         "assessors" => [
           {
             "registeredBy" => {
-              "schemeId" => scheme_id, "name" => "test scheme"
+              "schemeId" => scheme_id,
+              "name" => "test scheme",
             },
             "schemeAssessorId" => "SCHEME4233",
             "firstName" => valid_assessor_request_body[:firstName],
@@ -114,7 +117,8 @@ describe "Acceptance::AssessorList" do
             "lastName" => valid_assessor_request_body[:lastName],
             "dateOfBirth" => valid_assessor_request_body[:dateOfBirth],
             "contactDetails" => {
-              "telephoneNumber" => "01234 567", "email" => "someone@energy.gov"
+              "telephoneNumber" => "01234 567",
+              "email" => "someone@energy.gov",
             },
             "searchResultsComparisonPostcode" => "",
             "address" => {},
@@ -151,7 +155,8 @@ describe "Acceptance::AssessorList" do
         "assessors" => [
           {
             "registeredBy" => {
-              "schemeId" => scheme_id, "name" => "test scheme"
+              "schemeId" => scheme_id,
+              "name" => "test scheme",
             },
             "schemeAssessorId" => "SCHEME5678",
             "firstName" => valid_assessor_request_body[:firstName],
@@ -159,7 +164,8 @@ describe "Acceptance::AssessorList" do
             "lastName" => valid_assessor_request_body[:lastName],
             "dateOfBirth" => valid_assessor_request_body[:dateOfBirth],
             "contactDetails" => {
-              "telephoneNumber" => "01234 567", "email" => "someone@energy.gov"
+              "telephoneNumber" => "01234 567",
+              "email" => "someone@energy.gov",
             },
             "searchResultsComparisonPostcode" => "",
             "address" => {},
@@ -178,7 +184,8 @@ describe "Acceptance::AssessorList" do
           },
           {
             "registeredBy" => {
-              "schemeId" => scheme_id, "name" => "test scheme"
+              "schemeId" => scheme_id,
+              "name" => "test scheme",
             },
             "schemeAssessorId" => "SCHEME1234",
             "firstName" => valid_assessor_request_body[:firstName],
@@ -186,7 +193,8 @@ describe "Acceptance::AssessorList" do
             "lastName" => valid_assessor_request_body[:lastName],
             "dateOfBirth" => valid_assessor_request_body[:dateOfBirth],
             "contactDetails" => {
-              "telephoneNumber" => "01234 567", "email" => "someone@energy.gov"
+              "telephoneNumber" => "01234 567",
+              "email" => "someone@energy.gov",
             },
             "searchResultsComparisonPostcode" => "",
             "address" => {},

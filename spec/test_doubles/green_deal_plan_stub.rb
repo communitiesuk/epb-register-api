@@ -5,7 +5,9 @@ class GreenDealPlanStub
       startDate: "2020-01-30",
       endDate: "2030-02-28",
       providerDetails: {
-        name: "The Bank", telephone: "0800 0000000", email: "lender@example.com"
+        name: "The Bank",
+        telephone: "0800 0000000",
+        email: "lender@example.com",
       },
       interest: { rate: 12.3, fixed: true },
       chargeUplift: { amount: 1.25, date: "2025-03-29" },

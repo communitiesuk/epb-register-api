@@ -47,7 +47,8 @@ class GreenDealFuelDataMock
   def mock_data(data)
     WebMock.enable!
 
-    WebMock.stub_request(:get, "http://www.boilers.org.uk/data1/pcdf2012.dat")
+    WebMock
+      .stub_request(:get, "http://www.boilers.org.uk/data1/pcdf2012.dat")
       .to_return(status: 200, body: data)
   end
 

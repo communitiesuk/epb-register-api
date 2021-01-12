@@ -56,7 +56,8 @@ module ViewModel
             telephone: @view_model.assessor_telephone,
           },
           company_details: {
-            name: @view_model.company_name, address: @view_model.company_address
+            name: @view_model.company_name,
+            address: @view_model.company_address,
           },
         },
         related_rrn: @view_model.related_rrn,

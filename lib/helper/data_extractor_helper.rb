@@ -56,10 +56,10 @@ module Helper
 
                   next if inner_inner_data == {}
 
-                  if settings.key?("required") &&
-                      settings["required"].any? do |required_key|
-                        !inner_inner_data[required_key.to_sym]
-                      end
+                  if settings.key?("required") && settings["required"]
+                       .any? do |required_key|
+                       !inner_inner_data[required_key.to_sym]
+                     end
                     next
                   end
 

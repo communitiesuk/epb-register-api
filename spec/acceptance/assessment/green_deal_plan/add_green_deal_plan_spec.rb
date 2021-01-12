@@ -97,7 +97,9 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan" do
             savings: [
               { fuelCode: "39", fuelSaving: 23_253, standingChargeFraction: 0 },
               {
-                fuelCode: "40", fuelSaving: -6331, standingChargeFraction: -0.9
+                fuelCode: "40",
+                fuelSaving: -6331,
+                standingChargeFraction: -0.9,
               },
               { fuelCode: "41", fuelSaving: -15_561, standingChargeFraction: 0 },
             ],

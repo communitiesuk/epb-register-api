@@ -40,7 +40,8 @@ describe "Acceptance::LodgeAssessment::XML" do
       add_assessor scheme_id,
                    "SPEC000000",
                    fetch_assessor_stub.fetch_request_body(
-                     nonDomesticCc4: "ACTIVE", domesticSap: "ACTIVE",
+                     nonDomesticCc4: "ACTIVE",
+                     domesticSap: "ACTIVE",
                    )
     end
 
@@ -80,16 +81,16 @@ describe "Acceptance::LodgeAssessment::XML" do
 
     it "returns an XML response" do
       data_assessment_id =
-        response.at_css("response data assessments assessment").xpath(
-          "string()",
-        )
+        response
+          .at_css("response data assessments assessment")
+          .xpath("string()")
 
       expect(data_assessment_id).to eq("0000-0000-0000-0000-0000")
 
       data_assessment_link =
-        response.at_css("response meta links assessments assessment").xpath(
-          "string()",
-        )
+        response
+          .at_css("response meta links assessments assessment")
+          .xpath("string()")
 
       expect(data_assessment_link).to eq(
         "/api/assessments/0000-0000-0000-0000-0000",

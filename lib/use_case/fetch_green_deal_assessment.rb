@@ -31,7 +31,8 @@ module UseCase
 
       raise InvalidAssessmentTypeException unless %w[RdSAP SAP].include? type
 
-      assessment_view = ViewModel::Factory.new.create(xml, schema_type).get_view_model
+      assessment_view =
+        ViewModel::Factory.new.create(xml, schema_type).get_view_model
 
       canonical_address_id = assessment.to_hash[:address_id]
 

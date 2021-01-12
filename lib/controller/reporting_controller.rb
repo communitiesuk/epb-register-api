@@ -27,7 +27,8 @@ module Controller
         content_type "text/csv"
         attachment params[:start_date] + "_to_" + params[:end_date] + ".csv"
         body CSV.generate(
-          write_headers: true, headers: raw_data.first.keys,
+          write_headers: true,
+          headers: raw_data.first.keys,
         ) { |csv| raw_data.each { |row| csv << row } }
       end
     rescue StandardError => e
@@ -55,7 +56,8 @@ module Controller
         content_type "text/csv"
         attachment params[:start_date] + "_to_" + params[:end_date] + ".csv"
         body CSV.generate(
-          write_headers: true, headers: raw_data.first.keys,
+          write_headers: true,
+          headers: raw_data.first.keys,
         ) { |csv| raw_data.each { |row| csv << row } }
       end
     rescue StandardError => e
@@ -82,9 +84,11 @@ module Controller
         json_response(200, { data: "No lodgements during this time frame" })
       else
         content_type "text/csv"
-        attachment parsed_params[:start_date] + "_to_" + parsed_params[:end_date] + ".csv"
+        attachment parsed_params[:start_date] + "_to_" +
+          parsed_params[:end_date] + ".csv"
         body CSV.generate(
-          write_headers: true, headers: raw_data.first.keys,
+          write_headers: true,
+          headers: raw_data.first.keys,
         ) { |csv| raw_data.each { |row| csv << row } }
       end
     rescue StandardError => e

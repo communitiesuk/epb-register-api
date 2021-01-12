@@ -154,15 +154,17 @@ module Gateway
     def parse_results(results, address_type)
       address_id = {}
 
-      results.enum_for(:each_with_index).map do |res, i|
-        if res["address_id"].nil?
-          res["address_id"] = "RRN-#{res['assessment_id']}"
+      results
+        .enum_for(:each_with_index)
+        .map do |res, i|
+          if res["address_id"].nil?
+            res["address_id"] = "RRN-#{res['assessment_id']}"
+          end
+          unless address_id.key?(res["address_id"])
+            address_id[res["address_id"]] = []
+          end
+          address_id[res["address_id"]].push(i)
         end
-        unless address_id.key?(res["address_id"])
-          address_id[res["address_id"]] = []
-        end
-        address_id[res["address_id"]].push(i)
-      end
 
       results.map { |result|
         result["existing_assessments"] = []

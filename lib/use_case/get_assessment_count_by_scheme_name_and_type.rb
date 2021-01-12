@@ -43,7 +43,8 @@ module UseCase
           assessments_by_scheme_and_type[scheme] = DEFAULT_COUNTS.dup
         end
 
-        type = COMBINED_TYPES[type] unless COMBINED_TYPES[type].nil? || linked.nil?
+        type = COMBINED_TYPES[type] unless COMBINED_TYPES[type].nil? ||
+          linked.nil?
 
         assessments_by_scheme_and_type[scheme][type] += 1
       end
@@ -52,12 +53,11 @@ module UseCase
 
       assessments_by_scheme_and_type.each do |scheme, types|
         types.each do |type, count|
-          assessments_invoicing <<
-            {
-              number_of_assessments: count,
-              scheme_name: scheme,
-              type_of_assessment: type,
-            }
+          assessments_invoicing << {
+            number_of_assessments: count,
+            scheme_name: scheme,
+            type_of_assessment: type,
+          }
         end
       end
 

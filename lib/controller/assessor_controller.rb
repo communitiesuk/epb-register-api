@@ -46,31 +46,40 @@ module Controller
           type: "object",
           properties: {
             domesticSap: {
-              type: "string", enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED]
+              type: "string",
+              enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED],
             },
             domesticRdSap: {
-              type: "string", enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED]
+              type: "string",
+              enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED],
             },
             nonDomesticSp3: {
-              type: "string", enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED]
+              type: "string",
+              enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED],
             },
             nonDomesticCc4: {
-              type: "string", enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED]
+              type: "string",
+              enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED],
             },
             nonDomesticDec: {
-              type: "string", enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED]
+              type: "string",
+              enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED],
             },
             nonDomesticNos3: {
-              type: "string", enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED]
+              type: "string",
+              enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED],
             },
             nonDomesticNos4: {
-              type: "string", enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED]
+              type: "string",
+              enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED],
             },
             nonDomesticNos5: {
-              type: "string", enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED]
+              type: "string",
+              enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED],
             },
             gda: {
-              type: "string", enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED]
+              type: "string",
+              enum: %w[ACTIVE INACTIVE STRUCKOFF SUSPENDED],
             },
           },
         },

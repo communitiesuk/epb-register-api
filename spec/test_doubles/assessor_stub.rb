@@ -28,7 +28,8 @@ class AssessorStub
         gda: gda,
       },
       contactDetails: {
-        telephoneNumber: "010199991010101", email: "person@person.com"
+        telephoneNumber: "010199991010101",
+        email: "person@person.com",
       },
     }
   end

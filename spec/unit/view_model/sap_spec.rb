@@ -64,7 +64,7 @@ describe ViewModel::SapWrapper do
           contact_details: { email: "a@b.c", telephone: "111222333" },
         },
         tenure: nil,
-        transaction_type: '1',
+        transaction_type: "1",
       },
     },
     {
@@ -990,7 +990,7 @@ describe ViewModel::SapWrapper do
     current_energy_efficiency_rating: 50,
     dwelling_type: "Dwelling-Type0",
     estimated_energy_cost: "689.83",
-    main_fuel_type: '36',
+    main_fuel_type: "36",
     heat_demand: {
       current_space_heating_demand: 30.0,
       current_water_heating_demand: 60.0,
@@ -1133,14 +1133,14 @@ describe ViewModel::SapWrapper do
     total_floor_area: 10.0,
     opt_out: false,
     status: "ENTERED",
-    environmental_impact_current: '50',
-    co2_emissions_current_per_floor_area: '0',
+    environmental_impact_current: "50",
+    co2_emissions_current_per_floor_area: "0",
     mains_gas: nil,
-    level: '1',
-    top_storey: 'N',
+    level: "1",
+    top_storey: "N",
     storey_count: nil,
-    mains_heating_controls: 'Thermostat',
-    multiple_glazed_proportion: '50',
+    mains_heating_controls: "Thermostat",
+    multiple_glazed_proportion: "50",
     glazed_area: nil,
   }.freeze
   it "should read the appropriate values from the XML doc" do

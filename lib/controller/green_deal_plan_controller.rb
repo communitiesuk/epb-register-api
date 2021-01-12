@@ -20,7 +20,8 @@ module Controller
       ],
       properties: {
         greenDealPlanId: {
-          type: "string", pattern: Helper::RegexHelper::GREEN_DEAL_PLAN_ID
+          type: "string",
+          pattern: Helper::RegexHelper::GREEN_DEAL_PLAN_ID,
         },
         startDate: { type: "string", format: "iso-date" },
         endDate: { type: "string", format: "iso-date" },

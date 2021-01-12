@@ -4,7 +4,8 @@ module Gateway
     def add(assessment_id, validation_result)
       overidden_event =
         OveriddenLodgementEvent.create(
-          assessment_id: assessment_id, rule_triggers: validation_result,
+          assessment_id: assessment_id,
+          rule_triggers: validation_result,
         )
 
       overidden_event.save

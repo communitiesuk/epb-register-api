@@ -29,16 +29,16 @@ module UseCase
         linked = data["linked"]
         created_at = data["created_at"]
 
-        type = COMBINED_TYPES[type] unless COMBINED_TYPES[type].nil? || linked.nil?
+        type = COMBINED_TYPES[type] unless COMBINED_TYPES[type].nil? ||
+          linked.nil?
 
-        assessments_invoicing <<
-          {
-            rrn: rrn,
-            scheme_name: scheme,
-            type_of_assessment: type,
-            related_rrn: linked,
-            lodged_at: created_at,
-          }
+        assessments_invoicing << {
+          rrn: rrn,
+          scheme_name: scheme,
+          type_of_assessment: type,
+          related_rrn: linked,
+          lodged_at: created_at,
+        }
       end
 
       assessments_invoicing

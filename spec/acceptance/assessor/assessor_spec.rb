@@ -9,7 +9,8 @@ describe "Acceptance::Assessor" do
       lastName: "Person",
       dateOfBirth: "1991-02-25",
       contactDetails: {
-        telephoneNumber: "010199991010101", email: "person@person.com"
+        telephoneNumber: "010199991010101",
+        email: "person@person.com",
       },
       searchResultsComparisonPostcode: "",
       alsoKnownAs: "Bob",
@@ -260,7 +261,8 @@ describe "Acceptance::Assessor" do
                 gda: "ACTIVE",
               },
               contactDetails: {
-                email: "person@person.com", telephoneNumber: "010199991010101"
+                email: "person@person.com",
+                telephoneNumber: "010199991010101",
               },
             }.to_json,
           )
@@ -453,7 +455,8 @@ describe "Acceptance::Assessor" do
 
         expected_response = valid_assessor_request
         expected_response[:registeredBy] = {
-          schemeId: scheme_id, name: "test scheme"
+          schemeId: scheme_id,
+          name: "test scheme",
         }
         expected_response[:schemeAssessorId] = "ASSESSOR99"
         expected_response[:firstName] = "Janine"

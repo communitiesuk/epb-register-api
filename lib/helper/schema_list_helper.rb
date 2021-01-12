@@ -3,7 +3,8 @@ module Helper
     class ValidationErrorException < StandardError; end
 
     def initialize(
-      schema_name, schema_path = "api/schemas/data/orchestrate.json"
+      schema_name,
+      schema_path = "api/schemas/data/orchestrate.json"
     )
       @schema_name = schema_name.to_sym
       @schema_path = schema_path

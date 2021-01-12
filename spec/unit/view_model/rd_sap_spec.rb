@@ -107,7 +107,7 @@ describe ViewModel::RdSapWrapper do
       current_energy_efficiency_rating: 50,
       dwelling_type: "Dwelling-Type0",
       estimated_energy_cost: "689.83",
-      main_fuel_type: '26',
+      main_fuel_type: "26",
       heat_demand: {
         current_space_heating_demand: 30.0,
         current_water_heating_demand: 60.0,
@@ -251,14 +251,14 @@ describe ViewModel::RdSapWrapper do
       total_floor_area: 1.0,
       opt_out: false,
       status: "ENTERED",
-      environmental_impact_current: '50',
-      co2_emissions_current_per_floor_area: '0',
-      mains_gas: 'Y',
-      level: '1',
-      top_storey: 'N',
-      storey_count: '3',
-      mains_heating_controls: 'Description9',
-      multiple_glazed_proportion: '100',
+      environmental_impact_current: "50",
+      co2_emissions_current_per_floor_area: "0",
+      mains_gas: "Y",
+      level: "1",
+      top_storey: "N",
+      storey_count: "3",
+      mains_heating_controls: "Description9",
+      multiple_glazed_proportion: "100",
       glazed_area: "1",
     }.freeze
 
@@ -267,9 +267,7 @@ describe ViewModel::RdSapWrapper do
   end
 
   it "should read the appropriate values from the XML doc using the to_report method" do
-    report_hash = {
-      rrn: asserted_keys[:assessment_id]
-    }
+    report_hash = { rrn: asserted_keys[:assessment_id] }
 
     test_xml_doc(supported_schema, report_hash, true)
   end

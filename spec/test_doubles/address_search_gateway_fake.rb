@@ -4,7 +4,9 @@ class AddressSearchGatewayFake
   end
 
   def search_by_postcode(
-    postcode, building_name_number = nil, address_type = nil
+    postcode,
+    building_name_number = nil,
+    address_type = nil
   )
     filtered_results =
       @addresses.filter { |address| address[:postcode] == postcode }

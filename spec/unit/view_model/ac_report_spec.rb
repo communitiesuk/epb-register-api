@@ -57,7 +57,8 @@ describe ViewModel::AcReportWrapper do
                 consumption_records: false,
               },
               optional: {
-                cooling_load_estimate: false, complaint_records: false
+                cooling_load_estimate: false,
+                complaint_records: false,
               },
             },
             sccs: {
@@ -112,7 +113,8 @@ describe ViewModel::AcReportWrapper do
                 consumption_records: false,
               },
               optional: {
-                cooling_load_estimate: false, complaint_records: false
+                cooling_load_estimate: false,
+                complaint_records: false,
               },
             },
             sccs: {
@@ -167,7 +169,8 @@ describe ViewModel::AcReportWrapper do
                 consumption_records: false,
               },
               optional: {
-                cooling_load_estimate: false, complaint_records: false
+                cooling_load_estimate: false,
+                complaint_records: false,
               },
             },
             sccs: {
@@ -222,7 +225,8 @@ describe ViewModel::AcReportWrapper do
         scheme_assessor_id: "SPEC000000",
         name: "Test Assessor Name",
         contact_details: {
-          email: "test@example.com", telephone: "07555 666777"
+          email: "test@example.com",
+          telephone: "07555 666777",
         },
         company_details: {
           name: "Assess Energy Limited",
@@ -290,7 +294,9 @@ describe ViewModel::AcReportWrapper do
             model_reference: "FDC100VN",
             refrigerant_charge: "3",
             refrigerant_type: {
-              ecfgasregulation: nil, ecozoneregulation: nil, type: "R410A"
+              ecfgasregulation: nil,
+              ecozoneregulation: nil,
+              type: "R410A",
             },
             serial_number: "not visible",
             year_installed: "2014",
@@ -427,12 +433,14 @@ describe ViewModel::AcReportWrapper do
             },
             guidance: nil,
             records_kept: {
-              note: "Yes system appears in good order for age.", state: true
+              note: "Yes system appears in good order for age.",
+              state: true,
             },
           },
           metering: {
             bem_installed: {
-              note: "The system is linked to a Central Controller.", state: true
+              note: "The system is linked to a Central Controller.",
+              state: true,
             },
             excessive_use: { note: "No details available.", state: false },
             metering_installed: { note: "", state: false },
@@ -452,7 +460,8 @@ describe ViewModel::AcReportWrapper do
               state: false,
             },
             water_treatment: {
-              note: "N/A no cooling towers installed to this site", state: false
+              note: "N/A no cooling towers installed to this site",
+              state: false,
             },
           },
         },
@@ -468,7 +477,9 @@ describe ViewModel::AcReportWrapper do
             model_reference: "FDC100VN",
             refrigerant_charge: "3",
             refrigerant_type: {
-              ecfgasregulation: nil, ecozoneregulation: nil, type: "R410A"
+              ecfgasregulation: nil,
+              ecozoneregulation: nil,
+              type: "R410A",
             },
             serial_number: "not visible",
             year_installed: "2014",
@@ -594,12 +605,14 @@ describe ViewModel::AcReportWrapper do
             },
             guidance: nil,
             records_kept: {
-              note: "Yes system appears in good order for age.", state: true
+              note: "Yes system appears in good order for age.",
+              state: true,
             },
           },
           metering: {
             bem_installed: {
-              note: "The system is linked to a Central Controller.", state: true
+              note: "The system is linked to a Central Controller.",
+              state: true,
             },
             excessive_use: { note: "No details available.", state: false },
             metering_installed: { note: "", state: false },
@@ -619,7 +632,8 @@ describe ViewModel::AcReportWrapper do
               state: false,
             },
             water_treatment: {
-              note: "N/A no cooling towers installed to this site", state: false
+              note: "N/A no cooling towers installed to this site",
+              state: false,
             },
           },
         },
@@ -647,7 +661,9 @@ describe ViewModel::AcReportWrapper do
               },
               change_frequency: { flag: false, note: nil, recommendations: [] },
               differential_pressure_gauge: {
-                flag: false, note: nil, recommendations: []
+                flag: false,
+                note: nil,
+                recommendations: [],
               },
             },
             heat_exchangers: {
@@ -707,7 +723,9 @@ describe ViewModel::AcReportWrapper do
             diffuser_positions: {
               position_issues: { note: nil, recommendations: [], flag: true },
               partitioning_issues: {
-                note: nil, recommendations: [], flag: false
+                note: nil,
+                recommendations: [],
+                flag: false,
               },
               control_operation: { note: nil, recommendations: [], flag: true },
             },

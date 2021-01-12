@@ -8,7 +8,8 @@ describe "Acceptance::SearchForAssessor" do
       lastName: "Person",
       dateOfBirth: "1991-02-25",
       contactDetails: {
-        telephoneNumber: "010199991010101", email: "person@person.com"
+        telephoneNumber: "010199991010101",
+        email: "person@person.com",
       },
       searchResultsComparisonPostcode: "SE1 7EZ",
       qualifications: {
@@ -169,7 +170,8 @@ describe "Acceptance::SearchForAssessor" do
             searchResultsComparisonPostcode: "SE1 7EZ",
             dateOfBirth: "1991-02-25",
             contactDetails: {
-              telephoneNumber: "010199991010101", email: "person@person.com"
+              telephoneNumber: "010199991010101",
+              email: "person@person.com",
             },
             qualifications: {
               domesticSap: "INACTIVE",

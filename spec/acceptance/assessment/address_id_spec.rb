@@ -5,7 +5,8 @@ describe "Acceptance::AssessmentAddressId" do
 
   let(:valid_assessor_request_body) do
     AssessorStub.new.fetch_request_body(
-      domesticRdSap: "ACTIVE", nonDomesticNos3: "ACTIVE",
+      domesticRdSap: "ACTIVE",
+      nonDomesticNos3: "ACTIVE",
     )
   end
 
@@ -28,9 +29,10 @@ describe "Acceptance::AssessmentAddressId" do
       )
 
       address_id =
-        ActiveRecord::Base.connection.execute(
-          "SELECT * FROM assessments_address_id",
-        ).first
+        ActiveRecord::Base
+          .connection
+          .execute("SELECT * FROM assessments_address_id")
+          .first
 
       expect(address_id["address_id"]).to eq("RRN-0000-0000-0000-0000-0000")
     end
@@ -51,9 +53,10 @@ describe "Acceptance::AssessmentAddressId" do
       )
 
       address_id =
-        ActiveRecord::Base.connection.execute(
-          "SELECT * FROM assessments_address_id",
-        ).first
+        ActiveRecord::Base
+          .connection
+          .execute("SELECT * FROM assessments_address_id")
+          .first
 
       expect(address_id["address_id"]).to eq("UPRN-000000000001")
     end

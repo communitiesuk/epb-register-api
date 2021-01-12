@@ -74,7 +74,11 @@ module Controller
     end
 
     def json_api_response(
-      code: 200, data: {}, meta: {}, burrow_key: false, data_key: :data
+      code: 200,
+      data: {},
+      meta: {},
+      burrow_key: false,
+      data_key: :data
     )
       if burrow_key
         data, meta = meta, data

@@ -23,7 +23,9 @@ module Domain
 
       rrns.each do |rrn|
         report =
-          ViewModel::Factory.new.create(@raw_data, @schema_name.to_s, rrn)
+          ViewModel::Factory
+            .new
+            .create(@raw_data, @schema_name.to_s, rrn)
             .to_hash
         report[:raw_data] = @raw_data
 

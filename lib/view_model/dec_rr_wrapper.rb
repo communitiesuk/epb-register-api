@@ -52,7 +52,8 @@ module ViewModel
           scheme_assessor_id: @view_model.scheme_assessor_id,
           name: @view_model.assessor_name,
           company_details: {
-            name: @view_model.company_name, address: @view_model.company_address
+            name: @view_model.company_name,
+            address: @view_model.company_address,
           },
           contact_details: {
             email: @view_model.assessor_email,

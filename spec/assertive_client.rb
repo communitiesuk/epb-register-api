@@ -15,7 +15,11 @@ def check_response(response, accepted_responses)
 end
 
 def assertive_request(
-  request, accepted_responses, authenticate, auth_data, scopes = []
+  request,
+  accepted_responses,
+  authenticate,
+  auth_data,
+  scopes = []
 )
   response =
     if authenticate
@@ -31,7 +35,12 @@ def assertive_request(
 end
 
 def assertive_put(
-  path, body, accepted_responses, authenticate, auth_data, scopes
+  path,
+  body,
+  accepted_responses,
+  authenticate,
+  auth_data,
+  scopes
 )
   assertive_request(
     -> { put(path, body.to_json) },
@@ -63,7 +72,13 @@ def assertive_get(path, accepted_responses, authenticate, auth_data, scopes)
 end
 
 def assertive_post(
-  path, body, accepted_responses, authenticate, auth_data, scopes, json = true
+  path,
+  body,
+  accepted_responses,
+  authenticate,
+  auth_data,
+  scopes,
+  json = true
 )
   body = body.to_json if json
   assertive_request(
@@ -327,7 +342,9 @@ def update_assessment_status(
 end
 
 def add_scheme_and_get_id(
-  name = "test scheme", accepted_responses = [201], authenticate = true
+  name = "test scheme",
+  accepted_responses = [201],
+  authenticate = true
 )
   JSON.parse(add_scheme(name, accepted_responses, authenticate).body)["data"][
     "schemeId"
@@ -530,7 +547,7 @@ end
 def get_assessment_report(
   start_date:,
   end_date:,
-  scheme_id:nil,
+  scheme_id: nil,
   type: "region-and-type",
   accepted_responses: [200],
   authenticate: true,
@@ -541,17 +558,14 @@ def get_assessment_report(
     scopes = %w[reporting:assessment_by_scheme_and_type]
   end
 
-  url = "/api/reports/assessments/#{type}?startDate=#{start_date}&endDate=#{end_date}"
+  url =
+    "/api/reports/assessments/#{type}?startDate=#{start_date}&endDate=#{
+      end_date
+    }"
 
   url << "&scheme_id=#{scheme_id}" unless scheme_id.nil?
 
-  assertive_get(
-    url,
-    accepted_responses,
-    authenticate,
-    auth_data,
-    scopes,
-  )
+  assertive_get(url, accepted_responses, authenticate, auth_data, scopes)
 end
 
 def opt_out_assessment(

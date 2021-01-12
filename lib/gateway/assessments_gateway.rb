@@ -88,7 +88,6 @@ module Gateway
           Assessment.create assessment.to_record
 
           reattach_green_deal_plans(green_deal_plan_ids, binds)
-
         else
           Assessment.create assessment.to_record
         end
@@ -134,7 +133,7 @@ module Gateway
             "green_deal_plan_id",
             result["green_deal_plan_id"],
             ActiveRecord::Type::String.new,
-            )
+          )
 
         ActiveRecord::Base.connection.exec_query add_green_deal_plan,
                                                  "SQL",
@@ -153,18 +152,17 @@ module Gateway
           "assessment_id",
           assessment.get(:assessment_id),
           ActiveRecord::Type::String.new,
-          ),
+        ),
         ActiveRecord::Relation::QueryAttribute.new(
           "linked_assessment_id",
           assessment.get(:related_rrn),
           ActiveRecord::Type::String.new,
-          ),
+        ),
       ]
 
       ActiveRecord::Base.connection.exec_query add_linked_assessment,
                                                "SQL",
                                                linked_assessment_binds
     end
-
   end
 end

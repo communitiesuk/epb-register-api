@@ -10,12 +10,14 @@ module ViewModel
       end
 
       def extract_aci_recommendations(nodes)
-        nodes.map do |node|
-          {
+        nodes
+          .map { |node|
+            {
               sequence: node.at("Seq-Number").content,
               text: node.at("Text").content,
+            }
           }
-        end.reject { |node| node[:text].nil? || node[:text].empty? }
+          .reject { |node| node[:text].nil? || node[:text].empty? }
       end
 
       def key_recommendations_efficiency
@@ -51,23 +53,26 @@ module ViewModel
       end
 
       def sub_systems
-        @xml_doc.search("ACI-Sub-Systems/ACI-Sub-System").map do |node|
-          {
-            volume_definitions:
-              node.at("Sub-System-Volume-Definitions")&.content,
-            id: node.at("Sub-System-ID")&.content,
-            description: node.at("Sub-System-Description")&.content,
-            cooling_output: node.at("Sub-System-Cooling-Output")&.content,
-            area_served: node.at("Sub-System-Area-Served-Description")&.content,
-            inspection_date: node.at("Sub-System-Inspection-Date")&.content,
-            cooling_plant_count:
-              node.at("Sub-System-Cooling-Plant-Count")&.content,
-            ahu_count: node.at("Sub-System-AHU-Count")&.content,
-            terminal_units_count:
-              node.at("Sub-System-Terminal-Units-Count")&.content,
-            controls_count: node.at("Sub-System-Controls-Count")&.content,
-          }
-        end
+        @xml_doc
+          .search("ACI-Sub-Systems/ACI-Sub-System")
+          .map do |node|
+            {
+              volume_definitions:
+                node.at("Sub-System-Volume-Definitions")&.content,
+              id: node.at("Sub-System-ID")&.content,
+              description: node.at("Sub-System-Description")&.content,
+              cooling_output: node.at("Sub-System-Cooling-Output")&.content,
+              area_served:
+                node.at("Sub-System-Area-Served-Description")&.content,
+              inspection_date: node.at("Sub-System-Inspection-Date")&.content,
+              cooling_plant_count:
+                node.at("Sub-System-Cooling-Plant-Count")&.content,
+              ahu_count: node.at("Sub-System-AHU-Count")&.content,
+              terminal_units_count:
+                node.at("Sub-System-Terminal-Units-Count")&.content,
+              controls_count: node.at("Sub-System-Controls-Count")&.content,
+            }
+          end
       end
 
       def related_rrn
@@ -75,17 +80,21 @@ module ViewModel
       end
 
       def cooling_plants
-        @xml_doc.search("Air-Conditioning-Inspection-Report/ACI-Cooling-Plant")
+        @xml_doc
+          .search("Air-Conditioning-Inspection-Report/ACI-Cooling-Plant")
           .map { |_node| {} }
       end
 
       def checklist_values(checklist)
         results =
-          checklist&.element_children&.map { |node|
-            checklist_item = node.name.underscore.to_sym
-            value = node.content == "Yes"
-            { checklist_item => value }
-          }&.inject(&:merge)
+          checklist
+            &.element_children
+            &.map { |node|
+              checklist_item = node.name.underscore.to_sym
+              value = node.content == "Yes"
+              { checklist_item => value }
+            }
+            &.inject(&:merge)
 
         results.nil? ? {} : results
       end

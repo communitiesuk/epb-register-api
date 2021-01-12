@@ -35,12 +35,14 @@ describe "Acceptance::Assessment::QualificationAndStatusPerType" do
     assessments = {
       "RdSAP-Schema-20.0.0": {
         "valid_rdsap": {
-          xml: "epc", assessor_qualification: { domesticRdSap: "ACTIVE" }
+          xml: "epc",
+          assessor_qualification: { domesticRdSap: "ACTIVE" },
         },
       },
       "SAP-Schema-18.0.0": {
         "valid_sap": {
-          xml: "epc", assessor_qualification: { domesticSap: "ACTIVE" }
+          xml: "epc",
+          assessor_qualification: { domesticSap: "ACTIVE" },
         },
       },
       "CEPC-8.0.0": {
@@ -63,7 +65,8 @@ describe "Acceptance::Assessment::QualificationAndStatusPerType" do
           lodged_rrns: %w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001],
         },
         "valid_dec": {
-          xml: "dec", assessor_qualification: { nonDomesticDec: "ACTIVE" }
+          xml: "dec",
+          assessor_qualification: { nonDomesticDec: "ACTIVE" },
         },
         "valid_dec+rr": {
           xml: "dec+rr",
@@ -82,19 +85,22 @@ describe "Acceptance::Assessment::QualificationAndStatusPerType" do
         "valid_ac-report": {
           xml: "ac-report",
           assessor_qualification: {
-            nonDomesticSp3: "ACTIVE", nonDomesticCc4: "ACTIVE"
+            nonDomesticSp3: "ACTIVE",
+            nonDomesticCc4: "ACTIVE",
           },
         },
         "valid_ac-cert": {
           xml: "ac-cert",
           assessor_qualification: {
-            nonDomesticSp3: "ACTIVE", nonDomesticCc4: "ACTIVE"
+            nonDomesticSp3: "ACTIVE",
+            nonDomesticCc4: "ACTIVE",
           },
         },
         "valid_ac-cert+ac-report": {
           xml: "ac-cert+ac-report",
           assessor_qualification: {
-            nonDomesticCc4: "ACTIVE", nonDomesticSp3: "ACTIVE"
+            nonDomesticCc4: "ACTIVE",
+            nonDomesticSp3: "ACTIVE",
           },
           expected_response: "dual_lodgement",
           lodged_rrns: %w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001],

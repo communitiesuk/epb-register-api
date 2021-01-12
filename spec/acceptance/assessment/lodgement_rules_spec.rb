@@ -8,7 +8,8 @@ describe "Acceptance::LodgementRules" do
       scheme_id,
       "SPEC000000",
       fetch_assessor_stub.fetch_request_body(
-        nonDomesticNos3: "ACTIVE", domesticRdSap: "ACTIVE",
+        nonDomesticNos3: "ACTIVE",
+        domesticRdSap: "ACTIVE",
       ),
     )
 
