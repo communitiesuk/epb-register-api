@@ -141,7 +141,6 @@ module Gateway
       ]
 
       results = ActiveRecord::Base.connection.exec_query sql
-      pp results
       results.map { |result| result }
     end
 
@@ -149,7 +148,7 @@ module Gateway
       args = assessments_for_open_data_defaults.merge(args)
 
       sql = <<~SQL
-         SELECT  a.assessment_id
+         SELECT  a.assessment_id, created_at
          FROM assessments a
          INNER JOIN assessments_address_id c  ON(a.assessment_id = c.assessment_id)
          INNER JOIN assessments_xml b ON(a.assessment_id = b.assessment_id)

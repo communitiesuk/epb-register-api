@@ -21,8 +21,10 @@ describe UseCase::ExportOpenDataCommercial do
           )
       }
 
-      let(:expected_values) {Samples::ViewModels::Cepc.report_test_hash}
-      let(:expected_values_row_1) {Samples.update_test_hash(expected_values, {rrn: "0000-0000-0000-0000-0001", lodgement_date: "2018-05-04", })}
+      let(:date_today) {DateTime.now.strftime("%F")}
+      let(:time_today) {DateTime.now.strftime("%F %H:%M:%S")}
+      let(:expected_values) {Samples::ViewModels::Cepc.report_test_hash.merge({lodgement_date: date_today, lodgement_datetime: time_today})}
+      let(:expected_values_row_1) {Samples.update_test_hash(expected_values, {rrn: "0000-0000-0000-0000-0001", lodgement_date: date_today, lodgement_datetime: time_today })}
 
       before(:example) do
 
@@ -62,11 +64,10 @@ describe UseCase::ExportOpenDataCommercial do
             schema_name: "CEPC-8.0.0",
           )
 
-
       end
 
 
-      it "returns the correct nubmer of assesments in the CSV" do
+      it "returns the correct number of assessments in the CSV" do
         expect(exported_data.length).to eq(number_assments_to_test)
       end
 
@@ -87,8 +88,6 @@ describe UseCase::ExportOpenDataCommercial do
           expect(exported_data[1][index.to_sym]).to eq(expected_values[index])
         end
       }
-
-
 
     end
     end
