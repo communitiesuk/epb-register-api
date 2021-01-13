@@ -920,6 +920,62 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
+  /reports/assessors/lookup:
+    get:
+      tags:
+        - Manage Assessors
+        - Reports
+      summary: >-
+        Look up energy assessor records to check all scheme registrations
+      security:
+        - oauth:
+            - 'report:assessor:status'
+      parameters:
+        - in: query
+          name: firstName
+          required: true
+          description: The first name of the asssessor
+          schema:
+            type: string
+            example: 'Richard'
+        - in: query
+          name: lastName
+          required: true
+          description: The last name of the asssessor
+          schema:
+            type: string
+            format: date
+            example: 'James'
+        - in: query
+          name: dateOfBirth
+          required: true
+          description: The date of birth of the assessor
+          schema:
+            type: string
+            format: date
+            example: '1971-08-18'
+      responses:
+        200:
+          description: >-
+            Assessor registration list successfully returned
+            (an empty list is returned if there are no matching assessors)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssessorSearchResults'
+        400:
+          description: Bad request - probably a missing or badly formed parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
   /migrations/assessors/{schemeAssessorId}:
     put:
       tags:
