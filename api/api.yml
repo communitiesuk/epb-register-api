@@ -2352,7 +2352,7 @@ components:
                 example: "NOT_FOUND"
               title:
                 type: string
-                example: "The requested scheme was not found"
+                example: "The thing you are looking for is not here"
 
   links: {}
   callbacks: {}
