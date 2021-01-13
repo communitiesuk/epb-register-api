@@ -1670,22 +1670,6 @@ components:
       type: string
       example: 'TEST000001'
 
-    AssessorSummary:
-      allOf:
-        - $ref: '#/components/schemas/Assessor'
-        - type: object
-          properties:
-            dateOfBirth:
-              type: string
-              format: date
-              example: '1980-01-10'
-            registeredBy:
-              $ref: '#/components/schemas/Scheme'
-            schemeAssessorId:
-              $ref: '#/components/schemas/AssessorSchemeId'
-            searchResultsComparisonPostcode:
-              $ref: '#/components/schemas/AddressPostcode'
-
     AssessorAddress:
       type: object
       properties:
