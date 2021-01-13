@@ -7,7 +7,6 @@ module Helper
         Unleash.configure do |config|
           config.url = ENV["EPB_UNLEASH_URI"]
           config.app_name = "toggles-" + ENV["STAGE"]
-          config.log_level = Logger::DEBUG if ENV["STAGE"] != "production"
         end
 
         @unleash = Unleash::Client.new
