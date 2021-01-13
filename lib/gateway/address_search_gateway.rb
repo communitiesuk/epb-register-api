@@ -296,8 +296,8 @@ module Gateway
 
       addresses.sort_by! do |address|
         [
-          address["matched_rank"],
-          address["matched_difference"],
+          address["matched_rank"] || 0,
+          address["matched_difference"] || 0,
           compact_address(address),
         ]
       end
