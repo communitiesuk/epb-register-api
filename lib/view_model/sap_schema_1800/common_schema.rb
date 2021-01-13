@@ -367,6 +367,10 @@ module ViewModel
         nil
       end
 
+      def habitable_room_count
+        nil
+      end
+
     private
 
       def convert_to_big_decimal(node)

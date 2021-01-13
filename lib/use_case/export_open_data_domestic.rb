@@ -131,6 +131,7 @@ module UseCase
               MAIN_HEATING_CONTROLS: hash[:mains_heating_controls],
               MULTI_GLAZE_PROPORTION: hash[:multiple_glazed_proportion],
               GLAZED_AREA: hash[:glazed_area],
+              NUMBER_HABITABLE_ROOMS: hash[:habitable_room_count],
             },
           )
         end
