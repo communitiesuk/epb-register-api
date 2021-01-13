@@ -1143,6 +1143,7 @@ describe ViewModel::SapWrapper do
     multiple_glazed_proportion: "50",
     glazed_area: nil,
     habitable_room_count: nil,
+    heated_room_count: nil,
   }.freeze
   it "should read the appropriate values from the XML doc" do
     test_xml_doc(supported_schema, asserted_keys)

@@ -157,6 +157,7 @@ module ViewModel
         multiple_glazed_proportion: @view_model.multiple_glazed_proportion,
         glazed_area: @view_model.glazed_area,
         habitable_room_count: @view_model.habitable_room_count,
+        heated_room_count: @view_model.heated_room_count,
       }
     end
 

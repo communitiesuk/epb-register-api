@@ -338,6 +338,10 @@ module ViewModel
         xpath(%w[Glazed-Area])
       end
 
+      def heated_room_count
+        xpath(%w[Heated-Room-Count])
+      end
+
     private
 
       def convert_to_big_decimal(node)
