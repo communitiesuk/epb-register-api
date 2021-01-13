@@ -197,7 +197,7 @@ describe "Acceptance::Assessment::Lodge" do
     end
 
     context "when the 'lodgement-dual-force-matching-address-ids' feature is off" do
-      it "rejects a dual lodgement when the address ids do not match" do
+      it "does not reject a dual lodgement when the address ids do not match" do
         register_assessor
         xml = Nokogiri.XML valid_cepc_rr_xml
         xml.at("//CEPC:UPRN").content = "UPRN-111111111111"
