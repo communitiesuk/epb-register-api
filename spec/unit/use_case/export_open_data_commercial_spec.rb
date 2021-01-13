@@ -105,12 +105,12 @@ describe UseCase::ExportOpenDataCommercial do
       # 2nd row to test
       # write at test for each key in test hash
       Samples::ViewModels::Cepc
-        .report_test_hash
-        .keys
-        .each do |index|
+          .report_test_hash
+          .keys
+          .each do |index|
           it "returns the #{
-               index
-             } that matches the test data for the 1st row" do
+            index
+          } that matches the test data for the 1st row" do
             expect(exported_data[1][index.to_sym]).to eq(expected_values[index])
           end
         end
