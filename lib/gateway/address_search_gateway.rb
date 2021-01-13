@@ -49,6 +49,8 @@ module Gateway
         SQL_TYPE_OF_ASSESSMENT
       end
 
+      sql_assessments << " ORDER BY date_of_expiry DESC "
+
       sql_address_base = <<~SQL
         SELECT CONCAT('UPRN-', LPAD(uprn, 12, '0')) AS address_id,
                address_line1,
@@ -113,7 +115,7 @@ module Gateway
          WHERE cancelled_at IS NULL
            AND not_for_issue_at IS NULL
            AND (a.assessment_id = $1 OR aai.address_id = $2)
-         ORDER BY assessment_id
+         ORDER BY date_of_expiry DESC
       SQL
 
       sql_address_base = <<~SQL
@@ -199,6 +201,8 @@ module Gateway
           AND type_of_assessment IN(#{list_of_types.join(',')})
         SQL_TYPE_OF_ASSESSMENT
       end
+
+      sql << " ORDER BY date_of_expiry DESC "
 
       binds = [
         ActiveRecord::Relation::QueryAttribute.new(
