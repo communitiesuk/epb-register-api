@@ -1,13 +1,13 @@
 require "nokogiri"
 require "date"
 module UseCase
-  class ExportOpenDataDec
+  class ExportOpenDataCepcrr
     def initialize
       @gateway = Gateway::ReportingGateway.new
       @assessment_gateway = Gateway::AssessmentsXmlGateway.new
     end
 
-    # @TODO: pass arguments to filter for decs
+    # @TODO: use argument signature of this method
     def execute(args = {})
       view_model_array = []
 
@@ -15,7 +15,7 @@ module UseCase
       # call gateway to get data set
       assessments = @gateway.assessments_for_open_data(args)
 
-      # use existing gateway to get each xml doc from db line by line to ensure memory is not consumed by size of data returned
+      # use existing gateway to get each xml doc from db line by line to ensure memory is totllay consumed by size of data returned
       assessments.each do |assessment|
         xml_data = @assessment_gateway.fetch(assessment["assessment_id"])
         view_model =
@@ -29,6 +29,7 @@ module UseCase
           assessment["created_at"].strftime("%F")
         view_model_hash[:lodgement_datetime] =
           assessment["created_at"].strftime("%F %H:%M:%S")
+
         # lodgement_datetime
         view_model_array << view_model_hash
         # @TODO:update log table
@@ -38,5 +39,12 @@ module UseCase
       # to_csv
       view_model_array
     end
+
+
+
+
+
+
   end
 end
+

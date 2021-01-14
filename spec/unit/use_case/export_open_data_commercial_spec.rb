@@ -1,7 +1,6 @@
 describe UseCase::ExportOpenDataCommercial do
   include RSpecRegisterApiServiceMixin
 
-  require_relative "../cepc_view_model_test_helper"
 
   context "when creating the open data reporting release" do
     describe "for the commercial certificates and reports" do

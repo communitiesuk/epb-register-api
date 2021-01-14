@@ -1,7 +1,7 @@
 describe UseCase::ExportOpenDataDec do
   include RSpecRegisterApiServiceMixin
 
-  context "when creating the open data reporting release" do
+  context "when creating the open data reporting release " do
     describe "for the DEC and reports" do
       let(:scheme_id) { add_scheme_and_get_id }
       let(:dec_xml) { Nokogiri.XML Samples.xml("CEPC-8.0.0", "dec") }
