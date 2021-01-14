@@ -10,15 +10,8 @@ module Gateway
 
       ranking_sql = <<~SQL
         ,
-        ((1 - TS_RANK_CD(
-          TO_TSVECTOR('english', LOWER(CONCAT_WS(' ', address_line1, address_line2, address_line3))),
-          TO_TSQUERY('english', LOWER($2))
-        )) * 100) AS matched_rank,
-        LEVENSHTEIN(
-          LOWER($2),
-          LOWER(CONCAT_WS(' ', address_line1, address_line2, address_line3)),
-          0, 1, 1
-        ) AS matched_difference
+        0 AS matched_rank,
+        0 AS matched_difference
       SQL
 
       sql_assessments = <<~SQL
