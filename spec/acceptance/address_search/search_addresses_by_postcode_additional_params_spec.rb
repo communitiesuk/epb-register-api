@@ -131,11 +131,11 @@ describe "Acceptance::AddressSearch::ByPostcode::AdditionalParams" do
         )
       end
 
-      xit "returns the expected amount of addresses" do
+      it "returns the expected amount of addresses" do
         expect(response[:data][:addresses].length).to eq 7
       end
 
-      xit "returns the most relevant entries near the top" do
+      it "returns the most relevant entries near the top" do
         address_line1 = response[:data][:addresses].map do |address|
           address[:line1]
         end
@@ -151,7 +151,7 @@ describe "Acceptance::AddressSearch::ByPostcode::AdditionalParams" do
         ]
       end
 
-      xit "returns the expected previous assessment address entry" do
+      it "returns the expected previous assessment address entry" do
         address_ids = response[:data][:addresses].map do |address|
           address[:addressId]
         end
@@ -174,11 +174,11 @@ describe "Acceptance::AddressSearch::ByPostcode::AdditionalParams" do
         )
       end
 
-      xit "returns the expected amount of addresses" do
+      it "returns the expected amount of addresses" do
         expect(response[:data][:addresses].length).to eq 7
       end
 
-      xit "returns the most relevant entries near the top" do
+      it "returns the most relevant entries near the top" do
         address_line1 = response[:data][:addresses].map do |address|
           address[:line1]
         end
@@ -194,7 +194,7 @@ describe "Acceptance::AddressSearch::ByPostcode::AdditionalParams" do
         ]
       end
 
-      xit "returns the expected previous assessment address entry" do
+      it "returns the expected previous assessment address entry" do
         address_ids = response[:data][:addresses].map do |address|
           address[:addressId]
         end
@@ -217,11 +217,11 @@ describe "Acceptance::AddressSearch::ByPostcode::AdditionalParams" do
         )
       end
 
-      xit "returns the expected amount of addresses" do
+      it "returns the expected amount of addresses" do
         expect(response[:data][:addresses].length).to eq 7
       end
 
-      xit "returns the most relevant entries near the top" do
+      it "returns the most relevant entries near the top" do
         address_line1 = response[:data][:addresses].map do |address|
           address[:line1]
         end
@@ -237,7 +237,7 @@ describe "Acceptance::AddressSearch::ByPostcode::AdditionalParams" do
         ]
       end
 
-      xit "returns the expected previous assessment address entry" do
+      it "returns the expected previous assessment address entry" do
         address_ids = response[:data][:addresses].map do |address|
           address[:addressId]
         end
