@@ -67,7 +67,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
         {
           addresses: [
             {
-              addressId: "RRN-0000-0000-0000-0000-0001",
+              addressId: "RRN-0000-0000-0000-0000-0000",
               line1: "1 Some Street",
               line2: nil,
               line3: nil,
@@ -77,12 +77,12 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
               source: "PREVIOUS_ASSESSMENT",
               existingAssessments: [
                 {
-                  assessmentId: "0000-0000-0000-0000-0002",
+                  assessmentId: "0000-0000-0000-0000-0001",
                   assessmentStatus: "ENTERED",
                   assessmentType: "RdSAP",
                 },
                 {
-                  assessmentId: "0000-0000-0000-0000-0001",
+                  assessmentId: "0000-0000-0000-0000-0002",
                   assessmentStatus: "ENTERED",
                   assessmentType: "RdSAP",
                 },
@@ -113,12 +113,12 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
         expect(response[:data][:addresses][0][:existingAssessments]).to eq(
           [
             {
-              assessmentId: "0000-0000-0000-0000-0002",
+              assessmentId: "0000-0000-0000-0000-0001",
               assessmentStatus: "ENTERED",
               assessmentType: "RdSAP",
             },
             {
-              assessmentId: "0000-0000-0000-0000-0001",
+              assessmentId: "0000-0000-0000-0000-0002",
               assessmentStatus: "ENTERED",
               assessmentType: "RdSAP",
             },
@@ -152,12 +152,12 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
             source: "PREVIOUS_ASSESSMENT",
             existingAssessments: [
               {
-                assessmentId: "0000-0000-0000-0000-0001",
+                assessmentId: "0000-0000-0000-0000-0000",
                 assessmentStatus: "ENTERED",
                 assessmentType: "RdSAP",
               },
               {
-                assessmentId: "0000-0000-0000-0000-0000",
+                assessmentId: "0000-0000-0000-0000-0001",
                 assessmentStatus: "ENTERED",
                 assessmentType: "RdSAP",
               },
