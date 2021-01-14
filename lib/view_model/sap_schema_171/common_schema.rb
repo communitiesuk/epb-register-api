@@ -303,6 +303,10 @@ module ViewModel
         nil
       end
 
+      def low_energy_lighting
+        xpath(%w[Low-Energy-Fixed-Lighting-Outlets-Percentage])
+      end
+
     private
 
       def convert_to_big_decimal(node)

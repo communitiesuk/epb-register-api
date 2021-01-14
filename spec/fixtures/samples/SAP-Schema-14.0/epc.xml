@@ -229,6 +229,14 @@
               <Overshading>2</Overshading>
             </SAP-Building-Part>
           </SAP-Building-Parts>
+          <SAP-Energy-Source>
+            <PV-Peak-Power>0.803</PV-Peak-Power>
+            <Wind-Turbines-Count>0</Wind-Turbines-Count>
+            <Electricity-Tariff>1</Electricity-Tariff>
+            <Fixed-Lighting-Outlets-Count>8</Fixed-Lighting-Outlets-Count>
+            <Low-Energy-Fixed-Lighting-Outlets-Count>8</Low-Energy-Fixed-Lighting-Outlets-Count>
+            <Low-Energy-Fixed-Lighting-Outlets-Percentage>100</Low-Energy-Fixed-Lighting-Outlets-Percentage>
+          </SAP-Energy-Source>
           <SAP-Flat-Details>
             <Level>1</Level>
           </SAP-Flat-Details>

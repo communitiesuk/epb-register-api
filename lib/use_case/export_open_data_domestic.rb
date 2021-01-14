@@ -133,6 +133,7 @@ module UseCase
               GLAZED_AREA: hash[:glazed_area],
               NUMBER_HABITABLE_ROOMS: hash[:habitable_room_count],
               NUMBER_HEATED_ROOMS: hash[:habitable_room_count],
+              LOW_ENERGY_LIGHTING: hash[:low_energy_lighting],
             },
           )
         end

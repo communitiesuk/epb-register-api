@@ -289,12 +289,9 @@
             </SAP:PV-Arrays>
             <SAP:Wind-Turbines-Count>0</SAP:Wind-Turbines-Count>
             <SAP:Wind-Turbine-Terrain-Type>1</SAP:Wind-Turbine-Terrain-Type>
-            <SAP:Fixed-Lighting-Outlets-Count>8
-            </SAP:Fixed-Lighting-Outlets-Count>
-            <SAP:Low-Energy-Fixed-Lighting-Outlets-Count>8
-            </SAP:Low-Energy-Fixed-Lighting-Outlets-Count>
-            <SAP:Low-Energy-Fixed-Lighting-Outlets-Percentage>100
-            </SAP:Low-Energy-Fixed-Lighting-Outlets-Percentage>
+            <SAP:Fixed-Lighting-Outlets-Count>8</SAP:Fixed-Lighting-Outlets-Count>
+            <SAP:Low-Energy-Fixed-Lighting-Outlets-Count>8</SAP:Low-Energy-Fixed-Lighting-Outlets-Count>
+            <SAP:Low-Energy-Fixed-Lighting-Outlets-Percentage>100</SAP:Low-Energy-Fixed-Lighting-Outlets-Percentage>
             <SAP:Electricity-Tariff>1</SAP:Electricity-Tariff>
           </SAP:SAP-Energy-Source>
           <SAP:SAP-Building-Parts>

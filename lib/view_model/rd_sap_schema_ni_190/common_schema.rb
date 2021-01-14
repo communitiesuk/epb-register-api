@@ -342,6 +342,10 @@ module ViewModel
         xpath(%w[Heated-Room-Count])
       end
 
+      def low_energy_lighting
+        xpath(%w[Low-Energy-Lighting])
+      end
+
     private
 
       def convert_to_big_decimal(node)

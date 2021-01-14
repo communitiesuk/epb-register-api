@@ -269,6 +269,10 @@ describe UseCase::ExportOpenDataDomestic do
       it "returns the NUMBER_HEATED_ROOMS in the CSV" do
         expect(@table.by_col["NUMBER_HEATED_ROOMS"]).to eq(["5", "5", nil])
       end
+
+      it "returns the LOW_ENERGY_LIGHTING in the CSV" do
+        expect(@table.by_col["LOW_ENERGY_LIGHTING"]).to eq(["100", "100", "100"])
+      end
     end
   end
 end
