@@ -35,6 +35,7 @@ deploy-app: ## Deploys the app to PaaS
 	cf set-env "${DEPLOY_APPNAME}" JWT_SECRET "${JWT_SECRET}"
 	cf set-env "${DEPLOY_APPNAME}" STAGE "${PAAS_SPACE}"
 	cf set-env "${DEPLOY_APPNAME}" EPB_UNLEASH_URI "${EPB_UNLEASH_URI}"
+	cf set-env "${DEPLOY_APPNAME}" NEW_RELIC_LICENSE_KEY "${NEW_RELIC_LICENSE_KEY}"
 
 	cf push "${DEPLOY_APPNAME}" --strategy rolling
 

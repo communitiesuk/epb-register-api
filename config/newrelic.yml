@@ -1,0 +1,34 @@
+# For full documentation of agent configuration options, please refer to
+# https://docs.newrelic.com/docs/agents/ruby-agent/installation-configuration/ruby-agent-configuration
+
+common: &default_settings
+  # Your application name. Renaming here affects where data displays in New
+  # Relic.  For more details, see https://docs.newrelic.com/docs/apm/new-relic-apm/maintenance/renaming-applications
+  app_name: epb-register-api
+
+  distributed_tracing:
+    enabled: true
+
+  # Logging level for log/newrelic_agent.log
+  log_level: info
+
+development:
+  <<: *default_settings
+  # It doesn't make sense to report to New Relic from developer test machines.
+  monitor_mode: false
+
+test:
+  <<: *default_settings
+  # It doesn't make sense to report to New Relic from automated test runs.
+#  monitor_mode: false
+
+integration:
+  <<: *default_settings
+  app_name: epb-register-api (Integration)
+
+staging:
+  <<: *default_settings
+  app_name: epb-register-api (Staging)
+
+production:
+  <<: *default_settings
