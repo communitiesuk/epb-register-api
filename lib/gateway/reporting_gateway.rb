@@ -154,7 +154,7 @@ module Gateway
         INNER JOIN assessments_address_id c  ON(a.assessment_id = c.assessment_id)
         INNER JOIN assessments_xml b ON(a.assessment_id = b.assessment_id)
         WHERE a.opt_out = false AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
-        ORDER BY a.date_registered
+        ORDER BY a.assessment_id
 
       SQL
 

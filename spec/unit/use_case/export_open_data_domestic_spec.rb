@@ -7,7 +7,7 @@ describe UseCase::ExportOpenDataDomestic do
 
       let(:domestic_xml) { Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0") }
       let(:domestic_assessment_id) { domestic_xml.at("RRN") }
-      let(:domestic_assessment_date) { domestic_xml.at("Registration-Date") }
+      let(:domestic_assessment_date) { domestic_xml.at("Registration-Date")  }
 
       let(:domestic_sap_xml) { Nokogiri.XML Samples.xml("SAP-Schema-18.0.0") }
       let(:domestic_sap_assessment_id) { domestic_sap_xml.at("RRN") }

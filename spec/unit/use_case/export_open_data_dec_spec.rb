@@ -5,13 +5,20 @@ describe UseCase::ExportOpenDataDec do
     describe "for the DEC and reports" do
       let(:scheme_id) { add_scheme_and_get_id }
       let(:dec_xml) { Nokogiri.XML Samples.xml("CEPC-8.0.0", "dec") }
+      let(:dec_assessment_id) { dec_xml.at("RRN") }
+      let(:dec_assessment_date) { dec_xml.at("Registration-Date") }
 
       let(:date_today) { DateTime.now.strftime("%F") }
       let(:time_today) { DateTime.now.strftime("%F %H:%M:%S") }
-      let(:number_assessments_to_test) { 1 }
+      let(:number_assessments_to_test) { 2 }
       let(:expected_values) do
         Samples::ViewModels::Dec.report_test_hash.merge(
-          { lodgement_date: date_today, lodgement_datetime: time_today },
+          { lodgement_date: date_today, lodgement_datetime: time_today, },
+          )
+      end
+      let(:expected_values_1) do
+        Samples::ViewModels::Dec.report_test_hash.merge(
+          { lodgement_date: date_today, lodgement_datetime: time_today, rrn: "0000-0000-0000-0000-0001"},
           )
       end
 
@@ -45,13 +52,23 @@ describe UseCase::ExportOpenDataDec do
           )
 
 
-        lodged = lodge_assessment(
+        lodge_assessment(
           assessment_body: dec_xml.to_xml,
           accepted_responses: [201],
           auth_data: { scheme_ids: [scheme_id] },
           override: true,
           schema_name: "CEPC-8.0.0",
           )
+
+        dec_assessment_id.children = "0000-0000-0000-0000-0001"
+        lodge_assessment(
+          assessment_body: dec_xml.to_xml,
+          accepted_responses: [201],
+          auth_data: { scheme_ids: [scheme_id] },
+          override: true,
+          schema_name: "CEPC-8.0.0",
+          )
+
 
         # @Todo ask how to add another lodgement to test
       end
@@ -73,6 +90,19 @@ describe UseCase::ExportOpenDataDec do
           index
         } that matches the test data for the 1st row" do
           expect(exported_data[0][index.to_sym]).to eq(expected_values[index],)
+        end
+      end
+
+      # 1st row to test
+      # write at test for each key in test hash
+      Samples::ViewModels::Dec
+        .report_test_hash
+        .keys
+        .each do |index|
+        it "returns the #{
+          index
+        } that matches the test data for the 2nd row" do
+          expect(exported_data[1][index.to_sym]).to eq(expected_values_1[index],)
         end
       end
 

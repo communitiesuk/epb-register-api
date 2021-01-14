@@ -96,7 +96,7 @@ describe UseCase::ExportOpenDataCommercial do
                index
              } that matches the test data for the 1st row" do
             expect(exported_data[0][index.to_sym]).to eq(
-              expected_values_row_1[index],
+              expected_values[index],
             )
           end
         end
@@ -110,7 +110,7 @@ describe UseCase::ExportOpenDataCommercial do
           it "returns the #{
             index
           } that matches the test data for the 1st row" do
-            expect(exported_data[1][index.to_sym]).to eq(expected_values[index])
+            expect(exported_data[1][index.to_sym]).to eq(expected_values_row_1[index])
           end
         end
     end
