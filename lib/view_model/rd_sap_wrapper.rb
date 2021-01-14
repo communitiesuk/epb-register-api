@@ -159,6 +159,7 @@ module ViewModel
         habitable_room_count: @view_model.habitable_room_count,
         heated_room_count: @view_model.heated_room_count,
         low_energy_lighting: @view_model.low_energy_lighting,
+        fixed_lighting_outlets_count: @view_model.fixed_lighting_outlets_count,
       }
     end
 

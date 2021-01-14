@@ -182,9 +182,6 @@
           <HIP:Percent-Draughtproofed>100</HIP:Percent-Draughtproofed>
           <HIP:Measurement-Type>1</HIP:Measurement-Type>
           <HIP:SAP-Energy-Source>
-            <HIP:Fixed-Lighting-Outlets-Count>8</HIP:Fixed-Lighting-Outlets-Count>
-            <HIP:Low-Energy-Fixed-Lighting-Outlets-Count>8</HIP:Low-Energy-Fixed-Lighting-Outlets-Count>
-            <HIP:Low-Energy-Fixed-Lighting-Outlets-Percentage>100</HIP:Low-Energy-Fixed-Lighting-Outlets-Percentage>
             <HIP:Wind-Turbines-Terrain-Type>2</HIP:Wind-Turbines-Terrain-Type>
             <HIP:Wind-Turbines-Count>0</HIP:Wind-Turbines-Count>
             <HIP:Meter-Type>2</HIP:Meter-Type>
@@ -232,8 +229,8 @@
           <HIP:Multiple-Glazing-Type>1</HIP:Multiple-Glazing-Type>
           <HIP:Low-Energy-Lighting>50</HIP:Low-Energy-Lighting>
           <HIP:Fixed-Lighting-Outlets-Count>8</HIP:Fixed-Lighting-Outlets-Count>
-          <HIP:Low-Energy-Fixed-Lighting-Outlets-Count>4
-          </HIP:Low-Energy-Fixed-Lighting-Outlets-Count>
+          <HIP:Low-Energy-Fixed-Lighting-Outlets-Count>8</HIP:Low-Energy-Fixed-Lighting-Outlets-Count>
+          <HIP:Low-Energy-Fixed-Lighting-Outlets-Percentage>100</HIP:Low-Energy-Fixed-Lighting-Outlets-Percentage>
           <HIP:Solar-Water-Heating>N</HIP:Solar-Water-Heating>
           <HIP:SAP-Building-Parts>
             <HIP:SAP-Building-Part>

@@ -219,8 +219,9 @@
           <HIP:Percent-Draughtproofed>100</HIP:Percent-Draughtproofed>
           <HIP:Habitable-Room-Count>9</HIP:Habitable-Room-Count>
           <HIP:Heated-Room-Count>9</HIP:Heated-Room-Count>
-          <HIP:Fixed-Lighting-Outlets-Count>18</HIP:Fixed-Lighting-Outlets-Count>
+          <HIP:Fixed-Lighting-Outlets-Count>8</HIP:Fixed-Lighting-Outlets-Count>
           <HIP:Low-Energy-Fixed-Lighting-Outlets-Count>8</HIP:Low-Energy-Fixed-Lighting-Outlets-Count>
+          <HIP:Low-Energy-Fixed-Lighting-Outlets-Percentage>100</HIP:Low-Energy-Fixed-Lighting-Outlets-Percentage>
           <HIP:Low-Energy-Lighting>44</HIP:Low-Energy-Lighting>
           <HIP:Measurement-Type>2</HIP:Measurement-Type>
           <HIP:Mechanical-Ventilation>0</HIP:Mechanical-Ventilation>
@@ -295,9 +296,6 @@
             </HIP:WWHRS>
           </HIP:SAP-Heating>
           <HIP:SAP-Energy-Source>
-            <HIP:Fixed-Lighting-Outlets-Count>8</HIP:Fixed-Lighting-Outlets-Count>
-            <HIP:Low-Energy-Fixed-Lighting-Outlets-Count>8</HIP:Low-Energy-Fixed-Lighting-Outlets-Count>
-            <HIP:Low-Energy-Fixed-Lighting-Outlets-Percentage>100</HIP:Low-Energy-Fixed-Lighting-Outlets-Percentage>
             <HIP:Meter-Type>2</HIP:Meter-Type>
             <HIP:Main-Gas>N</HIP:Main-Gas>
             <HIP:Wind-Turbines-Count>0</HIP:Wind-Turbines-Count>

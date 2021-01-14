@@ -263,6 +263,7 @@ describe ViewModel::RdSapWrapper do
       habitable_room_count: "5",
       heated_room_count: "5",
       low_energy_lighting: "100",
+      fixed_lighting_outlets_count: "16",
     }.freeze
 
   it "should read the appropriate values from the XML doc using the to_hash method" do
