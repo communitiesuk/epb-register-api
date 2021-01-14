@@ -66,12 +66,12 @@ module Gateway
       ]
 
       if building_name_number
-        binds <<
-          ActiveRecord::Relation::QueryAttribute.new(
-            "building_name_number",
-            building_name_number.split(" ").join(" & "),
-            ActiveRecord::Type::String.new,
-          )
+        # binds <<
+        #   ActiveRecord::Relation::QueryAttribute.new(
+        #     "building_name_number",
+        #     building_name_number.split(" ").join(" & "),
+        #     ActiveRecord::Type::String.new,
+        #   )
       end
 
       parse_results(
