@@ -33,7 +33,8 @@ GEM
       aws-eventstream (~> 1, >= 1.0.2)
     coderay (1.1.3)
     concurrent-ruby (1.1.7)
-    crack (0.4.4)
+    crack (0.4.5)
+      rexml
     database_cleaner (1.8.5)
     debase (0.2.4.1)
       debase-ruby_core_source (>= 0.10.2)
@@ -154,7 +155,7 @@ GEM
     unicode-display_width (1.7.0)
     unleash (3.2.1)
       murmurhash3 (~> 0.1.6)
-    webmock (3.10.0)
+    webmock (3.11.1)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
@@ -185,7 +186,7 @@ DEPENDENCIES
   sinatra-contrib!
   sinatra-cross_origin (~> 0.4.0)!
   unleash (~> 3.2.1)!
-  webmock (~> 3.10)!
+  webmock (~> 3.11)!
   zeitwerk (~> 2.4.1)!
 
 RUBY VERSION
