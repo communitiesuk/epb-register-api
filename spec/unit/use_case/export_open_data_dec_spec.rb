@@ -18,7 +18,7 @@ describe UseCase::ExportOpenDataDec do
       end
       let(:expected_values_1) do
         Samples::ViewModels::Dec.report_test_hash.merge(
-          { lodgement_date: date_today, lodgement_datetime: time_today, rrn: "0000-0000-0000-0000-0001"},
+          { lodgement_date: date_today, lodgement_datetime: DateTime.now.strftime("%F %H:%M:%S"), rrn: "0000-0000-0000-0000-0001"},
           )
       end
 

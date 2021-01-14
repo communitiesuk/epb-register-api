@@ -541,17 +541,17 @@ class Samples
             calculation_tool: "Calculation-Tool0",
           },
           related_party_disclosure: "Related to the owner",
-        }.freeze
+        }
       end
 
        def self.report_test_hash
          {
            rrn: asserted_hash[:assessment_id],
            payback_type: [
-             {:code=>"1", :text=>"Consider replacing T8 lamps with retrofit T5 conversion kit.", :cO2Impact=>"HIGH", :payback_type=>"short"},
-             {:code=>"2", :text=>"Add optimum start/stop to the heating system.", :cO2Impact=>"MEDIUM", :payback_type=>"medium"},
-             {:code=>"3", :text=>"Consider installing an air source heat pump.",
-              :cO2Impact=>"HIGH", :payback_type=>"long"}, {:code=>"4", :text=>"Consider installing PV.", :cO2Impact=>"HIGH", :payback_type=>"other"}
+             {:recommendation_code=>"1", :recommendation=>"Consider replacing T8 lamps with retrofit T5 conversion kit.", :cO2_Impact=>"HIGH", :payback_type=>"short"},
+             {:recommendation_code=>"2", :recommendation=>"Add optimum start/stop to the heating system.", :cO2_Impact=>"MEDIUM", :payback_type=>"medium"},
+             {:recommendation_code=>"3", :recommendation=>"Consider installing an air source heat pump.", :cO2_Impact=>"HIGH", :payback_type=>"long"},
+             {:recommendation_code=>"4", :recommendation=>"Consider installing PV.", :cO2_Impact=>"HIGH", :payback_type=>"other"}
            ],
          }
        end

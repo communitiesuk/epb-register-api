@@ -80,17 +80,28 @@ module ViewModel
     def to_report
       # add recommendations into a single array
       payback = []
-      payback << @view_model.short_payback_recommendations[0].merge({payback_type: "short"})
-      payback << @view_model.medium_payback_recommendations[0].merge({payback_type: "medium"})
-      payback << @view_model.long_payback_recommendations[0].merge({payback_type: "long"})
-      payback << @view_model.other_recommendations[0].merge({payback_type: "other"})
-
-
+      payback << reset_hash_keys(@view_model.short_payback_recommendations[0].merge({payback_type: "short"}))
+      payback << reset_hash_keys(@view_model.medium_payback_recommendations[0].merge({payback_type: "medium"}))
+      payback << reset_hash_keys(@view_model.long_payback_recommendations[0].merge({payback_type: "long"}))
+      payback << reset_hash_keys(@view_model.other_recommendations[0].merge({payback_type: "other"}))
 
       # @TODO use recommendations method to only call xpath once and loop over nodeset
       { rrn: @view_model.assessment_id, payback_type: payback }
     end
 
+    def reset_hash_keys(hash)
+      update_hash_key(hash, "code", "recommendation_code")
+      update_hash_key(hash, "text", "recommendation")
+      update_hash_key(hash, "cO2Impact", "cO2_Impact")
+
+    end
+
+    def update_hash_key(hash, old, new)
+      value = hash[old.to_sym]
+      hash.delete(old.to_sym)
+      hash[new.to_sym] = value
+      hash
+    end
 
     def get_view_model
       @view_model
