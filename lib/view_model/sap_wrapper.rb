@@ -181,6 +181,7 @@ module ViewModel
         heated_room_count: @view_model.heated_room_count,
         low_energy_lighting: @view_model.low_energy_lighting,
         fixed_lighting_outlets_count: @view_model.fixed_lighting_outlets_count,
+        low_energy_fixed_lighting_outlets_count: @view_model.low_energy_fixed_lighting_outlets_count,
       }
     end
 

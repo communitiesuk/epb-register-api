@@ -1145,7 +1145,8 @@ describe ViewModel::SapWrapper do
     habitable_room_count: nil,
     heated_room_count: nil,
     low_energy_lighting: "100",
-    fixed_lighting_outlets_count: "8"
+    fixed_lighting_outlets_count: "8",
+    low_energy_fixed_lighting_outlets_count: "8",
   }.freeze
   it "should read the appropriate values from the XML doc" do
     test_xml_doc(supported_schema, asserted_keys)

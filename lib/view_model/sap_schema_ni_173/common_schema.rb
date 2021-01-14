@@ -312,6 +312,10 @@ module ViewModel
         xpath(%w[Fixed-Lighting-Outlets-Count])
       end
 
+      def low_energy_fixed_lighting_outlets_count
+        xpath(%w[Low-Energy-Fixed-Lighting-Outlets-Count])
+      end
+
     private
 
       def convert_to_big_decimal(node)
