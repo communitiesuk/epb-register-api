@@ -85,6 +85,8 @@ module ViewModel
       payback << @view_model.long_payback_recommendations[0].merge({payback_type: "long"})
       payback << @view_model.other_recommendations[0].merge({payback_type: "other"})
 
+
+
       # @TODO use recommendations method to only call xpath once and loop over nodeset
       { rrn: @view_model.assessment_id, payback_type: payback }
     end

@@ -83,75 +83,15 @@ describe ViewModel::CepcRrWrapper do
       },
     ].freeze
 
-    # You should only need to add to this list to test new fields on all CEPC schema
-    asserted_keys = {
-      assessment_id: "0000-0000-0000-0000-0000",
-      report_type: "4",
-      type_of_assessment: "CEPC-RR",
-      date_of_expiry: "2021-05-03",
-      date_of_registration: "2020-05-05",
-      related_certificate: "0000-0000-0000-0000-0001",
-      address: {
-        address_id: "UPRN-000000000000",
-        address_line1: "1 Lonely Street",
-        address_line2: nil,
-        address_line3: nil,
-        address_line4: nil,
-        town: "Post-Town0",
-        postcode: "A0 0AA",
-      },
-      assessor: {
-        scheme_assessor_id: "SPEC000000",
-        name: "Mrs Report Writer",
-        company_details: {
-          name: "Joe Bloggs Ltd",
-          address: "123 My Street, My City, AB3 4CD",
-        },
-        contact_details: { email: "a@b.c", telephone: "012345" },
-      },
-      short_payback_recommendations: [
-        {
-          code: "1",
-          text: "Consider replacing T8 lamps with retrofit T5 conversion kit.",
-          cO2Impact: "HIGH",
-        },
-        {
-          code: "3",
-          text:
-            "Introduce HF (high frequency) ballasts for fluorescent tubes: Reduced number of fittings required.",
-          cO2Impact: "LOW",
-        },
-      ],
-      medium_payback_recommendations: [
-        {
-          code: "2",
-          text: "Add optimum start/stop to the heating system.",
-          cO2Impact: "MEDIUM",
-        },
-      ],
-      long_payback_recommendations: [
-        {
-          code: "3",
-          text: "Consider installing an air source heat pump.",
-          cO2Impact: "HIGH",
-        },
-      ],
-      other_recommendations: [
-        { code: "4", text: "Consider installing PV.", cO2Impact: "HIGH" },
-      ],
-      technical_information: {
-        floor_area: "10",
-        building_environment: "Natural Ventilation Only",
-        calculation_tool: "Calculation-Tool0",
-      },
-      related_party_disclosure: "Related to the owner",
-    }.freeze
-
+    # use hash from sample
     it "should read the appropriate values from the XML doc using the to hash method" do
-      test_xml_doc(supported_schema, asserted_keys)
+      test_xml_doc(supported_schema, Samples::ViewModels::CepRr.asserted_hash)
     end
 
+    it "should read the appropriate values from the XML doc using the to report method" do
 
+      test_xml_doc(supported_schema, Samples::ViewModels::CepRr.report_test_hash, true)
+    end
 
     it "returns the expect error without a valid schema type" do
       expect {
