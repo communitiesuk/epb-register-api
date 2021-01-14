@@ -69,14 +69,11 @@ describe UseCase::ExportOpenDataDec do
           schema_name: "CEPC-8.0.0",
           )
 
-
-        # @Todo ask how to add another lodgement to test
       end
 
 
       # @TODO once tests have completed refactor to write one assertion for each row and compare to hash rather than for each column
-
-      it "returns the correct number of assessments in the CSV" do
+      it "returns the correct number of assessments in the Data" do
         expect(exported_data.length).to eq(number_assessments_to_test)
       end
 
