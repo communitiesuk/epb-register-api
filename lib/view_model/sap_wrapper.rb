@@ -185,6 +185,7 @@ module ViewModel
         open_fireplaces_count: @view_model.open_fireplaces_count,
         hot_water_description: @view_model.hot_water_description,
         hot_water_energy_efficiency_rating: @view_model.hot_water_energy_efficiency_rating,
+        hot_water_environmental_efficiency_rating: @view_model.hot_water_environmental_efficiency_rating,
       }
     end
 

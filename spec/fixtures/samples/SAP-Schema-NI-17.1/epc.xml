@@ -179,8 +179,7 @@
           <SAP:Hot-Water>
             <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
             <SAP:Description>Gas boiler</SAP:Description>
-            <SAP:Environmental-Efficiency-Rating>0
-            </SAP:Environmental-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
           </SAP:Hot-Water>
           <SAP:Lighting>
             <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>

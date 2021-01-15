@@ -146,8 +146,7 @@
           <HIP:Hot-Water>
             <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>
             <HIP:Description>Gas boiler</HIP:Description>
-            <HIP:Environmental-Efficiency-Rating>0
-            </HIP:Environmental-Efficiency-Rating>
+            <HIP:Environmental-Efficiency-Rating>0</HIP:Environmental-Efficiency-Rating>
           </HIP:Hot-Water>
           <HIP:Lighting>
             <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>

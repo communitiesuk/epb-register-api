@@ -293,6 +293,10 @@ describe UseCase::ExportOpenDataDomestic do
       it "returns the HOT_WATER_ENERGY_EFF in the CSV" do
         expect(@table.by_col["HOT_WATER_ENERGY_EFF"]).to eq(["0", "0", "0"])
       end
+
+      it "returns the HOT_WATER_ENV_EFF in the CSV" do
+        expect(@table.by_col["HOT_WATER_ENV_EFF"]).to eq(["0", "0", "0"])
+      end
     end
   end
 end

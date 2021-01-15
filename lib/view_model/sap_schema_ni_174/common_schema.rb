@@ -328,6 +328,10 @@ module ViewModel
         xpath(%w[Hot-Water Energy-Efficiency-Rating])
       end
 
+      def hot_water_environmental_efficiency_rating
+        xpath(%w[Hot-Water Environmental-Efficiency-Rating])
+      end
+
     private
 
       def convert_to_big_decimal(node)
