@@ -337,7 +337,7 @@ module ViewModel
       end
 
       def hot_water_energy_efficiency_rating
-        xpath(%w[Energy-Efficiency-Rating])
+        xpath(%w[Hot-Water Energy-Efficiency-Rating])
       end
 
     private
