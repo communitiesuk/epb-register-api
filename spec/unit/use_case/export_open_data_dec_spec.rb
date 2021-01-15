@@ -21,6 +21,10 @@ describe UseCase::ExportOpenDataDec do
           )
       end
 
+      let(:keys_to_test) do
+        expected_values.keys.select { |key| key!=:lodgement_datetime}
+      end
+
 
       # @TODO filter data correctly for DEC
       let(:exported_data) do
@@ -71,7 +75,7 @@ describe UseCase::ExportOpenDataDec do
 
         # in order to test the exact time of lodgement the time set on line 53
         expected_values[:lodgement_datetime]   = current_datetime
-        expected_values_1[:lodgement_datetime] = current_datetime
+
       end
 
 
@@ -83,8 +87,7 @@ describe UseCase::ExportOpenDataDec do
       # 1st row to test
       # write at test for each key in test hash
       Samples::ViewModels::Dec
-        .report_test_hash
-        .keys
+        .test_keys
         .each do |index|
         it "returns the #{
           index
@@ -96,8 +99,7 @@ describe UseCase::ExportOpenDataDec do
       # 1st row to test
       # write at test for each key in test hash
       Samples::ViewModels::Dec
-        .report_test_hash
-        .keys
+        .test_keys
         .each do |index|
         it "returns the #{
           index

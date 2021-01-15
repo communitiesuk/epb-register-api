@@ -236,6 +236,10 @@ class Samples
         }
       end
 
+      def self.test_keys
+        Samples::ViewModels::Dec.report_test_hash.keys.select { |key| key!= :lodgement_datetime }
+      end
+
       def self.update_schema_for_report
         schema = supported_schema
         report_schema = [] # new hash to hold schema
