@@ -1147,6 +1147,9 @@ describe ViewModel::SapWrapper do
     low_energy_lighting: "100",
     fixed_lighting_outlets_count: "8",
     low_energy_fixed_lighting_outlets_count: "8",
+    open_fireplaces_count: "0",
+    hot_water_description: "Gas boiler",
+    hot_water_energy_efficiency_rating: "0",
   }.freeze
   it "should read the appropriate values from the XML doc" do
     test_xml_doc(supported_schema, asserted_keys)

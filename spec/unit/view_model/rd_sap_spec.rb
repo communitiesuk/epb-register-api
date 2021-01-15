@@ -265,6 +265,9 @@ describe ViewModel::RdSapWrapper do
       low_energy_lighting: "100",
       fixed_lighting_outlets_count: "16",
       low_energy_fixed_lighting_outlets_count: "16",
+      open_fireplaces_count: "0",
+      hot_water_description: "Description11",
+      hot_water_energy_efficiency_rating: "0",
     }.freeze
 
   it "should read the appropriate values from the XML doc using the to_hash method" do

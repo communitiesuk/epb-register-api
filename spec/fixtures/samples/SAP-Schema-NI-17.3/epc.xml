@@ -240,6 +240,14 @@
         <Low-Energy-Fixed-Lighting-Outlets-Count>8</Low-Energy-Fixed-Lighting-Outlets-Count>
         <Low-Energy-Fixed-Lighting-Outlets-Percentage>100</Low-Energy-Fixed-Lighting-Outlets-Percentage>
       </SAP-Energy-Source>
+      <SAP-Ventilation>
+        <Open-Fireplaces-Count>0</Open-Fireplaces-Count>
+        <Open-Flues-Count>0</Open-Flues-Count>
+        <Flueless-Gas-Fires-Count>0</Flueless-Gas-Fires-Count>
+        <Pressure-Test>1</Pressure-Test>
+        <Sheltered-Sides-Count>3</Sheltered-Sides-Count>
+        <Ventilation-Type>8</Ventilation-Type>
+      </SAP-Ventilation>
       <SAP-Flat-Details>
         <Level>1</Level>
       </SAP-Flat-Details>

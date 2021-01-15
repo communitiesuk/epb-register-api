@@ -136,6 +136,9 @@ module UseCase
               LOW_ENERGY_LIGHTING: hash[:low_energy_lighting],
               FIXED_LIGHTING_OUTLETS_COUNT: hash[:fixed_lighting_outlets_count],
               LOW_ENERGY_FIXED_LIGHTING_OUTLETS_COUNT: hash[:low_energy_fixed_lighting_outlets_count],
+              NUMBER_OPEN_FIREPLACES: hash[:open_fireplaces_count],
+              HOTWATER_DESCRIPTION: hash[:hot_water_description],
+              HOT_WATER_ENERGY_EFF: hash[:hot_water_energy_efficiency_rating],
             },
           )
         end

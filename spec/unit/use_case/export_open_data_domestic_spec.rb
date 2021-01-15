@@ -281,6 +281,18 @@ describe UseCase::ExportOpenDataDomestic do
       it "returns the LOW_ENERGY_FIXED_LIGHTING_OUTLETS_COUNT in the CSV" do
         expect(@table.by_col["LOW_ENERGY_FIXED_LIGHTING_OUTLETS_COUNT"]).to eq(["16", "16", "8"])
       end
+
+      it "returns the NUMBER_OPEN_FIREPLACES in the CSV" do
+        expect(@table.by_col["NUMBER_OPEN_FIREPLACES"]).to eq(["0", "0", "0"])
+      end
+
+      it "returns the HOTWATER_DESCRIPTION in the CSV" do
+        expect(@table.by_col["HOTWATER_DESCRIPTION"]).to eq(["Description11", "Description11", "Gas boiler"])
+      end
+
+      it "returns the HOT_WATER_ENERGY_EFF in the CSV" do
+        expect(@table.by_col["HOT_WATER_ENERGY_EFF"]).to eq(["0", "0", "0"])
+      end
     end
   end
 end

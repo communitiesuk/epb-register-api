@@ -294,6 +294,14 @@
             <SAP:Low-Energy-Fixed-Lighting-Outlets-Percentage>100</SAP:Low-Energy-Fixed-Lighting-Outlets-Percentage>
             <SAP:Electricity-Tariff>1</SAP:Electricity-Tariff>
           </SAP:SAP-Energy-Source>
+          <SAP:SAP-Ventilation>
+            <SAP:Open-Fireplaces-Count>0</SAP:Open-Fireplaces-Count>
+            <SAP:Open-Flues-Count>0</SAP:Open-Flues-Count>
+            <SAP:Flueless-Gas-Fires-Count>0</SAP:Flueless-Gas-Fires-Count>
+            <SAP:Pressure-Test>1</SAP:Pressure-Test>
+            <SAP:Sheltered-Sides-Count>3</SAP:Sheltered-Sides-Count>
+            <SAP:Ventilation-Type>8</SAP:Ventilation-Type>
+          </SAP:SAP-Ventilation>
           <SAP:SAP-Building-Parts>
             <SAP:SAP-Building-Part>
               <SAP:Building-Part-Number>1</SAP:Building-Part-Number>

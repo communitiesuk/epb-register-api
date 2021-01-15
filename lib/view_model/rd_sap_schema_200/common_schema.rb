@@ -423,7 +423,19 @@ module ViewModel
         xpath(%w[Low-Energy-Fixed-Lighting-Outlets-Count])
       end
 
-      private
+      def open_fireplaces_count
+        xpath(%w[Open-Fireplaces-Count])
+      end
+
+      def hot_water_description
+        xpath(%w[Hot-Water Description])
+      end
+
+      def hot_water_energy_efficiency_rating
+        xpath(%w[Energy-Efficiency-Rating])
+      end
+
+    private
 
       def convert_to_big_decimal(node)
         return unless xpath(node)

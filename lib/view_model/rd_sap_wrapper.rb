@@ -161,6 +161,9 @@ module ViewModel
         low_energy_lighting: @view_model.low_energy_lighting,
         fixed_lighting_outlets_count: @view_model.fixed_lighting_outlets_count,
         low_energy_fixed_lighting_outlets_count: @view_model.low_energy_fixed_lighting_outlets_count,
+        open_fireplaces_count: @view_model.open_fireplaces_count,
+        hot_water_description: @view_model.hot_water_description,
+        hot_water_energy_efficiency_rating: @view_model.hot_water_energy_efficiency_rating,
       }
     end
 
