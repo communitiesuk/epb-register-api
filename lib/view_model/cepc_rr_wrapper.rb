@@ -106,5 +106,9 @@ module ViewModel
     def get_view_model
       @view_model
     end
+
+    def get_report_type
+      @view_model.report_type
+    end
   end
 end

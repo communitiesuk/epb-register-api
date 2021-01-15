@@ -15,9 +15,12 @@ module UseCase
       # call gateway to get data set
       assessments = @gateway.assessments_for_open_data_recommendation_report(args)
 
+
       # use existing gateway to get each xml doc from db line by line to ensure memory is totllay consumed by size of data returned
       assessments.each do |assessment|
+
         xml_data = @assessment_gateway.fetch(assessment["assessment_id"])
+
         view_model =
           ViewModel::Factory.new.create(
             xml_data[:xml],
@@ -25,9 +28,11 @@ module UseCase
             assessment["assessment_id"],
             )
 
-        report = view_model.to_report[:payback_type]
-        if report
-          report.each do | hash |
+        report = view_model.to_report
+        rr_report = report[:payback_type]
+
+        if rr_report #&& view_model.get_report_type == "4"
+          rr_report.each do | hash |
             view_model_array <<  hash.merge!({rrn:assessment["assessment_id"]})
             end
 

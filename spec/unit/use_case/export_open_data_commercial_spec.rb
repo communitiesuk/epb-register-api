@@ -28,7 +28,7 @@ describe UseCase::ExportOpenDataCommercial do
       let(:time_today) { DateTime.now.strftime("%F %H:%M:%S") }
       let(:expected_values) do
         Samples::ViewModels::Cepc.report_test_hash.merge(
-          { lodgement_date: date_today, lodgement_datetime: time_today },
+          { lodgement_date: date_today},
         )
       end
       let(:expected_values_row_1) do
@@ -37,7 +37,7 @@ describe UseCase::ExportOpenDataCommercial do
           {
             rrn: "0000-0000-0000-0000-0001",
             lodgement_date: date_today,
-            lodgement_datetime: time_today,
+
           },
         )
       end
