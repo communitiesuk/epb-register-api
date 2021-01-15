@@ -22,7 +22,7 @@ source "https://rubygems.org" do
   gem "geocoder", "~> 1.6.4"
   gem "json-schema", "~> 2.8"
   gem "newrelic_rpm", "~> 6.14"
-  gem "nokogiri", "~> 1.10.10"
+  gem "nokogiri", "~> 1.11.0"
   gem "ougai", "~> 1.8"
   gem "pg"
   gem "rake"
