@@ -78,6 +78,8 @@ describe UseCase::ExportOpenDataCommercial do
           override: true,
           schema_name: "CEPC-8.0.0",
         )
+
+
       end
 
       it "returns the correct number of assessments in the CSV" do

@@ -175,6 +175,36 @@ module Gateway
       results.map { |result| result }
     end
 
+
+    def assessments_for_open_data_recommendation_report(args = {})
+      args = assessments_for_open_data_defaults.merge(args)
+
+      sql = <<~SQL
+        SELECT  a.assessment_id, created_at
+        FROM assessments a
+        INNER JOIN assessments_xml b ON(a.assessment_id = b.assessment_id)
+        WHERE a.opt_out = false AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
+        ORDER BY a.assessment_id
+
+      SQL
+
+      binds = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "type_of_assessment",
+          args[:type_of_assessment],
+          ActiveRecord::Type::String.new,
+          ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "schema_type",
+          args[:schema_type],
+          ActiveRecord::Type::String.new,
+          ),
+      ]
+
+      results = ActiveRecord::Base.connection.exec_query(sql)
+      results.map { |result| result }
+    end
+
   private
 
     def assessments_for_open_data_defaults

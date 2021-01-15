@@ -9,16 +9,15 @@ describe UseCase::ExportOpenDataDec do
       let(:dec_assessment_date) { dec_xml.at("Registration-Date") }
 
       let(:date_today) { DateTime.now.strftime("%F") }
-      let(:time_today) { DateTime.now.strftime("%F %H:%M:%S") }
       let(:number_assessments_to_test) { 2 }
       let(:expected_values) do
         Samples::ViewModels::Dec.report_test_hash.merge(
-          { lodgement_date: date_today, lodgement_datetime: time_today, },
+          { lodgement_date: date_today, },
           )
       end
       let(:expected_values_1) do
         Samples::ViewModels::Dec.report_test_hash.merge(
-          { lodgement_date: date_today, lodgement_datetime: DateTime.now.strftime("%F %H:%M:%S"), rrn: "0000-0000-0000-0000-0001"},
+          { lodgement_date: date_today, rrn: "0000-0000-0000-0000-0001"},
           )
       end
 
@@ -51,7 +50,8 @@ describe UseCase::ExportOpenDataDec do
             ),
           )
 
-
+        # set exact time when data is lodged
+        current_datetime = Time.now.strftime("%F %H:%M:%S")
         lodge_assessment(
           assessment_body: dec_xml.to_xml,
           accepted_responses: [201],
@@ -69,6 +69,9 @@ describe UseCase::ExportOpenDataDec do
           schema_name: "CEPC-8.0.0",
           )
 
+        # in order to test the exact time of lodgement the time set on line 53
+        expected_values[:lodgement_datetime]   = current_datetime
+        expected_values_1[:lodgement_datetime] = current_datetime
       end
 
 
@@ -86,7 +89,7 @@ describe UseCase::ExportOpenDataDec do
         xit "returns the #{
           index
         } that matches the test data for the 1st row" do
-          expect(exported_data[0][index.to_sym]).to eq(expected_values[index],)
+            expect(exported_data[0][index.to_sym]).to eq(expected_values[index],)
         end
       end
 
