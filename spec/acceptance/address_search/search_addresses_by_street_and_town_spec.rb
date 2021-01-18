@@ -102,6 +102,39 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
     end
 
     describe "searching by street and town" do
+      context "when a lodgement has a legacy address id" do
+        before do
+          lodge_assessment(
+            assessment_body: Samples.xml("CEPC-7.0", "dec"),
+            accepted_responses: [201],
+            scopes: %w[assessment:lodge migrate:assessment],
+            auth_data: { scheme_ids: [scheme_id] },
+            schema_name: "CEPC-7.0",
+            override: true,
+            migrated: true,
+          )
+        end
+
+        let(:response) do
+          JSON.parse(
+            assertive_get(
+              "/api/search/addresses?street=Lonely%20Street&town=Post-Town1",
+              [200],
+              true,
+              {},
+              %w[address:search],
+            ).body,
+            symbolize_names: true,
+          )
+        end
+
+        it "does not return an LPRN address id in the results" do
+          address_ids = response[:data][:addresses].map { |a| a[:addressId] }
+
+          expect(address_ids).not_to include "LPRN-000000000001"
+        end
+      end
+
       context "when street is missing some letters" do
         let(:response) do
           JSON.parse(
