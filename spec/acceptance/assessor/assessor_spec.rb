@@ -237,24 +237,6 @@ describe "Acceptance::Assessor" do
       response = JSON.parse(fetch_assessor_current_status("Some", "Person", "1991-02-25", scheme_id).body)
       expect(response).to eq(expected_response)
     end
-
-    it "returns multiple results if the same assessor is lodged more than once" do
-      add_assessor(scheme_id, "SCHEME4233", valid_assessor_request)
-      add_assessor(scheme_id, "SCHEME4234", valid_assessor_request)
-
-      second_assessor_response = assessor_response.dup
-      second_assessor_response[:schemeAssessorId] = "SCHEME4234"
-      expected_response =
-          JSON.parse(
-              {
-                  data: [assessor_response, second_assessor_response],
-                  meta: {},
-              }.to_json,
-              )
-
-      response = JSON.parse(fetch_assessor_current_status("Some", "Person", "1991-02-25", scheme_id).body)
-      expect(response).to eq(expected_response)
-    end
   end
 
   context "when creating an assessor" do
