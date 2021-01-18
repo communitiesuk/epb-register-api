@@ -132,7 +132,7 @@ def fetch_assessor_current_status(
     accepted_responses = [200],
     authenticate = true,
     auth_data = nil,
-    scopes = %w[report:assessor:status]
+    scopes = %w[scheme:assessor:fetch]
 )
   auth_data ||= { 'scheme_ids': [scheme_id] }
   date_of_birth_param = date_of_birth ? "&dateOfBirth=#{date_of_birth}" : ''

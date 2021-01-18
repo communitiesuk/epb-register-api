@@ -154,11 +154,11 @@ module Controller
       not_found_error("The requested scheme was not found")
     end
 
-    get "/api/assessors", auth_token_has_one_of: %w[assessor:search report:assessor:status] do
+    get "/api/assessors", auth_token_has_one_of: %w[assessor:search scheme:assessor:fetch] do
 
       current_status_check = params.key?(:firstName) || params.key?(:lastName) || params.key?(:dateOfBirth) ? true : false
 
-      if (current_status_check && !env[:auth_token].scope?('report:assessor:status')) || (!current_status_check && !env[:auth_token].scope?('assessor:search'))
+      if (current_status_check && !env[:auth_token].scope?('scheme:assessor:fetch')) || (!current_status_check && !env[:auth_token].scope?('assessor:search'))
         forbidden(
             "UNAUTHORISED",
             "You are not authorised to perform this request",
