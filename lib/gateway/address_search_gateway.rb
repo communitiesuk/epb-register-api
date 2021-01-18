@@ -233,7 +233,18 @@ module Gateway
         if !res["linked_assessment_id"].nil? &&
             res["address_id"].start_with?("RRN-") &&
             res["linked_assessment_id"].to_s > res["address_id"].to_s
-          address_id = res["linked_assessment_id"]
+          address_id = "RRN-#{res['linked_assessment_id']}"
+          results[i]["address_id"] = address_id
+        end
+
+        if res["address_id"].start_with?("LPRN-")
+          address_id = if res["linked_assessment_id"].to_s > res["assessment_id"].to_s
+                         "RRN-#{res['linked_assessment_id']}"
+                       else
+                         "RRN-#{res['assessment_id']}"
+                       end
+
+          results[i]["address_id"] = address_id
         end
 
         address_ids[address_id] = [] unless address_ids.key? address_id
