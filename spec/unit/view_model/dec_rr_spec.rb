@@ -152,82 +152,15 @@ describe ViewModel::DecRrWrapper do
       },
     ].freeze
 
-    asserted_keys = {
-      assessment_id: "0000-0000-0000-0000-0000",
-      report_type: "2",
-      type_of_assessment: "DEC-RR",
-      date_of_expiry: "2030-05-03",
-      date_of_registration: "2020-05-04",
-      address: {
-        address_id: "RRN-0000-0000-0000-0000-0000",
-        address_line1: "1 Lonely Street",
-        address_line2: nil,
-        address_line3: nil,
-        address_line4: nil,
-        town: "Post-Town0",
-        postcode: "A0 0AA",
-      },
-      assessor: {
-        scheme_assessor_id: "SPEC000000",
-        name: "Mrs Report Writer",
-        company_details: {
-          name: "Joe Bloggs Ltd",
-          address: "123 My Street, My City, AB3 4CD",
-        },
-        contact_details: { email: "a@b.c", telephone: "0921-19037" },
-      },
-      short_payback_recommendations: [
-        {
-          code: "1",
-          text:
-            "Consider thinking about maybe possibly getting a solar panel but only one.",
-          cO2Impact: "MEDIUM",
-        },
-        {
-          code: "2",
-          text:
-            "Consider introducing variable speed drives (VSD) for fans, pumps and compressors.",
-          cO2Impact: "LOW",
-        },
-      ],
-      medium_payback_recommendations: [
-        {
-          code: "3",
-          text:
-            "Engage experts to propose specific measures to reduce hot waterwastage and plan to carry this out.",
-          cO2Impact: "LOW",
-        },
-      ],
-      long_payback_recommendations: [
-        {
-          code: "4",
-          text: "Consider replacing or improving glazing",
-          cO2Impact: "LOW",
-        },
-      ],
-      other_recommendations: [
-        { code: "5", text: "Add a big wind turbine", cO2Impact: "HIGH" },
-      ],
-      technical_information: {
-        building_environment: "Air Conditioning",
-        floor_area: "10",
-        occupier: "Primary School",
-        property_type: "University campus",
-        renewable_sources: "Renewable source",
-        discounted_energy: "Special discount",
-        date_of_issue: "2020-05-04",
-        calculation_tool: "DCLG, ORCalc, v3.6.2",
-        inspection_type: "Physical",
-      },
-      site_service_one: { description: "Electricity", quantity: "751445" },
-      site_service_two: { description: "Gas", quantity: "72956" },
-      site_service_three: { description: "Not used", quantity: "0" },
-      related_rrn: "0000-0000-0000-0000-1111",
-    }.freeze
+    asserted_keys = Samples::ViewModels::DecRr.asserted_hash
 
     it "should read the appropriate values from the XML doc  using the to hash method" do
       test_xml_doc(supported_schema, asserted_keys)
     end
+
+    # it "should read the appropriate values from the XML doc  using the to report method" do
+    #   test_xml_doc(supported_schema, Samples::ViewModels::CepRr.report_test_hash, true)
+    # end
 
     it "returns the expect error without a valid schema type" do
       expect {

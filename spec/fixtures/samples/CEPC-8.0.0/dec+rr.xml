@@ -352,27 +352,27 @@
     <Advisory-Report>
       <AR-Recommendations>
         <Short-Payback>
-          <Recommendation-Code>1</Recommendation-Code>
+          <Recommendation-Code>ECP-L5</Recommendation-Code>
           <Recommendation>Consider thinking about maybe possibly getting a solar panel but only one.</Recommendation>
           <CO2-Impact>MEDIUM</CO2-Impact>
         </Short-Payback>
         <Short-Payback>
-          <Recommendation-Code>2</Recommendation-Code>
+          <Recommendation-Code>EPC-L7</Recommendation-Code>
           <Recommendation>Consider introducing variable speed drives (VSD) for fans, pumps and compressors.</Recommendation>
           <CO2-Impact>LOW</CO2-Impact>
         </Short-Payback>
         <Medium-Payback>
-          <Recommendation-Code>3</Recommendation-Code>
+          <Recommendation-Code>ECP-C1</Recommendation-Code>
           <Recommendation>Engage experts to propose specific measures to reduce hot waterwastage and plan to carry this out.</Recommendation>
           <CO2-Impact>LOW</CO2-Impact>
         </Medium-Payback>
         <Long-Payback>
-          <Recommendation-Code>4</Recommendation-Code>
+          <Recommendation-Code>ECP-F4</Recommendation-Code>
           <Recommendation>Consider replacing or improving glazing</Recommendation>
           <CO2-Impact>LOW</CO2-Impact>
         </Long-Payback>
         <Other-Payback>
-          <Recommendation-Code>5</Recommendation-Code>
+          <Recommendation-Code>ECP-H2</Recommendation-Code>
           <Recommendation>Add a big wind turbine</Recommendation>
           <CO2-Impact>HIGH</CO2-Impact>
         </Other-Payback>

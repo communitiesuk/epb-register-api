@@ -80,8 +80,6 @@ module ViewModel
     def to_report
       # add recommendations into a single array
 
-      pp
-
       recommendations = []
       recommendations << Samples::ViewModels::CepRr.reset_hash_keys(@view_model.short_payback_recommendations, "short")
       recommendations << Samples::ViewModels::CepRr.reset_hash_keys(@view_model.medium_payback_recommendations, "medium")

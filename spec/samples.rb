@@ -40,6 +40,38 @@ class Samples
       "LPRN-000000000001"
     end
 
+    def self.recommendations_test_hash(asserted_hash)
+      hash = asserted_hash
+      recommendations = []
+      recommendations << self.reset_recommendations_hash_keys(hash[:short_payback_recommendations], "short")
+      recommendations << self.reset_recommendations_hash_keys(hash[:medium_payback_recommendations], "medium")
+      recommendations << self.reset_recommendations_hash_keys(hash[:long_payback_recommendations], "long")
+      recommendations << self.reset_recommendations_hash_keys(hash[:other_recommendations], "long")
+
+      {
+        rrn: asserted_hash[:assessment_id],
+        recommendations: recommendations,
+      }
+
+    end
+
+    def self.reset_recommendations_hash_keys(array_of_hashes, payback_type)
+      array_of_hashes.each { | hash|
+        self.update_hash_key(hash, "code", "recommendation_code")
+        self.update_hash_key(hash, "text", "recommendation")
+        self.update_hash_key(hash, "cO2Impact", "cO2_Impact")
+        hash.merge({payback_type: payback_type})
+      }
+    end
+
+    def self.update_hash_key(hash, old, new)
+      value = hash[old.to_sym]
+      hash.delete(old.to_sym)
+      hash[new.to_sym] = value
+      hash
+    end
+
+
     module Dec
       def self.supported_schema
         [
@@ -548,21 +580,7 @@ class Samples
       end
 
       def self.report_test_hash
-
-        hash = self.asserted_hash
-
-
-        recommendations = []
-        recommendations << self.reset_hash_keys(hash[:short_payback_recommendations], "short")
-        recommendations << self.reset_hash_keys(hash[:medium_payback_recommendations], "medium")
-        recommendations << self.reset_hash_keys(hash[:long_payback_recommendations], "long")
-        recommendations << self.reset_hash_keys(hash[:other_recommendations], "long")
-
-        {
-          rrn: asserted_hash[:assessment_id],
-          recommendations: recommendations,
-        }
-
+        Samples::ViewModels.recommendations_test_hash(self.asserted_hash)
       end
 
       def self.reset_hash_keys(array_of_hashes, payback_type)
@@ -581,6 +599,90 @@ class Samples
         hash
       end
 
+
+
+    end
+
+    module DecRr
+
+      def self.asserted_hash
+        {
+          assessment_id: "0000-0000-0000-0000-0000",
+          report_type: "2",
+          type_of_assessment: "DEC-RR",
+          date_of_expiry: "2030-05-03",
+          date_of_registration: "2020-05-04",
+          address: {
+            address_id: "RRN-0000-0000-0000-0000-0000",
+            address_line1: "1 Lonely Street",
+            address_line2: nil,
+            address_line3: nil,
+            address_line4: nil,
+            town: "Post-Town0",
+            postcode: "A0 0AA",
+          },
+          assessor: {
+            scheme_assessor_id: "SPEC000000",
+            name: "Mrs Report Writer",
+            company_details: {
+              name: "Joe Bloggs Ltd",
+              address: "123 My Street, My City, AB3 4CD",
+            },
+            contact_details: { email: "a@b.c", telephone: "0921-19037" },
+          },
+          short_payback_recommendations: [
+            {
+              code: "ECP-L5",
+              text:
+                "Consider thinking about maybe possibly getting a solar panel but only one.",
+              cO2Impact: "MEDIUM",
+            },
+            {
+              code: "EPC-L7",
+              text:
+                "Consider introducing variable speed drives (VSD) for fans, pumps and compressors.",
+              cO2Impact: "LOW",
+            },
+          ],
+          medium_payback_recommendations: [
+            {
+              code: "ECP-C1",
+              text:
+                "Engage experts to propose specific measures to reduce hot waterwastage and plan to carry this out.",
+              cO2Impact: "LOW",
+            },
+          ],
+          long_payback_recommendations: [
+            {
+              code: "ECP-F4",
+              text: "Consider replacing or improving glazing",
+              cO2Impact: "LOW",
+            },
+          ],
+          other_recommendations: [
+            { code: "ECP-H2", text: "Add a big wind turbine", cO2Impact: "HIGH" },
+          ],
+          technical_information: {
+            building_environment: "Air Conditioning",
+            floor_area: "10",
+            occupier: "Primary School",
+            property_type: "University campus",
+            renewable_sources: "Renewable source",
+            discounted_energy: "Special discount",
+            date_of_issue: "2020-05-04",
+            calculation_tool: "DCLG, ORCalc, v3.6.2",
+            inspection_type: "Physical",
+          },
+          site_service_one: { description: "Electricity", quantity: "751445" },
+          site_service_two: { description: "Gas", quantity: "72956" },
+          site_service_three: { description: "Not used", quantity: "0" },
+          related_rrn: "0000-0000-0000-0000-1111",
+        }
+      end
+
+      def self.report_test_hash
+        Samples::ViewModels.recommendations_test_hash(hash)
+      end
 
 
     end
