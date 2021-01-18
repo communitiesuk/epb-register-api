@@ -1,7 +1,7 @@
 module Gateway
   class ReportingGateway
 
-    OPEN_DATA_EXPORT_DATE_START = "01/07/2020"
+    OPEN_DATA_EXPORT_DATE_START = "2019-07-01"
 
 
     def assessments_by_region_and_type(start_date, end_date)
@@ -150,7 +150,7 @@ module Gateway
     end
 
     def assessments_for_open_data(args = {})
-      args = assessments_for_open_data_defaults.merge(args)
+      bindings = [[nil, OPEN_DATA_EXPORT_DATE_START, ActiveRecord::Type::Date.new]]
 
       sql = <<~SQL
         SELECT  a.assessment_id, created_at
@@ -158,31 +158,20 @@ module Gateway
         INNER JOIN assessments_address_id c  ON(a.assessment_id = c.assessment_id)
         INNER JOIN assessments_xml b ON(a.assessment_id = b.assessment_id)
         WHERE a.opt_out = false AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
+        AND a.date_of_assessment >= $1
         ORDER BY a.assessment_id
 
       SQL
 
-      binds = [
-        ActiveRecord::Relation::QueryAttribute.new(
-          "type_of_assessment",
-          args[:type_of_assessment],
-          ActiveRecord::Type::String.new,
-        ),
-        ActiveRecord::Relation::QueryAttribute.new(
-          "schema_type",
-          args[:schema_type],
-          ActiveRecord::Type::String.new,
-        ),
-      ]
 
-      results = ActiveRecord::Base.connection.exec_query(sql)
+      results = ActiveRecord::Base.connection.exec_query(sql, 'SQL', bindings)
       results.map { |result| result }
     end
 
 
     def assessments_for_open_data_recommendation_report(type_of_assessment)
 
-      bindings = [[nil, type_of_assessment]]
+      bindings = [[nil, type_of_assessment], [nil, OPEN_DATA_EXPORT_DATE_START, ActiveRecord::Type::Date.new]]
 
       sql = <<~SQL
         SELECT  a.assessment_id, created_at
@@ -191,6 +180,7 @@ module Gateway
         JOIN linked_assessments la ON a.assessment_id = la.assessment_id
         WHERE a.opt_out = false AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
         AND a.type_of_assessment = $1
+        AND a.date_of_assessment >= $2
         ORDER BY a.assessment_id
       SQL
 

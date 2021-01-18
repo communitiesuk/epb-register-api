@@ -5,13 +5,16 @@ describe UseCase::ExportOpenDataCepcrr do
       let(:scheme_id) { add_scheme_and_get_id }
       let(:expected) { described_class.new }
       let(:date_today) { DateTime.now.strftime("%F") }
-      let(:time_today) { DateTime.now.strftime("%F %H:%M:%S") }
       # number in test in 2 x 4 (number of recomendations in each lodgement)
       let(:number_assessments_to_test) { 5 }
       let(:cepc_plus_rr_xml) { Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc+rr") }
+      let(:cepc_plus_rr_xml_id) { cepc_plus_rr_xml.at("//CEPC:RRN") }
+      let(:cepc_plus_rr_xml_date) { cepc_plus_rr_xml.at("//CEPC:Registration-Date") }
       let(:cepc_minus_rr_xml) { Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc-rr") } # should not be present in export
       let(:cepc_minus_rr_xml_id) { cepc_minus_rr_xml.at("//CEPC:RRN") }
+      let(:cepc_plus_rr_xml_date) { cepc_plus_rr_xml.at("//CEPC:Registration-Date") }
       let(:expected_values) { Samples::ViewModels::CepRr.report_test_hash}
+
 
 
       let(:exported_data) {
@@ -36,7 +39,7 @@ describe UseCase::ExportOpenDataCepcrr do
             ),
           )
 
-        # create a lodgement for cepc
+        # create a lodgement for cepc whose date valid
         lodge_assessment(
           assessment_body: cepc_plus_rr_xml.to_xml,
           accepted_responses: [201],
@@ -44,6 +47,10 @@ describe UseCase::ExportOpenDataCepcrr do
           override: true,
           schema_name: "CEPC-8.0.0",
           )
+
+
+
+        # @TODO: create a lodgement for CEPC  whose date is not valid
 
         # create a lodgement for cepc that should not be returned
         cepc_minus_rr_xml_id.children = "0000-0000-0000-0000-0010"
@@ -54,6 +61,7 @@ describe UseCase::ExportOpenDataCepcrr do
           override: true,
           schema_name: "CEPC-8.0.0",
           )
+
 
       end
 
