@@ -209,7 +209,6 @@ class Samples
           nominated_date: "2020-01-01",
           or_assessment_end_date: "2020-05-01",
           lodgement_date: "",
-          lodgement_datetime: "",
           main_benchmark: "",
           main_heating_fuel: "Natural Gas",
           special_energy_uses: "special",
@@ -237,7 +236,7 @@ class Samples
       end
 
       def self.test_keys
-        Samples::ViewModels::Dec.report_test_hash.keys.select { |key| key!= :lodgement_datetime }
+        Samples::ViewModels::Dec.report_test_hash.keys
       end
 
       def self.update_schema_for_report

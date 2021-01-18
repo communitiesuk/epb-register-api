@@ -62,11 +62,11 @@ describe UseCase::ExportOpenDataCepcrr do
       end
 
 
-      # Samples::ViewModels::CepRr.report_test_hash[:payback_type].each_with_index do | value, index |
-      #   it "returns the #{index} that matches the test data for the 1st row" do
-      #     expect(value).to eq(Samples::ViewModels::CepRr.report_test_hash[:payback_type][index])
-      #   end
-      # end
+      Samples::ViewModels::CepRr.report_test_hash[:payback_type].each_with_index do | value, index |
+        it "returns the #{index} that matches the test data for the 1st row" do
+          expect(value).to eq(Samples::ViewModels::CepRr.report_test_hash[:payback_type][index])
+        end
+      end
 
 
     end
