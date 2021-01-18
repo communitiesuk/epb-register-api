@@ -89,7 +89,6 @@ describe ViewModel::CepcRrWrapper do
     end
 
     it "should read the appropriate values from the XML doc using the to report method" do
-
       test_xml_doc(supported_schema, Samples::ViewModels::CepRr.report_test_hash, true)
     end
 

@@ -28,20 +28,25 @@ module UseCase
             )
 
         report = view_model.to_report
-        rr_report = report[:payback_type]
+        # recs are an array that can cantian arrays of recs
+        rr_report_array = report[:recommendations]
+        recommendation_item = 1
 
-        if rr_report #&& view_model.get_report_type == "4"
-          rr_report.each do | hash |
-            view_model_array <<  hash.merge!({rrn:assessment["assessment_id"]})
+        if rr_report_array
+          rr_report_array.each do |item|
+            item.each do |hash|
+                view_model_array <<  hash.merge({rrn:assessment["assessment_id"], recommendation_item: recommendation_item })
+                recommendation_item+=1
+              end
             end
+          end
 
-        end
 
         # @TODO:update log table
       end
 
       # call method to return data as csv
-      view_model_array
+      view_model_array.sort_by!{|key| key[:recommendation_item]}
     end
 
 

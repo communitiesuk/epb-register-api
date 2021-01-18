@@ -483,81 +483,106 @@ class Samples
     module CepRr
 
       def self.asserted_hash
-         {
-          assessment_id: "0000-0000-0000-0000-0000",
-          report_type: "4",
-          type_of_assessment: "CEPC-RR",
-          date_of_expiry: "2021-05-03",
-          date_of_registration: "2020-05-05",
-          related_certificate: "0000-0000-0000-0000-0001",
-          address: {
-            address_id: "UPRN-000000000000",
-            address_line1: "1 Lonely Street",
-            address_line2: nil,
-            address_line3: nil,
-            address_line4: nil,
-            town: "Post-Town0",
-            postcode: "A0 0AA",
-          },
-          assessor: {
-            scheme_assessor_id: "SPEC000000",
-            name: "Mrs Report Writer",
-            company_details: {
-              name: "Joe Bloggs Ltd",
-              address: "123 My Street, My City, AB3 4CD",
-            },
-            contact_details: { email: "a@b.c", telephone: "012345" },
-          },
-          short_payback_recommendations: [
-            {
-              code: "ECP-L5",
-              text: "Consider replacing T8 lamps with retrofit T5 conversion kit.",
-              cO2Impact: "HIGH",
-            },
-            {
-              code: "EPC-L7",
-              text:
-                "Introduce HF (high frequency) ballasts for fluorescent tubes: Reduced number of fittings required.",
-              cO2Impact: "LOW",
-            },
-          ],
-          medium_payback_recommendations: [
-            {
-              code: "EPC-H7",
-              text: "Add optimum start/stop to the heating system.",
-              cO2Impact: "MEDIUM",
-            },
-          ],
-          long_payback_recommendations: [
-            {
-              code: "EPC-R5",
-              text: "Consider installing an air source heat pump.",
-              cO2Impact: "HIGH",
-            },
-          ],
-          other_recommendations: [
-            { code: "EPC-R4", text: "Consider installing PV.", cO2Impact: "HIGH" },
-          ],
-          technical_information: {
-            floor_area: "10",
-            building_environment: "Natural Ventilation Only",
-            calculation_tool: "Calculation-Tool0",
-          },
-          related_party_disclosure: "Related to the owner",
+        {
+         assessment_id: "0000-0000-0000-0000-0000",
+         report_type: "4",
+         type_of_assessment: "CEPC-RR",
+         date_of_expiry: "2021-05-03",
+         date_of_registration: "2020-05-05",
+         related_certificate: "0000-0000-0000-0000-0001",
+         address: {
+           address_id: "UPRN-000000000000",
+           address_line1: "1 Lonely Street",
+           address_line2: nil,
+           address_line3: nil,
+           address_line4: nil,
+           town: "Post-Town0",
+           postcode: "A0 0AA",
+         },
+         assessor: {
+           scheme_assessor_id: "SPEC000000",
+           name: "Mrs Report Writer",
+           company_details: {
+             name: "Joe Bloggs Ltd",
+             address: "123 My Street, My City, AB3 4CD",
+           },
+           contact_details: { email: "a@b.c", telephone: "012345" },
+         },
+         short_payback_recommendations: [
+           {
+             code: "ECP-L5",
+             text: "Consider replacing T8 lamps with retrofit T5 conversion kit.",
+             cO2Impact: "HIGH",
+           },
+           {
+             code: "EPC-L7",
+             text:
+               "Introduce HF (high frequency) ballasts for fluorescent tubes: Reduced number of fittings required.",
+             cO2Impact: "LOW",
+           },
+         ],
+         medium_payback_recommendations: [
+           {
+             code: "EPC-H7",
+             text: "Add optimum start/stop to the heating system.",
+             cO2Impact: "MEDIUM",
+           },
+         ],
+         long_payback_recommendations: [
+           {
+             code: "EPC-R5",
+             text: "Consider installing an air source heat pump.",
+             cO2Impact: "HIGH",
+           },
+         ],
+         other_recommendations: [
+           { code: "EPC-R4", text: "Consider installing PV.", cO2Impact: "HIGH" },
+         ],
+         technical_information: {
+           floor_area: "10",
+           building_environment: "Natural Ventilation Only",
+           calculation_tool: "Calculation-Tool0",
+         },
+         related_party_disclosure: "Related to the owner",
+       }
+      end
+
+      def self.report_test_hash
+
+        hash = self.asserted_hash
+
+
+        recommendations = []
+        recommendations << self.reset_hash_keys(hash[:short_payback_recommendations], "short")
+        recommendations << self.reset_hash_keys(hash[:medium_payback_recommendations], "medium")
+        recommendations << self.reset_hash_keys(hash[:long_payback_recommendations], "long")
+        recommendations << self.reset_hash_keys(hash[:other_recommendations], "long")
+
+        {
+          rrn: asserted_hash[:assessment_id],
+          recommendations: recommendations,
+        }
+
+      end
+
+      def self.reset_hash_keys(array_of_hashes, payback_type)
+        array_of_hashes.each { | hash|
+          self.update_hash_key(hash, "code", "recommendation_code")
+          self.update_hash_key(hash, "text", "recommendation")
+          self.update_hash_key(hash, "cO2Impact", "cO2_Impact")
+          hash.merge({payback_type: payback_type})
         }
       end
 
-       def self.report_test_hash
-         {
-           rrn: asserted_hash[:assessment_id],
-           payback_type: [
-             {:recommendation_code=>"ECP-L5", :recommendation=>"Consider replacing T8 lamps with retrofit T5 conversion kit.", :cO2_Impact=>"HIGH", :payback_type=>"short"},
-             {:recommendation_code=>"EPC-H7", :recommendation=>"Add optimum start/stop to the heating system.", :cO2_Impact=>"MEDIUM", :payback_type=>"medium"},
-             {:recommendation_code=>"EPC-R5", :recommendation=>"Consider installing an air source heat pump.", :cO2_Impact=>"HIGH", :payback_type=>"long"},
-             {:recommendation_code=>"EPC-R4", :recommendation=>"Consider installing PV.", :cO2_Impact=>"HIGH", :payback_type=>"other",  }
-           ],
-         }
-       end
+      def self.update_hash_key(hash, old, new)
+        value = hash[old.to_sym]
+        hash.delete(old.to_sym)
+        hash[new.to_sym] = value
+        hash
+      end
+
+
+
     end
   end
 end

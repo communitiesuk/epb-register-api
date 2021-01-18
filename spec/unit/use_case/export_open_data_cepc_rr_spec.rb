@@ -7,7 +7,7 @@ describe UseCase::ExportOpenDataCepcrr do
       let(:date_today) { DateTime.now.strftime("%F") }
       let(:time_today) { DateTime.now.strftime("%F %H:%M:%S") }
       # number in test in 2 x 4 (number of recomendations in each lodgement)
-      let(:number_assessments_to_test) { 4 }
+      let(:number_assessments_to_test) { 5 }
       let(:cepc_plus_rr_xml) { Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc+rr") }
       let(:cepc_minus_rr_xml) { Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc-rr") } # should not be present in export
       let(:cepc_minus_rr_xml_id) { cepc_minus_rr_xml.at("//CEPC:RRN") }
@@ -62,10 +62,19 @@ describe UseCase::ExportOpenDataCepcrr do
       end
 
 
-      Samples::ViewModels::CepRr.report_test_hash[:payback_type].each_with_index do | value, index |
-        it "returns the #{index} that matches the test data for the 1st row" do
-          expect(value).to eq(Samples::ViewModels::CepRr.report_test_hash[:payback_type][index])
-        end
+
+      it 'should export the data for short in the first 2 rows' do
+        expect(exported_data[0]).to eq({:cO2_Impact=>"HIGH",
+                                        :recommendation=>"Consider replacing T8 lamps with retrofit T5 conversion kit.",
+                                        :recommendation_code=>"ECP-L5",
+                                        :recommendation_item=>1,
+                                        :rrn=>"0000-0000-0000-0000-0001"})
+
+        expect(exported_data[1]).to eq({:cO2_Impact=>"LOW",
+                                        :recommendation=>"Introduce HF (high frequency) ballasts for fluorescent tubes: Reduced number of fittings required.",
+                                        :recommendation_code=>"ECP-L5",
+                                        :recommendation_item=>2,
+                                        :rrn=>"0000-0000-0000-0000-0001"})
       end
 
 
