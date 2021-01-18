@@ -1,6 +1,6 @@
 module Controller
   class AssessorStatusController < Controller::BaseController
-    get "/api/reports/assessors/status", jwt_auth: %w[report:assessor:status] do
+    get "/api/reports/assessors/status", auth_token_has_all: %w[report:assessor:status] do
       events =
         UseCase::GetAssessorsStatusEventsByDate.new.execute(
           Date.parse(params["date"].nil? ? "" : params["date"]),

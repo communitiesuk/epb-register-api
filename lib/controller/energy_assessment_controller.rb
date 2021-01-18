@@ -2,7 +2,7 @@
 
 module Controller
   class EnergyAssessmentController < Controller::BaseController
-    get "/api/assessments/search", jwt_auth: %w[assessment:search] do
+    get "/api/assessments/search", auth_token_has_all: %w[assessment:search] do
       result =
         if params.key?(:postcode)
           UseCase::FindAssessmentsByPostcode.new.execute(
@@ -45,12 +45,12 @@ module Controller
       end
     end
 
-    post "/api/assessments", jwt_auth: %w[assessment:lodge] do
+    post "/api/assessments", auth_token_has_all: %w[assessment:lodge] do
       correlation_id = rand
       migrated = boolean_parameter_true?("migrated")
       overridden = boolean_parameter_true?("override")
 
-      if migrated && !env[:jwt_auth].scopes?(%w[migrate:assessment])
+      if migrated && !env[:auth_token].scopes?(%w[migrate:assessment])
         forbidden(
           "UNAUTHORISED",
           "You are not authorised to perform this request",
@@ -66,7 +66,7 @@ module Controller
         {
           event_type: :lodgement_attempt,
           correlation_id: correlation_id,
-          client_id: env[:jwt_auth].sub,
+          client_id: env[:auth_token].sub,
           request_body: sanitised_xml.slice(0..logit_char_limit),
           request_headers: headers,
           request_body_truncated: sanitised_xml.length > logit_char_limit,
@@ -74,7 +74,7 @@ module Controller
         true,
       )
 
-      sup = env[:jwt_auth].supplemental("scheme_ids")
+      sup = env[:auth_token].supplemental("scheme_ids")
       validate_and_lodge_assessment = UseCase::ValidateAndLodgeAssessment.new
 
       xml_schema_type =
@@ -99,7 +99,7 @@ module Controller
           false,
           {
             event_type: :lodgement_successful,
-            client_id: env[:jwt_auth].sub,
+            client_id: env[:auth_token].sub,
             correlation_id: correlation_id,
             assessment_id: result.get(:assessment_id),
             schema: xml_schema_type,
@@ -154,7 +154,7 @@ module Controller
         {
           event_type: :lodgement_failed,
           correlation_id: correlation_id,
-          client_id: env[:jwt_auth]&.sub,
+          client_id: env[:auth_token]&.sub,
           error_message: e.to_s,
           schema: xml_schema_type.nil? ? "Schema not defined" : xml_schema_type,
         },
@@ -211,10 +211,10 @@ module Controller
       end
     end
 
-    get "/api/assessments/:assessment_id", jwt_auth: %w[assessment:fetch] do
+    get "/api/assessments/:assessment_id", auth_token_has_all: %w[assessment:fetch] do
       assessment_id = params[:assessment_id]
 
-      auth_scheme_ids = env[:jwt_auth].supplemental("scheme_ids")
+      auth_scheme_ids = env[:auth_token].supplemental("scheme_ids")
 
       result =
         UseCase::FetchAssessment.new.execute(assessment_id, auth_scheme_ids)
@@ -243,7 +243,7 @@ module Controller
     end
 
     put "/api/assessments/:assessment_id/opt-out",
-        jwt_auth: %w[admin:opt_out] do
+        auth_token_has_all: %w[admin:opt_out] do
       assessment_id = params[:assessment_id]
 
       UseCase::OptOutAssessment.new.execute(assessment_id)

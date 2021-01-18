@@ -36,7 +36,7 @@ module Controller
       ],
     }.freeze
 
-    get "/api/search/addresses", jwt_auth: %w[address:search] do
+    get "/api/search/addresses", auth_token_has_all: %w[address:search] do
       filters = params_body SEARCH_SCHEMA
 
       use_case =

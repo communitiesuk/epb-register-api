@@ -278,5 +278,51 @@ module Gateway
       response.each { |row| result.push(row_to_assessor_domain(row).to_hash) }
       result
     end
+
+    def search_by_first_name_last_name_and_date_of_birth(first_name, last_name, date_of_birth)
+
+      binds = [
+          ActiveRecord::Relation::QueryAttribute.new(
+              "first_name",
+              first_name,
+              ActiveRecord::Type::String.new,
+              ),
+          ActiveRecord::Relation::QueryAttribute.new(
+              "last_name",
+              last_name,
+              ActiveRecord::Type::String.new,
+              ),
+          ActiveRecord::Relation::QueryAttribute.new(
+              "date_of_birth",
+              date_of_birth,
+              ActiveRecord::Type::String.new,
+              ),
+      ]
+
+      sql = <<-SQL
+        SELECT
+          first_name, last_name, middle_names, date_of_birth, registered_by,
+          scheme_assessor_id, telephone_number, email, b.name AS scheme_name,
+          search_results_comparison_postcode, also_known_as, address_line1,
+          address_line2, address_line3, town, postcode, company_reg_no,
+          company_address_line1, company_address_line2, company_address_line3,
+          company_town, company_postcode, company_website, company_telephone_number,
+          company_email, company_name, domestic_sap_qualification,
+          domestic_rd_sap_qualification, non_domestic_sp3_qualification,
+          non_domestic_cc4_qualification, non_domestic_dec_qualification,
+          non_domestic_nos3_qualification, non_domestic_nos4_qualification,
+          non_domestic_nos5_qualification, gda_qualification
+        FROM assessors a
+        LEFT JOIN schemes b ON(a.registered_by = b.scheme_id)
+        WHERE
+          first_name = $1 AND last_name = $2 AND date_of_birth = $3
+      SQL
+
+      response = Assessor.connection.exec_query sql, "SQL", binds
+
+      result = []
+      response.each { |row| result.push(row_to_assessor_domain(row).to_hash) }
+      result
+    end
   end
 end

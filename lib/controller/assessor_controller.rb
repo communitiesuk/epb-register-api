@@ -86,6 +86,12 @@ module Controller
       },
     }.freeze
 
+    def search_by_first_name_last_name_date_of_birth(first_name, last_name, date_of_birth)
+      result = UseCase::FindAssessorsByFirstNameLastNameAndDateOfBirth.new.execute(first_name, last_name, date_of_birth)
+
+      json_api_response(code: 200, data: result)
+    end
+
     def search_by_name(name)
       result = UseCase::FindAssessorsByName.new.execute(name)
 
@@ -130,9 +136,9 @@ module Controller
     end
 
     get "/api/schemes/:scheme_id/assessors",
-        jwt_auth: %w[scheme:assessor:list] do
+        auth_token_has_all: %w[scheme:assessor:list] do
       scheme_id = params[:scheme_id]
-      sup = env[:jwt_auth].supplemental("scheme_ids")
+      sup = env[:auth_token].supplemental("scheme_ids")
 
       unless sup.include? scheme_id.to_i
         forbidden(
@@ -148,7 +154,29 @@ module Controller
       not_found_error("The requested scheme was not found")
     end
 
-    get "/api/assessors", jwt_auth: %w[assessor:search] do
+    get "/api/assessors", auth_token_has_one_of: %w[assessor:search report:assessor:status] do
+
+      current_status_check = params.key?(:firstName) || params.key?(:lastName) || params.key?(:dateOfBirth) ? true : false
+
+      if (current_status_check && !env[:auth_token].scope?('report:assessor:status')) || (!current_status_check && !env[:auth_token].scope?('assessor:search'))
+        forbidden(
+            "UNAUTHORISED",
+            "You are not authorised to perform this request",
+            )
+      end
+
+      if (current_status_check) && (params.key?(:firstName) && params.key?(:lastName) && params.key?(:dateOfBirth))
+        return search_by_first_name_last_name_date_of_birth(params[:firstName], params[:lastName], params[:dateOfBirth])
+      end
+
+      if current_status_check && (!params.key?(:firstName) || !params.key?(:lastName) || !params.key?(:dateOfBirth))
+          error_response(
+              400,
+              "INVALID_QUERY",
+              "Must specify first name, last name and date of birth when searching",
+              )
+      end
+
       if params.key?(:name)
         search_by_name(params[:name])
       elsif params.key?(:postcode) && params.key?(:qualification)
@@ -184,10 +212,10 @@ module Controller
     end
 
     get "/api/schemes/:scheme_id/assessors/:scheme_assessor_id",
-        jwt_auth: %w[scheme:assessor:fetch] do
+        auth_token_has_all: %w[scheme:assessor:fetch] do
       scheme_id = params[:scheme_id]
       scheme_assessor_id = params[:scheme_assessor_id]
-      sup = env[:jwt_auth].supplemental("scheme_ids")
+      sup = env[:auth_token].supplemental("scheme_ids")
 
       unless sup.include? scheme_id.to_i
         forbidden(
@@ -210,10 +238,10 @@ module Controller
     end
 
     put "/api/schemes/:scheme_id/assessors/:scheme_assessor_id",
-        jwt_auth: %w[scheme:assessor:update] do
+        auth_token_has_all: %w[scheme:assessor:update] do
       scheme_id = params["scheme_id"]
       scheme_assessor_id = params["scheme_assessor_id"]
-      sup = env[:jwt_auth].supplemental("scheme_ids")
+      sup = env[:auth_token].supplemental("scheme_ids")
       unless sup.include? scheme_id.to_i
         forbidden(
           "UNAUTHORISED",
@@ -230,7 +258,7 @@ module Controller
             scheme_assessor_id: scheme_assessor_id,
             registered_by_id: scheme_id,
           ),
-          env[:jwt_auth].sub,
+          env[:auth_token].sub,
         )
       assessor_record = create_assessor_response[:assessor]
 

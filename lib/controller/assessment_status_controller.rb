@@ -11,14 +11,14 @@ module Controller
     }.freeze
 
     post "/api/assessments/:assessment_id/status",
-         jwt_auth: %w[assessment:lodge] do
+         auth_token_has_all: %w[assessment:lodge] do
       assessment_id = params[:assessment_id]
       assessment_body = request_body(POST_SCHEMA)
 
       UseCase::UpdateAssessmentStatus.new.execute(
         assessment_id,
         assessment_body[:status],
-        env[:jwt_auth].supplemental("scheme_ids"),
+        env[:auth_token].supplemental("scheme_ids"),
       )
 
       json_api_response(code: 200, data: { "status": assessment_body[:status] })

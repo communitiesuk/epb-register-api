@@ -36,16 +36,37 @@ module Controller
         "Content-Type, Cache-Control, Accept"
     end
 
-    set(:jwt_auth) do |*scopes|
+    set(:auth_token_has_all) do |*scopes|
       condition do
         token = Auth::Sinatra::Conditional.process_request env
-        env[:jwt_auth] = token
         unless token.scopes?(scopes)
           forbidden(
             "UNAUTHORISED",
             "You are not authorised to perform this request",
           )
         end
+        env[:auth_token] = token
+      rescue Auth::Errors::Error => e
+        content_type :json
+        halt 401, { errors: [{ code: e }] }.to_json
+      end
+    end
+
+    set(:auth_token_has_one_of) do |*scopes|
+      condition do
+        token = Auth::Sinatra::Conditional.process_request env
+        has_a_scope = false
+        scopes.each do |scope|
+          has_a_scope = token.scope? scope
+          break if has_a_scope
+        end
+        unless has_a_scope
+          forbidden(
+              "UNAUTHORISED",
+              "You are not authorised to perform this request",
+              )
+        end
+        env[:auth_token] = token
       rescue Auth::Errors::Error => e
         content_type :json
         halt 401, { errors: [{ code: e }] }.to_json

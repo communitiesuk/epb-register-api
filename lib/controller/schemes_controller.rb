@@ -8,12 +8,12 @@ module Controller
       properties: { name: { type: "string" }, active: { type: "boolean" } },
     }.freeze
 
-    get "/api/schemes", jwt_auth: %w[scheme:list] do
+    get "/api/schemes", auth_token_has_all: %w[scheme:list] do
       all_schemes = UseCase::FetchSchemes.new.execute
       json_api_response(code: 200, data: all_schemes)
     end
 
-    post "/api/schemes", jwt_auth: %w[scheme:create] do
+    post "/api/schemes", auth_token_has_all: %w[scheme:create] do
       new_scheme_details = request_body(SCHEMA)
       result = UseCase::AddScheme.new.execute(new_scheme_details)
       json_api_response(code: 201, data: result)
@@ -32,7 +32,7 @@ module Controller
       end
     end
 
-    put "/api/schemes/:scheme_id", jwt_auth: %w[scheme:update] do
+    put "/api/schemes/:scheme_id", auth_token_has_all: %w[scheme:update] do
       updated_scheme_details = request_body(SCHEMA)
       UseCase::UpdateScheme.new.execute(
         params[:scheme_id],

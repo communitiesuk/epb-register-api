@@ -93,7 +93,7 @@ module Controller
     }.freeze
 
     post "/api/greendeal/disclosure/assessments/:assessment_id/plans",
-         jwt_auth: %w[greendeal:plans] do
+         auth_token_has_all: %w[greendeal:plans] do
       assessment_id = params[:assessment_id]
       plan = request_body SCHEMA
 
@@ -124,7 +124,7 @@ module Controller
     end
 
     put "/api/greendeal/disclosure/plans/:plan_id",
-        jwt_auth: %w[greendeal:plans] do
+        auth_token_has_all: %w[greendeal:plans] do
       plan_id = params[:plan_id]
       green_deal_plan = request_body SCHEMA
 
@@ -149,7 +149,7 @@ module Controller
     end
 
     get "/api/greendeal/rhi/assessments/:assessment_id/latest",
-        jwt_auth: %w[greendeal:plans] do
+        auth_token_has_all: %w[greendeal:plans] do
       assessment_id = params[:assessment_id]
       results = UseCase::FetchRenewableHeatIncentive.new.execute assessment_id
 
@@ -168,7 +168,7 @@ module Controller
     end
 
     get "/api/greendeal/assessments/:assessment_id/xml",
-        jwt_auth: %w[greendeal:plans] do
+        auth_token_has_all: %w[greendeal:plans] do
       assessment_id = params[:assessment_id]
 
       content_type :xml
@@ -193,7 +193,7 @@ module Controller
     end
 
     get "/api/greendeal/assessments/:assessment_id",
-        jwt_auth: %w[greendeal:plans] do
+        auth_token_has_all: %w[greendeal:plans] do
       assessment_id = params[:assessment_id]
       result = UseCase::FetchGreenDealAssessment.new.execute(assessment_id)
 
@@ -216,7 +216,7 @@ module Controller
     end
 
     delete "/api/greendeal/disclosure/plans/:plan_id",
-           jwt_auth: %w[greendeal:plans] do
+           auth_token_has_all: %w[greendeal:plans] do
       plan_id = params[:plan_id]
 
       result = UseCase::DeleteGreenDealPlan.new.execute(plan_id)
