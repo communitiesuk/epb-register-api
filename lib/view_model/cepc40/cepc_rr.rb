@@ -6,6 +6,8 @@ module ViewModel
           # return an enumerable of all nodes
           @xml_doc.xpath "RR-Recommendations"
         else
+
+
           @xml_doc
             .search("RR-Recommendations/#{payback}")
             .map do |node|

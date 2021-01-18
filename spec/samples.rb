@@ -510,12 +510,12 @@ class Samples
           },
           short_payback_recommendations: [
             {
-              code: "1",
+              code: "ECP-L5",
               text: "Consider replacing T8 lamps with retrofit T5 conversion kit.",
               cO2Impact: "HIGH",
             },
             {
-              code: "3",
+              code: "EPC-L7",
               text:
                 "Introduce HF (high frequency) ballasts for fluorescent tubes: Reduced number of fittings required.",
               cO2Impact: "LOW",
@@ -523,20 +523,20 @@ class Samples
           ],
           medium_payback_recommendations: [
             {
-              code: "2",
+              code: "EPC-H7",
               text: "Add optimum start/stop to the heating system.",
               cO2Impact: "MEDIUM",
             },
           ],
           long_payback_recommendations: [
             {
-              code: "3",
+              code: "EPC-R5",
               text: "Consider installing an air source heat pump.",
               cO2Impact: "HIGH",
             },
           ],
           other_recommendations: [
-            { code: "4", text: "Consider installing PV.", cO2Impact: "HIGH" },
+            { code: "EPC-R4", text: "Consider installing PV.", cO2Impact: "HIGH" },
           ],
           technical_information: {
             floor_area: "10",
@@ -551,10 +551,10 @@ class Samples
          {
            rrn: asserted_hash[:assessment_id],
            payback_type: [
-             {:recommendation_code=>"1", :recommendation=>"Consider replacing T8 lamps with retrofit T5 conversion kit.", :cO2_Impact=>"HIGH", :payback_type=>"short"},
-             {:recommendation_code=>"2", :recommendation=>"Add optimum start/stop to the heating system.", :cO2_Impact=>"MEDIUM", :payback_type=>"medium"},
-             {:recommendation_code=>"3", :recommendation=>"Consider installing an air source heat pump.", :cO2_Impact=>"HIGH", :payback_type=>"long"},
-             {:recommendation_code=>"4", :recommendation=>"Consider installing PV.", :cO2_Impact=>"HIGH", :payback_type=>"other"}
+             {:recommendation_code=>"ECP-L5", :recommendation=>"Consider replacing T8 lamps with retrofit T5 conversion kit.", :cO2_Impact=>"HIGH", :payback_type=>"short"},
+             {:recommendation_code=>"EPC-H7", :recommendation=>"Add optimum start/stop to the heating system.", :cO2_Impact=>"MEDIUM", :payback_type=>"medium"},
+             {:recommendation_code=>"EPC-R5", :recommendation=>"Consider installing an air source heat pump.", :cO2_Impact=>"HIGH", :payback_type=>"long"},
+             {:recommendation_code=>"EPC-R4", :recommendation=>"Consider installing PV.", :cO2_Impact=>"HIGH", :payback_type=>"other",  }
            ],
          }
        end

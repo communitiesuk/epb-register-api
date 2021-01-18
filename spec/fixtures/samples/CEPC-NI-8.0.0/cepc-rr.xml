@@ -42,27 +42,27 @@
     <Recommendations-Report>
       <RR-Recommendations>
         <Short-Payback>
-          <Recommendation-Code>1</Recommendation-Code>
+          <Recommendation-Code>ECP-L5</Recommendation-Code>
           <Recommendation>Consider replacing T8 lamps with retrofit T5 conversion kit.</Recommendation>
           <CO2-Impact>HIGH</CO2-Impact>
         </Short-Payback>
         <Short-Payback>
-          <Recommendation-Code>3</Recommendation-Code>
+          <Recommendation-Code>EPC-L7</Recommendation-Code>
           <Recommendation>Introduce HF (high frequency) ballasts for fluorescent tubes: Reduced number of fittings required.</Recommendation>
           <CO2-Impact>LOW</CO2-Impact>
         </Short-Payback>
         <Medium-Payback>
-          <Recommendation-Code>2</Recommendation-Code>
+          <Recommendation-Code>EPC-H7</Recommendation-Code>
           <Recommendation>Add optimum start/stop to the heating system.</Recommendation>
           <CO2-Impact>MEDIUM</CO2-Impact>
         </Medium-Payback>
         <Long-Payback>
-          <Recommendation-Code>3</Recommendation-Code>
+          <Recommendation-Code>EPC-R5</Recommendation-Code>
           <Recommendation>Consider installing an air source heat pump.</Recommendation>
           <CO2-Impact>HIGH</CO2-Impact>
         </Long-Payback>
         <Other-Payback>
-          <Recommendation-Code>4</Recommendation-Code>
+          <Recommendation-Code>EPC-R4</Recommendation-Code>
           <Recommendation>Consider installing PV.</Recommendation>
           <CO2-Impact>HIGH</CO2-Impact>
         </Other-Payback>

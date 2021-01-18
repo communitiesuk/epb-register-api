@@ -41,27 +41,27 @@
     <CEPC:Recommendations-Report>
       <CEPC:RR-Recommendations>
         <CEPC:Short-Payback>
-          <CEPC:Recommendation-Code>1</CEPC:Recommendation-Code>
+          <CEPC:Recommendation-Code>ECP-L5</CEPC:Recommendation-Code>
           <CEPC:Recommendation>Consider replacing T8 lamps with retrofit T5 conversion kit.</CEPC:Recommendation>
           <CEPC:CO2-Impact>HIGH</CEPC:CO2-Impact>
         </CEPC:Short-Payback>
         <CEPC:Short-Payback>
-          <CEPC:Recommendation-Code>3</CEPC:Recommendation-Code>
+          <CEPC:Recommendation-Code>EPC-L7</CEPC:Recommendation-Code>
           <CEPC:Recommendation>Introduce HF (high frequency) ballasts for fluorescent tubes: Reduced number of fittings required.</CEPC:Recommendation>
           <CEPC:CO2-Impact>LOW</CEPC:CO2-Impact>
         </CEPC:Short-Payback>
         <CEPC:Medium-Payback>
-          <CEPC:Recommendation-Code>2</CEPC:Recommendation-Code>
+          <CEPC:Recommendation-Code>EPC-H7</CEPC:Recommendation-Code>
           <CEPC:Recommendation>Add optimum start/stop to the heating system.</CEPC:Recommendation>
           <CEPC:CO2-Impact>MEDIUM</CEPC:CO2-Impact>
         </CEPC:Medium-Payback>
         <CEPC:Long-Payback>
-          <CEPC:Recommendation-Code>3</CEPC:Recommendation-Code>
+          <CEPC:Recommendation-Code>EPC-R5</CEPC:Recommendation-Code>
           <CEPC:Recommendation>Consider installing an air source heat pump.</CEPC:Recommendation>
           <CEPC:CO2-Impact>HIGH</CEPC:CO2-Impact>
         </CEPC:Long-Payback>
         <CEPC:Other-Payback>
-          <CEPC:Recommendation-Code>4</CEPC:Recommendation-Code>
+          <CEPC:Recommendation-Code>EPC-R4</CEPC:Recommendation-Code>
           <CEPC:Recommendation>Consider installing PV.</CEPC:Recommendation>
           <CEPC:CO2-Impact>HIGH</CEPC:CO2-Impact>
         </CEPC:Other-Payback>

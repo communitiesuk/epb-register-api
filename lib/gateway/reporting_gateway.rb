@@ -1,5 +1,9 @@
 module Gateway
   class ReportingGateway
+
+    OPEN_DATA_EXPORT_DATE_START = "01/07/2020"
+
+
     def assessments_by_region_and_type(start_date, end_date)
       sql = <<~SQL
         SELECT
