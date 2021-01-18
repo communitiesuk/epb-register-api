@@ -80,7 +80,7 @@ describe ViewModel::DecRrWrapper do
       },
       {
         schema_name: "CEPC-5.1",
-        xml: Samples.xml("CEPC-6.0", "dec-rr"),
+        xml: Samples.xml("CEPC-5.1", "dec-rr"),
         unsupported_fields: [],
         different_fields: {},
         different_buried_fields: {
@@ -89,7 +89,7 @@ describe ViewModel::DecRrWrapper do
       },
       {
         schema_name: "CEPC-5.1",
-        xml: Samples.xml("CEPC-6.0", "dec-rr-ni"),
+        xml: Samples.xml("CEPC-5.1", "dec-rr-ni"),
         unsupported_fields: [],
         different_fields: { date_of_expiry: "2027-05-03" },
         different_buried_fields: {
