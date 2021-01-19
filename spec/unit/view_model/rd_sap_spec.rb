@@ -278,6 +278,9 @@ describe ViewModel::RdSapWrapper do
       secondary_heating_description: "Description13",
       secondary_heating_energy_efficiency_rating: "0",
       secondary_heating_environmental_efficiency_rating: "0",
+      lighting_description: "Description12",
+      lighting_energy_efficiency_rating: "0",
+      lighting_environmental_efficiency_rating: "0",
     }.freeze
 
   it "should read the appropriate values from the XML doc using the to_hash method" do

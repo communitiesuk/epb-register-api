@@ -109,8 +109,7 @@
           <HIP:Lighting>
             <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>
             <HIP:Description>Energy saving bulbs</HIP:Description>
-            <HIP:Environmental-Efficiency-Rating>0
-            </HIP:Environmental-Efficiency-Rating>
+            <HIP:Environmental-Efficiency-Rating>0</HIP:Environmental-Efficiency-Rating>
           </HIP:Lighting>
           <HIP:Dwelling-Type>Dwelling-Type0</HIP:Dwelling-Type>
           <HIP:Total-Floor-Area>10</HIP:Total-Floor-Area>

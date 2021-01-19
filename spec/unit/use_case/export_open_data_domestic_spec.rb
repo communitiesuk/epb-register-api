@@ -321,6 +321,18 @@ describe UseCase::ExportOpenDataDomestic do
       it "returns the SHEATING_ENV_EFF in the CSV" do
         expect(@table.by_col["SHEATING_ENV_EFF"]).to eq(["0", "0", "0"])
       end
+
+      it "returns the LIGHTING_DESCRIPTION in the CSV" do
+        expect(@table.by_col["LIGHTING_DESCRIPTION"]).to eq(["Description12", "Description12", "Energy saving bulbs"])
+      end
+
+      it "returns the LIGHTING_ENERGY_EFF in the CSV" do
+        expect(@table.by_col["LIGHTING_ENERGY_EFF"]).to eq(["0", "0", "0"])
+      end
+
+      it "returns the LIGHTING_ENV_EFF in the CSV" do
+        expect(@table.by_col["LIGHTING_ENV_EFF"]).to eq(["0", "0", "0"])
+      end
     end
   end
 end

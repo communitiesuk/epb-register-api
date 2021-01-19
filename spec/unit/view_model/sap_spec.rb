@@ -1157,6 +1157,9 @@ describe ViewModel::SapWrapper do
     secondary_heating_description: "Electric heater",
     secondary_heating_energy_efficiency_rating: "0",
     secondary_heating_environmental_efficiency_rating: "0",
+    lighting_description: "Energy saving bulbs",
+    lighting_energy_efficiency_rating: "0",
+    lighting_environmental_efficiency_rating: "0",
   }.freeze
   it "should read the appropriate values from the XML doc" do
     test_xml_doc(supported_schema, asserted_keys)

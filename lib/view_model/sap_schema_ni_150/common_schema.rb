@@ -361,6 +361,18 @@ module ViewModel
         xpath(%w[Secondary-Heating Environmental-Efficiency-Rating])
       end
 
+      def lighting_description
+        xpath(%w[Lighting Description])
+      end
+
+      def lighting_energy_efficiency_rating
+        xpath(%w[Lighting Energy-Efficiency-Rating])
+      end
+
+      def lighting_environmental_efficiency_rating
+        xpath(%w[Lighting Environmental-Efficiency-Rating])
+      end
+
     private
 
       def convert_to_big_decimal(node)

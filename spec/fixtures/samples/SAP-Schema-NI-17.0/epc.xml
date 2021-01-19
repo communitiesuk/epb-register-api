@@ -175,8 +175,7 @@
           <SAP:Lighting>
             <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
             <SAP:Description>Energy saving bulbs</SAP:Description>
-            <SAP:Environmental-Efficiency-Rating>0
-            </SAP:Environmental-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
           </SAP:Lighting>
           <SAP:Dwelling-Type>Dwelling-Type0</SAP:Dwelling-Type>
           <SAP:Total-Floor-Area>10</SAP:Total-Floor-Area>

@@ -146,6 +146,9 @@ module UseCase
               SECONDHEAT_DESCRIPTION: hash[:secondary_heating_description],
               SHEATING_ENERGY_EFF: hash[:secondary_heating_energy_efficiency_rating],
               SHEATING_ENV_EFF: hash[:secondary_heating_environmental_efficiency_rating],
+              LIGHTING_DESCRIPTION: hash[:lighting_description],
+              LIGHTING_ENERGY_EFF: hash[:lighting_energy_efficiency_rating],
+              LIGHTING_ENV_EFF: hash[:lighting_environmental_efficiency_rating],
             },
           )
         end

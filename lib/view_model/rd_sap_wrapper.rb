@@ -174,6 +174,9 @@ module ViewModel
         secondary_heating_description: @view_model.secondary_heating_description,
         secondary_heating_energy_efficiency_rating: @view_model.secondary_heating_energy_efficiency_rating,
         secondary_heating_environmental_efficiency_rating: @view_model.secondary_heating_environmental_efficiency_rating,
+        lighting_description: @view_model.lighting_description,
+        lighting_energy_efficiency_rating: @view_model.lighting_energy_efficiency_rating,
+        lighting_environmental_efficiency_rating: @view_model.lighting_environmental_efficiency_rating,
       }
 
     end
