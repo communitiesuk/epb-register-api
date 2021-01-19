@@ -1,6 +1,6 @@
 require 'rspec'
 
-describe 'StorageCredentialsExtractor' do
+describe 'Gateway::StorageConfigurationReader' do
 
   INSTANCE_NAME = 'myinstance'
   EXPECTED_BUCKET_NAME = 'mybucket'
