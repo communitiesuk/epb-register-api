@@ -152,6 +152,9 @@ module Gateway
     def assessments_for_open_data(args = {})
       bindings = [[nil, OPEN_DATA_EXPORT_DATE_START, ActiveRecord::Type::Date.new]]
 
+      # @TODO Filter data by schema type
+      # @TODO create public hash for ID
+
       sql = <<~SQL
         SELECT  a.assessment_id, created_at
         FROM assessments a
