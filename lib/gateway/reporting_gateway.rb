@@ -149,8 +149,9 @@ module Gateway
       results.map { |result| result }
     end
 
-    def assessments_for_open_data(args = {})
-      bindings = [[nil, OPEN_DATA_EXPORT_DATE_START, ActiveRecord::Type::Date.new]]
+    def assessments_for_open_data(type_of_assessment="")
+      bindings = [[nil, type_of_assessment],
+                  [nil, OPEN_DATA_EXPORT_DATE_START, ActiveRecord::Type::Date.new]]
 
       # @TODO Filter data by schema type
       # @TODO create public hash for ID
@@ -161,7 +162,8 @@ module Gateway
         INNER JOIN assessments_address_id c  ON(a.assessment_id = c.assessment_id)
         INNER JOIN assessments_xml b ON(a.assessment_id = b.assessment_id)
         WHERE a.opt_out = false AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
-        AND a.date_of_assessment >= $1
+        AND a.type_of_assessment =  $1
+        AND a.date_of_assessment >= $2
         ORDER BY a.assessment_id
 
       SQL

@@ -6,7 +6,7 @@ describe UseCase::ExportOpenDataDec do
       let(:scheme_id) { add_scheme_and_get_id }
       let(:dec_xml) { Nokogiri.XML Samples.xml("CEPC-8.0.0", "dec") }
       let(:dec_assessment_id) { dec_xml.at("RRN") }
-      let(:dec_assessment_date) { dec_xml.at("Registration-Date") }
+      let(:dec_assessment_date) { dec_xml.at("") }
 
       let(:date_today) { DateTime.now.strftime("%F") }
       let(:number_assessments_to_test) { 2 }
@@ -26,15 +26,9 @@ describe UseCase::ExportOpenDataDec do
       end
 
 
-      # @TODO filter data correctly for DEC
+
       let(:exported_data) do
-        described_class.new.execute(
-          {
-            number_of_assessments: number_assessments_to_test,
-            max_runs: "3",
-            batch: "3",
-          },
-        )
+        described_class.new.execute
       end
 
       before do

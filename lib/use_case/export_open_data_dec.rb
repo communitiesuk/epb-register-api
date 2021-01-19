@@ -13,7 +13,7 @@ module UseCase
 
       # #use gateway to make db calls
       # call gateway to get data set
-      assessments = @gateway.assessments_for_open_data(args)
+      assessments = @gateway.assessments_for_open_data("DEC")
 
       # use existing gateway to get each xml doc from db line by line to ensure memory is not consumed by size of data returned
       assessments.each do |assessment|

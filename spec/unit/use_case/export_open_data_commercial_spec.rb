@@ -8,20 +8,17 @@ describe UseCase::ExportOpenDataCommercial do
 
       let(:non_domestic_xml) { Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc") }
       let(:non_domestic_assessment_id) { non_domestic_xml.at("//CEPC:RRN") }
-      let(:non_domestic_assessment_date) do
-        non_domestic_xml.at("//CEPC:Registration-Date")
-      end
+      let(:non_domestic_assessment_date) do non_domestic_xml.at("//CEPC:Registration-Date") end
       let(:number_assments_to_test) { 2 }
+
+      # Lodge a dec to ensure it is not exported
+      let(:domestic_xml) { Nokogiri.XML Samples.xml("CEPC-8.0.0", "dec") }
+      let(:domestic_assessment_id) { domestic_xml.at("RRN") }
+      let(:domestic_assessment_date) { domestic_xml.at("Registration-Date") }
 
       # @TODO filter data correctly for CEPC
       let(:exported_data) do
-        described_class.new.execute(
-          {
-            number_of_assessments: number_assments_to_test,
-            max_runs: "3",
-            batch: "3",
-          },
-        )
+        described_class.new.execute
       end
 
       let(:date_today) { DateTime.now.strftime("%F") }
@@ -78,6 +75,16 @@ describe UseCase::ExportOpenDataCommercial do
           schema_name: "CEPC-8.0.0",
         )
 
+        domestic_assessment_date.children = "2018-05-04"
+        domestic_assessment_id.children = "0000-0000-0000-0000-0005"
+        lodge_assessment(
+          assessment_body: domestic_xml.to_xml,
+          accepted_responses: [201],
+          auth_data: { scheme_ids: [scheme_id] },
+          override: true,
+          schema_name: "CEPC-8.0.0",
+          )
+
 
       end
 
@@ -87,8 +94,8 @@ describe UseCase::ExportOpenDataCommercial do
 
       # @TODO once tests have completed refactor to write one assertion for each row and compare to hash rather than for each column
 
-      # 1st row to test
-      # write at test for each key in test hash
+      #1st row to test
+      #write at test for each key in test hash
       Samples::ViewModels::Cepc
         .report_test_hash
         .keys
@@ -100,10 +107,11 @@ describe UseCase::ExportOpenDataCommercial do
               expected_values[index],
             )
           end
-        end
+      end
+
 
       # 2nd row to test
-      # write at test for each key in test hash
+      #write at test for each key in test hash
       Samples::ViewModels::Cepc
           .report_test_hash
           .keys

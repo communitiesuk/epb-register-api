@@ -52,7 +52,7 @@ describe UseCase::ExportOpenDataCepcrr do
 
         # @TODO: create a lodgement for CEPC  whose date is not valid
 
-        # create a lodgement for cepc that should not be returned
+        #create a lodgement for cepc that should not be returned
         cepc_minus_rr_xml_id.children = "0000-0000-0000-0000-0010"
         lodge_assessment(
           assessment_body: cepc_minus_rr_xml.to_xml,
