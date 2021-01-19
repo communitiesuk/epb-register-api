@@ -189,6 +189,9 @@ module ViewModel
         window_description: @view_model.window_description,
         window_energy_efficiency_rating: @view_model.window_energy_efficiency_rating,
         window_environmental_efficiency_rating: @view_model.window_environmental_efficiency_rating,
+        secondary_heating_description: @view_model.secondary_heating_description,
+        secondary_heating_energy_efficiency_rating: @view_model.secondary_heating_energy_efficiency_rating,
+        secondary_heating_environmental_efficiency_rating: @view_model.secondary_heating_environmental_efficiency_rating,
       }
     end
 

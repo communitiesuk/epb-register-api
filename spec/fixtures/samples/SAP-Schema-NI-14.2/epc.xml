@@ -144,8 +144,7 @@
           <HIP:Secondary-Heating>
             <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>
             <HIP:Description>Electric heater</HIP:Description>
-            <HIP:Environmental-Efficiency-Rating>0
-            </HIP:Environmental-Efficiency-Rating>
+            <HIP:Environmental-Efficiency-Rating>0</HIP:Environmental-Efficiency-Rating>
           </HIP:Secondary-Heating>
           <HIP:Hot-Water>
             <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>

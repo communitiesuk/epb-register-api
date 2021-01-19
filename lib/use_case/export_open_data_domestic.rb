@@ -143,6 +143,9 @@ module UseCase
               WINDOWS_DESCRIPTION: hash[:window_description],
               WINDOWS_ENERGY_EFF: hash[:window_energy_efficiency_rating],
               WINDOWS_ENV_EFF: hash[:window_environmental_efficiency_rating],
+              SECONDHEAT_DESCRIPTION: hash[:secondary_heating_description],
+              SHEATING_ENERGY_EFF: hash[:secondary_heating_energy_efficiency_rating],
+              SHEATING_ENV_EFF: hash[:secondary_heating_environmental_efficiency_rating],
             },
           )
         end

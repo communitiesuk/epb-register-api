@@ -309,6 +309,18 @@ describe UseCase::ExportOpenDataDomestic do
       it "returns the WINDOWS_ENV_EFF in the CSV" do
         expect(@table.by_col["WINDOWS_ENV_EFF"]).to eq(["0", "0", "0"])
       end
+
+      it "returns the SECONDHEAT_DESCRIPTION in the CSV" do
+        expect(@table.by_col["SECONDHEAT_DESCRIPTION"]).to eq(["Description13", "Description13", "Electric heater"])
+      end
+
+      it "returns the SHEATING_ENERGY_EFF in the CSV" do
+        expect(@table.by_col["SHEATING_ENERGY_EFF"]).to eq(["0", "0", "0"])
+      end
+
+      it "returns the SHEATING_ENV_EFF in the CSV" do
+        expect(@table.by_col["SHEATING_ENV_EFF"]).to eq(["0", "0", "0"])
+      end
     end
   end
 end
