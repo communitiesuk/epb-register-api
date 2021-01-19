@@ -403,6 +403,10 @@ module ViewModel
         xpath(%w[Hot-Water Environmental-Efficiency-Rating])
       end
 
+      def window_description
+        xpath(%w[Windows Description])
+      end
+
     private
 
       def convert_to_big_decimal(node)

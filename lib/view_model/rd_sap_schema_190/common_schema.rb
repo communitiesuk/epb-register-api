@@ -382,6 +382,9 @@ module ViewModel
         xpath(%w[Unheated-Corridor-Length])
       end
 
+      def window_description
+        xpath(%w[Window Description])
+      end
 
     private
 

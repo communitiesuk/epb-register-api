@@ -297,6 +297,10 @@ describe UseCase::ExportOpenDataDomestic do
       it "returns the HOT_WATER_ENV_EFF in the CSV" do
         expect(@table.by_col["HOT_WATER_ENV_EFF"]).to eq(["0", "0", "0"])
       end
+
+      it "returns the WINDOWS_DESCRIPTION in the CSV" do
+        expect(@table.by_col["WINDOWS_DESCRIPTION"]).to eq(["Description6", "Description6", "Glass window"])
+      end
     end
   end
 end

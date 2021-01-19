@@ -451,6 +451,10 @@ module ViewModel
         xpath(%w[Unheated-Corridor-Length])
       end
 
+      def window_description
+        xpath(%w[Window Description])
+      end
+
     private
 
       def convert_to_big_decimal(node)

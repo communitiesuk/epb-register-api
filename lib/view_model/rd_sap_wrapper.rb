@@ -168,7 +168,7 @@ module ViewModel
         wind_turbine_count: @view_model.wind_turbine_count,
         heat_loss_corridor: @view_model.heat_loss_corridor,
         unheated_corridor_length: @view_model.unheated_corridor_length,
-
+        window_description: @view_model.window_description,
       }
 
     end

@@ -1151,6 +1151,7 @@ describe ViewModel::SapWrapper do
     hot_water_description: "Gas boiler",
     hot_water_energy_efficiency_rating: "0",
     hot_water_environmental_efficiency_rating: "0",
+    window_description: "Glass window",
   }.freeze
   it "should read the appropriate values from the XML doc" do
     test_xml_doc(supported_schema, asserted_keys)

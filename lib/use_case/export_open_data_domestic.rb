@@ -140,6 +140,7 @@ module UseCase
               HOTWATER_DESCRIPTION: hash[:hot_water_description],
               HOT_WATER_ENERGY_EFF: hash[:hot_water_energy_efficiency_rating],
               HOT_WATER_ENV_EFF: hash[:hot_water_environmental_efficiency_rating],
+              WINDOWS_DESCRIPTION: hash[:window_description],
             },
           )
         end
