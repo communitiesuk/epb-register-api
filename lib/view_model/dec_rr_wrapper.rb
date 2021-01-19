@@ -88,13 +88,15 @@ module ViewModel
       # add recommendations into a single array
 
       recommendations = []
-      recommendations << Samples::ViewModels.reset_recommendations_hash_keys(@view_model.short_payback_recommendations, "short")
-      recommendations << Samples::ViewModels.reset_recommendations_hash_keys(@view_model.medium_payback_recommendations, "medium")
-      recommendations << Samples::ViewModels.reset_recommendations_hash_keys(@view_model.long_payback_recommendations, "long")
-      recommendations << Samples::ViewModels.reset_recommendations_hash_keys(@view_model.other_recommendations, "long")
+      recommendations <<  Samples::ViewModels.reset_recommendations_hash_keys(@view_model.short_payback_recommendations, "short")
+      recommendations <<  Samples::ViewModels.reset_recommendations_hash_keys(@view_model.medium_payback_recommendations, "medium")
+      recommendations <<  Samples::ViewModels.reset_recommendations_hash_keys(@view_model.long_payback_recommendations, "long")
+      recommendations <<  Samples::ViewModels.reset_recommendations_hash_keys(@view_model.other_recommendations, "other")
+      {
+        rrn: @view_model.assessment_id,
+        recommendations: recommendations,
+      }
 
-      # @TODO use recommendations method to only call xpath once and loop over nodeset
-      { rrn: @view_model.assessment_id, recommendations: recommendations }
     end
 
     def get_view_model

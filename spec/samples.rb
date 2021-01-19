@@ -46,7 +46,7 @@ class Samples
       recommendations << self.reset_recommendations_hash_keys(hash[:short_payback_recommendations], "short")
       recommendations << self.reset_recommendations_hash_keys(hash[:medium_payback_recommendations], "medium")
       recommendations << self.reset_recommendations_hash_keys(hash[:long_payback_recommendations], "long")
-      recommendations << self.reset_recommendations_hash_keys(hash[:other_recommendations], "long")
+      recommendations << self.reset_recommendations_hash_keys(hash[:other_recommendations], "other")
 
       {
         rrn: asserted_hash[:assessment_id],
@@ -583,22 +583,6 @@ class Samples
         Samples::ViewModels.recommendations_test_hash(self.asserted_hash)
       end
 
-      def self.reset_hash_keys(array_of_hashes, payback_type)
-        array_of_hashes.each { | hash|
-          self.update_hash_key(hash, "code", "recommendation_code")
-          self.update_hash_key(hash, "text", "recommendation")
-          self.update_hash_key(hash, "cO2Impact", "cO2_Impact")
-          hash.merge({payback_type: payback_type})
-        }
-      end
-
-      def self.update_hash_key(hash, old, new)
-        value = hash[old.to_sym]
-        hash.delete(old.to_sym)
-        hash[new.to_sym] = value
-        hash
-      end
-
 
 
     end
@@ -681,7 +665,8 @@ class Samples
       end
 
       def self.report_test_hash
-        Samples::ViewModels.recommendations_test_hash(hash)
+
+        Samples::ViewModels.recommendations_test_hash(self.asserted_hash)
       end
 
 

@@ -158,9 +158,9 @@ describe ViewModel::DecRrWrapper do
       test_xml_doc(supported_schema, asserted_keys)
     end
 
-    # it "should read the appropriate values from the XML doc  using the to report method" do
-    #   test_xml_doc(supported_schema, Samples::ViewModels::CepRr.report_test_hash, true)
-    # end
+    it "should read the appropriate values from the XML doc  using the to report method" do
+      test_xml_doc(supported_schema, Samples::ViewModels::DecRr.report_test_hash, true)
+    end
 
     it "returns the expect error without a valid schema type" do
       expect {
