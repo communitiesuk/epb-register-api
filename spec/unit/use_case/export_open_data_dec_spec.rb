@@ -7,7 +7,10 @@ describe UseCase::ExportOpenDataDec do
       let(:dec_xml) { Nokogiri.XML Samples.xml("CEPC-8.0.0", "dec") }
       let(:dec_assessment_id) { dec_xml.at("RRN") }
       let(:dec_assessment_date) { dec_xml.at("") }
-
+      # Lodge CEPC to ensure it is not export
+      let(:non_domestic_xml) { Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc") }
+      let(:non_domestic_assessment_id) { non_domestic_xml.at("//CEPC:RRN") }
+      # let(:non_domestic_assessment_date) do non_domestic_xml.at("//CEPC:Registration-Date") end
       let(:date_today) { DateTime.now.strftime("%F") }
       let(:number_assessments_to_test) { 2 }
       let(:expected_values) do
@@ -21,9 +24,8 @@ describe UseCase::ExportOpenDataDec do
           )
       end
 
-      let(:keys_to_test) do
-        expected_values.keys.select { |key| key!=:lodgement_datetime}
-      end
+      let(:expected_values_minus_time) { expected_values.delete(:lodgement_datetime)}
+
 
 
 
@@ -67,16 +69,33 @@ describe UseCase::ExportOpenDataDec do
           schema_name: "CEPC-8.0.0",
           )
 
+
+
+        non_domestic_assessment_id.children = "0000-0000-0000-0000-0003"
+        lodge_assessment(
+          assessment_body: non_domestic_xml.to_xml,
+          accepted_responses: [201],
+          auth_data: { scheme_ids: [scheme_id] },
+          override: true,
+          schema_name: "CEPC-8.0.0",
+          )
+
         # in order to test the exact time of lodgement the time set on line 53
         expected_values[:lodgement_datetime]   = current_datetime
 
       end
 
 
-      # @TODO once tests have completed refactor to write one assertion for each row and compare to hash rather than for each column
       it "returns the correct number of assessments in the Data" do
         expect(exported_data.length).to eq(number_assessments_to_test)
       end
+
+      # @TODO once tests have completed refactor to write one assertion for each row and compare to hash rather than for each column
+
+      # it 'returns a row that matches the to_report hash' do
+      #   expect(exported_data[0]).to eq(expected_values_minus_time)
+      # end
+
 
       # 1st row to test
       # write at test for each key in test hash
@@ -90,7 +109,7 @@ describe UseCase::ExportOpenDataDec do
         end
       end
 
-      # 1st row to test
+      # 2nd row to test
       # write at test for each key in test hash
       Samples::ViewModels::Dec
         .test_keys

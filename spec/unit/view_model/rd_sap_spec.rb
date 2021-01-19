@@ -269,6 +269,7 @@ describe ViewModel::RdSapWrapper do
       hot_water_description: "Description11",
       hot_water_energy_efficiency_rating: "0",
       hot_water_environmental_efficiency_rating: "0",
+      wind_turbine_count: "0",
     }.freeze
 
   it "should read the appropriate values from the XML doc using the to_hash method" do

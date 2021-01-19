@@ -370,6 +370,10 @@ module ViewModel
         xpath(%w[Hot-Water Environmental-Efficiency-Rating])
       end
 
+      def wind_turbine_count
+        xpath(%w[Wind-Turbines-Count])
+      end
+
     private
 
       def convert_to_big_decimal(node)
