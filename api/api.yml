@@ -306,6 +306,7 @@ paths:
       security:
         - oauth:
             - 'assessor:search'
+            - 'scheme:assessor:fetch'
       parameters:
         - in: query
           name: postcode
@@ -322,6 +323,21 @@ paths:
           description: Only show assessors who have this qualification
           schema:
             $ref: '#/components/schemas/AssessorQualificationSearchOptions'
+        - in: query
+          name: firstName
+          description: The first name of the assessor
+          schema:
+            $ref: '#/components/schemas/FirstName'
+        - in: query
+          name: lastName
+          description: The last name of the assessor
+          schema:
+            $ref: '#/components/schemas/LastName'
+        - in: query
+          name: dateOfBirth
+          description: The date of birth of the assessor
+          schema:
+            $ref: '#/components/schemas/DateOfBirth'
       responses:
         200:
           description: List of assessors matching the search criteria
@@ -331,6 +347,7 @@ paths:
                 oneOf:
                   - $ref: '#/components/schemas/AssessorSearchResults'
                   - $ref: '#/components/schemas/AssessorSearchByPostcodeResults'
+                  - $ref: '#/components/schemas/AssessorBody'
         400:
           description: Invalid query
           content:
@@ -1854,6 +1871,18 @@ components:
     AssessorFullName:
       type: string
       example: 'Joe Bloggs'
+
+    FirstName:
+      type: string
+      example: 'Joe'
+
+    LastName:
+      type: string
+      example: 'Bloggs'
+
+    DateOfBirth:
+      type: string
+      format: date
 
     # Assessments
     AssessmentId:

@@ -1,0 +1,766 @@
+<?xml version="1.0"?>
+<Reports xmlns="DCLG-CEPC"  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="DCLG-CEPC  ./Reports/CEPC-Reports.xsd">
+  <Report>
+    <Report-Header>
+      <RRN>0990-0031-1380-4204-0002</RRN>
+      <Issue-Date>2010-07-05</Issue-Date>
+      <Report-Type>3</Report-Type>
+      <Valid-Until>2020-07-04</Valid-Until>
+      <Related-RRN>0004-0041-8240-9300-9103</Related-RRN>
+      <Inspection-Date>2009-04-01</Inspection-Date>
+      <Registration-Date>2010-07-05</Registration-Date>
+      <Status>entered</Status>
+      <Language-Code>1</Language-Code>
+      <Energy-Assessor>
+        <Certificate-Number>STRO001414</Certificate-Number>
+        <Name>Kenneth Frith</Name>
+        <Accreditation-Scheme-Name>Stroma Accreditation Ltd</Accreditation-Scheme-Name>
+        <Trading-Address>18 Warren Drive Appleton Warrington WA4 5BN</Trading-Address>
+        <Company-Name>Clear Commercial Energy Reports</Company-Name>
+        <Qualifications>NOS4</Qualifications>
+        <Status>Registered</Status>
+      </Energy-Assessor>
+      <Building-Complexity>Level 3</Building-Complexity>
+      <Property-Details>
+        <Location-Description>This is a ground floor unit within a semi-detached building. The remainder of the unit being predominantly residential. The building fronts Carlton Hill, the main thoroghfare through the shopping area of Carlton, a suburb of Nottingham.</Location-Description>
+        <UPRN>948300210000</UPRN>
+        <Property-Address>
+          <Address-Line-1/>
+          <Address-Line-2>313, Carlton Hill</Address-Line-2>
+          <Address-Line-3>Carlton</Address-Line-3>
+          <Address-Line-4/>
+          <Post-Town>NOTTINGHAM</Post-Town>
+          <Postcode>NG4 1GL</Postcode>
+        </Property-Address>
+        <Property-Type>Retail</Property-Type>
+        <Owner>Information not provided by the user</Owner>
+        <Is-Heritage-Site>N</Is-Heritage-Site>
+      </Property-Details>
+      <Calculation-Details>
+        <Methodology>SBEM</Methodology>
+        <Calculation-Tool>CLG, iSBEM, v3.4.b, SBEM, v3.5.a.0</Calculation-Tool>
+        <Output-Engine>EPCgen, v3.5.a.0</Output-Engine>
+        <Inspection-Type>Physical</Inspection-Type>
+      </Calculation-Details>
+    </Report-Header>
+    <Summary-Of-Performance>
+      <Building-Data>
+        <Analysis-Type>ACTUAL</Analysis-Type>
+        <Area>115.19</Area>
+        <Area-Exterior>295.51</Area-Exterior>
+        <Weather>NOT</Weather>
+        <Q50-Infiltration>25</Q50-Infiltration>
+        <Building-W-K>377.613</Building-W-K>
+        <Building-W-M2K>1.27783</Building-W-M2K>
+        <Building-Alpha>9.09</Building-Alpha>
+        <Activities>
+          <Activity>
+            <ID>4</ID>
+            <Area>11.12</Area>
+          </Activity>
+          <Activity>
+            <ID>402</ID>
+            <Area>13.5</Area>
+          </Activity>
+          <Activity>
+            <ID>5</ID>
+            <Area>1.68</Area>
+          </Activity>
+          <Activity>
+            <ID>10</ID>
+            <Area>21.67</Area>
+          </Activity>
+          <Activity>
+            <ID>403</ID>
+            <Area>25.76</Area>
+          </Activity>
+          <Activity>
+            <ID>399</ID>
+            <Area>36.2</Area>
+          </Activity>
+          <Activity>
+            <ID>400</ID>
+            <Area>5.26</Area>
+          </Activity>
+        </Activities>
+        <Global-Performance>
+          <KWH-M2-Heating>233.211</KWH-M2-Heating>
+          <KWH-M2-Cooling>0</KWH-M2-Cooling>
+          <KWH-M2-Auxiliary>9.54458</KWH-M2-Auxiliary>
+          <KWH-M2-Lighting>56.2091</KWH-M2-Lighting>
+          <KWH-M2-DHW>37.2476</KWH-M2-DHW>
+          <KWH-M2-Equipment>22.1615</KWH-M2-Equipment>
+          <KWH-M2-Natural-Gas>270.458</KWH-M2-Natural-Gas>
+          <KWH-M2-LPG>0</KWH-M2-LPG>
+          <KWH-M2-Biogas>0</KWH-M2-Biogas>
+          <KWH-M2-Oil>0</KWH-M2-Oil>
+          <KWH-M2-Coal>0</KWH-M2-Coal>
+          <KWH-M2-Anthracite>0</KWH-M2-Anthracite>
+          <KWH-M2-Smokeless>0</KWH-M2-Smokeless>
+          <KWH-M2-Dual-Fuel>0</KWH-M2-Dual-Fuel>
+          <KWH-M2-Biomass>0</KWH-M2-Biomass>
+          <KWH-M2-Supplied>65.7537</KWH-M2-Supplied>
+          <KWH-M2-Waste-Heat>0</KWH-M2-Waste-Heat>
+          <KWH-M2-District-Heating>0</KWH-M2-District-Heating>
+          <KWH-M2-Displaced>0</KWH-M2-Displaced>
+          <KWH-M2-PVS>0</KWH-M2-PVS>
+          <KWH-M2-Wind>0</KWH-M2-Wind>
+          <KWH-M2-CHP>0</KWH-M2-CHP>
+          <KWH-M2-SES>0</KWH-M2-SES>
+        </Global-Performance>
+        <HVAC-Systems>
+          <HVAC-System-Data>
+            <Area>26.3</Area>
+            <Type>No Heating or Cooling</Type>
+            <Heat-Source>LTHW boiler</Heat-Source>
+            <Fuel-Type>Oil</Fuel-Type>
+            <MJ-M2-Heating-Dem>0</MJ-M2-Heating-Dem>
+            <MJ-M2-Cooling-Dem>85.3943</MJ-M2-Cooling-Dem>
+            <KWH-M2-Heating>0</KWH-M2-Heating>
+            <KWH-M2-Cooling>0</KWH-M2-Cooling>
+            <KWH-M2-Auxiliary>18.6601</KWH-M2-Auxiliary>
+            <Heating-SSEFF>0</Heating-SSEFF>
+            <Cooling-SSEER>0</Cooling-SSEER>
+            <Heating-Gen-SEFF>0</Heating-Gen-SEFF>
+            <Cooling-Gen-SEER>0</Cooling-Gen-SEER>
+            <Activities>
+              <Activity>
+                <ID>4</ID>
+                <Area>11.12</Area>
+              </Activity>
+              <Activity>
+                <ID>402</ID>
+                <Area>13.5</Area>
+              </Activity>
+              <Activity>
+                <ID>5</ID>
+                <Area>1.68</Area>
+              </Activity>
+            </Activities>
+          </HVAC-System-Data>
+          <HVAC-System-Data>
+            <Area>88.89</Area>
+            <Type>Central heating using water: radiators</Type>
+            <Heat-Source>LTHW boiler</Heat-Source>
+            <Fuel-Type>Natural Gas</Fuel-Type>
+            <MJ-M2-Heating-Dem>763.748</MJ-M2-Heating-Dem>
+            <MJ-M2-Cooling-Dem>228.886</MJ-M2-Cooling-Dem>
+            <KWH-M2-Heating>302.212</KWH-M2-Heating>
+            <KWH-M2-Cooling>0</KWH-M2-Cooling>
+            <KWH-M2-Auxiliary>6.84761</KWH-M2-Auxiliary>
+            <Heating-SSEFF>0.702</Heating-SSEFF>
+            <Cooling-SSEER>0</Cooling-SSEER>
+            <Heating-Gen-SEFF>0.787</Heating-Gen-SEFF>
+            <Cooling-Gen-SEER>0</Cooling-Gen-SEER>
+            <Activities>
+              <Activity>
+                <ID>10</ID>
+                <Area>21.67</Area>
+              </Activity>
+              <Activity>
+                <ID>403</ID>
+                <Area>25.76</Area>
+              </Activity>
+              <Activity>
+                <ID>399</ID>
+                <Area>36.2</Area>
+              </Activity>
+              <Activity>
+                <ID>400</ID>
+                <Area>5.26</Area>
+              </Activity>
+            </Activities>
+          </HVAC-System-Data>
+        </HVAC-Systems>
+      </Building-Data>
+      <Building-Data>
+        <Analysis-Type>NOTIONAL</Analysis-Type>
+        <Area>115.19</Area>
+        <Area-Exterior>295.51</Area-Exterior>
+        <Weather>NOT</Weather>
+        <Q50-Infiltration>10</Q50-Infiltration>
+        <Building-W-K>249.403</Building-W-K>
+        <Building-W-M2K>0.843975</Building-W-M2K>
+        <Building-Alpha>10</Building-Alpha>
+        <Activities>
+          <Activity>
+            <ID>4</ID>
+            <Area>11.12</Area>
+          </Activity>
+          <Activity>
+            <ID>402</ID>
+            <Area>13.5</Area>
+          </Activity>
+          <Activity>
+            <ID>5</ID>
+            <Area>1.68</Area>
+          </Activity>
+          <Activity>
+            <ID>10</ID>
+            <Area>21.67</Area>
+          </Activity>
+          <Activity>
+            <ID>403</ID>
+            <Area>25.76</Area>
+          </Activity>
+          <Activity>
+            <ID>399</ID>
+            <Area>36.2</Area>
+          </Activity>
+          <Activity>
+            <ID>400</ID>
+            <Area>5.26</Area>
+          </Activity>
+        </Activities>
+        <Global-Performance>
+          <KWH-M2-Heating>100.96</KWH-M2-Heating>
+          <KWH-M2-Cooling>0</KWH-M2-Cooling>
+          <KWH-M2-Auxiliary>4.18083</KWH-M2-Auxiliary>
+          <KWH-M2-Lighting>58.1346</KWH-M2-Lighting>
+          <KWH-M2-DHW>18.924</KWH-M2-DHW>
+          <KWH-M2-Equipment>22.1615</KWH-M2-Equipment>
+          <KWH-M2-Natural-Gas>119.885</KWH-M2-Natural-Gas>
+          <KWH-M2-LPG>0</KWH-M2-LPG>
+          <KWH-M2-Biogas>0</KWH-M2-Biogas>
+          <KWH-M2-Oil>0</KWH-M2-Oil>
+          <KWH-M2-Coal>0</KWH-M2-Coal>
+          <KWH-M2-Anthracite>0</KWH-M2-Anthracite>
+          <KWH-M2-Smokeless>0</KWH-M2-Smokeless>
+          <KWH-M2-Dual-Fuel>0</KWH-M2-Dual-Fuel>
+          <KWH-M2-Biomass>0</KWH-M2-Biomass>
+          <KWH-M2-Supplied>62.3154</KWH-M2-Supplied>
+          <KWH-M2-Waste-Heat>0</KWH-M2-Waste-Heat>
+          <KWH-M2-District-Heating>0</KWH-M2-District-Heating>
+          <KWH-M2-Displaced>0</KWH-M2-Displaced>
+          <KWH-M2-PVS>0</KWH-M2-PVS>
+          <KWH-M2-Wind>0</KWH-M2-Wind>
+          <KWH-M2-CHP>0</KWH-M2-CHP>
+          <KWH-M2-SES>0</KWH-M2-SES>
+        </Global-Performance>
+        <HVAC-Systems>
+          <HVAC-System-Data>
+            <Area>26.3</Area>
+            <Type>No Heating or Cooling</Type>
+            <Heat-Source>LTHW boiler</Heat-Source>
+            <Fuel-Type>Natural Gas</Fuel-Type>
+            <MJ-M2-Heating-Dem>0</MJ-M2-Heating-Dem>
+            <MJ-M2-Cooling-Dem>172.152</MJ-M2-Cooling-Dem>
+            <KWH-M2-Heating>0</KWH-M2-Heating>
+            <KWH-M2-Cooling>0</KWH-M2-Cooling>
+            <KWH-M2-Auxiliary>6.22</KWH-M2-Auxiliary>
+            <Heating-SSEFF>0</Heating-SSEFF>
+            <Cooling-SSEER>0</Cooling-SSEER>
+            <Heating-Gen-SEFF>0</Heating-Gen-SEFF>
+            <Cooling-Gen-SEER>0</Cooling-Gen-SEER>
+            <Activities>
+              <Activity>
+                <ID>4</ID>
+                <Area>11.12</Area>
+              </Activity>
+              <Activity>
+                <ID>402</ID>
+                <Area>13.5</Area>
+              </Activity>
+              <Activity>
+                <ID>5</ID>
+                <Area>1.68</Area>
+              </Activity>
+            </Activities>
+          </HVAC-System-Data>
+          <HVAC-System-Data>
+            <Area>88.89</Area>
+            <Type>Central heating using water: radiators</Type>
+            <Heat-Source>LTHW boiler</Heat-Source>
+            <Fuel-Type>Natural Gas</Fuel-Type>
+            <MJ-M2-Heating-Dem>343.826</MJ-M2-Heating-Dem>
+            <MJ-M2-Cooling-Dem>482.712</MJ-M2-Cooling-Dem>
+            <KWH-M2-Heating>130.831</KWH-M2-Heating>
+            <KWH-M2-Cooling>0</KWH-M2-Cooling>
+            <KWH-M2-Auxiliary>3.5775</KWH-M2-Auxiliary>
+            <Heating-SSEFF>0.73</Heating-SSEFF>
+            <Cooling-SSEER>0</Cooling-SSEER>
+            <Heating-Gen-SEFF>0</Heating-Gen-SEFF>
+            <Cooling-Gen-SEER>0</Cooling-Gen-SEER>
+            <Activities>
+              <Activity>
+                <ID>10</ID>
+                <Area>21.67</Area>
+              </Activity>
+              <Activity>
+                <ID>403</ID>
+                <Area>25.76</Area>
+              </Activity>
+              <Activity>
+                <ID>399</ID>
+                <Area>36.2</Area>
+              </Activity>
+              <Activity>
+                <ID>400</ID>
+                <Area>5.26</Area>
+              </Activity>
+            </Activities>
+          </HVAC-System-Data>
+        </HVAC-Systems>
+      </Building-Data>
+      <Building-Data>
+        <Analysis-Type>REFERENCE</Analysis-Type>
+        <Area>115.19</Area>
+        <Area-Exterior>295.51</Area-Exterior>
+        <Weather>NOT</Weather>
+        <Q50-Infiltration>10</Q50-Infiltration>
+        <Building-W-K>249.403</Building-W-K>
+        <Building-W-M2K>0.843975</Building-W-M2K>
+        <Building-Alpha>10</Building-Alpha>
+        <Activities>
+          <Activity>
+            <ID>4</ID>
+            <Area>11.12</Area>
+          </Activity>
+          <Activity>
+            <ID>402</ID>
+            <Area>13.5</Area>
+          </Activity>
+          <Activity>
+            <ID>5</ID>
+            <Area>1.68</Area>
+          </Activity>
+          <Activity>
+            <ID>10</ID>
+            <Area>21.67</Area>
+          </Activity>
+          <Activity>
+            <ID>403</ID>
+            <Area>25.76</Area>
+          </Activity>
+          <Activity>
+            <ID>399</ID>
+            <Area>36.2</Area>
+          </Activity>
+          <Activity>
+            <ID>400</ID>
+            <Area>5.26</Area>
+          </Activity>
+        </Activities>
+        <Global-Performance>
+          <KWH-M2-Heating>100.96</KWH-M2-Heating>
+          <KWH-M2-Cooling>40.0411</KWH-M2-Cooling>
+          <KWH-M2-Auxiliary>3.6275</KWH-M2-Auxiliary>
+          <KWH-M2-Lighting>58.1346</KWH-M2-Lighting>
+          <KWH-M2-DHW>18.924</KWH-M2-DHW>
+          <KWH-M2-Equipment>22.1615</KWH-M2-Equipment>
+          <KWH-M2-Natural-Gas>119.885</KWH-M2-Natural-Gas>
+          <KWH-M2-LPG>0</KWH-M2-LPG>
+          <KWH-M2-Biogas>0</KWH-M2-Biogas>
+          <KWH-M2-Oil>0</KWH-M2-Oil>
+          <KWH-M2-Coal>0</KWH-M2-Coal>
+          <KWH-M2-Anthracite>0</KWH-M2-Anthracite>
+          <KWH-M2-Smokeless>0</KWH-M2-Smokeless>
+          <KWH-M2-Dual-Fuel>0</KWH-M2-Dual-Fuel>
+          <KWH-M2-Biomass>0</KWH-M2-Biomass>
+          <KWH-M2-Supplied>101.803</KWH-M2-Supplied>
+          <KWH-M2-Waste-Heat>0</KWH-M2-Waste-Heat>
+          <KWH-M2-District-Heating>0</KWH-M2-District-Heating>
+          <KWH-M2-Displaced>0</KWH-M2-Displaced>
+          <KWH-M2-PVS>0</KWH-M2-PVS>
+          <KWH-M2-Wind>0</KWH-M2-Wind>
+          <KWH-M2-CHP>0</KWH-M2-CHP>
+          <KWH-M2-SES>0</KWH-M2-SES>
+        </Global-Performance>
+        <HVAC-Systems>
+          <HVAC-System-Data>
+            <Area>26.3</Area>
+            <Type>No Heating or Cooling</Type>
+            <Heat-Source>LTHW boiler</Heat-Source>
+            <Fuel-Type>Natural Gas</Fuel-Type>
+            <MJ-M2-Heating-Dem>0</MJ-M2-Heating-Dem>
+            <MJ-M2-Cooling-Dem>119.82</MJ-M2-Cooling-Dem>
+            <KWH-M2-Heating>0</KWH-M2-Heating>
+            <KWH-M2-Cooling>0</KWH-M2-Cooling>
+            <KWH-M2-Auxiliary>6.22</KWH-M2-Auxiliary>
+            <Heating-SSEFF>0</Heating-SSEFF>
+            <Cooling-SSEER>0</Cooling-SSEER>
+            <Heating-Gen-SEFF>0</Heating-Gen-SEFF>
+            <Cooling-Gen-SEER>0</Cooling-Gen-SEER>
+            <Activities>
+              <Activity>
+                <ID>4</ID>
+                <Area>11.12</Area>
+              </Activity>
+              <Activity>
+                <ID>402</ID>
+                <Area>13.5</Area>
+              </Activity>
+              <Activity>
+                <ID>5</ID>
+                <Area>1.68</Area>
+              </Activity>
+            </Activities>
+          </HVAC-System-Data>
+          <HVAC-System-Data>
+            <Area>88.89</Area>
+            <Type>Central heating using water: radiators</Type>
+            <Heat-Source>LTHW boiler</Heat-Source>
+            <Fuel-Type>Natural Gas</Fuel-Type>
+            <MJ-M2-Heating-Dem>343.826</MJ-M2-Heating-Dem>
+            <MJ-M2-Cooling-Dem>420.292</MJ-M2-Cooling-Dem>
+            <KWH-M2-Heating>130.831</KWH-M2-Heating>
+            <KWH-M2-Cooling>51.8881</KWH-M2-Cooling>
+            <KWH-M2-Auxiliary>2.86046</KWH-M2-Auxiliary>
+            <Heating-SSEFF>0.73</Heating-SSEFF>
+            <Cooling-SSEER>2.25</Cooling-SSEER>
+            <Heating-Gen-SEFF>0</Heating-Gen-SEFF>
+            <Cooling-Gen-SEER>0</Cooling-Gen-SEER>
+            <Activities>
+              <Activity>
+                <ID>10</ID>
+                <Area>21.67</Area>
+              </Activity>
+              <Activity>
+                <ID>403</ID>
+                <Area>25.76</Area>
+              </Activity>
+              <Activity>
+                <ID>399</ID>
+                <Area>36.2</Area>
+              </Activity>
+              <Activity>
+                <ID>400</ID>
+                <Area>5.26</Area>
+              </Activity>
+            </Activities>
+          </HVAC-System-Data>
+        </HVAC-Systems>
+      </Building-Data>
+      <Building-Data>
+        <Analysis-Type>TYPICAL</Analysis-Type>
+        <Area>115.19</Area>
+        <Area-Exterior>295.51</Area-Exterior>
+        <Weather>NOT</Weather>
+        <Q50-Infiltration>15</Q50-Infiltration>
+        <Building-W-K>272.152</Building-W-K>
+        <Building-W-M2K>0.920957</Building-W-M2K>
+        <Building-Alpha>10</Building-Alpha>
+        <Activities>
+          <Activity>
+            <ID>4</ID>
+            <Area>11.12</Area>
+          </Activity>
+          <Activity>
+            <ID>402</ID>
+            <Area>13.5</Area>
+          </Activity>
+          <Activity>
+            <ID>5</ID>
+            <Area>1.68</Area>
+          </Activity>
+          <Activity>
+            <ID>10</ID>
+            <Area>21.67</Area>
+          </Activity>
+          <Activity>
+            <ID>403</ID>
+            <Area>25.76</Area>
+          </Activity>
+          <Activity>
+            <ID>399</ID>
+            <Area>36.2</Area>
+          </Activity>
+          <Activity>
+            <ID>400</ID>
+            <Area>5.26</Area>
+          </Activity>
+        </Activities>
+        <Global-Performance>
+          <KWH-M2-Heating>156.955</KWH-M2-Heating>
+          <KWH-M2-Cooling>9.67732e-005</KWH-M2-Cooling>
+          <KWH-M2-Auxiliary>6.42439</KWH-M2-Auxiliary>
+          <KWH-M2-Lighting>52.5272</KWH-M2-Lighting>
+          <KWH-M2-DHW>24.3308</KWH-M2-DHW>
+          <KWH-M2-Equipment>22.1615</KWH-M2-Equipment>
+          <KWH-M2-Natural-Gas>181.286</KWH-M2-Natural-Gas>
+          <KWH-M2-LPG>0</KWH-M2-LPG>
+          <KWH-M2-Biogas>0</KWH-M2-Biogas>
+          <KWH-M2-Oil>0</KWH-M2-Oil>
+          <KWH-M2-Coal>0</KWH-M2-Coal>
+          <KWH-M2-Anthracite>0</KWH-M2-Anthracite>
+          <KWH-M2-Smokeless>0</KWH-M2-Smokeless>
+          <KWH-M2-Dual-Fuel>0</KWH-M2-Dual-Fuel>
+          <KWH-M2-Biomass>0</KWH-M2-Biomass>
+          <KWH-M2-Supplied>58.9516</KWH-M2-Supplied>
+          <KWH-M2-Waste-Heat>0</KWH-M2-Waste-Heat>
+          <KWH-M2-District-Heating>0</KWH-M2-District-Heating>
+          <KWH-M2-Displaced>0</KWH-M2-Displaced>
+          <KWH-M2-PVS>0</KWH-M2-PVS>
+          <KWH-M2-Wind>0</KWH-M2-Wind>
+          <KWH-M2-CHP>0</KWH-M2-CHP>
+          <KWH-M2-SES>0</KWH-M2-SES>
+        </Global-Performance>
+        <HVAC-Systems>
+          <HVAC-System-Data>
+            <Area>26.3</Area>
+            <Type>No Heating or Cooling</Type>
+            <Heat-Source>LTHW boiler</Heat-Source>
+            <Fuel-Type>Natural Gas</Fuel-Type>
+            <MJ-M2-Heating-Dem>0</MJ-M2-Heating-Dem>
+            <MJ-M2-Cooling-Dem>148.204</MJ-M2-Cooling-Dem>
+            <KWH-M2-Heating>0</KWH-M2-Heating>
+            <KWH-M2-Cooling>0</KWH-M2-Cooling>
+            <KWH-M2-Auxiliary>6.22</KWH-M2-Auxiliary>
+            <Heating-SSEFF>0</Heating-SSEFF>
+            <Cooling-SSEER>0</Cooling-SSEER>
+            <Heating-Gen-SEFF>0</Heating-Gen-SEFF>
+            <Cooling-Gen-SEER>0</Cooling-Gen-SEER>
+            <Activities>
+              <Activity>
+                <ID>4</ID>
+                <Area>11.12</Area>
+              </Activity>
+              <Activity>
+                <ID>402</ID>
+                <Area>13.5</Area>
+              </Activity>
+              <Activity>
+                <ID>5</ID>
+                <Area>1.68</Area>
+              </Activity>
+            </Activities>
+          </HVAC-System-Data>
+          <HVAC-System-Data>
+            <Area>88.89</Area>
+            <Type>Central heating using water: radiators</Type>
+            <Heat-Source>LTHW boiler</Heat-Source>
+            <Fuel-Type>Natural Gas</Fuel-Type>
+            <MJ-M2-Heating-Dem>402.719</MJ-M2-Heating-Dem>
+            <MJ-M2-Cooling-Dem>451.459</MJ-M2-Cooling-Dem>
+            <KWH-M2-Heating>203.394</KWH-M2-Heating>
+            <KWH-M2-Cooling>0.000125406</KWH-M2-Cooling>
+            <KWH-M2-Auxiliary>6.48485</KWH-M2-Auxiliary>
+            <Heating-SSEFF>0.55</Heating-SSEFF>
+            <Cooling-SSEER>1e+006</Cooling-SSEER>
+            <Heating-Gen-SEFF>0</Heating-Gen-SEFF>
+            <Cooling-Gen-SEER>0</Cooling-Gen-SEER>
+            <Activities>
+              <Activity>
+                <ID>10</ID>
+                <Area>21.67</Area>
+              </Activity>
+              <Activity>
+                <ID>403</ID>
+                <Area>25.76</Area>
+              </Activity>
+              <Activity>
+                <ID>399</ID>
+                <Area>36.2</Area>
+              </Activity>
+              <Activity>
+                <ID>400</ID>
+                <Area>5.26</Area>
+              </Activity>
+            </Activities>
+          </HVAC-System-Data>
+        </HVAC-Systems>
+      </Building-Data>
+    </Summary-Of-Performance>
+    <Insurance-Details>
+      <Insurer>&lt;ea insurer&gt;</Insurer>
+      <Policy-No>&lt;ea policy&gt;</Policy-No>
+      <Effective-Date>2009-08-01</Effective-Date>
+      <Expiry-Date>2010-07-31</Expiry-Date>
+      <PI-Limit>250000</PI-Limit>
+    </Insurance-Details>
+    <Energy-Performance-Certificate>
+      <Transaction-Type>1</Transaction-Type>
+      <EPC-Related-Party-Disclosure>1</EPC-Related-Party-Disclosure>
+      <EPC-Rating>
+        <Asset-Rating>79</Asset-Rating>
+        <New-Build-Benchmark>37</New-Build-Benchmark>
+        <Existing-Stock-Benchmark>59</Existing-Stock-Benchmark>
+        <SER>50.66</SER>
+        <BER>80.22</BER>
+        <TER>37.91</TER>
+        <TYR>60.05</TYR>
+      </EPC-Rating>
+      <EPC-Rating-Scale>
+        <Upper-Number-A-Scale>25</Upper-Number-A-Scale>
+        <Lower-Number-B-Scale>26</Lower-Number-B-Scale>
+        <Upper-Number-B-Scale>50</Upper-Number-B-Scale>
+        <Lower-Number-C-Scale>51</Lower-Number-C-Scale>
+        <Upper-Number-C-Scale>75</Upper-Number-C-Scale>
+        <Lower-Number-D-Scale>76</Lower-Number-D-Scale>
+        <Upper-Number-D-Scale>100</Upper-Number-D-Scale>
+        <Lower-Number-E-Scale>101</Lower-Number-E-Scale>
+        <Upper-Number-E-Scale>125</Upper-Number-E-Scale>
+        <Lower-Number-F-Scale>126</Lower-Number-F-Scale>
+        <Upper-Number-F-Scale>150</Upper-Number-F-Scale>
+        <Lowest-Number-G-Scale>150</Lowest-Number-G-Scale>
+      </EPC-Rating-Scale>
+      <Technical-Information>
+        <Main-Heating-Fuel>Natural Gas</Main-Heating-Fuel>
+        <Building-Environment>Heating and Natural Ventilation</Building-Environment>
+        <Floor-Area>115</Floor-Area>
+        <Building-Level>3</Building-Level>
+      </Technical-Information>
+      <AC-Questionnaire>
+        <AC-Present>No</AC-Present>
+        <AC-Rated-Output>
+          <AC-Rating-Unknown-Flag>1</AC-Rating-Unknown-Flag>
+        </AC-Rated-Output>
+        <AC-Inspection-Commissioned>4</AC-Inspection-Commissioned>
+      </AC-Questionnaire>
+    </Energy-Performance-Certificate>
+  </Report>
+  <Report>
+    <Report-Header>
+      <RRN>0004-0041-8240-9300-9103</RRN>
+      <Issue-Date>2010-07-05</Issue-Date>
+      <Report-Type>4</Report-Type>
+      <Valid-Until>2020-07-04</Valid-Until>
+      <Related-RRN>0990-0031-1380-4204-0002</Related-RRN>
+      <Inspection-Date>2009-04-01</Inspection-Date>
+      <Registration-Date>2010-07-05</Registration-Date>
+      <Status>entered</Status>
+      <Language-Code>1</Language-Code>
+      <Energy-Assessor>
+        <Certificate-Number>STRO001414</Certificate-Number>
+        <Name>Kenneth Frith</Name>
+        <Accreditation-Scheme-Name>Stroma Accreditation Ltd</Accreditation-Scheme-Name>
+        <Trading-Address>18 Warren Drive Appleton Warrington WA4 5BN</Trading-Address>
+        <Company-Name>Clear Commercial Energy Reports</Company-Name>
+        <Qualifications>NOS4</Qualifications>
+        <Status>Registered</Status>
+      </Energy-Assessor>
+      <Building-Complexity>Level 3</Building-Complexity>
+      <Property-Details>
+        <Location-Description>This is a ground floor unit within a semi-detached building. The remainder of the unit being predominantly residential. The building fronts Carlton Hill, the main thoroghfare through the shopping area of Carlton, a suburb of Nottingham.</Location-Description>
+        <UPRN>948300210000</UPRN>
+        <Property-Address>
+          <Address-Line-1/>
+          <Address-Line-2>313, Carlton Hill</Address-Line-2>
+          <Address-Line-3>Carlton</Address-Line-3>
+          <Address-Line-4/>
+          <Post-Town>NOTTINGHAM</Post-Town>
+          <Postcode>NG4 1GL</Postcode>
+        </Property-Address>
+        <Property-Type>Retail</Property-Type>
+        <Owner>Information not provided by the user</Owner>
+        <Is-Heritage-Site>N</Is-Heritage-Site>
+      </Property-Details>
+      <Calculation-Details>
+        <Methodology>SBEM</Methodology>
+        <Calculation-Tool>CLG, iSBEM, v3.4.b, SBEM, v3.5.a.0</Calculation-Tool>
+        <Output-Engine>EPCgen, v3.5.a.0</Output-Engine>
+        <Inspection-Type>Physical</Inspection-Type>
+      </Calculation-Details>
+    </Report-Header>
+
+
+
+    <Insurance-Details>
+      <Insurer>&lt;ea insurer&gt;</Insurer>
+      <Policy-No>&lt;ea policy&gt;</Policy-No>
+      <Effective-Date>2009-08-01</Effective-Date>
+      <Expiry-Date>2010-07-31</Expiry-Date>
+      <PI-Limit>250000</PI-Limit>
+    </Insurance-Details>
+    <Recommendations-Report>
+      <RR-Recommendations>
+
+        <Short-Payback>
+          <Recommendation-Code>EPC-L1</Recommendation-Code>
+          <Recommendation>Replace 38mm diameter (T12) fluorescent tubes on failure with 26mm (T8) tubes.</Recommendation>
+          <CO2-Impact>HIGH</CO2-Impact>
+        </Short-Payback>
+        <Short-Payback>
+          <Recommendation-Code>EPC-L2</Recommendation-Code>
+          <Recommendation>Replace tungsten GLS lamps with CFLs: Payback period dependent on hours of use.</Recommendation>
+          <CO2-Impact>LOW</CO2-Impact>
+        </Short-Payback>
+        <Short-Payback>
+          <Recommendation-Code>EPC-L4</Recommendation-Code>
+          <Recommendation>Replace tungsten GLS spotlights with low-voltage tungsten halogen: Payback period dependent on hours of use.</Recommendation>
+          <CO2-Impact>LOW</CO2-Impact>
+        </Short-Payback>
+        <Short-Payback>
+          <Recommendation-Code>EPC-L5</Recommendation-Code>
+          <Recommendation>Consider replacing T8 lamps with retrofit T5 conversion kit. </Recommendation>
+          <CO2-Impact>LOW</CO2-Impact>
+        </Short-Payback>
+        <Short-Payback>
+          <Recommendation-Code>EPC-V1</Recommendation-Code>
+          <Recommendation>Some spaces have a significant risk of overheating. Consider solar control measures such as the application of reflective coating or shading devices to windows.</Recommendation>
+          <CO2-Impact>MEDIUM</CO2-Impact>
+        </Short-Payback>
+        <Short-Payback>
+          <Recommendation-Code>EPC-W3</Recommendation-Code>
+          <Recommendation>Improve insulation on HWS storage.</Recommendation>
+          <CO2-Impact>LOW</CO2-Impact>
+        </Short-Payback>
+        <Short-Payback>
+          <Recommendation-Code>EPC-H7</Recommendation-Code>
+          <Recommendation>Add optimum start/stop to the heating system.</Recommendation>
+          <CO2-Impact>MEDIUM</CO2-Impact>
+        </Short-Payback>
+        <Medium-Payback>
+          <Recommendation-Code>EPC-L7</Recommendation-Code>
+          <Recommendation>Introduce HF (high frequency) ballasts for fluorescent tubes: Reduced number of fittings required.</Recommendation>
+          <CO2-Impact>LOW</CO2-Impact>
+        </Medium-Payback>
+        <Medium-Payback>
+          <Recommendation-Code>EPC-E4</Recommendation-Code>
+          <Recommendation>Some walls have uninsulated cavities - introduce cavity wall insulation.</Recommendation>
+          <CO2-Impact>MEDIUM</CO2-Impact>
+        </Medium-Payback>
+        <Medium-Payback>
+          <Recommendation-Code>EPC-H6</Recommendation-Code>
+          <Recommendation>Add local temperature control to the heating system.</Recommendation>
+          <CO2-Impact>MEDIUM</CO2-Impact>
+        </Medium-Payback>
+        <Medium-Payback>
+          <Recommendation-Code>EPC-H8</Recommendation-Code>
+          <Recommendation>Add weather compensation controls to heating system.</Recommendation>
+          <CO2-Impact>MEDIUM</CO2-Impact>
+        </Medium-Payback>
+        <Medium-Payback>
+          <Recommendation-Code>EPC-E6</Recommendation-Code>
+          <Recommendation>Some loft spaces are poorly insulated - install/improve insulation.</Recommendation>
+          <CO2-Impact>MEDIUM</CO2-Impact>
+        </Medium-Payback>
+        <Medium-Payback>
+          <Recommendation-Code>EPC-H5</Recommendation-Code>
+          <Recommendation>Add local time control to heating system.</Recommendation>
+          <CO2-Impact>MEDIUM</CO2-Impact>
+        </Medium-Payback>
+        <Medium-Payback>
+          <Recommendation-Code>EPC-H3</Recommendation-Code>
+          <Recommendation>Consider replacing heating boiler plant with a condensing type.</Recommendation>
+          <CO2-Impact>HIGH</CO2-Impact>
+        </Medium-Payback>
+        <Medium-Payback>
+          <Recommendation-Code>EPC-E7</Recommendation-Code>
+          <Recommendation>Carry out a pressure test, identify and treat identified air leakage. Enter result in EPC calculation.</Recommendation>
+          <CO2-Impact>MEDIUM</CO2-Impact>
+        </Medium-Payback>
+        <Long-Payback>
+          <Recommendation-Code>EPC-R2</Recommendation-Code>
+          <Recommendation>Consider installing building mounted wind turbine(s).</Recommendation>
+          <CO2-Impact>LOW</CO2-Impact>
+        </Long-Payback>
+        <Long-Payback>
+          <Recommendation-Code>EPC-R3</Recommendation-Code>
+          <Recommendation>Consider installing solar water heating.</Recommendation>
+          <CO2-Impact>LOW</CO2-Impact>
+        </Long-Payback>
+        <Long-Payback>
+          <Recommendation-Code>EPC-R4</Recommendation-Code>
+          <Recommendation>Consider installing PV.</Recommendation>
+          <CO2-Impact>LOW</CO2-Impact>
+        </Long-Payback>
+      </RR-Recommendations>
+      <Technical-Information>
+        <Building-Environment>Heating and Natural Ventilation</Building-Environment>
+        <Floor-Area>115</Floor-Area>
+        <Building-Level>3</Building-Level>
+      </Technical-Information>
+    </Recommendations-Report>
+  </Report>
+</Reports>
