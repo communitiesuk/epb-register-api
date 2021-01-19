@@ -187,6 +187,8 @@ module ViewModel
         hot_water_energy_efficiency_rating: @view_model.hot_water_energy_efficiency_rating,
         hot_water_environmental_efficiency_rating: @view_model.hot_water_environmental_efficiency_rating,
         window_description: @view_model.window_description,
+        window_energy_efficiency_rating: @view_model.window_energy_efficiency_rating,
+        window_environmental_efficiency_rating: @view_model.window_environmental_efficiency_rating,
       }
     end
 

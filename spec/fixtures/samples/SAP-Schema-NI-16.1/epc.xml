@@ -70,8 +70,7 @@
           <HIP:Windows>
             <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>
             <HIP:Description>Glass window</HIP:Description>
-            <HIP:Environmental-Efficiency-Rating>0
-            </HIP:Environmental-Efficiency-Rating>
+            <HIP:Environmental-Efficiency-Rating>0</HIP:Environmental-Efficiency-Rating>
           </HIP:Windows>
           <HIP:Main-Heating>
             <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>

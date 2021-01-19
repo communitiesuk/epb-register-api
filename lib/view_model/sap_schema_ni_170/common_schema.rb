@@ -349,6 +349,14 @@ module ViewModel
         xpath(%w[Windows Description])
       end
 
+      def window_energy_efficiency_rating
+        xpath(%w[Windows Energy-Efficiency-Rating])
+      end
+
+      def window_environmental_efficiency_rating
+        xpath(%w[Windows Environmental-Efficiency-Rating])
+      end
+
     private
 
       def convert_to_big_decimal(node)

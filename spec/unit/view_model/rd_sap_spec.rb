@@ -273,6 +273,8 @@ describe ViewModel::RdSapWrapper do
       heat_loss_corridor: "2",
       unheated_corridor_length: "10",
       window_description: "Description6",
+      window_energy_efficiency_rating: "0",
+      window_environmental_efficiency_rating: "0",
     }.freeze
 
   it "should read the appropriate values from the XML doc using the to_hash method" do

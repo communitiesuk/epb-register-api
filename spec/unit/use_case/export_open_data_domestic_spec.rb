@@ -301,6 +301,14 @@ describe UseCase::ExportOpenDataDomestic do
       it "returns the WINDOWS_DESCRIPTION in the CSV" do
         expect(@table.by_col["WINDOWS_DESCRIPTION"]).to eq(["Description6", "Description6", "Glass window"])
       end
+
+      it "returns the WINDOWS_ENERGY_EFF in the CSV" do
+        expect(@table.by_col["WINDOWS_ENERGY_EFF"]).to eq(["0", "0", "0"])
+      end
+
+      it "returns the WINDOWS_ENV_EFF in the CSV" do
+        expect(@table.by_col["WINDOWS_ENV_EFF"]).to eq(["0", "0", "0"])
+      end
     end
   end
 end

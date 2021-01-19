@@ -169,6 +169,8 @@ module ViewModel
         heat_loss_corridor: @view_model.heat_loss_corridor,
         unheated_corridor_length: @view_model.unheated_corridor_length,
         window_description: @view_model.window_description,
+        window_energy_efficiency_rating: @view_model.window_energy_efficiency_rating,
+        window_environmental_efficiency_rating: @view_model.window_environmental_efficiency_rating,
       }
 
     end

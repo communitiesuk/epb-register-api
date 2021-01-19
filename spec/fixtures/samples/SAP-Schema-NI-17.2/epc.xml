@@ -143,8 +143,7 @@
           <SAP:Windows>
             <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
             <SAP:Description>Glass window</SAP:Description>
-            <SAP:Environmental-Efficiency-Rating>0
-            </SAP:Environmental-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
           </SAP:Windows>
           <SAP:Main-Heating>
             <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
