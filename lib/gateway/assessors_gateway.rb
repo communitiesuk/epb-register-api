@@ -165,7 +165,7 @@ module Gateway
       response =
         Assessor.connection.exec_query(
           "SELECT
-          first_name, last_name, middle_names, date_of_birth, registered_by,
+          first_name, last_name, middle_names, registered_by,
            scheme_assessor_id, telephone_number, email, c.name AS scheme_name,
            c.active AS active,
            search_results_comparison_postcode, domestic_sap_qualification,
@@ -210,7 +210,7 @@ module Gateway
     )
       sql = <<-SQL
         SELECT
-          first_name, last_name, middle_names, date_of_birth, registered_by,
+          first_name, last_name, middle_names, registered_by,
           scheme_assessor_id, telephone_number, email, b.name AS scheme_name,
           search_results_comparison_postcode, also_known_as, address_line1,
           address_line2, address_line3, town, postcode, company_reg_no,
@@ -301,7 +301,7 @@ module Gateway
 
       sql = <<-SQL
         SELECT
-          first_name, last_name, middle_names, date_of_birth, registered_by,
+          first_name, last_name, middle_names, registered_by,
           scheme_assessor_id, telephone_number, email, b.name AS scheme_name,
           search_results_comparison_postcode, also_known_as, address_line1,
           address_line2, address_line3, town, postcode, company_reg_no,

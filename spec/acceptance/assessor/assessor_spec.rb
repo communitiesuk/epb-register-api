@@ -176,7 +176,6 @@ describe "Acceptance::Assessor" do
           firstName: valid_assessor_request[:firstName],
           middleNames: valid_assessor_request[:middleNames],
           lastName: valid_assessor_request[:lastName],
-          dateOfBirth: valid_assessor_request[:dateOfBirth],
           contactDetails: valid_assessor_request[:contactDetails],
           searchResultsComparisonPostcode:
               valid_assessor_request[:searchResultsComparisonPostcode],

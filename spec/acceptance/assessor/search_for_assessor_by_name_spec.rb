@@ -48,7 +48,6 @@ describe "Searching for an assessor by name" do
             firstName: valid_assessor_request[:firstName],
             lastName: valid_assessor_request[:lastName],
             middleNames: valid_assessor_request[:middleNames],
-            dateOfBirth: valid_assessor_request[:dateOfBirth],
             searchResultsComparisonPostcode:
               valid_assessor_request[:searchResultsComparisonPostcode],
             qualifications: valid_assessor_request[:qualifications],

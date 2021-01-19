@@ -98,12 +98,6 @@ module Domain
           scheme_id: @registered_by_id,
         },
         scheme_assessor_id: @scheme_assessor_id,
-        date_of_birth:
-          if @date_of_birth.methods.include?(:strftime)
-            @date_of_birth.strftime("%Y-%m-%d")
-          else
-            Date.parse(@date_of_birth)
-          end,
         contact_details:
           {
             email: @email,
@@ -152,6 +146,7 @@ module Domain
 
       hash[:middle_names] = @middle_names if @middle_names
       hash[:also_known_as] = @also_known_as if @also_known_as
+      hash[:date_of_birth] = date_of_birth if @date_of_birth
 
       hash
     end
@@ -203,6 +198,14 @@ module Domain
       return "INACTIVE" unless valid_qualifications.include? qualification
 
       qualification
+    end
+
+    def date_of_birth
+      if @date_of_birth.methods.include?(:strftime)
+        @date_of_birth.strftime("%Y-%m-%d")
+      else
+        Date.parse(@date_of_birth)
+      end
     end
   end
 end

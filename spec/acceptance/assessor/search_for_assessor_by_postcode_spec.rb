@@ -168,7 +168,6 @@ describe "Acceptance::SearchForAssessor" do
             registeredBy: { name: "test scheme", schemeId: 25 },
             schemeAssessorId: "ASSESSOR999",
             searchResultsComparisonPostcode: "SE1 7EZ",
-            dateOfBirth: "1991-02-25",
             contactDetails: {
               telephoneNumber: "010199991010101",
               email: "person@person.com",
