@@ -374,6 +374,14 @@ module ViewModel
         xpath(%w[Wind-Turbines-Count])
       end
 
+      def heat_loss_corridor
+        xpath(%w[Heat-Loss-Corridor])
+      end
+
+      def unheated_corridor_length
+        xpath(%w[Unheated-Corridor-Length])
+      end
+
     private
 
       def convert_to_big_decimal(node)

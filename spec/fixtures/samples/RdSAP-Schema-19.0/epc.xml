@@ -148,9 +148,11 @@
         <SAP-Flat-Details>
           <Level>1</Level>
           <Flat-Location>01</Flat-Location>
-          <Heat-Loss-Corridor>1</Heat-Loss-Corridor>
+          <Heat-Loss-Corridor>2</Heat-Loss-Corridor>
           <Storey-Count>3</Storey-Count>
           <Top-Storey>N</Top-Storey>
+
+          <Unheated-Corridor-Length>10</Unheated-Corridor-Length>
         </SAP-Flat-Details>
         <Property-Type>0</Property-Type>
         <Built-Form>2</Built-Form>

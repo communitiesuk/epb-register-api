@@ -166,6 +166,9 @@ module ViewModel
         hot_water_energy_efficiency_rating: @view_model.hot_water_energy_efficiency_rating,
         hot_water_environmental_efficiency_rating: @view_model.hot_water_environmental_efficiency_rating,
         wind_turbine_count: @view_model.wind_turbine_count,
+        heat_loss_corridor: @view_model.heat_loss_corridor,
+        unheated_corridor_length: @view_model.unheated_corridor_length,
+
       }
 
     end
