@@ -418,6 +418,10 @@ module ViewModel
         xpath(%w[Lighting Environmental-Efficiency-Rating])
       end
 
+      def photovoltaic_roof_area_percent
+        xpath(%w[Photovoltaic-Supply Percent-Roof-Area])
+      end
+
     private
 
       def convert_to_big_decimal(node)

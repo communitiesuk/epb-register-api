@@ -333,6 +333,10 @@ describe UseCase::ExportOpenDataDomestic do
       it "returns the LIGHTING_ENV_EFF in the CSV" do
         expect(@table.by_col["LIGHTING_ENV_EFF"]).to eq(["0", "0", "0"])
       end
+
+      it "returns the PHOTO_SUPPLY in the CSV" do
+        expect(@table.by_col["PHOTO_SUPPLY"]).to eq(["0", "0", nil])
+      end
     end
   end
 end

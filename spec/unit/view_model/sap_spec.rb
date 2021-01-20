@@ -1160,6 +1160,7 @@ describe ViewModel::SapWrapper do
     lighting_description: "Energy saving bulbs",
     lighting_energy_efficiency_rating: "0",
     lighting_environmental_efficiency_rating: "0",
+    photovoltaic_roof_area_percent: nil,
   }.freeze
   it "should read the appropriate values from the XML doc" do
     test_xml_doc(supported_schema, asserted_keys)
