@@ -384,7 +384,23 @@ module ViewModel
         nil
       end
 
-    private
+      def wind_turbine_count
+        xpath(%w[Wind-Turbines-Count])
+      end
+
+      def unheated_corridor_length
+        xpath(%w[Unheated-Corridor-Length])
+      end
+
+      def heat_loss_corridor
+        xpath(%w[Heat-Loss-Corridor])
+      end
+
+      def wind_turbine_count
+        xpath(%w[Wind-Turbines-Count])
+      end
+
+      private
 
       def convert_to_big_decimal(node)
         return unless xpath(node)

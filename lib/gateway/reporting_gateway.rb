@@ -165,9 +165,7 @@ module Gateway
         AND a.type_of_assessment =  $1
         AND a.date_of_assessment >= $2
         ORDER BY a.assessment_id
-
       SQL
-
 
       results = ActiveRecord::Base.connection.exec_query(sql, 'SQL', bindings)
       results.map { |result| result }

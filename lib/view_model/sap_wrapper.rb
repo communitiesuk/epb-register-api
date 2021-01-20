@@ -196,6 +196,9 @@ module ViewModel
         lighting_energy_efficiency_rating: @view_model.lighting_energy_efficiency_rating,
         lighting_environmental_efficiency_rating: @view_model.lighting_environmental_efficiency_rating,
         photovoltaic_roof_area_percent: @view_model.photovoltaic_roof_area_percent,
+        heat_loss_corridor: @view_model.heat_loss_corridor,
+        wind_turbine_count: @view_model.wind_turbine_count,
+
       }
     end
 

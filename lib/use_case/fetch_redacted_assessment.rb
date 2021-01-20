@@ -21,6 +21,8 @@ module UseCase
       Address
       Related-Party-Disclosure
       Insurance-Details
+      Heat-Loss-Corridor
+      Unheated-Corridor-Length
     ].freeze
 
     def initialize

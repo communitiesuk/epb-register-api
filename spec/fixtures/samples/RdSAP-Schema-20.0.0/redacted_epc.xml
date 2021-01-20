@@ -171,8 +171,6 @@
         <Storey-Count>3</Storey-Count>
         <Level>1</Level>
         <Top-Storey>N</Top-Storey>
-        <Heat-Loss-Corridor>2</Heat-Loss-Corridor>
-        <Unheated-Corridor-Length>10</Unheated-Corridor-Length>
       </SAP-Flat-Details>
       <SAP-Building-Parts>
         <SAP-Building-Part>
