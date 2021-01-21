@@ -17,12 +17,12 @@ describe 'Gateway::StorageGateway' do
 
     it 'retrieves an existing file' do
       stub_file_response(@storage_gateway.client)
-      expect(@storage_gateway.get_file_io(file_name: 'my-file').string).to eq 'Hello!'
+      expect(@storage_gateway.get_file_io('my-file').string).to eq 'Hello!'
     end
 
     it 'fails when the file is not existing' do
       stub_file_response(@storage_gateway.client)
-      expect(@storage_gateway.get_file_io(file_name: 'my-file').string).to eq 'Hello!'
+      expect(@storage_gateway.get_file_io('my-file').string).to eq 'Hello!'
     end
   end
 end
