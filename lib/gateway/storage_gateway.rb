@@ -20,7 +20,7 @@ module Gateway
 
     def initialise_client
       credentials = Aws::Credentials.new(storage_config.access_key_id, storage_config.secret_access_key)
-      Aws::S3::Client.new(credentials: credentials)
+      Aws::S3::Client.new(region: storage_config.region_name, credentials: credentials)
     end
 
     def initialise_client_stub
