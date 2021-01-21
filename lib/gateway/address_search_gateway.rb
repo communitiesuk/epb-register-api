@@ -250,14 +250,14 @@ module Gateway
         address_ids[address_id] = [] unless address_ids.key? address_id
         address_ids[address_id].push i
 
-        address_hash = compact_address(res).hash
+        address_hash = compact_address(res).downcase.hash
         address_hashes[address_hash] = [] unless address_hashes.key? address_hash
         address_hashes[address_hash].push i
       end
 
       address_ids.each do |_, entries|
         root_entry = results[entries.first]
-        entries_sharing_hash = address_hashes[compact_address(root_entry).hash]
+        entries_sharing_hash = address_hashes[compact_address(root_entry).downcase.hash]
 
         (entries_sharing_hash - entries).each do |result_to_update|
           next if remapped_addresses.include? result_to_update
