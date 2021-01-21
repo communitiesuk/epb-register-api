@@ -154,27 +154,35 @@ module Controller
       not_found_error("The requested scheme was not found")
     end
 
-    get "/api/assessors", auth_token_has_one_of: %w[assessor:search scheme:assessor:fetch] do
+    get "/api/assessors",
+        auth_token_has_one_of: %w[assessor:search scheme:assessor:fetch] do
 
-      current_status_check = params.key?(:firstName) || params.key?(:lastName) || params.key?(:dateOfBirth) ? true : false
+      current_status_check = params.key?(:firstName) ||
+        params.key?(:lastName) ||
+        params.key?(:dateOfBirth)
 
-      if (current_status_check && !env[:auth_token].scope?('scheme:assessor:fetch')) || (!current_status_check && !env[:auth_token].scope?('assessor:search'))
+      if (current_status_check && !env[:auth_token].scope?("scheme:assessor:fetch")) ||
+          (!current_status_check && !env[:auth_token].scope?("assessor:search"))
         forbidden(
-            "UNAUTHORISED",
-            "You are not authorised to perform this request",
-            )
+          "UNAUTHORISED",
+          "You are not authorised to perform this request",
+        )
       end
 
-      if (current_status_check) && (params.key?(:firstName) && params.key?(:lastName) && params.key?(:dateOfBirth))
-        return search_by_first_name_last_name_date_of_birth(params[:firstName], params[:lastName], params[:dateOfBirth])
+      if current_status_check &&
+          (params.key?(:firstName) && params.key?(:lastName) && params.key?(:dateOfBirth))
+        return search_by_first_name_last_name_date_of_birth params[:firstName],
+                                                            params[:lastName],
+                                                            params[:dateOfBirth]
       end
 
-      if current_status_check && (!params.key?(:firstName) || !params.key?(:lastName) || !params.key?(:dateOfBirth))
-          error_response(
-              400,
-              "INVALID_QUERY",
-              "Must specify first name, last name and date of birth when searching",
-              )
+      if current_status_check &&
+          (!params.key?(:firstName) || !params.key?(:lastName) || !params.key?(:dateOfBirth))
+        error_response(
+          400,
+          "INVALID_QUERY",
+          "Must specify first name, last name and date of birth when searching",
+        )
       end
 
       if params.key?(:name)
