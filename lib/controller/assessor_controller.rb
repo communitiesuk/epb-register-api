@@ -156,7 +156,6 @@ module Controller
 
     get "/api/assessors",
         auth_token_has_one_of: %w[assessor:search scheme:assessor:fetch] do
-
       current_status_check = params.key?(:firstName) ||
         params.key?(:lastName) ||
         params.key?(:dateOfBirth)
@@ -169,20 +168,26 @@ module Controller
         )
       end
 
-      if current_status_check &&
-          (params.key?(:firstName) && params.key?(:lastName) && params.key?(:dateOfBirth))
+      if current_status_check
+        if !params.key?(:firstName) ||
+            !params.key?(:lastName) ||
+            !params.key?(:dateOfBirth) ||
+            !Date.valid_date?(
+              *Array.new(3).zip((params[:dateOfBirth]&.split("-") || []))
+                    .map(&:last)
+                    .map(&:to_i),
+            )
+
+          return error_response(
+            400,
+            "INVALID_QUERY",
+            "Must specify first name, last name and a valid date of birth when searching",
+          )
+        end
+
         return search_by_first_name_last_name_date_of_birth params[:firstName],
                                                             params[:lastName],
                                                             params[:dateOfBirth]
-      end
-
-      if current_status_check &&
-          (!params.key?(:firstName) || !params.key?(:lastName) || !params.key?(:dateOfBirth))
-        error_response(
-          400,
-          "INVALID_QUERY",
-          "Must specify first name, last name and date of birth when searching",
-        )
       end
 
       if params.key?(:name)

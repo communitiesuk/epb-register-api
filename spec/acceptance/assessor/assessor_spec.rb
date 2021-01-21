@@ -198,7 +198,12 @@ describe "Acceptance::Assessor" do
 
     it "raises an error when incorrect params are provided" do
       response = JSON.parse(fetch_assessor_current_status("Some", "Person", nil, scheme_id, [400]).body)
-      expect(response["errors"].first["title"]).to eq("Must specify either name or postcode & qualification when searching")
+      expect(response["errors"].first["title"]).to eq("Must specify first name, last name and a valid date of birth when searching")
+    end
+
+    it "raises an error when invalid params are provided" do
+      response = JSON.parse(fetch_assessor_current_status("Some", "Person", "not_a_date", scheme_id, [400]).body)
+      expect(response["errors"].first["title"]).to eq("Must specify first name, last name and a valid date of birth when searching")
     end
 
     it "will raise an error if given the incorrect auth scope" do
