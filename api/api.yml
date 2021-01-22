@@ -302,7 +302,15 @@ paths:
       tags:
         - Search
         - Manage Assessors
-      summary: Search for an assessor by postcode or name
+      summary: 'Search for an assessor by postcode or full name
+                Clients with scope assessor:search can search by
+                  EITHER:
+                  - a postcode (with scope assessor:search)
+                  OR
+                  - full name (with scope assessor:search)
+
+                Clients with scope scheme:assessor:fetch can search by
+                  - firstName AND lastName AND dateOfBirth'
       security:
         - oauth:
             - 'assessor:search'
