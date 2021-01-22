@@ -166,8 +166,8 @@ module ViewModel
         mainheat_description: @view_model.all_main_heating_descriptions.join(", "),
         mainheat_energy_eff: energy_rating_string(all_main_heating_energy_efficiency[0]),
         mainheat_env_eff: energy_rating_string(all_main_heating_energy_efficiency[1]),
+        extensions_count: @view_model.extensions_count,
       }
-
     end
 
     def to_report

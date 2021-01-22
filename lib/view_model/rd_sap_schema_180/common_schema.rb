@@ -433,6 +433,10 @@ module ViewModel
         Helper::XmlEnumsToOutput.xml_value_to_string(built_form_value)
       end
 
+      def extensions_count
+        xpath(%w[Extensions-Count])
+      end
+
     private
 
       def convert_to_big_decimal(node)

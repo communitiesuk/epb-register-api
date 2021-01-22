@@ -35,7 +35,7 @@ describe ViewModel::SapWrapper do
       unsupported_fields: [],
       different_fields: {
         address_id: "LPRN-0000000000",
-        heat_loss_corridor:nil,
+        heat_loss_corridor: nil,
         unheated_corridor_length: nil,
         address: {
           address_id: "LPRN-0000000000",
@@ -45,7 +45,6 @@ describe ViewModel::SapWrapper do
           address_line4: "",
           postcode: "A0 0AA",
           town: "Post-Town1",
-
         },
       },
     },
@@ -55,6 +54,7 @@ describe ViewModel::SapWrapper do
       unsupported_fields: [],
       different_fields: {
         address_id: "LPRN-0000000000",
+        extensions_count: "0",
         address: {
           address_id: "LPRN-0000000000",
           address_line1: "1 Some Street",
@@ -80,6 +80,7 @@ describe ViewModel::SapWrapper do
       different_fields: {
         address_id: "LPRN-0000000000",
         heat_loss_corridor: nil,
+        extensions_count: "0",
         address: {
           address_id: "LPRN-0000000000",
           address_line1: "1 Some Street",
@@ -104,6 +105,7 @@ describe ViewModel::SapWrapper do
       different_fields: {
         address_id: "LPRN-0000000000",
         heat_loss_corridor: nil,
+        extensions_count: "0",
         address: {
           address_id: "LPRN-0000000000",
           address_line1: "1 Some Street",
@@ -165,6 +167,7 @@ describe ViewModel::SapWrapper do
       different_fields: {
         address_id: "LPRN-0000000000",
         heat_loss_corridor: nil,
+        extensions_count: "0",
         address: {
           address_id: "LPRN-0000000000",
           address_line1: "1 Some Street",
@@ -226,6 +229,7 @@ describe ViewModel::SapWrapper do
       different_fields: {
         address_id: "LPRN-0000000000",
         heat_loss_corridor: nil,
+        extensions_count: "0",
         address: {
           address_id: "LPRN-0000000000",
           address_line1: "1 Some Street",
@@ -287,6 +291,7 @@ describe ViewModel::SapWrapper do
       different_fields: {
         property_age_band: nil,
         heat_loss_corridor: nil,
+        extensions_count: "0",
         address_id: "LPRN-0000000000",
         address: {
           address_id: "LPRN-0000000000",
@@ -350,6 +355,7 @@ describe ViewModel::SapWrapper do
         property_age_band: nil,
         address_id: "LPRN-0000000000",
         heat_loss_corridor: nil,
+        extensions_count: "0",
         address: {
           address_id: "LPRN-0000000000",
           address_line1: "1 Some Street",
@@ -411,6 +417,7 @@ describe ViewModel::SapWrapper do
       different_fields: {
         property_age_band: nil,
         heat_loss_corridor: nil,
+        extensions_count: "0",
         address_id: "LPRN-0000000000",
         address: {
           address_id: "LPRN-0000000000",
@@ -634,6 +641,7 @@ describe ViewModel::SapWrapper do
       different_fields: {
         address_id: "LPRN-0000000000",
         heat_loss_corridor: nil,
+        extensions_count: "0",
         address: {
           address_id: "LPRN-0000000000",
           address_line1: "1 Some Street",
@@ -657,6 +665,7 @@ describe ViewModel::SapWrapper do
       different_fields: {
         address_id: "LPRN-0000000000",
         heat_loss_corridor: nil,
+        extensions_count: "0",
         address: {
           address_id: "LPRN-0000000000",
           address_line1: "1 Some Street",
@@ -679,6 +688,7 @@ describe ViewModel::SapWrapper do
       unsupported_fields: [],
       different_fields: {
         address_id: "LPRN-0000000000",
+        extensions_count: "0",
         heat_loss_corridor: nil,
         address: {
           address_id: "LPRN-0000000000",
@@ -739,6 +749,7 @@ describe ViewModel::SapWrapper do
       unsupported_fields: [],
       different_fields: {
         property_age_band: nil,
+        extensions_count: "0",
         heat_loss_corridor: "0",
         address_id: "LPRN-0000000000",
         address: {
@@ -801,6 +812,7 @@ describe ViewModel::SapWrapper do
       different_fields: {
         tenure: nil,
         property_age_band: nil,
+        extensions_count: "0",
         heat_loss_corridor: "0",
         address_id: "LPRN-0000000000",
         address: {
@@ -863,6 +875,7 @@ describe ViewModel::SapWrapper do
       different_fields: {
         tenure: nil,
         property_age_band: nil,
+        extensions_count: "0",
         heat_loss_corridor: "0",
         address_id: "LPRN-0000000000",
         address: {
@@ -926,6 +939,7 @@ describe ViewModel::SapWrapper do
         tenure: nil,
         property_age_band: nil,
         heat_loss_corridor: "0",
+        extensions_count: "0",
         address_id: "LPRN-0000000000",
         address: {
           address_id: "LPRN-0000000000",
@@ -1192,6 +1206,7 @@ describe ViewModel::SapWrapper do
     built_form: "Detached",
     unheated_corridor_length: "10",
     mainheat_description: "Thermostat, Thermostat",
+    extensions_count: nil,
   }.freeze
   it "should read the appropriate values from the XML doc" do
     test_xml_doc(supported_schema, asserted_keys)

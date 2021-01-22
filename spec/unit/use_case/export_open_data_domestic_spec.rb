@@ -341,6 +341,10 @@ describe UseCase::ExportOpenDataDomestic do
       it "returns the BUILT_FORM in the CSV" do
         expect(@table.by_col["BUILT_FORM"]).to eq(["Semi-Detached", "Semi-Detached", "Detached"])
       end
+
+      it "returns the EXTENSION_COUNT in the CSV" do
+        expect(@table.by_col["EXTENSION_COUNT"]).to eq(["0", "0", nil])
+      end
     end
   end
 end

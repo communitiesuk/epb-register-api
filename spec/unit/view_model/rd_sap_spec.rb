@@ -286,7 +286,7 @@ describe ViewModel::RdSapWrapper do
       mainheat_description: "Description7, Description8",
       mainheat_energy_eff: "N/A",
       mainheat_env_eff: "N/A",
-
+      extensions_count: "0",
     }.freeze
 
   it "should read the appropriate values from the XML doc using the to_hash method" do

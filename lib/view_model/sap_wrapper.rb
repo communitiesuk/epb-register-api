@@ -182,6 +182,7 @@ module ViewModel
         unheated_corridor_length: @view_model.unheated_corridor_length,
         built_form: @view_model.built_form,
         mainheat_description: @view_model.all_main_heating_descriptions.join(", "),
+        extensions_count: @view_model.respond_to?(:extensions_count) ? @view_model.extensions_count : nil,
       }
     end
 

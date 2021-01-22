@@ -247,6 +247,7 @@
         <SAP:SAP-Property-Details>
           <SAP:Property-Type>2</SAP:Property-Type>
           <SAP:Multiple-Glazed-Proportion>50</SAP:Multiple-Glazed-Proportion>
+          <SAP:Extensions-Count>0</SAP:Extensions-Count>
           <SAP:Built-Form>1</SAP:Built-Form>
           <SAP:Living-Area>24.78</SAP:Living-Area>
           <SAP:Orientation>0</SAP:Orientation>

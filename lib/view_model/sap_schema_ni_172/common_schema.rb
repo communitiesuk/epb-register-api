@@ -410,6 +410,10 @@ module ViewModel
         xpath(%w[Unheated-Corridor-Length])
       end
 
+      def extensions_count
+        xpath(%w[Extensions-Count])
+      end
+
     private
 
       def convert_to_big_decimal(node)
