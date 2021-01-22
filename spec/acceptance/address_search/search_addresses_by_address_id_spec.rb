@@ -125,6 +125,19 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
           ],
         )
       end
+
+      describe "searching by a cancelled rrn" do
+        let(:response) do
+          JSON.parse(
+            address_search_by_id("RRN-0000-0000-0000-0000-0003").body,
+            symbolize_names: true,
+          )
+        end
+
+        it "allows looking up an address by a not for issue rrn" do
+          expect(response[:data][:addresses][0][:line1]).to eq "1 Some Street"
+        end
+      end
     end
 
     describe "searching using an older address id" do

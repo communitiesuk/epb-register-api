@@ -32,6 +32,8 @@ module Gateway
                a.assessment_id,
                date_of_expiry,
                date_registered,
+               cancelled_at,
+               not_for_issue_at,
                type_of_assessment,
                linked_assessment_id
                #{ranking_sql if building_name_number}
@@ -101,6 +103,8 @@ module Gateway
           assessment_id,
           date_of_expiry,
           date_registered,
+          cancelled_at,
+          not_for_issue_at,
           address_line1,
           address_line2,
           address_line3,
@@ -110,9 +114,8 @@ module Gateway
           address_id,
           type_of_assessment
         FROM assessments
-        WHERE cancelled_at IS NULL
-          AND not_for_issue_at IS NULL
-          AND (assessment_id = $1 OR address_id = $2)
+        WHERE assessment_id = $1
+           OR address_id = $2
         ORDER BY assessment_id
       SQL
 
@@ -166,15 +169,14 @@ module Gateway
                a.assessment_id,
                date_of_expiry,
                date_registered,
+               cancelled_at,
+               not_for_issue_at,
                type_of_assessment,
                linked_assessment_id
         FROM assessments a
                LEFT JOIN linked_assessments la ON a.assessment_id = la.assessment_id
                INNER JOIN assessments_address_id aai on a.assessment_id = aai.assessment_id
-        WHERE
-          cancelled_at IS NULL
-        AND not_for_issue_at IS NULL
-        AND (
+        WHERE (
               LOWER(town) LIKE $2
               OR
               LOWER(address_line2) LIKE $2
@@ -282,9 +284,13 @@ module Gateway
           res = results[entry]
           next if res["assessment_id"].nil?
 
+          status = update_expiry_and_status(res)
+
+          next if %w[NOT_FOR_ISSUE CANCELLED].include? status
+
           {
             assessmentId: res["assessment_id"],
-            assessmentStatus: update_expiry_and_status(res),
+            assessmentStatus: status,
             assessmentType: res["type_of_assessment"],
           }
         end

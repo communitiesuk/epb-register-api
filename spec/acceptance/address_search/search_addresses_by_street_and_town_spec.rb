@@ -218,78 +218,66 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
       end
 
       context "with a cancelled assessment" do
-        it "returns the expected amount of addresses" do
-          response =
-            JSON.parse(
-              assertive_get(
-                "/api/search/addresses?street=Some%20Street&town=Post-Town1",
-                [200],
-                true,
-                {},
-                %w[address:search],
+        let(:response) do
+          JSON.parse(
+            assertive_get(
+              "/api/search/addresses?street=Some%20Street&town=Post-Town1",
+              [200],
+              true,
+              {},
+              %w[address:search],
               ).body,
-              symbolize_names: true,
+            symbolize_names: true,
             )
+        end
 
-          expect(response[:data][:addresses].length).to eq 1
-
+        before do
           update_assessment_status(
             assessment_id: "0000-0000-0000-0000-0000",
             assessment_status_body: { status: "CANCELLED" },
             auth_data: { scheme_ids: [scheme_id] },
             accepted_responses: [200],
-          )
-
-          response =
-            JSON.parse(
-              assertive_get(
-                "/api/search/addresses?street=Some%20Street&town=Post-Town1",
-                [200],
-                true,
-                {},
-                %w[address:search],
-              ).body,
-              symbolize_names: true,
             )
-          expect(response[:data][:addresses].length).to eq 0
+        end
+
+        it "returns the address" do
+          expect(response[:data][:addresses].length).to eq 1
+        end
+
+        it "does not include the assessment in existing assessments" do
+          expect(response[:data][:addresses][0][:existingAssessments]).to be_empty
         end
       end
 
       context "with a not-for-issue assessment" do
-        it "returns the expected amount of addresses" do
-          response =
-            JSON.parse(
-              assertive_get(
-                "/api/search/addresses?street=Some%20Street&town=Post-Town1",
-                [200],
-                true,
-                {},
-                %w[address:search],
-              ).body,
-              symbolize_names: true,
-            )
+        let(:response) do
+          JSON.parse(
+            assertive_get(
+              "/api/search/addresses?street=Some%20Street&town=Post-Town1",
+              [200],
+              true,
+              {},
+              %w[address:search],
+            ).body,
+            symbolize_names: true,
+          )
+        end
 
-          expect(response[:data][:addresses].length).to eq 1
-
+        before do
           update_assessment_status(
             assessment_id: "0000-0000-0000-0000-0000",
             assessment_status_body: { status: "NOT_FOR_ISSUE" },
             auth_data: { scheme_ids: [scheme_id] },
             accepted_responses: [200],
           )
+        end
 
-          response =
-            JSON.parse(
-              assertive_get(
-                "/api/search/addresses?street=Some%20Street&town=Post-Town1",
-                [200],
-                true,
-                {},
-                %w[address:search],
-              ).body,
-              symbolize_names: true,
-            )
-          expect(response[:data][:addresses].length).to eq 0
+        it "returns the address" do
+          expect(response[:data][:addresses].length).to eq 1
+        end
+
+        it "does not include the assessment in existing assessments" do
+          expect(response[:data][:addresses][0][:existingAssessments]).to be_empty
         end
       end
 
