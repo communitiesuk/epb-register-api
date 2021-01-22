@@ -2,7 +2,7 @@ module Helper
   class EnergyBandCalculator
     def self.domestic(number)
       case number
-      when number <= 20
+      when proc { |n| n <= 20 }
         "g"
       when 21..38
         "f"
@@ -21,7 +21,7 @@ module Helper
 
     def self.commercial(number)
       case number
-      when number <= 0
+      when proc { |n| n <= 0 }
         "a+"
       when 0..25
         "a"
