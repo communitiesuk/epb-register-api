@@ -1,17 +1,17 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    activemodel (6.0.3.4)
-      activesupport (= 6.0.3.4)
-    activerecord (6.0.3.4)
-      activemodel (= 6.0.3.4)
-      activesupport (= 6.0.3.4)
-    activesupport (6.0.3.4)
+    activemodel (6.1.1)
+      activesupport (= 6.1.1)
+    activerecord (6.1.1)
+      activemodel (= 6.1.1)
+      activesupport (= 6.1.1)
+    activesupport (6.1.1)
       concurrent-ruby (~> 1.0, >= 1.0.2)
-      i18n (>= 0.7, < 2)
-      minitest (~> 5.1)
-      tzinfo (~> 1.1)
-      zeitwerk (~> 2.2, >= 2.2.2)
+      i18n (>= 1.6, < 2)
+      minitest (>= 5.1)
+      tzinfo (~> 2.0)
+      zeitwerk (~> 2.3)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
     ast (2.4.1)
@@ -32,7 +32,7 @@ GEM
     aws-sigv4 (1.2.2)
       aws-eventstream (~> 1, >= 1.0.2)
     coderay (1.1.3)
-    concurrent-ruby (1.1.7)
+    concurrent-ruby (1.1.8)
     crack (0.4.4)
     database_cleaner (1.8.5)
     debase (0.2.4.1)
@@ -47,7 +47,7 @@ GEM
       ruby2_keywords
     geocoder (1.6.4)
     hashdiff (1.0.1)
-    i18n (1.8.5)
+    i18n (1.8.7)
       concurrent-ruby (~> 1.0)
     jmespath (1.4.0)
     json-schema (2.8.1)
@@ -133,14 +133,14 @@ GEM
     rubocop-rspec (1.42.0)
       rubocop (>= 0.87.0)
     ruby-progressbar (1.10.1)
-    ruby2_keywords (0.0.2)
+    ruby2_keywords (0.0.4)
     rubyzip (2.3.0)
     sinatra (2.1.0)
       mustermann (~> 1.0)
       rack (~> 2.2)
       rack-protection (= 2.1.0)
       tilt (~> 2.0)
-    sinatra-activerecord (2.0.21)
+    sinatra-activerecord (2.0.22)
       activerecord (>= 4.1)
       sinatra (>= 1.0)
     sinatra-contrib (2.1.0)
@@ -150,10 +150,9 @@ GEM
       sinatra (= 2.1.0)
       tilt (~> 2.0)
     sinatra-cross_origin (0.4.0)
-    thread_safe (0.3.6)
     tilt (2.0.10)
-    tzinfo (1.2.8)
-      thread_safe (~> 0.1)
+    tzinfo (2.0.4)
+      concurrent-ruby (~> 1.0)
     unicode-display_width (1.7.0)
     unleash (3.2.1)
       murmurhash3 (~> 0.1.6)
@@ -185,7 +184,7 @@ DEPENDENCIES
   rubocop-govuk (~> 3.17)!
   rubyzip (~> 2.3.0)!
   sinatra (~> 2.0, >= 2.0.7)!
-  sinatra-activerecord (~> 2.0.21)!
+  sinatra-activerecord (~> 2.0.22)!
   sinatra-contrib!
   sinatra-cross_origin (~> 0.4.0)!
   unleash (~> 3.2.1)!
