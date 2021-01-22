@@ -17,7 +17,7 @@ describe ViewModel::SapWrapper do
       different_fields: {
         address_id: "LPRN-0000000000",
         heat_loss_corridor: nil,
-        c        address: {
+        address: {
           address_id: "LPRN-0000000000",
           address_line1: "1 Some Street",
           address_line2: "",

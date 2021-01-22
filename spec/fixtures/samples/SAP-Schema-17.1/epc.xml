@@ -240,6 +240,7 @@
           </SAP-Ventilation>
           <SAP-Flat-Details>
             <Level>1</Level>
+            <Unheated-Corridor-Length>10</Unheated-Corridor-Length>
           </SAP-Flat-Details>
         </SAP-Property-Details>
     </SAP2012-Data>
