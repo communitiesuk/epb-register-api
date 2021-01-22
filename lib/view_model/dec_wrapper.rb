@@ -52,7 +52,7 @@ module ViewModel
           date: @view_model.current_assessment_date,
           energy_efficiency_rating: @view_model.energy_efficiency_rating,
           energy_efficiency_band:
-            get_energy_rating_band(@view_model.energy_efficiency_rating.to_i),
+            Helper::EnergyBandCalculator.commercial(@view_model.energy_efficiency_rating.to_i),
           heating_co2: @view_model.current_heating_co2,
           electricity_co2: @view_model.current_electricity_co2,
           renewables_co2: @view_model.current_renewables_co2,
@@ -61,7 +61,7 @@ module ViewModel
           date: @view_model.year1_assessment_date,
           energy_efficiency_rating: @view_model.year1_energy_efficiency_rating,
           energy_efficiency_band:
-            get_energy_rating_band(
+            Helper::EnergyBandCalculator.commercial(
               @view_model.year1_energy_efficiency_rating.to_i,
             ),
           heating_co2: @view_model.year1_heating_co2,
@@ -72,7 +72,7 @@ module ViewModel
           date: @view_model.year2_assessment_date,
           energy_efficiency_rating: @view_model.year2_energy_efficiency_rating,
           energy_efficiency_band:
-            get_energy_rating_band(
+            Helper::EnergyBandCalculator.commercial(
               @view_model.year2_energy_efficiency_rating.to_i,
             ),
           heating_co2: @view_model.year2_heating_co2,
@@ -115,25 +115,6 @@ module ViewModel
       }
     end
 
-    def get_energy_rating_band(number)
-      case number
-      when 0..25
-        "a"
-      when 26..50
-        "b"
-      when 51..75
-        "c"
-      when 76..100
-        "d"
-      when 101..125
-        "e"
-      when 126..150
-        "f"
-      else
-        "g"
-      end
-    end
-
     # create hash for data requested by Open Data Communities
     # hash keys will be turned into columns for expected csv
     def to_report
@@ -149,7 +130,7 @@ module ViewModel
         yr1_operational_rating: @view_model.year1_energy_efficiency_rating,
         yr2_operational_rating: @view_model.year2_energy_efficiency_rating,
         energy_efficiency_band:
-          get_energy_rating_band(@view_model.energy_efficiency_rating.to_i)
+          Helper::EnergyBandCalculator.commercial(@view_model.energy_efficiency_rating.to_i)
             .upcase,
         electric_co2: @view_model.current_electricity_co2,
         heating_co2: @view_model.current_heating_co2,

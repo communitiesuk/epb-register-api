@@ -26,27 +26,6 @@ module ViewModel
       end
     end
 
-    def get_energy_rating_band(number)
-      case number
-      when -Float::INFINITY...0
-        "a+"
-      when 0..25
-        "a"
-      when 26..50
-        "b"
-      when 51..75
-        "c"
-      when 76..100
-        "d"
-      when 101..125
-        "e"
-      when 126..150
-        "f"
-      else
-        "g"
-      end
-    end
-
     def type
       :CEPC
     end
@@ -80,10 +59,10 @@ module ViewModel
         related_rrn: @view_model.related_rrn,
         new_build_rating: @view_model.new_build_rating,
         new_build_band:
-          get_energy_rating_band(@view_model.new_build_rating.to_i),
+          Helper::EnergyBandCalculator.commercial(@view_model.new_build_rating.to_i),
         existing_build_rating: @view_model.existing_build_rating,
         existing_build_band:
-          get_energy_rating_band(@view_model.existing_build_rating.to_i),
+          Helper::EnergyBandCalculator.commercial(@view_model.existing_build_rating.to_i),
         current_energy_efficiency_rating: @view_model.energy_efficiency_rating,
         energy_efficiency_rating: @view_model.energy_efficiency_rating,
         assessor: {
@@ -100,7 +79,7 @@ module ViewModel
         },
         related_party_disclosure: @view_model.epc_related_party_disclosure,
         current_energy_efficiency_band:
-          get_energy_rating_band(@view_model.energy_efficiency_rating.to_i),
+          Helper::EnergyBandCalculator.commercial(@view_model.energy_efficiency_rating.to_i),
         property_type: @view_model.property_type,
         building_complexity: @view_model.building_level,
       }
@@ -124,7 +103,7 @@ module ViewModel
         postcode: @view_model.postcode,
         asset_rating: @view_model.energy_efficiency_rating,
         asset_rating_band:
-          get_energy_rating_band(@view_model.energy_efficiency_rating.to_i),
+          Helper::EnergyBandCalculator.commercial(@view_model.energy_efficiency_rating.to_i),
         property_type: @view_model.property_type,
         transaction_type: @view_model.transaction_type,
         new_build_benchmark: @view_model.new_build_rating,

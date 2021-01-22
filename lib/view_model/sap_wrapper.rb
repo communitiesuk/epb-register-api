@@ -49,25 +49,6 @@ module ViewModel
       end
     end
 
-    def get_energy_rating_band(number)
-      case number
-      when 1..20
-        "g"
-      when 21..38
-        "f"
-      when 39..54
-        "e"
-      when 55..68
-        "d"
-      when 69..80
-        "c"
-      when 81..91
-        "b"
-      else
-        "a"
-      end
-    end
-
     def type
       @view_model.type_of_assessment.to_sym
     end
@@ -112,7 +93,7 @@ module ViewModel
         },
         current_carbon_emission: @view_model.current_carbon_emission,
         current_energy_efficiency_band:
-          get_energy_rating_band(@view_model.current_energy_rating),
+          Helper::EnergyBandCalculator.domestic(@view_model.current_energy_rating),
         current_energy_efficiency_rating: @view_model.current_energy_rating,
         dwelling_type: @view_model.dwelling_type,
         estimated_energy_cost: estimated_energy_cost,
@@ -135,7 +116,7 @@ module ViewModel
         lighting_cost_potential: @view_model.lighting_cost_potential,
         potential_carbon_emission: @view_model.potential_carbon_emission,
         potential_energy_efficiency_band:
-          get_energy_rating_band(@view_model.potential_energy_rating),
+          Helper::EnergyBandCalculator.domestic(@view_model.potential_energy_rating),
         potential_energy_efficiency_rating: @view_model.potential_energy_rating,
         potential_energy_saving:
           Helper::EstimatedCostPotentialSavingHelper.new.potential_saving(
@@ -151,7 +132,7 @@ module ViewModel
         recommended_improvements:
           @view_model.improvements.map do |improvement|
             improvement[:energy_performance_band_improvement] =
-              get_energy_rating_band(
+              Helper::EnergyBandCalculator.domestic(
                 improvement[:energy_performance_rating_improvement],
               )
             improvement
