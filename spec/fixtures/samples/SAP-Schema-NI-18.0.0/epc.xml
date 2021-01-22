@@ -215,6 +215,7 @@
             </Main-Heating-Details>
           </SAP-Heating>
             <Property-Type>0</Property-Type>
+            <Built-Form>1</Built-Form>
             <Living-Area>0</Living-Area>
             <Orientation>0</Orientation>
             <Conservatory-Type>1</Conservatory-Type>

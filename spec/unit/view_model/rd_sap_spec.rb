@@ -282,7 +282,7 @@ describe ViewModel::RdSapWrapper do
       lighting_energy_efficiency_rating: "0",
       lighting_environmental_efficiency_rating: "0",
       photovoltaic_roof_area_percent: "0",
-
+      built_form: "Semi-Detached",
     }.freeze
 
   it "should read the appropriate values from the XML doc using the to_hash method" do

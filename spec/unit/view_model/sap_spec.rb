@@ -1189,6 +1189,7 @@ describe ViewModel::SapWrapper do
     photovoltaic_roof_area_percent: nil,
     heat_loss_corridor: "2",
     wind_turbine_count: "0",
+    built_form: "Detached",
     unheated_corridor_length: "10",
   }.freeze
   it "should read the appropriate values from the XML doc" do

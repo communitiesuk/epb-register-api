@@ -159,6 +159,7 @@ module ViewModel
         lighting_energy_efficiency_rating: @view_model.lighting_energy_efficiency_rating,
         lighting_environmental_efficiency_rating: @view_model.lighting_environmental_efficiency_rating,
         photovoltaic_roof_area_percent: @view_model.photovoltaic_roof_area_percent,
+        built_form: @view_model.built_form,
       }
 
     end

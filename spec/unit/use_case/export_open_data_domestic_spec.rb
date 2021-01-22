@@ -337,6 +337,10 @@ describe UseCase::ExportOpenDataDomestic do
       it "returns the PHOTO_SUPPLY in the CSV" do
         expect(@table.by_col["PHOTO_SUPPLY"]).to eq(["0", "0", nil])
       end
+
+      it "returns the BUILT_FORM in the CSV" do
+        expect(@table.by_col["BUILT_FORM"]).to eq(["Semi-Detached", "Semi-Detached", "Detached"])
+      end
     end
   end
 end

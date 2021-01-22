@@ -385,6 +385,11 @@ module ViewModel
         nil
       end
 
+      def built_form
+        built_form_value = xpath(%w[Built-Form])
+        Helper::XmlEnumsToOutput.xml_value_to_string(built_form_value)
+      end
+
       def heat_loss_corridor
         xpath(%w[Heat-Loss-Corridor])
       end

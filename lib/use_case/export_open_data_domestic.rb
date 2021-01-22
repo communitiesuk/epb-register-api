@@ -150,6 +150,7 @@ module UseCase
               LIGHTING_ENERGY_EFF: hash[:lighting_energy_efficiency_rating],
               LIGHTING_ENV_EFF: hash[:lighting_environmental_efficiency_rating],
               PHOTO_SUPPLY: hash[:photovoltaic_roof_area_percent],
+              BUILT_FORM: hash[:built_form],
             },
           )
         end

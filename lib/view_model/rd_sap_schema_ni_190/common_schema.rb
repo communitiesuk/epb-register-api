@@ -422,6 +422,11 @@ module ViewModel
         xpath(%w[Photovoltaic-Supply Percent-Roof-Area])
       end
 
+      def built_form
+        built_form_value = xpath(%w[Built-Form])
+        Helper::XmlEnumsToOutput.xml_value_to_string(built_form_value)
+      end
+
     private
 
       def convert_to_big_decimal(node)

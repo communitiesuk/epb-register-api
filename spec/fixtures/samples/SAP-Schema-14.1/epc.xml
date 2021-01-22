@@ -219,6 +219,7 @@
             <Secondary-Heating-Category>1</Secondary-Heating-Category>
           </SAP-Heating>
           <Property-Type>2</Property-Type>
+          <Built-Form>1</Built-Form>
           <Living-Area>24.78</Living-Area>
           <Orientation>0</Orientation>
           <Conservatory-Type>1</Conservatory-Type>
