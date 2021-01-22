@@ -249,6 +249,7 @@
           <SAP-Flat-Details>
             <Level>1</Level>
           </SAP-Flat-Details>
+          <Unheated-Corridor-Length>10</Unheated-Corridor-Length>
         </SAP-Property-Details>
       </SAP05-Data>
       <PDF/>

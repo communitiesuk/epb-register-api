@@ -384,6 +384,10 @@ module ViewModel
         nil
       end
 
+      def unheated_corridor_length
+        nil
+      end
+
       private
 
       def convert_to_big_decimal(node)

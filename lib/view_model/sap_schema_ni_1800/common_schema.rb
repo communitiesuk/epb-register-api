@@ -453,7 +453,7 @@ module ViewModel
       end
 
       def unheated_corridor_length
-        xpath(%w[Unheated-Corridor-Length])
+        nil
       end
 
     private

@@ -247,6 +247,7 @@
             <Ventilation-Type>8</Ventilation-Type>
           </SAP-Ventilation>
           <SAP-Flat-Details>
+            <Unheated-Corridor-Length>10</Unheated-Corridor-Length>
             <Level>1</Level>
           </SAP-Flat-Details>
         </SAP-Property-Details>

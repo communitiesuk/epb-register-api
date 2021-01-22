@@ -198,7 +198,7 @@ module ViewModel
         photovoltaic_roof_area_percent: @view_model.photovoltaic_roof_area_percent,
         heat_loss_corridor: @view_model.heat_loss_corridor,
         wind_turbine_count: @view_model.wind_turbine_count,
-
+        unheated_corridor_length: @view_model.unheated_corridor_length,
       }
     end
 

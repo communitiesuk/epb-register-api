@@ -436,6 +436,7 @@
           <SAP:SAP-Flat-Details>
             <SAP:Level>1</SAP:Level>
               <SAP:Heat-Loss-Corridor>2</SAP:Heat-Loss-Corridor>
+              <SAP:Unheated-Corridor-Length>10</SAP:Unheated-Corridor-Length>
           </SAP:SAP-Flat-Details>
           <SAP:Design-Water-Use>1</SAP:Design-Water-Use>
         </SAP:SAP-Property-Details>

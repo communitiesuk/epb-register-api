@@ -1,14 +1,14 @@
 require_relative "xml_view_test_helper"
 
 describe ViewModel::SapWrapper do
-  # @TODO refactor suuport schema so the same hash isn't re-used 21 times
+  # @TODO refactor support schema so the same hash isn't re-used 21 times
   # You should only need to add to this list to test new SAP schemas
   supported_schema = [
     {
       schema_name: "SAP-Schema-18.0.0",
       xml: Samples.xml("SAP-Schema-18.0.0"),
       unsupported_fields: [],
-      different_fields: {  heat_loss_corridor:nil,},
+      different_fields: {  heat_loss_corridor:nil, unheated_corridor_length: nil,},
     },
     {
       schema_name: "SAP-Schema-17.1",
@@ -17,7 +17,7 @@ describe ViewModel::SapWrapper do
       different_fields: {
         address_id: "LPRN-0000000000",
         heat_loss_corridor: nil,
-        address: {
+        c        address: {
           address_id: "LPRN-0000000000",
           address_line1: "1 Some Street",
           address_line2: "",
@@ -36,6 +36,7 @@ describe ViewModel::SapWrapper do
       different_fields: {
         address_id: "LPRN-0000000000",
         heat_loss_corridor:nil,
+        unheated_corridor_length: nil,
         address: {
           address_id: "LPRN-0000000000",
           address_line1: "1 Some Street",
@@ -472,6 +473,7 @@ describe ViewModel::SapWrapper do
       different_fields: {
         heat_loss_corridor: nil,
         multiple_glazed_proportion: nil,
+        unheated_corridor_length: nil,
         heat_demand: {
           current_space_heating_demand: 30.0,
           current_water_heating_demand: 60.0,
@@ -518,6 +520,7 @@ describe ViewModel::SapWrapper do
       different_fields: {
         multiple_glazed_proportion: nil,
         heat_loss_corridor: nil,
+        unheated_corridor_length: nil,
         heat_demand: {
           current_space_heating_demand: 30.0,
           current_water_heating_demand: 60.0,
@@ -574,6 +577,7 @@ describe ViewModel::SapWrapper do
       different_fields: {
         multiple_glazed_proportion: nil,
         heat_loss_corridor: nil,
+        unheated_corridor_length: nil,
         heat_demand: {
           current_space_heating_demand: 30.0,
           current_water_heating_demand: 60.0,
@@ -1184,8 +1188,8 @@ describe ViewModel::SapWrapper do
     lighting_environmental_efficiency_rating: "0",
     photovoltaic_roof_area_percent: nil,
     heat_loss_corridor: "2",
-    wind_turbine_count: "0"
-    # unheated_corridor_length: "10",
+    wind_turbine_count: "0",
+    unheated_corridor_length: "10",
   }.freeze
   it "should read the appropriate values from the XML doc" do
     test_xml_doc(supported_schema, asserted_keys)

@@ -393,6 +393,10 @@ module ViewModel
         xpath(%w[Wind-Turbines-Count])
       end
 
+      def unheated_corridor_length
+        xpath(%w[Unheated-Corridor-Length])
+      end
+
 
     private
 

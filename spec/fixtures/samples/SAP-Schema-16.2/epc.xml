@@ -356,6 +356,7 @@
                   <SAP:Total-Floor-Area>69.64</SAP:Total-Floor-Area>
                   <SAP:Storey-Height>2.4</SAP:Storey-Height>
                   <SAP:Heat-Loss-Area>3.67</SAP:Heat-Loss-Area>
+                  <SAP:Unheated-Corridor-Length>10</SAP:Unheated-Corridor-Length>
                   <SAP:U-Value>0.23</SAP:U-Value>
                 </SAP:SAP-Floor-Dimension>
               </SAP:SAP-Floor-Dimensions>

@@ -310,6 +310,7 @@
             <HIP:Heat-Loss-Corridor>0</HIP:Heat-Loss-Corridor>
             <HIP:Level>1</HIP:Level>
             <HIP:Top-Storey>N</HIP:Top-Storey>
+            <HIP:Unheated-Corridor-Length>10</HIP:Unheated-Corridor-Length>
           </HIP:SAP-Flat-Details>
         </HIP:SAP-Property-Details>
       </HIP:SAP-Data>

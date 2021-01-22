@@ -258,7 +258,7 @@
             <HIP:Heat-Loss-Corridor>0</HIP:Heat-Loss-Corridor>
             <HIP:Level>1</HIP:Level>
             <HIP:Top-Storey>N</HIP:Top-Storey>
-
+            <HIP:Unheated-Corridor-Length>10</HIP:Unheated-Corridor-Length>
           </HIP:SAP-Flat-Details>
           <HIP:Open-Fireplaces-Count>0</HIP:Open-Fireplaces-Count>
         </HIP:SAP-Property-Details>
