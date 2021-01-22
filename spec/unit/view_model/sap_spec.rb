@@ -1191,6 +1191,7 @@ describe ViewModel::SapWrapper do
     wind_turbine_count: "0",
     built_form: "Detached",
     unheated_corridor_length: "10",
+    mainheat_description: "Thermostat, Thermostat",
   }.freeze
   it "should read the appropriate values from the XML doc" do
     test_xml_doc(supported_schema, asserted_keys)

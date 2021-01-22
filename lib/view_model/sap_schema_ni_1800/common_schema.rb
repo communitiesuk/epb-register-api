@@ -452,6 +452,10 @@ module ViewModel
         nil
       end
 
+      def all_main_heating_descriptions
+        @xml_doc.search("Main-Heating-Controls/Description").map(&:content)
+      end
+
       def unheated_corridor_length
         nil
       end

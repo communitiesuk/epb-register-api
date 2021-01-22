@@ -181,6 +181,7 @@ module ViewModel
         wind_turbine_count: @view_model.wind_turbine_count,
         unheated_corridor_length: @view_model.unheated_corridor_length,
         built_form: @view_model.built_form,
+        mainheat_description: @view_model.all_main_heating_descriptions.join(", "),
       }
     end
 

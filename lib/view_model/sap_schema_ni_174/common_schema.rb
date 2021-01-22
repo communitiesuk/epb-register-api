@@ -231,6 +231,10 @@ module ViewModel
         nil
       end
 
+      def all_main_heating_descriptions
+        @xml_doc.search("Main-Heating-Controls/Description").map(&:content)
+      end
+
       def status
         date_of_expiry < Time.now ? "EXPIRED" : "ENTERED"
       end
@@ -380,6 +384,7 @@ module ViewModel
         nil
       end
 
+
       def unheated_corridor_length
         nil
       end
@@ -388,6 +393,7 @@ module ViewModel
         built_form_value = xpath(%w[Built-Form])
         Helper::XmlEnumsToOutput.xml_value_to_string(built_form_value)
       end
+
 
     private
 

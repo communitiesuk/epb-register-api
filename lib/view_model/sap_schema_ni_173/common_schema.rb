@@ -388,6 +388,10 @@ module ViewModel
         built_form_value = xpath(%w[Built-Form])
         Helper::XmlEnumsToOutput.xml_value_to_string(built_form_value)
       end
+      def all_main_heating_descriptions
+        @xml_doc.search("Main-Heating-Controls/Description").map(&:content)
+      end
+
 
     private
 

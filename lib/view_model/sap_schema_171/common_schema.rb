@@ -393,6 +393,10 @@ module ViewModel
         Helper::XmlEnumsToOutput.xml_value_to_string(built_form_value)
       end
 
+      def all_main_heating_descriptions
+        @xml_doc.search("Main-Heating-Controls/Description").map(&:content)
+      end
+
       private
 
       def convert_to_big_decimal(node)

@@ -291,6 +291,7 @@ module ViewModel
         end
       end
 
+
       def floor_heat_loss
         xpath(%w[Floor-Heat-Loss])
       end
@@ -456,11 +457,14 @@ module ViewModel
         nil
       end
 
+
       def heat_loss_corridor
         nil
       end
 
-
+      def all_main_heating_descriptions
+        @xml_doc.search("Main-Heating-Controls/Description").map(&:content)
+      end
 
       private
 

@@ -77,6 +77,11 @@ module ViewModel
 
       def address_id
         "LPRN-" + xpath(%w[UPRN])
+
+      end
+
+      def all_main_heating_descriptions
+        @xml_doc.search("Main-Heating-Controls/Description").map(&:content)
       end
 
       def date_of_expiry
@@ -237,6 +242,8 @@ module ViewModel
         end
       end
 
+
+
       def status
         date_of_expiry < Time.now ? "EXPIRED" : "ENTERED"
       end
@@ -244,6 +251,7 @@ module ViewModel
       def country_code
         xpath(%w[Country-Code])
       end
+
 
       def main_fuel_type
         xpath(%w[Main-Fuel-Type])

@@ -282,6 +282,10 @@ module ViewModel
         @xml_doc.search("Hot-Water/Description").map(&:content)
       end
 
+      def all_main_heating_energy_efficiency
+        @xml_doc.search("Main-Heating/Energy-Efficiency-Rating").map(&:content)
+      end
+
       def all_lighting_descriptions
         @xml_doc.search("Lighting/Description").map(&:content)
       end

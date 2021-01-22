@@ -32,6 +32,9 @@ module ViewModel
     end
 
     def to_hash
+
+      all_main_heating_energy_efficiency = @view_model.all_main_heating_energy_efficiency
+
       estimated_energy_cost =
         Helper::EstimatedCostPotentialSavingHelper.new.estimated_cost(
           @view_model.heating_cost_current,
@@ -160,12 +163,22 @@ module ViewModel
         lighting_environmental_efficiency_rating: @view_model.lighting_environmental_efficiency_rating,
         photovoltaic_roof_area_percent: @view_model.photovoltaic_roof_area_percent,
         built_form: @view_model.built_form,
+        mainheat_description: @view_model.all_main_heating_descriptions.join(", "),
+        mainheat_energy_eff: energy_rating_string(all_main_heating_energy_efficiency[0]),
+        mainheat_env_eff: energy_rating_string(all_main_heating_energy_efficiency[1]),
       }
 
     end
 
     def to_report
       { rrn: @view_model.assessment_id }
+    end
+
+    # @TODO Move method to helper class
+    def energy_rating_string(input)
+      number = input.to_i
+      ratings = ["N/A", "Very Good", "Good", "Average", "Poor", "Very Poor"]
+      number > ratings.length ? "N/A" : ratings[number]
     end
 
     def get_view_model
