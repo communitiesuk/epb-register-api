@@ -2,14 +2,6 @@ require "openssl"
 require "csv"
 require "zip"
 
-desc "Truncate AddressBase data"
-
-INSERT_BATCH_SIZE = 20000
-
-task :truncate_address_base do
-  ActiveRecord::Base.connection.execute("TRUNCATE TABLE address_base RESTART IDENTITY CASCADE")
-end
-
 desc "Import AddressBase data"
 
 task :import_address_base do
@@ -18,6 +10,8 @@ task :import_address_base do
   loader = Zeitwerk::Loader.new
   loader.push_dir("#{__dir__}/../")
   loader.setup
+
+  INSERT_BATCH_SIZE = 10000
 
   if ENV['file_template'].nil?
     abort("Please set the file_template environment variable")
@@ -36,9 +30,14 @@ task :import_address_base do
   ActiveRecord::Base.logger = nil
   db = ActiveRecord::Base.connection
 
+  db.drop_table :address_base_tmp, if_exists: true
+  puts "[#{Time.now}] Dropped temporary address_base table"
+
+  db.drop_table :address_base_legacy, if_exists: true
+  puts "[#{Time.now}] Dropped legacy address_base table"
+
   puts "[#{Time.now}] Starting address base import"
 
-  db.exec_query("DROP TABLE IF EXISTS address_base_tmp")
   db.create_table "address_base_tmp", primary_key: "uprn", id: :string, force: :cascade do |t|
     t.string "postcode"
     t.string "address_line1"
@@ -47,7 +46,6 @@ task :import_address_base do
     t.string "address_line4"
     t.string "town"
   end
-
   puts "[#{Time.now}] Created empty address_base_tmp table"
 
   storage_config_reader = Gateway::StorageConfigurationReader.new
@@ -169,7 +167,4 @@ task :import_address_base do
 
   db.rename_table :address_base_tmp, :address_base
   puts "[#{Time.now}] Switched address_base_tmp as new address_base table"
-
-  db.drop_table :address_base_legacy
-  puts "[#{Time.now}] Dropped previous address_base table"
 end
