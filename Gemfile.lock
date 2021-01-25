@@ -63,7 +63,7 @@ GEM
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
     newrelic_rpm (6.15.0)
-    nokogiri (1.11.0)
+    nokogiri (1.11.1)
       mini_portile2 (~> 2.5.0)
       racc (~> 1.4)
     oauth2 (1.4.4)
@@ -173,7 +173,7 @@ DEPENDENCIES
   geocoder (~> 1.6.4)!
   json-schema (~> 2.8)!
   newrelic_rpm (~> 6.15)!
-  nokogiri (~> 1.11.0)!
+  nokogiri (~> 1.11.1)!
   ougai (~> 1.9)!
   pg!
   prettier (~> 1.5.0)!
