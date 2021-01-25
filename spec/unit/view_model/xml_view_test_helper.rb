@@ -3,8 +3,6 @@ def test_xml_doc(supported_schema, asserted_keys, test_report = false)
     view_model =
       ViewModel::Factory.new.create(schema[:xml], schema[:schema_name], nil)
 
-    # test either to has or to report
-    view_model.class
     view_model = test_report ? view_model.to_report : view_model.to_hash
 
     asserted_keys.each do |key, value|
