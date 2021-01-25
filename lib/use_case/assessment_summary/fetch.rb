@@ -42,7 +42,10 @@ module UseCase
           )
 
         lodged_data = lodged_values.to_hash
-        lodged_data[:address_id] = assessment.to_hash[:address_id]
+        assessment_data = assessment.to_hash
+
+        lodged_data[:address_id] = assessment_data[:address_id]
+        lodged_data[:opt_out] = assessment_data[:opt_out]
 
         summary =
           case lodged_values.type
