@@ -11,7 +11,7 @@ task :import_address_base do
   loader.push_dir("#{__dir__}/../")
   loader.setup
 
-  INSERT_BATCH_SIZE = 10000
+  INSERT_BATCH_SIZE = 50000
 
   if ENV['file_template'].nil?
     abort("Please set the file_template environment variable")
