@@ -249,7 +249,6 @@ describe ViewModel::RdSapWrapper do
       tenure: "1",
       transaction_type: "1",
       total_floor_area: 1.0,
-      opt_out: false,
       status: "ENTERED",
       environmental_impact_current: "50",
       co2_emissions_current_per_floor_area: "0",

@@ -125,7 +125,6 @@ module ViewModel
         tenure: @view_model.tenure,
         transaction_type: @view_model.transaction_type,
         total_floor_area: @view_model.total_floor_area,
-        opt_out: false,
         status: @view_model.status,
         country_code: @view_model.country_code,
         environmental_impact_current: @view_model.environmental_impact_current,

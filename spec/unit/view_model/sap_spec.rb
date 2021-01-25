@@ -1171,7 +1171,6 @@ describe ViewModel::SapWrapper do
     related_party_disclosure_text: nil,
     tenure: "1",
     total_floor_area: 10.0,
-    opt_out: false,
     status: "ENTERED",
     environmental_impact_current: "50",
     co2_emissions_current_per_floor_area: "0",
