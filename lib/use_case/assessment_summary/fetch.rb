@@ -40,33 +40,32 @@ module UseCase
             lodged_xml_document[:schema_type],
             assessment_id,
           )
+        assessment_table_values = assessment.to_hash
 
-        lodged_data = lodged_values.to_hash
-        assessment_data = assessment.to_hash
-
-        lodged_data[:address_id] = assessment_data[:address_id]
-        lodged_data[:opt_out] = assessment_data[:opt_out]
+        summary_data = lodged_values.to_hash
+        summary_data[:address_id] = assessment_table_values[:address_id]
+        summary_data[:opt_out] = assessment_table_values[:opt_out]
 
         summary =
           case lodged_values.type
           when :AC_CERT
-            AcCertSupplement.new.add_data!(lodged_data)
+            AcCertSupplement.new.add_data!(summary_data)
           when :AC_REPORT
-            AcReportSupplement.new.add_data!(lodged_data)
+            AcReportSupplement.new.add_data!(summary_data)
           when :CEPC
-            CepcSupplement.new.add_data!(lodged_data)
+            CepcSupplement.new.add_data!(summary_data)
           when :CEPC_RR
-            CepcRrSupplement.new.add_data!(lodged_data)
+            CepcRrSupplement.new.add_data!(summary_data)
           when :DEC
-            DecSupplement.new.add_data!(lodged_data)
+            DecSupplement.new.add_data!(summary_data)
           when :DEC_RR
-            DecRrSupplement.new.add_data!(lodged_data)
+            DecRrSupplement.new.add_data!(summary_data)
           when :SAP
-            SapSupplement.new.add_data!(lodged_data)
+            SapSupplement.new.add_data!(summary_data)
           when :RdSAP
-            RdSapSupplement.new.add_data!(lodged_data)
+            RdSapSupplement.new.add_data!(summary_data)
           else
-            lodged_data
+            summary_data
           end
 
         summary
