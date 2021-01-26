@@ -723,6 +723,9 @@ class Samples
             roof_description: "Description2, Description3",
             roof_energy_eff: "0, 0",
             roof_env_eff: "0, 0",
+            walls_description: "Description0, Description1",
+            walls_energy_eff: "0, 0",
+            walls_env_eff: "0, 0",
 
           }
       end

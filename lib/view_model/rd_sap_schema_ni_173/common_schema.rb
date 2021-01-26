@@ -447,6 +447,18 @@ module ViewModel
         xpath(%w[Report-Type])
       end
 
+      def all_wall_descriptions
+        @xml_doc.search("Wall/Description").map(&:content)
+      end
+
+      def all_wall_energy_efficieny_rating
+        @xml_doc.search("Wall/Energy-Efficiency-Rating").map(&:content)
+      end
+
+      def all_wall_env_energy_efficieny_rating
+        @xml_doc.search("Wall/Environmental-Efficiency-Rating").map(&:content)
+      end
+
     private
 
       def convert_to_big_decimal(node)

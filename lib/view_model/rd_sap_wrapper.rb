@@ -186,7 +186,9 @@ module ViewModel
         roof_description:  @view_model.all_roof_descriptions.join(", "),
         roof_energy_eff: @view_model.all_roof_energy_efficieny_rating.join(", "),
         roof_env_eff: @view_model.all_roof_env_energy_efficieny_rating.join(", "),
-
+        walls_description: @view_model.all_wall_descriptions.join(", "),
+        walls_energy_eff: @view_model.all_wall_energy_efficieny_rating.join(", "),
+        walls_env_eff: @view_model.all_wall_env_energy_efficieny_rating.join(", "),
       }
     end
 
