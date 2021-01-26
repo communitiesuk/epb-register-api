@@ -718,6 +718,8 @@ class Samples
             mainheat_energy_eff: "N/A",
             mainheat_env_eff: "N/A",
             extensions_count: "0",
+            report_type: "2",
+            mainheatcont_description: "Description9, Description10",
           }
       end
     end

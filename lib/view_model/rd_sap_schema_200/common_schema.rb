@@ -509,6 +509,10 @@ module ViewModel
         xpath(%w[Extensions-Count])
       end
 
+      def report_type
+        xpath(%w[Report-Type])
+      end
+
     private
 
       def convert_to_big_decimal(node)

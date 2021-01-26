@@ -134,6 +134,7 @@ module ViewModel
     def to_report
       # TODO: change to ODC terms here
       all_main_heating_energy_efficiency = @view_model.all_main_heating_energy_efficiency
+
       { rrn: @view_model.assessment_id,
         type_of_assessment: "RdSAP",
         assessment_id: @view_model.assessment_id,
@@ -179,7 +180,11 @@ module ViewModel
         mainheat_description: @view_model.all_main_heating_descriptions.join(", "),
         mainheat_energy_eff: energy_rating_string(all_main_heating_energy_efficiency[0]),
         mainheat_env_eff: energy_rating_string(all_main_heating_energy_efficiency[1]),
-        extensions_count: @view_model.extensions_count,}
+        extensions_count: @view_model.extensions_count,
+        report_type: @view_model.report_type,
+        mainheatcont_description: @view_model.all_main_heating_controls_descriptions.join(", "),
+
+      }
     end
 
     # @TODO Move method to helper class
