@@ -183,6 +183,9 @@ module ViewModel
         extensions_count: @view_model.extensions_count,
         report_type: @view_model.report_type,
         mainheatcont_description: @view_model.all_main_heating_controls_descriptions.join(", "),
+        roof_description:  @view_model.all_roof_descriptions.join(", "),
+        roof_energy_eff: @view_model.all_roof_energy_efficieny_rating.join(", "),
+        roof_env_eff: @view_model.all_roof_env_energy_efficieny_rating.join(", "),
 
       }
     end

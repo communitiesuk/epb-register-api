@@ -266,6 +266,14 @@ module ViewModel
         @xml_doc.search("Roof/Description").map(&:content)
       end
 
+      def all_roof_energy_efficieny_rating
+        @xml_doc.search("Roof/Energy-Efficiency-Rating").map(&:content)
+      end
+
+      def all_roof_env_energy_efficieny_rating
+        @xml_doc.search("Roof/Environmental-Efficiency-Rating").map(&:content)
+      end
+
       def all_floor_descriptions
         @xml_doc.search("Floor/Description").map(&:content)
       end

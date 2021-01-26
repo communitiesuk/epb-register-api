@@ -720,6 +720,10 @@ class Samples
             extensions_count: "0",
             report_type: "2",
             mainheatcont_description: "Description9, Description10",
+            roof_description: "Description2, Description3",
+            roof_energy_eff: "0, 0",
+            roof_env_eff: "0, 0",
+
           }
       end
     end

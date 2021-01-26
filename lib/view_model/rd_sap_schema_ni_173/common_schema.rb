@@ -178,6 +178,14 @@ module ViewModel
         convert_to_big_decimal(%w[Property-Summary Total-Floor-Area])
       end
 
+      def all_roof_energy_efficieny_rating
+        @xml_doc.search("Roof/Energy-Efficiency-Rating").map(&:content)
+      end
+
+      def all_roof_env_energy_efficieny_rating
+        @xml_doc.search("Roof/Environmental-Efficiency-Rating").map(&:content)
+      end
+
       def dwelling_type
         xpath(%w[Dwelling-Type])
       end
