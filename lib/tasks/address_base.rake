@@ -4,6 +4,17 @@ require "zip"
 
 desc "Import AddressBase data"
 
+task :restore_legacy_address_base do
+  ActiveRecord::Base.logger = nil
+  db = ActiveRecord::Base.connection
+
+  db.rename_table :address_base, :address_base_tmp
+  puts "[#{Time.now}] Switched address_base to address_base_tmp"
+
+  db.rename_table :address_base_legacy, :address_base
+  puts "[#{Time.now}] Restored address_base_legacy as address_base"
+end
+
 task :import_address_base do
   require "zeitwerk"
 
