@@ -161,8 +161,8 @@ module ViewModel
         low_energy_fixed_lighting_outlets_count: @view_model.low_energy_fixed_lighting_outlets_count,
         open_fireplaces_count: @view_model.open_fireplaces_count,
         hot_water_description: @view_model.hot_water_description,
-        hot_water_energy_efficiency_rating: @view_model.hot_water_energy_efficiency_rating,
-        hot_water_environmental_efficiency_rating: @view_model.hot_water_environmental_efficiency_rating,
+        hot_water_energy_eff: Helper::XmlEnumsToOutput.energy_rating_string(@view_model.hot_water_energy_efficiency_rating),
+        hot_water_env_eff: Helper::XmlEnumsToOutput.energy_rating_string(@view_model.hot_water_environmental_efficiency_rating),
         wind_turbine_count: @view_model.wind_turbine_count,
         heat_loss_corridor: @view_model.heat_loss_corridor,
         unheated_corridor_length: @view_model.unheated_corridor_length,
@@ -178,8 +178,8 @@ module ViewModel
         photovoltaic_roof_area_percent: @view_model.photovoltaic_roof_area_percent,
         built_form: @view_model.built_form,
         mainheat_description: @view_model.all_main_heating_descriptions.join(", "),
-        mainheat_energy_eff: energy_rating_string(all_main_heating_energy_efficiency[0]),
-        mainheat_env_eff: energy_rating_string(all_main_heating_energy_efficiency[1]),
+        mainheat_energy_eff: Helper::XmlEnumsToOutput.energy_rating_string(all_main_heating_energy_efficiency[0]),
+        mainheat_env_eff: Helper::XmlEnumsToOutput.energy_rating_string(all_main_heating_energy_efficiency[1]),
         extensions_count: @view_model.extensions_count,
         report_type: @view_model.report_type,
         mainheatcont_description: @view_model.all_main_heating_controls_descriptions.join(", "),
@@ -189,14 +189,14 @@ module ViewModel
         walls_description: @view_model.all_wall_descriptions.join(", "),
         walls_energy_eff: @view_model.all_wall_energy_efficieny_rating.join(", "),
         walls_env_eff: @view_model.all_wall_env_energy_efficieny_rating.join(", "),
-      }
-    end
+        energy_tariff:  @view_model.meter_type,
+        floor_level: @view_model.floor_level,
+        solar_water_heating_flag: @view_model.solar_water_heating_flag,
+        mechanical_ventilation:  @view_model.mechanical_ventilation,
 
-    # @TODO Move method to helper class
-    def energy_rating_string(input)
-      number = input.to_i
-      ratings = ["N/A", "Very Good", "Good", "Average", "Poor", "Very Poor"]
-      number > ratings.length ? "N/A" : ratings[number]
+
+
+      }
     end
 
     def get_view_model

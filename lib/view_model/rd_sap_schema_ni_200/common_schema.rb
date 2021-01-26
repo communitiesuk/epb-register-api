@@ -528,7 +528,20 @@ module ViewModel
         @xml_doc.search("Wall/Environmental-Efficiency-Rating").map(&:content)
       end
 
-    private
+      def floor_level
+        xpath(%w[Flat-Location])
+      end
+
+      def solar_water_heating_flag
+        xpath(%w[Solar-Water-Heating])
+      end
+
+      def mechanical_ventilation
+        xpath(%w[Mechanical-Ventilation])
+      end
+
+
+      private
 
       def convert_to_big_decimal(node)
         return unless xpath(node)

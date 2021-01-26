@@ -10,6 +10,7 @@ module UseCase
     def execute(args = {})
 
       data = []
+      #TODO pass in both RdSAP and SAP to usecase
       assessments = @gateway.assessments_for_open_data("RdSAP")
 
         assessments.each do |assessment|

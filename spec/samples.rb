@@ -698,8 +698,8 @@ class Samples
             low_energy_fixed_lighting_outlets_count: "16",
             open_fireplaces_count: "0",
             hot_water_description: "Description11",
-            hot_water_energy_efficiency_rating: "0",
-            hot_water_environmental_efficiency_rating: "0",
+            hot_water_energy_eff: "N/A",
+            hot_water_env_eff: "N/A",
             wind_turbine_count: "0",
             heat_loss_corridor: "2",
             unheated_corridor_length: "10",
@@ -726,6 +726,10 @@ class Samples
             walls_description: "Description0, Description1",
             walls_energy_eff: "0, 0",
             walls_env_eff: "0, 0",
+            energy_tariff: "2",
+            floor_level: "01",
+            solar_water_heating_flag: "N",
+            mechanical_ventilation: "0"
 
           }
       end
