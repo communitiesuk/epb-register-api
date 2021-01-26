@@ -30,7 +30,7 @@ class Samples
     hash.merge!(args)
   end
 
-  # @TODO move to separate file and define as Mixin
+  # TODO move to separate file and define as Mixin
   module ViewModels
     def self.NI_PostCode
       "BT0 0AA"
@@ -668,8 +668,58 @@ class Samples
 
         Samples::ViewModels.recommendations_test_hash(self.asserted_hash)
       end
+    end
 
-
+    module RdSap
+      def self.report_test_hash
+        # TODO: change to ODC terms and in the .to_report
+          {
+            type_of_assessment: "RdSAP",
+            assessment_id: "0000-0000-0000-0000-0000",
+            lodgement_date: "2020-05-04",
+            address_line1: "1 Some Street",
+            address_line2: "",
+            address_line3: "",
+            address_line4: "",
+            town: "Post-Town1",
+            postcode: "A0 0AA",
+            co2_emissions_current_per_floor_area: "0",
+            mains_gas: "Y",
+            level: "1",
+            top_storey: "N",
+            storey_count: "3",
+            mains_heating_controls: "Description9",
+            multiple_glazed_proportion: "100",
+            glazed_area: "1",
+            habitable_room_count: "5",
+            heated_room_count: "5",
+            low_energy_lighting: "100",
+            fixed_lighting_outlets_count: "16",
+            low_energy_fixed_lighting_outlets_count: "16",
+            open_fireplaces_count: "0",
+            hot_water_description: "Description11",
+            hot_water_energy_efficiency_rating: "0",
+            hot_water_environmental_efficiency_rating: "0",
+            wind_turbine_count: "0",
+            heat_loss_corridor: "2",
+            unheated_corridor_length: "10",
+            window_description: "Description6",
+            window_energy_efficiency_rating: "0",
+            window_environmental_efficiency_rating: "0",
+            secondary_heating_description: "Description13",
+            secondary_heating_energy_efficiency_rating: "0",
+            secondary_heating_environmental_efficiency_rating: "0",
+            lighting_description: "Description12",
+            lighting_energy_efficiency_rating: "0",
+            lighting_environmental_efficiency_rating: "0",
+            photovoltaic_roof_area_percent: "0",
+            built_form: "Semi-Detached",
+            mainheat_description: "Description7, Description8",
+            mainheat_energy_eff: "N/A",
+            mainheat_env_eff: "N/A",
+            extensions_count: "0",
+          }
+      end
     end
   end
 end

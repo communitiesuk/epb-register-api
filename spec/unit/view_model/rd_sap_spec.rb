@@ -2,6 +2,7 @@ require_relative "xml_view_test_helper"
 
 describe ViewModel::RdSapWrapper do
   # You should only need to add to this list to test new RdSAP schemas
+
   supported_schema = [
     {
       schema_name: "RdSAP-Schema-20.0.0",
@@ -251,41 +252,6 @@ describe ViewModel::RdSapWrapper do
       total_floor_area: 1.0,
       status: "ENTERED",
       environmental_impact_current: "50",
-      co2_emissions_current_per_floor_area: "0",
-      mains_gas: "Y",
-      level: "1",
-      top_storey: "N",
-      storey_count: "3",
-      mains_heating_controls: "Description9",
-      multiple_glazed_proportion: "100",
-      glazed_area: "1",
-      habitable_room_count: "5",
-      heated_room_count: "5",
-      low_energy_lighting: "100",
-      fixed_lighting_outlets_count: "16",
-      low_energy_fixed_lighting_outlets_count: "16",
-      open_fireplaces_count: "0",
-      hot_water_description: "Description11",
-      hot_water_energy_efficiency_rating: "0",
-      hot_water_environmental_efficiency_rating: "0",
-      wind_turbine_count: "0",
-      heat_loss_corridor: "2",
-      unheated_corridor_length: "10",
-      window_description: "Description6",
-      window_energy_efficiency_rating: "0",
-      window_environmental_efficiency_rating: "0",
-      secondary_heating_description: "Description13",
-      secondary_heating_energy_efficiency_rating: "0",
-      secondary_heating_environmental_efficiency_rating: "0",
-      lighting_description: "Description12",
-      lighting_energy_efficiency_rating: "0",
-      lighting_environmental_efficiency_rating: "0",
-      photovoltaic_roof_area_percent: "0",
-      built_form: "Semi-Detached",
-      mainheat_description: "Description7, Description8",
-      mainheat_energy_eff: "N/A",
-      mainheat_env_eff: "N/A",
-      extensions_count: "0",
     }.freeze
 
   it "should read the appropriate values from the XML doc using the to_hash method" do
@@ -293,9 +259,7 @@ describe ViewModel::RdSapWrapper do
   end
 
   it "should read the appropriate values from the XML doc using the to_report method" do
-    report_hash = { rrn: asserted_keys[:assessment_id] }
-
-    test_xml_doc(supported_schema, report_hash, true)
+    test_xml_doc(supported_schema, Samples::ViewModels::RdSap.report_test_hash, true)
   end
 
   it "returns the expect error without a valid schema type" do

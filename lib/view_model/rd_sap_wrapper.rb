@@ -33,8 +33,6 @@ module ViewModel
 
     def to_hash
 
-      all_main_heating_energy_efficiency = @view_model.all_main_heating_energy_efficiency
-
       estimated_energy_cost =
         Helper::EstimatedCostPotentialSavingHelper.new.estimated_cost(
           @view_model.heating_cost_current,
@@ -130,6 +128,22 @@ module ViewModel
         environmental_impact_current: @view_model.environmental_impact_current,
         environmental_impact_potential:
           @view_model.environmental_impact_potential,
+      }
+    end
+
+    def to_report
+      # TODO: change to ODC terms here
+      all_main_heating_energy_efficiency = @view_model.all_main_heating_energy_efficiency
+      { rrn: @view_model.assessment_id,
+        type_of_assessment: "RdSAP",
+        assessment_id: @view_model.assessment_id,
+        lodgement_date: @view_model.date_of_registration,
+        address_line1: @view_model.address_line1,
+        address_line2: @view_model.address_line2,
+        address_line3: @view_model.address_line3,
+        address_line4: @view_model.address_line4,
+        town: @view_model.town,
+        postcode: @view_model.postcode,
         co2_emissions_current_per_floor_area:
           @view_model.co2_emissions_current_per_floor_area,
         mains_gas: @view_model.mains_gas,
@@ -165,12 +179,7 @@ module ViewModel
         mainheat_description: @view_model.all_main_heating_descriptions.join(", "),
         mainheat_energy_eff: energy_rating_string(all_main_heating_energy_efficiency[0]),
         mainheat_env_eff: energy_rating_string(all_main_heating_energy_efficiency[1]),
-        extensions_count: @view_model.extensions_count,
-      }
-    end
-
-    def to_report
-      { rrn: @view_model.assessment_id }
+        extensions_count: @view_model.extensions_count,}
     end
 
     # @TODO Move method to helper class

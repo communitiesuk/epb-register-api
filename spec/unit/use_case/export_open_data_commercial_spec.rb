@@ -9,7 +9,7 @@ describe UseCase::ExportOpenDataCommercial do
       let(:non_domestic_xml) { Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc") }
       let(:non_domestic_assessment_id) { non_domestic_xml.at("//CEPC:RRN") }
       let(:non_domestic_assessment_date) do non_domestic_xml.at("//CEPC:Registration-Date") end
-      let(:number_assments_to_test) { 2 }
+      let(:number_assessments_to_test) { 2 }
 
       # Lodge a dec to ensure it is not exported
       let(:domestic_xml) { Nokogiri.XML Samples.xml("CEPC-8.0.0", "dec") }
@@ -27,11 +27,11 @@ describe UseCase::ExportOpenDataCommercial do
           { lodgement_date: date_today},
         )
       end
-      let(:expected_values_row_1) do
+      let(:expected_values_index_1) do
         Samples.update_test_hash(
           expected_values,
           {
-            rrn: "0000-0000-0000-0000-0001",
+            rrn: "0000-0000-0000-0000-0002",
             lodgement_date: date_today,
 
           },
@@ -65,13 +65,22 @@ describe UseCase::ExportOpenDataCommercial do
         )
 
         non_domestic_assessment_date.children = "2020-05-04"
-        lodged =
           lodge_assessment(
             assessment_body: non_domestic_xml.to_xml,
             accepted_responses: [201],
             auth_data: { scheme_ids: [scheme_id] },
             override: true,
             schema_name: "CEPC-8.0.0",
+          )
+
+        non_domestic_assessment_date.children = "2020-05-04"
+        non_domestic_assessment_id.children = "0000-0000-0000-0000-0002"
+        lodge_assessment(
+          assessment_body: non_domestic_xml.to_xml,
+          accepted_responses: [201],
+          auth_data: { scheme_ids: [scheme_id] },
+          override: true,
+          schema_name: "CEPC-8.0.0",
           )
 
         non_domestic_assessment_date.children = "2018-05-04"
@@ -98,7 +107,7 @@ describe UseCase::ExportOpenDataCommercial do
       end
 
       it "returns the correct number of assessments in the CSV" do
-        expect(exported_data.length).to eq(number_assments_to_test)
+        expect(exported_data.length).to eq(number_assessments_to_test)
       end
 
       # @TODO once tests have completed refactor to write one assertion for each row and compare to hash rather than for each column
@@ -127,8 +136,8 @@ describe UseCase::ExportOpenDataCommercial do
           .each do |index|
           it "returns the #{
             index
-          } that matches the test data for the 1st row" do
-            expect(exported_data[1][index.to_sym]).to eq(expected_values_row_1[index])
+          } that matches the test data for the 2nd row" do
+            expect(exported_data[1][index.to_sym]).to eq(expected_values_index_1[index])
           end
         end
     end
