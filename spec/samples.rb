@@ -703,15 +703,15 @@ class Samples
             wind_turbine_count: "0",
             heat_loss_corridor: "2",
             unheated_corridor_length: "10",
-            window_description: "Description6",
-            window_energy_efficiency_rating: "0",
-            window_environmental_efficiency_rating: "0",
+            windows_description: "Description6",
+            windows_energy_eff: "N/A",
+            windows_env_eff: "N/A",
             secondary_heating_description: "Description13",
-            secondary_heating_energy_efficiency_rating: "0",
-            secondary_heating_environmental_efficiency_rating: "0",
+            sheating_energy_eff: "N/A",
+            sheating_env_eff: "N/A",
             lighting_description: "Description12",
-            lighting_energy_efficiency_rating: "0",
-            lighting_environmental_efficiency_rating: "0",
+            lighting_energy_eff: "N/A",
+            lighting_env_eff: "N/A",
             photovoltaic_roof_area_percent: "0",
             built_form: "Semi-Detached",
             mainheat_description: "Description7, Description8",
@@ -729,7 +729,8 @@ class Samples
             energy_tariff: "2",
             floor_level: "01",
             solar_water_heating_flag: "N",
-            mechanical_ventilation: "0"
+            mechanical_ventilation: "0",
+            floor_height: "2.45"
 
           }
       end

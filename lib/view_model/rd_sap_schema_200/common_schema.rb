@@ -545,6 +545,14 @@ module ViewModel
         xpath(%w[Mechanical-Ventilation])
       end
 
+      def floor_height
+        xpath(%w[Room-Height])
+      end
+
+      def floor_height
+        xpath(%w[Room-Height])
+      end
+
     private
 
       def convert_to_big_decimal(node)

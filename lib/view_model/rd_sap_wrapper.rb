@@ -166,15 +166,15 @@ module ViewModel
         wind_turbine_count: @view_model.wind_turbine_count,
         heat_loss_corridor: @view_model.heat_loss_corridor,
         unheated_corridor_length: @view_model.unheated_corridor_length,
-        window_description: @view_model.window_description,
-        window_energy_efficiency_rating: @view_model.window_energy_efficiency_rating,
-        window_environmental_efficiency_rating: @view_model.window_environmental_efficiency_rating,
+        windows_description: @view_model.window_description,
+        windows_energy_eff: Helper::XmlEnumsToOutput.energy_rating_string(@view_model.window_energy_efficiency_rating),
+        windows_env_eff: Helper::XmlEnumsToOutput.energy_rating_string(@view_model.window_environmental_efficiency_rating),
         secondary_heating_description: @view_model.secondary_heating_description,
-        secondary_heating_energy_efficiency_rating: @view_model.secondary_heating_energy_efficiency_rating,
-        secondary_heating_environmental_efficiency_rating: @view_model.secondary_heating_environmental_efficiency_rating,
+        sheating_energy_eff: Helper::XmlEnumsToOutput.energy_rating_string(@view_model.secondary_heating_energy_efficiency_rating),
+        sheating_env_eff: Helper::XmlEnumsToOutput.energy_rating_string(@view_model.secondary_heating_environmental_efficiency_rating),
         lighting_description: @view_model.lighting_description,
-        lighting_energy_efficiency_rating: @view_model.lighting_energy_efficiency_rating,
-        lighting_environmental_efficiency_rating: @view_model.lighting_environmental_efficiency_rating,
+        lighting_energy_eff: Helper::XmlEnumsToOutput.energy_rating_string(@view_model.lighting_energy_efficiency_rating),
+        lighting_env_eff: Helper::XmlEnumsToOutput.energy_rating_string(@view_model.lighting_environmental_efficiency_rating),
         photovoltaic_roof_area_percent: @view_model.photovoltaic_roof_area_percent,
         built_form: @view_model.built_form,
         mainheat_description: @view_model.all_main_heating_descriptions.join(", "),
@@ -193,7 +193,7 @@ module ViewModel
         floor_level: @view_model.floor_level,
         solar_water_heating_flag: @view_model.solar_water_heating_flag,
         mechanical_ventilation:  @view_model.mechanical_ventilation,
-
+        floor_height: @view_model.floor_height,
 
 
       }

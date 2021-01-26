@@ -475,7 +475,13 @@ module ViewModel
         xpath(%w[Mechanical-Ventilation])
       end
 
+      def floor_height
+        xpath(%w[Room-Height])
+      end
 
+      def floor_height
+        xpath(%w[Room-Height])
+      end
 
 
       private
