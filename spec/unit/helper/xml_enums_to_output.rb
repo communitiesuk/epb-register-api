@@ -40,4 +40,19 @@ describe Helper::XmlEnumsToOutput do
       expect(response).to be_nil
     end
   end
+
+  context "when the XML contains an energy rating integer is converting to its string representation" do
+    it "returns the correct string value for Open Data Communities" do
+      expect(Helper::XmlEnumsToOutput.energy_rating_string(2)).to eq("Good")
+    end
+
+    it "returns the N/A if a string value is passed or int is out of range" do
+      expect(Helper::XmlEnumsToOutput.energy_rating_string("a")).to eq("N/A")
+      expect(Helper::XmlEnumsToOutput.energy_rating_strin(0)).to eq("N/A")
+      expect(Helper::XmlEnumsToOutput.energy_rating_strin(10)).to eq("N/A")
+    end
+
+
+
+  end
 end
