@@ -3,37 +3,32 @@ describe UseCase::ExportOpenDataDec do
 
   context "when creating the open data reporting release " do
     describe "for the DEC and reports" do
-      let(:scheme_id) { add_scheme_and_get_id }
-      let(:dec_xml) { Nokogiri.XML Samples.xml("CEPC-8.0.0", "dec") }
-      let(:dec_assessment_id) { dec_xml.at("RRN") }
-      let(:dec_assessment_date) { dec_xml.at("") }
-      # Lodge CEPC to ensure it is not export
-      let(:non_domestic_xml) { Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc") }
-      let(:non_domestic_assessment_id) { non_domestic_xml.at("//CEPC:RRN") }
-      # let(:non_domestic_assessment_date) do non_domestic_xml.at("//CEPC:Registration-Date") end
       let(:date_today) { DateTime.now.strftime("%F") }
       let(:number_assessments_to_test) { 2 }
       let(:expected_values) do
-        Samples::ViewModels::Dec.report_test_hash.merge(
-          { lodgement_date: date_today, },
-          )
+        Samples::ViewModels::Dec.report_test_hash.merge(  { lodgement_date: date_today, },)
       end
       let(:expected_values_1) do
-        Samples::ViewModels::Dec.report_test_hash.merge(
-          { lodgement_date: date_today, rrn: "0000-0000-0000-0000-0001"},
-          )
+        Samples::ViewModels::Dec.report_test_hash.merge(  { lodgement_date: date_today, rrn: "0000-0000-0000-0000-0001"},  )
       end
 
       let(:expected_values_minus_time) { expected_values.delete(:lodgement_datetime)}
-
-
 
 
       let(:exported_data) do
         described_class.new.execute
       end
 
-      before do
+      before(:all) do
+        scheme_id = add_scheme_and_get_id
+        dec_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "dec")
+        dec_assessment_id = dec_xml.at("RRN")
+
+        # Lodge CEPC to ensure it is not export
+        non_domestic_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc")
+        non_domestic_assessment_id = non_domestic_xml.at("//CEPC:RRN")
+
+
         add_assessor(
           scheme_id,
           "SPEC000000",
@@ -81,7 +76,7 @@ describe UseCase::ExportOpenDataDec do
           )
 
         # in order to test the exact time of lodgement the time set on line 53
-        expected_values[:lodgement_datetime]   = current_datetime
+
 
       end
 

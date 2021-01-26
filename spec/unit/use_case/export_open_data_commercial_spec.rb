@@ -38,7 +38,16 @@ describe UseCase::ExportOpenDataCommercial do
         )
       end
 
-      before(:example) do
+      before(:all) do
+        scheme_id = add_scheme_and_get_id
+        non_domestic_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc")
+        non_domestic_assessment_id = non_domestic_xml.at("//CEPC:RRN")
+        non_domestic_assessment_date = non_domestic_xml.at("//CEPC:Registration-Date")
+        # Lodge a dec to ensure it is not exported
+        domestic_xml =  Nokogiri.XML Samples.xml("CEPC-8.0.0", "dec")
+        domestic_assessment_id = domestic_xml.at("RRN")
+        domestic_assessment_date =  domestic_xml.at("Registration-Date")
+
         add_assessor(
           scheme_id,
           "SPEC000000",
@@ -111,7 +120,7 @@ describe UseCase::ExportOpenDataCommercial do
 
 
       # 2nd row to test
-      #write at test for each key in test hash
+      # write at test for each key in test hash
       Samples::ViewModels::Cepc
           .report_test_hash
           .keys

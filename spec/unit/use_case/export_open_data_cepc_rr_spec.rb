@@ -2,27 +2,24 @@ describe UseCase::ExportOpenDataCepcrr do
   include RSpecRegisterApiServiceMixin
   context "when creating the open data reporting release" do
     describe "for the CEPC recommendation reports" do
-      let(:scheme_id) { add_scheme_and_get_id }
-      let(:expected) { described_class.new }
-      let(:date_today) { DateTime.now.strftime("%F") }
       # number in test in 2 x 4 (number of recomendations in each lodgement)
       let(:number_assessments_to_test) { 5 }
-      let(:cepc_plus_rr_xml) { Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc+rr") }
-      let(:cepc_plus_rr_xml_id) { cepc_plus_rr_xml.at("//CEPC:RRN") }
-      let(:cepc_plus_rr_xml_date) { cepc_plus_rr_xml.at("//CEPC:Registration-Date") }
-      let(:cepc_minus_rr_xml) { Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc-rr") } # should not be present in export
-      let(:cepc_minus_rr_xml_id) { cepc_minus_rr_xml.at("//CEPC:RRN") }
-      let(:cepc_plus_rr_xml_date) { cepc_plus_rr_xml.at("//CEPC:Registration-Date") }
       let(:expected_values) { Samples::ViewModels::CepRr.report_test_hash}
-
-
+      let(:date_today) { DateTime.now.strftime("%F")}
 
       let(:exported_data) {
         described_class.new.execute
       }
 
+      before (:all)do
+        scheme_id =  add_scheme_and_get_id
+        cepc_plus_rr_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc+rr")
+        cepc_plus_rr_xml_id = cepc_plus_rr_xml.at("//CEPC:RRN")
+        cepc_plus_rr_xml_date = cepc_plus_rr_xml.at("//CEPC:Registration-Date")
+        cepc_minus_rr_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc-rr")  # should not be present in export
+        cepc_minus_rr_xml_id = cepc_minus_rr_xml.at("//CEPC:RRN")
+        cepc_plus_rr_xml_date = cepc_plus_rr_xml.at("//CEPC:Registration-Date")
 
-      before do
         add_assessor(
           scheme_id,
           "SPEC000000",
