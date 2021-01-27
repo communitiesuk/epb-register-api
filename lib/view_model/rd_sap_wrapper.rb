@@ -216,8 +216,6 @@ module ViewModel
         solar_water_heating_flag: @view_model.solar_water_heating_flag,
         mechanical_ventilation:  @view_model.mechanical_ventilation,
         floor_height: @view_model.floor_height,
-
-
       }
     end
 
@@ -225,10 +223,10 @@ module ViewModel
       @view_model
     end
 
-    private
+  private
 
     def convert_to_big_decimal(node)
-      return unless node
+      return "" unless node
 
       BigDecimal(node)
     end
