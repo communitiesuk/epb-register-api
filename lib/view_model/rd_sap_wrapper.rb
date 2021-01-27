@@ -79,13 +79,13 @@ module ViewModel
         main_fuel_type: @view_model.main_fuel_type,
         heat_demand: {
           current_space_heating_demand:
-            convert_to_big_decimal(@view_model.current_space_heating_demand),
+            @view_model.current_space_heating_demand&.to_i,
           current_water_heating_demand:
-            convert_to_big_decimal(@view_model.current_water_heating_demand),
-          impact_of_cavity_insulation: convert_to_big_decimal(@view_model.impact_of_cavity_insulation),
-          impact_of_loft_insulation: convert_to_big_decimal(@view_model.impact_of_loft_insulation),
+            @view_model.current_water_heating_demand&.to_i,
+          impact_of_cavity_insulation: @view_model.impact_of_cavity_insulation,
+          impact_of_loft_insulation: @view_model.impact_of_loft_insulation,
           impact_of_solid_wall_insulation:
-            convert_to_big_decimal(@view_model.impact_of_solid_wall_insulation),
+            @view_model.impact_of_solid_wall_insulation,
         },
         heating_cost_current: @view_model.heating_cost_current,
         heating_cost_potential: @view_model.heating_cost_potential,
