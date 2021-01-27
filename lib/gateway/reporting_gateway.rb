@@ -151,12 +151,9 @@ module Gateway
 
     def assessments_for_open_data(type_of_assessment="")
 
-
-      bindings = [[nil, type_of_assessment],
-                  [nil, OPEN_DATA_EXPORT_DATE_START, ActiveRecord::Type::Date.new]]
+      bindings = [[nil, OPEN_DATA_EXPORT_DATE_START, ActiveRecord::Type::Date.new]]
 
       # TODO create public hash for ID
-      # # TODO update SQL query to take in two types of assessment (IN())
 
       sql = <<~SQL
         SELECT  a.assessment_id, created_at
@@ -164,12 +161,25 @@ module Gateway
         INNER JOIN assessments_address_id c  ON(a.assessment_id = c.assessment_id)
         INNER JOIN assessments_xml b ON(a.assessment_id = b.assessment_id)
         WHERE a.opt_out = false AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
-        AND a.type_of_assessment = $1
-        AND a.date_registered >= $2
-        ORDER BY a.assessment_id
+        AND a.date_registered >= $1
       SQL
 
+      if (type_of_assessment.is_a?(Array))
+        list_of_types = type_of_assessment.map { |n| "'#{n}'" }
+        sql << <<~SQL_TYPE_OF_ASSESSMENT
+                 AND type_of_assessment IN(#{list_of_types.join(',')})
+              SQL_TYPE_OF_ASSESSMENT
+      else
+        sql << <<~SQL_TYPE_OF_ASSESSMENT
+                 AND type_of_assessment = '#{type_of_assessment}'
+        SQL_TYPE_OF_ASSESSMENT
+
+      end
+
+      sql << " ORDER BY assessment_id "
+
       results = ActiveRecord::Base.connection.exec_query(sql, 'SQL', bindings)
+
       results.map { |result| result }
     end
 
@@ -182,7 +192,7 @@ module Gateway
         SELECT  a.assessment_id, created_at
         FROM assessments a
         INNER JOIN assessments_xml xml ON(a.assessment_id = xml.assessment_id)
-        JOIN linked_assessments la ON a.assessment_id = la.assessment_id
+        INNER JOIN linked_assessments la ON a.assessment_id = la.assessment_id
         WHERE a.opt_out = false AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
         AND a.type_of_assessment = $1
         AND a.date_of_assessment >= $2

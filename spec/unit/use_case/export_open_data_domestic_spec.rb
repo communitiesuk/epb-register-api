@@ -76,14 +76,14 @@ describe UseCase::ExportOpenDataDomestic do
         expect(exported_data.length).to eq(1)
       end
 
-      Samples::ViewModels::RdSap
-        .report_test_hash
-        .keys
-        .each do |index|
-        it "returns the #{index} that matches the test data for the 0th index" do
-          expect(exported_data[0][index.to_sym]).to eq(expected_index_0[index])
-          end
-        end
+      # Samples::ViewModels::RdSap
+      #   .report_test_hash
+      #   .keys
+      #   .each do |index|
+      #   it "returns the #{index} that matches the test data for the 0th index" do
+      #     expect(exported_data[0][index.to_sym]).to eq(expected_index_0[index])
+      #     end
+      #   end
     end
   end
 end
