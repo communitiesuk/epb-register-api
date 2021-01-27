@@ -18,14 +18,18 @@ module Helper
     end
 
     def self.energy_rating_string(input)
-      number = input.to_i
-      number > RATINGS.length ? "N/A" : RATINGS[number]
+      unless input.kind_of?(Array)
+        number = input.to_i
+        number > RATINGS.length ? "N/A" : RATINGS[number]
+      else
+        array = []
+        input.each do | input |
+          number = input.to_i
+          number > RATINGS.length ? array << "N/A" : array << RATINGS[number]
+        end
+        array.join", "
+      end
     end
 
   end
-
-
-
-
-
 end

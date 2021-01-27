@@ -3,76 +3,78 @@ require_relative "xml_view_test_helper"
 describe ViewModel::RdSapWrapper do
   # You should only need to add to this list to test new RdSAP schemas
 
-  supported_schema = [
-    {
-      schema_name: "RdSAP-Schema-20.0.0",
-      xml: Samples.xml("RdSAP-Schema-20.0.0"),
-      unsupported_fields: [],
-      different_fields: {},
-    },
-    {
-      schema_name: "RdSAP-Schema-19.0",
-      xml: Samples.xml("RdSAP-Schema-19.0"),
-      unsupported_fields: [],
-      different_fields: {},
-      different_buried_fields: { address: { address_id: "LPRN-0000000000" } },
-    },
-    {
-      schema_name: "RdSAP-Schema-18.0",
-      xml: Samples.xml("RdSAP-Schema-18.0"),
-      unsupported_fields: [],
-      different_fields: {},
-      different_buried_fields: { address: { address_id: "LPRN-0000000000" } },
-    },
-    {
-      schema_name: "RdSAP-Schema-17.1",
-      xml: Samples.xml("RdSAP-Schema-17.1"),
-      unsupported_fields: [],
-      different_fields: {},
-      different_buried_fields: { address: { address_id: "LPRN-0000000000" } },
-    },
-    {
-      schema_name: "RdSAP-Schema-17.0",
-      xml: Samples.xml("RdSAP-Schema-17.0"),
-      unsupported_fields: [],
-      different_fields: {},
-      different_buried_fields: { address: { address_id: "LPRN-0000000000" } },
-    },
-    {
-      schema_name: "RdSAP-Schema-NI-20.0.0",
-      xml: Samples.xml("RdSAP-Schema-NI-20.0.0"),
-      unsupported_fields: [],
-      different_fields: {},
-    },
-    {
-      schema_name: "RdSAP-Schema-NI-19.0",
-      xml: Samples.xml("RdSAP-Schema-NI-19.0"),
-      unsupported_fields: [],
-      different_fields: {},
-      different_buried_fields: { address: { address_id: "LPRN-0000000000" } },
-    },
-    {
-      schema_name: "RdSAP-Schema-NI-18.0",
-      xml: Samples.xml("RdSAP-Schema-NI-18.0"),
-      unsupported_fields: [],
-      different_fields: {},
-      different_buried_fields: { address: { address_id: "LPRN-0000000000" } },
-    },
-    {
-      schema_name: "RdSAP-Schema-NI-17.4",
-      xml: Samples.xml("RdSAP-Schema-NI-17.4"),
-      unsupported_fields: [],
-      different_fields: {},
-      different_buried_fields: { address: { address_id: "LPRN-0000000000" } },
-    },
-    {
-      schema_name: "RdSAP-Schema-NI-17.3",
-      xml: Samples.xml("RdSAP-Schema-NI-17.3"),
-      unsupported_fields: [],
-      different_fields: {},
-      different_buried_fields: { address: { address_id: "LPRN-0000000000" } },
-    },
-  ].freeze
+  supported_schema = Samples::ViewModels::RdSap.supported_schema
+
+  # supported_schema = [
+  #   {
+  #     schema_name: "RdSAP-Schema-20.0.0",
+  #     xml: Samples.xml("RdSAP-Schema-20.0.0"),
+  #     unsupported_fields: [],
+  #     different_fields: {},
+  #   },
+  #   {
+  #     schema_name: "RdSAP-Schema-19.0",
+  #     xml: Samples.xml("RdSAP-Schema-19.0"),
+  #     unsupported_fields: [],
+  #     different_fields: {},
+  #     different_buried_fields: { address: { address_id: "LPRN-0000000000" } },
+  #   },
+  #   {
+  #     schema_name: "RdSAP-Schema-18.0",
+  #     xml: Samples.xml("RdSAP-Schema-18.0"),
+  #     unsupported_fields: [],
+  #     different_fields: {},
+  #     different_buried_fields: { address: { address_id: "LPRN-0000000000" } },
+  #   },
+  #   {
+  #     schema_name: "RdSAP-Schema-17.1",
+  #     xml: Samples.xml("RdSAP-Schema-17.1"),
+  #     unsupported_fields: [],
+  #     different_fields: {},
+  #     different_buried_fields: { address: { address_id: "LPRN-0000000000" } },
+  #   },
+  #   {
+  #     schema_name: "RdSAP-Schema-17.0",
+  #     xml: Samples.xml("RdSAP-Schema-17.0"),
+  #     unsupported_fields: [],
+  #     different_fields: {},
+  #     different_buried_fields: { address: { address_id: "LPRN-0000000000" } },
+  #   },
+  #   {
+  #     schema_name: "RdSAP-Schema-NI-20.0.0",
+  #     xml: Samples.xml("RdSAP-Schema-NI-20.0.0"),
+  #     unsupported_fields: [],
+  #     different_fields: {},
+  #   },
+  #   {
+  #     schema_name: "RdSAP-Schema-NI-19.0",
+  #     xml: Samples.xml("RdSAP-Schema-NI-19.0"),
+  #     unsupported_fields: [],
+  #     different_fields: {},
+  #     different_buried_fields: { address: { address_id: "LPRN-0000000000" } },
+  #   },
+  #   {
+  #     schema_name: "RdSAP-Schema-NI-18.0",
+  #     xml: Samples.xml("RdSAP-Schema-NI-18.0"),
+  #     unsupported_fields: [],
+  #     different_fields: {},
+  #     different_buried_fields: { address: { address_id: "LPRN-0000000000" } },
+  #   },
+  #   {
+  #     schema_name: "RdSAP-Schema-NI-17.4",
+  #     xml: Samples.xml("RdSAP-Schema-NI-17.4"),
+  #     unsupported_fields: [],
+  #     different_fields: {},
+  #     different_buried_fields: { address: { address_id: "LPRN-0000000000" } },
+  #   },
+  #   {
+  #     schema_name: "RdSAP-Schema-NI-17.3",
+  #     xml: Samples.xml("RdSAP-Schema-NI-17.3"),
+  #     unsupported_fields: [],
+  #     different_fields: {},
+  #     different_buried_fields: { address: { address_id: "LPRN-0000000000" } },
+  #   },
+  # ].freeze
 
   # You should only need to add to this list to test new fields on all RdSAP schemas
   asserted_keys =
@@ -259,7 +261,11 @@ describe ViewModel::RdSapWrapper do
   end
 
   it "should read the appropriate values from the XML doc using the to_report method" do
-    test_xml_doc(supported_schema, Samples::ViewModels::RdSap.report_test_hash, true)
+    test_xml_doc(
+      Samples::ViewModels::RdSap.update_schema_for_report,
+      Samples::ViewModels::RdSap.report_test_hash,
+      true
+    )
   end
 
   it "returns the expect error without a valid schema type" do

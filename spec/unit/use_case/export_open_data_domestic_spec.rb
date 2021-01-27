@@ -9,7 +9,10 @@ describe UseCase::ExportOpenDataDomestic do
       end
       let(:expectation) { Samples::ViewModels::RdSap.report_test_hash }
       let(:exported_data) do
-        described_class.new.execute({ number_of_assessments: "3", max_runs: "3", batch: "3" })
+        described_class.new.execute({ number_of_assessments: "3", max_runs: "3", batch: "3" }).sort_by do |key|
+          key["assessment_id"]
+          # execute and order by assessment_id for test
+        end
       end
 
       before(:all) do
@@ -40,6 +43,7 @@ describe UseCase::ExportOpenDataDomestic do
           ),
         )
         domestic_assessment_date.children = "2017-05-04"
+        domestic_assessment_id.children = "0000-0000-0000-0000-0100"
         lodge_assessment(
           assessment_body: domestic_xml.to_xml,
           accepted_responses: [201],
@@ -48,7 +52,7 @@ describe UseCase::ExportOpenDataDomestic do
         )
 
         domestic_assessment_date.children = "2019-07-02"
-        domestic_assessment_id.children = "0000-0000-0000-0000-0001"
+        domestic_assessment_id.children = "0000-0000-0000-0000-0000"
         lodge_assessment(
           assessment_body: domestic_xml.to_xml,
           accepted_responses: [201],
@@ -57,7 +61,7 @@ describe UseCase::ExportOpenDataDomestic do
         )
 
         domestic_sap_assessment_date.children = "2020-05-04"
-        domestic_sap_assessment_id.children = "0000-0000-0000-0000-0003"
+        domestic_sap_assessment_id.children = "0000-0000-0000-0000-1000"
         domestic_sap_assessment_level.children = "3"
         lodge_assessment(
           assessment_body: domestic_sap_xml.to_xml,

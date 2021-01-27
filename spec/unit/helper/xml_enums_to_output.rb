@@ -48,11 +48,11 @@ describe Helper::XmlEnumsToOutput do
 
     it "returns the N/A if a string value is passed or int is out of range" do
       expect(Helper::XmlEnumsToOutput.energy_rating_string("a")).to eq("N/A")
-      expect(Helper::XmlEnumsToOutput.energy_rating_strin(0)).to eq("N/A")
-      expect(Helper::XmlEnumsToOutput.energy_rating_strin(10)).to eq("N/A")
+      expect(Helper::XmlEnumsToOutput.energy_rating_string(0)).to eq("N/A")
+      expect(Helper::XmlEnumsToOutput.energy_rating_string(10)).to eq("N/A")
     end
-
-
-
+    it "returns the joined string value if passed an array for Open Data Communities" do
+      expect(Helper::XmlEnumsToOutput.energy_rating_string([0, 0])).to eq("N/A, N/A")
+    end
   end
 end
