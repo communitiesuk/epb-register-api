@@ -71,9 +71,9 @@ describe "Rake open_data_export" do
 
     end
 
-    it 'should get data back from the use case' do
-      expect(capture_rake_task_output).to eq(nil)
-    end
+    # it 'should get data back from the use case' do
+    #   expect(capture_rake_task_output).to eq(nil)
+    # end
 
   end
 end
