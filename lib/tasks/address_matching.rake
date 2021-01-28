@@ -35,7 +35,7 @@ task :import_address_matching do
     abort("Please set the bucket_name or instance_name environment variable")
   end
   if ENV["file_name"].nil?
-    abort("Please set the file_name environment variable") if ENV["file_name"].nil?
+    abort("Please set the file_name environment variable")
   end
   file_name = ENV['file_name']
 
