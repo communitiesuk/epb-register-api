@@ -779,6 +779,55 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
+  /assessments/{assessmentId}/address-id:
+    put:
+      tags:
+        - Manage Assessments
+      summary: Update the address ID used to link this assessment with other assessments
+      security:
+        - oauth:
+            - 'admin:update-address-id'
+      parameters:
+        - in: path
+          name: assessmentId
+          required: true
+          description: 'The ID of the assessment being updated'
+          schema:
+            $ref: '#/components/schemas/AssessmentId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                addressId:
+                  $ref: '#/components/schemas/AddressId'
+      responses:
+        200:
+          description: Confirmation of successful update
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: string
+                    example: "Address ID for assessment 1234-1234-1234-1234-1234 has been updated successfully"
+                  meta:
+                    type: object
+        400:
+          description: Bad request - the assessmentId or addressId is badly formatted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: Assessment not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
   /dec_summary/{assessmentId}:
     get:
       tags:
