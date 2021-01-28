@@ -3,7 +3,6 @@ module Gateway
 
     OPEN_DATA_EXPORT_DATE_START = "2019-07-01"
 
-
     def assessments_by_region_and_type(start_date, end_date)
       sql = <<~SQL
         SELECT
@@ -162,6 +161,7 @@ module Gateway
         INNER JOIN assessments_xml b ON(a.assessment_id = b.assessment_id)
         WHERE a.opt_out = false AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
         AND a.date_registered >= $1
+        AND a.postcode NOT LIKE 'BT%'
       SQL
 
       if (type_of_assessment.is_a?(Array))
@@ -198,7 +198,6 @@ module Gateway
         AND a.date_of_assessment >= $2
         ORDER BY a.assessment_id
       SQL
-
 
       results = ActiveRecord::Base.connection.exec_query(sql, 'SQL', bindings)
       results.map { |result| result }

@@ -6,6 +6,7 @@ describe UseCase::ExportOpenDataCommercial do
     describe "for the commercial certificates and reports" do
       let(:scheme_id) { add_scheme_and_get_id }
 
+
       let(:non_domestic_xml) { Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc") }
       let(:non_domestic_assessment_id) { non_domestic_xml.at("//CEPC:RRN") }
       let(:non_domestic_assessment_date) do non_domestic_xml.at("//CEPC:Registration-Date") end
@@ -92,6 +93,19 @@ describe UseCase::ExportOpenDataCommercial do
           override: true,
           schema_name: "CEPC-8.0.0",
         )
+
+        postcode = non_domestic_xml.at("//CEPC:Postcode")
+        postcode.children = "BT1 2DE"
+        # add lodgement for Northern Ireland not to be export
+        non_domestic_assessment_date.children = "2020-11-11"
+        non_domestic_assessment_id.children = "0000-0000-0000-0000-0101"
+        lodge_assessment(
+          assessment_body: non_domestic_xml.to_xml,
+          accepted_responses: [201],
+          auth_data: { scheme_ids: [scheme_id] },
+          override: true,
+          schema_name: "CEPC-8.0.0",
+          )
 
         domestic_assessment_date.children = "2018-05-04"
         domestic_assessment_id.children = "0000-0000-0000-0000-0005"
