@@ -61,10 +61,7 @@ class Samples
           "long",
         )
       recommendations <<
-        reset_recommendations_hash_keys(
-          hash[:other_recommendations],
-          "other",
-        )
+        reset_recommendations_hash_keys(hash[:other_recommendations], "other")
 
       { rrn: asserted_hash[:assessment_id], recommendations: recommendations }
     end

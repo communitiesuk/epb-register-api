@@ -4,11 +4,7 @@ module Gateway
 
     def initialize(storage_config:, stub_responses: false)
       @storage_config = storage_config
-      @client = if stub_responses
-                  initialise_client_stub
-                else
-                  initialise_client
-                end
+      @client = stub_responses ? initialise_client_stub : initialise_client
     end
 
     def get_file_io(file_name)

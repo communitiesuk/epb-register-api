@@ -47,11 +47,7 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateFuelCostData" do
             fuel_price: "6.74",
             standing_charge: "59.0",
           },
-          {
-            fuel_heat_source: 4,
-            fuel_price: "4.6",
-            standing_charge: "0.0",
-          },
+          { fuel_heat_source: 4, fuel_price: "4.6", standing_charge: "0.0" },
           {
             fuel_heat_source: 74,
             fuel_price: "4.6",

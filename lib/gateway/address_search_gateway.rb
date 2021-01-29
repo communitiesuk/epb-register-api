@@ -268,9 +268,7 @@ module Gateway
 
           address_hash = compact_address(res).downcase.hash
           unless address_hashes.key? address_hash
-            address_hashes[
-              address_hash
-            ] = []
+            address_hashes[address_hash] = []
           end
           address_hashes[address_hash].push i
         end
