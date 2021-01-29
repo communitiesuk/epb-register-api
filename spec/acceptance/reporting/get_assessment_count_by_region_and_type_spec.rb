@@ -37,7 +37,9 @@ describe "Acceptance::Reports::GetAssessmentCountByRegionAndType" do
       lodge_assessment(
         assessment_body: valid_rdsap_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
       )
     end
     it "returns a CSV with headers and data included" do
@@ -84,7 +86,9 @@ describe "Acceptance::Reports::GetAssessmentCountByRegionAndType" do
       lodge_assessment(
         assessment_body: doc.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
       )
 
       expect(response).to eq(
@@ -113,7 +117,9 @@ describe "Acceptance::Reports::GetAssessmentCountByRegionAndType" do
       lodge_assessment(
         assessment_body: doc.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
       )
 
       update_assessment_status assessment_id: "0000-0000-0000-0000-0001",
@@ -121,7 +127,9 @@ describe "Acceptance::Reports::GetAssessmentCountByRegionAndType" do
                                  "status": "CANCELLED",
                                },
                                accepted_responses: [200],
-                               auth_data: { scheme_ids: [scheme_id] }
+                               auth_data: {
+                                 scheme_ids: [scheme_id],
+                               }
 
       response =
         get_assessment_report(
@@ -142,7 +150,9 @@ describe "Acceptance::Reports::GetAssessmentCountByRegionAndType" do
       lodge_assessment(
         assessment_body: doc.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
         schema_name: "SAP-Schema-18.0.0",
       )
 
@@ -151,7 +161,9 @@ describe "Acceptance::Reports::GetAssessmentCountByRegionAndType" do
       lodge_assessment(
         assessment_body: doc.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
         schema_name: "CEPC-8.0.0",
       )
 
@@ -160,7 +172,9 @@ describe "Acceptance::Reports::GetAssessmentCountByRegionAndType" do
       lodge_assessment(
         assessment_body: doc.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
         schema_name: "CEPC-8.0.0",
       )
 
@@ -169,7 +183,9 @@ describe "Acceptance::Reports::GetAssessmentCountByRegionAndType" do
       lodge_assessment(
         assessment_body: doc.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
         schema_name: "CEPC-8.0.0",
       )
 
@@ -178,7 +194,9 @@ describe "Acceptance::Reports::GetAssessmentCountByRegionAndType" do
       lodge_assessment(
         assessment_body: doc.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
         schema_name: "CEPC-8.0.0",
       )
 
@@ -187,7 +205,9 @@ describe "Acceptance::Reports::GetAssessmentCountByRegionAndType" do
       lodge_assessment(
         assessment_body: doc.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
         schema_name: "CEPC-8.0.0",
       )
 
@@ -196,7 +216,9 @@ describe "Acceptance::Reports::GetAssessmentCountByRegionAndType" do
       lodge_assessment(
         assessment_body: doc.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
         schema_name: "CEPC-8.0.0",
       )
 

@@ -61,7 +61,9 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
       lodge_assessment(
         assessment_body: doc.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
         schema_name: "RdSAP-Schema-20.0.0",
       )
 
@@ -70,7 +72,9 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
       lodge_assessment(
         assessment_body: doc.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
         schema_name: "SAP-Schema-18.0.0",
       )
 
@@ -79,7 +83,9 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
       lodge_assessment(
         assessment_body: doc.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
         schema_name: "CEPC-8.0.0",
       )
 
@@ -88,7 +94,9 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
       lodge_assessment(
         assessment_body: doc.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
         schema_name: "CEPC-8.0.0",
       )
 
@@ -101,7 +109,9 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
       lodge_assessment(
         assessment_body: doc.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
         schema_name: "CEPC-8.0.0",
       )
 
@@ -110,7 +120,9 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
       lodge_assessment(
         assessment_body: doc.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
         schema_name: "CEPC-8.0.0",
       )
 
@@ -119,7 +131,9 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
       lodge_assessment(
         assessment_body: doc.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
         schema_name: "CEPC-8.0.0",
       )
 
@@ -132,7 +146,9 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
       lodge_assessment(
         assessment_body: doc.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
         schema_name: "CEPC-8.0.0",
       )
 
@@ -141,7 +157,9 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
       lodge_assessment(
         assessment_body: doc.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
         schema_name: "CEPC-8.0.0",
       )
 
@@ -150,7 +168,9 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
       lodge_assessment(
         assessment_body: doc.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
         schema_name: "CEPC-8.0.0",
       )
 
@@ -163,7 +183,9 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
       lodge_assessment(
         assessment_body: doc.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
         schema_name: "CEPC-8.0.0",
       )
 
@@ -199,7 +221,9 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
           assessment_body: doc.to_xml,
           accepted_responses: [201],
           scopes: %w[assessment:lodge migrate:assessment],
-          auth_data: { scheme_ids: [scheme_id] },
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
           migrated: true,
         )
 

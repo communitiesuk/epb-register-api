@@ -8,7 +8,7 @@ module UseCase
     end
 
     # @TODO: pass arguments to filter for decs
-    def execute(args = {})
+    def execute(_args = {})
       view_model_array = []
 
       # #use gateway to make db calls
@@ -23,12 +23,13 @@ module UseCase
             xml_data[:xml],
             xml_data[:schema_type],
             assessment["assessment_id"],
-            )
+          )
         view_model_hash = view_model.to_report
         view_model_hash[:lodgement_date] =
           assessment["created_at"].strftime("%F")
         view_model_hash[:lodgement_datetime] =
           assessment["created_at"].strftime("%F %H:%M:%S")
+
         # lodgement_datetime
         view_model_array << view_model_hash
         # @TODO:update log table

@@ -2,7 +2,8 @@
 
 module UseCase
   class OptOutAssessment
-    class AssessmentNotFound < StandardError; end
+    class AssessmentNotFound < StandardError
+    end
 
     def initialize
       @assessments_gateway = Gateway::AssessmentsGateway.new

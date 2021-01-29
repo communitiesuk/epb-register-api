@@ -24,7 +24,9 @@ describe "Acceptance::Assessment::QualificationAndStatusPerType" do
       lodge_assessment(
         assessment_body: sample(xml_name, schema_name.to_s),
         accepted_responses: response_code,
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
         schema_name: schema_name.to_s,
       ).body,
       symbolize_names: true,
@@ -36,13 +38,17 @@ describe "Acceptance::Assessment::QualificationAndStatusPerType" do
       "RdSAP-Schema-20.0.0": {
         "valid_rdsap": {
           xml: "epc",
-          assessor_qualification: { domesticRdSap: "ACTIVE" },
+          assessor_qualification: {
+            domesticRdSap: "ACTIVE",
+          },
         },
       },
       "SAP-Schema-18.0.0": {
         "valid_sap": {
           xml: "epc",
-          assessor_qualification: { domesticSap: "ACTIVE" },
+          assessor_qualification: {
+            domesticSap: "ACTIVE",
+          },
         },
       },
       "CEPC-8.0.0": {
@@ -66,11 +72,15 @@ describe "Acceptance::Assessment::QualificationAndStatusPerType" do
         },
         "valid_dec": {
           xml: "dec",
-          assessor_qualification: { nonDomesticDec: "ACTIVE" },
+          assessor_qualification: {
+            nonDomesticDec: "ACTIVE",
+          },
         },
         "valid_dec+rr": {
           xml: "dec+rr",
-          assessor_qualification: { nonDomesticDec: "ACTIVE" },
+          assessor_qualification: {
+            nonDomesticDec: "ACTIVE",
+          },
           expected_response: "dual_lodgement",
           lodged_rrns: %w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001],
         },
@@ -170,9 +180,13 @@ describe "Acceptance::Assessment::QualificationAndStatusPerType" do
                 JSON.parse(
                   update_assessment_status(
                     assessment_id: rrn.to_s,
-                    assessment_status_body: { "status": "CANCELLED" },
+                    assessment_status_body: {
+                      "status": "CANCELLED",
+                    },
                     accepted_responses: [200],
-                    auth_data: { scheme_ids: [scheme_id] },
+                    auth_data: {
+                      scheme_ids: [scheme_id],
+                    },
                   ).body,
                   symbolize_names: true,
                 )
@@ -194,9 +208,13 @@ describe "Acceptance::Assessment::QualificationAndStatusPerType" do
                 JSON.parse(
                   update_assessment_status(
                     assessment_id: rrn.to_s,
-                    assessment_status_body: { "status": "NOT_FOR_ISSUE" },
+                    assessment_status_body: {
+                      "status": "NOT_FOR_ISSUE",
+                    },
                     accepted_responses: [200],
-                    auth_data: { scheme_ids: [scheme_id] },
+                    auth_data: {
+                      scheme_ids: [scheme_id],
+                    },
                   ).body,
                   symbolize_names: true,
                 )

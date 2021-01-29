@@ -3,7 +3,8 @@
 require "active_support/core_ext/hash/conversions"
 
 module Helper
-  class InvalidXml < StandardError; end
+  class InvalidXml < StandardError
+  end
 
   class XmlHelper
     def convert_to_hash(xml, schema)

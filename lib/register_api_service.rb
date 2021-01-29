@@ -19,7 +19,9 @@ class RegisterApiService < Controller::BaseController
     content_type :json
 
     {
-      links: { apispec: "https://mhclg-epb-swagger.london.cloudapps.digital" },
+      links: {
+        apispec: "https://mhclg-epb-swagger.london.cloudapps.digital",
+      },
     }.to_json
   end
 

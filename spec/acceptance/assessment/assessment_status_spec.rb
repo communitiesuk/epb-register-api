@@ -23,7 +23,9 @@ describe "Acceptance::AssessmentStatus" do
                                    status: "CANCELLED",
                                  },
                                  accepted_responses: [404],
-                                 auth_data: { scheme_ids: [scheme_id] }
+                                 auth_data: {
+                                   scheme_ids: [scheme_id],
+                                 }
       end
     end
 
@@ -34,7 +36,9 @@ describe "Acceptance::AssessmentStatus" do
                                    status: "NOT_FOR_ISSUE",
                                  },
                                  accepted_responses: [404],
-                                 auth_data: { scheme_ids: [scheme_id] }
+                                 auth_data: {
+                                   scheme_ids: [scheme_id],
+                                 }
       end
     end
   end
@@ -44,21 +48,27 @@ describe "Acceptance::AssessmentStatus" do
       it "responds that the assessment has already been cancelled" do
         lodge_assessment assessment_body: valid_rdsap_xml,
                          accepted_responses: [201],
-                         auth_data: { scheme_ids: [scheme_id] }
+                         auth_data: {
+                           scheme_ids: [scheme_id],
+                         }
 
         update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
                                  assessment_status_body: {
                                    "status": "CANCELLED",
                                  },
                                  accepted_responses: [200],
-                                 auth_data: { scheme_ids: [scheme_id] }
+                                 auth_data: {
+                                   scheme_ids: [scheme_id],
+                                 }
 
         update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
                                  assessment_status_body: {
                                    status: "CANCELLED",
                                  },
                                  accepted_responses: [410],
-                                 auth_data: { scheme_ids: [scheme_id] }
+                                 auth_data: {
+                                   scheme_ids: [scheme_id],
+                                 }
       end
     end
 
@@ -66,21 +76,27 @@ describe "Acceptance::AssessmentStatus" do
       it "responds that the assessment has already been marked not for issue" do
         lodge_assessment assessment_body: valid_rdsap_xml,
                          accepted_responses: [201],
-                         auth_data: { scheme_ids: [scheme_id] }
+                         auth_data: {
+                           scheme_ids: [scheme_id],
+                         }
 
         update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
                                  assessment_status_body: {
                                    "status": "NOT_FOR_ISSUE",
                                  },
                                  accepted_responses: [200],
-                                 auth_data: { scheme_ids: [scheme_id] }
+                                 auth_data: {
+                                   scheme_ids: [scheme_id],
+                                 }
 
         update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
                                  assessment_status_body: {
                                    status: "NOT_FOR_ISSUE",
                                  },
                                  accepted_responses: [410],
-                                 auth_data: { scheme_ids: [scheme_id] }
+                                 auth_data: {
+                                   scheme_ids: [scheme_id],
+                                 }
       end
     end
   end
@@ -140,16 +156,22 @@ describe "Acceptance::AssessmentStatus" do
         lodge_assessment(
           assessment_body: valid_rdsap_xml,
           accepted_responses: [201],
-          auth_data: { scheme_ids: [scheme_id] },
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
         )
 
         assessment_update_response =
           JSON.parse(
             update_assessment_status(
               assessment_id: "0000-0000-0000-0000-0000",
-              assessment_status_body: { "status": "NOT_FOR_ISSUE" },
+              assessment_status_body: {
+                "status": "NOT_FOR_ISSUE",
+              },
               accepted_responses: [403],
-              auth_data: { scheme_ids: [scheme_id + 1] },
+              auth_data: {
+                scheme_ids: [scheme_id + 1],
+              },
             ).body,
             symbolize_names: true,
           )

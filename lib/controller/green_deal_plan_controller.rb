@@ -23,43 +23,82 @@ module Controller
           type: "string",
           pattern: Helper::RegexHelper::GREEN_DEAL_PLAN_ID,
         },
-        startDate: { type: "string", format: "iso-date" },
-        endDate: { type: "string", format: "iso-date" },
+        startDate: {
+          type: "string",
+          format: "iso-date",
+        },
+        endDate: {
+          type: "string",
+          format: "iso-date",
+        },
         providerDetails: {
           type: "object",
           required: %w[name],
           properties: {
-            name: { type: "string" },
-            telephone: { type: "string" },
-            email: { type: "string" },
+            name: {
+              type: "string",
+            },
+            telephone: {
+              type: "string",
+            },
+            email: {
+              type: "string",
+            },
           },
         },
         interest: {
           type: "object",
           required: %w[rate fixed],
-          properties: { rate: { type: "number" }, fixed: { type: "boolean" } },
+          properties: {
+            rate: {
+              type: "number",
+            },
+            fixed: {
+              type: "boolean",
+            },
+          },
         },
         chargeUplift: {
           type: "object",
           required: %w[amount],
           properties: {
-            amount: { type: "number" },
-            date: { type: "string", format: "iso-date" },
+            amount: {
+              type: "number",
+            },
+            date: {
+              type: "string",
+              format: "iso-date",
+            },
           },
         },
-        ccaRegulated: { type: "boolean" },
-        structureChanged: { type: "boolean" },
-        measuresRemoved: { type: "boolean" },
+        ccaRegulated: {
+          type: "boolean",
+        },
+        structureChanged: {
+          type: "boolean",
+        },
+        measuresRemoved: {
+          type: "boolean",
+        },
         measures: {
           type: "array",
           items: {
             type: "object",
             required: %w[product],
             properties: {
-              sequence: { type: "integer" },
-              measureType: { type: "string" },
-              product: { type: "string" },
-              repaidDate: { type: "string", format: "iso-date" },
+              sequence: {
+                type: "integer",
+              },
+              measureType: {
+                type: "string",
+              },
+              product: {
+                type: "string",
+              },
+              repaidDate: {
+                type: "string",
+                format: "iso-date",
+              },
             },
           },
         },
@@ -69,10 +108,20 @@ module Controller
             type: "object",
             required: %w[startDate endDate dailyCharge],
             properties: {
-              sequence: { type: "integer" },
-              startDate: { type: "string", format: "iso-date" },
-              endDate: { type: "string", format: "iso-date" },
-              dailyCharge: { type: "number" },
+              sequence: {
+                type: "integer",
+              },
+              startDate: {
+                type: "string",
+                format: "iso-date",
+              },
+              endDate: {
+                type: "string",
+                format: "iso-date",
+              },
+              dailyCharge: {
+                type: "number",
+              },
             },
           },
         },
@@ -82,10 +131,18 @@ module Controller
             type: "object",
             required: %w[fuelCode fuelSaving standingChargeFraction],
             properties: {
-              sequence: { type: "integer" },
-              fuelCode: { type: "string" },
-              fuelSaving: { type: "number" },
-              standingChargeFraction: { type: "number" },
+              sequence: {
+                type: "integer",
+              },
+              fuelCode: {
+                type: "string",
+              },
+              fuelSaving: {
+                type: "number",
+              },
+              standingChargeFraction: {
+                type: "number",
+              },
             },
           },
         },

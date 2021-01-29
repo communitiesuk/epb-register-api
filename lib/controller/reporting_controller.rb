@@ -6,8 +6,14 @@ module Controller
       type: "object",
       required: %w[startDate endDate],
       properties: {
-        startDate: { type: "string", format: "iso-date" },
-        endDate: { type: "string", format: "iso-date" },
+        startDate: {
+          type: "string",
+          format: "iso-date",
+        },
+        endDate: {
+          type: "string",
+          format: "iso-date",
+        },
       },
     }.freeze
 

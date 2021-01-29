@@ -59,10 +59,14 @@ module ViewModel
         related_rrn: @view_model.related_rrn,
         new_build_rating: @view_model.new_build_rating,
         new_build_band:
-          Helper::EnergyBandCalculator.commercial(@view_model.new_build_rating.to_i),
+          Helper::EnergyBandCalculator.commercial(
+            @view_model.new_build_rating.to_i,
+          ),
         existing_build_rating: @view_model.existing_build_rating,
         existing_build_band:
-          Helper::EnergyBandCalculator.commercial(@view_model.existing_build_rating.to_i),
+          Helper::EnergyBandCalculator.commercial(
+            @view_model.existing_build_rating.to_i,
+          ),
         current_energy_efficiency_rating: @view_model.energy_efficiency_rating,
         energy_efficiency_rating: @view_model.energy_efficiency_rating,
         assessor: {
@@ -79,7 +83,9 @@ module ViewModel
         },
         related_party_disclosure: @view_model.epc_related_party_disclosure,
         current_energy_efficiency_band:
-          Helper::EnergyBandCalculator.commercial(@view_model.energy_efficiency_rating.to_i),
+          Helper::EnergyBandCalculator.commercial(
+            @view_model.energy_efficiency_rating.to_i,
+          ),
         property_type: @view_model.property_type,
         building_complexity: @view_model.building_level,
       }
@@ -103,7 +109,9 @@ module ViewModel
         postcode: @view_model.postcode,
         asset_rating: @view_model.energy_efficiency_rating,
         asset_rating_band:
-          Helper::EnergyBandCalculator.commercial(@view_model.energy_efficiency_rating.to_i),
+          Helper::EnergyBandCalculator.commercial(
+            @view_model.energy_efficiency_rating.to_i,
+          ),
         property_type: @view_model.property_type,
         transaction_type: @view_model.transaction_type,
         new_build_benchmark: @view_model.new_build_rating,

@@ -41,7 +41,9 @@ describe "Acceptance::Assessment::Lodge" do
           lodge_assessment(
             assessment_body: valid_rdsap_xml,
             accepted_responses: [400],
-            auth_data: { scheme_ids: [scheme_id] },
+            auth_data: {
+              scheme_ids: [scheme_id],
+            },
           ).body,
         )
 
@@ -56,7 +58,9 @@ describe "Acceptance::Assessment::Lodge" do
           lodge_assessment(
             assessment_body: valid_cepc_rr_xml,
             accepted_responses: [400],
-            auth_data: { scheme_ids: [scheme_id] },
+            auth_data: {
+              scheme_ids: [scheme_id],
+            },
             schema_name: "unsupported",
           ).body,
         )
@@ -70,7 +74,9 @@ describe "Acceptance::Assessment::Lodge" do
           lodge_assessment(
             assessment_body: valid_cepc_rr_xml,
             accepted_responses: [400],
-            auth_data: { scheme_ids: [scheme_id] },
+            auth_data: {
+              scheme_ids: [scheme_id],
+            },
             schema_name: nil,
           ).body,
         )
@@ -85,13 +91,17 @@ describe "Acceptance::Assessment::Lodge" do
       lodge_assessment(
         assessment_body: doc.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
       )
 
       lodge_assessment(
         assessment_body: doc.to_xml,
         accepted_responses: [409],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
       )
     end
 
@@ -100,20 +110,28 @@ describe "Acceptance::Assessment::Lodge" do
       lodge_assessment(
         assessment_body: doc.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
       )
 
       update_assessment_status(
         assessment_id: "0000-0000-0000-0000-0000",
-        assessment_status_body: { status: "CANCELLED" },
-        auth_data: { scheme_ids: [scheme_id] },
+        assessment_status_body: {
+          status: "CANCELLED",
+        },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
         accepted_responses: [200],
       )
 
       lodge_assessment(
         assessment_body: doc.to_xml,
         accepted_responses: [409],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
       )
     end
 
@@ -122,20 +140,28 @@ describe "Acceptance::Assessment::Lodge" do
       lodge_assessment(
         assessment_body: doc.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
       )
 
       update_assessment_status(
         assessment_id: "0000-0000-0000-0000-0000",
-        assessment_status_body: { status: "NOT_FOR_ISSUE" },
-        auth_data: { scheme_ids: [scheme_id] },
+        assessment_status_body: {
+          status: "NOT_FOR_ISSUE",
+        },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
         accepted_responses: [200],
       )
 
       lodge_assessment(
         assessment_body: doc.to_xml,
         accepted_responses: [409],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
       )
     end
 
@@ -151,7 +177,9 @@ describe "Acceptance::Assessment::Lodge" do
           lodge_assessment(
             assessment_body: doc.to_xml,
             accepted_responses: [400],
-            auth_data: { scheme_ids: [scheme_id] },
+            auth_data: {
+              scheme_ids: [scheme_id],
+            },
           ).body,
         )
 
@@ -184,7 +212,9 @@ describe "Acceptance::Assessment::Lodge" do
           lodge_assessment(
             assessment_body: xml.to_xml,
             accepted_responses: [400],
-            auth_data: { scheme_ids: [scheme_id] },
+            auth_data: {
+              scheme_ids: [scheme_id],
+            },
             schema_name: "CEPC-8.0.0",
             override: "true",
           ).body,
@@ -207,7 +237,9 @@ describe "Acceptance::Assessment::Lodge" do
         lodge_assessment(
           assessment_body: xml.to_xml,
           accepted_responses: [201],
-          auth_data: { scheme_ids: [scheme_id] },
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
           schema_name: "CEPC-8.0.0",
           override: "true",
         ).body
@@ -226,7 +258,9 @@ describe "Acceptance::Assessment::Lodge" do
           lodge_assessment(
             assessment_body: xml.to_xml,
             accepted_responses: [400],
-            auth_data: { scheme_ids: [scheme_id] },
+            auth_data: {
+              scheme_ids: [scheme_id],
+            },
             schema_name: "CEPC-8.0.0",
             override: "true",
           ).body,
@@ -251,7 +285,9 @@ describe "Acceptance::Assessment::Lodge" do
       lodge_assessment(
         assessment_body: cepc_xml_doc.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
         schema_name: "CEPC-8.0.0",
         override: "true",
       )
@@ -283,14 +319,18 @@ describe "Acceptance::Assessment::Lodge" do
           lodge_assessment(
             assessment_body: valid_rdsap_xml,
             accepted_responses: [201],
-            auth_data: { scheme_ids: [scheme_id] },
+            auth_data: {
+              scheme_ids: [scheme_id],
+            },
           ).body,
           symbolize_names: true,
         )
 
       expect(response).to eq(
         {
-          data: { assessments: %w[0000-0000-0000-0000-0000] },
+          data: {
+            assessments: %w[0000-0000-0000-0000-0000],
+          },
           meta: {
             links: {
               assessments: %w[/api/assessments/0000-0000-0000-0000-0000],
@@ -309,7 +349,9 @@ describe "Acceptance::Assessment::Lodge" do
           lodge_assessment(
             assessment_body: valid_cepc_rr_xml,
             accepted_responses: [201],
-            auth_data: { scheme_ids: [scheme_id] },
+            auth_data: {
+              scheme_ids: [scheme_id],
+            },
             schema_name: "CEPC-8.0.0",
           ).body,
           symbolize_names: true,
@@ -341,7 +383,9 @@ describe "Acceptance::Assessment::Lodge" do
           lodge_assessment(
             assessment_body: valid_dec_rr_xml,
             accepted_responses: [201],
-            auth_data: { scheme_ids: [scheme_id] },
+            auth_data: {
+              scheme_ids: [scheme_id],
+            },
             schema_name: "CEPC-8.0.0",
           ).body,
           symbolize_names: true,
@@ -373,7 +417,9 @@ describe "Acceptance::Assessment::Lodge" do
           lodge_assessment(
             assessment_body: valid_ac_cert_report_xml,
             accepted_responses: [201],
-            auth_data: { scheme_ids: [scheme_id] },
+            auth_data: {
+              scheme_ids: [scheme_id],
+            },
             schema_name: "CEPC-8.0.0",
           ).body,
           symbolize_names: true,
@@ -406,7 +452,9 @@ describe "Acceptance::Assessment::Lodge" do
       lodge_assessment(
         assessment_body: cepc_xml_doc.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
         schema_name: "CEPC-8.0.0",
       )
     end
@@ -421,7 +469,9 @@ describe "Acceptance::Assessment::Lodge" do
       lodge_assessment(
         assessment_body: cepc_xml_doc.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
         schema_name: "CEPC-8.0.0",
       )
     end
@@ -442,7 +492,9 @@ describe "Acceptance::Assessment::Lodge" do
       lodge_assessment assessment_body: valid_rdsap_xml,
                        accepted_responses: [201],
                        scopes: %w[assessment:lodge migrate:assessment],
-                       auth_data: { scheme_ids: [scheme_id] },
+                       auth_data: {
+                         scheme_ids: [scheme_id],
+                       },
                        migrated: "true"
     end
 
@@ -455,7 +507,9 @@ describe "Acceptance::Assessment::Lodge" do
         lodge_assessment assessment_body: valid_rdsap_xml,
                          accepted_responses: [201],
                          scopes: %w[assessment:lodge migrate:assessment],
-                         auth_data: { scheme_ids: [scheme_id] },
+                         auth_data: {
+                           scheme_ids: [scheme_id],
+                         },
                          migrated: true
       end
 
@@ -483,7 +537,9 @@ describe "Acceptance::Assessment::Lodge" do
         lodge_assessment assessment_body: rdsap_xml,
                          accepted_responses: [201],
                          scopes: %w[assessment:lodge migrate:assessment],
-                         auth_data: { scheme_ids: [scheme_id] },
+                         auth_data: {
+                           scheme_ids: [scheme_id],
+                         },
                          migrated: true
       end
     end
@@ -492,7 +548,9 @@ describe "Acceptance::Assessment::Lodge" do
       lodge_assessment(
         assessment_body: valid_rdsap_xml,
         accepted_responses: [403],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
         migrated: "true",
       )
     end
@@ -511,7 +569,9 @@ describe "Acceptance::Assessment::Lodge" do
       lodge_assessment(
         assessment_body: "body",
         accepted_responses: [403],
-        auth_data: { scheme_ids: {} },
+        auth_data: {
+          scheme_ids: {},
+        },
         scopes: %w[wrong:scope],
       )
     end
@@ -524,7 +584,9 @@ describe "Acceptance::Assessment::Lodge" do
       lodge_assessment(
         assessment_body: valid_rdsap_xml,
         accepted_responses: [403],
-        auth_data: { scheme_ids: [different_scheme_id] },
+        auth_data: {
+          scheme_ids: [different_scheme_id],
+        },
       )
     end
   end

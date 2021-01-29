@@ -92,10 +92,9 @@ module Gateway
             FROM assessments
             WHERE
               address_id IN(' +
-          uprns
-            .keys
-            .map { |uprn| ActiveRecord::Base.connection.quote(uprn) }
-            .join(", ") + ")"
+          uprns.keys.map { |uprn|
+            ActiveRecord::Base.connection.quote(uprn)
+          }.join(", ") + ")"
 
         existing_assessments = ActiveRecord::Base.connection.exec_query(sql)
 

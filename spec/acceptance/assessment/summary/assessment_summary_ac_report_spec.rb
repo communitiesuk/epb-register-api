@@ -61,7 +61,9 @@ def lodge_test_ac_report(scheme_id, schema_name, xml = nil)
 
   lodge_assessment(
     assessment_body: xml,
-    auth_data: { scheme_ids: [scheme_id] },
+    auth_data: {
+      scheme_ids: [scheme_id],
+    },
     schema_name: schema_name,
   )
 end

@@ -13,8 +13,14 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan" do
         telephone: "0800 0000000",
         email: "lender@example.com",
       },
-      interest: { rate: 12.3, fixed: true },
-      chargeUplift: { amount: 1.25, date: "2025-03-29" },
+      interest: {
+        rate: 12.3,
+        fixed: true,
+      },
+      chargeUplift: {
+        amount: 1.25,
+        date: "2025-03-29",
+      },
       ccaRegulated: true,
       structureChanged: false,
       measuresRemoved: false,
@@ -52,8 +58,14 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan" do
         telephone: "0900 0000000",
         email: "lender@example.io",
       },
-      interest: { rate: 12.5, fixed: false },
-      chargeUplift: { amount: 0.25, date: "2025-04-29" },
+      interest: {
+        rate: 12.5,
+        fixed: false,
+      },
+      chargeUplift: {
+        amount: 0.25,
+        date: "2025-04-29",
+      },
       ccaRegulated: false,
       structureChanged: true,
       measuresRemoved: true,
@@ -148,8 +160,14 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan" do
               telephone: "0900 0000000",
               email: "lender@example.io",
             },
-            interest: { rate: 12.5, fixed: false },
-            chargeUplift: { amount: 0.25, date: "2025-04-29" },
+            interest: {
+              rate: 12.5,
+              fixed: false,
+            },
+            chargeUplift: {
+              amount: 0.25,
+              date: "2025-04-29",
+            },
             ccaRegulated: false,
             structureChanged: true,
             measuresRemoved: true,
@@ -191,7 +209,9 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan" do
                      )
 
         lodge_assessment assessment_body: valid_rdsap_xml,
-                         auth_data: { scheme_ids: [scheme_id] }
+                         auth_data: {
+                           scheme_ids: [scheme_id],
+                         }
 
         add_green_deal_plan assessment_id: "0000-0000-0000-0000-0000",
                             body: valid_green_deal_plan_request_body
@@ -272,7 +292,9 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan" do
 
           lodge_assessment assessment_body: assessment.to_xml,
                            accepted_responses: [201],
-                           auth_data: { scheme_ids: [scheme_id] }
+                           auth_data: {
+                             scheme_ids: [scheme_id],
+                           }
         end
 
         GREEN_DEAL_PLAN_SCHEMA[:required].each do |field|

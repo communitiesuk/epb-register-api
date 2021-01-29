@@ -10,14 +10,12 @@ module ViewModel
       end
 
       def extract_aci_recommendations(nodes)
-        nodes
-          .map { |node|
-            {
-              sequence: node.at("Seq-Number").content,
-              text: node.at("Text").content,
-            }
+        nodes.map { |node|
+          {
+            sequence: node.at("Seq-Number").content,
+            text: node.at("Text").content,
           }
-          .reject { |node| node[:text].nil? || node[:text].empty? }
+        }.reject { |node| node[:text].nil? || node[:text].empty? }
       end
 
       def key_recommendations_efficiency
@@ -87,14 +85,11 @@ module ViewModel
 
       def checklist_values(checklist)
         results =
-          checklist
-            &.element_children
-            &.map { |node|
-              checklist_item = node.name.underscore.to_sym
-              value = node.content == "Yes"
-              { checklist_item => value }
-            }
-            &.inject(&:merge)
+          checklist&.element_children&.map { |node|
+            checklist_item = node.name.underscore.to_sym
+            value = node.content == "Yes"
+            { checklist_item => value }
+          }&.inject(&:merge)
 
         results.nil? ? {} : results
       end

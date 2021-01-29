@@ -85,18 +85,27 @@ module Gateway
 
       parse_results(
         [
-          ActiveRecord::Base.connection.exec_query(sql_address_base, "SQL", binds),
-          ActiveRecord::Base.connection.exec_query(sql_assessments, "SQL", binds),
+          ActiveRecord::Base.connection.exec_query(
+            sql_address_base,
+            "SQL",
+            binds,
+          ),
+          ActiveRecord::Base.connection.exec_query(
+            sql_assessments,
+            "SQL",
+            binds,
+          ),
         ].flatten,
       )
     end
 
     def search_by_address_id(address_id)
-      stripped_id = if address_id.start_with?("RRN")
-                      address_id[4..-1]
-                    elsif address_id.start_with?("UPRN")
-                      address_id[5..-1].to_i.to_s
-                    end
+      stripped_id =
+        if address_id.start_with?("RRN")
+          address_id[4..-1]
+        elsif address_id.start_with?("UPRN")
+          address_id[5..-1].to_i.to_s
+        end
 
       sql_assessments = <<~SQL
          SELECT
@@ -141,7 +150,11 @@ module Gateway
 
       parse_results(
         [
-          ActiveRecord::Base.connection.exec_query(sql_address_base, "SQL", binds),
+          ActiveRecord::Base.connection.exec_query(
+            sql_address_base,
+            "SQL",
+            binds,
+          ),
           ActiveRecord::Base.connection.exec_query(
             sql_assessments,
             "SQL",
@@ -217,9 +230,7 @@ module Gateway
         ),
       ]
 
-      parse_results(
-        ActiveRecord::Base.connection.exec_query(sql, "SQL", binds),
-      )
+      parse_results(ActiveRecord::Base.connection.exec_query(sql, "SQL", binds))
     end
 
   private
@@ -229,37 +240,45 @@ module Gateway
       address_hashes = {}
       remapped_addresses = []
 
-      results.enum_for(:each_with_index).each do |res, i|
-        address_id = res["address_id"]
+      results
+        .enum_for(:each_with_index)
+        .each do |res, i|
+          address_id = res["address_id"]
 
-        if !res["linked_assessment_id"].nil? &&
-            res["address_id"].start_with?("RRN-") &&
-            res["linked_assessment_id"].to_s > res["address_id"].to_s
-          address_id = "RRN-#{res['linked_assessment_id']}"
-          results[i]["address_id"] = address_id
+          if !res["linked_assessment_id"].nil? &&
+              res["address_id"].start_with?("RRN-") &&
+              res["linked_assessment_id"].to_s > res["address_id"].to_s
+            address_id = "RRN-#{res['linked_assessment_id']}"
+            results[i]["address_id"] = address_id
+          end
+
+          if res["address_id"].start_with?("LPRN-")
+            address_id =
+              if res["linked_assessment_id"].to_s > res["assessment_id"].to_s
+                "RRN-#{res['linked_assessment_id']}"
+              else
+                "RRN-#{res['assessment_id']}"
+              end
+
+            results[i]["address_id"] = address_id
+          end
+
+          address_ids[address_id] = [] unless address_ids.key? address_id
+          address_ids[address_id].push i
+
+          address_hash = compact_address(res).downcase.hash
+          unless address_hashes.key? address_hash
+            address_hashes[
+              address_hash
+            ] = []
+          end
+          address_hashes[address_hash].push i
         end
-
-        if res["address_id"].start_with?("LPRN-")
-          address_id = if res["linked_assessment_id"].to_s > res["assessment_id"].to_s
-                         "RRN-#{res['linked_assessment_id']}"
-                       else
-                         "RRN-#{res['assessment_id']}"
-                       end
-
-          results[i]["address_id"] = address_id
-        end
-
-        address_ids[address_id] = [] unless address_ids.key? address_id
-        address_ids[address_id].push i
-
-        address_hash = compact_address(res).downcase.hash
-        address_hashes[address_hash] = [] unless address_hashes.key? address_hash
-        address_hashes[address_hash].push i
-      end
 
       address_ids.each do |_, entries|
         root_entry = results[entries.first]
-        entries_sharing_hash = address_hashes[compact_address(root_entry).downcase.hash]
+        entries_sharing_hash =
+          address_hashes[compact_address(root_entry).downcase.hash]
 
         (entries_sharing_hash - entries).each do |result_to_update|
           next if remapped_addresses.include? result_to_update
@@ -271,43 +290,47 @@ module Gateway
       end
 
       address_ids = {}
-      results.enum_for(:each_with_index).each do |res, i|
-        address_id = res["address_id"]
-        address_ids[address_id] = [] unless address_ids.key? address_id
-        address_ids[address_id].push i
-      end
-
-      addresses = address_ids.keys.map do |address_id|
-        entries = address_ids[address_id]
-
-        existing_assessments = entries.map do |entry|
-          res = results[entry]
-          next if res["assessment_id"].nil?
-
-          status = update_expiry_and_status(res)
-
-          next if %w[NOT_FOR_ISSUE CANCELLED].include? status
-
-          {
-            assessmentId: res["assessment_id"],
-            assessmentStatus: status,
-            assessmentType: res["type_of_assessment"],
-          }
+      results
+        .enum_for(:each_with_index)
+        .each do |res, i|
+          address_id = res["address_id"]
+          address_ids[address_id] = [] unless address_ids.key? address_id
+          address_ids[address_id].push i
         end
 
-        {
-          address_id: address_id,
-          address_line1: results[entries.first]["address_line1"],
-          address_line2: results[entries.first]["address_line2"],
-          address_line3: results[entries.first]["address_line3"],
-          address_line4: results[entries.first]["address_line4"],
-          town: results[entries.first]["town"],
-          postcode: results[entries.first]["postcode"],
-          existing_assessments: existing_assessments.compact,
-          matched_rank: results[entries.first]["matched_rank"],
-          matched_difference: results[entries.first]["matched_difference"],
-        }.deep_stringify_keys
-      end
+      addresses =
+        address_ids.keys.map do |address_id|
+          entries = address_ids[address_id]
+
+          existing_assessments =
+            entries.map do |entry|
+              res = results[entry]
+              next if res["assessment_id"].nil?
+
+              status = update_expiry_and_status(res)
+
+              next if %w[NOT_FOR_ISSUE CANCELLED].include? status
+
+              {
+                assessmentId: res["assessment_id"],
+                assessmentStatus: status,
+                assessmentType: res["type_of_assessment"],
+              }
+            end
+
+          {
+            address_id: address_id,
+            address_line1: results[entries.first]["address_line1"],
+            address_line2: results[entries.first]["address_line2"],
+            address_line3: results[entries.first]["address_line3"],
+            address_line4: results[entries.first]["address_line4"],
+            town: results[entries.first]["town"],
+            postcode: results[entries.first]["postcode"],
+            existing_assessments: existing_assessments.compact,
+            matched_rank: results[entries.first]["matched_rank"],
+            matched_difference: results[entries.first]["matched_difference"],
+          }.deep_stringify_keys
+        end
 
       addresses.sort_by! do |address|
         [
@@ -317,9 +340,7 @@ module Gateway
         ]
       end
 
-      addresses.map do |address|
-        record_to_address_domain(address)
-      end
+      addresses.map { |address| record_to_address_domain(address) }
     end
 
     def record_to_address_domain(row)
@@ -338,7 +359,12 @@ module Gateway
                           line4: address_lines[3],
                           town: row["town"],
                           postcode: row["postcode"],
-                          source: row["address_id"].include?("UPRN-") ? "GAZETTEER" : "PREVIOUS_ASSESSMENT",
+                          source:
+                            if row["address_id"].include?("UPRN-")
+                              "GAZETTEER"
+                            else
+                              "PREVIOUS_ASSESSMENT"
+                            end,
                           existing_assessments: row["existing_assessments"]
     end
 

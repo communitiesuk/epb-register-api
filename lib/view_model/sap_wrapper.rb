@@ -99,7 +99,9 @@ module ViewModel
         },
         current_carbon_emission: @view_model.current_carbon_emission,
         current_energy_efficiency_band:
-          Helper::EnergyBandCalculator.domestic(@view_model.current_energy_rating),
+          Helper::EnergyBandCalculator.domestic(
+            @view_model.current_energy_rating,
+          ),
         current_energy_efficiency_rating: @view_model.current_energy_rating,
         dwelling_type: @view_model.dwelling_type,
         estimated_energy_cost: estimated_energy_cost,
@@ -122,7 +124,9 @@ module ViewModel
         lighting_cost_potential: @view_model.lighting_cost_potential,
         potential_carbon_emission: @view_model.potential_carbon_emission,
         potential_energy_efficiency_band:
-          Helper::EnergyBandCalculator.domestic(@view_model.potential_energy_rating),
+          Helper::EnergyBandCalculator.domestic(
+            @view_model.potential_energy_rating,
+          ),
         potential_energy_efficiency_rating: @view_model.potential_energy_rating,
         potential_energy_saving:
           Helper::EstimatedCostPotentialSavingHelper.new.potential_saving(
@@ -167,27 +171,42 @@ module ViewModel
         heated_room_count: @view_model.heated_room_count,
         low_energy_lighting: @view_model.low_energy_lighting,
         fixed_lighting_outlets_count: @view_model.fixed_lighting_outlets_count,
-        low_energy_fixed_lighting_outlets_count: @view_model.low_energy_fixed_lighting_outlets_count,
+        low_energy_fixed_lighting_outlets_count:
+          @view_model.low_energy_fixed_lighting_outlets_count,
         open_fireplaces_count: @view_model.open_fireplaces_count,
         hot_water_description: @view_model.hot_water_description,
-        hot_water_energy_efficiency_rating: @view_model.hot_water_energy_efficiency_rating,
-        hot_water_environmental_efficiency_rating: @view_model.hot_water_environmental_efficiency_rating,
+        hot_water_energy_efficiency_rating:
+          @view_model.hot_water_energy_efficiency_rating,
+        hot_water_environmental_efficiency_rating:
+          @view_model.hot_water_environmental_efficiency_rating,
         window_description: @view_model.window_description,
-        window_energy_efficiency_rating: @view_model.window_energy_efficiency_rating,
-        window_environmental_efficiency_rating: @view_model.window_environmental_efficiency_rating,
-        secondary_heating_description: @view_model.secondary_heating_description,
-        secondary_heating_energy_efficiency_rating: @view_model.secondary_heating_energy_efficiency_rating,
-        secondary_heating_environmental_efficiency_rating: @view_model.secondary_heating_environmental_efficiency_rating,
+        window_energy_efficiency_rating:
+          @view_model.window_energy_efficiency_rating,
+        window_environmental_efficiency_rating:
+          @view_model.window_environmental_efficiency_rating,
+        secondary_heating_description:
+          @view_model.secondary_heating_description,
+        secondary_heating_energy_efficiency_rating:
+          @view_model.secondary_heating_energy_efficiency_rating,
+        secondary_heating_environmental_efficiency_rating:
+          @view_model.secondary_heating_environmental_efficiency_rating,
         lighting_description: @view_model.lighting_description,
-        lighting_energy_efficiency_rating: @view_model.lighting_energy_efficiency_rating,
-        lighting_environmental_efficiency_rating: @view_model.lighting_environmental_efficiency_rating,
-        photovoltaic_roof_area_percent: @view_model.photovoltaic_roof_area_percent,
+        lighting_energy_efficiency_rating:
+          @view_model.lighting_energy_efficiency_rating,
+        lighting_environmental_efficiency_rating:
+          @view_model.lighting_environmental_efficiency_rating,
+        photovoltaic_roof_area_percent:
+          @view_model.photovoltaic_roof_area_percent,
         heat_loss_corridor: @view_model.heat_loss_corridor,
         wind_turbine_count: @view_model.wind_turbine_count,
         unheated_corridor_length: @view_model.unheated_corridor_length,
         built_form: @view_model.built_form,
-        mainheat_description: @view_model.all_main_heating_descriptions.join(", "),
-        extensions_count: @view_model.respond_to?(:extensions_count) ? @view_model.extensions_count : nil,
+        mainheat_description:
+          @view_model.all_main_heating_descriptions.join(", "),
+        extensions_count:
+          if @view_model.respond_to?(:extensions_count)
+            @view_model.extensions_count
+          end,
       }
     end
 

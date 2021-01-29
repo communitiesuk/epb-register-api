@@ -1,7 +1,6 @@
 module Gateway
   class ReportingGateway
-
-    OPEN_DATA_EXPORT_DATE_START = "2019-07-01"
+    OPEN_DATA_EXPORT_DATE_START = "2019-07-01".freeze
 
     def assessments_by_region_and_type(start_date, end_date)
       sql = <<~SQL
@@ -148,11 +147,12 @@ module Gateway
       results.map { |result| result }
     end
 
-    def assessments_for_open_data(type_of_assessment="")
+    def assessments_for_open_data(type_of_assessment = "")
+      bindings = [
+        [nil, OPEN_DATA_EXPORT_DATE_START, ActiveRecord::Type::Date.new],
+      ]
 
-      bindings = [[nil, OPEN_DATA_EXPORT_DATE_START, ActiveRecord::Type::Date.new]]
-
-      # TODO create public hash for ID
+      # TODO: create public hash for ID
 
       sql = <<~SQL
         SELECT  a.assessment_id, created_at
@@ -164,29 +164,29 @@ module Gateway
         AND a.postcode NOT LIKE 'BT%'
       SQL
 
-      if (type_of_assessment.is_a?(Array))
+      if type_of_assessment.is_a?(Array)
         list_of_types = type_of_assessment.map { |n| "'#{n}'" }
         sql << <<~SQL_TYPE_OF_ASSESSMENT
-                 AND type_of_assessment IN(#{list_of_types.join(',')})
-              SQL_TYPE_OF_ASSESSMENT
+          AND type_of_assessment IN(#{list_of_types.join(',')})
+        SQL_TYPE_OF_ASSESSMENT
       else
         sql << <<~SQL_TYPE_OF_ASSESSMENT
-                 AND type_of_assessment = '#{type_of_assessment}'
+          AND type_of_assessment = '#{type_of_assessment}'
         SQL_TYPE_OF_ASSESSMENT
-
       end
 
       sql << " ORDER BY assessment_id "
 
-      results = ActiveRecord::Base.connection.exec_query(sql, 'SQL', bindings)
+      results = ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
 
       results.map { |result| result }
     end
 
-
     def assessments_for_open_data_recommendation_report(type_of_assessment)
-
-      bindings = [[nil, type_of_assessment], [nil, OPEN_DATA_EXPORT_DATE_START, ActiveRecord::Type::Date.new]]
+      bindings = [
+        [nil, type_of_assessment],
+        [nil, OPEN_DATA_EXPORT_DATE_START, ActiveRecord::Type::Date.new],
+      ]
 
       sql = <<~SQL
         SELECT  a.assessment_id, created_at
@@ -199,7 +199,7 @@ module Gateway
         ORDER BY a.assessment_id
       SQL
 
-      results = ActiveRecord::Base.connection.exec_query(sql, 'SQL', bindings)
+      results = ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
       results.map { |result| result }
     end
 

@@ -1,6 +1,7 @@
 module Gateway
   class SchemesGateway
-    class DuplicateSchemeException < StandardError; end
+    class DuplicateSchemeException < StandardError
+    end
 
     class Scheme < ActiveRecord::Base
       def to_hash

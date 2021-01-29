@@ -32,7 +32,6 @@ module ViewModel
     end
 
     def to_hash
-
       estimated_energy_cost =
         Helper::EstimatedCostPotentialSavingHelper.new.estimated_cost(
           @view_model.heating_cost_current,
@@ -70,9 +69,12 @@ module ViewModel
             telephone: @view_model.assessor_telephone,
           },
         },
-        current_carbon_emission: convert_to_big_decimal(@view_model.current_carbon_emission),
+        current_carbon_emission:
+          convert_to_big_decimal(@view_model.current_carbon_emission),
         current_energy_efficiency_band:
-          Helper::EnergyBandCalculator.domestic(@view_model.current_energy_rating),
+          Helper::EnergyBandCalculator.domestic(
+            @view_model.current_energy_rating,
+          ),
         current_energy_efficiency_rating: @view_model.current_energy_rating,
         dwelling_type: @view_model.dwelling_type,
         estimated_energy_cost: estimated_energy_cost,
@@ -93,9 +95,12 @@ module ViewModel
         hot_water_cost_potential: @view_model.hot_water_cost_potential,
         lighting_cost_current: @view_model.lighting_cost_current,
         lighting_cost_potential: @view_model.lighting_cost_potential,
-        potential_carbon_emission: convert_to_big_decimal(@view_model.potential_carbon_emission),
+        potential_carbon_emission:
+          convert_to_big_decimal(@view_model.potential_carbon_emission),
         potential_energy_efficiency_band:
-          Helper::EnergyBandCalculator.domestic(@view_model.potential_energy_rating),
+          Helper::EnergyBandCalculator.domestic(
+            @view_model.potential_energy_rating,
+          ),
         potential_energy_efficiency_rating: @view_model.potential_energy_rating,
         potential_energy_saving:
           Helper::EstimatedCostPotentialSavingHelper.new.potential_saving(
@@ -132,9 +137,11 @@ module ViewModel
     end
 
     def to_report
-      all_main_heating_energy_efficiency = @view_model.all_main_heating_energy_efficiency
+      all_main_heating_energy_efficiency =
+        @view_model.all_main_heating_energy_efficiency
 
-      { rrn: @view_model.assessment_id,
+      {
+        rrn: @view_model.assessment_id,
         inspection_date: @view_model.date_of_assessment,
         lodgement_date: @view_model.date_of_registration,
         building_reference_number: @view_model.address_id,
@@ -145,11 +152,16 @@ module ViewModel
         postcode: @view_model.postcode,
         construction_age_band: @view_model.property_age_band,
         current_energy_rating:
-          Helper::EnergyBandCalculator.domestic(@view_model.current_energy_rating),
+          Helper::EnergyBandCalculator.domestic(
+            @view_model.current_energy_rating,
+          ),
         potential_energy_rating:
-          Helper::EnergyBandCalculator.domestic(@view_model.potential_energy_rating),
+          Helper::EnergyBandCalculator.domestic(
+            @view_model.potential_energy_rating,
+          ),
         current_energy_efficiency: @view_model.current_energy_rating.to_s.chomp,
-        potential_energy_efficiency: @view_model.potential_energy_rating.to_s.chomp,
+        potential_energy_efficiency:
+          @view_model.potential_energy_rating.to_s.chomp,
         property_type: @view_model.dwelling_type,
         tenure: @view_model.tenure,
         transaction_type: @view_model.transaction_type,
@@ -180,41 +192,86 @@ module ViewModel
         number_heated_rooms: @view_model.heated_room_count,
         low_energy_lighting: @view_model.low_energy_lighting,
         fixed_lighting_outlets_count: @view_model.fixed_lighting_outlets_count,
-        low_energy_fixed_lighting_outlets_count: @view_model.low_energy_fixed_lighting_outlets_count,
+        low_energy_fixed_lighting_outlets_count:
+          @view_model.low_energy_fixed_lighting_outlets_count,
         number_open_fireplaces: @view_model.open_fireplaces_count,
         hotwater_description: @view_model.hot_water_description,
-        hot_water_energy_eff: Helper::XmlEnumsToOutput.energy_rating_string(@view_model.hot_water_energy_efficiency_rating),
-        hot_water_env_eff: Helper::XmlEnumsToOutput.energy_rating_string(@view_model.hot_water_environmental_efficiency_rating),
+        hot_water_energy_eff:
+          Helper::XmlEnumsToOutput.energy_rating_string(
+            @view_model.hot_water_energy_efficiency_rating,
+          ),
+        hot_water_env_eff:
+          Helper::XmlEnumsToOutput.energy_rating_string(
+            @view_model.hot_water_environmental_efficiency_rating,
+          ),
         wind_turbine_count: @view_model.wind_turbine_count,
         heat_loss_corridor: @view_model.heat_loss_corridor,
         unheated_corridor_length: @view_model.unheated_corridor_length,
         windows_description: @view_model.window_description,
-        windows_energy_eff: Helper::XmlEnumsToOutput.energy_rating_string(@view_model.window_energy_efficiency_rating),
-        windows_env_eff: Helper::XmlEnumsToOutput.energy_rating_string(@view_model.window_environmental_efficiency_rating),
-        sheating_energy_eff: Helper::XmlEnumsToOutput.energy_rating_string(@view_model.secondary_heating_energy_efficiency_rating),
-        sheating_env_eff: Helper::XmlEnumsToOutput.energy_rating_string(@view_model.secondary_heating_environmental_efficiency_rating),
+        windows_energy_eff:
+          Helper::XmlEnumsToOutput.energy_rating_string(
+            @view_model.window_energy_efficiency_rating,
+          ),
+        windows_env_eff:
+          Helper::XmlEnumsToOutput.energy_rating_string(
+            @view_model.window_environmental_efficiency_rating,
+          ),
+        sheating_energy_eff:
+          Helper::XmlEnumsToOutput.energy_rating_string(
+            @view_model.secondary_heating_energy_efficiency_rating,
+          ),
+        sheating_env_eff:
+          Helper::XmlEnumsToOutput.energy_rating_string(
+            @view_model.secondary_heating_environmental_efficiency_rating,
+          ),
         secondheat_description: @view_model.secondary_heating_description,
         lighting_description: @view_model.lighting_description,
-        lighting_energy_eff: Helper::XmlEnumsToOutput.energy_rating_string(@view_model.lighting_energy_efficiency_rating),
-        lighting_env_eff: Helper::XmlEnumsToOutput.energy_rating_string(@view_model.lighting_environmental_efficiency_rating),
+        lighting_energy_eff:
+          Helper::XmlEnumsToOutput.energy_rating_string(
+            @view_model.lighting_energy_efficiency_rating,
+          ),
+        lighting_env_eff:
+          Helper::XmlEnumsToOutput.energy_rating_string(
+            @view_model.lighting_environmental_efficiency_rating,
+          ),
         photo_supply: @view_model.photovoltaic_roof_area_percent,
         built_form: @view_model.built_form,
-        mainheat_description: @view_model.all_main_heating_descriptions.join(", "),
-        mainheat_energy_eff: Helper::XmlEnumsToOutput.energy_rating_string(all_main_heating_energy_efficiency[0]),
-        mainheat_env_eff: Helper::XmlEnumsToOutput.energy_rating_string(all_main_heating_energy_efficiency[1]),
+        mainheat_description:
+          @view_model.all_main_heating_descriptions.join(", "),
+        mainheat_energy_eff:
+          Helper::XmlEnumsToOutput.energy_rating_string(
+            all_main_heating_energy_efficiency[0],
+          ),
+        mainheat_env_eff:
+          Helper::XmlEnumsToOutput.energy_rating_string(
+            all_main_heating_energy_efficiency[1],
+          ),
         extension_count: @view_model.extensions_count,
         report_type: @view_model.report_type,
-        mainheatcont_description: @view_model.all_main_heating_controls_descriptions.join(", "),
-        roof_description:  @view_model.all_roof_descriptions.join(", "),
-        roof_energy_eff: Helper::XmlEnumsToOutput.energy_rating_string(@view_model.all_roof_energy_efficieny_rating),
-        roof_env_eff: Helper::XmlEnumsToOutput.energy_rating_string(@view_model.all_roof_env_energy_efficieny_rating),
+        mainheatcont_description:
+          @view_model.all_main_heating_controls_descriptions.join(", "),
+        roof_description: @view_model.all_roof_descriptions.join(", "),
+        roof_energy_eff:
+          Helper::XmlEnumsToOutput.energy_rating_string(
+            @view_model.all_roof_energy_efficieny_rating,
+          ),
+        roof_env_eff:
+          Helper::XmlEnumsToOutput.energy_rating_string(
+            @view_model.all_roof_env_energy_efficieny_rating,
+          ),
         walls_description: @view_model.all_wall_descriptions.join(", "),
-        walls_energy_eff: Helper::XmlEnumsToOutput.energy_rating_string(@view_model.all_wall_energy_efficieny_rating),
-        walls_env_eff: Helper::XmlEnumsToOutput.energy_rating_string(@view_model.all_wall_env_energy_efficieny_rating),
-        energy_tariff:  @view_model.meter_type,
+        walls_energy_eff:
+          Helper::XmlEnumsToOutput.energy_rating_string(
+            @view_model.all_wall_energy_efficieny_rating,
+          ),
+        walls_env_eff:
+          Helper::XmlEnumsToOutput.energy_rating_string(
+            @view_model.all_wall_env_energy_efficieny_rating,
+          ),
+        energy_tariff: @view_model.meter_type,
         floor_level: @view_model.floor_level,
         solar_water_heating_flag: @view_model.solar_water_heating_flag,
-        mechanical_ventilation:  @view_model.mechanical_ventilation,
+        mechanical_ventilation: @view_model.mechanical_ventilation,
         floor_height: @view_model.floor_height,
       }
     end
@@ -230,6 +287,5 @@ module ViewModel
 
       BigDecimal(node)
     end
-
   end
 end

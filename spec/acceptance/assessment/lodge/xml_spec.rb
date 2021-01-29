@@ -49,7 +49,9 @@ describe "Acceptance::LodgeAssessment::XML" do
       before do
         lodge_assessment assessment_body: valid_sap_xml,
                          accepted_responses: [201],
-                         auth_data: { scheme_ids: [scheme_id] },
+                         auth_data: {
+                           scheme_ids: [scheme_id],
+                         },
                          schema_name: "SAP-Schema-18.0.0"
       end
 
@@ -67,9 +69,13 @@ describe "Acceptance::LodgeAssessment::XML" do
       Nokogiri.XML lodge_assessment(
         assessment_body: valid_sap_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
         schema_name: "SAP-Schema-18.0.0",
-        headers: { "Accept": "application/xml" },
+        headers: {
+          "Accept": "application/xml",
+        },
       ).body
     end
 
@@ -104,9 +110,13 @@ describe "Acceptance::LodgeAssessment::XML" do
         Nokogiri.XML lodge_assessment(
           assessment_body: valid_cepc_rr_xml,
           accepted_responses: [201],
-          auth_data: { scheme_ids: [scheme_id] },
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
           schema_name: "CEPC-8.0.0",
-          headers: { "Accept": "application/xml" },
+          headers: {
+            "Accept": "application/xml",
+          },
         ).body
       end
 

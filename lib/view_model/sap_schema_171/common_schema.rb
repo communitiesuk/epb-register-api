@@ -79,23 +79,20 @@ module ViewModel
       end
 
       def property_summary
-        @xml_doc
-          .search("Energy-Assessment Property-Summary")
-          .children
-          .select(&:element?)
-          .map { |node|
-            next if xpath(%w[Energy-Efficiency-Rating], node).nil?
+        @xml_doc.search("Energy-Assessment Property-Summary").children.select(
+          &:element?
+        ).map { |node|
+          next if xpath(%w[Energy-Efficiency-Rating], node).nil?
 
-            {
-              energy_efficiency_rating:
-                xpath(%w[Energy-Efficiency-Rating], node).to_i,
-              environmental_efficiency_rating:
-                xpath(%w[Environmental-Efficiency-Rating], node).to_i,
-              name: node.name.underscore,
-              description: xpath(%w[Description], node),
-            }
+          {
+            energy_efficiency_rating:
+              xpath(%w[Energy-Efficiency-Rating], node).to_i,
+            environmental_efficiency_rating:
+              xpath(%w[Environmental-Efficiency-Rating], node).to_i,
+            name: node.name.underscore,
+            description: xpath(%w[Description], node),
           }
-          .compact
+        }.compact
       end
 
       def related_party_disclosure_text
@@ -334,6 +331,7 @@ module ViewModel
       def window_description
         xpath(%w[Windows Description])
       end
+
       def wind_turbine_count
         xpath(%w[Wind-Turbines-Count])
       end
@@ -345,8 +343,6 @@ module ViewModel
       def unheated_corridor_length
         xpath(%w[Unheated-Corridor-Length])
       end
-
-
 
       def window_energy_efficiency_rating
         xpath(%w[Windows Energy-Efficiency-Rating])
@@ -397,7 +393,7 @@ module ViewModel
         @xml_doc.search("Main-Heating-Controls/Description").map(&:content)
       end
 
-      private
+    private
 
       def convert_to_big_decimal(node)
         return unless xpath(node)

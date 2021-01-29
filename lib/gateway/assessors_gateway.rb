@@ -82,8 +82,10 @@ module Gateway
       )
     end
 
-    class Assessor < ActiveRecord::Base; end
-    class Scheme < ActiveRecord::Base; end
+    class Assessor < ActiveRecord::Base
+    end
+    class Scheme < ActiveRecord::Base
+    end
 
     def qualification_to_column(qualification)
       case qualification
@@ -279,24 +281,27 @@ module Gateway
       result
     end
 
-    def search_by_first_name_last_name_and_date_of_birth(first_name, last_name, date_of_birth)
-
+    def search_by_first_name_last_name_and_date_of_birth(
+      first_name,
+      last_name,
+      date_of_birth
+    )
       binds = [
-          ActiveRecord::Relation::QueryAttribute.new(
-              "first_name",
-              first_name,
-              ActiveRecord::Type::String.new,
-              ),
-          ActiveRecord::Relation::QueryAttribute.new(
-              "last_name",
-              last_name,
-              ActiveRecord::Type::String.new,
-              ),
-          ActiveRecord::Relation::QueryAttribute.new(
-              "date_of_birth",
-              date_of_birth,
-              ActiveRecord::Type::String.new,
-              ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "first_name",
+          first_name,
+          ActiveRecord::Type::String.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "last_name",
+          last_name,
+          ActiveRecord::Type::String.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "date_of_birth",
+          date_of_birth,
+          ActiveRecord::Type::String.new,
+        ),
       ]
 
       sql = <<-SQL

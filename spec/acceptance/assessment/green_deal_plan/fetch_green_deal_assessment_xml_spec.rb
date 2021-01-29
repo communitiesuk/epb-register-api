@@ -22,7 +22,9 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessmentXml" do
 
     lodge_assessment(
       assessment_body: xml,
-      auth_data: { scheme_ids: [scheme_id] },
+      auth_data: {
+        scheme_ids: [scheme_id],
+      },
       schema_name: xml_schema,
     )
 
@@ -97,9 +99,13 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessmentXml" do
 
       update_assessment_status(
         assessment_id: "0000-0000-0000-0000-0000",
-        assessment_status_body: { "status": "CANCELLED" },
+        assessment_status_body: {
+          "status": "CANCELLED",
+        },
         accepted_responses: [200],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
       )
 
       error_response =
@@ -120,9 +126,13 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessmentXml" do
 
       update_assessment_status(
         assessment_id: "0000-0000-0000-0000-0000",
-        assessment_status_body: { "status": "NOT_FOR_ISSUE" },
+        assessment_status_body: {
+          "status": "NOT_FOR_ISSUE",
+        },
         accepted_responses: [200],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
       )
 
       error_response =

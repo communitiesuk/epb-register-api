@@ -54,9 +54,7 @@ module ViewModel
           xpath(%w[Home-Inspector Name First-Name]),
           xpath(%w[Home-Inspector Name Last-Name]),
           xpath(%w[Home-Inspector Name Suffix]),
-        ]
-          .reject { |e| e.to_s.empty? }
-          .join(" ")
+        ].reject { |e| e.to_s.empty? }.join(" ")
       end
 
       def assessor_email
@@ -86,23 +84,20 @@ module ViewModel
       end
 
       def property_summary
-        @xml_doc
-          .search("Energy-Assessment Property-Summary")
-          .children
-          .select(&:element?)
-          .map { |node|
-            next if xpath(%w[Energy-Efficiency-Rating], node).nil?
+        @xml_doc.search("Energy-Assessment Property-Summary").children.select(
+          &:element?
+        ).map { |node|
+          next if xpath(%w[Energy-Efficiency-Rating], node).nil?
 
-            {
-              energy_efficiency_rating:
-                xpath(%w[Energy-Efficiency-Rating], node).to_i,
-              environmental_efficiency_rating:
-                xpath(%w[Environmental-Efficiency-Rating], node).to_i,
-              name: node.name.underscore,
-              description: xpath(%w[Description], node),
-            }
+          {
+            energy_efficiency_rating:
+              xpath(%w[Energy-Efficiency-Rating], node).to_i,
+            environmental_efficiency_rating:
+              xpath(%w[Environmental-Efficiency-Rating], node).to_i,
+            name: node.name.underscore,
+            description: xpath(%w[Description], node),
           }
-          .compact
+        }.compact
       end
 
       def related_party_disclosure_text
@@ -388,10 +383,10 @@ module ViewModel
         built_form_value = xpath(%w[Built-Form])
         Helper::XmlEnumsToOutput.xml_value_to_string(built_form_value)
       end
+
       def all_main_heating_descriptions
         @xml_doc.search("Main-Heating-Controls/Description").map(&:content)
       end
-
 
     private
 

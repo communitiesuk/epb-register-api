@@ -52,7 +52,10 @@ module Domain
           telephone: @provider_telephone,
           email: @provider_email,
         },
-        interest: { rate: @interest_rate, fixed: @fixed_interest_rate },
+        interest: {
+          rate: @interest_rate,
+          fixed: @fixed_interest_rate,
+        },
         charge_uplift: {
           amount: @charge_uplift_amount,
           date:

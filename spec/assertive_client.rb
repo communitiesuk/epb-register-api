@@ -125,24 +125,25 @@ def fetch_assessor(
 end
 
 def fetch_assessor_current_status(
-    first_name,
-    last_name,
-    date_of_birth,
-    scheme_id,
-    accepted_responses = [200],
-    authenticate = true,
-    auth_data = nil,
-    scopes = %w[scheme:assessor:fetch]
+  first_name,
+  last_name,
+  date_of_birth,
+  scheme_id,
+  accepted_responses = [200],
+  authenticate = true,
+  auth_data = nil,
+  scopes = %w[scheme:assessor:fetch]
 )
   auth_data ||= { 'scheme_ids': [scheme_id] }
-  date_of_birth_param = date_of_birth ? "&dateOfBirth=#{date_of_birth}" : ''
+  date_of_birth_param = date_of_birth ? "&dateOfBirth=#{date_of_birth}" : ""
   assertive_get(
-      "/api/assessors?firstName=#{first_name}&lastName=#{last_name}" + date_of_birth_param,
-      accepted_responses,
-      authenticate,
-      auth_data,
-      scopes,
-      )
+    "/api/assessors?firstName=#{first_name}&lastName=#{last_name}" +
+      date_of_birth_param,
+    accepted_responses,
+    authenticate,
+    auth_data,
+    scopes,
+  )
 end
 
 def fetch_assessors_status(

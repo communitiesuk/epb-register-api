@@ -47,7 +47,9 @@ describe "Acceptance::AddressSearch::ByPostcode::AssessmentSource" do
       lodge_assessment(
         assessment_body: domestic_xml.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
         override: true,
       )
 
@@ -82,7 +84,9 @@ describe "Acceptance::AddressSearch::ByPostcode::AssessmentSource" do
       lodge_assessment(
         assessment_body: non_domestic_xml.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
         schema_name: "CEPC-8.0.0",
       )
 
@@ -94,7 +98,9 @@ describe "Acceptance::AddressSearch::ByPostcode::AssessmentSource" do
       lodge_assessment(
         assessment_body: non_domestic_xml.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
         schema_name: "CEPC-8.0.0",
       )
 

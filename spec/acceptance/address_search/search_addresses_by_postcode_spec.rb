@@ -80,7 +80,9 @@ describe "Acceptance::AddressSearch::ByPostcode" do
       lodge_assessment(
         assessment_body: rdsap_schema.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
         override: true,
       )
 
@@ -88,7 +90,9 @@ describe "Acceptance::AddressSearch::ByPostcode" do
       lodge_assessment(
         assessment_body: non_domestic_xml.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
         schema_name: "CEPC-8.0.0",
       )
     end
@@ -159,9 +163,8 @@ describe "Acceptance::AddressSearch::ByPostcode" do
         end
 
         it "returns the expected address entries" do
-          address_ids = response[:data][:addresses].map do |address|
-            address[:addressId]
-          end
+          address_ids =
+            response[:data][:addresses].map { |address| address[:addressId] }
 
           expect(address_ids).to eq %w[
             RRN-0000-0000-0000-0000-0000
@@ -217,7 +220,9 @@ describe "Acceptance::AddressSearch::ByPostcode" do
           lodge_assessment(
             assessment_body: rdsap_schema.to_xml,
             accepted_responses: [201],
-            auth_data: { scheme_ids: [scheme_id] },
+            auth_data: {
+              scheme_ids: [scheme_id],
+            },
             override: true,
           )
         end
@@ -235,11 +240,13 @@ describe "Acceptance::AddressSearch::ByPostcode" do
             assessment_body: Samples.xml("CEPC-7.0", "dec"),
             accepted_responses: [201],
             scopes: %w[assessment:lodge migrate:assessment],
-            auth_data: { scheme_ids: [scheme_id] },
+            auth_data: {
+              scheme_ids: [scheme_id],
+            },
             schema_name: "CEPC-7.0",
             override: true,
             migrated: true,
-            )
+          )
         end
 
         let(:response) do
@@ -250,9 +257,9 @@ describe "Acceptance::AddressSearch::ByPostcode" do
               true,
               {},
               %w[address:search],
-              ).body,
+            ).body,
             symbolize_names: true,
-            )
+          )
         end
 
         it "does not return an LPRN address id in the results" do
@@ -265,27 +272,34 @@ describe "Acceptance::AddressSearch::ByPostcode" do
       context "when both parts of dual lodgement expire at the same time" do
         let(:dual_lodgement) do
           xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "ac-cert+ac-report")
-          xml.xpath("//*[local-name() = 'RRN']").each_with_index do |node, index|
-            node.content = "1111-0000-0000-0000-000#{index}"
-          end
+          xml
+            .xpath("//*[local-name() = 'RRN']")
+            .each_with_index do |node, index|
+              node.content = "1111-0000-0000-0000-000#{index}"
+            end
 
-          xml.xpath("//*[local-name() = 'Related-RRN']").reverse.each_with_index do |node, index|
-            node.content = "1111-0000-0000-0000-000#{index}"
-          end
+          xml
+            .xpath("//*[local-name() = 'Related-RRN']")
+            .reverse
+            .each_with_index do |node, index|
+              node.content = "1111-0000-0000-0000-000#{index}"
+            end
 
           xml
         end
 
         context "when using an existing UPRN as the address id" do
           before do
-            dual_lodgement.xpath("//*[local-name() = 'UPRN']").each do |node|
-              node.content = "UPRN-000073546792"
-            end
+            dual_lodgement
+              .xpath("//*[local-name() = 'UPRN']")
+              .each { |node| node.content = "UPRN-000073546792" }
 
             lodge_assessment(
               assessment_body: dual_lodgement.to_xml,
               accepted_responses: [201],
-              auth_data: { scheme_ids: [scheme_id] },
+              auth_data: {
+                scheme_ids: [scheme_id],
+              },
               schema_name: "CEPC-8.0.0",
             )
           end
@@ -297,13 +311,15 @@ describe "Acceptance::AddressSearch::ByPostcode" do
               true,
               {},
               %w[address:search],
-            ).body, symbolize_names: true
+            ).body,
+                       symbolize_names: true
           end
 
           it "includes both assessments in the existing assessments for the address" do
-            entry = response[:data][:addresses].select { |address|
-              address[:addressId] == "UPRN-000073546792"
-            }.first
+            entry =
+              response[:data][:addresses].select { |address|
+                address[:addressId] == "UPRN-000073546792"
+              }.first
 
             expect(entry[:existingAssessments]).to eq [
               {
@@ -341,9 +357,8 @@ describe "Acceptance::AddressSearch::ByPostcode" do
       end
 
       it "returns the expected address base entries" do
-        address_ids = response[:data][:addresses].map do |address|
-          address[:addressId]
-        end
+        address_ids =
+          response[:data][:addresses].map { |address| address[:addressId] }
 
         expect(address_ids).to eq %w[
           RRN-0000-0000-0000-0000-0000
@@ -374,7 +389,8 @@ describe "Acceptance::AddressSearch::ByPostcode" do
       end
 
       it "returns the expected address base entries" do
-        address_ids = response[:data][:addresses].map { |address| address[:addressId] }
+        address_ids =
+          response[:data][:addresses].map { |address| address[:addressId] }
         expect(address_ids).to eq %w[
           RRN-0000-0000-0000-0000-0000
           UPRN-000073546795

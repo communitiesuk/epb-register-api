@@ -103,7 +103,10 @@ describe ViewModel::RdSapWrapper do
       assessor: {
         scheme_assessor_id: "SPEC000000",
         name: "Name0",
-        contact_details: { email: "a@b.c", telephone: "0921-19037" },
+        contact_details: {
+          email: "a@b.c",
+          telephone: "0921-19037",
+        },
       },
       current_carbon_emission: 2.4,
       current_energy_efficiency_band: "e",
@@ -264,7 +267,7 @@ describe ViewModel::RdSapWrapper do
     test_xml_doc(
       Samples::ViewModels::RdSap.update_schema_for_report,
       Samples::ViewModels::RdSap.report_test_hash,
-      true
+      true,
     )
   end
 

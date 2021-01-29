@@ -78,7 +78,9 @@ describe "Acceptance::Assessment" do
 
       lodge_assessment assessment_body: valid_sap_xml,
                        accepted_responses: [201],
-                       auth_data: { scheme_ids: [scheme_id] },
+                       auth_data: {
+                         scheme_ids: [scheme_id],
+                       },
                        schema_name: "SAP-Schema-18.0.0"
     end
 
@@ -90,7 +92,9 @@ describe "Acceptance::Assessment" do
           true,
           { 'scheme_ids': [scheme_id] },
           %w[assessment:fetch],
-          headers: { "Accept": "application/xml" },
+          headers: {
+            "Accept": "application/xml",
+          },
         )
       end
 
@@ -116,7 +120,9 @@ describe "Acceptance::Assessment" do
 
       lodge_assessment assessment_body: valid_sap_xml,
                        accepted_responses: [201],
-                       auth_data: { scheme_ids: [scheme_id] },
+                       auth_data: {
+                         scheme_ids: [scheme_id],
+                       },
                        schema_name: "SAP-Schema-18.0.0"
     end
 
@@ -127,7 +133,9 @@ describe "Acceptance::Assessment" do
         true,
         { 'scheme_ids': [other_scheme_id] },
         %w[assessment:fetch],
-        headers: { "Accept": "application/xml" },
+        headers: {
+          "Accept": "application/xml",
+        },
       )
     end
   end

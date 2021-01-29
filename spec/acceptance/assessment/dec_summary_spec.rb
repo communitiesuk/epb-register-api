@@ -29,7 +29,9 @@ describe "Acceptance::DECSummary" do
         lodge_assessment(
           assessment_body: xml.to_s,
           accepted_responses: [201],
-          auth_data: { scheme_ids: [scheme_id] },
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
           schema_name: "CEPC-8.0.0",
         )
       end
@@ -52,7 +54,9 @@ describe "Acceptance::DECSummary" do
       lodge_assessment(
         assessment_body: valid_dec_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
         schema_name: "CEPC-8.0.0",
       )
 
@@ -71,7 +75,9 @@ describe "Acceptance::DECSummary" do
       lodge_assessment(
         assessment_body: valid_cepc_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
         schema_name: "CEPC-8.0.0",
       )
 
@@ -116,16 +122,22 @@ describe "Acceptance::DECSummary" do
       lodge_assessment(
         assessment_body: valid_dec_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
         schema_name: "CEPC-8.0.0",
       )
 
       JSON.parse(
         update_assessment_status(
           assessment_id: "0000-0000-0000-0000-0000",
-          assessment_status_body: { "status": "CANCELLED" },
+          assessment_status_body: {
+            "status": "CANCELLED",
+          },
           accepted_responses: [200],
-          auth_data: { scheme_ids: [scheme_id] },
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
         ).body,
         symbolize_names: true,
       )

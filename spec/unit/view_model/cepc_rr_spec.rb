@@ -8,7 +8,9 @@ describe ViewModel::CepcRrWrapper do
         schema_name: "CEPC-8.0.0",
         xml: Samples.xml("CEPC-8.0.0", "cepc-rr"),
         unsupported_fields: [],
-        different_fields: { related_certificate: nil },
+        different_fields: {
+          related_certificate: nil,
+        },
       },
       {
         schema_name: "CEPC-NI-8.0.0",
@@ -22,7 +24,9 @@ describe ViewModel::CepcRrWrapper do
         unsupported_fields: [],
         different_fields: {},
         different_buried_fields: {
-          address: { address_id: "LPRN-000000000000" },
+          address: {
+            address_id: "LPRN-000000000000",
+          },
         },
       },
       {
@@ -31,7 +35,9 @@ describe ViewModel::CepcRrWrapper do
         unsupported_fields: [],
         different_fields: {},
         different_buried_fields: {
-          address: { address_id: "LPRN-000000000000" },
+          address: {
+            address_id: "LPRN-000000000000",
+          },
         },
       },
       {
@@ -40,7 +46,9 @@ describe ViewModel::CepcRrWrapper do
         unsupported_fields: [],
         different_fields: {},
         different_buried_fields: {
-          address: { address_id: "LPRN-000000000000" },
+          address: {
+            address_id: "LPRN-000000000000",
+          },
         },
       },
       {
@@ -49,7 +57,9 @@ describe ViewModel::CepcRrWrapper do
         unsupported_fields: [],
         different_fields: {},
         different_buried_fields: {
-          address: { address_id: "LPRN-000000000000" },
+          address: {
+            address_id: "LPRN-000000000000",
+          },
         },
       },
       {
@@ -58,7 +68,9 @@ describe ViewModel::CepcRrWrapper do
         unsupported_fields: [],
         different_fields: {},
         different_buried_fields: {
-          address: { address_id: "LPRN-000000000000" },
+          address: {
+            address_id: "LPRN-000000000000",
+          },
         },
       },
       {
@@ -67,8 +79,12 @@ describe ViewModel::CepcRrWrapper do
         unsupported_fields: [],
         different_fields: {},
         different_buried_fields: {
-          address: { address_id: "LPRN-000000000000" },
-          technical_information: { building_environment: "Air Conditioning" },
+          address: {
+            address_id: "LPRN-000000000000",
+          },
+          technical_information: {
+            building_environment: "Air Conditioning",
+          },
         },
       },
       {
@@ -77,8 +93,12 @@ describe ViewModel::CepcRrWrapper do
         unsupported_fields: [],
         different_fields: {},
         different_buried_fields: {
-          address: { address_id: "LPRN-000000000000" },
-          technical_information: { building_environment: "Air Conditioning" },
+          address: {
+            address_id: "LPRN-000000000000",
+          },
+          technical_information: {
+            building_environment: "Air Conditioning",
+          },
         },
       },
     ].freeze
@@ -89,7 +109,11 @@ describe ViewModel::CepcRrWrapper do
     end
 
     it "should read the appropriate values from the XML doc using the to report method" do
-      test_xml_doc(supported_schema, Samples::ViewModels::CepRr.report_test_hash, true)
+      test_xml_doc(
+        supported_schema,
+        Samples::ViewModels::CepRr.report_test_hash,
+        true,
+      )
     end
 
     it "returns the expect error without a valid schema type" do

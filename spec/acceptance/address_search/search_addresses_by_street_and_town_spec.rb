@@ -43,7 +43,9 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
       lodge_assessment(
         assessment_body: expired_assessment.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
       )
 
       assessment_id.children = "0000-0000-0000-0000-0001"
@@ -52,7 +54,9 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
       lodge_assessment(
         assessment_body: assessment.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
       )
 
       cepc_assessment_id.children = "0000-0000-0000-0000-0002"
@@ -61,7 +65,9 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
       lodge_assessment(
         assessment_body: non_domestic_xml.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
         schema_name: "CEPC-8.0.0",
       )
 
@@ -73,7 +79,9 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
       lodge_assessment(
         assessment_body: assessment.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
       )
 
       assessment_id.children = "0000-0000-0000-0000-0004"
@@ -85,7 +93,9 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
       lodge_assessment(
         assessment_body: assessment.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
       )
 
       assessment_id.children = "0000-0000-0000-0000-0005"
@@ -97,7 +107,9 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
       lodge_assessment(
         assessment_body: assessment.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
       )
     end
 
@@ -108,7 +120,9 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
             assessment_body: Samples.xml("CEPC-7.0", "dec"),
             accepted_responses: [201],
             scopes: %w[assessment:lodge migrate:assessment],
-            auth_data: { scheme_ids: [scheme_id] },
+            auth_data: {
+              scheme_ids: [scheme_id],
+            },
             schema_name: "CEPC-7.0",
             override: true,
             migrated: true,
@@ -226,18 +240,22 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
               true,
               {},
               %w[address:search],
-              ).body,
+            ).body,
             symbolize_names: true,
-            )
+          )
         end
 
         before do
           update_assessment_status(
             assessment_id: "0000-0000-0000-0000-0000",
-            assessment_status_body: { status: "CANCELLED" },
-            auth_data: { scheme_ids: [scheme_id] },
+            assessment_status_body: {
+              status: "CANCELLED",
+            },
+            auth_data: {
+              scheme_ids: [scheme_id],
+            },
             accepted_responses: [200],
-            )
+          )
         end
 
         it "returns the address" do
@@ -245,7 +263,9 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
         end
 
         it "does not include the assessment in existing assessments" do
-          expect(response[:data][:addresses][0][:existingAssessments]).to be_empty
+          expect(
+            response[:data][:addresses][0][:existingAssessments],
+          ).to be_empty
         end
       end
 
@@ -266,8 +286,12 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
         before do
           update_assessment_status(
             assessment_id: "0000-0000-0000-0000-0000",
-            assessment_status_body: { status: "NOT_FOR_ISSUE" },
-            auth_data: { scheme_ids: [scheme_id] },
+            assessment_status_body: {
+              status: "NOT_FOR_ISSUE",
+            },
+            auth_data: {
+              scheme_ids: [scheme_id],
+            },
             accepted_responses: [200],
           )
         end
@@ -277,7 +301,9 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
         end
 
         it "does not include the assessment in existing assessments" do
-          expect(response[:data][:addresses][0][:existingAssessments]).to be_empty
+          expect(
+            response[:data][:addresses][0][:existingAssessments],
+          ).to be_empty
         end
       end
 

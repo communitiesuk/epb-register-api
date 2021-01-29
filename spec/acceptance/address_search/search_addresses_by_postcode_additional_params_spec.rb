@@ -93,7 +93,9 @@ describe "Acceptance::AddressSearch::ByPostcode::AdditionalParams" do
     lodge_assessment(
       assessment_body: domestic_xml.to_xml,
       accepted_responses: [201],
-      auth_data: { scheme_ids: [scheme_id] },
+      auth_data: {
+        scheme_ids: [scheme_id],
+      },
       override: true,
     )
 
@@ -101,7 +103,9 @@ describe "Acceptance::AddressSearch::ByPostcode::AdditionalParams" do
     lodge_assessment(
       assessment_body: non_domestic_xml.to_xml,
       accepted_responses: [201],
-      auth_data: { scheme_ids: [scheme_id] },
+      auth_data: {
+        scheme_ids: [scheme_id],
+      },
       schema_name: "CEPC-8.0.0",
     )
 
@@ -111,7 +115,9 @@ describe "Acceptance::AddressSearch::ByPostcode::AdditionalParams" do
     lodge_assessment(
       assessment_body: domestic_xml.to_xml,
       accepted_responses: [201],
-      auth_data: { scheme_ids: [scheme_id] },
+      auth_data: {
+        scheme_ids: [scheme_id],
+      },
       override: true,
     )
   end
@@ -136,9 +142,8 @@ describe "Acceptance::AddressSearch::ByPostcode::AdditionalParams" do
       end
 
       it "returns the most relevant entries near the top" do
-        address_line1 = response[:data][:addresses].map do |address|
-          address[:line1]
-        end
+        address_line1 =
+          response[:data][:addresses].map { |address| address[:line1] }
 
         expect(address_line1).to eq [
           "The House",
@@ -152,9 +157,8 @@ describe "Acceptance::AddressSearch::ByPostcode::AdditionalParams" do
       end
 
       it "returns the expected previous assessment address entry" do
-        address_ids = response[:data][:addresses].map do |address|
-          address[:addressId]
-        end
+        address_ids =
+          response[:data][:addresses].map { |address| address[:addressId] }
 
         expect(address_ids).to include "RRN-0000-0000-0000-0000-0003"
       end
@@ -179,9 +183,8 @@ describe "Acceptance::AddressSearch::ByPostcode::AdditionalParams" do
       end
 
       it "returns the most relevant entries near the top" do
-        address_line1 = response[:data][:addresses].map do |address|
-          address[:line1]
-        end
+        address_line1 =
+          response[:data][:addresses].map { |address| address[:line1] }
 
         expect(address_line1).to eq [
           "2 Grimal Place",
@@ -195,9 +198,8 @@ describe "Acceptance::AddressSearch::ByPostcode::AdditionalParams" do
       end
 
       it "returns the expected previous assessment address entry" do
-        address_ids = response[:data][:addresses].map do |address|
-          address[:addressId]
-        end
+        address_ids =
+          response[:data][:addresses].map { |address| address[:addressId] }
 
         expect(address_ids).to include "RRN-0000-0000-0000-0000-0003"
       end
@@ -222,9 +224,8 @@ describe "Acceptance::AddressSearch::ByPostcode::AdditionalParams" do
       end
 
       it "returns the most relevant entries near the top" do
-        address_line1 = response[:data][:addresses].map do |address|
-          address[:line1]
-        end
+        address_line1 =
+          response[:data][:addresses].map { |address| address[:line1] }
 
         expect(address_line1).to eq [
           "The Cottage",
@@ -238,9 +239,8 @@ describe "Acceptance::AddressSearch::ByPostcode::AdditionalParams" do
       end
 
       it "returns the expected previous assessment address entry" do
-        address_ids = response[:data][:addresses].map do |address|
-          address[:addressId]
-        end
+        address_ids =
+          response[:data][:addresses].map { |address| address[:addressId] }
 
         expect(address_ids).to include "RRN-0000-0000-0000-0000-0003"
       end

@@ -8,7 +8,10 @@ describe ViewModel::SapWrapper do
       schema_name: "SAP-Schema-18.0.0",
       xml: Samples.xml("SAP-Schema-18.0.0"),
       unsupported_fields: [],
-      different_fields: {  heat_loss_corridor:nil, unheated_corridor_length: nil,},
+      different_fields: {
+        heat_loss_corridor: nil,
+        unheated_corridor_length: nil,
+      },
     },
     {
       schema_name: "SAP-Schema-17.1",
@@ -25,7 +28,6 @@ describe ViewModel::SapWrapper do
           address_line4: "",
           postcode: "A0 0AA",
           town: "Post-Town1",
-
         },
       },
     },
@@ -67,7 +69,10 @@ describe ViewModel::SapWrapper do
         assessor: {
           scheme_assessor_id: "SPEC000000",
           name: "Mr Test Boi",
-          contact_details: { email: "a@b.c", telephone: "111222333" },
+          contact_details: {
+            email: "a@b.c",
+            telephone: "111222333",
+          },
         },
         tenure: nil,
         transaction_type: "1",
@@ -93,7 +98,10 @@ describe ViewModel::SapWrapper do
         assessor: {
           scheme_assessor_id: "SPEC000000",
           name: "Mr Test Boi",
-          contact_details: { email: "a@b.c", telephone: "111222333" },
+          contact_details: {
+            email: "a@b.c",
+            telephone: "111222333",
+          },
         },
         tenure: nil,
       },
@@ -118,7 +126,10 @@ describe ViewModel::SapWrapper do
         assessor: {
           scheme_assessor_id: "SPEC000000",
           name: "Mr Test Boi",
-          contact_details: { email: "a@b.c", telephone: "111222333" },
+          contact_details: {
+            email: "a@b.c",
+            telephone: "111222333",
+          },
         },
         heat_demand: {
           current_space_heating_demand: 30.0,
@@ -180,7 +191,10 @@ describe ViewModel::SapWrapper do
         assessor: {
           scheme_assessor_id: "SPEC000000",
           name: "Mr Test Boi",
-          contact_details: { email: "a@b.c", telephone: "111222333" },
+          contact_details: {
+            email: "a@b.c",
+            telephone: "111222333",
+          },
         },
         heat_demand: {
           current_space_heating_demand: 30.0,
@@ -242,7 +256,10 @@ describe ViewModel::SapWrapper do
         assessor: {
           scheme_assessor_id: "SPEC000000",
           name: "Mr Test Boi",
-          contact_details: { email: "a@b.c", telephone: "111222333" },
+          contact_details: {
+            email: "a@b.c",
+            telephone: "111222333",
+          },
         },
         heat_demand: {
           current_space_heating_demand: 30.0,
@@ -305,7 +322,10 @@ describe ViewModel::SapWrapper do
         assessor: {
           scheme_assessor_id: "SPEC000000",
           name: "Mr Test Boi",
-          contact_details: { email: "a@b.c", telephone: "111222333" },
+          contact_details: {
+            email: "a@b.c",
+            telephone: "111222333",
+          },
         },
         heat_demand: {
           current_space_heating_demand: nil,
@@ -368,7 +388,10 @@ describe ViewModel::SapWrapper do
         assessor: {
           scheme_assessor_id: "SPEC000000",
           name: "Mr Test Boi",
-          contact_details: { email: "a@b.c", telephone: "111222333" },
+          contact_details: {
+            email: "a@b.c",
+            telephone: "111222333",
+          },
         },
         heat_demand: {
           current_space_heating_demand: nil,
@@ -431,7 +454,10 @@ describe ViewModel::SapWrapper do
         assessor: {
           scheme_assessor_id: "SPEC000000",
           name: "Mr Test Boi",
-          contact_details: { email: "a@b.c", telephone: "111222333" },
+          contact_details: {
+            email: "a@b.c",
+            telephone: "111222333",
+          },
         },
         heat_demand: {
           current_space_heating_demand: nil,
@@ -654,7 +680,10 @@ describe ViewModel::SapWrapper do
         assessor: {
           scheme_assessor_id: "SPEC000000",
           name: "Mr Test Boi",
-          contact_details: { email: "a@b.c", telephone: "111222333" },
+          contact_details: {
+            email: "a@b.c",
+            telephone: "111222333",
+          },
         },
       },
     },
@@ -678,7 +707,10 @@ describe ViewModel::SapWrapper do
         assessor: {
           scheme_assessor_id: "SPEC000000",
           name: "Mr Test Boi",
-          contact_details: { email: "a@b.c", telephone: "111222333" },
+          contact_details: {
+            email: "a@b.c",
+            telephone: "111222333",
+          },
         },
       },
     },
@@ -702,7 +734,10 @@ describe ViewModel::SapWrapper do
         assessor: {
           scheme_assessor_id: "SPEC000000",
           name: "Mr Test Boi",
-          contact_details: { email: "a@b.c", telephone: "111222333" },
+          contact_details: {
+            email: "a@b.c",
+            telephone: "111222333",
+          },
         },
         heat_demand: {
           current_space_heating_demand: 30.0,
@@ -764,7 +799,10 @@ describe ViewModel::SapWrapper do
         assessor: {
           scheme_assessor_id: "SPEC000000",
           name: "Mr Test Boi",
-          contact_details: { email: "a@b.c", telephone: "111222333" },
+          contact_details: {
+            email: "a@b.c",
+            telephone: "111222333",
+          },
         },
         heat_demand: {
           current_space_heating_demand: nil,
@@ -827,7 +865,10 @@ describe ViewModel::SapWrapper do
         assessor: {
           scheme_assessor_id: "SPEC000000",
           name: "Mr Test Boi",
-          contact_details: { email: "a@b.c", telephone: "111222333" },
+          contact_details: {
+            email: "a@b.c",
+            telephone: "111222333",
+          },
         },
         heat_demand: {
           current_space_heating_demand: nil,
@@ -890,7 +931,10 @@ describe ViewModel::SapWrapper do
         assessor: {
           scheme_assessor_id: "SPEC000000",
           name: "Mr Test Boi",
-          contact_details: { email: "a@b.c", telephone: "111222333" },
+          contact_details: {
+            email: "a@b.c",
+            telephone: "111222333",
+          },
         },
         heat_demand: {
           current_space_heating_demand: nil,
@@ -953,7 +997,10 @@ describe ViewModel::SapWrapper do
         assessor: {
           scheme_assessor_id: "SPEC000000",
           name: "Mr Test Boi",
-          contact_details: { email: "a@b.c", telephone: "111222333" },
+          contact_details: {
+            email: "a@b.c",
+            telephone: "111222333",
+          },
         },
         heat_demand: {
           current_space_heating_demand: nil,
@@ -1016,7 +1063,10 @@ describe ViewModel::SapWrapper do
         assessor: {
           scheme_assessor_id: "SPEC000000",
           name: "Mr Test Boi",
-          contact_details: { email: "a@b.c", telephone: "111222333" },
+          contact_details: {
+            email: "a@b.c",
+            telephone: "111222333",
+          },
         },
         heat_demand: {
           current_space_heating_demand: nil,
@@ -1079,7 +1129,10 @@ describe ViewModel::SapWrapper do
         assessor: {
           scheme_assessor_id: "SPEC000000",
           name: "Mr Test Boi",
-          contact_details: { email: "a@b.c", telephone: "111222333" },
+          contact_details: {
+            email: "a@b.c",
+            telephone: "111222333",
+          },
         },
         heat_demand: {
           current_space_heating_demand: nil,
@@ -1142,7 +1195,10 @@ describe ViewModel::SapWrapper do
         assessor: {
           scheme_assessor_id: "SPEC000000",
           name: "Mr Test Boi",
-          contact_details: { email: "a@b.c", telephone: "111222333" },
+          contact_details: {
+            email: "a@b.c",
+            telephone: "111222333",
+          },
         },
         heat_demand: {
           current_space_heating_demand: nil,
@@ -1212,7 +1268,10 @@ describe ViewModel::SapWrapper do
     assessor: {
       scheme_assessor_id: "SPEC000000",
       name: "Name0",
-      contact_details: { email: nil, telephone: nil },
+      contact_details: {
+        email: nil,
+        telephone: nil,
+      },
     },
     current_carbon_emission: 2.4,
     current_energy_efficiency_band: "e",

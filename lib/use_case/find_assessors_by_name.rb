@@ -1,6 +1,7 @@
 module UseCase
   class FindAssessorsByName
-    class OnlyFirstNameGiven < StandardError; end
+    class OnlyFirstNameGiven < StandardError
+    end
 
     def initialize
       @assessor_gateway = Gateway::AssessorsGateway.new

@@ -40,8 +40,14 @@ describe "Acceptance::Assessment::GreenDealPlan:DeleteGreenDealPlan" do
             telephone: "0800 0000000",
             email: "lender@example.com",
           },
-          interest: { rate: 12.3, fixed: true },
-          chargeUplift: { amount: 1.25, date: "2025-03-29" },
+          interest: {
+            rate: 12.3,
+            fixed: true,
+          },
+          chargeUplift: {
+            amount: 1.25,
+            date: "2025-03-29",
+          },
           ccaRegulated: true,
           structureChanged: false,
           measuresRemoved: false,
@@ -82,7 +88,9 @@ describe "Acceptance::Assessment::GreenDealPlan:DeleteGreenDealPlan" do
                      )
 
         lodge_assessment assessment_body: valid_rdsap_xml,
-                         auth_data: { scheme_ids: [scheme_id] }
+                         auth_data: {
+                           scheme_ids: [scheme_id],
+                         }
 
         add_green_deal_plan assessment_id: "0000-0000-0000-0000-0000",
                             body: valid_green_deal_plan_request_body

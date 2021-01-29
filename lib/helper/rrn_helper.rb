@@ -1,6 +1,7 @@
 module Helper
   class RrnHelper
-    class RrnNotValid < StandardError; end
+    class RrnNotValid < StandardError
+    end
     VALID_RRN = "^(\\d{4}-){4}\\d{4}$".freeze
 
     def self.normalise_rrn_format(rrn)

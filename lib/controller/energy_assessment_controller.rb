@@ -203,7 +203,11 @@ module Controller
           400,
           {
             errors: e.errors,
-            meta: { links: { override: "/api/assessments?override=true" } },
+            meta: {
+              links: {
+                override: "/api/assessments?override=true",
+              },
+            },
           },
         )
       else
@@ -211,7 +215,8 @@ module Controller
       end
     end
 
-    get "/api/assessments/:assessment_id", auth_token_has_all: %w[assessment:fetch] do
+    get "/api/assessments/:assessment_id",
+        auth_token_has_all: %w[assessment:fetch] do
       assessment_id = params[:assessment_id]
 
       auth_scheme_ids = env[:auth_token].supplemental("scheme_ids")

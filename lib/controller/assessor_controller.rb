@@ -4,42 +4,91 @@ module Controller
       type: "object",
       required: %w[firstName lastName dateOfBirth],
       properties: {
-        firstName: { type: "string" },
-        lastName: { type: "string" },
-        middleNames: { type: "string" },
-        dateOfBirth: { type: "string", format: "iso-date" },
-        searchResultsComparisonPostcode: { type: "string" },
-        alsoKnownAs: { type: %w[string null] },
+        firstName: {
+          type: "string",
+        },
+        lastName: {
+          type: "string",
+        },
+        middleNames: {
+          type: "string",
+        },
+        dateOfBirth: {
+          type: "string",
+          format: "iso-date",
+        },
+        searchResultsComparisonPostcode: {
+          type: "string",
+        },
+        alsoKnownAs: {
+          type: %w[string null],
+        },
         address: {
           type: "object",
           properties: {
-            addressLine1: { type: %w[string null] },
-            addressLine2: { type: %w[string null] },
-            addressLine3: { type: %w[string null] },
-            town: { type: %w[string null] },
-            postcode: { type: %w[string null] },
+            addressLine1: {
+              type: %w[string null],
+            },
+            addressLine2: {
+              type: %w[string null],
+            },
+            addressLine3: {
+              type: %w[string null],
+            },
+            town: {
+              type: %w[string null],
+            },
+            postcode: {
+              type: %w[string null],
+            },
           },
         },
         companyDetails: {
           type: "object",
           properties: {
-            companyRegNo: { type: %w[string null] },
-            companyAddressLine1: { type: %w[string null] },
-            companyAddressLine2: { type: %w[string null] },
-            companyAddressLine3: { type: %w[string null] },
-            companyTown: { type: %w[string null] },
-            companyPostcode: { type: %w[string null] },
-            companyWebsite: { type: %w[string null] },
-            companyTelephoneNumber: { type: %w[string null] },
-            companyEmail: { type: %w[string null] },
-            companyName: { type: %w[string null] },
+            companyRegNo: {
+              type: %w[string null],
+            },
+            companyAddressLine1: {
+              type: %w[string null],
+            },
+            companyAddressLine2: {
+              type: %w[string null],
+            },
+            companyAddressLine3: {
+              type: %w[string null],
+            },
+            companyTown: {
+              type: %w[string null],
+            },
+            companyPostcode: {
+              type: %w[string null],
+            },
+            companyWebsite: {
+              type: %w[string null],
+            },
+            companyTelephoneNumber: {
+              type: %w[string null],
+            },
+            companyEmail: {
+              type: %w[string null],
+            },
+            companyName: {
+              type: %w[string null],
+            },
           },
         },
         contactDetails: {
           type: "object",
           properties: {
-            telephoneNumber: { type: "string", format: "telephone" },
-            email: { type: "string", format: "email" },
+            telephoneNumber: {
+              type: "string",
+              format: "telephone",
+            },
+            email: {
+              type: "string",
+              format: "email",
+            },
           },
         },
         qualifications: {
@@ -86,8 +135,17 @@ module Controller
       },
     }.freeze
 
-    def search_by_first_name_last_name_date_of_birth(first_name, last_name, date_of_birth)
-      result = UseCase::FindAssessorsByFirstNameLastNameAndDateOfBirth.new.execute(first_name, last_name, date_of_birth)
+    def search_by_first_name_last_name_date_of_birth(
+      first_name,
+      last_name,
+      date_of_birth
+    )
+      result =
+        UseCase::FindAssessorsByFirstNameLastNameAndDateOfBirth.new.execute(
+          first_name,
+          last_name,
+          date_of_birth,
+        )
 
       json_api_response(code: 200, data: result)
     end
@@ -156,12 +214,18 @@ module Controller
 
     get "/api/assessors",
         auth_token_has_one_of: %w[assessor:search scheme:assessor:fetch] do
-      current_status_check = params.key?(:firstName) ||
-        params.key?(:lastName) ||
+      current_status_check =
+        params.key?(:firstName) || params.key?(:lastName) ||
         params.key?(:dateOfBirth)
 
-      if (current_status_check && !env[:auth_token].scope?("scheme:assessor:fetch")) ||
-          (!current_status_check && !env[:auth_token].scope?("assessor:search"))
+      if (
+           current_status_check &&
+             !env[:auth_token].scope?("scheme:assessor:fetch")
+         ) ||
+          (
+            !current_status_check &&
+              !env[:auth_token].scope?("assessor:search")
+          )
         forbidden(
           "UNAUTHORISED",
           "You are not authorised to perform this request",
@@ -169,25 +233,29 @@ module Controller
       end
 
       if current_status_check
-        if !params.key?(:firstName) ||
-            !params.key?(:lastName) ||
+        if !params.key?(:firstName) || !params.key?(:lastName) ||
             !params.key?(:dateOfBirth) ||
             !Date.valid_date?(
-              *Array.new(3).zip((params[:dateOfBirth]&.split("-") || []))
-                    .map(&:last)
-                    .map(&:to_i),
+              *Array
+                .new(3)
+                .zip((params[:dateOfBirth]&.split("-") || []))
+                .map(&:last)
+                .map(&:to_i),
             )
-
-          return error_response(
-            400,
-            "INVALID_QUERY",
-            "Must specify first name, last name and a valid date of birth when searching",
+          return(
+            error_response(
+              400,
+              "INVALID_QUERY",
+              "Must specify first name, last name and a valid date of birth when searching",
+            )
           )
         end
 
-        return search_by_first_name_last_name_date_of_birth params[:firstName],
-                                                            params[:lastName],
-                                                            params[:dateOfBirth]
+        return(
+          search_by_first_name_last_name_date_of_birth params[:firstName],
+                                                       params[:lastName],
+                                                       params[:dateOfBirth]
+        )
       end
 
       if params.key?(:name)

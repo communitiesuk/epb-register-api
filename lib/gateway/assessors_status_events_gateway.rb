@@ -1,6 +1,7 @@
 module Gateway
   class AssessorsStatusEventsGateway
-    class AssessorsStatusEvents < ActiveRecord::Base; end
+    class AssessorsStatusEvents < ActiveRecord::Base
+    end
     def filter_by(date)
       sql =
         'SELECT

@@ -38,7 +38,9 @@ describe "Acceptance::AssessmentSummary" do
 
       lodge_assessment(
         assessment_body: cepc_and_rr.to_xml,
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
         schema_name: "CEPC-8.0.0",
       )
 
@@ -79,7 +81,9 @@ describe "Acceptance::AssessmentSummary" do
 
       lodge_assessment(
         assessment_body: cepc_and_rr.to_xml,
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
         schema_name: "CEPC-8.0.0",
       )
 

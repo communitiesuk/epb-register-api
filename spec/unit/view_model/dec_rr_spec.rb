@@ -7,22 +7,30 @@ describe ViewModel::DecRrWrapper do
         schema_name: "CEPC-8.0.0",
         xml: Samples.xml("CEPC-8.0.0", "dec-rr"),
         unsupported_fields: [],
-        different_fields: { related_rrn: nil },
+        different_fields: {
+          related_rrn: nil,
+        },
       },
       {
         schema_name: "CEPC-8.0.0",
         xml: Samples.xml("CEPC-8.0.0", "dec-rr-large-building"),
         unsupported_fields: [],
-        different_fields: { date_of_expiry: "2027-05-03" },
+        different_fields: {
+          date_of_expiry: "2027-05-03",
+        },
         different_buried_fields: {
-          technical_information: { floor_area: "8000" },
+          technical_information: {
+            floor_area: "8000",
+          },
         },
       },
       {
         schema_name: "CEPC-NI-8.0.0",
         xml: Samples.xml("CEPC-NI-8.0.0", "dec-rr"),
         unsupported_fields: [],
-        different_fields: { date_of_expiry: "2027-05-03" },
+        different_fields: {
+          date_of_expiry: "2027-05-03",
+        },
       },
       {
         schema_name: "CEPC-7.1",
@@ -30,16 +38,23 @@ describe ViewModel::DecRrWrapper do
         unsupported_fields: [],
         different_fields: {},
         different_buried_fields: {
-          address: { address_id: "LPRN-000000000001" },
+          address: {
+            address_id: "LPRN-000000000001",
+          },
         },
       },
       {
         schema_name: "CEPC-7.1",
         xml: Samples.xml("CEPC-7.1", "dec-rr-ni"),
         unsupported_fields: [],
-        different_fields: { date_of_expiry: "2027-05-03" },
+        different_fields: {
+          date_of_expiry: "2027-05-03",
+        },
         different_buried_fields: {
-          address: { address_id: "LPRN-000000000001", postcode: "BT0 0AA" },
+          address: {
+            address_id: "LPRN-000000000001",
+            postcode: "BT0 0AA",
+          },
         },
       },
       {
@@ -48,16 +63,23 @@ describe ViewModel::DecRrWrapper do
         unsupported_fields: [],
         different_fields: {},
         different_buried_fields: {
-          address: { address_id: "LPRN-000000000001" },
+          address: {
+            address_id: "LPRN-000000000001",
+          },
         },
       },
       {
         schema_name: "CEPC-7.0",
         xml: Samples.xml("CEPC-7.0", "dec-rr-ni"),
         unsupported_fields: [],
-        different_fields: { date_of_expiry: "2027-05-03" },
+        different_fields: {
+          date_of_expiry: "2027-05-03",
+        },
         different_buried_fields: {
-          address: { address_id: "LPRN-000000000001", postcode: "BT0 0AA" },
+          address: {
+            address_id: "LPRN-000000000001",
+            postcode: "BT0 0AA",
+          },
         },
       },
       {
@@ -66,16 +88,23 @@ describe ViewModel::DecRrWrapper do
         unsupported_fields: [],
         different_fields: {},
         different_buried_fields: {
-          address: { address_id: "LPRN-000000000001" },
+          address: {
+            address_id: "LPRN-000000000001",
+          },
         },
       },
       {
         schema_name: "CEPC-6.0",
         xml: Samples.xml("CEPC-6.0", "dec-rr-ni"),
         unsupported_fields: [],
-        different_fields: { date_of_expiry: "2027-05-03" },
+        different_fields: {
+          date_of_expiry: "2027-05-03",
+        },
         different_buried_fields: {
-          address: { address_id: "LPRN-000000000001", postcode: "BT0 0AA" },
+          address: {
+            address_id: "LPRN-000000000001",
+            postcode: "BT0 0AA",
+          },
         },
       },
       {
@@ -84,16 +113,23 @@ describe ViewModel::DecRrWrapper do
         unsupported_fields: [],
         different_fields: {},
         different_buried_fields: {
-          address: { address_id: "LPRN-000000000001" },
+          address: {
+            address_id: "LPRN-000000000001",
+          },
         },
       },
       {
         schema_name: "CEPC-5.1",
         xml: Samples.xml("CEPC-5.1", "dec-rr-ni"),
         unsupported_fields: [],
-        different_fields: { date_of_expiry: "2027-05-03" },
+        different_fields: {
+          date_of_expiry: "2027-05-03",
+        },
         different_buried_fields: {
-          address: { address_id: "LPRN-000000000001", postcode: "BT0 0AA" },
+          address: {
+            address_id: "LPRN-000000000001",
+            postcode: "BT0 0AA",
+          },
         },
       },
       {
@@ -102,16 +138,23 @@ describe ViewModel::DecRrWrapper do
         unsupported_fields: [],
         different_fields: {},
         different_buried_fields: {
-          address: { address_id: "LPRN-000000000001" },
+          address: {
+            address_id: "LPRN-000000000001",
+          },
         },
       },
       {
         schema_name: "CEPC-5.0",
         xml: Samples.xml("CEPC-5.0", "dec-rr-ni"),
         unsupported_fields: [],
-        different_fields: { date_of_expiry: "2027-05-03" },
+        different_fields: {
+          date_of_expiry: "2027-05-03",
+        },
         different_buried_fields: {
-          address: { address_id: "LPRN-000000000001", postcode: "BT0 0AA" },
+          address: {
+            address_id: "LPRN-000000000001",
+            postcode: "BT0 0AA",
+          },
         },
       },
       {
@@ -120,16 +163,23 @@ describe ViewModel::DecRrWrapper do
         unsupported_fields: [],
         different_fields: {},
         different_buried_fields: {
-          address: { address_id: "LPRN-000000000001" },
+          address: {
+            address_id: "LPRN-000000000001",
+          },
         },
       },
       {
         schema_name: "CEPC-4.0",
         xml: Samples.xml("CEPC-4.0", "dec-rr-ni"),
         unsupported_fields: [],
-        different_fields: { date_of_expiry: "2027-05-03" },
+        different_fields: {
+          date_of_expiry: "2027-05-03",
+        },
         different_buried_fields: {
-          address: { address_id: "LPRN-000000000001", postcode: "BT0 0AA" },
+          address: {
+            address_id: "LPRN-000000000001",
+            postcode: "BT0 0AA",
+          },
         },
       },
       {
@@ -138,16 +188,23 @@ describe ViewModel::DecRrWrapper do
         unsupported_fields: [],
         different_fields: {},
         different_buried_fields: {
-          address: { address_id: "LPRN-000000000001" },
+          address: {
+            address_id: "LPRN-000000000001",
+          },
         },
       },
       {
         schema_name: "CEPC-3.1",
         xml: Samples.xml("CEPC-3.1", "dec-rr-ni"),
         unsupported_fields: [],
-        different_fields: { date_of_expiry: "2027-05-03" },
+        different_fields: {
+          date_of_expiry: "2027-05-03",
+        },
         different_buried_fields: {
-          address: { address_id: "LPRN-000000000001", postcode: "BT0 0AA" },
+          address: {
+            address_id: "LPRN-000000000001",
+            postcode: "BT0 0AA",
+          },
         },
       },
     ].freeze
@@ -159,7 +216,11 @@ describe ViewModel::DecRrWrapper do
     end
 
     it "should read the appropriate values from the XML doc  using the to report method" do
-      test_xml_doc(supported_schema, Samples::ViewModels::DecRr.report_test_hash, true)
+      test_xml_doc(
+        supported_schema,
+        Samples::ViewModels::DecRr.report_test_hash,
+        true,
+      )
     end
 
     it "returns the expect error without a valid schema type" do

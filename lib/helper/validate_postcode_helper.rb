@@ -1,6 +1,7 @@
 module Helper
   class ValidatePostcodeHelper
-    class PostcodeNotValid < StandardError; end
+    class PostcodeNotValid < StandardError
+    end
 
     def validate_postcode(postcode)
       if postcode.length < 4

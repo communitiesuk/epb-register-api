@@ -2,9 +2,12 @@
 
 module UseCase
   class LodgeAssessment
-    class InactiveAssessorException < StandardError; end
-    class AssessmentIdMismatchException < StandardError; end
-    class DuplicateAssessmentIdException < StandardError; end
+    class InactiveAssessorException < StandardError
+    end
+    class AssessmentIdMismatchException < StandardError
+    end
+    class DuplicateAssessmentIdException < StandardError
+    end
 
     def initialize
       @assessments_gateway = Gateway::AssessmentsGateway.new

@@ -94,7 +94,9 @@ describe "Acceptance::AddressSearch" do
         lodge_assessment(
           assessment_body: Samples.xml("RdSAP-Schema-20.0.0"),
           accepted_responses: [201],
-          auth_data: { scheme_ids: [scheme_id] },
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
         )
       end
 

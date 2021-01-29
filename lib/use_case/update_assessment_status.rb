@@ -2,9 +2,12 @@
 
 module UseCase
   class UpdateAssessmentStatus
-    class AssessmentNotFound < StandardError; end
-    class AssessmentAlreadyCancelled < StandardError; end
-    class AssessmentNotLodgedByScheme < StandardError; end
+    class AssessmentNotFound < StandardError
+    end
+    class AssessmentAlreadyCancelled < StandardError
+    end
+    class AssessmentNotLodgedByScheme < StandardError
+    end
 
     def initialize
       @assessments_gateway = Gateway::AssessmentsGateway.new

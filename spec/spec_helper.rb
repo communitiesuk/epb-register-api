@@ -49,7 +49,8 @@ rake.load_rakefile
 
 GREEN_DEAL_PLAN_SCHEMA = Controller::GreenDealPlanController::SCHEMA
 
-class UnexpectedApiError < StandardError; end
+class UnexpectedApiError < StandardError
+end
 
 module RSpecRegisterApiServiceMixin
   include Rack::Test::Methods

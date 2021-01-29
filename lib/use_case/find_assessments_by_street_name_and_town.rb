@@ -1,6 +1,7 @@
 module UseCase
   class FindAssessmentsByStreetNameAndTown
-    class ParameterMissing < StandardError; end
+    class ParameterMissing < StandardError
+    end
 
     def initialize
       @assessment_gateway = Gateway::AssessmentsSearchGateway.new

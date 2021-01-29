@@ -1,8 +1,10 @@
 module UseCase
   module AssessmentSummary
     class Fetch
-      class NotFoundException < StandardError; end
-      class AssessmentGone < StandardError; end
+      class NotFoundException < StandardError
+      end
+      class AssessmentGone < StandardError
+      end
 
       def lodged_values_from_xml(xml, schema_type, assessment_id)
         view_model =

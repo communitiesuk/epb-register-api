@@ -15,7 +15,9 @@ describe "Acceptance::OptOut" do
       lodge_assessment(
         assessment_body: valid_rdsap_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
       )
 
       response =
@@ -41,46 +43,50 @@ describe "Acceptance::OptOut" do
       scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
       lodge_assessment(
-          assessment_body: valid_rdsap_xml,
-          accepted_responses: [201],
-          auth_data: { scheme_ids: [scheme_id] },
-          )
+        assessment_body: valid_rdsap_xml,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+      )
       opt_out_assessment("0000-0000-0000-0000-0000")
 
       summary =
-          JSON.parse(
-              fetch_assessment_summary("0000-0000-0000-0000-0000").body,
-              symbolize_names: true,
-              )
+        JSON.parse(
+          fetch_assessment_summary("0000-0000-0000-0000-0000").body,
+          symbolize_names: true,
+        )
 
       expect(summary[:data][:optOut]).to eq true
     end
 
-    it 'shows as opted out in commercial assessment summary JSON' do
+    it "shows as opted out in commercial assessment summary JSON" do
       scheme_id = add_scheme_and_get_id
       xml_file = Samples.xml "CEPC-8.0.0", "cepc+rr"
       assessor =
-          AssessorStub.new.fetch_request_body(
-              nonDomesticNos3: "ACTIVE",
-              nonDomesticNos4: "ACTIVE",
-              nonDomesticNos5: "ACTIVE",
-              )
+        AssessorStub.new.fetch_request_body(
+          nonDomesticNos3: "ACTIVE",
+          nonDomesticNos4: "ACTIVE",
+          nonDomesticNos5: "ACTIVE",
+        )
       add_assessor(scheme_id, "SPEC000000", assessor)
       cepc_and_rr = Nokogiri.XML(xml_file)
 
       lodge_assessment(
-          assessment_body: cepc_and_rr.to_xml,
-          auth_data: { scheme_ids: [scheme_id] },
-          schema_name: "CEPC-8.0.0",
-          )
+        assessment_body: cepc_and_rr.to_xml,
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        schema_name: "CEPC-8.0.0",
+      )
 
       opt_out_assessment("0000-0000-0000-0000-0000")
 
       summary =
-          JSON.parse(
-              fetch_assessment_summary("0000-0000-0000-0000-0000").body,
-              symbolize_names: true,
-              )
+        JSON.parse(
+          fetch_assessment_summary("0000-0000-0000-0000-0000").body,
+          symbolize_names: true,
+        )
 
       expect(summary[:data][:optOut]).to eq true
     end

@@ -2,9 +2,11 @@
 
 module Gateway
   class AssessmentsSearchGateway
-    class Assessment < ActiveRecord::Base; end
+    class Assessment < ActiveRecord::Base
+    end
 
-    class InvalidAssessmentType < StandardError; end
+    class InvalidAssessmentType < StandardError
+    end
 
     ASSESSMENT_SEARCH_INDEX_SELECT = <<-SQL
         SELECT
@@ -136,8 +138,9 @@ module Gateway
       assessment_type = []
     )
       sql = ASSESSMENT_SEARCH_INDEX_SELECT + <<-SQL
-        WHERE a.assessment_id = #{ActiveRecord::Base.connection
-          .quote(assessment_id)}
+        WHERE a.assessment_id = #{
+          ActiveRecord::Base.connection.quote(assessment_id)
+        }
       SQL
 
       if restrictive

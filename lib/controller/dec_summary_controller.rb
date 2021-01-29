@@ -1,6 +1,7 @@
 module Controller
   class DecSummaryController < Controller::BaseController
-    get "/api/dec_summary/:assessment_id", auth_token_has_all: %w[dec_summary:fetch] do
+    get "/api/dec_summary/:assessment_id",
+        auth_token_has_all: %w[dec_summary:fetch] do
       json_api_response(
         code: 200,
         data: UseCase::FetchDecSummary.new.execute(params[:assessment_id]),

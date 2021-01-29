@@ -81,7 +81,9 @@ describe "Acceptance::AddressSearch::ByPostcode::Status" do
     lodge_assessment(
       assessment_body: domestic_xml.to_xml,
       accepted_responses: [201],
-      auth_data: { scheme_ids: [scheme_id] },
+      auth_data: {
+        scheme_ids: [scheme_id],
+      },
       override: true,
     )
 
@@ -89,7 +91,9 @@ describe "Acceptance::AddressSearch::ByPostcode::Status" do
     lodge_assessment(
       assessment_body: non_domestic_xml.to_xml,
       accepted_responses: [201],
-      auth_data: { scheme_ids: [scheme_id] },
+      auth_data: {
+        scheme_ids: [scheme_id],
+      },
       schema_name: "CEPC-8.0.0",
     )
   end
@@ -112,8 +116,12 @@ describe "Acceptance::AddressSearch::ByPostcode::Status" do
       before do
         update_assessment_status(
           assessment_id: "0000-0000-0000-0000-0002",
-          assessment_status_body: { status: "CANCELLED" },
-          auth_data: { scheme_ids: [scheme_id] },
+          assessment_status_body: {
+            status: "CANCELLED",
+          },
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
           accepted_responses: [200],
         )
       end
@@ -178,8 +186,12 @@ describe "Acceptance::AddressSearch::ByPostcode::Status" do
       before do
         update_assessment_status(
           assessment_id: "0000-0000-0000-0000-0002",
-          assessment_status_body: { status: "NOT_FOR_ISSUE" },
-          auth_data: { scheme_ids: [scheme_id] },
+          assessment_status_body: {
+            status: "NOT_FOR_ISSUE",
+          },
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
           accepted_responses: [200],
         )
       end

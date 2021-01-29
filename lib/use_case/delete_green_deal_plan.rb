@@ -1,6 +1,7 @@
 module UseCase
   class DeleteGreenDealPlan
-    class NotFoundException < StandardError; end
+    class NotFoundException < StandardError
+    end
 
     def initialize
       @green_deal_plan_gateway = Gateway::GreenDealPlansGateway.new

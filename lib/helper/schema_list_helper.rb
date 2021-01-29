@@ -1,6 +1,7 @@
 module Helper
   class SchemaListHelper
-    class ValidationErrorException < StandardError; end
+    class ValidationErrorException < StandardError
+    end
 
     def initialize(
       schema_name,

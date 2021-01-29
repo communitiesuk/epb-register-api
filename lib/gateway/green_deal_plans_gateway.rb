@@ -1,6 +1,7 @@
 module Gateway
   class GreenDealPlansGateway
-    class GreenDealPlan < ActiveRecord::Base; end
+    class GreenDealPlan < ActiveRecord::Base
+    end
 
     def exists?(green_deal_plan_id)
       sql = <<-SQL

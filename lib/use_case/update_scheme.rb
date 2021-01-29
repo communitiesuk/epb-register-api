@@ -1,6 +1,7 @@
 module UseCase
   class UpdateScheme
-    class SchemeNotFound < StandardError; end
+    class SchemeNotFound < StandardError
+    end
 
     def initialize
       @gateway = Gateway::SchemesGateway.new

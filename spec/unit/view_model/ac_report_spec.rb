@@ -16,7 +16,9 @@ describe ViewModel::AcReportWrapper do
         schema_name: "CEPC-8.0.0",
         xml: Samples.xml("CEPC-8.0.0", "ac-report"),
         unsupported_fields: [],
-        different_fields: { related_rrn: nil },
+        different_fields: {
+          related_rrn: nil,
+        },
       },
       {
         schema_name: "CEPC-NI-8.0.0",
@@ -428,7 +430,9 @@ describe ViewModel::AcReportWrapper do
           refrigeration: {
             acceptable_temperature: "0",
             ambient: "13",
-            compressor_control: { note: "The capacity control is inverter." },
+            compressor_control: {
+              note: "The capacity control is inverter.",
+            },
             f_gas_inspection: {
               note:
                 "The system operated using refrigerant which is not banned.",
@@ -473,8 +477,14 @@ describe ViewModel::AcReportWrapper do
               note: "The system is linked to a Central Controller.",
               state: true,
             },
-            excessive_use: { note: "No details available.", state: false },
-            metering_installed: { note: "", state: false },
+            excessive_use: {
+              note: "No details available.",
+              state: false,
+            },
+            metering_installed: {
+              note: "",
+              state: false,
+            },
             usage_records: {
               note:
                 "There were no records of air conditioning plant usage or sub-metered energy consumption with expected hours of use per year for the plant or systems located on site.",
@@ -600,7 +610,9 @@ describe ViewModel::AcReportWrapper do
           refrigeration: {
             acceptable_temperature: "0",
             ambient: "13",
-            compressor_control: { note: "The capacity control is inverter." },
+            compressor_control: {
+              note: "The capacity control is inverter.",
+            },
             f_gas_inspection: {
               note:
                 "The system operated using refrigerant which is not banned.",
@@ -645,8 +657,14 @@ describe ViewModel::AcReportWrapper do
               note: "The system is linked to a Central Controller.",
               state: true,
             },
-            excessive_use: { note: "No details available.", state: false },
-            metering_installed: { note: "", state: false },
+            excessive_use: {
+              note: "No details available.",
+              state: false,
+            },
+            metering_installed: {
+              note: "",
+              state: false,
+            },
             usage_records: {
               note:
                 "There were no records of air conditioning plant usage or sub-metered energy consumption with expected hours of use per year for the plant or systems located on site.",
@@ -690,7 +708,11 @@ describe ViewModel::AcReportWrapper do
                   { sequence: "0", text: "Give it a good scrub" },
                 ],
               },
-              change_frequency: { flag: false, note: nil, recommendations: [] },
+              change_frequency: {
+                flag: false,
+                note: nil,
+                recommendations: [],
+              },
               differential_pressure_gauge: {
                 flag: false,
                 note: nil,
@@ -698,29 +720,61 @@ describe ViewModel::AcReportWrapper do
               },
             },
             heat_exchangers: {
-              condition: { flag: true, note: nil, recommendations: [] },
+              condition: {
+                flag: true,
+                note: nil,
+                recommendations: [],
+              },
             },
             refrigeration: {
-              leaks: { flag: true, note: nil, recommendations: [] },
+              leaks: {
+                flag: true,
+                note: nil,
+                recommendations: [],
+              },
             },
             fan_rotation: {
-              direction: { flag: true, note: nil, recommendations: [] },
-              modulation: { flag: true, note: nil, recommendations: [] },
+              direction: {
+                flag: true,
+                note: nil,
+                recommendations: [],
+              },
+              modulation: {
+                flag: true,
+                note: nil,
+                recommendations: [],
+              },
             },
             air_leakage: {
-              condition: { note: "No leaks", recommendations: [] },
+              condition: {
+                note: "No leaks",
+                recommendations: [],
+              },
             },
             heat_recovery: {
-              energy_conservation: { note: "None", recommendations: [] },
+              energy_conservation: {
+                note: "None",
+                recommendations: [],
+              },
             },
             outdoor_inlets: {
-              condition: { note: "Diffusers clean", recommendations: [] },
+              condition: {
+                note: "Diffusers clean",
+                recommendations: [],
+              },
             },
             fan_control: {
-              setting: { note: "No dampers", recommendations: [] },
+              setting: {
+                note: "No dampers",
+                recommendations: [],
+              },
             },
             fan_power: {
-              condition: { note: nil, flag: true, recommendations: [] },
+              condition: {
+                note: nil,
+                flag: true,
+                recommendations: [],
+              },
               sfp_calculation: "464 watts x 70% - 0.311/400 = 8.12 w/ltr.",
             },
           },
@@ -741,24 +795,62 @@ describe ViewModel::AcReportWrapper do
           },
           inspection: {
             insulation: {
-              pipework: { note: nil, recommendations: [], flag: true },
-              ductwork: { note: nil, recommendations: [], flag: false },
+              pipework: {
+                note: nil,
+                recommendations: [],
+                flag: true,
+              },
+              ductwork: {
+                note: nil,
+                recommendations: [],
+                flag: false,
+              },
             },
-            unit: { condition: { note: nil, recommendations: [], flag: true } },
+            unit: {
+              condition: {
+                note: nil,
+                recommendations: [],
+                flag: true,
+              },
+            },
             grilles_air_flow: {
-              distribution: { note: nil, recommendations: [], flag: true },
-              tampering: { note: nil, recommendations: [], flag: true },
-              water_supply: { note: nil, recommendations: [], flag: false },
-              complaints: { note: nil, recommendations: [], flag: false },
+              distribution: {
+                note: nil,
+                recommendations: [],
+                flag: true,
+              },
+              tampering: {
+                note: nil,
+                recommendations: [],
+                flag: true,
+              },
+              water_supply: {
+                note: nil,
+                recommendations: [],
+                flag: false,
+              },
+              complaints: {
+                note: nil,
+                recommendations: [],
+                flag: false,
+              },
             },
             diffuser_positions: {
-              position_issues: { note: nil, recommendations: [], flag: true },
+              position_issues: {
+                note: nil,
+                recommendations: [],
+                flag: true,
+              },
               partitioning_issues: {
                 note: nil,
                 recommendations: [],
                 flag: false,
               },
-              control_operation: { note: nil, recommendations: [], flag: true },
+              control_operation: {
+                note: nil,
+                recommendations: [],
+                flag: true,
+              },
             },
           },
         },

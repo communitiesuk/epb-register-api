@@ -22,20 +22,20 @@ task :import_address_base do
   loader.push_dir("#{__dir__}/../")
   loader.setup
 
-  INSERT_BATCH_SIZE = 50000
+  INSERT_BATCH_SIZE = 50_000
 
-  if ENV['file_template'].nil?
+  if ENV["file_template"].nil?
     abort("Please set the file_template environment variable")
   end
-  if ENV['bucket_name'].nil? and ENV['instance_name'].nil?
+  if ENV["bucket_name"].nil? && ENV["instance_name"].nil?
     abort("Please set the bucket_name or instance_name environment variable")
   end
 
-  if ENV['number_of_files'].nil?
+  if ENV["number_of_files"].nil?
     puts("number_of_files environment variable not present, defaulting to 1")
     iterations = 1
   else
-    iterations = ENV['number_of_files'].to_i
+    iterations = ENV["number_of_files"].to_i
   end
 
   ActiveRecord::Base.logger = nil
@@ -60,16 +60,16 @@ task :import_address_base do
   puts "[#{Time.now}] Created empty address_base_tmp table"
 
   storage_config_reader = Gateway::StorageConfigurationReader.new
-  if ENV['instance_name'].nil?
-    storage_config = storage_config_reader.get_local_configuration(ENV['bucket_name'])
-  else
-    storage_config = storage_config_reader.get_paas_configuration(ENV['instance_name'])
-  end
+  storage_config = if ENV["instance_name"].nil?
+                     storage_config_reader.get_local_configuration(ENV["bucket_name"])
+                   else
+                     storage_config_reader.get_paas_configuration(ENV["instance_name"])
+                   end
   storage_gateway = Gateway::StorageGateway.new(storage_config: storage_config)
 
   iterations.times do |iteration|
     # For example: AddressBasePlus_FULL_2020-12-11_{iterations}.csv.zip
-    file_name = ENV['file_template'].gsub('{iteration}', (iteration + 1).to_s.rjust(3, '0'))
+    file_name = ENV["file_template"].gsub("{iteration}", (iteration + 1).to_s.rjust(3, "0"))
     puts "[#{Time.now}] Downloading file #{file_name} from storage"
     file_io = storage_gateway.get_file_io(file_name)
 
@@ -77,6 +77,7 @@ task :import_address_base do
     Zip::InputStream.open(file_io) do |csv_io|
       while (entry = csv_io.get_next_entry)
         next unless entry.size.positive?
+
         puts "[#{Time.now}] #{entry.name} was unzipped with a size of #{entry.size} bytes"
 
         csv_contents = CSV.new(csv_io)

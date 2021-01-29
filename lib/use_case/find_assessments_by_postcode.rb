@@ -1,8 +1,11 @@
 module UseCase
   class FindAssessmentsByPostcode
-    class PostcodeNotValid < StandardError; end
-    class ParameterMissing < StandardError; end
-    class AssessmentTypeNotValid < StandardError; end
+    class PostcodeNotValid < StandardError
+    end
+    class ParameterMissing < StandardError
+    end
+    class AssessmentTypeNotValid < StandardError
+    end
 
     def initialize
       @assessments_gateway = Gateway::AssessmentsSearchGateway.new

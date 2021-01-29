@@ -11,15 +11,23 @@ describe Helper::DataExtractorHelper do
           { name: "Barry Darlow" },
         ],
         complex_hash: {
-          "crazy": { name: "Barry Garlow" },
+          "crazy": {
+            name: "Barry Garlow",
+          },
           "cool": [{ name: "Barry Barlow" }, { name: "Barry Darlow" }],
         },
         complex_broken_hash: {
-          "crazy": { name: "Barry Garlow" },
+          "crazy": {
+            name: "Barry Garlow",
+          },
           "cool": [{ name: "Barry Barlow" }, { name: "Barry Darlow" }],
           "broken": "I don't comply",
         },
-        deep_hash: { another_hash: { treasure: "found me" } },
+        deep_hash: {
+          another_hash: {
+            treasure: "found me",
+          },
+        },
         not_an_int: "99",
         not_snake_case: "HowGreatIsThis",
         mapped_entry: "1",
@@ -72,7 +80,9 @@ describe Helper::DataExtractorHelper do
           "key" => "make_map",
           "path" => %w[mapped_entry],
           "cast" => "map",
-          "map" => { "1" => "great" },
+          "map" => {
+            "1" => "great",
+          },
         },
       ]
     end

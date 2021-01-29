@@ -62,9 +62,9 @@ module Controller
         end
         unless has_a_scope
           forbidden(
-              "UNAUTHORISED",
-              "You are not authorised to perform this request",
-              )
+            "UNAUTHORISED",
+            "You are not authorised to perform this request",
+          )
         end
         env[:auth_token] = token
       rescue Auth::Errors::Error => e

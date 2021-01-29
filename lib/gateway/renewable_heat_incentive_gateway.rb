@@ -7,7 +7,8 @@ module Gateway
       "ND" => "Unknown",
     }.freeze
 
-    class Assessor < ActiveRecord::Base; end
+    class Assessor < ActiveRecord::Base
+    end
 
     def fetch(assessment_id)
       sql = <<-SQL

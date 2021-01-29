@@ -8,17 +8,23 @@ describe ViewModel::DecSummaryWrapper do
     {
       schema_name: "CEPC-7.1",
       xml: Samples.xml("CEPC-7.1", "dec"),
-      replace: { "UPRN-000000000001": "" },
+      replace: {
+        "UPRN-000000000001": "",
+      },
     },
     {
       schema_name: "CEPC-7.0",
       xml: Samples.xml("CEPC-7.0", "dec"),
-      replace: { "UPRN-000000000001": "" },
+      replace: {
+        "UPRN-000000000001": "",
+      },
     },
     {
       schema_name: "CEPC-6.0",
       xml: Samples.xml("CEPC-6.0", "dec"),
-      replace: { "UPRN-000000000001": "" },
+      replace: {
+        "UPRN-000000000001": "",
+      },
     },
   ].freeze
 

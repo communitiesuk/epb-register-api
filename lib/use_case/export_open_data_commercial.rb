@@ -8,11 +8,13 @@ module UseCase
     end
 
     # @TODO: use argument signature of this method
-    def execute()
+    def execute
       view_model_array = []
+
       # use gateway to make db calls
       # call gateway to get data set
       assessments = @gateway.assessments_for_open_data("CEPC")
+
       # use existing gateway to get each xml doc from db line by line to ensure memory is totllay consumed by size of data returned
       assessments.each do |assessment|
         xml_data = @assessment_gateway.fetch(assessment["assessment_id"])
@@ -38,10 +40,7 @@ module UseCase
       view_model_array
     end
 
-  private
-
     # @TODO:move CSV prod code and tests to presentation layer (Rake)
-
 
     # def execute(args = {})
 

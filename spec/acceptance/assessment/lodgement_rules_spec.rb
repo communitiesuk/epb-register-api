@@ -27,7 +27,9 @@ describe "Acceptance::LodgementRules" do
         lodge_assessment(
           assessment_body: xml_doc.to_xml,
           accepted_responses: [400],
-          auth_data: { scheme_ids: [scheme_id] },
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
           schema_name: "CEPC-8.0.0",
         )
       end
@@ -40,7 +42,9 @@ describe "Acceptance::LodgementRules" do
           assessment_body: xml_doc.to_xml,
           accepted_responses: [201],
           scopes: %w[assessment:lodge migrate:assessment],
-          auth_data: { scheme_ids: [scheme_id] },
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
           migrated: true,
           schema_name: "CEPC-8.0.0",
         )
@@ -55,7 +59,9 @@ describe "Acceptance::LodgementRules" do
           lodge_assessment(
             assessment_body: xml_doc.to_xml,
             accepted_responses: [400],
-            auth_data: { scheme_ids: [scheme_id] },
+            auth_data: {
+              scheme_ids: [scheme_id],
+            },
             schema_name: "CEPC-8.0.0",
           )
 
@@ -68,7 +74,11 @@ describe "Acceptance::LodgementRules" do
                   "Inspection-Date\", \"Registration-Date\", \"Issue-Date\", \"Effective-Date\", \"OR-Availability-Date\", \"Start-Date\" and \"OR-Assessment-Start-Date\" must not be in the future",
               },
             ],
-            meta: { links: { override: "/api/assessments?override=true" } },
+            meta: {
+              links: {
+                override: "/api/assessments?override=true",
+              },
+            },
           },
         )
       end
@@ -86,7 +96,9 @@ describe "Acceptance::LodgementRules" do
           lodge_assessment(
             assessment_body: xml_doc.to_xml,
             accepted_responses: [400],
-            auth_data: { scheme_ids: [scheme_id] },
+            auth_data: {
+              scheme_ids: [scheme_id],
+            },
             schema_name: "RdSAP-Schema-20.0.0",
           )
         expect(JSON.parse(response.body, symbolize_names: true)[:errors]).to eq(

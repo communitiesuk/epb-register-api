@@ -1,16 +1,16 @@
 # frozen_string_literal: true
+
 shared_context "common" do
   before do
-    @enum_built_form =
-      {
-        "1" => "Detached",
-        "2" => "Semi-Detached",
-        "3" => "End-Terrace",
-        "4" => "Mid-Terrace",
-        "5" => "Enclosed End-Terrace",
-        "6" => "Enclosed Mid-Terrace",
-        "NR" => "Not Recorded",
-      }
+    @enum_built_form = {
+      "1" => "Detached",
+      "2" => "Semi-Detached",
+      "3" => "End-Terrace",
+      "4" => "Mid-Terrace",
+      "5" => "Enclosed End-Terrace",
+      "6" => "Enclosed Mid-Terrace",
+      "NR" => "Not Recorded",
+    }
   end
 end
 
@@ -52,7 +52,9 @@ describe Helper::XmlEnumsToOutput do
       expect(Helper::XmlEnumsToOutput.energy_rating_string(10)).to eq("N/A")
     end
     it "returns the joined string value if passed an array for Open Data Communities" do
-      expect(Helper::XmlEnumsToOutput.energy_rating_string([0, 0])).to eq("N/A, N/A")
+      expect(Helper::XmlEnumsToOutput.energy_rating_string([0, 0])).to eq(
+        "N/A, N/A",
+      )
     end
   end
 end

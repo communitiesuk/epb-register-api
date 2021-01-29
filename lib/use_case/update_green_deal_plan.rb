@@ -1,8 +1,11 @@
 module UseCase
   class UpdateGreenDealPlan
-    class NotFoundException < StandardError; end
-    class PlanIdMismatchException < StandardError; end
-    class InvalidFuelCode < StandardError; end
+    class NotFoundException < StandardError
+    end
+    class PlanIdMismatchException < StandardError
+    end
+    class InvalidFuelCode < StandardError
+    end
 
     def initialize
       @green_deal_plan_gateway = Gateway::GreenDealPlansGateway.new

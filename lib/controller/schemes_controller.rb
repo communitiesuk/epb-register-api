@@ -5,7 +5,14 @@ module Controller
     SCHEMA = {
       type: "object",
       required: %w[name active],
-      properties: { name: { type: "string" }, active: { type: "boolean" } },
+      properties: {
+        name: {
+          type: "string",
+        },
+        active: {
+          type: "boolean",
+        },
+      },
     }.freeze
 
     get "/api/schemes", auth_token_has_all: %w[scheme:list] do

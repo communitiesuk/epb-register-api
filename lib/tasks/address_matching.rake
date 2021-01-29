@@ -31,20 +31,20 @@ task :import_address_matching do
   ActiveRecord::Base.logger = nil
   db = ActiveRecord::Base.connection
 
-  if ENV['bucket_name'].nil? and ENV['instance_name'].nil?
+  if ENV["bucket_name"].nil? && ENV["instance_name"].nil?
     abort("Please set the bucket_name or instance_name environment variable")
   end
   if ENV["file_name"].nil?
     abort("Please set the file_name environment variable")
   end
-  file_name = ENV['file_name']
+  file_name = ENV["file_name"]
 
   storage_config_reader = Gateway::StorageConfigurationReader.new
-  if ENV['instance_name'].nil?
-    storage_config = storage_config_reader.get_local_configuration(ENV['bucket_name'])
-  else
-    storage_config = storage_config_reader.get_paas_configuration(ENV['instance_name'])
-  end
+  storage_config = if ENV["instance_name"].nil?
+                     storage_config_reader.get_local_configuration(ENV["bucket_name"])
+                   else
+                     storage_config_reader.get_paas_configuration(ENV["instance_name"])
+                   end
   storage_gateway = Gateway::StorageGateway.new(storage_config: storage_config)
 
   i = 0
@@ -90,7 +90,7 @@ task :import_address_matching do
 
 rescue StandardError => e
   catch(:sigint) do
-    puts "#{e}"
+    puts e.to_s
     abort "Interrupted while downloading or processing CSV file at line #{i}"
   end
   catch(:sigterm) do

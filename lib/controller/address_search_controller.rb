@@ -20,17 +20,29 @@ module Controller
               type: "string",
               pattern: Helper::RegexHelper::POSTCODE,
             },
-            buildingNameNumber: { type: "string" },
-            addressType: { type: "string", enum: %w[DOMESTIC COMMERCIAL] },
+            buildingNameNumber: {
+              type: "string",
+            },
+            addressType: {
+              type: "string",
+              enum: %w[DOMESTIC COMMERCIAL],
+            },
           },
         },
         {
           type: "object",
           required: %w[street town],
           properties: {
-            street: { type: "string" },
-            town: { type: "string" },
-            addressType: { type: "string", enum: %w[DOMESTIC COMMERCIAL] },
+            street: {
+              type: "string",
+            },
+            town: {
+              type: "string",
+            },
+            addressType: {
+              type: "string",
+              enum: %w[DOMESTIC COMMERCIAL],
+            },
           },
         },
       ],
@@ -59,8 +71,12 @@ module Controller
       results = use_case.execute filters
 
       json_api_response code: 200,
-                        data: { addresses: results.map(&:to_hash) },
-                        meta: { filters: filters }
+                        data: {
+                          addresses: results.map(&:to_hash),
+                        },
+                        meta: {
+                          filters: filters,
+                        }
     rescue StandardError => e
       case e
       when JSON::Schema::ValidationError

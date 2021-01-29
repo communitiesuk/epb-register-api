@@ -1,7 +1,9 @@
 module UseCase
   class FetchRenewableHeatIncentive
-    class NotFoundException < StandardError; end
-    class AssessmentGone < StandardError; end
+    class NotFoundException < StandardError
+    end
+    class AssessmentGone < StandardError
+    end
 
     def initialize
       @renewable_heat_incentive_gateway =

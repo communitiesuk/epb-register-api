@@ -1,9 +1,13 @@
 module UseCase
   class FetchRedactedAssessment
-    class NotFoundException < StandardError; end
-    class AssessmentGone < StandardError; end
-    class SchemeIdsDoNotMatch < StandardError; end
-    class NotAnRdsap < StandardError; end
+    class NotFoundException < StandardError
+    end
+    class AssessmentGone < StandardError
+    end
+    class SchemeIdsDoNotMatch < StandardError
+    end
+    class NotAnRdsap < StandardError
+    end
 
     REDACTED_TAGS = %w[
       Identification

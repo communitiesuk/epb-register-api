@@ -165,7 +165,10 @@ describe "Acceptance::SearchForAssessor" do
             firstName: "Some",
             lastName: "Person",
             middleNames: "Middle",
-            registeredBy: { name: "test scheme", schemeId: 25 },
+            registeredBy: {
+              name: "test scheme",
+              schemeId: 25,
+            },
             schemeAssessorId: "ASSESSOR999",
             searchResultsComparisonPostcode: "SE1 7EZ",
             contactDetails: {

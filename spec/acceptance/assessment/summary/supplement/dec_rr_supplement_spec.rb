@@ -9,7 +9,9 @@ describe "Acceptance::AssessmentSummary::Supplement::DECRR" do
     add_address_base(uprn: "1")
 
     regular_assessment = Nokogiri.XML(Samples.xml("CEPC-8.0.0", "dec+rr"))
-    regular_assessment.css("UPRN").each { |id| id.content = "RRN-0000-0000-0000-0000-0200" }
+    regular_assessment
+      .css("UPRN")
+      .each { |id| id.content = "RRN-0000-0000-0000-0000-0200" }
     lodge_dec_rr(regular_assessment.to_xml, scheme_id)
     @regular_summary =
       JSON.parse(
@@ -89,7 +91,9 @@ end
 def lodge_dec_rr(xml, scheme_id)
   lodge_assessment(
     assessment_body: xml,
-    auth_data: { scheme_ids: [scheme_id] },
+    auth_data: {
+      scheme_ids: [scheme_id],
+    },
     schema_name: "CEPC-8.0.0",
   )
 end

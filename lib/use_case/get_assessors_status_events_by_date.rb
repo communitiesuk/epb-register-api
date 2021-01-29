@@ -1,6 +1,7 @@
 module UseCase
   class GetAssessorsStatusEventsByDate
-    class SchemeNotFoundException < StandardError; end
+    class SchemeNotFoundException < StandardError
+    end
 
     def initialize
       @assessors_status_events_gateway =

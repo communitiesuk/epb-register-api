@@ -19,14 +19,18 @@ describe "Acceptance::Assessment::SearchForAssessments" do
       lodge_assessment(
         assessment_body: Samples.xml("CEPC-8.0.0", "cepc+rr"),
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
         schema_name: "CEPC-8.0.0",
       )
     else
       lodge_assessment(
         assessment_body: Samples.xml("RdSAP-Schema-20.0.0"),
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
       )
     end
     scheme_id
@@ -128,9 +132,13 @@ describe "Acceptance::Assessment::SearchForAssessments" do
 
       update_assessment_status(
         assessment_id: "0000-0000-0000-0000-0000",
-        assessment_status_body: { "status": "CANCELLED" },
+        assessment_status_body: {
+          "status": "CANCELLED",
+        },
         accepted_responses: [200],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
       )
 
       after_assessments =
@@ -154,9 +162,13 @@ describe "Acceptance::Assessment::SearchForAssessments" do
 
       update_assessment_status(
         assessment_id: "0000-0000-0000-0000-0000",
-        assessment_status_body: { "status": "NOT_FOR_ISSUE" },
+        assessment_status_body: {
+          "status": "NOT_FOR_ISSUE",
+        },
         accepted_responses: [200],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
       )
 
       after_assessments =
@@ -236,7 +248,9 @@ describe "Acceptance::Assessment::SearchForAssessments" do
       lodge_assessment(
         assessment_body: second_xml.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
       )
 
       response =
@@ -441,13 +455,17 @@ describe "Acceptance::Assessment::SearchForAssessments" do
       lodge_assessment(
         assessment_body: second_xml.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
       )
 
       lodge_assessment(
         assessment_body: third_xml.to_xml,
         accepted_responses: [201],
-        auth_data: { scheme_ids: [scheme_id] },
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
       )
 
       response =

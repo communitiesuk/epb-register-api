@@ -7,7 +7,9 @@ describe ViewModel::AcCertWrapper do
         schema_name: "CEPC-8.0.0",
         xml: Samples.xml("CEPC-8.0.0", "ac-cert"),
         unsupported_fields: [],
-        different_fields: { related_rrn: nil },
+        different_fields: {
+          related_rrn: nil,
+        },
         different_buried_fields: {
           address: {
             address_id: "UPRN-432167890000",
@@ -18,7 +20,9 @@ describe ViewModel::AcCertWrapper do
         schema_name: "CEPC-NI-8.0.0",
         xml: Samples.xml("CEPC-8.0.0", "ac-cert"),
         unsupported_fields: [],
-        different_fields: { related_rrn: nil },
+        different_fields: {
+          related_rrn: nil,
+        },
         different_buried_fields: {
           address: {
             address_id: "UPRN-432167890000",

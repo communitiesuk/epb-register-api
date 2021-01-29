@@ -1,8 +1,11 @@
 module UseCase
   class FetchGreenDealAssessment
-    class NotFoundException < StandardError; end
-    class AssessmentGone < StandardError; end
-    class InvalidAssessmentTypeException < StandardError; end
+    class NotFoundException < StandardError
+    end
+    class AssessmentGone < StandardError
+    end
+    class InvalidAssessmentTypeException < StandardError
+    end
 
     def initialize
       @assessments_gateway = Gateway::AssessmentsSearchGateway.new

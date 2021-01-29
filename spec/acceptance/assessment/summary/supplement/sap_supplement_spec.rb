@@ -90,7 +90,9 @@ end
 def lodge_sap(xml, scheme_id)
   lodge_assessment(
     assessment_body: xml,
-    auth_data: { scheme_ids: [scheme_id] },
+    auth_data: {
+      scheme_ids: [scheme_id],
+    },
     schema_name: "SAP-Schema-18.0.0",
   )
 end

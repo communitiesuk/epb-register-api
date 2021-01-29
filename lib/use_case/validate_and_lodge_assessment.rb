@@ -2,13 +2,20 @@
 
 module UseCase
   class ValidateAndLodgeAssessment
-    class OveriddenLodgementEvent < ActiveRecord::Base; end
-    class ValidationErrorException < StandardError; end
-    class UnauthorisedToLodgeAsThisSchemeException < StandardError; end
-    class SchemaNotSupportedException < StandardError; end
-    class RelatedReportError < StandardError; end
-    class AddressIdsDoNotMatch < StandardError; end
-    class SchemaNotDefined < StandardError; end
+    class OveriddenLodgementEvent < ActiveRecord::Base
+    end
+    class ValidationErrorException < StandardError
+    end
+    class UnauthorisedToLodgeAsThisSchemeException < StandardError
+    end
+    class SchemaNotSupportedException < StandardError
+    end
+    class RelatedReportError < StandardError
+    end
+    class AddressIdsDoNotMatch < StandardError
+    end
+    class SchemaNotDefined < StandardError
+    end
     class LodgementRulesException < StandardError
       attr_reader :errors
       def initialize(errors)
@@ -114,10 +121,13 @@ module UseCase
     end
 
     def address_ids_match?(lodgement)
-      return true unless Helper::Toggles.enabled? "lodgement-dual-force-matching-address-ids",
-                                                  false
+      unless Helper::Toggles.enabled? "lodgement-dual-force-matching-address-ids",
+                                      false
+        return true
+      end
 
-      lodgement.map { |assessment| assessment[:address][:address_id] }.uniq.length <= 1
+      lodgement.map { |assessment| assessment[:address][:address_id] }.uniq
+        .length <= 1
     end
 
     def reports_refer_to_each_other?(xml)

@@ -51,14 +51,18 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
 
       lodge_assessment assessment_body: valid_rdsap_xml,
                        accepted_responses: [201],
-                       auth_data: { scheme_ids: [scheme_id] }
+                       auth_data: {
+                         scheme_ids: [scheme_id],
+                       }
 
       update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
                                assessment_status_body: {
                                  "status": "CANCELLED",
                                },
                                accepted_responses: [200],
-                               auth_data: { scheme_ids: [scheme_id] }
+                               auth_data: {
+                                 scheme_ids: [scheme_id],
+                               }
     end
 
     it "returns the expected error response" do
@@ -81,7 +85,9 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
 
       lodge_assessment assessment_body: valid_rdsap_xml,
                        accepted_responses: [201],
-                       auth_data: { scheme_ids: [scheme_id] }
+                       auth_data: {
+                         scheme_ids: [scheme_id],
+                       }
     end
 
     it "returns status 200" do
@@ -140,7 +146,9 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
 
           lodge_assessment assessment_body: assessment.to_xml,
                            accepted_responses: [201],
-                           auth_data: { scheme_ids: [scheme_id] }
+                           auth_data: {
+                             scheme_ids: [scheme_id],
+                           }
         end
 
         it "returns true for loftInsulation" do
@@ -166,7 +174,9 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
 
           lodge_assessment assessment_body: assessment.to_xml,
                            accepted_responses: [201],
-                           auth_data: { scheme_ids: [scheme_id] }
+                           auth_data: {
+                             scheme_ids: [scheme_id],
+                           }
         end
 
         it "returns true for cavityWallInsulation" do
@@ -192,7 +202,9 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
         lodge_assessment assessment_body: assessment.to_xml,
                          accepted_responses: [201],
                          schema_name: "SAP-Schema-18.0.0",
-                         auth_data: { scheme_ids: [scheme_id] }
+                         auth_data: {
+                           scheme_ids: [scheme_id],
+                         }
       end
 
       it "returns the expected response" do
@@ -240,7 +252,9 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
           lodge_assessment assessment_body: assessment.to_xml,
                            accepted_responses: [201],
                            schema_name: "SAP-Schema-18.0.0",
-                           auth_data: { scheme_ids: [scheme_id] }
+                           auth_data: {
+                             scheme_ids: [scheme_id],
+                           }
         end
 
         it "returns false for loftInsulation" do
@@ -267,7 +281,9 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
           lodge_assessment assessment_body: assessment.to_xml,
                            accepted_responses: [201],
                            schema_name: "SAP-Schema-18.0.0",
-                           auth_data: { scheme_ids: [scheme_id] }
+                           auth_data: {
+                             scheme_ids: [scheme_id],
+                           }
         end
 
         it "returns false for loftInsulation" do
@@ -301,7 +317,9 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
           lodge_assessment assessment_body: assessment.to_xml,
                            accepted_responses: [201],
                            schema_name: "SAP-Schema-18.0.0",
-                           auth_data: { scheme_ids: [scheme_id] }
+                           auth_data: {
+                             scheme_ids: [scheme_id],
+                           }
         end
 
         it "returns false for loftInsulation" do
@@ -327,7 +345,9 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
         lodge_assessment assessment_body: assessment.to_xml,
                          accepted_responses: [201],
                          schema_name: "SAP-Schema-18.0.0",
-                         auth_data: { scheme_ids: [scheme_id] }
+                         auth_data: {
+                           scheme_ids: [scheme_id],
+                         }
       end
 
       it "returns the assessment details" do
@@ -374,7 +394,9 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
 
         lodge_assessment assessment_body: assessment.to_xml,
                          accepted_responses: [201],
-                         auth_data: { scheme_ids: [scheme_id] }
+                         auth_data: {
+                           scheme_ids: [scheme_id],
+                         }
       end
 
       it "returns false for loftInsulation" do
@@ -411,7 +433,9 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
         lodge_assessment assessment_body: first_assessment.to_xml,
                          accepted_responses: [201],
                          schema_name: "SAP-Schema-18.0.0",
-                         auth_data: { scheme_ids: [scheme_id] }
+                         auth_data: {
+                           scheme_ids: [scheme_id],
+                         }
 
         second_assessment = Nokogiri.XML(valid_rdsap_xml)
         second_assessment.at("RRN").content = "0000-0000-0000-0000-0002"
@@ -422,7 +446,9 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
 
         lodge_assessment assessment_body: second_assessment.to_xml,
                          accepted_responses: [201],
-                         auth_data: { scheme_ids: [scheme_id] }
+                         auth_data: {
+                           scheme_ids: [scheme_id],
+                         }
       end
 
       it "returns the information for the most recent assessment" do

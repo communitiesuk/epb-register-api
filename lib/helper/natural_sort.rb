@@ -13,8 +13,7 @@ module Helper
             a[:address_line4],
             b[:postcode],
             a[:town],
-          ]
-            .reverse
+          ].reverse
             .compact
             .join(" ")
             .gsub(",", "")
@@ -30,8 +29,7 @@ module Helper
             b[:address_line4],
             b[:postcode],
             b[:town],
-          ]
-            .reverse
+          ].reverse
             .compact
             .join(" ")
             .gsub(",", "")

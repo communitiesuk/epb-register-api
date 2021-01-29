@@ -61,8 +61,7 @@ module LodgementRules
               method_or_nil(adapter, :building_emissions),
               method_or_nil(adapter, :target_emissions),
               method_or_nil(adapter, :typical_emissions),
-            ]
-              .compact
+            ].compact
               .map(&:to_f)
               .none?(&:negative?)
           end,

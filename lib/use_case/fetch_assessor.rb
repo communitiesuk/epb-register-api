@@ -1,8 +1,10 @@
 module UseCase
   class FetchAssessor
-    class SchemeNotFoundException < StandardError; end
+    class SchemeNotFoundException < StandardError
+    end
 
-    class AssessorNotFoundException < StandardError; end
+    class AssessorNotFoundException < StandardError
+    end
 
     def initialize
       @assessor_gateway = Gateway::AssessorsGateway.new

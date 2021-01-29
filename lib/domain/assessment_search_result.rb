@@ -78,7 +78,9 @@ module Domain
         address_line4: @address_line4,
         town: @town,
         current_energy_efficiency_band:
-          Helper::EnergyBandCalculator.domestic(@current_energy_efficiency_rating),
+          Helper::EnergyBandCalculator.domestic(
+            @current_energy_efficiency_rating,
+          ),
         status: expiry_helper.assessment_status,
       }
     end

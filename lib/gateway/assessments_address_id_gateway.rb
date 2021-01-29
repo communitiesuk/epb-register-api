@@ -6,7 +6,8 @@ end
 
 module Gateway
   class AssessmentsAddressIdGateway
-    class AssessmentsAddressId < ActiveRecord::Base; end
+    class AssessmentsAddressId < ActiveRecord::Base
+    end
 
     def fetch(assessment_id)
       AssessmentsAddressId.find(assessment_id).as_json.symbolize_keys

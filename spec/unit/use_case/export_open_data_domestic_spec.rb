@@ -5,18 +5,25 @@ describe UseCase::ExportOpenDataDomestic do
     describe "for the domestic certificates and reports" do
       let(:date_today) { DateTime.now.strftime("%F") }
       let(:expected_index_0) do
-        Samples::ViewModels::RdSap.report_test_hash.merge({ assessment_id: "0000-0000-0000-0000-0001", lodgement_date: date_today})
+        Samples::ViewModels::RdSap.report_test_hash.merge(
+          {
+            assessment_id: "0000-0000-0000-0000-0001",
+            lodgement_date: date_today,
+          },
+        )
       end
       let(:expectation) { Samples::ViewModels::RdSap.report_test_hash }
       let(:exported_data) do
-        described_class.new.execute({ number_of_assessments: "3", max_runs: "3", batch: "3" }).sort_by do |key|
-          key["assessment_id"]
-          # execute and order by assessment_id for test
-        end
+        described_class
+          .new
+          .execute({ number_of_assessments: "3", max_runs: "3", batch: "3" })
+          .sort_by do |key|
+            key["assessment_id"]
+            # execute and order by assessment_id for test
+          end
       end
 
       before(:all) do
-
         scheme_id = add_scheme_and_get_id
         domestic_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
         domestic_assessment_id = domestic_xml.at("RRN")
@@ -47,7 +54,9 @@ describe UseCase::ExportOpenDataDomestic do
         lodge_assessment(
           assessment_body: domestic_xml.to_xml,
           accepted_responses: [201],
-          auth_data: { scheme_ids: [scheme_id] },
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
           override: true,
         )
 
@@ -56,7 +65,9 @@ describe UseCase::ExportOpenDataDomestic do
         lodge_assessment(
           assessment_body: domestic_xml.to_xml,
           accepted_responses: [201],
-          auth_data: { scheme_ids: [scheme_id] },
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
           override: true,
         )
 
@@ -66,7 +77,9 @@ describe UseCase::ExportOpenDataDomestic do
         lodge_assessment(
           assessment_body: domestic_sap_xml.to_xml,
           accepted_responses: [201],
-          auth_data: { scheme_ids: [scheme_id] },
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
           schema_name: "SAP-Schema-18.0.0",
           override: true,
         )

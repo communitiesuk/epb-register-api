@@ -83,23 +83,20 @@ module ViewModel
       end
 
       def property_summary
-        @xml_doc
-          .search("Energy-Assessment Property-Summary")
-          .children
-          .select(&:element?)
-          .map { |node|
-            next if xpath(%w[Energy-Efficiency-Rating], node).nil?
+        @xml_doc.search("Energy-Assessment Property-Summary").children.select(
+          &:element?
+        ).map { |node|
+          next if xpath(%w[Energy-Efficiency-Rating], node).nil?
 
-            {
-              energy_efficiency_rating:
-                xpath(%w[Energy-Efficiency-Rating], node).to_i,
-              environmental_efficiency_rating:
-                xpath(%w[Environmental-Efficiency-Rating], node).to_i,
-              name: node.name.underscore,
-              description: xpath(%w[Description], node),
-            }
+          {
+            energy_efficiency_rating:
+              xpath(%w[Energy-Efficiency-Rating], node).to_i,
+            environmental_efficiency_rating:
+              xpath(%w[Environmental-Efficiency-Rating], node).to_i,
+            name: node.name.underscore,
+            description: xpath(%w[Description], node),
           }
-          .compact
+        }.compact
       end
 
       def related_party_disclosure_text
@@ -311,14 +308,9 @@ module ViewModel
       end
 
       def all_sap_floor_dimensions
-        @xml_doc
-          .search("SAP-Floor-Dimension")
-          .select(&:element?)
-          .map { |node|
-            { total_floor_area: xpath(%w[Total-Floor-Area], node).to_f }
-          }
-          .compact
-
+        @xml_doc.search("SAP-Floor-Dimension").select(&:element?).map { |node|
+          { total_floor_area: xpath(%w[Total-Floor-Area], node).to_f }
+        }.compact
       end
 
       def level

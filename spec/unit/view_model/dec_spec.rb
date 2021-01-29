@@ -70,7 +70,10 @@ describe ViewModel::DecWrapper do
       },
       name: "Name1",
       scheme_assessor_id: "SPEC000000",
-      contact_details: { email: "a@b.c", telephone: "0921-19037" },
+      contact_details: {
+        email: "a@b.c",
+        telephone: "0921-19037",
+      },
     },
   }.freeze
 

@@ -6,7 +6,10 @@ module Controller
       type: "object",
       required: %w[status],
       properties: {
-        status: { type: "string", enum: %w[CANCELLED NOT_FOR_ISSUE] },
+        status: {
+          type: "string",
+          enum: %w[CANCELLED NOT_FOR_ISSUE],
+        },
       },
     }.freeze
 

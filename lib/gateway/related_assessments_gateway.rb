@@ -1,6 +1,7 @@
 module Gateway
   class RelatedAssessmentsGateway
-    class Assessment < ActiveRecord::Base; end
+    class Assessment < ActiveRecord::Base
+    end
 
     def by_address_id(address_id)
       return [] if address_id.blank?

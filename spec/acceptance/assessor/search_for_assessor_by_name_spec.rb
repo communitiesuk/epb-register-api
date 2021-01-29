@@ -43,7 +43,10 @@ describe "Searching for an assessor by name" do
       expect(response["data"]["assessors"][0]).to eq(
         JSON.parse(
           {
-            registeredBy: { schemeId: scheme_id, name: "test scheme" },
+            registeredBy: {
+              schemeId: scheme_id,
+              name: "test scheme",
+            },
             schemeAssessorId: "SCHE55443",
             firstName: valid_assessor_request[:firstName],
             lastName: valid_assessor_request[:lastName],

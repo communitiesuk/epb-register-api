@@ -73,8 +73,14 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan" do
               telephone: "0800 0000000",
               email: "lender@example.com",
             },
-            interest: { rate: "12.3", fixed: true },
-            chargeUplift: { amount: "1.25", date: "2025-03-29" },
+            interest: {
+              rate: "12.3",
+              fixed: true,
+            },
+            chargeUplift: {
+              amount: "1.25",
+              date: "2025-03-29",
+            },
             ccaRegulated: true,
             structureChanged: false,
             measuresRemoved: false,
@@ -117,7 +123,9 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan" do
 
         lodge_assessment assessment_body: valid_rdsap_xml,
                          accepted_responses: [201],
-                         auth_data: { scheme_ids: [scheme_id] }
+                         auth_data: {
+                           scheme_ids: [scheme_id],
+                         }
       end
 
       it "returns the expected response" do
@@ -234,7 +242,9 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan" do
                                      "status": "CANCELLED",
                                    },
                                    accepted_responses: [200],
-                                   auth_data: { scheme_ids: [scheme_id] }
+                                   auth_data: {
+                                     scheme_ids: [scheme_id],
+                                   }
         end
 
         it "returns status 410" do
@@ -251,7 +261,9 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan" do
                                      "status": "NOT_FOR_ISSUE",
                                    },
                                    accepted_responses: [200],
-                                   auth_data: { scheme_ids: [scheme_id] }
+                                   auth_data: {
+                                     scheme_ids: [scheme_id],
+                                   }
         end
 
         it "returns status 410" do
@@ -276,7 +288,9 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan" do
 
           lodge_assessment assessment_body: sap_assessment.to_xml,
                            accepted_responses: [201],
-                           auth_data: { scheme_ids: [scheme_id] },
+                           auth_data: {
+                             scheme_ids: [scheme_id],
+                           },
                            schema_name: "SAP-Schema-18.0.0"
         end
 
@@ -313,7 +327,9 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan" do
 
           lodge_assessment assessment_body: assessment.to_xml,
                            accepted_responses: [201],
-                           auth_data: { scheme_ids: [scheme_id] }
+                           auth_data: {
+                             scheme_ids: [scheme_id],
+                           }
         end
 
         GREEN_DEAL_PLAN_SCHEMA[:required].each do |field|
@@ -447,7 +463,9 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan" do
 
         lodge_assessment assessment_body: doc.to_xml,
                          accepted_responses: [201],
-                         auth_data: { scheme_ids: [scheme_id] },
+                         auth_data: {
+                           scheme_ids: [scheme_id],
+                         },
                          override: true
       end
 

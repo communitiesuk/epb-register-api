@@ -2,9 +2,11 @@
 
 module Gateway
   class AssessmentsGateway
-    class Assessment < ActiveRecord::Base; end
+    class Assessment < ActiveRecord::Base
+    end
 
-    class InvalidAssessmentType < StandardError; end
+    class InvalidAssessmentType < StandardError
+    end
 
     def insert_or_update(assessment)
       check_valid_energy_ratings assessment
