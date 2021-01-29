@@ -1,6 +1,16 @@
 require "sinatra"
 require "sinatra/activerecord"
 require "sinatra/activerecord/rake"
+
+
+unless defined? Zeitwerk
+  require "zeitwerk"
+  loader = Zeitwerk::Loader.new
+  loader.push_dir("#{__dir__}/lib/")
+  loader.setup
+end
+
+
 Dir.glob("lib/tasks/*.rake").each { |r| load r }
 
 namespace :tasks do

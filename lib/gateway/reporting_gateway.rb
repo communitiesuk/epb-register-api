@@ -196,7 +196,9 @@ module Gateway
         WHERE a.opt_out = false AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
         AND a.type_of_assessment = $1
         AND a.date_of_assessment >= $2
+        AND a.postcode NOT LIKE 'BT%'
         ORDER BY a.assessment_id
+
       SQL
 
       results = ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)

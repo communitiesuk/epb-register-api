@@ -144,7 +144,17 @@ def add_address_base(uprn:)
     "INSERT INTO address_base (uprn) VALUES(" +
       ActiveRecord::Base.connection.quote(uprn) + ")",
   )
+
+
 end
+
+def get_task(name)
+  rake = Rake::Application.new
+  Rake.application = rake
+  rake.load_rakefile
+  rake.tasks.find { |task| task.to_s == name }
+end
+
 
 RSpec.configure do |config|
   config.include Rack::Test::Methods
