@@ -13,6 +13,14 @@ module Gateway
       file_response.body
     end
 
+    def write_file(file_name, data)
+      client.put_object(
+        body: data,
+        bucket: storage_config.bucket_name,
+        key: file_name
+      )
+    end
+
   private
 
     def initialise_client
