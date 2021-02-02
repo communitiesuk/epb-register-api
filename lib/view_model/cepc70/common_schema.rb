@@ -1,24 +1,6 @@
 module ViewModel
   module Cepc70
-    class CommonSchema
-      # This class should contain fields only that are common
-      # to ALL types of CEPC-7.0 documents: CEPC, RR, DEC, AC, etc
-
-      def initialize(xml)
-        @xml_doc = Nokogiri.XML xml
-      end
-
-      def xpath(queries, node = @xml_doc)
-        queries.each do |query|
-          if node
-            node = node.at query
-          else
-            return nil
-          end
-        end
-        node ? node.content : nil
-      end
-
+    class CommonSchema < ViewModel::Base
       def assessment_id
         xpath(%w[RRN])
       end
