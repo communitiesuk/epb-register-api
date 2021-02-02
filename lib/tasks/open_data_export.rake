@@ -18,8 +18,7 @@ task :open_data_export_cepc do
    storage_gateway.write_file("open_data_export_cepc_#{DateTime.now}.csv", data)
 
   rescue StandardError => e
-    puts e
-    puts "File could not be uploaded"
+    abort "Error open data import failed: #{e}"
 
 end
 
