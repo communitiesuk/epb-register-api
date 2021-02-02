@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ConditionReportCreateRequest_1
+  xmlns:SAP05="DCLG-SAP05"
+  xmlns:HIP="DCLG-HIP"
+  xmlns:CS="DCLG-HIP/CommonStructures"
+  xmlns:ERR="DCLG-HIP/Exceptions"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.hcrregister.com ../../../../api/schemas/xml/SAP-Schema-13.0/Messages/ConditionReportCreateRequest_1.xsd">
+  <Identification>
+    <CS:ServiceName>CreateReport</CS:ServiceName>
+    <CS:Operation>Create</CS:Operation>
+    <CS:TransactionDetails>
+      <CS:OriginatingID>EES</CS:OriginatingID>
+      <CS:RecipientID>Landmark</CS:RecipientID>
+      <CS:Timestamp>2009-06-10T16:18:45</CS:Timestamp>
+      <CS:TransactionID>string</CS:TransactionID>
+    </CS:TransactionDetails>
+    <CS:TermsAndConditions>Y</CS:TermsAndConditions>
+  </Identification>
+  <Configuration>
+    <CS:StopOnFirstError>No</CS:StopOnFirstError>
+    <CS:ReasonForChange>N/A</CS:ReasonForChange>
+  </Configuration>
+  <Content>
+    <SAP-EPC-Data>
+      <SAP05:SAP-Version>9.81</SAP05:SAP-Version>
+      <SAP05:BEDF-Revision-Number>242</SAP05:BEDF-Revision-Number>
+      <SAP05:Calculation-Software-Name>SAP Calculator</SAP05:Calculation-Software-Name>
+      <SAP05:Calculation-Software-Version>SAP 2005.017.02, May 2009</SAP05:Calculation-Software-Version>
+      <SAP05:Report-Header>
+        <SAP05:RRN>0000-0000-0000-0000-0000</SAP05:RRN>
+        <SAP05:Inspection-Date>2020-05-04</SAP05:Inspection-Date>
+        <SAP05:Report-Type>3</SAP05:Report-Type>
+        <SAP05:Completion-Date>2020-05-04</SAP05:Completion-Date>
+        <SAP05:Registration-Date>2020-05-04</SAP05:Registration-Date>
+        <SAP05:Status>entered</SAP05:Status>
+        <SAP05:Language-Code>1</SAP05:Language-Code>
+        <SAP05:Restricted-Access>0</SAP05:Restricted-Access>
+        <SAP05:Related-Party-Disclosure>Not related</SAP05:Related-Party-Disclosure>
+        <SAP05:Seller-Commission-Report>N</SAP05:Seller-Commission-Report>
+        <SAP05:Property-Type>2</SAP05:Property-Type>
+        <SAP05:Home-Inspector>
+          <SAP05:Certification-Scheme>
+            <SAP05:Scheme-Name>APEL New Build Domestic Energy Assessor</SAP05:Scheme-Name>
+            <SAP05:Complaints-Address>
+              <SAP05:Address-Line-1>Unit 16, St Johns Business Park</SAP05:Address-Line-1>
+              <SAP05:Address-Line-2>Leicestershire</SAP05:Address-Line-2>
+              <SAP05:Post-Town>Lutterworth</SAP05:Post-Town>
+              <SAP05:Postcode>LE17 4HB</SAP05:Postcode>
+            </SAP05:Complaints-Address>
+            <SAP05:Contact-Address>
+              <SAP05:Address-Line-1>Unit 16, St Johns Business Park</SAP05:Address-Line-1>
+              <SAP05:Address-Line-2>Leicestershire</SAP05:Address-Line-2>
+              <SAP05:Post-Town>Lutterworth</SAP05:Post-Town>
+              <SAP05:Postcode>LE17 4HB</SAP05:Postcode>
+            </SAP05:Contact-Address>
+            <SAP05:Web-Site>www.elmhurstenergy.co.uk</SAP05:Web-Site>
+            <SAP05:E-Mail>enquiries@elmhurstenergy.co.uk</SAP05:E-Mail>
+            <SAP05:Fax>08700 850491</SAP05:Fax>
+            <SAP05:Telephone>08700 850490</SAP05:Telephone>
+            <SAP05:Registered-Name>Elmhurst Energy Systems Ltd</SAP05:Registered-Name>
+          </SAP05:Certification-Scheme>
+          <SAP05:Identification-Number>
+            <SAP05:Certificate-Number>EES/004652</SAP05:Certificate-Number>
+          </SAP05:Identification-Number>
+          <SAP05:Name>
+            <SAP05:Prefix>Mr.</SAP05:Prefix>
+            <SAP05:First-Name>Jonathan </SAP05:First-Name>
+            <SAP05:Surname>Laird</SAP05:Surname>
+            <SAP05:Suffix/>
+          </SAP05:Name>
+          <SAP05:Certification-Date>2008-06-02</SAP05:Certification-Date>
+          <SAP05:Status>Registered</SAP05:Status>
+          <SAP05:Notify-Lodgement>Y</SAP05:Notify-Lodgement>
+          <SAP05:Contact-Address>
+            <SAP05:Address-Line-1>24 Rutland Street</SAP05:Address-Line-1>
+            <SAP05:Address-Line-2>Lothian</SAP05:Address-Line-2>
+            <SAP05:Post-Town>Edinburgh</SAP05:Post-Town>
+            <SAP05:Postcode>EH1 2AN</SAP05:Postcode>
+          </SAP05:Contact-Address>
+          <SAP05:E-Mail>john.laird@rybka.co.uk</SAP05:E-Mail>
+          <SAP05:Fax>0131 2288447</SAP05:Fax>
+          <SAP05:Telephone>031 228 8447</SAP05:Telephone>
+          <SAP05:Qualifications/>
+          <SAP05:Specialisms/>
+          <SAP05:Company-Name>Rybka Limited</SAP05:Company-Name>
+          <SAP05:Inspector-Report-Types>
+            <SAP05:Report-Type>3</SAP05:Report-Type>
+          </SAP05:Inspector-Report-Types>
+        </SAP05:Home-Inspector>
+        <SAP05:Transaction-Type>6</SAP05:Transaction-Type>
+        <SAP05:Region-Code>6</SAP05:Region-Code>
+        <SAP05:Country-Code>EAW</SAP05:Country-Code>
+        <SAP05:Property>
+          <SAP05:Address>
+            <SAP05:Address-Line-1>1 Some Street</SAP05:Address-Line-1>
+            <SAP05:Post-Town>Post-Town1</SAP05:Post-Town>
+            <SAP05:Postcode>A0 0AA</SAP05:Postcode>
+          </SAP05:Address>
+          <SAP05:UPRN>0000000000</SAP05:UPRN>
+        </SAP05:Property>
+      </SAP05:Report-Header>
+      <SAP05:Energy-Assessment>
+        <SAP05:Assessment-Date>2009-06-09</SAP05:Assessment-Date>
+        <SAP05:Property-Summary>
+          <SAP05:Walls>
+            <SAP05:Description>Average thermal transmittance 0.22 W/m�K</SAP05:Description>
+            <SAP05:Energy-Efficiency-Rating>5</SAP05:Energy-Efficiency-Rating>
+            <SAP05:Environmental-Efficiency-Rating>5</SAP05:Environmental-Efficiency-Rating>
+          </SAP05:Walls>
+          <SAP05:Roof>
+            <SAP05:Description>(other premises above)</SAP05:Description>
+            <SAP05:Energy-Efficiency-Rating>0</SAP05:Energy-Efficiency-Rating>
+            <SAP05:Environmental-Efficiency-Rating>0</SAP05:Environmental-Efficiency-Rating>
+          </SAP05:Roof>
+          <SAP05:Floor>
+            <SAP05:Description>(other premises below)</SAP05:Description>
+            <SAP05:Energy-Efficiency-Rating>0</SAP05:Energy-Efficiency-Rating>
+            <SAP05:Environmental-Efficiency-Rating>0</SAP05:Environmental-Efficiency-Rating>
+          </SAP05:Floor>
+          <SAP05:Windows>
+            <SAP05:Description>High performance glazing</SAP05:Description>
+            <SAP05:Energy-Efficiency-Rating>5</SAP05:Energy-Efficiency-Rating>
+            <SAP05:Environmental-Efficiency-Rating>5</SAP05:Environmental-Efficiency-Rating>
+          </SAP05:Windows>
+          <SAP05:Main-Heating>
+            <SAP05:Description>Room heaters, electric</SAP05:Description>
+            <SAP05:Energy-Efficiency-Rating>1</SAP05:Energy-Efficiency-Rating>
+            <SAP05:Environmental-Efficiency-Rating>2</SAP05:Environmental-Efficiency-Rating>
+          </SAP05:Main-Heating>
+          <SAP05:Main-Heating-Controls>
+            <SAP05:Description>Programmer and appliance thermostats</SAP05:Description>
+            <SAP05:Energy-Efficiency-Rating>4</SAP05:Energy-Efficiency-Rating>
+            <SAP05:Environmental-Efficiency-Rating>4</SAP05:Environmental-Efficiency-Rating>
+          </SAP05:Main-Heating-Controls>
+          <SAP05:Secondary-Heating>
+            <SAP05:Description>Room heaters, electric</SAP05:Description>
+            <SAP05:Energy-Efficiency-Rating>0</SAP05:Energy-Efficiency-Rating>
+            <SAP05:Environmental-Efficiency-Rating>0</SAP05:Environmental-Efficiency-Rating>
+          </SAP05:Secondary-Heating>
+          <SAP05:Hot-Water>
+            <SAP05:Description>Electric immersion, standard tariff</SAP05:Description>
+            <SAP05:Energy-Efficiency-Rating>1</SAP05:Energy-Efficiency-Rating>
+            <SAP05:Environmental-Efficiency-Rating>2</SAP05:Environmental-Efficiency-Rating>
+          </SAP05:Hot-Water>
+          <SAP05:Lighting>
+            <SAP05:Description>Low energy lighting in 80% of fixed outlets</SAP05:Description>
+            <SAP05:Energy-Efficiency-Rating>5</SAP05:Energy-Efficiency-Rating>
+            <SAP05:Environmental-Efficiency-Rating>5</SAP05:Environmental-Efficiency-Rating>
+          </SAP05:Lighting>
+          <SAP05:Air-Tightness>
+            <SAP05:Description>(not tested)</SAP05:Description>
+            <SAP05:Energy-Efficiency-Rating>0</SAP05:Energy-Efficiency-Rating>
+            <SAP05:Environmental-Efficiency-Rating>0</SAP05:Environmental-Efficiency-Rating>
+          </SAP05:Air-Tightness>
+          <SAP05:Has-Fixed-Air-Conditioning>false</SAP05:Has-Fixed-Air-Conditioning>
+          <SAP05:Has-Hot-Water-Cylinder>true</SAP05:Has-Hot-Water-Cylinder>
+          <SAP05:Has-Heated-Separate-Conservatory>false</SAP05:Has-Heated-Separate-Conservatory>
+          <SAP05:Dwelling-Type>Mid-floor flat</SAP05:Dwelling-Type>
+          <SAP05:Total-Floor-Area>49</SAP05:Total-Floor-Area>
+        </SAP05:Property-Summary>
+        <SAP05:Energy-Use>
+          <SAP05:Energy-Rating-Current>64</SAP05:Energy-Rating-Current>
+          <SAP05:Energy-Rating-Potential>64</SAP05:Energy-Rating-Potential>
+          <SAP05:Environmental-Impact-Current>75</SAP05:Environmental-Impact-Current>
+          <SAP05:Environmental-Impact-Potential>75</SAP05:Environmental-Impact-Potential>
+          <SAP05:Energy-Consumption-Current>239</SAP05:Energy-Consumption-Current>
+          <SAP05:Energy-Consumption-Potential>239</SAP05:Energy-Consumption-Potential>
+          <SAP05:CO2-Emissions-Current>1.8</SAP05:CO2-Emissions-Current>
+          <SAP05:CO2-Emissions-Potential>1.8</SAP05:CO2-Emissions-Potential>
+          <SAP05:CO2-Emissions-Current-Per-Floor-Area>36</SAP05:CO2-Emissions-Current-Per-Floor-Area>
+          <SAP05:Lighting-Cost-Current>32</SAP05:Lighting-Cost-Current>
+          <SAP05:Lighting-Cost-Potential>32</SAP05:Lighting-Cost-Potential>
+          <SAP05:Heating-Cost-Current>201</SAP05:Heating-Cost-Current>
+          <SAP05:Heating-Cost-Potential>201</SAP05:Heating-Cost-Potential>
+          <SAP05:Hot-Water-Cost-Current>211</SAP05:Hot-Water-Cost-Current>
+          <SAP05:Hot-Water-Cost-Potential>211</SAP05:Hot-Water-Cost-Potential>
+        </SAP05:Energy-Use>
+      </SAP05:Energy-Assessment>
+      <SAP05:SAP05-Data>
+        <SAP05:Data-Type>2</SAP05:Data-Type>
+        <SAP05:Schema-Version>LIG-13.0</SAP05:Schema-Version>
+        <SAP05:SAP-Property-Details>
+          <SAP05:Property-Type>2</SAP05:Property-Type>
+          <SAP05:Built-Form>4</SAP05:Built-Form>
+          <SAP05:Living-Area>20.39</SAP05:Living-Area>
+          <SAP05:Orientation>6</SAP05:Orientation>
+          <SAP05:Conservatory-Type>1</SAP05:Conservatory-Type>
+          <SAP05:Has-Special-Feature>false</SAP05:Has-Special-Feature>
+          <SAP05:Is-In-Smoke-Control-Area>unknown</SAP05:Is-In-Smoke-Control-Area>
+          <SAP05:SAP-Flat-Details>
+            <SAP05:Level>2</SAP05:Level>
+          </SAP05:SAP-Flat-Details>
+          <SAP05:SAP-Opening-Types>
+            <SAP05:SAP-Opening-Type>
+              <SAP05:Name>Doors 1</SAP05:Name>
+              <SAP05:Description>Front Door</SAP05:Description>
+              <SAP05:Data-Source>3</SAP05:Data-Source>
+              <SAP05:Type>1</SAP05:Type>
+              <SAP05:Glazing-Type>1</SAP05:Glazing-Type>
+              <SAP05:U-Value>3</SAP05:U-Value>
+            </SAP05:SAP-Opening-Type>
+            <SAP05:SAP-Opening-Type>
+              <SAP05:Name>Windows 1</SAP05:Name>
+              <SAP05:Description>Window</SAP05:Description>
+              <SAP05:Data-Source>2</SAP05:Data-Source>
+              <SAP05:Type>4</SAP05:Type>
+              <SAP05:Glazing-Type>4</SAP05:Glazing-Type>
+              <SAP05:Glazing-Gap>2</SAP05:Glazing-Gap>
+              <SAP05:IsArgonFilled>false</SAP05:IsArgonFilled>
+              <SAP05:Frame-Type>2</SAP05:Frame-Type>
+              <SAP05:Solar-Transmittance>0.72</SAP05:Solar-Transmittance>
+              <SAP05:Frame-Factor>0.7</SAP05:Frame-Factor>
+              <SAP05:U-Value>1.59</SAP05:U-Value>
+            </SAP05:SAP-Opening-Type>
+          </SAP05:SAP-Opening-Types>
+          <SAP05:SAP-Building-Parts>
+            <SAP05:SAP-Building-Part>
+              <SAP05:Building-Part-Number>1</SAP05:Building-Part-Number>
+              <SAP05:Identifier>Main Dwelling</SAP05:Identifier>
+              <SAP05:Construction-Year>2008</SAP05:Construction-Year>
+              <SAP05:Overshading>2</SAP05:Overshading>
+              <SAP05:SAP-Openings>
+                <SAP05:SAP-Opening>
+                  <SAP05:Name>Front Door</SAP05:Name>
+                  <SAP05:Type>Doors 1</SAP05:Type>
+                  <SAP05:Location>Walls (1)</SAP05:Location>
+                  <SAP05:Orientation>0</SAP05:Orientation>
+                  <SAP05:Width>2.2</SAP05:Width>
+                  <SAP05:Height>1</SAP05:Height>
+                </SAP05:SAP-Opening>
+                <SAP05:SAP-Opening>
+                  <SAP05:Name>Window</SAP05:Name>
+                  <SAP05:Type>Windows 1</SAP05:Type>
+                  <SAP05:Location>Walls (1)</SAP05:Location>
+                  <SAP05:Orientation>2</SAP05:Orientation>
+                  <SAP05:Width>5.23</SAP05:Width>
+                  <SAP05:Height>1</SAP05:Height>
+                </SAP05:SAP-Opening>
+              </SAP05:SAP-Openings>
+              <SAP05:SAP-Floor-Dimensions>
+                <SAP05:SAP-Floor-Dimension>
+                  <SAP05:Storey>1</SAP05:Storey>
+                  <SAP05:Description/>
+                  <SAP05:Floor-Type>2</SAP05:Floor-Type>
+                  <SAP05:Total-Floor-Area>49.09</SAP05:Total-Floor-Area>
+                  <SAP05:Storey-Height>2.35</SAP05:Storey-Height>
+                  <SAP05:Heat-Loss-Area>0</SAP05:Heat-Loss-Area>
+                  <SAP05:U-Value>0</SAP05:U-Value>
+                </SAP05:SAP-Floor-Dimension>
+              </SAP05:SAP-Floor-Dimensions>
+              <SAP05:SAP-Exposed-Roofs>
+                <SAP05:SAP-Exposed-Roof>
+                  <SAP05:Name>Roof (1)</SAP05:Name>
+                  <SAP05:Description/>
+                  <SAP05:Total-Roof-Area>0</SAP05:Total-Roof-Area>
+                  <SAP05:U-Value>0</SAP05:U-Value>
+                </SAP05:SAP-Exposed-Roof>
+              </SAP05:SAP-Exposed-Roofs>
+              <SAP05:SAP-Exposed-Walls>
+                <SAP05:SAP-Exposed-Wall>
+                  <SAP05:Name>Walls (1)</SAP05:Name>
+                  <SAP05:Description/>
+                  <SAP05:Wall-Type>2</SAP05:Wall-Type>
+                  <SAP05:Total-Wall-Area>37.61</SAP05:Total-Wall-Area>
+                  <SAP05:U-Value>0.22</SAP05:U-Value>
+                  <SAP05:Is-Curtain-Walling>false</SAP05:Is-Curtain-Walling>
+                </SAP05:SAP-Exposed-Wall>
+              </SAP05:SAP-Exposed-Walls>
+            </SAP05:SAP-Building-Part>
+          </SAP05:SAP-Building-Parts>
+          <SAP05:SAP-Ventilation>
+            <SAP05:Open-Fireplaces-Count>0</SAP05:Open-Fireplaces-Count>
+            <SAP05:Open-Flues-Count>0</SAP05:Open-Flues-Count>
+            <SAP05:Fans-Vents-Count>0</SAP05:Fans-Vents-Count>
+            <SAP05:Flueless-Gas-Fires-Count>0</SAP05:Flueless-Gas-Fires-Count>
+            <SAP05:Pressure-Test>3</SAP05:Pressure-Test>
+            <SAP05:Air-Permeability>15</SAP05:Air-Permeability>
+            <SAP05:Sheltered-Sides-Count>1</SAP05:Sheltered-Sides-Count>
+            <SAP05:Ventilation-Type>7</SAP05:Ventilation-Type>
+            <SAP05:Mechanical-Ventilation-Data-Source>1</SAP05:Mechanical-Ventilation-Data-Source>
+            <SAP05:Mechanical-Vent-System-Index-Number>500004</SAP05:Mechanical-Vent-System-Index-Number>
+            <SAP05:Wet-Rooms-Count>1</SAP05:Wet-Rooms-Count>
+            <SAP05:Mechanical-Vent-Duct-Type>2</SAP05:Mechanical-Vent-Duct-Type>
+            <SAP05:Mechanical-Vent-Duct-Insulation>1</SAP05:Mechanical-Vent-Duct-Insulation>
+          </SAP05:SAP-Ventilation>
+          <SAP05:SAP-Heating>
+            <SAP05:Main-Heating-Category>10</SAP05:Main-Heating-Category>
+            <SAP05:Main-Heating-Data-Source>3</SAP05:Main-Heating-Data-Source>
+            <SAP05:Main-Heating-Code>691</SAP05:Main-Heating-Code>
+            <SAP05:Main-Fuel-Type>39</SAP05:Main-Fuel-Type>
+            <SAP05:Main-Heating-Control>2603</SAP05:Main-Heating-Control>
+            <SAP05:Water-Heating-Code>903</SAP05:Water-Heating-Code>
+            <SAP05:Water-Fuel-Type>39</SAP05:Water-Fuel-Type>
+            <SAP05:Has-Hot-Water-Cylinder>true</SAP05:Has-Hot-Water-Cylinder>
+            <SAP05:Secondary-Heating-Category>10</SAP05:Secondary-Heating-Category>
+            <SAP05:Secondary-Heating-Data-Source>3</SAP05:Secondary-Heating-Data-Source>
+            <SAP05:Secondary-Fuel-Type>39</SAP05:Secondary-Fuel-Type>
+            <SAP05:Secondary-Heating-Code>693</SAP05:Secondary-Heating-Code>
+            <SAP05:Has-Fixed-Air-Conditioning>false</SAP05:Has-Fixed-Air-Conditioning>
+            <SAP05:Immersion-Heating-Type>1</SAP05:Immersion-Heating-Type>
+            <SAP05:Hot-Water-Store-Size>125</SAP05:Hot-Water-Store-Size>
+            <SAP05:Hot-Water-Store-Heat-Loss-Source>3</SAP05:Hot-Water-Store-Heat-Loss-Source>
+            <SAP05:Hot-Water-Store-Insulation-Type>1</SAP05:Hot-Water-Store-Insulation-Type>
+            <SAP05:Hot-Water-Store-Insulation-Thickness>80</SAP05:Hot-Water-Store-Insulation-Thickness>
+            <SAP05:Is-Cylinder-In-Heated-Space>true</SAP05:Is-Cylinder-In-Heated-Space>
+            <SAP05:Has-Solar-Panel>false</SAP05:Has-Solar-Panel>
+          </SAP05:SAP-Heating>
+          <SAP05:SAP-Energy-Source>
+            <SAP05:PV-Peak-Power>0</SAP05:PV-Peak-Power>
+            <SAP05:Wind-Turbines-Count>0</SAP05:Wind-Turbines-Count>
+            <SAP05:Wind-Turbine-Terrain-Type>1</SAP05:Wind-Turbine-Terrain-Type>
+            <SAP05:Low-Energy-Fixed-Lighting-Outlets-Percentage>80</SAP05:Low-Energy-Fixed-Lighting-Outlets-Percentage>
+            <SAP05:Electricity-Tariff>1</SAP05:Electricity-Tariff>
+          </SAP05:SAP-Energy-Source>
+        </SAP05:SAP-Property-Details>
+      </SAP05:SAP05-Data>
+      <SAP05:PDF/>
+      <SAP05:Insurance-Details>
+        <SAP05:Insurer/>
+        <SAP05:Policy-No/>
+        <SAP05:Effective-Date>0001-01-01</SAP05:Effective-Date>
+        <SAP05:Expiry-Date>2009-04-01</SAP05:Expiry-Date>
+        <SAP05:PI-Limit>1000000</SAP05:PI-Limit>
+      </SAP05:Insurance-Details>
+    </SAP-EPC-Data>
+    <PDF>PDF data removed by LIG</PDF>
+  </Content>
+</ConditionReportCreateRequest_1>
