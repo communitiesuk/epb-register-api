@@ -6,13 +6,11 @@ describe UseCase::ExportOpenDataDec do
       let(:date_today) { DateTime.now.strftime("%F") }
       let(:number_assessments_to_test) { 2 }
       let(:expected_values) do
-        Samples::ViewModels::Dec.report_test_hash.merge(
-          { lodgement_date: date_today },
-        )
+        Samples::ViewModels::Dec.report_test_hash
       end
       let(:expected_values_1) do
         Samples::ViewModels::Dec.report_test_hash.merge(
-          { lodgement_date: date_today, rrn: "0000-0000-0000-0000-0001" },
+          { rrn: "0000-0000-0000-0000-0001" },
         )
       end
 

@@ -22,14 +22,12 @@ describe UseCase::ExportOpenDataCommercial do
 
       let(:date_today) { DateTime.now.strftime("%F") }
       let(:expected_values) do
-        Samples::ViewModels::Cepc.report_test_hash.merge(
-          { lodgement_date: date_today },
-        )
+        Samples::ViewModels::Cepc.report_test_hash
       end
       let(:expected_values_index_1) do
         Samples.update_test_hash(
           expected_values,
-          { rrn: "0000-0000-0000-0000-0002", lodgement_date: date_today },
+          { rrn: "0000-0000-0000-0000-0002" },
         )
       end
 

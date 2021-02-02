@@ -155,7 +155,7 @@ module Gateway
       # TODO: create public hash for ID
 
       sql = <<~SQL
-        SELECT  a.assessment_id, created_at
+        SELECT  a.assessment_id, date_registered
         FROM assessments a
         INNER JOIN assessments_address_id c  ON(a.assessment_id = c.assessment_id)
         INNER JOIN assessments_xml b ON(a.assessment_id = b.assessment_id)
@@ -176,7 +176,6 @@ module Gateway
       end
 
       sql << " ORDER BY assessment_id "
-
       results = ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
 
       results.map { |result| result }
@@ -189,13 +188,13 @@ module Gateway
       ]
 
       sql = <<~SQL
-        SELECT  a.assessment_id, created_at
+        SELECT  a.assessment_id, date_registered
         FROM assessments a
         INNER JOIN assessments_xml xml ON(a.assessment_id = xml.assessment_id)
         INNER JOIN linked_assessments la ON a.assessment_id = la.assessment_id
         WHERE a.opt_out = false AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
         AND a.type_of_assessment = $1
-        AND a.date_of_assessment >= $2
+        AND a.date_registered >= $2
         AND a.postcode NOT LIKE 'BT%'
         ORDER BY a.assessment_id
 

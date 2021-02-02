@@ -268,7 +268,7 @@ class Samples
           inspection_date: "2020-05-04",
           nominated_date: "2020-01-01",
           or_assessment_end_date: "2020-05-01",
-          lodgement_date: "",
+          lodgement_date: "2020-05-04",
           main_benchmark: "",
           main_heating_fuel: "Natural Gas",
           special_energy_uses: "special",

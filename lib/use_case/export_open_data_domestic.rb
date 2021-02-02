@@ -24,9 +24,9 @@ module UseCase
         view_model_hash = view_model.to_report
 
         view_model_hash[:lodgement_date] =
-          assessment["created_at"].strftime("%F")
+          assessment["date_registered"].strftime("%F")
         view_model_hash[:lodgement_datetime] =
-          assessment["created_at"].strftime("%F %H:%M:%S")
+          assessment["date_registered"].strftime("%F %H:%M:%S")
 
         data << view_model_hash
       end

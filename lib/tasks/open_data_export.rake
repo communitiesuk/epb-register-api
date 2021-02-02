@@ -15,7 +15,7 @@ task :open_data_export_cepc do
 
    export_open_data_commercial = UseCase::ExportOpenDataCommercial.new
    data = Helper::ExportHelper.to_csv(export_open_data_commercial.execute)
-   storage_gateway.write_file('open_data_export_cepc', data)
+   storage_gateway.write_file("open_data_export_cepc_#{DateTime.now}.csv", data)
 
   rescue StandardError => e
     puts e

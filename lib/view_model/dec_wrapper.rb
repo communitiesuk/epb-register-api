@@ -142,7 +142,7 @@ module ViewModel
         inspection_date: @view_model.date_of_assessment,
         nominated_date: @view_model.current_assessment_date,
         or_assessment_end_date: @view_model.or_assessment_end_date,
-        lodgement_date: "",
+        lodgement_date: @view_model.date_of_registration,
         lodgement_datetime: "",
         main_benchmark: @view_model.main_benchmark,
         main_heating_fuel: @view_model.main_heating_fuel,
