@@ -156,11 +156,11 @@ module ViewModel
       end
 
       def potential_carbon_emission
-        convert_to_big_decimal(%w[CO2-Emissions-Potential])
+        xpath(%w[CO2-Emissions-Potential])
       end
 
       def current_carbon_emission
-        convert_to_big_decimal(%w[CO2-Emissions-Current])
+        xpath(%w[CO2-Emissions-Current])
       end
 
       def potential_energy_rating
@@ -184,7 +184,7 @@ module ViewModel
       end
 
       def total_floor_area
-        convert_to_big_decimal(%w[Property-Summary Total-Floor-Area])
+        xpath(%w[Property-Summary Total-Floor-Area])
       end
 
       def dwelling_type
@@ -206,12 +206,12 @@ module ViewModel
       end
 
       def current_space_heating_demand
-        convert_to_big_decimal(%w[Space-Heating]) or
-          convert_to_big_decimal(%w[Space-Heating-Existing-Dwelling])
+        xpath(%w[Space-Heating]) or
+          xpath(%w[Space-Heating-Existing-Dwelling])
       end
 
       def current_water_heating_demand
-        convert_to_big_decimal(%w[Water-Heating])
+        xpath(%w[Water-Heating])
       end
 
       def impact_of_cavity_insulation
@@ -388,13 +388,6 @@ module ViewModel
         @xml_doc.search("Main-Heating-Controls/Description").map(&:content)
       end
 
-    private
-
-      def convert_to_big_decimal(node)
-        return unless xpath(node)
-
-        BigDecimal(xpath(node))
-      end
     end
   end
 end

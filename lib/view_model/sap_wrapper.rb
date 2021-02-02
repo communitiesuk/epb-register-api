@@ -97,7 +97,7 @@ module ViewModel
             telephone: @view_model.assessor_telephone,
           },
         },
-        current_carbon_emission: @view_model.current_carbon_emission,
+        current_carbon_emission: convert_to_big_decimal(@view_model.current_carbon_emission),
         current_energy_efficiency_band:
           Helper::EnergyBandCalculator.domestic(
             @view_model.current_energy_rating,
@@ -108,9 +108,9 @@ module ViewModel
         main_fuel_type: @view_model.main_fuel_type,
         heat_demand: {
           current_space_heating_demand:
-            @view_model.current_space_heating_demand,
+            @view_model.current_space_heating_demand&.to_i,
           current_water_heating_demand:
-            @view_model.current_water_heating_demand,
+            @view_model.current_water_heating_demand&.to_i,
           impact_of_cavity_insulation: @view_model.impact_of_cavity_insulation,
           impact_of_loft_insulation: @view_model.impact_of_loft_insulation,
           impact_of_solid_wall_insulation:
@@ -122,7 +122,7 @@ module ViewModel
         hot_water_cost_potential: @view_model.hot_water_cost_potential,
         lighting_cost_current: @view_model.lighting_cost_current,
         lighting_cost_potential: @view_model.lighting_cost_potential,
-        potential_carbon_emission: @view_model.potential_carbon_emission,
+        potential_carbon_emission: convert_to_big_decimal(@view_model.potential_carbon_emission),
         potential_energy_efficiency_band:
           Helper::EnergyBandCalculator.domestic(
             @view_model.potential_energy_rating,
@@ -153,7 +153,7 @@ module ViewModel
           @view_model.related_party_disclosure_text,
         tenure: @view_model.tenure,
         transaction_type: @view_model.transaction_type,
-        total_floor_area: @view_model.total_floor_area,
+        total_floor_area: convert_to_big_decimal(@view_model.total_floor_area),
         status: @view_model.status,
         environmental_impact_current: @view_model.environmental_impact_current,
         environmental_impact_potential:
@@ -211,9 +211,19 @@ module ViewModel
     end
 
     def to_report; end
+      
 
     def get_view_model
       @view_model
-    end
+      end
+
+      private
+
+      def convert_to_big_decimal(node)
+        return "" unless node
+
+        BigDecimal(node)
+      end
+
   end
 end
