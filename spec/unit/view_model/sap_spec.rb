@@ -15,7 +15,6 @@ describe ViewModel::SapWrapper do
       unsupported_fields: [],
       different_fields: {
         address_id: "LPRN-0000000000",
-        heat_loss_corridor: nil,
       },
       different_buried_fields: {
         address: {
@@ -811,7 +810,6 @@ describe ViewModel::SapWrapper do
       unsupported_fields: [],
       different_fields: {
         address_id: "LPRN-0000000000",
-        heat_loss_corridor: nil,
         extensions_count: "0",
         address: {
           address_id: "LPRN-0000000000",
