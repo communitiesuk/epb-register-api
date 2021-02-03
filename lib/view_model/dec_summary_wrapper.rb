@@ -3,6 +3,8 @@ module ViewModel
     TYPE_OF_ASSESSMENT = "DEC".freeze
 
     def initialize(xml, schema_type)
+      xml = Nokogiri.XML(xml).remove_namespaces!.to_s
+
       case schema_type
       when "CEPC-8.0.0"
         @view_model = ViewModel::Cepc800::Dec.new xml

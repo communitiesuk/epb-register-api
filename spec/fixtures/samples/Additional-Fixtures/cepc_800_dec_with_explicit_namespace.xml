@@ -1,0 +1,154 @@
+<CEPC:Reports xmlns:CEPC="https://epbr.digital.communities.gov.uk/xsd/cepc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://epbr.digital.communities.gov.uk/xsd/cepc  ../CEPC-8.0.0/Reports/CEPC-Reports.xsd">
+  <CEPC:Report>
+    <CEPC:Report-Header>
+      <CEPC:RRN>6666-7777-8888-9999-9999</CEPC:RRN>
+      <CEPC:Issue-Date>2021-01-11</CEPC:Issue-Date>
+      <CEPC:Valid-Until>2020-10-31</CEPC:Valid-Until>
+      <CEPC:Report-Type>1</CEPC:Report-Type>
+      <CEPC:Inspection-Date>2021-01-11</CEPC:Inspection-Date>
+      <CEPC:Registration-Date>2021-01-11</CEPC:Registration-Date>
+      <CEPC:Status>entered</CEPC:Status>
+      <CEPC:Language-Code>1</CEPC:Language-Code>
+      <CEPC:Energy-Assessor>
+        <CEPC:Certificate-Number>SPEC000000</CEPC:Certificate-Number>
+        <CEPC:Name>Don Johnson</CEPC:Name>
+        <CEPC:Accreditation-Scheme-Name>Elmhurst Energy Systems Ltd</CEPC:Accreditation-Scheme-Name>
+        <CEPC:Trading-Address>Don's Place, Miami, Florida</CEPC:Trading-Address>
+        <CEPC:Company-Name>M-Vice</CEPC:Company-Name>
+        <CEPC:Status>Registered</CEPC:Status>
+      </CEPC:Energy-Assessor>
+      <CEPC:Property-Details>
+        <CEPC:Location-Description />
+        <CEPC:Property-Address>
+          <CEPC:Address-Line-1>A Building</CEPC:Address-Line-1>
+          <CEPC:Address-Line-2>Lummus Park</CEPC:Address-Line-2>
+          <CEPC:Address-Line-3>Miami Beach</CEPC:Address-Line-3>
+          <CEPC:Address-Line-4></CEPC:Address-Line-4>
+          <CEPC:Post-Town>Miami</CEPC:Post-Town>
+          <CEPC:Postcode>M1 4MI</CEPC:Postcode>
+        </CEPC:Property-Address>
+        <CEPC:Property-Type>Entertainment Halls</CEPC:Property-Type>
+        <CEPC:Occupier>Miami PD</CEPC:Occupier>
+      </CEPC:Property-Details>
+      <CEPC:Calculation-Details>
+        <CEPC:Methodology>ORCalc</CEPC:Methodology>
+        <CEPC:Calculation-Tool>Property-Tectonics Ltd, Lifespan DEC, v3.6.1</CEPC:Calculation-Tool>
+        <CEPC:Output-Engine>ORGen v4.0.4</CEPC:Output-Engine>
+      </CEPC:Calculation-Details>
+    </CEPC:Report-Header>
+
+    <CEPC:OR-Operational-Rating>
+      <CEPC:OR-Assessment-Start-Date>2018-08-31</CEPC:OR-Assessment-Start-Date>
+      <CEPC:OR-Assessment-End-Date>2019-08-31</CEPC:OR-Assessment-End-Date>
+      <CEPC:Building-Category>H5</CEPC:Building-Category>
+      <CEPC:OR-Building-Data>
+        <CEPC:Internal-Environment>Air Conditioning</CEPC:Internal-Environment>
+        <CEPC:Assessment-Period-Alignment>End Of Main Heating Fuel Period</CEPC:Assessment-Period-Alignment>
+        <CEPC:HVAC-System>Radiators</CEPC:HVAC-System>
+      </CEPC:OR-Building-Data>
+      <CEPC:OR-Benchmark-Data>
+        <CEPC:Main-Benchmark>Entertainment Halls</CEPC:Main-Benchmark>
+        <CEPC:Benchmarks>
+          <CEPC:Benchmark>
+            <CEPC:Name>Theatre</CEPC:Name>
+            <CEPC:Benchmark-ID>1</CEPC:Benchmark-ID>
+            <CEPC:Area-Metric>Gross floor area measured as RICS Gross Internal Area (GIA)</CEPC:Area-Metric>
+            <CEPC:Floor-Area>2550</CEPC:Floor-Area>
+            <CEPC:Special-Uses-Area />
+            <CEPC:TUFA>2550</CEPC:TUFA>
+            <CEPC:Benchmark>Entertainment Halls</CEPC:Benchmark>
+            <CEPC:Occupancy-Level>Standard Occupancy</CEPC:Occupancy-Level>
+          </CEPC:Benchmark>
+        </CEPC:Benchmarks>
+      </CEPC:OR-Benchmark-Data>
+      <CEPC:OR-Energy-Consumption>
+        <CEPC:Electricity>
+          <CEPC:Consumption>270601</CEPC:Consumption>
+          <CEPC:Start-Date>2018-09-01</CEPC:Start-Date>
+          <CEPC:End-Date>2019-08-31</CEPC:End-Date>
+          <CEPC:Estimate>0</CEPC:Estimate>
+        </CEPC:Electricity>
+        <CEPC:Gas>
+          <CEPC:Consumption>557102</CEPC:Consumption>
+          <CEPC:Start-Date>2018-09-01</CEPC:Start-Date>
+          <CEPC:End-Date>2019-08-31</CEPC:End-Date>
+          <CEPC:Estimate>0</CEPC:Estimate>
+        </CEPC:Gas>
+      </CEPC:OR-Energy-Consumption>
+      <CEPC:OR-Usable-Floor-Area>
+        <CEPC:UFA-1>
+          <CEPC:Name>boiler room &amp; basement storage</CEPC:Name>
+          <CEPC:Floor-Area>333</CEPC:Floor-Area>
+        </CEPC:UFA-1>
+      </CEPC:OR-Usable-Floor-Area>
+      <CEPC:OR-Previous-Data>
+        <CEPC:Previous-Rating-1>
+          <CEPC:OR>66</CEPC:OR>
+          <CEPC:ORMM>11</CEPC:ORMM>
+          <CEPC:ORYYYY>2018</CEPC:ORYYYY>
+        </CEPC:Previous-Rating-1>
+        <CEPC:Previous-Rating-2>
+          <CEPC:OR>65</CEPC:OR>
+          <CEPC:ORMM>11</CEPC:ORMM>
+          <CEPC:ORYYYY>2017</CEPC:ORYYYY>
+        </CEPC:Previous-Rating-2>
+        <CEPC:Asset-Rating>0</CEPC:Asset-Rating>
+      </CEPC:OR-Previous-Data>
+    </CEPC:OR-Operational-Rating>
+    <CEPC:Insurance-Details>
+      <CEPC:Insurer>Woopsy Ltd</CEPC:Insurer>
+      <CEPC:Policy-No>AB12345</CEPC:Policy-No>
+      <CEPC:Effective-Date>2019-06-29</CEPC:Effective-Date>
+      <CEPC:Expiry-Date>2120-06-28</CEPC:Expiry-Date>
+      <CEPC:PI-Limit>1000000</CEPC:PI-Limit>
+    </CEPC:Insurance-Details>
+    <CEPC:Display-Certificate>
+      <CEPC:DEC-Annual-Energy-Summary>
+        <CEPC:Annual-Energy-Use-Electrical>106</CEPC:Annual-Energy-Use-Electrical>
+        <CEPC:Annual-Energy-Use-Fuel-Thermal>218</CEPC:Annual-Energy-Use-Fuel-Thermal>
+        <CEPC:Renewables-Fuel-Thermal>0</CEPC:Renewables-Fuel-Thermal>
+        <CEPC:Renewables-Electrical>10</CEPC:Renewables-Electrical>
+        <CEPC:Typical-Thermal-Use>429</CEPC:Typical-Thermal-Use>
+        <CEPC:Typical-Electrical-Use>150</CEPC:Typical-Electrical-Use>
+      </CEPC:DEC-Annual-Energy-Summary>
+      <CEPC:DEC-Status>0</CEPC:DEC-Status>
+      <CEPC:Reason-Type>1</CEPC:Reason-Type>
+      <CEPC:DEC-Related-Party-Disclosure>4</CEPC:DEC-Related-Party-Disclosure>
+      <CEPC:This-Assessment>
+        <CEPC:Nominated-Date>2019-11-01</CEPC:Nominated-Date>
+        <CEPC:Energy-Rating>61</CEPC:Energy-Rating>
+        <CEPC:Electricity-CO2>149</CEPC:Electricity-CO2>
+        <CEPC:Heating-CO2>108</CEPC:Heating-CO2>
+        <CEPC:Renewables-CO2>0</CEPC:Renewables-CO2>
+      </CEPC:This-Assessment>
+      <CEPC:Year1-Assessment>
+        <CEPC:Nominated-Date>2018-11-01</CEPC:Nominated-Date>
+        <CEPC:Energy-Rating>66</CEPC:Energy-Rating>
+        <CEPC:Electricity-CO2>179</CEPC:Electricity-CO2>
+        <CEPC:Heating-CO2>98</CEPC:Heating-CO2>
+        <CEPC:Renewables-CO2>0</CEPC:Renewables-CO2>
+      </CEPC:Year1-Assessment>
+      <CEPC:Year2-Assessment>
+        <CEPC:Nominated-Date>2017-11-01</CEPC:Nominated-Date>
+        <CEPC:Energy-Rating>65</CEPC:Energy-Rating>
+        <CEPC:Electricity-CO2>188</CEPC:Electricity-CO2>
+        <CEPC:Heating-CO2>81</CEPC:Heating-CO2>
+        <CEPC:Renewables-CO2>0</CEPC:Renewables-CO2>
+      </CEPC:Year2-Assessment>
+      <CEPC:Technical-Information>
+        <CEPC:Main-Heating-Fuel>Natural Gas</CEPC:Main-Heating-Fuel>
+        <CEPC:Building-Environment>Air Conditioning</CEPC:Building-Environment>
+        <CEPC:Floor-Area>2550</CEPC:Floor-Area>
+        <CEPC:Separately-Metered-Electric-Heating>0</CEPC:Separately-Metered-Electric-Heating>
+      </CEPC:Technical-Information>
+      <CEPC:AC-Questionnaire>
+        <CEPC:AC-Present>Yes</CEPC:AC-Present>
+        <CEPC:AC-Rated-Output>
+          <CEPC:AC-Rating-Unknown-Flag>1</CEPC:AC-Rating-Unknown-Flag>
+        </CEPC:AC-Rated-Output>
+        <CEPC:AC-Estimated-Output>2</CEPC:AC-Estimated-Output>
+        <CEPC:AC-Inspection-Commissioned>2</CEPC:AC-Inspection-Commissioned>
+      </CEPC:AC-Questionnaire>
+    </CEPC:Display-Certificate>
+  </CEPC:Report>
+</CEPC:Reports>

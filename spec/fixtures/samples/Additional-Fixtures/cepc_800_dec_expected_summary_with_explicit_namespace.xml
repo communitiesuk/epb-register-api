@@ -1,0 +1,65 @@
+<Reports
+  xmlns="https://epbr.digital.communities.gov.uk/xsd/dec-summary"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/dec-summary  ../../../../api/schemas/xml/CEPC-8.0.0/DEC-Summary.xsd"
+>
+  <Report>
+    <Report-Header>
+      <Report-Type>1</Report-Type>
+      <Property-Details>
+        <UPRN></UPRN>
+      </Property-Details>
+      <Calculation-Details>
+        <Output-Engine>ORGen v4.0.4</Output-Engine>
+      </Calculation-Details>
+    </Report-Header>
+    <OR-Operational-Rating>
+      <OR-Assessment-Start-Date>2018-08-31</OR-Assessment-Start-Date>
+      <OR-Assessment-End-Date>2019-08-31</OR-Assessment-End-Date>
+      <OR-Benchmark-Data>
+        <Benchmarks>
+          <Benchmark>
+            <Name>Theatre</Name>
+            <Benchmark-ID>1</Benchmark-ID>
+            <TUFA>2550</TUFA>
+          </Benchmark>
+        </Benchmarks>
+      </OR-Benchmark-Data>
+      <OR-Energy-Consumption>
+        <Electricity>
+          <Consumption>270601</Consumption>
+          <Start-Date>2018-09-01</Start-Date>
+          <End-Date>2019-08-31</End-Date>
+          <Estimate>0</Estimate>
+        </Electricity>
+        <Gas>
+          <Consumption>557102</Consumption>
+          <Start-Date>2018-09-01</Start-Date>
+          <End-Date>2019-08-31</End-Date>
+          <Estimate>0</Estimate>
+        </Gas>
+      </OR-Energy-Consumption>
+    </OR-Operational-Rating>
+    <Display-Certificate>
+      <DEC-Annual-Energy-Summary>
+        <Annual-Energy-Use-Electrical>106</Annual-Energy-Use-Electrical>
+        <Annual-Energy-Use-Fuel-Thermal>218</Annual-Energy-Use-Fuel-Thermal>
+        <Renewables-Fuel-Thermal>0</Renewables-Fuel-Thermal>
+        <Renewables-Electrical>10</Renewables-Electrical>
+        <Typical-Thermal-Use>429</Typical-Thermal-Use>
+        <Typical-Electrical-Use>150</Typical-Electrical-Use>
+      </DEC-Annual-Energy-Summary>
+      <DEC-Status>0</DEC-Status>
+      <This-Assessment>
+        <Nominated-Date>2019-11-01</Nominated-Date>
+        <Energy-Rating>61</Energy-Rating>
+        <Electricity-CO2>149</Electricity-CO2>
+        <Heating-CO2>108</Heating-CO2>
+        <Renewables-CO2>0</Renewables-CO2>
+      </This-Assessment>
+      <Technical-Information>
+        <Main-Heating-Fuel>Natural Gas</Main-Heating-Fuel>
+      </Technical-Information>
+    </Display-Certificate>
+  </Report>
+</Reports>

@@ -36,7 +36,7 @@ describe "Acceptance::DECSummary" do
         )
       end
 
-      it "returns valid XML" do
+      it "returns the expected XML summary" do
         response =
           JSON.parse(
             fetch_dec_summary("0000-0000-0000-0000-0000", [200]).body,
@@ -50,23 +50,45 @@ describe "Acceptance::DECSummary" do
       end
     end
 
-    it "returns valid XML" do
-      lodge_assessment(
-        assessment_body: valid_dec_xml,
-        accepted_responses: [201],
-        auth_data: {
-          scheme_ids: [scheme_id],
-        },
-        schema_name: "CEPC-8.0.0",
-      )
-
-      response =
-        JSON.parse(
-          fetch_dec_summary("0000-0000-0000-0000-0000", [200]).body,
-          symbolize_names: true,
+    context "when the DEC does have a UPRN field" do
+      it "returns the expected XML summary" do
+        lodge_assessment(
+          assessment_body: valid_dec_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: "CEPC-8.0.0",
         )
 
-      expect(response[:data]).to eq(Samples.xml("CEPC-8.0.0", "dec_summary"))
+        response =
+          JSON.parse(
+            fetch_dec_summary("0000-0000-0000-0000-0000", [200]).body,
+            symbolize_names: true,
+          )
+        expect(response[:data]).to eq(Samples.xml("CEPC-8.0.0", "dec_summary"))
+      end
+    end
+
+    context "when the DEC element names are explicitly namespaced with CEPC:" do
+      it "returns the expected XML summary" do
+        lodge_assessment(
+          assessment_body: Samples.xml("Additional-Fixtures", "cepc_800_dec_with_explicit_namespace"),
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: "CEPC-8.0.0",
+          )
+
+        response =
+          JSON.parse(
+            fetch_dec_summary("6666-7777-8888-9999-9999", [200]).body,
+            symbolize_names: true,
+            )
+
+        expect(response[:data]).to eq(Samples.xml("Additional-Fixtures", "cepc_800_dec_expected_summary_with_explicit_namespace"))
+      end
     end
   end
 
