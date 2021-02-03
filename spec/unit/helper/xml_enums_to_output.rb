@@ -36,6 +36,14 @@ describe Helper::XmlEnumsToOutput do
 
   context "when the XML contains any other value outside of the enum" do
     it "returns nil for Open Data Communities" do
+      response = helper.xml_value_to_string(1.30)
+      expect(response).to be_nil
+    end
+    it "returns nil for Open Data Communities" do
+      response = helper.xml_value_to_string({ "hello": 20 })
+      expect(response).to be_nil
+    end
+    it "returns nil for Open Data Communities" do
       response = helper.xml_value_to_string("Any other value")
       expect(response).to be_nil
     end

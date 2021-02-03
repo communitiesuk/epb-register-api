@@ -155,6 +155,9 @@ def get_task(name)
   rake.tasks.find { |task| task.to_s == name }
 end
 
+def date_today
+  DateTime.now.strftime("%F")
+end
 
 RSpec.configure do |config|
   config.include Rack::Test::Methods

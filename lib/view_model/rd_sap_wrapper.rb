@@ -182,7 +182,6 @@ module ViewModel
         lighting_cost_potential: @view_model.lighting_cost_potential,
         total_floor_area: @view_model.total_floor_area,
         mains_gas_flag: @view_model.mains_gas,
-        level: @view_model.level,
         flat_top_storey: @view_model.top_storey,
         flat_storey_count: @view_model.storey_count,
         main_heating_controls: @view_model.mains_heating_controls,

@@ -9,9 +9,7 @@ module UseCase
 
     def execute(_args = {})
       data = []
-
-      # TODO: pass in both RdSAP and SAP to usecase
-      assessments = @gateway.assessments_for_open_data("RdSAP")
+      assessments = @gateway.assessments_for_open_data(["RdSAP", "SAP"])
 
       assessments.each do |assessment|
         xml_data = @assessment_gateway.fetch(assessment["assessment_id"])

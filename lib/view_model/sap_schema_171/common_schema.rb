@@ -341,7 +341,7 @@ module ViewModel
       end
 
       def unheated_corridor_length
-        xpath(%w[Unheated-Corridor-Length])
+        nil
       end
 
       def window_energy_efficiency_rating
@@ -385,8 +385,7 @@ module ViewModel
       end
 
       def built_form
-        built_form_value = xpath(%w[Built-Form])
-        Helper::XmlEnumsToOutput.xml_value_to_string(built_form_value)
+        xpath(%w[Built-Form])
       end
 
       def all_main_heating_descriptions

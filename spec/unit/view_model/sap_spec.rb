@@ -1,16 +1,32 @@
 require_relative "xml_view_test_helper"
 
 describe ViewModel::SapWrapper do
-  # @TODO refactor support schema so the same hash isn't re-used 21 times
   # You should only need to add to this list to test new SAP schemas
   supported_schema = [
     {
       schema_name: "SAP-Schema-18.0.0",
       xml: Samples.xml("SAP-Schema-18.0.0"),
       unsupported_fields: [],
+      different_fields: {},
+    },
+    {
+      schema_name: "SAP-Schema-17.1",
+      xml: Samples.xml("SAP-Schema-17.1"),
+      unsupported_fields: [],
       different_fields: {
+        address_id: "LPRN-0000000000",
         heat_loss_corridor: nil,
-        unheated_corridor_length: nil,
+      },
+      different_buried_fields: {
+        address: {
+          address_id: "LPRN-0000000000",
+          address_line1: "1 Some Street",
+          address_line2: "",
+          address_line3: "",
+          address_line4: "",
+          postcode: "A0 0AA",
+          town: "Post-Town1",
+        },
       },
     },
     {
@@ -49,6 +65,16 @@ describe ViewModel::SapWrapper do
           town: "Post-Town1",
         },
       },
+      assessor: {
+        scheme_assessor_id: "SPEC000000",
+        name: "Mr Test Boi",
+        contact_details: {
+          email: "a@b.c",
+          telephone: "111222333",
+        },
+      },
+      tenure: nil,
+      transaction_type: "1",
     },
     {
       schema_name: "SAP-Schema-16.3",
@@ -77,6 +103,15 @@ describe ViewModel::SapWrapper do
         tenure: nil,
         transaction_type: "1",
       },
+      assessor: {
+        scheme_assessor_id: "SPEC000000",
+        name: "Mr Test Boi",
+        contact_details: {
+          email: "a@b.c",
+          telephone: "111222333",
+        },
+      },
+      tenure: nil,
     },
     {
       schema_name: "SAP-Schema-16.2",
@@ -84,8 +119,53 @@ describe ViewModel::SapWrapper do
       unsupported_fields: [],
       different_fields: {
         address_id: "LPRN-0000000000",
-        heat_loss_corridor: nil,
-        extensions_count: "0",
+        address_line1: "1 Some Street",
+        address_line2: "",
+        address_line3: "",
+        address_line4: "",
+        postcode: "A0 0AA",
+        town: "Post-Town1",
+        tenure: nil,
+        recommended_improvements: [
+          {
+            energy_performance_rating_improvement: 50,
+            environmental_impact_rating_improvement: 50,
+            energy_performance_band_improvement: "e",
+            green_deal_category_code: "1",
+            improvement_category: "6",
+            improvement_code: "5",
+            improvement_description: nil,
+            improvement_title: nil,
+            improvement_type: "Z3",
+            indicative_cost: "5",
+            sequence: 0,
+            typical_saving: "0.0",
+          },
+          {
+            energy_performance_rating_improvement: 60,
+            environmental_impact_rating_improvement: 64,
+            green_deal_category_code: "3",
+            improvement_category: "2",
+            improvement_code: "1",
+            improvement_description: nil,
+            improvement_title: nil,
+            improvement_type: "Z2",
+            indicative_cost: "2",
+            sequence: 1,
+            typical_saving: "0.1",
+            energy_performance_band_improvement: "d",
+          },
+        ],
+      },
+      different_buried_fields: {
+        assessor: {
+          scheme_assessor_id: "SPEC000000",
+          name: "Mr Test Boi",
+          contact_details: {
+            email: "a@b.c",
+            telephone: "111222333",
+          },
+        },
         address: {
           address_id: "LPRN-0000000000",
           address_line1: "1 Some Street",
@@ -95,15 +175,13 @@ describe ViewModel::SapWrapper do
           postcode: "A0 0AA",
           town: "Post-Town1",
         },
-        assessor: {
-          scheme_assessor_id: "SPEC000000",
-          name: "Mr Test Boi",
-          contact_details: {
-            email: "a@b.c",
-            telephone: "111222333",
-          },
+        heat_demand: {
+          current_space_heating_demand: 30,
+          current_water_heating_demand: 60,
+          impact_of_cavity_insulation: -12,
+          impact_of_loft_insulation: -8,
+          impact_of_solid_wall_insulation: -16,
         },
-        tenure: nil,
       },
     },
     {
@@ -112,32 +190,12 @@ describe ViewModel::SapWrapper do
       unsupported_fields: [],
       different_fields: {
         address_id: "LPRN-0000000000",
-        heat_loss_corridor: nil,
-        extensions_count: "0",
-        address: {
-          address_id: "LPRN-0000000000",
-          address_line1: "1 Some Street",
-          address_line2: "",
-          address_line3: "",
-          address_line4: "",
-          postcode: "A0 0AA",
-          town: "Post-Town1",
-        },
-        assessor: {
-          scheme_assessor_id: "SPEC000000",
-          name: "Mr Test Boi",
-          contact_details: {
-            email: "a@b.c",
-            telephone: "111222333",
-          },
-        },
-        heat_demand: {
-          current_space_heating_demand: 30.0,
-          current_water_heating_demand: 60.0,
-          impact_of_cavity_insulation: nil,
-          impact_of_loft_insulation: nil,
-          impact_of_solid_wall_insulation: nil,
-        },
+        address_line1: "1 Some Street",
+        address_line2: "",
+        address_line3: "",
+        address_line4: "",
+        postcode: "A0 0AA",
+        town: "Post-Town1",
         recommended_improvements: [
           {
             energy_performance_rating_improvement: 50,
@@ -169,6 +227,32 @@ describe ViewModel::SapWrapper do
           },
         ],
         tenure: nil,
+      },
+      different_buried_fields: {
+        address: {
+          address_id: "LPRN-0000000000",
+          address_line1: "1 Some Street",
+          address_line2: "",
+          address_line3: "",
+          address_line4: "",
+          postcode: "A0 0AA",
+          town: "Post-Town1",
+        },
+        assessor: {
+          scheme_assessor_id: "SPEC000000",
+          name: "Mr Test Boi",
+          contact_details: {
+            email: "a@b.c",
+            telephone: "111222333",
+          },
+        },
+        heat_demand: {
+          current_space_heating_demand: 30.0,
+          current_water_heating_demand: 60.0,
+          impact_of_cavity_insulation: nil,
+          impact_of_loft_insulation: nil,
+          impact_of_solid_wall_insulation: nil,
+        },
       },
     },
     {
@@ -177,32 +261,12 @@ describe ViewModel::SapWrapper do
       unsupported_fields: [],
       different_fields: {
         address_id: "LPRN-0000000000",
-        heat_loss_corridor: nil,
-        extensions_count: "0",
-        address: {
-          address_id: "LPRN-0000000000",
-          address_line1: "1 Some Street",
-          address_line2: "",
-          address_line3: "",
-          address_line4: "",
-          postcode: "A0 0AA",
-          town: "Post-Town1",
-        },
-        assessor: {
-          scheme_assessor_id: "SPEC000000",
-          name: "Mr Test Boi",
-          contact_details: {
-            email: "a@b.c",
-            telephone: "111222333",
-          },
-        },
-        heat_demand: {
-          current_space_heating_demand: 30.0,
-          current_water_heating_demand: 60.0,
-          impact_of_cavity_insulation: nil,
-          impact_of_loft_insulation: nil,
-          impact_of_solid_wall_insulation: nil,
-        },
+        address_line1: "1 Some Street",
+        address_line2: "",
+        address_line3: "",
+        address_line4: "",
+        postcode: "A0 0AA",
+        town: "Post-Town1",
         recommended_improvements: [
           {
             energy_performance_rating_improvement: 50,
@@ -235,15 +299,7 @@ describe ViewModel::SapWrapper do
         ],
         tenure: nil,
       },
-    },
-    {
-      schema_name: "SAP-Schema-15.0",
-      xml: Samples.xml("SAP-Schema-15.0"),
-      unsupported_fields: [],
-      different_fields: {
-        address_id: "LPRN-0000000000",
-        heat_loss_corridor: nil,
-        extensions_count: "0",
+      different_buried_fields: {
         address: {
           address_id: "LPRN-0000000000",
           address_line1: "1 Some Street",
@@ -268,6 +324,20 @@ describe ViewModel::SapWrapper do
           impact_of_loft_insulation: nil,
           impact_of_solid_wall_insulation: nil,
         },
+      },
+    },
+    {
+      schema_name: "SAP-Schema-15.0",
+      xml: Samples.xml("SAP-Schema-15.0"),
+      unsupported_fields: [],
+      different_fields: {
+        address_id: "LPRN-0000000000",
+        address_line1: "1 Some Street",
+        address_line2: "",
+        address_line3: "",
+        address_line4: "",
+        postcode: "A0 0AA",
+        town: "Post-Town1",
         recommended_improvements: [
           {
             energy_performance_rating_improvement: 50,
@@ -299,6 +369,32 @@ describe ViewModel::SapWrapper do
           },
         ],
         tenure: nil,
+      },
+      different_buried_fields: {
+        address: {
+          address_id: "LPRN-0000000000",
+          address_line1: "1 Some Street",
+          address_line2: "",
+          address_line3: "",
+          address_line4: "",
+          postcode: "A0 0AA",
+          town: "Post-Town1",
+        },
+        assessor: {
+          scheme_assessor_id: "SPEC000000",
+          name: "Mr Test Boi",
+          contact_details: {
+            email: "a@b.c",
+            telephone: "111222333",
+          },
+        },
+        heat_demand: {
+          current_space_heating_demand: 30,
+          current_water_heating_demand: 60,
+          impact_of_cavity_insulation: nil,
+          impact_of_loft_insulation: nil,
+          impact_of_solid_wall_insulation: nil,
+        },
       },
     },
     {
@@ -310,30 +406,12 @@ describe ViewModel::SapWrapper do
         heat_loss_corridor: nil,
         extensions_count: "0",
         address_id: "LPRN-0000000000",
-        address: {
-          address_id: "LPRN-0000000000",
-          address_line1: "1 Some Street",
-          address_line2: "",
-          address_line3: "",
-          address_line4: "",
-          postcode: "A0 0AA",
-          town: "Post-Town1",
-        },
-        assessor: {
-          scheme_assessor_id: "SPEC000000",
-          name: "Mr Test Boi",
-          contact_details: {
-            email: "a@b.c",
-            telephone: "111222333",
-          },
-        },
-        heat_demand: {
-          current_space_heating_demand: nil,
-          current_water_heating_demand: nil,
-          impact_of_cavity_insulation: nil,
-          impact_of_loft_insulation: nil,
-          impact_of_solid_wall_insulation: nil,
-        },
+        address_line1: "1 Some Street",
+        address_line2: "",
+        address_line3: "",
+        address_line4: "",
+        postcode: "A0 0AA",
+        town: "Post-Town1",
         recommended_improvements: [
           {
             energy_performance_rating_improvement: 50,
@@ -366,16 +444,7 @@ describe ViewModel::SapWrapper do
         ],
         tenure: nil,
       },
-    },
-    {
-      schema_name: "SAP-Schema-14.1",
-      xml: Samples.xml("SAP-Schema-14.1"),
-      unsupported_fields: [],
-      different_fields: {
-        property_age_band: nil,
-        address_id: "LPRN-0000000000",
-        heat_loss_corridor: nil,
-        extensions_count: "0",
+      different_buried_fields: {
         address: {
           address_id: "LPRN-0000000000",
           address_line1: "1 Some Street",
@@ -400,6 +469,21 @@ describe ViewModel::SapWrapper do
           impact_of_loft_insulation: nil,
           impact_of_solid_wall_insulation: nil,
         },
+      },
+    },
+    {
+      schema_name: "SAP-Schema-14.1",
+      xml: Samples.xml("SAP-Schema-14.1"),
+      unsupported_fields: [],
+      different_fields: {
+        property_age_band: nil,
+        address_id: "LPRN-0000000000",
+        address_line1: "1 Some Street",
+        address_line2: "",
+        address_line3: "",
+        address_line4: "",
+        postcode: "A0 0AA",
+        town: "Post-Town1",
         recommended_improvements: [
           {
             energy_performance_rating_improvement: 50,
@@ -431,6 +515,32 @@ describe ViewModel::SapWrapper do
           },
         ],
         tenure: nil,
+      },
+      different_buried_fields: {
+        address: {
+          address_id: "LPRN-0000000000",
+          address_line1: "1 Some Street",
+          address_line2: "",
+          address_line3: "",
+          address_line4: "",
+          postcode: "A0 0AA",
+          town: "Post-Town1",
+        },
+        assessor: {
+          scheme_assessor_id: "SPEC000000",
+          name: "Mr Test Boi",
+          contact_details: {
+            email: "a@b.c",
+            telephone: "111222333",
+          },
+        },
+        heat_demand: {
+          current_space_heating_demand: nil,
+          current_water_heating_demand: nil,
+          impact_of_cavity_insulation: nil,
+          impact_of_loft_insulation: nil,
+          impact_of_solid_wall_insulation: nil,
+        },
       },
     },
     {
@@ -686,6 +796,14 @@ describe ViewModel::SapWrapper do
           },
         },
       },
+      assessor: {
+        scheme_assessor_id: "SPEC000000",
+        name: "Mr Test Boi",
+        contact_details: {
+          email: "a@b.c",
+          telephone: "111222333",
+        },
+      },
     },
     {
       schema_name: "SAP-Schema-NI-17.1",
@@ -713,6 +831,14 @@ describe ViewModel::SapWrapper do
           },
         },
       },
+      assessor: {
+        scheme_assessor_id: "SPEC000000",
+        name: "Mr Test Boi",
+        contact_details: {
+          email: "a@b.c",
+          telephone: "111222333",
+        },
+      },
     },
     {
       schema_name: "SAP-Schema-NI-17.0",
@@ -720,8 +846,44 @@ describe ViewModel::SapWrapper do
       unsupported_fields: [],
       different_fields: {
         address_id: "LPRN-0000000000",
-        extensions_count: "0",
-        heat_loss_corridor: nil,
+        address_line1: "1 Some Street",
+        address_line2: "",
+        address_line3: "",
+        address_line4: "",
+        postcode: "A0 0AA",
+        town: "Post-Town1",
+        recommended_improvements: [
+          {
+            energy_performance_rating_improvement: 50,
+            environmental_impact_rating_improvement: 50,
+            energy_performance_band_improvement: "e",
+            green_deal_category_code: nil,
+            improvement_category: "1",
+            improvement_code: "5",
+            improvement_description: nil,
+            improvement_title: nil,
+            improvement_type: "A",
+            indicative_cost: "5",
+            sequence: 0,
+            typical_saving: "0.0",
+          },
+          {
+            energy_performance_rating_improvement: 60,
+            environmental_impact_rating_improvement: 64,
+            energy_performance_band_improvement: "d",
+            green_deal_category_code: nil,
+            improvement_category: "2",
+            improvement_code: "1",
+            improvement_description: nil,
+            improvement_title: nil,
+            improvement_type: "B",
+            indicative_cost: "2",
+            sequence: 1,
+            typical_saving: "0.1",
+          },
+        ],
+      },
+      different_buried_fields: {
         address: {
           address_id: "LPRN-0000000000",
           address_line1: "1 Some Street",
@@ -746,6 +908,23 @@ describe ViewModel::SapWrapper do
           impact_of_loft_insulation: nil,
           impact_of_solid_wall_insulation: nil,
         },
+      },
+    },
+    {
+      schema_name: "SAP-Schema-NI-16.1",
+      xml: Samples.xml("SAP-Schema-NI-16.1"),
+      unsupported_fields: [],
+      different_fields: {
+        property_age_band: nil,
+        extensions_count: "0",
+        heat_loss_corridor: "0",
+        address_id: "LPRN-0000000000",
+        address_line1: "1 Some Street",
+        address_line2: "",
+        address_line3: "",
+        address_line4: "",
+        postcode: "A0 0AA",
+        town: "Post-Town1",
         recommended_improvements: [
           {
             energy_performance_rating_improvement: 50,
@@ -777,16 +956,7 @@ describe ViewModel::SapWrapper do
           },
         ],
       },
-    },
-    {
-      schema_name: "SAP-Schema-NI-16.1",
-      xml: Samples.xml("SAP-Schema-NI-16.1"),
-      unsupported_fields: [],
-      different_fields: {
-        property_age_band: nil,
-        extensions_count: "0",
-        heat_loss_corridor: "0",
-        address_id: "LPRN-0000000000",
+      different_buried_fields: {
         address: {
           address_id: "LPRN-0000000000",
           address_line1: "1 Some Street",
@@ -811,36 +981,6 @@ describe ViewModel::SapWrapper do
           impact_of_loft_insulation: nil,
           impact_of_solid_wall_insulation: nil,
         },
-        recommended_improvements: [
-          {
-            energy_performance_rating_improvement: 50,
-            environmental_impact_rating_improvement: 50,
-            energy_performance_band_improvement: "e",
-            green_deal_category_code: nil,
-            improvement_category: "1",
-            improvement_code: "5",
-            improvement_description: nil,
-            improvement_title: nil,
-            improvement_type: "A",
-            indicative_cost: "5",
-            sequence: 0,
-            typical_saving: "0.0",
-          },
-          {
-            energy_performance_rating_improvement: 60,
-            environmental_impact_rating_improvement: 64,
-            energy_performance_band_improvement: "d",
-            green_deal_category_code: nil,
-            improvement_category: "2",
-            improvement_code: "1",
-            improvement_description: nil,
-            improvement_title: nil,
-            improvement_type: "B",
-            indicative_cost: "2",
-            sequence: 1,
-            typical_saving: "0.1",
-          },
-        ],
       },
     },
     {
@@ -853,30 +993,12 @@ describe ViewModel::SapWrapper do
         extensions_count: "0",
         heat_loss_corridor: "0",
         address_id: "LPRN-0000000000",
-        address: {
-          address_id: "LPRN-0000000000",
-          address_line1: "1 Some Street",
-          address_line2: "",
-          address_line3: "",
-          address_line4: "",
-          postcode: "A0 0AA",
-          town: "Post-Town1",
-        },
-        assessor: {
-          scheme_assessor_id: "SPEC000000",
-          name: "Mr Test Boi",
-          contact_details: {
-            email: "a@b.c",
-            telephone: "111222333",
-          },
-        },
-        heat_demand: {
-          current_space_heating_demand: nil,
-          current_water_heating_demand: nil,
-          impact_of_cavity_insulation: nil,
-          impact_of_loft_insulation: nil,
-          impact_of_solid_wall_insulation: nil,
-        },
+        address_line1: "1 Some Street",
+        address_line2: "",
+        address_line3: "",
+        address_line4: "",
+        postcode: "A0 0AA",
+        town: "Post-Town1",
         recommended_improvements: [
           {
             energy_performance_rating_improvement: 50,
@@ -907,6 +1029,32 @@ describe ViewModel::SapWrapper do
             typical_saving: "0.1",
           },
         ],
+      },
+      different_buried_fields: {
+        address: {
+          address_id: "LPRN-0000000000",
+          address_line1: "1 Some Street",
+          address_line2: "",
+          address_line3: "",
+          address_line4: "",
+          postcode: "A0 0AA",
+          town: "Post-Town1",
+        },
+        assessor: {
+          scheme_assessor_id: "SPEC000000",
+          name: "Mr Test Boi",
+          contact_details: {
+            email: "a@b.c",
+            telephone: "111222333",
+          },
+        },
+        heat_demand: {
+          current_space_heating_demand: nil,
+          current_water_heating_demand: nil,
+          impact_of_cavity_insulation: nil,
+          impact_of_loft_insulation: nil,
+          impact_of_solid_wall_insulation: nil,
+        },
       },
     },
     {
@@ -919,30 +1067,12 @@ describe ViewModel::SapWrapper do
         extensions_count: "0",
         heat_loss_corridor: "0",
         address_id: "LPRN-0000000000",
-        address: {
-          address_id: "LPRN-0000000000",
-          address_line1: "1 Some Street",
-          address_line2: "",
-          address_line3: "",
-          address_line4: "",
-          postcode: "A0 0AA",
-          town: "Post-Town1",
-        },
-        assessor: {
-          scheme_assessor_id: "SPEC000000",
-          name: "Mr Test Boi",
-          contact_details: {
-            email: "a@b.c",
-            telephone: "111222333",
-          },
-        },
-        heat_demand: {
-          current_space_heating_demand: nil,
-          current_water_heating_demand: nil,
-          impact_of_cavity_insulation: nil,
-          impact_of_loft_insulation: nil,
-          impact_of_solid_wall_insulation: nil,
-        },
+        address_line1: "1 Some Street",
+        address_line2: "",
+        address_line3: "",
+        address_line4: "",
+        postcode: "A0 0AA",
+        town: "Post-Town1",
         recommended_improvements: [
           {
             energy_performance_rating_improvement: 50,
@@ -973,6 +1103,32 @@ describe ViewModel::SapWrapper do
             typical_saving: "0.1",
           },
         ],
+      },
+      different_buried_fields: {
+        address: {
+          address_id: "LPRN-0000000000",
+          address_line1: "1 Some Street",
+          address_line2: "",
+          address_line3: "",
+          address_line4: "",
+          postcode: "A0 0AA",
+          town: "Post-Town1",
+        },
+        assessor: {
+          scheme_assessor_id: "SPEC000000",
+          name: "Mr Test Boi",
+          contact_details: {
+            email: "a@b.c",
+            telephone: "111222333",
+          },
+        },
+        heat_demand: {
+          current_space_heating_demand: nil,
+          current_water_heating_demand: nil,
+          impact_of_cavity_insulation: nil,
+          impact_of_loft_insulation: nil,
+          impact_of_solid_wall_insulation: nil,
+        },
       },
     },
     {
@@ -985,30 +1141,12 @@ describe ViewModel::SapWrapper do
         heat_loss_corridor: "0",
         extensions_count: "0",
         address_id: "LPRN-0000000000",
-        address: {
-          address_id: "LPRN-0000000000",
-          address_line1: "1 Some Street",
-          address_line2: "",
-          address_line3: "",
-          address_line4: "",
-          postcode: "A0 0AA",
-          town: "Post-Town1",
-        },
-        assessor: {
-          scheme_assessor_id: "SPEC000000",
-          name: "Mr Test Boi",
-          contact_details: {
-            email: "a@b.c",
-            telephone: "111222333",
-          },
-        },
-        heat_demand: {
-          current_space_heating_demand: nil,
-          current_water_heating_demand: nil,
-          impact_of_cavity_insulation: nil,
-          impact_of_loft_insulation: nil,
-          impact_of_solid_wall_insulation: nil,
-        },
+        address_line1: "1 Some Street",
+        address_line2: "",
+        address_line3: "",
+        address_line4: "",
+        postcode: "A0 0AA",
+        town: "Post-Town1",
         recommended_improvements: [
           {
             energy_performance_rating_improvement: 50,
@@ -1039,6 +1177,32 @@ describe ViewModel::SapWrapper do
             typical_saving: "0.1",
           },
         ],
+      },
+      different_buried_fields: {
+        address: {
+          address_id: "LPRN-0000000000",
+          address_line1: "1 Some Street",
+          address_line2: "",
+          address_line3: "",
+          address_line4: "",
+          postcode: "A0 0AA",
+          town: "Post-Town1",
+        },
+        assessor: {
+          scheme_assessor_id: "SPEC000000",
+          name: "Mr Test Boi",
+          contact_details: {
+            email: "a@b.c",
+            telephone: "111222333",
+          },
+        },
+        heat_demand: {
+          current_space_heating_demand: nil,
+          current_water_heating_demand: nil,
+          impact_of_cavity_insulation: nil,
+          impact_of_loft_insulation: nil,
+          impact_of_solid_wall_insulation: nil,
+        },
       },
     },
     {
@@ -1051,30 +1215,12 @@ describe ViewModel::SapWrapper do
         heat_loss_corridor: "0",
         extensions_count: "0",
         address_id: "LPRN-0000000000",
-        address: {
-          address_id: "LPRN-0000000000",
-          address_line1: "1 Some Street",
-          address_line2: "",
-          address_line3: "",
-          address_line4: "",
-          postcode: "A0 0AA",
-          town: "Post-Town1",
-        },
-        assessor: {
-          scheme_assessor_id: "SPEC000000",
-          name: "Mr Test Boi",
-          contact_details: {
-            email: "a@b.c",
-            telephone: "111222333",
-          },
-        },
-        heat_demand: {
-          current_space_heating_demand: nil,
-          current_water_heating_demand: nil,
-          impact_of_cavity_insulation: nil,
-          impact_of_loft_insulation: nil,
-          impact_of_solid_wall_insulation: nil,
-        },
+        address_line1: "1 Some Street",
+        address_line2: "",
+        address_line3: "",
+        address_line4: "",
+        postcode: "A0 0AA",
+        town: "Post-Town1",
         recommended_improvements: [
           {
             energy_performance_rating_improvement: 50,
@@ -1105,6 +1251,32 @@ describe ViewModel::SapWrapper do
             typical_saving: "0.1",
           },
         ],
+      },
+      different_buried_fields: {
+        address: {
+          address_id: "LPRN-0000000000",
+          address_line1: "1 Some Street",
+          address_line2: "",
+          address_line3: "",
+          address_line4: "",
+          postcode: "A0 0AA",
+          town: "Post-Town1",
+        },
+        assessor: {
+          scheme_assessor_id: "SPEC000000",
+          name: "Mr Test Boi",
+          contact_details: {
+            email: "a@b.c",
+            telephone: "111222333",
+          },
+        },
+        heat_demand: {
+          current_space_heating_demand: nil,
+          current_water_heating_demand: nil,
+          impact_of_cavity_insulation: nil,
+          impact_of_loft_insulation: nil,
+          impact_of_solid_wall_insulation: nil,
+        },
       },
     },
     {
@@ -1117,30 +1289,12 @@ describe ViewModel::SapWrapper do
         heat_loss_corridor: "0",
         extensions_count: "0",
         address_id: "LPRN-0000000000",
-        address: {
-          address_id: "LPRN-0000000000",
-          address_line1: "1 Some Street",
-          address_line2: "",
-          address_line3: "",
-          address_line4: "",
-          postcode: "A0 0AA",
-          town: "Post-Town1",
-        },
-        assessor: {
-          scheme_assessor_id: "SPEC000000",
-          name: "Mr Test Boi",
-          contact_details: {
-            email: "a@b.c",
-            telephone: "111222333",
-          },
-        },
-        heat_demand: {
-          current_space_heating_demand: nil,
-          current_water_heating_demand: nil,
-          impact_of_cavity_insulation: nil,
-          impact_of_loft_insulation: nil,
-          impact_of_solid_wall_insulation: nil,
-        },
+        address_line1: "1 Some Street",
+        address_line2: "",
+        address_line3: "",
+        address_line4: "",
+        postcode: "A0 0AA",
+        town: "Post-Town1",
         recommended_improvements: [
           {
             energy_performance_rating_improvement: 50,
@@ -1172,17 +1326,7 @@ describe ViewModel::SapWrapper do
           },
         ],
       },
-    },
-    {
-      schema_name: "SAP-Schema-NI-13.0",
-      xml: Samples.xml("SAP-Schema-NI-13.0"),
-      unsupported_fields: [],
-      different_fields: {
-        tenure: nil,
-        property_age_band: nil,
-        heat_loss_corridor: "0",
-        extensions_count: "0",
-        address_id: "LPRN-0000000000",
+      different_buried_fields: {
         address: {
           address_id: "LPRN-0000000000",
           address_line1: "1 Some Street",
@@ -1207,6 +1351,24 @@ describe ViewModel::SapWrapper do
           impact_of_loft_insulation: nil,
           impact_of_solid_wall_insulation: nil,
         },
+      },
+    },
+    {
+      schema_name: "SAP-Schema-NI-13.0",
+      xml: Samples.xml("SAP-Schema-NI-13.0"),
+      unsupported_fields: [],
+      different_fields: {
+        tenure: nil,
+        property_age_band: nil,
+        heat_loss_corridor: "0",
+        extensions_count: "0",
+        address_id: "LPRN-0000000000",
+        address_line1: "1 Some Street",
+        address_line2: "",
+        address_line3: "",
+        address_line4: "",
+        postcode: "A0 0AA",
+        town: "Post-Town1",
         recommended_improvements: [
           {
             energy_performance_rating_improvement: 50,
@@ -1237,6 +1399,32 @@ describe ViewModel::SapWrapper do
             typical_saving: "0.1",
           },
         ],
+      },
+      different_buried_fields: {
+        address: {
+          address_id: "LPRN-0000000000",
+          address_line1: "1 Some Street",
+          address_line2: "",
+          address_line3: "",
+          address_line4: "",
+          postcode: "A0 0AA",
+          town: "Post-Town1",
+        },
+        assessor: {
+          scheme_assessor_id: "SPEC000000",
+          name: "Mr Test Boi",
+          contact_details: {
+            email: "a@b.c",
+            telephone: "111222333",
+          },
+        },
+        heat_demand: {
+          current_space_heating_demand: nil,
+          current_water_heating_demand: nil,
+          impact_of_cavity_insulation: nil,
+          impact_of_loft_insulation: nil,
+          impact_of_solid_wall_insulation: nil,
+        },
       },
     },
   ].freeze
@@ -1421,42 +1609,42 @@ describe ViewModel::SapWrapper do
     total_floor_area: 10.0,
     status: "ENTERED",
     environmental_impact_current: "50",
-    co2_emissions_current_per_floor_area: "0",
-    mains_gas: nil,
-    level: "1",
-    top_storey: "N",
-    storey_count: nil,
-    mains_heating_controls: "Thermostat",
-    multiple_glazed_proportion: "50",
-    glazed_area: nil,
-    habitable_room_count: nil,
-    heated_room_count: nil,
-    low_energy_lighting: "100",
-    fixed_lighting_outlets_count: "8",
-    low_energy_fixed_lighting_outlets_count: "8",
-    open_fireplaces_count: "0",
-    hot_water_description: "Gas boiler",
-    hot_water_energy_efficiency_rating: "0",
-    hot_water_environmental_efficiency_rating: "0",
-    window_description: "Glass window",
-    window_energy_efficiency_rating: "0",
-    window_environmental_efficiency_rating: "0",
-    secondary_heating_description: "Electric heater",
-    secondary_heating_energy_efficiency_rating: "0",
-    secondary_heating_environmental_efficiency_rating: "0",
-    lighting_description: "Energy saving bulbs",
-    lighting_energy_efficiency_rating: "0",
-    lighting_environmental_efficiency_rating: "0",
-    photovoltaic_roof_area_percent: nil,
-    heat_loss_corridor: "2",
-    wind_turbine_count: "0",
-    built_form: "Detached",
-    unheated_corridor_length: "10",
-    mainheat_description: "Thermostat, Thermostat",
-    extensions_count: nil,
   }.freeze
+
   it "should read the appropriate values from the XML doc" do
     test_xml_doc(supported_schema, asserted_keys)
+  end
+
+  it "should read the appropriate values from the XML doc using the to_report method" do
+    # TODO: Add rest of supported schema after Lawrence's refactor (v16.3 >)
+    test_xml_doc(
+      [
+        {
+          schema_name: "SAP-Schema-18.0.0",
+          xml: Samples.xml("SAP-Schema-18.0.0"),
+          unsupported_fields: [],
+          different_fields: {},
+        },
+        {
+          schema_name: "SAP-Schema-17.1",
+          xml: Samples.xml("SAP-Schema-17.1"),
+          unsupported_fields: [],
+          different_fields: {
+            building_reference_number: "LPRN-0000000000",
+          },
+        },
+        {
+          schema_name: "SAP-Schema-17.0",
+          xml: Samples.xml("SAP-Schema-17.0"),
+          unsupported_fields: [],
+          different_fields: {
+            building_reference_number: "LPRN-0000000000",
+          },
+        },
+      ],
+      Samples::ViewModels::Sap.report_test_hash,
+      true,
+    )
   end
 
   it "returns the expect error without a valid schema type" do

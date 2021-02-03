@@ -17,7 +17,7 @@ def test_xml_doc(supported_schema, asserted_keys, test_report = false)
         expect(result).to be_nil,
                           "Failed on #{schema[:schema_name]}:#{key}\n" \
                             "Unsupported fields must return nil, got \"#{result}\""
-      elsif schema[:different_fields].key? key
+      elsif schema[:different_fields]&.key? key
         expect(result).to eq(schema[:different_fields][key]),
                           "Failed on #{schema[:schema_name]}:#{key}\n with different value" \
                             "EXPECTED: \"#{schema[:different_fields][key]}\"\n" \
