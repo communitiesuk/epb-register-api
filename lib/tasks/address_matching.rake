@@ -39,13 +39,11 @@ task :import_address_matching do
   end
   file_name = ENV["file_name"]
 
-  storage_config_reader = Gateway::StorageConfigurationReader.new
-  storage_config = if ENV["instance_name"].nil?
-                     storage_config_reader.get_local_configuration(ENV["bucket_name"])
-                   else
-                     storage_config_reader.get_paas_configuration(ENV["instance_name"])
-                   end
-  storage_gateway = Gateway::StorageGateway.new(storage_config: storage_config)
+  storage_config_reader = Gateway::StorageConfigurationReader.new(
+    bucket_name: ENV["bucket_name"],
+    instance_name: ENV["instance_name"],
+  )
+  storage_gateway = Gateway::StorageGateway.new(storage_config: storage_config_reader.get_configuration)
 
   i = 0
   skipped = 0

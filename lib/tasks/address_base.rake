@@ -4,6 +4,17 @@ require "zip"
 
 desc "Import AddressBase data"
 
+task :cleanup_address_base do
+  ActiveRecord::Base.logger = nil
+  db = ActiveRecord::Base.connection
+
+  db.drop_table :address_base_tmp, if_exists: true
+  puts "[#{Time.now}] Dropped address_base_tmp table"
+
+  db.drop_table :address_base_legacy, if_exists: true
+  puts "[#{Time.now}] Dropped address_base_legacy table"
+end
+
 task :restore_legacy_address_base do
   ActiveRecord::Base.logger = nil
   db = ActiveRecord::Base.connection
@@ -42,10 +53,10 @@ task :import_address_base do
   db = ActiveRecord::Base.connection
 
   db.drop_table :address_base_tmp, if_exists: true
-  puts "[#{Time.now}] Dropped temporary address_base table"
+  puts "[#{Time.now}] Dropped address_base_tmp table"
 
   db.drop_table :address_base_legacy, if_exists: true
-  puts "[#{Time.now}] Dropped legacy address_base table"
+  puts "[#{Time.now}] Dropped address_base_legacy table"
 
   puts "[#{Time.now}] Starting address base import"
 
@@ -59,13 +70,11 @@ task :import_address_base do
   end
   puts "[#{Time.now}] Created empty address_base_tmp table"
 
-  storage_config_reader = Gateway::StorageConfigurationReader.new
-  storage_config = if ENV["instance_name"].nil?
-                     storage_config_reader.get_local_configuration(ENV["bucket_name"])
-                   else
-                     storage_config_reader.get_paas_configuration(ENV["instance_name"])
-                   end
-  storage_gateway = Gateway::StorageGateway.new(storage_config: storage_config)
+  storage_config_reader = Gateway::StorageConfigurationReader.new(
+    bucket_name: ENV["bucket_name"],
+    instance_name: ENV["instance_name"],
+  )
+  storage_gateway = Gateway::StorageGateway.new(storage_config: storage_config_reader.get_configuration)
 
   iterations.times do |iteration|
     # For example: AddressBasePlus_FULL_2020-12-11_{iterations}.csv.zip
