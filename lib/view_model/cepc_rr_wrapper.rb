@@ -78,30 +78,43 @@ module ViewModel
     end
 
     def to_report
-      # add recommendations into a single array
-
-      recommendations = []
-      recommendations <<
-        Samples::ViewModels.reset_recommendations_hash_keys(
-          @view_model.short_payback_recommendations,
-          "short",
-        )
-      recommendations <<
-        Samples::ViewModels.reset_recommendations_hash_keys(
-          @view_model.medium_payback_recommendations,
-          "medium",
-        )
-      recommendations <<
-        Samples::ViewModels.reset_recommendations_hash_keys(
-          @view_model.long_payback_recommendations,
-          "long",
-        )
-      recommendations <<
-        Samples::ViewModels.reset_recommendations_hash_keys(
-          @view_model.other_recommendations,
-          "other",
-        )
-      { rrn: @view_model.assessment_id, recommendations: recommendations }
+      {
+        rrn: @view_model.assessment_id,
+        recommendations: [
+          @view_model.short_payback_recommendations.map do |recommendation|
+            {
+              payback: "short",
+              recommendation_code: recommendation[:code],
+              recommendation: recommendation[:text],
+              cO2_Impact: recommendation[:cO2Impact],
+            }
+          end,
+          @view_model.medium_payback_recommendations.map do |recommendation|
+            {
+              payback: "medium",
+              recommendation_code: recommendation[:code],
+              recommendation: recommendation[:text],
+              cO2_Impact: recommendation[:cO2Impact],
+            }
+          end,
+          @view_model.long_payback_recommendations.map do |recommendation|
+            {
+              payback: "long",
+              recommendation_code: recommendation[:code],
+              recommendation: recommendation[:text],
+              cO2_Impact: recommendation[:cO2Impact],
+            }
+          end,
+          @view_model.other_recommendations.map do |recommendation|
+            {
+              payback: "other",
+              recommendation_code: recommendation[:code],
+              recommendation: recommendation[:text],
+              cO2_Impact: recommendation[:cO2Impact],
+            }
+          end,
+        ].flatten,
+      }
     end
 
     def get_view_model

@@ -9,7 +9,7 @@ describe UseCase::ExportOpenDataCepcrr do
 
       let(:exported_data) { described_class.new.execute }
 
-      before (:example) do
+      before(:example) do
         scheme_id = add_scheme_and_get_id
         cepc_plus_rr_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc+rr")
         cepc_plus_rr_xml_id = cepc_plus_rr_xml.at("//CEPC:RRN")
@@ -18,9 +18,8 @@ describe UseCase::ExportOpenDataCepcrr do
         cepc_minus_rr_xml_id = cepc_minus_rr_xml.at("//CEPC:RRN")
         cepc_plus_rr_xml_date = cepc_plus_rr_xml.at("//CEPC:Registration-Date")
         ni_cepc_plus_rr_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc+rr")
-        ni_cepc_postcode =  ni_cepc_plus_rr_xml.at("//CEPC:Postcode")
+        ni_cepc_postcode = ni_cepc_plus_rr_xml.at("//CEPC:Postcode")
         ni_cepc_plus_id = ni_cepc_plus_rr_xml.at("//CEPC:RRN")
-
 
         add_assessor(
           scheme_id,
@@ -59,9 +58,9 @@ describe UseCase::ExportOpenDataCepcrr do
           },
           override: true,
           schema_name: "CEPC-8.0.0",
-          )
+        )
 
-        #TODO Create a lodgment in NI to test it is not export
+        # TODO: Create a lodgment in NI to test it is not exported
         ni_cepc_postcode.children = "BT1 2TD"
         ni_cepc_plus_id.children = "0000-0000-0000-0000-0050"
         # lodge_assessment(
@@ -71,25 +70,28 @@ describe UseCase::ExportOpenDataCepcrr do
         #   override: true,
         #   schema_name: "CEPC-8.0.0",
         #   )
-
       end
 
-      it 'returns the correct number of items (excluding the cepc-rr and NI) ' do
-          expect(exported_data.length).to eq(number_assessments_to_test)
+      it "returns the correct number of items (excluding the cepc-rr and NI) " do
+        expect(exported_data.length).to eq(number_assessments_to_test)
       end
 
-      it 'should export the data for short in the first 2 rows' do
-        expect(exported_data[0]).to eq({:cO2_Impact=>"HIGH",
-                                        :recommendation=>"Consider replacing T8 lamps with retrofit T5 conversion kit.",
-                                        :recommendation_code=>"ECP-L5",
-                                        :recommendation_item=>1,
-                                        :rrn=>"0000-0000-0000-0000-0001"})
+      it "should export the data for short in the first 2 rows" do
+        expect(exported_data[0]).to eq cO2_Impact: "HIGH",
+                                       payback: "short",
+                                       recommendation:
+             "Consider replacing T8 lamps with retrofit T5 conversion kit.",
+                                       recommendation_code: "ECP-L5",
+                                       recommendation_item: 1,
+                                       rrn: "0000-0000-0000-0000-0001"
 
-        expect(exported_data[1]).to eq({:cO2_Impact=>"LOW",
-                                        :recommendation=>"Introduce HF (high frequency) ballasts for fluorescent tubes: Reduced number of fittings required.",
-                                        :recommendation_code=>"ECP-L5",
-                                        :recommendation_item=>2,
-                                        :rrn=>"0000-0000-0000-0000-0001"})
+        expect(exported_data[1]).to eq cO2_Impact: "LOW",
+                                       payback: "short",
+                                       recommendation:
+             "Introduce HF (high frequency) ballasts for fluorescent tubes: Reduced number of fittings required.",
+                                       recommendation_code: "ECP-L5",
+                                       recommendation_item: 2,
+                                       rrn: "0000-0000-0000-0000-0001"
       end
     end
   end

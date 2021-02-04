@@ -6,7 +6,6 @@
       <Issue-Date>2020-05-14</Issue-Date>
       <Report-Type>4</Report-Type>
       <Valid-Until>2021-05-03</Valid-Until>
-      <Related-RRN>0000-0000-0000-0000-0001</Related-RRN>
       <Inspection-Date>2020-05-04</Inspection-Date>
       <Registration-Date>2020-05-05</Registration-Date>
       <Status>cancelled</Status>
@@ -24,7 +23,10 @@
       <Property-Details>
         <UPRN>000000000000</UPRN>
         <Property-Address>
-          <Address-Line-1>1 Lonely Street</Address-Line-1>
+          <Address-Line-1>Some Unit</Address-Line-1>
+          <Address-Line-2>2 Lonely Street</Address-Line-2>
+          <Address-Line-3>Some Area</Address-Line-3>
+          <Address-Line-4>Some County</Address-Line-4>
           <Post-Town>Post-Town0</Post-Town>
           <Postcode>A0 0AA</Postcode>
         </Property-Address>

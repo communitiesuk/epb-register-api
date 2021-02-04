@@ -42,46 +42,6 @@ class Samples
       "LPRN-000000000001"
     end
 
-    def self.recommendations_test_hash(asserted_hash)
-      hash = asserted_hash
-      recommendations = []
-      recommendations <<
-        reset_recommendations_hash_keys(
-          hash[:short_payback_recommendations],
-          "short",
-        )
-      recommendations <<
-        reset_recommendations_hash_keys(
-          hash[:medium_payback_recommendations],
-          "medium",
-        )
-      recommendations <<
-        reset_recommendations_hash_keys(
-          hash[:long_payback_recommendations],
-          "long",
-        )
-      recommendations <<
-        reset_recommendations_hash_keys(hash[:other_recommendations], "other")
-
-      { rrn: asserted_hash[:assessment_id], recommendations: recommendations }
-    end
-
-    def self.reset_recommendations_hash_keys(array_of_hashes, payback_type)
-      array_of_hashes.each do |hash|
-        update_hash_key(hash, "code", "recommendation_code")
-        update_hash_key(hash, "text", "recommendation")
-        update_hash_key(hash, "cO2Impact", "cO2_Impact")
-        hash.merge({ payback_type: payback_type })
-      end
-    end
-
-    def self.update_hash_key(hash, old, new)
-      value = hash[old.to_sym]
-      hash.delete(old.to_sym)
-      hash[new.to_sym] = value
-      hash
-    end
-
     module Dec
       def self.supported_schema
         [
@@ -353,85 +313,6 @@ class Samples
         end
 
         report_schema
-      end
-    end
-
-    module CepRr
-      def self.asserted_hash
-        {
-          assessment_id: "0000-0000-0000-0000-0000",
-          report_type: "4",
-          type_of_assessment: "CEPC-RR",
-          date_of_expiry: "2021-05-03",
-          date_of_registration: "2020-05-05",
-          related_certificate: "0000-0000-0000-0000-0001",
-          address: {
-            address_id: "UPRN-000000000000",
-            address_line1: "1 Lonely Street",
-            address_line2: nil,
-            address_line3: nil,
-            address_line4: nil,
-            town: "Post-Town0",
-            postcode: "A0 0AA",
-          },
-          assessor: {
-            scheme_assessor_id: "SPEC000000",
-            name: "Mrs Report Writer",
-            company_details: {
-              name: "Joe Bloggs Ltd",
-              address: "123 My Street, My City, AB3 4CD",
-            },
-            contact_details: {
-              email: "a@b.c",
-              telephone: "012345",
-            },
-          },
-          short_payback_recommendations: [
-            {
-              code: "ECP-L5",
-              text:
-                "Consider replacing T8 lamps with retrofit T5 conversion kit.",
-              cO2Impact: "HIGH",
-            },
-            {
-              code: "EPC-L7",
-              text:
-                "Introduce HF (high frequency) ballasts for fluorescent tubes: Reduced number of fittings required.",
-              cO2Impact: "LOW",
-            },
-          ],
-          medium_payback_recommendations: [
-            {
-              code: "EPC-H7",
-              text: "Add optimum start/stop to the heating system.",
-              cO2Impact: "MEDIUM",
-            },
-          ],
-          long_payback_recommendations: [
-            {
-              code: "EPC-R5",
-              text: "Consider installing an air source heat pump.",
-              cO2Impact: "HIGH",
-            },
-          ],
-          other_recommendations: [
-            {
-              code: "EPC-R4",
-              text: "Consider installing PV.",
-              cO2Impact: "HIGH",
-            },
-          ],
-          technical_information: {
-            floor_area: "10",
-            building_environment: "Natural Ventilation Only",
-            calculation_tool: "Calculation-Tool0",
-          },
-          related_party_disclosure: "Related to the owner",
-        }
-      end
-
-      def self.report_test_hash
-        Samples::ViewModels.recommendations_test_hash(asserted_hash)
       end
     end
 

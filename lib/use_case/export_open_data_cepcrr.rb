@@ -29,23 +29,19 @@ module UseCase
 
         report = view_model.to_report
 
-        # recs are an array that can cantian arrays of recs
-        rr_report_array = report[:recommendations]
         recommendation_item = 1
 
-        next unless rr_report_array
+        next unless report[:recommendations]
 
-        rr_report_array.each do |item|
-          item.each do |hash|
-            view_model_array <<
-              hash.merge(
-                {
-                  rrn: assessment["assessment_id"],
-                  recommendation_item: recommendation_item,
-                },
-              )
-            recommendation_item += 1
-          end
+        report[:recommendations].each do |recommendation|
+          view_model_array <<
+            recommendation.merge(
+              {
+                rrn: assessment["assessment_id"],
+                recommendation_item: recommendation_item,
+              },
+            )
+          recommendation_item += 1
         end
 
         # @TODO:update log table
