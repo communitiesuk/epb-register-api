@@ -1,6 +1,6 @@
 module ViewModel
   module RdSapSchemaNi190
-    class CommonSchema < ViewModel::Base
+    class CommonSchema < ViewModel::BaseViewModel
       def assessment_id
         xpath(%w[RRN])
       end

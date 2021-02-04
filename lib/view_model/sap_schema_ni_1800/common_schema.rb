@@ -1,6 +1,6 @@
 module ViewModel
   module SapSchemaNi1800
-    class CommonSchema < ViewModel::Base
+    class CommonSchema < ViewModel::BaseViewModel
       def assessment_id
         xpath(%w[RRN])
       end

@@ -1,6 +1,6 @@
 module ViewModel
   module Cepc800
-    class CommonSchema < ViewModel::Base
+    class CommonSchema < ViewModel::BaseViewModel
       def assessment_id
         xpath(%w[RRN])
       end

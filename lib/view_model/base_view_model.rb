@@ -1,5 +1,5 @@
 module ViewModel
-  class Base
+  class BaseViewModel
     def initialize(xml)
       @xml_doc = Nokogiri.XML xml
     end
