@@ -1,35 +1,32 @@
 require "json"
 require "csv"
 require "aws-sdk-s3"
+require "nokogiri"
 
-desc "Import address matching data from an S3 bucket"
+desc "Update addresses in database from various sources"
 
-task :clear_address_id_backup do
+task :import_address_matching_cleanup do
   ActiveRecord::Base.logger = nil
   db = ActiveRecord::Base.connection
 
   db.drop_table :assessments_address_id_backup, if_exists: true
   puts "[#{Time.now}] Dropped temporary assessments_address_id_backup table"
-
-  db.create_table :assessments_address_id_backup, primary_key: :assessment_id, id: :string do |t|
-    t.string :address_id, index: true
-    t.string :source
-  end
-  puts "[#{Time.now}] Created empty assessments_address_id_backup table"
 end
 
 task :import_address_matching do
   Signal.trap("INT") { throw :sigint }
   Signal.trap("TERM") { throw :sigterm }
 
-  require "zeitwerk"
-
-  loader = Zeitwerk::Loader.new
-  loader.push_dir("#{__dir__}/../")
-  loader.setup
-
   ActiveRecord::Base.logger = nil
   db = ActiveRecord::Base.connection
+
+  unless db.table_exists?(:assessments_address_id_backup)
+    db.create_table :assessments_address_id_backup, primary_key: :assessment_id, id: :string do |t|
+      t.string :address_id, index: true
+      t.string :source
+    end
+    puts "[#{Time.now}] Created empty assessments_address_id_backup table"
+  end
 
   if ENV["bucket_name"].nil? && ENV["instance_name"].nil?
     abort("Please set the bucket_name or instance_name environment variable")
@@ -96,3 +93,83 @@ rescue StandardError => e
   end
   puts "Error while downloading or processing CSV file: #{e}"
 end
+
+task :update_address_lines_cleanup do
+  ActiveRecord::Base.logger = nil
+  db = ActiveRecord::Base.connection
+
+  db.drop_table :address_lines_updated, if_exists: true
+  puts "[#{Time.now}] Dropped temporary address_lines_updated table"
+end
+
+task :update_address_lines do
+  Signal.trap("INT") { throw :sigint }
+  Signal.trap("TERM") { throw :sigterm }
+
+  ActiveRecord::Base.logger = nil
+  db = ActiveRecord::Base.connection
+
+  unless db.table_exists?(:address_lines_updated)
+    db.create_table :address_lines_updated, primary_key: :assessment_id, id: :string
+    puts "[#{Time.now}] Created empty address_lines_updated table"
+  end
+
+  assessment_ids = db.exec_query("SELECT assessment_id FROM assessments ORDER BY assessment_id ASC")
+  last_updated_id = db.exec_query("SELECT max(assessment_id) FROM address_lines_updated").first
+
+  updated_assessments = 0
+  matched_assessments = 0
+  assessment_ids.each do |assessment_id|
+    puts "Skipping to #{last_updated_id}" unless last_updated_id.nil?
+    next if not last_updated_id.nil? and assessment_id <= last_updated_id
+
+    assessment_xml = db.exec_query("SELECT xml, schema_type FROM assessments_xml WHERE assessment_id = '#{assessment_id}'").first
+    if assessment_xml.nil?
+      puts "[#{Time.now}] Could not read XML for assessment #{assessment_id}"
+    else
+      wrapper = ViewModel::Factory.new.create(assessment_xml["xml"], assessment_xml["schema_type"], assessment_id)
+      next if wrapper.nil?
+
+      wrapper_hash = wrapper.to_hash
+      address_line1 = wrapper_hash[:address][:address_line1]
+      address_line2 = wrapper_hash[:address][:address_line2]
+      address_line3 = wrapper_hash[:address][:address_line3]
+      address_line4 = wrapper_hash[:address][:address_line4]
+
+      matching_address = db.exec_query("SELECT 1 FROM assessments " \
+        "WHERE assessment_id = '#{assessment_id}' " \
+        "AND address_line1 = '#{address_line1}' " \
+        "AND address_line2 = '#{address_line2}' " \
+        "AND address_line3 = '#{address_line3}' " \
+        "AND address_line4 = '#{address_line4}'").first
+
+      if matching_address.nil?
+        matched_assessments += 1
+      else
+        ActiveRecord::Base.transaction do
+          db.exec_query("UPDATE assessments " \
+            "SET address_line1 = '#{address_line1}', address_line2 = '#{address_line2}', " \
+            "address_line3 = '#{address_line3}', address_line4 = '#{address_line4}' " \
+            "WHERE assessment_id = '#{assessment_id}'")
+
+          db.exec_query("INSERT INTO address_lines_updated VALUES('#{assessment_id}')")
+
+          updated_assessments += 1
+        end
+      end
+
+    end
+  end
+
+  puts "[#{Time.now}] Address lines update complete: #{updated_assessments} assessments updated and #{matched_assessments} assessments matched"
+
+rescue StandardError => e
+  catch(:sigint) do
+    abort "Task interrupted while updating address lines"
+  end
+  catch(:sigterm) do
+    abort "Task killed while updating address lines"
+  end
+  puts "Error while updating address lines: #{e}"
+end
+
