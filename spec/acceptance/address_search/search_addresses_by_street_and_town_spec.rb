@@ -20,6 +20,9 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
     let(:non_domestic_xml) { Nokogiri.XML valid_cepc_xml }
     let(:cepc_assessment_id) { non_domestic_xml.at("//CEPC:RRN") }
     let(:cepc_address_line_one) { non_domestic_xml.at("//CEPC:Address-Line-1") }
+    let(:cepc_address_line_two) { non_domestic_xml.at("//CEPC:Address-Line-2") }
+    let(:cepc_address_line_three) { non_domestic_xml.at("//CEPC:Address-Line-3") }
+    let(:cepc_address_line_four) { non_domestic_xml.at("//CEPC:Address-Line-4") }
 
     before(:each) do
       add_assessor(
@@ -61,6 +64,9 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
 
       cepc_assessment_id.children = "0000-0000-0000-0000-0002"
       cepc_address_line_one.children = "3 Other Street"
+      cepc_address_line_two.children = ""
+      cepc_address_line_three.children = ""
+      cepc_address_line_four.children = ""
 
       lodge_assessment(
         assessment_body: non_domestic_xml.to_xml,

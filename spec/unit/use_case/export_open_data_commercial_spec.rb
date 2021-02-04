@@ -5,7 +5,9 @@ describe UseCase::ExportOpenDataCommercial do
     describe "for the commercial certificates and reports" do
       let(:scheme_id) { add_scheme_and_get_id }
 
-      let(:non_domestic_xml) { Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc") }
+      let(:non_domestic_xml) do
+        Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc")
+      end
       let(:non_domestic_assessment_id) { non_domestic_xml.at("//CEPC:RRN") }
       let(:non_domestic_assessment_date) do
         non_domestic_xml.at("//CEPC:Registration-Date")
@@ -21,9 +23,42 @@ describe UseCase::ExportOpenDataCommercial do
       let(:exported_data) { described_class.new.execute }
 
       let(:date_today) { DateTime.now.strftime("%F") }
-      let(:expected_values) do
-        Samples::ViewModels::Cepc.report_test_hash
-      end
+
+      expected_values = {
+        rrn: "0000-0000-0000-0000-0000",
+        address1: "Some Unit",
+        address2: "2 Lonely Street",
+        address3: "Some Area",
+        address4: "Some County",
+        posttown: "Post-Town1",
+        postcode: "A0 0AA",
+        building_reference_number: "UPRN-000000000001",
+        asset_rating: "80",
+        asset_rating_band: "d",
+        property_type: "B1 Offices and Workshop businesses",
+        inspection_date: "2020-05-04",
+        lodgement_date: "2020-05-04",
+        transaction_type: "1",
+        new_build_benchmark: "28",
+        existing_stock_benchmark: "81",
+        standard_emissions: "42.07",
+        building_emissions: "67.09",
+        main_heating_fuel: "Natural Gas",
+        building_level: "3",
+        floor_area: "403",
+        other_fuel_description: "Test",
+        special_energy_uses: "Test sp",
+        aircon_present: "N",
+        aircon_kw_rating: "100",
+        estimated_aircon_kw_rating: "3",
+        ac_inspection_commissioned: "1",
+        target_emissions: "23.2",
+        typical_emissions: "67.98",
+        building_environment: "Air Conditioning",
+        primary_energy: "413.22",
+        report_type: "3",
+      }
+
       let(:expected_values_index_1) do
         Samples.update_test_hash(
           expected_values,
@@ -131,26 +166,18 @@ describe UseCase::ExportOpenDataCommercial do
 
       # 1st row to test
       # write at test for each key in test hash
-      Samples::ViewModels::Cepc
-        .report_test_hash
-        .keys
+      expected_values.keys
         .each do |index|
-          it "returns the #{
-               index
-             } that matches the test data for the 1st row" do
+          it "returns the #{index} that matches the data for the 1st row" do
             expect(exported_data[0][index.to_sym]).to eq(expected_values[index])
           end
         end
 
       # 2nd row to test
       # write at test for each key in test hash
-      Samples::ViewModels::Cepc
-        .report_test_hash
-        .keys
+      expected_values.keys
         .each do |index|
-          it "returns the #{
-               index
-             } that matches the test data for the 2nd row" do
+          it "returns the #{index} that matches the data for the 2nd row" do
             expect(exported_data[1][index.to_sym]).to eq(
               expected_values_index_1[index],
             )

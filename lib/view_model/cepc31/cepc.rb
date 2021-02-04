@@ -66,7 +66,7 @@ module ViewModel
       end
 
       def other_fuel_description
-        nil
+        xpath(%w[Other-Fuel-Description])
       end
 
       def target_emissions
@@ -93,7 +93,7 @@ module ViewModel
         nil
       end
 
-      def ac_inpsection_commissioned
+      def ac_inspection_commissioned
         nil
       end
 

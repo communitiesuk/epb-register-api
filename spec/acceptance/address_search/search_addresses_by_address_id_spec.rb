@@ -287,8 +287,8 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
       assessment_id = assessment.at("//CEPC:RRN")
 
       address_line_one = assessment.at("//CEPC:Address-Line-1")
-      address_line_two = Nokogiri::XML::Node.new "Address-Line-2", assessment
-      address_line_three = Nokogiri::XML::Node.new "Address-Line-3", assessment
+      address_line_two = assessment.at("//CEPC:Address-Line-2")
+      address_line_three = assessment.at("//CEPC:Address-Line-3")
 
       address_line_one.content = ""
       address_line_two.content = ""

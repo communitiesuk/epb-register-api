@@ -136,7 +136,7 @@ module ViewModel
           end,
         aircon_kw_rating: @view_model.ac_kw_rating,
         estimated_aircon_kw_rating: @view_model.estimated_ac_kw_rating,
-        ac_inpsection_commissioned: @view_model.ac_inpsection_commissioned,
+        ac_inspection_commissioned: @view_model.ac_inspection_commissioned,
         primary_energy: @view_model.primary_energy_use,
         other_fuel_desc: @view_model.other_fuel_description,
       }

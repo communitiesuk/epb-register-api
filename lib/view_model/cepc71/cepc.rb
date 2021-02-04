@@ -93,7 +93,7 @@ module ViewModel
         xpath(%w[SER])
       end
 
-      def ac_inpsection_commissioned
+      def ac_inspection_commissioned
         xpath(%w[AC-Inspection-Commissioned])
       end
     end

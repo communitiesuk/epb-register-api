@@ -101,7 +101,7 @@ module ViewModel
         xpath(%w[Special-Energy-Uses])
       end
 
-      def ac_inpsection_commissioned
+      def ac_inspection_commissioned
         xpath(%w[AC-Inspection-Commissioned])
       end
 

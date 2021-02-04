@@ -149,9 +149,9 @@ describe "Acceptance::AddressSearch::ByPostcode::AdditionalParams" do
           "The House",
           "The house Grimal Place",
           "The Cottage",
+          "Some Unit",
           "1 Some Street",
           "2 Grimal Place",
-          "2 Lonely Street",
           "5 Grimal Place",
         ]
       end
@@ -188,7 +188,7 @@ describe "Acceptance::AddressSearch::ByPostcode::AdditionalParams" do
 
         expect(address_line1).to eq [
           "2 Grimal Place",
-          "2 Lonely Street",
+          "Some Unit",
           "1 Some Street",
           "5 Grimal Place",
           "The Cottage",
@@ -232,7 +232,7 @@ describe "Acceptance::AddressSearch::ByPostcode::AdditionalParams" do
           "5 Grimal Place",
           "1 Some Street",
           "2 Grimal Place",
-          "2 Lonely Street",
+          "Some Unit",
           "The House",
           "The house Grimal Place",
         ]

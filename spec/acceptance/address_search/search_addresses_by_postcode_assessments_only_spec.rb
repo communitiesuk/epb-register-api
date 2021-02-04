@@ -107,10 +107,10 @@ describe "Acceptance::AddressSearch::ByPostcode::AssessmentSource" do
       expect(response[:data][:addresses]).to eq(
         [
           {
-            line1: "2 Lonely Street",
-            line2: nil,
-            line3: nil,
-            line4: nil,
+            line1: "Some Unit",
+            line2: "2 Lonely Street",
+            line3: "Some Area",
+            line4: "Some County",
             postcode: "A0 0AA",
             town: "Post-Town1",
             addressId: "RRN-0000-0000-0000-0000-0000",

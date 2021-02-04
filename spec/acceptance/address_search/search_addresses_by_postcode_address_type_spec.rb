@@ -188,7 +188,7 @@ describe "Acceptance::AddressSearch::ByPostcode::WithAddressType" do
       end
 
       it "returns the address from address base" do
-        expect(response[:data][:addresses][2]).to eq(
+        expect(response[:data][:addresses][1]).to eq(
           {
             line1: "5 Grimal Place",
             line2: "Skewit Road",
@@ -204,13 +204,13 @@ describe "Acceptance::AddressSearch::ByPostcode::WithAddressType" do
       end
 
       it "returns the expected previous assessment address" do
-        expect(response[:data][:addresses][1]).to eq(
+        expect(response[:data][:addresses][2]).to eq(
           {
             addressId: "RRN-0000-0000-0000-0000-0002",
-            line1: "2 Lonely Street",
-            line2: nil,
-            line3: nil,
-            line4: nil,
+            line1: "Some Unit",
+            line2: "2 Lonely Street",
+            line3: "Some Area",
+            line4: "Some County",
             town: "Post-Town1",
             postcode: "A0 0AA",
             source: "PREVIOUS_ASSESSMENT",

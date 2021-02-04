@@ -131,7 +131,7 @@ describe "Acceptance::AddressSearch::ByPostcode::Status" do
       end
 
       it "returns the address from address base" do
-        expect(response[:data][:addresses][3]).to eq(
+        expect(response[:data][:addresses][2]).to eq(
           {
             line1: "5 Grimal Place",
             line2: "Skewit Road",
@@ -201,7 +201,7 @@ describe "Acceptance::AddressSearch::ByPostcode::Status" do
       end
 
       it "returns the address from address base" do
-        expect(response[:data][:addresses][3]).to eq(
+        expect(response[:data][:addresses][2]).to eq(
           {
             line1: "5 Grimal Place",
             line2: "Skewit Road",

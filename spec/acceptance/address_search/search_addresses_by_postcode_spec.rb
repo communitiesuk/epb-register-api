@@ -169,8 +169,8 @@ describe "Acceptance::AddressSearch::ByPostcode" do
           expect(address_ids).to eq %w[
             RRN-0000-0000-0000-0000-0000
             UPRN-000073546795
-            RRN-0000-0000-0000-0000-0002
             UPRN-000073546792
+            RRN-0000-0000-0000-0000-0002
             UPRN-000073546793
           ]
         end
@@ -363,8 +363,8 @@ describe "Acceptance::AddressSearch::ByPostcode" do
         expect(address_ids).to eq %w[
           RRN-0000-0000-0000-0000-0000
           UPRN-000073546795
-          RRN-0000-0000-0000-0000-0002
           UPRN-000073546792
+          RRN-0000-0000-0000-0000-0002
           UPRN-000073546793
         ]
       end
@@ -394,8 +394,8 @@ describe "Acceptance::AddressSearch::ByPostcode" do
         expect(address_ids).to eq %w[
           RRN-0000-0000-0000-0000-0000
           UPRN-000073546795
-          RRN-0000-0000-0000-0000-0002
           UPRN-000073546792
+          RRN-0000-0000-0000-0000-0002
           UPRN-000073546793
         ]
       end
