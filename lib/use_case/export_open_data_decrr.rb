@@ -36,16 +36,14 @@ module UseCase
         next unless rr_report_array
 
         rr_report_array.each do |item|
-          item.each do |hash|
-            view_model_array <<
-              hash.merge(
-                {
-                  rrn: assessment["assessment_id"],
-                  recommendation_item: recommendation_item,
-                },
-              )
-            recommendation_item += 1
-          end
+          view_model_array <<
+            item.merge(
+              {
+                rrn: assessment["assessment_id"],
+                recommendation_item: recommendation_item,
+              },
+            )
+          recommendation_item += 1
         end
 
         # @TODO:update log table

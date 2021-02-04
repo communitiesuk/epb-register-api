@@ -7,7 +7,6 @@
       <RRN>0000-0000-0000-0000-0000</RRN>
       <Issue-Date>2020-05-04</Issue-Date>
       <Report-Type>2</Report-Type>
-      <Related-RRN>0000-0000-0000-0000-1111</Related-RRN>
       <Valid-Until>2028-05-03</Valid-Until>
       <Inspection-Date>2020-05-04</Inspection-Date>
       <Registration-Date>2020-05-04</Registration-Date>
@@ -23,9 +22,12 @@
         <Telephone-Number>0921-19037</Telephone-Number>
       </Energy-Assessor>
       <Property-Details>
-        <UPRN>RRN-0000-0000-0000-0000-0000</UPRN>
+        <UPRN>UPRN-000000000001</UPRN>
         <Property-Address>
-          <Address-Line-1>1 Lonely Street</Address-Line-1>
+          <Address-Line-1>Some Unit</Address-Line-1>
+          <Address-Line-2>2 Lonely Street</Address-Line-2>
+          <Address-Line-3>Some Area</Address-Line-3>
+          <Address-Line-4>Some County</Address-Line-4>
           <Post-Town>Post-Town0</Post-Town>
           <Postcode>A0 0AA</Postcode>
         </Property-Address>

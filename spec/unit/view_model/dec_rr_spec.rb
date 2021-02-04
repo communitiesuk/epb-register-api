@@ -1,232 +1,412 @@
 require_relative "xml_view_test_helper"
 
 describe ViewModel::DecRrWrapper do
-  context "Testing the DEC-RR schemas" do
-    supported_schema = [
-      {
-        schema_name: "CEPC-8.0.0",
-        xml: Samples.xml("CEPC-8.0.0", "dec-rr"),
-        unsupported_fields: [],
-        different_fields: {
-          related_rrn: nil,
-        },
-      },
-      {
-        schema_name: "CEPC-8.0.0",
-        xml: Samples.xml("CEPC-8.0.0", "dec-rr-large-building"),
-        unsupported_fields: [],
-        different_fields: {
-          date_of_expiry: "2027-05-03",
-        },
-        different_buried_fields: {
-          technical_information: {
-            floor_area: "8000",
+  context "when calling to_hash" do
+    let(:schemas) do
+      [
+        {
+          schema: "CEPC-8.0.0",
+          type: "dec-rr",
+          different_buried_fields: {
+            address: {
+              address_id: "UPRN-000000000001",
+            },
           },
         },
-      },
-      {
-        schema_name: "CEPC-NI-8.0.0",
-        xml: Samples.xml("CEPC-NI-8.0.0", "dec-rr"),
-        unsupported_fields: [],
-        different_fields: {
-          date_of_expiry: "2027-05-03",
-        },
-      },
-      {
-        schema_name: "CEPC-7.1",
-        xml: Samples.xml("CEPC-7.1", "dec-rr"),
-        unsupported_fields: [],
-        different_fields: {},
-        different_buried_fields: {
-          address: {
-            address_id: "LPRN-000000000001",
+        {
+          schema: "CEPC-8.0.0",
+          type: "dec-rr-large-building",
+          different_fields: {
+            date_of_expiry: "2027-05-03",
+          },
+          different_buried_fields: {
+            technical_information: {
+              floor_area: "8000",
+            },
+            address: {
+              address_id: "UPRN-000000000001",
+            },
           },
         },
-      },
-      {
-        schema_name: "CEPC-7.1",
-        xml: Samples.xml("CEPC-7.1", "dec-rr-ni"),
-        unsupported_fields: [],
-        different_fields: {
-          date_of_expiry: "2027-05-03",
-        },
-        different_buried_fields: {
-          address: {
-            address_id: "LPRN-000000000001",
-            postcode: "BT0 0AA",
+        {
+          schema: "CEPC-NI-8.0.0",
+          type: "dec-rr",
+          different_fields: {
+            date_of_expiry: "2027-05-03",
+          },
+          different_buried_fields: {
+            address: {
+              address_id: "UPRN-000000000001",
+            },
           },
         },
-      },
-      {
-        schema_name: "CEPC-7.0",
-        xml: Samples.xml("CEPC-7.0", "dec-rr"),
-        unsupported_fields: [],
-        different_fields: {},
-        different_buried_fields: {
-          address: {
-            address_id: "LPRN-000000000001",
+        { schema: "CEPC-7.1", type: "dec-rr" },
+        {
+          schema: "CEPC-7.1",
+          type: "dec-rr-ni",
+          different_fields: {
+            date_of_expiry: "2027-05-03",
+          },
+          different_buried_fields: {
+            address: {
+              postcode: "BT0 0AA",
+            },
           },
         },
-      },
-      {
-        schema_name: "CEPC-7.0",
-        xml: Samples.xml("CEPC-7.0", "dec-rr-ni"),
-        unsupported_fields: [],
-        different_fields: {
-          date_of_expiry: "2027-05-03",
-        },
-        different_buried_fields: {
-          address: {
-            address_id: "LPRN-000000000001",
-            postcode: "BT0 0AA",
+        { schema: "CEPC-7.0", type: "dec-rr" },
+        {
+          schema: "CEPC-7.0",
+          type: "dec-rr-ni",
+          different_fields: {
+            date_of_expiry: "2027-05-03",
+          },
+          different_buried_fields: {
+            address: {
+              postcode: "BT0 0AA",
+            },
           },
         },
-      },
-      {
-        schema_name: "CEPC-6.0",
-        xml: Samples.xml("CEPC-6.0", "dec-rr"),
-        unsupported_fields: [],
-        different_fields: {},
-        different_buried_fields: {
-          address: {
-            address_id: "LPRN-000000000001",
+        { schema: "CEPC-6.0", type: "dec-rr" },
+        {
+          schema: "CEPC-6.0",
+          type: "dec-rr-ni",
+          different_fields: {
+            date_of_expiry: "2027-05-03",
+          },
+          different_buried_fields: {
+            address: {
+              postcode: "BT0 0AA",
+            },
           },
         },
-      },
-      {
-        schema_name: "CEPC-6.0",
-        xml: Samples.xml("CEPC-6.0", "dec-rr-ni"),
-        unsupported_fields: [],
-        different_fields: {
-          date_of_expiry: "2027-05-03",
-        },
-        different_buried_fields: {
-          address: {
-            address_id: "LPRN-000000000001",
-            postcode: "BT0 0AA",
+        { schema: "CEPC-5.1", type: "dec-rr" },
+        {
+          schema: "CEPC-5.1",
+          type: "dec-rr-ni",
+          different_fields: {
+            date_of_expiry: "2027-05-03",
+          },
+          different_buried_fields: {
+            address: {
+              postcode: "BT0 0AA",
+            },
           },
         },
-      },
-      {
-        schema_name: "CEPC-5.1",
-        xml: Samples.xml("CEPC-5.1", "dec-rr"),
-        unsupported_fields: [],
-        different_fields: {},
-        different_buried_fields: {
-          address: {
-            address_id: "LPRN-000000000001",
+        { schema: "CEPC-5.0", type: "dec-rr" },
+        {
+          schema: "CEPC-5.0",
+          type: "dec-rr-ni",
+          different_fields: {
+            date_of_expiry: "2027-05-03",
+          },
+          different_buried_fields: {
+            address: {
+              postcode: "BT0 0AA",
+            },
           },
         },
-      },
-      {
-        schema_name: "CEPC-5.1",
-        xml: Samples.xml("CEPC-5.1", "dec-rr-ni"),
-        unsupported_fields: [],
-        different_fields: {
-          date_of_expiry: "2027-05-03",
-        },
-        different_buried_fields: {
-          address: {
-            address_id: "LPRN-000000000001",
-            postcode: "BT0 0AA",
+        { schema: "CEPC-4.0", type: "dec-rr" },
+        {
+          schema: "CEPC-4.0",
+          type: "dec-rr-ni",
+          different_fields: {
+            date_of_expiry: "2027-05-03",
+          },
+          different_buried_fields: {
+            address: {
+              postcode: "BT0 0AA",
+            },
           },
         },
-      },
-      {
-        schema_name: "CEPC-5.0",
-        xml: Samples.xml("CEPC-5.0", "dec-rr"),
-        unsupported_fields: [],
-        different_fields: {},
-        different_buried_fields: {
-          address: {
-            address_id: "LPRN-000000000001",
+        { schema: "CEPC-3.1", type: "dec-rr" },
+        {
+          schema: "CEPC-3.1",
+          type: "dec-rr-ni",
+          different_fields: {
+            date_of_expiry: "2027-05-03",
+          },
+          different_buried_fields: {
+            address: {
+              postcode: "BT0 0AA",
+            },
           },
         },
-      },
-      {
-        schema_name: "CEPC-5.0",
-        xml: Samples.xml("CEPC-5.0", "dec-rr-ni"),
-        unsupported_fields: [],
-        different_fields: {
-          date_of_expiry: "2027-05-03",
-        },
-        different_buried_fields: {
-          address: {
-            address_id: "LPRN-000000000001",
-            postcode: "BT0 0AA",
-          },
-        },
-      },
-      {
-        schema_name: "CEPC-4.0",
-        xml: Samples.xml("CEPC-4.0", "dec-rr"),
-        unsupported_fields: [],
-        different_fields: {},
-        different_buried_fields: {
-          address: {
-            address_id: "LPRN-000000000001",
-          },
-        },
-      },
-      {
-        schema_name: "CEPC-4.0",
-        xml: Samples.xml("CEPC-4.0", "dec-rr-ni"),
-        unsupported_fields: [],
-        different_fields: {
-          date_of_expiry: "2027-05-03",
-        },
-        different_buried_fields: {
-          address: {
-            address_id: "LPRN-000000000001",
-            postcode: "BT0 0AA",
-          },
-        },
-      },
-      {
-        schema_name: "CEPC-3.1",
-        xml: Samples.xml("CEPC-3.1", "dec-rr"),
-        unsupported_fields: [],
-        different_fields: {},
-        different_buried_fields: {
-          address: {
-            address_id: "LPRN-000000000001",
-          },
-        },
-      },
-      {
-        schema_name: "CEPC-3.1",
-        xml: Samples.xml("CEPC-3.1", "dec-rr-ni"),
-        unsupported_fields: [],
-        different_fields: {
-          date_of_expiry: "2027-05-03",
-        },
-        different_buried_fields: {
-          address: {
-            address_id: "LPRN-000000000001",
-            postcode: "BT0 0AA",
-          },
-        },
-      },
-    ].freeze
-
-    asserted_keys = Samples::ViewModels::DecRr.asserted_hash
-
-    it "should read the appropriate values from the XML doc  using the to hash method" do
-      test_xml_doc(supported_schema, asserted_keys)
+      ]
     end
 
-    it "should read the appropriate values from the XML doc  using the to report method" do
-      test_xml_doc(
-        supported_schema,
-        Samples::ViewModels::DecRr.report_test_hash,
-        true,
-      )
+    let(:assertion) do
+      {
+        assessment_id: "0000-0000-0000-0000-0000",
+        report_type: "2",
+        type_of_assessment: "DEC-RR",
+        date_of_expiry: "2030-05-03",
+        date_of_registration: "2020-05-04",
+        address: {
+          address_id: "LPRN-000000000001",
+          address_line1: "Some Unit",
+          address_line2: "2 Lonely Street",
+          address_line3: "Some Area",
+          address_line4: "Some County",
+          town: "Post-Town0",
+          postcode: "A0 0AA",
+        },
+        assessor: {
+          scheme_assessor_id: "SPEC000000",
+          name: "Mrs Report Writer",
+          company_details: {
+            name: "Joe Bloggs Ltd",
+            address: "123 My Street, My City, AB3 4CD",
+          },
+          contact_details: {
+            email: "a@b.c",
+            telephone: "0921-19037",
+          },
+        },
+        short_payback_recommendations: [
+          {
+            code: "ECP-L5",
+            text:
+              "Consider thinking about maybe possibly getting a solar panel but only one.",
+            cO2Impact: "MEDIUM",
+          },
+          {
+            code: "EPC-L7",
+            text:
+              "Consider introducing variable speed drives (VSD) for fans, pumps and compressors.",
+            cO2Impact: "LOW",
+          },
+        ],
+        medium_payback_recommendations: [
+          {
+            code: "ECP-C1",
+            text:
+              "Engage experts to propose specific measures to reduce hot waterwastage and plan to carry this out.",
+            cO2Impact: "LOW",
+          },
+        ],
+        long_payback_recommendations: [
+          {
+            code: "ECP-F4",
+            text: "Consider replacing or improving glazing",
+            cO2Impact: "LOW",
+          },
+        ],
+        other_recommendations: [
+          { code: "ECP-H2", text: "Add a big wind turbine", cO2Impact: "HIGH" },
+        ],
+        technical_information: {
+          building_environment: "Air Conditioning",
+          floor_area: "10",
+          occupier: "Primary School",
+          property_type: "University campus",
+          renewable_sources: "Renewable source",
+          discounted_energy: "Special discount",
+          date_of_issue: "2020-05-04",
+          calculation_tool: "DCLG, ORCalc, v3.6.2",
+          inspection_type: "Physical",
+        },
+        site_service_one: {
+          description: "Electricity",
+          quantity: "751445",
+        },
+        site_service_two: {
+          description: "Gas",
+          quantity: "72956",
+        },
+        site_service_three: {
+          description: "Not used",
+          quantity: "0",
+        },
+      }
     end
 
-    it "returns the expect error without a valid schema type" do
-      expect {
-        ViewModel::DecRrWrapper.new "", "invalid"
-      }.to raise_error.with_message "Unsupported schema type"
+    it "reads the appropriate values" do
+      test_xml_doc(schemas, assertion)
     end
+  end
+
+  context "when calling to_report" do
+    let(:schemas) do
+      [
+        {
+          schema: "CEPC-8.0.0",
+          type: "dec-rr",
+          different_buried_fields: {
+            address: {
+              address_id: "UPRN-000000000001",
+            },
+          },
+        },
+        {
+          schema: "CEPC-8.0.0",
+          type: "dec-rr-large-building",
+          different_fields: {
+            date_of_expiry: "2027-05-03",
+          },
+          different_buried_fields: {
+            technical_information: {
+              floor_area: "8000",
+            },
+            address: {
+              address_id: "UPRN-000000000001",
+            },
+          },
+        },
+        {
+          schema: "CEPC-NI-8.0.0",
+          type: "dec-rr",
+          different_fields: {
+            date_of_expiry: "2027-05-03",
+          },
+          different_buried_fields: {
+            address: {
+              address_id: "UPRN-000000000001",
+            },
+          },
+        },
+        { schema: "CEPC-7.1", type: "dec-rr" },
+        {
+          schema: "CEPC-7.1",
+          type: "dec-rr-ni",
+          different_fields: {
+            date_of_expiry: "2027-05-03",
+          },
+          different_buried_fields: {
+            address: {
+              postcode: "BT0 0AA",
+            },
+          },
+        },
+        { schema: "CEPC-7.0", type: "dec-rr" },
+        {
+          schema: "CEPC-7.0",
+          type: "dec-rr-ni",
+          different_fields: {
+            date_of_expiry: "2027-05-03",
+          },
+          different_buried_fields: {
+            address: {
+              postcode: "BT0 0AA",
+            },
+          },
+        },
+        { schema: "CEPC-6.0", type: "dec-rr" },
+        {
+          schema: "CEPC-6.0",
+          type: "dec-rr-ni",
+          different_fields: {
+            date_of_expiry: "2027-05-03",
+          },
+          different_buried_fields: {
+            address: {
+              postcode: "BT0 0AA",
+            },
+          },
+        },
+        { schema: "CEPC-5.1", type: "dec-rr" },
+        {
+          schema: "CEPC-5.1",
+          type: "dec-rr-ni",
+          different_fields: {
+            date_of_expiry: "2027-05-03",
+          },
+          different_buried_fields: {
+            address: {
+              postcode: "BT0 0AA",
+            },
+          },
+        },
+        { schema: "CEPC-5.0", type: "dec-rr" },
+        {
+          schema: "CEPC-5.0",
+          type: "dec-rr-ni",
+          different_fields: {
+            date_of_expiry: "2027-05-03",
+          },
+          different_buried_fields: {
+            address: {
+              postcode: "BT0 0AA",
+            },
+          },
+        },
+        { schema: "CEPC-4.0", type: "dec-rr" },
+        {
+          schema: "CEPC-4.0",
+          type: "dec-rr-ni",
+          different_fields: {
+            date_of_expiry: "2027-05-03",
+          },
+          different_buried_fields: {
+            address: {
+              postcode: "BT0 0AA",
+            },
+          },
+        },
+        { schema: "CEPC-3.1", type: "dec-rr" },
+        {
+          schema: "CEPC-3.1",
+          type: "dec-rr-ni",
+          different_fields: {
+            date_of_expiry: "2027-05-03",
+          },
+          different_buried_fields: {
+            address: {
+              postcode: "BT0 0AA",
+            },
+          },
+        },
+      ]
+    end
+
+    let(:assertion) do
+      {
+        rrn: "0000-0000-0000-0000-0000",
+        recommendations: [
+          {
+            payback: "short",
+            recommendation_code: "ECP-L5",
+            recommendation:
+              "Consider thinking about maybe possibly getting a solar panel but only one.",
+            cO2_Impact: "MEDIUM",
+          },
+          {
+            recommendation_code: "EPC-L7",
+            payback: "short",
+            recommendation:
+              "Consider introducing variable speed drives (VSD) for fans, pumps and compressors.",
+            cO2_Impact: "LOW",
+          },
+          {
+            payback: "medium",
+            recommendation_code: "ECP-C1",
+            recommendation:
+              "Engage experts to propose specific measures to reduce hot waterwastage and plan to carry this out.",
+            cO2_Impact: "LOW",
+          },
+          {
+            payback: "long",
+            recommendation_code: "ECP-F4",
+            recommendation: "Consider replacing or improving glazing",
+            cO2_Impact: "LOW",
+          },
+          {
+            payback: "other",
+            recommendation_code: "ECP-H2",
+            recommendation: "Add a big wind turbine",
+            cO2_Impact: "HIGH",
+          },
+        ],
+      }
+    end
+
+    it "reads the appropriate values" do
+      test_xml_doc(schemas, assertion, :to_report)
+    end
+  end
+
+  it "returns the expect error without a valid schema type" do
+    expect { ViewModel::DecRrWrapper.new "", "invalid" }.to raise_error(
+      ArgumentError,
+    ).with_message "Unsupported schema type"
   end
 end

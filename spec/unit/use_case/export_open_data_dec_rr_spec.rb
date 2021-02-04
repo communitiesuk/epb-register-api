@@ -72,6 +72,7 @@ describe UseCase::ExportOpenDataDecrr do
       it "should export the data for short in the first 2 rows" do
         expect(exported_data[0]).to eq(
           {
+            payback: "short",
             cO2_Impact: "MEDIUM",
             recommendation:
               "Consider thinking about maybe possibly getting a solar panel but only one.",
@@ -83,6 +84,7 @@ describe UseCase::ExportOpenDataDecrr do
 
         expect(exported_data[1]).to eq(
           {
+            payback: "short",
             cO2_Impact: "LOW",
             recommendation:
               "Consider introducing variable speed drives (VSD) for fans, pumps and compressors.",
