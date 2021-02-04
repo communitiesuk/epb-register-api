@@ -209,7 +209,7 @@ module ViewModel
         xpath(%w[Benchmarks Benchmark Occupancy-Level])
       end
 
-      def ac_inpsection_commissioned
+      def ac_inspection_commissioned
         xpath(%w[AC-Inspection-Commissioned])
       end
 

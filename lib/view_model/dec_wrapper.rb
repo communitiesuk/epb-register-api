@@ -172,7 +172,7 @@ module ViewModel
           end,
         aircon_kw_rating: @view_model.ac_kw_rating,
         estimated_aircon_kw_rating: @view_model.estimated_ac_kw_rating,
-        ac_inpsection_commissioned: @view_model.ac_inpsection_commissioned,
+        ac_inspection_commissioned: @view_model.ac_inspection_commissioned,
         building_environment: @view_model.building_environment,
         building_category: @view_model.building_category,
         report_type: @view_model.report_type,

@@ -5,11 +5,53 @@ describe UseCase::ExportOpenDataDec do
     describe "for the DEC and reports" do
       let(:date_today) { DateTime.now.strftime("%F") }
       let(:number_assessments_to_test) { 2 }
-      let(:expected_values) do
-        Samples::ViewModels::Dec.report_test_hash
-      end
+      expected_values = {
+          rrn: "0000-0000-0000-0000-0000",
+          building_reference_number: "UPRN-000000000001",
+          address1: "Some Unit",
+          address2: "2 Lonely Street",
+          address3: "Some Area",
+          posttown: "Post-Town1",
+          postcode: "A0 0AA",
+          current_operational_rating: "1",
+          yr1_operational_rating: "24",
+          yr2_operational_rating: "40",
+          energy_efficiency_band: "A",
+          electric_co2: "7",
+          heating_co2: "3",
+          renewables_co2: "0",
+          property_type: "B1 Offices and Workshop businesses",
+          inspection_date: "2020-05-04",
+          nominated_date: "2020-01-01",
+          or_assessment_end_date: "2020-05-01",
+          lodgement_date: "2020-05-04",
+          main_benchmark: "",
+          main_heating_fuel: "Natural Gas",
+          special_energy_uses: "special",
+          renewable_sources: "1",
+          total_floor_area: "99",
+          occupancy_level: "level",
+          typical_thermal_use: "1",
+          annual_electrical_fuel_usage: "1",
+          typical_electrical_fuel_usage: "1",
+          renewables_fuel_thermal: "1",
+          renewables_electrical: "1",
+          yr1_electricity_co2: "10",
+          yr2_electricity_co2: "15",
+          yr1_heating_co2: "5",
+          yr2_heating_co2: "10",
+          yr1_renewables_co2: "1",
+          yr2_renewables_co2: "2",
+          aircon_present: "Y",
+          aircon_kw_rating: "1",
+          ac_inspection_commissioned: "1",
+          building_environment: "Heating and Natural Ventilation",
+          building_category: "C1",
+          report_type: "1",
+        }
+
       let(:expected_values_1) do
-        Samples::ViewModels::Dec.report_test_hash.merge(
+        expected_values.merge(
           { rrn: "0000-0000-0000-0000-0001" },
         )
       end
@@ -94,7 +136,7 @@ describe UseCase::ExportOpenDataDec do
 
       # 1st row to test
       # write at test for each key in test hash
-      Samples::ViewModels::Dec.test_keys.each do |index|
+      expected_values.keys.each do |index|
         it "returns the #{index} that matches the test data for the 1st row" do
           expect(exported_data[0][index.to_sym]).to eq(expected_values[index])
         end
@@ -102,7 +144,7 @@ describe UseCase::ExportOpenDataDec do
 
       # 2nd row to test
       # write at test for each key in test hash
-      Samples::ViewModels::Dec.test_keys.each do |index|
+      expected_values.keys.each do |index|
         it "returns the #{index} that matches the test data for the 2nd row" do
           expect(exported_data[1][index.to_sym]).to eq(expected_values_1[index])
         end

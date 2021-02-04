@@ -30,7 +30,10 @@
       <Property-Details>
         <UPRN>UPRN-000000000001</UPRN>
         <Property-Address>
-          <Address-Line-1>2 Lonely Street</Address-Line-1>
+          <Address-Line-1>Some Unit</Address-Line-1>
+          <Address-Line-2>2 Lonely Street</Address-Line-2>
+          <Address-Line-3>Some Area</Address-Line-3>
+          <Address-Line-4>Some County</Address-Line-4>
           <Post-Town>Post-Town1</Post-Town>
           <Postcode>A0 0AA</Postcode>
         </Property-Address>
