@@ -1,9 +1,10 @@
 def test_xml_doc(supported_schema, asserted_keys, method_called = :to_hash)
   supported_schema.each do |schema|
-    view_model =
-      ViewModel::Factory.new.create Samples.xml(schema[:schema], schema[:type] || "epc"),
-                                    schema[:schema],
-                                    nil
+    sample = Samples.xml(schema[:schema], schema[:type] || "epc")
+
+    view_model = ViewModel::Factory.new.create sample,
+                                               schema[:schema],
+                                               nil
 
     source_hash = view_model.method(method_called).call
 
@@ -16,19 +17,23 @@ def test_xml_doc(supported_schema, asserted_keys, method_called = :to_hash)
       end
 
       if schema[:unsupported_fields]&.include? key
-        expect(result).to be_nil,
-                          "Failed on #{schema[:schema]}:#{schema[:type]}:#{key}\n" \
-                            "Unsupported fields must return nil, got \"#{result}\""
+        expect(result).to be_nil, <<~ERROR
+          Failed on #{schema[:schema]}:#{schema[:type]}:#{key}
+          Unsupported fields must return nil, got "#{result}" (#{result.class})
+        ERROR
+
       elsif schema[:different_fields]&.key? key
-        expect(result).to eq(schema[:different_fields][key]),
-                          "Failed on #{schema[:schema]}:#{schema[:type]}:#{key}\n with different value" \
-                            "EXPECTED: \"#{schema[:different_fields][key]}\" (#{schema[:different_fields][key].class})\n" \
-                            "     GOT: \"#{result}\" (#{result.class})\n"
+        expect(result).to eq(schema[:different_fields][key]), <<~ERROR
+          Failed on #{schema[:schema]}:#{schema[:type]}:#{key}
+            EXPECTED: "#{schema[:different_fields][key]}" (#{schema[:different_fields][key].class})
+                 GOT: "#{result}" (#{result.class})
+        ERROR
       else
-        expect(result).to eq(value),
-                          "Failed on #{schema[:schema]}:#{schema[:type]}:#{schema[:schema_type]}:#{key}\n" \
-                            "EXPECTED: \"#{value}\" (#{value.class})\n" \
-                            "     GOT: \"#{result}\" (#{result.class})\n"
+        expect(result).to eq(value), <<~ERROR
+          Failed on #{schema[:schema]}:#{schema[:type]}:#{key}
+            EXPECTED: "#{value}" (#{value.class})
+                 GOT: "#{result}" (#{result.class})
+        ERROR
       end
     end
   end
