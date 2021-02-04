@@ -8,21 +8,30 @@
       <Issue-Date>2020-05-04</Issue-Date>
       <Report-Type>6</Report-Type>
       <Valid-Until>2024-05-04</Valid-Until>
-      <Related-RRN>0000-0000-0000-0000-0001</Related-RRN>
       <Inspection-Date>2020-05-20</Inspection-Date>
-      <Registration-Date>2020-05-04</Registration-Date>
+      <Registration-Date>2020-05-20</Registration-Date>
       <Status>entered</Status>
       <Language-Code>1</Language-Code>
       <Building-Complexity>Level 3</Building-Complexity>
       <Energy-Assessor>
         <Certificate-Number>SPEC000000</Certificate-Number>
-        <Name>Name1</Name>
-        <Accreditation-Scheme-Name>Accreditation-Scheme-Name1</Accreditation-Scheme-Name>
+        <Name>Test Assessor Name</Name>
+        <Accreditation-Scheme-Name>Some Accreditation Limited</Accreditation-Scheme-Name>
+        <Accreditation-Scheme-Website>www.example.com</Accreditation-Scheme-Website>
+        <Trading-Address>111 Twotwotwo Street, Mytown,, MT7 1AA</Trading-Address>
+        <Company-Name>Assess Energy Limited</Company-Name>
+        <Qualifications>SP3</Qualifications>
+        <Qualifications>CC4</Qualifications>
+        <E-Mail>test@example.com</E-Mail>
+        <Telephone-Number>07555 666777</Telephone-Number>x
       </Energy-Assessor>
       <Property-Details>
-        <UPRN>UPRN-000000000000</UPRN>
+        <UPRN>UPRN-432167890000</UPRN>
         <Property-Address>
-          <Address-Line-1>2 Lonely Street</Address-Line-1>
+          <Address-Line-1>Some Unit</Address-Line-1>
+          <Address-Line-2>2 Lonely Street</Address-Line-2>
+          <Address-Line-3>Some Area</Address-Line-3>
+          <Address-Line-4>Some County</Address-Line-4>
           <Post-Town>Post-Town1</Post-Town>
           <Postcode>A0 0AA</Postcode>
         </Property-Address>
@@ -48,16 +57,10 @@
       <Refrigerant-Charge-Total>50</Refrigerant-Charge-Total>
       <AC-Sub-Systems>
         <AC-Sub-System>
-          <Sub-System-Number>Sub-System-Number0</Sub-System-Number>
-          <Sub-System-Description>Sub-System-Description0</Sub-System-Description>
-          <Refrigerant-Type>Refrigerant-Type0</Refrigerant-Type>
-          <Sub-System-Age>Sub-System-Age0</Sub-System-Age>
-        </AC-Sub-System>
-        <AC-Sub-System>
-          <Sub-System-Number>Sub-System-Number1</Sub-System-Number>
-          <Sub-System-Description>Sub-System-Description1</Sub-System-Description>
-          <Refrigerant-Type>Refrigerant-Type1</Refrigerant-Type>
-          <Sub-System-Age>Sub-System-Age1</Sub-System-Age>
+          <Sub-System-Number>VOL001/SYS001 R410A Inverter Split Systems to Sales Area</Sub-System-Number>
+          <Sub-System-Description>This sub system comprised of; 4Nr 10kW R410A Mitsubishi Heavy Industries inverter driven split AC condensers interconnected to indoor cassette units within the Sales Area dating from circa 2014.</Sub-System-Description>
+          <Refrigerant-Type>R410A</Refrigerant-Type>
+          <Sub-System-Age>2014</Sub-System-Age>
         </AC-Sub-System>
       </AC-Sub-Systems>
     </Air-Conditioning-Inspection-Certificate>
