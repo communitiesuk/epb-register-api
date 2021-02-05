@@ -173,33 +173,33 @@ describe ViewModel::CepcRrWrapper do
         rrn: "0000-0000-0000-0000-0000",
         recommendations: [
           {
-            payback: "short",
+            payback_type: "short",
             recommendation_code: "ECP-L5",
             recommendation:
               "Consider replacing T8 lamps with retrofit T5 conversion kit.",
             cO2_Impact: "HIGH",
           },
           {
-            payback: "short",
+            payback_type: "short",
             recommendation_code: "EPC-L7",
             recommendation:
               "Introduce HF (high frequency) ballasts for fluorescent tubes: Reduced number of fittings required.",
             cO2_Impact: "LOW",
           },
           {
-            payback: "medium",
+            payback_type: "medium",
             recommendation_code: "EPC-H7",
             recommendation: "Add optimum start/stop to the heating system.",
             cO2_Impact: "MEDIUM",
           },
           {
-            payback: "long",
+            payback_type: "long",
             recommendation_code: "EPC-R5",
             recommendation: "Consider installing an air source heat pump.",
             cO2_Impact: "HIGH",
           },
           {
-            payback: "other",
+            payback_type: "other",
             recommendation_code: "EPC-R4",
             recommendation: "Consider installing PV.",
             cO2_Impact: "HIGH",

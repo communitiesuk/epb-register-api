@@ -6,18 +6,16 @@ describe UseCase::ExportOpenDataDecrr do
       let(:expected) { described_class.new }
       let(:date_today) { DateTime.now.strftime("%F") }
 
-      # number in test in 2 x 4 (number of recomendations in each lodgement)
+      # number in test in 2 x 4 (number of recommendations in each lodgement)
       let(:number_assessments_to_test) { 5 }
       let(:dec_plus_rr_xml) { Nokogiri.XML Samples.xml("CEPC-8.0.0", "dec+rr") }
       let(:dec_plus_rr_xml_id) { dec_plus_rr_xml.at("//RRN") }
       let(:dec_plus_rr_xml_date) { dec_plus_rr_xml.at("//Registration-Date") }
       let(:dec_minus_rr_xml) do
         Nokogiri.XML Samples.xml("CEPC-8.0.0", "dec-rr")
-      end # should not be present in export
+      end
       let(:dec_minus_rr_xml_id) { dec_minus_rr_xml.at("RRN") }
       let(:dec_minus_rr_xml_date) { dec_minus_rr_xml.at("//Registration-Date") }
-      let(:expected_values) { Samples::ViewModels::CepRr.report_test_hash }
-
       let(:exported_data) { described_class.new.execute }
 
       before do
@@ -72,7 +70,7 @@ describe UseCase::ExportOpenDataDecrr do
       it "should export the data for short in the first 2 rows" do
         expect(exported_data[0]).to eq(
           {
-            payback: "short",
+            payback_type: "short",
             cO2_Impact: "MEDIUM",
             recommendation:
               "Consider thinking about maybe possibly getting a solar panel but only one.",
@@ -84,7 +82,7 @@ describe UseCase::ExportOpenDataDecrr do
 
         expect(exported_data[1]).to eq(
           {
-            payback: "short",
+            payback_type: "short",
             cO2_Impact: "LOW",
             recommendation:
               "Consider introducing variable speed drives (VSD) for fans, pumps and compressors.",

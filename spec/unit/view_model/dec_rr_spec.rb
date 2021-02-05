@@ -363,7 +363,7 @@ describe ViewModel::DecRrWrapper do
         rrn: "0000-0000-0000-0000-0000",
         recommendations: [
           {
-            payback: "short",
+            payback_type: "short",
             recommendation_code: "ECP-L5",
             recommendation:
               "Consider thinking about maybe possibly getting a solar panel but only one.",
@@ -371,26 +371,26 @@ describe ViewModel::DecRrWrapper do
           },
           {
             recommendation_code: "EPC-L7",
-            payback: "short",
+            payback_type: "short",
             recommendation:
               "Consider introducing variable speed drives (VSD) for fans, pumps and compressors.",
             cO2_Impact: "LOW",
           },
           {
-            payback: "medium",
+            payback_type: "medium",
             recommendation_code: "ECP-C1",
             recommendation:
               "Engage experts to propose specific measures to reduce hot waterwastage and plan to carry this out.",
             cO2_Impact: "LOW",
           },
           {
-            payback: "long",
+            payback_type: "long",
             recommendation_code: "ECP-F4",
             recommendation: "Consider replacing or improving glazing",
             cO2_Impact: "LOW",
           },
           {
-            payback: "other",
+            payback_type: "other",
             recommendation_code: "ECP-H2",
             recommendation: "Add a big wind turbine",
             cO2_Impact: "HIGH",

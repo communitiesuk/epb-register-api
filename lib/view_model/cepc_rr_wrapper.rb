@@ -83,7 +83,7 @@ module ViewModel
         recommendations: [
           @view_model.short_payback_recommendations.map do |recommendation|
             {
-              payback: "short",
+              payback_type: "short",
               recommendation_code: recommendation[:code],
               recommendation: recommendation[:text],
               cO2_Impact: recommendation[:cO2Impact],
@@ -91,7 +91,7 @@ module ViewModel
           end,
           @view_model.medium_payback_recommendations.map do |recommendation|
             {
-              payback: "medium",
+              payback_type: "medium",
               recommendation_code: recommendation[:code],
               recommendation: recommendation[:text],
               cO2_Impact: recommendation[:cO2Impact],
@@ -99,7 +99,7 @@ module ViewModel
           end,
           @view_model.long_payback_recommendations.map do |recommendation|
             {
-              payback: "long",
+              payback_type: "long",
               recommendation_code: recommendation[:code],
               recommendation: recommendation[:text],
               cO2_Impact: recommendation[:cO2Impact],
@@ -107,7 +107,7 @@ module ViewModel
           end,
           @view_model.other_recommendations.map do |recommendation|
             {
-              payback: "other",
+              payback_type: "other",
               recommendation_code: recommendation[:code],
               recommendation: recommendation[:text],
               cO2_Impact: recommendation[:cO2Impact],

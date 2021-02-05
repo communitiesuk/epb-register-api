@@ -78,7 +78,7 @@ describe UseCase::ExportOpenDataCepcrr do
 
       it "should export the data for short in the first 2 rows" do
         expect(exported_data[0]).to eq cO2_Impact: "HIGH",
-                                       payback: "short",
+                                       payback_type: "short",
                                        recommendation:
              "Consider replacing T8 lamps with retrofit T5 conversion kit.",
                                        recommendation_code: "ECP-L5",
@@ -86,7 +86,7 @@ describe UseCase::ExportOpenDataCepcrr do
                                        rrn: "0000-0000-0000-0000-0001"
 
         expect(exported_data[1]).to eq cO2_Impact: "LOW",
-                                       payback: "short",
+                                       payback_type: "short",
                                        recommendation:
              "Introduce HF (high frequency) ballasts for fluorescent tubes: Reduced number of fittings required.",
                                        recommendation_code: "ECP-L5",
