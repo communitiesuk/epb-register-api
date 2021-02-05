@@ -169,6 +169,107 @@ describe ViewModel::SapWrapper do
         },
       }
 
+      ni_pre_17_difference = {
+        different_buried_fields: {
+          heat_demand: {
+            current_space_heating_demand: nil,
+            current_water_heating_demand: nil,
+            impact_of_cavity_insulation: nil,
+            impact_of_loft_insulation: nil,
+            impact_of_solid_wall_insulation: nil,
+          },
+        },
+        different_fields: {
+          property_age_band: "D",
+          property_summary: [
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "wall",
+              description: "Brick walls",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "wall",
+              description: "Brick walls",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "roof",
+              description: "Slate roof",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "roof",
+              description: "slate roof",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "floor",
+              description: "Tiled floor",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "floor",
+              description: "Tiled floor",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "window",
+              description: "Glass window",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "main_heating",
+              description: "Gas boiler",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "main_heating",
+              description: "Gas boiler",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "main_heating_controls",
+              description: "Thermostat",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "main_heating_controls",
+              description: "Thermostat",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "hot_water",
+              description: "Gas boiler",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "lighting",
+              description: "Energy saving bulbs",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "secondary_heating",
+              description: "Electric heater",
+            },
+          ],
+        }.merge(ni_difference[:different_fields]),
+      }
+
       [
         {
           schema: "SAP-Schema-18.0.0",
@@ -204,6 +305,9 @@ describe ViewModel::SapWrapper do
           type: "sap",
           unsupported_fields: %i[tenure],
         },
+        {
+          schema: "SAP-Schema-NI-16.1",
+        }.merge(ni_pre_17_difference),
         {
           schema: "SAP-Schema-16.2",
           type: "sap",

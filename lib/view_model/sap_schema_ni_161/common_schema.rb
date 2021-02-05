@@ -174,7 +174,7 @@ module ViewModel
       def potential_energy_saving; end
 
       def property_age_band
-        xpath(%w[Construction-Year])
+        xpath(%w[Construction-Age-Band])
       end
 
       def tenure

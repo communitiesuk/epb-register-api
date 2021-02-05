@@ -13,94 +13,74 @@
       <CS:Timestamp>2012-10-11T00:00:00</CS:Timestamp>
       <CS:TransactionID>1</CS:TransactionID>
     </CS:TransactionDetails>
-    <CS:TermsAndConditions xmlns:CS="DCLG-HIP/CommonStructures">Y
-    </CS:TermsAndConditions>
+    <CS:TermsAndConditions xmlns:CS="DCLG-HIP/CommonStructures">Y</CS:TermsAndConditions>
   </Identification>
   <Configuration>
-    <CS:StopOnFirstError xmlns:CS="DCLG-HIP/CommonStructures">No
-    </CS:StopOnFirstError>
-    <CS:ReasonForChange xmlns:CS="DCLG-HIP/CommonStructures">N/A
-    </CS:ReasonForChange>
+    <CS:StopOnFirstError xmlns:CS="DCLG-HIP/CommonStructures">No</CS:StopOnFirstError>
+    <CS:ReasonForChange xmlns:CS="DCLG-HIP/CommonStructures">N/A</CS:ReasonForChange>
   </Configuration>
   <Content>
     <EPC-Data>
-      <SAP:Calculation-Software-Version xmlns:SAP="DCLG-SAP">4.1
-      </SAP:Calculation-Software-Version>
-      <SAP:Calculation-Software-Name xmlns:SAP="DCLG-SAP">Epc Reporter
-      </SAP:Calculation-Software-Name>
+      <SAP:Calculation-Software-Version xmlns:SAP="DCLG-SAP">4.1</SAP:Calculation-Software-Version>
+      <SAP:Calculation-Software-Name xmlns:SAP="DCLG-SAP">Epc Reporter</SAP:Calculation-Software-Name>
       <SAP:SAP-Version xmlns:SAP="DCLG-SAP">9.91</SAP:SAP-Version>
       <SAP:Energy-Assessment xmlns:SAP="DCLG-SAP">
         <HIP:Property-Summary xmlns:HIP="DCLG-HIP">
-          <HIP:Walls>
+          <HIP:Wall>
             <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>
             <HIP:Description>Brick walls</HIP:Description>
-            <HIP:Environmental-Efficiency-Rating>0
-            </HIP:Environmental-Efficiency-Rating>
-          </HIP:Walls>
-          <HIP:Walls>
+            <HIP:Environmental-Efficiency-Rating>0</HIP:Environmental-Efficiency-Rating>
+          </HIP:Wall>
+          <HIP:Wall>
             <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>
             <HIP:Description>Brick walls</HIP:Description>
-            <HIP:Environmental-Efficiency-Rating>0
-            </HIP:Environmental-Efficiency-Rating>
-          </HIP:Walls>
+            <HIP:Environmental-Efficiency-Rating>0</HIP:Environmental-Efficiency-Rating>
+          </HIP:Wall>
           <HIP:Roof>
             <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>
             <HIP:Description>Slate roof</HIP:Description>
-            <HIP:Environmental-Efficiency-Rating>0
-            </HIP:Environmental-Efficiency-Rating>
+            <HIP:Environmental-Efficiency-Rating>0</HIP:Environmental-Efficiency-Rating>
           </HIP:Roof>
           <HIP:Roof>
             <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>
             <HIP:Description>slate roof</HIP:Description>
-            <HIP:Environmental-Efficiency-Rating>0
-            </HIP:Environmental-Efficiency-Rating>
+            <HIP:Environmental-Efficiency-Rating>0</HIP:Environmental-Efficiency-Rating>
           </HIP:Roof>
           <HIP:Floor>
             <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>
             <HIP:Description>Tiled floor</HIP:Description>
-            <HIP:Environmental-Efficiency-Rating>0
-            </HIP:Environmental-Efficiency-Rating>
+            <HIP:Environmental-Efficiency-Rating>0</HIP:Environmental-Efficiency-Rating>
           </HIP:Floor>
           <HIP:Floor>
             <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>
             <HIP:Description>Tiled floor</HIP:Description>
-            <HIP:Environmental-Efficiency-Rating>0
-            </HIP:Environmental-Efficiency-Rating>
+            <HIP:Environmental-Efficiency-Rating>0</HIP:Environmental-Efficiency-Rating>
           </HIP:Floor>
-          <HIP:Windows>
+          <HIP:Window>
             <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>
             <HIP:Description>Glass window</HIP:Description>
             <HIP:Environmental-Efficiency-Rating>0</HIP:Environmental-Efficiency-Rating>
-          </HIP:Windows>
+          </HIP:Window>
           <HIP:Main-Heating>
             <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>
             <HIP:Description>Gas boiler</HIP:Description>
-            <HIP:Environmental-Efficiency-Rating>0
-            </HIP:Environmental-Efficiency-Rating>
-          </HIP:Main-Heating>
-          <HIP:Main-Heating>
-            <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>
-            <HIP:Description>Gas boiler</HIP:Description>
-            <HIP:Environmental-Efficiency-Rating>0
-            </HIP:Environmental-Efficiency-Rating>
-          </HIP:Main-Heating>
-          <HIP:Main-Heating-Controls>
-            <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>
-            <HIP:Description>Thermostat</HIP:Description>
-            <HIP:Environmental-Efficiency-Rating>0
-            </HIP:Environmental-Efficiency-Rating>
-          </HIP:Main-Heating-Controls>
-          <HIP:Main-Heating-Controls>
-            <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>
-            <HIP:Description>Thermostat</HIP:Description>
-            <HIP:Environmental-Efficiency-Rating>0
-            </HIP:Environmental-Efficiency-Rating>
-          </HIP:Main-Heating-Controls>
-          <HIP:Secondary-Heating>
-            <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>
-            <HIP:Description>Electric heater</HIP:Description>
             <HIP:Environmental-Efficiency-Rating>0</HIP:Environmental-Efficiency-Rating>
-          </HIP:Secondary-Heating>
+          </HIP:Main-Heating>
+          <HIP:Main-Heating>
+            <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>
+            <HIP:Description>Gas boiler</HIP:Description>
+            <HIP:Environmental-Efficiency-Rating>0</HIP:Environmental-Efficiency-Rating>
+          </HIP:Main-Heating>
+          <HIP:Main-Heating-Controls>
+            <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>
+            <HIP:Description>Thermostat</HIP:Description>
+            <HIP:Environmental-Efficiency-Rating>0</HIP:Environmental-Efficiency-Rating>
+          </HIP:Main-Heating-Controls>
+          <HIP:Main-Heating-Controls>
+            <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>
+            <HIP:Description>Thermostat</HIP:Description>
+            <HIP:Environmental-Efficiency-Rating>0</HIP:Environmental-Efficiency-Rating>
+          </HIP:Main-Heating-Controls>
           <HIP:Hot-Water>
             <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>
             <HIP:Description>Gas boiler</HIP:Description>
@@ -111,9 +91,13 @@
             <HIP:Description>Energy saving bulbs</HIP:Description>
             <HIP:Environmental-Efficiency-Rating>0</HIP:Environmental-Efficiency-Rating>
           </HIP:Lighting>
+          <HIP:Secondary-Heating>
+            <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>
+            <HIP:Description>Electric heater</HIP:Description>
+            <HIP:Environmental-Efficiency-Rating>0</HIP:Environmental-Efficiency-Rating>
+          </HIP:Secondary-Heating>
           <HIP:Dwelling-Type>Dwelling-Type0</HIP:Dwelling-Type>
           <HIP:Total-Floor-Area>10</HIP:Total-Floor-Area>
-          <HIP:Is-Zero-Carbon-Home>true</HIP:Is-Zero-Carbon-Home>
         </HIP:Property-Summary>
         <HIP:Energy-Use xmlns:HIP="DCLG-HIP">
           <HIP:Energy-Rating-Average>57</HIP:Energy-Rating-Average>
@@ -168,7 +152,7 @@
         <HIP:Schema-Version xmlns:HIP="DCLG-HIP">LIG-16.0</HIP:Schema-Version>
         <HIP:SAP-Property-Details xmlns:HIP="DCLG-HIP">
           <HIP:Multiple-Glazed-Proportion>50</HIP:Multiple-Glazed-Proportion>
-          <HIP:Extensions-Count>0</HIP:Extensions-Count>
+          <HIP:Multiple-Glazing-Type>2</HIP:Multiple-Glazing-Type>
           <HIP:Habitable-Room-Count>3</HIP:Habitable-Room-Count>
           <HIP:Heated-Room-Count>3</HIP:Heated-Room-Count>
           <HIP:Conservatory-Type>1</HIP:Conservatory-Type>
@@ -210,24 +194,19 @@
               </HIP:Main-Heating>
             </HIP:Main-Heating-Details>
             <HIP:WWHRS>
-              <HIP:Rooms-With-Bath-And-Or-Shower>1
-              </HIP:Rooms-With-Bath-And-Or-Shower>
-              <HIP:Rooms-With-Mixer-Shower-No-Bath>0
-              </HIP:Rooms-With-Mixer-Shower-No-Bath>
-              <HIP:Rooms-With-Bath-And-Mixer-Shower>0
-              </HIP:Rooms-With-Bath-And-Mixer-Shower>
+              <HIP:Rooms-With-Bath-And-Or-Shower>1</HIP:Rooms-With-Bath-And-Or-Shower>
+              <HIP:Rooms-With-Mixer-Shower-No-Bath>0</HIP:Rooms-With-Mixer-Shower-No-Bath>
+              <HIP:Rooms-With-Bath-And-Mixer-Shower>0</HIP:Rooms-With-Bath-And-Mixer-Shower>
             </HIP:WWHRS>
             <HIP:Secondary-Heating-Type>691</HIP:Secondary-Heating-Type>
             <HIP:Secondary-Fuel-Type>29</HIP:Secondary-Fuel-Type>
           </HIP:SAP-Heating>
           <HIP:Door-Count>2</HIP:Door-Count>
           <HIP:Insulated-Door-Count>0</HIP:Insulated-Door-Count>
-          <HIP:Multiple-Glazed-Proportion>100</HIP:Multiple-Glazed-Proportion>
-          <HIP:Multiple-Glazing-Type>1</HIP:Multiple-Glazing-Type>
           <HIP:Low-Energy-Lighting>50</HIP:Low-Energy-Lighting>
           <HIP:Fixed-Lighting-Outlets-Count>8</HIP:Fixed-Lighting-Outlets-Count>
           <HIP:Low-Energy-Fixed-Lighting-Outlets-Count>8</HIP:Low-Energy-Fixed-Lighting-Outlets-Count>
-          <HIP:Low-Energy-Fixed-Lighting-Outlets-Percentage>100</HIP:Low-Energy-Fixed-Lighting-Outlets-Percentage>
+          <HIP:Open-Fireplaces-Count>0</HIP:Open-Fireplaces-Count>
           <HIP:Solar-Water-Heating>N</HIP:Solar-Water-Heating>
           <HIP:SAP-Building-Parts>
             <HIP:SAP-Building-Part>
@@ -261,7 +240,6 @@
             <HIP:Top-Storey>N</HIP:Top-Storey>
             <HIP:Unheated-Corridor-Length>10</HIP:Unheated-Corridor-Length>
           </HIP:SAP-Flat-Details>
-          <HIP:Open-Fireplaces-Count>0</HIP:Open-Fireplaces-Count>
         </HIP:SAP-Property-Details>
       </SAP:SAP-Data>
       <SAP:ExternalDefinitions-Revision-Number xmlns:SAP="DCLG-SAP">4.4
@@ -278,8 +256,7 @@
         <SAP:Language-Code>1</SAP:Language-Code>
         <SAP:Restricted-Access>1</SAP:Restricted-Access>
         <SAP:Related-Party-Disclosure>
-          <SAP:Related-Party-Disclosure-Number>1
-          </SAP:Related-Party-Disclosure-Number>
+          <SAP:Related-Party-Disclosure-Number>1</SAP:Related-Party-Disclosure-Number>
         </SAP:Related-Party-Disclosure>
         <SAP:Seller-Commission-Report>Y</SAP:Seller-Commission-Report>
         <SAP:Property-Type>2</SAP:Property-Type>
@@ -299,19 +276,31 @@
             <HIP:Postcode xmlns:HIP="DCLG-HIP">A0 0AA</HIP:Postcode>
           </SAP:Contact-Address>
           <SAP:Notify-Lodgement>Y</SAP:Notify-Lodgement>
+          <SAP:Web-Site>a@b.c</SAP:Web-Site>
+          <SAP:Scheme-Web-Site>a@b.c</SAP:Scheme-Web-Site>
           <SAP:E-Mail>a@b.c</SAP:E-Mail>
           <SAP:Telephone>111222333</SAP:Telephone>
+          <SAP:Fax>111222333</SAP:Fax>
           <SAP:Company-Name>DD Energy</SAP:Company-Name>
         </SAP:Home-Inspector>
         <SAP:Property>
           <HIP:Address xmlns:HIP="DCLG-HIP">
             <HIP:Address-Line-1>1 Some Street</HIP:Address-Line-1>
+            <HIP:Address-Line-2>Some Area</HIP:Address-Line-2>
+            <HIP:Address-Line-3>Some County</HIP:Address-Line-3>
             <HIP:Post-Town>Post-Town1</HIP:Post-Town>
             <HIP:Postcode>A0 0AA</HIP:Postcode>
           </HIP:Address>
           <HIP:UPRN xmlns:HIP="DCLG-HIP">0000000000</HIP:UPRN>
         </SAP:Property>
       </SAP:Report-Header>
+      <SAP:Insurance-Details xmlns:SAP="DCLG-SAP">
+        <SAP:Insurer>Insurer0</SAP:Insurer>
+        <SAP:Policy-No>Policy-No0</SAP:Policy-No>
+        <SAP:Effective-Date>2020-05-04</SAP:Effective-Date>
+        <SAP:Expiry-Date>2020-05-04</SAP:Expiry-Date>
+        <SAP:PI-Limit>0</SAP:PI-Limit>
+      </SAP:Insurance-Details>
     </EPC-Data>
   </Content>
 </ConditionReportCreateRequest_1>

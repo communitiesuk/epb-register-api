@@ -448,8 +448,7 @@
         </SAP:SAP-Property-Details>
       </SAP:SAP09-Data>
       <SAP:PDF/>
-      <SAP:ExternalDefinitions-Revision-Number>4.7
-      </SAP:ExternalDefinitions-Revision-Number>
+      <SAP:ExternalDefinitions-Revision-Number>4.7</SAP:ExternalDefinitions-Revision-Number>
     </SAP-EPC-Data>
   </Content>
 </ConditionReportCreateRequest_1>
