@@ -7,9 +7,9 @@ module UseCase
       @assessment_gateway = Gateway::AssessmentsXmlGateway.new
     end
 
-    def execute(_args = {})
+    def execute(date_from = "2019-07-01")
       data = []
-      assessments = @gateway.assessments_for_open_data(["RdSAP", "SAP"])
+      assessments = @gateway.assessments_for_open_data(["RdSAP", "SAP"], date_from)
 
       assessments.each do |assessment|
         xml_data = @assessment_gateway.fetch(assessment["assessment_id"])

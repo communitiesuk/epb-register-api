@@ -9,6 +9,12 @@ task :open_data_export do
      abort("Please set the assessment_type environment variable")
    end
 
+   if ENV["date_from"].nil?
+     abort("Please set the date_from environment variable")
+   end
+
+   date_from = ENV["date_from"]
+
    export_open_data_use_case = nil
 
    if ENV["assessment_type"].upcase == "CEPC"
@@ -39,7 +45,7 @@ task :open_data_export do
 
    date_time = DateTime.now.strftime("%Y%m%dT%H%M")
 
-   data = Helper::ExportHelper.to_csv(export_open_data_use_case.execute)
+   data = Helper::ExportHelper.to_csv(export_open_data_use_case.execute.(date_from))
 
    storage_gateway.write_file("open_data_export_#{ENV["assessment_type"].downcase}_#{date_time}.csv", data)
 

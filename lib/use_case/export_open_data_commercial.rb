@@ -8,12 +8,12 @@ module UseCase
     end
 
     # @TODO: use argument signature of this method
-    def execute
+    def execute(date_from = "2019-07-01")
       view_model_array = []
 
       # use gateway to make db calls
       # call gateway to get data set
-      assessments = @gateway.assessments_for_open_data("CEPC")
+      assessments = @gateway.assessments_for_open_data("CEPC", date_from)
 
       # use existing gateway to get each xml doc from db line by line to ensure memory is totllay consumed by size of data returned
       assessments.each do |assessment|

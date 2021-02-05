@@ -8,12 +8,12 @@ module UseCase
     end
 
     # @TODO: pass arguments to filter for decs
-    def execute(_args = {})
+    def execute(date_from = "2019-07-01")
       view_model_array = []
 
       # #use gateway to make db calls
       # call gateway to get data set
-      assessments = @gateway.assessments_for_open_data("DEC")
+      assessments = @gateway.assessments_for_open_data("DEC", date_from)
 
       # use existing gateway to get each xml doc from db line by line to ensure memory is not consumed by size of data returned
       assessments.each do |assessment|

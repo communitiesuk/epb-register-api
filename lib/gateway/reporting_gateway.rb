@@ -148,9 +148,9 @@ module Gateway
       results.map { |result| result }
     end
 
-    def assessments_for_open_data(type_of_assessment = "")
+    def assessments_for_open_data(type_of_assessment = "", date_from)
       bindings = [
-        [nil, OPEN_DATA_EXPORT_DATE_START, ActiveRecord::Type::Date.new],
+        [nil, date_from, ActiveRecord::Type::Date.new],
       ]
 
       # TODO: create public hash for ID
@@ -182,10 +182,10 @@ module Gateway
       results.map { |result| result }
     end
 
-    def assessments_for_open_data_recommendation_report(type_of_assessment)
+    def assessments_for_open_data_recommendation_report(type_of_assessment, date_from)
       bindings = [
         [nil, type_of_assessment],
-        [nil, OPEN_DATA_EXPORT_DATE_START, ActiveRecord::Type::Date.new],
+        [nil, date_from, ActiveRecord::Type::Date.new],
       ]
 
       sql = <<~SQL
