@@ -88,4 +88,15 @@ describe Helper::RrnHelper do
       end
     end
   end
+
+  describe "hashing an RRN" do
+    context "when given an rrn" do
+
+      it 'returns a hashed string' do
+        expect(
+            described_class.hash_rrn("1234-5678-1234-2278-1234"),
+            ).to eq("3219a657a59c669870b97a97a00fd722b81dbb02ffed384e794782f4991a5687")
+      end
+    end
+  end
 end
