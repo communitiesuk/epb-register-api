@@ -292,7 +292,7 @@
           <SAP:Identification-Number>
             <SAP:Certificate-Number>SPEC000000</SAP:Certificate-Number>
           </SAP:Identification-Number>
-          <SAP:Name>Mr Test Boi</SAP:Name>
+          <SAP:Name>Mr Test Boi TST</SAP:Name>
           <SAP:Contact-Address>
             <HIP:Address-Line-1 xmlns:HIP="DCLG-HIP">2 Some Street</HIP:Address-Line-1>
             <HIP:Post-Town xmlns:HIP="DCLG-HIP">Post-Town1</HIP:Post-Town>

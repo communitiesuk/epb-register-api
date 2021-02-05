@@ -46,7 +46,7 @@
           <SAP:Identification-Number>
             <SAP:Certificate-Number>SPEC000000</SAP:Certificate-Number>
           </SAP:Identification-Number>
-          <SAP:Name>Mr Test Boi</SAP:Name>
+          <SAP:Name>Mr Test Boi TST</SAP:Name>
           <SAP:Notify-Lodgement>Y</SAP:Notify-Lodgement>
           <SAP:Contact-Address>
             <HIP:Address-Line-1>2 Some Street</HIP:Address-Line-1>

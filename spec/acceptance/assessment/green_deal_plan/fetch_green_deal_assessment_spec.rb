@@ -265,8 +265,8 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment" do
           address: {
             source: "PREVIOUS_ASSESSMENT",
             line1: "1 Some Street",
-            line2: "",
-            line3: "",
+            line2: "Some Area",
+            line3: "Some County",
             line4: "",
             postcode: "A0 0AA",
             town: "Post-Town1",

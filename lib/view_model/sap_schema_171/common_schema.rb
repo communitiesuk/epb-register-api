@@ -42,7 +42,7 @@ module ViewModel
       end
 
       def assessor_telephone
-        xpath(%w[Home-Inspector Telephone-Number])
+        xpath(%w[Home-Inspector Telephone])
       end
 
       def date_of_assessment

@@ -48,7 +48,7 @@
             <HIP:Prefix>Mr</HIP:Prefix>
             <HIP:First-Name>Test</HIP:First-Name>
             <HIP:Surname>Boi</HIP:Surname>
-            <HIP:Suffix/>
+            <HIP:Suffix>TST</HIP:Suffix>
           </HIP:Name>
           <HIP:Notify-Lodgement>Y</HIP:Notify-Lodgement>
           <HIP:Contact-Address>

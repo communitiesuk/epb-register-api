@@ -2,31 +2,27 @@ module ViewModel
   module SapSchema1800
     class CommonSchema < ViewModel::BaseViewModel
       def assessment_id
-        xpath(%w[RRN])
+        xpath(%w[Report-Header RRN])
       end
 
       def address_line1
-        xpath(%w[Property Address Address-Line-1])
+        xpath(%w[Report-Header Property Address Address-Line-1])
       end
 
       def address_line2
-        xpath(%w[Property Address Address-Line-2]).to_s
+        xpath(%w[Report-Header Property Address Address-Line-2])
       end
 
       def address_line3
-        xpath(%w[Property Address Address-Line-3]).to_s
-      end
-
-      def address_line4
-        xpath(%w[Property Address Address-Line-4]).to_s
+        xpath(%w[Report-Header Property Address Address-Line-3])
       end
 
       def town
-        xpath(%w[Property Address Post-Town])
+        xpath(%w[Report-Header Property Address Post-Town])
       end
 
       def postcode
-        xpath(%w[Property Address Postcode])
+        xpath(%w[Report-Header Property Address Postcode])
       end
 
       def scheme_assessor_id
@@ -42,7 +38,7 @@ module ViewModel
       end
 
       def assessor_telephone
-        xpath(%w[Home-Inspector Telephone-Number])
+        xpath(%w[Home-Inspector Telephone])
       end
 
       def date_of_assessment
@@ -89,7 +85,7 @@ module ViewModel
       end
 
       def related_party_disclosure_number
-        xpath(%w[Related-Party-Disclosure-Number]).to_i
+        xpath(%w[Related-Party-Disclosure-Number])&.to_i
       end
 
       def improvements

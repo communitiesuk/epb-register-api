@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ConditionReportCreateRequest_1 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                                xmlns="http://www.epcregister.com"
+                                xmlns="http://www.hcrregister.com"
                                 xmlns:SAP="DCLG-SAP09"
                                 xmlns:CS="DCLG-HIP/CommonStructures"
-                                xsi:schemaLocation="http://www.epcregister.com ../../../../api/schemas/xml/SAP-Schema-16.1/Messages/ConditionReportCreateRequest_1.xsd">
+                                xsi:schemaLocation="http://www.hcrregister.com ../../../../api/schemas/xml/SAP-Schema-15.0/Messages/ConditionReportCreateRequest_1.xsd">
   <Identification>
     <CS:ServiceName>CreateReport</CS:ServiceName>
     <CS:Operation>Create</CS:Operation>
@@ -39,7 +39,7 @@
             <SAP:Prefix>Mr</SAP:Prefix>
             <SAP:First-Name>Test</SAP:First-Name>
             <SAP:Surname>Boi</SAP:Surname>
-            <SAP:Suffix/>
+            <SAP:Suffix>TST</SAP:Suffix>
           </SAP:Name>
           <SAP:Certification-Date>2020-05-04</SAP:Certification-Date>
           <SAP:Status>Registered</SAP:Status>
@@ -74,6 +74,8 @@
         <SAP:Property>
           <SAP:Address>
             <SAP:Address-Line-1>1 Some Street</SAP:Address-Line-1>
+            <SAP:Address-Line-2>Some Area</SAP:Address-Line-2>
+            <SAP:Address-Line-3>Some County</SAP:Address-Line-3>
             <SAP:Post-Town>Post-Town1</SAP:Post-Town>
             <SAP:Postcode>A0 0AA</SAP:Postcode>
           </SAP:Address>
@@ -88,10 +90,13 @@
       <SAP:Energy-Assessment>
         <SAP:Assessment-Date>2014-02-12</SAP:Assessment-Date>
         <SAP:Renewable-Heat-Incentive>
-          <SAP:RHI-New-Dwelling>
-            <SAP:Space-Heating>30</SAP:Space-Heating>
+          <SAP:RHI-Existing-Dwelling>
+            <SAP:Space-Heating-Existing-Dwelling>30</SAP:Space-Heating-Existing-Dwelling>
             <SAP:Water-Heating>60</SAP:Water-Heating>
-          </SAP:RHI-New-Dwelling>
+            <SAP:Space-Heating-With-Loft-Insulation>20</SAP:Space-Heating-With-Loft-Insulation>
+            <SAP:Space-Heating-With-Cavity-Insulation>20</SAP:Space-Heating-With-Cavity-Insulation>
+            <SAP:Space-Heating-With-Loft-And-Cavity-Insulation>10</SAP:Space-Heating-With-Loft-And-Cavity-Insulation>
+          </SAP:RHI-Existing-Dwelling>
         </SAP:Renewable-Heat-Incentive>
         <SAP:Property-Summary>
           <SAP:Walls>
@@ -164,6 +169,11 @@
             <SAP:Description>Energy saving bulbs</SAP:Description>
             <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
           </SAP:Lighting>
+          <SAP:Air-Tightness>
+            <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
+            <SAP:Description>Draft Exclusion</SAP:Description>
+            <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
+          </SAP:Air-Tightness>
           <SAP:Dwelling-Type>Dwelling-Type0</SAP:Dwelling-Type>
           <SAP:Total-Floor-Area>10</SAP:Total-Floor-Area>
           <SAP:Is-Zero-Carbon-Home>true</SAP:Is-Zero-Carbon-Home>
@@ -184,7 +194,6 @@
           <SAP:Heating-Cost-Potential>250.34</SAP:Heating-Cost-Potential>
           <SAP:Hot-Water-Cost-Current>200.40</SAP:Hot-Water-Cost-Current>
           <SAP:Hot-Water-Cost-Potential>180.43</SAP:Hot-Water-Cost-Potential>
-          <SAP:Energy-Rating-Average>60</SAP:Energy-Rating-Average>
         </SAP:Energy-Use>
         <SAP:Suggested-Improvements>
           <SAP:Improvement>
@@ -222,8 +231,6 @@
         <SAP:SAP-Property-Details>
           <SAP:Property-Type>2</SAP:Property-Type>
           <SAP:Built-Form>1</SAP:Built-Form>
-          <SAP:Multiple-Glazed-Proportion>50</SAP:Multiple-Glazed-Proportion>
-          <SAP:Extensions-Count>0</SAP:Extensions-Count>
           <SAP:Living-Area>24.78</SAP:Living-Area>
           <SAP:Orientation>0</SAP:Orientation>
           <SAP:Conservatory-Type>1</SAP:Conservatory-Type>
@@ -431,7 +438,6 @@
           </SAP:SAP-Ventilation>
           <SAP:SAP-Flat-Details>
             <SAP:Level>1</SAP:Level>
-            <SAP:Unheated-Corridor-Length>10</SAP:Unheated-Corridor-Length>
           </SAP:SAP-Flat-Details>
           <SAP:Design-Water-Use>1</SAP:Design-Water-Use>
         </SAP:SAP-Property-Details>
@@ -439,5 +445,6 @@
       <SAP:PDF/>
       <SAP:ExternalDefinitions-Revision-Number>4.7</SAP:ExternalDefinitions-Revision-Number>
     </SAP-EPC-Data>
+    <PDF/>
   </Content>
 </ConditionReportCreateRequest_1>

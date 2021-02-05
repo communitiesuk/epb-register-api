@@ -63,7 +63,7 @@ module UseCase
           line1: assessment_view.address_line1,
           line2: assessment_view.address_line2,
           line3: assessment_view.address_line3,
-          line4: assessment_view.address_line4,
+          line4: "",
           town: assessment_view.town,
           postcode: assessment_view.postcode,
         },

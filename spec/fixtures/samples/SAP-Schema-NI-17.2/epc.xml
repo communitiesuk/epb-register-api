@@ -42,7 +42,7 @@
             <SAP:Prefix>Mr</SAP:Prefix>
             <SAP:First-Name>Test</SAP:First-Name>
             <SAP:Surname>Boi</SAP:Surname>
-            <SAP:Suffix/>
+            <SAP:Suffix>TST</SAP:Suffix>
           </SAP:Name>
           <SAP:Certification-Date>2020-05-04</SAP:Certification-Date>
           <SAP:Status>Registered</SAP:Status>

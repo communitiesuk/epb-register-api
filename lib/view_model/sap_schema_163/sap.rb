@@ -1,6 +1,6 @@
 module ViewModel
-  module SapSchema170
-    class CommonSchema < ViewModel::BaseViewModel
+  module SapSchema163
+    class Sap < ViewModel::SapSchema163::CommonSchema
       def assessment_id
         xpath(%w[RRN])
       end
@@ -31,10 +31,6 @@ module ViewModel
 
       def scheme_assessor_id
         xpath(%w[Certificate-Number])
-      end
-
-      def assessor_name
-        xpath(%w[Home-Inspector Name])
       end
 
       def assessor_email
@@ -136,11 +132,11 @@ module ViewModel
       end
 
       def potential_carbon_emission
-        xpath(%w[CO2-Emissions-Potential])
+        convert_to_big_decimal(%w[CO2-Emissions-Potential])
       end
 
       def current_carbon_emission
-        xpath(%w[CO2-Emissions-Current])
+        convert_to_big_decimal(%w[CO2-Emissions-Current])
       end
 
       def potential_energy_rating
@@ -164,7 +160,7 @@ module ViewModel
       end
 
       def total_floor_area
-        xpath(%w[Property-Summary Total-Floor-Area])
+        convert_to_big_decimal(%w[Property-Summary Total-Floor-Area])
       end
 
       def dwelling_type
@@ -178,7 +174,7 @@ module ViewModel
       end
 
       def tenure
-        xpath(%w[Tenure])
+        nil
       end
 
       def transaction_type
@@ -186,12 +182,12 @@ module ViewModel
       end
 
       def current_space_heating_demand
-        xpath(%w[Space-Heating]) or
-          xpath(%w[Space-Heating-Existing-Dwelling])
+        convert_to_big_decimal(%w[Space-Heating]) or
+          convert_to_big_decimal(%w[Space-Heating-Existing-Dwelling])
       end
 
       def current_water_heating_demand
-        xpath(%w[Water-Heating])
+        convert_to_big_decimal(%w[Water-Heating])
       end
 
       def impact_of_cavity_insulation
@@ -216,10 +212,6 @@ module ViewModel
         date_of_expiry < Time.now ? "EXPIRED" : "ENTERED"
       end
 
-      def type_of_assessment
-        "SAP"
-      end
-
       def country_code
         xpath(%w[Country-Code])
       end
@@ -234,6 +226,17 @@ module ViewModel
 
       def water_heating_fuel
         xpath(%w[Water-Fuel-Type])
+      end
+
+      def type_of_assessment
+        case xpath(%w[Report-Type]).to_i
+        when 1
+          "HCR"
+        when 2
+          "RdSAP"
+        when 3
+          "SAP"
+        end
       end
 
       def environmental_impact_current
@@ -270,7 +273,7 @@ module ViewModel
       end
 
       def multiple_glazed_proportion
-        xpath(%w[Multiple-Glazed-Percentage])
+        xpath(%w[Multiple-Glazed-Proportion])
       end
 
       def glazed_area
@@ -354,7 +357,8 @@ module ViewModel
       end
 
       def built_form
-        xpath(%w[Built-Form])
+        built_form_value = xpath(%w[Built-Form])
+        Helper::XmlEnumsToOutput.xml_value_to_string(built_form_value)
       end
 
       def wind_turbine_count
@@ -362,17 +366,28 @@ module ViewModel
       end
 
       def heat_loss_corridor
-        nil
+        xpath(%w[Heat-Loss-Corridor])
       end
 
       def unheated_corridor_length
-        nil
+        xpath(%w[Unheated-Corridor-Length])
       end
 
       def all_main_heating_descriptions
         @xml_doc.search("Main-Heating-Controls/Description").map(&:content)
       end
 
+      def extensions_count
+        xpath(%w[Extensions-Count])
+      end
+
+    private
+
+      def convert_to_big_decimal(node)
+        return unless xpath(node)
+
+        BigDecimal(xpath(node))
+      end
     end
   end
 end

@@ -21,10 +21,10 @@
     <Property-Type>0</Property-Type>
     <Home-Inspector>
       <Name>
-        <Prefix />
-        <First-Name>Name0</First-Name>
-        <Surname />
-        <Suffix />
+        <Prefix>Mr</Prefix>
+        <First-Name>Test</First-Name>
+        <Surname>Boi</Surname>
+        <Suffix>TST</Suffix>
       </Name>
       <Certification-Date>2019-05-04</Certification-Date>
       <Status>Inactive</Status>
@@ -47,8 +47,8 @@
         <Web-Site>Web-Site0</Web-Site>
         <E-Mail>E-Mail0</E-Mail>
         <Registered-Name>Registered-Name0</Registered-Name>
-        <Fax> </Fax>
-        <Telephone> </Telephone>
+        <Fax></Fax>
+        <Telephone></Telephone>
       </Certification-Scheme>
       <Identification-Number>
         <Certificate-Number>SPEC000000</Certificate-Number>

@@ -44,7 +44,7 @@
           <HIP:Identification-Number>
             <HIP:Certificate-Number>SPEC000000</HIP:Certificate-Number>
           </HIP:Identification-Number>
-          <HIP:Name>Mr Test Boi</HIP:Name>
+          <HIP:Name>Mr Test Boi TST</HIP:Name>
           <HIP:Notify-Lodgement>Y</HIP:Notify-Lodgement>
           <HIP:Contact-Address>
             <HIP:Address-Line-1>2 Some Street</HIP:Address-Line-1>

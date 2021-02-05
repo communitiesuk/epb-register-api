@@ -3,7 +3,7 @@
                                 xmlns="http://www.epcregister.com"
                                 xmlns:SAP="DCLG-SAP09"
                                 xmlns:CS="DCLG-HIP/CommonStructures"
-                                xsi:schemaLocation="http://www.epcregister.com ../../../../api/schemas/xml/SAP-Schema-16.3/Messages/ConditionReportCreateRequest_1.xsd">
+                                xsi:schemaLocation="http://www.epcregister.com ../../../../api/schemas/xml/SAP-Schema-16.0/Messages/ConditionReportCreateRequest_1.xsd">
   <Identification>
     <CS:ServiceName>CreateReport</CS:ServiceName>
     <CS:Operation>Create</CS:Operation>
@@ -39,7 +39,7 @@
             <SAP:Prefix>Mr</SAP:Prefix>
             <SAP:First-Name>Test</SAP:First-Name>
             <SAP:Surname>Boi</SAP:Surname>
-            <SAP:Suffix/>
+            <SAP:Suffix>TST</SAP:Suffix>
           </SAP:Name>
           <SAP:Certification-Date>2020-05-04</SAP:Certification-Date>
           <SAP:Status>Registered</SAP:Status>
@@ -74,6 +74,8 @@
         <SAP:Property>
           <SAP:Address>
             <SAP:Address-Line-1>1 Some Street</SAP:Address-Line-1>
+            <SAP:Address-Line-2>Some Area</SAP:Address-Line-2>
+            <SAP:Address-Line-3>Some County</SAP:Address-Line-3>
             <SAP:Post-Town>Post-Town1</SAP:Post-Town>
             <SAP:Postcode>A0 0AA</SAP:Postcode>
           </SAP:Address>
@@ -167,6 +169,11 @@
             <SAP:Description>Energy saving bulbs</SAP:Description>
             <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
           </SAP:Lighting>
+          <SAP:Air-Tightness>
+            <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
+            <SAP:Description>Draft Exclusion</SAP:Description>
+            <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
+          </SAP:Air-Tightness>
           <SAP:Dwelling-Type>Dwelling-Type0</SAP:Dwelling-Type>
           <SAP:Total-Floor-Area>10</SAP:Total-Floor-Area>
           <SAP:Is-Zero-Carbon-Home>true</SAP:Is-Zero-Carbon-Home>
@@ -198,10 +205,10 @@
             <SAP:Energy-Performance-Rating>50</SAP:Energy-Performance-Rating>
             <SAP:Environmental-Impact-Rating>50</SAP:Environmental-Impact-Rating>
             <SAP:Indicative-Cost>5</SAP:Indicative-Cost>
+            <SAP:Green-Deal-Category>1</SAP:Green-Deal-Category>
             <SAP:Improvement-Details>
               <SAP:Improvement-Number>5</SAP:Improvement-Number>
             </SAP:Improvement-Details>
-            <SAP:Green-Deal-Category>1</SAP:Green-Deal-Category>
           </SAP:Improvement>
           <SAP:Improvement>
             <SAP:Sequence>1</SAP:Sequence>
@@ -211,10 +218,10 @@
             <SAP:Energy-Performance-Rating>60</SAP:Energy-Performance-Rating>
             <SAP:Environmental-Impact-Rating>64</SAP:Environmental-Impact-Rating>
             <SAP:Indicative-Cost>2</SAP:Indicative-Cost>
+            <SAP:Green-Deal-Category>3</SAP:Green-Deal-Category>
             <SAP:Improvement-Details>
               <SAP:Improvement-Number>1</SAP:Improvement-Number>
             </SAP:Improvement-Details>
-            <SAP:Green-Deal-Category>3</SAP:Green-Deal-Category>
           </SAP:Improvement>
         </SAP:Suggested-Improvements>
         <SAP:LZC-Energy-Sources>
@@ -227,8 +234,6 @@
         <SAP:SAP-Property-Details>
           <SAP:Property-Type>2</SAP:Property-Type>
           <SAP:Built-Form>1</SAP:Built-Form>
-          <SAP:Multiple-Glazed-Proportion>50</SAP:Multiple-Glazed-Proportion>
-          <SAP:Extensions-Count>0</SAP:Extensions-Count>
           <SAP:Living-Area>24.78</SAP:Living-Area>
           <SAP:Orientation>0</SAP:Orientation>
           <SAP:Conservatory-Type>1</SAP:Conservatory-Type>
@@ -436,8 +441,6 @@
           </SAP:SAP-Ventilation>
           <SAP:SAP-Flat-Details>
             <SAP:Level>1</SAP:Level>
-              <SAP:Heat-Loss-Corridor>2</SAP:Heat-Loss-Corridor>
-              <SAP:Unheated-Corridor-Length>10</SAP:Unheated-Corridor-Length>
           </SAP:SAP-Flat-Details>
           <SAP:Design-Water-Use>1</SAP:Design-Water-Use>
         </SAP:SAP-Property-Details>

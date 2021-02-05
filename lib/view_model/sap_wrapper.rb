@@ -9,7 +9,7 @@ module ViewModel
       when "SAP-Schema-17.0"
         @view_model = ViewModel::SapSchema170::CommonSchema.new xml
       when "SAP-Schema-16.3"
-        @view_model = ViewModel::SapSchema163::CommonSchema.new xml
+        @view_model = ViewModel::SapSchema163::Sap.new xml
       when "SAP-Schema-16.2"
         @view_model = ViewModel::SapSchema162::CommonSchema.new xml
       when "SAP-Schema-16.1"
@@ -79,7 +79,7 @@ module ViewModel
         address_line1: @view_model.address_line1,
         address_line2: @view_model.address_line2,
         address_line3: @view_model.address_line3,
-        address_line4: @view_model.address_line4,
+        address_line4: nil,
         town: @view_model.town,
         postcode: @view_model.postcode,
         address: {
@@ -87,7 +87,7 @@ module ViewModel
           address_line1: @view_model.address_line1,
           address_line2: @view_model.address_line2,
           address_line3: @view_model.address_line3,
-          address_line4: @view_model.address_line4,
+          address_line4: nil,
           town: @view_model.town,
           postcode: @view_model.postcode,
         },

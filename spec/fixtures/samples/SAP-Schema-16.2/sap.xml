@@ -39,7 +39,7 @@
             <SAP:Prefix>Mr</SAP:Prefix>
             <SAP:First-Name>Test</SAP:First-Name>
             <SAP:Surname>Boi</SAP:Surname>
-            <SAP:Suffix/>
+            <SAP:Suffix>TST</SAP:Suffix>
           </SAP:Name>
           <SAP:Certification-Date>2020-05-04</SAP:Certification-Date>
           <SAP:Status>Registered</SAP:Status>
@@ -74,6 +74,8 @@
         <SAP:Property>
           <SAP:Address>
             <SAP:Address-Line-1>1 Some Street</SAP:Address-Line-1>
+            <SAP:Address-Line-2>Some Area</SAP:Address-Line-2>
+            <SAP:Address-Line-3>Some County</SAP:Address-Line-3>
             <SAP:Post-Town>Post-Town1</SAP:Post-Town>
             <SAP:Postcode>A0 0AA</SAP:Postcode>
           </SAP:Address>
@@ -167,6 +169,11 @@
             <SAP:Description>Energy saving bulbs</SAP:Description>
             <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
           </SAP:Lighting>
+          <SAP:Air-Tightness>
+            <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
+            <SAP:Description>Draft Exclusion</SAP:Description>
+            <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
+          </SAP:Air-Tightness>
           <SAP:Dwelling-Type>Dwelling-Type0</SAP:Dwelling-Type>
           <SAP:Total-Floor-Area>10</SAP:Total-Floor-Area>
           <SAP:Is-Zero-Carbon-Home>true</SAP:Is-Zero-Carbon-Home>
@@ -227,8 +234,6 @@
         <SAP:SAP-Property-Details>
           <SAP:Property-Type>2</SAP:Property-Type>
           <SAP:Built-Form>1</SAP:Built-Form>
-          <SAP:Multiple-Glazed-Proportion>50</SAP:Multiple-Glazed-Proportion>
-          <SAP:Extensions-Count>0</SAP:Extensions-Count>
           <SAP:Living-Area>24.78</SAP:Living-Area>
           <SAP:Orientation>0</SAP:Orientation>
           <SAP:Conservatory-Type>1</SAP:Conservatory-Type>
@@ -357,7 +362,6 @@
                   <SAP:Total-Floor-Area>69.64</SAP:Total-Floor-Area>
                   <SAP:Storey-Height>2.4</SAP:Storey-Height>
                   <SAP:Heat-Loss-Area>3.67</SAP:Heat-Loss-Area>
-                  <SAP:Unheated-Corridor-Length>10</SAP:Unheated-Corridor-Length>
                   <SAP:U-Value>0.23</SAP:U-Value>
                 </SAP:SAP-Floor-Dimension>
               </SAP:SAP-Floor-Dimensions>
