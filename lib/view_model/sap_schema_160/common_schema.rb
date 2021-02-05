@@ -403,6 +403,19 @@ module ViewModel
       end
 
 
+      def all_wall_descriptions
+        @xml_doc.search("Walls/Description").map(&:content)
+      end
+
+      def all_wall_energy_efficieny_rating
+        @xml_doc.search("Walls/Energy-Efficiency-Rating").map(&:content)
+      end
+
+      def all_wall_env_energy_efficieny_rating
+        @xml_doc.search("Walls/Environmental-Efficiency-Rating").map(&:content)
+      end
+
+
     end
   end
 end

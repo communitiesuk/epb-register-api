@@ -289,6 +289,15 @@ module ViewModel
           Helper::XmlEnumsToOutput.energy_rating_string(
             @view_model.all_roof_env_energy_efficieny_rating,
             ),
+        walls_description: @view_model.all_wall_descriptions.join(", "),
+        walls_energy_eff:
+          Helper::XmlEnumsToOutput.energy_rating_string(
+            @view_model.all_wall_energy_efficieny_rating,
+            ),
+        walls_env_eff:
+          Helper::XmlEnumsToOutput.energy_rating_string(
+            @view_model.all_wall_env_energy_efficieny_rating,
+            ),
       }
     end
 

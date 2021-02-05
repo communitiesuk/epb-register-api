@@ -659,6 +659,9 @@ describe ViewModel::SapWrapper do
         roof_description: "Slate roof, slate roof",
         roof_energy_eff: "N/A, N/A",
         roof_env_eff: "N/A, N/A",
+        walls_description: "Brick walls, Brick walls",
+        walls_energy_eff: "N/A, N/A",
+        walls_env_eff: "N/A, N/A",
 
       }
     end
