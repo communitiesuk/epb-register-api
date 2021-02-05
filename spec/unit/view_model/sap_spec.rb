@@ -192,6 +192,7 @@ describe ViewModel::SapWrapper do
             },
           }.merge(ni_difference[:different_buried_fields]),
         },
+        { schema: "SAP-Schema-NI-17.4" }.merge(ni_difference),
         { schema: "SAP-Schema-17.1" },
         { schema: "SAP-Schema-17.0" },
         {
