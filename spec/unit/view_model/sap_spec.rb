@@ -654,6 +654,9 @@ describe ViewModel::SapWrapper do
         photo_supply: nil,
         built_form: "Detached",
         mainheat_description: "Thermostat, Thermostat",
+        report_type: "1",
+        mainheatcont_description: "Thermostat, Thermostat",
+
       }
     end
 

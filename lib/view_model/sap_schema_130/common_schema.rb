@@ -407,6 +407,8 @@ module ViewModel
         xpath(%w[Report-Type])
       end
 
+
+
       private
 
       def convert_to_big_decimal(node)

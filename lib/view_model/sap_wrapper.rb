@@ -278,7 +278,7 @@ module ViewModel
         photo_supply: @view_model.photovoltaic_roof_area_percent,
         built_form: Helper::XmlEnumsToOutput.xml_value_to_string(@view_model.built_form),
         mainheat_description: @view_model.all_main_heating_descriptions.join(", "),
-        reoport_type: @view_model.report_type,
+        report_type: @view_model.report_type,
         mainheatcont_description:  @view_model.all_main_heating_controls_descriptions.join(", "),
       }
     end
