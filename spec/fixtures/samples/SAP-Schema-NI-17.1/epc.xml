@@ -21,8 +21,7 @@
     <SAP-EPC-Data>
       <SAP:SAP-Version>9.90</SAP:SAP-Version>
       <SAP:BEDF-Revision-Number>353</SAP:BEDF-Revision-Number>
-      <SAP:Calculation-Software-Name>NHER Plan Assessor
-      </SAP:Calculation-Software-Name>
+      <SAP:Calculation-Software-Name>NHER Plan Assessor</SAP:Calculation-Software-Name>
       <SAP:Calculation-Software-Version>5.4</SAP:Calculation-Software-Version>
       <SAP:Report-Header>
         <SAP:RRN>0000-0000-0000-0000-0000</SAP:RRN>
@@ -77,6 +76,8 @@
         <SAP:Property>
           <SAP:Address>
             <SAP:Address-Line-1>1 Some Street</SAP:Address-Line-1>
+            <SAP:Address-Line-2>Some Area</SAP:Address-Line-2>
+            <SAP:Address-Line-3>Some County</SAP:Address-Line-3>
             <SAP:Post-Town>Post-Town1</SAP:Post-Town>
             <SAP:Postcode>A0 0AA</SAP:Postcode>
           </SAP:Address>
@@ -85,60 +86,47 @@
         <SAP:Region-Code>2</SAP:Region-Code>
         <SAP:Country-Code>EAW</SAP:Country-Code>
         <SAP:Related-Party-Disclosure>
-          <SAP:Related-Party-Disclosure-Number>1
-          </SAP:Related-Party-Disclosure-Number>
+          <SAP:Related-Party-Disclosure-Number>1</SAP:Related-Party-Disclosure-Number>
         </SAP:Related-Party-Disclosure>
       </SAP:Report-Header>
       <SAP:Energy-Assessment>
         <SAP:Assessment-Date>2014-02-12</SAP:Assessment-Date>
         <SAP:Renewable-Heat-Incentive>
           <SAP:RHI-Existing-Dwelling>
-            <SAP:Space-Heating-Existing-Dwelling>30
-            </SAP:Space-Heating-Existing-Dwelling>
+            <SAP:Space-Heating-Existing-Dwelling>30</SAP:Space-Heating-Existing-Dwelling>
             <SAP:Water-Heating>60</SAP:Water-Heating>
-            <SAP:Impact-Of-Cavity-Insulation>-12
-            </SAP:Impact-Of-Cavity-Insulation>
-            <SAP:Impact-Of-Loft-Insulation>-8</SAP:Impact-Of-Loft-Insulation>
-            <SAP:Impact-Of-Solid-Wall-Insulation>-16
-            </SAP:Impact-Of-Solid-Wall-Insulation>
           </SAP:RHI-Existing-Dwelling>
         </SAP:Renewable-Heat-Incentive>
         <SAP:Property-Summary>
           <SAP:Walls>
             <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
             <SAP:Description>Brick walls</SAP:Description>
-            <SAP:Environmental-Efficiency-Rating>0
-            </SAP:Environmental-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
           </SAP:Walls>
           <SAP:Walls>
             <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
             <SAP:Description>Brick walls</SAP:Description>
-            <SAP:Environmental-Efficiency-Rating>0
-            </SAP:Environmental-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
           </SAP:Walls>
           <SAP:Roof>
             <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
             <SAP:Description>Slate roof</SAP:Description>
-            <SAP:Environmental-Efficiency-Rating>0
-            </SAP:Environmental-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
           </SAP:Roof>
           <SAP:Roof>
             <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
             <SAP:Description>slate roof</SAP:Description>
-            <SAP:Environmental-Efficiency-Rating>0
-            </SAP:Environmental-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
           </SAP:Roof>
           <SAP:Floor>
             <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
             <SAP:Description>Tiled floor</SAP:Description>
-            <SAP:Environmental-Efficiency-Rating>0
-            </SAP:Environmental-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
           </SAP:Floor>
           <SAP:Floor>
             <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
             <SAP:Description>Tiled floor</SAP:Description>
-            <SAP:Environmental-Efficiency-Rating>0
-            </SAP:Environmental-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
           </SAP:Floor>
           <SAP:Windows>
             <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
@@ -148,26 +136,22 @@
           <SAP:Main-Heating>
             <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
             <SAP:Description>Gas boiler</SAP:Description>
-            <SAP:Environmental-Efficiency-Rating>0
-            </SAP:Environmental-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
           </SAP:Main-Heating>
           <SAP:Main-Heating>
             <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
             <SAP:Description>Gas boiler</SAP:Description>
-            <SAP:Environmental-Efficiency-Rating>0
-            </SAP:Environmental-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
           </SAP:Main-Heating>
           <SAP:Main-Heating-Controls>
             <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
             <SAP:Description>Thermostat</SAP:Description>
-            <SAP:Environmental-Efficiency-Rating>0
-            </SAP:Environmental-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
           </SAP:Main-Heating-Controls>
           <SAP:Main-Heating-Controls>
             <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
             <SAP:Description>Thermostat</SAP:Description>
-            <SAP:Environmental-Efficiency-Rating>0
-            </SAP:Environmental-Efficiency-Rating>
+            <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
           </SAP:Main-Heating-Controls>
           <SAP:Secondary-Heating>
             <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
@@ -184,6 +168,11 @@
             <SAP:Description>Energy saving bulbs</SAP:Description>
             <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
           </SAP:Lighting>
+          <SAP:Air-Tightness>
+            <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
+            <SAP:Description>Draft Exclusion</SAP:Description>
+            <SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
+          </SAP:Air-Tightness>
           <SAP:Dwelling-Type>Dwelling-Type0</SAP:Dwelling-Type>
           <SAP:Total-Floor-Area>10</SAP:Total-Floor-Area>
           <SAP:Is-Zero-Carbon-Home>true</SAP:Is-Zero-Carbon-Home>
@@ -191,9 +180,9 @@
         <SAP:Energy-Use>
           <SAP:Energy-Rating-Current>50</SAP:Energy-Rating-Current>
           <SAP:Energy-Rating-Potential>50</SAP:Energy-Rating-Potential>
+          <SAP:Energy-Rating-Typical-Newbuild>80</SAP:Energy-Rating-Typical-Newbuild>
           <SAP:Environmental-Impact-Current>50</SAP:Environmental-Impact-Current>
-          <SAP:Environmental-Impact-Potential>93
-          </SAP:Environmental-Impact-Potential>
+          <SAP:Environmental-Impact-Potential>93</SAP:Environmental-Impact-Potential>
           <SAP:Energy-Consumption-Current>0</SAP:Energy-Consumption-Current>
           <SAP:Energy-Consumption-Potential>0</SAP:Energy-Consumption-Potential>
           <SAP:CO2-Emissions-Current>2.4</SAP:CO2-Emissions-Current>
@@ -210,31 +199,27 @@
         <SAP:Suggested-Improvements>
           <SAP:Improvement>
             <SAP:Sequence>0</SAP:Sequence>
-            <SAP:Improvement-Category>6</SAP:Improvement-Category>
-            <SAP:Improvement-Type>Z3</SAP:Improvement-Type>
+            <SAP:Improvement-Category>1</SAP:Improvement-Category>
+            <SAP:Improvement-Type>A</SAP:Improvement-Type>
             <SAP:Typical-Saving>0.0</SAP:Typical-Saving>
             <SAP:Energy-Performance-Rating>50</SAP:Energy-Performance-Rating>
-            <SAP:Environmental-Impact-Rating>50
-            </SAP:Environmental-Impact-Rating>
+            <SAP:Environmental-Impact-Rating>50</SAP:Environmental-Impact-Rating>
             <SAP:Indicative-Cost>5</SAP:Indicative-Cost>
             <SAP:Improvement-Details>
               <SAP:Improvement-Number>5</SAP:Improvement-Number>
             </SAP:Improvement-Details>
-            <SAP:Green-Deal-Category>1</SAP:Green-Deal-Category>
           </SAP:Improvement>
           <SAP:Improvement>
             <SAP:Sequence>1</SAP:Sequence>
             <SAP:Improvement-Category>2</SAP:Improvement-Category>
-            <SAP:Improvement-Type>Z2</SAP:Improvement-Type>
+            <SAP:Improvement-Type>B</SAP:Improvement-Type>
             <SAP:Typical-Saving>0.1</SAP:Typical-Saving>
             <SAP:Energy-Performance-Rating>60</SAP:Energy-Performance-Rating>
-            <SAP:Environmental-Impact-Rating>64
-            </SAP:Environmental-Impact-Rating>
+            <SAP:Environmental-Impact-Rating>64</SAP:Environmental-Impact-Rating>
             <SAP:Indicative-Cost>2</SAP:Indicative-Cost>
             <SAP:Improvement-Details>
               <SAP:Improvement-Number>1</SAP:Improvement-Number>
             </SAP:Improvement-Details>
-            <SAP:Green-Deal-Category>3</SAP:Green-Deal-Category>
           </SAP:Improvement>
         </SAP:Suggested-Improvements>
         <SAP:LZC-Energy-Sources>
@@ -246,8 +231,6 @@
         <SAP:Schema-Version>LIG-16.0</SAP:Schema-Version>
         <SAP:SAP-Property-Details>
           <SAP:Property-Type>2</SAP:Property-Type>
-          <SAP:Multiple-Glazed-Proportion>50</SAP:Multiple-Glazed-Proportion>
-          <SAP:Extensions-Count>0</SAP:Extensions-Count>
           <SAP:Built-Form>1</SAP:Built-Form>
           <SAP:Living-Area>24.78</SAP:Living-Area>
           <SAP:Orientation>0</SAP:Orientation>
@@ -278,8 +261,7 @@
                 <SAP:Is-Interlocked-System>true</SAP:Is-Interlocked-System>
                 <SAP:Has-Delayed-Start-Thermostat>true
                 </SAP:Has-Delayed-Start-Thermostat>
-                <SAP:Load-Or-Weather-Compensation>0
-                </SAP:Load-Or-Weather-Compensation>
+                <SAP:Load-Or-Weather-Compensation>0</SAP:Load-Or-Weather-Compensation>
                 <SAP:Main-Heating-Fraction>1</SAP:Main-Heating-Fraction>
               </SAP:Main-Heating>
             </SAP:Main-Heating-Details>
@@ -300,14 +282,6 @@
             <SAP:Low-Energy-Fixed-Lighting-Outlets-Percentage>100</SAP:Low-Energy-Fixed-Lighting-Outlets-Percentage>
             <SAP:Electricity-Tariff>1</SAP:Electricity-Tariff>
           </SAP:SAP-Energy-Source>
-          <SAP:SAP-Ventilation>
-            <SAP:Open-Fireplaces-Count>0</SAP:Open-Fireplaces-Count>
-            <SAP:Open-Flues-Count>0</SAP:Open-Flues-Count>
-            <SAP:Flueless-Gas-Fires-Count>0</SAP:Flueless-Gas-Fires-Count>
-            <SAP:Pressure-Test>1</SAP:Pressure-Test>
-            <SAP:Sheltered-Sides-Count>3</SAP:Sheltered-Sides-Count>
-            <SAP:Ventilation-Type>8</SAP:Ventilation-Type>
-          </SAP:SAP-Ventilation>
           <SAP:SAP-Building-Parts>
             <SAP:SAP-Building-Part>
               <SAP:Building-Part-Number>1</SAP:Building-Part-Number>
@@ -457,14 +431,11 @@
             <SAP:Air-Permeability>4.72</SAP:Air-Permeability>
             <SAP:Sheltered-Sides-Count>3</SAP:Sheltered-Sides-Count>
             <SAP:Ventilation-Type>8</SAP:Ventilation-Type>
-            <SAP:Mechanical-Ventilation-Data-Source>1
-            </SAP:Mechanical-Ventilation-Data-Source>
-            <SAP:Mechanical-Vent-System-Index-Number>500249
-            </SAP:Mechanical-Vent-System-Index-Number>
+            <SAP:Mechanical-Ventilation-Data-Source>1</SAP:Mechanical-Ventilation-Data-Source>
+            <SAP:Mechanical-Vent-System-Index-Number>500249</SAP:Mechanical-Vent-System-Index-Number>
             <SAP:Wet-Rooms-Count>3</SAP:Wet-Rooms-Count>
             <SAP:Mechanical-Vent-Duct-Type>2</SAP:Mechanical-Vent-Duct-Type>
-            <SAP:Mechanical-Vent-Duct-Insulation>2
-            </SAP:Mechanical-Vent-Duct-Insulation>
+            <SAP:Mechanical-Vent-Duct-Insulation>2</SAP:Mechanical-Vent-Duct-Insulation>
             <SAP:Extract-Fans-Count>0</SAP:Extract-Fans-Count>
             <SAP:PSV-Count>0</SAP:PSV-Count>
             <SAP:Is-Mechanical-Vent-Approved-Installer-Scheme>true
@@ -472,7 +443,6 @@
           </SAP:SAP-Ventilation>
           <SAP:SAP-Flat-Details>
             <SAP:Level>1</SAP:Level>
-            <SAP:Unheated-Corridor-Length>10</SAP:Unheated-Corridor-Length>
           </SAP:SAP-Flat-Details>
           <SAP:Design-Water-Use>1</SAP:Design-Water-Use>
         </SAP:SAP-Property-Details>
