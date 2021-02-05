@@ -385,8 +385,6 @@ module ViewModel
         @xml_doc.search("Main-Heating-Controls/Description").map(&:content)
       end
 
-
-
       def extensions_count
         xpath(%w[Extensions-Count])
       end
@@ -397,6 +395,10 @@ module ViewModel
 
       def report_type
         xpath(%w[Report-Type])
+      end
+
+      def all_roof_descriptions
+        @xml_doc.search("Roof/Description").map(&:content)
       end
 
     end

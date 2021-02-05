@@ -449,6 +449,10 @@ module ViewModel
         xpath(%w[Report-Type])
       end
 
+      def all_roof_descriptions
+        @xml_doc.search("Roof/Description").map(&:content)
+      end
+
 
     end
   end

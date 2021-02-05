@@ -656,6 +656,7 @@ describe ViewModel::SapWrapper do
         mainheat_description: "Thermostat, Thermostat",
         report_type: "1",
         mainheatcont_description: "Thermostat, Thermostat",
+        roof_description: "Slate roof, slate roof",
 
       }
     end

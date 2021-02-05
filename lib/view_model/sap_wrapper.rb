@@ -280,6 +280,7 @@ module ViewModel
         mainheat_description: @view_model.all_main_heating_descriptions.join(", "),
         report_type: @view_model.report_type,
         mainheatcont_description:  @view_model.all_main_heating_controls_descriptions.join(", "),
+        roof_description: @view_model.all_roof_descriptions.join(", "),
       }
     end
 
