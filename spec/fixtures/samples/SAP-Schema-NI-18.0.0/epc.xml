@@ -44,10 +44,10 @@
           <Postcode>A0 0AA</Postcode>
         </Contact-Address>
         <Web-Site>Web-Site0</Web-Site>
-        <E-Mail>E-Mail0</E-Mail>
+        <E-Mail>a@b.c</E-Mail>
         <Registered-Name>Registered-Name0</Registered-Name>
-        <Fax></Fax>
-        <Telephone></Telephone>
+        <Fax>111222333</Fax>
+        <Telephone>111222333</Telephone>
       </Certification-Scheme>
       <Identification-Number>
         <Certificate-Number>SPEC000000</Certificate-Number>
@@ -56,6 +56,8 @@
     <Property>
       <Address>
         <Address-Line-1>1 Some Street</Address-Line-1>
+        <Address-Line-2>Some Area</Address-Line-2>
+        <Address-Line-3>Some County</Address-Line-3>
         <Post-Town>Post-Town1</Post-Town>
         <Postcode>A0 0AA</Postcode>
       </Address>
@@ -81,7 +83,6 @@
       <Roof>
         <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
         <Description>Slate roof</Description>
-
         <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
       </Roof>
       <Roof>
@@ -139,6 +140,11 @@
         <Description>Energy saving bulbs</Description>
         <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
       </Lighting>
+      <Air-Tightness>
+        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+        <Description>Draft Exclusion</Description>
+        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+      </Air-Tightness>
       <Dwelling-Type>Dwelling-Type0</Dwelling-Type>
       <Total-Floor-Area>10</Total-Floor-Area>
       <Is-Zero-Carbon-Home>true</Is-Zero-Carbon-Home>
@@ -201,7 +207,7 @@
     <Data-Type>1</Data-Type>
     <SAP-Property-Details>
       <SAP-Heating>
-        <Water-Heating-Code>1</Water-Heating-Code>
+        <Water-Heating-Code>906</Water-Heating-Code>
         <Secondary-Heating-Category>1</Secondary-Heating-Category>
         <Main-Heating-Details>
           <Main-Heating>
@@ -209,7 +215,7 @@
             <Main-Heating-Category>1</Main-Heating-Category>
             <Main-Heating-Data-Source>1</Main-Heating-Data-Source>
             <Main-Fuel-Type>36</Main-Fuel-Type>
-            <Main-Heating-Control>3</Main-Heating-Control>
+            <Main-Heating-Control>2001</Main-Heating-Control>
             <Main-Heating-Fraction>1</Main-Heating-Fraction>
           </Main-Heating>
         </Main-Heating-Details>

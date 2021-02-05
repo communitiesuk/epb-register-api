@@ -127,6 +127,48 @@ describe ViewModel::SapWrapper do
         },
       }
 
+      ni_difference = {
+        different_fields: {
+          recommended_improvements: [
+            {
+              energy_performance_band_improvement: "e",
+              energy_performance_rating_improvement: 50,
+              environmental_impact_rating_improvement: 50,
+              green_deal_category_code: nil,
+              improvement_category: "1",
+              improvement_code: "5",
+              improvement_description: nil,
+              improvement_title: nil,
+              improvement_type: "A",
+              indicative_cost: "5",
+              sequence: 0,
+              typical_saving: "0.0",
+            },
+            {
+              energy_performance_band_improvement: "d",
+              energy_performance_rating_improvement: 60,
+              environmental_impact_rating_improvement: 64,
+              green_deal_category_code: nil,
+              improvement_category: "2",
+              improvement_code: "1",
+              improvement_description: nil,
+              improvement_title: nil,
+              improvement_type: "B",
+              indicative_cost: "2",
+              sequence: 1,
+              typical_saving: "0.1",
+            },
+          ],
+        },
+        different_buried_fields: {
+          heat_demand: {
+            impact_of_cavity_insulation: nil,
+            impact_of_loft_insulation: nil,
+            impact_of_solid_wall_insulation: nil,
+          },
+        },
+      }
+
       [
         {
           schema: "SAP-Schema-18.0.0",
@@ -138,6 +180,17 @@ describe ViewModel::SapWrapper do
               address_id: "UPRN-000000000000",
             },
           },
+        },
+        {
+          schema: "SAP-Schema-NI-18.0.0",
+          different_fields: {
+            address_id: "UPRN-000000000000",
+          }.merge(ni_difference[:different_fields]),
+          different_buried_fields: {
+            address: {
+              address_id: "UPRN-000000000000",
+            },
+          }.merge(ni_difference[:different_buried_fields]),
         },
         { schema: "SAP-Schema-17.1" },
         { schema: "SAP-Schema-17.0" },
