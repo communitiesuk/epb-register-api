@@ -28,9 +28,6 @@ describe ViewModel::CepcWrapper do
           schema: "CEPC-6.0",
           type: "cepc",
           unsupported_fields: %i[primary_energy_use],
-          different_fields: {
-            other_fuel_description: "Test",
-          },
         },
         {
           schema: "CEPC-5.1",

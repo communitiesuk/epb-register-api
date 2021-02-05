@@ -24,7 +24,7 @@ describe ViewModel::DecWrapper do
           },
           different_buried_fields: {
             address: {
-              postcode: Samples::ViewModels.NI_PostCode,
+              postcode: "BT0 0AA",
             },
           },
         },
@@ -36,8 +36,8 @@ describe ViewModel::DecWrapper do
           },
           different_buried_fields: {
             address: {
-              address_id: Samples::ViewModels.Lprn_code,
-              postcode: Samples::ViewModels.NI_PostCode,
+              address_id: "LPRN-000000000001",
+              postcode: "BT0 0AA",
             },
           },
         },
@@ -49,8 +49,8 @@ describe ViewModel::DecWrapper do
           },
           different_buried_fields: {
             address: {
-              address_id: Samples::ViewModels.Lprn_code,
-              postcode: Samples::ViewModels.NI_PostCode,
+              address_id: "LPRN-000000000001",
+              postcode: "BT0 0AA",
             },
           },
         },
@@ -62,8 +62,8 @@ describe ViewModel::DecWrapper do
           },
           different_buried_fields: {
             address: {
-              address_id: Samples::ViewModels.Lprn_code,
-              postcode: Samples::ViewModels.NI_PostCode,
+              address_id: "LPRN-000000000001",
+              postcode: "BT0 0AA",
             },
           },
         },
@@ -75,8 +75,8 @@ describe ViewModel::DecWrapper do
           },
           different_buried_fields: {
             address: {
-              address_id: Samples::ViewModels.Lprn_code,
-              postcode: Samples::ViewModels.NI_PostCode,
+              address_id: "LPRN-000000000001",
+              postcode: "BT0 0AA",
             },
           },
         },
@@ -88,8 +88,8 @@ describe ViewModel::DecWrapper do
           },
           different_buried_fields: {
             address: {
-              address_id: Samples::ViewModels.Lprn_code,
-              postcode: Samples::ViewModels.NI_PostCode,
+              address_id: "LPRN-000000000001",
+              postcode: "BT0 0AA",
             },
           },
         },
@@ -101,8 +101,8 @@ describe ViewModel::DecWrapper do
           },
           different_buried_fields: {
             address: {
-              address_id: Samples::ViewModels.Lprn_code,
-              postcode: Samples::ViewModels.NI_PostCode,
+              address_id: "LPRN-000000000001",
+              postcode: "BT0 0AA",
             },
           },
         },
@@ -114,8 +114,8 @@ describe ViewModel::DecWrapper do
           },
           different_buried_fields: {
             address: {
-              address_id: Samples::ViewModels.Lprn_code,
-              postcode: Samples::ViewModels.NI_PostCode,
+              address_id: "LPRN-000000000001",
+              postcode: "BT0 0AA",
             },
           },
         },

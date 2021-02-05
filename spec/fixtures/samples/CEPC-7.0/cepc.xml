@@ -332,8 +332,8 @@
         <AC-Rated-Output>
           <AC-kW-Rating>100</AC-kW-Rating>
         </AC-Rated-Output>
-        <AC-Inspection-Commissioned>1</AC-Inspection-Commissioned>
         <AC-Estimated-Output>3</AC-Estimated-Output>
+        <AC-Inspection-Commissioned>1</AC-Inspection-Commissioned>
       </AC-Questionnaire>
     </Energy-Performance-Certificate>
   </Report>

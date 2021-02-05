@@ -31,10 +31,10 @@
       <Property-Details>
         <UPRN>UPRN-432167890000</UPRN>
         <Property-Address>
-          <Address-Line-1>A. Shop</Address-Line-1>
-          <Address-Line-2>The High Street</Address-Line-2>
-          <Address-Line-3 />
-          <Address-Line-4 />
+          <Address-Line-1>Some Unit</Address-Line-1>
+          <Address-Line-2>2 Lonely Street</Address-Line-2>
+          <Address-Line-3>Some Area</Address-Line-3>
+          <Address-Line-4>Some County</Address-Line-4>
           <Post-Town>London</Post-Town>
           <Postcode>AB12 2AA</Postcode>
         </Property-Address>
@@ -59,10 +59,10 @@
         <Telephone-Number>0208777777</Telephone-Number>
         <Organisation-Name>The Shop</Organisation-Name>
         <Registered-Address>
-          <Address-Line-1>A. Shop</Address-Line-1>
-          <Address-Line-2>The High Street</Address-Line-2>
-          <Address-Line-3 />
-          <Address-Line-4 />
+          <Address-Line-1>Some Unit</Address-Line-1>
+          <Address-Line-2>2 Lonely Street</Address-Line-2>
+          <Address-Line-3>Some Area</Address-Line-3>
+          <Address-Line-4>Some County</Address-Line-4>
           <Post-Town>London</Post-Town>
           <Postcode>AB12 2AA</Postcode>
         </Registered-Address>
@@ -72,10 +72,10 @@
         <Telephone-Number>0208777777</Telephone-Number>
         <Organisation-Name>The Shop</Organisation-Name>
         <Registered-Address>
-          <Address-Line-1>A. Shop</Address-Line-1>
-          <Address-Line-2>The High Street</Address-Line-2>
-          <Address-Line-3 />
-          <Address-Line-4 />
+          <Address-Line-1>Some Unit</Address-Line-1>
+          <Address-Line-2>2 Lonely Street</Address-Line-2>
+          <Address-Line-3>Some Area</Address-Line-3>
+          <Address-Line-4>Some County</Address-Line-4>
           <Post-Town>London</Post-Town>
           <Postcode>AB12 2AA</Postcode>
         </Registered-Address>

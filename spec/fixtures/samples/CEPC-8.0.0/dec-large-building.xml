@@ -313,8 +313,8 @@
         <AC-Rated-Output>
           <AC-kW-Rating>1</AC-kW-Rating>
         </AC-Rated-Output>
+        <AC-Estimated-Output>1</AC-Estimated-Output>
         <AC-Inspection-Commissioned>1</AC-Inspection-Commissioned>
-        <AC-Estimated-Output>100</AC-Estimated-Output>
       </AC-Questionnaire>
       <This-Assessment>
         <Nominated-Date>2020-01-01</Nominated-Date>

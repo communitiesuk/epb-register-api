@@ -41,6 +41,7 @@
         <Calculation-Tool>Sterling Accreditation, Sterling e-Volve, v1.2</Calculation-Tool>
       </Calculation-Details>
     </Report-Header>
+    <Formatted-Report>ZWYKNDY1MjIKJSVFT0YK</Formatted-Report>
     <Insurance-Details>
       <Insurer>Assessor Underwriting Limited</Insurer>
       <Policy-No>AB1234567CD</Policy-No>
@@ -48,7 +49,6 @@
       <Expiry-Date>2018-01-31</Expiry-Date>
       <PI-Limit>2000000</PI-Limit>
     </Insurance-Details>
-    <Formatted-Report>ZWYKNDY1MjIKJSVFT0YK</Formatted-Report>
     <Air-Conditioning-Inspection-Certificate>
       <Equipment-Owner>
         <Equipment-Owner-Name>Katy Smith</Equipment-Owner-Name>
