@@ -432,12 +432,17 @@ module ViewModel
         @xml_doc.search("Main-Heating-Controls/Description").map(&:content)
       end
 
+
       def unheated_corridor_length
         nil
       end
 
       def built_form
         xpath(%w[Built-Form])
+      end
+
+      def all_main_heating_controls_descriptions
+        @xml_doc.search("Main-Heating-Controls/Description").map(&:content)
       end
 
       def report_type

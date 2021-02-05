@@ -437,6 +437,10 @@ module ViewModel
         @xml_doc.search("Main-Heating-Controls/Description").map(&:content)
       end
 
+      def all_main_heating_controls_descriptions
+        @xml_doc.search("Main-Heating-Controls/Description").map(&:content)
+      end
+
       def report_type
         xpath(%w[Report-Type])
       end
