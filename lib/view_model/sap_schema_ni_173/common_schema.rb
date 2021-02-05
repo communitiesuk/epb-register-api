@@ -37,17 +37,17 @@ module ViewModel
         [
           xpath(%w[Home-Inspector Name Prefix]),
           xpath(%w[Home-Inspector Name First-Name]),
-          xpath(%w[Home-Inspector Name Last-Name]),
+          xpath(%w[Home-Inspector Name Surname]),
           xpath(%w[Home-Inspector Name Suffix]),
         ].reject { |e| e.to_s.empty? }.join(" ")
       end
 
       def assessor_email
-        xpath(%w[Home-Inspector/E-Mail])
+        xpath(%w[Home-Inspector E-Mail])
       end
 
       def assessor_telephone
-        xpath(%w[Home-Inspector/Telephone-Number])
+        xpath(%w[Home-Inspector Telephone])
       end
 
       def date_of_assessment
