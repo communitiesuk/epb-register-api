@@ -45,7 +45,7 @@ task :open_data_export do
 
    date_time = DateTime.now.strftime("%Y%m%dT%H%M")
 
-   data = Helper::ExportHelper.to_csv(export_open_data_use_case.execute.(date_from))
+   data = Helper::ExportHelper.to_csv(export_open_data_use_case.execute(date_from))
 
    storage_gateway.write_file("open_data_export_#{ENV["assessment_type"].downcase}_#{date_time}.csv", data)
 
