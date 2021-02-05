@@ -657,6 +657,8 @@ describe ViewModel::SapWrapper do
         report_type: "1",
         mainheatcont_description: "Thermostat, Thermostat",
         roof_description: "Slate roof, slate roof",
+        roof_energy_eff: "N/A, N/A",
+        roof_env_eff: "N/A, N/A",
 
       }
     end

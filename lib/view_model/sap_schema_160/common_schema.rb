@@ -402,6 +402,7 @@ module ViewModel
         @xml_doc.search("Roof/Description").map(&:content)
       end
 
+
     end
   end
 end
