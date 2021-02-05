@@ -389,6 +389,9 @@ module ViewModel
         xpath(%w[Extensions-Count])
       end
 
+      def report_type
+        xpath(%w[Report-Type])
+      end
     end
   end
 end

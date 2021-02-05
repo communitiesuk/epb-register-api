@@ -440,6 +440,11 @@ module ViewModel
         xpath(%w[Built-Form])
       end
 
+      def report_type
+        xpath(%w[Report-Type])
+      end
+
+
     end
   end
 end
