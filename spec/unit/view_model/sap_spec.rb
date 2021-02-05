@@ -198,6 +198,7 @@ describe ViewModel::SapWrapper do
         { schema: "SAP-Schema-17.1" },
         { schema: "SAP-Schema-NI-17.1" }.merge(ni_difference),
         { schema: "SAP-Schema-17.0" },
+        { schema: "SAP-Schema-NI-17.0" }.merge(ni_difference),
         {
           schema: "SAP-Schema-16.3",
           type: "sap",
