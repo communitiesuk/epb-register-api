@@ -648,7 +648,7 @@ describe ViewModel::SapWrapper do
         lighting_env_eff: "N/A",
         photo_supply: nil,
         built_form: "Detached",
-        mainheat_description: "Thermostat, Thermostat",
+        mainheat_description: "Gas boiler, Gas boiler",
         report_type: "1",
         mainheatcont_description: "Thermostat, Thermostat",
         roof_description: "Slate roof, slate roof",

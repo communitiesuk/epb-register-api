@@ -381,7 +381,7 @@ module ViewModel
       end
 
       def all_main_heating_descriptions
-        @xml_doc.search("Main-Heating-Controls/Description").map(&:content)
+        @xml_doc.search("Main-Heating/Description").map(&:content)
       end
 
       def extensions_count

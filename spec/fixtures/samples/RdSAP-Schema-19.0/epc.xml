@@ -51,6 +51,11 @@
               <Environmental-Efficiency-Rating>3</Environmental-Efficiency-Rating>
             </Window>
             <Main-Heating>
+              <Description>Boiler and radiators, anthracite</Description>
+              <Energy-Efficiency-Rating>3</Energy-Efficiency-Rating>
+              <Environmental-Efficiency-Rating>1</Environmental-Efficiency-Rating>
+            </Main-Heating>
+            <Main-Heating>
               <Description>Boiler and radiators, mains gas</Description>
               <Energy-Efficiency-Rating>4</Energy-Efficiency-Rating>
               <Environmental-Efficiency-Rating>4</Environmental-Efficiency-Rating>
@@ -59,6 +64,11 @@
               <Description>Programmer, room thermostat and TRVs</Description>
               <Energy-Efficiency-Rating>4</Energy-Efficiency-Rating>
               <Environmental-Efficiency-Rating>4</Environmental-Efficiency-Rating>
+            </Main-Heating-Controls>
+            <Main-Heating-Controls>
+              <Description>Time and temperature zone control</Description>
+              <Energy-Efficiency-Rating>5</Energy-Efficiency-Rating>
+              <Environmental-Efficiency-Rating>5</Environmental-Efficiency-Rating>
             </Main-Heating-Controls>
             <Hot-Water>
                 <Description>Description11</Description>

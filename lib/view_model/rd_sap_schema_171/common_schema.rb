@@ -264,16 +264,16 @@ module ViewModel
         @xml_doc.search("Main-Heating/Description").map(&:content)
       end
 
+      def all_main_heating_controls_descriptions
+        @xml_doc.search("Main-Heating-Controls/Description").map(&:content)
+      end
+
       def all_main_heating_energy_efficiency
         @xml_doc.search("Main-Heating/Energy-Efficiency-Rating").map(&:content)
       end
 
       def all_main_heating_environmental_efficiency
         @xml_doc.search("Main-Heating/Environmental-Efficiency-Rating").map(&:content)
-      end
-
-      def all_main_heating_controls_descriptions
-        @xml_doc.search("Main-Heating-Controls/Description").map(&:content)
       end
 
       def all_hot_water_descriptions
