@@ -298,6 +298,8 @@ module ViewModel
           Helper::XmlEnumsToOutput.energy_rating_string(
             @view_model.all_wall_env_energy_efficieny_rating,
             ),
+        energy_tariff: Helper::XmlEnumsToOutput.energy_tariff(@view_model.energy_tariff),
+
       }
     end
 

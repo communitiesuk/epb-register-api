@@ -431,6 +431,10 @@ module ViewModel
         @xml_doc.search("Walls/Environmental-Efficiency-Rating").map(&:content)
       end
 
+      def energy_tariff
+        xpath(%w[Electricity-Tariff])
+      end
+
 
 
       private

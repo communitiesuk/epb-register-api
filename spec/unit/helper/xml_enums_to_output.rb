@@ -65,4 +65,15 @@ describe Helper::XmlEnumsToOutput do
       )
     end
   end
+
+  context "when the XML contains an energy tariff it is converting to its string representation" do
+    it "returns the correct string value for Open Data Communities" do
+      expect(Helper::XmlEnumsToOutput.energy_tariff("1")).to eq("standard tariff")
+      expect(Helper::XmlEnumsToOutput.energy_tariff("ND")).to eq("not applicable")
+    end
+
+    it "returns the not applicable if string is not  present in enum" do
+      expect(Helper::XmlEnumsToOutput.energy_tariff("test")).to eq("not applicable")
+    end
+  end
 end

@@ -662,6 +662,8 @@ describe ViewModel::SapWrapper do
         walls_description: "Brick walls, Brick walls",
         walls_energy_eff: "N/A, N/A",
         walls_env_eff: "N/A, N/A",
+        energy_tariff: "standard tariff",
+
 
       }
     end
