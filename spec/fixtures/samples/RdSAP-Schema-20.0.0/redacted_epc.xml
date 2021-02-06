@@ -32,12 +32,12 @@
         <Environmental-Efficiency-Rating>4</Environmental-Efficiency-Rating>
       </Roof>
       <Floor>
-        <Description>Description4</Description>
+        <Description>Suspended, no insulation (assumed)</Description>
         <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
         <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
       </Floor>
       <Floor>
-        <Description>Description5</Description>
+        <Description>Solid, insulated (assumed)</Description>
         <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
         <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
       </Floor>

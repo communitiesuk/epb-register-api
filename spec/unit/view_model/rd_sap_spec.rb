@@ -156,13 +156,13 @@ describe ViewModel::RdSapWrapper do
             name: "roof",
           },
           {
-            description: "Description4",
+            description: "Suspended, no insulation (assumed)",
             energy_efficiency_rating: 0,
             environmental_efficiency_rating: 0,
             name: "floor",
           },
           {
-            description: "Description5",
+            description: "Solid, insulated (assumed)",
             energy_efficiency_rating: 0,
             environmental_efficiency_rating: 0,
             name: "floor",
