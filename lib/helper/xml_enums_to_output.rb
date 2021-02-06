@@ -2,12 +2,6 @@ module Helper
   class XmlEnumsToOutput
     # These mirror the energy performance ratings as in the
     # EnergyEfficiencySummaryCode simpleType defined in EPC-Domains.xsd
-    # 0 = N/A
-    # 1 = Very Poor
-    # 2 = Poor
-    # 3 = Average
-    # 4 = Good
-    # 5 = Very Good
     RATINGS = [
       "N/A",
       "Very Poor",
@@ -16,6 +10,9 @@ module Helper
       "Good",
       "Very Good",
     ].freeze
+
+    # These mirror the built form codes as in the
+    # SAP-BuiltFormCode simpleType defined in SAP-Domains.xsd
     BUILT_FORM = {
       "1" => "Detached",
       "2" => "Semi-Detached",
