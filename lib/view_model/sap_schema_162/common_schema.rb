@@ -426,6 +426,10 @@ module ViewModel
         xpath(%w[Electricity-Tariff])
       end
 
+      def floor_level
+        xpath(%w[SAP-Flat-Details Level])
+      end
+
     end
   end
 end

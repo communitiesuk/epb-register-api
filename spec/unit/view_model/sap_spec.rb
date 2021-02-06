@@ -663,7 +663,7 @@ describe ViewModel::SapWrapper do
         walls_energy_eff: "N/A, N/A",
         walls_env_eff: "N/A, N/A",
         energy_tariff: "standard tariff",
-
+        floor_level: "1",
 
       }
     end

@@ -299,7 +299,7 @@ module ViewModel
             @view_model.all_wall_env_energy_efficieny_rating,
             ),
         energy_tariff: Helper::XmlEnumsToOutput.energy_tariff(@view_model.energy_tariff),
-
+        floor_level: @view_model.floor_level,
       }
     end
 
