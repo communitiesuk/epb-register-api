@@ -409,9 +409,12 @@ module ViewModel
         xpath(%w[Electricity-Tariff])
       end
 
-
       def floor_level
         xpath(%w[SAP-Flat-Details Level])
+      end
+
+      def all_main_heating_energy_efficiency
+        @xml_doc.search("Main-Heating/Energy-Efficiency-Rating").map(&:content)
       end
 
     end
