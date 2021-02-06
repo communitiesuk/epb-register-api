@@ -76,12 +76,12 @@
               <Environmental-Efficiency-Rating>4</Environmental-Efficiency-Rating>
             </Hot-Water>
             <Lighting>
-                <Description>Description12</Description>
-                <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
-                <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+              <Description>Low energy lighting in 50% of fixed outlets</Description>
+              <Energy-Efficiency-Rating>4</Energy-Efficiency-Rating>
+              <Environmental-Efficiency-Rating>4</Environmental-Efficiency-Rating>
             </Lighting>
             <Secondary-Heating>
-                <Description>Description13</Description>
+                <Description>Room heaters, electric</Description>
                 <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
                 <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
             </Secondary-Heating>

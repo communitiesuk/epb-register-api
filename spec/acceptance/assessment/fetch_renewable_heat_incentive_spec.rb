@@ -118,7 +118,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
           loftInsulation: false,
           spaceHeating: 30.0,
           waterHeating: 60.0,
-          secondaryHeating: "Description13",
+          secondaryHeating: "Room heaters, electric",
           energyEfficiency: {
             currentRating: 50,
             currentBand: "e",
