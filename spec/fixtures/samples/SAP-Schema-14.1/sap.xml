@@ -159,8 +159,8 @@
           <SAP05:Has-Fixed-Air-Conditioning>false</SAP05:Has-Fixed-Air-Conditioning>
           <SAP05:Has-Hot-Water-Cylinder>true</SAP05:Has-Hot-Water-Cylinder>
           <SAP05:Has-Heated-Separate-Conservatory>false</SAP05:Has-Heated-Separate-Conservatory>
-          <SAP05:Dwelling-Type>Dwelling-Type0</SAP05:Dwelling-Type>
-          <SAP05:Total-Floor-Area>10</SAP05:Total-Floor-Area>
+          <SAP05:Dwelling-Type>Mid-terrace house</SAP05:Dwelling-Type>
+          <SAP05:Total-Floor-Area>69</SAP05:Total-Floor-Area>
         </SAP05:Property-Summary>
         <SAP05:Energy-Use>
           <SAP05:Energy-Rating-Current>50</SAP05:Energy-Rating-Current>

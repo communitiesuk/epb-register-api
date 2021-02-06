@@ -283,7 +283,7 @@
         </ACI-Cooling-Plant-Inspection>
         <ACI-Cooling-Plant-Sizing>
           <Total-Occupants>40</Total-Occupants>
-          <Total-Floor-Area>357</Total-Floor-Area>
+          <Total-Floor-Area>88</Total-Floor-Area>
           <Occupant-Density>8.93</Occupant-Density>
           <Upper-Heat-Gain>140.0</Upper-Heat-Gain>
           <Installed-Capacity>10.0</Installed-Capacity>
@@ -602,7 +602,7 @@
         </ACI-Cooling-Plant-Inspection>
         <ACI-Cooling-Plant-Sizing>
           <Total-Occupants>40</Total-Occupants>
-          <Total-Floor-Area>357</Total-Floor-Area>
+          <Total-Floor-Area>88</Total-Floor-Area>
           <Occupant-Density>8.93</Occupant-Density>
           <Upper-Heat-Gain>140.0</Upper-Heat-Gain>
           <Installed-Capacity>10.0</Installed-Capacity>

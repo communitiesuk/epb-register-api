@@ -147,8 +147,8 @@
         <Description>Draft Exclusion</Description>
         <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
       </Air-Tightness>
-      <Dwelling-Type>Dwelling-Type0</Dwelling-Type>
-      <Total-Floor-Area>10</Total-Floor-Area>
+      <Dwelling-Type>Mid-terrace house</Dwelling-Type>
+      <Total-Floor-Area>69</Total-Floor-Area>
       <Is-Zero-Carbon-Home>true</Is-Zero-Carbon-Home>
     </Property-Summary>
     <Energy-Use>
