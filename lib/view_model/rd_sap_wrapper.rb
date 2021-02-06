@@ -252,20 +252,20 @@ module ViewModel
         roof_description: @view_model.all_roof_descriptions.join(", "),
         roof_energy_eff:
           Helper::XmlEnumsToOutput.energy_rating_string(
-            @view_model.all_roof_energy_efficieny_rating,
+            @view_model.all_roof_energy_efficiency_rating,
           ),
         roof_env_eff:
           Helper::XmlEnumsToOutput.energy_rating_string(
-            @view_model.all_roof_env_energy_efficieny_rating,
+            @view_model.all_roof_env_energy_efficiency_rating,
           ),
         walls_description: @view_model.all_wall_descriptions.join(", "),
         walls_energy_eff:
           Helper::XmlEnumsToOutput.energy_rating_string(
-            @view_model.all_wall_energy_efficieny_rating,
+            @view_model.all_wall_energy_efficiency_rating,
           ),
         walls_env_eff:
           Helper::XmlEnumsToOutput.energy_rating_string(
-            @view_model.all_wall_env_energy_efficieny_rating,
+            @view_model.all_wall_env_energy_efficiency_rating,
           ),
         energy_tariff: @view_model.meter_type,
         floor_level: @view_model.floor_level,
