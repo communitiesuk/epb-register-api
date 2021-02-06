@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RdSAP-Report schemaLocation="https://epbr.digital.communities.gov.uk/xsd/rdsap ../../../../api/schemas/xml/RdSAP-Schema-20.0.0/RdSAP/Templates/RdSAP-Report.xsd">
-  <User-Interface-Name>User-Interface-Name0</User-Interface-Name>
-  <User-Interface-Version>User-Interface-Version0</User-Interface-Version>
+  <User-Interface-Name>SomeSoft RdSAP FormWiz</User-Interface-Name>
+  <User-Interface-Version>UI-13.05r16</User-Interface-Version>
   <Schema-Version-Original>Schema-Version-Original0</Schema-Version-Original>
   <SAP-Version>9.80</SAP-Version>
-  <PCDF-Revision-Number>PCDF-Revision-Number0</PCDF-Revision-Number>
+  <PCDF-Revision-Number>345</PCDF-Revision-Number>
   <Previous-EPC-Check>
     <Previous-EPC-Checked>Y</Previous-EPC-Checked>
     <Previous-EPC-Exists>Y</Previous-EPC-Exists>
@@ -273,5 +273,5 @@
       <UPRN>UPRN-000000000000</UPRN>
     </Property>
   </Report-Header>
-  <ExternalDefinitions-Revision-Number>ExternalDefinitions-Revision-Number0</ExternalDefinitions-Revision-Number>
+  <ExternalDefinitions-Revision-Number>5.0</ExternalDefinitions-Revision-Number>
 </RdSAP-Report>

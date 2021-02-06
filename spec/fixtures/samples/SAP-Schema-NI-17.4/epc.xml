@@ -3,8 +3,8 @@
             xsi:schemaLocation="http://www.epbniregister.com/xsd/sap /api/schemas/xml/SAP-Schema-NI-17.4/SAP/Templates/SAP-Report.xsd"
             xmlns="http://www.epbniregister.com/xsd/sap">
   <SAP-Version>9.80</SAP-Version>
-  <Calculation-Software-Name>Calculation-Software-Name0</Calculation-Software-Name>
-  <Calculation-Software-Version>Calculation-Software-Version0</Calculation-Software-Version>
+  <Calculation-Software-Name>SomeSoft SAP Calculator</Calculation-Software-Name>
+  <Calculation-Software-Version>13.05r16</Calculation-Software-Version>
   <Report-Header>
     <RRN>0000-0000-0000-0000-0000</RRN>
     <Inspection-Date>2020-05-04</Inspection-Date>
@@ -260,5 +260,5 @@
     </SAP-Property-Details>
   </SAP09-Data>
   <PDF/>
-  <ExternalDefinitions-Revision-Number>ExternalDefinitions-Revision-Number0</ExternalDefinitions-Revision-Number>
+  <ExternalDefinitions-Revision-Number>5.0</ExternalDefinitions-Revision-Number>
 </SAP-Report>

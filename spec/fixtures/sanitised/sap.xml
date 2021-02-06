@@ -5,9 +5,9 @@
   <Schema-Version-Current>Schema-Version-Current0</Schema-Version-Current>
   <SAP-Version>9.80</SAP-Version>
   <SAP-Data-Version>9.80</SAP-Data-Version>
-  <PCDF-Revision-Number>1</PCDF-Revision-Number>
-  <Calculation-Software-Name>Calculation-Software-Name0</Calculation-Software-Name>
-  <Calculation-Software-Version>Calculation-Software-Version0</Calculation-Software-Version>
+  <PCDF-Revision-Number>345</PCDF-Revision-Number>
+  <Calculation-Software-Name>SomeSoft SAP Calculator</Calculation-Software-Name>
+  <Calculation-Software-Version>13.05r16</Calculation-Software-Version>
   <Report-Header>
     <RRN>0000-0000-0000-0000-0000</RRN>
     <Inspection-Date>2020-05-04</Inspection-Date>
@@ -295,5 +295,5 @@
       </SAP-Flat-Details>
     </SAP-Property-Details>
   </SAP2012-Data>
-  <ExternalDefinitions-Revision-Number>ExternalDefinitions-Revision-Number0</ExternalDefinitions-Revision-Number>
+  <ExternalDefinitions-Revision-Number>5.0</ExternalDefinitions-Revision-Number>
 </SAP-Report>

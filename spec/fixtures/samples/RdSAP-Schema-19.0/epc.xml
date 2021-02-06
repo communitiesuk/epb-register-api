@@ -2,13 +2,13 @@
 <RdSAP-Report xmlns="http://www.epcregister.com/xsd/rdsap"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:schemaLocation="http://www.epcregister.com/xsd/rdsap ../../../../api/schemas/xml/RdSAP-Schema-19.0/RdSAP/Templates/RdSAP-Report.xsd">
-    <Calculation-Software-Name>Calculation-Software-Name0</Calculation-Software-Name>
-    <Calculation-Software-Version>Calculation-Software-Version0</Calculation-Software-Version>
-    <User-Interface-Name>User-Interface-Name0</User-Interface-Name>
-    <User-Interface-Version>User-Interface-Version0</User-Interface-Version>
+    <Calculation-Software-Name>SomeSoft RdSAP Calculator</Calculation-Software-Name>
+    <Calculation-Software-Version>13.05r16</Calculation-Software-Version>
+    <User-Interface-Name>SomeSoft RdSAP FormWiz</User-Interface-Name>
+    <User-Interface-Version>UI-13.05r16</User-Interface-Version>
     <Schema-Version-Original>Schema-Version-Original0</Schema-Version-Original>
     <SAP-Version>9.80</SAP-Version>
-    <PCDF-Revision-Number>PCDF-Revision-Number0</PCDF-Revision-Number>
+    <PCDF-Revision-Number>345</PCDF-Revision-Number>
     <Previous-EPC-Check>
         <Previous-EPC-Checked>Y</Previous-EPC-Checked>
         <Previous-EPC-Exists>Y</Previous-EPC-Exists>
@@ -309,5 +309,5 @@
         <Expiry-Date>2020-05-04</Expiry-Date>
         <PI-Limit>0</PI-Limit>
     </Insurance-Details>
-    <ExternalDefinitions-Revision-Number>ExternalDefinitions-Revision-Number0</ExternalDefinitions-Revision-Number>
+    <ExternalDefinitions-Revision-Number>5.0</ExternalDefinitions-Revision-Number>
 </RdSAP-Report>

@@ -5,10 +5,10 @@
   <Calculation-Software-Name>RdSAP 4 U</Calculation-Software-Name>
   <Calculation-Software-Version>2.0</Calculation-Software-Version>
   <User-Interface-Name>RdSAPwize</User-Interface-Name>
-  <User-Interface-Version>1.3.60</User-Interface-Version>
+  <User-Interface-Version>UI-2.0</User-Interface-Version>
   <Schema-Version-Original>20.0.0</Schema-Version-Original>
   <SAP-Version>9.80</SAP-Version>
-  <PCDF-Revision-Number>PCDF-Revision-Number0</PCDF-Revision-Number>
+  <PCDF-Revision-Number>345</PCDF-Revision-Number>
   <Previous-EPC-Check>
     <Previous-EPC-Checked>Y</Previous-EPC-Checked>
     <Previous-EPC-Exists>Y</Previous-EPC-Exists>
@@ -287,5 +287,5 @@
     <Expiry-Date>2025-05-04</Expiry-Date>
     <PI-Limit>0</PI-Limit>
   </Insurance-Details>
-  <ExternalDefinitions-Revision-Number>ExternalDefinitions-Revision-Number0</ExternalDefinitions-Revision-Number>
+  <ExternalDefinitions-Revision-Number>5.0</ExternalDefinitions-Revision-Number>
 </RdSAP-Report>
