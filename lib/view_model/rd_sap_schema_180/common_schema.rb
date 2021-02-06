@@ -364,6 +364,10 @@ module ViewModel
         @xml_doc.search("Main-Heating/Energy-Efficiency-Rating").map(&:content)
       end
 
+      def all_main_heating_environmental_efficiency
+        @xml_doc.search("Main-Heating/Environmental-Efficiency-Rating").map(&:content)
+      end
+
       def wind_turbine_count
         xpath(%w[Wind-Turbines-Count])
       end

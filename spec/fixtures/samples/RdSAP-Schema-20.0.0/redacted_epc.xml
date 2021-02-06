@@ -47,24 +47,14 @@
         <Environmental-Efficiency-Rating>3</Environmental-Efficiency-Rating>
       </Window>
       <Main-Heating>
-        <Description>Description7</Description>
-        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
-        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
-      </Main-Heating>
-      <Main-Heating>
-        <Description>Description8</Description>
-        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
-        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+        <Description>Boiler and radiators, mains gas</Description>
+        <Energy-Efficiency-Rating>4</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>4</Environmental-Efficiency-Rating>
       </Main-Heating>
       <Main-Heating-Controls>
-        <Description>Description9</Description>
-        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
-        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
-      </Main-Heating-Controls>
-      <Main-Heating-Controls>
-        <Description>Description10</Description>
-        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
-        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+        <Description>Programmer, room thermostat and TRVs</Description>
+        <Energy-Efficiency-Rating>4</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>4</Environmental-Efficiency-Rating>
       </Main-Heating-Controls>
       <Hot-Water>
         <Description>Description11</Description>

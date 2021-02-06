@@ -139,6 +139,8 @@ module ViewModel
     def to_report
       all_main_heating_energy_efficiency =
         @view_model.all_main_heating_energy_efficiency
+      all_main_heating_environmental_efficiency =
+        @view_model.all_main_heating_environmental_efficiency
 
       {
         rrn: @view_model.assessment_id,
@@ -243,7 +245,7 @@ module ViewModel
           ),
         mainheat_env_eff:
           Helper::XmlEnumsToOutput.energy_rating_string(
-            all_main_heating_energy_efficiency[1],
+            all_main_heating_environmental_efficiency[0],
           ),
         extension_count: @view_model.extensions_count,
         report_type: @view_model.report_type,
