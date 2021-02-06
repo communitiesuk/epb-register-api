@@ -1,12 +1,20 @@
 module Helper
   class XmlEnumsToOutput
+    # These mirror the energy performance ratings as in the
+    # EnergyEfficiencySummaryCode simpleType defined in EPC-Domains.xsd
+    # 0 = N/A
+    # 1 = Very Poor
+    # 2 = Poor
+    # 3 = Average
+    # 4 = Good
+    # 5 = Very Good
     RATINGS = [
       "N/A",
-      "Very Good",
-      "Good",
-      "Average",
-      "Poor",
       "Very Poor",
+      "Poor",
+      "Average",
+      "Good",
+      "Very Good",
     ].freeze
     BUILT_FORM = {
       "1" => "Detached",
