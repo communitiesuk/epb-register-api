@@ -70,9 +70,9 @@ describe UseCase::ExportOpenDataDomestic do
         extension_count: "0",
         report_type: "2",
         mainheatcont_description: "Description9, Description10",
-        roof_description: "Description2, Description3",
-        roof_energy_eff: "N/A, N/A",
-        roof_env_eff: "N/A, N/A",
+        roof_description: "Pitched, 25 mm loft insulation, Pitched, 250 mm loft insulation",
+        roof_energy_eff: "Poor, Good",
+        roof_env_eff: "Poor, Good",
         walls_description:
           "Solid brick, as built, no insulation (assumed), Cavity wall, as built, insulated (assumed)",
         walls_energy_eff: "Very Poor, Good",

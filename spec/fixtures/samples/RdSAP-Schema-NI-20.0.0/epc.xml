@@ -26,14 +26,14 @@
         <Environmental-Efficiency-Rating>4</Environmental-Efficiency-Rating>
       </Wall>
       <Roof>
-        <Description>Description2</Description>
-        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
-        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+        <Description>Pitched, 25 mm loft insulation</Description>
+        <Energy-Efficiency-Rating>2</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>2</Environmental-Efficiency-Rating>
       </Roof>
       <Roof>
-        <Description>Description3</Description>
-        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
-        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+        <Description>Pitched, 250 mm loft insulation</Description>
+        <Energy-Efficiency-Rating>4</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>4</Environmental-Efficiency-Rating>
       </Roof>
       <Floor>
         <Description>Description4</Description>
