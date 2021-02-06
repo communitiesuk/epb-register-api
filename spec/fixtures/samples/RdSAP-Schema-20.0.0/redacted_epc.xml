@@ -42,9 +42,9 @@
         <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
       </Floor>
       <Window>
-        <Description>Description6</Description>
-        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
-        <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+        <Description>Fully double glazed</Description>
+        <Energy-Efficiency-Rating>3</Energy-Efficiency-Rating>
+        <Environmental-Efficiency-Rating>3</Environmental-Efficiency-Rating>
       </Window>
       <Main-Heating>
         <Description>Description7</Description>
