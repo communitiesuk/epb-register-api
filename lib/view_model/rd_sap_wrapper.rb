@@ -267,7 +267,7 @@ module ViewModel
           Helper::XmlEnumsToOutput.energy_rating_string(
             @view_model.all_wall_env_energy_efficieny_rating,
           ),
-        energy_tariff: @view_model.meter_type,
+        energy_tariff: Helper::XmlEnumsToOutput.energy_tariff(@view_model.meter_type),
         floor_level: @view_model.floor_level,
         solar_water_heating_flag: @view_model.solar_water_heating_flag,
         mechanical_ventilation: @view_model.mechanical_ventilation,

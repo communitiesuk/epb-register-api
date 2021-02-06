@@ -399,7 +399,7 @@ describe ViewModel::RdSapWrapper do
         walls_description: "Description0, Description1",
         walls_energy_eff: "N/A, N/A",
         walls_env_eff: "N/A, N/A",
-        energy_tariff: "2",
+        energy_tariff: "off-peak 7 hour",
         floor_level: "01",
         solar_water_heating_flag: "N",
         mechanical_ventilation: "0",

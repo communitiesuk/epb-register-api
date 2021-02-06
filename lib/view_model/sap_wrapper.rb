@@ -300,6 +300,7 @@ module ViewModel
             ),
         energy_tariff: Helper::XmlEnumsToOutput.energy_tariff(@view_model.energy_tariff),
         floor_level: @view_model.floor_level,
+        # solar_water_heating_flag: @view_model.solar_water_heating_flag,
       }
     end
 

@@ -665,6 +665,7 @@ describe ViewModel::SapWrapper do
         energy_tariff: "standard tariff",
         floor_level: "1",
 
+
       }
     end
 
