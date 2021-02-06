@@ -191,8 +191,7 @@ module ViewModel
       end
 
       def current_space_heating_demand
-        xpath(%w[Space-Heating]) or
-          xpath(%w[Space-Heating-Existing-Dwelling])
+        xpath(%w[Space-Heating]) or xpath(%w[Space-Heating-Existing-Dwelling])
       end
 
       def current_water_heating_demand
@@ -385,7 +384,6 @@ module ViewModel
         @xml_doc.search("Main-Heating-Controls/Description").map(&:content)
       end
 
-
       def extensions_count
         xpath(%w[Extensions-Count])
       end
@@ -393,7 +391,6 @@ module ViewModel
       def all_main_heating_controls_descriptions
         @xml_doc.search("Main-Heating-Controls/Description").map(&:content)
       end
-
 
       def report_type
         xpath(%w[Report-Type])
@@ -422,7 +419,6 @@ module ViewModel
       def all_wall_env_energy_efficiency_rating
         @xml_doc.search("Walls/Environmental-Efficiency-Rating").map(&:content)
       end
-
     end
   end
 end

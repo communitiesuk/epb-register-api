@@ -4,9 +4,7 @@ describe ViewModel::RdSapWrapper do
   context "when calling to_hash" do
     let(:schemas) do
       [
-        {
-          schema: "RdSAP-Schema-20.0.0",
-        },
+        { schema: "RdSAP-Schema-20.0.0" },
         {
           schema: "RdSAP-Schema-19.0",
           different_buried_fields: {
@@ -39,9 +37,7 @@ describe ViewModel::RdSapWrapper do
             },
           },
         },
-        {
-          schema: "RdSAP-Schema-NI-20.0.0",
-        },
+        { schema: "RdSAP-Schema-NI-20.0.0" },
         {
           schema: "RdSAP-Schema-NI-19.0",
           different_buried_fields: {
@@ -268,9 +264,7 @@ describe ViewModel::RdSapWrapper do
   context "when calling to_report" do
     let(:schemas) do
       [
-        {
-          schema: "RdSAP-Schema-20.0.0",
-        },
+        { schema: "RdSAP-Schema-20.0.0" },
         {
           schema: "RdSAP-Schema-19.0",
           different_fields: {
@@ -295,9 +289,7 @@ describe ViewModel::RdSapWrapper do
             building_reference_number: "LPRN-0000000000",
           },
         },
-        {
-          schema: "RdSAP-Schema-NI-20.0.0",
-        },
+        { schema: "RdSAP-Schema-NI-20.0.0" },
         {
           schema: "RdSAP-Schema-NI-19.0",
           different_fields: {
@@ -396,14 +388,15 @@ describe ViewModel::RdSapWrapper do
         roof_description: "Description2, Description3",
         roof_energy_eff: "N/A, N/A",
         roof_env_eff: "N/A, N/A",
-        walls_description: "Solid brick, as built, no insulation (assumed), Cavity wall, as built, insulated (assumed)",
+        walls_description:
+          "Solid brick, as built, no insulation (assumed), Cavity wall, as built, insulated (assumed)",
         walls_energy_eff: "Very Poor, Good",
         walls_env_eff: "Very Poor, Good",
         energy_tariff: "2",
         floor_level: "01",
         solar_water_heating_flag: "N",
         mechanical_ventilation: "0",
-        floor_height: "2.45"
+        floor_height: "2.45",
       }
     end
 
@@ -413,8 +406,8 @@ describe ViewModel::RdSapWrapper do
   end
 
   it "returns the expect error without a valid schema type" do
-    expect {
-      ViewModel::RdSapWrapper.new "", "invalid"
-    }.to raise_error(ArgumentError).with_message "Unsupported schema type"
+    expect { ViewModel::RdSapWrapper.new "", "invalid" }.to raise_error(
+      ArgumentError,
+    ).with_message "Unsupported schema type"
   end
 end

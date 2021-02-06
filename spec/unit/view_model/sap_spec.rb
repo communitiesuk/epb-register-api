@@ -179,95 +179,96 @@ describe ViewModel::SapWrapper do
             impact_of_solid_wall_insulation: nil,
           },
         },
-        different_fields: {
-          property_age_band: "D",
-          property_summary: [
-            {
-              energy_efficiency_rating: 0,
-              environmental_efficiency_rating: 0,
-              name: "wall",
-              description: "Brick walls",
-            },
-            {
-              energy_efficiency_rating: 0,
-              environmental_efficiency_rating: 0,
-              name: "wall",
-              description: "Brick walls",
-            },
-            {
-              energy_efficiency_rating: 0,
-              environmental_efficiency_rating: 0,
-              name: "roof",
-              description: "Slate roof",
-            },
-            {
-              energy_efficiency_rating: 0,
-              environmental_efficiency_rating: 0,
-              name: "roof",
-              description: "slate roof",
-            },
-            {
-              energy_efficiency_rating: 0,
-              environmental_efficiency_rating: 0,
-              name: "floor",
-              description: "Tiled floor",
-            },
-            {
-              energy_efficiency_rating: 0,
-              environmental_efficiency_rating: 0,
-              name: "floor",
-              description: "Tiled floor",
-            },
-            {
-              energy_efficiency_rating: 0,
-              environmental_efficiency_rating: 0,
-              name: "window",
-              description: "Glass window",
-            },
-            {
-              energy_efficiency_rating: 0,
-              environmental_efficiency_rating: 0,
-              name: "main_heating",
-              description: "Gas boiler",
-            },
-            {
-              energy_efficiency_rating: 0,
-              environmental_efficiency_rating: 0,
-              name: "main_heating",
-              description: "Gas boiler",
-            },
-            {
-              energy_efficiency_rating: 0,
-              environmental_efficiency_rating: 0,
-              name: "main_heating_controls",
-              description: "Thermostat",
-            },
-            {
-              energy_efficiency_rating: 0,
-              environmental_efficiency_rating: 0,
-              name: "main_heating_controls",
-              description: "Thermostat",
-            },
-            {
-              energy_efficiency_rating: 0,
-              environmental_efficiency_rating: 0,
-              name: "hot_water",
-              description: "Gas boiler",
-            },
-            {
-              energy_efficiency_rating: 0,
-              environmental_efficiency_rating: 0,
-              name: "lighting",
-              description: "Energy saving bulbs",
-            },
-            {
-              energy_efficiency_rating: 0,
-              environmental_efficiency_rating: 0,
-              name: "secondary_heating",
-              description: "Electric heater",
-            },
-          ],
-        }.merge(ni_difference[:different_fields]),
+        different_fields:
+          {
+            property_age_band: "D",
+            property_summary: [
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "wall",
+                description: "Brick walls",
+              },
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "wall",
+                description: "Brick walls",
+              },
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "roof",
+                description: "Slate roof",
+              },
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "roof",
+                description: "slate roof",
+              },
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "floor",
+                description: "Tiled floor",
+              },
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "floor",
+                description: "Tiled floor",
+              },
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "window",
+                description: "Glass window",
+              },
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "main_heating",
+                description: "Gas boiler",
+              },
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "main_heating",
+                description: "Gas boiler",
+              },
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "main_heating_controls",
+                description: "Thermostat",
+              },
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "main_heating_controls",
+                description: "Thermostat",
+              },
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "hot_water",
+                description: "Gas boiler",
+              },
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "lighting",
+                description: "Energy saving bulbs",
+              },
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "secondary_heating",
+                description: "Electric heater",
+              },
+            ],
+          }.merge(ni_difference[:different_fields]),
       }
 
       [
@@ -284,14 +285,14 @@ describe ViewModel::SapWrapper do
         },
         {
           schema: "SAP-Schema-NI-18.0.0",
-          different_fields: {
-            address_id: "UPRN-000000000000",
-          }.merge(ni_difference[:different_fields]),
-          different_buried_fields: {
-            address: {
-              address_id: "UPRN-000000000000",
-            },
-          }.merge(ni_difference[:different_buried_fields]),
+          different_fields:
+            { address_id: "UPRN-000000000000" }.merge(
+              ni_difference[:different_fields],
+            ),
+          different_buried_fields:
+            { address: { address_id: "UPRN-000000000000" } }.merge(
+              ni_difference[:different_buried_fields],
+            ),
         },
         { schema: "SAP-Schema-NI-17.4" }.merge(ni_difference),
         { schema: "SAP-Schema-NI-17.3" }.merge(ni_difference),
@@ -305,9 +306,7 @@ describe ViewModel::SapWrapper do
           type: "sap",
           unsupported_fields: %i[tenure],
         },
-        {
-          schema: "SAP-Schema-NI-16.1",
-        }.merge(ni_pre_17_difference),
+        { schema: "SAP-Schema-NI-16.1" }.merge(ni_pre_17_difference),
         {
           schema: "SAP-Schema-16.2",
           type: "sap",
@@ -583,12 +582,8 @@ describe ViewModel::SapWrapper do
             building_reference_number: "UPRN-000000000000",
           },
         },
-        {
-          schema: "SAP-Schema-17.1",
-        },
-        {
-          schema: "SAP-Schema-17.0",
-        },
+        { schema: "SAP-Schema-17.1" },
+        { schema: "SAP-Schema-17.0" },
       ]
     end
 
@@ -662,7 +657,6 @@ describe ViewModel::SapWrapper do
         walls_description: "Brick walls, Brick walls",
         walls_energy_eff: "N/A, N/A",
         walls_env_eff: "N/A, N/A",
-
       }
     end
 
@@ -672,8 +666,8 @@ describe ViewModel::SapWrapper do
   end
 
   it "returns the expect error without a valid schema type" do
-    expect {
-      ViewModel::SapWrapper.new "", "invalid"
-    }.to raise_error(ArgumentError).with_message "Unsupported schema type"
+    expect { ViewModel::SapWrapper.new "", "invalid" }.to raise_error(
+      ArgumentError,
+    ).with_message "Unsupported schema type"
   end
 end

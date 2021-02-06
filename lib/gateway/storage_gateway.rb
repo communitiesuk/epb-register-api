@@ -17,7 +17,7 @@ module Gateway
       client.put_object(
         body: data,
         bucket: storage_config.bucket_name,
-        key: file_name
+        key: file_name,
       )
     end
 

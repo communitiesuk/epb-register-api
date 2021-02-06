@@ -8,14 +8,18 @@ describe ViewModel::CepcWrapper do
           schema: "CEPC-8.0.0",
           type: "cepc",
           different_buried_fields: {
-            address: { address_id: "UPRN-000000000001" },
+            address: {
+              address_id: "UPRN-000000000001",
+            },
           },
         },
         {
           schema: "CEPC-NI-8.0.0",
           type: "cepc",
           different_buried_fields: {
-            address: { address_id: "UPRN-000000000001" },
+            address: {
+              address_id: "UPRN-000000000001",
+            },
           },
         },
         { schema: "CEPC-7.1", type: "cepc" },
@@ -85,7 +89,10 @@ describe ViewModel::CepcWrapper do
             name: "Joe Bloggs Ltd",
             address: "123 My Street, My City, AB3 4CD",
           },
-          contact_details: { email: "a@b.c", telephone: "012345" },
+          contact_details: {
+            email: "a@b.c",
+            telephone: "012345",
+          },
         },
         report_type: "3",
         type_of_assessment: "CEPC",
@@ -213,9 +220,8 @@ describe ViewModel::CepcWrapper do
   end
 
   it "returns the expect error without a valid schema type" do
-    expect {
-      ViewModel::CepcWrapper.new "", "invalid"
-    }.to raise_error(ArgumentError)
-           .with_message "Unsupported schema type"
+    expect { ViewModel::CepcWrapper.new "", "invalid" }.to raise_error(
+      ArgumentError,
+    ).with_message "Unsupported schema type"
   end
 end

@@ -316,10 +316,7 @@ describe ViewModel::DecWrapper do
         {
           schema: "CEPC-3.1",
           type: "dec",
-          unsupported_fields: %i[
-            aircon_kw_rating
-            ac_inspection_commissioned
-          ],
+          unsupported_fields: %i[aircon_kw_rating ac_inspection_commissioned],
           different_fields: {
             aircon_present: "N",
             date_of_expiry: "2020-12-31",
@@ -328,10 +325,7 @@ describe ViewModel::DecWrapper do
         {
           schema: "CEPC-3.1",
           type: "dec-ni",
-          unsupported_fields: %i[
-            aircon_kw_rating
-            ac_inspection_commissioned
-          ],
+          unsupported_fields: %i[aircon_kw_rating ac_inspection_commissioned],
           different_fields: {
             aircon_present: "N",
             date_of_expiry: "2020-12-31",

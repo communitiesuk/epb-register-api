@@ -419,7 +419,6 @@ module ViewModel
       def all_wall_env_energy_efficiency_rating
         @xml_doc.search("Walls/Environmental-Efficiency-Rating").map(&:content)
       end
-
     end
   end
 end

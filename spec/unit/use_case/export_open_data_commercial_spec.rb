@@ -5,9 +5,7 @@ describe UseCase::ExportOpenDataCommercial do
     describe "for the commercial certificates and reports" do
       let(:scheme_id) { add_scheme_and_get_id }
 
-      let(:non_domestic_xml) do
-        Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc")
-      end
+      let(:non_domestic_xml) { Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc") }
       let(:non_domestic_assessment_id) { non_domestic_xml.at("//CEPC:RRN") }
       let(:non_domestic_assessment_date) do
         non_domestic_xml.at("//CEPC:Registration-Date")
@@ -166,23 +164,21 @@ describe UseCase::ExportOpenDataCommercial do
 
       # 1st row to test
       # write at test for each key in test hash
-      expected_values.keys
-        .each do |index|
-          it "returns the #{index} that matches the data for the 1st row" do
-            expect(exported_data[0][index.to_sym]).to eq(expected_values[index])
-          end
+      expected_values.keys.each do |index|
+        it "returns the #{index} that matches the data for the 1st row" do
+          expect(exported_data[0][index.to_sym]).to eq(expected_values[index])
         end
+      end
 
       # 2nd row to test
       # write at test for each key in test hash
-      expected_values.keys
-        .each do |index|
-          it "returns the #{index} that matches the data for the 2nd row" do
-            expect(exported_data[1][index.to_sym]).to eq(
-              expected_values_index_1[index],
-            )
-          end
+      expected_values.keys.each do |index|
+        it "returns the #{index} that matches the data for the 2nd row" do
+          expect(exported_data[1][index.to_sym]).to eq(
+            expected_values_index_1[index],
+          )
         end
+      end
     end
   end
 end

@@ -404,7 +404,6 @@ module ViewModel
         @xml_doc.search("Roof/Description").map(&:content)
       end
 
-
       def all_roof_energy_efficiency_rating
         @xml_doc.search("Roof/Energy-Efficiency-Rating").map(&:content)
       end
@@ -412,7 +411,6 @@ module ViewModel
       def all_roof_env_energy_efficiency_rating
         @xml_doc.search("Roof/Environmental-Efficiency-Rating").map(&:content)
       end
-
     end
   end
 end

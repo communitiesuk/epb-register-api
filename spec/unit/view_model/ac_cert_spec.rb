@@ -84,9 +84,8 @@ describe ViewModel::AcCertWrapper do
   end
 
   it "returns the expect error without a valid schema type" do
-    expect {
-      ViewModel::AcCertWrapper.new "", "invalid"
-    }.to raise_error(ArgumentError)
-           .with_message "Unsupported schema type"
+    expect { ViewModel::AcCertWrapper.new "", "invalid" }.to raise_error(
+      ArgumentError,
+    ).with_message "Unsupported schema type"
   end
 end

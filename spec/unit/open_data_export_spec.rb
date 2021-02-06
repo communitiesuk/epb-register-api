@@ -3,7 +3,7 @@ describe "Rake open_data_export" do
   context "when exporting data for open data" do
     after { HttpStub.off }
 
-    let(:file_path) {"./spec/fixtures/open_data_export/"}
+    let(:file_path) { "./spec/fixtures/open_data_export/" }
 
     before do
       scheme_id = add_scheme_and_get_id
@@ -13,9 +13,9 @@ describe "Rake open_data_export" do
         non_domestic_xml.at("//CEPC:Registration-Date")
 
       # Lodge a dec to ensure it is not exported
-      dec_xml =  Nokogiri.XML Samples.xml("CEPC-8.0.0", "dec")
+      dec_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "dec")
       dec_assessment_id = dec_xml.at("RRN")
-      dec_assessment_date =  dec_xml.at("Registration-Date")
+      dec_assessment_date = dec_xml.at("Registration-Date")
 
       add_assessor(
         scheme_id,
@@ -84,34 +84,22 @@ describe "Rake open_data_export" do
     after do
       Dir.foreach(file_path) do |f|
         fn = File.join(file_path, f)
-        File.delete(fn) if f != '.' && f != '..'
+        File.delete(fn) if f != "." && f != ".."
       end
     end
 
     context "when we are unable to send data to S3" do
       xit "the rake can't send the file it should raise an error" do
-        expect {
-          get_task("open_data_export_cepc").invoke
-        }.to output(/File could not be uploaded/).to_stdout
+        expect { get_task("open_data_export_cepc").invoke }.to output(
+          /File could not be uploaded/,
+        ).to_stdout
       end
     end
 
-    xit 'runs the task and create a csv for cepc and uploads ' do
+    xit "runs the task and create a csv for cepc and uploads " do
       get_task("open_data_export_cepc").invoke
-      expect {
-        get_task("open_data_export_cepc").invoke
-      }.to output(true).to_stdout
+      expect { get_task("open_data_export_cepc").invoke }.to output(true)
+        .to_stdout
     end
-
-
-
   end
 end
-
-
-
-
-
-
-
-

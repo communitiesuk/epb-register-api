@@ -21,8 +21,12 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
     let(:cepc_assessment_id) { non_domestic_xml.at("//CEPC:RRN") }
     let(:cepc_address_line_one) { non_domestic_xml.at("//CEPC:Address-Line-1") }
     let(:cepc_address_line_two) { non_domestic_xml.at("//CEPC:Address-Line-2") }
-    let(:cepc_address_line_three) { non_domestic_xml.at("//CEPC:Address-Line-3") }
-    let(:cepc_address_line_four) { non_domestic_xml.at("//CEPC:Address-Line-4") }
+    let(:cepc_address_line_three) do
+      non_domestic_xml.at("//CEPC:Address-Line-3")
+    end
+    let(:cepc_address_line_four) do
+      non_domestic_xml.at("//CEPC:Address-Line-4")
+    end
 
     before(:each) do
       add_assessor(

@@ -1,4 +1,4 @@
-require 'digest'
+require "digest"
 
 module Helper
   class RrnHelper
@@ -22,10 +22,10 @@ module Helper
     end
 
     def self.hash_rrn(rrn)
-      rrn_array = rrn.split('-')
+      rrn_array = rrn.split("-")
       rrn_array.unshift(rrn_array.last)
       rrn_array << rrn_array[1]
-      Digest::SHA256.hexdigest rrn_array.join('-')
+      Digest::SHA256.hexdigest rrn_array.join("-")
     end
   end
 end

@@ -1,9 +1,8 @@
 module Helper
   class ExportHelper
     def self.to_csv(view_model_array)
-      if view_model_array.empty?
-        return ""
-      end
+      return "" if view_model_array.empty?
+
       csv_string =
         CSV.generate do |csv|
           csv << view_model_array.first.map { |key, _value| key.to_s.upcase }
