@@ -87,10 +87,10 @@
         </Property-Summary>
         <Energy-Use>
             <Energy-Rating-Current>50</Energy-Rating-Current>
-            <Energy-Rating-Potential>50</Energy-Rating-Potential>
-            <Energy-Rating-Average>50</Energy-Rating-Average>
-            <Environmental-Impact-Current>50</Environmental-Impact-Current>
-            <Environmental-Impact-Potential>50</Environmental-Impact-Potential>
+            <Energy-Rating-Potential>72</Energy-Rating-Potential>
+            <Energy-Rating-Average>60</Energy-Rating-Average>
+            <Environmental-Impact-Current>52</Environmental-Impact-Current>
+            <Environmental-Impact-Potential>74</Environmental-Impact-Potential>
             <Energy-Consumption-Current>0</Energy-Consumption-Current>
             <Energy-Consumption-Potential>0</Energy-Consumption-Potential>
             <CO2-Emissions-Current>2.4</CO2-Emissions-Current>

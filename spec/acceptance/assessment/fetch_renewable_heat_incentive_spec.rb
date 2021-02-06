@@ -122,8 +122,8 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
           energyEfficiency: {
             currentRating: 50,
             currentBand: "e",
-            potentialRating: 50,
-            potentialBand: "e",
+            potentialRating: 72,
+            potentialBand: "c",
           },
         )
       end
@@ -227,8 +227,8 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
           energyEfficiency: {
             currentRating: 50,
             currentBand: "e",
-            potentialRating: 50,
-            potentialBand: "e",
+            potentialRating: 72,
+            potentialBand: "c",
           },
         )
       end
@@ -370,8 +370,8 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
           energyEfficiency: {
             currentRating: 50,
             currentBand: "e",
-            potentialRating: 50,
-            potentialBand: "e",
+            potentialRating: 72,
+            potentialBand: "c",
           },
         )
       end

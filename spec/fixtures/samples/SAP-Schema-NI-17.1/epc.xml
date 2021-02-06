@@ -179,9 +179,9 @@
         </SAP:Property-Summary>
         <SAP:Energy-Use>
           <SAP:Energy-Rating-Current>50</SAP:Energy-Rating-Current>
-          <SAP:Energy-Rating-Potential>50</SAP:Energy-Rating-Potential>
+          <SAP:Energy-Rating-Potential>72</SAP:Energy-Rating-Potential>
           <SAP:Energy-Rating-Typical-Newbuild>80</SAP:Energy-Rating-Typical-Newbuild>
-          <SAP:Environmental-Impact-Current>50</SAP:Environmental-Impact-Current>
+          <SAP:Environmental-Impact-Current>52</SAP:Environmental-Impact-Current>
           <SAP:Environmental-Impact-Potential>93</SAP:Environmental-Impact-Potential>
           <SAP:Energy-Consumption-Current>0</SAP:Energy-Consumption-Current>
           <SAP:Energy-Consumption-Potential>0</SAP:Energy-Consumption-Potential>

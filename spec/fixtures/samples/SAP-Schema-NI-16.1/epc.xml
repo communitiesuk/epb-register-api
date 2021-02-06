@@ -102,8 +102,8 @@
         <HIP:Energy-Use xmlns:HIP="DCLG-HIP">
           <HIP:Energy-Rating-Average>57</HIP:Energy-Rating-Average>
           <HIP:Energy-Rating-Current>50</HIP:Energy-Rating-Current>
-          <HIP:Energy-Rating-Potential>50</HIP:Energy-Rating-Potential>
-          <HIP:Environmental-Impact-Current>50</HIP:Environmental-Impact-Current>
+          <HIP:Energy-Rating-Potential>72</HIP:Energy-Rating-Potential>
+          <HIP:Environmental-Impact-Current>52</HIP:Environmental-Impact-Current>
           <HIP:Environmental-Impact-Potential>78</HIP:Environmental-Impact-Potential>
           <HIP:Energy-Consumption-Current quantity="kWh/m2 per year">0</HIP:Energy-Consumption-Current>
           <HIP:Energy-Consumption-Potential quantity="kWh/m2 per year">0</HIP:Energy-Consumption-Potential>
