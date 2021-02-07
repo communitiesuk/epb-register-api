@@ -109,7 +109,7 @@
     </Energy-Use>
     <Suggested-Improvements>
       <Improvement>
-        <Sequence>0</Sequence>
+        <Sequence>1</Sequence>
         <Improvement-Category>6</Improvement-Category>
         <Improvement-Type>Z3</Improvement-Type>
         <Typical-Saving>0.0</Typical-Saving>
@@ -122,7 +122,7 @@
         <Green-Deal-Category>1</Green-Deal-Category>
       </Improvement>
       <Improvement>
-        <Sequence>1</Sequence>
+        <Sequence>2</Sequence>
         <Improvement-Category>2</Improvement-Category>
         <Improvement-Type>B</Improvement-Type>
         <Typical-Saving>0.1</Typical-Saving>

@@ -119,7 +119,7 @@
         </HIP:Energy-Use>
         <HIP:Suggested-Improvements xmlns:HIP="DCLG-HIP">
           <HIP:Improvement>
-            <HIP:Sequence>0</HIP:Sequence>
+            <HIP:Sequence>1</HIP:Sequence>
             <HIP:Improvement-Type>A</HIP:Improvement-Type>
             <HIP:Indicative-Cost>5</HIP:Indicative-Cost>
             <HIP:Improvement-Category>1</HIP:Improvement-Category>
@@ -131,7 +131,7 @@
             </HIP:Improvement-Details>
           </HIP:Improvement>
           <HIP:Improvement>
-            <HIP:Sequence>1</HIP:Sequence>
+            <HIP:Sequence>2</HIP:Sequence>
             <HIP:Improvement-Type>B</HIP:Improvement-Type>
             <HIP:Indicative-Cost>2</HIP:Indicative-Cost>
             <HIP:Improvement-Category>2</HIP:Improvement-Category>

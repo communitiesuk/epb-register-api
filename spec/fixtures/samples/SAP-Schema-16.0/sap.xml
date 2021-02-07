@@ -198,7 +198,7 @@
         </SAP:Energy-Use>
         <SAP:Suggested-Improvements>
           <SAP:Improvement>
-            <SAP:Sequence>0</SAP:Sequence>
+            <SAP:Sequence>1</SAP:Sequence>
             <SAP:Improvement-Category>6</SAP:Improvement-Category>
             <SAP:Improvement-Type>Z3</SAP:Improvement-Type>
             <SAP:Typical-Saving>0.0</SAP:Typical-Saving>
@@ -211,7 +211,7 @@
             </SAP:Improvement-Details>
           </SAP:Improvement>
           <SAP:Improvement>
-            <SAP:Sequence>1</SAP:Sequence>
+            <SAP:Sequence>2</SAP:Sequence>
             <SAP:Improvement-Category>2</SAP:Improvement-Category>
             <SAP:Improvement-Type>Z2</SAP:Improvement-Type>
             <SAP:Typical-Saving>0.1</SAP:Typical-Saving>

@@ -180,7 +180,7 @@
         </Energy-Use>
         <Suggested-Improvements>
           <Improvement>
-            <Sequence>0</Sequence>
+            <Sequence>1</Sequence>
             <Improvement-Category>1</Improvement-Category>
             <Improvement-Type>A</Improvement-Type>
             <Typical-Saving>0.0</Typical-Saving>
@@ -191,7 +191,7 @@
             </Improvement-Details>
           </Improvement>
           <Improvement>
-            <Sequence>1</Sequence>
+            <Sequence>2</Sequence>
             <Improvement-Category>2</Improvement-Category>
             <Improvement-Type>B</Improvement-Type>
             <Typical-Saving>0.1</Typical-Saving>

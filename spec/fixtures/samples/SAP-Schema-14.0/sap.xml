@@ -181,7 +181,7 @@
         </SAP05:Energy-Use>
         <SAP05:Suggested-Improvements>
           <SAP05:Improvement>
-            <SAP05:Sequence>0</SAP05:Sequence>
+            <SAP05:Sequence>1</SAP05:Sequence>
             <SAP05:Improvement-Category>1</SAP05:Improvement-Category>
             <SAP05:Improvement-Type>A</SAP05:Improvement-Type>
             <SAP05:Typical-Saving>0.0</SAP05:Typical-Saving>
@@ -192,7 +192,7 @@
             </SAP05:Improvement-Details>
           </SAP05:Improvement>
           <SAP05:Improvement>
-            <SAP05:Sequence>1</SAP05:Sequence>
+            <SAP05:Sequence>2</SAP05:Sequence>
             <SAP05:Improvement-Category>2</SAP05:Improvement-Category>
             <SAP05:Improvement-Type>B</SAP05:Improvement-Type>
             <SAP05:Typical-Saving>0.1</SAP05:Typical-Saving>
