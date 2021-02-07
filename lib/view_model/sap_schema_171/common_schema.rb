@@ -264,7 +264,7 @@ module ViewModel
         nil
       end
 
-      def mains_heating_controls
+      def main_heating_controls
         xpath(%w[Main-Heating-Controls Description])
       end
 

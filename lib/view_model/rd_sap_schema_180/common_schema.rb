@@ -316,7 +316,7 @@ module ViewModel
         xpath(%w[Storey-Count])
       end
 
-      def mains_heating_controls
+      def main_heating_controls
         xpath(%w[Main-Heating-Controls Description])
       end
 

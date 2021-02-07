@@ -186,7 +186,7 @@ module ViewModel
         mains_gas_flag: @view_model.mains_gas,
         flat_top_storey: @view_model.top_storey,
         flat_storey_count: @view_model.storey_count,
-        main_heating_controls: @view_model.mains_heating_controls,
+        main_heating_controls: @view_model.main_heating_controls,
         multi_glaze_proportion: @view_model.multiple_glazed_proportion,
         glazed_area: @view_model.glazed_area,
         number_habitable_rooms: @view_model.habitable_room_count,
