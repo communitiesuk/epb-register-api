@@ -183,10 +183,10 @@
         <Sequence>1</Sequence>
         <Improvement-Category>1</Improvement-Category>
         <Improvement-Type>A</Improvement-Type>
-        <Typical-Saving>0.0</Typical-Saving>
+        <Typical-Saving>360</Typical-Saving>
         <Energy-Performance-Rating>50</Energy-Performance-Rating>
         <Environmental-Impact-Rating>50</Environmental-Impact-Rating>
-        <Indicative-Cost>5</Indicative-Cost>
+        <Indicative-Cost>£100 - £350</Indicative-Cost>
         <Improvement-Details>
           <Improvement-Number>5</Improvement-Number>
         </Improvement-Details>
@@ -195,10 +195,10 @@
         <Sequence>2</Sequence>
         <Improvement-Category>2</Improvement-Category>
         <Improvement-Type>B</Improvement-Type>
-        <Typical-Saving>0.1</Typical-Saving>
+        <Typical-Saving>99</Typical-Saving>
         <Energy-Performance-Rating>60</Energy-Performance-Rating>
         <Environmental-Impact-Rating>64</Environmental-Impact-Rating>
-        <Indicative-Cost>2</Indicative-Cost>
+        <Indicative-Cost>2000</Indicative-Cost>
         <Improvement-Details>
           <Improvement-Number>1</Improvement-Number>
         </Improvement-Details>

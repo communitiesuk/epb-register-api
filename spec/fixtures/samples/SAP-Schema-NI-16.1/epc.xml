@@ -121,9 +121,9 @@
           <HIP:Improvement>
             <HIP:Sequence>1</HIP:Sequence>
             <HIP:Improvement-Type>A</HIP:Improvement-Type>
-            <HIP:Indicative-Cost>5</HIP:Indicative-Cost>
+            <HIP:Indicative-Cost>£100 - £350</HIP:Indicative-Cost>
             <HIP:Improvement-Category>1</HIP:Improvement-Category>
-            <HIP:Typical-Saving currency="GBP">0.0</HIP:Typical-Saving>
+            <HIP:Typical-Saving currency="GBP">360</HIP:Typical-Saving>
             <HIP:Energy-Performance-Rating>50</HIP:Energy-Performance-Rating>
             <HIP:Environmental-Impact-Rating>50</HIP:Environmental-Impact-Rating>
             <HIP:Improvement-Details>
@@ -133,9 +133,9 @@
           <HIP:Improvement>
             <HIP:Sequence>2</HIP:Sequence>
             <HIP:Improvement-Type>B</HIP:Improvement-Type>
-            <HIP:Indicative-Cost>2</HIP:Indicative-Cost>
+            <HIP:Indicative-Cost>2000</HIP:Indicative-Cost>
             <HIP:Improvement-Category>2</HIP:Improvement-Category>
-            <HIP:Typical-Saving currency="GBP">0.1</HIP:Typical-Saving>
+            <HIP:Typical-Saving currency="GBP">99</HIP:Typical-Saving>
             <HIP:Energy-Performance-Rating>60</HIP:Energy-Performance-Rating>
             <HIP:Environmental-Impact-Rating>64
             </HIP:Environmental-Impact-Rating>
