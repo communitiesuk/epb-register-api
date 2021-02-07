@@ -64,13 +64,16 @@ describe UseCase::ExportOpenDataDomestic do
         lighting_env_eff: "Good",
         photo_supply: "0",
         built_form: "Semi-Detached",
-        mainheat_description: "Boiler and radiators, anthracite, Boiler and radiators, mains gas",
+        mainheat_description:
+          "Boiler and radiators, anthracite, Boiler and radiators, mains gas",
         mainheat_energy_eff: "Average, Good",
         mainheat_env_eff: "Very Poor, Good",
         extension_count: "0",
         report_type: "2",
-        mainheatcont_description: "Programmer, room thermostat and TRVs, Time and temperature zone control",
-        roof_description: "Pitched, 25 mm loft insulation, Pitched, 250 mm loft insulation",
+        mainheatcont_description:
+          "Programmer, room thermostat and TRVs, Time and temperature zone control",
+        roof_description:
+          "Pitched, 25 mm loft insulation, Pitched, 250 mm loft insulation",
         roof_energy_eff: "Poor, Good",
         roof_env_eff: "Poor, Good",
         walls_description:

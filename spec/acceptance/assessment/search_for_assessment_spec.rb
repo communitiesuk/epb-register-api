@@ -380,10 +380,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
     it "returns matching assessments" do
       setup_scheme_and_lodge
       response =
-        assessments_search_by_street_name_and_town(
-          "1 Some Street",
-          "Whitbury",
-        )
+        assessments_search_by_street_name_and_town("1 Some Street", "Whitbury")
 
       response_json = JSON.parse(response.body)
 
@@ -415,10 +412,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
       opt_out_assessment("0000-0000-0000-0000-0000")
 
       response =
-        assessments_search_by_street_name_and_town(
-          "1 Some Street",
-          "Whitbury",
-        )
+        assessments_search_by_street_name_and_town("1 Some Street", "Whitbury")
       response_json = JSON.parse(response.body)
 
       expect(response_json["data"]["assessments"].length).to eq(0)

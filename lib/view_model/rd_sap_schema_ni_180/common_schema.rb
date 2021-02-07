@@ -273,7 +273,9 @@ module ViewModel
       end
 
       def all_main_heating_environmental_efficiency
-        @xml_doc.search("Main-Heating/Environmental-Efficiency-Rating").map(&:content)
+        @xml_doc
+          .search("Main-Heating/Environmental-Efficiency-Rating")
+          .map(&:content)
       end
 
       def all_hot_water_descriptions

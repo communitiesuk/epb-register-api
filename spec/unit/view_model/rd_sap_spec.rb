@@ -111,7 +111,7 @@ describe ViewModel::RdSapWrapper do
         estimated_energy_cost: "689.83",
         main_fuel_type: "26",
         heat_demand: {
-          current_space_heating_demand: 13120,
+          current_space_heating_demand: 13_120,
           current_water_heating_demand: 2285,
           impact_of_cavity_insulation: -122,
           impact_of_loft_insulation: -2114,
@@ -379,13 +379,16 @@ describe ViewModel::RdSapWrapper do
         lighting_env_eff: "Good",
         photo_supply: "0",
         built_form: "Semi-Detached",
-        mainheat_description: "Boiler and radiators, anthracite, Boiler and radiators, mains gas",
+        mainheat_description:
+          "Boiler and radiators, anthracite, Boiler and radiators, mains gas",
         mainheat_energy_eff: "Average, Good",
         mainheat_env_eff: "Very Poor, Good",
         extension_count: "0",
         report_type: "2",
-        mainheatcont_description: "Programmer, room thermostat and TRVs, Time and temperature zone control",
-        roof_description: "Pitched, 25 mm loft insulation, Pitched, 250 mm loft insulation",
+        mainheatcont_description:
+          "Programmer, room thermostat and TRVs, Time and temperature zone control",
+        roof_description:
+          "Pitched, 25 mm loft insulation, Pitched, 250 mm loft insulation",
         roof_energy_eff: "Poor, Good",
         roof_env_eff: "Poor, Good",
         walls_description:

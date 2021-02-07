@@ -418,7 +418,7 @@ describe ViewModel::SapWrapper do
         estimated_energy_cost: "689.83",
         main_fuel_type: "36",
         heat_demand: {
-          current_space_heating_demand: 13120,
+          current_space_heating_demand: 13_120,
           current_water_heating_demand: 2285,
           impact_of_cavity_insulation: -122,
           impact_of_loft_insulation: -2114,
