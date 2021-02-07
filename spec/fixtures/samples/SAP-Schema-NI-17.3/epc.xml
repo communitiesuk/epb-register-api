@@ -36,7 +36,7 @@
         <Scheme-Name>Testing Energy Scheme</Scheme-Name>
         <Complaints-Address>
           <Address-Line-1>123 Some Street</Address-Line-1>
-          <Post-Town>Post-Town0</Post-Town>
+          <Post-Town>Fulchester</Post-Town>
           <Postcode>A0 0AA</Postcode>
         </Complaints-Address>
         <Contact-Address>
@@ -44,9 +44,9 @@
           <Post-Town>Whitbury</Post-Town>
           <Postcode>A0 0AA</Postcode>
         </Contact-Address>
-        <Web-Site>Web-Site0</Web-Site>
+        <Web-Site>http://www.scheme.example.com</Web-Site>
         <E-Mail>a@b.c</E-Mail>
-        <Registered-Name>Registered-Name0</Registered-Name>
+        <Registered-Name>Test Scheme Plc</Registered-Name>
         <Fax>111222333</Fax>
         <Telephone>111222333</Telephone>
       </Certification-Scheme>

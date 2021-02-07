@@ -276,8 +276,8 @@
             <HIP:Postcode xmlns:HIP="DCLG-HIP">A0 0AA</HIP:Postcode>
           </SAP:Contact-Address>
           <SAP:Notify-Lodgement>Y</SAP:Notify-Lodgement>
-          <SAP:Web-Site>a@b.c</SAP:Web-Site>
-          <SAP:Scheme-Web-Site>a@b.c</SAP:Scheme-Web-Site>
+          <SAP:Web-Site>http://www.scheme.example.com</SAP:Web-Site>
+          <SAP:Scheme-Web-Site>http://www.scheme.example.com</SAP:Scheme-Web-Site>
           <SAP:E-Mail>a@b.c</SAP:E-Mail>
           <SAP:Telephone>111222333</SAP:Telephone>
           <SAP:Fax>111222333</SAP:Fax>

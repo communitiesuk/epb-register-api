@@ -17,11 +17,11 @@
       <Language-Code>1</Language-Code>
       <Energy-Assessor>
         <Certificate-Number>SPEC000000</Certificate-Number>
-        <Name>Name1</Name>
+        <Name>Arthur Dent</Name>
         <Accreditation-Scheme-Name>Information not available</Accreditation-Scheme-Name>
         <Accreditation-Scheme-Website>Information not available</Accreditation-Scheme-Website>
         <Trading-Address>123 My Street, My City, AB3 4CD</Trading-Address>
-        <Company-Name>Joe Bloggs Ltd</Company-Name>
+        <Company-Name>Trillian Certificates Plc</Company-Name>
         <Qualifications>NOS5</Qualifications>
         <Status>Registered</Status>
       </Energy-Assessor>
@@ -40,7 +40,7 @@
         <Is-Heritage-Site>N</Is-Heritage-Site>
       </Property-Details>
       <Calculation-Details>
-        <Calculation-Tool>Calculation-Tool1</Calculation-Tool>
+        <Calculation-Tool>Casio fx-39</Calculation-Tool>
       </Calculation-Details>
     </Report-Header>
     <Summary-Of-Performance>
@@ -330,7 +330,7 @@
       <Energy-Assessor>
         <Certificate-Number>SPEC000000</Certificate-Number>
         <Name>Testa Sessor</Name>
-        <Accreditation-Scheme-Name>Accreditation-Scheme-Name0</Accreditation-Scheme-Name>
+        <Accreditation-Scheme-Name>Test Energy Scheme</Accreditation-Scheme-Name>
       </Energy-Assessor>
       <Property-Details>
         <UPRN>RRN-0000-0000-0000-0000-0000</UPRN>
@@ -339,13 +339,13 @@
           <Address-Line-2>2 Lonely Street</Address-Line-2>
           <Address-Line-3>Some Area</Address-Line-3>
           <Address-Line-4>Some County</Address-Line-4>
-          <Post-Town>Post-Town0</Post-Town>
+          <Post-Town>Fulchester</Post-Town>
           <Postcode>A0 0AA</Postcode>
         </Property-Address>
-        <Property-Type>Property-Type0</Property-Type>
+        <Property-Type>B1 Offices and Workshop businesses</Property-Type>
       </Property-Details>
       <Calculation-Details>
-        <Calculation-Tool>Calculation-Tool0</Calculation-Tool>
+        <Calculation-Tool>CEPC Compute v0.2</Calculation-Tool>
       </Calculation-Details>
     </Report-Header>
     <Formatted-Report>ZGVmYXVsdA==</Formatted-Report>

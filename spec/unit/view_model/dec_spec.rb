@@ -184,9 +184,9 @@ describe ViewModel::DecWrapper do
         assessor: {
           company_details: {
             address: "123 My Street, My City, AB3 4CD",
-            name: "Joe Bloggs Ltd",
+            name: "Trillian Certificates Plc",
           },
-          name: "Name1",
+          name: "Arthur Dent",
           scheme_assessor_id: "SPEC000000",
           contact_details: {
             email: "a@b.c",

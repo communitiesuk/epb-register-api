@@ -86,7 +86,7 @@ describe ViewModel::CepcWrapper do
           scheme_assessor_id: "SPEC000000",
           name: "TEST NAME BOI",
           company_details: {
-            name: "Joe Bloggs Ltd",
+            name: "Trillian Certificates Plc",
             address: "123 My Street, My City, AB3 4CD",
           },
           contact_details: {

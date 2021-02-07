@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SAP-Report xmlns="https://epbr.digital.communities.gov.uk/xsd/sap" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/sap ../../../../api/schemas/xml/SAP-Schema-18.0.0/SAP/Templates/SAP-Report.xsd">
-  <Schema-Version-Original>Schema-Version-Original0</Schema-Version-Original>
-  <Schema-Version-Current>Schema-Version-Current0</Schema-Version-Current>
+  <Schema-Version-Original>SAP-17.0</Schema-Version-Original>
+  <Schema-Version-Current>SAP-18.0</Schema-Version-Current>
   <SAP-Version>9.80</SAP-Version>
   <SAP-Data-Version>9.80</SAP-Data-Version>
   <PCDF-Revision-Number>345</PCDF-Revision-Number>
@@ -25,7 +25,7 @@
       <Notify-Lodgement>Y</Notify-Lodgement>
       <Contact-Address>
         <Address-Line-1>1 Some Assessor's Street</Address-Line-1>
-        <Post-Town>Post-Town0</Post-Town>
+        <Post-Town>Fulchester</Post-Town>
         <Postcode>A0 0AA</Postcode>
       </Contact-Address>
       <Web-Site>www.example.com</Web-Site>

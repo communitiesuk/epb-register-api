@@ -61,14 +61,14 @@ describe ViewModel::CepcRrWrapper do
           address_line2: "2 Lonely Street",
           address_line3: "Some Area",
           address_line4: "Some County",
-          town: "Post-Town0",
+          town: "Fulchester",
           postcode: "A0 0AA",
         },
         assessor: {
           scheme_assessor_id: "SPEC000000",
           name: "Mrs Report Writer",
           company_details: {
-            name: "Joe Bloggs Ltd",
+            name: "Trillian Certificates Plc",
             address: "123 My Street, My City, AB3 4CD",
           },
           contact_details: {
@@ -79,7 +79,7 @@ describe ViewModel::CepcRrWrapper do
         technical_information: {
           floor_area: "10",
           building_environment: "Natural Ventilation Only",
-          calculation_tool: "Calculation-Tool0",
+          calculation_tool: "CEPC Compute v0.2",
         },
         related_party_disclosure: "Related to the owner",
         short_payback_recommendations: [

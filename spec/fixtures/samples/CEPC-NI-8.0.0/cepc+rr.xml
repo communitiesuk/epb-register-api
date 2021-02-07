@@ -17,11 +17,11 @@
       <CEPC:Language-Code>1</CEPC:Language-Code>
       <CEPC:Energy-Assessor>
         <CEPC:Certificate-Number>SPEC000000</CEPC:Certificate-Number>
-        <CEPC:Name>Name1</CEPC:Name>
+        <CEPC:Name>Arthur Dent</CEPC:Name>
         <CEPC:Accreditation-Scheme-Name>Information not available</CEPC:Accreditation-Scheme-Name>
         <CEPC:Accreditation-Scheme-Website>Information not available</CEPC:Accreditation-Scheme-Website>
         <CEPC:Trading-Address>123 My Street, My City, AB3 4CD</CEPC:Trading-Address>
-        <CEPC:Company-Name>Joe Bloggs Ltd</CEPC:Company-Name>
+        <CEPC:Company-Name>Trillian Certificates Plc</CEPC:Company-Name>
         <CEPC:Qualifications>NOS5</CEPC:Qualifications>
         <CEPC:Status>Registered</CEPC:Status>
       </CEPC:Energy-Assessor>
@@ -40,7 +40,7 @@
         <CEPC:Is-Heritage-Site>N</CEPC:Is-Heritage-Site>
       </CEPC:Property-Details>
       <CEPC:Calculation-Details>
-        <CEPC:Calculation-Tool>Calculation-Tool1</CEPC:Calculation-Tool>
+        <CEPC:Calculation-Tool>Casio fx-39</CEPC:Calculation-Tool>
       </CEPC:Calculation-Details>
     </CEPC:Report-Header>
     <CEPC:Summary-Of-Performance>
@@ -304,7 +304,7 @@
       <CEPC:Energy-Assessor>
         <CEPC:Certificate-Number>SPEC000000</CEPC:Certificate-Number>
         <CEPC:Name>Testa Sessor</CEPC:Name>
-        <CEPC:Accreditation-Scheme-Name>Accreditation-Scheme-Name0</CEPC:Accreditation-Scheme-Name>
+        <CEPC:Accreditation-Scheme-Name>Test Energy Scheme</CEPC:Accreditation-Scheme-Name>
         <CEPC:Related-Party-Disclosure>Related to the owner</CEPC:Related-Party-Disclosure>
       </CEPC:Energy-Assessor>
       <CEPC:Property-Details>
@@ -314,13 +314,13 @@
           <CEPC:Address-Line-2>2 Lonely Street</CEPC:Address-Line-2>
           <CEPC:Address-Line-3>Some Area</CEPC:Address-Line-3>
           <CEPC:Address-Line-4>Some County</CEPC:Address-Line-4>
-          <CEPC:Post-Town>Post-Town0</CEPC:Post-Town>
+          <CEPC:Post-Town>Fulchester</CEPC:Post-Town>
           <CEPC:Postcode>A0 0AA</CEPC:Postcode>
         </CEPC:Property-Address>
-        <CEPC:Property-Type>Property-Type0</CEPC:Property-Type>
+        <CEPC:Property-Type>B1 Offices and Workshop businesses</CEPC:Property-Type>
       </CEPC:Property-Details>
       <CEPC:Calculation-Details>
-        <CEPC:Calculation-Tool>Calculation-Tool0</CEPC:Calculation-Tool>
+        <CEPC:Calculation-Tool>CEPC Compute v0.2</CEPC:Calculation-Tool>
       </CEPC:Calculation-Details>
     </CEPC:Report-Header>
     <CEPC:Formatted-Report>ZGVmYXVsdA==</CEPC:Formatted-Report>

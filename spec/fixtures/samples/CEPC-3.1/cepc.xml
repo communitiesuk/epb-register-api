@@ -15,7 +15,7 @@
         <Name>TEST NAME BOI</Name>
         <Accreditation-Scheme-Name>TESTSCHEME</Accreditation-Scheme-Name>
         <Trading-Address>123 My Street, My City, AB3 4CD</Trading-Address>
-        <Company-Name>Joe Bloggs Ltd</Company-Name>
+        <Company-Name>Trillian Certificates Plc</Company-Name>
         <Related-Party-Disclosure>1</Related-Party-Disclosure>
         <Qualifications>NOS5</Qualifications>
         <Status>Registered</Status>
@@ -38,7 +38,7 @@
         <Is-Heritage-Site>N</Is-Heritage-Site>
       </Property-Details>
       <Calculation-Details>
-        <Calculation-Tool>Calculation-Tool1</Calculation-Tool>
+        <Calculation-Tool>Casio fx-39</Calculation-Tool>
       </Calculation-Details>
     </Report-Header>
     <Insurance-Details>

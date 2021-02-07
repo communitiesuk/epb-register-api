@@ -124,7 +124,7 @@ describe ViewModel::AcReportWrapper do
           },
           company_details: {
             name: "Assess Energy Limited",
-            address: "111 Twotwotwo Street, Mytown,, MT7 1AA",
+            address: "111 Twotwotwo Street, Mytown, MT7 1AA",
           },
         },
         executive_summary: expected_summary,

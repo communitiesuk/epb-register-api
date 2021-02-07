@@ -57,7 +57,7 @@
             </SAP:Complaints-Address>
             <SAP:Contact-Address>
               <SAP:Address-Line-1>3 Some Street</SAP:Address-Line-1>
-              <SAP:Post-Town>Post-Town0</SAP:Post-Town>
+              <SAP:Post-Town>Fulchester</SAP:Post-Town>
               <SAP:Postcode>A0 0AA</SAP:Postcode>
             </SAP:Contact-Address>
             <SAP:Web-Site>http://www.scheme.example.com</SAP:Web-Site>

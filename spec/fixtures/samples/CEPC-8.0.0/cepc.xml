@@ -20,7 +20,7 @@
         <CEPC:Accreditation-Scheme-Name>TESTSCHEME</CEPC:Accreditation-Scheme-Name>
         <CEPC:Accreditation-Scheme-Website>Information not available</CEPC:Accreditation-Scheme-Website>
         <CEPC:Trading-Address>123 My Street, My City, AB3 4CD</CEPC:Trading-Address>
-        <CEPC:Company-Name>Joe Bloggs Ltd</CEPC:Company-Name>
+        <CEPC:Company-Name>Trillian Certificates Plc</CEPC:Company-Name>
         <CEPC:Qualifications>NOS5</CEPC:Qualifications>
         <CEPC:Status>Registered</CEPC:Status>
         <CEPC:E-Mail>a@b.c</CEPC:E-Mail>
@@ -41,7 +41,7 @@
         <CEPC:Is-Heritage-Site>N</CEPC:Is-Heritage-Site>
       </CEPC:Property-Details>
       <CEPC:Calculation-Details>
-        <CEPC:Calculation-Tool>Calculation-Tool1</CEPC:Calculation-Tool>
+        <CEPC:Calculation-Tool>Casio fx-39</CEPC:Calculation-Tool>
       </CEPC:Calculation-Details>
     </CEPC:Report-Header>
     <CEPC:Summary-Of-Performance>
