@@ -434,8 +434,8 @@ describe ViewModel::SapWrapper do
         potential_energy_efficiency_band: "c",
         potential_energy_efficiency_rating: 72,
         potential_energy_saving: "174.83",
-        primary_energy_use: "0",
-        energy_consumption_potential: "0",
+        primary_energy_use: "230",
+        energy_consumption_potential: "88",
         property_age_band: "1750",
         property_summary: [
           {
@@ -608,8 +608,8 @@ describe ViewModel::SapWrapper do
         transaction_type: "1",
         environmental_impact_current: "52",
         environmental_impact_potential: "74",
-        energy_consumption_current: "0",
-        energy_consumption_potential: "0",
+        energy_consumption_current: "230",
+        energy_consumption_potential: "88",
         co2_emissions_current: "2.4",
         co2_emiss_curr_per_floor_area: "0",
         co2_emissions_potential: "1.4",

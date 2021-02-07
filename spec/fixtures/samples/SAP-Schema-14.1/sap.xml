@@ -167,8 +167,8 @@
           <SAP05:Energy-Rating-Potential>72</SAP05:Energy-Rating-Potential>
           <SAP05:Environmental-Impact-Current>52</SAP05:Environmental-Impact-Current>
           <SAP05:Environmental-Impact-Potential>93</SAP05:Environmental-Impact-Potential>
-          <SAP05:Energy-Consumption-Current>0</SAP05:Energy-Consumption-Current>
-          <SAP05:Energy-Consumption-Potential>0</SAP05:Energy-Consumption-Potential>
+          <SAP05:Energy-Consumption-Current>230</SAP05:Energy-Consumption-Current>
+          <SAP05:Energy-Consumption-Potential>88</SAP05:Energy-Consumption-Potential>
           <SAP05:CO2-Emissions-Current>2.4</SAP05:CO2-Emissions-Current>
           <SAP05:CO2-Emissions-Current-Per-Floor-Area>0</SAP05:CO2-Emissions-Current-Per-Floor-Area>
           <SAP05:CO2-Emissions-Potential>1.4</SAP05:CO2-Emissions-Potential>
