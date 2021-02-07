@@ -109,7 +109,7 @@
           <HIP:Energy-Consumption-Potential quantity="kWh/m2 per year">88</HIP:Energy-Consumption-Potential>
           <HIP:CO2-Emissions-Current quantity="tonnes per year">2.4</HIP:CO2-Emissions-Current>
           <HIP:CO2-Emissions-Potential quantity="tonnes per year">1.4</HIP:CO2-Emissions-Potential>
-          <HIP:CO2-Emissions-Current-Per-Floor-Area quantity="kg/m2 per year">0</HIP:CO2-Emissions-Current-Per-Floor-Area>
+          <HIP:CO2-Emissions-Current-Per-Floor-Area quantity="kg/m2 per year">20</HIP:CO2-Emissions-Current-Per-Floor-Area>
           <HIP:Lighting-Cost-Current currency="GBP">123.45</HIP:Lighting-Cost-Current>
           <HIP:Lighting-Cost-Potential currency="GBP">84.23</HIP:Lighting-Cost-Potential>
           <HIP:Heating-Cost-Current currency="GBP">365.98</HIP:Heating-Cost-Current>

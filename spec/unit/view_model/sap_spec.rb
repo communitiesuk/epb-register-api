@@ -611,7 +611,7 @@ describe ViewModel::SapWrapper do
         energy_consumption_current: "230",
         energy_consumption_potential: "88",
         co2_emissions_current: "2.4",
-        co2_emiss_curr_per_floor_area: "0",
+        co2_emiss_curr_per_floor_area: "20",
         co2_emissions_potential: "1.4",
         heating_cost_current: "365.98",
         heating_cost_potential: "250.34",

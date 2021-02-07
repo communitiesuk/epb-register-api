@@ -170,7 +170,7 @@
           <SAP05:Energy-Consumption-Current>230</SAP05:Energy-Consumption-Current>
           <SAP05:Energy-Consumption-Potential>88</SAP05:Energy-Consumption-Potential>
           <SAP05:CO2-Emissions-Current>2.4</SAP05:CO2-Emissions-Current>
-          <SAP05:CO2-Emissions-Current-Per-Floor-Area>0</SAP05:CO2-Emissions-Current-Per-Floor-Area>
+          <SAP05:CO2-Emissions-Current-Per-Floor-Area>20</SAP05:CO2-Emissions-Current-Per-Floor-Area>
           <SAP05:CO2-Emissions-Potential>1.4</SAP05:CO2-Emissions-Potential>
           <SAP05:Lighting-Cost-Current>123.45</SAP05:Lighting-Cost-Current>
           <SAP05:Lighting-Cost-Potential>84.23</SAP05:Lighting-Cost-Potential>
