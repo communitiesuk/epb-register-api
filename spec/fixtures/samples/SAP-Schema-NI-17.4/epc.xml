@@ -170,8 +170,8 @@
     </Energy-Use>
     <Renewable-Heat-Incentive>
       <RHI-Existing-Dwelling>
-        <Space-Heating-Existing-Dwelling>30</Space-Heating-Existing-Dwelling>
-        <Water-Heating>60</Water-Heating>
+        <Space-Heating-Existing-Dwelling>13120</Space-Heating-Existing-Dwelling>
+        <Water-Heating>2285</Water-Heating>
         <Space-Heating-With-Cavity-Insulation>-12</Space-Heating-With-Cavity-Insulation>
         <Space-Heating-With-Loft-And-Cavity-Insulation>-8</Space-Heating-With-Loft-And-Cavity-Insulation>
       </RHI-Existing-Dwelling>

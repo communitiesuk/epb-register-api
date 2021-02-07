@@ -91,11 +91,11 @@
         <SAP:Assessment-Date>2014-02-12</SAP:Assessment-Date>
         <SAP:Renewable-Heat-Incentive>
           <SAP:RHI-Existing-Dwelling>
-            <SAP:Space-Heating-Existing-Dwelling>30</SAP:Space-Heating-Existing-Dwelling>
-            <SAP:Water-Heating>60</SAP:Water-Heating>
-            <SAP:Impact-Of-Cavity-Insulation>-12</SAP:Impact-Of-Cavity-Insulation>
-            <SAP:Impact-Of-Loft-Insulation>-8</SAP:Impact-Of-Loft-Insulation>
-            <SAP:Impact-Of-Solid-Wall-Insulation>-16</SAP:Impact-Of-Solid-Wall-Insulation>
+            <SAP:Space-Heating-Existing-Dwelling>13120</SAP:Space-Heating-Existing-Dwelling>
+            <SAP:Water-Heating>2285</SAP:Water-Heating>
+            <SAP:Impact-Of-Cavity-Insulation>-122</SAP:Impact-Of-Cavity-Insulation>
+            <SAP:Impact-Of-Loft-Insulation>-2114</SAP:Impact-Of-Loft-Insulation>
+            <SAP:Impact-Of-Solid-Wall-Insulation>-3560</SAP:Impact-Of-Solid-Wall-Insulation>
           </SAP:RHI-Existing-Dwelling>
         </SAP:Renewable-Heat-Incentive>
         <SAP:Property-Summary>

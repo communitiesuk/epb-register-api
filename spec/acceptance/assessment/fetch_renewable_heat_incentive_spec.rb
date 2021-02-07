@@ -116,8 +116,8 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
           totalFloorArea: 55.0,
           cavityWallInsulation: false,
           loftInsulation: false,
-          spaceHeating: 30.0,
-          waterHeating: 60.0,
+          spaceHeating: 13120.0,
+          waterHeating: 2285.0,
           secondaryHeating: "Room heaters, electric",
           energyEfficiency: {
             currentRating: 50,
@@ -221,8 +221,8 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
           totalFloorArea: 69.0,
           cavityWallInsulation: false,
           loftInsulation: false,
-          spaceHeating: 30.0,
-          waterHeating: 60.0,
+          spaceHeating: 13120.0,
+          waterHeating: 2285.0,
           secondaryHeating: "Electric heater",
           energyEfficiency: {
             currentRating: 50,
@@ -364,8 +364,8 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
           totalFloorArea: 69.0,
           cavityWallInsulation: false,
           loftInsulation: false,
-          spaceHeating: 30.0,
-          waterHeating: 60.0,
+          spaceHeating: 13120.0,
+          waterHeating: 2285.0,
           secondaryHeating: "Electric heater",
           energyEfficiency: {
             currentRating: 50,

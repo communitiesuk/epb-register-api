@@ -136,11 +136,11 @@
         </Improvement>
       </Suggested-Improvements>
       <Renewable-Heat-Incentive>
-        <Space-Heating-Existing-Dwelling>30</Space-Heating-Existing-Dwelling>
-        <Water-Heating>60</Water-Heating>
-        <Impact-Of-Loft-Insulation>-8</Impact-Of-Loft-Insulation>
-        <Impact-Of-Cavity-Insulation>-12</Impact-Of-Cavity-Insulation>
-        <Impact-Of-Solid-Wall-Insulation>-16</Impact-Of-Solid-Wall-Insulation>
+        <Space-Heating-Existing-Dwelling>13120</Space-Heating-Existing-Dwelling>
+        <Water-Heating>2285</Water-Heating>
+        <Impact-Of-Loft-Insulation>-2114</Impact-Of-Loft-Insulation>
+        <Impact-Of-Cavity-Insulation>-122</Impact-Of-Cavity-Insulation>
+        <Impact-Of-Solid-Wall-Insulation>-3560</Impact-Of-Solid-Wall-Insulation>
       </Renewable-Heat-Incentive>
     </Energy-Assessment>
     <SAP-Data>

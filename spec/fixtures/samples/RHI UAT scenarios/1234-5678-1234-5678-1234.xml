@@ -138,7 +138,7 @@
     <Renewable-Heat-Incentive>
       <Space-Heating-Existing-Dwelling>12213</Space-Heating-Existing-Dwelling>
       <Water-Heating>10106</Water-Heating>
-      <Impact-Of-Solid-Wall-Insulation>-16</Impact-Of-Solid-Wall-Insulation>
+      <Impact-Of-Solid-Wall-Insulation>-3560</Impact-Of-Solid-Wall-Insulation>
     </Renewable-Heat-Incentive>
   </Energy-Assessment>
   <SAP-Data>

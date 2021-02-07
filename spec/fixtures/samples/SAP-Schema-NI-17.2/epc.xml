@@ -94,8 +94,8 @@
         <SAP:Assessment-Date>2014-02-12</SAP:Assessment-Date>
         <SAP:Renewable-Heat-Incentive>
           <SAP:RHI-Existing-Dwelling>
-            <SAP:Space-Heating-Existing-Dwelling>30</SAP:Space-Heating-Existing-Dwelling>
-            <SAP:Water-Heating>60</SAP:Water-Heating>
+            <SAP:Space-Heating-Existing-Dwelling>13120</SAP:Space-Heating-Existing-Dwelling>
+            <SAP:Water-Heating>2285</SAP:Water-Heating>
           </SAP:RHI-Existing-Dwelling>
         </SAP:Renewable-Heat-Incentive>
         <SAP:Property-Summary>

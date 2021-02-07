@@ -135,11 +135,11 @@
 		</Property-Summary>
 		<Renewable-Heat-Incentive>
 			<RHI-Existing-Dwelling>
-				<Space-Heating-Existing-Dwelling>30</Space-Heating-Existing-Dwelling>
-				<Water-Heating>60</Water-Heating>
-				<Impact-Of-Cavity-Insulation>-12</Impact-Of-Cavity-Insulation>
-				<Impact-Of-Loft-Insulation>-8</Impact-Of-Loft-Insulation>
-				<Impact-Of-Solid-Wall-Insulation>-16</Impact-Of-Solid-Wall-Insulation>
+				<Space-Heating-Existing-Dwelling>13120</Space-Heating-Existing-Dwelling>
+				<Water-Heating>2285</Water-Heating>
+				<Impact-Of-Cavity-Insulation>-122</Impact-Of-Cavity-Insulation>
+				<Impact-Of-Loft-Insulation>-2114</Impact-Of-Loft-Insulation>
+				<Impact-Of-Solid-Wall-Insulation>-3560</Impact-Of-Solid-Wall-Insulation>
 			</RHI-Existing-Dwelling>
 		</Renewable-Heat-Incentive>
 		<Energy-Use>
