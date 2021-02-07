@@ -50,7 +50,7 @@
           <SAP:Notify-Lodgement>Y</SAP:Notify-Lodgement>
           <SAP:Contact-Address>
             <HIP:Address-Line-1>2 Some Street</HIP:Address-Line-1>
-            <HIP:Post-Town>Post-Town1</HIP:Post-Town>
+            <HIP:Post-Town>Whitbury</HIP:Post-Town>
             <HIP:Postcode>A0 0AA</HIP:Postcode>
           </SAP:Contact-Address>
           <SAP:E-Mail>a@b.c</SAP:E-Mail>
@@ -60,7 +60,7 @@
         <SAP:Property>
           <HIP:Address>
             <HIP:Address-Line-1>1 Some Street</HIP:Address-Line-1>
-            <HIP:Post-Town>Post-Town1</HIP:Post-Town>
+            <HIP:Post-Town>Whitbury</HIP:Post-Town>
             <HIP:Postcode>A0 0AA</HIP:Postcode>
           </HIP:Address>
           <HIP:UPRN>0000000000</HIP:UPRN>

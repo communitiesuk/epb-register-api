@@ -111,7 +111,7 @@ describe ViewModel::AcReportWrapper do
           address_line2: "2 Lonely Street",
           address_line3: "Some Area",
           address_line4: "Some County",
-          town: "Post-Town1",
+          town: "Whitbury",
           postcode: "A0 0AA",
         },
         related_party_disclosure: "1",

@@ -277,15 +277,15 @@
       <UPRN>UPRN-000000000000</UPRN>
     </Property>
     <Related-Party-Disclosure>
-      <Related-Party-Disclosure-Text>Related-Party-Disclosure-Text0</Related-Party-Disclosure-Text>
+      <Related-Party-Disclosure-Text>No related party</Related-Party-Disclosure-Text>
     </Related-Party-Disclosure>
   </Report-Header>
   <Insurance-Details>
-    <Insurer>Insurer0</Insurer>
-    <Policy-No>Policy-No0</Policy-No>
+    <Insurer>EPC Protect Inc.</Insurer>
+    <Policy-No>X13-76540987B</Policy-No>
     <Effective-Date>2019-05-04</Effective-Date>
     <Expiry-Date>2025-05-04</Expiry-Date>
-    <PI-Limit>0</PI-Limit>
+    <PI-Limit>5000000</PI-Limit>
   </Insurance-Details>
   <ExternalDefinitions-Revision-Number>5.0</ExternalDefinitions-Revision-Number>
 </RdSAP-Report>

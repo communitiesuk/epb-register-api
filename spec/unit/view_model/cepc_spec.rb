@@ -66,7 +66,7 @@ describe ViewModel::CepcWrapper do
           address_line2: "2 Lonely Street",
           address_line3: "Some Area",
           address_line4: "Some County",
-          town: "Post-Town1",
+          town: "Whitbury",
           postcode: "A0 0AA",
         },
         technical_information: {
@@ -184,7 +184,7 @@ describe ViewModel::CepcWrapper do
         address2: "2 Lonely Street",
         address3: "Some Area",
         address4: "Some County",
-        posttown: "Post-Town1",
+        posttown: "Whitbury",
         postcode: "A0 0AA",
         building_reference_number: "LPRN-000000000001",
         asset_rating: "80",

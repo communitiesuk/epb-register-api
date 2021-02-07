@@ -267,17 +267,17 @@
         <Transaction-Type>1</Transaction-Type>
         <Tenure>1</Tenure>
         <Energy-Assessor>
-            <Name>Name0</Name>
+            <Name>Testa Sessor</Name>
             <Contact-Address>
-              <Address-Line-1></Address-Line-1>
+              <Address-Line-1>12 Epc Street</Address-Line-1>
               <Post-Town></Post-Town>
               <Postcode>AB1C 2DE</Postcode>
             </Contact-Address>
             <E-Mail>a@b.c</E-Mail>
-            <Telephone>0921-19037</Telephone>
-            <Company-Name>Company-Name0</Company-Name>
-            <Scheme-Name>Scheme-Name0</Scheme-Name>
-            <Scheme-Web-Site>Scheme-Web-Site0</Scheme-Web-Site>
+            <Telephone>0555 497 2848</Telephone>
+            <Company-Name>Test EPCs 4U</Company-Name>
+            <Scheme-Name>Testing Energy Scheme</Scheme-Name>
+            <Scheme-Web-Site>http://www.scheme.example.com</Scheme-Web-Site>
             <Identification-Number>
                 <Certificate-Number>SPEC000000</Certificate-Number>
             </Identification-Number>
@@ -285,21 +285,21 @@
         <Property>
             <Address>
                 <Address-Line-1>1 Some Street</Address-Line-1>
-                <Post-Town>Post-Town1</Post-Town>
+                <Post-Town>Whitbury</Post-Town>
                 <Postcode>A0 0AA</Postcode>
             </Address>
             <UPRN>0000000000</UPRN>
         </Property>
         <Related-Party-Disclosure>
-          <Related-Party-Disclosure-Text>Related-Party-Disclosure-Text0</Related-Party-Disclosure-Text>
+          <Related-Party-Disclosure-Text>No related party</Related-Party-Disclosure-Text>
         </Related-Party-Disclosure>
     </Report-Header>
     <Insurance-Details>
-        <Insurer>Insurer0</Insurer>
-        <Policy-No>Policy-No0</Policy-No>
+        <Insurer>EPC Protect Inc.</Insurer>
+        <Policy-No>X13-76540987B</Policy-No>
         <Effective-Date>2020-05-04</Effective-Date>
-        <Expiry-Date>2020-05-04</Expiry-Date>
-        <PI-Limit>0</PI-Limit>
+        <Expiry-Date>2030-05-03</Expiry-Date>
+        <PI-Limit>5000000</PI-Limit>
     </Insurance-Details>
     <ExternalDefinitions-Revision-Number>5.0</ExternalDefinitions-Revision-Number>
 </RdSAP-Report>

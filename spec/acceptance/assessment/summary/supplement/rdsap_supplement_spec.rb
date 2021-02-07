@@ -55,7 +55,7 @@ describe "Acceptance::AssessmentSummary::Supplement::RdSAP" do
     it "Returns lodged email and phone values by default" do
       contact_details = @regular_summary.dig(:data, :assessor, :contactDetails)
       expect(contact_details).to eq(
-        { telephoneNumber: "0921-19037", email: "a@b.c" },
+        { telephoneNumber: "0555 497 2848", email: "a@b.c" },
       )
     end
 

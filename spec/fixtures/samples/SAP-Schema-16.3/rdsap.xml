@@ -61,7 +61,7 @@
           <HIP:Address>
             <HIP:Address-Line-1>1 Some Street</HIP:Address-Line-1>
             <HIP:Address-Line-2/>
-            <HIP:Post-Town>Post-Town1</HIP:Post-Town>
+            <HIP:Post-Town>Whitbury</HIP:Post-Town>
             <HIP:Postcode>A0 0AA</HIP:Postcode>
           </HIP:Address>
           <HIP:UPRN>0000000000</HIP:UPRN>

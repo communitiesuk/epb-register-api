@@ -48,7 +48,7 @@
           <HIP:Notify-Lodgement>Y</HIP:Notify-Lodgement>
           <HIP:Contact-Address>
             <HIP:Address-Line-1>2 Some Street</HIP:Address-Line-1>
-            <HIP:Post-Town>Post-Town1</HIP:Post-Town>
+            <HIP:Post-Town>Whitbury</HIP:Post-Town>
             <HIP:Postcode>A0 0AA</HIP:Postcode>
           </HIP:Contact-Address>
           <HIP:E-Mail>a@b.c</HIP:E-Mail>
@@ -58,7 +58,7 @@
         <HIP:Property>
           <HIP:Address>
             <HIP:Address-Line-1>1 Some Street</HIP:Address-Line-1>
-            <HIP:Post-Town>Post-Town1</HIP:Post-Town>
+            <HIP:Post-Town>Whitbury</HIP:Post-Town>
             <HIP:Postcode>A0 0AA</HIP:Postcode>
           </HIP:Address>
           <HIP:UPRN>0000000000</HIP:UPRN>

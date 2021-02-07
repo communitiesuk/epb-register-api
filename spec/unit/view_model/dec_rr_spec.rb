@@ -159,7 +159,7 @@ describe ViewModel::DecRrWrapper do
           },
           contact_details: {
             email: "a@b.c",
-            telephone: "0921-19037",
+            telephone: "0555 497 2848",
           },
         },
         short_payback_recommendations: [

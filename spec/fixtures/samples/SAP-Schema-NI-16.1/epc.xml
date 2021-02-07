@@ -272,7 +272,7 @@
           <SAP:Name>Mr Test Boi TST</SAP:Name>
           <SAP:Contact-Address>
             <HIP:Address-Line-1 xmlns:HIP="DCLG-HIP">2 Some Street</HIP:Address-Line-1>
-            <HIP:Post-Town xmlns:HIP="DCLG-HIP">Post-Town1</HIP:Post-Town>
+            <HIP:Post-Town xmlns:HIP="DCLG-HIP">Whitbury</HIP:Post-Town>
             <HIP:Postcode xmlns:HIP="DCLG-HIP">A0 0AA</HIP:Postcode>
           </SAP:Contact-Address>
           <SAP:Notify-Lodgement>Y</SAP:Notify-Lodgement>
@@ -288,18 +288,18 @@
             <HIP:Address-Line-1>1 Some Street</HIP:Address-Line-1>
             <HIP:Address-Line-2>Some Area</HIP:Address-Line-2>
             <HIP:Address-Line-3>Some County</HIP:Address-Line-3>
-            <HIP:Post-Town>Post-Town1</HIP:Post-Town>
+            <HIP:Post-Town>Whitbury</HIP:Post-Town>
             <HIP:Postcode>A0 0AA</HIP:Postcode>
           </HIP:Address>
           <HIP:UPRN xmlns:HIP="DCLG-HIP">0000000000</HIP:UPRN>
         </SAP:Property>
       </SAP:Report-Header>
       <SAP:Insurance-Details xmlns:SAP="DCLG-SAP">
-        <SAP:Insurer>Insurer0</SAP:Insurer>
-        <SAP:Policy-No>Policy-No0</SAP:Policy-No>
+        <SAP:Insurer>EPC Protect Inc.</SAP:Insurer>
+        <SAP:Policy-No>X13-76540987B</SAP:Policy-No>
         <SAP:Effective-Date>2020-05-04</SAP:Effective-Date>
-        <SAP:Expiry-Date>2020-05-04</SAP:Expiry-Date>
-        <SAP:PI-Limit>0</SAP:PI-Limit>
+        <SAP:Expiry-Date>2030-05-03</SAP:Expiry-Date>
+        <SAP:PI-Limit>5000000</SAP:PI-Limit>
       </SAP:Insurance-Details>
     </EPC-Data>
   </Content>

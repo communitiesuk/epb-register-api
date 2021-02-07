@@ -48,14 +48,14 @@
               <SAP05:Address-Line-1>1 Some Street</SAP05:Address-Line-1>
               <SAP05:Address-Line-2>Some Area</SAP05:Address-Line-2>
               <SAP05:Address-Line-3>Some County</SAP05:Address-Line-3>
-              <SAP05:Post-Town>Post-Town1</SAP05:Post-Town>
+              <SAP05:Post-Town>Whitbury</SAP05:Post-Town>
               <SAP05:Postcode>A0 0AA</SAP05:Postcode>
             </SAP05:Complaints-Address>
             <SAP05:Contact-Address>
               <SAP05:Address-Line-1>1 Some Street</SAP05:Address-Line-1>
               <SAP05:Address-Line-2>Some Area</SAP05:Address-Line-2>
               <SAP05:Address-Line-3>Some County</SAP05:Address-Line-3>
-              <SAP05:Post-Town>Post-Town1</SAP05:Post-Town>
+              <SAP05:Post-Town>Whitbury</SAP05:Post-Town>
               <SAP05:Postcode>A0 0AA</SAP05:Postcode>
             </SAP05:Contact-Address>
             <SAP05:Web-Site></SAP05:Web-Site>
@@ -77,7 +77,7 @@
             <SAP05:Address-Line-1>1 Some Street</SAP05:Address-Line-1>
             <SAP05:Address-Line-2>Some Area</SAP05:Address-Line-2>
             <SAP05:Address-Line-3>Some County</SAP05:Address-Line-3>
-            <SAP05:Post-Town>Post-Town1</SAP05:Post-Town>
+            <SAP05:Post-Town>Whitbury</SAP05:Post-Town>
             <SAP05:Postcode>A0 0AA</SAP05:Postcode>
           </SAP05:Address>
           <SAP05:UPRN>0000000000</SAP05:UPRN>

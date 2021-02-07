@@ -11,7 +11,7 @@ describe UseCase::ExportOpenDataDec do
         address1: "Some Unit",
         address2: "2 Lonely Street",
         address3: "Some Area",
-        posttown: "Post-Town1",
+        posttown: "Whitbury",
         postcode: "A0 0AA",
         current_operational_rating: "1",
         yr1_operational_rating: "24",

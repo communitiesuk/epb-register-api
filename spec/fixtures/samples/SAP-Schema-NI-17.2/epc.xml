@@ -53,7 +53,7 @@
             <SAP:Scheme-Name>SPEC</SAP:Scheme-Name>
             <SAP:Complaints-Address>
               <SAP:Address-Line-1>2 Some Street</SAP:Address-Line-1>
-              <SAP:Post-Town>Post-Town1</SAP:Post-Town>
+              <SAP:Post-Town>Whitbury</SAP:Post-Town>
               <SAP:Postcode>A0 0AA</SAP:Postcode>
             </SAP:Complaints-Address>
             <SAP:Contact-Address>
@@ -61,9 +61,9 @@
               <SAP:Post-Town>Post-Town0</SAP:Post-Town>
               <SAP:Postcode>A0 0AA</SAP:Postcode>
             </SAP:Contact-Address>
-            <SAP:Web-Site>Scheme-Web-Site0</SAP:Web-Site>
+            <SAP:Web-Site>http://www.scheme.example.com</SAP:Web-Site>
             <SAP:E-Mail>d@e.f</SAP:E-Mail>
-            <SAP:Registered-Name>Name0</SAP:Registered-Name>
+            <SAP:Registered-Name>Testa Sessor</SAP:Registered-Name>
             <SAP:Fax>000000</SAP:Fax>
             <SAP:Telephone>0000000</SAP:Telephone>
           </SAP:Certification-Scheme>
@@ -79,7 +79,7 @@
             <SAP:Address-Line-1>1 Some Street</SAP:Address-Line-1>
             <SAP:Address-Line-2>Some Area</SAP:Address-Line-2>
             <SAP:Address-Line-3>Some County</SAP:Address-Line-3>
-            <SAP:Post-Town>Post-Town1</SAP:Post-Town>
+            <SAP:Post-Town>Whitbury</SAP:Post-Town>
             <SAP:Postcode>A0 0AA</SAP:Postcode>
           </SAP:Address>
           <SAP:UPRN>0000000000</SAP:UPRN>

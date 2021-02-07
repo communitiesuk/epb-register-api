@@ -33,7 +33,7 @@
         <Report-Type>1</Report-Type>
       </Inspector-Report-Types>
       <Certification-Scheme>
-        <Scheme-Name>Scheme-Name0</Scheme-Name>
+        <Scheme-Name>Testing Energy Scheme</Scheme-Name>
         <Complaints-Address>
           <Address-Line-1>123 Some Street</Address-Line-1>
           <Post-Town>Post-Town0</Post-Town>
@@ -41,7 +41,7 @@
         </Complaints-Address>
         <Contact-Address>
           <Address-Line-1>321 Some Street</Address-Line-1>
-          <Post-Town>Post-Town1</Post-Town>
+          <Post-Town>Whitbury</Post-Town>
           <Postcode>A0 0AA</Postcode>
         </Contact-Address>
         <Web-Site>Web-Site0</Web-Site>
@@ -59,7 +59,7 @@
         <Address-Line-1>1 Some Street</Address-Line-1>
         <Address-Line-2>Some Area</Address-Line-2>
         <Address-Line-3>Some County</Address-Line-3>
-        <Post-Town>Post-Town1</Post-Town>
+        <Post-Town>Whitbury</Post-Town>
         <Postcode>A0 0AA</Postcode>
       </Address>
       <UPRN>0000000000</UPRN>

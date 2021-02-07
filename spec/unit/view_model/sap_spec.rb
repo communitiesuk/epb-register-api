@@ -392,7 +392,7 @@ describe ViewModel::SapWrapper do
         address_line2: "Some Area",
         address_line3: "Some County",
         address_line4: nil,
-        town: "Post-Town1",
+        town: "Whitbury",
         postcode: "A0 0AA",
         address: {
           address_id: "LPRN-0000000000",
@@ -400,7 +400,7 @@ describe ViewModel::SapWrapper do
           address_line2: "Some Area",
           address_line3: "Some County",
           address_line4: nil,
-          town: "Post-Town1",
+          town: "Whitbury",
           postcode: "A0 0AA",
         },
         assessor: {
@@ -596,7 +596,7 @@ describe ViewModel::SapWrapper do
         address1: "1 Some Street",
         address2: "Some Area",
         address3: "Some County",
-        posttown: "Post-Town1",
+        posttown: "Whitbury",
         postcode: "A0 0AA",
         construction_age_band: "1750",
         current_energy_rating: "e",

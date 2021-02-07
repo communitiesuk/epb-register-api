@@ -31,7 +31,7 @@
           <Address-Line-2>2 Lonely Street</Address-Line-2>
           <Address-Line-3>Some Area</Address-Line-3>
           <Address-Line-4>Some County</Address-Line-4>
-          <Post-Town>Post-Town1</Post-Town>
+          <Post-Town>Whitbury</Post-Town>
           <Postcode>A0 0AA</Postcode>
         </Property-Address>
         <Property-Type>B1 Offices and Workshop businesses</Property-Type>
@@ -347,7 +347,7 @@
       <Language-Code>1</Language-Code>
       <Energy-Assessor>
         <Certificate-Number>SPEC000000</Certificate-Number>
-        <Name>Name0</Name>
+        <Name>Testa Sessor</Name>
         <Accreditation-Scheme-Name>Accreditation-Scheme-Name0</Accreditation-Scheme-Name>
         <Related-Party-Disclosure>Related to the owner</Related-Party-Disclosure>
       </Energy-Assessor>
