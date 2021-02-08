@@ -424,6 +424,11 @@ module ViewModel
       def all_main_heating_energy_efficiency
         @xml_doc.search("Main-Heating/Energy-Efficiency-Rating").map(&:content)
       end
+
+      def extensions_count
+        xpath(%w[Extensions-Count])
+      end
+
     end
   end
 end

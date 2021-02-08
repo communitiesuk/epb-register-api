@@ -581,13 +581,20 @@ describe ViewModel::SapWrapper do
           schema: "SAP-Schema-18.0.0",
           different_fields: {
             building_reference_number: "UPRN-000000000000",
+            extension_count: nil,
           },
         },
         {
           schema: "SAP-Schema-17.1",
+          different_fields: {
+            extension_count: nil,
+          },
         },
         {
           schema: "SAP-Schema-17.0",
+          different_fields: {
+            extension_count: nil,
+          },
         },
       ]
     end
@@ -666,6 +673,7 @@ describe ViewModel::SapWrapper do
         floor_level: "1",
         mainheat_energy_eff: "N/A",
         mainheat_env_eff: "N/A",
+        extension_count: "0",
 
       }
     end

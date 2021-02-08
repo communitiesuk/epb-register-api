@@ -310,6 +310,7 @@ module ViewModel
           Helper::XmlEnumsToOutput.energy_rating_string(
             all_main_heating_energy_efficiency[1],
             ),
+        extension_count: @view_model.extensions_count,
 
       }
     end
