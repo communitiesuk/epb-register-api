@@ -392,7 +392,7 @@ describe ViewModel::RdSapWrapper do
         roof_energy_eff: "Poor, Good",
         roof_env_eff: "Poor, Good",
         walls_description:
-          "Solid brick, as built, no insulation (assumed), Cavity wall, as built, insulated (assumed)",
+          "Solid brick, as built, no insulation (assumed) | Cavity wall, as built, insulated (assumed)",
         walls_energy_eff: "Very Poor, Good",
         walls_env_eff: "Very Poor, Good",
         energy_tariff: "off-peak 7 hour",
