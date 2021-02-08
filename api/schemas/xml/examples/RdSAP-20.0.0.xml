@@ -38,14 +38,14 @@
                 <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
             </Roof>
             <Floor>
-                <Description>Description4</Description>
-                <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
-                <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+              <Description>Suspended, no insulation (assumed)</Description>
+              <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+              <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
             </Floor>
             <Floor>
-                <Description>Description5</Description>
-                <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
-                <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+              <Description>Solid, insulated (assumed)</Description>
+              <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+              <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
             </Floor>
             <Window>
                 <Description>Description6</Description>
@@ -73,9 +73,9 @@
                 <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
             </Main-Heating-Controls>
             <Hot-Water>
-                <Description>Description11</Description>
-                <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
-                <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+              <Description>From main system</Description>
+              <Energy-Efficiency-Rating>4</Energy-Efficiency-Rating>
+              <Environmental-Efficiency-Rating>4</Environmental-Efficiency-Rating>
             </Hot-Water>
             <Lighting>
                 <Description>Description12</Description>

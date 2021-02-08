@@ -25,6 +25,7 @@ module UseCase
             assessment["assessment_id"],
           )
         next if view_model.nil?
+
         view_model_hash = view_model.to_report
         view_model_hash[:lodgement_date] =
           assessment["date_registered"].strftime("%F")

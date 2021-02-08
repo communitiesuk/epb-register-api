@@ -133,7 +133,7 @@ describe ViewModel::DecWrapper do
           address_line2: "2 Lonely Street",
           address_line3: "Some Area",
           address_line4: "Some County",
-          town: "Post-Town1",
+          town: "Whitbury",
           postcode: "A0 0AA",
         },
         type_of_assessment: "DEC",
@@ -184,13 +184,13 @@ describe ViewModel::DecWrapper do
         assessor: {
           company_details: {
             address: "123 My Street, My City, AB3 4CD",
-            name: "Joe Bloggs Ltd",
+            name: "Trillian Certificates Plc",
           },
-          name: "Name1",
+          name: "Arthur Dent",
           scheme_assessor_id: "SPEC000000",
           contact_details: {
             email: "a@b.c",
-            telephone: "0921-19037",
+            telephone: "0555 497 2848",
           },
         },
       }
@@ -316,10 +316,7 @@ describe ViewModel::DecWrapper do
         {
           schema: "CEPC-3.1",
           type: "dec",
-          unsupported_fields: %i[
-            aircon_kw_rating
-            ac_inspection_commissioned
-          ],
+          unsupported_fields: %i[aircon_kw_rating ac_inspection_commissioned],
           different_fields: {
             aircon_present: "N",
             date_of_expiry: "2020-12-31",
@@ -328,10 +325,7 @@ describe ViewModel::DecWrapper do
         {
           schema: "CEPC-3.1",
           type: "dec-ni",
-          unsupported_fields: %i[
-            aircon_kw_rating
-            ac_inspection_commissioned
-          ],
+          unsupported_fields: %i[aircon_kw_rating ac_inspection_commissioned],
           different_fields: {
             aircon_present: "N",
             date_of_expiry: "2020-12-31",
@@ -348,7 +342,7 @@ describe ViewModel::DecWrapper do
         address1: "Some Unit",
         address2: "2 Lonely Street",
         address3: "Some Area",
-        posttown: "Post-Town1",
+        posttown: "Whitbury",
         postcode: "A0 0AA",
         current_operational_rating: "1",
         yr1_operational_rating: "24",

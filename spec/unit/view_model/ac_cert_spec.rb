@@ -40,7 +40,7 @@ describe ViewModel::AcCertWrapper do
           address_line2: "2 Lonely Street",
           address_line3: "Some Area",
           address_line4: "Some County",
-          town: "Post-Town1",
+          town: "Whitbury",
           postcode: "A0 0AA",
         },
         technical_information: {
@@ -72,7 +72,7 @@ describe ViewModel::AcCertWrapper do
           },
           company_details: {
             name: "Assess Energy Limited",
-            address: "111 Twotwotwo Street, Mytown,, MT7 1AA",
+            address: "111 Twotwotwo Street, Mytown, MT7 1AA",
           },
         },
       }
@@ -84,9 +84,8 @@ describe ViewModel::AcCertWrapper do
   end
 
   it "returns the expect error without a valid schema type" do
-    expect {
-      ViewModel::AcCertWrapper.new "", "invalid"
-    }.to raise_error(ArgumentError)
-           .with_message "Unsupported schema type"
+    expect { ViewModel::AcCertWrapper.new "", "invalid" }.to raise_error(
+      ArgumentError,
+    ).with_message "Unsupported schema type"
   end
 end

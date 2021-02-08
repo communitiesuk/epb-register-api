@@ -13,14 +13,14 @@
       <Language-Code>1</Language-Code>
       <Energy-Assessor>
         <Certificate-Number>SPEC000000</Certificate-Number>
-        <Name>Name1</Name>
+        <Name>Arthur Dent</Name>
         <Accreditation-Scheme-Name>Information not available</Accreditation-Scheme-Name>
         <Trading-Address>123 My Street, My City, AB3 4CD</Trading-Address>
-        <Company-Name>Joe Bloggs Ltd</Company-Name>
+        <Company-Name>Trillian Certificates Plc</Company-Name>
         <Qualifications>NOS5</Qualifications>
         <Status>Registered</Status>
         <E-Mail>a@b.c</E-Mail>
-        <Telephone-Number>0921-19037</Telephone-Number>
+        <Telephone-Number>0555 497 2848</Telephone-Number>
       </Energy-Assessor>
       <Building-Complexity>Level 3</Building-Complexity>
       <Property-Details>
@@ -30,7 +30,7 @@
           <Address-Line-2>2 Lonely Street</Address-Line-2>
           <Address-Line-3>Some Area</Address-Line-3>
           <Address-Line-4>Some County</Address-Line-4>
-          <Post-Town>Post-Town1</Post-Town>
+          <Post-Town>Whitbury</Post-Town>
           <Postcode>BT0 0AA</Postcode>
         </Property-Address>
         <Occupier>Primary School</Occupier>

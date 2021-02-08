@@ -5,10 +5,10 @@
   <Calculation-Software-Name>RdSAP 4 U</Calculation-Software-Name>
   <Calculation-Software-Version>2.0</Calculation-Software-Version>
   <User-Interface-Name>RdSAPwize</User-Interface-Name>
-  <User-Interface-Version>1.3.60</User-Interface-Version>
+  <User-Interface-Version>UI-2.0</User-Interface-Version>
   <Schema-Version-Original>20.0.0</Schema-Version-Original>
   <SAP-Version>9.80</SAP-Version>
-  <PCDF-Revision-Number>PCDF-Revision-Number0</PCDF-Revision-Number>
+  <PCDF-Revision-Number>345</PCDF-Revision-Number>
   <Previous-EPC-Check>
     <Previous-EPC-Checked>Y</Previous-EPC-Checked>
     <Previous-EPC-Exists>Y</Previous-EPC-Exists>
@@ -92,13 +92,13 @@
     <Energy-Use>
       <Energy-Rating-Current>70</Energy-Rating-Current>
       <Energy-Rating-Potential>82</Energy-Rating-Potential>
-      <Energy-Rating-Average>50</Energy-Rating-Average>
-      <Environmental-Impact-Current>50</Environmental-Impact-Current>
-      <Environmental-Impact-Potential>50</Environmental-Impact-Potential>
-      <Energy-Consumption-Current>0</Energy-Consumption-Current>
-      <Energy-Consumption-Potential>0</Energy-Consumption-Potential>
+      <Energy-Rating-Average>60</Energy-Rating-Average>
+      <Environmental-Impact-Current>52</Environmental-Impact-Current>
+      <Environmental-Impact-Potential>74</Environmental-Impact-Potential>
+      <Energy-Consumption-Current>230</Energy-Consumption-Current>
+      <Energy-Consumption-Potential>88</Energy-Consumption-Potential>
       <CO2-Emissions-Current>2.4</CO2-Emissions-Current>
-      <CO2-Emissions-Current-Per-Floor-Area>0</CO2-Emissions-Current-Per-Floor-Area>
+      <CO2-Emissions-Current-Per-Floor-Area>20</CO2-Emissions-Current-Per-Floor-Area>
       <CO2-Emissions-Potential>1.4</CO2-Emissions-Potential>
       <Lighting-Cost-Current>0</Lighting-Cost-Current>
       <Lighting-Cost-Potential>0</Lighting-Cost-Potential>
@@ -109,26 +109,26 @@
     </Energy-Use>
     <Suggested-Improvements>
       <Improvement>
-        <Sequence>0</Sequence>
+        <Sequence>1</Sequence>
         <Improvement-Category>6</Improvement-Category>
         <Improvement-Type>Z3</Improvement-Type>
-        <Typical-Saving>0.0</Typical-Saving>
+        <Typical-Saving>360</Typical-Saving>
         <Energy-Performance-Rating>50</Energy-Performance-Rating>
         <Environmental-Impact-Rating>50</Environmental-Impact-Rating>
-        <Indicative-Cost>5</Indicative-Cost>
+        <Indicative-Cost>£100 - £350</Indicative-Cost>
         <Improvement-Details>
           <Improvement-Number>5</Improvement-Number>
         </Improvement-Details>
         <Green-Deal-Category>1</Green-Deal-Category>
       </Improvement>
       <Improvement>
-        <Sequence>1</Sequence>
+        <Sequence>2</Sequence>
         <Improvement-Category>2</Improvement-Category>
         <Improvement-Type>A</Improvement-Type>
-        <Typical-Saving>0.1</Typical-Saving>
+        <Typical-Saving>99</Typical-Saving>
         <Energy-Performance-Rating>60</Energy-Performance-Rating>
         <Environmental-Impact-Rating>64</Environmental-Impact-Rating>
-        <Indicative-Cost>2</Indicative-Cost>
+        <Indicative-Cost>2000</Indicative-Cost>
         <Improvement-Details>
           <Improvement-Number>1</Improvement-Number>
         </Improvement-Details>
@@ -138,8 +138,8 @@
     <Renewable-Heat-Incentive>
       <Space-Heating-Existing-Dwelling>9901</Space-Heating-Existing-Dwelling>
       <Water-Heating>2256</Water-Heating>
-      <Impact-Of-Loft-Insulation>-8</Impact-Of-Loft-Insulation>
-      <Impact-Of-Solid-Wall-Insulation>-16</Impact-Of-Solid-Wall-Insulation>
+      <Impact-Of-Loft-Insulation>-2114</Impact-Of-Loft-Insulation>
+      <Impact-Of-Solid-Wall-Insulation>-3560</Impact-Of-Solid-Wall-Insulation>
     </Renewable-Heat-Incentive>
   </Energy-Assessment>
   <SAP-Data>
@@ -277,15 +277,15 @@
       <UPRN>UPRN-000000000000</UPRN>
     </Property>
     <Related-Party-Disclosure>
-      <Related-Party-Disclosure-Text>Related-Party-Disclosure-Text0</Related-Party-Disclosure-Text>
+      <Related-Party-Disclosure-Text>No related party</Related-Party-Disclosure-Text>
     </Related-Party-Disclosure>
   </Report-Header>
   <Insurance-Details>
-    <Insurer>Insurer0</Insurer>
-    <Policy-No>Policy-No0</Policy-No>
+    <Insurer>EPC Protect Inc.</Insurer>
+    <Policy-No>X13-76540987B</Policy-No>
     <Effective-Date>2019-05-04</Effective-Date>
     <Expiry-Date>2025-05-04</Expiry-Date>
-    <PI-Limit>0</PI-Limit>
+    <PI-Limit>5000000</PI-Limit>
   </Insurance-Details>
-  <ExternalDefinitions-Revision-Number>ExternalDefinitions-Revision-Number0</ExternalDefinitions-Revision-Number>
+  <ExternalDefinitions-Revision-Number>5.0</ExternalDefinitions-Revision-Number>
 </RdSAP-Report>

@@ -50,17 +50,17 @@
           <SAP:Notify-Lodgement>Y</SAP:Notify-Lodgement>
           <SAP:Contact-Address>
             <HIP:Address-Line-1>2 Some Street</HIP:Address-Line-1>
-            <HIP:Post-Town>Post-Town1</HIP:Post-Town>
+            <HIP:Post-Town>Whitbury</HIP:Post-Town>
             <HIP:Postcode>A0 0AA</HIP:Postcode>
           </SAP:Contact-Address>
           <SAP:E-Mail>a@b.c</SAP:E-Mail>
           <SAP:Telephone>111222333</SAP:Telephone>
-          <SAP:Company-Name>Joe Bloggs Ltd</SAP:Company-Name>
+          <SAP:Company-Name>Trillian Certificates Plc</SAP:Company-Name>
         </SAP:Home-Inspector>
         <SAP:Property>
           <HIP:Address>
             <HIP:Address-Line-1>1 Some Street</HIP:Address-Line-1>
-            <HIP:Post-Town>Post-Town1</HIP:Post-Town>
+            <HIP:Post-Town>Whitbury</HIP:Post-Town>
             <HIP:Postcode>A0 0AA</HIP:Postcode>
           </HIP:Address>
           <HIP:UPRN>0000000000</HIP:UPRN>
@@ -153,21 +153,21 @@
             <HIP:Description>Energy saving bulbs</HIP:Description>
             <HIP:Environmental-Efficiency-Rating>0</HIP:Environmental-Efficiency-Rating>
           </HIP:Lighting>
-          <HIP:Dwelling-Type>Dwelling-Type0</HIP:Dwelling-Type>
-          <HIP:Total-Floor-Area>10</HIP:Total-Floor-Area>
+          <HIP:Dwelling-Type>Mid-terrace house</HIP:Dwelling-Type>
+          <HIP:Total-Floor-Area>69</HIP:Total-Floor-Area>
           <HIP:Is-Zero-Carbon-Home>true</HIP:Is-Zero-Carbon-Home>
         </HIP:Property-Summary>
         <HIP:Energy-Use>
           <HIP:Energy-Rating-Average>57</HIP:Energy-Rating-Average>
           <HIP:Energy-Rating-Current>50</HIP:Energy-Rating-Current>
-          <HIP:Energy-Rating-Potential>50</HIP:Energy-Rating-Potential>
-          <HIP:Environmental-Impact-Current>50</HIP:Environmental-Impact-Current>
+          <HIP:Energy-Rating-Potential>72</HIP:Energy-Rating-Potential>
+          <HIP:Environmental-Impact-Current>52</HIP:Environmental-Impact-Current>
           <HIP:Environmental-Impact-Potential>65</HIP:Environmental-Impact-Potential>
-          <HIP:Energy-Consumption-Current>0</HIP:Energy-Consumption-Current>
-          <HIP:Energy-Consumption-Potential>0</HIP:Energy-Consumption-Potential>
+          <HIP:Energy-Consumption-Current>230</HIP:Energy-Consumption-Current>
+          <HIP:Energy-Consumption-Potential>88</HIP:Energy-Consumption-Potential>
           <HIP:CO2-Emissions-Current>2.4</HIP:CO2-Emissions-Current>
           <HIP:CO2-Emissions-Potential>1.4</HIP:CO2-Emissions-Potential>
-          <HIP:CO2-Emissions-Current-Per-Floor-Area>0</HIP:CO2-Emissions-Current-Per-Floor-Area>
+          <HIP:CO2-Emissions-Current-Per-Floor-Area>20</HIP:CO2-Emissions-Current-Per-Floor-Area>
           <HIP:Lighting-Cost-Current currency="GBP">123.45</HIP:Lighting-Cost-Current>
           <HIP:Lighting-Cost-Potential currency="GBP">84.23</HIP:Lighting-Cost-Potential>
           <HIP:Heating-Cost-Current currency="GBP">365.98</HIP:Heating-Cost-Current>
@@ -177,9 +177,9 @@
         </HIP:Energy-Use>
         <HIP:Suggested-Improvements>
           <HIP:Improvement>
-            <HIP:Sequence>0</HIP:Sequence>
+            <HIP:Sequence>1</HIP:Sequence>
             <HIP:Improvement-Type>A</HIP:Improvement-Type>
-            <HIP:Indicative-Cost>5</HIP:Indicative-Cost>
+            <HIP:Indicative-Cost>£100 - £350</HIP:Indicative-Cost>
             <HIP:Improvement-Category>1</HIP:Improvement-Category>
             <HIP:Typical-Saving currency="GBP">0.0</HIP:Typical-Saving>
             <HIP:Energy-Performance-Rating>50</HIP:Energy-Performance-Rating>
@@ -189,9 +189,9 @@
             </HIP:Improvement-Details>
           </HIP:Improvement>
           <HIP:Improvement>
-            <HIP:Sequence>1</HIP:Sequence>
+            <HIP:Sequence>2</HIP:Sequence>
             <HIP:Improvement-Type>B</HIP:Improvement-Type>
-            <HIP:Indicative-Cost>2</HIP:Indicative-Cost>
+            <HIP:Indicative-Cost>2000</HIP:Indicative-Cost>
             <HIP:Improvement-Category>2</HIP:Improvement-Category>
             <HIP:Typical-Saving currency="GBP">0.1</HIP:Typical-Saving>
             <HIP:Energy-Performance-Rating>60</HIP:Energy-Performance-Rating>

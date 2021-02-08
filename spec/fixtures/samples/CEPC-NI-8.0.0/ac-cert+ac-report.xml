@@ -21,7 +21,7 @@
         <Name>Test Assessor Name</Name>
         <Accreditation-Scheme-Name>Some Accreditation Limited</Accreditation-Scheme-Name>
         <Accreditation-Scheme-Website>www.example.com</Accreditation-Scheme-Website>
-        <Trading-Address>111 Twotwotwo Street, Mytown,, MT7 1AA</Trading-Address>
+        <Trading-Address>111 Twotwotwo Street, Mytown, MT7 1AA</Trading-Address>
         <Company-Name>Assess Energy Limited</Company-Name>
         <Qualifications>SP3</Qualifications>
         <Qualifications>CC4</Qualifications>
@@ -38,7 +38,7 @@
           <Post-Town>London</Post-Town>
           <Postcode>AB12 2AA</Postcode>
         </Property-Address>
-        <Property-Type>Property-Type1</Property-Type>
+        <Property-Type>A1/A2 Retail and Financial/Professional services</Property-Type>
         <Is-Heritage-Site>N</Is-Heritage-Site>
       </Property-Details>
       <Calculation-Details>
@@ -116,7 +116,7 @@
         <Name>Test Assessor Name</Name>
         <Accreditation-Scheme-Name>Some Accreditation Limited</Accreditation-Scheme-Name>
         <Accreditation-Scheme-Website>www.example.com</Accreditation-Scheme-Website>
-        <Trading-Address>111 Twotwotwo Street, Mytown,, MT7 1AA</Trading-Address>
+        <Trading-Address>111 Twotwotwo Street, Mytown, MT7 1AA</Trading-Address>
         <Company-Name>Assess Energy Limited</Company-Name>
         <Qualifications>SP3</Qualifications>
         <Qualifications>CC4</Qualifications>
@@ -415,7 +415,7 @@
         </ACI-Cooling-Plant-Inspection>
         <ACI-Cooling-Plant-Sizing>
           <Total-Occupants>40</Total-Occupants>
-          <Total-Floor-Area>357</Total-Floor-Area>
+          <Total-Floor-Area>88</Total-Floor-Area>
           <Occupant-Density>8.93</Occupant-Density>
           <Upper-Heat-Gain>140.0</Upper-Heat-Gain>
           <Installed-Capacity>10.0</Installed-Capacity>
@@ -734,7 +734,7 @@
         </ACI-Cooling-Plant-Inspection>
         <ACI-Cooling-Plant-Sizing>
           <Total-Occupants>40</Total-Occupants>
-          <Total-Floor-Area>357</Total-Floor-Area>
+          <Total-Floor-Area>88</Total-Floor-Area>
           <Occupant-Density>8.93</Occupant-Density>
           <Upper-Heat-Gain>140.0</Upper-Heat-Gain>
           <Installed-Capacity>10.0</Installed-Capacity>

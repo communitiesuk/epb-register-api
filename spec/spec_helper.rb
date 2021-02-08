@@ -144,8 +144,6 @@ def add_address_base(uprn:)
     "INSERT INTO address_base (uprn) VALUES(" +
       ActiveRecord::Base.connection.quote(uprn) + ")",
   )
-
-
 end
 
 def get_task(name)

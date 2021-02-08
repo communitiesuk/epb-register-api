@@ -139,6 +139,8 @@ module ViewModel
     def to_report
       all_main_heating_energy_efficiency =
         @view_model.all_main_heating_energy_efficiency
+      all_main_heating_environmental_efficiency =
+        @view_model.all_main_heating_environmental_efficiency
 
       {
         rrn: @view_model.assessment_id,
@@ -184,7 +186,7 @@ module ViewModel
         mains_gas_flag: @view_model.mains_gas,
         flat_top_storey: @view_model.top_storey,
         flat_storey_count: @view_model.storey_count,
-        main_heating_controls: @view_model.mains_heating_controls,
+        main_heating_controls: @view_model.main_heating_controls,
         multi_glaze_proportion: @view_model.multiple_glazed_proportion,
         glazed_area: @view_model.glazed_area,
         number_habitable_rooms: @view_model.habitable_room_count,
@@ -239,11 +241,11 @@ module ViewModel
           @view_model.all_main_heating_descriptions.join(", "),
         mainheat_energy_eff:
           Helper::XmlEnumsToOutput.energy_rating_string(
-            all_main_heating_energy_efficiency[0],
+            all_main_heating_energy_efficiency,
           ),
         mainheat_env_eff:
           Helper::XmlEnumsToOutput.energy_rating_string(
-            all_main_heating_energy_efficiency[1],
+            all_main_heating_environmental_efficiency,
           ),
         extension_count: @view_model.extensions_count,
         report_type: @view_model.report_type,
@@ -252,20 +254,20 @@ module ViewModel
         roof_description: @view_model.all_roof_descriptions.join(", "),
         roof_energy_eff:
           Helper::XmlEnumsToOutput.energy_rating_string(
-            @view_model.all_roof_energy_efficieny_rating,
+            @view_model.all_roof_energy_efficiency_rating,
           ),
         roof_env_eff:
           Helper::XmlEnumsToOutput.energy_rating_string(
-            @view_model.all_roof_env_energy_efficieny_rating,
+            @view_model.all_roof_env_energy_efficiency_rating,
           ),
         walls_description: @view_model.all_wall_descriptions.join(", "),
         walls_energy_eff:
           Helper::XmlEnumsToOutput.energy_rating_string(
-            @view_model.all_wall_energy_efficieny_rating,
+            @view_model.all_wall_energy_efficiency_rating,
           ),
         walls_env_eff:
           Helper::XmlEnumsToOutput.energy_rating_string(
-            @view_model.all_wall_env_energy_efficieny_rating,
+            @view_model.all_wall_env_energy_efficiency_rating,
           ),
         energy_tariff: Helper::XmlEnumsToOutput.energy_tariff(@view_model.meter_type),
         floor_level: @view_model.floor_level,

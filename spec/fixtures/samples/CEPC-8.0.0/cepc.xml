@@ -20,7 +20,7 @@
         <CEPC:Accreditation-Scheme-Name>TESTSCHEME</CEPC:Accreditation-Scheme-Name>
         <CEPC:Accreditation-Scheme-Website>Information not available</CEPC:Accreditation-Scheme-Website>
         <CEPC:Trading-Address>123 My Street, My City, AB3 4CD</CEPC:Trading-Address>
-        <CEPC:Company-Name>Joe Bloggs Ltd</CEPC:Company-Name>
+        <CEPC:Company-Name>Trillian Certificates Plc</CEPC:Company-Name>
         <CEPC:Qualifications>NOS5</CEPC:Qualifications>
         <CEPC:Status>Registered</CEPC:Status>
         <CEPC:E-Mail>a@b.c</CEPC:E-Mail>
@@ -34,14 +34,14 @@
           <CEPC:Address-Line-2>2 Lonely Street</CEPC:Address-Line-2>
           <CEPC:Address-Line-3>Some Area</CEPC:Address-Line-3>
           <CEPC:Address-Line-4>Some County</CEPC:Address-Line-4>
-          <CEPC:Post-Town>Post-Town1</CEPC:Post-Town>
+          <CEPC:Post-Town>Whitbury</CEPC:Post-Town>
           <CEPC:Postcode>A0 0AA</CEPC:Postcode>
         </CEPC:Property-Address>
         <CEPC:Property-Type>B1 Offices and Workshop businesses</CEPC:Property-Type>
         <CEPC:Is-Heritage-Site>N</CEPC:Is-Heritage-Site>
       </CEPC:Property-Details>
       <CEPC:Calculation-Details>
-        <CEPC:Calculation-Tool>Calculation-Tool1</CEPC:Calculation-Tool>
+        <CEPC:Calculation-Tool>Casio fx-39</CEPC:Calculation-Tool>
       </CEPC:Calculation-Details>
     </CEPC:Report-Header>
     <CEPC:Summary-Of-Performance>

@@ -13,11 +13,11 @@
           <Energy-Assessor>
               <Certificate-Number>SPEC000000</Certificate-Number>
               <Name>Mrs Report Writer</Name>
-              <Accreditation-Scheme-Name>Accreditation-Scheme-Name0</Accreditation-Scheme-Name>
+              <Accreditation-Scheme-Name>Test Energy Scheme</Accreditation-Scheme-Name>
               <Trading-Address>123 My Street, My City, AB3 4CD</Trading-Address>
-              <Company-Name>Joe Bloggs Ltd</Company-Name>
+              <Company-Name>Trillian Certificates Plc</Company-Name>
               <E-Mail>a@b.c</E-Mail>
-              <Telephone-Number>0921-19037</Telephone-Number>
+              <Telephone-Number>0555 497 2848</Telephone-Number>
           </Energy-Assessor>
           <Property-Details>
               <UPRN>000000000001</UPRN>
@@ -26,7 +26,7 @@
                   <Address-Line-2>2 Lonely Street</Address-Line-2>
                   <Address-Line-3>Some Area</Address-Line-3>
                   <Address-Line-4>Some County</Address-Line-4>
-                  <Post-Town>Post-Town0</Post-Town>
+                  <Post-Town>Fulchester</Post-Town>
                   <Postcode>BT0 0AA</Postcode>
               </Property-Address>
               <Occupier>Primary School</Occupier>

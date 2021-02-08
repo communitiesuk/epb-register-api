@@ -61,7 +61,7 @@
           <HIP:Address>
             <HIP:Address-Line-1>1 Some Street</HIP:Address-Line-1>
             <HIP:Address-Line-2/>
-            <HIP:Post-Town>Post-Town1</HIP:Post-Town>
+            <HIP:Post-Town>Whitbury</HIP:Post-Town>
             <HIP:Postcode>A0 0AA</HIP:Postcode>
           </HIP:Address>
           <HIP:UPRN>0000000000</HIP:UPRN>
@@ -182,7 +182,7 @@
         </HIP:Energy-Use>
         <HIP:Suggested-Improvements>
           <HIP:Improvement>
-            <HIP:Sequence>1</HIP:Sequence>
+            <HIP:Sequence>2</HIP:Sequence>
             <HIP:Improvement-Category>5</HIP:Improvement-Category>
             <HIP:Green-Deal-Category>3</HIP:Green-Deal-Category>
             <HIP:Improvement-Type>Q</HIP:Improvement-Type>
@@ -248,7 +248,7 @@
           <HIP:Other-Fuel-Saving currency="GBP">0</HIP:Other-Fuel-Saving>
         </HIP:Green-Deal-Package>
         <HIP:Renewable-Heat-Incentive>
-          <HIP:Space-Heating-Existing-Dwelling>21056
+          <HIP:Space-Heating-Existing-Dwelling>13120
           </HIP:Space-Heating-Existing-Dwelling>
           <HIP:Impact-Of-Loft-Insulation>-1697</HIP:Impact-Of-Loft-Insulation>
           <HIP:Impact-Of-Solid-Wall-Insulation>-6310

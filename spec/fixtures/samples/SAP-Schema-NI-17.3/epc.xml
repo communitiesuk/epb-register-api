@@ -4,8 +4,8 @@
   xsi:schemaLocation="http://www.epbniregister.com/xsd/sap /api/schemas/xml/SAP-Schema-NI-17.3/SAP/Templates/SAP-Report.xsd"
   xmlns="http://www.epbniregister.com/xsd/sap">
   <SAP-Version>9.80</SAP-Version>
-  <Calculation-Software-Name>Calculation-Software-Name0</Calculation-Software-Name>
-  <Calculation-Software-Version>Calculation-Software-Version0</Calculation-Software-Version>
+  <Calculation-Software-Name>SomeSoft SAP Calculator</Calculation-Software-Name>
+  <Calculation-Software-Version>13.05r16</Calculation-Software-Version>
   <Report-Header>
     <RRN>0000-0000-0000-0000-0000</RRN>
     <Inspection-Date>2020-05-04</Inspection-Date>
@@ -33,20 +33,20 @@
         <Report-Type>1</Report-Type>
       </Inspector-Report-Types>
       <Certification-Scheme>
-        <Scheme-Name>Scheme-Name0</Scheme-Name>
+        <Scheme-Name>Testing Energy Scheme</Scheme-Name>
         <Complaints-Address>
           <Address-Line-1>123 Some Street</Address-Line-1>
-          <Post-Town>Post-Town0</Post-Town>
+          <Post-Town>Fulchester</Post-Town>
           <Postcode>A0 0AA</Postcode>
         </Complaints-Address>
         <Contact-Address>
           <Address-Line-1>321 Some Street</Address-Line-1>
-          <Post-Town>Post-Town1</Post-Town>
+          <Post-Town>Whitbury</Post-Town>
           <Postcode>A0 0AA</Postcode>
         </Contact-Address>
-        <Web-Site>Web-Site0</Web-Site>
+        <Web-Site>http://www.scheme.example.com</Web-Site>
         <E-Mail>a@b.c</E-Mail>
-        <Registered-Name>Registered-Name0</Registered-Name>
+        <Registered-Name>Test Scheme Plc</Registered-Name>
         <Fax>111222333</Fax>
         <Telephone>111222333</Telephone>
       </Certification-Scheme>
@@ -59,7 +59,7 @@
         <Address-Line-1>1 Some Street</Address-Line-1>
         <Address-Line-2>Some Area</Address-Line-2>
         <Address-Line-3>Some County</Address-Line-3>
-        <Post-Town>Post-Town1</Post-Town>
+        <Post-Town>Whitbury</Post-Town>
         <Postcode>A0 0AA</Postcode>
       </Address>
       <UPRN>0000000000</UPRN>
@@ -147,21 +147,21 @@
         <Description>Draft Exclusion</Description>
         <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
       </Air-Tightness>
-      <Dwelling-Type>Dwelling-Type0</Dwelling-Type>
-      <Total-Floor-Area>10</Total-Floor-Area>
+      <Dwelling-Type>Mid-terrace house</Dwelling-Type>
+      <Total-Floor-Area>69</Total-Floor-Area>
       <Is-Zero-Carbon-Home>true</Is-Zero-Carbon-Home>
     </Property-Summary>
     <Energy-Use>
       <Energy-Rating-Current>50</Energy-Rating-Current>
-      <Energy-Rating-Potential>50</Energy-Rating-Potential>
-      <Energy-Rating-Average>50</Energy-Rating-Average>
+      <Energy-Rating-Potential>72</Energy-Rating-Potential>
+      <Energy-Rating-Average>60</Energy-Rating-Average>
       <Energy-Rating-Typical-Newbuild>50</Energy-Rating-Typical-Newbuild>
-      <Environmental-Impact-Current>50</Environmental-Impact-Current>
-      <Environmental-Impact-Potential>50</Environmental-Impact-Potential>
-      <Energy-Consumption-Current>0</Energy-Consumption-Current>
-      <Energy-Consumption-Potential>0</Energy-Consumption-Potential>
+      <Environmental-Impact-Current>52</Environmental-Impact-Current>
+      <Environmental-Impact-Potential>74</Environmental-Impact-Potential>
+      <Energy-Consumption-Current>230</Energy-Consumption-Current>
+      <Energy-Consumption-Potential>88</Energy-Consumption-Potential>
       <CO2-Emissions-Current>2.4</CO2-Emissions-Current>
-      <CO2-Emissions-Current-Per-Floor-Area>0</CO2-Emissions-Current-Per-Floor-Area>
+      <CO2-Emissions-Current-Per-Floor-Area>20</CO2-Emissions-Current-Per-Floor-Area>
       <CO2-Emissions-Potential>1.4</CO2-Emissions-Potential>
       <Lighting-Cost-Current>123.45</Lighting-Cost-Current>
       <Lighting-Cost-Potential>84.23</Lighting-Cost-Potential>
@@ -172,33 +172,33 @@
     </Energy-Use>
     <Renewable-Heat-Incentive>
       <RHI-Existing-Dwelling>
-        <Space-Heating-Existing-Dwelling>30</Space-Heating-Existing-Dwelling>
-        <Water-Heating>60</Water-Heating>
+        <Space-Heating-Existing-Dwelling>13120</Space-Heating-Existing-Dwelling>
+        <Water-Heating>2285</Water-Heating>
         <Space-Heating-With-Cavity-Insulation>-12</Space-Heating-With-Cavity-Insulation>
         <Space-Heating-With-Loft-And-Cavity-Insulation>-8</Space-Heating-With-Loft-And-Cavity-Insulation>
       </RHI-Existing-Dwelling>
     </Renewable-Heat-Incentive>
     <Suggested-Improvements>
       <Improvement>
-        <Sequence>0</Sequence>
+        <Sequence>1</Sequence>
         <Improvement-Category>1</Improvement-Category>
         <Improvement-Type>A</Improvement-Type>
-        <Typical-Saving>0.0</Typical-Saving>
+        <Typical-Saving>360</Typical-Saving>
         <Energy-Performance-Rating>50</Energy-Performance-Rating>
         <Environmental-Impact-Rating>50</Environmental-Impact-Rating>
-        <Indicative-Cost>5</Indicative-Cost>
+        <Indicative-Cost>£100 - £350</Indicative-Cost>
         <Improvement-Details>
           <Improvement-Number>5</Improvement-Number>
         </Improvement-Details>
       </Improvement>
       <Improvement>
-        <Sequence>1</Sequence>
+        <Sequence>2</Sequence>
         <Improvement-Category>2</Improvement-Category>
         <Improvement-Type>B</Improvement-Type>
-        <Typical-Saving>0.1</Typical-Saving>
+        <Typical-Saving>99</Typical-Saving>
         <Energy-Performance-Rating>60</Energy-Performance-Rating>
         <Environmental-Impact-Rating>64</Environmental-Impact-Rating>
-        <Indicative-Cost>2</Indicative-Cost>
+        <Indicative-Cost>2000</Indicative-Cost>
         <Improvement-Details>
           <Improvement-Number>1</Improvement-Number>
         </Improvement-Details>
@@ -262,5 +262,5 @@
     </SAP-Property-Details>
   </SAP09-Data>
   <PDF/>
-  <ExternalDefinitions-Revision-Number>ExternalDefinitions-Revision-Number0</ExternalDefinitions-Revision-Number>
+  <ExternalDefinitions-Revision-Number>5.0</ExternalDefinitions-Revision-Number>
 </SAP-Report>

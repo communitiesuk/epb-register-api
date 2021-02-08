@@ -23,8 +23,9 @@ describe "Gateway::StorageGateway" do
 
     it "fails when the file is not existing" do
       stub_file_response(@storage_gateway.client)
-      expect { @storage_gateway.get_file_io("fake_name") }
-        .to raise_error Aws::S3::Errors::NoSuchKey
+      expect {
+        @storage_gateway.get_file_io("fake_name")
+      }.to raise_error Aws::S3::Errors::NoSuchKey
     end
   end
 end
@@ -34,7 +35,7 @@ def stub_file_response(client)
     :get_object,
     lambda do |context|
       if context.params[:key] == "my-file" &&
-        context.params[:bucket] == "my-bucket"
+           context.params[:bucket] == "my-bucket"
         { body: "Hello!" }
       else
         "NoSuchKey"

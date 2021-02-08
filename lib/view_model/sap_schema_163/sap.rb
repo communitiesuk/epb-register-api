@@ -268,7 +268,7 @@ module ViewModel
         nil
       end
 
-      def mains_heating_controls
+      def main_heating_controls
         xpath(%w[Main-Heating-Controls Description])
       end
 
@@ -374,7 +374,7 @@ module ViewModel
       end
 
       def all_main_heating_descriptions
-        @xml_doc.search("Main-Heating-Controls/Description").map(&:content)
+        @xml_doc.search("Main-Heating/Description").map(&:content)
       end
 
       def extensions_count

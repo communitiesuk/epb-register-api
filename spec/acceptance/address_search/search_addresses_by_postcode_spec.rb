@@ -183,7 +183,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
               line2: nil,
               line3: nil,
               line4: nil,
-              town: "Post-Town1",
+              town: "Whitbury",
               postcode: "A0 0AA",
               source: "PREVIOUS_ASSESSMENT",
               existingAssessments: [
@@ -408,7 +408,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
             line2: nil,
             line3: nil,
             line4: nil,
-            town: "Post-Town1",
+            town: "Whitbury",
             postcode: "A0 0AA",
             source: "PREVIOUS_ASSESSMENT",
             existingAssessments: [

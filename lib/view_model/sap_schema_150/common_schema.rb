@@ -191,8 +191,7 @@ module ViewModel
       end
 
       def current_space_heating_demand
-        xpath(%w[Space-Heating]) or
-          xpath(%w[Space-Heating-Existing-Dwelling])
+        xpath(%w[Space-Heating]) or xpath(%w[Space-Heating-Existing-Dwelling])
       end
 
       def current_water_heating_demand
@@ -277,7 +276,7 @@ module ViewModel
         nil
       end
 
-      def mains_heating_controls
+      def main_heating_controls
         xpath(%w[Main-Heating-Controls Description])
       end
 
@@ -382,7 +381,7 @@ module ViewModel
       end
 
       def all_main_heating_descriptions
-        @xml_doc.search("Main-Heating-Controls/Description").map(&:content)
+        @xml_doc.search("Main-Heating/Description").map(&:content)
       end
 
       def extensions_count
@@ -401,11 +400,11 @@ module ViewModel
         @xml_doc.search("Roof/Description").map(&:content)
       end
 
-      def all_roof_energy_efficieny_rating
+      def all_roof_energy_efficiency_rating
         @xml_doc.search("Roof/Energy-Efficiency-Rating").map(&:content)
       end
 
-      def all_roof_env_energy_efficieny_rating
+      def all_roof_env_energy_efficiency_rating
         @xml_doc.search("Roof/Environmental-Efficiency-Rating").map(&:content)
       end
 
@@ -413,11 +412,11 @@ module ViewModel
         @xml_doc.search("Walls/Description").map(&:content)
       end
 
-      def all_wall_energy_efficieny_rating
+      def all_wall_energy_efficiency_rating
         @xml_doc.search("Walls/Energy-Efficiency-Rating").map(&:content)
       end
 
-      def all_wall_env_energy_efficieny_rating
+      def all_wall_env_energy_efficiency_rating
         @xml_doc.search("Walls/Environmental-Efficiency-Rating").map(&:content)
       end
 

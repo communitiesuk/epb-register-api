@@ -48,14 +48,14 @@
               <SAP05:Address-Line-1>1 Some Street</SAP05:Address-Line-1>
               <SAP05:Address-Line-2>Some Area</SAP05:Address-Line-2>
               <SAP05:Address-Line-3>Some County</SAP05:Address-Line-3>
-              <SAP05:Post-Town>Post-Town1</SAP05:Post-Town>
+              <SAP05:Post-Town>Whitbury</SAP05:Post-Town>
               <SAP05:Postcode>A0 0AA</SAP05:Postcode>
             </SAP05:Complaints-Address>
             <SAP05:Contact-Address>
               <SAP05:Address-Line-1>1 Some Street</SAP05:Address-Line-1>
               <SAP05:Address-Line-2>Some Area</SAP05:Address-Line-2>
               <SAP05:Address-Line-3>Some County</SAP05:Address-Line-3>
-              <SAP05:Post-Town>Post-Town1</SAP05:Post-Town>
+              <SAP05:Post-Town>Whitbury</SAP05:Post-Town>
               <SAP05:Postcode>A0 0AA</SAP05:Postcode>
             </SAP05:Contact-Address>
             <SAP05:Web-Site></SAP05:Web-Site>
@@ -77,7 +77,7 @@
             <SAP05:Address-Line-1>1 Some Street</SAP05:Address-Line-1>
             <SAP05:Address-Line-2>Some Area</SAP05:Address-Line-2>
             <SAP05:Address-Line-3>Some County</SAP05:Address-Line-3>
-            <SAP05:Post-Town>Post-Town1</SAP05:Post-Town>
+            <SAP05:Post-Town>Whitbury</SAP05:Post-Town>
             <SAP05:Postcode>A0 0AA</SAP05:Postcode>
           </SAP05:Address>
           <SAP05:UPRN>0000000000</SAP05:UPRN>
@@ -159,18 +159,18 @@
           <SAP05:Has-Fixed-Air-Conditioning>false</SAP05:Has-Fixed-Air-Conditioning>
           <SAP05:Has-Hot-Water-Cylinder>true</SAP05:Has-Hot-Water-Cylinder>
           <SAP05:Has-Heated-Separate-Conservatory>false</SAP05:Has-Heated-Separate-Conservatory>
-          <SAP05:Dwelling-Type>Dwelling-Type0</SAP05:Dwelling-Type>
-          <SAP05:Total-Floor-Area>10</SAP05:Total-Floor-Area>
+          <SAP05:Dwelling-Type>Mid-terrace house</SAP05:Dwelling-Type>
+          <SAP05:Total-Floor-Area>69</SAP05:Total-Floor-Area>
         </SAP05:Property-Summary>
         <SAP05:Energy-Use>
           <SAP05:Energy-Rating-Current>50</SAP05:Energy-Rating-Current>
-          <SAP05:Energy-Rating-Potential>50</SAP05:Energy-Rating-Potential>
-          <SAP05:Environmental-Impact-Current>50</SAP05:Environmental-Impact-Current>
+          <SAP05:Energy-Rating-Potential>72</SAP05:Energy-Rating-Potential>
+          <SAP05:Environmental-Impact-Current>52</SAP05:Environmental-Impact-Current>
           <SAP05:Environmental-Impact-Potential>93</SAP05:Environmental-Impact-Potential>
-          <SAP05:Energy-Consumption-Current>0</SAP05:Energy-Consumption-Current>
-          <SAP05:Energy-Consumption-Potential>0</SAP05:Energy-Consumption-Potential>
+          <SAP05:Energy-Consumption-Current>230</SAP05:Energy-Consumption-Current>
+          <SAP05:Energy-Consumption-Potential>88</SAP05:Energy-Consumption-Potential>
           <SAP05:CO2-Emissions-Current>2.4</SAP05:CO2-Emissions-Current>
-          <SAP05:CO2-Emissions-Current-Per-Floor-Area>0</SAP05:CO2-Emissions-Current-Per-Floor-Area>
+          <SAP05:CO2-Emissions-Current-Per-Floor-Area>20</SAP05:CO2-Emissions-Current-Per-Floor-Area>
           <SAP05:CO2-Emissions-Potential>1.4</SAP05:CO2-Emissions-Potential>
           <SAP05:Lighting-Cost-Current>123.45</SAP05:Lighting-Cost-Current>
           <SAP05:Lighting-Cost-Potential>84.23</SAP05:Lighting-Cost-Potential>
@@ -181,10 +181,10 @@
         </SAP05:Energy-Use>
         <SAP05:Suggested-Improvements>
           <SAP05:Improvement>
-            <SAP05:Sequence>0</SAP05:Sequence>
+            <SAP05:Sequence>1</SAP05:Sequence>
             <SAP05:Improvement-Category>1</SAP05:Improvement-Category>
             <SAP05:Improvement-Type>A</SAP05:Improvement-Type>
-            <SAP05:Typical-Saving>0.0</SAP05:Typical-Saving>
+            <SAP05:Typical-Saving>360</SAP05:Typical-Saving>
             <SAP05:Energy-Performance-Rating>50</SAP05:Energy-Performance-Rating>
             <SAP05:Environmental-Impact-Rating>50</SAP05:Environmental-Impact-Rating>
             <SAP05:Improvement-Details>
@@ -192,10 +192,10 @@
             </SAP05:Improvement-Details>
           </SAP05:Improvement>
           <SAP05:Improvement>
-            <SAP05:Sequence>1</SAP05:Sequence>
+            <SAP05:Sequence>2</SAP05:Sequence>
             <SAP05:Improvement-Category>2</SAP05:Improvement-Category>
             <SAP05:Improvement-Type>B</SAP05:Improvement-Type>
-            <SAP05:Typical-Saving>0.1</SAP05:Typical-Saving>
+            <SAP05:Typical-Saving>99</SAP05:Typical-Saving>
             <SAP05:Energy-Performance-Rating>60</SAP05:Energy-Performance-Rating>
             <SAP05:Environmental-Impact-Rating>64</SAP05:Environmental-Impact-Rating>
             <SAP05:Improvement-Details>

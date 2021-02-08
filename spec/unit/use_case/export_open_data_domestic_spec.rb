@@ -11,22 +11,22 @@ describe UseCase::ExportOpenDataDomestic do
         address1: "1 Some Street",
         address2: "",
         address3: "",
-        posttown: "Post-Town1",
+        posttown: "Whitbury",
         postcode: "A0 0AA",
         construction_age_band: "K",
         current_energy_rating: "e",
-        potential_energy_rating: "e",
+        potential_energy_rating: "c",
         current_energy_efficiency: "50",
-        potential_energy_efficiency: "50",
-        property_type: "Dwelling-Type0",
+        potential_energy_efficiency: "72",
+        property_type: "Mid-terrace house",
         tenure: "1",
         transaction_type: "1",
-        environmental_impact_current: "50",
-        environmental_impact_potential: "50",
-        energy_consumption_current: "0",
-        energy_consumption_potential: "0",
+        environmental_impact_current: "52",
+        environmental_impact_potential: "74",
+        energy_consumption_current: "230",
+        energy_consumption_potential: "88",
         co2_emissions_current: "2.4",
-        co2_emiss_curr_per_floor_area: "0",
+        co2_emiss_curr_per_floor_area: "20",
         co2_emissions_potential: "1.4",
         heating_cost_current: "365.98",
         heating_cost_potential: "250.34",
@@ -34,11 +34,11 @@ describe UseCase::ExportOpenDataDomestic do
         hot_water_cost_potential: "180.43",
         lighting_cost_current: "123.45",
         lighting_cost_potential: "84.23",
-        total_floor_area: "1",
+        total_floor_area: "55",
         mains_gas_flag: "Y",
         flat_top_storey: "N",
         flat_storey_count: "3",
-        main_heating_controls: "Description9",
+        main_heating_controls: "Programmer, room thermostat and TRVs",
         multi_glaze_proportion: "100",
         glazed_area: "1",
         number_habitable_rooms: "5",
@@ -47,40 +47,44 @@ describe UseCase::ExportOpenDataDomestic do
         fixed_lighting_outlets_count: "16",
         low_energy_fixed_lighting_outlets_count: "16",
         number_open_fireplaces: "0",
-        hotwater_description: "Description11",
-        hot_water_energy_eff: "N/A",
-        hot_water_env_eff: "N/A",
+        hotwater_description: "From main system",
+        hot_water_energy_eff: "Good",
+        hot_water_env_eff: "Good",
         wind_turbine_count: "0",
         heat_loss_corridor: "2",
         unheated_corridor_length: "10",
-        windows_description: "Description6",
-        windows_energy_eff: "N/A",
-        windows_env_eff: "N/A",
-        secondheat_description: "Description13",
+        windows_description: "Fully double glazed",
+        windows_energy_eff: "Average",
+        windows_env_eff: "Average",
+        secondheat_description: "Room heaters, electric",
         sheating_energy_eff: "N/A",
         sheating_env_eff: "N/A",
-        lighting_description: "Description12",
-        lighting_energy_eff: "N/A",
-        lighting_env_eff: "N/A",
+        lighting_description: "Low energy lighting in 50% of fixed outlets",
+        lighting_energy_eff: "Good",
+        lighting_env_eff: "Good",
         photo_supply: "0",
         built_form: "Semi-Detached",
-        mainheat_description: "Description7, Description8",
-        mainheat_energy_eff: "N/A",
-        mainheat_env_eff: "N/A",
+        mainheat_description:
+          "Boiler and radiators, anthracite, Boiler and radiators, mains gas",
+        mainheat_energy_eff: "Average, Good",
+        mainheat_env_eff: "Very Poor, Good",
         extension_count: "0",
         report_type: "2",
-        mainheatcont_description: "Description9, Description10",
-        roof_description: "Description2, Description3",
-        roof_energy_eff: "N/A, N/A",
-        roof_env_eff: "N/A, N/A",
-        walls_description: "Description0, Description1",
-        walls_energy_eff: "N/A, N/A",
-        walls_env_eff: "N/A, N/A",
+        mainheatcont_description:
+          "Programmer, room thermostat and TRVs, Time and temperature zone control",
+        roof_description:
+          "Pitched, 25 mm loft insulation, Pitched, 250 mm loft insulation",
+        roof_energy_eff: "Poor, Good",
+        roof_env_eff: "Poor, Good",
+        walls_description:
+          "Solid brick, as built, no insulation (assumed), Cavity wall, as built, insulated (assumed)",
+        walls_energy_eff: "Very Poor, Good",
+        walls_env_eff: "Very Poor, Good",
         energy_tariff: "off-peak 7 hour",
         floor_level: "01",
         solar_water_heating_flag: "N",
         mechanical_ventilation: "0",
-        floor_height: "2.45"
+        floor_height: "2.45",
       }
       expected_sap_values = {
         rrn: "0000-0000-0000-0000-0000",
@@ -90,22 +94,22 @@ describe UseCase::ExportOpenDataDomestic do
         address1: "1 Some Street",
         address2: "Some Area",
         address3: "Some County",
-        posttown: "Post-Town1",
+        posttown: "Whitbury",
         postcode: "A0 0AA",
         construction_age_band: "1750",
         current_energy_rating: "e",
-        potential_energy_rating: "e",
+        potential_energy_rating: "c",
         current_energy_efficiency: "50",
-        potential_energy_efficiency: "50",
-        property_type: "Dwelling-Type0",
+        potential_energy_efficiency: "72",
+        property_type: "Mid-terrace house",
         tenure: "1",
         transaction_type: "1",
-        environmental_impact_current: "50",
-        environmental_impact_potential: "50",
-        energy_consumption_current: "0",
-        energy_consumption_potential: "0",
+        environmental_impact_current: "52",
+        environmental_impact_potential: "74",
+        energy_consumption_current: "230",
+        energy_consumption_potential: "88",
         co2_emissions_current: "2.4",
-        co2_emiss_curr_per_floor_area: "0",
+        co2_emiss_curr_per_floor_area: "20",
         co2_emissions_potential: "1.4",
         heating_cost_current: "365.98",
         heating_cost_potential: "250.34",
@@ -113,7 +117,7 @@ describe UseCase::ExportOpenDataDomestic do
         hot_water_cost_potential: "180.43",
         lighting_cost_current: "123.45",
         lighting_cost_potential: "84.23",
-        total_floor_area: "10",
+        total_floor_area: "69",
         mains_gas_flag: nil,
         flat_top_storey: "N",
         flat_storey_count: nil,
@@ -142,23 +146,17 @@ describe UseCase::ExportOpenDataDomestic do
         lighting_env_eff: "N/A",
         photo_supply: nil,
         built_form: "Detached",
-        mainheat_description: "Thermostat, Thermostat",
+        mainheat_description: "Gas boiler, Gas boiler",
       }
 
       let(:rdsap_odc_hash) do
         expected_rdsap_values.merge(
-          {
-            rrn: "0000-0000-0000-0000-0000",
-            lodgement_date: date_today,
-          },
+          { rrn: "0000-0000-0000-0000-0000", lodgement_date: date_today },
         )
       end
       let(:sap_odc_hash) do
         expected_sap_values.merge(
-          {
-            rrn: "0000-0000-0000-0000-1000",
-            lodgement_date: date_today,
-          },
+          { rrn: "0000-0000-0000-0000-1000", lodgement_date: date_today },
         )
       end
       let(:exported_data) { described_class.new.execute }
@@ -175,11 +173,13 @@ describe UseCase::ExportOpenDataDomestic do
 
         domestic_legacy_sap_xml = Nokogiri.XML Samples.xml("SAP-Schema-17.0")
         domestic_legacy_sap_assessment_id = domestic_legacy_sap_xml.at("RRN")
-        domestic_legacy_sap_assessment_date = domestic_legacy_sap_xml.at("Registration-Date")
+        domestic_legacy_sap_assessment_date =
+          domestic_legacy_sap_xml.at("Registration-Date")
 
         domestic_ni_sap_xml = Nokogiri.XML Samples.xml("SAP-Schema-NI-18.0.0")
         domestic_ni_sap_assessment_id = domestic_ni_sap_xml.at("RRN")
-        domestic_ni_sap_assessment_date = domestic_ni_sap_xml.at("Registration-Date")
+        domestic_ni_sap_assessment_date =
+          domestic_ni_sap_xml.at("Registration-Date")
 
         add_assessor(
           scheme_id,
@@ -237,26 +237,36 @@ describe UseCase::ExportOpenDataDomestic do
         lodge_assessment(
           assessment_body: domestic_legacy_sap_xml.to_xml,
           accepted_responses: [201],
-          auth_data: { scheme_ids: [scheme_id] },
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
           schema_name: "SAP-Schema-17.0",
           override: true,
         )
-     end
+      end
 
       it "expects the number of non Northern Irish RdSAP and SAP lodgements within required date range for ODC to be 2" do
         expect(exported_data.length).to eq(2)
       end
 
-      expected_rdsap_values.keys
-        .each do |key|
+      expected_rdsap_values.keys.each do |key|
         it "returns the #{key} that matches the RdSAP test data for the equivalent entry in the ODC hash" do
           expect(exported_data[0][key.to_sym]).to include(rdsap_odc_hash[key])
         end
       end
 
-      expected_sap_values.reject { |k| %i[flat_storey_count unheated_corridor_length mains_gas_flag heat_loss_corridor number_heated_rooms number_habitable_rooms photo_supply glazed_area].include? k }
-        .keys
-        .each do |key|
+      expected_sap_values.reject { |k|
+        %i[
+          flat_storey_count
+          unheated_corridor_length
+          mains_gas_flag
+          heat_loss_corridor
+          number_heated_rooms
+          number_habitable_rooms
+          photo_supply
+          glazed_area
+        ].include? k
+      }.keys.each do |key|
         it "returns the #{key} that matches the SAP test data for the equivalent entry in the ODC hash" do
           expect(exported_data[1][key.to_sym]).to include(sap_odc_hash[key])
         end

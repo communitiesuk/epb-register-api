@@ -21,8 +21,12 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
     let(:cepc_assessment_id) { non_domestic_xml.at("//CEPC:RRN") }
     let(:cepc_address_line_one) { non_domestic_xml.at("//CEPC:Address-Line-1") }
     let(:cepc_address_line_two) { non_domestic_xml.at("//CEPC:Address-Line-2") }
-    let(:cepc_address_line_three) { non_domestic_xml.at("//CEPC:Address-Line-3") }
-    let(:cepc_address_line_four) { non_domestic_xml.at("//CEPC:Address-Line-4") }
+    let(:cepc_address_line_three) do
+      non_domestic_xml.at("//CEPC:Address-Line-3")
+    end
+    let(:cepc_address_line_four) do
+      non_domestic_xml.at("//CEPC:Address-Line-4")
+    end
 
     before(:each) do
       add_assessor(
@@ -138,7 +142,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
         let(:response) do
           JSON.parse(
             assertive_get(
-              "/api/search/addresses?street=Lonely%20Street&town=Post-Town1",
+              "/api/search/addresses?street=Lonely%20Street&town=Whitbury",
               [200],
               true,
               {},
@@ -159,7 +163,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
         let(:response) do
           JSON.parse(
             assertive_get(
-              "/api/search/addresses?street=Some%20Stre&town=Post-Town1",
+              "/api/search/addresses?street=Some%20Stre&town=Whitbury",
               [200],
               true,
               {},
@@ -181,7 +185,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
               line2: nil,
               line3: nil,
               line4: nil,
-              town: "Post-Town1",
+              town: "Whitbury",
               postcode: "A0 0AA",
               source: "PREVIOUS_ASSESSMENT",
               existingAssessments: [
@@ -200,7 +204,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
         let(:response) do
           JSON.parse(
             assertive_get(
-              "/api/search/addresses?street=Some%20Street&town=Post-Town1",
+              "/api/search/addresses?street=Some%20Street&town=Whitbury",
               [200],
               true,
               {},
@@ -222,7 +226,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
               line2: nil,
               line3: nil,
               line4: nil,
-              town: "Post-Town1",
+              town: "Whitbury",
               postcode: "A0 0AA",
               source: "PREVIOUS_ASSESSMENT",
               existingAssessments: [
@@ -241,7 +245,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
         let(:response) do
           JSON.parse(
             assertive_get(
-              "/api/search/addresses?street=Some%20Street&town=Post-Town1",
+              "/api/search/addresses?street=Some%20Street&town=Whitbury",
               [200],
               true,
               {},
@@ -279,7 +283,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
         let(:response) do
           JSON.parse(
             assertive_get(
-              "/api/search/addresses?street=Some%20Street&town=Post-Town1",
+              "/api/search/addresses?street=Some%20Street&town=Whitbury",
               [200],
               true,
               {},
@@ -317,7 +321,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
         let(:response) do
           JSON.parse(
             assertive_get(
-              "/api/search/addresses?street=Some%20Street&town=Post-Town1",
+              "/api/search/addresses?street=Some%20Street&town=Whitbury",
               [200],
               true,
               {},
@@ -339,7 +343,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
               line2: nil,
               line3: nil,
               line4: nil,
-              town: "Post-Town1",
+              town: "Whitbury",
               postcode: "A0 0AA",
               source: "PREVIOUS_ASSESSMENT",
               existingAssessments: [
@@ -357,7 +361,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
           let(:response) do
             JSON.parse(
               assertive_get(
-                "/api/search/addresses?street=Some%20Street&town=POST-TOWN1",
+                "/api/search/addresses?street=Some%20Street&town=Whitbury",
                 [200],
                 true,
                 {},
@@ -379,7 +383,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
                 line2: nil,
                 line3: nil,
                 line4: nil,
-                town: "Post-Town1",
+                town: "Whitbury",
                 postcode: "A0 0AA",
                 source: "PREVIOUS_ASSESSMENT",
                 existingAssessments: [
@@ -399,7 +403,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
         let(:response) do
           JSON.parse(
             assertive_get(
-              "/api/search/addresses?street=Some%20Street&town=Post-Town1&addressType=DOMESTIC",
+              "/api/search/addresses?street=Some%20Street&town=Whitbury&addressType=DOMESTIC",
               [200],
               true,
               {},
@@ -421,7 +425,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
               line2: nil,
               line3: nil,
               line4: nil,
-              town: "Post-Town1",
+              town: "Whitbury",
               postcode: "A0 0AA",
               source: "PREVIOUS_ASSESSMENT",
               existingAssessments: [
@@ -439,7 +443,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
       context "when an invalid address type is provided" do
         it "returns status 422" do
           assertive_get(
-            "/api/search/addresses?street=Other%20Street&town=Post-Town1&addressType=asdf",
+            "/api/search/addresses?street=Other%20Street&town=Whitbury&addressType=asdf",
             [422],
             true,
             {},
@@ -452,7 +456,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
         let(:response) do
           JSON.parse(
             assertive_get(
-              "/api/search/addresses?street=Other%20Street&town=Post-Town1&addressType=COMMERCIAL",
+              "/api/search/addresses?street=Other%20Street&town=Whitbury&addressType=COMMERCIAL",
               [200],
               true,
               {},
@@ -474,7 +478,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
               line2: nil,
               line3: nil,
               line4: nil,
-              town: "Post-Town1",
+              town: "Whitbury",
               postcode: "A0 0AA",
               source: "PREVIOUS_ASSESSMENT",
               existingAssessments: [
@@ -493,7 +497,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
         let(:response) do
           JSON.parse(
             assertive_get(
-              "/api/search/addresses?street=Test%20Street&town=Post-Town1",
+              "/api/search/addresses?street=Test%20Street&town=Whitbury",
               [200],
               true,
               {},
@@ -515,7 +519,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown" do
               line2: "123 Test Street",
               line3: nil,
               line4: nil,
-              town: "Post-Town1",
+              town: "Whitbury",
               postcode: "A0 0AA",
               source: "PREVIOUS_ASSESSMENT",
               existingAssessments: [

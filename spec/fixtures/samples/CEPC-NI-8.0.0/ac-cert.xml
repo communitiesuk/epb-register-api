@@ -18,7 +18,7 @@
         <Name>Test Assessor Name</Name>
         <Accreditation-Scheme-Name>Some Accreditation Limited</Accreditation-Scheme-Name>
         <Accreditation-Scheme-Website>www.example.com</Accreditation-Scheme-Website>
-        <Trading-Address>111 Twotwotwo Street, Mytown,, MT7 1AA</Trading-Address>
+        <Trading-Address>111 Twotwotwo Street, Mytown, MT7 1AA</Trading-Address>
         <Company-Name>Assess Energy Limited</Company-Name>
         <Qualifications>SP3</Qualifications>
         <Qualifications>CC4</Qualifications>
@@ -32,10 +32,10 @@
           <Address-Line-2>2 Lonely Street</Address-Line-2>
           <Address-Line-3>Some Area</Address-Line-3>
           <Address-Line-4>Some County</Address-Line-4>
-          <Post-Town>Post-Town1</Post-Town>
+          <Post-Town>Whitbury</Post-Town>
           <Postcode>A0 0AA</Postcode>
         </Property-Address>
-        <Property-Type>Property-Type1</Property-Type>
+        <Property-Type>A1/A2 Retail and Financial/Professional services</Property-Type>
       </Property-Details>
       <Calculation-Details>
         <Calculation-Tool>Sterling Accreditation, Sterling e-Volve, v1.2</Calculation-Tool>
@@ -46,7 +46,7 @@
       <Data-Blob></Data-Blob>
     </Unstructured-Data>
     <Air-Conditioning-Inspection-Certificate>
-      <Building-Name>Building-Name0</Building-Name>
+      <Building-Name>The Coolfresh Building</Building-Name>
       <F-Gas-Compliant-Date>00/00/,,00</F-Gas-Compliant-Date>
       <AC-Rated-Output>
         <AC-kW-Rating>40</AC-kW-Rating>

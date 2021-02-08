@@ -96,20 +96,20 @@
             <HIP:Description>Electric heater</HIP:Description>
             <HIP:Environmental-Efficiency-Rating>0</HIP:Environmental-Efficiency-Rating>
           </HIP:Secondary-Heating>
-          <HIP:Dwelling-Type>Dwelling-Type0</HIP:Dwelling-Type>
-          <HIP:Total-Floor-Area>10</HIP:Total-Floor-Area>
+          <HIP:Dwelling-Type>Mid-terrace house</HIP:Dwelling-Type>
+          <HIP:Total-Floor-Area>69</HIP:Total-Floor-Area>
         </HIP:Property-Summary>
         <HIP:Energy-Use xmlns:HIP="DCLG-HIP">
           <HIP:Energy-Rating-Average>57</HIP:Energy-Rating-Average>
           <HIP:Energy-Rating-Current>50</HIP:Energy-Rating-Current>
-          <HIP:Energy-Rating-Potential>50</HIP:Energy-Rating-Potential>
-          <HIP:Environmental-Impact-Current>50</HIP:Environmental-Impact-Current>
+          <HIP:Energy-Rating-Potential>72</HIP:Energy-Rating-Potential>
+          <HIP:Environmental-Impact-Current>52</HIP:Environmental-Impact-Current>
           <HIP:Environmental-Impact-Potential>78</HIP:Environmental-Impact-Potential>
-          <HIP:Energy-Consumption-Current quantity="kWh/m2 per year">0</HIP:Energy-Consumption-Current>
-          <HIP:Energy-Consumption-Potential quantity="kWh/m2 per year">0</HIP:Energy-Consumption-Potential>
+          <HIP:Energy-Consumption-Current quantity="kWh/m2 per year">230</HIP:Energy-Consumption-Current>
+          <HIP:Energy-Consumption-Potential quantity="kWh/m2 per year">88</HIP:Energy-Consumption-Potential>
           <HIP:CO2-Emissions-Current quantity="tonnes per year">2.4</HIP:CO2-Emissions-Current>
           <HIP:CO2-Emissions-Potential quantity="tonnes per year">1.4</HIP:CO2-Emissions-Potential>
-          <HIP:CO2-Emissions-Current-Per-Floor-Area quantity="kg/m2 per year">0</HIP:CO2-Emissions-Current-Per-Floor-Area>
+          <HIP:CO2-Emissions-Current-Per-Floor-Area quantity="kg/m2 per year">20</HIP:CO2-Emissions-Current-Per-Floor-Area>
           <HIP:Lighting-Cost-Current currency="GBP">123.45</HIP:Lighting-Cost-Current>
           <HIP:Lighting-Cost-Potential currency="GBP">84.23</HIP:Lighting-Cost-Potential>
           <HIP:Heating-Cost-Current currency="GBP">365.98</HIP:Heating-Cost-Current>
@@ -119,11 +119,11 @@
         </HIP:Energy-Use>
         <HIP:Suggested-Improvements xmlns:HIP="DCLG-HIP">
           <HIP:Improvement>
-            <HIP:Sequence>0</HIP:Sequence>
+            <HIP:Sequence>1</HIP:Sequence>
             <HIP:Improvement-Type>A</HIP:Improvement-Type>
-            <HIP:Indicative-Cost>5</HIP:Indicative-Cost>
+            <HIP:Indicative-Cost>£100 - £350</HIP:Indicative-Cost>
             <HIP:Improvement-Category>1</HIP:Improvement-Category>
-            <HIP:Typical-Saving currency="GBP">0.0</HIP:Typical-Saving>
+            <HIP:Typical-Saving currency="GBP">360</HIP:Typical-Saving>
             <HIP:Energy-Performance-Rating>50</HIP:Energy-Performance-Rating>
             <HIP:Environmental-Impact-Rating>50</HIP:Environmental-Impact-Rating>
             <HIP:Improvement-Details>
@@ -131,11 +131,11 @@
             </HIP:Improvement-Details>
           </HIP:Improvement>
           <HIP:Improvement>
-            <HIP:Sequence>1</HIP:Sequence>
+            <HIP:Sequence>2</HIP:Sequence>
             <HIP:Improvement-Type>B</HIP:Improvement-Type>
-            <HIP:Indicative-Cost>2</HIP:Indicative-Cost>
+            <HIP:Indicative-Cost>2000</HIP:Indicative-Cost>
             <HIP:Improvement-Category>2</HIP:Improvement-Category>
-            <HIP:Typical-Saving currency="GBP">0.1</HIP:Typical-Saving>
+            <HIP:Typical-Saving currency="GBP">99</HIP:Typical-Saving>
             <HIP:Energy-Performance-Rating>60</HIP:Energy-Performance-Rating>
             <HIP:Environmental-Impact-Rating>64
             </HIP:Environmental-Impact-Rating>
@@ -272,12 +272,12 @@
           <SAP:Name>Mr Test Boi TST</SAP:Name>
           <SAP:Contact-Address>
             <HIP:Address-Line-1 xmlns:HIP="DCLG-HIP">2 Some Street</HIP:Address-Line-1>
-            <HIP:Post-Town xmlns:HIP="DCLG-HIP">Post-Town1</HIP:Post-Town>
+            <HIP:Post-Town xmlns:HIP="DCLG-HIP">Whitbury</HIP:Post-Town>
             <HIP:Postcode xmlns:HIP="DCLG-HIP">A0 0AA</HIP:Postcode>
           </SAP:Contact-Address>
           <SAP:Notify-Lodgement>Y</SAP:Notify-Lodgement>
-          <SAP:Web-Site>a@b.c</SAP:Web-Site>
-          <SAP:Scheme-Web-Site>a@b.c</SAP:Scheme-Web-Site>
+          <SAP:Web-Site>http://www.scheme.example.com</SAP:Web-Site>
+          <SAP:Scheme-Web-Site>http://www.scheme.example.com</SAP:Scheme-Web-Site>
           <SAP:E-Mail>a@b.c</SAP:E-Mail>
           <SAP:Telephone>111222333</SAP:Telephone>
           <SAP:Fax>111222333</SAP:Fax>
@@ -288,18 +288,18 @@
             <HIP:Address-Line-1>1 Some Street</HIP:Address-Line-1>
             <HIP:Address-Line-2>Some Area</HIP:Address-Line-2>
             <HIP:Address-Line-3>Some County</HIP:Address-Line-3>
-            <HIP:Post-Town>Post-Town1</HIP:Post-Town>
+            <HIP:Post-Town>Whitbury</HIP:Post-Town>
             <HIP:Postcode>A0 0AA</HIP:Postcode>
           </HIP:Address>
           <HIP:UPRN xmlns:HIP="DCLG-HIP">0000000000</HIP:UPRN>
         </SAP:Property>
       </SAP:Report-Header>
       <SAP:Insurance-Details xmlns:SAP="DCLG-SAP">
-        <SAP:Insurer>Insurer0</SAP:Insurer>
-        <SAP:Policy-No>Policy-No0</SAP:Policy-No>
+        <SAP:Insurer>EPC Protect Inc.</SAP:Insurer>
+        <SAP:Policy-No>X13-76540987B</SAP:Policy-No>
         <SAP:Effective-Date>2020-05-04</SAP:Effective-Date>
-        <SAP:Expiry-Date>2020-05-04</SAP:Expiry-Date>
-        <SAP:PI-Limit>0</SAP:PI-Limit>
+        <SAP:Expiry-Date>2030-05-03</SAP:Expiry-Date>
+        <SAP:PI-Limit>5000000</SAP:PI-Limit>
       </SAP:Insurance-Details>
     </EPC-Data>
   </Content>

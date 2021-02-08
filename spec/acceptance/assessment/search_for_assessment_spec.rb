@@ -86,7 +86,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
             optOut: false,
             postcode: "A0 0AA",
             dateOfExpiry: "2030-05-03",
-            town: "Post-Town1",
+            town: "Whitbury",
             addressId: "UPRN-000000000000",
             addressLine1: "1 Some Street",
             addressLine2: "",
@@ -309,7 +309,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
             currentEnergyEfficiencyBand: "e",
             postcode: "A0 0AA",
             dateOfExpiry: "2030-05-03",
-            town: "Post-Town1",
+            town: "Whitbury",
             addressId: "UPRN-000000000000",
             addressLine1: "1 Some Street",
             addressLine2: "",
@@ -335,7 +335,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
           optOut: false,
           postcode: "A0 0AA",
           dateOfExpiry: "2030-05-03",
-          town: "Post-Town1",
+          town: "Whitbury",
           addressId: "UPRN-000000000000",
           addressLine1: "1 Some Street",
           addressLine2: "",
@@ -380,10 +380,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
     it "returns matching assessments" do
       setup_scheme_and_lodge
       response =
-        assessments_search_by_street_name_and_town(
-          "1 Some Street",
-          "Post-Town1",
-        )
+        assessments_search_by_street_name_and_town("1 Some Street", "Whitbury")
 
       response_json = JSON.parse(response.body)
 
@@ -393,7 +390,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
     it "returns matching assessments with missing property number" do
       setup_scheme_and_lodge
       response =
-        assessments_search_by_street_name_and_town("Some Street", "Post-Town1")
+        assessments_search_by_street_name_and_town("Some Street", "Whitbury")
 
       response_json = JSON.parse(response.body)
 
@@ -403,7 +400,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
     it "returns matching assessments with missing letters in street" do
       setup_scheme_and_lodge
       response =
-        assessments_search_by_street_name_and_town("ome Street", "Post-Town1")
+        assessments_search_by_street_name_and_town("ome Street", "Whitbury")
 
       response_json = JSON.parse(response.body)
 
@@ -415,10 +412,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
       opt_out_assessment("0000-0000-0000-0000-0000")
 
       response =
-        assessments_search_by_street_name_and_town(
-          "1 Some Street",
-          "Post-Town1",
-        )
+        assessments_search_by_street_name_and_town("1 Some Street", "Whitbury")
       response_json = JSON.parse(response.body)
 
       expect(response_json["data"]["assessments"].length).to eq(0)
@@ -429,7 +423,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
       response =
         assessments_search_by_street_name_and_town(
           "2 Lonely Street",
-          "Post-Town1",
+          "Whitbury",
           [200],
           %w[CEPC],
         )
@@ -469,7 +463,7 @@ describe "Acceptance::Assessment::SearchForAssessments" do
       )
 
       response =
-        assessments_search_by_street_name_and_town("Some Street", "Post-Town1")
+        assessments_search_by_street_name_and_town("Some Street", "Whitbury")
 
       response_json = JSON.parse(response.body, symbolize_names: true)
 

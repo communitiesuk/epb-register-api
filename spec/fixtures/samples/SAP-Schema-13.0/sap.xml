@@ -94,7 +94,7 @@
         <SAP05:Property>
           <SAP05:Address>
             <SAP05:Address-Line-1>1 Some Street</SAP05:Address-Line-1>
-            <SAP05:Post-Town>Post-Town1</SAP05:Post-Town>
+            <SAP05:Post-Town>Whitbury</SAP05:Post-Town>
             <SAP05:Postcode>A0 0AA</SAP05:Postcode>
           </SAP05:Address>
           <SAP05:UPRN>0000000000</SAP05:UPRN>

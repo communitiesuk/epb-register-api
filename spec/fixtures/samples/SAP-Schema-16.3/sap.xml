@@ -50,17 +50,17 @@
 						<SAP:Scheme-Name>SPEC</SAP:Scheme-Name>
 						<SAP:Complaints-Address>
 							<SAP:Address-Line-1>2 Some Street</SAP:Address-Line-1>
-							<SAP:Post-Town>Post-Town1</SAP:Post-Town>
+							<SAP:Post-Town>Whitbury</SAP:Post-Town>
 							<SAP:Postcode>A0 0AA</SAP:Postcode>
 						</SAP:Complaints-Address>
 						<SAP:Contact-Address>
 							<SAP:Address-Line-1>3 Some Street</SAP:Address-Line-1>
-							<SAP:Post-Town>Post-Town0</SAP:Post-Town>
+							<SAP:Post-Town>Fulchester</SAP:Post-Town>
 							<SAP:Postcode>A0 0AA</SAP:Postcode>
 						</SAP:Contact-Address>
-						<SAP:Web-Site>Scheme-Web-Site0</SAP:Web-Site>
+						<SAP:Web-Site>http://www.scheme.example.com</SAP:Web-Site>
 						<SAP:E-Mail>d@e.f</SAP:E-Mail>
-						<SAP:Registered-Name>Name0</SAP:Registered-Name>
+						<SAP:Registered-Name>Testa Sessor</SAP:Registered-Name>
 						<SAP:Fax>000000</SAP:Fax>
 						<SAP:Telephone>0000000</SAP:Telephone>
 					</SAP:Certification-Scheme>
@@ -76,7 +76,7 @@
 						<SAP:Address-Line-1>1 Some Street</SAP:Address-Line-1>
 						<SAP:Address-Line-2>Some Area</SAP:Address-Line-2>
 						<SAP:Address-Line-3>Some County</SAP:Address-Line-3>
-						<SAP:Post-Town>Post-Town1</SAP:Post-Town>
+						<SAP:Post-Town>Whitbury</SAP:Post-Town>
 						<SAP:Postcode>A0 0AA</SAP:Postcode>
 					</SAP:Address>
 					<SAP:UPRN>0000000000</SAP:UPRN>
@@ -91,13 +91,13 @@
 				<SAP:Assessment-Date>2014-02-12</SAP:Assessment-Date>
 				<SAP:Renewable-Heat-Incentive>
 					<SAP:RHI-Existing-Dwelling>
-						<SAP:Space-Heating-Existing-Dwelling>30</SAP:Space-Heating-Existing-Dwelling>
-						<SAP:Water-Heating>60</SAP:Water-Heating>
+						<SAP:Space-Heating-Existing-Dwelling>13120</SAP:Space-Heating-Existing-Dwelling>
+						<SAP:Water-Heating>2285</SAP:Water-Heating>
 						<SAP:Space-Heating-With-Cavity-Insulation>15</SAP:Space-Heating-With-Cavity-Insulation>
 						<SAP:Space-Heating-With-Loft-And-Cavity-Insulation>15</SAP:Space-Heating-With-Loft-And-Cavity-Insulation>
-						<SAP:Impact-Of-Loft-Insulation>-8</SAP:Impact-Of-Loft-Insulation>
-						<SAP:Impact-Of-Cavity-Insulation>-12</SAP:Impact-Of-Cavity-Insulation>
-						<SAP:Impact-Of-Solid-Wall-Insulation>-16</SAP:Impact-Of-Solid-Wall-Insulation>
+						<SAP:Impact-Of-Loft-Insulation>-2114</SAP:Impact-Of-Loft-Insulation>
+						<SAP:Impact-Of-Cavity-Insulation>-122</SAP:Impact-Of-Cavity-Insulation>
+						<SAP:Impact-Of-Solid-Wall-Insulation>-3560</SAP:Impact-Of-Solid-Wall-Insulation>
 					</SAP:RHI-Existing-Dwelling>
 				</SAP:Renewable-Heat-Incentive>
 				<SAP:Property-Summary>
@@ -176,19 +176,19 @@
 						<SAP:Description>Draft Exclusion</SAP:Description>
 						<SAP:Environmental-Efficiency-Rating>0</SAP:Environmental-Efficiency-Rating>
 					</SAP:Air-Tightness>
-					<SAP:Dwelling-Type>Dwelling-Type0</SAP:Dwelling-Type>
-					<SAP:Total-Floor-Area>10</SAP:Total-Floor-Area>
+					<SAP:Dwelling-Type>Mid-terrace house</SAP:Dwelling-Type>
+					<SAP:Total-Floor-Area>69</SAP:Total-Floor-Area>
 					<SAP:Is-Zero-Carbon-Home>true</SAP:Is-Zero-Carbon-Home>
 				</SAP:Property-Summary>
 				<SAP:Energy-Use>
 					<SAP:Energy-Rating-Current>50</SAP:Energy-Rating-Current>
-					<SAP:Energy-Rating-Potential>50</SAP:Energy-Rating-Potential>
-					<SAP:Environmental-Impact-Current>50</SAP:Environmental-Impact-Current>
+					<SAP:Energy-Rating-Potential>72</SAP:Energy-Rating-Potential>
+					<SAP:Environmental-Impact-Current>52</SAP:Environmental-Impact-Current>
 					<SAP:Environmental-Impact-Potential>93</SAP:Environmental-Impact-Potential>
-					<SAP:Energy-Consumption-Current>0</SAP:Energy-Consumption-Current>
-					<SAP:Energy-Consumption-Potential>0</SAP:Energy-Consumption-Potential>
+					<SAP:Energy-Consumption-Current>230</SAP:Energy-Consumption-Current>
+					<SAP:Energy-Consumption-Potential>88</SAP:Energy-Consumption-Potential>
 					<SAP:CO2-Emissions-Current>2.4</SAP:CO2-Emissions-Current>
-					<SAP:CO2-Emissions-Current-Per-Floor-Area>0</SAP:CO2-Emissions-Current-Per-Floor-Area>
+					<SAP:CO2-Emissions-Current-Per-Floor-Area>20</SAP:CO2-Emissions-Current-Per-Floor-Area>
 					<SAP:CO2-Emissions-Potential>1.4</SAP:CO2-Emissions-Potential>
 					<SAP:Lighting-Cost-Current>123.45</SAP:Lighting-Cost-Current>
 					<SAP:Lighting-Cost-Potential>84.23</SAP:Lighting-Cost-Potential>
@@ -200,26 +200,26 @@
 				</SAP:Energy-Use>
 				<SAP:Suggested-Improvements>
 					<SAP:Improvement>
-						<SAP:Sequence>0</SAP:Sequence>
+						<SAP:Sequence>1</SAP:Sequence>
 						<SAP:Improvement-Category>6</SAP:Improvement-Category>
 						<SAP:Improvement-Type>Z3</SAP:Improvement-Type>
-						<SAP:Typical-Saving>0.0</SAP:Typical-Saving>
+						<SAP:Typical-Saving>360</SAP:Typical-Saving>
 						<SAP:Energy-Performance-Rating>50</SAP:Energy-Performance-Rating>
 						<SAP:Environmental-Impact-Rating>50</SAP:Environmental-Impact-Rating>
-						<SAP:Indicative-Cost>5</SAP:Indicative-Cost>
+						<SAP:Indicative-Cost>£100 - £350</SAP:Indicative-Cost>
 						<SAP:Improvement-Details>
 							<SAP:Improvement-Number>5</SAP:Improvement-Number>
 						</SAP:Improvement-Details>
 						<SAP:Green-Deal-Category>1</SAP:Green-Deal-Category>
 					</SAP:Improvement>
 					<SAP:Improvement>
-						<SAP:Sequence>1</SAP:Sequence>
+						<SAP:Sequence>2</SAP:Sequence>
 						<SAP:Improvement-Category>2</SAP:Improvement-Category>
 						<SAP:Improvement-Type>Z2</SAP:Improvement-Type>
-						<SAP:Typical-Saving>0.1</SAP:Typical-Saving>
+						<SAP:Typical-Saving>99</SAP:Typical-Saving>
 						<SAP:Energy-Performance-Rating>60</SAP:Energy-Performance-Rating>
 						<SAP:Environmental-Impact-Rating>64</SAP:Environmental-Impact-Rating>
-						<SAP:Indicative-Cost>2</SAP:Indicative-Cost>
+						<SAP:Indicative-Cost>2000</SAP:Indicative-Cost>
 						<SAP:Improvement-Details>
 							<SAP:Improvement-Number>1</SAP:Improvement-Number>
 						</SAP:Improvement-Details>

@@ -74,7 +74,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
               line2: nil,
               line3: nil,
               line4: nil,
-              town: "Post-Town1",
+              town: "Whitbury",
               postcode: "A0 0AA",
               source: "PREVIOUS_ASSESSMENT",
               existingAssessments: [
@@ -170,7 +170,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
             line2: nil,
             line3: nil,
             line4: nil,
-            town: "Post-Town1",
+            town: "Whitbury",
             postcode: "A0 0AA",
             source: "PREVIOUS_ASSESSMENT",
             existingAssessments: [
@@ -219,7 +219,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
 
     before(:each) do
       ActiveRecord::Base.connection.execute(
-        "INSERT INTO address_base (uprn, address_line1, postcode, town) VALUES ('1', '1 Some Street', 'A0 0AA', 'Post-Town1')",
+        "INSERT INTO address_base (uprn, address_line1, postcode, town) VALUES ('1', '1 Some Street', 'A0 0AA', 'Whitbury')",
       )
       add_assessor(scheme_id, "SPEC000000", VALID_ASSESSOR_REQUEST_BODY)
     end
@@ -234,7 +234,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
               line2: nil,
               line3: nil,
               line4: nil,
-              town: "Post-Town1",
+              town: "Whitbury",
               postcode: "A0 0AA",
               source: "GAZETTEER",
               existingAssessments: [],
@@ -261,7 +261,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
               line2: nil,
               line3: nil,
               line4: nil,
-              town: "Post-Town1",
+              town: "Whitbury",
               postcode: "A0 0AA",
               source: "GAZETTEER",
               existingAssessments: [

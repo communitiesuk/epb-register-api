@@ -244,11 +244,11 @@ module ViewModel
         @xml_doc.search("Roof/Description").map(&:content)
       end
 
-      def all_roof_energy_efficieny_rating
+      def all_roof_energy_efficiency_rating
         @xml_doc.search("Roof/Energy-Efficiency-Rating").map(&:content)
       end
 
-      def all_roof_env_energy_efficieny_rating
+      def all_roof_env_energy_efficiency_rating
         @xml_doc.search("Roof/Environmental-Efficiency-Rating").map(&:content)
       end
 
@@ -316,7 +316,7 @@ module ViewModel
         xpath(%w[Storey-Count])
       end
 
-      def mains_heating_controls
+      def main_heating_controls
         xpath(%w[Main-Heating-Controls Description])
       end
 
@@ -362,6 +362,12 @@ module ViewModel
 
       def all_main_heating_energy_efficiency
         @xml_doc.search("Main-Heating/Energy-Efficiency-Rating").map(&:content)
+      end
+
+      def all_main_heating_environmental_efficiency
+        @xml_doc
+          .search("Main-Heating/Environmental-Efficiency-Rating")
+          .map(&:content)
       end
 
       def wind_turbine_count
@@ -433,11 +439,11 @@ module ViewModel
         @xml_doc.search("Wall/Description").map(&:content)
       end
 
-      def all_wall_energy_efficieny_rating
+      def all_wall_energy_efficiency_rating
         @xml_doc.search("Wall/Energy-Efficiency-Rating").map(&:content)
       end
 
-      def all_wall_env_energy_efficieny_rating
+      def all_wall_env_energy_efficiency_rating
         @xml_doc.search("Wall/Environmental-Efficiency-Rating").map(&:content)
       end
 

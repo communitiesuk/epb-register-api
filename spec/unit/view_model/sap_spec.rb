@@ -17,8 +17,8 @@ describe ViewModel::SapWrapper do
               improvement_title: nil,
               improvement_type: "A",
               indicative_cost: nil,
-              sequence: 0,
-              typical_saving: "0.0",
+              sequence: 1,
+              typical_saving: "360",
             },
             {
               energy_performance_band_improvement: "d",
@@ -31,8 +31,8 @@ describe ViewModel::SapWrapper do
               improvement_title: nil,
               improvement_type: "B",
               indicative_cost: nil,
-              sequence: 1,
-              typical_saving: "0.1",
+              sequence: 2,
+              typical_saving: "99",
             },
           ],
           property_summary: [
@@ -140,9 +140,9 @@ describe ViewModel::SapWrapper do
               improvement_description: nil,
               improvement_title: nil,
               improvement_type: "A",
-              indicative_cost: "5",
-              sequence: 0,
-              typical_saving: "0.0",
+              indicative_cost: "£100 - £350",
+              sequence: 1,
+              typical_saving: "360",
             },
             {
               energy_performance_band_improvement: "d",
@@ -154,9 +154,9 @@ describe ViewModel::SapWrapper do
               improvement_description: nil,
               improvement_title: nil,
               improvement_type: "B",
-              indicative_cost: "2",
-              sequence: 1,
-              typical_saving: "0.1",
+              indicative_cost: "2000",
+              sequence: 2,
+              typical_saving: "99",
             },
           ],
         },
@@ -179,95 +179,96 @@ describe ViewModel::SapWrapper do
             impact_of_solid_wall_insulation: nil,
           },
         },
-        different_fields: {
-          property_age_band: "D",
-          property_summary: [
-            {
-              energy_efficiency_rating: 0,
-              environmental_efficiency_rating: 0,
-              name: "wall",
-              description: "Brick walls",
-            },
-            {
-              energy_efficiency_rating: 0,
-              environmental_efficiency_rating: 0,
-              name: "wall",
-              description: "Brick walls",
-            },
-            {
-              energy_efficiency_rating: 0,
-              environmental_efficiency_rating: 0,
-              name: "roof",
-              description: "Slate roof",
-            },
-            {
-              energy_efficiency_rating: 0,
-              environmental_efficiency_rating: 0,
-              name: "roof",
-              description: "slate roof",
-            },
-            {
-              energy_efficiency_rating: 0,
-              environmental_efficiency_rating: 0,
-              name: "floor",
-              description: "Tiled floor",
-            },
-            {
-              energy_efficiency_rating: 0,
-              environmental_efficiency_rating: 0,
-              name: "floor",
-              description: "Tiled floor",
-            },
-            {
-              energy_efficiency_rating: 0,
-              environmental_efficiency_rating: 0,
-              name: "window",
-              description: "Glass window",
-            },
-            {
-              energy_efficiency_rating: 0,
-              environmental_efficiency_rating: 0,
-              name: "main_heating",
-              description: "Gas boiler",
-            },
-            {
-              energy_efficiency_rating: 0,
-              environmental_efficiency_rating: 0,
-              name: "main_heating",
-              description: "Gas boiler",
-            },
-            {
-              energy_efficiency_rating: 0,
-              environmental_efficiency_rating: 0,
-              name: "main_heating_controls",
-              description: "Thermostat",
-            },
-            {
-              energy_efficiency_rating: 0,
-              environmental_efficiency_rating: 0,
-              name: "main_heating_controls",
-              description: "Thermostat",
-            },
-            {
-              energy_efficiency_rating: 0,
-              environmental_efficiency_rating: 0,
-              name: "hot_water",
-              description: "Gas boiler",
-            },
-            {
-              energy_efficiency_rating: 0,
-              environmental_efficiency_rating: 0,
-              name: "lighting",
-              description: "Energy saving bulbs",
-            },
-            {
-              energy_efficiency_rating: 0,
-              environmental_efficiency_rating: 0,
-              name: "secondary_heating",
-              description: "Electric heater",
-            },
-          ],
-        }.merge(ni_difference[:different_fields]),
+        different_fields:
+          {
+            property_age_band: "D",
+            property_summary: [
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "wall",
+                description: "Brick walls",
+              },
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "wall",
+                description: "Brick walls",
+              },
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "roof",
+                description: "Slate roof",
+              },
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "roof",
+                description: "slate roof",
+              },
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "floor",
+                description: "Tiled floor",
+              },
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "floor",
+                description: "Tiled floor",
+              },
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "window",
+                description: "Glass window",
+              },
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "main_heating",
+                description: "Gas boiler",
+              },
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "main_heating",
+                description: "Gas boiler",
+              },
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "main_heating_controls",
+                description: "Thermostat",
+              },
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "main_heating_controls",
+                description: "Thermostat",
+              },
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "hot_water",
+                description: "Gas boiler",
+              },
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "lighting",
+                description: "Energy saving bulbs",
+              },
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "secondary_heating",
+                description: "Electric heater",
+              },
+            ],
+          }.merge(ni_difference[:different_fields]),
       }
 
       [
@@ -284,14 +285,14 @@ describe ViewModel::SapWrapper do
         },
         {
           schema: "SAP-Schema-NI-18.0.0",
-          different_fields: {
-            address_id: "UPRN-000000000000",
-          }.merge(ni_difference[:different_fields]),
-          different_buried_fields: {
-            address: {
-              address_id: "UPRN-000000000000",
-            },
-          }.merge(ni_difference[:different_buried_fields]),
+          different_fields:
+            { address_id: "UPRN-000000000000" }.merge(
+              ni_difference[:different_fields],
+            ),
+          different_buried_fields:
+            { address: { address_id: "UPRN-000000000000" } }.merge(
+              ni_difference[:different_buried_fields],
+            ),
         },
         { schema: "SAP-Schema-NI-17.4" }.merge(ni_difference),
         { schema: "SAP-Schema-NI-17.3" }.merge(ni_difference),
@@ -305,9 +306,7 @@ describe ViewModel::SapWrapper do
           type: "sap",
           unsupported_fields: %i[tenure],
         },
-        {
-          schema: "SAP-Schema-NI-16.1",
-        }.merge(ni_pre_17_difference),
+        { schema: "SAP-Schema-NI-16.1" }.merge(ni_pre_17_difference),
         {
           schema: "SAP-Schema-16.2",
           type: "sap",
@@ -339,9 +338,9 @@ describe ViewModel::SapWrapper do
                 improvement_description: nil,
                 improvement_title: nil,
                 improvement_type: "A",
-                indicative_cost: "5",
-                sequence: 0,
-                typical_saving: "0.0",
+                indicative_cost: "£100 - £350",
+                sequence: 1,
+                typical_saving: "360",
               },
               {
                 energy_performance_band_improvement: "d",
@@ -353,9 +352,9 @@ describe ViewModel::SapWrapper do
                 improvement_description: nil,
                 improvement_title: nil,
                 improvement_type: "B",
-                indicative_cost: "2",
-                sequence: 1,
-                typical_saving: "0.1",
+                indicative_cost: "2000",
+                sequence: 2,
+                typical_saving: "99",
               },
             ],
           },
@@ -393,7 +392,7 @@ describe ViewModel::SapWrapper do
         address_line2: "Some Area",
         address_line3: "Some County",
         address_line4: nil,
-        town: "Post-Town1",
+        town: "Whitbury",
         postcode: "A0 0AA",
         address: {
           address_id: "LPRN-0000000000",
@@ -401,7 +400,7 @@ describe ViewModel::SapWrapper do
           address_line2: "Some Area",
           address_line3: "Some County",
           address_line4: nil,
-          town: "Post-Town1",
+          town: "Whitbury",
           postcode: "A0 0AA",
         },
         assessor: {
@@ -415,15 +414,15 @@ describe ViewModel::SapWrapper do
         current_carbon_emission: 2.4,
         current_energy_efficiency_band: "e",
         current_energy_efficiency_rating: 50,
-        dwelling_type: "Dwelling-Type0",
+        dwelling_type: "Mid-terrace house",
         estimated_energy_cost: "689.83",
         main_fuel_type: "36",
         heat_demand: {
-          current_space_heating_demand: 30,
-          current_water_heating_demand: 60,
-          impact_of_cavity_insulation: -12,
-          impact_of_loft_insulation: -8,
-          impact_of_solid_wall_insulation: -16,
+          current_space_heating_demand: 13_120,
+          current_water_heating_demand: 2285,
+          impact_of_cavity_insulation: -122,
+          impact_of_loft_insulation: -2114,
+          impact_of_solid_wall_insulation: -3560,
         },
         heating_cost_current: "365.98",
         heating_cost_potential: "250.34",
@@ -432,11 +431,11 @@ describe ViewModel::SapWrapper do
         lighting_cost_current: "123.45",
         lighting_cost_potential: "84.23",
         potential_carbon_emission: 1.4,
-        potential_energy_efficiency_band: "e",
-        potential_energy_efficiency_rating: 50,
+        potential_energy_efficiency_band: "c",
+        potential_energy_efficiency_rating: 72,
         potential_energy_saving: "174.83",
-        primary_energy_use: "0",
-        energy_consumption_potential: "0",
+        primary_energy_use: "230",
+        energy_consumption_potential: "88",
         property_age_band: "1750",
         property_summary: [
           {
@@ -541,9 +540,9 @@ describe ViewModel::SapWrapper do
             improvement_description: nil,
             improvement_title: nil,
             improvement_type: "Z3",
-            indicative_cost: "5",
-            sequence: 0,
-            typical_saving: "0.0",
+            indicative_cost: "£100 - £350",
+            sequence: 1,
+            typical_saving: "360",
           },
           {
             energy_performance_rating_improvement: 60,
@@ -555,17 +554,17 @@ describe ViewModel::SapWrapper do
             improvement_description: nil,
             improvement_title: nil,
             improvement_type: "Z2",
-            indicative_cost: "2",
-            sequence: 1,
-            typical_saving: "0.1",
+            indicative_cost: "2000",
+            sequence: 2,
+            typical_saving: "99",
           },
         ],
         related_party_disclosure_number: 1,
         related_party_disclosure_text: nil,
         tenure: "1",
-        total_floor_area: 10.0,
+        total_floor_area: 69.0,
         status: "ENTERED",
-        environmental_impact_current: "50",
+        environmental_impact_current: "52",
       }
     end
 
@@ -608,22 +607,22 @@ describe ViewModel::SapWrapper do
         address1: "1 Some Street",
         address2: "Some Area",
         address3: "Some County",
-        posttown: "Post-Town1",
+        posttown: "Whitbury",
         postcode: "A0 0AA",
         construction_age_band: "1750",
         current_energy_rating: "e",
-        potential_energy_rating: "e",
+        potential_energy_rating: "c",
         current_energy_efficiency: "50",
-        potential_energy_efficiency: "50",
-        property_type: "Dwelling-Type0",
+        potential_energy_efficiency: "72",
+        property_type: "Mid-terrace house",
         tenure: "1",
         transaction_type: "1",
-        environmental_impact_current: "50",
-        environmental_impact_potential: "50",
-        energy_consumption_current: "0",
-        energy_consumption_potential: "0",
+        environmental_impact_current: "52",
+        environmental_impact_potential: "74",
+        energy_consumption_current: "230",
+        energy_consumption_potential: "88",
         co2_emissions_current: "2.4",
-        co2_emiss_curr_per_floor_area: "0",
+        co2_emiss_curr_per_floor_area: "20",
         co2_emissions_potential: "1.4",
         heating_cost_current: "365.98",
         heating_cost_potential: "250.34",
@@ -631,7 +630,7 @@ describe ViewModel::SapWrapper do
         hot_water_cost_potential: "180.43",
         lighting_cost_current: "123.45",
         lighting_cost_potential: "84.23",
-        total_floor_area: "10",
+        total_floor_area: "69",
         mains_gas_flag: nil,
         flat_top_storey: "N",
         flat_storey_count: nil,
@@ -660,7 +659,7 @@ describe ViewModel::SapWrapper do
         lighting_env_eff: "N/A",
         photo_supply: nil,
         built_form: "Detached",
-        mainheat_description: "Thermostat, Thermostat",
+        mainheat_description: "Gas boiler, Gas boiler",
         report_type: "1",
         mainheatcont_description: "Thermostat, Thermostat",
         roof_description: "Slate roof, slate roof",
@@ -674,7 +673,6 @@ describe ViewModel::SapWrapper do
         mainheat_energy_eff: "N/A",
         mainheat_env_eff: "N/A",
         extension_count: "0",
-
       }
     end
 
@@ -684,8 +682,8 @@ describe ViewModel::SapWrapper do
   end
 
   it "returns the expect error without a valid schema type" do
-    expect {
-      ViewModel::SapWrapper.new "", "invalid"
-    }.to raise_error(ArgumentError).with_message "Unsupported schema type"
+    expect { ViewModel::SapWrapper.new "", "invalid" }.to raise_error(
+      ArgumentError,
+    ).with_message "Unsupported schema type"
   end
 end

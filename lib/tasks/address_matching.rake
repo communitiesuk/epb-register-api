@@ -121,7 +121,7 @@ task :update_address_lines do
   matched_assessments = 0
   assessment_ids.each do |assessment_id|
     puts "Skipping to #{last_updated_id}" unless last_updated_id.nil?
-    next if not last_updated_id.nil? and assessment_id <= last_updated_id
+    next if !last_updated_id.nil? && (assessment_id <= last_updated_id)
 
     assessment_xml = db.exec_query("SELECT xml, schema_type FROM assessments_xml WHERE assessment_id = '#{assessment_id}'").first
     if assessment_xml.nil?
@@ -172,4 +172,3 @@ rescue StandardError => e
   end
   puts "Error while updating address lines: #{e}"
 end
-

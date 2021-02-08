@@ -5,7 +5,11 @@ def test_xml_doc(schemas, assertion, method_called = :to_hash)
     sample = Samples.xml(schema_case[:schema], schema_case[:type])
 
     schema_path = Helper::SchemaListHelper.new(schema_case[:schema]).schema_path
-    schema = Nokogiri::XML::Schema.from_document Nokogiri.XML(File.read(schema_path), schema_path)
+    schema =
+      Nokogiri::XML::Schema.from_document Nokogiri.XML(
+        File.read(schema_path),
+        schema_path,
+      )
     validation = schema.validate(Nokogiri.XML(sample))
 
     expect(validation).to be_empty, <<~ERROR
@@ -32,7 +36,6 @@ def test_xml_doc(schemas, assertion, method_called = :to_hash)
           Failed on #{schema_case[:schema]}:#{schema_case[:type]}:#{key}
             Unsupported fields must return nil, got "#{result}" (#{result.class})
         ERROR
-
       elsif schema_case[:different_fields]&.key? key
         expect(result).to eq(schema_case[:different_fields][key]), <<~ERROR
           Failed on #{schema_case[:schema]}:#{schema_case[:type]}:#{key}

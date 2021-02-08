@@ -147,19 +147,19 @@ describe ViewModel::DecRrWrapper do
           address_line2: "2 Lonely Street",
           address_line3: "Some Area",
           address_line4: "Some County",
-          town: "Post-Town0",
+          town: "Fulchester",
           postcode: "A0 0AA",
         },
         assessor: {
           scheme_assessor_id: "SPEC000000",
           name: "Mrs Report Writer",
           company_details: {
-            name: "Joe Bloggs Ltd",
+            name: "Trillian Certificates Plc",
             address: "123 My Street, My City, AB3 4CD",
           },
           contact_details: {
             email: "a@b.c",
-            telephone: "0921-19037",
+            telephone: "0555 497 2848",
           },
         },
         short_payback_recommendations: [

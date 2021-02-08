@@ -49,17 +49,17 @@
             <Scheme-Name>SPEC</Scheme-Name>
             <Complaints-Address>
               <Address-Line-1>2 Some Street</Address-Line-1>
-              <Post-Town>Post-Town1</Post-Town>
+              <Post-Town>Whitbury</Post-Town>
               <Postcode>A0 0AA</Postcode>
             </Complaints-Address>
             <Contact-Address>
               <Address-Line-1>3 Some Street</Address-Line-1>
-              <Post-Town>Post-Town0</Post-Town>
+              <Post-Town>Fulchester</Post-Town>
               <Postcode>A0 0AA</Postcode>
             </Contact-Address>
-            <Web-Site>Scheme-Web-Site0</Web-Site>
+            <Web-Site>http://www.scheme.example.com</Web-Site>
             <E-Mail>d@e.f</E-Mail>
-            <Registered-Name>Name0</Registered-Name>
+            <Registered-Name>Testa Sessor</Registered-Name>
             <Fax>000000</Fax>
             <Telephone>0000000</Telephone>
           </Certification-Scheme>
@@ -73,7 +73,7 @@
         <Property>
           <Address>
             <Address-Line-1>1 Some Street</Address-Line-1>
-            <Post-Town>Post-Town1</Post-Town>
+            <Post-Town>Whitbury</Post-Town>
             <Postcode>A0 0AA</Postcode>
           </Address>
           <UPRN>0000000000</UPRN>
@@ -157,19 +157,19 @@
             <Description>Energy saving bulbs</Description>
             <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
           </Lighting>
-          <Dwelling-Type>Dwelling-Type0</Dwelling-Type>
-          <Total-Floor-Area>10</Total-Floor-Area>
+          <Dwelling-Type>Mid-terrace house</Dwelling-Type>
+          <Total-Floor-Area>69</Total-Floor-Area>
           <Is-Zero-Carbon-Home>true</Is-Zero-Carbon-Home>
         </Property-Summary>
         <Energy-Use>
           <Energy-Rating-Current>50</Energy-Rating-Current>
-          <Energy-Rating-Potential>50</Energy-Rating-Potential>
-          <Environmental-Impact-Current>50</Environmental-Impact-Current>
+          <Energy-Rating-Potential>72</Energy-Rating-Potential>
+          <Environmental-Impact-Current>52</Environmental-Impact-Current>
           <Environmental-Impact-Potential>93</Environmental-Impact-Potential>
-          <Energy-Consumption-Current>0</Energy-Consumption-Current>
-          <Energy-Consumption-Potential>0</Energy-Consumption-Potential>
+          <Energy-Consumption-Current>230</Energy-Consumption-Current>
+          <Energy-Consumption-Potential>88</Energy-Consumption-Potential>
           <CO2-Emissions-Current>2.4</CO2-Emissions-Current>
-          <CO2-Emissions-Current-Per-Floor-Area>0</CO2-Emissions-Current-Per-Floor-Area>
+          <CO2-Emissions-Current-Per-Floor-Area>20</CO2-Emissions-Current-Per-Floor-Area>
           <CO2-Emissions-Potential>1.4</CO2-Emissions-Potential>
           <Lighting-Cost-Current>123.45</Lighting-Cost-Current>
           <Lighting-Cost-Potential>84.23</Lighting-Cost-Potential>
@@ -180,10 +180,10 @@
         </Energy-Use>
         <Suggested-Improvements>
           <Improvement>
-            <Sequence>0</Sequence>
+            <Sequence>1</Sequence>
             <Improvement-Category>1</Improvement-Category>
             <Improvement-Type>A</Improvement-Type>
-            <Typical-Saving>0.0</Typical-Saving>
+            <Typical-Saving>360</Typical-Saving>
             <Energy-Performance-Rating>50</Energy-Performance-Rating>
             <Environmental-Impact-Rating>50</Environmental-Impact-Rating>
             <Improvement-Details>
@@ -191,10 +191,10 @@
             </Improvement-Details>
           </Improvement>
           <Improvement>
-            <Sequence>1</Sequence>
+            <Sequence>2</Sequence>
             <Improvement-Category>2</Improvement-Category>
             <Improvement-Type>B</Improvement-Type>
-            <Typical-Saving>0.1</Typical-Saving>
+            <Typical-Saving>99</Typical-Saving>
             <Energy-Performance-Rating>60</Energy-Performance-Rating>
             <Environmental-Impact-Rating>64</Environmental-Impact-Rating>
             <Improvement-Details>

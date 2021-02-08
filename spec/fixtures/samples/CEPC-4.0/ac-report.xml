@@ -16,7 +16,7 @@
         <Certificate-Number>SPEC000000</Certificate-Number>
         <Name>Test Assessor Name</Name>
         <Accreditation-Scheme-Name>Some Accreditation Limited</Accreditation-Scheme-Name>
-        <Trading-Address>111 Twotwotwo Street, Mytown,, MT7 1AA</Trading-Address>
+        <Trading-Address>111 Twotwotwo Street, Mytown, MT7 1AA</Trading-Address>
         <Company-Name>Assess Energy Limited</Company-Name>
         <Related-Party-Disclosure>No related Party</Related-Party-Disclosure>
         <Qualifications>SP3</Qualifications>
@@ -31,7 +31,7 @@
           <Address-Line-2>2 Lonely Street</Address-Line-2>
           <Address-Line-3>Some Area</Address-Line-3>
           <Address-Line-4>Some County</Address-Line-4>
-          <Post-Town>Post-Town1</Post-Town>
+          <Post-Town>Whitbury</Post-Town>
           <Postcode>A0 0AA</Postcode>
         </Property-Address>
         <Property-Type />

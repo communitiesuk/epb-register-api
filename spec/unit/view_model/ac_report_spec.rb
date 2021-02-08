@@ -111,7 +111,7 @@ describe ViewModel::AcReportWrapper do
           address_line2: "2 Lonely Street",
           address_line3: "Some Area",
           address_line4: "Some County",
-          town: "Post-Town1",
+          town: "Whitbury",
           postcode: "A0 0AA",
         },
         related_party_disclosure: "1",
@@ -124,7 +124,7 @@ describe ViewModel::AcReportWrapper do
           },
           company_details: {
             name: "Assess Energy Limited",
-            address: "111 Twotwotwo Street, Mytown,, MT7 1AA",
+            address: "111 Twotwotwo Street, Mytown, MT7 1AA",
           },
         },
         executive_summary: expected_summary,
@@ -178,7 +178,8 @@ describe ViewModel::AcReportWrapper do
           {
             system_number:
               "VOL001/SYS001 R410A Inverter Split Systems to Sales Area",
-            identifier: "VOL001/SYS001/CP1 Sampled R410A Inverter Split Area (1)",
+            identifier:
+              "VOL001/SYS001/CP1 Sampled R410A Inverter Split Area (1)",
             equipment: {
               cooling_capacity: "10",
               description: "Single Split",
@@ -283,7 +284,7 @@ describe ViewModel::AcReportWrapper do
               ],
               installed_capacity: "10.0",
               occupant_density: "8.93",
-              total_floor_area: "357",
+              total_floor_area: "88",
               total_occupants: "40",
               upper_heat_gain: "140.0",
             },
@@ -369,7 +370,8 @@ describe ViewModel::AcReportWrapper do
           {
             system_number:
               "VOL001/SYS001 R410A Inverter Split Systems to Sales Area",
-            identifier: "VOL001/SYS001/CP2 Sampled R410A Inverter Split Area (2)",
+            identifier:
+              "VOL001/SYS001/CP2 Sampled R410A Inverter Split Area (2)",
             equipment: {
               cooling_capacity: "10",
               description: "Single Split",
@@ -463,7 +465,7 @@ describe ViewModel::AcReportWrapper do
               ],
               installed_capacity: "10.0",
               occupant_density: "8.93",
-              total_floor_area: "357",
+              total_floor_area: "88",
               total_occupants: "40",
               upper_heat_gain: "140.0",
             },
@@ -821,9 +823,8 @@ describe ViewModel::AcReportWrapper do
   end
 
   it "returns the expect error without a valid schema type" do
-    expect {
-      ViewModel::AcReportWrapper.new "", "invalid"
-    }.to raise_error(ArgumentError)
-           .with_message "Unsupported schema type"
+    expect { ViewModel::AcReportWrapper.new "", "invalid" }.to raise_error(
+      ArgumentError,
+    ).with_message "Unsupported schema type"
   end
 end

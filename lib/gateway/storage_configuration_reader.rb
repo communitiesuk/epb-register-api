@@ -16,14 +16,16 @@ module Gateway
       elsif local_configuration_present?
         credentials_from_local_keys
       else
-        raise IllegalCalLException, "Local AWS credentials or VCAP_SERVICES not present"
+        raise IllegalCalLException,
+              "Local AWS credentials or VCAP_SERVICES not present"
       end
     end
 
-    private
+  private
 
     def local_configuration_present?
-      !ENV["AWS_ACCESS_KEY_ID"].nil? && !ENV["AWS_SECRET_ACCESS_KEY"].nil? && !bucket_name.nil?
+      !ENV["AWS_ACCESS_KEY_ID"].nil? && !ENV["AWS_SECRET_ACCESS_KEY"].nil? &&
+        !bucket_name.nil?
     end
 
     def paas_configuration_present?

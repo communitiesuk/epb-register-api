@@ -51,7 +51,9 @@ describe "Acceptance::AssessmentSummary::Supplement::DECRR" do
 
     it "returns lodged email and phone values by default" do
       contact_details = @regular_summary.dig(:data, :assessor, :contactDetails)
-      expect(contact_details).to eq({ telephone: "0921-19037", email: "a@b.c" })
+      expect(contact_details).to eq(
+        { telephone: "0555 497 2848", email: "a@b.c" },
+      )
     end
 
     it "overrides missing assessor email and phone values with DB values" do

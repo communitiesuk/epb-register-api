@@ -8,14 +8,18 @@ describe ViewModel::CepcWrapper do
           schema: "CEPC-8.0.0",
           type: "cepc",
           different_buried_fields: {
-            address: { address_id: "UPRN-000000000001" },
+            address: {
+              address_id: "UPRN-000000000001",
+            },
           },
         },
         {
           schema: "CEPC-NI-8.0.0",
           type: "cepc",
           different_buried_fields: {
-            address: { address_id: "UPRN-000000000001" },
+            address: {
+              address_id: "UPRN-000000000001",
+            },
           },
         },
         { schema: "CEPC-7.1", type: "cepc" },
@@ -62,7 +66,7 @@ describe ViewModel::CepcWrapper do
           address_line2: "2 Lonely Street",
           address_line3: "Some Area",
           address_line4: "Some County",
-          town: "Post-Town1",
+          town: "Whitbury",
           postcode: "A0 0AA",
         },
         technical_information: {
@@ -82,10 +86,13 @@ describe ViewModel::CepcWrapper do
           scheme_assessor_id: "SPEC000000",
           name: "TEST NAME BOI",
           company_details: {
-            name: "Joe Bloggs Ltd",
+            name: "Trillian Certificates Plc",
             address: "123 My Street, My City, AB3 4CD",
           },
-          contact_details: { email: "a@b.c", telephone: "012345" },
+          contact_details: {
+            email: "a@b.c",
+            telephone: "012345",
+          },
         },
         report_type: "3",
         type_of_assessment: "CEPC",
@@ -177,7 +184,7 @@ describe ViewModel::CepcWrapper do
         address2: "2 Lonely Street",
         address3: "Some Area",
         address4: "Some County",
-        posttown: "Post-Town1",
+        posttown: "Whitbury",
         postcode: "A0 0AA",
         building_reference_number: "LPRN-000000000001",
         asset_rating: "80",
@@ -213,9 +220,8 @@ describe ViewModel::CepcWrapper do
   end
 
   it "returns the expect error without a valid schema type" do
-    expect {
-      ViewModel::CepcWrapper.new "", "invalid"
-    }.to raise_error(ArgumentError)
-           .with_message "Unsupported schema type"
+    expect { ViewModel::CepcWrapper.new "", "invalid" }.to raise_error(
+      ArgumentError,
+    ).with_message "Unsupported schema type"
   end
 end
