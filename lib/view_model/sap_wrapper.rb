@@ -347,7 +347,8 @@ module ViewModel
             all_main_heating_energy_efficiency[1],
             ),
         extension_count: @view_model.extensions_count,
-        solar_water_heating_flag: @view_model.solar_water_heating_flag
+        solar_water_heating_flag: @view_model.solar_water_heating_flag,
+        mechanical_ventilation: @view_model.mechanical_ventilation,
 
       }
     end

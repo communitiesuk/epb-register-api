@@ -431,6 +431,10 @@ module ViewModel
         nil
       end
 
+      def mechanical_ventilation
+        nil
+      end
+
     end
   end
 end

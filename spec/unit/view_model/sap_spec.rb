@@ -673,7 +673,9 @@ describe ViewModel::SapWrapper do
         mainheat_energy_eff: "N/A",
         mainheat_env_eff: "N/A",
         extension_count: "0",
-        solar_water_heating_flag: nil
+        solar_water_heating_flag: nil,
+        mechanical_ventilation: nil,
+
       }
     end
 

@@ -160,6 +160,8 @@ describe UseCase::ExportOpenDataDomestic do
         mainheat_energy_eff: "N/A",
         mainheat_env_eff: "N/A",
         extension_count: 0,
+        solar_water_heating_flag: nil,
+        mechanical_ventilation: nil,
       }
 
       let(:rdsap_odc_hash) do
@@ -279,6 +281,8 @@ describe UseCase::ExportOpenDataDomestic do
           photo_supply
           glazed_area
           extension_count
+          solar_water_heating_flag
+          mechanical_ventilation
         ].include? k
       }.keys.each do |key|
         it "returns the #{key} that matches the SAP test data for the equivalent entry in the ODC hash" do
