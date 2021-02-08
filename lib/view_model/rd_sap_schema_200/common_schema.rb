@@ -532,9 +532,6 @@ module ViewModel
         xpath(%w[Room-Height])
       end
 
-      def floor_height
-        xpath(%w[Room-Height])
-      end
     end
   end
 end
