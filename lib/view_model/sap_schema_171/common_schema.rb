@@ -424,6 +424,11 @@ module ViewModel
         nil
       end
 
+      def solar_water_heating_flag
+        nil
+      end
+
+
     end
   end
 end

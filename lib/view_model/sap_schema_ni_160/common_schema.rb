@@ -423,9 +423,12 @@ module ViewModel
         xpath(%w[SAP-Flat-Details Level])
       end
 
-
       def all_main_heating_energy_efficiency
         @xml_doc.search("Main-Heating/Energy-Efficiency-Rating").map(&:content)
+      end
+
+      def solar_water_heating_flag
+        nil
       end
 
     end

@@ -400,6 +400,7 @@ describe ViewModel::RdSapWrapper do
         solar_water_heating_flag: "N",
         mechanical_ventilation: "0",
         floor_height: "2.45",
+
       }
     end
 

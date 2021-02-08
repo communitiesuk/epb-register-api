@@ -436,6 +436,10 @@ module ViewModel
         xpath(%w[Extensions-Count])
       end
 
+      def solar_water_heating_flag
+        nil
+      end
+
     end
   end
 end
