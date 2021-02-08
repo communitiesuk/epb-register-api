@@ -5,6 +5,7 @@ describe UseCase::ExportOpenDataDec do
     describe "for the DEC and reports" do
       let(:date_today) { DateTime.now.strftime("%F") }
       let(:number_assessments_to_test) { 2 }
+
       expected_values = {
         rrn: "0000-0000-0000-0000-0000",
         building_reference_number: "UPRN-000000000001",
@@ -54,18 +55,16 @@ describe UseCase::ExportOpenDataDec do
         expected_values.merge({ rrn: "0000-0000-0000-0000-0001" })
       end
 
-      let(:expected_values_minus_time) do
-        expected_values.delete(:lodgement_datetime)
-      end
-
-      let(:exported_data) { described_class.new.execute }
+      let(:exported_data) { described_class.new.execute("2019-07-01") }
 
       before(:all) do
         scheme_id = add_scheme_and_get_id
         dec_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "dec")
         dec_assessment_id = dec_xml.at("RRN")
+        dec_assessment_date = dec_xml.at("Registration-Date")
 
-        # Lodge CEPC to ensure it is not export
+
+        # Lodge CEPC to ensure it is not exported
         non_domestic_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc")
         non_domestic_assessment_id = non_domestic_xml.at("//CEPC:RRN")
 
@@ -85,8 +84,6 @@ describe UseCase::ExportOpenDataDec do
           ),
         )
 
-        # set exact time when data is lodged
-        current_datetime = Time.now.strftime("%F %H:%M:%S")
         lodge_assessment(
           assessment_body: dec_xml.to_xml,
           accepted_responses: [201],
@@ -108,6 +105,18 @@ describe UseCase::ExportOpenDataDec do
           schema_name: "CEPC-8.0.0",
         )
 
+        dec_assessment_id.children = "0000-0000-0000-0000-0002"
+        dec_assessment_date.children = "2018-07-01"
+        lodge_assessment(
+            assessment_body: dec_xml.to_xml,
+            accepted_responses: [201],
+            auth_data: {
+                scheme_ids: [scheme_id],
+            },
+            override: true,
+            schema_name: "CEPC-8.0.0",
+            )
+
         non_domestic_assessment_id.children = "0000-0000-0000-0000-0003"
         lodge_assessment(
           assessment_body: non_domestic_xml.to_xml,
@@ -118,8 +127,6 @@ describe UseCase::ExportOpenDataDec do
           override: true,
           schema_name: "CEPC-8.0.0",
         )
-
-        # in order to test the exact time of lodgement the time set on line 53
       end
 
       it "returns the correct number of assessments in the Data" do
@@ -127,10 +134,6 @@ describe UseCase::ExportOpenDataDec do
       end
 
       # @TODO once tests have completed refactor to write one assertion for each row and compare to hash rather than for each column
-
-      # it 'returns a row that matches the to_report hash' do
-      #   expect(exported_data[0]).to eq(expected_values_minus_time)
-      # end
 
       # 1st row to test
       # write at test for each key in test hash

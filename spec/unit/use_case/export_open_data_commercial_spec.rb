@@ -17,8 +17,7 @@ describe UseCase::ExportOpenDataCommercial do
       let(:domestic_assessment_id) { domestic_xml.at("RRN") }
       let(:domestic_assessment_date) { domestic_xml.at("Registration-Date") }
 
-      # @TODO filter data correctly for CEPC
-      let(:exported_data) { described_class.new.execute }
+      let(:exported_data) { described_class.new.execute("2019-07-01") }
 
       let(:date_today) { DateTime.now.strftime("%F") }
 
@@ -70,6 +69,7 @@ describe UseCase::ExportOpenDataCommercial do
         non_domestic_assessment_id = non_domestic_xml.at("//CEPC:RRN")
         non_domestic_assessment_date =
           non_domestic_xml.at("//CEPC:Registration-Date")
+        non_domestic_assessment_postcode = non_domestic_xml.at("//CEPC:Postcode")
 
         # Lodge a dec to ensure it is not exported
         domestic_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "dec")
@@ -127,10 +127,8 @@ describe UseCase::ExportOpenDataCommercial do
           schema_name: "CEPC-8.0.0",
         )
 
-        postcode = non_domestic_xml.at("//CEPC:Postcode")
-        postcode.children = "BT1 2DE"
-
         # add lodgement for Northern Ireland not to be export
+        non_domestic_assessment_postcode.children = "BT1 2DE"
         non_domestic_assessment_date.children = "2020-11-11"
         non_domestic_assessment_id.children = "0000-0000-0000-0000-0101"
         lodge_assessment(

@@ -8,7 +8,7 @@ module UseCase
     end
 
     # @TODO: use argument signature of this method
-    def execute(date_from = "2019-07-01")
+    def execute(date_from)
       view_model_array = []
 
       # use gateway to make db calls
