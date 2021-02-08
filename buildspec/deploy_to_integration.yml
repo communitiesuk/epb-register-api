@@ -16,7 +16,6 @@ env:
     EPB_UNLEASH_URI: "epbr-unleash-integration-uri"
     JWT_ISSUER: "epbr-jwt-issuer-integration"
     JWT_SECRET: "epbr-jwt-secret-integration"
-    NEW_RELIC_LICENSE_KEY: "epb-register-api-newrelic-licence"
 
 phases:
   install:

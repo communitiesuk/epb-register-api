@@ -1,4 +1,3 @@
-require 'newrelic_rpm'
 require 'zeitwerk'
 
 loader = Zeitwerk::Loader.new

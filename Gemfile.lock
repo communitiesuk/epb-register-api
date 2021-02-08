@@ -65,7 +65,6 @@ GEM
     murmurhash3 (0.1.6)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
-    newrelic_rpm (6.15.0)
     nokogiri (1.11.1)
       mini_portile2 (~> 2.5.0)
       racc (~> 1.4)
@@ -175,7 +174,6 @@ DEPENDENCIES
   epb-auth-tools (~> 1.0.4)!
   geocoder (~> 1.6.4)!
   json-schema (~> 2.8)!
-  newrelic_rpm (~> 6.15)!
   nokogiri (~> 1.11.1)!
   ougai (~> 1.9)!
   pg!
