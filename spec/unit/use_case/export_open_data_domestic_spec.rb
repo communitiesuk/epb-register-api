@@ -77,7 +77,7 @@ describe UseCase::ExportOpenDataDomestic do
         roof_energy_eff: "Poor, Good",
         roof_env_eff: "Poor, Good",
         walls_description:
-          "Solid brick, as built, no insulation (assumed), Cavity wall, as built, insulated (assumed)",
+          "Solid brick, as built, no insulation (assumed) | Cavity wall, as built, insulated (assumed)",
         walls_energy_eff: "Very Poor, Good",
         walls_env_eff: "Very Poor, Good",
         energy_tariff: "off-peak 7 hour",
@@ -147,6 +147,19 @@ describe UseCase::ExportOpenDataDomestic do
         photo_supply: nil,
         built_form: "Detached",
         mainheat_description: "Gas boiler, Gas boiler",
+        report_type: "1",
+        mainheatcont_description: "Thermostat, Thermostat",
+        roof_description: "Slate roof, slate roof",
+        roof_energy_eff: "N/A, N/A",
+        roof_env_eff: "N/A, N/A",
+        walls_description: "Brick walls | Brick walls",
+        walls_energy_eff: "N/A, N/A",
+        walls_env_eff: "N/A, N/A",
+        energy_tariff: "standard tariff",
+        floor_level: "1",
+        mainheat_energy_eff: "N/A",
+        mainheat_env_eff: "N/A",
+        extension_count: 0,
       }
 
       let(:rdsap_odc_hash) do
@@ -265,9 +278,12 @@ describe UseCase::ExportOpenDataDomestic do
           number_habitable_rooms
           photo_supply
           glazed_area
+          extension_count
         ].include? k
       }.keys.each do |key|
         it "returns the #{key} that matches the SAP test data for the equivalent entry in the ODC hash" do
+
+          exported_data[1]["extension_count"]
           expect(exported_data[1][key.to_sym]).to include(sap_odc_hash[key])
         end
       end

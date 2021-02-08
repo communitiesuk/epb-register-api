@@ -260,7 +260,7 @@ module ViewModel
           Helper::XmlEnumsToOutput.energy_rating_string(
             @view_model.all_roof_env_energy_efficiency_rating,
           ),
-        walls_description: @view_model.all_wall_descriptions.join(", "),
+        walls_description: @view_model.all_wall_descriptions.join(" | "),
         walls_energy_eff:
           Helper::XmlEnumsToOutput.energy_rating_string(
             @view_model.all_wall_energy_efficiency_rating,
