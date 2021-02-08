@@ -174,7 +174,7 @@ describe UseCase::ExportOpenDataDomestic do
           { rrn: "0000-0000-0000-0000-1000", lodgement_date: date_today },
         )
       end
-      let(:exported_data) { described_class.new.execute }
+      let(:exported_data) { described_class.new.execute( "2019-07-01") }
 
       before(:all) do
         scheme_id = add_scheme_and_get_id

@@ -7,7 +7,7 @@ module UseCase
       @assessment_gateway = Gateway::AssessmentsXmlGateway.new
     end
 
-    def execute(date_from = "2019-07-01")
+    def execute(date_from)
       data = []
       assessments = @gateway.assessments_for_open_data(%w[RdSAP SAP], date_from)
 
