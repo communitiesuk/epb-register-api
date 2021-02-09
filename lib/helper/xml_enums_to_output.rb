@@ -49,11 +49,7 @@ module Helper
     end
 
     def self.energy_tariff(value)
-      if !ENERGY_TARIFF.key?(value)
-        ENERGY_TARIFF["ND"]
-      else
-        ENERGY_TARIFF[value]
-      end
+      !ENERGY_TARIFF.key?(value) ? ENERGY_TARIFF["ND"] : ENERGY_TARIFF[value]
     end
   end
 end

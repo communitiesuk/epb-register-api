@@ -444,7 +444,6 @@ module ViewModel
       def mechanical_ventilation
         nil
       end
-
     end
   end
 end

@@ -1,4 +1,3 @@
-
 describe UseCase::ExportOpenDataDecrr do
   include RSpecRegisterApiServiceMixin
   context "when creating the open data reporting release" do
@@ -78,10 +77,9 @@ describe UseCase::ExportOpenDataDecrr do
       end
 
       it "exports the data ordered by payback_type" do
-        order_of_payback_type = exported_data.map do |recommendation|
-          recommendation[:payback_type]
-        end
-        expect(order_of_payback_type).to eq ["short", "short", "medium", "long", "other"]
+        order_of_payback_type =
+          exported_data.map { |recommendation| recommendation[:payback_type] }
+        expect(order_of_payback_type).to eq %w[short short medium long other]
       end
     end
   end

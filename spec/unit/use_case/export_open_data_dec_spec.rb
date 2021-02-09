@@ -63,7 +63,6 @@ describe UseCase::ExportOpenDataDec do
         dec_assessment_id = dec_xml.at("RRN")
         dec_assessment_date = dec_xml.at("Registration-Date")
 
-
         # Lodge CEPC to ensure it is not exported
         non_domestic_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc")
         non_domestic_assessment_id = non_domestic_xml.at("//CEPC:RRN")
@@ -108,14 +107,14 @@ describe UseCase::ExportOpenDataDec do
         dec_assessment_id.children = "0000-0000-0000-0000-0002"
         dec_assessment_date.children = "2018-07-01"
         lodge_assessment(
-            assessment_body: dec_xml.to_xml,
-            accepted_responses: [201],
-            auth_data: {
-                scheme_ids: [scheme_id],
-            },
-            override: true,
-            schema_name: "CEPC-8.0.0",
-            )
+          assessment_body: dec_xml.to_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          override: true,
+          schema_name: "CEPC-8.0.0",
+        )
 
         non_domestic_assessment_id.children = "0000-0000-0000-0000-0003"
         lodge_assessment(

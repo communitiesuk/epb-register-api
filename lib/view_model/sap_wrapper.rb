@@ -215,7 +215,8 @@ module ViewModel
     end
 
     def to_report
-      all_main_heating_energy_efficiency = @view_model.all_main_heating_energy_efficiency
+      all_main_heating_energy_efficiency =
+        @view_model.all_main_heating_energy_efficiency
 
       {
         rrn: @view_model.assessment_id,
@@ -326,7 +327,7 @@ module ViewModel
         roof_env_eff:
           Helper::XmlEnumsToOutput.energy_rating_string(
             @view_model.all_roof_env_energy_efficiency_rating,
-            ),
+          ),
         walls_description: @view_model.all_wall_descriptions.join(" | "),
         walls_energy_eff:
           Helper::XmlEnumsToOutput.energy_rating_string(
@@ -335,21 +336,21 @@ module ViewModel
         walls_env_eff:
           Helper::XmlEnumsToOutput.energy_rating_string(
             @view_model.all_wall_env_energy_efficiency_rating,
-            ),
-        energy_tariff: Helper::XmlEnumsToOutput.energy_tariff(@view_model.energy_tariff),
+          ),
+        energy_tariff:
+          Helper::XmlEnumsToOutput.energy_tariff(@view_model.energy_tariff),
         floor_level: @view_model.floor_level,
         mainheat_energy_eff:
           Helper::XmlEnumsToOutput.energy_rating_string(
             all_main_heating_energy_efficiency[0],
-            ),
+          ),
         mainheat_env_eff:
           Helper::XmlEnumsToOutput.energy_rating_string(
             all_main_heating_energy_efficiency[1],
-            ),
+          ),
         extension_count: @view_model.extensions_count,
         solar_water_heating_flag: @view_model.solar_water_heating_flag,
         mechanical_ventilation: @view_model.mechanical_ventilation,
-
       }
     end
 

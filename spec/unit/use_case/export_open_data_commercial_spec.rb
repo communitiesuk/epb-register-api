@@ -69,7 +69,8 @@ describe UseCase::ExportOpenDataCommercial do
         non_domestic_assessment_id = non_domestic_xml.at("//CEPC:RRN")
         non_domestic_assessment_date =
           non_domestic_xml.at("//CEPC:Registration-Date")
-        non_domestic_assessment_postcode = non_domestic_xml.at("//CEPC:Postcode")
+        non_domestic_assessment_postcode =
+          non_domestic_xml.at("//CEPC:Postcode")
 
         # Lodge a dec to ensure it is not exported
         domestic_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "dec")

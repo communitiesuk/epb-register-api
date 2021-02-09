@@ -174,7 +174,7 @@ describe UseCase::ExportOpenDataDomestic do
           { rrn: "0000-0000-0000-0000-1000", lodgement_date: date_today },
         )
       end
-      let(:exported_data) { described_class.new.execute( "2019-07-01") }
+      let(:exported_data) { described_class.new.execute("2019-07-01") }
 
       before(:all) do
         scheme_id = add_scheme_and_get_id
@@ -286,7 +286,6 @@ describe UseCase::ExportOpenDataDomestic do
         ].include? k
       }.keys.each do |key|
         it "returns the #{key} that matches the SAP test data for the equivalent entry in the ODC hash" do
-
           exported_data[1]["extension_count"]
           expect(exported_data[1][key.to_sym]).to include(sap_odc_hash[key])
         end

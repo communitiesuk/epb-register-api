@@ -10,24 +10,22 @@ describe UseCase::ExportOpenDataCepcrr do
       let(:ni_cepc_plus_rr) do
         xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc+rr")
         xml
-            .xpath("//*[local-name() = 'RRN']")
-            .each_with_index do |node, index|
-          node.content = "1111-0000-0000-0000-000#{index}"
-        end
+          .xpath("//*[local-name() = 'RRN']")
+          .each_with_index do |node, index|
+            node.content = "1111-0000-0000-0000-000#{index}"
+          end
 
         xml
-            .xpath("//*[local-name() = 'Related-RRN']")
-            .reverse
-            .each_with_index do |node, index|
-          node.content = "1111-0000-0000-0000-000#{index}"
-        end
+          .xpath("//*[local-name() = 'Related-RRN']")
+          .reverse
+          .each_with_index do |node, index|
+            node.content = "1111-0000-0000-0000-000#{index}"
+          end
 
         xml
-            .xpath("//*[local-name() = 'Postcode']")
-            .reverse
-            .each do |node|
-          node.content = "BT1 2TD"
-        end
+          .xpath("//*[local-name() = 'Postcode']")
+          .reverse
+          .each { |node| node.content = "BT1 2TD" }
 
         xml
       end
@@ -35,24 +33,22 @@ describe UseCase::ExportOpenDataCepcrr do
       let(:cepc_plus_rr_pre_2019) do
         xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc+rr")
         xml
-            .xpath("//*[local-name() = 'RRN']")
-            .each_with_index do |node, index|
-          node.content = "1111-0000-0000-0000-000#{index + 2}"
-        end
+          .xpath("//*[local-name() = 'RRN']")
+          .each_with_index do |node, index|
+            node.content = "1111-0000-0000-0000-000#{index + 2}"
+          end
 
         xml
-            .xpath("//*[local-name() = 'Related-RRN']")
-            .reverse
-            .each_with_index do |node, index|
-          node.content = "1111-0000-0000-0000-000#{index + 2}"
-        end
+          .xpath("//*[local-name() = 'Related-RRN']")
+          .reverse
+          .each_with_index do |node, index|
+            node.content = "1111-0000-0000-0000-000#{index + 2}"
+          end
 
         xml
-            .xpath("//*[local-name() = 'Registration-Date']")
-            .reverse
-            .each do |node|
-          node.content = "2018-07-01"
-        end
+          .xpath("//*[local-name() = 'Registration-Date']")
+          .reverse
+          .each { |node| node.content = "2018-07-01" }
 
         xml
       end
@@ -81,25 +77,25 @@ describe UseCase::ExportOpenDataCepcrr do
 
         # create a lodgement for cepc whose date valid
         lodge_assessment(
-            assessment_body: cepc_plus_rr_xml.to_xml,
-            accepted_responses: [201],
-            auth_data: {
-                scheme_ids: [scheme_id],
-            },
-            override: true,
-            schema_name: "CEPC-8.0.0",
-            )
+          assessment_body: cepc_plus_rr_xml.to_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          override: true,
+          schema_name: "CEPC-8.0.0",
+        )
 
         # create a lodgement for cepc whose date is not valid
         lodge_assessment(
-            assessment_body: cepc_plus_rr_pre_2019.to_xml,
-            accepted_responses: [201],
-            auth_data: {
-                scheme_ids: [scheme_id],
-            },
-            override: true,
-            schema_name: "CEPC-8.0.0",
-            )
+          assessment_body: cepc_plus_rr_pre_2019.to_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          override: true,
+          schema_name: "CEPC-8.0.0",
+        )
 
         # create a lodgement for cepc that should NOT be returned
         rr_minus_cepc_xml_id.children = "0000-0000-0000-0000-0010"
@@ -117,10 +113,12 @@ describe UseCase::ExportOpenDataCepcrr do
         lodge_assessment(
           assessment_body: ni_cepc_plus_rr.to_xml,
           accepted_responses: [201],
-          auth_data: { scheme_ids: [scheme_id] },
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
           override: true,
           schema_name: "CEPC-8.0.0",
-          )
+        )
       end
 
       it "returns the correct number of recommendations excluding the cepc-rr, NI lodgements and any before the given date" do
@@ -131,17 +129,16 @@ describe UseCase::ExportOpenDataCepcrr do
         expect(exported_data[0]).to eq cO2_Impact: "HIGH",
                                        payback_type: "short",
                                        recommendation:
-                                           "Consider replacing T8 lamps with retrofit T5 conversion kit.",
+             "Consider replacing T8 lamps with retrofit T5 conversion kit.",
                                        recommendation_code: "ECP-L5",
                                        recommendation_item: 1,
                                        rrn: "0000-0000-0000-0000-0001"
       end
 
       it "exports the data ordered by payback_type" do
-        order_of_payback_type = exported_data.map do |recommendation|
-          recommendation[:payback_type]
-        end
-        expect(order_of_payback_type).to eq ["short", "short", "medium", "long", "other"]
+        order_of_payback_type =
+          exported_data.map { |recommendation| recommendation[:payback_type] }
+        expect(order_of_payback_type).to eq %w[short short medium long other]
       end
     end
   end
