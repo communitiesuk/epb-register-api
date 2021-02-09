@@ -399,7 +399,7 @@ describe ViewModel::RdSapWrapper do
         floor_level: "01",
         solar_water_heating_flag: "N",
         mechanical_ventilation: "0",
-        floor_height: "2.45",
+        floor_height: "2.45, 2.59",
       }
     end
 

@@ -274,7 +274,7 @@ module ViewModel
         floor_level: @view_model.floor_level,
         solar_water_heating_flag: @view_model.solar_water_heating_flag,
         mechanical_ventilation: @view_model.mechanical_ventilation,
-        floor_height: @view_model.floor_height,
+        floor_height: @view_model.floor_height.join(", "),
       }
     end
 

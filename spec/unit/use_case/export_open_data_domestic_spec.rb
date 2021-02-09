@@ -84,7 +84,7 @@ describe UseCase::ExportOpenDataDomestic do
         floor_level: "01",
         solar_water_heating_flag: "N",
         mechanical_ventilation: "0",
-        floor_height: "2.45",
+        floor_height: "2.45, 2.59",
       }
       expected_sap_values = {
         rrn: "0000-0000-0000-0000-0000",

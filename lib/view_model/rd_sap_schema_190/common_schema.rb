@@ -464,9 +464,8 @@ module ViewModel
       end
 
       def floor_height
-        xpath(%w[Room-Height])
+        @xml_doc.search("Room-Height").map(&:content)
       end
-
     end
   end
 end
