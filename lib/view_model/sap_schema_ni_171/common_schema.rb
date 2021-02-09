@@ -439,6 +439,10 @@ module ViewModel
       def mechanical_ventilation
         nil
       end
+
+      def floor_height
+        @xml_doc.search("Storey-Height").map(&:content)
+      end
     end
   end
 end

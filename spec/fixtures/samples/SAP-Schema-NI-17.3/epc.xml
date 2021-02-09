@@ -234,11 +234,31 @@
           <Construction-Age-Band>K</Construction-Age-Band>
           <Construction-Year>1750</Construction-Year>
           <Overshading>1</Overshading>
+          <SAP-Floor-Dimensions>
+            <SAP-Floor-Dimension>
+              <Storey>0</Storey>
+              <Floor-Type>2</Floor-Type>
+              <Total-Floor-Area>28.80</Total-Floor-Area>
+              <Storey-Height>2.4</Storey-Height>
+              <Heat-Loss-Area>28.79</Heat-Loss-Area>
+              <U-Value>0.22</U-Value>
+            </SAP-Floor-Dimension>
+          </SAP-Floor-Dimensions>
         </SAP-Building-Part>
         <SAP-Building-Part>
           <Building-Part-Number>50</Building-Part-Number>
           <Construction-Age-Band>A</Construction-Age-Band>
           <Overshading>1</Overshading>
+          <SAP-Floor-Dimensions>
+            <SAP-Floor-Dimension>
+              <Storey>1</Storey>
+              <Floor-Type>3</Floor-Type>
+              <Total-Floor-Area>28.80</Total-Floor-Area>
+              <Storey-Height>2.5</Storey-Height>
+              <Heat-Loss-Area>0.00</Heat-Loss-Area>
+              <U-Value>0.00</U-Value>
+            </SAP-Floor-Dimension>
+          </SAP-Floor-Dimensions>
         </SAP-Building-Part>
       </SAP-Building-Parts>
       <SAP-Energy-Source>

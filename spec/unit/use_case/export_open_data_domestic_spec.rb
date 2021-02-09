@@ -162,6 +162,7 @@ describe UseCase::ExportOpenDataDomestic do
         extension_count: 0,
         solar_water_heating_flag: nil,
         mechanical_ventilation: nil,
+        floor_height: "2.4, 2.5",
       }
 
       let(:rdsap_odc_hash) do

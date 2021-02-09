@@ -360,13 +360,13 @@
               </SAP:SAP-Roofs>
               <SAP:SAP-Floor-Dimensions>
                 <SAP:SAP-Floor-Dimension>
-                  <SAP:Storey>1</SAP:Storey>
+                  <SAP:Storey>0</SAP:Storey>
                   <SAP:Description>Exposed Floor</SAP:Description>
-                  <SAP:Floor-Type>4</SAP:Floor-Type>
-                  <SAP:Total-Floor-Area>69.64</SAP:Total-Floor-Area>
+                  <SAP:Floor-Type>2</SAP:Floor-Type>
+                  <SAP:Total-Floor-Area>28.80</SAP:Total-Floor-Area>
                   <SAP:Storey-Height>2.4</SAP:Storey-Height>
-                  <SAP:Heat-Loss-Area>3.67</SAP:Heat-Loss-Area>
-                  <SAP:U-Value>0.23</SAP:U-Value>
+                  <SAP:Heat-Loss-Area>28.79</SAP:Heat-Loss-Area>
+                  <SAP:U-Value>0.22</SAP:U-Value>
                 </SAP:SAP-Floor-Dimension>
               </SAP:SAP-Floor-Dimensions>
               <SAP:SAP-Thermal-Bridges>
@@ -398,6 +398,20 @@
                 </SAP:SAP-Wall>
               </SAP:SAP-Walls>
               <SAP:Thermal-Mass-Parameter>250</SAP:Thermal-Mass-Parameter>
+            </SAP:SAP-Building-Part>
+            <SAP:SAP-Building-Part>
+              <SAP:Building-Part-Number>2</SAP:Building-Part-Number>
+              <SAP:Overshading>1</SAP:Overshading>
+              <SAP:SAP-Floor-Dimensions>
+                <SAP:SAP-Floor-Dimension>
+                  <SAP:Storey>1</SAP:Storey>
+                  <SAP:Floor-Type>3</SAP:Floor-Type>
+                  <SAP:Total-Floor-Area>28.80</SAP:Total-Floor-Area>
+                  <SAP:Storey-Height>2.5</SAP:Storey-Height>
+                  <SAP:Heat-Loss-Area>0.00</SAP:Heat-Loss-Area>
+                  <SAP:U-Value>0.00</SAP:U-Value>
+                </SAP:SAP-Floor-Dimension>
+              </SAP:SAP-Floor-Dimensions>
             </SAP:SAP-Building-Part>
           </SAP:SAP-Building-Parts>
           <SAP:SAP-Opening-Types>

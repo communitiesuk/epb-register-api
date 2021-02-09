@@ -351,6 +351,10 @@ module ViewModel
         extension_count: @view_model.extensions_count,
         solar_water_heating_flag: @view_model.solar_water_heating_flag,
         mechanical_ventilation: @view_model.mechanical_ventilation,
+        floor_height:
+          if @view_model.respond_to?(:floor_height)
+            @view_model.floor_height.join(", ")
+          end,
       }
     end
 
