@@ -1,6 +1,9 @@
 describe UseCase::ExportOpenDataCommercial do
   include RSpecRegisterApiServiceMixin
 
+
+
+
   context "when creating the open data reporting release" do
     describe "for the commercial certificates and reports" do
       let(:scheme_id) { add_scheme_and_get_id }
@@ -17,9 +20,15 @@ describe UseCase::ExportOpenDataCommercial do
       let(:domestic_assessment_id) { domestic_xml.at("RRN") }
       let(:domestic_assessment_date) { domestic_xml.at("Registration-Date") }
 
-      let(:exported_data) { described_class.new.execute("2019-07-01") }
+      let(:exported_data) { described_class.new.execute(1,"2019-07-01") }
 
       let(:date_today) { DateTime.now.strftime("%F") }
+
+      let(:statistics) do
+        gateway = Gateway::OpenDataLogGateway.new
+        gateway.get_statistics
+      end
+
 
       expected_values = {
         rrn: "0000-0000-0000-0000-0000",
@@ -63,14 +72,14 @@ describe UseCase::ExportOpenDataCommercial do
         )
       end
 
+
+
       before(:all) do
         scheme_id = add_scheme_and_get_id
         non_domestic_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc")
         non_domestic_assessment_id = non_domestic_xml.at("//CEPC:RRN")
-        non_domestic_assessment_date =
-          non_domestic_xml.at("//CEPC:Registration-Date")
-        non_domestic_assessment_postcode =
-          non_domestic_xml.at("//CEPC:Postcode")
+        non_domestic_assessment_date =   non_domestic_xml.at("//CEPC:Registration-Date")
+        non_domestic_assessment_postcode = non_domestic_xml.at("//CEPC:Postcode")
 
         # Lodge a dec to ensure it is not exported
         domestic_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "dec")
@@ -141,7 +150,6 @@ describe UseCase::ExportOpenDataCommercial do
           override: true,
           schema_name: "CEPC-8.0.0",
         )
-
         domestic_assessment_date.children = "2018-05-04"
         domestic_assessment_id.children = "0000-0000-0000-0000-0005"
         lodge_assessment(
@@ -153,24 +161,22 @@ describe UseCase::ExportOpenDataCommercial do
           override: true,
           schema_name: "CEPC-8.0.0",
         )
+
       end
 
-      it "returns the correct number of assessments in the CSV" do
+      it "returns the correct number of assessments in the CSV and the logs" do
         expect(exported_data.length).to eq(number_assessments_to_test)
+        gateway = Gateway::OpenDataLogGateway.new
+        expect(gateway.get_statistics[0]["num_rows"]).to eq(number_assessments_to_test)
       end
 
-      # @TODO once tests have completed refactor to write one assertion for each row and compare to hash rather than for each column
 
-      # 1st row to test
-      # write at test for each key in test hash
       expected_values.keys.each do |index|
-        it "returns the #{index} that matches the data for the 1st row" do
-          expect(exported_data[0][index.to_sym]).to eq(expected_values[index])
+       it "returns the #{index} that matches the data for the 2nd row" do
+         expect(exported_data[0][index.to_sym]).to eq(expected_values[index])
         end
       end
 
-      # 2nd row to test
-      # write at test for each key in test hash
       expected_values.keys.each do |index|
         it "returns the #{index} that matches the data for the 2nd row" do
           expect(exported_data[1][index.to_sym]).to eq(
@@ -178,6 +184,18 @@ describe UseCase::ExportOpenDataCommercial do
           )
         end
       end
+
+
     end
   end
+
+  context "when data has been exported more then once" do
+    let(:exported_data) { described_class.new.execute(1,"2019-07-01") }
+    let(:exported_data2) { described_class.new.execute(1,"2019-07-01") }
+
+    it "should not return any data" do
+      expect(exported_data.length).to eq(0)
+    end
+  end
+
 end

@@ -149,18 +149,27 @@ module Gateway
     end
 
     def assessments_for_open_data(type_of_assessment = "", date_from)
-      bindings = [[nil, date_from, ActiveRecord::Type::Date.new]]
+
+      bindings = [
+        ActiveRecord::Relation::QueryAttribute.new(
+            "type_of_assessment",
+            date_from,
+            ActiveRecord::Type::Date.new
+          ),
+
+      ]
 
       # TODO: create public hash for ID
 
       sql = <<~SQL
         SELECT  a.assessment_id, date_registered
         FROM assessments a
-        INNER JOIN assessments_address_id c  ON(a.assessment_id = c.assessment_id)
-        INNER JOIN assessments_xml b ON(a.assessment_id = b.assessment_id)
         WHERE a.opt_out = false AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
         AND a.date_registered >= $1
         AND a.postcode NOT LIKE 'BT%'
+        AND NOT EXISTS (SELECT * FROM open_data_logs l
+                        WHERE l.assessment_id = a.assessment_id
+                         )
       SQL
 
       if type_of_assessment.is_a?(Array)

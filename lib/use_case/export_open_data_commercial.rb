@@ -5,10 +5,11 @@ module UseCase
     def initialize
       @gateway = Gateway::ReportingGateway.new
       @assessment_gateway = Gateway::AssessmentsXmlGateway.new
+      @log_gateway = Gateway::OpenDataLogGateway.new
     end
 
     # @TODO: use argument signature of this method
-    def execute(date_from)
+    def execute(task_id=1,date_from)
       view_model_array = []
 
       # use gateway to make db calls
@@ -32,9 +33,9 @@ module UseCase
         view_model_hash[:lodgement_datetime] =
           assessment["date_registered"].strftime("%F %H:%M:%S")
 
-        # lodgement_datetime
         view_model_array << view_model_hash
-        # @TODO:update log table
+        @log_gateway.insert(assessment["assessment_id"], task_id)
+
       end
 
       view_model_array

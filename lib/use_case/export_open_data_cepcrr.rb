@@ -12,7 +12,6 @@ module UseCase
       view_model_array = []
 
       # #use gateway to make db calls
-      # call gateway to get data set
       assessments =
         @gateway.assessments_for_open_data_recommendation_report(
           "CEPC-RR",

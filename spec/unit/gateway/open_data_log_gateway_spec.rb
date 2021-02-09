@@ -1,45 +1,34 @@
 describe "Gateway::OpenDataLogGateway" do
-  context "when there is no log data in the database insert a row" do
+
+  context "when there is no log data in the database insert it and return the statistics" do
+
+    let(:statistics) do
+      gateway = Gateway::OpenDataLogGateway.new
+      gateway.get_statistics
+    end
+
     before(:all) do
       gateway = Gateway::OpenDataLogGateway.new
       gateway.insert("0000-0000-0000-0000-0001", 1)
-      gateway.insert("0000-0000-0000-0000-0002", 2)
+      gateway.insert("0000-0000-0000-0000-0002", 1)
+      gateway.insert("0000-0000-0000-0000-0004", 1)
+      gateway.insert("0000-0000-0000-0000-0004", 2)
     end
 
-    let(:log_data) do
-      log_data =
-        ActiveRecord::Base.connection.execute "SELECT * FROM open_data_logs"
+    it "should return the correct count in the statistics " do
+      expect(statistics.count).to eq(2)
+      expect(statistics[0]["num_rows"]).to eq(3)
+      expect(statistics[1]["num_rows"]).to eq(1)
     end
 
-    it "should return a row of the newly inserted data" do
-      expect(log_data.count).to eq(2)
+    it "should return the the today as the created at date " do
+      expect(statistics[0]["date_start"].to_datetime.strftime("%F")).to eq(DateTime.now.strftime("%F"))
     end
 
-    it "should return the the correct asssessment_id " do
-      expect(log_data[0]["assessment_id"]).to eq("0000-0000-0000-0000-0001")
-      expect(log_data[1]["assessment_id"]).to eq("0000-0000-0000-0000-0002")
+    it "should return an execution time" do
+      expect(statistics[0]["execution_time"]).not_to be_nil
     end
 
-    it "should return the the correct task id " do
-      expect(log_data[0]["task_id"]).to eq(1)
-      expect(log_data[1]["task_id"]).to eq(2)
-    end
-
-    it "should return the the today as the created_at date " do
-      expect(log_data[0]["created_at"].to_datetime.strftime("%F")).to eq(
-        DateTime.now.strftime("%F"),
-      )
-      expect(log_data[1]["created_at"].to_datetime.strftime("%F")).to eq(
-        DateTime.now.strftime("%F"),
-      )
-    end
-
-    it "should return a create_at whose datetime increments " do
-      expect(log_data[1]["created_at"].to_datetime).to be >
-        log_data[0]["created_at"].to_datetime
-    end
   end
 
-  context "when there is an existing log data entry in the database " do
-  end
 end
