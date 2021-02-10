@@ -7,7 +7,7 @@ describe UseCase::ExportOpenDataDec do
       let(:number_assessments_to_test) { 2 }
 
       expected_values = {
-        rrn: "0000-0000-0000-0000-0000",
+        rrn: "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
         building_reference_number: "UPRN-000000000001",
         address1: "Some Unit",
         address2: "2 Lonely Street",
@@ -52,7 +52,12 @@ describe UseCase::ExportOpenDataDec do
       }
 
       let(:expected_values_1) do
-        expected_values.merge({ rrn: "0000-0000-0000-0000-0001" })
+        expected_values.merge(
+          {
+            rrn:
+              "55ce7d026c13e923d26cbfb0d6ed60734d3270ba981d629a168bb8eb2da3f8c4",
+          },
+        )
       end
 
       let(:exported_data) { described_class.new.execute(1, "2019-07-01") }
