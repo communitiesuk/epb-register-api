@@ -10,7 +10,8 @@ module UseCase
 
     def execute(task_id = 1, date_from)
       data = []
-      assessments = @gateway.assessments_for_open_data(%w[RdSAP SAP], date_from)
+      assessments =
+        @gateway.assessments_for_open_data(%w[RdSAP SAP], task_id, date_from)
 
       assessments.each do |assessment|
         xml_data = @assessment_gateway.fetch(assessment["assessment_id"])

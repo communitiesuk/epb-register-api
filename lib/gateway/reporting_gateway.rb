@@ -148,12 +148,17 @@ module Gateway
       results.map { |result| result }
     end
 
-    def assessments_for_open_data(type_of_assessment = "", date_from)
+    def assessments_for_open_data(type_of_assessment = "", task_id, date_from)
       bindings = [
         ActiveRecord::Relation::QueryAttribute.new(
           "type_of_assessment",
           date_from,
           ActiveRecord::Type::Date.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "task_id",
+          task_id,
+          ActiveRecord::Type::Integer.new,
         ),
       ]
 
@@ -167,6 +172,7 @@ module Gateway
         AND a.postcode NOT LIKE 'BT%'
         AND NOT EXISTS (SELECT * FROM open_data_logs l
                         WHERE l.assessment_id = a.assessment_id
+                        AND task_id = $2
                          )
       SQL
 

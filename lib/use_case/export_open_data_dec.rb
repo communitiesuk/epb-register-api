@@ -10,12 +10,8 @@ module UseCase
 
     def execute(task_id, date_from)
       view_model_array = []
-
-      # #use gateway to make db calls
-      # call gateway to get data set
-      assessments = @gateway.assessments_for_open_data("DEC", date_from)
-
-      # use existing gateway to get each xml doc from db line by line to ensure memory is not consumed by size of data returned
+      assessments =
+        @gateway.assessments_for_open_data("DEC", task_id, date_from)
       assessments.each do |assessment|
         xml_data = @assessment_gateway.fetch(assessment["assessment_id"])
         view_model =
@@ -36,8 +32,6 @@ module UseCase
         @log_gateway.insert(assessment["assessment_id"], task_id)
       end
 
-      # call method to return data as csv
-      # to_csv
       view_model_array
     end
   end

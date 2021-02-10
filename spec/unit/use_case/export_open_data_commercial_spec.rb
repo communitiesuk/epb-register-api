@@ -192,12 +192,20 @@ describe UseCase::ExportOpenDataCommercial do
   end
 
   context "when data has been exported more then once" do
-    let(:exported_data) { described_class.new.execute(1, "2019-07-01") }
-    let(:exported_data2) { described_class.new.execute(1, "2019-07-01") }
+    before do
+      ActiveRecord::Base.connection.execute("TRUNCATE TABLE open_data_logs")
+    end
 
-    it "should not return any data" do
-      exported_data.length
-      expect(exported_data2.length).to eq(0)
+    it "should not return any data for the task if it has already been called with the same task id" do
+      task1 = described_class.new.execute(1, "2019-07-01")
+      task2 = described_class.new.execute(1, "2019-07-01")
+      expect(task2.length).to eq(0)
+    end
+
+    it "should return data when the task id is different" do
+      task1 = described_class.new.execute(1, "2019-07-01")
+      task2 = described_class.new.execute(2, "2019-07-01")
+      expect(task2.length).to eq(2)
     end
   end
 end

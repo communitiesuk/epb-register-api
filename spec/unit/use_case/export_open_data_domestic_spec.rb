@@ -184,7 +184,10 @@ describe UseCase::ExportOpenDataDomestic do
         )
       end
       let(:exported_data) do
-        described_class.new.execute("2019-07-01").sort_by! { |key| key[:rrn] }
+        described_class
+          .new
+          .execute(2, "2019-07-01")
+          .sort_by! { |key| key[:rrn] }
       end
 
       let(:statistics) do
@@ -309,6 +312,24 @@ describe UseCase::ExportOpenDataDomestic do
           expect(exported_data[1][key.to_sym]).to include(sap_odc_hash[key])
         end
       end
+    end
+  end
+
+  context "when data has been exported more then once" do
+    before do
+      ActiveRecord::Base.connection.execute("TRUNCATE TABLE open_data_logs")
+    end
+
+    it "should not return any data for the task if it has already been called with the same task id" do
+      task1 = described_class.new.execute(1, "2019-07-01")
+      task2 = described_class.new.execute(1, "2019-07-01")
+      expect(task2.length).to eq(0)
+    end
+
+    it "should return data when the task id is different" do
+      task1 = described_class.new.execute(1, "2019-07-01")
+      task2 = described_class.new.execute(2, "2019-07-01")
+      expect(task2.length).to eq(2)
     end
   end
 end

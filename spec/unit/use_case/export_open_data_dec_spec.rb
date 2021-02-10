@@ -63,7 +63,7 @@ describe UseCase::ExportOpenDataDec do
       let(:exported_data) do
         described_class
           .new
-          .execute(1, "2019-07-01")
+          .execute(3, "2019-07-01")
           .sort_by! { |key| key[:rrn] }
       end
 
@@ -167,6 +167,24 @@ describe UseCase::ExportOpenDataDec do
           expect(exported_data[1][index.to_sym]).to eq(expected_values_1[index])
         end
       end
+    end
+  end
+
+  context "when data has been exported more then once" do
+    before do
+      ActiveRecord::Base.connection.execute("TRUNCATE TABLE open_data_logs")
+    end
+
+    it "should not return any data for the task if it has already been called with the same task id" do
+      task1 = described_class.new.execute(1, "2019-07-01")
+      task2 = described_class.new.execute(1, "2019-07-01")
+      expect(task2.length).to eq(0)
+    end
+
+    it "should return data when the task id is different" do
+      task1 = described_class.new.execute(1, "2019-07-01")
+      task2 = described_class.new.execute(2, "2019-07-01")
+      expect(task2.length).to eq(2)
     end
   end
 end
