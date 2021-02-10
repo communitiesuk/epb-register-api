@@ -1,7 +1,5 @@
 describe "Gateway::OpenDataLogGateway" do
-
   context "when there is no log data in the database insert it and return the statistics" do
-
     let(:statistics) do
       gateway = Gateway::OpenDataLogGateway.new
       gateway.get_statistics
@@ -22,13 +20,13 @@ describe "Gateway::OpenDataLogGateway" do
     end
 
     it "should return the the today as the created at date " do
-      expect(statistics[0]["date_start"].to_datetime.strftime("%F")).to eq(DateTime.now.strftime("%F"))
+      expect(statistics[0]["date_start"].to_datetime.strftime("%F")).to eq(
+        DateTime.now.strftime("%F"),
+      )
     end
 
     it "should return an execution time" do
       expect(statistics[0]["execution_time"]).not_to be_nil
     end
-
   end
-
 end

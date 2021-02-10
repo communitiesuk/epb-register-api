@@ -8,8 +8,7 @@ module UseCase
       @log_gateway = Gateway::OpenDataLogGateway.new
     end
 
-    # @TODO: use argument signature of this method
-    def execute(task_id=1,date_from)
+    def execute(task_id = 1, date_from)
       view_model_array = []
 
       # use gateway to make db calls
@@ -35,7 +34,6 @@ module UseCase
 
         view_model_array << view_model_hash
         @log_gateway.insert(assessment["assessment_id"], task_id)
-
       end
 
       view_model_array

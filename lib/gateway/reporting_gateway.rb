@@ -149,14 +149,12 @@ module Gateway
     end
 
     def assessments_for_open_data(type_of_assessment = "", date_from)
-
       bindings = [
         ActiveRecord::Relation::QueryAttribute.new(
-            "type_of_assessment",
-            date_from,
-            ActiveRecord::Type::Date.new
-          ),
-
+          "type_of_assessment",
+          date_from,
+          ActiveRecord::Type::Date.new,
+        ),
       ]
 
       # TODO: create public hash for ID

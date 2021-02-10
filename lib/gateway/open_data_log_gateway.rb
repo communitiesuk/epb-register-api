@@ -12,7 +12,6 @@ module Gateway
           assessment_id,
           ActiveRecord::Type::String.new,
         ),
-
         ActiveRecord::Relation::QueryAttribute.new(
           "created_at",
           DateTime.now,
@@ -35,9 +34,11 @@ module Gateway
               FROM open_data_logs
               GROUP BY task_id
               ORDER BY  Max(created_at)
-        SQL
+      SQL
       results = ActiveRecord::Base.connection.exec_query(sql)
       results.map { |result| result }
     end
+
+    # TODO: Add delete method for testing
   end
 end

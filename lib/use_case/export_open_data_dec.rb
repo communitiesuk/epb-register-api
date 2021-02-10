@@ -7,7 +7,6 @@ module UseCase
       @assessment_gateway = Gateway::AssessmentsXmlGateway.new
     end
 
-    # @TODO: pass arguments to filter for decs
     def execute(date_from)
       view_model_array = []
 
