@@ -5,9 +5,10 @@ module UseCase
     def initialize
       @gateway = Gateway::ReportingGateway.new
       @assessment_gateway = Gateway::AssessmentsXmlGateway.new
+      @log_gateway = Gateway::OpenDataLogGateway.new
     end
 
-    def execute(date_from)
+    def execute(task_id = 1, date_from)
       data = []
       assessments = @gateway.assessments_for_open_data(%w[RdSAP SAP], date_from)
 
@@ -25,6 +26,7 @@ module UseCase
           assessment["date_registered"].strftime("%F")
         view_model_hash[:lodgement_datetime] =
           assessment["date_registered"].strftime("%F %H:%M:%S")
+        @log_gateway.insert(assessment["assessment_id"], task_id)
 
         data << view_model_hash
       end

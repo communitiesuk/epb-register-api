@@ -157,7 +157,7 @@ module Gateway
         ),
       ]
 
-      # TODO: create public hash for ID
+      # TODO: add task id to export so can be re-run
 
       sql = <<~SQL
         SELECT  a.assessment_id, date_registered

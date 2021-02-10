@@ -177,6 +177,11 @@ describe UseCase::ExportOpenDataDomestic do
       end
       let(:exported_data) { described_class.new.execute("2019-07-01") }
 
+      let(:statistics) do
+        gateway = Gateway::OpenDataLogGateway.new
+        gateway.get_statistics
+      end
+
       before(:all) do
         scheme_id = add_scheme_and_get_id
         domestic_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
@@ -263,6 +268,13 @@ describe UseCase::ExportOpenDataDomestic do
 
       it "expects the number of non Northern Irish RdSAP and SAP lodgements within required date range for ODC to be 2" do
         expect(exported_data.length).to eq(2)
+        gateway = Gateway::OpenDataLogGateway.new
+        expect(gateway.get_statistics[0]["num_rows"]).to eq(2)
+      end
+
+      it "expects logs to have 2 rows after export" do
+        exported_data
+        expect(statistics[0]["num_rows"]).to eq(2)
       end
 
       expected_rdsap_values.keys.each do |key|
