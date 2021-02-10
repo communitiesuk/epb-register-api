@@ -114,15 +114,17 @@ task :update_address_lines do
     puts "[#{Time.now}] Created empty address_lines_updated table"
   end
 
-  assessment_ids = db.exec_query("SELECT assessment_id FROM assessments ORDER BY assessment_id ASC")
-  last_updated_id = db.exec_query("SELECT max(assessment_id) FROM address_lines_updated").first
+  assessments = db.exec_query("SELECT assessment_id FROM assessments ORDER BY assessment_id ASC")
+  last_updated = db.exec_query("SELECT max(assessment_id) FROM address_lines_updated").first
+  last_updated_id = last_updated["max"]
 
   updated_assessments = 0
   matched_assessments = 0
-  assessment_ids.each do |assessment_id|
+  assessments.each do |assessment|
     puts "Skipping to #{last_updated_id}" unless last_updated_id.nil?
-    next if !last_updated_id.nil? && (assessment_id <= last_updated_id)
+    next if !last_updated_id.nil? && (assessment["assessment_id"] <= last_updated_id)
 
+    assessment_id = assessment["assessment_id"]
     assessment_xml = db.exec_query("SELECT xml, schema_type FROM assessments_xml WHERE assessment_id = '#{assessment_id}'").first
     if assessment_xml.nil?
       puts "[#{Time.now}] Could not read XML for assessment #{assessment_id}"
@@ -143,7 +145,7 @@ task :update_address_lines do
         "AND address_line3 = '#{address_line3}' " \
         "AND address_line4 = '#{address_line4}'").first
 
-      if matching_address.nil?
+      if matching_address.empty?
         matched_assessments += 1
       else
         ActiveRecord::Base.transaction do
