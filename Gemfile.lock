@@ -191,7 +191,7 @@ DEPENDENCIES
   rspec (~> 3.10)!
   rubocop-govuk (~> 3.17)!
   rubyzip (~> 2.3.0)!
-  sentry-ruby (~> 4.2)
+  sentry-ruby (~> 4.2)!
   sinatra (~> 2.0, >= 2.0.7)!
   sinatra-activerecord (~> 2.0.22)!
   sinatra-contrib!

@@ -123,7 +123,7 @@ module Controller
     end
 
     def server_error(exception)
-      Sentry.capture_exception(exception) if defined? Sentry
+      Sentry.capture_exception(exception) if defined?(Sentry)
 
       message =
         exception.methods.include?(:message) ? exception.message : exception

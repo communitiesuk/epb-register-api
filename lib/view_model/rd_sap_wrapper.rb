@@ -279,10 +279,10 @@ module ViewModel
     end
 
     def to_recommendation_report
-
-      complete_recommendations = @view_model.recommendations_for_report.each do |recommendations|
-        recommendations[:assessment_id] = @view_model.assessment_id
-      end
+      complete_recommendations =
+        @view_model.recommendations_for_report.each do |recommendations|
+          recommendations[:assessment_id] = @view_model.assessment_id
+        end
 
       { recommendations: complete_recommendations }
     end
