@@ -139,18 +139,18 @@ task :update_address_lines do
       next if wrapper.nil?
 
       wrapper_hash = wrapper.to_hash
-      address_line1 = wrapper_hash[:address][:address_line1]
-      address_line2 = wrapper_hash[:address][:address_line2]
-      address_line3 = wrapper_hash[:address][:address_line3]
-      address_line4 = wrapper_hash[:address][:address_line4]
+      address_line1 = wrapper_hash[:address][:address_line1] || ""
+      address_line2 = wrapper_hash[:address][:address_line2] || ""
+      address_line3 = wrapper_hash[:address][:address_line3] || ""
+      address_line4 = wrapper_hash[:address][:address_line4] || ""
 
       matching_assessment = db.exec_query("SELECT assessment_id, address_line1, address_line2, address_line3, address_line4 " \
         "FROM assessments WHERE assessment_id = '#{assessment_id}'").first
 
-      prev_address_line1 = matching_assessment["address_line1"]
-      prev_address_line2 = matching_assessment["address_line2"]
-      prev_address_line3 = matching_assessment["address_line3"]
-      prev_address_line4 = matching_assessment["address_line4"]
+      prev_address_line1 = matching_assessment["address_line1"] || ""
+      prev_address_line2 = matching_assessment["address_line2"] || ""
+      prev_address_line3 = matching_assessment["address_line3"] || ""
+      prev_address_line4 = matching_assessment["address_line4"] || ""
 
       if prev_address_line1 == address_line1 and
         prev_address_line2 == address_line2 and
