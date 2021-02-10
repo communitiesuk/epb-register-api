@@ -37,7 +37,9 @@ describe ViewModel::RdSapWrapper do
             },
           },
         },
-        { schema: "RdSAP-Schema-NI-20.0.0" },
+        { schema: "RdSAP-Schema-NI-20.0.0",
+          unsupported_fields: %i[improvement_summary]
+        },
         {
           schema: "RdSAP-Schema-NI-19.0",
           different_buried_fields: {
@@ -259,6 +261,47 @@ describe ViewModel::RdSapWrapper do
     it "read the appropriate values" do
       test_xml_doc(schemas, assertion)
     end
+  end
+
+  context "when calling to_recommendation_report" do
+    let(:schemas) do
+      [
+          { schema: "RdSAP-Schema-20.0.0" },
+          {schema: "RdSAP-Schema-19.0"},
+          {schema: "RdSAP-Schema-18.0"},
+          {schema: "RdSAP-Schema-17.1"},
+          {schema: "RdSAP-Schema-17.0"},
+      ]
+    end
+
+    let(:recommendation_assertion) do
+      {
+          recommendations: [
+              {
+                  assessment_id: "0000-0000-0000-0000-0000",
+                  improvement_code: "5",
+                  improvement_description: nil,
+                  improvement_summary: nil,
+                  indicative_cost: "£100 - £350",
+                  sequence: 1,
+              },
+              {
+                  assessment_id: "0000-0000-0000-0000-0000",
+                  improvement_code: "1",
+                  improvement_description: nil,
+                  improvement_summary: nil,
+                  indicative_cost: "2000",
+                  sequence: 2,
+              },
+          ]
+      }
+
+    end
+
+    it "should read the appropriate values" do
+      test_xml_doc(schemas, recommendation_assertion, :to_recommendation_report)
+    end
+
   end
 
   context "when calling to_report" do
