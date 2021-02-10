@@ -41,7 +41,7 @@ module Controller
           "The requested assessment id is not valid",
         )
       else
-        server_error(e.message)
+        server_error(e)
       end
     end
 
@@ -261,7 +261,7 @@ module Controller
       when Helper::RrnHelper::RrnNotValid
         error_response(400, "INVALID_QUERY", "Assessment ID not valid")
       else
-        server_error(e.message)
+        server_error(e)
       end
     end
   end

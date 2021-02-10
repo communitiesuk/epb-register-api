@@ -34,7 +34,7 @@ module Controller
       when UseCase::UpdateAssessmentStatus::AssessmentNotFound
         not_found_error("Assessment not found")
       else
-        server_error(e.message)
+        server_error(e)
       end
     end
   end

@@ -35,7 +35,7 @@ module Controller
           "Scheme with this name already exists",
         )
       else
-        server_error(e.message)
+        server_error(e)
       end
     end
 
@@ -53,7 +53,7 @@ module Controller
       when JSON::Schema::ValidationError, JSON::ParserError
         error_response(400, "INVALID_REQUEST", e.message)
       else
-        server_error(e.message)
+        server_error(e)
       end
     end
   end

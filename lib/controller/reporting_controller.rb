@@ -42,7 +42,7 @@ module Controller
       when JSON::Schema::ValidationError
         error_response(422, "INVALID_REQUEST", e.message)
       else
-        server_error(e.message)
+        server_error(e)
       end
     end
 
@@ -71,7 +71,7 @@ module Controller
       when JSON::Schema::ValidationError
         error_response(422, "INVALID_REQUEST", e.message)
       else
-        server_error(e.message)
+        server_error(e)
       end
     end
 
@@ -102,7 +102,7 @@ module Controller
       when JSON::Schema::ValidationError
         error_response(422, "INVALID_REQUEST", e.message)
       else
-        server_error(e.message)
+        server_error(e)
       end
     end
   end

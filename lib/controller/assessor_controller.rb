@@ -288,7 +288,7 @@ module Controller
       when ArgumentError
         error_response(400, "INVALID_QUERY", e.message)
       else
-        server_error(e.message)
+        server_error(e)
       end
     end
 
@@ -314,7 +314,7 @@ module Controller
       when UseCase::FetchAssessor::AssessorNotFoundException
         not_found_error("The requested assessor was not found")
       else
-        server_error(e.message)
+        server_error(e)
       end
     end
 
@@ -365,7 +365,7 @@ module Controller
       when JSON::Schema::ValidationError
         error_response(422, "INVALID_REQUEST", e.message)
       else
-        server_error(e.message)
+        server_error(e)
       end
     end
   end
