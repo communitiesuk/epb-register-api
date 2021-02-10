@@ -17,7 +17,12 @@ describe UseCase::ExportOpenDataCommercial do
       let(:domestic_assessment_id) { domestic_xml.at("RRN") }
       let(:domestic_assessment_date) { domestic_xml.at("Registration-Date") }
 
-      let(:exported_data) { described_class.new.execute(1, "2019-07-01") }
+      let(:exported_data) do
+        described_class
+          .new
+          .execute(1, "2019-07-01")
+          .sort_by! { |key| key[:rrn] }
+      end
 
       let(:date_today) { DateTime.now.strftime("%F") }
 

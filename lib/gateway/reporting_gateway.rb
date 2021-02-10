@@ -181,7 +181,6 @@ module Gateway
         SQL_TYPE_OF_ASSESSMENT
       end
 
-      sql << " ORDER BY assessment_id "
       results = ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
 
       results.map { |result| result }

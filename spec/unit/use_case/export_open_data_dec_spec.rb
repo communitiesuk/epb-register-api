@@ -60,7 +60,12 @@ describe UseCase::ExportOpenDataDec do
         )
       end
 
-      let(:exported_data) { described_class.new.execute(1, "2019-07-01") }
+      let(:exported_data) do
+        described_class
+          .new
+          .execute(1, "2019-07-01")
+          .sort_by! { |key| key[:rrn] }
+      end
 
       let(:statistics) do
         gateway = Gateway::OpenDataLogGateway.new

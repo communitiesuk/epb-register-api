@@ -28,5 +28,10 @@ describe "Gateway::OpenDataLogGateway" do
     it "should return an execution time" do
       expect(statistics[0]["execution_time"]).not_to be_nil
     end
+
+    it "should return an the task ids" do
+      expect(statistics[0]["task_id"]).to eq(1)
+      expect(statistics[1]["task_id"]).to eq(2)
+    end
   end
 end

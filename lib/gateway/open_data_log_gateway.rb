@@ -30,7 +30,7 @@ module Gateway
 
     def get_statistics
       sql = <<-SQL
-              SELECT Count(*) as num_rows, Min(created_at) as date_start, Max(created_at) as date_end, (Max(created_at) - Min(created_at)) as execution_time
+              SELECT task_id, Count(*) as num_rows, Min(created_at) as date_start, Max(created_at) as date_end, (Max(created_at) - Min(created_at)) as execution_time
               FROM open_data_logs
               GROUP BY task_id
               ORDER BY  Max(created_at)
@@ -38,7 +38,5 @@ module Gateway
       results = ActiveRecord::Base.connection.exec_query(sql)
       results.map { |result| result }
     end
-
-    # TODO: Add delete method for testing
   end
 end
