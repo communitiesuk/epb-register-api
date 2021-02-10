@@ -1,4 +1,5 @@
 require_relative "xml_view_test_helper"
+require "active_support/core_ext/hash/deep_merge"
 
 describe ViewModel::SapWrapper do
   context "when calling to_hash" do
@@ -271,6 +272,134 @@ describe ViewModel::SapWrapper do
           }.merge(ni_difference[:different_fields]),
       }
 
+      pre_17_difference = {
+        different_fields: {
+          recommended_improvements: [
+            {
+              energy_performance_band_improvement: "e",
+              energy_performance_rating_improvement: 50,
+              environmental_impact_rating_improvement: 50,
+              green_deal_category_code: "1",
+              improvement_category: "1",
+              improvement_code: "5",
+              improvement_description: nil,
+              improvement_title: nil,
+              improvement_type: "A",
+              indicative_cost: "£100 - £350",
+              sequence: 1,
+              typical_saving: "360",
+            },
+            {
+              energy_performance_band_improvement: "d",
+              energy_performance_rating_improvement: 60,
+              environmental_impact_rating_improvement: 64,
+              green_deal_category_code: "3",
+              improvement_category: "2",
+              improvement_code: "1",
+              improvement_description: nil,
+              improvement_title: nil,
+              improvement_type: "B",
+              indicative_cost: "2000",
+              sequence: 2,
+              typical_saving: "99",
+            },
+          ],
+        },
+      }
+
+      rdsap_difference = {
+        different_fields: {
+          type_of_assessment: "RdSAP",
+          property_age_band: "A",
+          property_summary: [
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "wall",
+              description: "Brick walls",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "wall",
+              description: "Brick walls",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "roof",
+              description: "Slate roof",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "roof",
+              description: "slate roof",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "floor",
+              description: "Tiled floor",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "floor",
+              description: "Tiled floor",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "window",
+              description: "Glass window",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "main_heating",
+              description: "Gas boiler",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "main_heating",
+              description: "Gas boiler",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "main_heating_controls",
+              description: "Thermostat",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "main_heating_controls",
+              description: "Thermostat",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "hot_water",
+              description: "Gas boiler",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "lighting",
+              description: "Energy saving bulbs",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "secondary_heating",
+              description: "Electric heater",
+            },
+          ],
+        },
+      }
+
       [
         {
           schema: "SAP-Schema-18.0.0",
@@ -305,7 +434,10 @@ describe ViewModel::SapWrapper do
           schema: "SAP-Schema-16.3",
           type: "sap",
           unsupported_fields: %i[tenure],
-        },
+        }.deep_merge(pre_17_difference),
+        { schema: "SAP-Schema-16.3", type: "rdsap" }.deep_merge(
+          rdsap_difference,
+        ).deep_merge(pre_17_difference),
         { schema: "SAP-Schema-NI-16.1" }.merge(ni_pre_17_difference),
         {
           schema: "SAP-Schema-16.2",
@@ -684,9 +816,20 @@ describe ViewModel::SapWrapper do
     end
   end
 
-  it "returns the expect error without a valid schema type" do
-    expect { ViewModel::SapWrapper.new "", "invalid" }.to raise_error(
-      ArgumentError,
-    ).with_message "Unsupported schema type"
+  context "when using the view model with invalid arguments" do
+    it "returns the expect error without a valid schema type" do
+      expect { ViewModel::SapWrapper.new "", "invalid" }.to raise_error(
+        ArgumentError,
+      ).with_message "Unsupported schema type"
+    end
+
+    it "raises an error when trying to parse an HCR report" do
+      xml = Nokogiri.XML Samples.xml "SAP-Schema-16.3", "sap"
+      xml.xpath("//*[local-name() = 'Report-Type']").first.content = "1"
+
+      expect {
+        ViewModel::SapWrapper.new xml.to_s, "SAP-Schema-16.3"
+      }.to raise_error(ArgumentError).with_message "Unsupported schema type"
+    end
   end
 end

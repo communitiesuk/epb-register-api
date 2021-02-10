@@ -18,7 +18,7 @@ module ViewModel
       end
 
       def address_line4
-        xpath(%w[Property Address Address-Line-4]).to_s
+        ""
       end
 
       def town
@@ -31,15 +31,6 @@ module ViewModel
 
       def scheme_assessor_id
         xpath(%w[Certificate-Number])
-      end
-
-      def assessor_name
-        [
-          xpath(%w[Home-Inspector Name Prefix]),
-          xpath(%w[Home-Inspector Name First-Name]),
-          xpath(%w[Home-Inspector Name Surname]),
-          xpath(%w[Home-Inspector Name Suffix]),
-        ].reject { |e| e.to_s.empty? }.join(" ")
       end
 
       def assessor_email
@@ -90,7 +81,7 @@ module ViewModel
       end
 
       def related_party_disclosure_number
-        xpath(%w[Related-Party-Disclosure-Number]).to_i
+        xpath(%w[Related-Party-Disclosure-Number])&.to_i
       end
 
       def improvements
@@ -177,10 +168,6 @@ module ViewModel
       end
 
       def potential_energy_saving; end
-
-      def property_age_band
-        xpath(%w[Construction-Year])
-      end
 
       def tenure
         xpath(%w[Tenure])

@@ -1,6 +1,9 @@
 module ViewModel
   class SapWrapper
     def initialize(xml, schema_type)
+      xml_doc = Nokogiri.XML(xml).remove_namespaces!
+      report_type = xml_doc.at("Report-Type")&.content
+
       case schema_type
       when "SAP-Schema-18.0.0"
         @view_model = ViewModel::SapSchema1800::CommonSchema.new xml
@@ -9,7 +12,13 @@ module ViewModel
       when "SAP-Schema-17.0"
         @view_model = ViewModel::SapSchema170::CommonSchema.new xml
       when "SAP-Schema-16.3"
-        @view_model = ViewModel::SapSchema163::Sap.new xml
+        @view_model =
+          case report_type
+          when "2"
+            ViewModel::SapSchema163::Rdsap.new(xml)
+          when "3"
+            ViewModel::SapSchema163::Sap.new(xml)
+          end
       when "SAP-Schema-16.2"
         @view_model = ViewModel::SapSchema162::CommonSchema.new xml
       when "SAP-Schema-16.1"
@@ -55,6 +64,8 @@ module ViewModel
       else
         raise ArgumentError, "Unsupported schema type"
       end
+
+      raise ArgumentError, "Unsupported schema type" if @view_model.nil?
     end
 
     def type

@@ -92,10 +92,11 @@
 				<SAP:Renewable-Heat-Incentive>
 					<SAP:RHI-Existing-Dwelling>
 						<SAP:Space-Heating-Existing-Dwelling>13120</SAP:Space-Heating-Existing-Dwelling>
-						<SAP:Water-Heating>2285</SAP:Water-Heating>
+						<SAP:Space-Heating-With-Loft-Insulation>15</SAP:Space-Heating-With-Loft-Insulation>
 						<SAP:Space-Heating-With-Cavity-Insulation>15</SAP:Space-Heating-With-Cavity-Insulation>
-						<SAP:Space-Heating-With-Loft-And-Cavity-Insulation>15</SAP:Space-Heating-With-Loft-And-Cavity-Insulation>
-						<SAP:Impact-Of-Loft-Insulation>-2114</SAP:Impact-Of-Loft-Insulation>
+            <SAP:Space-Heating-With-Loft-And-Cavity-Insulation>15</SAP:Space-Heating-With-Loft-And-Cavity-Insulation>
+            <SAP:Water-Heating>2285</SAP:Water-Heating>
+            <SAP:Impact-Of-Loft-Insulation>-2114</SAP:Impact-Of-Loft-Insulation>
 						<SAP:Impact-Of-Cavity-Insulation>-122</SAP:Impact-Of-Cavity-Insulation>
 						<SAP:Impact-Of-Solid-Wall-Insulation>-3560</SAP:Impact-Of-Solid-Wall-Insulation>
 					</SAP:RHI-Existing-Dwelling>
@@ -201,29 +202,29 @@
 				<SAP:Suggested-Improvements>
 					<SAP:Improvement>
 						<SAP:Sequence>1</SAP:Sequence>
-						<SAP:Improvement-Category>6</SAP:Improvement-Category>
-						<SAP:Improvement-Type>Z3</SAP:Improvement-Type>
+						<SAP:Improvement-Category>1</SAP:Improvement-Category>
+						<SAP:Improvement-Type>A</SAP:Improvement-Type>
 						<SAP:Typical-Saving>360</SAP:Typical-Saving>
 						<SAP:Energy-Performance-Rating>50</SAP:Energy-Performance-Rating>
 						<SAP:Environmental-Impact-Rating>50</SAP:Environmental-Impact-Rating>
-						<SAP:Indicative-Cost>£100 - £350</SAP:Indicative-Cost>
 						<SAP:Improvement-Details>
 							<SAP:Improvement-Number>5</SAP:Improvement-Number>
 						</SAP:Improvement-Details>
-						<SAP:Green-Deal-Category>1</SAP:Green-Deal-Category>
+            <SAP:Indicative-Cost>£100 - £350</SAP:Indicative-Cost>
+            <SAP:Green-Deal-Category>1</SAP:Green-Deal-Category>
 					</SAP:Improvement>
 					<SAP:Improvement>
 						<SAP:Sequence>2</SAP:Sequence>
 						<SAP:Improvement-Category>2</SAP:Improvement-Category>
-						<SAP:Improvement-Type>Z2</SAP:Improvement-Type>
+						<SAP:Improvement-Type>B</SAP:Improvement-Type>
 						<SAP:Typical-Saving>99</SAP:Typical-Saving>
 						<SAP:Energy-Performance-Rating>60</SAP:Energy-Performance-Rating>
 						<SAP:Environmental-Impact-Rating>64</SAP:Environmental-Impact-Rating>
-						<SAP:Indicative-Cost>2000</SAP:Indicative-Cost>
-						<SAP:Improvement-Details>
+            <SAP:Improvement-Details>
 							<SAP:Improvement-Number>1</SAP:Improvement-Number>
 						</SAP:Improvement-Details>
-						<SAP:Green-Deal-Category>3</SAP:Green-Deal-Category>
+            <SAP:Indicative-Cost>2000</SAP:Indicative-Cost>
+            <SAP:Green-Deal-Category>3</SAP:Green-Deal-Category>
 					</SAP:Improvement>
 				</SAP:Suggested-Improvements>
 				<SAP:LZC-Energy-Sources>
