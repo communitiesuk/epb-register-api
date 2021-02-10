@@ -110,7 +110,12 @@ task :update_address_lines do
   db = ActiveRecord::Base.connection
 
   unless db.table_exists?(:address_lines_updated)
-    db.create_table :address_lines_updated, primary_key: :assessment_id, id: :string
+    db.create_table :address_lines_updated, primary_key: :assessment_id, id: :string do |t|
+      t.string :address_line1
+      t.string :address_line2
+      t.string :address_line3
+      t.string :address_line4
+    end
     puts "[#{Time.now}] Created empty address_lines_updated table"
   end
 
@@ -139,14 +144,18 @@ task :update_address_lines do
       address_line3 = wrapper_hash[:address][:address_line3]
       address_line4 = wrapper_hash[:address][:address_line4]
 
-      matching_address = db.exec_query("SELECT 1 FROM assessments " \
-        "WHERE assessment_id = '#{assessment_id}' " \
-        "AND address_line1 = '#{address_line1}' " \
-        "AND address_line2 = '#{address_line2}' " \
-        "AND address_line3 = '#{address_line3}' " \
-        "AND address_line4 = '#{address_line4}'").first
+      matching_assessment = db.exec_query("SELECT assessment_id, address_line1, address_line2, address_line3, address_line4 " \
+        "FROM assessments WHERE assessment_id = '#{assessment_id}'").first
 
-      if matching_address.empty?
+      prev_address_line1 = matching_assessment["address_line1"]
+      prev_address_line2 = matching_assessment["address_line2"]
+      prev_address_line3 = matching_assessment["address_line3"]
+      prev_address_line4 = matching_assessment["address_line4"]
+
+      if prev_address_line1 == address_line1 and
+        prev_address_line2 == address_line2 and
+        prev_address_line3 == address_line3 and
+        prev_address_line4 == address_line4
         matched_assessments += 1
       else
         ActiveRecord::Base.transaction do
@@ -155,7 +164,8 @@ task :update_address_lines do
             "address_line3 = '#{address_line3}', address_line4 = '#{address_line4}' " \
             "WHERE assessment_id = '#{assessment_id}'")
 
-          db.exec_query("INSERT INTO address_lines_updated VALUES('#{assessment_id}')")
+          db.exec_query("INSERT INTO address_lines_updated (assessment_id, address_line1, address_line2, address_line3, address_line4) VALUES " \
+            "('#{assessment_id}','#{prev_address_line1}','#{prev_address_line2}','#{prev_address_line3}','#{prev_address_line4}')")
 
           updated_assessments += 1
         end
