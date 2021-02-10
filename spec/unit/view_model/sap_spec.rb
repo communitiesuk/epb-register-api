@@ -444,6 +444,9 @@ describe ViewModel::SapWrapper do
           type: "sap",
           unsupported_fields: %i[tenure],
         },
+        { schema: "SAP-Schema-16.2", type: "rdsap" }.deep_merge(
+          rdsap_difference,
+        ).deep_merge(pre_17_difference),
         {
           schema: "SAP-Schema-16.1",
           type: "sap",
@@ -823,12 +826,21 @@ describe ViewModel::SapWrapper do
       ).with_message "Unsupported schema type"
     end
 
-    it "raises an error when trying to parse an HCR report" do
+    it "raises an error when trying to parse an HCR report with SAP-16.3" do
       xml = Nokogiri.XML Samples.xml "SAP-Schema-16.3", "sap"
       xml.xpath("//*[local-name() = 'Report-Type']").first.content = "1"
 
       expect {
         ViewModel::SapWrapper.new xml.to_s, "SAP-Schema-16.3"
+      }.to raise_error(ArgumentError).with_message "Unsupported schema type"
+    end
+
+    it "raises an error when trying to parse an HCR report with SAP-16.2" do
+      xml = Nokogiri.XML Samples.xml "SAP-Schema-16.2", "sap"
+      xml.xpath("//*[local-name() = 'Report-Type']").first.content = "1"
+
+      expect {
+        ViewModel::SapWrapper.new xml.to_s, "SAP-Schema-16.2"
       }.to raise_error(ArgumentError).with_message "Unsupported schema type"
     end
   end
