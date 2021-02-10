@@ -27,7 +27,7 @@ describe UseCase::ExportOpenDataCommercial do
       end
 
       expected_values = {
-        rrn: "0000-0000-0000-0000-0000",
+        rrn: "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
         address1: "Some Unit",
         address2: "2 Lonely Street",
         address3: "Some Area",
@@ -64,7 +64,10 @@ describe UseCase::ExportOpenDataCommercial do
       let(:expected_values_index_1) do
         Samples.update_test_hash(
           expected_values,
-          { rrn: "0000-0000-0000-0000-0002" },
+          {
+            rrn:
+              "a6f818e3dd0ac70cbd2838cb0efe0b4aadf5b43ed33a6e7cd13cb9738dca5f60",
+          },
         )
       end
 
