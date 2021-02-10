@@ -199,7 +199,6 @@ module Gateway
       sql = <<~SQL
         SELECT  a.assessment_id, date_registered
         FROM assessments a
-        INNER JOIN assessments_xml xml ON(a.assessment_id = xml.assessment_id)
         INNER JOIN linked_assessments la ON a.assessment_id = la.assessment_id
         WHERE a.opt_out = false AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
         AND a.type_of_assessment = $1

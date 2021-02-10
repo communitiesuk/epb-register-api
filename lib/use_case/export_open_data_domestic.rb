@@ -27,6 +27,8 @@ module UseCase
         view_model_hash[:lodgement_datetime] =
           assessment["date_registered"].strftime("%F %H:%M:%S")
         @log_gateway.insert(assessment["assessment_id"], task_id)
+        view_model_hash[:rrn] =
+          Helper::RrnHelper.hash_rrn(assessment["assessment_id"])
 
         data << view_model_hash
       end

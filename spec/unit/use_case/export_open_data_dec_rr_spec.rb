@@ -15,7 +15,12 @@ describe UseCase::ExportOpenDataDecrr do
       end
       let(:rr_minus_dec_xml_id) { rr_minus_dec_xml.at("RRN") }
       let(:rr_minus_dec_xml_date) { rr_minus_dec_xml.at("//Registration-Date") }
-      let(:exported_data) { described_class.new.execute("2019-07-01") }
+      let(:exported_data) { described_class.new.execute(1, "2019-07-01") }
+
+      let(:statistics) do
+        gateway = Gateway::OpenDataLogGateway.new
+        gateway.get_statistics
+      end
 
       before do
         add_assessor(

@@ -30,7 +30,6 @@ module UseCase
         view_model_hash[:lodgement_datetime] =
           assessment["date_registered"].strftime("%F %H:%M:%S")
 
-        # lodgement_datetime
         view_model_array << view_model_hash
         @log_gateway.insert(assessment["assessment_id"], task_id)
       end

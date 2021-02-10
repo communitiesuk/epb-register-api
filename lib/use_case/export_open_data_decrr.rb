@@ -5,20 +5,18 @@ module UseCase
     def initialize
       @gateway = Gateway::ReportingGateway.new
       @assessment_gateway = Gateway::AssessmentsXmlGateway.new
+      @log_gateway = Gateway::OpenDataLogGateway.new
     end
 
-    def execute(date_from)
+    def execute(_task_id = 1, date_from)
       view_model_array = []
 
-      # #use gateway to make db calls
-      # call gateway to get data set
       assessments =
         @gateway.assessments_for_open_data_recommendation_report(
           "DEC-RR",
           date_from,
         )
 
-      # use existing gateway to get each xml doc from db line by line to ensure memory is totllay consumed by size of data returned
       assessments.each do |assessment|
         xml_data = @assessment_gateway.fetch(assessment["assessment_id"])
 
@@ -47,11 +45,8 @@ module UseCase
             )
           recommendation_item += 1
         end
-
-        # @TODO:update log table
       end
 
-      # call method to return data as csv
       view_model_array.sort_by! { |key| key[:recommendation_item] }
     end
   end

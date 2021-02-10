@@ -4,7 +4,7 @@ describe UseCase::ExportOpenDataDomestic do
   context "when creating the open data reporting release" do
     describe "for the domestic certificates and reports" do
       expected_rdsap_values = {
-        rrn: "0000-0000-0000-0000-0000",
+        rrn: "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
         inspection_date: "2020-05-04",
         lodgement_date: "2020-05-04",
         building_reference_number: "UPRN-000000000000",
@@ -87,7 +87,7 @@ describe UseCase::ExportOpenDataDomestic do
         floor_height: "2.45, 2.59",
       }
       expected_sap_values = {
-        rrn: "0000-0000-0000-0000-0000",
+        rrn: "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
         inspection_date: "2020-05-04",
         lodgement_date: "2020-05-04",
         building_reference_number: "UPRN-000000000000",
@@ -167,12 +167,20 @@ describe UseCase::ExportOpenDataDomestic do
 
       let(:rdsap_odc_hash) do
         expected_rdsap_values.merge(
-          { rrn: "0000-0000-0000-0000-0000", lodgement_date: date_today },
+          {
+            rrn:
+              "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
+            lodgement_date: date_today,
+          },
         )
       end
       let(:sap_odc_hash) do
         expected_sap_values.merge(
-          { rrn: "0000-0000-0000-0000-1000", lodgement_date: date_today },
+          {
+            rrn:
+              "a154b93d62db9b77c82f6b11ba4a4a4056816572180c95e0bc5d486b905d4996",
+            lodgement_date: date_today,
+          },
         )
       end
       let(:exported_data) { described_class.new.execute("2019-07-01") }
