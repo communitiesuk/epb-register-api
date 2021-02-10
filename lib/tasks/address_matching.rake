@@ -120,8 +120,9 @@ task :update_address_lines do
 
   updated_assessments = 0
   matched_assessments = 0
+
+  puts "Skipping to #{last_updated_id}" unless last_updated_id.nil?
   assessments.each do |assessment|
-    puts "Skipping to #{last_updated_id}" unless last_updated_id.nil?
     next if !last_updated_id.nil? && (assessment["assessment_id"] <= last_updated_id)
 
     assessment_id = assessment["assessment_id"]
@@ -167,10 +168,10 @@ task :update_address_lines do
 
 rescue StandardError => e
   catch(:sigint) do
-    abort "Task interrupted while updating address lines"
+    abort "Task interrupted while updating address lines: #{e}"
   end
   catch(:sigterm) do
-    abort "Task killed while updating address lines"
+    abort "Task killed while updating address lines: #{e}"
   end
   puts "Error while updating address lines: #{e}"
 end
