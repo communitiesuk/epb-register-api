@@ -188,7 +188,8 @@ describe UseCase::ExportOpenDataCommercial do
     let(:exported_data2) { described_class.new.execute(1, "2019-07-01") }
 
     it "should not return any data" do
-      expect(exported_data.length).to eq(0)
+      exported_data.length
+      expect(exported_data2.length).to eq(0)
     end
   end
 end
