@@ -3,6 +3,9 @@ describe UseCase::ExportOpenDataDomestic do
 
   context "when creating the open data reporting release" do
     describe "for the domestic certificates and reports" do
+
+      let(:export_object) { described_class.new }
+
       expected_rdsap_values = {
         rrn: "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
         inspection_date: "2020-05-04",
@@ -165,6 +168,7 @@ describe UseCase::ExportOpenDataDomestic do
         floor_height: "2.4, 2.5",
       }
 
+
       let(:rdsap_odc_hash) do
         expected_rdsap_values.merge(
           {
@@ -192,8 +196,12 @@ describe UseCase::ExportOpenDataDomestic do
 
       let(:statistics) do
         gateway = Gateway::OpenDataLogGateway.new
-        gateway.get_statistics
+        gateway.get_log_statistics
       end
+
+
+
+
 
       before(:all) do
         scheme_id = add_scheme_and_get_id
@@ -286,6 +294,16 @@ describe UseCase::ExportOpenDataDomestic do
         expect(statistics[0]["num_rows"]).to eq(2)
       end
 
+      it 'should return no rows if called with the existing task_id' do
+        expect(export_object.execute(1, "2019-07-01").length).to eq(2)
+        expect(export_object.execute(1, "2019-07-01").length).to eq(0)
+      end
+
+      it 'should return 2 rows if called with a different task_id' do
+        expect(export_object.execute(1, "2019-07-01").length).to eq(2)
+        expect(export_object.execute(2, "2019-07-01").length).to eq(2)
+      end
+
       expected_rdsap_values.keys.each do |key|
         it "returns the #{key} that matches the RdSAP test data for the equivalent entry in the ODC hash" do
           expect(exported_data[0][key.to_sym]).to include(rdsap_odc_hash[key])
@@ -313,23 +331,11 @@ describe UseCase::ExportOpenDataDomestic do
         end
       end
     end
+
+
+
+
   end
 
-  context "when data has been exported more then once" do
-    before do
-      ActiveRecord::Base.connection.execute("TRUNCATE TABLE open_data_logs")
-    end
 
-    it "should not return any data for the task if it has already been called with the same task id" do
-      task1 = described_class.new.execute(1, "2019-07-01")
-      task2 = described_class.new.execute(1, "2019-07-01")
-      expect(task2.length).to eq(0)
-    end
-
-    it "should return data when the task id is different" do
-      task1 = described_class.new.execute(1, "2019-07-01")
-      task2 = described_class.new.execute(2, "2019-07-01")
-      expect(task2.length).to eq(2)
-    end
-  end
 end

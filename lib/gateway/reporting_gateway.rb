@@ -149,6 +149,8 @@ module Gateway
     end
 
     def assessments_for_open_data(type_of_assessment = "", task_id, date_from)
+      report_type = type_of_assessment.is_a?(Array) ? 'Domestic' : type_of_assessment
+
       bindings = [
         ActiveRecord::Relation::QueryAttribute.new(
           "type_of_assessment",
@@ -160,9 +162,12 @@ module Gateway
           task_id,
           ActiveRecord::Type::Integer.new,
         ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "report_type",
+            report_type,
+          ActiveRecord::Type::String.new,
+          ),
       ]
-
-      # TODO: add task id to export so can be re-run
 
       sql = <<~SQL
         SELECT  a.assessment_id, date_registered
@@ -172,9 +177,11 @@ module Gateway
         AND a.postcode NOT LIKE 'BT%'
         AND NOT EXISTS (SELECT * FROM open_data_logs l
                         WHERE l.assessment_id = a.assessment_id
-                        AND task_id = $2
+                        AND task_id = $2 AND report_type = $3
                          )
       SQL
+
+
 
       if type_of_assessment.is_a?(Array)
         list_of_types = type_of_assessment.map { |n| "'#{n}'" }
@@ -186,6 +193,7 @@ module Gateway
           AND type_of_assessment = '#{type_of_assessment}'
         SQL_TYPE_OF_ASSESSMENT
       end
+
 
       results = ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
 

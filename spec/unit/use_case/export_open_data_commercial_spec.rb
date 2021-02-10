@@ -3,6 +3,8 @@ describe UseCase::ExportOpenDataCommercial do
 
   context "when creating the open data reporting release" do
     describe "for the commercial certificates and reports" do
+
+      let(:export_object) { described_class.new }
       let(:scheme_id) { add_scheme_and_get_id }
 
       let(:non_domestic_xml) { Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc") }
@@ -28,7 +30,7 @@ describe UseCase::ExportOpenDataCommercial do
 
       let(:statistics) do
         gateway = Gateway::OpenDataLogGateway.new
-        gateway.get_statistics
+        gateway.get_log_statistics
       end
 
       expected_values = {
@@ -167,10 +169,11 @@ describe UseCase::ExportOpenDataCommercial do
         )
       end
 
+
+
       it "returns the correct number of assessments in the CSV and the logs" do
         expect(exported_data.length).to eq(number_assessments_to_test)
-        gateway = Gateway::OpenDataLogGateway.new
-        expect(gateway.get_statistics[0]["num_rows"]).to eq(
+        expect(statistics[0]["num_rows"]).to eq(
           number_assessments_to_test,
         )
       end
@@ -188,24 +191,19 @@ describe UseCase::ExportOpenDataCommercial do
           )
         end
       end
+
+      it 'should return no rows if called with the existing task_id' do
+        expect(export_object.execute(1, "2019-07-01").length).to eq(2)
+        expect(export_object.execute(1, "2019-07-01").length).to eq(0)
+      end
+
+      it 'should return 2 rows if called with a different task_id' do
+        expect(export_object.execute(1, "2019-07-01").length).to eq(2)
+        expect(export_object.execute(2, "2019-07-01").length).to eq(2)
+      end
+
     end
   end
 
-  context "when data has been exported more then once" do
-    before do
-      ActiveRecord::Base.connection.execute("TRUNCATE TABLE open_data_logs")
-    end
 
-    it "should not return any data for the task if it has already been called with the same task id" do
-      task1 = described_class.new.execute(1, "2019-07-01")
-      task2 = described_class.new.execute(1, "2019-07-01")
-      expect(task2.length).to eq(0)
-    end
-
-    it "should return data when the task id is different" do
-      task1 = described_class.new.execute(1, "2019-07-01")
-      task2 = described_class.new.execute(2, "2019-07-01")
-      expect(task2.length).to eq(2)
-    end
-  end
 end

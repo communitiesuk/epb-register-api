@@ -6,6 +6,8 @@ describe UseCase::ExportOpenDataDec do
       let(:date_today) { DateTime.now.strftime("%F") }
       let(:number_assessments_to_test) { 2 }
 
+      let(:export_object) { described_class.new }
+
       expected_values = {
         rrn: "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
         building_reference_number: "UPRN-000000000001",
@@ -69,7 +71,7 @@ describe UseCase::ExportOpenDataDec do
 
       let(:statistics) do
         gateway = Gateway::OpenDataLogGateway.new
-        gateway.get_statistics
+        gateway.get_log_statistics
       end
 
       before(:all) do
@@ -167,24 +169,22 @@ describe UseCase::ExportOpenDataDec do
           expect(exported_data[1][index.to_sym]).to eq(expected_values_1[index])
         end
       end
+
+      it 'should return no rows if called with the existing task_id' do
+        expect(export_object.execute(1, "2019-07-01").length).to eq(2)
+        expect(export_object.execute(1, "2019-07-01").length).to eq(0)
+      end
+
+      it 'should return 2 rows if called with a different task_id' do
+        export = described_class.new
+        expect(export_object.execute(1, "2019-07-01").length).to eq(2)
+        expect(export_object.execute(2, "2019-07-01").length).to eq(2)
+      end
+
+
     end
   end
 
-  context "when data has been exported more then once" do
-    before do
-      ActiveRecord::Base.connection.execute("TRUNCATE TABLE open_data_logs")
-    end
 
-    it "should not return any data for the task if it has already been called with the same task id" do
-      task1 = described_class.new.execute(1, "2019-07-01")
-      task2 = described_class.new.execute(1, "2019-07-01")
-      expect(task2.length).to eq(0)
-    end
 
-    it "should return data when the task id is different" do
-      task1 = described_class.new.execute(1, "2019-07-01")
-      task2 = described_class.new.execute(2, "2019-07-01")
-      expect(task2.length).to eq(2)
-    end
-  end
 end

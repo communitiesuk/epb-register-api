@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_09_150314) do
+ActiveRecord::Schema.define(version: 2021_02_10_155650) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -167,6 +167,7 @@ ActiveRecord::Schema.define(version: 2021_02_09_150314) do
     t.string "assessment_id", null: false
     t.datetime "created_at", null: false
     t.integer "task_id", null: false
+    t.string "report_type"
     t.index ["assessment_id"], name: "index_open_data_logs_on_assessment_id"
     t.index ["task_id"], name: "index_open_data_logs_on_task_id"
   end

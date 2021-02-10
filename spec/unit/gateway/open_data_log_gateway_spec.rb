@@ -2,15 +2,16 @@ describe "Gateway::OpenDataLogGateway" do
   context "when there is no log data in the database insert it and return the statistics" do
     let(:statistics) do
       gateway = Gateway::OpenDataLogGateway.new
-      gateway.get_statistics
+      gateway.get_log_statistics
     end
 
     before(:all) do
       gateway = Gateway::OpenDataLogGateway.new
-      gateway.insert("0000-0000-0000-0000-0001", 1)
-      gateway.insert("0000-0000-0000-0000-0002", 1)
-      gateway.insert("0000-0000-0000-0000-0004", 1)
-      gateway.insert("0000-0000-0000-0000-0004", 2)
+      report_type = 'CEPC'
+      gateway.insert("0000-0000-0000-0000-0001", 1, report_type)
+      gateway.insert("0000-0000-0000-0000-0002", 1, report_type)
+      gateway.insert("0000-0000-0000-0000-0004", 1, report_type)
+      gateway.insert("0000-0000-0000-0000-0004", 2, report_type)
     end
 
     it "should return the correct count in the statistics " do
@@ -23,6 +24,10 @@ describe "Gateway::OpenDataLogGateway" do
       expect(statistics[0]["date_start"].to_datetime.strftime("%F")).to eq(
         DateTime.now.strftime("%F"),
       )
+    end
+
+    it "should return the report types" do
+      expect(statistics[0]["report_type"]).to eq('CEPC')
     end
 
     it "should return an execution time" do

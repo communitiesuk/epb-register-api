@@ -2,6 +2,9 @@ require "nokogiri"
 require "date"
 module UseCase
   class ExportOpenDataCommercial
+
+    ASSESSMENT_TYPE = 'CEPC'
+
     def initialize
       @gateway = Gateway::ReportingGateway.new
       @assessment_gateway = Gateway::AssessmentsXmlGateway.new
@@ -14,7 +17,7 @@ module UseCase
       # use gateway to make db calls
       # call gateway to get data set
       assessments =
-        @gateway.assessments_for_open_data("CEPC", task_id, date_from)
+        @gateway.assessments_for_open_data(ASSESSMENT_TYPE, task_id, date_from)
 
       # use existing gateway to get each xml doc from db line by line to ensure memory is totllay consumed by size of data returned
       assessments.each do |assessment|
@@ -36,7 +39,7 @@ module UseCase
           Helper::RrnHelper.hash_rrn(assessment["assessment_id"])
 
         view_model_array << view_model_hash
-        @log_gateway.insert(assessment["assessment_id"], task_id)
+        @log_gateway.insert(assessment["assessment_id"], task_id, ASSESSMENT_TYPE)
       end
 
       view_model_array

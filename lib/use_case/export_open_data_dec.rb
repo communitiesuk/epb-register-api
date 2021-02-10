@@ -2,6 +2,9 @@ require "nokogiri"
 require "date"
 module UseCase
   class ExportOpenDataDec
+
+    ASSESSMENT_TYPE = "DEC"
+
     def initialize
       @gateway = Gateway::ReportingGateway.new
       @assessment_gateway = Gateway::AssessmentsXmlGateway.new
@@ -29,7 +32,7 @@ module UseCase
           Helper::RrnHelper.hash_rrn(assessment["assessment_id"])
 
         view_model_array << view_model_hash
-        @log_gateway.insert(assessment["assessment_id"], task_id)
+        @log_gateway.insert(assessment["assessment_id"], task_id, "DEC")
       end
 
       view_model_array
