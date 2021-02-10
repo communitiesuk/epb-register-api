@@ -239,8 +239,6 @@ describe UseCase::ExportOpenDataDomestic do
           override: true,
         )
 
-        # TODO: Add NI lodgement
-
         domestic_sap_assessment_date.children = date_today
         domestic_sap_assessment_id.children = "0000-0000-0000-0000-1000"
         lodge_assessment(
@@ -268,8 +266,6 @@ describe UseCase::ExportOpenDataDomestic do
 
       it "expects the number of non Northern Irish RdSAP and SAP lodgements within required date range for ODC to be 2" do
         expect(exported_data.length).to eq(2)
-        gateway = Gateway::OpenDataLogGateway.new
-        expect(gateway.get_statistics[0]["num_rows"]).to eq(2)
       end
 
       it "expects logs to have 2 rows after export" do

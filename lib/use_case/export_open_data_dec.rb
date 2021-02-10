@@ -5,9 +5,10 @@ module UseCase
     def initialize
       @gateway = Gateway::ReportingGateway.new
       @assessment_gateway = Gateway::AssessmentsXmlGateway.new
+      @log_gateway = Gateway::OpenDataLogGateway.new
     end
 
-    def execute(date_from)
+    def execute(task_id, date_from)
       view_model_array = []
 
       # #use gateway to make db calls
@@ -31,7 +32,7 @@ module UseCase
 
         # lodgement_datetime
         view_model_array << view_model_hash
-        # @TODO:update log table
+        @log_gateway.insert(assessment["assessment_id"], task_id)
       end
 
       # call method to return data as csv

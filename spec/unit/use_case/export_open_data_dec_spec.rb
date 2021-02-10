@@ -55,7 +55,12 @@ describe UseCase::ExportOpenDataDec do
         expected_values.merge({ rrn: "0000-0000-0000-0000-0001" })
       end
 
-      let(:exported_data) { described_class.new.execute("2019-07-01") }
+      let(:exported_data) { described_class.new.execute(1, "2019-07-01") }
+
+      let(:statistics) do
+        gateway = Gateway::OpenDataLogGateway.new
+        gateway.get_statistics
+      end
 
       before(:all) do
         scheme_id = add_scheme_and_get_id
@@ -132,7 +137,10 @@ describe UseCase::ExportOpenDataDec do
         expect(exported_data.length).to eq(number_assessments_to_test)
       end
 
-      # @TODO once tests have completed refactor to write one assertion for each row and compare to hash rather than for each column
+      it "expects logs to have 2 rows after export" do
+        exported_data
+        expect(statistics[0]["num_rows"]).to eq(2)
+      end
 
       # 1st row to test
       # write at test for each key in test hash
