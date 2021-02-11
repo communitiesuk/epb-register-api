@@ -24,7 +24,7 @@ module Gateway
         ),
         ActiveRecord::Relation::QueryAttribute.new(
           "report_type",
-          report_type,
+          Helper::ExportHelper.report_type_to_s(report_type),
           ActiveRecord::Type::String.new,
         ),
       ]

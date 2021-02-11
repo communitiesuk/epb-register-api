@@ -12,5 +12,13 @@ module Helper
         end
       csv_string
     end
+
+    def self.report_type_to_s(type_of_assessment)
+      if type_of_assessment.is_a?(Array)
+        type_of_assessment.join(",")
+      else
+        type_of_assessment
+      end
+    end
   end
 end

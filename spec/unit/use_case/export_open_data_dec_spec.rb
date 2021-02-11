@@ -65,7 +65,7 @@ describe UseCase::ExportOpenDataDec do
       let(:exported_data) do
         described_class
           .new
-          .execute(3, "2019-07-01")
+          .execute("2019-07-01", 3)
           .sort_by! { |key| key[:rrn] }
       end
 
@@ -171,8 +171,8 @@ describe UseCase::ExportOpenDataDec do
       end
 
       it "should return 2 rows if called with a different task_id" do
-        expect(export_object.execute(1, "2019-07-01").length).to eq(2)
-        expect(export_object.execute(2, "2019-07-01").length).to eq(2)
+        expect(export_object.execute("2019-07-01", 1).length).to eq(2)
+        expect(export_object.execute("2019-07-01", 2).length).to eq(2)
       end
 
       it "should execute the export if no task id is passed" do

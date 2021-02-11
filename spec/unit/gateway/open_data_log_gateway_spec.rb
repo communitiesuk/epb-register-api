@@ -7,16 +7,19 @@ describe "Gateway::OpenDataLogGateway" do
     before(:all) do
       gateway = Gateway::OpenDataLogGateway.new
       report_type = "CEPC"
+
       gateway.create("0000-0000-0000-0000-0001", 1, report_type)
       gateway.create("0000-0000-0000-0000-0002", 1, report_type)
       gateway.create("0000-0000-0000-0000-0004", 1, report_type)
       gateway.create("0000-0000-0000-0000-0004", 2, report_type)
+      gateway.create("0000-0000-0000-0000-0004", 2, report_type)
+      gateway.create("0000-0000-0000-0000-0009", 3, %w[RdSAP SAP])
     end
 
     it "should return the correct count in the statistics " do
-      expect(statistics.count).to eq(2)
+      expect(statistics.count).to eq(3)
       expect(statistics[0]["num_rows"]).to eq(3)
-      expect(statistics[1]["num_rows"]).to eq(1)
+      expect(statistics[1]["num_rows"]).to eq(2)
     end
 
     it "should return the the today as the created at date " do
@@ -43,11 +46,15 @@ describe "Gateway::OpenDataLogGateway" do
     end
 
     it "should should return the latest task Id as 1" do
-      expect(gateway.fetch_new_task_id).to eq(3)
+      expect(gateway.fetch_new_task_id).to eq(4)
+    end
+
+    it "should should return the comma delimited string for report type of an array" do
+      expect(statistics[2]["report_type"]).to eq("RdSAP,SAP")
     end
 
     it "should should return the latest task Id if you do not pass an integer" do
-      expect(gateway.fetch_new_task_id("a")).to eq(3)
+      expect(gateway.fetch_new_task_id("a")).to eq(4)
     end
   end
 

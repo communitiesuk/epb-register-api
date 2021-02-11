@@ -10,12 +10,17 @@ module UseCase
       @log_gateway = Gateway::OpenDataLogGateway.new
     end
 
-    def execute(task_id = 0, date_from)
+    def execute(date_from, task_id = 0)
       view_model_array = []
       new_task_id = @log_gateway.fetch_new_task_id(task_id)
 
       assessments =
-        @gateway.assessments_for_open_data("DEC", new_task_id, date_from)
+        @gateway.assessments_for_open_data(
+          date_from,
+          ASSESSMENT_TYPE,
+          new_task_id,
+        )
+
       assessments.each do |assessment|
         xml_data = @assessment_gateway.fetch(assessment["assessment_id"])
         view_model =

@@ -10,14 +10,14 @@ module UseCase
       @log_gateway = Gateway::OpenDataLogGateway.new
     end
 
-    def execute(task_id = 0, date_from)
+    def execute(date_from, task_id = 0)
       data = []
       new_task_id = @log_gateway.fetch_new_task_id(task_id)
       assessments =
         @gateway.assessments_for_open_data(
+          date_from,
           ASSESSMENT_TYPE,
           new_task_id,
-          date_from,
         )
 
       assessments.each do |assessment|
@@ -37,7 +37,7 @@ module UseCase
         @log_gateway.create(
           assessment["assessment_id"],
           new_task_id,
-          "Domestic",
+          Helper::ExportHelper.report_type_to_s(ASSESSMENT_TYPE),
         )
         view_model_hash[:rrn] =
           Helper::RrnHelper.hash_rrn(assessment["assessment_id"])

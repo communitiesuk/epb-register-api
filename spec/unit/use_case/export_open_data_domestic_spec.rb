@@ -188,7 +188,7 @@ describe UseCase::ExportOpenDataDomestic do
       let(:exported_data) do
         described_class
           .new
-          .execute(2, "2019-07-01")
+          .execute("2019-07-01", 2)
           .sort_by! { |key| key[:rrn] }
       end
 
@@ -283,21 +283,6 @@ describe UseCase::ExportOpenDataDomestic do
         expect(exported_data.length).to eq(2)
       end
 
-      it "expects logs to have 2 rows after export" do
-        exported_data
-        expect(statistics[0]["num_rows"]).to eq(2)
-      end
-
-      it "should execute the export if no task id is passed" do
-        expect(export_object.execute("2019-07-01").length).to eq(2)
-        expect(statistics.first["num_rows"]).to eq(2)
-      end
-
-      it "should return no rows if called with the existing task_id" do
-        expect(export_object.execute(1, "2019-07-01").length).to eq(2)
-        expect(export_object.execute(1, "2019-07-01").length).to eq(0)
-      end
-
       expected_rdsap_values.keys.each do |key|
         it "returns the #{key} that matches the RdSAP test data for the equivalent entry in the ODC hash" do
           expect(exported_data[0][key.to_sym]).to include(rdsap_odc_hash[key])
@@ -323,6 +308,21 @@ describe UseCase::ExportOpenDataDomestic do
           exported_data[1]["extension_count"]
           expect(exported_data[1][key.to_sym]).to include(sap_odc_hash[key])
         end
+      end
+
+      it "should return 2 rows if called with a different task_id" do
+        expect(export_object.execute("2019-07-01", 1).length).to eq(2)
+        expect(export_object.execute("2019-07-01", 2).length).to eq(2)
+      end
+
+      it "should execute the export if no task id is passed" do
+        expect(export_object.execute("2019-07-01").length).to eq(2)
+        expect(statistics.first["num_rows"]).to eq(2)
+      end
+
+      it "should return no rows if called with the existing task_id" do
+        expect(export_object.execute("2019-07-01", 1).length).to eq(2)
+        expect(export_object.execute("2019-07-01", 1).length).to eq(0)
       end
     end
   end

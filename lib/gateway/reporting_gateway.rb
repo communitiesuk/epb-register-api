@@ -148,9 +148,12 @@ module Gateway
       results.map { |result| result }
     end
 
-    def assessments_for_open_data(type_of_assessment = "", task_id, date_from)
-      report_type =
-        type_of_assessment.is_a?(Array) ? "Domestic" : type_of_assessment
+    def assessments_for_open_data(
+      date_from,
+      type_of_assessment = "",
+      task_id = 0
+    )
+      report_type = Helper::ExportHelper.report_type_to_s(type_of_assessment)
 
       bindings = [
         ActiveRecord::Relation::QueryAttribute.new(
