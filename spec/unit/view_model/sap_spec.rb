@@ -4,7 +4,233 @@ require "active_support/core_ext/hash/deep_merge"
 describe ViewModel::SapWrapper do
   context "when calling to_hash" do
     let(:schemas) do
-      shared_difference_14 = {
+      heat_demand_current_unsupported = {
+        different_buried_fields: {
+          heat_demand: {
+            current_space_heating_demand: nil,
+            current_water_heating_demand: nil,
+          },
+        },
+      }
+
+      heat_demand_impact_of_unsupported = {
+        different_buried_fields: {
+          heat_demand: {
+            impact_of_cavity_insulation: nil,
+            impact_of_loft_insulation: nil,
+            impact_of_solid_wall_insulation: nil,
+          },
+        },
+      }
+
+      heat_demand_unsupported = heat_demand_current_unsupported
+                                  .deep_merge(heat_demand_impact_of_unsupported)
+
+      is_ni = {
+        different_fields: {
+          recommended_improvements: [
+            {
+              energy_performance_band_improvement: "e",
+              energy_performance_rating_improvement: 50,
+              environmental_impact_rating_improvement: 50,
+              green_deal_category_code: nil,
+              improvement_category: "1",
+              improvement_code: "5",
+              improvement_description: nil,
+              improvement_title: nil,
+              improvement_type: "A",
+              indicative_cost: "£100 - £350",
+              sequence: 1,
+              typical_saving: "360",
+            },
+            {
+              energy_performance_band_improvement: "d",
+              energy_performance_rating_improvement: 60,
+              environmental_impact_rating_improvement: 64,
+              green_deal_category_code: nil,
+              improvement_category: "2",
+              improvement_code: "1",
+              improvement_description: nil,
+              improvement_title: nil,
+              improvement_type: "B",
+              indicative_cost: "2000",
+              sequence: 2,
+              typical_saving: "99",
+            },
+          ],
+        },
+        different_buried_fields: {
+          heat_demand: {
+            impact_of_cavity_insulation: nil,
+            impact_of_loft_insulation: nil,
+            impact_of_solid_wall_insulation: nil,
+          },
+        },
+      }
+
+      is_ni_pre_17 = {
+        different_fields: {
+            property_age_band: "D",
+            property_summary: [
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "wall",
+                description: "Brick walls",
+              },
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "wall",
+                description: "Brick walls",
+              },
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "roof",
+                description: "Slate roof",
+              },
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "roof",
+                description: "slate roof",
+              },
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "floor",
+                description: "Tiled floor",
+              },
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "floor",
+                description: "Tiled floor",
+              },
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "window",
+                description: "Glass window",
+              },
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "main_heating",
+                description: "Gas boiler",
+              },
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "main_heating",
+                description: "Gas boiler",
+              },
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "main_heating_controls",
+                description: "Thermostat",
+              },
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "main_heating_controls",
+                description: "Thermostat",
+              },
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "hot_water",
+                description: "Gas boiler",
+              },
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "lighting",
+                description: "Energy saving bulbs",
+              },
+              {
+                energy_efficiency_rating: 0,
+                environmental_efficiency_rating: 0,
+                name: "secondary_heating",
+                description: "Electric heater",
+              },
+            ],
+          },
+      }.deep_merge(heat_demand_unsupported).deep_merge(is_ni)
+
+      is_pre_17 = {
+        different_fields: {
+          recommended_improvements: [
+            {
+              energy_performance_band_improvement: "e",
+              energy_performance_rating_improvement: 50,
+              environmental_impact_rating_improvement: 50,
+              green_deal_category_code: "1",
+              improvement_category: "1",
+              improvement_code: "5",
+              improvement_description: nil,
+              improvement_title: nil,
+              improvement_type: "A",
+              indicative_cost: "£100 - £350",
+              sequence: 1,
+              typical_saving: "360",
+            },
+            {
+              energy_performance_band_improvement: "d",
+              energy_performance_rating_improvement: 60,
+              environmental_impact_rating_improvement: 64,
+              green_deal_category_code: "3",
+              improvement_category: "2",
+              improvement_code: "1",
+              improvement_description: nil,
+              improvement_title: nil,
+              improvement_type: "B",
+              indicative_cost: "2000",
+              sequence: 2,
+              typical_saving: "99",
+            },
+          ],
+        },
+      }
+
+      is_pre_16 = {
+        different_fields: {
+          recommended_improvements: [
+            {
+              energy_performance_band_improvement: "e",
+              energy_performance_rating_improvement: 50,
+              environmental_impact_rating_improvement: 50,
+              green_deal_category_code: nil,
+              improvement_category: "1",
+              improvement_code: "5",
+              improvement_description: nil,
+              improvement_title: nil,
+              improvement_type: "A",
+              indicative_cost: "£100 - £350",
+              sequence: 1,
+              typical_saving: "360",
+            },
+            {
+              energy_performance_band_improvement: "d",
+              energy_performance_rating_improvement: 60,
+              environmental_impact_rating_improvement: 64,
+              green_deal_category_code: nil,
+              improvement_category: "2",
+              improvement_code: "1",
+              improvement_description: nil,
+              improvement_title: nil,
+              improvement_type: "B",
+              indicative_cost: "2000",
+              sequence: 2,
+              typical_saving: "99",
+            },
+          ],
+        },
+      }
+
+      is_pre_15 = {
         different_fields: {
           recommended_improvements: [
             {
@@ -117,197 +343,9 @@ describe ViewModel::SapWrapper do
             },
           ],
         },
-        different_buried_fields: {
-          heat_demand: {
-            current_space_heating_demand: nil,
-            current_water_heating_demand: nil,
-            impact_of_cavity_insulation: nil,
-            impact_of_loft_insulation: nil,
-            impact_of_solid_wall_insulation: nil,
-          },
-        },
-      }
+      }.deep_merge heat_demand_unsupported
 
-      ni_difference = {
-        different_fields: {
-          recommended_improvements: [
-            {
-              energy_performance_band_improvement: "e",
-              energy_performance_rating_improvement: 50,
-              environmental_impact_rating_improvement: 50,
-              green_deal_category_code: nil,
-              improvement_category: "1",
-              improvement_code: "5",
-              improvement_description: nil,
-              improvement_title: nil,
-              improvement_type: "A",
-              indicative_cost: "£100 - £350",
-              sequence: 1,
-              typical_saving: "360",
-            },
-            {
-              energy_performance_band_improvement: "d",
-              energy_performance_rating_improvement: 60,
-              environmental_impact_rating_improvement: 64,
-              green_deal_category_code: nil,
-              improvement_category: "2",
-              improvement_code: "1",
-              improvement_description: nil,
-              improvement_title: nil,
-              improvement_type: "B",
-              indicative_cost: "2000",
-              sequence: 2,
-              typical_saving: "99",
-            },
-          ],
-        },
-        different_buried_fields: {
-          heat_demand: {
-            impact_of_cavity_insulation: nil,
-            impact_of_loft_insulation: nil,
-            impact_of_solid_wall_insulation: nil,
-          },
-        },
-      }
-
-      ni_pre_17_difference = {
-        different_buried_fields: {
-          heat_demand: {
-            current_space_heating_demand: nil,
-            current_water_heating_demand: nil,
-            impact_of_cavity_insulation: nil,
-            impact_of_loft_insulation: nil,
-            impact_of_solid_wall_insulation: nil,
-          },
-        },
-        different_fields:
-          {
-            property_age_band: "D",
-            property_summary: [
-              {
-                energy_efficiency_rating: 0,
-                environmental_efficiency_rating: 0,
-                name: "wall",
-                description: "Brick walls",
-              },
-              {
-                energy_efficiency_rating: 0,
-                environmental_efficiency_rating: 0,
-                name: "wall",
-                description: "Brick walls",
-              },
-              {
-                energy_efficiency_rating: 0,
-                environmental_efficiency_rating: 0,
-                name: "roof",
-                description: "Slate roof",
-              },
-              {
-                energy_efficiency_rating: 0,
-                environmental_efficiency_rating: 0,
-                name: "roof",
-                description: "slate roof",
-              },
-              {
-                energy_efficiency_rating: 0,
-                environmental_efficiency_rating: 0,
-                name: "floor",
-                description: "Tiled floor",
-              },
-              {
-                energy_efficiency_rating: 0,
-                environmental_efficiency_rating: 0,
-                name: "floor",
-                description: "Tiled floor",
-              },
-              {
-                energy_efficiency_rating: 0,
-                environmental_efficiency_rating: 0,
-                name: "window",
-                description: "Glass window",
-              },
-              {
-                energy_efficiency_rating: 0,
-                environmental_efficiency_rating: 0,
-                name: "main_heating",
-                description: "Gas boiler",
-              },
-              {
-                energy_efficiency_rating: 0,
-                environmental_efficiency_rating: 0,
-                name: "main_heating",
-                description: "Gas boiler",
-              },
-              {
-                energy_efficiency_rating: 0,
-                environmental_efficiency_rating: 0,
-                name: "main_heating_controls",
-                description: "Thermostat",
-              },
-              {
-                energy_efficiency_rating: 0,
-                environmental_efficiency_rating: 0,
-                name: "main_heating_controls",
-                description: "Thermostat",
-              },
-              {
-                energy_efficiency_rating: 0,
-                environmental_efficiency_rating: 0,
-                name: "hot_water",
-                description: "Gas boiler",
-              },
-              {
-                energy_efficiency_rating: 0,
-                environmental_efficiency_rating: 0,
-                name: "lighting",
-                description: "Energy saving bulbs",
-              },
-              {
-                energy_efficiency_rating: 0,
-                environmental_efficiency_rating: 0,
-                name: "secondary_heating",
-                description: "Electric heater",
-              },
-            ],
-          }.merge(ni_difference[:different_fields]),
-      }
-
-      pre_17_difference = {
-        different_fields: {
-          recommended_improvements: [
-            {
-              energy_performance_band_improvement: "e",
-              energy_performance_rating_improvement: 50,
-              environmental_impact_rating_improvement: 50,
-              green_deal_category_code: "1",
-              improvement_category: "1",
-              improvement_code: "5",
-              improvement_description: nil,
-              improvement_title: nil,
-              improvement_type: "A",
-              indicative_cost: "£100 - £350",
-              sequence: 1,
-              typical_saving: "360",
-            },
-            {
-              energy_performance_band_improvement: "d",
-              energy_performance_rating_improvement: 60,
-              environmental_impact_rating_improvement: 64,
-              green_deal_category_code: "3",
-              improvement_category: "2",
-              improvement_code: "1",
-              improvement_description: nil,
-              improvement_title: nil,
-              improvement_type: "B",
-              indicative_cost: "2000",
-              sequence: 2,
-              typical_saving: "99",
-            },
-          ],
-        },
-      }
-
-      rdsap_difference = {
+      is_rdsap = {
         different_fields: {
           type_of_assessment: "RdSAP",
           property_age_band: "A",
@@ -414,40 +452,40 @@ describe ViewModel::SapWrapper do
       [
         { schema: "SAP-Schema-18.0.0" }.deep_merge(has_uprn),
         { schema: "SAP-Schema-NI-18.0.0" }.deep_merge(has_uprn).deep_merge(
-          ni_difference,
+          is_ni,
         ),
-        { schema: "SAP-Schema-NI-17.4" }.merge(ni_difference),
-        { schema: "SAP-Schema-NI-17.3" }.merge(ni_difference),
-        { schema: "SAP-Schema-NI-17.2" }.merge(ni_difference),
+        { schema: "SAP-Schema-NI-17.4" }.merge(is_ni),
+        { schema: "SAP-Schema-NI-17.3" }.merge(is_ni),
+        { schema: "SAP-Schema-NI-17.2" }.merge(is_ni),
         { schema: "SAP-Schema-17.1" },
-        { schema: "SAP-Schema-NI-17.1" }.merge(ni_difference),
+        { schema: "SAP-Schema-NI-17.1" }.merge(is_ni),
         { schema: "SAP-Schema-17.0" },
-        { schema: "SAP-Schema-NI-17.0" }.merge(ni_difference),
+        { schema: "SAP-Schema-NI-17.0" }.merge(is_ni),
         {
           schema: "SAP-Schema-16.3",
           type: "sap",
           unsupported_fields: %i[tenure],
-        }.deep_merge(pre_17_difference),
+        }.deep_merge(is_pre_17),
         { schema: "SAP-Schema-16.3", type: "rdsap" }.deep_merge(
-          rdsap_difference,
-        ).deep_merge(pre_17_difference),
-        { schema: "SAP-Schema-NI-16.1" }.merge(ni_pre_17_difference),
+          is_rdsap,
+        ).deep_merge(is_pre_17),
+        { schema: "SAP-Schema-NI-16.1" }.merge(is_ni_pre_17),
         {
           schema: "SAP-Schema-16.2",
           type: "sap",
           unsupported_fields: %i[tenure],
         },
         { schema: "SAP-Schema-16.2", type: "rdsap" }.deep_merge(
-          rdsap_difference,
-        ).deep_merge(pre_17_difference),
+          is_rdsap,
+        ).deep_merge(is_pre_17),
         {
           schema: "SAP-Schema-16.1",
           type: "sap",
           unsupported_fields: %i[tenure],
         },
         { schema: "SAP-Schema-16.1", type: "rdsap" }.deep_merge(
-          rdsap_difference,
-        ).deep_merge(pre_17_difference),
+          is_rdsap,
+        ).deep_merge(is_pre_17),
         {
           schema: "SAP-Schema-16.0",
           type: "sap",
@@ -457,61 +495,22 @@ describe ViewModel::SapWrapper do
           schema: "SAP-Schema-16.0",
           type: "rdsap",
           unsupported_fields: %i[tenure],
-        }.deep_merge(rdsap_difference).deep_merge(pre_17_difference),
+        }.deep_merge(is_rdsap).deep_merge(is_pre_17),
         {
           schema: "SAP-Schema-15.0",
           type: "sap",
           unsupported_fields: %i[tenure],
-          different_fields: {
-            recommended_improvements: [
-              {
-                energy_performance_band_improvement: "e",
-                energy_performance_rating_improvement: 50,
-                environmental_impact_rating_improvement: 50,
-                green_deal_category_code: nil,
-                improvement_category: "1",
-                improvement_code: "5",
-                improvement_description: nil,
-                improvement_title: nil,
-                improvement_type: "A",
-                indicative_cost: "£100 - £350",
-                sequence: 1,
-                typical_saving: "360",
-              },
-              {
-                energy_performance_band_improvement: "d",
-                energy_performance_rating_improvement: 60,
-                environmental_impact_rating_improvement: 64,
-                green_deal_category_code: nil,
-                improvement_category: "2",
-                improvement_code: "1",
-                improvement_description: nil,
-                improvement_title: nil,
-                improvement_type: "B",
-                indicative_cost: "2000",
-                sequence: 2,
-                typical_saving: "99",
-              },
-            ],
-          },
-          different_buried_fields: {
-            heat_demand: {
-              impact_of_cavity_insulation: nil,
-              impact_of_loft_insulation: nil,
-              impact_of_solid_wall_insulation: nil,
-            },
-          },
-        },
+        }.deep_merge(is_pre_16).deep_merge(heat_demand_impact_of_unsupported),
         {
           schema: "SAP-Schema-14.1",
           type: "sap",
           unsupported_fields: %i[tenure],
-        }.merge(shared_difference_14),
+        }.merge(is_pre_15),
         {
           schema: "SAP-Schema-14.0",
           type: "sap",
           unsupported_fields: %i[tenure],
-        }.merge(shared_difference_14),
+        }.merge(is_pre_15),
       ]
     end
 
