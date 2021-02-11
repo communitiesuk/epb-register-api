@@ -164,7 +164,7 @@ task :update_address_lines do
             "address_line3 = '#{address_line3}', address_line4 = '#{address_line4}' " \
             "WHERE assessment_id = '#{assessment_id}'")
 
-          db.exec_query("INSERT INTO address_lines_updated (assessment_id, address_line1, address_line2, address_line3, address_line4) VALUES " \
+          db.exec_query("INSERT INTO address_lines_updated(assessment_id, address_line1, address_line2, address_line3, address_line4) VALUES " \
             "('#{assessment_id}','#{prev_address_line1}','#{prev_address_line2}','#{prev_address_line3}','#{prev_address_line4}')")
 
           updated_assessments += 1
@@ -178,7 +178,8 @@ task :update_address_lines do
 
 rescue StandardError => e
   catch(:sigint) do
-    abort "Task interrupted while updating address lines: #{e}"
+    e.backtrace.each { |line| puts line }
+    abort "Task interrupted while updating address lines: #{e.message}"
   end
   catch(:sigterm) do
     abort "Task killed while updating address lines: #{e}"

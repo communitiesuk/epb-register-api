@@ -131,16 +131,16 @@ end
 
 def truncate(postcode)
   if postcode == Regexp.new(Helper::RegexHelper::POSTCODE, Regexp::IGNORECASE)
-    ActiveRecord::Base.connection.execute("TRUNCATE TABLE postcode_geolocation")
+    ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE postcode_geolocation")
   else
-    ActiveRecord::Base.connection.execute(
+    ActiveRecord::Base.connection.exec_query(
       "TRUNCATE TABLE postcode_outcode_geolocations",
     )
   end
 end
 
 def add_address_base(uprn:)
-  ActiveRecord::Base.connection.execute(
+  ActiveRecord::Base.connection.exec_query(
     "INSERT INTO address_base (uprn) VALUES(" +
       ActiveRecord::Base.connection.quote(uprn) + ")",
   )
@@ -155,6 +155,12 @@ end
 
 def date_today
   DateTime.now.strftime("%F")
+end
+
+def change_address(assessment_id:, address_line1:"",  address_line2:"",  address_line3:"",  address_line4:"")
+  ActiveRecord::Base.connection.exec_query("UPDATE assessments " \
+    "SET address_line1 = '#{address_line1}', address_line2 = '#{address_line2}', address_line3 = '#{address_line3}', address_line4 = '#{address_line4}' " \
+    "WHERE assessment_id = '#{assessment_id}'")
 end
 
 RSpec.configure do |config|
