@@ -2,15 +2,15 @@ describe "Gateway::OpenDataLogGateway" do
   context "when there is no log data in the database insert it and return the statistics" do
     let(:gateway) { Gateway::OpenDataLogGateway.new }
 
-    let(:statistics) { gateway.get_log_statistics }
+    let(:statistics) { gateway.fetch_log_statistics }
 
     before(:all) do
       gateway = Gateway::OpenDataLogGateway.new
       report_type = "CEPC"
-      gateway.insert("0000-0000-0000-0000-0001", 1, report_type)
-      gateway.insert("0000-0000-0000-0000-0002", 1, report_type)
-      gateway.insert("0000-0000-0000-0000-0004", 1, report_type)
-      gateway.insert("0000-0000-0000-0000-0004", 2, report_type)
+      gateway.create("0000-0000-0000-0000-0001", 1, report_type)
+      gateway.create("0000-0000-0000-0000-0002", 1, report_type)
+      gateway.create("0000-0000-0000-0000-0004", 1, report_type)
+      gateway.create("0000-0000-0000-0000-0004", 2, report_type)
     end
 
     it "should return the correct count in the statistics " do
@@ -39,8 +39,17 @@ describe "Gateway::OpenDataLogGateway" do
     end
 
     it "should return the latest task Id" do
-      expect(gateway.get_latest_task_id).to eq(2)
+      expect(gateway.fetch_new_task_id(2)).to eq(2)
     end
+
+    it "should should return the latest task Id as 1" do
+      expect(gateway.fetch_new_task_id).to eq(3)
+    end
+
+    it "should should return the latest task Id if you do not pass an integer" do
+      expect(gateway.fetch_new_task_id('a')).to eq(3)
+    end
+
   end
 
   context "when the log table is empty" do
@@ -51,7 +60,7 @@ describe "Gateway::OpenDataLogGateway" do
     end
 
     it "should should return the latest task Id as 1" do
-      expect(gateway.get_latest_task_id).to eq(0)
+      expect(gateway.fetch_new_task_id).to eq(1)
     end
   end
 end

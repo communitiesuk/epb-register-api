@@ -10,15 +10,14 @@ module UseCase
       @log_gateway = Gateway::OpenDataLogGateway.new
     end
 
-    def execute(task_id = 1, date_from)
+
+    def execute(task_id=0, date_from)
       view_model_array = []
+      new_task_id = @log_gateway.fetch_new_task_id(task_id)
 
-      # use gateway to make db calls
-      # call gateway to get data set
       assessments =
-        @gateway.assessments_for_open_data(ASSESSMENT_TYPE, task_id, date_from)
+        @gateway.assessments_for_open_data(ASSESSMENT_TYPE, new_task_id, date_from)
 
-      # use existing gateway to get each xml doc from db line by line to ensure memory is totllay consumed by size of data returned
       assessments.each do |assessment|
         xml_data = @assessment_gateway.fetch(assessment["assessment_id"])
         view_model =
@@ -38,14 +37,17 @@ module UseCase
           Helper::RrnHelper.hash_rrn(assessment["assessment_id"])
 
         view_model_array << view_model_hash
-        @log_gateway.insert(
+        @log_gateway.create(
           assessment["assessment_id"],
-          task_id,
+          new_task_id,
           ASSESSMENT_TYPE,
         )
       end
 
       view_model_array
     end
+
+
+
   end
 end

@@ -10,11 +10,11 @@ module UseCase
       @log_gateway = Gateway::OpenDataLogGateway.new
     end
 
-    def execute(task_id = 1, date_from)
+    def execute(task_id = 0, date_from)
       data = []
-      assessment_type = "CEPC"
+      new_task_id = @log_gateway.fetch_new_task_id(task_id)
       assessments =
-        @gateway.assessments_for_open_data(ASSESSMENT_TYPE, task_id, date_from)
+        @gateway.assessments_for_open_data(ASSESSMENT_TYPE, new_task_id, date_from)
 
       assessments.each do |assessment|
         xml_data = @assessment_gateway.fetch(assessment["assessment_id"])
@@ -30,7 +30,7 @@ module UseCase
           assessment["date_registered"].strftime("%F")
         view_model_hash[:lodgement_datetime] =
           assessment["date_registered"].strftime("%F %H:%M:%S")
-        @log_gateway.insert(assessment["assessment_id"], task_id, "Domestic")
+        @log_gateway.create(assessment["assessment_id"], new_task_id, "Domestic")
         view_model_hash[:rrn] =
           Helper::RrnHelper.hash_rrn(assessment["assessment_id"])
 

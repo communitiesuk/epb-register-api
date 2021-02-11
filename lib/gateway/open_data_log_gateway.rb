@@ -1,6 +1,6 @@
 module Gateway
   class OpenDataLogGateway
-    def insert(assessment_id, task_id, report_type)
+    def create(assessment_id, task_id, report_type)
       insert_sql = <<-SQL
             INSERT INTO open_data_logs(assessment_id, created_at, task_id, report_type)
             VALUES ($1, $2, $3, $4)
@@ -33,7 +33,7 @@ module Gateway
       assessment_id
     end
 
-    def get_log_statistics
+    def fetch_log_statistics
       sql = <<-SQL
               SELECT task_id, Count(*) as num_rows, Min(created_at) as date_start, Max(created_at) as date_end, (Max(created_at) - Min(created_at)) as execution_time, report_type
               FROM open_data_logs
@@ -44,13 +44,14 @@ module Gateway
       results.map { |result| result }
     end
 
-    def get_latest_task_id
+    def fetch_new_task_id(task_id=0)
+      return task_id if (task_id.is_a?(Integer) && task_id != 0)
       sql = <<-SQL
               SELECT Max(task_id)
               FROM open_data_logs
       SQL
       task_id = ActiveRecord::Base.connection.exec_query(sql).first["max"]
-      task_id.nil? ? 0 : task_id
+      task_id.nil? ? 1 : task_id + 1
     end
   end
 end

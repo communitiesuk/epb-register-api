@@ -29,7 +29,7 @@ describe UseCase::ExportOpenDataCommercial do
 
       let(:statistics) do
         gateway = Gateway::OpenDataLogGateway.new
-        gateway.get_log_statistics
+        gateway.fetch_log_statistics
       end
 
       expected_values = {
@@ -187,14 +187,19 @@ describe UseCase::ExportOpenDataCommercial do
         end
       end
 
-      it "should return no rows if called with the existing task_id" do
-        expect(export_object.execute(1, "2019-07-01").length).to eq(2)
-        expect(export_object.execute(1, "2019-07-01").length).to eq(0)
-      end
-
       it "should return 2 rows if called with a different task_id" do
         expect(export_object.execute(1, "2019-07-01").length).to eq(2)
         expect(export_object.execute(2, "2019-07-01").length).to eq(2)
+      end
+
+      it 'should execute the export if no task id is passed' do
+        expect(export_object.execute("2019-07-01").length).to eq(2)
+        expect(statistics.first["num_rows"]).to eq(2)
+      end
+
+      it "should return no rows if called with the existing task_id" do
+        expect(export_object.execute(1, "2019-07-01").length).to eq(2)
+        expect(export_object.execute(1, "2019-07-01").length).to eq(0)
       end
     end
   end

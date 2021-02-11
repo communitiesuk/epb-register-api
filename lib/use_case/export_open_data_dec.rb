@@ -10,10 +10,11 @@ module UseCase
       @log_gateway = Gateway::OpenDataLogGateway.new
     end
 
-    def execute(task_id, date_from)
+    def execute(task_id=0, date_from)
       view_model_array = []
-      assessments =
-        @gateway.assessments_for_open_data("DEC", task_id, date_from)
+      new_task_id = @log_gateway.fetch_new_task_id(task_id)
+
+      assessments = @gateway.assessments_for_open_data("DEC", new_task_id, date_from)
       assessments.each do |assessment|
         xml_data = @assessment_gateway.fetch(assessment["assessment_id"])
         view_model =
@@ -31,7 +32,7 @@ module UseCase
           Helper::RrnHelper.hash_rrn(assessment["assessment_id"])
 
         view_model_array << view_model_hash
-        @log_gateway.insert(assessment["assessment_id"], task_id, "DEC")
+        @log_gateway.create(assessment["assessment_id"], new_task_id, "DEC")
       end
 
       view_model_array
