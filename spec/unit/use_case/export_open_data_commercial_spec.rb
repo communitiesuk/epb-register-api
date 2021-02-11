@@ -192,7 +192,7 @@ describe UseCase::ExportOpenDataCommercial do
         expect(export_object.execute(2, "2019-07-01").length).to eq(2)
       end
 
-      it 'should execute the export if no task id is passed' do
+      it "should execute the export if no task id is passed" do
         expect(export_object.execute("2019-07-01").length).to eq(2)
         expect(statistics.first["num_rows"]).to eq(2)
       end

@@ -44,8 +44,9 @@ module Gateway
       results.map { |result| result }
     end
 
-    def fetch_new_task_id(task_id=0)
-      return task_id if (task_id.is_a?(Integer) && task_id != 0)
+    def fetch_new_task_id(task_id = 0)
+      return task_id if task_id.is_a?(Integer) && task_id != 0
+
       sql = <<-SQL
               SELECT Max(task_id)
               FROM open_data_logs
