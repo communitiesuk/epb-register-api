@@ -199,6 +199,7 @@ describe ViewModel::SapWrapper do
       }
 
       is_pre_16 = {
+        unsupported_fields: %i[tenure],
         different_fields: {
           recommended_improvements: [
             {
@@ -504,11 +505,11 @@ describe ViewModel::SapWrapper do
           type: "rdsap",
           unsupported_fields: %i[tenure],
         }.deep_merge(is_rdsap).deep_merge(is_pre_17),
-        {
-          schema: "SAP-Schema-15.0",
-          type: "sap",
-          unsupported_fields: %i[tenure],
-        }.deep_merge(is_pre_16).deep_merge(heat_demand_impact_of_unsupported),
+        { schema: "SAP-Schema-15.0", type: "sap" }.deep_merge(is_pre_16)
+          .deep_merge(heat_demand_impact_of_unsupported),
+        { schema: "SAP-Schema-15.0", type: "rdsap" }.deep_merge(is_rdsap)
+          .deep_merge(is_pre_16)
+          .deep_merge(heat_demand_impact_of_unsupported),
         {
           schema: "SAP-Schema-14.1",
           type: "sap",

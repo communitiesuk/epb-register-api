@@ -44,7 +44,13 @@ module ViewModel
             ViewModel::SapSchema160::Sap.new(xml)
           end
       when "SAP-Schema-15.0"
-        @view_model = ViewModel::SapSchema150::CommonSchema.new xml
+        @view_model =
+          case report_type
+          when "2"
+            ViewModel::SapSchema150::Rdsap.new(xml)
+          when "3"
+            ViewModel::SapSchema150::Sap.new(xml)
+          end
       when "SAP-Schema-14.2"
         @view_model = ViewModel::SapSchema142::CommonSchema.new xml
       when "SAP-Schema-14.1"

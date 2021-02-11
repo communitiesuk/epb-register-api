@@ -38,11 +38,11 @@ module ViewModel
       end
 
       def assessor_email
-        xpath(%w[Home-Inspector E-Mail])
+        xpath(%w[Home-Inspector/E-Mail])
       end
 
       def assessor_telephone
-        xpath(%w[Home-Inspector Telephone])
+        xpath(%w[Home-Inspector/Telephone])
       end
 
       def date_of_assessment
