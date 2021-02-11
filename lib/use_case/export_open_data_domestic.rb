@@ -2,8 +2,7 @@ require "nokogiri"
 
 module UseCase
   class ExportOpenDataDomestic
-
-    ASSESSMENT_TYPE = %w[RdSAP SAP]
+    ASSESSMENT_TYPE = %w[RdSAP SAP].freeze
 
     def initialize
       @gateway = Gateway::ReportingGateway.new
@@ -13,7 +12,7 @@ module UseCase
 
     def execute(task_id = 1, date_from)
       data = []
-      assessment_type = 'CEPC'
+      assessment_type = "CEPC"
       assessments =
         @gateway.assessments_for_open_data(ASSESSMENT_TYPE, task_id, date_from)
 

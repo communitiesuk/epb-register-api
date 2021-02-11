@@ -3,7 +3,6 @@ describe UseCase::ExportOpenDataDomestic do
 
   context "when creating the open data reporting release" do
     describe "for the domestic certificates and reports" do
-
       let(:export_object) { described_class.new }
 
       expected_rdsap_values = {
@@ -168,7 +167,6 @@ describe UseCase::ExportOpenDataDomestic do
         floor_height: "2.4, 2.5",
       }
 
-
       let(:rdsap_odc_hash) do
         expected_rdsap_values.merge(
           {
@@ -198,10 +196,6 @@ describe UseCase::ExportOpenDataDomestic do
         gateway = Gateway::OpenDataLogGateway.new
         gateway.get_log_statistics
       end
-
-
-
-
 
       before(:all) do
         scheme_id = add_scheme_and_get_id
@@ -294,12 +288,12 @@ describe UseCase::ExportOpenDataDomestic do
         expect(statistics[0]["num_rows"]).to eq(2)
       end
 
-      it 'should return no rows if called with the existing task_id' do
+      it "should return no rows if called with the existing task_id" do
         expect(export_object.execute(1, "2019-07-01").length).to eq(2)
         expect(export_object.execute(1, "2019-07-01").length).to eq(0)
       end
 
-      it 'should return 2 rows if called with a different task_id' do
+      it "should return 2 rows if called with a different task_id" do
         expect(export_object.execute(1, "2019-07-01").length).to eq(2)
         expect(export_object.execute(2, "2019-07-01").length).to eq(2)
       end
@@ -331,11 +325,5 @@ describe UseCase::ExportOpenDataDomestic do
         end
       end
     end
-
-
-
-
   end
-
-
 end

@@ -170,21 +170,16 @@ describe UseCase::ExportOpenDataDec do
         end
       end
 
-      it 'should return no rows if called with the existing task_id' do
+      it "should return no rows if called with the existing task_id" do
         expect(export_object.execute(1, "2019-07-01").length).to eq(2)
         expect(export_object.execute(1, "2019-07-01").length).to eq(0)
       end
 
-      it 'should return 2 rows if called with a different task_id' do
+      it "should return 2 rows if called with a different task_id" do
         export = described_class.new
         expect(export_object.execute(1, "2019-07-01").length).to eq(2)
         expect(export_object.execute(2, "2019-07-01").length).to eq(2)
       end
-
-
     end
   end
-
-
-
 end

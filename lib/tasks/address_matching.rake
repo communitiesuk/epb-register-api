@@ -152,10 +152,10 @@ task :update_address_lines do
       prev_address_line3 = matching_assessment["address_line3"] || ""
       prev_address_line4 = matching_assessment["address_line4"] || ""
 
-      if prev_address_line1 == address_line1 and
-        prev_address_line2 == address_line2 and
-        prev_address_line3 == address_line3 and
-        prev_address_line4 == address_line4
+      if (prev_address_line1 == address_line1) &&
+          (prev_address_line2 == address_line2) &&
+          (prev_address_line3 == address_line3) &&
+          (prev_address_line4 == address_line4)
         matched_assessments += 1
       else
         ActiveRecord::Base.transaction do

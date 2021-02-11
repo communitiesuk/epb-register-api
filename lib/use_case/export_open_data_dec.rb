@@ -2,8 +2,7 @@ require "nokogiri"
 require "date"
 module UseCase
   class ExportOpenDataDec
-
-    ASSESSMENT_TYPE = "DEC"
+    ASSESSMENT_TYPE = "DEC".freeze
 
     def initialize
       @gateway = Gateway::ReportingGateway.new

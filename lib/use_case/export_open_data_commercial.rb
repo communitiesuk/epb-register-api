@@ -2,8 +2,7 @@ require "nokogiri"
 require "date"
 module UseCase
   class ExportOpenDataCommercial
-
-    ASSESSMENT_TYPE = 'CEPC'
+    ASSESSMENT_TYPE = "CEPC".freeze
 
     def initialize
       @gateway = Gateway::ReportingGateway.new
@@ -39,7 +38,11 @@ module UseCase
           Helper::RrnHelper.hash_rrn(assessment["assessment_id"])
 
         view_model_array << view_model_hash
-        @log_gateway.insert(assessment["assessment_id"], task_id, ASSESSMENT_TYPE)
+        @log_gateway.insert(
+          assessment["assessment_id"],
+          task_id,
+          ASSESSMENT_TYPE,
+        )
       end
 
       view_model_array

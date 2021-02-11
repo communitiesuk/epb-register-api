@@ -149,7 +149,8 @@ module Gateway
     end
 
     def assessments_for_open_data(type_of_assessment = "", task_id, date_from)
-      report_type = type_of_assessment.is_a?(Array) ? 'Domestic' : type_of_assessment
+      report_type =
+        type_of_assessment.is_a?(Array) ? "Domestic" : type_of_assessment
 
       bindings = [
         ActiveRecord::Relation::QueryAttribute.new(
@@ -164,9 +165,9 @@ module Gateway
         ),
         ActiveRecord::Relation::QueryAttribute.new(
           "report_type",
-            report_type,
+          report_type,
           ActiveRecord::Type::String.new,
-          ),
+        ),
       ]
 
       sql = <<~SQL
@@ -181,8 +182,6 @@ module Gateway
                          )
       SQL
 
-
-
       if type_of_assessment.is_a?(Array)
         list_of_types = type_of_assessment.map { |n| "'#{n}'" }
         sql << <<~SQL_TYPE_OF_ASSESSMENT
@@ -193,7 +192,6 @@ module Gateway
           AND type_of_assessment = '#{type_of_assessment}'
         SQL_TYPE_OF_ASSESSMENT
       end
-
 
       results = ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
 

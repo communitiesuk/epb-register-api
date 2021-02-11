@@ -26,7 +26,7 @@ module Gateway
           "report_type",
           report_type,
           ActiveRecord::Type::String.new,
-          ),
+        ),
       ]
 
       ActiveRecord::Base.connection.exec_query(insert_sql, "SQL", bindings)
@@ -42,6 +42,15 @@ module Gateway
       SQL
       results = ActiveRecord::Base.connection.exec_query(sql)
       results.map { |result| result }
+    end
+
+    def get_latest_task_id
+      sql = <<-SQL
+              SELECT Max(task_id)
+              FROM open_data_logs
+      SQL
+      task_id = ActiveRecord::Base.connection.exec_query(sql).first["max"]
+      task_id.nil? ? 0 : task_id
     end
   end
 end
