@@ -103,9 +103,6 @@ task :update_address_lines_cleanup do
 end
 
 task :update_address_lines do
-  Signal.trap("INT") { throw :sigint }
-  Signal.trap("TERM") { throw :sigterm }
-
   ActiveRecord::Base.logger = nil
   db = ActiveRecord::Base.connection
 
@@ -183,13 +180,4 @@ task :update_address_lines do
   end
 
   puts "[#{Time.now}] Address lines update complete: #{updated_assessments} assessments updated and #{matched_assessments} assessments matched"
-
-rescue StandardError => e
-  catch(:sigint) do
-    abort "Task interrupted while updating address lines: #{e.message}"
-  end
-  catch(:sigterm) do
-    abort "Task killed while updating address lines: #{e.message}"
-  end
-  puts "Error while updating address lines: #{e.message}"
 end
