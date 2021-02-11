@@ -135,7 +135,15 @@ task :update_address_lines do
     if assessment_xml.nil?
       puts "[#{Time.now}] Could not read XML for assessment #{assessment_id}"
     else
-      wrapper = ViewModel::Factory.new.create(assessment_xml["xml"], assessment_xml["schema_type"], assessment_id)
+
+      wrapper = nil
+      begin
+        wrapper = ViewModel::Factory.new.create(assessment_xml["xml"], assessment_xml["schema_type"], assessment_id)
+      rescue Exception => e
+        puts "[#{Time.now}] Exception in view model factory for #{assessment_id}"
+        puts "[#{Time.now}] #{e.message}"
+        puts "[#{Time.now}] #{e.backtrace.first}"
+      end
       next if wrapper.nil?
 
       wrapper_hash = wrapper.to_hash
@@ -178,11 +186,10 @@ task :update_address_lines do
 
 rescue StandardError => e
   catch(:sigint) do
-    e.backtrace.each { |line| puts line }
     abort "Task interrupted while updating address lines: #{e.message}"
   end
   catch(:sigterm) do
-    abort "Task killed while updating address lines: #{e}"
+    abort "Task killed while updating address lines: #{e.message}"
   end
-  puts "Error while updating address lines: #{e}"
+  puts "Error while updating address lines: #{e.message}"
 end
