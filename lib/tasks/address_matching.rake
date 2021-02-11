@@ -132,18 +132,20 @@ task :update_address_lines do
     if assessment_xml.nil?
       puts "[#{Time.now}] Could not read XML for assessment #{assessment_id}"
     else
-
-      wrapper = nil
-      begin
-        wrapper = ViewModel::Factory.new.create(assessment_xml["xml"], assessment_xml["schema_type"], assessment_id)
-      rescue Exception => e
-        puts "[#{Time.now}] Exception in view model factory for #{assessment_id}"
-        puts "[#{Time.now}] #{e.message}"
-        puts "[#{Time.now}] #{e.backtrace.first}"
-      end
+      wrapper = ViewModel::Factory.new.create(assessment_xml["xml"], assessment_xml["schema_type"], assessment_id)
+      puts "Skipping #{assessment_id} since view model is nil" if wrapper.nil?
       next if wrapper.nil?
 
-      wrapper_hash = wrapper.to_hash
+      begin
+        wrapper_hash = wrapper.to_hash
+      rescue Exception => e
+        puts "[#{Time.now}] Exception in wrapper to_hash for #{assessment_id}"
+        puts "[#{Time.now}] #{e.message}"
+        puts "[#{Time.now}] #{e.backtrace.first}"
+        wrapper_hash = nil
+      end
+      next if wrapper_hash.nil?
+
       address_line1 = wrapper_hash[:address][:address_line1] || ""
       address_line2 = wrapper_hash[:address][:address_line2] || ""
       address_line3 = wrapper_hash[:address][:address_line3] || ""
