@@ -10,6 +10,7 @@ def test_xml_doc(schemas, assertion, method_called = :to_hash)
         File.read(schema_path),
         schema_path,
       )
+
     validation = schema.validate(Nokogiri.XML(sample))
 
     expect(validation).to be_empty, <<~ERROR
@@ -22,8 +23,10 @@ def test_xml_doc(schemas, assertion, method_called = :to_hash)
     view_model = ViewModel::Factory.new.create sample, schema_case[:schema], nil
 
     source_hash = view_model.method(method_called).call
+
     assertion.each do |key, value|
       result = source_hash[key]
+
       if schema_case.key?(:different_buried_fields) &&
           schema_case[:different_buried_fields].key?(key)
         value = value.merge(schema_case[:different_buried_fields][key])
