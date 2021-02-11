@@ -400,29 +400,22 @@ describe ViewModel::SapWrapper do
         },
       }
 
-      [
-        {
-          schema: "SAP-Schema-18.0.0",
-          different_fields: {
+      has_uprn = {
+        different_fields: {
+          address_id: "UPRN-000000000000",
+        },
+        different_buried_fields: {
+          address: {
             address_id: "UPRN-000000000000",
           },
-          different_buried_fields: {
-            address: {
-              address_id: "UPRN-000000000000",
-            },
-          },
         },
-        {
-          schema: "SAP-Schema-NI-18.0.0",
-          different_fields:
-            { address_id: "UPRN-000000000000" }.merge(
-              ni_difference[:different_fields],
-            ),
-          different_buried_fields:
-            { address: { address_id: "UPRN-000000000000" } }.merge(
-              ni_difference[:different_buried_fields],
-            ),
-        },
+      }
+
+      [
+        { schema: "SAP-Schema-18.0.0" }.deep_merge(has_uprn),
+        { schema: "SAP-Schema-NI-18.0.0" }.deep_merge(has_uprn).deep_merge(
+          ni_difference,
+        ),
         { schema: "SAP-Schema-NI-17.4" }.merge(ni_difference),
         { schema: "SAP-Schema-NI-17.3" }.merge(ni_difference),
         { schema: "SAP-Schema-NI-17.2" }.merge(ni_difference),
@@ -460,6 +453,11 @@ describe ViewModel::SapWrapper do
           type: "sap",
           unsupported_fields: %i[tenure],
         },
+        {
+          schema: "SAP-Schema-16.0",
+          type: "rdsap",
+          unsupported_fields: %i[tenure],
+        }.deep_merge(rdsap_difference).deep_merge(pre_17_difference),
         {
           schema: "SAP-Schema-15.0",
           type: "sap",
