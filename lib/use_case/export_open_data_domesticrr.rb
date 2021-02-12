@@ -22,7 +22,7 @@ module UseCase
         wrapper_hash = wrapper.to_recommendation_report
         data << wrapper_hash
       end
-      data.sort_by! { |key| key[:assessment_id] }
+      data
     end
   end
 end
