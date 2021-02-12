@@ -994,6 +994,81 @@ describe ViewModel::SapWrapper do
     end
   end
 
+  context "when calling to_recommendation_report" do
+    let(:schemas) do
+      without_indicative_cost = {
+        different_fields: {
+          recommendations: [
+            {
+              assessment_id: "0000-0000-0000-0000-0000",
+              improvement_code: "5",
+              improvement_description: nil,
+              improvement_summary: nil,
+              indicative_cost: nil,
+              sequence: 1,
+            },
+            {
+              assessment_id: "0000-0000-0000-0000-0000",
+              improvement_code: "1",
+              improvement_description: nil,
+              improvement_summary: nil,
+              indicative_cost: nil,
+              sequence: 2,
+            },
+          ],
+        },
+      }
+
+      [
+        { schema: "SAP-Schema-18.0.0" },
+        { schema: "SAP-Schema-17.1" },
+        { schema: "SAP-Schema-17.0" },
+        { schema: "SAP-Schema-16.3", type: "sap" },
+        { schema: "SAP-Schema-16.3", type: "rdsap" },
+        { schema: "SAP-Schema-16.2", type: "sap" },
+        { schema: "SAP-Schema-16.1", type: "sap" },
+        { schema: "SAP-Schema-16.0", type: "sap" },
+        { schema: "SAP-Schema-15.0", type: "sap" },
+        { schema: "SAP-Schema-14.1", type: "sap" }.deep_merge(
+          without_indicative_cost,
+        ),
+        { schema: "SAP-Schema-14.0", type: "sap" }.deep_merge(
+          without_indicative_cost,
+        ),
+        { schema: "SAP-Schema-13.0", type: "sap" }.deep_merge(
+          without_indicative_cost,
+        ),
+      ]
+    end
+
+    let(:recommendation_assertion) do
+      {
+        recommendations: [
+          {
+            assessment_id: "0000-0000-0000-0000-0000",
+            improvement_code: "5",
+            improvement_description: nil,
+            improvement_summary: nil,
+            indicative_cost: "£100 - £350",
+            sequence: 1,
+          },
+          {
+            assessment_id: "0000-0000-0000-0000-0000",
+            improvement_code: "1",
+            improvement_description: nil,
+            improvement_summary: nil,
+            indicative_cost: "2000",
+            sequence: 2,
+          },
+        ],
+      }
+    end
+
+    it "should read the appropriate values" do
+      test_xml_doc(schemas, recommendation_assertion, :to_recommendation_report)
+    end
+  end
+
   context "when using the view model with invalid arguments" do
     it "returns the expect error without a valid schema type" do
       expect { ViewModel::SapWrapper.new "", "invalid" }.to raise_error(

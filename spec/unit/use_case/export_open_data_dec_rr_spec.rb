@@ -3,7 +3,6 @@ describe UseCase::ExportOpenDataDecrr do
   context "when creating the open data reporting release" do
     describe "for the DEC recommendation reports" do
       let(:scheme_id) { add_scheme_and_get_id }
-      let(:expected) { described_class.new }
       let(:date_today) { DateTime.now.strftime("%F") }
 
       let(:number_of_recommendations_expected) { 5 }
@@ -15,7 +14,7 @@ describe UseCase::ExportOpenDataDecrr do
       end
       let(:rr_minus_dec_xml_id) { rr_minus_dec_xml.at("RRN") }
       let(:rr_minus_dec_xml_date) { rr_minus_dec_xml.at("//Registration-Date") }
-      let(:exported_data) { described_class.new.execute(1, "2019-07-01") }
+      let(:exported_data) { described_class.new.execute "2019-07-01", 1 }
 
       let(:statistics) do
         gateway = Gateway::OpenDataLogGateway.new

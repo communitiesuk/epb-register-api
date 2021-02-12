@@ -7,14 +7,16 @@ module UseCase
       @assessment_gateway = Gateway::AssessmentsXmlGateway.new
     end
 
-    def execute(date_from)
+    def execute(date_from, task_id = 0)
       view_model_array = []
 
-      # #use gateway to make db calls
+      # use gateway to make db calls
+      # call gateway to get data set
       assessments =
         @gateway.assessments_for_open_data_recommendation_report(
-          "CEPC-RR",
           date_from,
+          "CEPC-RR",
+          task_id,
         )
 
       assessments.each do |assessment|

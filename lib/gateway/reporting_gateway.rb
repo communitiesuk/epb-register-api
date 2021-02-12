@@ -157,7 +157,7 @@ module Gateway
 
       bindings = [
         ActiveRecord::Relation::QueryAttribute.new(
-          "type_of_assessment",
+          "date_from",
           date_from,
           ActiveRecord::Type::Date.new,
         ),
@@ -202,25 +202,32 @@ module Gateway
     end
 
     def assessments_for_open_data_recommendation_report(
-      type_of_assessment,
-      date_from
+      date_from,
+      type_of_assessment = "",
+      _task_id = 0
     )
-      bindings = [
-        [nil, type_of_assessment],
-        [nil, date_from, ActiveRecord::Type::Date.new],
-      ]
+      bindings = [[nil, date_from, ActiveRecord::Type::Date.new]]
 
       sql = <<~SQL
         SELECT  a.assessment_id, date_registered
         FROM assessments a
         INNER JOIN linked_assessments la ON a.assessment_id = la.assessment_id
         WHERE a.opt_out = false AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
-        AND a.type_of_assessment = $1
-        AND a.date_registered >= $2
+        AND a.date_registered >= $1
         AND a.postcode NOT LIKE 'BT%'
-        ORDER BY a.assessment_id
 
       SQL
+
+      if type_of_assessment.is_a?(Array)
+        list_of_types = type_of_assessment.map { |n| "'#{n}'" }
+        sql << <<~SQL_TYPE_OF_ASSESSMENT
+          AND type_of_assessment IN(#{list_of_types.join(',')})
+        SQL_TYPE_OF_ASSESSMENT
+      else
+        sql << <<~SQL_TYPE_OF_ASSESSMENT
+          AND type_of_assessment = '#{type_of_assessment}'
+        SQL_TYPE_OF_ASSESSMENT
+      end
 
       results = ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
       results.map { |result| result }

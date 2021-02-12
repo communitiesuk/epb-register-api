@@ -8,13 +8,14 @@ module UseCase
       @log_gateway = Gateway::OpenDataLogGateway.new
     end
 
-    def execute(_task_id = 1, date_from)
+    def execute(date_from, task_id = 0)
       view_model_array = []
 
       assessments =
         @gateway.assessments_for_open_data_recommendation_report(
-          "DEC-RR",
           date_from,
+          "DEC-RR",
+          task_id,
         )
 
       assessments.each do |assessment|

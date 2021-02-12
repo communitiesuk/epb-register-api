@@ -5,7 +5,7 @@ describe UseCase::ExportOpenDataCepcrr do
       let(:number_of_recommendations_returned) { 5 }
       let(:expected_values) { Samples::ViewModels::CepRr.report_test_hash }
       let(:date_today) { DateTime.now.strftime("%F") }
-      let(:exported_data) { described_class.new.execute("2019-07-01") }
+      let(:exported_data) { described_class.new.execute("2019-07-01", 1) }
 
       let(:ni_cepc_plus_rr) do
         xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc+rr")

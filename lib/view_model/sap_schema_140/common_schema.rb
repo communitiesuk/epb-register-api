@@ -116,6 +116,21 @@ module ViewModel
           end
       end
 
+      def recommendations_for_report
+        @xml_doc
+          .search("Suggested-Improvements Improvement")
+          .map do |node|
+            {
+              sequence: xpath(%w[Sequence], node).to_i,
+              improvement_summary: xpath(%w[Improvement-Summary], node),
+              improvement_description: xpath(%w[Improvement-Description], node),
+              improvement_code:
+                xpath(%w[Improvement-Details Improvement-Number], node),
+              indicative_cost: xpath(%w[Indicative-Cost], node),
+            }
+          end
+      end
+
       def hot_water_cost_potential
         xpath(%w[Hot-Water-Cost-Potential])
       end
