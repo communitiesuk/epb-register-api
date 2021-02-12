@@ -264,5 +264,40 @@ module Controller
         server_error(e)
       end
     end
+
+    UPDATE_ADDRESS_ID_PUT_SCHEMA =
+      {
+        type: "object",
+        required: %w[addressId],
+        properties: {
+          addressId: {
+            type: "string",
+          },
+        },
+      }.freeze
+
+    put "/api/assessments/:assessment_id/address-id",
+        auth_token_has_all: %w[admin:update-address-id] do
+
+      assessment_id = params[:assessment_id]
+      new_address_id = request_body(UPDATE_ADDRESS_ID_PUT_SCHEMA)[:address_id]
+
+      UseCase::UpdateAssessmentAddressId.new.execute(assessment_id, new_address_id)
+      json_api_response(code: 200, data: "Address ID has been updated")
+
+    rescue StandardError => e
+      case e
+      when UseCase::UpdateAssessmentAddressId::AssessmentNotFound
+        not_found_error("Assessment not found")
+      when UseCase::UpdateAssessmentAddressId::AddressIdNotFound
+        error_response(400, "BAD_REQUEST", "Address ID does not exist")
+      when UseCase::UpdateAssessmentAddressId::AddressIdMismatched
+        error_response(400, "BAD_REQUEST", "Address ID mismatched: #{e.message}")
+      when Helper::RrnHelper::RrnNotValid
+        error_response(400, "INVALID_QUERY", "Assessment ID not valid")
+      else
+        server_error(e)
+      end
+    end
   end
 end

@@ -566,6 +566,22 @@ def address_search_by_id(
   )
 end
 
+def address_search_by_postcode(
+  postcode,
+  accepted_responses = [200],
+  authenticate = true,
+  auth_data = {},
+  scopes = %w[address:search]
+)
+  assertive_get(
+    "/api/search/addresses?postcode=#{postcode}",
+    accepted_responses,
+    authenticate,
+    auth_data,
+    scopes,
+  )
+end
+
 def get_assessment_report(
   start_date:,
   end_date:,
@@ -600,6 +616,24 @@ def opt_out_assessment(
   assertive_put(
     "/api/assessments/#{assessment_id}/opt-out",
     "",
+    accepted_responses,
+    authenticate,
+    auth_data,
+    scopes,
+  )
+end
+
+def update_assessment_address_id(
+  assessment_id,
+  new_address_id,
+  accepted_responses = [200],
+  authenticate = true,
+  auth_data = {},
+  scopes = %w[admin:update-address-id]
+)
+  assertive_put(
+    "/api/assessments/#{assessment_id}/address-id",
+    {"addressId": new_address_id},
     accepted_responses,
     authenticate,
     auth_data,

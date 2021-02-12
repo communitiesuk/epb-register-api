@@ -37,5 +37,11 @@ module Gateway
 
       AssessmentsAddressId.create(record) if existing_assessment_address_id.nil?
     end
+
+    def update_assessment_address_id_mapping(assessment_id, new_address_id, new_source = "epb_team_update")
+      assessment_address_id_row =
+        AssessmentsAddressId.find_by assessment_id: assessment_id
+      assessment_address_id_row.update({ "address_id" => new_address_id, "source" => new_source})
+    end
   end
 end
