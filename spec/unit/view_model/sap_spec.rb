@@ -610,6 +610,17 @@ describe ViewModel::SapWrapper do
           unsupported_fields: %i[tenure],
         }.merge(is_pre_15),
         {
+          schema: "SAP-Schema-14.1",
+          type: "rdsap",
+          unsupported_fields: %i[tenure],
+          different_fields: {
+            main_fuel_type: "10",
+          },
+        }.deep_merge(is_rdsap)
+         .deep_merge(is_pre_15)
+         .deep_merge(is_pre_15_rdsap)
+         .deep_merge(heat_demand_unsupported),
+        {
           schema: "SAP-Schema-14.0",
           type: "sap",
           unsupported_fields: %i[tenure],
