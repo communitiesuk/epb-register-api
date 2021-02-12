@@ -100,27 +100,49 @@ describe UseCase::ExportOpenDataDomesticrr do
       end
 
       it "returns recommendations in the following format" do
-        expect(exported_data.first).to eq(
-          {
-            recommendations: [
-              {
-                assessment_id: "0000-0000-0000-0000-1000",
-                improvement_code: "5",
-                improvement_description: nil,
-                improvement_summary: nil,
-                indicative_cost: "£100 - £350",
-                sequence: 1,
-              },
-              {
-                assessment_id: "0000-0000-0000-0000-1000",
-                improvement_code: "1",
-                improvement_description: nil,
-                improvement_summary: nil,
-                indicative_cost: "2000",
-                sequence: 2,
-              },
-            ],
-          },
+        expect(exported_data).to eq(
+          [
+            {
+              recommendations: [
+                {
+                  assessment_id: "0000-0000-0000-0000-0000",
+                  improvement_code: "5",
+                  improvement_description: nil,
+                  improvement_summary: nil,
+                  indicative_cost: "£100 - £350",
+                  sequence: 1,
+                },
+                {
+                  assessment_id: "0000-0000-0000-0000-0000",
+                  improvement_code: "1",
+                  improvement_description: nil,
+                  improvement_summary: nil,
+                  indicative_cost: "2000",
+                  sequence: 2,
+                },
+              ],
+            },
+            {
+              recommendations: [
+                {
+                  assessment_id: "0000-0000-0000-0000-1000",
+                  improvement_code: "5",
+                  improvement_description: nil,
+                  improvement_summary: nil,
+                  indicative_cost: "£100 - £350",
+                  sequence: 1,
+                },
+                {
+                  assessment_id: "0000-0000-0000-0000-1000",
+                  improvement_code: "1",
+                  improvement_description: nil,
+                  improvement_summary: nil,
+                  indicative_cost: "2000",
+                  sequence: 2,
+                },
+              ],
+            },
+          ],
         )
       end
     end

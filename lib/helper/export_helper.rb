@@ -20,5 +20,11 @@ module Helper
         type_of_assessment
       end
     end
+
+    def self.flatten_domestic_rr_response(response)
+      flattened_array = []
+      response.each { |hash| flattened_array << hash[:recommendations] }
+      flattened_array.flatten
+    end
   end
 end

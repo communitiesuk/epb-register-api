@@ -14,27 +14,32 @@ task :open_data_export do
   end
 
   date_from = ENV["date_from"]
+  assessment_type = ENV["assessment_type"].upcase
 
   export_open_data_use_case = nil
 
-  if ENV["assessment_type"].upcase == "CEPC"
+  if assessment_type == "CEPC"
     export_open_data_use_case = UseCase::ExportOpenDataCommercial.new
   end
 
-  if ENV["assessment_type"].upcase == "CEPC-RR"
+  if assessment_type == "CEPC-RR"
     export_open_data_use_case = UseCase::ExportOpenDataCepcrr.new
   end
 
-  if ENV["assessment_type"].upcase == "DEC"
+  if assessment_type == "DEC"
     export_open_data_use_case = UseCase::ExportOpenDataDec.new
   end
 
-  if ENV["assessment_type"].upcase == "DEC-RR"
+  if assessment_type == "DEC-RR"
     export_open_data_use_case = UseCase::ExportOpenDataDecrr.new
   end
 
-  if ENV["assessment_type"].upcase == "SAP-RDSAP"
+  if assessment_type == "SAP-RDSAP"
     export_open_data_use_case = UseCase::ExportOpenDataDomestic.new
+  end
+
+  if assessment_type == "SAP-RDSAP-RR"
+    export_open_data_use_case = UseCase::ExportOpenDataDomesticrr.new
   end
 
   storage_config_reader = Gateway::StorageConfigurationReader.new(
@@ -45,7 +50,12 @@ task :open_data_export do
 
   date_time = DateTime.now.strftime("%Y%m%dT%H%M")
 
-  data = Helper::ExportHelper.to_csv(export_open_data_use_case.execute(date_from))
+  if assessment_type == "SAP-RDSAP-RR"
+    flattened_data = Helper::ExportHelper.flatten_domestic_rr_response(export_open_data_use_case.execute(date_from))
+    data = Helper::ExportHelper.to_csv(flattened_data)
+  else
+    data = Helper::ExportHelper.to_csv(export_open_data_use_case.execute(date_from))
+  end
 
   storage_gateway.write_file("open_data_export_#{ENV['assessment_type'].downcase}_#{date_time}.csv", data)
 

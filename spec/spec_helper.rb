@@ -159,7 +159,13 @@ def date_today
   DateTime.now.strftime("%F")
 end
 
-def change_address(assessment_id:, address_line1:"",  address_line2:"",  address_line3:"",  address_line4:"")
+def change_address(
+  assessment_id:,
+  address_line1: "",
+  address_line2: "",
+  address_line3: "",
+  address_line4: ""
+)
   update_query = <<-SQL
             UPDATE assessments
             SET address_line1 = $1,
@@ -170,11 +176,36 @@ def change_address(assessment_id:, address_line1:"",  address_line2:"",  address
   SQL
 
   update_binds = []
-  update_binds << ActiveRecord::Relation::QueryAttribute.new("address_line1", address_line1, ActiveRecord::Type::String.new)
-  update_binds << ActiveRecord::Relation::QueryAttribute.new("address_line2", address_line2, ActiveRecord::Type::String.new)
-  update_binds << ActiveRecord::Relation::QueryAttribute.new("address_line3", address_line3, ActiveRecord::Type::String.new)
-  update_binds << ActiveRecord::Relation::QueryAttribute.new("address_line4", address_line4, ActiveRecord::Type::String.new)
-  update_binds << ActiveRecord::Relation::QueryAttribute.new("assessment_id", assessment_id, ActiveRecord::Type::String.new)
+  update_binds <<
+    ActiveRecord::Relation::QueryAttribute.new(
+      "address_line1",
+      address_line1,
+      ActiveRecord::Type::String.new,
+    )
+  update_binds <<
+    ActiveRecord::Relation::QueryAttribute.new(
+      "address_line2",
+      address_line2,
+      ActiveRecord::Type::String.new,
+    )
+  update_binds <<
+    ActiveRecord::Relation::QueryAttribute.new(
+      "address_line3",
+      address_line3,
+      ActiveRecord::Type::String.new,
+    )
+  update_binds <<
+    ActiveRecord::Relation::QueryAttribute.new(
+      "address_line4",
+      address_line4,
+      ActiveRecord::Type::String.new,
+    )
+  update_binds <<
+    ActiveRecord::Relation::QueryAttribute.new(
+      "assessment_id",
+      assessment_id,
+      ActiveRecord::Type::String.new,
+    )
   ActiveRecord::Base.connection.exec_query(update_query, "SQL", update_binds)
 end
 
