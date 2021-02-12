@@ -17,7 +17,7 @@ def test_xml_doc(schemas, assertion, method_called = :to_hash)
       Failed on #{schema_case[:schema]}:#{schema_case[:type]}
         This document does not validate against the chosen schema,
           Errors:
-            #{validation.join('\n')}
+            #{validation.join("\n      ")}
     ERROR
 
     view_model = ViewModel::Factory.new.create sample, schema_case[:schema], nil

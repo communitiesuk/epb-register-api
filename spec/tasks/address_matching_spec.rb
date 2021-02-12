@@ -1,10 +1,10 @@
-require 'rspec'
+require "rspec"
 
-describe 'AddressMatching' do
+describe "AddressMatching" do
   include RSpecRegisterApiServiceMixin
 
-  RDSAP_SCHEMA = "RdSAP-Schema-20.0.0"
-  SAP_SCHEMA = "SAP-Schema-18.0.0"
+  RDSAP_SCHEMA = "RdSAP-Schema-20.0.0".freeze
+  SAP_SCHEMA = "SAP-Schema-18.0.0".freeze
 
   before(:all) do
     scheme_id = add_scheme_and_get_id
@@ -21,8 +21,9 @@ describe 'AddressMatching' do
 
   context "When we call the update_address_lines task on two assessments with no address discrepancy" do
     it "Then both assessments addresses should be matched" do
-      expect { get_task("update_address_lines").invoke }
-        .to output(/0 assessments updated and 2 assessments matched/).to_stdout
+      expect { get_task("update_address_lines").invoke }.to output(
+        /0 assessments updated and 2 assessments matched/,
+      ).to_stdout
     end
   end
 
@@ -33,8 +34,9 @@ describe 'AddressMatching' do
     end
 
     it "Then both assessments addresses should be updated" do
-      expect { get_task("update_address_lines").invoke }
-        .to output(/2 assessments updated and 0 assessments matched/).to_stdout
+      expect { get_task("update_address_lines").invoke }.to output(
+        /2 assessments updated and 0 assessments matched/,
+      ).to_stdout
     end
   end
 end
@@ -70,6 +72,3 @@ def call_lodge_assessment(scheme_id, schema_name, xml_document)
     schema_name: schema_name,
   )
 end
-
-
-

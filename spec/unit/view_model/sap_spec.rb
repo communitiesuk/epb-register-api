@@ -234,6 +234,84 @@ describe ViewModel::SapWrapper do
         },
       }
 
+      is_pre_15_rdsap = {
+        different_fields: {
+          property_summary: [
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "wall",
+              description: "Brick walls",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "wall",
+              description: "Brick walls",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "roof",
+              description: "Slate roof",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "roof",
+              description: "slate roof",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "floor",
+              description: "Tiled floor",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "floor",
+              description: "Tiled floor",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "window",
+              description: "Glass window",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "main_heating",
+              description: "Gas boiler",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "main_heating_controls",
+              description: "Thermostat",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "hot_water",
+              description: "Gas boiler",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "lighting",
+              description: "Energy saving bulbs",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "secondary_heating",
+              description: "Electric heater",
+            },
+          ],
+        },
+      }
       is_pre_15 =
         {
           different_fields: {
@@ -510,6 +588,22 @@ describe ViewModel::SapWrapper do
         { schema: "SAP-Schema-15.0", type: "rdsap" }.deep_merge(is_rdsap)
           .deep_merge(is_pre_16)
           .deep_merge(heat_demand_impact_of_unsupported),
+        {
+          schema: "SAP-Schema-14.2",
+          type: "sap",
+          unsupported_fields: %i[tenure],
+        }.merge(is_pre_15),
+        {
+          schema: "SAP-Schema-14.2",
+          type: "rdsap",
+          unsupported_fields: %i[tenure],
+          different_fields: {
+            main_fuel_type: "10",
+          },
+        }.deep_merge(is_rdsap)
+          .deep_merge(is_pre_15)
+          .deep_merge(is_pre_15_rdsap)
+          .deep_merge(heat_demand_unsupported),
         {
           schema: "SAP-Schema-14.1",
           type: "sap",
