@@ -166,13 +166,36 @@ task :update_address_lines do
         matched_assessments += 1
       else
         ActiveRecord::Base.transaction do
-          db.exec_query("UPDATE assessments " \
-            "SET address_line1 = '#{address_line1}', address_line2 = '#{address_line2}', " \
-            "address_line3 = '#{address_line3}', address_line4 = '#{address_line4}' " \
-            "WHERE assessment_id = '#{assessment_id}'")
 
-          db.exec_query("INSERT INTO address_lines_updated(assessment_id, address_line1, address_line2, address_line3, address_line4) VALUES " \
-            "('#{assessment_id}','#{prev_address_line1}','#{prev_address_line2}','#{prev_address_line3}','#{prev_address_line4}')")
+          update_query = <<-SQL
+            UPDATE assessments
+            SET address_line1 = $1,
+                address_line2 = $2,
+                address_line3 = $3,
+                address_line4 = $4
+            WHERE assessment_id = $5;
+          SQL
+
+          update_binds = []
+          bind_string_attribute(update_binds, "address_line1", address_line1)
+          bind_string_attribute(update_binds, "address_line2", address_line2)
+          bind_string_attribute(update_binds, "address_line3", address_line3)
+          bind_string_attribute(update_binds, "address_line4", address_line4)
+          bind_string_attribute(update_binds, "assessment_id", assessment_id)
+          db.exec_query(update_query, "SQL", update_binds)
+
+          backup_query = <<-SQL
+            INSERT INTO address_lines_updated(address_line1, address_line2, address_line3, address_line4, assessment_id)
+            VALUES($1, $2, $3, $4, $5);
+          SQL
+
+          backup_binds = []
+          bind_string_attribute(backup_binds, "address_line1", prev_address_line1)
+          bind_string_attribute(backup_binds, "address_line2", prev_address_line2)
+          bind_string_attribute(backup_binds, "address_line3", prev_address_line3)
+          bind_string_attribute(backup_binds, "address_line4", prev_address_line4)
+          bind_string_attribute(backup_binds, "assessment_id", assessment_id)
+          db.exec_query(backup_query, "SQL", backup_binds)
 
           updated_assessments += 1
         end
@@ -182,4 +205,8 @@ task :update_address_lines do
   end
 
   puts "[#{Time.now}] Address lines update complete: #{updated_assessments} assessments updated and #{matched_assessments} assessments matched"
+end
+
+def bind_string_attribute(array, name, value)
+  array << ActiveRecord::Relation::QueryAttribute.new(name, value, ActiveRecord::Type::String.new)
 end

@@ -159,18 +159,23 @@ def date_today
   DateTime.now.strftime("%F")
 end
 
-def change_address(
-  assessment_id:,
-  address_line1: "",
-  address_line2: "",
-  address_line3: "",
-  address_line4: ""
-)
-  ActiveRecord::Base.connection.exec_query(
-    "UPDATE assessments " \
-      "SET address_line1 = '#{address_line1}', address_line2 = '#{address_line2}', address_line3 = '#{address_line3}', address_line4 = '#{address_line4}' " \
-      "WHERE assessment_id = '#{assessment_id}'",
-  )
+def change_address(assessment_id:, address_line1:"",  address_line2:"",  address_line3:"",  address_line4:"")
+  update_query = <<-SQL
+            UPDATE assessments
+            SET address_line1 = $1,
+                address_line2 = $2,
+                address_line3 = $3,
+                address_line4 = $4
+            WHERE assessment_id = $5;
+  SQL
+
+  update_binds = []
+  update_binds << ActiveRecord::Relation::QueryAttribute.new("address_line1", address_line1, ActiveRecord::Type::String.new)
+  update_binds << ActiveRecord::Relation::QueryAttribute.new("address_line2", address_line2, ActiveRecord::Type::String.new)
+  update_binds << ActiveRecord::Relation::QueryAttribute.new("address_line3", address_line3, ActiveRecord::Type::String.new)
+  update_binds << ActiveRecord::Relation::QueryAttribute.new("address_line4", address_line4, ActiveRecord::Type::String.new)
+  update_binds << ActiveRecord::Relation::QueryAttribute.new("assessment_id", assessment_id, ActiveRecord::Type::String.new)
+  ActiveRecord::Base.connection.exec_query(update_query, "SQL", update_binds)
 end
 
 RSpec.configure do |config|

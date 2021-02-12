@@ -27,10 +27,10 @@ describe "AddressMatching" do
     end
   end
 
-  context "When we call the update_address_lines task with two assessments having address issues" do
+  context "When we call the update_address_lines task with two assessments having address modified" do
     before do
-      change_address(assessment_id: "0000-0000-0000-0000-0001")
-      change_address(assessment_id: "0000-0000-0000-0000-0002")
+      change_address(assessment_id: "0000-0000-0000-0000-0001", address_line1: "1 John's Street")
+      change_address(assessment_id: "0000-0000-0000-0000-0002", address_line2: "2 John's Street")
     end
 
     it "Then both assessments addresses should be updated" do
