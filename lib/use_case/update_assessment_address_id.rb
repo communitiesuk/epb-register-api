@@ -39,7 +39,8 @@ module UseCase
 
         rrn_assessment_address_id =
           @assessments_address_id_gateway.fetch(linking_to_rrn)[:address_id]
-        if new_address_id != rrn_assessment_address_id
+        if (new_address_id != rrn_assessment_address_id) &&
+            (linking_to_rrn != assessment_id)
           raise AddressIdMismatched,
                 "Assessment #{linking_to_rrn} is linked to address ID #{rrn_assessment_address_id}"
         end

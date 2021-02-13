@@ -311,6 +311,36 @@ describe "Acceptance::AddressLinking" do
     end
   end
 
+  context "when updating the linked address of an assessment to an RRN- identifier that is its own RRN" do
+    it "returns 200 and a success message even if the address_id is currently different" do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
+
+      lodge_assessment(
+        assessment_body: rdsap_xml,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+      )
+
+      update_assessment_address_id(
+        "0000-0000-0000-0000-0000",
+        "UPRN-000073546793",
+        [200],
+      )
+      response =
+        update_assessment_address_id(
+          "0000-0000-0000-0000-0000",
+          "RRN-0000-0000-0000-0000-0000",
+          [200],
+        )
+      expect(JSON.parse(response.body, symbolize_names: true)[:data]).to eq(
+        "Address ID has been updated",
+      )
+    end
+  end
+
   context "when updating the address ID linked to an assessment with a related report" do
     xit "updates both the records for the requested RRN and its related reports" do
       # TODO: implement this feature once the linked_assessments table is working as expected
