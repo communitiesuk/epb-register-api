@@ -102,26 +102,26 @@ describe UseCase::ExportOpenDataDomesticrr do
 
       it "returns recommendations in the following format" do
         expect(exported_data[0]).to eq(
-            {
-              recommendations: [
-                {
-                  assessment_id: "0000-0000-0000-0000-0000",
-                  improvement_code: "5",
-                  improvement_description: nil,
-                  improvement_summary: nil,
-                  indicative_cost: "£100 - £350",
-                  sequence: 1,
-                },
-                {
-                  assessment_id: "0000-0000-0000-0000-0000",
-                  improvement_code: "1",
-                  improvement_description: nil,
-                  improvement_summary: nil,
-                  indicative_cost: "2000",
-                  sequence: 2,
-                },
-              ],
-            },
+          {
+            recommendations: [
+              {
+                assessment_id: "0000-0000-0000-0000-0000",
+                improvement_code: "5",
+                improvement_description: nil,
+                improvement_summary: nil,
+                indicative_cost: "£100 - £350",
+                sequence: 1,
+              },
+              {
+                assessment_id: "0000-0000-0000-0000-0000",
+                improvement_code: "1",
+                improvement_description: nil,
+                improvement_summary: nil,
+                indicative_cost: "2000",
+                sequence: 2,
+              },
+            ],
+          },
         )
       end
     end

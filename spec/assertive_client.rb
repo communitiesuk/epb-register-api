@@ -633,7 +633,7 @@ def update_assessment_address_id(
 )
   assertive_put(
     "/api/assessments/#{assessment_id}/address-id",
-    {"addressId": new_address_id},
+    { "addressId": new_address_id },
     accepted_responses,
     authenticate,
     auth_data,

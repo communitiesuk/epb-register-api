@@ -166,7 +166,6 @@ task :update_address_lines do
         matched_assessments += 1
       else
         ActiveRecord::Base.transaction do
-
           update_query = <<-SQL
             UPDATE assessments
             SET address_line1 = $1,

@@ -67,12 +67,15 @@ describe "Acceptance::AddressLinking" do
 
   context "when updating the linked address of an assessment that doesnt exist" do
     it "returns 404" do
-      response = update_assessment_address_id(
-        "0000-0000-0000-0000-0000",
-        "UPRN-000073546793",
-        [404],
+      response =
+        update_assessment_address_id(
+          "0000-0000-0000-0000-0000",
+          "UPRN-000073546793",
+          [404],
+        )
+      expect(JSON.parse(response.body, symbolize_names: true)[:errors]).to eq(
+        [{ code: "NOT_FOUND", title: "Assessment not found" }],
       )
-      expect(JSON.parse(response.body, symbolize_names: true)[:errors]).to eq([{:code=>"NOT_FOUND", :title=>"Assessment not found"}])
     end
   end
 
@@ -89,12 +92,15 @@ describe "Acceptance::AddressLinking" do
         },
       )
 
-      response = update_assessment_address_id(
-        "0000-0000-0000-0000-0000",
-        "UPRN-999999999999",
-        [400],
+      response =
+        update_assessment_address_id(
+          "0000-0000-0000-0000-0000",
+          "UPRN-999999999999",
+          [400],
+        )
+      expect(JSON.parse(response.body, symbolize_names: true)[:errors]).to eq(
+        [{ code: "BAD_REQUEST", title: "Address ID does not exist" }],
       )
-      expect(JSON.parse(response.body, symbolize_names: true)[:errors]).to eq([{:code=>"BAD_REQUEST", :title=>"Address ID does not exist"}])
     end
   end
 
@@ -111,12 +117,15 @@ describe "Acceptance::AddressLinking" do
         },
       )
 
-      response = update_assessment_address_id(
-        "0000-0000-0000-0000-0000",
-        "RRN-9999-9999-9999-9999-9999",
-        [400],
+      response =
+        update_assessment_address_id(
+          "0000-0000-0000-0000-0000",
+          "RRN-9999-9999-9999-9999-9999",
+          [400],
+        )
+      expect(JSON.parse(response.body, symbolize_names: true)[:errors]).to eq(
+        [{ code: "BAD_REQUEST", title: "Address ID does not exist" }],
       )
-      expect(JSON.parse(response.body, symbolize_names: true)[:errors]).to eq([{:code=>"BAD_REQUEST", :title=>"Address ID does not exist"}])
     end
   end
 
@@ -232,7 +241,7 @@ describe "Acceptance::AddressLinking" do
         auth_data: {
           scheme_ids: [scheme_id],
         },
-        )
+      )
 
       second_assessment = Nokogiri.XML rdsap_xml
       second_assessment.at("RRN").content = "0000-0000-0000-0000-0001"
@@ -242,14 +251,17 @@ describe "Acceptance::AddressLinking" do
         auth_data: {
           scheme_ids: [scheme_id],
         },
-        )
+      )
 
-      response = update_assessment_address_id(
-        "0000-0000-0000-0000-0001",
-        "RRN-0000-0000-0000-0000-0000",
-        [200],
+      response =
+        update_assessment_address_id(
+          "0000-0000-0000-0000-0001",
+          "RRN-0000-0000-0000-0000-0000",
+          [200],
         )
-      expect(JSON.parse(response.body, symbolize_names: true)[:data]).to eq("Address ID has been updated")
+      expect(JSON.parse(response.body, symbolize_names: true)[:data]).to eq(
+        "Address ID has been updated",
+      )
     end
   end
 
@@ -279,8 +291,12 @@ describe "Acceptance::AddressLinking" do
           symbolize_names: true,
         )
 
-      expect(cepc_response[:data][:addressId]).to eq "RRN-0000-0000-0000-0000-0000"
-      expect(cepc_rr_response[:data][:addressId]).to eq "RRN-0000-0000-0000-0000-0001"
+      expect(
+        cepc_response[:data][:addressId],
+      ).to eq "RRN-0000-0000-0000-0000-0000"
+      expect(
+        cepc_rr_response[:data][:addressId],
+      ).to eq "RRN-0000-0000-0000-0000-0001"
 
       update_assessment_address_id(
         "0000-0000-0000-0000-0000",
