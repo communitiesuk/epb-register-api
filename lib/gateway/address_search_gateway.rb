@@ -252,7 +252,7 @@ module Gateway
             results[i]["address_id"] = address_id
           end
 
-          if res["address_id"].start_with?("LPRN-")
+          if res["address_id"].nil? || res["address_id"].start_with?("LPRN-")
             address_id =
               if res["linked_assessment_id"].to_s > res["assessment_id"].to_s
                 "RRN-#{res['linked_assessment_id']}"
