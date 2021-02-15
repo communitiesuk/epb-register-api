@@ -2,21 +2,23 @@ require "nokogiri"
 require "date"
 module UseCase
   class ExportOpenDataCepcrr
+    ASSESSMENT_TYPE = "CEPC-RR".freeze
+
     def initialize
       @gateway = Gateway::ReportingGateway.new
       @assessment_gateway = Gateway::AssessmentsXmlGateway.new
+      @log_gateway = Gateway::OpenDataLogGateway.new
     end
 
     def execute(date_from, task_id = 0)
       view_model_array = []
+      new_task_id = @log_gateway.fetch_new_task_id(task_id)
 
-      # use gateway to make db calls
-      # call gateway to get data set
       assessments =
         @gateway.assessments_for_open_data_recommendation_report(
           date_from,
-          "CEPC-RR",
-          task_id,
+          ASSESSMENT_TYPE,
+          new_task_id,
         )
 
       assessments.each do |assessment|
@@ -39,18 +41,21 @@ module UseCase
           view_model_array <<
             recommendation.merge(
               {
-                rrn: assessment["assessment_id"],
+                rrn: Helper::RrnHelper.hash_rrn(assessment["assessment_id"]),
                 recommendation_item: recommendation_item,
               },
             )
           recommendation_item += 1
         end
-
-        # @TODO:update log table
+        @log_gateway.create(
+          assessment["assessment_id"],
+          new_task_id,
+          ASSESSMENT_TYPE,
+        )
       end
 
       # call method to return data as csv
-      view_model_array.sort_by! { |key| key[:recommendation_item] }
+      view_model_array
     end
   end
 end

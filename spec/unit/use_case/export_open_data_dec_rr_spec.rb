@@ -4,7 +4,7 @@ describe UseCase::ExportOpenDataDecrr do
     describe "for the DEC recommendation reports" do
       let(:scheme_id) { add_scheme_and_get_id }
       let(:date_today) { DateTime.now.strftime("%F") }
-
+      let(:export_object) { described_class.new }
       let(:number_of_recommendations_expected) { 5 }
       let(:dec_plus_rr_xml) { Nokogiri.XML Samples.xml("CEPC-8.0.0", "dec+rr") }
       let(:dec_plus_rr_xml_id) { dec_plus_rr_xml.at("//RRN") }
@@ -14,11 +14,15 @@ describe UseCase::ExportOpenDataDecrr do
       end
       let(:rr_minus_dec_xml_id) { rr_minus_dec_xml.at("RRN") }
       let(:rr_minus_dec_xml_date) { rr_minus_dec_xml.at("//Registration-Date") }
-      let(:exported_data) { described_class.new.execute "2019-07-01", 1 }
+      let(:exported_data) do
+        export_object
+          .execute("2019-07-01", 1)
+          .sort_by! { |key| key[:recommendation_item] }
+      end
 
       let(:statistics) do
         gateway = Gateway::OpenDataLogGateway.new
-        gateway.get_statistics
+        gateway.fetch_log_statistics
       end
 
       before do
@@ -75,15 +79,25 @@ describe UseCase::ExportOpenDataDecrr do
               "Consider thinking about maybe possibly getting a solar panel but only one.",
             recommendation_code: "ECP-L5",
             recommendation_item: 1,
-            rrn: "0000-0000-0000-0000-0001",
+            rrn:
+              "55ce7d026c13e923d26cbfb0d6ed60734d3270ba981d629a168bb8eb2da3f8c4",
           },
         )
       end
 
-      it "exports the data ordered by payback_type" do
-        order_of_payback_type =
-          exported_data.map { |recommendation| recommendation[:payback_type] }
-        expect(order_of_payback_type).to eq %w[short short medium long other]
+      it "should return 2 rows if called with a different task_id" do
+        expect(export_object.execute("2019-07-01", 1).length).to eq(5)
+        expect(export_object.execute("2019-07-01", 2).length).to eq(5)
+      end
+
+      it "should execute the export if no task id is passed" do
+        expect(export_object.execute("2019-07-01").length).to eq(5)
+        expect(statistics.first["num_rows"]).to eq(1)
+      end
+
+      it "should return no rows if called with the existing task_id" do
+        expect(export_object.execute("2019-07-01", 1).length).to eq(5)
+        expect(export_object.execute("2019-07-01", 1).length).to eq(0)
       end
     end
   end

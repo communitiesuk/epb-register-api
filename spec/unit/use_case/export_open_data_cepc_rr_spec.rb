@@ -5,7 +5,19 @@ describe UseCase::ExportOpenDataCepcrr do
       let(:number_of_recommendations_returned) { 5 }
       let(:expected_values) { Samples::ViewModels::CepRr.report_test_hash }
       let(:date_today) { DateTime.now.strftime("%F") }
-      let(:exported_data) { described_class.new.execute("2019-07-01", 1) }
+
+      let(:export_object) { described_class.new }
+
+      let(:exported_data) do
+        export_object
+          .execute("2019-07-01", 1)
+          .sort_by! { |key| key[:recommendation_item] }
+      end
+
+      let(:statistics) do
+        gateway = Gateway::OpenDataLogGateway.new
+        gateway.fetch_log_statistics
+      end
 
       let(:ni_cepc_plus_rr) do
         xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc+rr")
@@ -132,13 +144,23 @@ describe UseCase::ExportOpenDataCepcrr do
              "Consider replacing T8 lamps with retrofit T5 conversion kit.",
                                        recommendation_code: "ECP-L5",
                                        recommendation_item: 1,
-                                       rrn: "0000-0000-0000-0000-0001"
+                                       rrn:
+             "55ce7d026c13e923d26cbfb0d6ed60734d3270ba981d629a168bb8eb2da3f8c4"
       end
 
-      it "exports the data ordered by payback_type" do
-        order_of_payback_type =
-          exported_data.map { |recommendation| recommendation[:payback_type] }
-        expect(order_of_payback_type).to eq %w[short short medium long other]
+      it "should return 2 rows if called with a different task_id" do
+        expect(export_object.execute("2019-07-01", 1).length).to eq(5)
+        expect(export_object.execute("2019-07-01", 2).length).to eq(5)
+      end
+
+      it "should execute the export if no task id is passed" do
+        expect(export_object.execute("2019-07-01").length).to eq(5)
+        expect(statistics.first["num_rows"]).to eq(1)
+      end
+
+      it "should return no rows if called with the existing task_id" do
+        expect(export_object.execute("2019-07-01", 1).length).to eq(5)
+        expect(export_object.execute("2019-07-01", 1).length).to eq(0)
       end
     end
   end

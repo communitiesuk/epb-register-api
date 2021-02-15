@@ -186,11 +186,20 @@ module Gateway
       SQL
 
       if type_of_assessment.is_a?(Array)
+        valid_type = %w[RdSAP SAP]
+        invalid_types = type_of_assessment - valid_type
+        raise StandardError, "Invalid types" unless invalid_types.empty?
+
         list_of_types = type_of_assessment.map { |n| "'#{n}'" }
         sql << <<~SQL_TYPE_OF_ASSESSMENT
           AND type_of_assessment IN(#{list_of_types.join(',')})
         SQL_TYPE_OF_ASSESSMENT
       else
+        valid_types = %w[CEPC DEC CEPC-RR DEC-RR]
+        unless valid_types.include? type_of_assessment
+          raise StandardError, "Invalid types"
+        end
+
         sql << <<~SQL_TYPE_OF_ASSESSMENT
           AND type_of_assessment = '#{type_of_assessment}'
         SQL_TYPE_OF_ASSESSMENT
@@ -204,9 +213,25 @@ module Gateway
     def assessments_for_open_data_recommendation_report(
       date_from,
       type_of_assessment = "",
-      _task_id = 0
+      task_id = 0
     )
-      bindings = [[nil, date_from, ActiveRecord::Type::Date.new]]
+      bindings = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "date_from",
+          date_from,
+          ActiveRecord::Type::Date.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "type_of_assessment",
+          type_of_assessment,
+          ActiveRecord::Type::String.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "task_id",
+          task_id,
+          ActiveRecord::Type::Integer.new,
+        ),
+      ]
 
       sql = <<~SQL
         SELECT  a.assessment_id, date_registered
@@ -214,20 +239,14 @@ module Gateway
         INNER JOIN linked_assessments la ON a.assessment_id = la.assessment_id
         WHERE a.opt_out = false AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
         AND a.date_registered >= $1
+        AND  type_of_assessment = $2
         AND a.postcode NOT LIKE 'BT%'
+        AND NOT EXISTS (SELECT * FROM open_data_logs l
+                        WHERE l.assessment_id = a.assessment_id
+                        AND task_id = $3 AND report_type = $2
+                         )
 
       SQL
-
-      if type_of_assessment.is_a?(Array)
-        list_of_types = type_of_assessment.map { |n| "'#{n}'" }
-        sql << <<~SQL_TYPE_OF_ASSESSMENT
-          AND type_of_assessment IN(#{list_of_types.join(',')})
-        SQL_TYPE_OF_ASSESSMENT
-      else
-        sql << <<~SQL_TYPE_OF_ASSESSMENT
-          AND type_of_assessment = '#{type_of_assessment}'
-        SQL_TYPE_OF_ASSESSMENT
-      end
 
       results = ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
       results.map { |result| result }

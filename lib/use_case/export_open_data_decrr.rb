@@ -2,6 +2,8 @@ require "nokogiri"
 require "date"
 module UseCase
   class ExportOpenDataDecrr
+    ASSESSMENT_TYPE = "DEC-RR".freeze
+
     def initialize
       @gateway = Gateway::ReportingGateway.new
       @assessment_gateway = Gateway::AssessmentsXmlGateway.new
@@ -10,6 +12,7 @@ module UseCase
 
     def execute(date_from, task_id = 0)
       view_model_array = []
+      new_task_id = @log_gateway.fetch_new_task_id(task_id)
 
       assessments =
         @gateway.assessments_for_open_data_recommendation_report(
@@ -40,15 +43,21 @@ module UseCase
           view_model_array <<
             item.merge(
               {
-                rrn: assessment["assessment_id"],
+                rrn: Helper::RrnHelper.hash_rrn(assessment["assessment_id"]),
                 recommendation_item: recommendation_item,
               },
             )
           recommendation_item += 1
         end
+
+        @log_gateway.create(
+          assessment["assessment_id"],
+          new_task_id,
+          ASSESSMENT_TYPE,
+        )
       end
 
-      view_model_array.sort_by! { |key| key[:recommendation_item] }
+      view_model_array
     end
   end
 end
