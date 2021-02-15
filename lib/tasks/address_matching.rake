@@ -133,9 +133,16 @@ task :update_address_lines do
     if assessment_xml.nil?
       puts "[#{Time.now}] Could not read XML, skipping #{assessment_id}"
     else
-      wrapper = ViewModel::Factory.new.create(assessment_xml["xml"], assessment_xml["schema_type"], assessment_id)
-      assessment_xml = nil
-      puts "[#{Time.now}] View model is nil, skipping #{assessment_id}" if wrapper.nil?
+
+      begin
+        wrapper = ViewModel::Factory.new.create(assessment_xml["xml"], assessment_xml["schema_type"], assessment_id)
+        assessment_xml = nil
+      rescue Exception => e
+        puts "[#{Time.now}] Exception in view model creation, skipping #{assessment_id}"
+        puts "[#{Time.now}] #{e.message}"
+        puts "[#{Time.now}] #{e.backtrace.first}"
+        wrapper = nil
+      end
       next if wrapper.nil?
 
       begin
