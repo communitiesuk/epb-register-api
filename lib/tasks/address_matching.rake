@@ -123,23 +123,24 @@ task :update_address_lines do
   updated_assessments = 0
   matched_assessments = 0
 
-  puts "Skipping to #{last_updated_id}" unless last_updated_id.nil?
+  puts "[#{Time.now}] Found #{assessments.length} assessments"
+  puts "[#{Time.now}] Starting from #{last_updated_id} (last updated)" unless last_updated_id.nil?
   assessments.each do |assessment|
     next if !last_updated_id.nil? && (assessment["assessment_id"] <= last_updated_id)
 
     assessment_id = assessment["assessment_id"]
     assessment_xml = db.exec_query("SELECT xml, schema_type FROM assessments_xml WHERE assessment_id = '#{assessment_id}'").first
     if assessment_xml.nil?
-      puts "[#{Time.now}] Could not read XML for assessment #{assessment_id}"
+      puts "[#{Time.now}] Could not read XML, skipping #{assessment_id}"
     else
       wrapper = ViewModel::Factory.new.create(assessment_xml["xml"], assessment_xml["schema_type"], assessment_id)
-      puts "Skipping #{assessment_id} since view model is nil" if wrapper.nil?
+      puts "[#{Time.now}] View model is nil, skipping #{assessment_id}" if wrapper.nil?
       next if wrapper.nil?
 
       begin
         wrapper_hash = wrapper.to_hash
       rescue Exception => e
-        puts "[#{Time.now}] Exception in wrapper to_hash for #{assessment_id}"
+        puts "[#{Time.now}] Exception in wrapper to_hash, skipping #{assessment_id}"
         puts "[#{Time.now}] #{e.message}"
         puts "[#{Time.now}] #{e.backtrace.first}"
         wrapper_hash = nil
