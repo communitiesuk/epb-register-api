@@ -148,17 +148,17 @@ describe UseCase::ExportOpenDataCepcrr do
              "55ce7d026c13e923d26cbfb0d6ed60734d3270ba981d629a168bb8eb2da3f8c4"
       end
 
-      it "should return 2 rows if called with a different task_id" do
+      it "returns 5 rows if called with a different task_id" do
         expect(export_object.execute("2019-07-01", 1).length).to eq(5)
         expect(export_object.execute("2019-07-01", 2).length).to eq(5)
       end
 
-      it "should execute the export if no task id is passed" do
+      it "executes the export if no task id is passed" do
         expect(export_object.execute("2019-07-01").length).to eq(5)
         expect(statistics.first["num_rows"]).to eq(1)
       end
 
-      it "should return no rows if called with the existing task_id" do
+      it "returns no rows if called with the existing task_id" do
         expect(export_object.execute("2019-07-01", 1).length).to eq(5)
         expect(export_object.execute("2019-07-01", 1).length).to eq(0)
       end
