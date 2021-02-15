@@ -195,7 +195,7 @@ module Gateway
           AND type_of_assessment IN(#{list_of_types.join(',')})
         SQL_TYPE_OF_ASSESSMENT
       else
-        valid_types = %w[CEPC DEC CEPC-RR DEC-RR]
+        valid_types = %w[CEPC DEC]
         unless valid_types.include? type_of_assessment
           raise StandardError, "Invalid types"
         end

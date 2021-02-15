@@ -18,7 +18,7 @@ module UseCase
         @gateway.assessments_for_open_data_recommendation_report(
           date_from,
           "DEC-RR",
-          task_id,
+          new_task_id,
         )
 
       assessments.each do |assessment|
