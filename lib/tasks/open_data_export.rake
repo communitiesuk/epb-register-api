@@ -54,10 +54,18 @@ task :open_data_export do
   export_open_data_use_case = get_use_case_by_assessment_type(assessment_type)
   raise Boundary::InvalidAssessment, ENV["assessment_type"] unless export_open_data_use_case
 
+  storage_config_reader = Gateway::StorageConfigurationReader.new(
+    instance_name: ENV["instance_name"],
+    bucket_name: ENV["bucket_name"],
+  )
+
+  storage_gateway = Gateway::StorageGateway.new(storage_config: storage_config_reader.get_configuration)
+  data = execute_use_case
+  storage_gateway.write_file("open_data_export_#{ENV['assessment_type'].downcase}_#{set_date_time}.csv", data)
+
 rescue Boundary::RecoverableError => e
   error_output = {
     error: e.class.name,
-
   }
 
   error_output[:message] = e.message unless e.message == error_output[:error]
@@ -68,15 +76,7 @@ rescue Boundary::RecoverableError => e
     # ignore
   end
 
-  storage_config_reader = Gateway::StorageConfigurationReader.new(
-    bucket_name: ENV["bucket_name"],
-    instance_name: ENV["instance_name"],
-  )
-  storage_gateway = Gateway::StorageGateway.new(storage_config: storage_config_reader.get_configuration)
-  data = execute_use_case
-  storage_gateway.write_file("open_data_export_#{ENV['assessment_type'].downcase}_#{set_date_time}.csv", data)
-
-rescue Boundary::TerminableError => e
+rescue Boundary::TerminableError, Gateway::StorageConfigurationReader::IllegalCalLException => e
   warn e.message
 end
 
