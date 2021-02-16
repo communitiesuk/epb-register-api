@@ -50,6 +50,10 @@ task :open_data_export do
   raise Boundary::ArgumentMissing, "ASSESSMENT_TYPE" unless assessment_type
   raise Boundary::ArgumentMissing, "DATE_FROM" unless date_from
 
+  assessment_type = ENV["assessment_type"].upcase
+  export_open_data_use_case = get_use_case_by_assessment_type(assessment_type)
+  raise Boundary::InvalidAssessment, ENV["assessment_type"] unless export_open_data_use_case
+
 rescue Boundary::RecoverableError => e
   error_output = {
     error: e.class.name,
@@ -64,8 +68,7 @@ rescue Boundary::RecoverableError => e
     # ignore
   end
 
-  assessment_type = ENV["assessment_type"].upcase
-  export_open_data_use_case = get_use_case_by_assessment_type(assessment_type)
+
 
   storage_config_reader = Gateway::StorageConfigurationReader.new(
     bucket_name: ENV["bucket_name"],
@@ -75,6 +78,10 @@ rescue Boundary::RecoverableError => e
   data = execute_use_case
   storage_gateway.write_file("open_data_export_#{ENV['assessment_type'].downcase}_#{set_date_time}.csv", data)
 
+
+
 rescue Boundary::TerminableError => e
   warn e.message
 end
+
+puts "true"

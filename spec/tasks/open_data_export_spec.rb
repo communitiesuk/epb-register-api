@@ -86,11 +86,51 @@ describe "Rake open_data_export" do
     ~/A required argument is missing/
   end
 
-  context "When we call the invoke method" do
-    it "fails if no bucket or isnatnce name is defined in environment variables" do
+  context "when we call the invoke method without providing environment variables" do
+    it "fails if no bucket or instance name is defined in environment variables" do
       expect { get_task("open_data_export").invoke }.to output(
         /#{expected_output}/,
       ).to_stderr
+    end
+  end
+
+  # it "fails if no date_from is defined in environment variables" do
+  #   ENV["bucket_name"] = "test_bucket"
+  #   ENV["instance_name"] = "test_instance"
+  #   ENV["assessment_type"] = "CEPC"
+  #
+  #   expect { get_task("open_data_export").invoke }.to output(
+  #     /A required argument is missing: DATE_FROM/,
+  #   ).to_stderr
+  # end
+  #
+  context "when given environment variables" do
+    before do
+      ENV["bucket_name"] = "test_bucket"
+      ENV["instance_name"] = "test_instance"
+      ENV["date_from"] = DateTime.now.strftime("%F")
+      ENV["assessment_type"] = "TEST"
+    end
+
+    it "fails if assessment is not of a valid type" do
+      expect { get_task("open_data_export").invoke }.to output(
+        /Assessment type is not valid:/,
+      ).to_stderr
+    end
+  end
+
+  context "When we call the invoke method with the correct environment variables" do
+    before do
+      ENV["bucket_name"] = "test_bucket"
+      ENV["instance_name"] = "test_instance"
+      ENV["date_from"] = DateTime.now.strftime("%F")
+      ENV["assessment_type"] = "TEST_ASSESSMENT_TYPE"
+    end
+
+    it "returns when all environment variables are present" do
+      expect { get_task("open_data_export").invoke }.to output(
+        "true\n",
+      ).to_stdout
     end
   end
 end
