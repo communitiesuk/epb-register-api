@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="DCLG-SAP05" xmlns="DCLG-SAP05" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bdt="DCLG-SAP05/BaseDataTypes" xmlns:SAP05="DCLG-SAP05" elementFormDefault="qualified" version="LIG-12.0">
+	<xs:import namespace="DCLG-SAP05/BaseDataTypes" schemaLocation="../UDT/BaseDataTypes.xsd"/>
+	<xs:include schemaLocation="../UDT/EPC-Domains.xsd"/>
+	<xs:include schemaLocation="../UDT/SAP05-Domains.xsd"/>
+	<xs:element name="LZC-Energy-Sources" type="LZC-Energy-Sources"/>
+	<xs:complexType name="LZC-Energy-Sources">
+		<xs:annotation>
+			<xs:documentation>Details of low and zero carbon energy source(s) for the property, if any.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="LZC-Energy-Source" type="SAP-LZCEnergySourceCode" minOccurs="1" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Low and zero carbon energy source(s) for the property.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="EnergyRatingType">
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="0"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="Energy-Assessment" type="Energy-Assessment"/>
+	<xs:complexType name="Energy-Assessment">
+		<xs:annotation>
+			<xs:documentation>Energy Efficiency Assessment Report is an inspection report whose purpose is to assess the energy efficiency of the inspected property and provide energy ratings for the significant heat-loss features of the property. 
+
+The report also identifies a number of potential improvements that may be made to the property in order to increase the energy efficiency.
+</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Assessment-Date" type="xs:date" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Date of assessment.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Property-Summary" type="Property-Summary" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Energy-Use" type="Energy-Use" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Suggested-Improvements" type="Suggested-Improvements" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="LZC-Energy-Sources" type="LZC-Energy-Sources" minOccurs="0" maxOccurs="1"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Property-Summary" type="Property-Summary"/>
+	<xs:complexType name="Property-Summary">
+		<xs:sequence>
+			<xs:element name="Walls" type="PropertySummaryType" minOccurs="1" maxOccurs="unbounded"/>
+			<xs:element name="Roof" type="PropertySummaryType" minOccurs="1" maxOccurs="unbounded"/>
+			<xs:element name="Floor" type="PropertySummaryType" minOccurs="1" maxOccurs="unbounded"/>
+			<xs:element name="Windows" type="PropertySummaryType" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Main-Heating" type="PropertySummaryType" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Main-Heating-Controls" type="PropertySummaryType" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Secondary-Heating" type="PropertySummaryType" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Hot-Water" type="PropertySummaryType" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Lighting" type="PropertySummaryType" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Air-Tightness" type="PropertySummaryType" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Has-Fixed-Air-Conditioning" type="xs:boolean" minOccurs="0" maxOccurs="1" default="false">
+				<xs:annotation>
+					<xs:documentation>Fixed air conditioning?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Has-Hot-Water-Cylinder" type="xs:boolean" minOccurs="0" maxOccurs="1" default="false">
+				<xs:annotation>
+					<xs:documentation>Hot water cylinder?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Has-Heated-Separate-Conservatory" type="xs:boolean" minOccurs="0" maxOccurs="1" default="false">
+				<xs:annotation>
+					<xs:documentation>Heated separate conservatory?</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Energy-Use" type="Energy-Use"/>
+	<xs:complexType name="Energy-Use">
+		<xs:annotation>
+			<xs:documentation>Part of an Energy Report summarising the results of the various energy calculations made by the Home Inspector.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Energy-Rating-Current" type="EnergyRatingType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The Current Energy Rating of the Property</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Energy-Rating-Potential" type="EnergyRatingType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The overall Energy Rating for the Property being assessed.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Environmental-Impact-Current" type="EnergyRatingType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The estimated current Environmental Impact Rating of the property</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Environmental-Impact-Potential" type="EnergyRatingType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The estimated potential Environmental Impact Rating of the property</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Energy-Consumption-Current" type="bdt:Measurement" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Estimated total energy consumption for the Property in a 12 month period. Value is Kilowatt Hours per Square Metre (kWh/m2)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Energy-Consumption-Potential" type="bdt:Measurement" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Estimated total energy consumption for the Property in a 12 month period. Value is Kilowatt Hours per Square Metre (kWh/m2)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CO2-Emissions-Current" type="bdt:Measurement" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>CO2 emissions per year in tonnes/year.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CO2-Emissions-Current-Per-Floor-Area" type="bdt:Measurement" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>CO2 emissions per square metre floor area per year in kg/m².</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CO2-Emissions-Potential" type="bdt:Measurement" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Estimated value in Tonnes per Year of the total CO2 emissions produced by the Property in 12 month period.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Lighting-Cost-Current" type="bdt:Money" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The current estimated cost of Lighting for the property</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Lighting-Cost-Potential" type="bdt:Money" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The current estimated cost of Lighting for the property</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Heating-Cost-Current" type="bdt:Money" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The current estimated cost of Heating for the property</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Heating-Cost-Potential" type="bdt:Money" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The current estimated cost of Heating for the property</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Hot-Water-Cost-Current" type="bdt:Money" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>|The current estimated cost of Hot Water for the property</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Hot-Water-Cost-Potential" type="bdt:Money" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>|The current estimated cost of Hot Water for the property</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Suggested-Improvements" type="Suggested-Improvements"/>
+	<xs:complexType name="Suggested-Improvements">
+		<xs:annotation>
+			<xs:documentation>Part of an Energy Report that describes the a set of improvements that the Home Inspector considers would contribute to the overall energy rating of the property.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Improvement" type="Improvement" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Improvement" type="Improvement"/>
+	<xs:complexType name="Improvement">
+		<xs:all>
+			<xs:element name="Sequence" type="xs:integer" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Sequence of the Suggested Improvements within the set of Suggested Improvements. This is used to order the Recommendations on the output HCR / EPC so that the cumulative Ratings make sense.
+
+The Improved Energy Ratings that result from carrying out a Suggested Improvement are cumulative and assume that the improvements have been installed in the order they appear in the list. Hence they must be sequenced.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Improvement-Category" type="RecommendationCategoryCode" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The category of improvement. This identifies where on the report the recommendation is printed.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Improvement-Type" type="SAP-ImprovementMeasureCode" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Suggested work to be carried out on the Property to improve its energy efficiency. This should be a enumerated list of acceptable improvements but it hasn't yet been defined.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Improvement-Summary" type="bdt:Sentence" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A short description of the suggested improvement.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Improvement-Heading" type="bdt:Sentence" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Text to precede the improvement description. If this field is not provided the 'Improvement-Summary' is used instead.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Improvement-Description" type="bdt:Sentence" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Detailed description of the suggested improvement.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Typical-Saving" type="bdt:Money" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Typical savings (in British Pounds) per year if the suggested improvement is carried out.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Energy-Performance-Rating" type="EnergyRatingType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The estimated Energy performance rating of the Property after the Suggested Improvement has been carried out providing any preceding Suggested Improvement has also been carried out.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Environmental-Impact-Rating" type="EnergyRatingType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The estimated Environmental Impact rating of the Property after the Suggested Improvement has been carried out providing any preceding Suggested Improvement has also been carried out.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="PropertySummaryType" type="PropertySummaryType"/>
+	<xs:complexType name="PropertySummaryType">
+		<xs:all>
+			<xs:element name="Description" type="bdt:Sentence" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Overall description of the property feature</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Energy-Efficiency-Rating" type="EnergyEfficiencySummaryCode" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Overall summary of the energy effiocuemcy of the property feature.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Environmental-Efficiency-Rating" type="EnergyEfficiencySummaryCode" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Summary of the environmental efficiency of the property feature</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+</xs:schema>

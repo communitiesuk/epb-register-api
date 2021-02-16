@@ -471,6 +471,47 @@ describe ViewModel::SapWrapper do
         },
       }
 
+      is_pre_13 = {
+        unsupported_fields: %i[
+          dwelling_type
+          related_party_disclosure_number
+          tenure
+        ],
+        different_fields: {
+          total_floor_area: "",
+          recommended_improvements: [
+            {
+              energy_performance_band_improvement: "e",
+              energy_performance_rating_improvement: 50,
+              environmental_impact_rating_improvement: 50,
+              green_deal_category_code: nil,
+              improvement_category: "1",
+              improvement_code: nil,
+              improvement_description: "",
+              improvement_title: nil,
+              improvement_type: "A",
+              indicative_cost: nil,
+              sequence: 1,
+              typical_saving: "360",
+            },
+            {
+              energy_performance_band_improvement: "d",
+              energy_performance_rating_improvement: 60,
+              environmental_impact_rating_improvement: 64,
+              green_deal_category_code: nil,
+              improvement_category: "2",
+              improvement_code: nil,
+              improvement_description: "",
+              improvement_title: nil,
+              improvement_type: "B",
+              indicative_cost: nil,
+              sequence: 2,
+              typical_saving: "99",
+            },
+          ],
+        },
+      }
+
       is_rdsap = {
         different_fields: {
           type_of_assessment: "RdSAP",
@@ -683,6 +724,22 @@ describe ViewModel::SapWrapper do
         }.deep_merge(is_rdsap)
           .deep_merge(is_pre_15)
           .deep_merge(is_pre_14)
+          .deep_merge(is_pre_15_rdsap)
+          .deep_merge(is_pre_14_rdsap)
+          .deep_merge(heat_demand_unsupported),
+        { schema: "SAP-Schema-12.0", type: "sap" }.deep_merge(is_pre_15)
+          .deep_merge(is_pre_14)
+          .deep_merge(is_pre_13),
+        {
+          schema: "SAP-Schema-12.0",
+          type: "rdsap",
+          different_fields: {
+            main_fuel_type: "10",
+          },
+        }.deep_merge(is_rdsap)
+          .deep_merge(is_pre_15)
+          .deep_merge(is_pre_14)
+          .deep_merge(is_pre_13)
           .deep_merge(is_pre_15_rdsap)
           .deep_merge(is_pre_14_rdsap)
           .deep_merge(heat_demand_unsupported),

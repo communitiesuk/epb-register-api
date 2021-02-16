@@ -83,6 +83,14 @@ module ViewModel
           when "3"
             ViewModel::SapSchema130::Sap.new(xml)
           end
+      when "SAP-Schema-12.0"
+        @view_model =
+          case report_type
+          when "2"
+            ViewModel::SapSchema120::Rdsap.new(xml)
+          when "3"
+            ViewModel::SapSchema120::Sap.new(xml)
+          end
       when "SAP-Schema-NI-18.0.0"
         @view_model = ViewModel::SapSchemaNi1800::CommonSchema.new xml
       when "SAP-Schema-NI-17.4"

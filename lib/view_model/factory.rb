@@ -36,6 +36,7 @@ module ViewModel
       SAP-Schema-14.1
       SAP-Schema-14.0
       SAP-Schema-13.0
+      SAP-Schema-12.0
       SAP-Schema-NI-18.0.0
       SAP-Schema-NI-17.4
       SAP-Schema-NI-17.3
