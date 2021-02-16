@@ -110,7 +110,8 @@ describe UseCase::ExportOpenDataDomesticrr do
           {
             recommendations: [
               {
-                assessment_id: "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
+                assessment_id:
+                  "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
                 improvement_code: "5",
                 improvement_description: nil,
                 improvement_summary: nil,
@@ -118,7 +119,8 @@ describe UseCase::ExportOpenDataDomesticrr do
                 sequence: 1,
               },
               {
-                assessment_id: "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
+                assessment_id:
+                  "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
                 improvement_code: "1",
                 improvement_description: nil,
                 improvement_summary: nil,

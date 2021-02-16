@@ -82,9 +82,7 @@ describe "Rake open_data_export" do
     gateway.fetch_log_statistics
   end
 
-  let(:expected_output) do
-    ~/A required argument is missing/
-  end
+  let(:expected_output) { ~/A required argument is missing/ }
 
   context "when we call the invoke method without providing environment variables" do
     it "fails if no bucket or instance name is defined in environment variables" do
@@ -128,9 +126,8 @@ describe "Rake open_data_export" do
     end
 
     it "returns when all environment variables are present" do
-      expect { get_task("open_data_export").invoke }.to output(
-        "true\n",
-      ).to_stdout
+      expect { get_task("open_data_export").invoke }.to output("true\n")
+        .to_stdout
     end
   end
 end

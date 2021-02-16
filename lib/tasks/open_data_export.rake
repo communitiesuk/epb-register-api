@@ -68,8 +68,6 @@ rescue Boundary::RecoverableError => e
     # ignore
   end
 
-
-
   storage_config_reader = Gateway::StorageConfigurationReader.new(
     bucket_name: ENV["bucket_name"],
     instance_name: ENV["instance_name"],
@@ -77,8 +75,6 @@ rescue Boundary::RecoverableError => e
   storage_gateway = Gateway::StorageGateway.new(storage_config: storage_config_reader.get_configuration)
   data = execute_use_case
   storage_gateway.write_file("open_data_export_#{ENV['assessment_type'].downcase}_#{set_date_time}.csv", data)
-
-
 
 rescue Boundary::TerminableError => e
   warn e.message
