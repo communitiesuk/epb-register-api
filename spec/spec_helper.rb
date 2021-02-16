@@ -209,6 +209,33 @@ def change_address(
   ActiveRecord::Base.connection.exec_query(update_query, "SQL", update_binds)
 end
 
+def get_vcap_services
+  '{
+    "aws-s3-bucket": [
+      {
+        "binding_name": null,
+        "credentials": {
+          "aws_access_key_id": "myaccesskey",
+          "aws_region": "eu-west-2",
+          "aws_secret_access_key": "mysecret",
+          "bucket_name": "mybucket",
+          "deploy_env": ""
+        },
+        "instance_name": "myinstance",
+        "label": "aws-s3-bucket",
+        "name": "myinstance",
+        "plan": "default",
+        "provider": null,
+        "syslog_drain_url": null,
+        "tags": [
+          "s3"
+        ],
+        "volume_mounts": []
+      }
+    ]
+  }'
+end
+
 RSpec.configure do |config|
   config.include Rack::Test::Methods
   config.order = :random

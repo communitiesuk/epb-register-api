@@ -187,6 +187,7 @@ describe UseCase::ExportOpenDataCommercial do
         end
       end
 
+      # TODO: Move these test to acceptance
       it "should return 2 rows if called with a different task_id" do
         expect(export_object.execute("2019-07-01", 1).length).to eq(2)
         expect(export_object.execute("2019-07-01", 2).length).to eq(2)
