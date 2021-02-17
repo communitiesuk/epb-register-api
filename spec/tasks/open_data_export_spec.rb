@@ -29,7 +29,7 @@ describe "Rake open_data_export" do
       ),
     )
 
-    non_domestic_assessment_date.children = "2020-05-04"
+    non_domestic_assessment_date.children = Date.today.strftime("%F")
     lodge_assessment(
       assessment_body: non_domestic_xml.to_xml,
       accepted_responses: [201],
@@ -40,7 +40,7 @@ describe "Rake open_data_export" do
       schema_name: "CEPC-8.0.0",
     )
 
-    non_domestic_assessment_date.children = "2020-05-04"
+    non_domestic_assessment_date.children = Date.today.strftime("%F")
     non_domestic_assessment_id.children = "0000-0000-0000-0000-0002"
     lodge_assessment(
       assessment_body: non_domestic_xml.to_xml,
@@ -52,7 +52,7 @@ describe "Rake open_data_export" do
       schema_name: "CEPC-8.0.0",
     )
 
-    non_domestic_assessment_date.children = "2018-05-04"
+    non_domestic_assessment_date.children = Date.today.strftime("%F")
     non_domestic_assessment_id.children = "0000-0000-0000-0000-0001"
     lodge_assessment(
       assessment_body: non_domestic_xml.to_xml,
@@ -64,7 +64,7 @@ describe "Rake open_data_export" do
       schema_name: "CEPC-8.0.0",
     )
 
-    dec_assessment_date.children = "2020-10-10"
+    dec_assessment_date.children = Date.today.strftime("%F")
     dec_assessment_id.children = "0000-0000-0000-0000-0005"
     lodge_assessment(
       assessment_body: dec_xml.to_xml,
@@ -79,7 +79,7 @@ describe "Rake open_data_export" do
 
   let(:statistics) do
     gateway = Gateway::OpenDataLogGateway.new
-    gateway.fetch_log_statistics
+    gateway.fetch_latest_statistics
   end
 
   let(:expected_output) { ~/A required argument is missing/ }
@@ -107,7 +107,7 @@ describe "Rake open_data_export" do
     end
   end
 
-  context "when given environment variables" do
+  context "when given the an incorrect environment variables" do
     before do
       ENV["bucket_name"] = "test_bucket"
       ENV["instance_name"] = "test_instance"
@@ -122,17 +122,19 @@ describe "Rake open_data_export" do
     end
   end
 
-  context "When we call the invoke method with the correct environment variables" do
+  context "When we call the invoke method with future data" do
     before do
       ENV["bucket_name"] = "test_bucket"
       ENV["instance_name"] = "test_instance"
-      ENV["date_from"] = DateTime.now.strftime("%F")
-      ENV["assessment_type"] = "TEST_ASSESSMENT_TYPE"
+      future_date_from = Time.now + 60 * 86_400
+      ENV["date_from"] = future_date_from.strftime("%F")
+      ENV["assessment_type"] = "CEPC"
     end
 
-    it "returns when all environment variables are present" do
-      expect { get_task("open_data_export").invoke }.to output("true\n")
-        .to_stdout
+    it "returns the expected error for no data being found" do
+      expect { get_task("open_data_export").invoke }.to output(
+        /no data to export/,
+      ).to_stdout
     end
   end
 end

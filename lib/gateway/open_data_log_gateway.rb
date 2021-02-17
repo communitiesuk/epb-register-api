@@ -44,6 +44,17 @@ module Gateway
       results.map { |result| result }
     end
 
+    def fetch_latest_statistics
+      sql = <<-SQL
+              SELECT  task_id, Count(*) as num_rows, Min(created_at) as date_start, Max(created_at) as date_end, (Max(created_at) - Min(created_at)) as execution_time
+              FROM open_data_logs
+              WHERE task_id = (SELECT Max(task_id) FROM open_data_logs)
+              GROUP BY task_id
+      SQL
+
+      ActiveRecord::Base.connection.exec_query(sql).first
+    end
+
     def fetch_new_task_id(task_id = 0)
       return task_id if task_id.is_a?(Integer) && task_id != 0
 
