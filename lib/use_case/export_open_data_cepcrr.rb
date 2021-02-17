@@ -54,7 +54,6 @@ module UseCase
         )
       end
 
-      # call method to return data as csv
       view_model_array
     end
   end

@@ -137,4 +137,8 @@ describe "Rake open_data_export" do
       ).to_stdout
     end
   end
+
+  #TODO stub the csv of exported data and use it as the expectation agianst the export
+  #TODO add a test that test the logging
+
 end

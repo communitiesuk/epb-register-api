@@ -132,17 +132,17 @@ describe UseCase::ExportOpenDataDomesticrr do
         )
       end
 
-      it "returns 1 rows if called with a different task_id" do
+      it "returns 1 rows when called with a different task_id" do
         expect(export_object.execute("2019-07-01", 1).length).to eq(1)
         expect(export_object.execute("2019-07-01", 2).length).to eq(1)
       end
 
-      it "executes the export if no task id is passed" do
+      it "returns 1 row when no task id is passed" do
         expect(export_object.execute("2019-07-01").length).to eq(1)
         expect(statistics.first["num_rows"]).to eq(1)
       end
 
-      it "returns no rows if called with the existing task_id" do
+      it "returns 0 rows when called with the existing task_id" do
         expect(export_object.execute("2019-07-01", 1).length).to eq(1)
         expect(export_object.execute("2019-07-01", 1).length).to eq(0)
       end

@@ -187,18 +187,18 @@ describe UseCase::ExportOpenDataCommercial do
         end
       end
 
-      # TODO: Move these test to acceptance
-      it "should return 2 rows if called with a different task_id" do
+
+      it "returns 2 rows when called with a different task_id" do
         expect(export_object.execute("2019-07-01", 1).length).to eq(2)
         expect(export_object.execute("2019-07-01", 2).length).to eq(2)
       end
 
-      it "should execute the export if no task id is passed" do
+      it "returns 2 rows when no task id is passed" do
         expect(export_object.execute("2019-07-01").length).to eq(2)
         expect(statistics.first["num_rows"]).to eq(2)
       end
 
-      it "should return no rows if called with the existing task_id" do
+      it "returns 0 rows if called with the existing task_id" do
         expect(export_object.execute("2019-07-01", 1).length).to eq(2)
         expect(export_object.execute("2019-07-01", 1).length).to eq(0)
       end
