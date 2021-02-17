@@ -85,7 +85,6 @@ describe UseCase::ExportOpenDataDecrr do
         )
       end
 
-
       it "returns 5 rows when called with a different task_id" do
         expect(export_object.execute("2019-07-01", 1).length).to eq(5)
         expect(export_object.execute("2019-07-01", 2).length).to eq(5)
