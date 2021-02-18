@@ -2,12 +2,12 @@ def read_csv_fixture(file_name)
   # TODO: update the path to be more dynamic
   fixture_path = File.dirname __FILE__.gsub("acceptance/reporting", "")
   fixture_path << "/fixtures/open_data_export/csv/"
-  csv = CSV.open("#{fixture_path}#{file_name}.csv", headers: true)
-  csv.read
+  read_file = File.read("#{fixture_path}#{file_name}.csv")
+  CSV.parse(read_file, headers: true)
 end
 
 def fixture_headers(fixture_csv)
-  fixture_csv.headers.collect { |item| item ? item.strip : item }
+  fixture_csv.headers.compact.collect { |item| item.strip }
 end
 
 def exported_data_headers(exported_data)
@@ -15,8 +15,13 @@ def exported_data_headers(exported_data)
   firstline.split(",")
 end
 
-def missing_headers(fixture_header_array, exported_header_array)
-  fixture_header_array.select { |item| !exported_header_array.include?(item) }
+def missing_headers(
+  fixture_header_array,
+  exported_header_array,
+  escape_headers = []
+)
+  escaped_array = fixture_header_array - escape_headers
+  escaped_array.reject { |item| exported_header_array.include?(item) }
 end
 
 describe "Acceptance::Reports::OpenDataExport" do
@@ -128,7 +133,7 @@ describe "Acceptance::Reports::OpenDataExport" do
     end
   end
 
-  context "when given the an incorrect environment variables" do
+  context "when given the incorrect assessment type" do
     before do
       ENV["bucket_name"] = "test_bucket"
       ENV["instance_name"] = "test_instance"
@@ -152,14 +157,14 @@ describe "Acceptance::Reports::OpenDataExport" do
 
     let(:fixture_headers_array) { fixture_headers(fixture_csv) }
 
-    let(:known_outstanding_nodes) do
-      known_outstanding_nodes = %w[RENEWABLE_SOURCES]
-    end
-
-    it "there to be no missing headers in the exported data based on the fixture" do
+    it "returns an empty array when there are no missing headers in the exported data based on the fixture" do
       expect(
-        missing_headers(fixture_headers_array, export_data_headers_array),
-      ).to eq(known_outstanding_nodes)
+        missing_headers(
+          fixture_headers_array,
+          export_data_headers_array,
+          %w[RENEWABLE_SOURCES],
+        ),
+      ).to eq([])
     end
   end
 
@@ -172,6 +177,32 @@ describe "Acceptance::Reports::OpenDataExport" do
 
     let(:fixture_headers_array) { fixture_headers(fixture_csv) }
 
-    let(:known_outstanding_nodes) { known_outstanding_nodes = "" }
+    let(:esacpe_headers) do
+      %w[
+        GLAZED_TYPE
+        FLOOR_DESCRIPTION
+        ENVIRONMENT_IMPACT_CURRENT
+        ENVIRONMENT_IMPACT_POTENTIAL
+        FLOOR_DESCRIPTION
+        FLOOR_ENERGY_EFF
+        FLOOR_ENV_EFF
+        COUNTY
+        CONSTITUENCY
+        LOCAL_AUTHORITY
+        MAINHEATC_ENERGY_EFF
+        MAINHEATC_ENV_EFF
+        MAIN_FUEL
+      ]
+    end
+
+    it "returns an empty array when there are no missing headers in the exported data based on the fixture" do
+      expect(
+        missing_headers(
+          fixture_headers_array,
+          export_data_headers_array,
+          esacpe_headers,
+        ),
+      ).to eq([])
+    end
   end
 end
