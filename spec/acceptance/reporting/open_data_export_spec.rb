@@ -128,21 +128,6 @@ describe "Acceptance::Reports::OpenDataExport" do
     end
   end
 
-  context "When we call the invoke method without the storage configuration" do
-    before do
-      ENV["bucket_name"] = ""
-      ENV["instance_name"] = ""
-      ENV["date_from"] = DateTime.now.strftime("%F")
-      ENV["assessment_type"] = "CEPC"
-    end
-
-    it "fails with correct error type" do
-      expect { get_task("open_data_export").invoke }.to output(
-        /Local AWS credentials or VCAP_SERVICES not present/,
-      ).to_stderr
-    end
-  end
-
   context "when given the an incorrect environment variables" do
     before do
       ENV["bucket_name"] = "test_bucket"
