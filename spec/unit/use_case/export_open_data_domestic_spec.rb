@@ -9,6 +9,7 @@ describe UseCase::ExportOpenDataDomestic do
         rrn: "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
         inspection_date: "2020-05-04",
         lodgement_date: "2020-05-04",
+        lodgement_datetime: "2021-02-18 00:00:00",
         building_reference_number: "UPRN-000000000000",
         address1: "1 Some Street",
         address2: "",
@@ -40,7 +41,6 @@ describe UseCase::ExportOpenDataDomestic do
         mains_gas_flag: "Y",
         flat_top_storey: "N",
         flat_storey_count: "3",
-        main_heating_controls: "Programmer, room thermostat and TRVs",
         multi_glaze_proportion: "100",
         glazed_area: "1",
         number_habitable_rooms: "5",
@@ -87,11 +87,13 @@ describe UseCase::ExportOpenDataDomestic do
         solar_water_heating_flag: "N",
         mechanical_ventilation: "0",
         floor_height: "2.45, 2.59",
+        main_fuel: "mains gas (not community)",
       }
       expected_sap_values = {
-        rrn: "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
+        rrn: "a154b93d62db9b77c82f6b11ba4a4a4056816572180c95e0bc5d486b905d4996",
         inspection_date: "2020-05-04",
         lodgement_date: "2020-05-04",
+        lodgement_datetime: "2021-02-18 00:00:00",
         building_reference_number: "UPRN-000000000000",
         address1: "1 Some Street",
         address2: "Some Area",
@@ -165,23 +167,22 @@ describe UseCase::ExportOpenDataDomestic do
         solar_water_heating_flag: nil,
         mechanical_ventilation: nil,
         floor_height: "2.4, 2.5",
+        main_fuel: "Electricity: electricity sold to grid",
       }
 
       let(:rdsap_odc_hash) do
         expected_rdsap_values.merge(
           {
-            rrn:
-              "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
             lodgement_date: date_today,
+            lodgement_datetime: date_today,
           },
         )
       end
       let(:sap_odc_hash) do
         expected_sap_values.merge(
           {
-            rrn:
-              "a154b93d62db9b77c82f6b11ba4a4a4056816572180c95e0bc5d486b905d4996",
             lodgement_date: date_today,
+            lodgement_datetime: date_today,
           },
         )
       end
@@ -289,6 +290,11 @@ describe UseCase::ExportOpenDataDomestic do
         end
       end
 
+      it "contains the expected keys for RdSAP" do
+        unexpected_keys = (exported_data[0].keys - rdsap_odc_hash.keys)
+        expect(unexpected_keys).to be_empty
+      end
+
       expected_sap_values.reject { |k|
         %i[
           flat_storey_count
@@ -308,6 +314,11 @@ describe UseCase::ExportOpenDataDomestic do
           exported_data[1]["extension_count"]
           expect(exported_data[1][key.to_sym]).to include(sap_odc_hash[key])
         end
+      end
+
+      it "contains the expected keys for SAP" do
+        unexpected_keys = (exported_data[0].keys - sap_odc_hash.keys)
+        expect(unexpected_keys).to be_empty
       end
 
       it "returns 2 rows when called with a different task_id" do

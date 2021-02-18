@@ -1043,6 +1043,7 @@ describe ViewModel::SapWrapper do
         solar_water_heating_flag: nil,
         mechanical_ventilation: nil,
         floor_height: "2.4, 2.5",
+        main_fuel: "Electricity: electricity sold to grid",
       }
     end
 

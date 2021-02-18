@@ -159,6 +159,10 @@ def date_today
   DateTime.now.strftime("%F")
 end
 
+def datetime_today
+  DateTime.now.strftime("%F %H:%M:%S")
+end
+
 def change_address(
   assessment_id:,
   address_line1: "",

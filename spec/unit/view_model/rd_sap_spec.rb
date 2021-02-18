@@ -395,7 +395,6 @@ describe ViewModel::RdSapWrapper do
         mains_gas_flag: "Y",
         flat_top_storey: "N",
         flat_storey_count: "3",
-        main_heating_controls: "Programmer, room thermostat and TRVs",
         multi_glaze_proportion: "100",
         glazed_area: "1",
         number_habitable_rooms: "5",
@@ -442,6 +441,7 @@ describe ViewModel::RdSapWrapper do
         solar_water_heating_flag: "N",
         mechanical_ventilation: "0",
         floor_height: "2.45, 2.59",
+        main_fuel: "mains gas (not community)",
       }
     end
 

@@ -186,7 +186,6 @@ module ViewModel
         mains_gas_flag: @view_model.mains_gas,
         flat_top_storey: @view_model.top_storey,
         flat_storey_count: @view_model.storey_count,
-        main_heating_controls: @view_model.main_heating_controls,
         multi_glaze_proportion: @view_model.multiple_glazed_proportion,
         glazed_area: @view_model.glazed_area,
         number_habitable_rooms: @view_model.habitable_room_count,
@@ -275,6 +274,7 @@ module ViewModel
         solar_water_heating_flag: @view_model.solar_water_heating_flag,
         mechanical_ventilation: @view_model.mechanical_ventilation,
         floor_height: @view_model.floor_height.join(", "),
+        main_fuel: Helper::XmlEnumsToOutput.main_fuel_rdsap(@view_model.main_fuel_type),
       }
     end
 

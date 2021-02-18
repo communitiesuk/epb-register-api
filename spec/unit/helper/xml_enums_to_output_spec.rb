@@ -1,19 +1,6 @@
-module Helper
-  class XmlEnumsToOutput
-    # These mirror the energy performance ratings as in the
-    # EnergyEfficiencySummaryCode simpleType defined in EPC-Domains.xsd
-    RATINGS = [
-      "N/A",
-      "Very Poor",
-      "Poor",
-      "Average",
-      "Good",
-      "Very Good",
-    ].freeze
-
-    # These mirror the built form codes as in the
-    # SAP-BuiltFormCode simpleType defined in SAP-Domains.xsd
-    BUILT_FORM = {
+shared_context "common" do
+  before do
+    @enum_built_form = {
       "1" => "Detached",
       "2" => "Semi-Detached",
       "3" => "End-Terrace",
@@ -21,15 +8,8 @@ module Helper
       "5" => "Enclosed End-Terrace",
       "6" => "Enclosed Mid-Terrace",
       "NR" => "Not Recorded",
-    }.freeze
-    ENERGY_TARIFF = {
-      "1" => "standard tariff",
-      "2" => "off-peak 7 hour",
-      "3" => "off-peak 10 hour",
-      "4" => "24 hour",
-      "ND" => "not applicable",
-    }.freeze
-    RDSAP_MAIN_FUEL = {
+    }
+    @enum_rdsap_main_fuel = {
       "0" => "To be used only when there is no heating/hot-water system or data is from a community network",
       "1" => "mains gas - this is for backwards compatibility only and should not be used",
       "2" => "LPG - this is for backwards compatibility only and should not be used",
@@ -73,8 +53,8 @@ module Helper
       "57" => "heat from boilers using biodiesel from any biomass source (community)",
       "58" => "biodiesel from vegetable oil only (community)",
       "99" => "from heat network data (community)",
-    }.freeze
-    SAP_MAIN_FUEL = {
+    }
+    @enum_sap_main_fuel = {
       "1" => "Gas: mains gas",
       "2" => "Gas: bulk LPG",
       "3" => "Gas: bottled LPG",
@@ -116,36 +96,115 @@ module Helper
       "75" => "B30K",
       "76" => "bioethanol from any biomass source",
       "99" => "Community heating schemes: special fuel",
-    }.freeze
+    }
+  end
+end
 
-    def self.xml_value_to_string(number)
-      BUILT_FORM[number]
-    end
+describe Helper::XmlEnumsToOutput do
+  let(:helper) { described_class }
+  include_context("common")
 
-    def self.energy_rating_string(input)
-      if input.is_a?(Array)
-        array = []
-        input.each do |input|
-          number = input.to_i
-          array << (number > RATINGS.length ? "N/A" : RATINGS[number])
-        end
-        array.join ", "
-      else
-        number = input.to_i
-        number > RATINGS.length ? "N/A" : RATINGS[number]
+  context "when a Built-Form XML value is passed to the BUILT_FORM enum" do
+    context "and the XML does not have the specified node" do
+      it "returns nil for Open Data Communities" do
+        response = helper.xml_value_to_string(nil)
+        expect(response).to be_nil
       end
     end
 
-    def self.energy_tariff(value)
-      !ENERGY_TARIFF.key?(value) ? ENERGY_TARIFF["ND"] : ENERGY_TARIFF[value]
+    context "when the XML does have the specified node" do
+      it "returns the string when you pass as the argument" do
+        @enum_built_form.each do |key, value|
+          response = helper.xml_value_to_string(key)
+          expect(response).to eq(value)
+        end
+      end
     end
 
-    def self.main_fuel_rdsap(value)
-      RDSAP_MAIN_FUEL[value]
+    context "when the XML contains any other value outside of the enum" do
+      it "returns nil for Open Data Communities" do
+        response = helper.xml_value_to_string({ "hello": 20 })
+        expect(response).to be_nil
+      end
+      it "returns nil for Open Data Communities" do
+        response = helper.xml_value_to_string("Any other value")
+        expect(response).to be_nil
+      end
+    end
+  end
+
+  context "when an EnergyEfficiencySummaryCode type XML value is passed to the RATINGS enum" do
+    context "and the XML has a value contained in the enum" do
+      it "returns the correct string value for Open Data Communities" do
+        expect(Helper::XmlEnumsToOutput.energy_rating_string(2)).to eq("Poor")
+      end
+
+      context "and the XML has a value outside of the enum" do
+        it "returns the N/A if a string value is passed or int is out of range" do
+          expect(Helper::XmlEnumsToOutput.energy_rating_string("a")).to eq("N/A")
+          expect(Helper::XmlEnumsToOutput.energy_rating_string(0)).to eq("N/A")
+          expect(Helper::XmlEnumsToOutput.energy_rating_string(10)).to eq("N/A")
+        end
+      end
+
+      context "and the XML has values in the form of an array" do
+        it "returns the joined string value for Open Data Communities" do
+          expect(Helper::XmlEnumsToOutput.energy_rating_string([0, 0])).to eq(
+            "N/A, N/A",
+          )
+        end
+      end
+    end
+  end
+
+  context "when the Energy-Tariff XML value is passed to the ENERGY_TARIFF enum" do
+    it "finds the value in the enum and returns the correct string value" do
+      expect(Helper::XmlEnumsToOutput.energy_tariff("1")).to eq(
+        "standard tariff",
+      )
+      expect(Helper::XmlEnumsToOutput.energy_tariff("ND")).to eq(
+        "not applicable",
+      )
+    end
+    it "does not find the value in the enum and returns not applicable" do
+      expect(Helper::XmlEnumsToOutput.energy_tariff("test")).to eq(
+        "not applicable",
+      )
+    end
+  end
+
+  context "when the Main-Fuel-Type XML value is passed to the RDSAP_MAIN_FUEL enum" do
+    it "does not find a value in the enum and returns nil" do
+      expect(Helper::XmlEnumsToOutput.main_fuel_rdsap(nil)).to be_nil
+      expect(Helper::XmlEnumsToOutput.main_fuel_rdsap("hello")).to be_nil
+    end
+    it "returns nil if the value is not the correct type" do
+      expect(Helper::XmlEnumsToOutput.main_fuel_rdsap({ "hello": 1 })).to be_nil
+      expect(Helper::XmlEnumsToOutput.main_fuel_rdsap(1)).to be_nil
     end
 
-    def self.main_fuel_sap(value)
-      SAP_MAIN_FUEL[value]
+    it "and the value is in the lookup it return the expected string" do
+      @enum_rdsap_main_fuel.each do |key, value|
+        response = helper.main_fuel_rdsap(key)
+        expect(response).to eq(value)
+      end
+    end
+  end
+
+  context "when the Main-Fuel-Type XML value is passed to the SAP_MAIN_FUEL enum" do
+    it "does not find a value in the enum and returns nil" do
+      expect(Helper::XmlEnumsToOutput.main_fuel_sap(nil)).to be_nil
+      expect(Helper::XmlEnumsToOutput.main_fuel_sap("any other value")).to be_nil
+    end
+    it "returns nil if the value is not the correct type" do
+      expect(Helper::XmlEnumsToOutput.main_fuel_sap({ "hello": 1 })).to be_nil
+      expect(Helper::XmlEnumsToOutput.main_fuel_sap(1)).to be_nil
+    end
+    it "and the value is in the lookup it return the expected string" do
+      @enum_sap_main_fuel.each do |key, value|
+        response = helper.main_fuel_sap(key)
+        expect(response).to eq(value)
+      end
     end
   end
 end
