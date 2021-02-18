@@ -5,7 +5,9 @@ module Helper
 
       csv_string =
         CSV.generate do |csv|
-          csv << view_model_array.first.map { |key, _value| key.to_s.upcase }
+          csv << view_model_array.first.map do |key, _value|
+            key.to_s.upcase.strip
+          end
           view_model_array.each do |model|
             csv << model.map { |_key, value| value }
           end
