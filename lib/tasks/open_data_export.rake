@@ -82,13 +82,24 @@ rescue Boundary::RecoverableError => e
   }
 
   error_output[:message] = e.message unless e.message == error_output[:error]
-
   begin
     error_output[:message] = JSON.parse error_output[:message] if error_output[:message]
   rescue JSON::ParserError
     # ignore
   end
 
-rescue Boundary::TerminableError, Gateway::StorageConfigurationReader::IllegalCalLException, Boundary::OpenDataEmpty => e
+  assessment_type = ENV["assessment_type"].upcase
+  export_open_data_use_case = get_use_case_by_assessment_type(assessment_type)
+
+  storage_config_reader = Gateway::StorageConfigurationReader.new(
+    bucket_name: ENV["bucket_name"],
+    instance_name: ENV["instance_name"],
+  )
+
+  storage_gateway = Gateway::StorageGateway.new(storage_config: storage_config_reader.get_configuration)
+  data = execute_use_case
+  storage_gateway.write_file("open_data_export_#{ENV['assessment_type'].downcase}_#{set_date_time}.csv", data)
+
+rescue Boundary::TerminableError => e
   warn e.message
 end
