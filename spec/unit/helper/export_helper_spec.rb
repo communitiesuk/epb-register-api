@@ -87,13 +87,40 @@ describe Helper::ExportHelper do
     end
   end
 
-  describe "Helper::ExportHelper" do
-    context "when turning exported data into a csv" do
-      let(:expectation) do
-        'ASSESSMENT_ID,ADDRESS1,POSTCODE,BUILDING_REFERENCE_NUMBER,COMMA_TEST_VALUES,LODGEMENT_DATE
+  context "when turning exported data into a csv" do
+    let(:expectation) do
+      'ASSESSMENT_ID,ADDRESS1,POSTCODE,BUILDING_REFERENCE_NUMBER,COMMA_TEST_VALUES,LODGEMENT_DATE
 0000-0000-0000-0000-0005,"28, Joicey Court",TS26 8BZ,4504250668,"a,b,c,",13/04/2009
 0000-0000-0000-0000-0101,"88, Station Lane",TS25 1DS,2469620278,"1,2",01/02/2020'
-      end
+    end
+  end
+
+  context "when mapping between csv header to fixture header values" do
+    let(:report_keys) do
+      %w[
+        assessment_id
+        improvement_code
+        improvement_description
+        improvement_summary
+        indicative_cost
+        sequence
+      ]
+    end
+    let(:expectation) do
+      %w[
+        ASSESSMENT_ID
+        IMPROVEMENT_ITEM
+        INDICATIVE_COST
+        IMPROVEMENT_SUMMARY_TEXT
+        IMPROVEMENT_DESCR_TEXT
+        IMPROVEMENT_ID
+      ]
+    end
+
+    let(:convert_method) { helper.convert_header_values(report_keys) }
+
+    it "maps the expected column headers from the report" do
+      expect(convert_method).to match_array(expectation)
     end
   end
 end
