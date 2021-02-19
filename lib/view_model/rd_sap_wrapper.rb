@@ -274,7 +274,8 @@ module ViewModel
         solar_water_heating_flag: @view_model.solar_water_heating_flag,
         mechanical_ventilation: @view_model.mechanical_ventilation,
         floor_height: @view_model.floor_height.join(", "),
-        main_fuel: Helper::XmlEnumsToOutput.main_fuel_rdsap(@view_model.main_fuel_type),
+        main_fuel:
+          Helper::XmlEnumsToOutput.main_fuel_rdsap(@view_model.main_fuel_type),
       }
     end
 

@@ -42,6 +42,24 @@ describe "Acceptance::Reports::OpenDataExport" do
     domestic_rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
     domestic_rdsap_assessment_id = domestic_rdsap_xml.at("RRN")
     domestic_rdsap_assessment_date = domestic_rdsap_xml.at("Registration-Date")
+    cepc_rr_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc+rr")
+    cepc_rr_xml
+      .xpath("//*[local-name() = 'RRN']")
+      .each_with_index do |node, index|
+        node.content = "1111-0000-0000-0000-000#{index + 2}"
+      end
+
+    cepc_rr_xml
+      .xpath("//*[local-name() = 'Related-RRN']")
+      .reverse
+      .each_with_index do |node, index|
+        node.content = "1111-0000-0000-0000-000#{index + 2}"
+      end
+
+    cepc_rr_xml
+      .xpath("//*[local-name() = 'Registration-Date']")
+      .reverse
+      .each { |node| node.content = Date.today.strftime("%F") }
 
     add_assessor(
       scheme_id,
@@ -116,6 +134,16 @@ describe "Acceptance::Reports::OpenDataExport" do
       },
       override: true,
     )
+
+    lodge_assessment(
+      assessment_body: cepc_rr_xml.to_xml,
+      accepted_responses: [201],
+      auth_data: {
+        scheme_ids: [scheme_id],
+      },
+      override: true,
+      schema_name: "CEPC-8.0.0",
+    )
   end
 
   let(:statistics) do
@@ -168,6 +196,41 @@ describe "Acceptance::Reports::OpenDataExport" do
     end
   end
 
+  context "When we call the use case to extract the DEC data" do
+    let(:days_ago) { Date.today - 2 }
+    let(:dec_use_case) { UseCase::ExportOpenDataDec.new }
+    let(:csv_data) do
+      Helper::ExportHelper.to_csv(dec_use_case.execute(days_ago))
+    end
+    let(:export_data_headers_array) { get_exported_data_headers(csv_data) }
+    let(:fixture_csv) { read_csv_fixture("dec") }
+
+    let(:fixture_headers_array) { get_fixture_headers(fixture_csv) }
+
+    let(:ignore_headers) do
+      %w[
+        OPERATIONAL_RATING_BAND
+        HEATING_CO2RENEWABLES_CO2
+        NOMINATED-DATE"
+        OR-ASSESSMENT-END-DATE
+        OTHER_FUEL
+        OCCUPANCY-LEVEL
+        TYPICAL_THERMAL_FUEL_USAGE
+        NOMINATED-DATE
+      ]
+    end
+
+    it "returns an empty array when there are no missing headers in the exported data based on the fixture" do
+      expect(
+        missing_headers(
+          fixture_headers_array,
+          export_data_headers_array,
+          ignore_headers,
+        ),
+      ).to eq([])
+    end
+  end
+
   context "When we call the use case to extract the domestic data" do
     let(:days_ago) { Date.today - 2 }
     let(:use_case) { UseCase::ExportOpenDataDomestic.new }
@@ -177,7 +240,7 @@ describe "Acceptance::Reports::OpenDataExport" do
 
     let(:fixture_headers_array) { get_fixture_headers(fixture_csv) }
 
-    let(:escape_headers) do
+    let(:ignore_headers) do
       %w[
         GLAZED_TYPE
         FLOOR_DESCRIPTION
@@ -200,7 +263,7 @@ describe "Acceptance::Reports::OpenDataExport" do
         missing_headers(
           fixture_headers_array,
           export_data_headers_array,
-          escape_headers,
+          ignore_headers,
         ),
       ).to eq([])
     end
@@ -209,14 +272,43 @@ describe "Acceptance::Reports::OpenDataExport" do
   context "When we call the use case to extract the domestic recommendations data" do
     let(:days_ago) { Date.today - 2 }
     let(:use_case) { UseCase::ExportOpenDataDomesticrr.new }
-    let(:flattened_data) { Helper::ExportHelper.flatten_domestic_rr_response(use_case.execute(days_ago)) }
+    let(:flattened_data) do
+      Helper::ExportHelper.flatten_domestic_rr_response(
+        use_case.execute(days_ago),
+      )
+    end
     let(:csv_data) { Helper::ExportHelper.to_csv(flattened_data) }
-    let(:csv_export_data_headers_array) { Helper::ExportHelper.convert_header_values(get_exported_data_headers(csv_data)).sort }
+    let(:csv_export_data_headers_array) do
+      Helper::ExportHelper.convert_header_values(
+        get_exported_data_headers(csv_data),
+      ).sort
+    end
     let(:fixture_csv) { read_csv_fixture("domestic_rr") }
     let(:fixture_headers_array) { get_fixture_headers(fixture_csv).sort }
 
     it "returns an empty array when there are no missing headers in the exported data based on the fixture" do
       expect(csv_export_data_headers_array).to eq(fixture_headers_array)
+    end
+  end
+
+  context "When we call the use case to extract the Non Domestic RR data" do
+    let(:days_ago) { Date.today - 2 }
+    let(:use_case) { UseCase::ExportOpenDataCepcrr.new }
+    let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(days_ago)) }
+    let(:export_data_headers_array) { get_exported_data_headers(csv_data) }
+    let(:fixture_csv) { read_csv_fixture("non_domestic_rr") }
+    let(:fixture_headers_array) { get_fixture_headers(fixture_csv) }
+
+    let(:ignore_headers) { %w[ASSESSMENT_ID] }
+
+    it "returns an empty array when there are no missing headers in the exported data based on the fixture" do
+      expect(
+        missing_headers(
+          fixture_headers_array,
+          export_data_headers_array,
+          ignore_headers,
+        ),
+      ).to eq([])
     end
   end
 end

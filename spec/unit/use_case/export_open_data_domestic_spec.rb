@@ -172,18 +172,12 @@ describe UseCase::ExportOpenDataDomestic do
 
       let(:rdsap_odc_hash) do
         expected_rdsap_values.merge(
-          {
-            lodgement_date: date_today,
-            lodgement_datetime: date_today,
-          },
+          { lodgement_date: date_today, lodgement_datetime: date_today },
         )
       end
       let(:sap_odc_hash) do
         expected_sap_values.merge(
-          {
-            lodgement_date: date_today,
-            lodgement_datetime: date_today,
-          },
+          { lodgement_date: date_today, lodgement_datetime: date_today },
         )
       end
       let(:exported_data) do

@@ -422,7 +422,8 @@ module ViewModel
           if @view_model.respond_to?(:floor_height)
             @view_model.floor_height.join(", ")
           end,
-        main_fuel: Helper::XmlEnumsToOutput.main_fuel_sap(@view_model.main_fuel_type),
+        main_fuel:
+          Helper::XmlEnumsToOutput.main_fuel_sap(@view_model.main_fuel_type),
       }
     end
 

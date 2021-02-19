@@ -149,6 +149,5 @@ describe Helper::ExportHelper do
         expect(convert_method).to match_array(expectation)
       end
     end
-
   end
 end

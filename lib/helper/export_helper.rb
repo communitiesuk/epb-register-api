@@ -52,7 +52,8 @@ module Helper
         flattened_data = Helper::ExportHelper.flatten_domestic_rr_response(data)
         data = Helper::ExportHelper.to_csv(flattened_data)
         csv_array = data.split("\n")
-        headers = Helper::ExportHelper.convert_header_values(csv_array.first.split(","))
+        headers =
+          Helper::ExportHelper.convert_header_values(csv_array.first.split(","))
         csv_array[0] = headers.join(",")
         data = csv_array
       else
