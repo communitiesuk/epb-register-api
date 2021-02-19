@@ -310,8 +310,8 @@ module ViewModel
         property_type: @view_model.dwelling_type,
         tenure: @view_model.tenure,
         transaction_type: @view_model.transaction_type,
-        environmental_impact_current: @view_model.environmental_impact_current,
-        environmental_impact_potential:
+        environment_impact_current: @view_model.environmental_impact_current,
+        environment_impact_potential:
           @view_model.environmental_impact_potential,
         energy_consumption_current: @view_model.primary_energy_use,
         energy_consumption_potential: @view_model.energy_consumption_potential,
