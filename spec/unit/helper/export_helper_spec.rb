@@ -122,5 +122,33 @@ describe Helper::ExportHelper do
     it "maps the expected column headers from the report" do
       expect(convert_method).to match_array(expectation)
     end
+
+    context "when mapping between csv header to fixture header values" do
+      let(:report_keys) do
+        %w[
+          assessment_id
+          improvement_code
+          improvement_description
+          improvement_summary
+          indicative_cost
+          sequence
+        ]
+      end
+      let(:expectation) do
+        %w[
+          ASSESSMENT_ID
+          IMPROVEMENT_ITEM
+          INDICATIVE_COST
+          IMPROVEMENT_SUMMARY_TEXT
+          IMPROVEMENT_DESCR_TEXT
+          IMPROVEMENT_ID
+        ]
+      end
+      let(:convert_method) { helper.convert_header_values(report_keys) }
+      it "maps the expected column headers from the report" do
+        expect(convert_method).to match_array(expectation)
+      end
+    end
+
   end
 end

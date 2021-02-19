@@ -6,11 +6,11 @@ def read_csv_fixture(file_name)
   CSV.parse(read_file, headers: true)
 end
 
-def fixture_headers(fixture_csv)
-  fixture_csv.headers.compact.collect { |item| item.strip }
+def get_fixture_headers(fixture_csv)
+  fixture_csv.headers.compact.collect(&:strip)
 end
 
-def exported_data_headers(exported_data)
+def get_exported_data_headers(exported_data)
   firstline = exported_data.split("\n")[0]
   firstline.split(",")
 end
@@ -152,10 +152,10 @@ describe "Acceptance::Reports::OpenDataExport" do
     let(:days_ago) { Date.today - 2 }
     let(:use_case) { UseCase::ExportOpenDataCommercial.new }
     let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(days_ago)) }
-    let(:export_data_headers_array) { exported_data_headers(csv_data) }
+    let(:export_data_headers_array) { get_exported_data_headers(csv_data) }
     let(:fixture_csv) { read_csv_fixture("commerical") }
 
-    let(:fixture_headers_array) { fixture_headers(fixture_csv) }
+    let(:fixture_headers_array) { get_fixture_headers(fixture_csv) }
 
     it "returns an empty array when there are no missing headers in the exported data based on the fixture" do
       expect(
@@ -172,12 +172,12 @@ describe "Acceptance::Reports::OpenDataExport" do
     let(:days_ago) { Date.today - 2 }
     let(:use_case) { UseCase::ExportOpenDataDomestic.new }
     let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(days_ago)) }
-    let(:export_data_headers_array) { exported_data_headers(csv_data) }
+    let(:export_data_headers_array) { get_exported_data_headers(csv_data) }
     let(:fixture_csv) { read_csv_fixture("domestic") }
 
-    let(:fixture_headers_array) { fixture_headers(fixture_csv) }
+    let(:fixture_headers_array) { get_fixture_headers(fixture_csv) }
 
-    let(:esacpe_headers) do
+    let(:escape_headers) do
       %w[
         GLAZED_TYPE
         FLOOR_DESCRIPTION
@@ -200,9 +200,23 @@ describe "Acceptance::Reports::OpenDataExport" do
         missing_headers(
           fixture_headers_array,
           export_data_headers_array,
-          esacpe_headers,
+          escape_headers,
         ),
       ).to eq([])
+    end
+  end
+
+  context "When we call the use case to extract the domestic recommendations data" do
+    let(:days_ago) { Date.today - 2 }
+    let(:use_case) { UseCase::ExportOpenDataDomesticrr.new }
+    let(:flattened_data) { Helper::ExportHelper.flatten_domestic_rr_response(use_case.execute(days_ago)) }
+    let(:csv_data) { Helper::ExportHelper.to_csv(flattened_data) }
+    let(:csv_export_data_headers_array) { Helper::ExportHelper.convert_header_values(get_exported_data_headers(csv_data)).sort }
+    let(:fixture_csv) { read_csv_fixture("domestic_rr") }
+    let(:fixture_headers_array) { get_fixture_headers(fixture_csv).sort }
+
+    it "returns an empty array when there are no missing headers in the exported data based on the fixture" do
+      expect(csv_export_data_headers_array).to eq(fixture_headers_array)
     end
   end
 end

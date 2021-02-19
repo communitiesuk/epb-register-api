@@ -6,15 +6,16 @@ def set_date_time
   DateTime.now.strftime("%Y%m%dT%H%M")
 end
 
-def convert_data_to_csv(data, assessment_type)
-  if assessment_type == "SAP-RDSAP-RR"
-    flattened_data = Helper::ExportHelper.flatten_domestic_rr_response(data)
-    data = Helper::ExportHelper.to_csv(flattened_data)
-  else
-    data = Helper::ExportHelper.to_csv(data)
-  end
-  data
-end
+# def convert_data_to_csv(data, assessment_type)
+#   if assessment_type == "SAP-RDSAP-RR"
+#     flattened_data = Helper::ExportHelper.flatten_domestic_rr_response(data)
+#     data = Helper::ExportHelper.to_csv(flattened_data)
+#     data.headers = Helper::ExportHelper.convert_header_values(data.headers)
+#   else
+#     data = Helper::ExportHelper.to_csv(data)
+#   end
+#   data
+# end
 
 def transmit_file(data)
   storage_config_reader = Gateway::StorageConfigurationReader.new(
@@ -69,7 +70,7 @@ task :open_data_export do
   data = open_data_use_case.execute(date_from, task_id)
 
   if data.length > 0
-    csv_data = convert_data_to_csv(data, assessment_type)
+    csv_data =  Helper::ExportHelper.convert_data_to_csv(data, assessment_type)
     transmit_file(csv_data)
     output_completed_task
     puts "true"
