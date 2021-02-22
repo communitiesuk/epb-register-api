@@ -89,7 +89,6 @@ rescue Boundary::RecoverableError => e
     # ignore
   end
 
-
 rescue Boundary::TerminableError => e
   warn e.message
 end
