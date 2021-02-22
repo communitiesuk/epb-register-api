@@ -45,7 +45,6 @@ rescue Boundary::TerminableError => e
   warn e.message
 end
 
-
 private
 
 def set_date_time
@@ -56,14 +55,14 @@ def transmit_file(data)
   storage_config_reader = Gateway::StorageConfigurationReader.new(
     instance_name: ENV["instance_name"],
     bucket_name: ENV["bucket_name"],
-    )
+  )
   storage_gateway = Gateway::StorageGateway.new(storage_config: storage_config_reader.get_configuration)
   storage_gateway.write_file("open_data_export_#{ENV['assessment_type'].downcase}_#{set_date_time}.csv", data)
 end
 
 def output_completed_task
   gateway = Gateway::OpenDataLogGateway.new
-  pp gateway.fetch_log_statistics
+  pp gateway.fetch_latest_statistics
 end
 
 def get_use_case_by_assessment_type(assessment_type)
