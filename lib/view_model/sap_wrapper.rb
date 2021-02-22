@@ -432,6 +432,7 @@ module ViewModel
           end,
         main_fuel:
           Helper::XmlEnumsToOutput.main_fuel_sap(@view_model.main_fuel_type),
+        floor_description: @view_model.all_floor_descriptions.first,
       }
     end
 

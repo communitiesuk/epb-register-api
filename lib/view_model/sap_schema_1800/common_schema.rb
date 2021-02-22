@@ -510,6 +510,10 @@ module ViewModel
       def floor_height
         @xml_doc.search("Storey-Height").map(&:content)
       end
+
+      def all_floor_descriptions
+        @xml_doc.search("Property-Summary/Floor/Description").map(&:content)
+      end
     end
   end
 end

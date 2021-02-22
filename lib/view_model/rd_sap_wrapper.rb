@@ -276,6 +276,7 @@ module ViewModel
         floor_height: @view_model.floor_height.join(", "),
         main_fuel:
           Helper::XmlEnumsToOutput.main_fuel_rdsap(@view_model.main_fuel_type),
+        floor_description: @view_model.all_floor_descriptions.first,
       }
     end
 

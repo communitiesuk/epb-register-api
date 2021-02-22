@@ -1070,6 +1070,7 @@ describe ViewModel::SapWrapper do
         mechanical_ventilation: nil,
         floor_height: "2.4, 2.5",
         main_fuel: "Electricity: electricity sold to grid",
+        floor_description: "Tiled floor",
       }
     end
 

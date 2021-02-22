@@ -442,6 +442,7 @@ describe ViewModel::RdSapWrapper do
         mechanical_ventilation: "0",
         floor_height: "2.45, 2.59",
         main_fuel: "mains gas (not community)",
+        floor_description: "Suspended, no insulation (assumed)",
       }
     end
 

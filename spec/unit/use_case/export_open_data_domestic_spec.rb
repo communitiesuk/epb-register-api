@@ -89,6 +89,7 @@ describe UseCase::ExportOpenDataDomestic do
         mechanical_ventilation: "0",
         floor_height: "2.45, 2.59",
         main_fuel: "mains gas (not community)",
+        floor_description: "Suspended, no insulation (assumed)",
       }
       expected_sap_values = {
         assessment_id:
@@ -170,6 +171,7 @@ describe UseCase::ExportOpenDataDomestic do
         mechanical_ventilation: nil,
         floor_height: "2.4, 2.5",
         main_fuel: "Electricity: electricity sold to grid",
+        floor_description: "Tiled floor",
       }
 
       let(:rdsap_odc_hash) do
