@@ -514,6 +514,18 @@ module ViewModel
       def all_floor_descriptions
         @xml_doc.search("Property-Summary/Floor/Description").map(&:content)
       end
+
+      def all_floor_energy_efficiency_rating
+        @xml_doc
+          .search("Property-Summary/Floor/Energy-Efficiency-Rating")
+          .map(&:content)
+      end
+
+      def all_floor_env_energy_efficiency_rating
+        @xml_doc
+          .search("Property-Summary/Floor/Environmental-Efficiency-Rating")
+          .map(&:content)
+      end
     end
   end
 end

@@ -1071,6 +1071,8 @@ describe ViewModel::SapWrapper do
         floor_height: "2.4, 2.5",
         main_fuel: "Electricity: electricity sold to grid",
         floor_description: "Tiled floor",
+        floor_energy_eff: "0",
+        floor_env_eff: "0",
       }
     end
 

@@ -277,6 +277,8 @@ module ViewModel
         main_fuel:
           Helper::XmlEnumsToOutput.main_fuel_rdsap(@view_model.main_fuel_type),
         floor_description: @view_model.all_floor_descriptions.first,
+        floor_energy_eff: @view_model.all_floor_energy_efficiency_rating.first,
+        floor_env_eff: @view_model.all_floor_env_energy_efficiency_rating.first,
       }
     end
 

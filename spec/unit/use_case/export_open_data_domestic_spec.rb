@@ -90,6 +90,8 @@ describe UseCase::ExportOpenDataDomestic do
         floor_height: "2.45, 2.59",
         main_fuel: "mains gas (not community)",
         floor_description: "Suspended, no insulation (assumed)",
+        floor_energy_eff: "0",
+        floor_env_eff: "0",
       }
       expected_sap_values = {
         assessment_id:
@@ -172,6 +174,8 @@ describe UseCase::ExportOpenDataDomestic do
         floor_height: "2.4, 2.5",
         main_fuel: "Electricity: electricity sold to grid",
         floor_description: "Tiled floor",
+        floor_energy_eff: "0",
+        floor_env_eff: "0",
       }
 
       let(:rdsap_odc_hash) do
@@ -282,9 +286,11 @@ describe UseCase::ExportOpenDataDomestic do
         expect(exported_data.length).to eq(2)
       end
 
-      expected_rdsap_values.keys.each do |key|
+      expected_rdsap_values.reject { |k|
+        %i[lodgement_datetime].include? k
+      }.keys.each do |key|
         it "returns the #{key} that matches the RdSAP test data for the equivalent entry in the ODC hash" do
-          expect(exported_data[0][key.to_sym]).to include(rdsap_odc_hash[key])
+          expect(exported_data[0][key.to_sym]).to eq(rdsap_odc_hash[key])
         end
       end
 
@@ -295,6 +301,7 @@ describe UseCase::ExportOpenDataDomestic do
 
       expected_sap_values.reject { |k|
         %i[
+          lodgement_datetime
           flat_storey_count
           unheated_corridor_length
           mains_gas_flag
@@ -310,7 +317,7 @@ describe UseCase::ExportOpenDataDomestic do
       }.keys.each do |key|
         it "returns the #{key} that matches the SAP test data for the equivalent entry in the ODC hash" do
           exported_data[1]["extension_count"]
-          expect(exported_data[1][key.to_sym]).to include(sap_odc_hash[key])
+          expect(exported_data[1][key.to_sym]).to eq(sap_odc_hash[key])
         end
       end
 
