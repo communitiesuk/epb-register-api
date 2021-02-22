@@ -18,7 +18,7 @@ module Helper
           end
           view_model_array.each do |model|
             csv << model.map do |_key, value|
-              value.is_a?(String) ? value.to_s : value
+              value.is_a?(String) ? "#{value}" : value
             end
           end
         end

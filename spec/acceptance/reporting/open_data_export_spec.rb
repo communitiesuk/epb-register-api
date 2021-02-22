@@ -265,6 +265,11 @@ describe "Acceptance::Reports::OpenDataExport" do
         ),
       ).to eq([])
     end
+
+    it "returns the data exported to a csv object to match the .csv fixture " do
+      expect(parsed_exported_data.length).to eq(fixture_csv.length)
+    end
+
   end
 
   context "When we call the use case to extract the domestic recommendations data" do
