@@ -235,39 +235,13 @@ describe "Acceptance::Reports::OpenDataExport" do
     let(:days_ago) { Date.today - 2 }
     let(:use_case) { UseCase::ExportOpenDataDomestic.new }
     let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(days_ago)) }
-    let(:export_data_headers_array) { get_exported_data_headers(csv_data) }
-
     let(:export_data_rows) { csv_data.split("\n")[1] }
     let(:fixture_csv) { read_csv_fixture("domestic") }
-
-    let(:fixture_headers_array) { get_fixture_headers(fixture_csv) }
-
     let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
-
-    let(:ignore_headers) do
-      %w[
-        GLAZED_TYPE
-        FLOOR_DESCRIPTION
-        FLOOR_DESCRIPTION
-        FLOOR_ENERGY_EFF
-        FLOOR_ENV_EFF
-        MAINHEATC_ENERGY_EFF
-        MAINHEATC_ENV_EFF
-      ]
-    end
-
-    it "returns an empty array when there are no missing headers in the exported data based on the fixture" do
-      expect(
-        missing_headers(
-          fixture_headers_array,
-          export_data_headers_array,
-          ignore_headers,
-        ),
-      ).to eq([])
-    end
 
     it "returns the data exported to a csv object to match the .csv fixture " do
       expect(parsed_exported_data.length).to eq(fixture_csv.length)
+      expect(parsed_exported_data.first.to_a - fixture_csv.first.to_a).to eq([])
     end
   end
 
