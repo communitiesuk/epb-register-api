@@ -743,6 +743,32 @@ describe ViewModel::SapWrapper do
           .deep_merge(is_pre_15_rdsap)
           .deep_merge(is_pre_14_rdsap)
           .deep_merge(heat_demand_unsupported),
+        { schema: "SAP-Schema-11.2", type: "sap" }.deep_merge(is_pre_15)
+          .deep_merge(is_pre_14)
+          .deep_merge(is_pre_13),
+        {
+          schema: "SAP-Schema-11.2",
+          type: "rdsap",
+          different_fields: {
+            main_fuel_type: "10",
+          },
+        }.deep_merge(is_rdsap)
+          .deep_merge(is_pre_15)
+          .deep_merge(is_pre_14)
+          .deep_merge(is_pre_13)
+          .deep_merge(is_pre_15_rdsap)
+          .deep_merge(is_pre_14_rdsap)
+          .deep_merge(heat_demand_unsupported)
+          .deep_merge(
+            {
+              unsupported_fields: %i[
+                property_age_band
+                dwelling_type
+                related_party_disclosure_number
+                tenure
+              ],
+            },
+          ),
       ]
     end
 
