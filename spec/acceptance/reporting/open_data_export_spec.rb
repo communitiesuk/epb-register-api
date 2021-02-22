@@ -236,25 +236,23 @@ describe "Acceptance::Reports::OpenDataExport" do
     let(:use_case) { UseCase::ExportOpenDataDomestic.new }
     let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(days_ago)) }
     let(:export_data_headers_array) { get_exported_data_headers(csv_data) }
+
+    let(:export_data_rows) { csv_data.split("\n")[1] }
     let(:fixture_csv) { read_csv_fixture("domestic") }
 
     let(:fixture_headers_array) { get_fixture_headers(fixture_csv) }
+
+    let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
 
     let(:ignore_headers) do
       %w[
         GLAZED_TYPE
         FLOOR_DESCRIPTION
-        ENVIRONMENT_IMPACT_CURRENT
-        ENVIRONMENT_IMPACT_POTENTIAL
         FLOOR_DESCRIPTION
         FLOOR_ENERGY_EFF
         FLOOR_ENV_EFF
-        COUNTY
-        CONSTITUENCY
-        LOCAL_AUTHORITY
         MAINHEATC_ENERGY_EFF
         MAINHEATC_ENV_EFF
-        MAIN_FUEL
       ]
     end
 

@@ -361,7 +361,7 @@ describe ViewModel::RdSapWrapper do
 
     let(:assertion) do
       {
-        rrn: "0000-0000-0000-0000-0000",
+        assessment_id: "0000-0000-0000-0000-0000",
         inspection_date: "2020-05-04",
         lodgement_date: "2020-05-04",
         building_reference_number: "UPRN-000000000000",

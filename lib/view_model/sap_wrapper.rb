@@ -294,7 +294,7 @@ module ViewModel
         @view_model.all_main_heating_energy_efficiency
 
       {
-        rrn: @view_model.assessment_id,
+        assessment_id: @view_model.assessment_id,
         inspection_date: @view_model.date_of_assessment,
         lodgement_date: @view_model.date_of_registration,
         building_reference_number: @view_model.address_id,

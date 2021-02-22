@@ -39,7 +39,7 @@ module UseCase
           new_task_id,
           Helper::ExportHelper.report_type_to_s(ASSESSMENT_TYPE),
         )
-        view_model_hash[:rrn] =
+        view_model_hash[:assessment_id] =
           Helper::RrnHelper.hash_rrn(assessment["assessment_id"])
 
         data << view_model_hash

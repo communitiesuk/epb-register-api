@@ -6,7 +6,8 @@ describe UseCase::ExportOpenDataDomestic do
       let(:export_object) { described_class.new }
 
       expected_rdsap_values = {
-        rrn: "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
+        assessment_id:
+          "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
         inspection_date: "2020-05-04",
         lodgement_date: "2020-05-04",
         lodgement_datetime: "2021-02-18 00:00:00",
@@ -90,7 +91,8 @@ describe UseCase::ExportOpenDataDomestic do
         main_fuel: "mains gas (not community)",
       }
       expected_sap_values = {
-        rrn: "a154b93d62db9b77c82f6b11ba4a4a4056816572180c95e0bc5d486b905d4996",
+        assessment_id:
+          "a154b93d62db9b77c82f6b11ba4a4a4056816572180c95e0bc5d486b905d4996",
         inspection_date: "2020-05-04",
         lodgement_date: "2020-05-04",
         lodgement_datetime: "2021-02-18 00:00:00",
@@ -184,7 +186,7 @@ describe UseCase::ExportOpenDataDomestic do
         described_class
           .new
           .execute("2019-07-01", 2)
-          .sort_by! { |key| key[:rrn] }
+          .sort_by! { |key| key[:assessment_id] }
       end
 
       let(:statistics) do

@@ -17,7 +17,9 @@ module Helper
             key.to_s.upcase.strip
           end
           view_model_array.each do |model|
-            csv << model.map { |_key, value| value }
+            csv << model.map do |_key, value|
+              value.is_a?(String) ? value.to_s : value
+            end
           end
         end
       csv_string
