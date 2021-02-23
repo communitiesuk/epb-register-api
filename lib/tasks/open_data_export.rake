@@ -10,8 +10,6 @@ task :open_data_export do
     task_id = ENV["task_id"].to_i
   end
 
-  raise Boundary::ArgumentMissing, "BUCKET" unless bucket
-  raise Boundary::ArgumentMissing, "INSTANCE_NAME" unless instance_name
   raise Boundary::ArgumentMissing, "ASSESSMENT_TYPE" unless assessment_type
   raise Boundary::ArgumentMissing, "DATE_FROM" unless date_from
 

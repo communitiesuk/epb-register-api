@@ -167,8 +167,6 @@ describe "Acceptance::Reports::OpenDataExport" do
 
   context "when given the incorrect assessment type" do
     before do
-      ENV["bucket_name"] = "test_bucket"
-      ENV["instance_name"] = "test_instance"
       ENV["date_from"] = DateTime.now.strftime("%F")
       ENV["assessment_type"] = "TEST"
     end
@@ -183,7 +181,7 @@ describe "Acceptance::Reports::OpenDataExport" do
   context "When we call the use case to extract the commercial data" do
     let(:use_case) { UseCase::ExportOpenDataCommercial.new }
     let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(test_date)) }
-    let(:fixture_csv) { read_csv_fixture("commerical") }
+    let(:fixture_csv) { read_csv_fixture("commercial") }
     let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
     let(:fixture_csv_headers) do
       fixture_csv.headers - %w[
@@ -247,24 +245,14 @@ describe "Acceptance::Reports::OpenDataExport" do
 
   context "When we call the use case to extract the domestic recommendations data" do
     let(:use_case) { UseCase::ExportOpenDataDomesticrr.new }
-    let(:flattened_data) do
-      Helper::ExportHelper.flatten_domestic_rr_response(
+    let(:csv_data) do
+      Helper::ExportHelper.convert_data_to_csv(
         use_case.execute(test_date),
+        "SAP-RDSAP-RR",
       )
     end
-    let(:csv_data) { Helper::ExportHelper.to_csv(flattened_data) }
-
-    let(:csv_export_data_headers_array) do
-      Helper::ExportHelper.convert_header_values(
-        get_exported_data_headers(csv_data),
-      ).sort
-    end
     let(:fixture_csv) { read_csv_fixture("domestic_rr") }
-    let(:fixture_headers_array) { get_fixture_headers(fixture_csv).sort }
-
-    it "returns an empty array when there are no missing headers in the exported data based on the fixture" do
-      expect(csv_export_data_headers_array).to eq(fixture_headers_array)
-    end
+    let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
   end
 
   context "When we call the use case to extract the Non Domestic RR data" do
