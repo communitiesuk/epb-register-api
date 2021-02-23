@@ -279,8 +279,10 @@ module ViewModel
         floor_description: @view_model.all_floor_descriptions.first,
         floor_energy_eff: @view_model.all_floor_energy_efficiency_rating.first,
         floor_env_eff: @view_model.all_floor_env_energy_efficiency_rating.first,
-        mainheatc_energy_eff: @view_model.all_main_heating_controls_energy_efficiency.first,
-        mainheatc_env_eff: @view_model.all_main_heating_controls_environmental_efficiency.first,
+        mainheatc_energy_eff:
+          @view_model.all_main_heating_controls_energy_efficiency.first,
+        mainheatc_env_eff:
+          @view_model.all_main_heating_controls_environmental_efficiency.first,
       }
     end
 

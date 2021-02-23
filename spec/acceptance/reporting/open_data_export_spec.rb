@@ -186,13 +186,12 @@ describe "Acceptance::Reports::OpenDataExport" do
     let(:fixture_csv) { read_csv_fixture("commerical") }
     let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
 
-    let(:fixture_csv_headers) do fixture_csv.headers - %w[RENEWABLE_SOURCES]
-    end
+    let(:fixture_csv_headers) { fixture_csv.headers - %w[RENEWABLE_SOURCES] }
 
     it "returns an empty array when there are no missing headers in the exported data based on the fixture" do
-          expect(fixture_csv_headers - parsed_exported_data.headers).to eq([nil])
-      end
+      expect(fixture_csv_headers - parsed_exported_data.headers).to eq([nil])
     end
+  end
 
   context "When we call the use case to extract the DEC data" do
     let(:dec_use_case) { UseCase::ExportOpenDataDec.new }
@@ -239,7 +238,6 @@ describe "Acceptance::Reports::OpenDataExport" do
       expect(parsed_exported_data.length).to eq(fixture_csv.length)
       expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
       expect(parsed_exported_data.first.to_a - fixture_csv.first.to_a).to eq([])
-
     end
   end
 
@@ -266,7 +264,6 @@ describe "Acceptance::Reports::OpenDataExport" do
   end
 
   context "When we call the use case to extract the Non Domestic RR data" do
-
     let(:use_case) { UseCase::ExportOpenDataCepcrr.new }
     let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(test_date)) }
     let(:export_data_headers_array) { get_exported_data_headers(csv_data) }
