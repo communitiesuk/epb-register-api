@@ -92,6 +92,8 @@ describe UseCase::ExportOpenDataDomestic do
         floor_description: "Suspended, no insulation (assumed)",
         floor_energy_eff: "0",
         floor_env_eff: "0",
+        mainheatc_energy_eff: "4",
+        mainheatc_env_eff: "4",
       }
       expected_sap_values = {
         assessment_id:
@@ -176,6 +178,8 @@ describe UseCase::ExportOpenDataDomestic do
         floor_description: "Tiled floor",
         floor_energy_eff: "0",
         floor_env_eff: "0",
+        mainheatc_energy_eff: "0",
+        mainheatc_env_eff: "0",
       }
 
       let(:rdsap_odc_hash) do

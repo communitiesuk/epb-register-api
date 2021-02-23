@@ -1073,6 +1073,8 @@ describe ViewModel::SapWrapper do
         floor_description: "Tiled floor",
         floor_energy_eff: "0",
         floor_env_eff: "0",
+        mainheatc_energy_eff: "0",
+        mainheatc_env_eff: "0",
       }
     end
 

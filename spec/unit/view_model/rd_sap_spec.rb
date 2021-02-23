@@ -445,6 +445,8 @@ describe ViewModel::RdSapWrapper do
         floor_description: "Suspended, no insulation (assumed)",
         floor_energy_eff: "0",
         floor_env_eff: "0",
+        mainheatc_energy_eff: "4",
+        mainheatc_env_eff: "4",
       }
     end
 

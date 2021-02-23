@@ -493,6 +493,14 @@ module ViewModel
           .search("Property-Summary/Floor/Environmental-Efficiency-Rating")
           .map(&:content)
       end
+
+      def all_main_heating_controls_energy_efficiency
+        @xml_doc.search("Main-Heating-Controls/Energy-Efficiency-Rating").map(&:content)
+      end
+
+      def all_main_heating_controls_environmental_efficiency
+        @xml_doc.search("Main-Heating-Controls/Environmental-Efficiency-Rating").map(&:content)
+      end
     end
   end
 end
