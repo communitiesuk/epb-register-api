@@ -213,6 +213,24 @@ def change_address(
   ActiveRecord::Base.connection.exec_query(update_query, "SQL", update_binds)
 end
 
+def get_address(assessment_id)
+  select_query = <<-SQL
+                  SELECT address_line1, address_line2, address_line3, address_line4
+                  FROM assessments
+                  WHERE assessment_id = $1;
+  SQL
+
+  update_binds = []
+  update_binds <<
+    ActiveRecord::Relation::QueryAttribute.new(
+      "assessment_id",
+      assessment_id,
+      ActiveRecord::Type::String.new,
+    )
+
+  ActiveRecord::Base.connection.exec_query(select_query, "SQL", update_binds)
+end
+
 def get_vcap_services
   '{
     "aws-s3-bucket": [

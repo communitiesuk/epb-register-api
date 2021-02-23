@@ -12,7 +12,6 @@ describe "AddressMatching" do
 
     rdsap_xml = Nokogiri.XML Samples.xml(RDSAP_SCHEMA, "epc")
     rdsap_xml.at("RRN").children = "0000-0000-0000-0000-0001"
-    rdsap_xml.at("RRN").children = "0000-0000-0000-0000-0001"
     sap_xml = Nokogiri.XML Samples.xml(SAP_SCHEMA, "epc")
     sap_xml.at("RRN").children = "0000-0000-0000-0000-0002"
     call_lodge_assessment(scheme_id, RDSAP_SCHEMA, rdsap_xml)
@@ -43,6 +42,19 @@ describe "AddressMatching" do
       expect { get_task("update_address_lines").invoke }.to output(
         /2 assessments updated and 0 assessments matched/,
       ).to_stdout
+    end
+
+    it "updates the address in the assessments table to match the XML" do
+      get_task("update_address_lines").invoke
+      results = get_address("0000-0000-0000-0000-0001")
+      expect(results.map { |result| result }.first.symbolize_keys).to eq(
+        {
+          address_line1: "1 Some Street",
+          address_line2: "",
+          address_line3: "",
+          address_line4: "",
+        },
+      )
     end
   end
 end
