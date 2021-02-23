@@ -96,7 +96,7 @@ module ViewModel
     def to_report
       {
         type_of_assessment: TYPE_OF_ASSESSMENT,
-        rrn: @view_model.assessment_id,
+        assessment_id: @view_model.assessment_id,
         report_type: @view_model.report_type,
         inspection_date: @view_model.date_of_assessment,
         lodgement_date: @view_model.date_of_registration,

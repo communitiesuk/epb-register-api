@@ -22,7 +22,7 @@ describe UseCase::ExportOpenDataCommercial do
         described_class
           .new
           .execute("2019-07-01", 1)
-          .sort_by! { |key| key[:rrn] }
+          .sort_by! { |key| key[:assessment_id] }
       end
 
       let(:date_today) { DateTime.now.strftime("%F") }
@@ -33,7 +33,7 @@ describe UseCase::ExportOpenDataCommercial do
       end
 
       expected_values = {
-        rrn: "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
+        assessment_id: "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
         address1: "Some Unit",
         address2: "2 Lonely Street",
         address3: "Some Area",
@@ -71,7 +71,7 @@ describe UseCase::ExportOpenDataCommercial do
         Samples.update_test_hash(
           expected_values,
           {
-            rrn:
+            assessment_id:
               "a6f818e3dd0ac70cbd2838cb0efe0b4aadf5b43ed33a6e7cd13cb9738dca5f60",
           },
         )

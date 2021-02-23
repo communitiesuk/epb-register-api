@@ -179,7 +179,7 @@ describe ViewModel::CepcWrapper do
 
     let(:assertion) do
       {
-        rrn: "0000-0000-0000-0000-0000",
+        assessment_id: "0000-0000-0000-0000-0000",
         address1: "Some Unit",
         address2: "2 Lonely Street",
         address3: "Some Area",

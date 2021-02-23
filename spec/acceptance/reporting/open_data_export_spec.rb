@@ -10,6 +10,10 @@ def get_fixture_headers(fixture_csv)
   fixture_csv.headers.compact.collect(&:strip)
 end
 
+def test_date
+  "2021-02-22"
+end
+
 def get_exported_data_headers(exported_data)
   firstline = exported_data.split("\n")[0]
   firstline.split(",")
@@ -77,7 +81,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       ),
     )
 
-    non_domestic_assessment_date.children = Date.today.strftime("%F")
+    non_domestic_assessment_date.children = test_date
     lodge_assessment(
       assessment_body: non_domestic_xml.to_xml,
       accepted_responses: [201],
@@ -88,7 +92,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       schema_name: "CEPC-8.0.0",
     )
 
-    non_domestic_assessment_date.children = Date.today.strftime("%F")
+    non_domestic_assessment_date.children = test_date
     non_domestic_assessment_id.children = "0000-0000-0000-0000-0001"
     lodge_assessment(
       assessment_body: non_domestic_xml.to_xml,
@@ -100,7 +104,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       schema_name: "CEPC-8.0.0",
     )
 
-    non_domestic_assessment_date.children = Date.today.strftime("%F")
+    non_domestic_assessment_date.children = test_date
     non_domestic_assessment_id.children = "0000-0000-0000-0000-0002"
     lodge_assessment(
       assessment_body: non_domestic_xml.to_xml,
@@ -112,7 +116,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       schema_name: "CEPC-8.0.0",
     )
 
-    dec_assessment_date.children = Date.today.strftime("%F")
+    dec_assessment_date.children = test_date
     dec_assessment_id.children = "0000-0000-0000-0000-0003"
     lodge_assessment(
       assessment_body: dec_xml.to_xml,
@@ -124,7 +128,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       schema_name: "CEPC-8.0.0",
     )
 
-    domestic_rdsap_assessment_date.children = Date.today.strftime("%F")
+    domestic_rdsap_assessment_date.children = test_date
     domestic_rdsap_assessment_id.children = "0000-0000-0000-0000-0004"
     lodge_assessment(
       assessment_body: domestic_rdsap_xml.to_xml,
@@ -177,30 +181,23 @@ describe "Acceptance::Reports::OpenDataExport" do
   end
 
   context "When we call the use case to extract the commercial data" do
-    let(:days_ago) { Date.today - 2 }
     let(:use_case) { UseCase::ExportOpenDataCommercial.new }
-    let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(days_ago)) }
-    let(:export_data_headers_array) { get_exported_data_headers(csv_data) }
+    let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(test_date)) }
     let(:fixture_csv) { read_csv_fixture("commerical") }
+    let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
 
-    let(:fixture_headers_array) { get_fixture_headers(fixture_csv) }
+    let(:fixture_csv_headers) do fixture_csv.headers - %w[RENEWABLE_SOURCES]
+    end
 
     it "returns an empty array when there are no missing headers in the exported data based on the fixture" do
-      expect(
-        missing_headers(
-          fixture_headers_array,
-          export_data_headers_array,
-          %w[RENEWABLE_SOURCES],
-        ),
-      ).to eq([])
+          expect(fixture_csv_headers - parsed_exported_data.headers).to eq([nil])
+      end
     end
-  end
 
   context "When we call the use case to extract the DEC data" do
-    let(:days_ago) { Date.today - 2 }
     let(:dec_use_case) { UseCase::ExportOpenDataDec.new }
     let(:csv_data) do
-      Helper::ExportHelper.to_csv(dec_use_case.execute(days_ago))
+      Helper::ExportHelper.to_csv(dec_use_case.execute(test_date))
     end
     let(:export_data_headers_array) { get_exported_data_headers(csv_data) }
     let(:fixture_csv) { read_csv_fixture("dec") }
@@ -232,29 +229,29 @@ describe "Acceptance::Reports::OpenDataExport" do
   end
 
   context "When we call the use case to extract the domestic data" do
-    let(:days_ago) { Date.today - 2 }
     let(:use_case) { UseCase::ExportOpenDataDomestic.new }
-    let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(days_ago)) }
+    let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(test_date)) }
     let(:export_data_rows) { csv_data.split("\n")[1] }
     let(:fixture_csv) { read_csv_fixture("domestic") }
     let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
 
     it "returns the data exported to a csv object to match the .csv fixture " do
       expect(parsed_exported_data.length).to eq(fixture_csv.length)
-
+      expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
+      expect(parsed_exported_data.first.to_a - fixture_csv.first.to_a).to eq([])
 
     end
   end
 
   context "When we call the use case to extract the domestic recommendations data" do
-    let(:days_ago) { Date.today - 2 }
     let(:use_case) { UseCase::ExportOpenDataDomesticrr.new }
     let(:flattened_data) do
       Helper::ExportHelper.flatten_domestic_rr_response(
-        use_case.execute(days_ago),
+        use_case.execute(test_date),
       )
     end
     let(:csv_data) { Helper::ExportHelper.to_csv(flattened_data) }
+
     let(:csv_export_data_headers_array) do
       Helper::ExportHelper.convert_header_values(
         get_exported_data_headers(csv_data),
@@ -269,9 +266,9 @@ describe "Acceptance::Reports::OpenDataExport" do
   end
 
   context "When we call the use case to extract the Non Domestic RR data" do
-    let(:days_ago) { Date.today - 2 }
+
     let(:use_case) { UseCase::ExportOpenDataCepcrr.new }
-    let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(days_ago)) }
+    let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(test_date)) }
     let(:export_data_headers_array) { get_exported_data_headers(csv_data) }
     let(:fixture_csv) { read_csv_fixture("non_domestic_rr") }
     let(:fixture_headers_array) { get_fixture_headers(fixture_csv) }
