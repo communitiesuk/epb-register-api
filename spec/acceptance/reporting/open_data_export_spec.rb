@@ -255,10 +255,6 @@ describe "Acceptance::Reports::OpenDataExport" do
     let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
 
     it "returns the data exported to a csv object to match the .csv fixture " do
-      parsed_exported_data.each do |item|
-        pp item
-      end
-      pp fixture_csv.length
       expect(parsed_exported_data.length).to eq(fixture_csv.length)
       expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
       expect(parsed_exported_data.first.to_a - fixture_csv.first.to_a).to eq([])
