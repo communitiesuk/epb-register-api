@@ -1,6 +1,6 @@
 module ViewModel
   module SapSchemaNi1800
-    class CommonSchema < ViewModel::BaseViewModel
+    class CommonSchema < ViewModel::DomesticEpcViewModel
       def assessment_id
         xpath(%w[RRN])
       end
@@ -111,7 +111,7 @@ module ViewModel
               improvement_code:
                 xpath(%w[Improvement-Details Improvement-Number], node),
               improvement_description: xpath(%w[Improvement-Description], node),
-              improvement_title: xpath(%w[Improvement-Title], node),
+              improvement_title: improvement_title(node),
               improvement_type: xpath(%w[Improvement-Type], node),
               indicative_cost: xpath(%w[Indicative-Cost], node),
               sequence: xpath(%w[Sequence], node).to_i,

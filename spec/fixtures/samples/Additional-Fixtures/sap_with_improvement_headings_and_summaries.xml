@@ -1,0 +1,288 @@
+<ConditionReportCreateRequest_1 xmlns:SAP05="DCLG-SAP05" xmlns:HIP="DCLG-HIP" xmlns:CS="DCLG-HIP/CommonStructures" xmlns:ERR="DCLG-HIP/Exceptions" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Identification>
+    <CS:ServiceName>SAVA-HCR</CS:ServiceName>
+    <CS:Operation>Create</CS:Operation>
+    <CS:TransactionDetails>
+      <CS:OriginatingID>Unknown</CS:OriginatingID>
+      <CS:RecipientID>Unknown</CS:RecipientID>
+      <CS:Timestamp>2009-08-28T10:10:10</CS:Timestamp>
+      <CS:TransactionID>Unknown</CS:TransactionID>
+    </CS:TransactionDetails>
+  </Identification>
+  <Configuration>
+    <CS:StopOnFirstError>Unknown</CS:StopOnFirstError>
+    <CS:ReasonForChange>Unknown</CS:ReasonForChange>
+  </Configuration>
+  <Content>
+    <EPC-Data>
+      <Calculation-Software-Name>NES one</Calculation-Software-Name>
+      <Calculation-Software-Version>Version 5.7.0</Calculation-Software-Version>
+      <SAP-Version>9.82</SAP-Version>
+      <Energy-Assessment>
+        <Property-Summary>
+          <Wall>
+            <Description>Cavity wall, filled cavity</Description>
+            <Energy-Efficiency-Rating>4</Energy-Efficiency-Rating>
+            <Environmental-Efficiency-Rating>4</Environmental-Efficiency-Rating>
+          </Wall>
+          <Roof>
+            <Description>Pitched, 100mm loft insulation</Description>
+            <Energy-Efficiency-Rating>3</Energy-Efficiency-Rating>
+            <Environmental-Efficiency-Rating>3</Environmental-Efficiency-Rating>
+          </Roof>
+          <Floor>
+            <Description>Suspended, no insulation (assumed)</Description>
+            <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+            <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+          </Floor>
+          <Window>
+            <Description>Partial double glazing</Description>
+            <Energy-Efficiency-Rating>3</Energy-Efficiency-Rating>
+            <Environmental-Efficiency-Rating>3</Environmental-Efficiency-Rating>
+          </Window>
+          <Main-Heating>
+            <Description>Boiler and radiators, mains gas</Description>
+            <Energy-Efficiency-Rating>3</Energy-Efficiency-Rating>
+            <Environmental-Efficiency-Rating>4</Environmental-Efficiency-Rating>
+          </Main-Heating>
+          <Main-Heating-Controls>
+            <Description>Programmer and room thermostat</Description>
+            <Energy-Efficiency-Rating>2</Energy-Efficiency-Rating>
+            <Environmental-Efficiency-Rating>2</Environmental-Efficiency-Rating>
+          </Main-Heating-Controls>
+          <Hot-Water>
+            <Description>From main system, no cylinderstat</Description>
+            <Energy-Efficiency-Rating>2</Energy-Efficiency-Rating>
+            <Environmental-Efficiency-Rating>3</Environmental-Efficiency-Rating>
+          </Hot-Water>
+          <Lighting>
+            <Description>No low energy lighting</Description>
+            <Energy-Efficiency-Rating>1</Energy-Efficiency-Rating>
+            <Environmental-Efficiency-Rating>1</Environmental-Efficiency-Rating>
+          </Lighting>
+          <Secondary-Heating>
+            <Description>Room heaters, mains gas</Description>
+            <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
+            <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
+          </Secondary-Heating>
+          <Has-Hot-Water-Cylinder>true</Has-Hot-Water-Cylinder>
+          <Has-Heated-Separate-Conservatory>false</Has-Heated-Separate-Conservatory>
+          <Total-Floor-Area>63</Total-Floor-Area>
+        </Property-Summary>
+        <Energy-Use>
+          <Energy-Rating-Current>62</Energy-Rating-Current>
+          <Energy-Rating-Potential>78</Energy-Rating-Potential>
+          <Environmental-Impact-Current>56</Environmental-Impact-Current>
+          <Environmental-Impact-Potential>75</Environmental-Impact-Potential>
+          <Energy-Consumption-Current>339</Energy-Consumption-Current>
+          <Energy-Consumption-Potential>193</Energy-Consumption-Potential>
+          <CO2-Emissions-Current>3.6</CO2-Emissions-Current>
+          <CO2-Emissions-Current-Per-Floor-Area>56.7</CO2-Emissions-Current-Per-Floor-Area>
+          <CO2-Emissions-Potential>2</CO2-Emissions-Potential>
+          <Lighting-Cost-Current>63</Lighting-Cost-Current>
+          <Lighting-Cost-Potential>32</Lighting-Cost-Potential>
+          <Heating-Cost-Current>394</Heating-Cost-Current>
+          <Heating-Cost-Potential>317</Heating-Cost-Potential>
+          <Hot-Water-Cost-Current>240</Hot-Water-Cost-Current>
+          <Hot-Water-Cost-Potential>97</Hot-Water-Cost-Potential>
+        </Energy-Use>
+        <Suggested-Improvements>
+          <Improvement>
+            <Improvement-Summary>Increase loft insulation to 270 mm</Improvement-Summary>
+            <Improvement-Heading>Loft insulation</Improvement-Heading>
+            <Improvement-Category>1</Improvement-Category>
+            <Sequence>1</Sequence>
+            <Typical-Saving>20</Typical-Saving>
+            <Energy-Performance-Rating>63</Energy-Performance-Rating>
+            <Environmental-Impact-Rating>57</Environmental-Impact-Rating>
+            <Improvement-Description>Loft insulation laid in the loft space or between roof rafters to a depth of at least 270 mm will significantly reduce heat loss through the roof; this will improve levels of comfort, reduce energy use and lower fuel bills. Insulation should not be placed below any cold water storage tank, any such tank should also be insulated on its sides and top, and there should be boarding on battens over the insulation to provide safe access between the loft hatch and the cold water tank. The insulation can be installed by professional contractors but also by a capable DIY enthusiast. Loose granules may be used instead of insulation quilt; this form of loft insulation can be blown into place and can be useful where access is difficult. The loft space must have adequate ventilation to prevent dampness; seek advice about this if unsure. Further information about loft insulation and details of local contractors can be obtained from the National Insulation Association (www.nationalinsulationassociation.org.uk).</Improvement-Description>
+          </Improvement>
+          <Improvement>
+            <Improvement-Summary>Increase hot water cylinder insulation</Improvement-Summary>
+            <Improvement-Heading></Improvement-Heading>
+            <Improvement-Category>1</Improvement-Category>
+            <Sequence>2</Sequence>
+            <Typical-Saving>41</Typical-Saving>
+            <Energy-Performance-Rating>65</Energy-Performance-Rating>
+            <Environmental-Impact-Rating>60</Environmental-Impact-Rating>
+            <Improvement-Description>Increasing the thickness of existing insulation up to 160 mm around the hot water cylinder will help to maintain the water at the required temperature; this will reduce the amount of energy used and lower fuel bills. A cylinder jacket is a layer of insulation that is fitted around the hot water cylinder. The jacket should be fitted over the top of the existing insulation and over any thermostat clamped to the cylinder. Hot water pipes from the hot water cylinder should also be insulated, using pre-formed pipe insulation of up to 50 mm thickness, or to suit the space available, for as far as they can be accessed to reduce losses in summer. All these materials can be purchased from DIY stores and installed by a competent DIY enthusiast.</Improvement-Description>
+          </Improvement>
+          <Improvement>
+            <Improvement-Summary>Low energy lighting for all fixed outlets</Improvement-Summary>
+            <Improvement-Heading>Low energy lighting</Improvement-Heading>
+            <Improvement-Category>1</Improvement-Category>
+            <Sequence>3</Sequence>
+            <Typical-Saving>24</Typical-Saving>
+            <Energy-Performance-Rating>67</Energy-Performance-Rating>
+            <Environmental-Impact-Rating>61</Environmental-Impact-Rating>
+            <Improvement-Description>Replacement of traditional light bulbs with energy saving recommended ones will reduce lighting costs over the lifetime of the bulb, and they last up to 12 times longer than ordinary light bulbs. Also consider selecting low energy light fittings when redecorating; contact the Lighting Association for your nearest stockist of Domestic Energy Efficient Lighting Scheme fittings.</Improvement-Description>
+          </Improvement>
+          <Improvement>
+            <Improvement-Summary>Hot water cylinder thermostat</Improvement-Summary>
+            <Improvement-Heading></Improvement-Heading>
+            <Improvement-Category>1</Improvement-Category>
+            <Sequence>4</Sequence>
+            <Typical-Saving>55</Typical-Saving>
+            <Energy-Performance-Rating>71</Energy-Performance-Rating>
+            <Environmental-Impact-Rating>66</Environmental-Impact-Rating>
+            <Improvement-Description>A hot water cylinder thermostat enables the boiler to switch off when the water in the cylinder reaches the required temperature; this minimises the amount of energy that is used and lowers fuel bills. The thermostat is a temperature sensor that sends a signal to the boiler when the required temperature is reached. To be fully effective it needs to be sited in the correct position and hard wired in place, so it should be installed by a competent plumber or heating engineer.</Improvement-Description>
+          </Improvement>
+        </Suggested-Improvements>
+      </Energy-Assessment>
+      <SAP-Data>
+        <Schema-Version>LIG-13.0</Schema-Version>
+        <SAP-Property-Details>
+          <Built-Form>4</Built-Form>
+          <Multiple-Glazed-Proportion>70</Multiple-Glazed-Proportion>
+          <Multiple-Glazing-Type>2</Multiple-Glazing-Type>
+          <Extensions-Count>0</Extensions-Count>
+          <Glazed-Area>1</Glazed-Area>
+          <Habitable-Room-Count>3</Habitable-Room-Count>
+          <Heated-Room-Count>3</Heated-Room-Count>
+          <Low-Energy-Lighting>0</Low-Energy-Lighting>
+          <Measurement-Type>1</Measurement-Type>
+          <Open-Fireplaces-Count>0</Open-Fireplaces-Count>
+          <Photovoltaic-Supply>0</Photovoltaic-Supply>
+          <Property-Type>0</Property-Type>
+          <Solar-Water-Heating>N</Solar-Water-Heating>
+          <Mechanical-Ventilation>0</Mechanical-Ventilation>
+          <Conservatory-Type>1</Conservatory-Type>
+          <SAP-Heating>
+            <Main-Heating-Category>2</Main-Heating-Category>
+            <Secondary-Fuel-Type>1</Secondary-Fuel-Type>
+            <Main-Fuel-Type>1</Main-Fuel-Type>
+            <Water-Heating-Fuel>1</Water-Heating-Fuel>
+            <Main-Heating-Control>2104</Main-Heating-Control>
+            <Secondary-Heating-Type>601</Secondary-Heating-Type>
+            <Water-Heating-Code>901</Water-Heating-Code>
+            <Cylinder-Size>2</Cylinder-Size>
+            <Cylinder-Insulation-Type>2</Cylinder-Insulation-Type>
+            <Cylinder-Insulation-Thickness>25</Cylinder-Insulation-Thickness>
+            <Cylinder-Thermostat>N</Cylinder-Thermostat>
+            <BEDF-Revision-Number>245</BEDF-Revision-Number>
+            <Boiler-Index-Number>NA</Boiler-Index-Number>
+            <Main-Heating-Data-Source>2</Main-Heating-Data-Source>
+            <SAP-Main-Heating-Code>119</SAP-Main-Heating-Code>
+            <Boiler-Flue-Type>1</Boiler-Flue-Type>
+            <Fan-Flue-Present>N</Fan-Flue-Present>
+            <Heat-Emitter-Type>1</Heat-Emitter-Type>
+          </SAP-Heating>
+          <SAP-Energy-Source>
+            <Meter-Type>2</Meter-Type>
+            <Main-Gas>Y</Main-Gas>
+            <Wind-Turbines-Count>0</Wind-Turbines-Count>
+            <Wind-Turbines-Terrain-Type>2</Wind-Turbines-Terrain-Type>
+          </SAP-Energy-Source>
+          <SAP-Building-Parts>
+            <SAP-Building-Part>
+              <Building-Part-Number>1</Building-Part-Number>
+              <Identifier>Main</Identifier>
+              <Construction-Age-Band>C</Construction-Age-Band>
+              <Wall-Insulation-Type>2</Wall-Insulation-Type>
+              <Roof-Construction>4</Roof-Construction>
+              <Wall-Construction>4</Wall-Construction>
+              <Roof-Insulation-Location>2</Roof-Insulation-Location>
+              <Roof-Insulation-Thickness>100mm</Roof-Insulation-Thickness>
+              <SAP-Floor-Dimensions>
+                <SAP-Floor-Dimension>
+                  <Heat-Loss-Perimeter>8.72</Heat-Loss-Perimeter>
+                  <Room-Height>2.58</Room-Height>
+                  <Total-Floor-Area>31.74</Total-Floor-Area>
+                  <Floor>0</Floor>
+                  <Floor-Construction>2</Floor-Construction>
+                  <Floor-Insulation>1</Floor-Insulation>
+                </SAP-Floor-Dimension>
+                <SAP-Floor-Dimension>
+                  <Heat-Loss-Perimeter>8.72</Heat-Loss-Perimeter>
+                  <Room-Height>2.46</Room-Height>
+                  <Total-Floor-Area>31.74</Total-Floor-Area>
+                  <Floor>1</Floor>
+                </SAP-Floor-Dimension>
+              </SAP-Floor-Dimensions>
+            </SAP-Building-Part>
+          </SAP-Building-Parts>
+        </SAP-Property-Details>
+      </SAP-Data>
+      <Report-Header>
+        <RRN>6666-7777-8888-9999-9999</RRN>
+        <Inspection-Date>2009-08-25</Inspection-Date>
+        <Report-Type>2</Report-Type>
+        <Completion-Date>2009-08-28</Completion-Date>
+        <Registration-Date>2009-08-28</Registration-Date>
+        <Status>entered</Status>
+        <Language-Code>1</Language-Code>
+        <Restricted-Access>0</Restricted-Access>
+        <Related-Party-Disclosure> </Related-Party-Disclosure>
+        <Seller-Commission-Report>Y</Seller-Commission-Report>
+        <Property-Type>0</Property-Type>
+        <Transaction-Type>3</Transaction-Type>
+        <Country-Code>EAW</Country-Code>
+        <Home-Inspector>
+          <HIP:Name>
+            <HIP:Prefix>Mr</HIP:Prefix>
+            <HIP:First-Name>Testa</HIP:First-Name>
+            <HIP:Surname>Sessor</HIP:Surname>
+            <HIP:Suffix> </HIP:Suffix>
+          </HIP:Name>
+          <HIP:Certification-Date>2009-07-09</HIP:Certification-Date>
+          <HIP:Status>Registered</HIP:Status>
+          <HIP:Notify-Lodgement>N</HIP:Notify-Lodgement>
+          <HIP:Contact-Address>
+            <HIP:Address-Line-1>12 Epc Street</HIP:Address-Line-1>
+            <HIP:Address-Line-2></HIP:Address-Line-2>
+            <HIP:Address-Line-3></HIP:Address-Line-3>
+            <HIP:Post-Town></HIP:Post-Town>
+            <HIP:Postcode>AB1C 2DE</HIP:Postcode>
+          </HIP:Contact-Address>
+          <HIP:Web-Site>http://www.hips.example.com</HIP:Web-Site>
+          <HIP:E-Mail>a@b.c</HIP:E-Mail>
+          <HIP:Fax>0555 497 2848</HIP:Fax>
+          <HIP:Telephone>0555 497 2848</HIP:Telephone>
+          <HIP:Company-Name>Hipsters</HIP:Company-Name>
+          <HIP:Inspector-Report-Types>
+            <HIP:Report-Type>2</HIP:Report-Type>
+          </HIP:Inspector-Report-Types>
+          <HIP:Certification-Scheme>
+            <HIP:Scheme-Name>Testing Energy Scheme</HIP:Scheme-Name>
+            <HIP:Complaints-Address>
+              <HIP:Address-Line-1>13 Hip Street</HIP:Address-Line-1>
+              <HIP:Address-Line-2></HIP:Address-Line-2>
+              <HIP:Post-Town></HIP:Post-Town>
+              <HIP:Postcode>AB1C 2DF</HIP:Postcode>
+            </HIP:Complaints-Address>
+            <HIP:Contact-Address>
+              <HIP:Address-Line-1>13 Hip Street</HIP:Address-Line-1>
+              <HIP:Address-Line-2></HIP:Address-Line-2>
+              <HIP:Post-Town></HIP:Post-Town>
+              <HIP:Postcode>AB1C 2DF</HIP:Postcode>
+            </HIP:Contact-Address>
+            <HIP:Web-Site>http://www.hips.example.com</HIP:Web-Site>
+            <HIP:E-Mail>info@example-scheme.org.uk</HIP:E-Mail>
+            <HIP:Registered-Name>Mr Testa Sessor</HIP:Registered-Name>
+            <HIP:Fax>0555 497 2848</HIP:Fax>
+            <HIP:Telephone>0555 497 2848</HIP:Telephone>
+          </HIP:Certification-Scheme>
+          <HIP:Identification-Number>
+            <HIP:Certificate-Number>SPEC000000</HIP:Certificate-Number>
+          </HIP:Identification-Number>
+        </Home-Inspector>
+        <Property>
+          <HIP:Address>
+            <HIP:Address-Line-1>1 Some Street</HIP:Address-Line-1>
+            <HIP:Post-Town>Whitbury</HIP:Post-Town>
+            <HIP:Postcode>A0 0AA</HIP:Postcode>
+          </HIP:Address>
+          <HIP:UPRN>0000000000</HIP:UPRN>
+        </Property>
+      </Report-Header>
+      <Insurance-Details>
+        <Insurer>EPC Protect Inc.</Insurer>
+        <Policy-No>X13-76540987B</Policy-No>
+        <Effective-Date>2020-05-04</Effective-Date>
+        <Expiry-Date>2030-05-03</Expiry-Date>
+        <PI-Limit>5000000</PI-Limit>
+      </Insurance-Details>
+    </EPC-Data>
+    <PDF/>
+  </Content>
+</ConditionReportCreateRequest_1>
