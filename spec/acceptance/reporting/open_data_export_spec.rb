@@ -178,7 +178,7 @@ describe "Acceptance::Reports::OpenDataExport" do
     end
   end
 
-  context "When we call the use case to extract the commercial data" do
+  context "When we call the use case to extract the commercial/non-domestic data" do
     let(:use_case) { UseCase::ExportOpenDataCommercial.new }
     let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(test_date)) }
     let(:fixture_csv) { read_csv_fixture("commercial") }
@@ -193,6 +193,26 @@ describe "Acceptance::Reports::OpenDataExport" do
 
     it "returns an empty array when there are no missing headers in the exported data based on the fixture" do
       expect(fixture_csv_headers - parsed_exported_data.headers).to eq([])
+    end
+  end
+
+  context "When we call the use case to extract the commercial/non Domestic RR data" do
+    let(:use_case) { UseCase::ExportOpenDataCepcrr.new }
+    let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(test_date)) }
+    let(:export_data_headers_array) { get_exported_data_headers(csv_data) }
+    let(:fixture_csv) { read_csv_fixture("commercial_rr") }
+    let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
+    let(:ignore_headers) { %w[ASSESSMENT_ID] }
+
+    it "returns the data exported to a csv object to match the .csv fixture " do
+      expect(parsed_exported_data.length).to eq(fixture_csv.length)
+      expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
+    end
+
+    5.times do |i|
+      it "returns the data exported for row #{i} object to match same row in the .csv fixture " do
+        expect(parsed_exported_data[i].to_a - fixture_csv[i].to_a).to eq([])
+      end
     end
   end
 
@@ -230,6 +250,13 @@ describe "Acceptance::Reports::OpenDataExport" do
     end
   end
 
+  context "When we call the use case to extract the DEC RR data" do
+    let(:use_case) { UseCase::ExportOpenDataDecrr.new }
+    let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(test_date)) }
+    let(:fixture_csv) { read_csv_fixture("domestic") }
+    let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
+  end
+
   context "When we call the use case to extract the domestic data" do
     let(:use_case) { UseCase::ExportOpenDataDomestic.new }
     let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(test_date)) }
@@ -259,26 +286,6 @@ describe "Acceptance::Reports::OpenDataExport" do
       expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
       expect(parsed_exported_data.first.to_a - fixture_csv.first.to_a).to eq([])
       expect(parsed_exported_data[1].to_a - fixture_csv[1].to_a).to eq([])
-    end
-  end
-
-  context "When we call the use case to extract the Non Domestic RR data" do
-    let(:use_case) { UseCase::ExportOpenDataCepcrr.new }
-    let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(test_date)) }
-    let(:export_data_headers_array) { get_exported_data_headers(csv_data) }
-    let(:fixture_csv) { read_csv_fixture("non_domestic_rr") }
-    let(:fixture_headers_array) { get_fixture_headers(fixture_csv) }
-
-    let(:ignore_headers) { %w[ASSESSMENT_ID] }
-
-    it "returns an empty array when there are no missing headers in the exported data based on the fixture" do
-      expect(
-        missing_headers(
-          fixture_headers_array,
-          export_data_headers_array,
-          ignore_headers,
-        ),
-      ).to eq([])
     end
   end
 end
