@@ -50,18 +50,34 @@ module Helper
     end
 
     def self.convert_data_to_csv(data, assessment_type)
-      if assessment_type == "SAP-RDSAP-RR"
+      if assessment_type == "SAP-RDSAP"
         flattened_data = Helper::ExportHelper.flatten_domestic_rr_response(data)
         data = Helper::ExportHelper.to_csv(flattened_data)
         csv_array = data.split("\n")
         headers =
           Helper::ExportHelper.convert_header_values(csv_array.first.split(","))
         csv_array[0] = headers.join(",")
-        data = csv_array
+        data = array_to_csv(csv_array)
       else
         data = Helper::ExportHelper.to_csv(data)
       end
       data
+    end
+
+    def self.array_to_csv(array)
+      return "" if array.empty?
+
+      csv_object =
+        CSV.generate do |csv|
+          csv << array.first.split(",")
+          array.each.with_index do |row, i|
+            next if i == 0 # skip first row
+
+            array_row = row.split(",")
+            csv << array_row
+          end
+        end
+      csv_object
     end
   end
 end
