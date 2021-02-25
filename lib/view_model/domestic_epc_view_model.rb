@@ -12,11 +12,7 @@ module ViewModel
 
       heading = xpath(%w[Improvement-Heading], node)
       summary = xpath(%w[Improvement-Summary], node)
-      if heading.nil? || heading.empty?
-        summary || ""
-      else
-        heading
-      end
+      heading.nil? || heading.empty? ? summary || "" : heading
     end
   end
 end
