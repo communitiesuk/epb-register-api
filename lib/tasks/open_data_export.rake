@@ -50,17 +50,19 @@ def set_date_time
 end
 
 def transmit_file(data)
+  filename = "open_data_export_#{ENV['assessment_type'].downcase}_#{set_date_time}_#{get_max_task_id}.csv"
+
   storage_config_reader = Gateway::StorageConfigurationReader.new(
     instance_name: ENV["instance_name"],
     bucket_name: ENV["bucket_name"],
   )
   storage_gateway = Gateway::StorageGateway.new(storage_config: storage_config_reader.get_configuration)
-  storage_gateway.write_file("open_data_export_#{ENV['assessment_type'].downcase}_#{set_date_time}.csv", data)
+  storage_gateway.write_file(filename, data)
 end
 
-def output_completed_task
+def get_max_task_id
   gateway = Gateway::OpenDataLogGateway.new
-  pp gateway.fetch_latest_statistics
+  gateway.fetch_latest_task_id
 end
 
 def get_use_case_by_assessment_type(assessment_type)

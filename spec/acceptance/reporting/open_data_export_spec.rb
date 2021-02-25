@@ -1,33 +1,3 @@
-def read_csv_fixture(file_name)
-  # TODO: update the path to be more dynamic
-  fixture_path = File.dirname __FILE__.gsub("acceptance/reporting", "")
-  fixture_path << "/fixtures/open_data_export/csv/"
-  read_file = File.read("#{fixture_path}#{file_name}.csv")
-  CSV.parse(read_file, headers: true)
-end
-
-def get_fixture_headers(fixture_csv)
-  fixture_csv.headers.compact.collect(&:strip)
-end
-
-def test_date
-  "2021-02-22"
-end
-
-def get_exported_data_headers(exported_data)
-  firstline = exported_data.split("\n")[0]
-  firstline.split(",")
-end
-
-def missing_headers(
-  fixture_header_array,
-  exported_header_array,
-  escape_headers = []
-)
-  escaped_array = fixture_header_array - escape_headers
-  escaped_array.reject { |item| exported_header_array.include?(item) }
-end
-
 describe "Acceptance::Reports::OpenDataExport" do
   include RSpecRegisterApiServiceMixin
 
@@ -50,20 +20,39 @@ describe "Acceptance::Reports::OpenDataExport" do
     cepc_rr_xml
       .xpath("//*[local-name() = 'RRN']")
       .each_with_index do |node, index|
-      node.content = "1111-0000-0000-0000-000#{index + 2}"
-    end
+        node.content = "1111-0000-0000-0000-000#{index + 2}"
+      end
 
     cepc_rr_xml
       .xpath("//*[local-name() = 'Related-RRN']")
       .reverse
       .each_with_index do |node, index|
-      node.content = "1111-0000-0000-0000-000#{index + 2}"
-    end
+        node.content = "1111-0000-0000-0000-000#{index + 2}"
+      end
 
     cepc_rr_xml
       .xpath("//*[local-name() = 'Registration-Date']")
       .reverse
-      .each { |node| node.content = Date.today.strftime("%F") }
+      .each { |node| node.content = test_date }
+
+    dec_rr_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "dec+rr")
+    dec_rr_xml
+      .xpath("//*[local-name() = 'RRN']")
+      .each_with_index do |node, index|
+        node.content = "1111-0000-0000-0000-000#{index + 4}"
+      end
+
+    dec_rr_xml
+      .xpath("//*[local-name() = 'Related-RRN']")
+      .reverse
+      .each_with_index do |node, index|
+        node.content = "1111-0000-0000-0000-000#{index + 4}"
+      end
+
+    dec_rr_xml
+      .xpath("//*[local-name() = 'Registration-Date']")
+      .reverse
+      .each { |node| node.content = test_date }
 
     add_assessor(
       scheme_id,
@@ -78,8 +67,8 @@ describe "Acceptance::Reports::OpenDataExport" do
         nonDomesticSp3: "ACTIVE",
         nonDomesticCc4: "ACTIVE",
         gda: "ACTIVE",
-        ),
-      )
+      ),
+    )
 
     non_domestic_assessment_date.children = test_date
     lodge_assessment(
@@ -90,7 +79,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       },
       override: true,
       schema_name: "CEPC-8.0.0",
-      )
+    )
 
     non_domestic_assessment_date.children = test_date
     non_domestic_assessment_id.children = "0000-0000-0000-0000-0001"
@@ -102,7 +91,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       },
       override: true,
       schema_name: "CEPC-8.0.0",
-      )
+    )
 
     non_domestic_assessment_date.children = test_date
     non_domestic_assessment_id.children = "0000-0000-0000-0000-0002"
@@ -114,7 +103,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       },
       override: true,
       schema_name: "CEPC-8.0.0",
-      )
+    )
 
     dec_assessment_date.children = test_date
     dec_assessment_id.children = "0000-0000-0000-0000-0003"
@@ -126,7 +115,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       },
       override: true,
       schema_name: "CEPC-8.0.0",
-      )
+    )
 
     domestic_rdsap_assessment_date.children = test_date
     domestic_rdsap_assessment_id.children = "0000-0000-0000-0000-0004"
@@ -137,7 +126,7 @@ describe "Acceptance::Reports::OpenDataExport" do
         scheme_ids: [scheme_id],
       },
       override: true,
-      )
+    )
 
     lodge_assessment(
       assessment_body: cepc_rr_xml.to_xml,
@@ -147,7 +136,17 @@ describe "Acceptance::Reports::OpenDataExport" do
       },
       override: true,
       schema_name: "CEPC-8.0.0",
-      )
+    )
+
+    lodge_assessment(
+      assessment_body: dec_rr_xml.to_xml,
+      accepted_responses: [201],
+      auth_data: {
+        scheme_ids: [scheme_id],
+      },
+      override: true,
+      schema_name: "CEPC-8.0.0",
+    )
   end
 
   let(:statistics) do
@@ -160,8 +159,8 @@ describe "Acceptance::Reports::OpenDataExport" do
   context "when we call the invoke method without providing environment variables" do
     it "fails if no bucket or instance name is defined in environment variables" do
       expect { get_task("open_data_export").invoke }.to output(
-                                                          /#{expected_output}/,
-                                                          ).to_stderr
+        /#{expected_output}/,
+      ).to_stderr
     end
   end
 
@@ -173,11 +172,12 @@ describe "Acceptance::Reports::OpenDataExport" do
 
     it "fails if assessment is not of a valid type" do
       expect { get_task("open_data_export").invoke }.to output(
-                                                          /Assessment type is not valid:/,
-                                                          ).to_stderr
+        /Assessment type is not valid:/,
+      ).to_stderr
     end
   end
 
+  # TODO: once the nodes are complete update to test for content as well as headers
   context "When we call the use case to extract the commercial/non-domestic data" do
     let(:use_case) { UseCase::ExportOpenDataCommercial.new }
     let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(test_date)) }
@@ -245,16 +245,33 @@ describe "Acceptance::Reports::OpenDataExport" do
           fixture_headers_array,
           export_data_headers_array,
           ignore_headers,
-          ),
-        ).to eq([])
+        ),
+      ).to eq([])
     end
   end
 
   context "When we call the use case to extract the DEC RR data" do
     let(:use_case) { UseCase::ExportOpenDataDecrr.new }
-    let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(test_date)) }
-    let(:fixture_csv) { read_csv_fixture("domestic") }
+    let(:csv_data) do
+      Helper::ExportHelper.to_csv(
+        use_case.execute(test_date).sort_by! { |key| key[:recommendation_item] },
+      )
+    end
+    let(:export_data_headers_array) { get_exported_data_headers(csv_data) }
+    let(:fixture_csv) { read_csv_fixture("dec_rr") }
     let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
+    let(:ignore_headers) { %w[ASSESSMENT_ID] }
+
+    it "returns the data exported to a csv object to match the .csv fixture " do
+      expect(parsed_exported_data.length).to eq(fixture_csv.length)
+      expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
+    end
+
+    5.times do |i|
+      it "returns the data exported for row #{i} object to match same row in the .csv fixture " do
+        expect(parsed_exported_data[i].to_a - fixture_csv[i].to_a).to eq([])
+      end
+    end
   end
 
   context "When we call the use case to extract the domestic data" do
@@ -276,7 +293,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       Helper::ExportHelper.convert_data_to_csv(
         use_case.execute(test_date),
         "SAP-RDSAP",
-        )
+      )
     end
     let(:fixture_csv) { read_csv_fixture("domestic_rr") }
     let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
@@ -288,4 +305,36 @@ describe "Acceptance::Reports::OpenDataExport" do
       expect(parsed_exported_data[1].to_a - fixture_csv[1].to_a).to eq([])
     end
   end
+end
+
+private
+
+def read_csv_fixture(file_name)
+  # TODO: update the path to be more dynamic
+  fixture_path = File.dirname __FILE__.gsub("acceptance/reporting", "")
+  fixture_path << "/fixtures/open_data_export/csv/"
+  read_file = File.read("#{fixture_path}#{file_name}.csv")
+  CSV.parse(read_file, headers: true)
+end
+
+def get_fixture_headers(fixture_csv)
+  fixture_csv.headers.compact.collect(&:strip)
+end
+
+def test_date
+  "2021-02-22"
+end
+
+def get_exported_data_headers(exported_data)
+  firstline = exported_data.split("\n")[0]
+  firstline.split(",")
+end
+
+def missing_headers(
+  fixture_header_array,
+  exported_header_array,
+  escape_headers = []
+)
+  escaped_array = fixture_header_array - escape_headers
+  escaped_array.reject { |item| exported_header_array.include?(item) }
 end

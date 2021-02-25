@@ -67,7 +67,6 @@ describe "Gateway::OpenDataLogGateway" do
     it "returns a new task Id incremented from the last if you do not pass an integer" do
       expect(gateway.fetch_new_task_id("a")).to eq(4)
     end
-
   end
 
   context "when the log table is empty" do
