@@ -199,7 +199,6 @@ describe "Acceptance::Reports::OpenDataExport" do
   context "When we call the use case to extract the commercial/non Domestic RR data" do
     let(:use_case) { UseCase::ExportOpenDataCepcrr.new }
     let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(test_date)) }
-    let(:export_data_headers_array) { get_exported_data_headers(csv_data) }
     let(:fixture_csv) { read_csv_fixture("commercial_rr") }
     let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
     let(:ignore_headers) { %w[ASSESSMENT_ID] }
