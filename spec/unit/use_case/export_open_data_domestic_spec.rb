@@ -326,7 +326,7 @@ describe UseCase::ExportOpenDataDomestic do
       end
 
       it "contains the expected keys for SAP" do
-        unexpected_keys = (exported_data[0].keys - sap_odc_hash.keys)
+        unexpected_keys = (exported_data[1].keys - sap_odc_hash.keys)
         expect(unexpected_keys).to be_empty
       end
 
