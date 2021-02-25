@@ -226,4 +226,20 @@ describe Helper::XmlEnumsToOutput do
       end
     end
   end
+
+  context "when the Glazing-Type XML value is passed to to the RdSAP glazed_type enum" do
+    it "does not find a value in the enum and returns nil" do
+      expect(Helper::XmlEnumsToOutput.glazed_type_rdsap(nil)).to be_nil
+      expect(Helper::XmlEnumsToOutput.glazed_type_rdsap("Any other value")).to be_nil
+    end
+    it "and the value is in the lookup, it returns the expected string" do
+      expect(Helper::XmlEnumsToOutput.glazed_type_rdsap("1")).to eq("double glazing installed before 2002")
+      expect(Helper::XmlEnumsToOutput.glazed_type_rdsap("3")).to eq("double glazing, unknown install date")
+      expect(Helper::XmlEnumsToOutput.glazed_type_rdsap("5")).to eq("single glazing")
+    end
+    it "returns nil if the value is not the correct type" do
+      expect(Helper::XmlEnumsToOutput.glazed_type_rdsap({ "hash": "3" })).to be_nil
+      expect(Helper::XmlEnumsToOutput.glazed_type_rdsap(3)).to be_nil
+    end
+  end
 end

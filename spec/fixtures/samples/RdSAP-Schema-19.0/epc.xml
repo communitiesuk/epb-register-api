@@ -257,6 +257,22 @@
             </None-Or-No-Details>
           </Photovoltaic-Supply>
         </SAP-Energy-Source>
+        <SAP-Windows>
+          <SAP-Window>
+            <Window-Location>0</Window-Location>
+            <Window-Area>200.1</Window-Area>
+            <Glazing-Type>1</Glazing-Type>
+            <Window-Type>2</Window-Type>
+            <Orientation>1</Orientation>
+          </SAP-Window>
+          <SAP-Window>
+            <Window-Location>1</Window-Location>
+            <Window-Area>180.2</Window-Area>
+            <Glazing-Type>2</Glazing-Type>
+            <Window-Type>1</Window-Type>
+            <Orientation>2</Orientation>
+          </SAP-Window>
+        </SAP-Windows>
       </SAP-Property-Details>
     </SAP-Data>
     <Report-Header>

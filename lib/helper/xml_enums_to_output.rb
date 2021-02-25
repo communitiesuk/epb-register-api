@@ -1,7 +1,5 @@
 module Helper
   class XmlEnumsToOutput
-    # These mirror the energy performance ratings as in the
-    # EnergyEfficiencySummaryCode simpleType defined in EPC-Domains.xsd
     RATINGS = [
       "N/A",
       "Very Poor",
@@ -10,9 +8,6 @@ module Helper
       "Good",
       "Very Good",
     ].freeze
-
-    # These mirror the built form codes as in the
-    # SAP-BuiltFormCode simpleType defined in SAP-Domains.xsd
     BUILT_FORM = {
       "1" => "Detached",
       "2" => "Semi-Detached",
@@ -132,6 +127,17 @@ module Helper
       "76" => "bioethanol from any biomass source",
       "99" => "Community heating schemes: special fuel",
     }.freeze
+    RDSAP_GLAZED_TYPE = {
+      "1" => "double glazing installed before 2002",
+      "2" => "double glazing installed during or after 2002",
+      "3" => "double glazing, unknown install date",
+      "4" => "secondary glazing",
+      "5" => "single glazing",
+      "6" => "triple glazing",
+      "7" => "double, known data",
+      "8" => "triple, known data",
+      "ND" => "not defined"
+    }.freeze
 
     def self.xml_value_to_string(number)
       BUILT_FORM[number]
@@ -161,6 +167,10 @@ module Helper
 
     def self.main_fuel_sap(value)
       SAP_MAIN_FUEL[value]
+    end
+
+    def self.glazed_type_rdsap(value)
+      RDSAP_GLAZED_TYPE[value]
     end
   end
 end
