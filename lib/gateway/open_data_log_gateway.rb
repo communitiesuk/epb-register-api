@@ -55,6 +55,17 @@ module Gateway
       ActiveRecord::Base.connection.exec_query(sql).first
     end
 
+    def fetch_latest_task_id
+      sql = <<-SQL
+              SELECT  task_id
+              FROM open_data_logs
+              WHERE task_id = (SELECT Max(task_id) FROM open_data_logs)
+
+      SQL
+
+      ActiveRecord::Base.connection.exec_query(sql).first["task_id"]
+    end
+
     def fetch_new_task_id(task_id = 0)
       return task_id if task_id.is_a?(Integer) && task_id != 0
 

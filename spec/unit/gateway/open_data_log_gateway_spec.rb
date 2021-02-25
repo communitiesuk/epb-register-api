@@ -3,8 +3,9 @@ describe "Gateway::OpenDataLogGateway" do
     let(:gateway) { Gateway::OpenDataLogGateway.new }
 
     let(:statistics) { gateway.fetch_log_statistics }
-
     let(:latest_statistics) { gateway.fetch_latest_statistics }
+
+    let(:latest_task_id) { gateway.fetch_latest_task_id }
 
     before(:all) do
       gateway = Gateway::OpenDataLogGateway.new
@@ -59,9 +60,14 @@ describe "Gateway::OpenDataLogGateway" do
       expect(statistics[2]["report_type"]).to eq("RdSAP,SAP")
     end
 
-    it "returns the latest task Id if you do not pass an integer" do
+    it "returns the Id of the task that has just been run" do
+      expect(gateway.fetch_latest_task_id).to eq(3)
+    end
+
+    it "returns a new task Id incremented from the last if you do not pass an integer" do
       expect(gateway.fetch_new_task_id("a")).to eq(4)
     end
+
   end
 
   context "when the log table is empty" do
