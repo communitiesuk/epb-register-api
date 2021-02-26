@@ -76,9 +76,9 @@ describe UseCase::ExportOpenDataDomestic do
         mainheatcont_description:
           "Programmer, room thermostat and TRVs, Time and temperature zone control",
         roof_description:
-          "Pitched, 25 mm loft insulation, Pitched, 250 mm loft insulation",
-        roof_energy_eff: "Poor, Good",
-        roof_env_eff: "Poor, Good",
+          "Pitched, 25 mm loft insulation",
+        roof_energy_eff: "Poor",
+        roof_env_eff: "Poor",
         walls_description:
           "Solid brick, as built, no insulation (assumed) | Cavity wall, as built, insulated (assumed)",
         walls_energy_eff: "Very Poor, Good",
@@ -161,9 +161,9 @@ describe UseCase::ExportOpenDataDomestic do
         mainheat_description: "Gas boiler, Gas boiler",
         report_type: "1",
         mainheatcont_description: "Thermostat, Thermostat",
-        roof_description: "Slate roof, slate roof",
-        roof_energy_eff: "N/A, N/A",
-        roof_env_eff: "N/A, N/A",
+        roof_description: "Slate roof",
+        roof_energy_eff: "N/A",
+        roof_env_eff: "N/A",
         walls_description: "Brick walls | Brick walls",
         walls_energy_eff: "N/A, N/A",
         walls_env_eff: "N/A, N/A",

@@ -428,10 +428,9 @@ describe ViewModel::RdSapWrapper do
         report_type: "2",
         mainheatcont_description:
           "Programmer, room thermostat and TRVs, Time and temperature zone control",
-        roof_description:
-          "Pitched, 25 mm loft insulation, Pitched, 250 mm loft insulation",
-        roof_energy_eff: "Poor, Good",
-        roof_env_eff: "Poor, Good",
+        roof_description: "Pitched, 25 mm loft insulation",
+        roof_energy_eff: "Poor",
+        roof_env_eff: "Poor",
         walls_description:
           "Solid brick, as built, no insulation (assumed) | Cavity wall, as built, insulated (assumed)",
         walls_energy_eff: "Very Poor, Good",

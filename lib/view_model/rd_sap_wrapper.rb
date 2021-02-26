@@ -250,14 +250,14 @@ module ViewModel
         report_type: @view_model.report_type,
         mainheatcont_description:
           @view_model.all_main_heating_controls_descriptions.join(", "),
-        roof_description: @view_model.all_roof_descriptions.join(", "),
+        roof_description: @view_model.all_roof_descriptions.first,
         roof_energy_eff:
           Helper::XmlEnumsToOutput.energy_rating_string(
-            @view_model.all_roof_energy_efficiency_rating,
+            @view_model.all_roof_energy_efficiency_rating.first,
           ),
         roof_env_eff:
           Helper::XmlEnumsToOutput.energy_rating_string(
-            @view_model.all_roof_env_energy_efficiency_rating,
+            @view_model.all_roof_env_energy_efficiency_rating.first,
           ),
         walls_description: @view_model.all_wall_descriptions.join(" | "),
         walls_energy_eff:
