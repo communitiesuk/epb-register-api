@@ -107,6 +107,9 @@ module ViewModel
           when "3"
             ViewModel::SapSchema110::Sap.new(xml)
           end
+      when "SAP-Schema-10.2"
+        @view_model =
+          report_type == "2" ? ViewModel::SapSchema102::Rdsap.new(xml) : nil
       when "SAP-Schema-NI-18.0.0"
         @view_model = ViewModel::SapSchemaNi1800::CommonSchema.new xml
       when "SAP-Schema-NI-17.4"

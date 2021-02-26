@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema version="LIG-10.2"  
+	elementFormDefault="qualified" 
+	attributeFormDefault="unqualified" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:CS="DCLG-HIP/CommonStructures" 
+	xmlns:ERR="DCLG-HIP/Exceptions" 
+	xmlns:pfdt="DCLG-HIP/BaseDataTypes" 
+	xmlns:HIP="DCLG-HIP">
+<!--
+	© Department of Communities and Local Government. © Crown copyright, 2007. The Home Condition Report logo and associated wording is a registered trade mark - any unlicensed use is not permitted. Copyright in the typographical arrangement of this document rests with the Crown. This publication, excluding logos, may be reproduced free of charge in any format or medium for research, private study, for internal circulation within an organisation or by registered scheme users. This is subject to it being reproduced accurately and not used in a misleading context. 
+
+-->	
+
+	<!-- Common Structures contains the standard domain-wide declarations of the infrastructure elements such as IdentifyingBlock -->
+	<xs:import namespace="DCLG-HIP/CommonStructures" schemaLocation="../CommonFiles/CommonStructures.xsd"/>
+	<xs:import namespace="DCLG-HIP/Exceptions" schemaLocation="../CommonFiles/Exceptions.xsd"/>
+	<xs:import namespace="DCLG-HIP/BaseDataTypes" schemaLocation="../UDT/BaseDataTypes.xsd"/>
+	<!-- Include templates for all Business Entities used by the message -->
+	<xs:import namespace="DCLG-HIP" schemaLocation="../Templates/HIP-Reports.xsd"/>
+	<!--***************************************************************************
+	Request Message Definition
+	*************************************************************************** -->
+	<xs:element name="HomeInspectorRegisterUpdateStatusRequest_1">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Identification" type="CS:DefaultIdBlock"/>
+				<xs:element name="Configuration">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="CS:UpdateRequestConfigBlock"/>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
