@@ -1103,7 +1103,7 @@ describe ViewModel::SapWrapper do
         built_form: "Detached",
         mainheat_description: "Gas boiler, Gas boiler",
         report_type: "1",
-        mainheatcont_description: "Thermostat, Thermostat",
+        mainheatcont_description: "Thermostat",
         roof_description: "Slate roof",
         roof_energy_eff: "N/A",
         roof_env_eff: "N/A",

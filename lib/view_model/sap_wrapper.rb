@@ -404,7 +404,7 @@ module ViewModel
           @view_model.all_main_heating_descriptions.join(", "),
         report_type: @view_model.report_type,
         mainheatcont_description:
-          @view_model.all_main_heating_controls_descriptions.join(", "),
+          @view_model.all_main_heating_controls_descriptions.first,
         roof_description: @view_model.all_roof_descriptions.first,
         roof_energy_eff:
           Helper::XmlEnumsToOutput.energy_rating_string(

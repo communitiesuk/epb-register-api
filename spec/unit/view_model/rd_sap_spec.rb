@@ -427,7 +427,7 @@ describe ViewModel::RdSapWrapper do
         extension_count: "0",
         report_type: "2",
         mainheatcont_description:
-          "Programmer, room thermostat and TRVs, Time and temperature zone control",
+          "Programmer, room thermostat and TRVs",
         roof_description: "Pitched, 25 mm loft insulation",
         roof_energy_eff: "Poor",
         roof_env_eff: "Poor",
