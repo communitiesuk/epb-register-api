@@ -3,9 +3,6 @@ describe UseCase::ExportOpenDataDec do
 
   context "when creating the open data reporting release " do
     describe "for the DEC and reports" do
-      let(:date_today) { DateTime.now.strftime("%F") }
-      let(:number_assessments_to_test) { 2 }
-
       let(:export_object) { described_class.new }
 
       expected_values = {
@@ -62,6 +59,16 @@ describe UseCase::ExportOpenDataDec do
         )
       end
 
+      let(:expected_values_2) do
+        expected_values.merge(
+            {
+                rrn:
+                    "5cb9fa3be789df637c7c20acac4e19c5ebf691f0f0d78f2a1b5f30c8b336bba6",
+                building_reference_number: nil,
+            },
+            )
+      end
+
       let(:exported_data) do
         described_class
           .new
@@ -79,6 +86,7 @@ describe UseCase::ExportOpenDataDec do
         dec_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "dec")
         dec_assessment_id = dec_xml.at("RRN")
         dec_assessment_date = dec_xml.at("Registration-Date")
+        dec_building_reference_number = dec_xml.at("UPRN")
 
         # Lodge CEPC to ensure it is not exported
         non_domestic_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc")
@@ -121,6 +129,18 @@ describe UseCase::ExportOpenDataDec do
           schema_name: "CEPC-8.0.0",
         )
 
+        dec_assessment_id.children = "0000-0000-0000-0000-0004"
+        dec_building_reference_number.children = "RRN-0000-0000-0000-0000-0004"
+        lodge_assessment(
+            assessment_body: dec_xml.to_xml,
+            accepted_responses: [201],
+            auth_data: {
+                scheme_ids: [scheme_id],
+            },
+            override: true,
+            schema_name: "CEPC-8.0.0",
+            )
+
         dec_assessment_id.children = "0000-0000-0000-0000-0002"
         dec_assessment_date.children = "2018-07-01"
         lodge_assessment(
@@ -146,12 +166,12 @@ describe UseCase::ExportOpenDataDec do
       end
 
       it "returns the correct number of assessments in the Data" do
-        expect(exported_data.length).to eq(number_assessments_to_test)
+        expect(exported_data.length).to eq(3)
       end
 
       it "expects logs to have 2 rows after export" do
         exported_data
-        expect(statistics[0]["num_rows"]).to eq(2)
+        expect(statistics[0]["num_rows"]).to eq(3)
       end
 
       # 1st row to test
@@ -171,18 +191,25 @@ describe UseCase::ExportOpenDataDec do
       end
 
       it "returns 2 rows when called with a different task_id" do
-        expect(export_object.execute("2019-07-01", 1).length).to eq(2)
-        expect(export_object.execute("2019-07-01", 2).length).to eq(2)
+        expect(export_object.execute("2019-07-01", 1).length).to eq(3)
+        expect(export_object.execute("2019-07-01", 2).length).to eq(3)
       end
 
       it "returns 2 rows no task id is passed" do
-        expect(export_object.execute("2019-07-01").length).to eq(2)
-        expect(statistics.first["num_rows"]).to eq(2)
+        expect(export_object.execute("2019-07-01").length).to eq(3)
+        expect(statistics.first["num_rows"]).to eq(3)
       end
 
       it "returns 0 rows when called with the existing task_id" do
-        expect(export_object.execute("2019-07-01", 1).length).to eq(2)
+        expect(export_object.execute("2019-07-01", 1).length).to eq(3)
         expect(export_object.execute("2019-07-01", 1).length).to eq(0)
+      end
+
+      it 'returns a hash with building_reference_number nil when building_reference_number is not a UPRN' do
+        expected_data_hash =  exported_data.select do |hash|
+          hash[:rrn] == "5cb9fa3be789df637c7c20acac4e19c5ebf691f0f0d78f2a1b5f30c8b336bba6"
+        end
+        expect(expected_data_hash[0][:building_reference_number]).to eq(nil)
       end
     end
   end

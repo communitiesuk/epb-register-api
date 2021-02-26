@@ -4,19 +4,6 @@ describe UseCase::ExportOpenDataCommercial do
   context "when creating the open data reporting release" do
     describe "for the commercial certificates and reports" do
       let(:export_object) { described_class.new }
-      let(:scheme_id) { add_scheme_and_get_id }
-
-      let(:non_domestic_xml) { Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc") }
-      let(:non_domestic_assessment_id) { non_domestic_xml.at("//CEPC:RRN") }
-      let(:non_domestic_assessment_date) do
-        non_domestic_xml.at("//CEPC:Registration-Date")
-      end
-      let(:number_assessments_to_test) { 2 }
-
-      # Lodge a dec to ensure it is not exported
-      let(:domestic_xml) { Nokogiri.XML Samples.xml("CEPC-8.0.0", "dec") }
-      let(:domestic_assessment_id) { domestic_xml.at("RRN") }
-      let(:domestic_assessment_date) { domestic_xml.at("Registration-Date") }
 
       let(:exported_data) do
         described_class
@@ -24,8 +11,6 @@ describe UseCase::ExportOpenDataCommercial do
           .execute("2019-07-01", 1)
           .sort_by! { |key| key[:assessment_id] }
       end
-
-      let(:date_today) { DateTime.now.strftime("%F") }
 
       let(:statistics) do
         gateway = Gateway::OpenDataLogGateway.new
@@ -73,9 +58,20 @@ describe UseCase::ExportOpenDataCommercial do
           expected_values,
           {
             assessment_id:
-              "a6f818e3dd0ac70cbd2838cb0efe0b4aadf5b43ed33a6e7cd13cb9738dca5f60",
+              "833db6da02dadee69b96c96917a5e190473828713f5074bd7d67a2371b315520",
+            building_reference_number: nil,
           },
         )
+      end
+
+      let(:expected_values_index_2) do
+        Samples.update_test_hash(
+            expected_values,
+            {
+                assessment_id:
+                    "a6f818e3dd0ac70cbd2838cb0efe0b4aadf5b43ed33a6e7cd13cb973847652",
+            },
+            )
       end
 
       before(:all) do
@@ -86,6 +82,7 @@ describe UseCase::ExportOpenDataCommercial do
           non_domestic_xml.at("//CEPC:Registration-Date")
         non_domestic_assessment_postcode =
           non_domestic_xml.at("//CEPC:Postcode")
+        non_domestic_building_reference_number = non_domestic_xml.at("//CEPC:UPRN")
 
         # Lodge a dec to ensure it is not exported
         domestic_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "dec")
@@ -120,6 +117,19 @@ describe UseCase::ExportOpenDataCommercial do
         )
 
         non_domestic_assessment_date.children = "2020-05-04"
+        non_domestic_building_reference_number.children = "RRN-0000-0000-0000-0000-0008"
+        non_domestic_assessment_id.children = "0000-0000-0000-0000-0328"
+        lodge_assessment(
+            assessment_body: non_domestic_xml.to_xml,
+            accepted_responses: [201],
+            auth_data: {
+                scheme_ids: [scheme_id],
+            },
+            override: true,
+            schema_name: "CEPC-8.0.0",
+            )
+
+        non_domestic_assessment_date.children = "2020-05-04"
         non_domestic_assessment_id.children = "0000-0000-0000-0000-0002"
         lodge_assessment(
           assessment_body: non_domestic_xml.to_xml,
@@ -131,6 +141,9 @@ describe UseCase::ExportOpenDataCommercial do
           schema_name: "CEPC-8.0.0",
         )
 
+
+
+        # Date too early so not exported
         non_domestic_assessment_date.children = "2018-05-04"
         non_domestic_assessment_id.children = "0000-0000-0000-0000-0001"
         lodge_assessment(
@@ -156,6 +169,8 @@ describe UseCase::ExportOpenDataCommercial do
           override: true,
           schema_name: "CEPC-8.0.0",
         )
+
+        # Domestic assessment not exported
         domestic_assessment_date.children = "2018-05-04"
         domestic_assessment_id.children = "0000-0000-0000-0000-0005"
         lodge_assessment(
@@ -170,8 +185,8 @@ describe UseCase::ExportOpenDataCommercial do
       end
 
       it "returns the correct number of assessments in the CSV and the logs" do
-        expect(exported_data.length).to eq(number_assessments_to_test)
-        expect(statistics[0]["num_rows"]).to eq(number_assessments_to_test)
+        expect(exported_data.length).to eq(3)
+        expect(statistics[0]["num_rows"]).to eq(3)
       end
 
       expected_values.keys.each do |index|
@@ -188,20 +203,28 @@ describe UseCase::ExportOpenDataCommercial do
         end
       end
 
-      it "returns 2 rows when called with a different task_id" do
-        expect(export_object.execute("2019-07-01", 1).length).to eq(2)
-        expect(export_object.execute("2019-07-01", 2).length).to eq(2)
+      it "returns 3 rows when called with a different task_id" do
+        expect(export_object.execute("2019-07-01", 1).length).to eq(3)
+        expect(export_object.execute("2019-07-01", 2).length).to eq(3)
       end
 
-      it "returns 2 rows when no task id is passed" do
-        expect(export_object.execute("2019-07-01").length).to eq(2)
-        expect(statistics.first["num_rows"]).to eq(2)
+      it "returns 3 rows when no task id is passed" do
+        expect(export_object.execute("2019-07-01").length).to eq(3)
+        expect(statistics.first["num_rows"]).to eq(3)
       end
 
       it "returns 0 rows if called with the existing task_id" do
-        expect(export_object.execute("2019-07-01", 1).length).to eq(2)
+        expect(export_object.execute("2019-07-01", 1).length).to eq(3)
         expect(export_object.execute("2019-07-01", 1).length).to eq(0)
       end
+
+      it 'returns a hash with building_reference_number nil when building_reference_number is not a UPRN' do
+        expected_data_hash =  exported_data.select do |hash|
+          hash[:assessment_id] == "833db6da02dadee69b96c96917a5e190473828713f5074bd7d67a2371b315520"
+        end
+        expect(expected_data_hash[0][:building_reference_number]).to eq(nil)
+      end
+
     end
   end
 end
