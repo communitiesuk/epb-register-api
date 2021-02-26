@@ -414,14 +414,14 @@ module ViewModel
           Helper::XmlEnumsToOutput.energy_rating_string(
             @view_model.all_roof_env_energy_efficiency_rating.first,
           ),
-        walls_description: @view_model.all_wall_descriptions.join(" | "),
+        walls_description: @view_model.all_wall_descriptions.first,
         walls_energy_eff:
           Helper::XmlEnumsToOutput.energy_rating_string(
-            @view_model.all_wall_energy_efficiency_rating,
+            @view_model.all_wall_energy_efficiency_rating.first,
           ),
         walls_env_eff:
           Helper::XmlEnumsToOutput.energy_rating_string(
-            @view_model.all_wall_env_energy_efficiency_rating,
+            @view_model.all_wall_env_energy_efficiency_rating.first,
           ),
         energy_tariff:
           Helper::XmlEnumsToOutput.energy_tariff(@view_model.energy_tariff),
