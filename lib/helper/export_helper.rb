@@ -19,7 +19,11 @@ module Helper
           csv << headers
           view_model_array.each do |hash|
             csv << columns.map do |key, _value|
-              hash[key.to_sym].is_a?(String) ? (hash[key.to_sym]).to_s : hash[key.to_sym]
+              if hash[key.to_sym].is_a?(String)
+                (hash[key.to_sym]).to_s
+              else
+                hash[key.to_sym]
+              end
             end
           end
         end
@@ -51,7 +55,7 @@ module Helper
     end
 
     def self.convert_data_to_csv(data, assessment_type)
-      if assessment_type == "SAP-RDSAP"
+      if assessment_type == "SAP-RDSAP-RR"
         flattened_data = Helper::ExportHelper.flatten_domestic_rr_response(data)
         data = Helper::ExportHelper.to_csv(flattened_data)
         csv_array = data.split("\n")

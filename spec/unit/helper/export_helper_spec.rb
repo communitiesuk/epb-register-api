@@ -95,7 +95,6 @@ describe Helper::ExportHelper do
         0000-0000-0000-0000-0002,"88, Station Lane","1,2",01-02-2020
       CSV
       csv
-
     end
 
     let(:test_data) do
@@ -116,7 +115,6 @@ describe Helper::ExportHelper do
     end
 
     it "returns a csv that matches the expectation and is formatted correctly" do
-
       expect(expectation).to eq(helper.to_csv(test_data))
     end
   end

@@ -291,14 +291,14 @@ describe "Acceptance::Reports::OpenDataExport" do
     let(:csv_data) do
       Helper::ExportHelper.convert_data_to_csv(
         use_case.execute(test_date),
-        "SAP-RDSAP",
+        "SAP-RDSAP-RR",
       )
     end
     let(:fixture_csv) { read_csv_fixture("domestic_rr") }
     let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
 
     it "returns the data exported to a csv object to match the .csv fixture " do
-      expect(parsed_exported_data.length).to eq(fixture_csv.length)
+      expect(parsed_exported_data.length).to eq(1)
       expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
       expect(parsed_exported_data.first.to_a - fixture_csv.first.to_a).to eq([])
       expect(parsed_exported_data[1].to_a - fixture_csv[1].to_a).to eq([])

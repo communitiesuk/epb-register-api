@@ -77,6 +77,8 @@ def get_use_case_by_assessment_type(assessment_type)
     open_data_use_case = UseCase::ExportOpenDataDecrr.new
   when "SAP-RDSAP"
     open_data_use_case = UseCase::ExportOpenDataDomestic.new
+  when "SAP-RDSAP-RR"
+    open_data_use_case = UseCase::ExportOpenDataDomesticrr.new
   end
   open_data_use_case
 end
