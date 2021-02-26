@@ -11,18 +11,19 @@ module Helper
     def self.to_csv(view_model_array)
       return "" if view_model_array.empty?
 
-      csv_string =
+      columns = view_model_array.first.keys.clone
+      headers = columns.map { |item| item.to_s.upcase.strip }.clone
+
+      csv_object =
         CSV.generate do |csv|
-          csv << view_model_array.first.map do |key, _value|
-            key.to_s.upcase.strip
-          end
-          view_model_array.each do |model|
-            csv << model.map do |_key, value|
-              value.is_a?(String) ? value.to_s : value
+          csv << headers
+          view_model_array.each do |hash|
+            csv << columns.map do |key, value|
+                     hash[key.to_sym].is_a?(String) ? "#{hash[key.to_sym].to_s}" : hash[key.to_sym]
             end
+           end
           end
-        end
-      csv_string
+      csv_object
     end
 
     def self.report_type_to_s(type_of_assessment)
@@ -64,6 +65,7 @@ module Helper
       data
     end
 
+
     def self.array_to_csv(array)
       return "" if array.empty?
 
@@ -79,5 +81,8 @@ module Helper
         end
       csv_object
     end
+
+
+
   end
 end

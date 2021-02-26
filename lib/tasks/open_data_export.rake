@@ -50,7 +50,6 @@ def set_date_time
 end
 
 def transmit_file(data)
-
   filename = "open_data_export_#{ENV['assessment_type'].downcase}_#{DateTime.now.strftime('%FT%T')}_#{get_max_task_id}.csv"
 
   storage_config_reader = Gateway::StorageConfigurationReader.new(

@@ -95,6 +95,7 @@ describe Helper::ExportHelper do
         0000-0000-0000-0000-0002,"88, Station Lane","1,2",01-02-2020
       CSV
       csv
+
     end
 
     let(:test_data) do
@@ -107,14 +108,15 @@ describe Helper::ExportHelper do
         },
         {
           assessment_id: "0000-0000-0000-0000-0002",
-          address1: "88, Station Lane",
           comma_test_values: "1,2",
+          address1: "88, Station Lane",
           lodgement_date: "01-02-2020",
         },
       ]
     end
 
     it "returns a csv that matches the expectation and is formatted correctly" do
+
       expect(expectation).to eq(helper.to_csv(test_data))
     end
   end
