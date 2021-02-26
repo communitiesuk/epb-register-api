@@ -439,7 +439,7 @@ module ViewModel
         mechanical_ventilation: @view_model.mechanical_ventilation,
         floor_height:
           if @view_model.respond_to?(:floor_height)
-            @view_model.floor_height.join(", ")
+            @view_model.floor_height.first
           end,
         main_fuel:
           Helper::XmlEnumsToOutput.main_fuel_sap(@view_model.main_fuel_type),

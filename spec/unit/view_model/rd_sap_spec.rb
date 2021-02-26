@@ -440,7 +440,7 @@ describe ViewModel::RdSapWrapper do
         floor_level: "01",
         solar_water_heating_flag: "N",
         mechanical_ventilation: "0",
-        floor_height: "2.45, 2.59",
+        floor_height: "2.45",
         main_fuel: "mains gas (not community)",
         floor_description: "Suspended, no insulation (assumed)",
         floor_energy_eff: "0",

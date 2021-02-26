@@ -1117,7 +1117,7 @@ describe ViewModel::SapWrapper do
         extension_count: "0",
         solar_water_heating_flag: nil,
         mechanical_ventilation: nil,
-        floor_height: "2.4, 2.5",
+        floor_height: "2.4",
         main_fuel: "Electricity: electricity sold to grid",
         floor_description: "Tiled floor",
         floor_energy_eff: "0",
