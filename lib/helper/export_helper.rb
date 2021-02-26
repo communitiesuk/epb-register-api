@@ -18,11 +18,11 @@ module Helper
         CSV.generate do |csv|
           csv << headers
           view_model_array.each do |hash|
-            csv << columns.map do |key, value|
-                     hash[key.to_sym].is_a?(String) ? "#{hash[key.to_sym].to_s}" : hash[key.to_sym]
+            csv << columns.map do |key, _value|
+              hash[key.to_sym].is_a?(String) ? (hash[key.to_sym]).to_s : hash[key.to_sym]
             end
-           end
           end
+        end
       csv_object
     end
 
@@ -65,7 +65,6 @@ module Helper
       data
     end
 
-
     def self.array_to_csv(array)
       return "" if array.empty?
 
@@ -81,8 +80,5 @@ module Helper
         end
       csv_object
     end
-
-
-
   end
 end

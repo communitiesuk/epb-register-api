@@ -22,7 +22,6 @@ task :open_data_export do
   if data.length > 0
     csv_data = Helper::ExportHelper.convert_data_to_csv(data, assessment_type)
     transmit_file(csv_data)
-    output_completed_task
     puts "true"
   else
     puts "no data to export"
