@@ -538,6 +538,10 @@ module ViewModel
           .search("Main-Heating-Controls/Environmental-Efficiency-Rating")
           .map(&:content)
       end
+
+      def glazing_type
+        @xml_doc.search("Glazing-Type").map(&:content)
+      end
     end
   end
 end

@@ -268,6 +268,20 @@
 				<Sheltered-Sides-Count>3</Sheltered-Sides-Count>
 				<Ventilation-Type>8</Ventilation-Type>
 			</SAP-Ventilation>
+      <SAP-Opening-Types>
+        <SAP-Opening-Type>
+          <Name>Opening Type 1</Name>
+          <Data-Source>2</Data-Source>
+          <Type>1</Type>
+          <Glazing-Type>1</Glazing-Type>
+        </SAP-Opening-Type>
+        <SAP-Opening-Type>
+          <Name>Opening Type 2</Name>
+          <Data-Source>3</Data-Source>
+          <Type>2</Type>
+          <Glazing-Type>3</Glazing-Type>
+        </SAP-Opening-Type>
+      </SAP-Opening-Types>
 			<SAP-Flat-Details>
 				<Level>1</Level>
 			</SAP-Flat-Details>

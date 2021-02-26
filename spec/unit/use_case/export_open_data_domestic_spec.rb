@@ -181,6 +181,7 @@ describe UseCase::ExportOpenDataDomestic do
         floor_env_eff: "0",
         mainheatc_energy_eff: "0",
         mainheatc_env_eff: "0",
+        glazed_type: "not applicable (non-glazed door)",
       }
 
       let(:rdsap_odc_hash) do

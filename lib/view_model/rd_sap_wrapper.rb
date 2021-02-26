@@ -283,7 +283,10 @@ module ViewModel
           @view_model.all_main_heating_controls_energy_efficiency.first,
         mainheatc_env_eff:
           @view_model.all_main_heating_controls_environmental_efficiency.first,
-        glazed_type: Helper::XmlEnumsToOutput.glazed_type_rdsap(@view_model.glazing_type.first),
+        glazed_type:
+          Helper::XmlEnumsToOutput.glazed_type_rdsap(
+            @view_model.glazing_type.first,
+          ),
       }
     end
 
