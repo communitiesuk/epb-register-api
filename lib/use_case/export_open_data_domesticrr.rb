@@ -4,7 +4,6 @@ module UseCase
       @gateway = Gateway::ReportingGateway.new
       @assessment_gateway = Gateway::AssessmentsXmlGateway.new
       @log_gateway = Gateway::OpenDataLogGateway.new
-      @array_view_model = nil
     end
 
     RR_HEADERS = {
@@ -16,7 +15,7 @@ module UseCase
     }.freeze
 
     def execute(date_from, task_id = 0)
-      @array_view_model = []
+      recommendations = []
       new_task_id = @log_gateway.fetch_new_task_id(task_id)
       assessments =
         @gateway.assessments_for_open_data(
@@ -37,7 +36,7 @@ module UseCase
           )
         wrapper_hash = wrapper.to_recommendation_report
 
-        update_hash(wrapper_hash[:recommendations].flatten)
+        update_recommendation_headers(recommendations, wrapper_hash[:recommendations].flatten)
 
         @log_gateway.create(
           assessment["assessment_id"],
@@ -45,12 +44,12 @@ module UseCase
           %w[RdSAP SAP],
         )
       end
-      @array_view_model
+      recommendations
     end
 
   private
 
-    def update_hash(array_wrapper)
+    def update_recommendation_headers(recommendations, array_wrapper)
       array_wrapper.each do |hash|
         new_hash = {}
         hash.each do |key, value|
@@ -64,7 +63,7 @@ module UseCase
         assessment_id = new_hash[:assessment_id]
         new_hash[:assessment_id] = Helper::RrnHelper.hash_rrn(assessment_id)
 
-        @array_view_model << new_hash
+        recommendations << new_hash
       end
     end
   end
