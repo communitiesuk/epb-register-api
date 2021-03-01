@@ -623,11 +623,11 @@ describe ViewModel::SapWrapper do
         ),
         { schema: "SAP-Schema-NI-17.4" }.merge(is_ni),
         { schema: "SAP-Schema-NI-17.3" }.merge(is_ni),
-        { schema: "SAP-Schema-NI-17.2" }.merge(is_ni),
+        { schema: "SAP-Schema-NI-17.2", type: "sap" }.merge(is_ni),
         { schema: "SAP-Schema-17.1" },
-        { schema: "SAP-Schema-NI-17.1" }.merge(is_ni),
+        { schema: "SAP-Schema-NI-17.1", type: "sap" }.merge(is_ni),
         { schema: "SAP-Schema-17.0" },
-        { schema: "SAP-Schema-NI-17.0" }.merge(is_ni),
+        { schema: "SAP-Schema-NI-17.0", type: "sap" }.merge(is_ni),
         {
           schema: "SAP-Schema-16.3",
           type: "sap",
@@ -635,7 +635,6 @@ describe ViewModel::SapWrapper do
         }.deep_merge(is_pre_17),
         { schema: "SAP-Schema-16.3", type: "rdsap" }.deep_merge(is_rdsap)
           .deep_merge(is_pre_17),
-        { schema: "SAP-Schema-NI-16.1" }.merge(is_ni_pre_17),
         {
           schema: "SAP-Schema-16.2",
           type: "sap",
@@ -650,6 +649,7 @@ describe ViewModel::SapWrapper do
         },
         { schema: "SAP-Schema-16.1", type: "rdsap" }.deep_merge(is_rdsap)
           .deep_merge(is_pre_17),
+        { schema: "SAP-Schema-NI-16.1", type: "sap" }.merge(is_ni_pre_17),
         {
           schema: "SAP-Schema-16.0",
           type: "sap",

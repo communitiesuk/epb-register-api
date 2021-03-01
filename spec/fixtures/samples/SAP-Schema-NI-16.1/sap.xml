@@ -4,8 +4,7 @@
   xmlns="http://www.epbniregister.com"
   xsi:schemaLocation="http://www.epbniregister.com ../../../../api/schemas/xml/SAP-Schema-NI-16.1/Messages/ConditionReportCreateRequest_1.xsd">
   <Identification>
-    <CS:ServiceName xmlns:CS="DCLG-HIP/CommonStructures">CreateReport
-    </CS:ServiceName>
+    <CS:ServiceName xmlns:CS="DCLG-HIP/CommonStructures">CreateReport</CS:ServiceName>
     <CS:Operation xmlns:CS="DCLG-HIP/CommonStructures">Create</CS:Operation>
     <CS:TransactionDetails xmlns:CS="DCLG-HIP/CommonStructures">
       <CS:OriginatingID>TEST</CS:OriginatingID>
