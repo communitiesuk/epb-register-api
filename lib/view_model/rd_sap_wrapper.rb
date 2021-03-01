@@ -240,11 +240,11 @@ module ViewModel
           @view_model.all_main_heating_descriptions.join(", "),
         mainheat_energy_eff:
           Helper::XmlEnumsToOutput.energy_rating_string(
-            all_main_heating_energy_efficiency,
+            all_main_heating_energy_efficiency.first,
           ),
         mainheat_env_eff:
           Helper::XmlEnumsToOutput.energy_rating_string(
-            all_main_heating_environmental_efficiency,
+            all_main_heating_environmental_efficiency.first,
           ),
         extension_count: @view_model.extensions_count,
         report_type: @view_model.report_type,

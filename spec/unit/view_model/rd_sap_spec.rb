@@ -422,8 +422,8 @@ describe ViewModel::RdSapWrapper do
         built_form: "Semi-Detached",
         mainheat_description:
           "Boiler and radiators, anthracite, Boiler and radiators, mains gas",
-        mainheat_energy_eff: "Average, Good",
-        mainheat_env_eff: "Very Poor, Good",
+        mainheat_energy_eff: "Average",
+        mainheat_env_eff: "Very Poor",
         extension_count: "0",
         report_type: "2",
         mainheatcont_description: "Programmer, room thermostat and TRVs",
