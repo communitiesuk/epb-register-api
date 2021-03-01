@@ -11,11 +11,12 @@ module ViewModel
       # If 'Improvement-Summary' is not provided the 'Improvement' is used instead
       return "" unless node
 
-      title = [
-        xpath(%w[Improvement-Heading], node),
-        xpath(%w[Improvement-Summary], node),
-        xpath(%w[Improvement], node),
-      ].compact.delete_if(&:empty?).first || ""
+      title =
+        [
+          xpath(%w[Improvement-Heading], node),
+          xpath(%w[Improvement-Summary], node),
+          xpath(%w[Improvement], node),
+        ].compact.delete_if(&:empty?).first || ""
 
       title = "" if title.to_i.to_s == title
 

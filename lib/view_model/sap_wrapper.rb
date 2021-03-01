@@ -311,7 +311,7 @@ module ViewModel
         address3: @view_model.address_line3,
         posttown: @view_model.town,
         postcode: @view_model.postcode,
-        construction_age_band: @view_model.property_age_band,
+        construction_age_band: @view_model.construction_age_band,
         current_energy_rating:
           Helper::EnergyBandCalculator.domestic(
             @view_model.current_energy_rating,
@@ -441,12 +441,22 @@ module ViewModel
         main_fuel:
           Helper::XmlEnumsToOutput.main_fuel_sap(@view_model.main_fuel_type),
         floor_description: @view_model.all_floor_descriptions.first,
-        floor_energy_eff: Helper::XmlEnumsToOutput.energy_rating_string(@view_model.all_floor_energy_efficiency_rating.first),
-        floor_env_eff: Helper::XmlEnumsToOutput.energy_rating_string(@view_model.all_floor_env_energy_efficiency_rating.first),
+        floor_energy_eff:
+          Helper::XmlEnumsToOutput.energy_rating_string(
+            @view_model.all_floor_energy_efficiency_rating.first,
+          ),
+        floor_env_eff:
+          Helper::XmlEnumsToOutput.energy_rating_string(
+            @view_model.all_floor_env_energy_efficiency_rating.first,
+          ),
         mainheatc_energy_eff:
-          Helper::XmlEnumsToOutput.energy_rating_string(@view_model.all_main_heating_controls_energy_efficiency.first),
+          Helper::XmlEnumsToOutput.energy_rating_string(
+            @view_model.all_main_heating_controls_energy_efficiency.first,
+          ),
         mainheatc_env_eff:
-          Helper::XmlEnumsToOutput.energy_rating_string(@view_model.all_main_heating_controls_environmental_efficiency.first),
+          Helper::XmlEnumsToOutput.energy_rating_string(
+            @view_model.all_main_heating_controls_environmental_efficiency.first,
+          ),
         glazed_type:
           Helper::XmlEnumsToOutput.glazed_type_sap(
             @view_model.glazing_type.first,

@@ -434,6 +434,10 @@ module ViewModel
       def mechanical_ventilation
         nil
       end
+
+      def construction_age_band
+        xpath(%w[Construction-Age-Band])
+      end
     end
   end
 end

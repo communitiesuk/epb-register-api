@@ -443,6 +443,10 @@ module ViewModel
       def floor_height
         @xml_doc.search("Storey-Height").map(&:content)
       end
+
+      def construction_age_band
+        xpath(%w[Construction-Age-Band])
+      end
     end
   end
 end
