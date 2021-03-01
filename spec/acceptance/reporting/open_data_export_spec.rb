@@ -29,14 +29,12 @@ describe "Acceptance::Reports::OpenDataExport" do
       .each_with_index do |node, index|
         node.content = "1111-0000-0000-0000-000#{index + 2}"
       end
-
     cepc_rr_xml
       .xpath("//*[local-name() = 'Related-RRN']")
       .reverse
       .each_with_index do |node, index|
         node.content = "1111-0000-0000-0000-000#{index + 2}"
       end
-
     cepc_rr_xml
       .xpath("//*[local-name() = 'Registration-Date']")
       .reverse
@@ -293,7 +291,6 @@ describe "Acceptance::Reports::OpenDataExport" do
     end
   end
 
-  #TODO test more than the 1st row
   context "When we call the use case to extract the domestic recommendations data" do
     let(:use_case) { UseCase::ExportOpenDataDomesticrr.new }
     let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(test_date)) }
@@ -302,8 +299,13 @@ describe "Acceptance::Reports::OpenDataExport" do
 
     it "returns the data exported to a csv object to match the .csv fixture " do
       expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
-      expect(parsed_exported_data.first.to_a - fixture_csv.first.to_a).to eq([])
-      expect(parsed_exported_data[1].to_a - fixture_csv[1].to_a).to eq([])
+      expect(parsed_exported_data.length).to eq(fixture_csv.length)
+    end
+
+    4.times do |i|
+      it "returns the data exported for row #{i} object to match same row in the .csv fixture " do
+        expect(parsed_exported_data[i].to_a - fixture_csv[i].to_a).to eq([])
+      end
     end
   end
 end
