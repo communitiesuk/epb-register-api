@@ -20,7 +20,7 @@ task :open_data_export do
   data = open_data_use_case.execute(date_from, task_id)
 
   if data.length > 0
-    csv_data = Helper::ExportHelper.convert_data_to_csv(data, assessment_type)
+    csv_data = Helper::ExportHelper.to_csv(data)
     transmit_file(csv_data)
     puts "true"
   else

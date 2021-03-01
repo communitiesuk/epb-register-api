@@ -3,7 +3,11 @@ describe UseCase::ExportOpenDataDomesticrr do
   context "when creating the open data domestic recommendations report release" do
     describe "for the domestic recommendation report" do
       let(:export_object) { described_class.new }
-      let(:exported_data) { export_object.execute("2019-07-01") }
+      let(:exported_data) do
+        export_object
+          .execute("2019-07-01")
+          .sort_by! { |item| item[:assessment_id] }
+      end
       let(:statistics) do
         gateway = Gateway::OpenDataLogGateway.new
         gateway.fetch_log_statistics
@@ -46,7 +50,7 @@ describe UseCase::ExportOpenDataDomesticrr do
           ),
         )
 
-        domestic_rdsap_assessment_date.children = "2017-05-04"
+        domestic_rdsap_assessment_date.children = date_today
         domestic_rdsap_assessment_id.children = "0000-0000-0000-0000-0100"
         lodge_assessment(
           assessment_body: domestic_rdsap_xml.to_xml,
@@ -57,18 +61,7 @@ describe UseCase::ExportOpenDataDomesticrr do
           override: true,
         )
 
-        domestic_rdsap_assessment_date.children = date_today
-        domestic_rdsap_assessment_id.children = "0000-0000-0000-0000-0000"
-        lodge_assessment(
-          assessment_body: domestic_rdsap_xml.to_xml,
-          accepted_responses: [201],
-          auth_data: {
-            scheme_ids: [scheme_id],
-          },
-          override: true,
-        )
-
-        domestic_legacy_sap_assessment_date.children = "2017-05-04"
+        domestic_legacy_sap_assessment_date.children = "2018-05-02"
         domestic_legacy_sap_assessment_id.children = "0000-0000-0000-0000-1010"
         lodge_assessment(
           assessment_body: domestic_legacy_sap_xml.to_xml,
@@ -79,56 +72,94 @@ describe UseCase::ExportOpenDataDomesticrr do
           schema_name: "SAP-Schema-17.0",
           override: true,
         )
+
+        domestic_sap_assessment_date.children = date_today
+        domestic_sap_assessment_id.children = "1000-0000-0000-0000-1010"
+        lodge_assessment(
+          assessment_body: domestic_sap_xml.to_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: "SAP-Schema-18.0.0",
+          override: true,
+        )
+
+        domestic_ni_sap_assessment_date.children = date_today
+        domestic_ni_sap_assessment_id.children = "2000-0000-0000-0000-1010"
+        lodge_assessment(
+          assessment_body: domestic_ni_sap_xml.to_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: "SAP-Schema-NI-18.0.0",
+          override: true,
+        )
+      end
+
+      let(:grouped_results) do
+        exported_data.group_by { |item| item[:assessment_id] }
       end
 
       it "returns the correct number of assessments excluding the NI lodgements and any before the given date" do
-        expect(exported_data.length).to eq(1)
+        expect(exported_data.length).to eq(4)
       end
 
-      it "returns the correct number of recommendations for each assessment" do
-        expect(exported_data.first[:recommendations].length).to eq(2)
-        # expect(exported_data.last[:recommendations].length).to eq(2)
+      it "returns the correct number of recommendations for each assessment when grouped" do
+        expect(grouped_results.length).to eq(2)
+        # expect(exported_data.group_by{|item| item[:assessment_id]}[0].length).to eq(2)
       end
 
       it "returns recommendations in the following format" do
         expect(exported_data[0]).to eq(
           {
-            recommendations: [
-              {
-                assessment_id:
-                  "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
-                improvement_code: "5",
-                improvement_description: nil,
-                improvement_summary: nil,
-                indicative_cost: "£100 - £350",
-                sequence: 1,
-              },
-              {
-                assessment_id:
-                  "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
-                improvement_code: "1",
-                improvement_description: nil,
-                improvement_summary: nil,
-                indicative_cost: "2000",
-                sequence: 2,
-              },
-            ],
+            assessment_id:
+              "2da345c51a134b04e2c2a27d6ad48441cddebeba199d11a3a3ff8572ff75d9c8",
+            improvement_descr_text: nil,
+            improvement_summary_text: nil,
+            indicative_cost: "£100 - £350",
+            improvement_id: "5",
+            improvement_item: 1,
+          },
+        )
+        expect(exported_data[1]).to eq(
+          {
+            assessment_id:
+              "2da345c51a134b04e2c2a27d6ad48441cddebeba199d11a3a3ff8572ff75d9c8",
+            improvement_descr_text: nil,
+            improvement_summary_text: nil,
+            indicative_cost: "2000",
+            improvement_id: "1",
+            improvement_item: 2,
+          },
+        )
+
+        expect(exported_data[2]).to eq(
+          {
+            assessment_id:
+              "9ef56d3e0ad9e5e8787715e05fdf61a2a85c7b7eb091827910c3d048ce2aee94",
+            improvement_descr_text: nil,
+            improvement_summary_text: nil,
+            indicative_cost: "£100 - £350",
+            improvement_id: "5",
+            improvement_item: 1,
           },
         )
       end
 
       it "returns 1 rows when called with a different task_id" do
-        expect(export_object.execute("2019-07-01", 1).length).to eq(1)
-        expect(export_object.execute("2019-07-01", 2).length).to eq(1)
+        expect(export_object.execute("2019-07-01", 1).length).to eq(4)
+        expect(export_object.execute("2019-07-01", 2).length).to eq(4)
       end
 
       it "returns 1 row when no task id is passed" do
-        expect(export_object.execute("2019-07-01").length).to eq(1)
-        expect(statistics.first["num_rows"]).to eq(1)
+        expect(export_object.execute("2019-07-01").length).to eq(4)
+        expect(statistics.first["num_rows"]).to eq(2)
       end
 
       it "returns 0 rows when called with the existing task_id" do
-        expect(export_object.execute("2019-07-01", 1).length).to eq(1)
+        expect(export_object.execute("2019-07-01", 1).length).to eq(4)
         expect(export_object.execute("2019-07-01", 1).length).to eq(0)
       end
     end

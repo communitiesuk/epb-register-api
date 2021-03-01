@@ -47,6 +47,7 @@ module UseCase
 
         data << view_model_hash
       end
+
       data
     end
   end
