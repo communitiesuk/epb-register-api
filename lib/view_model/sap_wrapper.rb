@@ -441,8 +441,8 @@ module ViewModel
         main_fuel:
           Helper::XmlEnumsToOutput.main_fuel_sap(@view_model.main_fuel_type),
         floor_description: @view_model.all_floor_descriptions.first,
-        floor_energy_eff: @view_model.all_floor_energy_efficiency_rating.first,
-        floor_env_eff: @view_model.all_floor_env_energy_efficiency_rating.first,
+        floor_energy_eff: Helper::XmlEnumsToOutput.energy_rating_string(@view_model.all_floor_energy_efficiency_rating.first),
+        floor_env_eff: Helper::XmlEnumsToOutput.energy_rating_string(@view_model.all_floor_env_energy_efficiency_rating.first),
         mainheatc_energy_eff:
           @view_model.all_main_heating_controls_energy_efficiency.first,
         mainheatc_env_eff:
