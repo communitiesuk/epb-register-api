@@ -16,6 +16,13 @@ describe "Acceptance::Reports::OpenDataExport" do
     domestic_rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
     domestic_rdsap_assessment_id = domestic_rdsap_xml.at("RRN")
     domestic_rdsap_assessment_date = domestic_rdsap_xml.at("Registration-Date")
+
+    domestic_sap_xml = Nokogiri.XML Samples.xml("SAP-Schema-18.0.0")
+    domestic_sap_assessment_id = domestic_sap_xml.at("RRN")
+    domestic_sap_assessment_date = domestic_sap_xml.at("Registration-Date")
+    domestic_sap_building_reference_number = domestic_sap_xml.at("UPRN")
+
+
     cepc_rr_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc+rr")
     cepc_rr_xml
       .xpath("//*[local-name() = 'RRN']")
@@ -147,6 +154,18 @@ describe "Acceptance::Reports::OpenDataExport" do
       override: true,
       schema_name: "CEPC-8.0.0",
     )
+
+    domestic_sap_assessment_date.children = test_date
+    domestic_sap_assessment_id.children = "0000-0000-0000-0000-1100"
+    lodge_assessment(
+      assessment_body: domestic_sap_xml.to_xml,
+      accepted_responses: [201],
+      auth_data: {
+        scheme_ids: [scheme_id],
+      },
+      override: true,
+      schema_name: "SAP-Schema-18.0.0",
+      )
   end
 
   let(:statistics) do
@@ -215,6 +234,7 @@ describe "Acceptance::Reports::OpenDataExport" do
     end
   end
 
+  #TODO Test content as well as headers
   context "When we call the use case to extract the DEC data" do
     let(:dec_use_case) { UseCase::ExportOpenDataDec.new }
     let(:csv_data) do
@@ -225,21 +245,8 @@ describe "Acceptance::Reports::OpenDataExport" do
 
     let(:fixture_csv) { read_csv_fixture("dec") }
 
-    let(:ignore_headers) do
-      %w[
-        OPERATIONAL_RATING_BAND
-        HEATING_CO2RENEWABLES_CO2
-        NOMINATED-DATE"
-        OR-ASSESSMENT-END-DATE
-        OTHER_FUEL
-        OCCUPANCY-LEVEL
-        TYPICAL_THERMAL_FUEL_USAGE
-        NOMINATED-DATE
-      ]
-    end
-
     it "returns the data exported to a csv object to match the .csv fixture " do
-      # expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
+      expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
     end
   end
 
@@ -267,7 +274,7 @@ describe "Acceptance::Reports::OpenDataExport" do
     end
   end
 
-  # TODO: Lodge and test for SAP as well as RDSAP
+
   context "When we call the use case to extract the domestic data" do
     let(:use_case) { UseCase::ExportOpenDataDomestic.new }
     let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(test_date)) }
@@ -275,12 +282,18 @@ describe "Acceptance::Reports::OpenDataExport" do
     let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
 
     it "returns the data exported to a csv object to match the .csv fixture " do
-      expect(parsed_exported_data.length).to eq(1)
+      expect(parsed_exported_data.length).to eq(fixture_csv.length)
       expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
-      expect(parsed_exported_data.first.to_a - fixture_csv.first.to_a).to eq([])
+    end
+
+    2.times do |i|
+      it "returns the data exported for row #{i} object to match same row in the .csv fixture " do
+        expect(parsed_exported_data[i].to_a - fixture_csv[i].to_a).to eq([])
+      end
     end
   end
 
+  #TODO test more than the 1st row
   context "When we call the use case to extract the domestic recommendations data" do
     let(:use_case) { UseCase::ExportOpenDataDomesticrr.new }
     let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(test_date)) }
