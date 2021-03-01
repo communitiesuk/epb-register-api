@@ -87,10 +87,10 @@ describe UseCase::ExportOpenDataDomestic do
         floor_height: "2.45",
         main_fuel: "mains gas (not community)",
         floor_description: "Suspended, no insulation (assumed)",
-        floor_energy_eff: "0",
-        floor_env_eff: "0",
-        mainheatc_energy_eff: "4",
-        mainheatc_env_eff: "4",
+        floor_energy_eff: "N/A",
+        floor_env_eff: "N/A",
+        mainheatc_energy_eff: "Good",
+        mainheatc_env_eff: "Good",
         glazed_type: "double glazing installed before 2002",
       }
       expected_sap_values = {
