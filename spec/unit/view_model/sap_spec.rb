@@ -1122,8 +1122,8 @@ describe ViewModel::SapWrapper do
         floor_description: "Tiled floor",
         floor_energy_eff: "N/A",
         floor_env_eff: "N/A",
-        mainheatc_energy_eff: "0",
-        mainheatc_env_eff: "0",
+        mainheatc_energy_eff: "N/A",
+        mainheatc_env_eff: "N/A",
         glazed_type: "not applicable (non-glazed door)",
       }
     end
