@@ -61,12 +61,12 @@ describe UseCase::ExportOpenDataDec do
 
       let(:expected_values_2) do
         expected_values.merge(
-            {
-                rrn:
-                    "5cb9fa3be789df637c7c20acac4e19c5ebf691f0f0d78f2a1b5f30c8b336bba6",
-                building_reference_number: nil,
-            },
-            )
+          {
+            rrn:
+              "5cb9fa3be789df637c7c20acac4e19c5ebf691f0f0d78f2a1b5f30c8b336bba6",
+            building_reference_number: nil,
+          },
+        )
       end
 
       let(:exported_data) do
@@ -132,14 +132,14 @@ describe UseCase::ExportOpenDataDec do
         dec_assessment_id.children = "0000-0000-0000-0000-0004"
         dec_building_reference_number.children = "RRN-0000-0000-0000-0000-0004"
         lodge_assessment(
-            assessment_body: dec_xml.to_xml,
-            accepted_responses: [201],
-            auth_data: {
-                scheme_ids: [scheme_id],
-            },
-            override: true,
-            schema_name: "CEPC-8.0.0",
-            )
+          assessment_body: dec_xml.to_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          override: true,
+          schema_name: "CEPC-8.0.0",
+        )
 
         dec_assessment_id.children = "0000-0000-0000-0000-0002"
         dec_assessment_date.children = "2018-07-01"
@@ -205,10 +205,12 @@ describe UseCase::ExportOpenDataDec do
         expect(export_object.execute("2019-07-01", 1).length).to eq(0)
       end
 
-      it 'returns a hash with building_reference_number nil when building_reference_number is not a UPRN' do
-        expected_data_hash =  exported_data.select do |hash|
-          hash[:rrn] == "5cb9fa3be789df637c7c20acac4e19c5ebf691f0f0d78f2a1b5f30c8b336bba6"
-        end
+      it "returns a hash with building_reference_number nil when building_reference_number is not a UPRN" do
+        expected_data_hash =
+          exported_data.select do |hash|
+            hash[:rrn] ==
+              "5cb9fa3be789df637c7c20acac4e19c5ebf691f0f0d78f2a1b5f30c8b336bba6"
+          end
         expect(expected_data_hash[0][:building_reference_number]).to eq(nil)
       end
     end

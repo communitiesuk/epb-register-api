@@ -36,7 +36,9 @@ module UseCase
             assessment["assessment_id"],
           )
         wrapper_hash = wrapper.to_recommendation_report
-        update_hashwrapper_hash[:recommendations].flatten
+
+        update_hash(wrapper_hash[:recommendations].flatten)
+
         @log_gateway.create(
           assessment["assessment_id"],
           new_task_id,

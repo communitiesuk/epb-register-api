@@ -66,12 +66,12 @@ describe UseCase::ExportOpenDataCommercial do
 
       let(:expected_values_index_2) do
         Samples.update_test_hash(
-            expected_values,
-            {
-                assessment_id:
-                    "a6f818e3dd0ac70cbd2838cb0efe0b4aadf5b43ed33a6e7cd13cb973847652",
-            },
-            )
+          expected_values,
+          {
+            assessment_id:
+              "a6f818e3dd0ac70cbd2838cb0efe0b4aadf5b43ed33a6e7cd13cb973847652",
+          },
+        )
       end
 
       before(:all) do
@@ -82,7 +82,8 @@ describe UseCase::ExportOpenDataCommercial do
           non_domestic_xml.at("//CEPC:Registration-Date")
         non_domestic_assessment_postcode =
           non_domestic_xml.at("//CEPC:Postcode")
-        non_domestic_building_reference_number = non_domestic_xml.at("//CEPC:UPRN")
+        non_domestic_building_reference_number =
+          non_domestic_xml.at("//CEPC:UPRN")
 
         # Lodge a dec to ensure it is not exported
         domestic_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "dec")
@@ -117,17 +118,18 @@ describe UseCase::ExportOpenDataCommercial do
         )
 
         non_domestic_assessment_date.children = "2020-05-04"
-        non_domestic_building_reference_number.children = "RRN-0000-0000-0000-0000-0008"
+        non_domestic_building_reference_number.children =
+          "RRN-0000-0000-0000-0000-0008"
         non_domestic_assessment_id.children = "0000-0000-0000-0000-0328"
         lodge_assessment(
-            assessment_body: non_domestic_xml.to_xml,
-            accepted_responses: [201],
-            auth_data: {
-                scheme_ids: [scheme_id],
-            },
-            override: true,
-            schema_name: "CEPC-8.0.0",
-            )
+          assessment_body: non_domestic_xml.to_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          override: true,
+          schema_name: "CEPC-8.0.0",
+        )
 
         non_domestic_assessment_date.children = "2020-05-04"
         non_domestic_assessment_id.children = "0000-0000-0000-0000-0002"
@@ -140,8 +142,6 @@ describe UseCase::ExportOpenDataCommercial do
           override: true,
           schema_name: "CEPC-8.0.0",
         )
-
-
 
         # Date too early so not exported
         non_domestic_assessment_date.children = "2018-05-04"
@@ -218,13 +218,14 @@ describe UseCase::ExportOpenDataCommercial do
         expect(export_object.execute("2019-07-01", 1).length).to eq(0)
       end
 
-      it 'returns a hash with building_reference_number nil when building_reference_number is not a UPRN' do
-        expected_data_hash =  exported_data.select do |hash|
-          hash[:assessment_id] == "833db6da02dadee69b96c96917a5e190473828713f5074bd7d67a2371b315520"
-        end
+      it "returns a hash with building_reference_number nil when building_reference_number is not a UPRN" do
+        expected_data_hash =
+          exported_data.select do |hash|
+            hash[:assessment_id] ==
+              "833db6da02dadee69b96c96917a5e190473828713f5074bd7d67a2371b315520"
+          end
         expect(expected_data_hash[0][:building_reference_number]).to eq(nil)
       end
-
     end
   end
 end

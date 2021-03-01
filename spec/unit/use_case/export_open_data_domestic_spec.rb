@@ -225,7 +225,7 @@ describe UseCase::ExportOpenDataDomestic do
         domestic_ni_sap_assessment_date =
           domestic_ni_sap_xml.at("Registration-Date")
         domestic_ni_sap_postcode =
-            domestic_ni_sap_xml.at("Property Address Postcode")
+          domestic_ni_sap_xml.at("Property Address Postcode")
 
         add_assessor(
           scheme_id,
@@ -266,15 +266,16 @@ describe UseCase::ExportOpenDataDomestic do
 
         domestic_assessment_date.children = date_today
         domestic_assessment_id.children = "0000-0000-0000-0000-0023"
-        domestic_building_reference_number.children = "RRN-0000-0000-0000-0000-0023"
+        domestic_building_reference_number.children =
+          "RRN-0000-0000-0000-0000-0023"
         lodge_assessment(
-            assessment_body: domestic_xml.to_xml,
-            accepted_responses: [201],
-            auth_data: {
-                scheme_ids: [scheme_id],
-            },
-            override: true,
-            )
+          assessment_body: domestic_xml.to_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          override: true,
+        )
 
         domestic_sap_assessment_date.children = date_today
         domestic_sap_assessment_id.children = "0000-0000-0000-0000-1000"
@@ -290,16 +291,17 @@ describe UseCase::ExportOpenDataDomestic do
 
         domestic_sap_assessment_date.children = date_today
         domestic_sap_assessment_id.children = "0000-0000-0000-0000-0033"
-        domestic_sap_building_reference_number.children = "RRN-0000-0000-0000-0000-0033"
+        domestic_sap_building_reference_number.children =
+          "RRN-0000-0000-0000-0000-0033"
         lodge_assessment(
-            assessment_body: domestic_sap_xml.to_xml,
-            accepted_responses: [201],
-            auth_data: {
-                scheme_ids: [scheme_id],
-            },
-            schema_name: "SAP-Schema-18.0.0",
-            override: true,
-            )
+          assessment_body: domestic_sap_xml.to_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: "SAP-Schema-18.0.0",
+          override: true,
+        )
 
         domestic_legacy_sap_assessment_date.children = "2017-05-04"
         domestic_legacy_sap_assessment_id.children = "0000-0000-0000-0000-1010"
@@ -317,16 +319,14 @@ describe UseCase::ExportOpenDataDomestic do
         domestic_ni_sap_assessment_date.children = date_today
         domestic_ni_sap_postcode.children = "BT4 3NE"
         lodge_assessment(
-            assessment_body: domestic_ni_sap_xml.to_xml,
-            accepted_responses: [201],
-            auth_data: {
-                scheme_ids: [scheme_id],
-            },
-            schema_name: "SAP-Schema-NI-18.0.0",
-            override: true,
-            )
-
-
+          assessment_body: domestic_ni_sap_xml.to_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: "SAP-Schema-NI-18.0.0",
+          override: true,
+        )
       end
 
       it "expects the number of non Northern Irish RdSAP and SAP lodgements within required date range for ODC to be 2" do
@@ -337,17 +337,21 @@ describe UseCase::ExportOpenDataDomestic do
         %i[lodgement_datetime].include? k
       }.keys.each do |key|
         it "returns the #{key} that matches the RdSAP test data for the equivalent entry in the ODC hash" do
-          expected_data_hash =  exported_data.select do |hash|
-            hash[:assessment_id] == "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a"
-          end
+          expected_data_hash =
+            exported_data.select do |hash|
+              hash[:assessment_id] ==
+                "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a"
+            end
           expect(expected_data_hash[0][key.to_sym]).to eq(rdsap_odc_hash[key])
         end
       end
 
-      it 'returns a hash with building_reference_number nil when an RdSAP is submitted when building_reference_number is not a UPRN' do
-        expected_data_hash=  exported_data.select do |hash|
-          hash[:assessment_id] == "46cd39a5a7ccc7e4abab6e99577831f3c6dff2ce98bea5858195063694967ff4"
-        end
+      it "returns a hash with building_reference_number nil when an RdSAP is submitted when building_reference_number is not a UPRN" do
+        expected_data_hash =
+          exported_data.select do |hash|
+            hash[:assessment_id] ==
+              "46cd39a5a7ccc7e4abab6e99577831f3c6dff2ce98bea5858195063694967ff4"
+          end
         expect(expected_data_hash[0][:building_reference_number]).to eq(nil)
       end
 
@@ -373,17 +377,21 @@ describe UseCase::ExportOpenDataDomestic do
         ].include? k
       }.keys.each do |key|
         it "returns the #{key} that matches the SAP test data for the equivalent entry in the ODC hash" do
-          expected_data_hash =  exported_data.select do |hash|
-            hash[:assessment_id] == "a154b93d62db9b77c82f6b11ba4a4a4056816572180c95e0bc5d486b905d4996"
-          end
+          expected_data_hash =
+            exported_data.select do |hash|
+              hash[:assessment_id] ==
+                "a154b93d62db9b77c82f6b11ba4a4a4056816572180c95e0bc5d486b905d4996"
+            end
           expect(expected_data_hash[0][key.to_sym]).to eq(sap_odc_hash[key])
         end
       end
 
-      it 'returns a hash with building_reference_number nil when a SAP is submitted when building_reference_number is not a UPRN' do
-        expected_data_hash=  exported_data.select do |hash|
-          hash[:assessment_id] == "c721f7c21520e8dc97d9746d0747c285d057971acee9e2ef3b8d94f8d7a1ed43"
-        end
+      it "returns a hash with building_reference_number nil when a SAP is submitted when building_reference_number is not a UPRN" do
+        expected_data_hash =
+          exported_data.select do |hash|
+            hash[:assessment_id] ==
+              "c721f7c21520e8dc97d9746d0747c285d057971acee9e2ef3b8d94f8d7a1ed43"
+          end
         expect(expected_data_hash[0][:building_reference_number]).to eq(nil)
       end
 
