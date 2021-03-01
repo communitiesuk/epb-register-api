@@ -301,9 +301,6 @@ module ViewModel
     end
 
     def to_report
-      all_main_heating_energy_efficiency =
-        @view_model.all_main_heating_energy_efficiency
-
       {
         assessment_id: @view_model.assessment_id,
         inspection_date: @view_model.date_of_assessment,
@@ -428,11 +425,11 @@ module ViewModel
         floor_level: @view_model.floor_level,
         mainheat_energy_eff:
           Helper::XmlEnumsToOutput.energy_rating_string(
-            all_main_heating_energy_efficiency[0],
+            @view_model.all_main_heating_energy_efficiency.first,
           ),
         mainheat_env_eff:
           Helper::XmlEnumsToOutput.energy_rating_string(
-            all_main_heating_energy_efficiency[1],
+            @view_model.all_main_heating_environmental_efficiency.first,
           ),
         extension_count: @view_model.extensions_count,
         solar_water_heating_flag: @view_model.solar_water_heating_flag,
