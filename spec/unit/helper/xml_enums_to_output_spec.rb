@@ -176,10 +176,10 @@ describe Helper::XmlEnumsToOutput do
         "not applicable",
       )
     end
-    it "does not find the value in the enum and returns not applicable" do
-      expect(Helper::XmlEnumsToOutput.energy_tariff("test")).to eq(
-        "not applicable",
-      )
+    it "does not find the value in the enum and returns nil" do
+      expect(Helper::XmlEnumsToOutput.energy_tariff("test")).to be_nil
+      expect(Helper::XmlEnumsToOutput.energy_tariff("5")).to be_nil
+      expect(Helper::XmlEnumsToOutput.energy_tariff([0, 1])).to be_nil
     end
   end
 

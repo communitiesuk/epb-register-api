@@ -163,7 +163,7 @@ module Helper
     end
 
     def self.energy_tariff(value)
-      !ENERGY_TARIFF.key?(value) ? ENERGY_TARIFF["ND"] : ENERGY_TARIFF[value]
+      ENERGY_TARIFF[value]
     end
 
     def self.main_fuel_rdsap(value)
