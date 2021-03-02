@@ -40,8 +40,6 @@ module UseCase
           view_model_hash[:building_reference_number] = nil
         end
 
-
-
         view_model_array << view_model_hash
         @log_gateway.create(assessment["assessment_id"], new_task_id, "DEC")
       end
