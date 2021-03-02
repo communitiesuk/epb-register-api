@@ -6,7 +6,7 @@ describe UseCase::ExportOpenDataDec do
       let(:export_object) { described_class.new }
 
       expected_values = {
-        rrn: "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
+        assessment_id: "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
         building_reference_number: "UPRN-000000000001",
         address1: "Some Unit",
         address2: "2 Lonely Street",
@@ -53,7 +53,7 @@ describe UseCase::ExportOpenDataDec do
       let(:expected_values_1) do
         expected_values.merge(
           {
-            rrn:
+            assessment_id:
               "55ce7d026c13e923d26cbfb0d6ed60734d3270ba981d629a168bb8eb2da3f8c4",
           },
         )
@@ -62,7 +62,7 @@ describe UseCase::ExportOpenDataDec do
       let(:expected_values_2) do
         expected_values.merge(
           {
-            rrn:
+            assessment_id:
               "5cb9fa3be789df637c7c20acac4e19c5ebf691f0f0d78f2a1b5f30c8b336bba6",
             building_reference_number: nil,
           },
@@ -73,13 +73,20 @@ describe UseCase::ExportOpenDataDec do
         described_class
           .new
           .execute("2019-07-01", 3)
-          .sort_by! { |key| key[:rrn] }
+          .sort_by! { |key| key[:assessment_id] }
       end
 
       let(:statistics) do
         gateway = Gateway::OpenDataLogGateway.new
         gateway.fetch_log_statistics
       end
+
+      let(:first_exported_dec) do
+          exported_data.select do |hash|
+            hash[:assessment_id] ==
+              "5cb9fa3be789df637c7c20acac4e19c5ebf691f0f0d78f2a1b5f30c8b336bba6"
+          end
+        end
 
       before(:all) do
         scheme_id = add_scheme_and_get_id
@@ -206,12 +213,7 @@ describe UseCase::ExportOpenDataDec do
       end
 
       it "returns a hash with building_reference_number nil when building_reference_number is not a UPRN" do
-        expected_data_hash =
-          exported_data.select do |hash|
-            hash[:rrn] ==
-              "5cb9fa3be789df637c7c20acac4e19c5ebf691f0f0d78f2a1b5f30c8b336bba6"
-          end
-        expect(expected_data_hash[0][:building_reference_number]).to eq(nil)
+        expect(first_exported_dec[0][:building_reference_number]).to eq(nil)
       end
     end
   end

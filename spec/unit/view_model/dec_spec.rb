@@ -337,7 +337,7 @@ describe ViewModel::DecWrapper do
 
     let(:assertion) do
       {
-        rrn: "0000-0000-0000-0000-0000",
+        assessment_id: "0000-0000-0000-0000-0000",
         building_reference_number: "LPRN-000000000001",
         address1: "Some Unit",
         address2: "2 Lonely Street",

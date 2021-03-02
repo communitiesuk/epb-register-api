@@ -121,7 +121,7 @@ module ViewModel
     # hash keys will be turned into columns for expected csv
     def to_report
       {
-        rrn: @view_model.assessment_id,
+        assessment_id: @view_model.assessment_id,
         building_reference_number: @view_model.address_id,
         address1: @view_model.address_line1,
         address2: @view_model.address_line2,
