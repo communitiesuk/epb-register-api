@@ -86,7 +86,7 @@ module ViewModel
 
     def to_report
       {
-        rrn: @view_model.assessment_id,
+        assessment_id: @view_model.assessment_id,
         recommendations: [
           @view_model.short_payback_recommendations.map do |recommendation|
             {

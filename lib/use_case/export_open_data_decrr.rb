@@ -43,7 +43,8 @@ module UseCase
           view_model_array <<
             item.merge(
               {
-                rrn: Helper::RrnHelper.hash_rrn(assessment["assessment_id"]),
+                assessment_id:
+                  Helper::RrnHelper.hash_rrn(assessment["assessment_id"]),
                 recommendation_item: recommendation_item,
               },
             )

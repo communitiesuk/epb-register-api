@@ -79,7 +79,19 @@ describe UseCase::ExportOpenDataDecrr do
               "Consider thinking about maybe possibly getting a solar panel but only one.",
             recommendation_code: "ECP-L5",
             recommendation_item: 1,
-            rrn:
+            assessment_id:
+              "55ce7d026c13e923d26cbfb0d6ed60734d3270ba981d629a168bb8eb2da3f8c4",
+          },
+        )
+        expect(exported_data[1]).to eq(
+          {
+            payback_type: "short",
+            cO2_Impact: "LOW",
+            recommendation:
+              "Consider introducing variable speed drives (VSD) for fans, pumps and compressors.",
+            recommendation_code: "EPC-L7",
+            recommendation_item: 2,
+            assessment_id:
               "55ce7d026c13e923d26cbfb0d6ed60734d3270ba981d629a168bb8eb2da3f8c4",
           },
         )

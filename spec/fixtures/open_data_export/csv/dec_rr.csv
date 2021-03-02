@@ -1,4 +1,4 @@
-RRN,PAYBACK_TYPE,RECOMMENDATION_ITEM,RECOMMENDATION_CODE,RECOMMENDATION,CO2_IMPACT
+ASSESSMENT_ID,PAYBACK_TYPE,RECOMMENDATION_ITEM,RECOMMENDATION_CODE,RECOMMENDATION,CO2_IMPACT
 b17f9fac01e2b60a9cc883ed655e5a47b986b179a8bcd8120dd998717ff5984c,"short",1,ECP-L5,"Consider thinking about maybe possibly getting a solar panel but only one.",MEDIUM
 b17f9fac01e2b60a9cc883ed655e5a47b986b179a8bcd8120dd998717ff5984c,short,2,EPC-L7,"Consider introducing variable speed drives (VSD) for fans, pumps and compressors.",LOW
 b17f9fac01e2b60a9cc883ed655e5a47b986b179a8bcd8120dd998717ff5984c,medium,3,ECP-C1,"Engage experts to propose specific measures to reduce hot waterwastage and plan to carry this out.",LOW
