@@ -193,6 +193,33 @@ describe "Acceptance::Reports::OpenDataExport" do
     end
   end
 
+  context "when given the correct environment variables but an invalid date" do
+    before do
+      ENV["bucket_name"] = "test_instance"
+      ENV["date_from"] = DateTime.now.strftime("%F")
+      ENV["assessment_type"] = "SAP-RDSAP"
+    end
+
+    it "returns no data to extact error" do
+      expect { get_task("open_data_export").invoke }.to output(
+        /no data to export/,
+      ).to_stdout
+    end
+  end
+
+  context "when given the correct environment variables post Domestic data" do
+    let(:use_case) { UseCase::ExportOpenDataDomestic.new }
+    let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(test_date)) }
+
+    before do
+      files_list = HttpStub.enable_aws.s3_objects [{ key: "", body: csv_data }]
+
+      HttpStub.enable_logging
+      HttpStub.successful_token
+      # HttpStub.stream_file_to_s3(csv_data)
+    end
+  end
+
   # TODO: once the nodes are complete update to test for content as well as headers
   context "When we call the use case to extract the commercial/non-domestic data" do
     let(:use_case) { UseCase::ExportOpenDataCommercial.new }
@@ -321,7 +348,6 @@ end
 private
 
 def read_csv_fixture(file_name)
-  # TODO: update the path to be more dynamic
   fixture_path = File.dirname __FILE__.gsub("acceptance/reporting", "")
   fixture_path << "/fixtures/open_data_export/csv/"
   read_file = File.read("#{fixture_path}#{file_name}.csv")
