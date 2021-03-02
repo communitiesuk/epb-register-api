@@ -2,7 +2,7 @@
 <ConditionReportCreateRequest_1 xmlns:SAP="DCLG-SAP05"
                                 xmlns:CS="DCLG-HIP/CommonStructures"
                                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                                xsi:noNamespaceSchemaLocation="../../../../api/schemas/xml/SAP-Schema-NI-13.0/Messages/ConditionReportCreateRequest_1.xsd">
+                                xsi:noNamespaceSchemaLocation="../../../../api/schemas/xml/SAP-Schema-NI-12.0/Messages/ConditionReportCreateRequest_1.xsd">
 <Identification>
     <CS:ServiceName>CreateReport</CS:ServiceName>
     <CS:Operation>Create</CS:Operation>

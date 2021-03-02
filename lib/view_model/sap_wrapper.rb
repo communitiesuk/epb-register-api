@@ -204,6 +204,14 @@ module ViewModel
           when "3"
             ViewModel::SapSchemaNi120::Sap.new(xml)
           end
+      when "SAP-Schema-NI-11.2"
+        @view_model =
+          case report_type
+          when "2"
+            ViewModel::SapSchemaNi112::Rdsap.new(xml)
+          when "3"
+            ViewModel::SapSchemaNi112::Sap.new(xml)
+          end
       else
         raise ArgumentError, "Unsupported schema type"
       end

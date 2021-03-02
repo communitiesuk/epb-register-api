@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- edited with XMLSpy v2006 rel. 3 sp2 (http://www.altova.com) by Jim Bowery (Landmark Information Group Ltd.) -->
+<xs:schema xmlns="DCLG-HIP" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pfdt="DCLG-HIP/BaseDataTypes" xmlns:HIP="DCLG-HIP" targetNamespace="DCLG-HIP" version="LIG-11.2">
+	<!--
+	© Department of Communities and Local Government. © Crown copyright, 2007. The Home Condition Report logo and associated wording is a registered trade mark - any unlicensed use is not permitted. Copyright in the typographical arrangement of this document rests with the Crown. This publication, excluding logos, may be reproduced free of charge in any format or medium for research, private study, for internal circulation within an organisation or by registered scheme users. This is subject to it being reproduced accurately and not used in a misleading context. 
+
+-->
+	<xs:import namespace="DCLG-HIP/BaseDataTypes" schemaLocation="../UDT/BaseDataTypes.xsd"/>
+	<xs:include schemaLocation="../UDT/TypeDefinitions.xsd"/>
+	<xs:include schemaLocation="../UDT/SAP-Domains.xsd"/>
+	<xs:include schemaLocation="../UDT/SharedDomains.xsd"/>
+	<xs:element name="SAP-Data" type="SAP-Data"/>
+	<xs:complexType name="SAP-Data">
+		<xs:annotation>
+			<xs:documentation>These are the specific data-items collected by the HI / EA needed to perform the SAP calculation.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="SAP-Property-Details" type="SAP-Property-Details"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="SAP-Property-Details" type="SAP-Property-Details"/>
+	<xs:complexType name="SAP-Property-Details">
+		<xs:all>
+			<xs:element name="Built-Form" type="SAP-BuiltFormCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The building type of the Property e.g. Detached, Semi-Detached, Terrace etc.
+
+Together with the Property Type, the Build Form produces a structured description of the property.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Double-Glazed-Proportion" type="pfdt:Percentage" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The estimated banded range (e.g. 0% - 10%) of the total glazed area of the Property that is double glazed.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Double-Glazing-Installed" type="GlazingInstalledCode">
+				<xs:annotation>
+					<xs:documentation>If double glazing is installed then identifies approximately when the double glazing was installed.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Extensions-Count" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>The number of extensions added to the house.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Glazed-Area" type="GlazedAreaCode">
+				<xs:annotation>
+					<xs:documentation>Ranged estimate of the total glazed area of the Habitable Area.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Habitable-Room-Count" type="pfdt:Count">
+				<xs:annotation>
+					<xs:documentation>Count of the number of habitable rooms within the property. 
+
+This is the number of Reception Rooms (including Living Rooms, Sitting Rooms, Dining Rooms), Bedrooms, Study and similar rooms but excludes hall, stairs, kitchen, utility rooms, bathrooms, cloakrooms, en-suites and similar rooms.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Heated-Room-Count" type="pfdt:Count" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The numbewr of heated rooms in the property if more than half of the abitable rooms are not heated.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Low-Energy-Lighting" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>The percentage of low energy lighting present in the property as a percentage of the total fixed lights in the property. 0% indicates that no low-energy lighting is present.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Measurement-Type" type="MeasurementTypeCode">
+				<xs:annotation>
+					<xs:documentation>Indicates the type of measurements taken to calculate floor areas e.g. "Internal" or "External"</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Open-Fireplaces-Count" type="pfdt:Count">
+				<xs:annotation>
+					<xs:documentation>The number of Open Fireplaces in the Property.
+
+An Open Fireplace is a fireplace that still allows air to pass between the inside of the Property and the outside.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Photovoltaic-Supply" type="xs:int">
+				<xs:annotation>
+					<xs:documentation>Percentage of photovoltaic area as a percentage of total roof area. 0% indicates that a Photovoltaic Supply is not present in the property.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Property-Type" type="PropertyTypeCode">
+				<xs:annotation>
+					<xs:documentation>Describes the type of property such as House, Flat, Mansion, Maisonette etc.
+
+This is actually the type differentiator for Property but only a limited number of property types, notably Apartment and Apartment Block, have any specific characteristics and warrant their own definition.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Solar-Water-Heating" type="pfdt:Flag">
+				<xs:annotation>
+					<xs:documentation>Indicates whether the heating in the Property is solar powered.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Mechanical-Ventliation" type="VentilationTypeCode">
+				<xs:annotation>
+					<xs:documentation>Identifies the type of mechanical ventilation the property has. This is required for the RdSAP calculation.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SAP-Heating" type="SAP-Heating" minOccurs="0"/>
+			<xs:element name="SAP-Energy-Source" type="SAP-Energy-Source" minOccurs="0"/>
+			<xs:element name="SAP-Building-Parts" type="SAP-Building-Parts"/>
+			<xs:element name="SAP-Flat-Details" type="SAP-Flat-Details" minOccurs="0"/>
+			<xs:element name="SAP-WIndows" type="SAP-Windows" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="SAP-Floor-Dimension" type="SAP-Floor-Dimension"/>
+	<xs:complexType name="SAP-Floor-Dimension">
+		<xs:annotation>
+			<xs:documentation>Various measurements for each floor that makes up a particular Build-Part.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Heat-Loss-Perimeter" type="pfdt:Measurement">
+				<xs:annotation>
+					<xs:documentation>The estimate total heat loss perimeter for the Storey. The heat loss perimeter is any part of the storey that is exposed to the outside world through which heat may escape.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Room-Height" type="pfdt:Measurement">
+				<xs:annotation>
+					<xs:documentation>Average height of the Storey</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Total-Floor-Area" type="pfdt:Measurement">
+				<xs:annotation>
+					<xs:documentation>The total floor area of the storey</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Floor" type="SAP-StoreyFloorCode"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="MainHeatingDetailsType" type="MainHeatingDetailsType"/>
+	<xs:complexType name="MainHeatingDetailsType">
+		<xs:annotation>
+			<xs:documentation>Structured type for recording the details of the main heating present in nthe property as used in the SAP calculation</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Heating-Brand-Name" type="xs:string" minOccurs="0"/>
+			<xs:element name="Heating-Model-Name" type="xs:string" minOccurs="0"/>
+			<xs:element name="Heating-Boiler-ID" type="xs:string" minOccurs="0"/>
+			<xs:element name="Heating-SEDBUK-ID" type="xs:string" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="SAP-Building-Parts" type="SAP-Building-Parts"/>
+	<xs:complexType name="SAP-Building-Parts">
+		<xs:annotation>
+			<xs:documentation>Details of the significant building parts that comprise the main habitable building in the property. The main habitable area generally consists of a single main building but can over time be extended to include extensions such as new wings and additional storeys.
+
+For the purpose of calculating the overall Energy Assessment for the property details of each distinct Building Part, such as its construction, have to be gathered because different materials have different insulation ratings (obviously) which affects the overall rating.
+</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SAP-Integral-Conservatory" type="SAP-Integral-Conservatory" minOccurs="0"/>
+			<xs:element name="SAP-Alternative-Wall" type="SAP-Alternative-Wall" minOccurs="0"/>
+			<xs:element name="SAP-Building-Part" type="SAP-Building-Part" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SAP-Building-Part" type="SAP-Building-Part"/>
+	<xs:complexType name="SAP-Building-Part">
+		<xs:annotation>
+			<xs:documentation>A permanent structure that forms part of the Property and is built primarily for human habitation. A Building is usually made up of one or more Storey's and may contain a number of Internal Structural Features. An extension would be a Building Part.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Identifier" type="pfdt:IDString" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Identifier for the Building part - generally only required if there are more that one Building Parts of the same type e.g. "West Wing" and "East Wing" Extensions</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Construction-Year" type="ConstructionDateCode">
+				<xs:annotation>
+					<xs:documentation>The value represents the year the property was constructed.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Wall-Insulation-Type" type="WallInsulationCode">
+				<xs:annotation>
+					<xs:documentation>Describes the type of insulation present in the wall if any.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Roof-Construction" type="RoofTypeCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Describes the material that the roof of the Building Part is constructed from e.g. Tile, Slate etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Wall-Construction" type="WallConstructionCode"/>
+			<xs:element name="Roof-Insulation-Location" type="RoofInsulationLocationCode">
+				<xs:annotation>
+					<xs:documentation>The location of the insulation in the roof e.g. between joists, in rafters etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Roof-Insulation-Thickness" type="RoofInsulationThicknessCode">
+				<xs:annotation>
+					<xs:documentation>Average thickness range of the insulation e.g. "100 - 125", "200 - 225" etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SAP-Floor-Dimensions" type="SAP-Floor-Dimensions" minOccurs="0"/>
+			<xs:element name="SAP-Room-in-roof" type="SAP-Room-In-Roof" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="SAP-Room-In-Roof">
+		<xs:all>
+			<xs:element name="Floor-Area" type="pfdt:Measurement"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="SAP-Windows">
+		<xs:annotation>
+			<xs:documentation>Details of the windows in the building
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SAP-Window" type="SAP-Window" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SAP-Window">
+		<xs:all>
+			<xs:element name="Window-Location" type="BuildingPartCode"/>
+			<xs:element name="Window-Area" type="pfdt:Measurement"/>
+			<xs:element name="Glazing-Type" type="GlazingInstalledCode"/>
+			<xs:element name="Window-Type" type="WindowTypeCode"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="SAP-Alternative-Wall" type="SAP-Alternative-Wall"/>
+	<xs:complexType name="SAP-Alternative-Wall">
+		<xs:all>
+			<xs:element name="Wall-Location" type="BuildingPartCode"/>
+			<xs:element name="Wall-Construction" type="WallConstructionCode"/>
+			<xs:element name="Wall-Insulation-Type" type="WallInsulationCode"/>
+			<xs:element name="Wall-Area" type="pfdt:Measurement"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="SAP-Internal-Wall" type="SAP-Internal-Wall"/>
+	<xs:complexType name="SAP-Internal-Wall">
+		<xs:all>
+			<xs:element name="Construction" type="WallConstructionCode">
+				<xs:annotation>
+					<xs:documentation>Classifies the type of construction for the Wall e.g. stud-partition, brick etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="U-Value" type="UValue"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="SAP-Energy-Source" type="SAP-Energy-Source"/>
+	<xs:complexType name="SAP-Energy-Source">
+		<xs:annotation>
+			<xs:documentation>Details of the main Electricity supply to the Property.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Meter-Type" type="ElectricMeterTypeCode">
+				<xs:annotation>
+					<xs:documentation>The type of Electricity Meter - taken from a pre-defined list of values.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Main-Gas" type="pfdt:Flag" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Additional record of Energy Source - selected if Gas</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="SAP-Heating" type="SAP-Heating"/>
+	<xs:complexType name="SAP-Heating">
+		<xs:annotation>
+			<xs:documentation>Details of the means by which the Main Building is heated.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Secondary-Fuel-Type" type="HeatingFuelTypeCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The secondary type of fuel used to power the central heating e.g. Gas, Electricity</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Main-Fuel-Type" type="HeatingFuelTypeCode">
+				<xs:annotation>
+					<xs:documentation>The type of fuel used to power the central heating e.g. Gas, Electricity</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Water-Heating-Fuel" type="HeatingFuelTypeCode">
+				<xs:annotation>
+					<xs:documentation>The type of fuel used to heat the water e.g. Gas, Electricity</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Main-Heating-Control" type="SAP-HeatingCode">
+				<xs:annotation>
+					<xs:documentation>Type of Main Control for the Heating System.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Secondary-Heating-Type" type="SAP-HeatingCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Type of secondary heating (if any) present in the property.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Water-Heating-Code" type="SAP-HeatingCode">
+				<xs:annotation>
+					<xs:documentation>Describes the type of Water Heating present in the Property.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Immersion-Heating-Type" type="ImmersionHeatingTypeCode" minOccurs="0"/>
+			<xs:element name="Cylinder-Size" type="CylinderSizeCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The size of the Hot Water Cylinder - taken from a range of standard sizes.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Cylinder-Insulation-Type" type="CylinderInsulationTypeCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>the type of insulation surrounding the Hot Water Cylinder</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Cylinder-Insulation-Thickness" type="CylinderThicknessCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Average thickness of the insulation surrounding the Hot Water Cylinder.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Cylinder-Thermostat" type="pfdt:Flag" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The type of thermostat installed for the hot water cylinder</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Boiler-BEDF-Number" type="xs:string" minOccurs="0"/>
+			<xs:element name="Boiler-Index-Number" type="xs:string" minOccurs="0"/>
+			<xs:element name="Data-Source" type="BoilerDataSourceCode"/>
+			<xs:element name="SAP-Main-Heating-Code" type="SAP-HeatingCode" minOccurs="0"/>
+			<xs:element name="Boiler-Flue-Type" type="BoilerFlueTypeCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indicates the flue type of the heating system.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Fan-Flue-Present" type="pfdt:Flag" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Indicates whether the heating system contains a fan flue. This is required by RdSAP and should be part of the 3-letter codes but isn't.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Heat-Emitter-Type" type="HeatEmmitterCode">
+				<xs:annotation>
+					<xs:documentation>Identifies the means by which the central heating system (if present) emits heat.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="SAP-Floor-Dimensions" type="SAP-Floor-Dimensions"/>
+	<xs:complexType name="SAP-Floor-Dimensions">
+		<xs:sequence>
+			<xs:element name="SAP-Floor-Dimension" type="SAP-Floor-Dimension" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SAP-Integral-Conservatory" type="SAP-Integral-Conservatory"/>
+	<xs:complexType name="SAP-Integral-Conservatory">
+		<xs:annotation>
+			<xs:documentation>A conservatory intergrated into the property that is within the heat-loss perimeter and forms part of the habitable area.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Double-Glazed" type="pfdt:Flag">
+				<xs:annotation>
+					<xs:documentation>Indicates whether the conservatory is double glazed</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Floor-Area" type="pfdt:Measurement">
+				<xs:annotation>
+					<xs:documentation>The gross floor area of the conservatory</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Glazed-Perimeter" type="pfdt:Measurement">
+				<xs:annotation>
+					<xs:documentation>The length of the glazed area</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Room-Height" type="RoomHeightCode">
+				<xs:annotation>
+					<xs:documentation>The average height of the conservatory</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="SAP-Flat-Details" type="SAP-Flat-Details"/>
+	<xs:complexType name="SAP-Flat-Details">
+		<xs:all>
+			<xs:element name="Flat-Location" type="BlockStoreyCode">
+				<xs:annotation>
+					<xs:documentation>Identifies the storey within the block that the entrance to the flat is located on</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Storey-Count" type="pfdt:Count">
+				<xs:annotation>
+					<xs:documentation>The number of Storeys in the Apartment Block.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Top-Storey" type="pfdt:Flag">
+				<xs:annotation>
+					<xs:documentation>Indicates that the Apartment is located on the Top Storey of the Apartment Block.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Heat-Loss-Corridor" type="HeatLossCorridorCode">
+				<xs:annotation>
+					<xs:documentation>Indiocates that the flat contained a cossidor through which heat is lost.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Unheated-Corridor-Length" type="pfdt:Measurement" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The tortal length of unheated corridor in the flat. Only popualted if Heat-Loss-Corridor = {Unheated Corridor}</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Floor-Heat-Loss" type="HeatLossFloorCode">
+				<xs:annotation>
+					<xs:documentation>Identifies the type of foor through which heat loss occurs.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+</xs:schema>

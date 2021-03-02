@@ -1005,6 +1005,23 @@ describe ViewModel::SapWrapper do
               ],
             },
           ),
+        { schema: "SAP-Schema-NI-11.2", type: "sap" }.merge(is_ni_pre_17)
+          .deep_merge(is_pre_14)
+          .deep_merge(is_pre_13),
+        {
+          schema: "SAP-Schema-NI-11.2",
+          type: "rdsap",
+          different_fields: {
+            main_fuel_type: "10",
+          },
+        }.deep_merge(is_ni)
+          .deep_merge(is_ni_pre_17)
+          .deep_merge(is_rdsap)
+          .deep_merge(is_pre_14)
+          .deep_merge(is_pre_13)
+          .deep_merge(is_ni_rdsap_pre_15)
+          .deep_merge(is_pre_14_rdsap)
+          .deep_merge(heat_demand_unsupported),
         { schema: "SAP-Schema-11.0", type: "sap" }.deep_merge(is_pre_15)
           .deep_merge(is_pre_14)
           .deep_merge(is_pre_13),
