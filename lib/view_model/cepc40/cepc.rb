@@ -1,20 +1,16 @@
 module ViewModel
   module Cepc40
     class Cepc < ViewModel::Cepc40::CommonSchema
-      def main_heating_fuel
-        xpath(%w[Main-Heating-Fuel])
+      def ac_inspection_commissioned
+        xpath(%w[AC-Inspection-Commissioned])
       end
 
-      def building_environment
-        xpath(%w[Building-Environment])
+      def ac_kw_rating
+        xpath(%w[AC-kW-Rating])
       end
 
-      def floor_area
-        xpath(%w[Technical-Information Floor-Area])
-      end
-
-      def building_level
-        xpath(%w[Building-Level])
+      def ac_present
+        xpath(%w[AC-Present])
       end
 
       def building_emission_rate
@@ -25,20 +21,12 @@ module ViewModel
         nil
       end
 
-      def primary_energy_use
-        xpath(%w[Energy-Consumption-Current])
+      def building_environment
+        xpath(%w[Building-Environment])
       end
 
-      def related_rrn
-        xpath(%w[Related-RRN])
-      end
-
-      def new_build_rating
-        xpath(%w[New-Build-Benchmark])
-      end
-
-      def existing_build_rating
-        xpath(%w[Existing-Stock-Benchmark])
+      def building_level
+        xpath(%w[Building-Level])
       end
 
       def energy_efficiency_rating
@@ -49,20 +37,52 @@ module ViewModel
         xpath(%w[Related-Party-Disclosure])
       end
 
-      def property_type
-        xpath(%w[Property-Type])
+      def estimated_ac_kw_rating
+        xpath(%w[AC-Estimated-Output])
       end
 
-      def ac_present
-        xpath(%w[AC-Present])
+      def existing_build_rating
+        xpath(%w[Existing-Stock-Benchmark])
       end
 
-      def transaction_type
-        nil
+      def floor_area
+        xpath(%w[Technical-Information Floor-Area])
+      end
+
+      def main_heating_fuel
+        xpath(%w[Main-Heating-Fuel])
+      end
+
+      def new_build_rating
+        xpath(%w[New-Build-Benchmark])
       end
 
       def other_fuel_description
         xpath(%w[Other-Fuel-Description])
+      end
+
+      def primary_energy_use
+        xpath(%w[Energy-Consumption-Current])
+      end
+
+      def primary_energy_use
+        nil
+      end
+
+      def property_type
+        xpath(%w[Property-Type])
+      end
+
+      def related_rrn
+        xpath(%w[Related-RRN])
+      end
+
+      def special_energy_uses
+        xpath(%w[Special-Energy-Uses])
+      end
+
+      def standard_emissions
+        nil
       end
 
       def target_emissions
@@ -74,34 +94,6 @@ module ViewModel
       end
 
       def typical_emissions
-        nil
-      end
-
-      def ac_kw_rating
-        xpath(%w[AC-kW-Rating])
-      end
-
-      def estimated_ac_kw_rating
-        xpath(%w[AC-Estimated-Output])
-      end
-
-      def special_energy_uses
-        xpath(%w[Special-Energy-Uses])
-      end
-
-      def building_environment
-        xpath(%w[Building-Environment])
-      end
-
-      def standard_emissions
-        nil
-      end
-
-      def ac_inspection_commissioned
-        xpath(%w[AC-Inspection-Commissioned])
-      end
-
-      def primary_energy_use
         nil
       end
     end
