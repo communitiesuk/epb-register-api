@@ -18,12 +18,12 @@ module ViewModel
         xpath(%w[AC-Rated-Output])
       end
 
-      def building_environment
-        xpath(%w[Building-Environment])
-      end
-
       def building_emission_rate
         xpath(%w[BER])
+      end
+
+      def building_environment
+        xpath(%w[Building-Environment])
       end
 
       def building_level
@@ -58,16 +58,16 @@ module ViewModel
         xpath(%w[New-Build-Benchmark])
       end
 
+      def other_fuel_description
+        xpath(%w[Other-Fuel-Description])
+      end
+
       def primary_energy_use
         xpath(%w[Energy-Consumption-Current])
       end
 
       def property_type
         xpath(%w[Property-Type])
-      end
-
-      def other_fuel_description
-        xpath(%w[Other-Fuel-Description])
       end
 
       def related_rrn

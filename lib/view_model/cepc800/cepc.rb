@@ -64,16 +64,16 @@ module ViewModel
         xpath(%w[New-Build-Benchmark])
       end
 
-      def other_fuel_description
-        xpath(%w[Other-Fuel-Description])
+      def or_assessment_start_date
+        xpath(%w[OR-Operational-Rating OR-Assessment-Start-Date])
       end
 
       def or_availability_date
         xpath(%w[Technical-Information OR-Availability-Date])
       end
 
-      def or_assessment_start_date
-        xpath(%w[OR-Operational-Rating OR-Assessment-Start-Date])
+      def other_fuel_description
+        xpath(%w[Other-Fuel-Description])
       end
 
       def primary_energy_use
@@ -93,6 +93,10 @@ module ViewModel
         xpath(%w[Related-RRN])
       end
 
+      def special_energy_uses
+        xpath(%w[Special-Energy-Uses])
+      end
+
       def standard_emissions
         xpath(%w[SER])
       end
@@ -107,10 +111,6 @@ module ViewModel
 
       def typical_emissions
         xpath(%w[TYR])
-      end
-
-      def special_energy_uses
-        xpath(%w[Special-Energy-Uses])
       end
     end
   end
