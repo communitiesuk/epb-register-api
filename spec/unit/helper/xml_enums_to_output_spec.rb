@@ -141,6 +141,7 @@ describe Helper::XmlEnumsToOutput do
         response = helper.xml_value_to_string({ "hello": 20 })
         expect(response).to be_nil
       end
+
       it "returns nil for Open Data Communities" do
         response = helper.xml_value_to_string("Any other value")
         expect(response).to be_nil
@@ -151,28 +152,20 @@ describe Helper::XmlEnumsToOutput do
   context "when an EnergyEfficiencySummaryCode type XML value is passed to the RATINGS enum" do
     context "and the XML has a value contained in the enum" do
       it "returns the correct string value for Open Data Communities" do
-        expect(Helper::XmlEnumsToOutput.energy_rating_string(2)).to eq("Poor")
+        expect(Helper::XmlEnumsToOutput.energy_rating_string("2")).to eq("Poor")
+        expect(Helper::XmlEnumsToOutput.energy_rating_string("0")).to eq("N/A")
+        expect(Helper::XmlEnumsToOutput.energy_rating_string("4")).to eq("Good")
       end
+    end
 
       context "and the XML has a value outside of the enum" do
-        it "returns the N/A if a string value is passed or int is out of range" do
-          expect(Helper::XmlEnumsToOutput.energy_rating_string("a")).to eq(
-            "N/A",
-          )
-          expect(Helper::XmlEnumsToOutput.energy_rating_string(0)).to eq("N/A")
-          expect(Helper::XmlEnumsToOutput.energy_rating_string(10)).to eq("N/A")
-        end
-      end
-
-      context "and the XML has values in the form of an array" do
-        it "returns the joined string value for Open Data Communities" do
-          expect(Helper::XmlEnumsToOutput.energy_rating_string([0, 0])).to eq(
-            "N/A, N/A",
-          )
+        it "returns nil if the wrong type or key out of range is passed" do
+          expect(Helper::XmlEnumsToOutput.energy_rating_string("A")).to be_nil
+          expect(Helper::XmlEnumsToOutput.energy_rating_string("10")).to be_nil
+          expect(Helper::XmlEnumsToOutput.energy_rating_string([0, 0])).to be_nil
         end
       end
     end
-  end
 
   context "when the Energy-Tariff XML value is passed to the ENERGY_TARIFF enum" do
     it "finds the value in the enum and returns the correct string value" do

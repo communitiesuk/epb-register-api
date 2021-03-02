@@ -1,13 +1,13 @@
 module Helper
   class XmlEnumsToOutput
-    RATINGS = [
-      "N/A",
-      "Very Poor",
-      "Poor",
-      "Average",
-      "Good",
-      "Very Good",
-    ].freeze
+    RATINGS = {
+      "0" => "N/A",
+      "1" => "Very Poor",
+      "2" => "Poor",
+      "3" => "Average",
+      "4" => "Good",
+      "5" => "Very Good",
+    }.freeze
     BUILT_FORM = {
       "1" => "Detached",
       "2" => "Semi-Detached",
@@ -158,18 +158,8 @@ module Helper
       BUILT_FORM[number]
     end
 
-    def self.energy_rating_string(input)
-      if input.is_a?(Array)
-        array = []
-        input.each do |input|
-          number = input.to_i
-          array << (number > RATINGS.length ? "N/A" : RATINGS[number])
-        end
-        array.join ", "
-      else
-        number = input.to_i
-        number > RATINGS.length ? "N/A" : RATINGS[number]
-      end
+    def self.energy_rating_string(value)
+        RATINGS[value]
     end
 
     def self.energy_tariff(value)
