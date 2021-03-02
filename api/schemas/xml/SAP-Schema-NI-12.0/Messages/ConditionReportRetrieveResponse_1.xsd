@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:CS="DCLG-HIP/CommonStructures" xmlns:ERR="DCLG-HIP/Exceptions" xmlns:SAP05="DCLG-SAP05" xmlns:pfdt="DCLG-HIP/BaseDataTypes" xmlns:HIP="DCLG-HIP" elementFormDefault="qualified" attributeFormDefault="unqualified" version="LIG-12.0">
+	<!--
+	© Department of Communities and Local Government. © Crown copyright, 2007. The Home Condition Report logo and associated wording is a registered trade mark - any unlicensed use is not permitted. Copyright in the typographical arrangement of this document rests with the Crown. This publication, excluding logos, may be reproduced free of charge in any format or medium for research, private study, for internal circulation within an organisation or by registered scheme users. This is subject to it being reproduced accurately and not used in a misleading context. 
+
+-->
+	<!--***************************************************************************
+	Imports and Inclusions
+	*************************************************************************** -->
+	<!-- Common Structures contains the standard domain-wide declarations of the infrastructure elements such as IdentifyingBlock -->
+	<xs:import namespace="DCLG-HIP/CommonStructures" schemaLocation="../CommonFiles/CommonStructures.xsd"/>
+	<xs:import namespace="DCLG-HIP/Exceptions" schemaLocation="../CommonFiles/Exceptions.xsd"/>
+	<xs:import namespace="DCLG-HIP/BaseDataTypes" schemaLocation="../UDT/BaseDataTypes.xsd"/>
+	<!-- Include templates for all Business Entities used by the message -->
+	<xs:import namespace="DCLG-HIP" schemaLocation="../Templates/HIP-Reports.xsd"/>
+	<!-- Add the New build SAP-EPC data model -->
+	<xs:import namespace="DCLG-SAP05" schemaLocation="../SAP-EPC/Templates/SAP05-Report.xsd"/>
+	<!--***************************************************************************
+	Response Message Definition
+	The response from the service may be:
+	*	A summary list of available Reports
+	*	A PDF of one of the Reports
+	*	A list of exceptions
+	*************************************************************************** -->
+	<xs:element name="ConditionReportRetrieveResponse_1">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Identification">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="CS:DefaultIdBlock">
+								<xs:sequence>
+									<xs:element name="Identifier" type="HIP:ReportKeyFields"/>
+								</xs:sequence>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Configuration">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="CS:SearchResponseConfigBlock">
+								<xs:sequence>
+									<xs:element name="LatestRetrieved" type="pfdt:Flag"/>
+								</xs:sequence>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:choice>
+					<!-- This is the valid response if everthing is OK -->
+					<xs:element name="Content">
+						<xs:complexType>
+							<xs:choice>
+								<xs:element name="Report-List" maxOccurs="unbounded">
+									<xs:complexType>
+										<xs:all>
+											<xs:element name="Report-Summary">
+												<xs:complexType>
+													<xs:all>
+														<xs:element name="RRN" type="pfdt:RRNType"/>
+														<xs:element name="Inspection-Date" type="xs:date"/>
+														<xs:element name="HI-Name" type="HIP:PersonNameType"/>
+														<xs:element name="HI-Certificate" type="HIP:CertificateNumberType"/>
+														<xs:element name="Restricted-Access" type="HIP:RestrictedAccessCode"/>
+														<xs:element name="Report-Status" type="HIP:ReportStatusCode"/>
+													</xs:all>
+												</xs:complexType>
+											</xs:element>
+										</xs:all>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="PDF" type="xs:base64Binary"/>
+								<xs:element name="HCR-Header" type="HIP:Report-Header"/>
+								<xs:element name="HCR-Data" type="HIP:Home-Condition-Report"/>
+								<xs:element name="EPC-Data" type="HIP:Energy-Performance-Certificate"/>
+								<xs:element name="SAP-EPC-Data" type="SAP05:Energy-Performance-Certificate"/>
+							</xs:choice>
+						</xs:complexType>
+					</xs:element>
+					<!-- This is the response if anything is wrong with the actual data in the message -->
+					<xs:element name="ExceptionList" type="ERR:ExceptionList"/>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

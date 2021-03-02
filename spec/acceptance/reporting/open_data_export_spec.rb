@@ -22,7 +22,6 @@ describe "Acceptance::Reports::OpenDataExport" do
     domestic_sap_assessment_date = domestic_sap_xml.at("Registration-Date")
     domestic_sap_building_reference_number = domestic_sap_xml.at("UPRN")
 
-
     cepc_rr_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc+rr")
     cepc_rr_xml
       .xpath("//*[local-name() = 'RRN']")
@@ -163,7 +162,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       },
       override: true,
       schema_name: "SAP-Schema-18.0.0",
-      )
+    )
   end
 
   let(:statistics) do
@@ -232,7 +231,7 @@ describe "Acceptance::Reports::OpenDataExport" do
     end
   end
 
-  #TODO Test content as well as headers
+  # TODO: Test content as well as headers
   context "When we call the use case to extract the DEC data" do
     let(:dec_use_case) { UseCase::ExportOpenDataDec.new }
     let(:csv_data) do
@@ -252,7 +251,7 @@ describe "Acceptance::Reports::OpenDataExport" do
     let(:use_case) { UseCase::ExportOpenDataDecrr.new }
     let(:csv_data) do
       Helper::ExportHelper.to_csv(
-          use_case.execute(test_date).sort_by! { |key| key[:recommendation_item] },
+        use_case.execute(test_date).sort_by! { |key| key[:recommendation_item] },
       )
     end
     let(:export_data_headers_array) { get_exported_data_headers(csv_data) }
@@ -272,10 +271,13 @@ describe "Acceptance::Reports::OpenDataExport" do
     end
   end
 
-
   context "When we call the use case to extract the domestic data" do
     let(:use_case) { UseCase::ExportOpenDataDomestic.new }
-    let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(test_date).sort_by!{|item| item[:assessment_id]}) }
+    let(:csv_data) do
+      Helper::ExportHelper.to_csv(
+        use_case.execute(test_date).sort_by! { |item| item[:assessment_id] },
+      )
+    end
     let(:fixture_csv) { read_csv_fixture("domestic") }
     let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
 
@@ -293,7 +295,13 @@ describe "Acceptance::Reports::OpenDataExport" do
 
   context "When we call the use case to extract the domestic recommendations data" do
     let(:use_case) { UseCase::ExportOpenDataDomesticrr.new }
-    let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(test_date).sort_by!{|item| [item[:assessment_id], item[:improvement_item]]}) }
+    let(:csv_data) do
+      Helper::ExportHelper.to_csv(
+        use_case
+          .execute(test_date)
+          .sort_by! { |item| [item[:assessment_id], item[:improvement_item]] },
+      )
+    end
     let(:fixture_csv) { read_csv_fixture("domestic_rr") }
     let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
 

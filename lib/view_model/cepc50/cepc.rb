@@ -17,8 +17,6 @@ module ViewModel
         xpath(%w[Building-Environment])
       end
 
-
-
       def building_level
         xpath(%w[Building-Level])
       end
@@ -26,8 +24,6 @@ module ViewModel
       def building_emission_rate
         xpath(%w[BER])
       end
-
-
 
       def energy_efficiency_rating
         xpath(%w[Asset-Rating])

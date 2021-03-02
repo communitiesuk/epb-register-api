@@ -1,7 +1,6 @@
 module ViewModel
   module Cepc71
     class Cepc < ViewModel::Cepc71::CommonSchema
-
       def ac_inspection_commissioned
         xpath(%w[AC-Inspection-Commissioned])
       end

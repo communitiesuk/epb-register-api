@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="DCLG-HIP" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="DCLG-HIP" xmlns:pfdt="DCLG-HIP/BaseDataTypes" xmlns:HIP="DCLG-HIP" version="LIG-12.0">
+	<xs:annotation>
+		<xs:documentation>© Department of Communities and Local Government. © Crown copyright, 2007. The Home Condition Report logo and associated wording is a registered trade mark - any unlicensed use is not permitted. Copyright in the typographical arrangement of this document rests with the Crown. This publication, excluding logos, may be reproduced free of charge in any format or medium for research, private study, for internal circulation within an organisation or by registered scheme users. This is subject to it being reproduced accurately and not used in a misleading context. </xs:documentation>
+	</xs:annotation>
+	<xs:import namespace="DCLG-HIP/BaseDataTypes" schemaLocation="../UDT/BaseDataTypes.xsd"/>
+	<xs:include schemaLocation="../UDT/HCR-Domains.xsd"/>
+	<xs:element name="Risk-Assessment" type="Risk-Assessment"/>
+	<xs:complexType name="Risk-Assessment">
+		<xs:annotation>
+			<xs:documentation>Part of a Home Condition Report identifying, in the Home Inspectors opinion, the types of risks that may affect the value of the inspected property or place restrictions on the use of the inspected property.</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Conveyancing-Risks" type="Conveyancing-Risks" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="Environmental-Risks" type="Environmental-Risks" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="Health-Risks" type="Health-Risks" minOccurs="0" maxOccurs="1"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="Conveyancing-Risks" type="Conveyancing-Risks"/>
+	<xs:complexType name="Conveyancing-Risks">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="Highway-Adoption-Risk" type="HighwayAdoptionRiskType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Indicates whether the Home Inspector believes that there is a risk of the Highways or Footpaths not being adopted.
+
+Not being adopted means that the maintenance cost of the road or footpath must be carried by the Owners of the Properties adjoining the highway or footpath.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Statutory-Consents-Risk" type="pfdt:Sentence" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A description of the alteration that the Home Inspector believes required a statutory consent to be given.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Freehold-Consents-Risk" type="pfdt:Sentence" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A description of the alteration that the Home Inspectors believes required a Freehold Owner Consent to have been obtained.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Flying-Freehold-Risk" type="pfdt:Flag" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Indicates that the Home Inspector believes that their may be some risk with Flying Freeholds hat may be associated with the Property.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Mining-Risk" type="MiningTypeCode" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Indicates whether the Home Inspector believes that there is a some risk to the Property Owner relating to Mining rights in the land.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Rights-Of-Way-Risk" type="RightsOfWayRiskType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Details of any Rights of Way that the Home Inspector believes encroach on the Property.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Boundary-Risk" type="pfdt:Sentence" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Indicates that the Home Inspector believes that there may be some risk associated with the boundaries (including Party Walls) of the Property.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Easements-Risk" type="EasementsRiskType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Details of any easements that the Home Inspector believes relate to the Property.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Structural-Repairs-Risk" type="StructuralWorkRiskType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Indicates that the Home Inspector believes that there may be some risk with some of the structural repairs that may previously have been carried out on the Property.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Property-Warranty-Risk" type="PropertyWarrantyCode" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identifies the type of property warranty that the Home Inspector believes is covering the entire property such as an NHBC Buildmark Certificate.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Building-Insurance-Risk" type="pfdt:Flag" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Indicates that the Home Inspector believes that their may be some risk with on-going claims against the Property's Building Insurance.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Tree-Preservation-Risk" type="TreeLocationCode" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Indicates that the Home Inspector believes that there may be some risk of Tree Preservation Orders affecting the Property.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Property-Let-Risk" type="pfdt:Flag" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Indicates that </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Radon-Gas-Risk" type="pfdt:Flag" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Indicates that the property is in an area where Radon gas is know yto occur.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Shared-Parts-Repaired" type="pfdt:Sentence" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Describes any repairs to shared parts that may have been carried out.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:element name="Environmental-Risks" type="Environmental-Risks"/>
+	<xs:complexType name="Environmental-Risks">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="Contamination-Risk" type="ContaminationRiskType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Indicates whether the Home Inspector believes that there is an existing risk of contamination to the land or property.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Flooding-Risk" type="FloodingRiskType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Indicates whether the Home Inspector believes that there is a risk of flooding of the property in the future.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:element name="Health-Risks" type="Health-Risks"/>
+	<xs:complexType name="Health-Risks">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="Escape-Windows-Risk" type="EscapeWindowLocationCode" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Location where the Home Inspector thinks the lack of an escape window poses a fire risk.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Fire-Control-Risk" type="pfdt:Flag" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Indicates that the Home Inspector believes that there are inadequate measures to control the spread of fire.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="No-Fire-Doors-Location" type="pfdt:Sentence" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Safety-Glass-Risk" type="SafetyGlassType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Gas-Leak-Detected" type="GasLeakType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Indicates that the Home inspector believes that there is a gas leak in the property
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Handrail-Risk" type="HandrailRiskCode" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Identifies where the Home Inspector believes a lack of hand-rails may be present and health risk.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Unsafe-Fitting" type="UnsafeFittingsCode" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>indicates the type of unsafe fittings that may be present at the property.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Untested-Service" type="UntestedServiceCode" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Indicates appliances and services that present a safety risk because they have not been recently tested.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Unsafe-Room" type="UnsafeRoomType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Nest-Location" type="pfdt:Sentence" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Location of the Bees / Wasp  Hornets nest if one is present at the property.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Flagged-Health-Risk" type="FlaggedHealthRiskCode" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Identifies health risks that the inspector believes may exist at the property</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:element name="FloodingRiskType" type="FloodingRiskType"/>
+	<xs:complexType name="FloodingRiskType">
+		<xs:annotation>
+			<xs:documentation>Details of any flooding risk that may affect a property</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="Flooding-Category" type="FloodingRiskCode" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The type of flooding that might occur</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Location" type="FloodingLocationCode" minOccurs="1" maxOccurs="1"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="RightsOfWayRiskType" type="RightsOfWayRiskType"/>
+	<xs:complexType name="RightsOfWayRiskType">
+		<xs:all>
+			<xs:element name="RoW-Access" type="RightOfWayAccessCode" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identifies the type of access for the Right of Way e.g. Shared or Public.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RoW-Type" type="RightOfWayTypeCode" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The type of Right of Way e.g. Bridleway or Footpath</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="EasementsRiskType" type="EasementsRiskType"/>
+	<xs:complexType name="EasementsRiskType">
+		<xs:all>
+			<xs:element name="Location" type="EasementLocationCode" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="Easement-Type" type="EasementTypeCode" minOccurs="1" maxOccurs="1"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="HighwayAdoptionRiskType" type="HighwayAdoptionRiskType"/>
+	<xs:complexType name="HighwayAdoptionRiskType">
+		<xs:all>
+			<xs:element name="Adopted-Scope" type="AdoptedStatusLocationCode" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identifies whether it is the roads, footpaths or both that at adopted.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Adopted-Status" type="AdoptedStatusCode" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identifies the adopted status of the roads and/or footpaths.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Location" type="pfdt:Sentence" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Text description of the location of the unmade roads e.g. "North, South and East", "Front", "Front and Sides" etc. 
+It is a sentence rather than an enumerated domain because the possible values and combinations required to described the standard scenarios are excessively large.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="StructuralWorkRiskType" type="StructuralWorkRiskType"/>
+	<xs:complexType name="StructuralWorkRiskType">
+		<xs:all>
+			<xs:element name="Warranty" type="StructuralWarrantyCode" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identifies the type of warranty that applies to the structural work that was carried out.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Work-Type" type="StructuralWorkCode" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identifies the type of Structural Work that was carried out.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Other-Work-Description" type="pfdt:Sentence" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Description of the other work that was carried out if Work-Type = 'other'.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Work-Scope" type="StructuralWorkScopeCode" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identifies the scope of the building that was affected by the structural work that was carried out e.g. whole building</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="ContaminationRiskType" type="ContaminationRiskType"/>
+	<xs:complexType name="ContaminationRiskType">
+		<xs:all>
+			<xs:element name="Location" type="ContaminationLocationCode" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identifies the location of the contamination risk relative to the Property.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="UnsafeRoomType" type="UnsafeRoomType"/>
+	<xs:complexType name="UnsafeRoomType">
+		<xs:all>
+			<xs:element name="Location" type="UnsafeRoomCode" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identifies the location of the suspected unsafe room.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Reason" type="UnsafeRoomReasonCode" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identifies the reason that the Home Inspector suspects the room is unsafe to live in.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="GasLeakType" type="GasLeakType"/>
+	<xs:complexType name="GasLeakType">
+		<xs:all>
+			<xs:element name="InformedPerson" type="GasLeakInformedCode" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identifies who the Home Inspector informed about the suspected Gas Leak</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Location" type="GasLeakLocationCode" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identifies the location of the suspected Gas Leak.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="SafetyGlassType" type="SafetyGlassType"/>
+	<xs:complexType name="SafetyGlassType">
+		<xs:sequence>
+			<xs:element name="Location" type="pfdt:Sentence" minOccurs="1" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>The location of the property feature that the Home Inspector believes should have safety glass installed.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

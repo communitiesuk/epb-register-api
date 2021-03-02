@@ -158,14 +158,14 @@ describe Helper::XmlEnumsToOutput do
       end
     end
 
-      context "and the XML has a value outside of the enum" do
-        it "returns nil if the wrong type or key out of range is passed" do
-          expect(Helper::XmlEnumsToOutput.energy_rating_string("A")).to be_nil
-          expect(Helper::XmlEnumsToOutput.energy_rating_string("10")).to be_nil
-          expect(Helper::XmlEnumsToOutput.energy_rating_string([0, 0])).to be_nil
-        end
+    context "and the XML has a value outside of the enum" do
+      it "returns nil if the wrong type or key out of range is passed" do
+        expect(Helper::XmlEnumsToOutput.energy_rating_string("A")).to be_nil
+        expect(Helper::XmlEnumsToOutput.energy_rating_string("10")).to be_nil
+        expect(Helper::XmlEnumsToOutput.energy_rating_string([0, 0])).to be_nil
       end
     end
+  end
 
   context "when the Energy-Tariff XML value is passed to the ENERGY_TARIFF enum" do
     it "finds the value in the enum and returns the correct string value" do

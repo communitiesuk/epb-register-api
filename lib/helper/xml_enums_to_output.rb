@@ -159,7 +159,7 @@ module Helper
     end
 
     def self.energy_rating_string(value)
-        RATINGS[value]
+      RATINGS[value]
     end
 
     def self.energy_tariff(value)

@@ -36,7 +36,10 @@ module UseCase
           )
         wrapper_hash = wrapper.to_recommendation_report
 
-        update_recommendation_headers(recommendations, wrapper_hash[:recommendations].flatten)
+        update_recommendation_headers(
+          recommendations,
+          wrapper_hash[:recommendations].flatten,
+        )
 
         @log_gateway.create(
           assessment["assessment_id"],
