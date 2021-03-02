@@ -144,7 +144,16 @@ describe UseCase::ExportOpenDataCepcrr do
              "Consider replacing T8 lamps with retrofit T5 conversion kit.",
                                        recommendation_code: "ECP-L5",
                                        recommendation_item: 1,
-                                       rrn:
+                                       assessment_id:
+             "55ce7d026c13e923d26cbfb0d6ed60734d3270ba981d629a168bb8eb2da3f8c4"
+
+        expect(exported_data[1]).to eq cO2_Impact: "LOW",
+                                       payback_type: "short",
+                                       recommendation:
+             "Introduce HF (high frequency) ballasts for fluorescent tubes: Reduced number of fittings required.",
+                                       recommendation_code: "ECP-L5",
+                                       recommendation_item: 2,
+                                       assessment_id:
              "55ce7d026c13e923d26cbfb0d6ed60734d3270ba981d629a168bb8eb2da3f8c4"
       end
 

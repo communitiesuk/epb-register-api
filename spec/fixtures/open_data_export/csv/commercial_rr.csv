@@ -1,4 +1,4 @@
-RRN,PAYBACK_TYPE,RECOMMENDATION_ITEM,RECOMMENDATION_CODE,RECOMMENDATION,CO2_IMPACT
+ASSESSMENT_ID,PAYBACK_TYPE,RECOMMENDATION_ITEM,RECOMMENDATION_CODE,RECOMMENDATION,CO2_IMPACT
 "1ed13ff0d6bce834b1cfdcb30f9e113f8832ce75822089cd2d29fa307f147fa0","short",1,"ECP-L5","Consider replacing T8 lamps with retrofit T5 conversion kit.","HIGH"
 "1ed13ff0d6bce834b1cfdcb30f9e113f8832ce75822089cd2d29fa307f147fa0","short",2,"ECP-L5","Introduce HF (high frequency) ballasts for fluorescent tubes: Reduced number of fittings required.","LOW"
 "1ed13ff0d6bce834b1cfdcb30f9e113f8832ce75822089cd2d29fa307f147fa0","medium",3,"EPC-H7","Add optimum start/stop to the heating system.","MEDIUM"

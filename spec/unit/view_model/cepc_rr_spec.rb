@@ -170,7 +170,7 @@ describe ViewModel::CepcRrWrapper do
 
     let(:assertion) do
       {
-        rrn: "0000-0000-0000-0000-0000",
+        assessment_id: "0000-0000-0000-0000-0000",
         recommendations: [
           {
             payback_type: "short",
