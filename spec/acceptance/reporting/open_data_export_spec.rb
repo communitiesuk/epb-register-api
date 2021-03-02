@@ -252,7 +252,7 @@ describe "Acceptance::Reports::OpenDataExport" do
     let(:use_case) { UseCase::ExportOpenDataDecrr.new }
     let(:csv_data) do
       Helper::ExportHelper.to_csv(
-        use_case.execute(test_date).sort_by! { |key| key[:recommendation_item] },
+          use_case.execute(test_date).sort_by! { |key| key[:recommendation_item] },
       )
     end
     let(:export_data_headers_array) { get_exported_data_headers(csv_data) }
@@ -275,7 +275,7 @@ describe "Acceptance::Reports::OpenDataExport" do
 
   context "When we call the use case to extract the domestic data" do
     let(:use_case) { UseCase::ExportOpenDataDomestic.new }
-    let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(test_date)) }
+    let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(test_date).sort_by!{|item| item[:assessment_id]}) }
     let(:fixture_csv) { read_csv_fixture("domestic") }
     let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
 
@@ -293,7 +293,7 @@ describe "Acceptance::Reports::OpenDataExport" do
 
   context "When we call the use case to extract the domestic recommendations data" do
     let(:use_case) { UseCase::ExportOpenDataDomesticrr.new }
-    let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(test_date)) }
+    let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(test_date).sort_by!{|item| [item[:assessment_id], item[:improvement_item]]}) }
     let(:fixture_csv) { read_csv_fixture("domestic_rr") }
     let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
 
