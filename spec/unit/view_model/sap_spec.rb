@@ -72,19 +72,50 @@ describe ViewModel::SapWrapper do
 
       is_ni_pre_17 =
         {
+          unsupported_fields: %i[tenure],
           different_fields: {
-            property_age_band: "D",
+            property_age_band: "1750",
+            recommended_improvements: [
+              {
+                energy_performance_band_improvement: "e",
+                energy_performance_rating_improvement: 50,
+                environmental_impact_rating_improvement: 50,
+                green_deal_category_code: nil,
+                improvement_category: "1",
+                improvement_code: "5",
+                improvement_description: nil,
+                improvement_title: "",
+                improvement_type: "A",
+                indicative_cost: nil,
+                sequence: 1,
+                typical_saving: "360",
+              },
+              {
+                energy_performance_band_improvement: "d",
+                energy_performance_rating_improvement: 60,
+                environmental_impact_rating_improvement: 64,
+                green_deal_category_code: nil,
+                improvement_category: "2",
+                improvement_code: "1",
+                improvement_description: nil,
+                improvement_title: "",
+                improvement_type: "B",
+                indicative_cost: nil,
+                sequence: 2,
+                typical_saving: "99",
+              },
+            ],
             property_summary: [
               {
                 energy_efficiency_rating: 0,
                 environmental_efficiency_rating: 0,
-                name: "wall",
+                name: "walls",
                 description: "Brick walls",
               },
               {
                 energy_efficiency_rating: 0,
                 environmental_efficiency_rating: 0,
-                name: "wall",
+                name: "walls",
                 description: "Brick walls",
               },
               {
@@ -114,7 +145,7 @@ describe ViewModel::SapWrapper do
               {
                 energy_efficiency_rating: 0,
                 environmental_efficiency_rating: 0,
-                name: "window",
+                name: "windows",
                 description: "Glass window",
               },
               {
@@ -126,20 +157,14 @@ describe ViewModel::SapWrapper do
               {
                 energy_efficiency_rating: 0,
                 environmental_efficiency_rating: 0,
-                name: "main_heating",
-                description: "Gas boiler",
-              },
-              {
-                energy_efficiency_rating: 0,
-                environmental_efficiency_rating: 0,
                 name: "main_heating_controls",
                 description: "Thermostat",
               },
               {
                 energy_efficiency_rating: 0,
                 environmental_efficiency_rating: 0,
-                name: "main_heating_controls",
-                description: "Thermostat",
+                name: "secondary_heating",
+                description: "Electric heater",
               },
               {
                 energy_efficiency_rating: 0,
@@ -154,14 +179,14 @@ describe ViewModel::SapWrapper do
                 description: "Energy saving bulbs",
               },
               {
+                description: "Draft Exclusion",
                 energy_efficiency_rating: 0,
                 environmental_efficiency_rating: 0,
-                name: "secondary_heating",
-                description: "Electric heater",
+                name: "air_tightness",
               },
             ],
           },
-        }.deep_merge(heat_demand_unsupported).deep_merge(is_ni)
+        }.deep_merge(heat_demand_unsupported)
 
       is_pre_17 = {
         different_fields: {
@@ -512,6 +537,120 @@ describe ViewModel::SapWrapper do
         },
       }
 
+      is_ni_rdsap_pre_15 = {
+        different_fields: {
+          property_summary: [
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "wall",
+              description: "Brick walls",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "wall",
+              description: "Brick walls",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "roof",
+              description: "Slate roof",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "roof",
+              description: "slate roof",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "floor",
+              description: "Tiled floor",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "floor",
+              description: "Tiled floor",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "window",
+              description: "Glass window",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "main_heating",
+              description: "Gas boiler",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "main_heating_controls",
+              description: "Thermostat",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "hot_water",
+              description: "Gas boiler",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "lighting",
+              description: "Energy saving bulbs",
+            },
+            {
+              energy_efficiency_rating: 0,
+              environmental_efficiency_rating: 0,
+              name: "secondary_heating",
+              description: "Electric heater",
+            },
+          ],
+        },
+      }
+
+      is_ni_rdsap = {
+        different_fields: {
+          recommended_improvements: [
+            {
+              energy_performance_band_improvement: "e",
+              energy_performance_rating_improvement: 50,
+              environmental_impact_rating_improvement: 50,
+              green_deal_category_code: "1",
+              improvement_category: "1",
+              improvement_code: "5",
+              improvement_description: nil,
+              improvement_title: "",
+              improvement_type: "A",
+              indicative_cost: "£100 - £350",
+              sequence: 1,
+              typical_saving: "360",
+            },
+            {
+              energy_performance_band_improvement: "d",
+              energy_performance_rating_improvement: 60,
+              environmental_impact_rating_improvement: 64,
+              green_deal_category_code: "3",
+              improvement_category: "2",
+              improvement_code: "1",
+              improvement_description: nil,
+              improvement_title: "",
+              improvement_type: "B",
+              indicative_cost: "2000",
+              sequence: 2,
+              typical_saving: "99",
+            },
+          ],
+        },
+      }
+
       is_rdsap = {
         different_fields: {
           type_of_assessment: "RdSAP",
@@ -624,10 +763,16 @@ describe ViewModel::SapWrapper do
         { schema: "SAP-Schema-NI-17.4" }.merge(is_ni),
         { schema: "SAP-Schema-NI-17.3" }.merge(is_ni),
         { schema: "SAP-Schema-NI-17.2", type: "sap" }.merge(is_ni),
+        { schema: "SAP-Schema-NI-17.2", type: "rdsap" }.deep_merge(is_rdsap)
+          .deep_merge(is_ni_rdsap),
         { schema: "SAP-Schema-17.1" },
         { schema: "SAP-Schema-NI-17.1", type: "sap" }.merge(is_ni),
+        { schema: "SAP-Schema-NI-17.1", type: "rdsap" }.deep_merge(is_rdsap)
+          .deep_merge(is_ni_rdsap),
         { schema: "SAP-Schema-17.0" },
         { schema: "SAP-Schema-NI-17.0", type: "sap" }.merge(is_ni),
+        { schema: "SAP-Schema-NI-17.0", type: "rdsap" }.deep_merge(is_rdsap)
+          .deep_merge(is_ni_rdsap),
         {
           schema: "SAP-Schema-16.3",
           type: "sap",
@@ -650,6 +795,8 @@ describe ViewModel::SapWrapper do
         { schema: "SAP-Schema-16.1", type: "rdsap" }.deep_merge(is_rdsap)
           .deep_merge(is_pre_17),
         { schema: "SAP-Schema-NI-16.1", type: "sap" }.merge(is_ni_pre_17),
+        { schema: "SAP-Schema-NI-16.1", type: "rdsap" }.deep_merge(is_rdsap)
+          .deep_merge(is_ni_rdsap),
         {
           schema: "SAP-Schema-16.0",
           type: "sap",
@@ -660,11 +807,29 @@ describe ViewModel::SapWrapper do
           type: "rdsap",
           unsupported_fields: %i[tenure],
         }.deep_merge(is_rdsap).deep_merge(is_pre_17),
+        {
+          schema: "SAP-Schema-NI-16.0",
+          type: "sap",
+          unsupported_fields: %i[tenure],
+        }.merge(is_ni_pre_17),
+        {
+          schema: "SAP-Schema-NI-16.0",
+          type: "rdsap",
+          unsupported_fields: %i[tenure],
+        }.deep_merge(is_rdsap).deep_merge(is_ni_rdsap),
         { schema: "SAP-Schema-15.0", type: "sap" }.deep_merge(is_pre_16)
           .deep_merge(heat_demand_impact_of_unsupported),
         { schema: "SAP-Schema-15.0", type: "rdsap" }.deep_merge(is_rdsap)
           .deep_merge(is_pre_16)
           .deep_merge(heat_demand_impact_of_unsupported),
+        { schema: "SAP-Schema-NI-15.0", type: "sap" }.merge(is_ni_pre_17),
+        {
+          schema: "SAP-Schema-NI-15.0",
+          type: "rdsap",
+          unsupported_fields: %i[tenure],
+        }.deep_merge(is_rdsap)
+          .deep_merge(is_ni)
+          .deep_merge(heat_demand_impact_of_unsupported),
         {
           schema: "SAP-Schema-14.2",
           type: "sap",
@@ -680,6 +845,19 @@ describe ViewModel::SapWrapper do
         }.deep_merge(is_rdsap)
           .deep_merge(is_pre_15)
           .deep_merge(is_pre_15_rdsap)
+          .deep_merge(heat_demand_unsupported),
+        { schema: "SAP-Schema-NI-14.2", type: "sap" }.merge(is_ni_pre_17),
+        {
+          schema: "SAP-Schema-NI-14.2",
+          type: "rdsap",
+          unsupported_fields: %i[tenure],
+          different_fields: {
+            main_fuel_type: "10",
+          },
+        }.deep_merge(is_ni)
+          .deep_merge(is_ni_pre_17)
+          .deep_merge(is_rdsap)
+          .deep_merge(is_ni_rdsap_pre_15)
           .deep_merge(heat_demand_unsupported),
         {
           schema: "SAP-Schema-14.1",
@@ -697,6 +875,19 @@ describe ViewModel::SapWrapper do
           .deep_merge(is_pre_15)
           .deep_merge(is_pre_15_rdsap)
           .deep_merge(heat_demand_unsupported),
+        { schema: "SAP-Schema-NI-14.1", type: "sap" }.merge(is_ni_pre_17),
+        {
+          schema: "SAP-Schema-NI-14.1",
+          type: "rdsap",
+          unsupported_fields: %i[tenure],
+          different_fields: {
+            main_fuel_type: "10",
+          },
+        }.deep_merge(is_ni)
+          .deep_merge(is_ni_pre_17)
+          .deep_merge(is_rdsap)
+          .deep_merge(is_ni_rdsap_pre_15)
+          .deep_merge(heat_demand_unsupported),
         {
           schema: "SAP-Schema-14.0",
           type: "sap",
@@ -712,6 +903,19 @@ describe ViewModel::SapWrapper do
         }.deep_merge(is_rdsap)
           .deep_merge(is_pre_15)
           .deep_merge(is_pre_15_rdsap)
+          .deep_merge(heat_demand_unsupported),
+        { schema: "SAP-Schema-NI-14.0", type: "sap" }.merge(is_ni_pre_17),
+        {
+          schema: "SAP-Schema-NI-14.0",
+          type: "rdsap",
+          unsupported_fields: %i[tenure],
+          different_fields: {
+            main_fuel_type: "10",
+          },
+        }.deep_merge(is_ni)
+          .deep_merge(is_ni_pre_17)
+          .deep_merge(is_rdsap)
+          .deep_merge(is_ni_rdsap_pre_15)
           .deep_merge(heat_demand_unsupported),
         { schema: "SAP-Schema-13.0", type: "sap" }.deep_merge(is_pre_15)
           .deep_merge(is_pre_14),
@@ -725,6 +929,21 @@ describe ViewModel::SapWrapper do
           .deep_merge(is_pre_15)
           .deep_merge(is_pre_14)
           .deep_merge(is_pre_15_rdsap)
+          .deep_merge(is_pre_14_rdsap)
+          .deep_merge(heat_demand_unsupported),
+        { schema: "SAP-Schema-NI-13.0", type: "sap" }.merge(is_ni_pre_17)
+          .deep_merge(is_pre_14),
+        {
+          schema: "SAP-Schema-NI-13.0",
+          type: "rdsap",
+          different_fields: {
+            main_fuel_type: "10",
+          },
+        }.deep_merge(is_ni)
+          .deep_merge(is_ni_pre_17)
+          .deep_merge(is_rdsap)
+          .deep_merge(is_pre_14)
+          .deep_merge(is_ni_rdsap_pre_15)
           .deep_merge(is_pre_14_rdsap)
           .deep_merge(heat_demand_unsupported),
         { schema: "SAP-Schema-12.0", type: "sap" }.deep_merge(is_pre_15)

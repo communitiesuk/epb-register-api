@@ -1,64 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ConditionReportCreateRequest_1
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:HIP="DCLG-HIP"
-  xmlns:SAP="DCLG-SAP" xmlns:SAP09="DCLG-SAP09"
-  xmlns:CS="DCLG-HIP/CommonStructures" xmlns:pfdt="DCLG-HIP/BaseDataTypes"
-  xmlns:ERR="DCLG-HIP/Exceptions" xmlns="http://www.epcregister.com"
-  xsi:schemaLocation="http://www.epcregister.com ../../../../api/schemas/xml/SAP-Schema-16.3/Messages/ConditionReportCreateRequest_1.xsd">
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.epbniregister.com"
+  xmlns:SAP="DCLG-SAP"
+  xmlns:HIP="DCLG-HIP"
+  xmlns:CS="DCLG-HIP/CommonStructures"
+  xsi:schemaLocation="http://www.epbniregister.com ../../../../api/schemas/xml/SAP-Schema-NI-15.0/Messages/ConditionReportCreateRequest_1.xsd">
   <Identification>
     <CS:ServiceName>CreateReport</CS:ServiceName>
     <CS:Operation>Create</CS:Operation>
     <CS:TransactionDetails>
-      <CS:OriginatingID>Certification</CS:OriginatingID>
-      <CS:RecipientID>Register</CS:RecipientID>
-      <CS:Timestamp>2014-02-07T15:04:35.0Z</CS:Timestamp>
-      <CS:TransactionID>00000000</CS:TransactionID>
+      <CS:OriginatingID>NES</CS:OriginatingID>
+      <CS:RecipientID>Landmark</CS:RecipientID>
+      <CS:Timestamp>2014-02-12T12:31:00</CS:Timestamp>
+      <CS:TransactionID>string</CS:TransactionID>
     </CS:TransactionDetails>
     <CS:TermsAndConditions>Y</CS:TermsAndConditions>
   </Identification>
-  <Configuration>
-    <CS:StopOnFirstError>No</CS:StopOnFirstError>
-    <CS:ReasonForChange>NA</CS:ReasonForChange>
-  </Configuration>
+  <Configuration/>
   <Content>
     <EPC-Data>
-      <SAP:SAP-Version>9.91</SAP:SAP-Version>
-      <SAP:BEDF-Revision-Number>353</SAP:BEDF-Revision-Number>
-      <SAP:Calculation-Software-Name>RdSAP Software</SAP:Calculation-Software-Name>
-      <SAP:Calculation-Software-Version>1.4.1.0</SAP:Calculation-Software-Version>
-      <SAP:Report-Header>
-        <SAP:RRN>0000-0000-0000-0000-0000</SAP:RRN>
-        <SAP:Inspection-Date>2020-05-04</SAP:Inspection-Date>
-        <SAP:Report-Type>2</SAP:Report-Type>
-        <SAP:Completion-Date>2020-05-04</SAP:Completion-Date>
-        <SAP:Registration-Date>2020-05-04</SAP:Registration-Date>
-        <SAP:Status>entered</SAP:Status>
-        <SAP:Language-Code>1</SAP:Language-Code>
-        <SAP:Restricted-Access>0</SAP:Restricted-Access>
-        <SAP:Tenure>1</SAP:Tenure>
-        <SAP:Transaction-Type>5</SAP:Transaction-Type>
-        <SAP:Seller-Commission-Report>Y</SAP:Seller-Commission-Report>
-        <SAP:Property-Type>0</SAP:Property-Type>
-        <SAP:Home-Inspector>
-          <SAP:Scheme-Name>Certification</SAP:Scheme-Name>
-          <SAP:Scheme-Web-Site>www.stroma.com</SAP:Scheme-Web-Site>
-          <SAP:Identification-Number>
-            <SAP:Certificate-Number>SPEC000000</SAP:Certificate-Number>
-          </SAP:Identification-Number>
-          <SAP:Name>Mr Test Boi TST</SAP:Name>
-          <SAP:Notify-Lodgement>Y</SAP:Notify-Lodgement>
-          <SAP:Contact-Address>
-            <HIP:Address-Line-1>Y Gwinwydd Llangwstenin</HIP:Address-Line-1>
-            <HIP:Address-Line-2>Llandudno Junction</HIP:Address-Line-2>
-            <HIP:Post-Town>Conwy</HIP:Post-Town>
-            <HIP:Postcode>LL31 9JF</HIP:Postcode>
-          </SAP:Contact-Address>
-          <SAP:Web-Site>http://www.clbenergyconsultants.co.uk</SAP:Web-Site>
-          <SAP:E-Mail>a@b.c</SAP:E-Mail>
-          <SAP:Fax>111222333</SAP:Fax>
-          <SAP:Telephone>111222333</SAP:Telephone>
-          <SAP:Company-Name>CLB Energy Consultants</SAP:Company-Name>
-        </SAP:Home-Inspector>
-        <SAP:Property>
+      <HIP:Calculation-Software-Name>RdSAP Software</HIP:Calculation-Software-Name>
+      <HIP:Calculation-Software-Version>1.4.1.0</HIP:Calculation-Software-Version>
+      <HIP:SAP-Version>9.90</HIP:SAP-Version>
+      <HIP:BEDF-Revision-Number>353</HIP:BEDF-Revision-Number>
+      <HIP:Report-Header>
+        <HIP:RRN>0000-0000-0000-0000-0000</HIP:RRN>
+        <HIP:Inspection-Date>2020-05-04</HIP:Inspection-Date>
+        <HIP:Report-Type>2</HIP:Report-Type>
+        <HIP:Completion-Date>2020-05-04</HIP:Completion-Date>
+        <HIP:Registration-Date>2020-05-04</HIP:Registration-Date>
+        <HIP:Status>entered</HIP:Status>
+        <HIP:Language-Code>1</HIP:Language-Code>
+        <HIP:Restricted-Access>0</HIP:Restricted-Access>
+        <HIP:Transaction-Type>5</HIP:Transaction-Type>
+        <HIP:Seller-Commission-Report>Y</HIP:Seller-Commission-Report>
+        <HIP:Property-Type>0</HIP:Property-Type>
+        <HIP:Home-Inspector>
+          <HIP:Name>
+            <HIP:Prefix>Mr</HIP:Prefix>
+            <HIP:First-Name>Test</HIP:First-Name>
+            <HIP:Surname>Boi</HIP:Surname>
+            <HIP:Suffix>TST</HIP:Suffix>
+          </HIP:Name>
+          <HIP:Certification-Date>2020-05-04</HIP:Certification-Date>
+          <HIP:Status>Registered</HIP:Status>
+          <HIP:Company-Name>SPEC</HIP:Company-Name>
+          <HIP:E-Mail>a@b.c</HIP:E-Mail>
+          <HIP:Telephone>111222333</HIP:Telephone>
+          <HIP:Contact-Address>
+            <HIP:Address-Line-1>3 Some Street</HIP:Address-Line-1>
+            <HIP:Post-Town>Fulchester</HIP:Post-Town>
+            <HIP:Postcode>A0 0AA</HIP:Postcode>
+          </HIP:Contact-Address>
+          <HIP:Certification-Scheme>
+            <HIP:Scheme-Name>SPEC</HIP:Scheme-Name>
+            <HIP:Complaints-Address>
+              <HIP:Address-Line-1>2 Some Street</HIP:Address-Line-1>
+              <HIP:Post-Town>Whitbury</HIP:Post-Town>
+              <HIP:Postcode>A0 0AA</HIP:Postcode>
+            </HIP:Complaints-Address>
+            <HIP:Contact-Address>
+              <HIP:Address-Line-1>3 Some Street</HIP:Address-Line-1>
+              <HIP:Post-Town>Fulchester</HIP:Post-Town>
+              <HIP:Postcode>A0 0AA</HIP:Postcode>
+            </HIP:Contact-Address>
+            <HIP:Web-Site>http://www.scheme.example.com</HIP:Web-Site>
+            <HIP:E-Mail>d@e.f</HIP:E-Mail>
+            <HIP:Registered-Name>Testa Sessor</HIP:Registered-Name>
+            <HIP:Fax>000000</HIP:Fax>
+            <HIP:Telephone>0000000</HIP:Telephone>
+          </HIP:Certification-Scheme>
+          <HIP:Identification-Number>
+            <HIP:Certificate-Number>SPEC000000</HIP:Certificate-Number>
+          </HIP:Identification-Number>
+          <HIP:Inspector-Report-Types>
+            <HIP:Report-Type>3</HIP:Report-Type>
+          </HIP:Inspector-Report-Types>
+        </HIP:Home-Inspector>
+        <HIP:Property>
           <HIP:Address>
             <HIP:Address-Line-1>1 Some Street</HIP:Address-Line-1>
             <HIP:Address-Line-2>Some Area</HIP:Address-Line-2>
@@ -67,14 +87,14 @@
             <HIP:Postcode>A0 0AA</HIP:Postcode>
           </HIP:Address>
           <HIP:UPRN>0000000000</HIP:UPRN>
-        </SAP:Property>
-        <SAP:Region-Code>18</SAP:Region-Code>
-        <SAP:Country-Code>EAW</SAP:Country-Code>
-        <SAP:Related-Party-Disclosure>
-          <SAP:Related-Party-Disclosure-Number>1</SAP:Related-Party-Disclosure-Number>
-        </SAP:Related-Party-Disclosure>
-      </SAP:Report-Header>
-      <SAP:Energy-Assessment>
+        </HIP:Property>
+        <HIP:Region-Code>18</HIP:Region-Code>
+        <HIP:Country-Code>EAW</HIP:Country-Code>
+        <HIP:Related-Party-Disclosure>
+          <HIP:Related-Party-Disclosure-Number>1</HIP:Related-Party-Disclosure-Number>
+        </HIP:Related-Party-Disclosure>
+      </HIP:Report-Header>
+      <HIP:Energy-Assessment>
         <HIP:Property-Summary>
           <HIP:Wall>
             <HIP:Energy-Efficiency-Rating>0</HIP:Energy-Efficiency-Rating>
@@ -153,7 +173,6 @@
           <HIP:Has-Fixed-Air-Conditioning>false</HIP:Has-Fixed-Air-Conditioning>
         </HIP:Property-Summary>
         <HIP:Energy-Use>
-          <HIP:Energy-Rating-Average>60</HIP:Energy-Rating-Average>
           <HIP:Energy-Rating-Current>50</HIP:Energy-Rating-Current>
           <HIP:Energy-Rating-Potential>72</HIP:Energy-Rating-Potential>
           <HIP:Environmental-Impact-Current>52</HIP:Environmental-Impact-Current>
@@ -182,7 +201,6 @@
               <HIP:Improvement-Number>5</HIP:Improvement-Number>
             </HIP:Improvement-Details>
             <HIP:Indicative-Cost>£100 - £350</HIP:Indicative-Cost>
-            <HIP:Green-Deal-Category>1</HIP:Green-Deal-Category>
           </HIP:Improvement>
           <HIP:Improvement>
             <HIP:Sequence>2</HIP:Sequence>
@@ -195,33 +213,17 @@
               <HIP:Improvement-Number>1</HIP:Improvement-Number>
             </HIP:Improvement-Details>
             <HIP:Indicative-Cost>2000</HIP:Indicative-Cost>
-            <HIP:Green-Deal-Category>3</HIP:Green-Deal-Category>
           </HIP:Improvement>
         </HIP:Suggested-Improvements>
-        <HIP:Green-Deal-Package>
-          <HIP:Green-Deal-Improvement>
-            <HIP:Improvement-Type>Q</HIP:Improvement-Type>
-            <HIP:Improvement-Number>7</HIP:Improvement-Number>
-          </HIP:Green-Deal-Improvement>
-          <HIP:Electricity-Saving currency="GBP">0</HIP:Electricity-Saving>
-          <HIP:Gas-Saving currency="GBP">271</HIP:Gas-Saving>
-          <HIP:Other-Fuel-Saving currency="GBP">0</HIP:Other-Fuel-Saving>
-        </HIP:Green-Deal-Package>
         <HIP:Renewable-Heat-Incentive>
           <HIP:Space-Heating-Existing-Dwelling>13120</HIP:Space-Heating-Existing-Dwelling>
           <HIP:Space-Heating-With-Loft-Insulation>15</HIP:Space-Heating-With-Loft-Insulation>
           <HIP:Space-Heating-With-Cavity-Insulation>15</HIP:Space-Heating-With-Cavity-Insulation>
           <HIP:Space-Heating-With-Loft-And-Cavity-Insulation>15</HIP:Space-Heating-With-Loft-And-Cavity-Insulation>
           <HIP:Water-Heating>2285</HIP:Water-Heating>
-          <HIP:Impact-Of-Loft-Insulation>-2114</HIP:Impact-Of-Loft-Insulation>
-          <HIP:Impact-Of-Cavity-Insulation>-122</HIP:Impact-Of-Cavity-Insulation>
-          <HIP:Impact-Of-Solid-Wall-Insulation>-3560</HIP:Impact-Of-Solid-Wall-Insulation>
         </HIP:Renewable-Heat-Incentive>
-        <HIP:Addendum>
-          <HIP:Stone-Walls>true</HIP:Stone-Walls>
-        </HIP:Addendum>
-      </SAP:Energy-Assessment>
-      <SAP:SAP-Data>
+      </HIP:Energy-Assessment>
+      <HIP:SAP-Data>
         <HIP:Schema-Version>LIG-16.1</HIP:Schema-Version>
         <HIP:SAP-Property-Details>
           <HIP:Property-Type>0</HIP:Property-Type>
@@ -230,9 +232,6 @@
           <HIP:Multiple-Glazed-Proportion>100</HIP:Multiple-Glazed-Proportion>
           <HIP:Multiple-Glazing-Type>2</HIP:Multiple-Glazing-Type>
           <HIP:Glazed-Area>1</HIP:Glazed-Area>
-          <HIP:Door-Count>2</HIP:Door-Count>
-          <HIP:Insulated-Door-Count>0</HIP:Insulated-Door-Count>
-          <HIP:Percent-Draughtproofed>100</HIP:Percent-Draughtproofed>
           <HIP:Habitable-Room-Count>5</HIP:Habitable-Room-Count>
           <HIP:Heated-Room-Count>5</HIP:Heated-Room-Count>
           <HIP:Fixed-Lighting-Outlets-Count>11
@@ -250,8 +249,6 @@
               <HIP:Building-Part-Number>1</HIP:Building-Part-Number>
               <HIP:Identifier>Main Dwelling</HIP:Identifier>
               <HIP:Construction-Age-Band>A</HIP:Construction-Age-Band>
-              <HIP:Wall-Thickness-Measured>N</HIP:Wall-Thickness-Measured>
-              <HIP:Wall-Dry-Lined>N</HIP:Wall-Dry-Lined>
               <HIP:Wall-Construction>1</HIP:Wall-Construction>
               <HIP:Wall-Insulation-Type>4</HIP:Wall-Insulation-Type>
               <HIP:Roof-Construction>4</HIP:Roof-Construction>
@@ -278,15 +275,12 @@
                 <HIP:Floor-Area>18.3</HIP:Floor-Area>
                 <HIP:Construction-Age-Band>A</HIP:Construction-Age-Band>
                 <HIP:Insulation>0</HIP:Insulation>
-                <HIP:Roof-Room-Connected>N</HIP:Roof-Room-Connected>
               </HIP:SAP-Room-In-Roof>
             </HIP:SAP-Building-Part>
             <HIP:SAP-Building-Part>
               <HIP:Building-Part-Number>2</HIP:Building-Part-Number>
               <HIP:Identifier>Extension 1</HIP:Identifier>
               <HIP:Construction-Age-Band>A</HIP:Construction-Age-Band>
-              <HIP:Wall-Thickness-Measured>N</HIP:Wall-Thickness-Measured>
-              <HIP:Wall-Dry-Lined>N</HIP:Wall-Dry-Lined>
               <HIP:Wall-Construction>3</HIP:Wall-Construction>
               <HIP:Wall-Insulation-Type>4</HIP:Wall-Insulation-Type>
               <HIP:Roof-Construction>5</HIP:Roof-Construction>
@@ -323,22 +317,12 @@
                 <HIP:Main-Heating-Control>2106</HIP:Main-Heating-Control>
                 <HIP:Boiler-Flue-Type>2</HIP:Boiler-Flue-Type>
                 <HIP:Heat-Emitter-Type>1</HIP:Heat-Emitter-Type>
-                <HIP:Has-FGHRS>N</HIP:Has-FGHRS>
               </HIP:Main-Heating>
             </HIP:Main-Heating-Details>
             <HIP:Water-Heating-Code>901</HIP:Water-Heating-Code>
             <HIP:Water-Heating-Fuel>26</HIP:Water-Heating-Fuel>
             <HIP:Cylinder-Size>1</HIP:Cylinder-Size>
-            <HIP:Has-Fixed-Air-Conditioning>false
-            </HIP:Has-Fixed-Air-Conditioning>
-            <HIP:WWHRS>
-              <HIP:Rooms-With-Bath-And-Or-Shower>1
-              </HIP:Rooms-With-Bath-And-Or-Shower>
-              <HIP:Rooms-With-Mixer-Shower-No-Bath>0
-              </HIP:Rooms-With-Mixer-Shower-No-Bath>
-              <HIP:Rooms-With-Bath-And-Mixer-Shower>1
-              </HIP:Rooms-With-Bath-And-Mixer-Shower>
-            </HIP:WWHRS>
+            <HIP:Has-Fixed-Air-Conditioning>false</HIP:Has-Fixed-Air-Conditioning>
           </HIP:SAP-Heating>
           <HIP:SAP-Energy-Source>
             <HIP:Meter-Type>2</HIP:Meter-Type>
@@ -350,15 +334,16 @@
             </HIP:Photovoltaic-Supply>
           </HIP:SAP-Energy-Source>
         </HIP:SAP-Property-Details>
-      </SAP:SAP-Data>
-      <SAP:Insurance-Details>
-        <SAP:Insurer>Enterprise Insurance Services</SAP:Insurer>
-        <SAP:Policy-No>VTI200820116</SAP:Policy-No>
-        <SAP:Effective-Date>2013-01-01</SAP:Effective-Date>
-        <SAP:Expiry-Date>2013-12-31</SAP:Expiry-Date>
-        <SAP:PI-Limit>250000</SAP:PI-Limit>
-      </SAP:Insurance-Details>
-      <SAP:ExternalDefinitions-Revision-Number>3.9f</SAP:ExternalDefinitions-Revision-Number>
+      </HIP:SAP-Data>
+      <HIP:Insurance-Details>
+        <HIP:Insurer>Enterprise Insurance Services</HIP:Insurer>
+        <HIP:Policy-No>VTI200820116</HIP:Policy-No>
+        <HIP:Effective-Date>2013-01-01</HIP:Effective-Date>
+        <HIP:Expiry-Date>2013-12-31</HIP:Expiry-Date>
+        <HIP:PI-Limit>250000</HIP:PI-Limit>
+      </HIP:Insurance-Details>
+      <HIP:ExternalDefinitions-Revision-Number>3.9f</HIP:ExternalDefinitions-Revision-Number>
     </EPC-Data>
+    <PDF/>
   </Content>
 </ConditionReportCreateRequest_1>

@@ -1,24 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ConditionReportCreateRequest_1
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:HIP="DCLG-HIP"
-  xmlns:SAP="DCLG-SAP" xmlns:SAP09="DCLG-SAP09"
-  xmlns:CS="DCLG-HIP/CommonStructures" xmlns:pfdt="DCLG-HIP/BaseDataTypes"
-  xmlns:ERR="DCLG-HIP/Exceptions" xmlns="http://www.epcregister.com"
-  xsi:schemaLocation="http://www.epcregister.com ../../../../api/schemas/xml/SAP-Schema-16.3/Messages/ConditionReportCreateRequest_1.xsd">
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.epbniregister.com"
+  xmlns:SAP="DCLG-SAP"
+  xmlns:HIP="DCLG-HIP"
+  xmlns:CS="DCLG-HIP/CommonStructures"
+  xsi:schemaLocation="http://www.epbniregister.com ../../../../api/schemas/xml/SAP-Schema-NI-16.1/Messages/ConditionReportCreateRequest_1.xsd">
   <Identification>
     <CS:ServiceName>CreateReport</CS:ServiceName>
     <CS:Operation>Create</CS:Operation>
     <CS:TransactionDetails>
-      <CS:OriginatingID>Certification</CS:OriginatingID>
-      <CS:RecipientID>Register</CS:RecipientID>
-      <CS:Timestamp>2014-02-07T15:04:35.0Z</CS:Timestamp>
-      <CS:TransactionID>00000000</CS:TransactionID>
+      <CS:OriginatingID>NES</CS:OriginatingID>
+      <CS:RecipientID>Landmark</CS:RecipientID>
+      <CS:Timestamp>2014-02-12T12:31:00</CS:Timestamp>
+      <CS:TransactionID>string</CS:TransactionID>
     </CS:TransactionDetails>
     <CS:TermsAndConditions>Y</CS:TermsAndConditions>
   </Identification>
-  <Configuration>
-    <CS:StopOnFirstError>No</CS:StopOnFirstError>
-    <CS:ReasonForChange>NA</CS:ReasonForChange>
-  </Configuration>
+  <Configuration/>
   <Content>
     <EPC-Data>
       <SAP:SAP-Version>9.91</SAP:SAP-Version>
@@ -358,7 +357,8 @@
         <SAP:Expiry-Date>2013-12-31</SAP:Expiry-Date>
         <SAP:PI-Limit>250000</SAP:PI-Limit>
       </SAP:Insurance-Details>
-      <SAP:ExternalDefinitions-Revision-Number>3.9f</SAP:ExternalDefinitions-Revision-Number>
+      <SAP:ExternalDefinitions-Revision-Number>3.9f
+      </SAP:ExternalDefinitions-Revision-Number>
     </EPC-Data>
   </Content>
 </ConditionReportCreateRequest_1>

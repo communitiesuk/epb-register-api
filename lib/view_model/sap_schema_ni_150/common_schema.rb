@@ -34,7 +34,12 @@ module ViewModel
       end
 
       def assessor_name
-        xpath(%w[Home-Inspector Name])
+        [
+          xpath(%w[Home-Inspector Name Prefix]),
+          xpath(%w[Home-Inspector Name First-Name]),
+          xpath(%w[Home-Inspector Name Surname]),
+          xpath(%w[Home-Inspector Name Suffix]),
+        ].reject { |e| e.to_s.empty? }.join(" ")
       end
 
       def assessor_email

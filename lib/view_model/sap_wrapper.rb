@@ -117,25 +117,85 @@ module ViewModel
       when "SAP-Schema-NI-17.3"
         @view_model = ViewModel::SapSchemaNi173::CommonSchema.new xml
       when "SAP-Schema-NI-17.2"
-        @view_model = ViewModel::SapSchemaNi172::CommonSchema.new xml
+        @view_model =
+          case report_type
+          when "2"
+            ViewModel::SapSchemaNi172::Rdsap.new(xml)
+          when "3"
+            ViewModel::SapSchemaNi172::Sap.new(xml)
+          end
       when "SAP-Schema-NI-17.1"
-        @view_model = ViewModel::SapSchemaNi171::CommonSchema.new xml
+        @view_model =
+          case report_type
+          when "2"
+            ViewModel::SapSchemaNi171::Rdsap.new(xml)
+          when "3"
+            ViewModel::SapSchemaNi171::Sap.new(xml)
+          end
       when "SAP-Schema-NI-17.0"
-        @view_model = ViewModel::SapSchemaNi170::CommonSchema.new xml
+        @view_model =
+          case report_type
+          when "2"
+            ViewModel::SapSchemaNi170::Rdsap.new(xml)
+          when "3"
+            ViewModel::SapSchemaNi170::Sap.new(xml)
+          end
       when "SAP-Schema-NI-16.1"
-        @view_model = ViewModel::SapSchemaNi161::CommonSchema.new xml
+        @view_model =
+          case report_type
+          when "2"
+            ViewModel::SapSchemaNi161::Rdsap.new(xml)
+          when "3"
+            ViewModel::SapSchemaNi161::Sap.new(xml)
+          end
       when "SAP-Schema-NI-16.0"
-        @view_model = ViewModel::SapSchemaNi160::CommonSchema.new xml
+        @view_model =
+          case report_type
+          when "2"
+            ViewModel::SapSchemaNi160::Rdsap.new(xml)
+          when "3"
+            ViewModel::SapSchemaNi160::Sap.new(xml)
+          end
       when "SAP-Schema-NI-15.0"
-        @view_model = ViewModel::SapSchemaNi150::CommonSchema.new xml
+        @view_model =
+          case report_type
+          when "2"
+            ViewModel::SapSchemaNi150::Rdsap.new(xml)
+          when "3"
+            ViewModel::SapSchemaNi150::Sap.new(xml)
+          end
       when "SAP-Schema-NI-14.2"
-        @view_model = ViewModel::SapSchemaNi142::CommonSchema.new xml
+        @view_model =
+          case report_type
+          when "2"
+            ViewModel::SapSchemaNi142::Rdsap.new(xml)
+          when "3"
+            ViewModel::SapSchemaNi142::Sap.new(xml)
+          end
       when "SAP-Schema-NI-14.1"
-        @view_model = ViewModel::SapSchemaNi141::CommonSchema.new xml
+        @view_model =
+          case report_type
+          when "2"
+            ViewModel::SapSchemaNi141::Rdsap.new(xml)
+          when "3"
+            ViewModel::SapSchemaNi141::Sap.new(xml)
+          end
       when "SAP-Schema-NI-14.0"
-        @view_model = ViewModel::SapSchemaNi140::CommonSchema.new xml
+        @view_model =
+          case report_type
+          when "2"
+            ViewModel::SapSchemaNi140::Rdsap.new(xml)
+          when "3"
+            ViewModel::SapSchemaNi140::Sap.new(xml)
+          end
       when "SAP-Schema-NI-13.0"
-        @view_model = ViewModel::SapSchemaNi130::CommonSchema.new xml
+        @view_model =
+          case report_type
+          when "2"
+            ViewModel::SapSchemaNi130::Rdsap.new(xml)
+          when "3"
+            ViewModel::SapSchemaNi130::Sap.new(xml)
+          end
       else
         raise ArgumentError, "Unsupported schema type"
       end

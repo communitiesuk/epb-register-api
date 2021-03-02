@@ -86,11 +86,11 @@ module ViewModel
       end
 
       def related_party_disclosure_text
-        xpath(%w[Related-Party-Disclosure-Text])
+        xpath(%w[Related-Party-Disclosure])
       end
 
       def related_party_disclosure_number
-        xpath(%w[Related-Party-Disclosure-Number]).to_i
+        nil
       end
 
       def improvements

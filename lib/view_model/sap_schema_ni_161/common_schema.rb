@@ -33,10 +33,6 @@ module ViewModel
         xpath(%w[Certificate-Number])
       end
 
-      def assessor_name
-        xpath(%w[Home-Inspector Name])
-      end
-
       def assessor_email
         xpath(%w[Home-Inspector E-Mail])
       end
