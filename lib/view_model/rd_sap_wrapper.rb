@@ -160,7 +160,7 @@ module ViewModel
         potential_energy_efficiency:
           @view_model.potential_energy_rating.to_s.chomp,
         property_type: @view_model.dwelling_type,
-        tenure: @view_model.tenure,
+        tenure: Helper::XmlEnumsToOutput.tenure(@view_model.tenure&.first),
         transaction_type: @view_model.transaction_type,
         environment_impact_current: @view_model.environmental_impact_current,
         environment_impact_potential:
