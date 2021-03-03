@@ -153,6 +153,13 @@ module Helper
       "12" => "triple low-E soft 0.05",
       "13" => "secondary glazing",
     }.freeze
+    TENURE = {
+      "1" => "Owner-occupied",
+      "2" => "Rented (social)",
+      "3" => "Rented (private)",
+      "ND" =>
+        "Not defined - use in the case of a new dwelling for which the intended tenure in not known. It is not to be used for an existing dwelling",
+    }.freeze
 
     def self.xml_value_to_string(number)
       BUILT_FORM[number]
@@ -180,6 +187,10 @@ module Helper
 
     def self.glazed_type_sap(value)
       SAP_GLAZED_TYPE[value]
+    end
+
+    def self.tenure(value)
+      TENURE[value] || value
     end
   end
 end

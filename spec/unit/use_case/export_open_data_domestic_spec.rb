@@ -117,7 +117,7 @@ describe UseCase::ExportOpenDataDomestic do
         current_energy_efficiency: "50",
         potential_energy_efficiency: "72",
         property_type: "Mid-terrace house",
-        tenure: "1",
+        tenure: "Owner-occupied",
         transaction_type: "1",
         environment_impact_current: "52",
         environment_impact_potential: "74",

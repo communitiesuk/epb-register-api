@@ -270,4 +270,20 @@ describe Helper::XmlEnumsToOutput do
       expect(Helper::XmlEnumsToOutput.glazed_type_sap(12_000)).to be_nil
     end
   end
+
+  context "when the Tenure XML value is passed to the tenure enum" do
+    it "and the value is in the lookup, it returns the expected string" do
+      expect(Helper::XmlEnumsToOutput.tenure("1")).to eq("Owner-occupied")
+      expect(Helper::XmlEnumsToOutput.tenure("ND")).to eq(
+        "Not defined - use in the case of a new dwelling for which the intended tenure in not known. It is not to be used for an existing dwelling",
+      )
+    end
+    it "returns the entered value if the value in the lookup" do
+      expect(Helper::XmlEnumsToOutput.tenure("Hello, this is a value")).to eq(
+        "Hello, this is a value",
+      )
+      expect(Helper::XmlEnumsToOutput.tenure(nil)).to be_nil
+      expect(Helper::XmlEnumsToOutput.tenure(%w[1 2 3])).to eq(%w[1 2 3])
+    end
+  end
 end
