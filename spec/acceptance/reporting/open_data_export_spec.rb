@@ -154,6 +154,8 @@ describe "Acceptance::Reports::OpenDataExport" do
 
     domestic_sap_assessment_date.children = test_date
     domestic_sap_assessment_id.children = "0000-0000-0000-0000-1100"
+    domestic_sap_building_reference_number.children =
+      "RRN-0000-0000-0000-0000-0023"
     lodge_assessment(
       assessment_body: domestic_sap_xml.to_xml,
       accepted_responses: [201],

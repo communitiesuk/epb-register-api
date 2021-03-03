@@ -1,3 +1,9 @@
+def filter_assessment(assessment_id)
+  expected_data_hash =
+    exported_data.select { |hash| hash[:assessment_id] == assessment_id }
+  expected_data_hash.first
+end
+
 describe UseCase::ExportOpenDataDomestic do
   include RSpecRegisterApiServiceMixin
 
@@ -333,31 +339,33 @@ describe UseCase::ExportOpenDataDomestic do
         expect(exported_data.length).to eq(4)
       end
 
+      # TODO: update test to com
       expected_rdsap_values.reject { |k|
         %i[lodgement_datetime].include? k
       }.keys.each do |key|
         it "returns the #{key} that matches the RdSAP test data for the equivalent entry in the ODC hash" do
-          expected_data_hash =
-            exported_data.select do |hash|
-              hash[:assessment_id] ==
-                "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a"
-            end
-          expect(expected_data_hash[0][key.to_sym]).to eq(rdsap_odc_hash[key])
+          expect(
+            filter_assessment(
+              "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
+            )[
+              key.to_sym
+            ],
+          ).to eq(rdsap_odc_hash[key])
         end
       end
 
       it "returns a hash with building_reference_number nil when an RdSAP is submitted when building_reference_number is not a UPRN" do
-        expected_data_hash =
-          exported_data.select do |hash|
-            hash[:assessment_id] ==
-              "46cd39a5a7ccc7e4abab6e99577831f3c6dff2ce98bea5858195063694967ff4"
-          end
-        expect(expected_data_hash[0][:building_reference_number]).to eq(nil)
+        expect(
+          filter_assessment(
+            "46cd39a5a7ccc7e4abab6e99577831f3c6dff2ce98bea5858195063694967ff4",
+          )[
+            :building_reference_number
+          ],
+        ).to eq(nil)
       end
 
       it "contains the expected keys for RdSAP" do
-        unexpected_keys = (exported_data[0].keys - rdsap_odc_hash.keys)
-        expect(unexpected_keys).to be_empty
+        expect(exported_data[0].keys - rdsap_odc_hash.keys).to be_empty
       end
 
       expected_sap_values.reject { |k|
@@ -377,40 +385,41 @@ describe UseCase::ExportOpenDataDomestic do
         ].include? k
       }.keys.each do |key|
         it "returns the #{key} that matches the SAP test data for the equivalent entry in the ODC hash" do
-          expected_data_hash =
-            exported_data.select do |hash|
-              hash[:assessment_id] ==
-                "a154b93d62db9b77c82f6b11ba4a4a4056816572180c95e0bc5d486b905d4996"
-            end
-          expect(expected_data_hash[0][key.to_sym]).to eq(sap_odc_hash[key])
+          expect(
+            filter_assessment(
+              "a154b93d62db9b77c82f6b11ba4a4a4056816572180c95e0bc5d486b905d4996",
+            )[
+              key.to_sym
+            ],
+          ).to eq(sap_odc_hash[key])
         end
       end
 
       it "returns a hash with building_reference_number nil when a SAP is submitted when building_reference_number is not a UPRN" do
-        expected_data_hash =
-          exported_data.select do |hash|
-            hash[:assessment_id] ==
-              "c721f7c21520e8dc97d9746d0747c285d057971acee9e2ef3b8d94f8d7a1ed43"
-          end
-        expect(expected_data_hash[0][:building_reference_number]).to eq(nil)
+        expect(
+          filter_assessment(
+            "c721f7c21520e8dc97d9746d0747c285d057971acee9e2ef3b8d94f8d7a1ed43",
+          )[
+            :building_reference_number
+          ],
+        ).to eq(nil)
       end
 
       it "contains the expected keys for SAP" do
-        unexpected_keys = (exported_data[1].keys - sap_odc_hash.keys)
-        expect(unexpected_keys).to be_empty
+        expect(exported_data[1].keys - sap_odc_hash.keys).to be_empty
       end
 
-      it "returns 2 rows when called with a different task_id" do
+      it "returns 4 rows when called with a different task_id" do
         expect(export_object.execute("2019-07-01", 1).length).to eq(4)
         expect(export_object.execute("2019-07-01", 2).length).to eq(4)
       end
 
-      it "returns 2 row when no task id is passed" do
+      it "returns 4 row when no task id is passed" do
         expect(export_object.execute("2019-07-01").length).to eq(4)
         expect(statistics.first["num_rows"]).to eq(4)
       end
 
-      it "returns 0 return when called again with the existing task_id" do
+      it "returns 0 when called again with the existing task_id" do
         expect(export_object.execute("2019-07-01", 1).length).to eq(4)
         expect(export_object.execute("2019-07-01", 1).length).to eq(0)
       end

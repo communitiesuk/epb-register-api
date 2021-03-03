@@ -184,6 +184,15 @@ describe UseCase::ExportOpenDataCommercial do
         )
       end
 
+      let(:rrn_assessment) do
+        expected_data_hash =
+          exported_data.select do |hash|
+            hash[:assessment_id] ==
+              "833db6da02dadee69b96c96917a5e190473828713f5074bd7d67a2371b315520"
+          end
+        expected_data_hash.first
+      end
+
       it "returns the correct number of assessments in the CSV and the logs" do
         expect(exported_data.length).to eq(3)
         expect(statistics[0]["num_rows"]).to eq(3)
@@ -219,12 +228,7 @@ describe UseCase::ExportOpenDataCommercial do
       end
 
       it "returns a hash with building_reference_number nil when building_reference_number is not a UPRN" do
-        expected_data_hash =
-          exported_data.select do |hash|
-            hash[:assessment_id] ==
-              "833db6da02dadee69b96c96917a5e190473828713f5074bd7d67a2371b315520"
-          end
-        expect(expected_data_hash[0][:building_reference_number]).to eq(nil)
+        expect(rrn_assessment[:building_reference_number]).to eq(nil)
       end
     end
   end
