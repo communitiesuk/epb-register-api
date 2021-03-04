@@ -160,6 +160,26 @@ module Helper
       "ND" =>
         "Not defined - use in the case of a new dwelling for which the intended tenure in not known. It is not to be used for an existing dwelling",
     }.freeze
+    TRANSACTION_TYPE = {
+      "1" => "marketed sale",
+      "2" => "non marketed sale",
+      "3" =>
+        "rental (social) - this is for backwards compatibility only and should not be used",
+      "4" =>
+        "rental (private) - this is for backwards compatibility only and should not be used",
+      "5" => "not sale or rental",
+      "6" => "new dwelling",
+      "7" =>
+        "not recorded - this is for backwards compatibility only and should not be used",
+      "8" => "rental",
+      "9" => "assessment for green deal",
+      "10" => "following green deal",
+      "11" => "FiT application",
+      "12" => "Stock condition survey",
+      "12RdSAP" => "RHI application",
+      "13RdSAP" => "ECO assessment",
+      "14RdSAP" => "Stock condition survey",
+    }.freeze
 
     def self.xml_value_to_string(number)
       BUILT_FORM[number]
@@ -191,6 +211,14 @@ module Helper
 
     def self.tenure(value)
       TENURE[value] || value
+    end
+
+    def self.transaction_type(value, schema_type = "SAP")
+      if schema_type == "RdSAP" && value.to_i >= 12
+        TRANSACTION_TYPE["#{value}RdSAP"]
+      else
+        TRANSACTION_TYPE[value]
+      end
     end
   end
 end

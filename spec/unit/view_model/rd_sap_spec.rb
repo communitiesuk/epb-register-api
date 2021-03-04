@@ -377,7 +377,7 @@ describe ViewModel::RdSapWrapper do
         potential_energy_efficiency: "72",
         property_type: "Mid-terrace house",
         tenure: "Owner-occupied",
-        transaction_type: "1",
+        transaction_type: "marketed sale",
         environment_impact_current: "52",
         environment_impact_potential: "74",
         energy_consumption_current: "230",

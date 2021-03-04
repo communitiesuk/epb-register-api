@@ -161,7 +161,11 @@ module ViewModel
           @view_model.potential_energy_rating.to_s.chomp,
         property_type: @view_model.dwelling_type,
         tenure: Helper::XmlEnumsToOutput.tenure(@view_model.tenure&.first),
-        transaction_type: @view_model.transaction_type,
+        transaction_type:
+          Helper::XmlEnumsToOutput.transaction_type(
+            @view_model.transaction_type,
+            "RdSAP",
+          ),
         environment_impact_current: @view_model.environmental_impact_current,
         environment_impact_potential:
           @view_model.environmental_impact_potential,

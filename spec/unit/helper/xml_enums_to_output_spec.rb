@@ -286,4 +286,21 @@ describe Helper::XmlEnumsToOutput do
       expect(Helper::XmlEnumsToOutput.tenure(%w[1 2 3])).to eq(%w[1 2 3])
     end
   end
+
+  context "when the Transaction-Type xml value is passed to the transaction type enum" do
+    it "and the value is in the lookup, it returns the expected string" do
+      expect(Helper::XmlEnumsToOutput.transaction_type("1")).to eq(
+        "marketed sale",
+      )
+      expect(Helper::XmlEnumsToOutput.transaction_type("3")).to eq(
+        "rental (social) - this is for backwards compatibility only and should not be used",
+      )
+      expect(Helper::XmlEnumsToOutput.transaction_type("12")).to eq(
+        "Stock condition survey",
+      )
+      expect(Helper::XmlEnumsToOutput.transaction_type("12", "RdSAP")).to eq(
+        "RHI application",
+      )
+    end
+  end
 end
