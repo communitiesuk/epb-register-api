@@ -1,21 +1,22 @@
 desc "Exporting assessments data for Open Data"
 
 task :open_data_export do
-  bucket = ENV["bucket_name"]
-  instance_name = ENV["instance_name"]
-  assessment_type = ENV["assessment_type"]
-  date_from = ENV["date_from"]
+  bucket = ENV["BUCKET_NAME"]
+  instance_name = ENV["INSTANCE_NAME"]
+  assessment_type = ENV["ASSESSMENT_TYPE"]
+
+  date_from = ENV["DATE_FROM"]
   task_id = 0
-  unless ENV["task_id"]
-    task_id = ENV["task_id"].to_i
+  unless ENV["TASK_ID"]
+    task_id = ENV["TASK_ID"].to_i
   end
 
-  raise Boundary::ArgumentMissing, "ASSESSMENT_TYPE" unless assessment_type
-  raise Boundary::ArgumentMissing, "DATE_FROM" unless date_from
+  raise Boundary::ArgumentMissing, "assessment_type" unless assessment_type
+  raise Boundary::ArgumentMissing, "date_from" unless date_from
 
   assessment_type = assessment_type.upcase
   open_data_use_case = get_use_case_by_assessment_type(assessment_type)
-  raise Boundary::InvalidAssessment, ENV["assessment_type"] unless open_data_use_case
+  raise Boundary::InvalidAssessment, ENV["ASSESSMENT_TYPE"] unless open_data_use_case
 
   data = open_data_use_case.execute(date_from, task_id)
 
@@ -49,11 +50,11 @@ def set_date_time
 end
 
 def transmit_file(data)
-  filename = "open_data_export_#{ENV['assessment_type'].downcase}_#{DateTime.now.strftime('%F')}_#{get_max_task_id}.csv"
+  filename = "open_data_export_#{ENV['ASSESSMENT_TYPE'].downcase}_#{DateTime.now.strftime('%F')}_#{get_max_task_id}.csv"
 
   storage_config_reader = Gateway::StorageConfigurationReader.new(
-    instance_name: ENV["instance_name"],
-    bucket_name: ENV["bucket_name"],
+    instance_name: ENV["INSTANCE_NAME"],
+    bucket_name: ENV["BUCKET_NAME"],
   )
   storage_gateway = Gateway::StorageGateway.new(storage_config: storage_config_reader.get_configuration)
   storage_gateway.write_file(filename, data)

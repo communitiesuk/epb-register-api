@@ -263,11 +263,8 @@ def read_csv_fixture(file_name, parse = true)
   fixture_path = File.dirname __FILE__.gsub("acceptance/reporting", "")
   fixture_path << "/fixtures/open_data_export/csv/"
   read_file = File.read("#{fixture_path}#{file_name}.csv")
-  if parse
-    CSV.parse(read_file, headers: true)
-  end
+  CSV.parse(read_file, headers: true) if parse
 end
-
 
 RSpec.configure do |config|
   config.include Rack::Test::Methods

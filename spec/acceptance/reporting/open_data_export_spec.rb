@@ -1,6 +1,8 @@
 describe "Acceptance::Reports::OpenDataExport" do
   include RSpecRegisterApiServiceMixin
 
+  after { WebMock.disable! }
+
   before(:all) do
     scheme_id = add_scheme_and_get_id
     non_domestic_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc")
@@ -175,6 +177,14 @@ describe "Acceptance::Reports::OpenDataExport" do
   let(:expected_output) { ~/A required argument is missing/ }
 
   context "when we call the invoke method without providing environment variables" do
+    before do
+      EnvironmentStub
+        .all
+        .except("BUCKET_NAME")
+        .except("DATE_FROM")
+        .except("ASSESSMENT_TYPE")
+    end
+
     it "fails if no bucket or instance name is defined in environment variables" do
       expect { get_task("open_data_export").invoke }.to output(
         /#{expected_output}/,
@@ -184,8 +194,10 @@ describe "Acceptance::Reports::OpenDataExport" do
 
   context "when given the incorrect assessment type" do
     before do
-      ENV["date_from"] = DateTime.now.strftime("%F")
-      ENV["assessment_type"] = "TEST"
+      EnvironmentStub
+        .all
+        .with("DATE_FROM", DateTime.now.strftime("%F"))
+        .with("ASSESSMENT_TYPE", "TEST")
     end
 
     it "fails if assessment is not of a valid type" do
@@ -197,12 +209,13 @@ describe "Acceptance::Reports::OpenDataExport" do
 
   context "when given the correct environment variables but an invalid date" do
     before do
-      ENV["bucket_name"] = "test_instance"
-      ENV["date_from"] = DateTime.now.strftime("%F")
-      ENV["assessment_type"] = "SAP-RDSAP"
+      EnvironmentStub
+        .all
+        .with("DATE_FROM", DateTime.now.strftime("%F"))
+        .with("ASSESSMENT_TYPE", "SAP-RDSAP")
     end
 
-    it "returns no data to extact error" do
+    it "returns a no data to extract error" do
       expect { get_task("open_data_export").invoke }.to output(
         /no data to export/,
       ).to_stdout
@@ -211,9 +224,11 @@ describe "Acceptance::Reports::OpenDataExport" do
 
   context "when given the correct environment variables invoke the task to send the commercial rr data to S3" do
     before do
-      ENV["date_from"] = test_date
-      ENV["assessment_type"] = "CEPC-RR"
-      HttpStub.enable_aws_keys
+      EnvironmentStub
+        .all
+        .with("DATE_FROM", test_date)
+        .with("ASSESSMENT_TYPE", "CEPC-RR")
+
       WebMock.enable!
       WebMock.reset!
       HttpStub.s3_put_csv(file_name)
@@ -221,12 +236,7 @@ describe "Acceptance::Reports::OpenDataExport" do
     let(:fixture_csv) { read_csv_fixture("commercial_rr") }
 
     let(:file_name) do
-      "open_data_export_#{ENV['assessment_type'].downcase}_#{DateTime.now.strftime('%F')}_1.csv"
-    end
-
-    after do
-      WebMock.disable!
-      HttpStub.disable_aws_keys
+      "open_data_export_#{ENV['ASSESSMENT_TYPE'].downcase}_#{DateTime.now.strftime('%F')}_1.csv"
     end
 
     it "mocks the HTTP Request of the storage gateway and checks the client request was processed" do
@@ -234,7 +244,12 @@ describe "Acceptance::Reports::OpenDataExport" do
       expect(WebMock).to have_requested(
         :put,
         "#{HttpStub::S3_BUCKET_URI}#{file_name}",
-      ).with(body: Regexp.union(fixture_csv.headers), headers:{ 'Host' => 's3.eu-west-2.amazonaws.com' })
+      ).with(
+        body: Regexp.union(fixture_csv.headers),
+        headers: {
+          "Host" => "s3.eu-west-2.amazonaws.com",
+        },
+      )
     end
   end
 
