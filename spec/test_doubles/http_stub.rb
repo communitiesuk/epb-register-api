@@ -7,6 +7,8 @@ class HttpStub
   S3_BUCKET_URI = "https://s3.eu-west-2.amazonaws.com/test_bucket/".freeze
 
   def self.s3_get_object(key, body = "", code = 200)
+
+
     WebMock.stub_request(
       :get,
       "https://test-bucket.s3.eu-west-1.amazonaws.com/#{key}",
@@ -17,7 +19,7 @@ class HttpStub
 
   def self.s3_put_csv(file_name, _error = nil, _code = 200)
     uri = "#{S3_BUCKET_URI}#{file_name}"
-    WebMock.enable!
+
     WebMock.stub_request(:put, uri).to_return(status: 200)
   end
 

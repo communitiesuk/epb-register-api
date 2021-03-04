@@ -216,6 +216,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       ENV["assessment_type"] = "CEPC-RR"
       HttpStub.enable_aws_keys
       WebMock.enable!
+      WebMock.reset!
       HttpStub.s3_put_csv(file_name)
       get_task("open_data_export").invoke
     end
@@ -224,6 +225,11 @@ describe "Acceptance::Reports::OpenDataExport" do
     let(:file_name) do
       "open_data_export_#{ENV['assessment_type'].downcase}_#{DateTime.now.strftime('%F')}_1.csv"
     end
+
+    after do
+      WebMock.disable!
+    end
+
 
     it "mocks the HTTP Request of the storage gateway and checks the client request was processed" do
       expect(WebMock).to have_requested(
