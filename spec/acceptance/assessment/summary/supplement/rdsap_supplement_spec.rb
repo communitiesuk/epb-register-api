@@ -7,38 +7,60 @@ describe "Acceptance::AssessmentSummary::Supplement::RdSAP" do
 
   before(:all) do
     scheme_id = add_scheme_and_get_id
-    assessor = AssessorStub.new.fetch_request_body(domesticRdSap: "ACTIVE")
+    assessor =
+      AssessorStub.new.fetch_request_body(
+        domesticRdSap: "ACTIVE",
+        domesticSap: "ACTIVE",
+      )
     add_assessor(scheme_id, "SPEC000000", assessor)
 
     add_address_base(uprn: "0")
+
+    # DATA SETUP:
+    # 0000 = RdSAP with address ID UPRN-000000000000
+    # 0001 = RdSAP with address ID UPRN-000000000000, no contact details
+    # 0002 = RdSAP with address ID RRN-0000-0000-0000-0000-0002
+    # 0003 = SAP with address ID UPRN-000000000000
 
     lodge_rdsap(Samples.xml("RdSAP-Schema-20.0.0"), scheme_id)
     add_green_deal_plan(
       assessment_id: "0000-0000-0000-0000-0000",
       body: GreenDealPlanStub.new.request_body,
     )
-    @regular_summary =
-      JSON.parse(
-        fetch_assessment_summary("0000-0000-0000-0000-0000").body,
-        symbolize_names: true,
-      )
 
     rdsap_without_contacts = Nokogiri.XML(Samples.xml("RdSAP-Schema-20.0.0"))
     rdsap_without_contacts.at("E-Mail").remove
     rdsap_without_contacts.at("Telephone").remove
     rdsap_without_contacts.at("RRN").content = "0000-0000-0000-0000-0001"
     lodge_rdsap(rdsap_without_contacts.to_xml, scheme_id)
-    @second_summary =
-      JSON.parse(
-        fetch_assessment_summary("0000-0000-0000-0000-0001").body,
-        symbolize_names: true,
-      )
 
     rdsap_without_uprn = Nokogiri.XML(Samples.xml("RdSAP-Schema-20.0.0"))
     rdsap_without_uprn.at("RRN").content = "0000-0000-0000-0000-0002"
     rdsap_without_uprn.at("UPRN").remove
     lodge_rdsap(rdsap_without_uprn.to_xml, scheme_id)
-    @third_summary =
+
+    sap_assessment = Nokogiri.XML(Samples.xml("SAP-Schema-18.0.0"))
+    sap_assessment.at("RRN").content = "0000-0000-0000-0000-0003"
+    sap_assessment.at("UPRN").content = "UPRN-000000000000"
+    lodge_assessment(
+      assessment_body: sap_assessment.to_xml,
+      auth_data: {
+        scheme_ids: [scheme_id],
+      },
+      schema_name: "SAP-Schema-18.0.0",
+    )
+
+    @summary_0000 =
+      JSON.parse(
+        fetch_assessment_summary("0000-0000-0000-0000-0000").body,
+        symbolize_names: true,
+      )
+    @summary_0001 =
+      JSON.parse(
+        fetch_assessment_summary("0000-0000-0000-0000-0001").body,
+        symbolize_names: true,
+      )
+    @summary_0002 =
       JSON.parse(
         fetch_assessment_summary("0000-0000-0000-0000-0002").body,
         symbolize_names: true,
@@ -47,20 +69,20 @@ describe "Acceptance::AssessmentSummary::Supplement::RdSAP" do
 
   context "when getting the assessor data supplement" do
     it "Adds scheme details" do
-      scheme = @regular_summary.dig(:data, :assessor, :registeredBy)
+      scheme = @summary_0000.dig(:data, :assessor, :registeredBy)
       expect(scheme[:name]).to eq("test scheme")
       expect(scheme[:schemeId]).to be_a(Integer)
     end
 
     it "Returns lodged email and phone values by default" do
-      contact_details = @regular_summary.dig(:data, :assessor, :contactDetails)
+      contact_details = @summary_0000.dig(:data, :assessor, :contactDetails)
       expect(contact_details).to eq(
         { telephoneNumber: "0555 497 2848", email: "a@b.c" },
       )
     end
 
     it "Overrides missing assessor email and phone values with DB values" do
-      expect(@second_summary.dig(:data, :assessor, :contactDetails)).to eq(
+      expect(@summary_0001.dig(:data, :assessor, :contactDetails)).to eq(
         { email: "person@person.com", telephoneNumber: "010199991010101" },
       )
     end
@@ -68,43 +90,47 @@ describe "Acceptance::AssessmentSummary::Supplement::RdSAP" do
 
   context "when getting the related certificates" do
     it "returns an empty list when there are no related certificates" do
-      expect(@regular_summary.dig(:data, :relatedAssessments)).to eq([])
+      expect(@summary_0002.dig(:data, :relatedAssessments)).to eq([])
     end
 
-    it "Returns assessments lodged against the same address" do
-      related_assessments = @second_summary.dig(:data, :relatedAssessments)
-      expect(related_assessments.count).to eq(1)
-      expect(related_assessments[0][:assessmentId]).to eq(
-        "0000-0000-0000-0000-0000",
-      )
+    it "returns SAP and RdSAP assessments lodged against the same address" do
+      related_assessments = @summary_0001.dig(:data, :relatedAssessments)
+      related_ids = related_assessments.map { |x| x[:assessmentId] }
+      expect(related_ids.count).to eq(2)
+      expect(related_ids).to include "0000-0000-0000-0000-0000"
+      expect(related_ids).to include "0000-0000-0000-0000-0003"
     end
 
     it "does not return opted out related assessments" do
       opt_out_assessment("0000-0000-0000-0000-0000")
 
-      @second_summary =
+      @summary_0001 =
         JSON.parse(
           fetch_assessment_summary("0000-0000-0000-0000-0001").body,
           symbolize_names: true,
         )
 
-      expect(@second_summary.dig(:data, :relatedAssessments)).to eq([])
+      related_assessments = @summary_0001.dig(:data, :relatedAssessments)
+      expect(related_assessments.count).to eq(1)
+      expect(
+        related_assessments[0][:assessmentId],
+      ).to eq "0000-0000-0000-0000-0003"
     end
 
     context "when there is no UPRN field" do
       it "returns an empty list when there are no related assessments" do
-        expect(@third_summary.dig(:data, :relatedAssessments)).to eq([])
+        expect(@summary_0002.dig(:data, :relatedAssessments)).to eq([])
       end
     end
   end
 
   context "when getting the green deal plan" do
     it "does not add a green deal plan when there isn't one" do
-      expect(@second_summary.dig(:data, :greenDealPlan)).to eq([])
+      expect(@summary_0001.dig(:data, :greenDealPlan)).to eq([])
     end
 
     it "adds a green deal plan when there is one" do
-      green_deal_plan = @regular_summary.dig(:data, :greenDealPlan).first
+      green_deal_plan = @summary_0000.dig(:data, :greenDealPlan).first
       expect(green_deal_plan[:ccaRegulated]).to be_truthy
       expect(green_deal_plan[:chargeUplift]).to eq(
         { amount: "1.25", date: "2025-03-29" },

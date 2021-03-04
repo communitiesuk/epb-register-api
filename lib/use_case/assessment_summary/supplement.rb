@@ -53,8 +53,12 @@ module UseCase
           related_assessments.filter do |assessment|
             related = assessment.to_hash
 
-            related[:assessment_type] == hash[:type_of_assessment] &&
-              related[:assessment_id] != hash[:assessment_id]
+            (
+              (
+                %w[RdSAP SAP].include?(related[:assessment_type]) &&
+                  %w[RdSAP SAP].include?(hash[:type_of_assessment])
+              ) || related[:assessment_type] == hash[:type_of_assessment]
+            ) && related[:assessment_id] != hash[:assessment_id]
           end
 
         hash[:related_assessments] = other_assessments_without_self
