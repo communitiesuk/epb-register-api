@@ -209,16 +209,27 @@ describe "Acceptance::Reports::OpenDataExport" do
     end
   end
 
-  context "when given the correct environment variables post Domestic data" do
-    let(:use_case) { UseCase::ExportOpenDataDomestic.new }
-    let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(test_date)) }
-
+  context "when given the correct environment variables invoke the task to send the commerical rr data to S3" do
     before do
-      files_list = HttpStub.enable_aws.s3_objects [{ key: "", body: csv_data }]
+      ENV["bucket_name"] = "test_bucket"
+      ENV["date_from"] = test_date
+      ENV["assessment_type"] = "CEPC-RR"
+      HttpStub.enable_aws_keys
+      WebMock.enable!
+      HttpStub.s3_put_csv(file_name)
+      get_task("open_data_export").invoke
+    end
+    let(:fixture_csv) { read_csv_fixture("commerical-rr") }
 
-      HttpStub.enable_logging
-      HttpStub.successful_token
-      # HttpStub.stream_file_to_s3(csv_data)
+    let(:file_name) do
+      "open_data_export_#{ENV['assessment_type'].downcase}_#{DateTime.now.strftime('%F')}_1.csv"
+    end
+
+    it "mocks the HTTP Request of the storage gateway and checks the client request was processed" do
+      expect(WebMock).to have_requested(
+        :put,
+        "#{HttpStub::S3_BUCKET_URI}#{file_name}",
+      )
     end
   end
 

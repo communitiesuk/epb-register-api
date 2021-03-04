@@ -13,6 +13,7 @@ require "rspec"
 require "sinatra/activerecord"
 require "webmock"
 require "zeitwerk"
+require "webmock/rspec"
 
 class TestLoader
   def self.setup
