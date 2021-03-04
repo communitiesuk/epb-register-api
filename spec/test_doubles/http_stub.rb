@@ -7,8 +7,6 @@ class HttpStub
   S3_BUCKET_URI = "https://s3.eu-west-2.amazonaws.com/test_bucket/".freeze
 
   def self.s3_get_object(key, body = "", code = 200)
-
-
     WebMock.stub_request(
       :get,
       "https://test-bucket.s3.eu-west-1.amazonaws.com/#{key}",
@@ -234,6 +232,7 @@ class HttpStub
   end
 
   def self.enable_aws_keys
+    ENV["bucket_name"] = "test_bucket"
     ENV["AWS_ACCESS_KEY_ID"] = "AKIAIOSFODNN7EXAMPLE"
     ENV["AWS_SECRET_ACCESS_KEY"] = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
     ENV["AWS_DEFAULT_REGION"] = "eu-west-1"
