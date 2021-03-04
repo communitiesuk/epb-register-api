@@ -209,11 +209,7 @@ describe "Acceptance::Reports::OpenDataExport" do
     end
   end
 
-
-
-
-
-  context "when given the correct environment variables invoke the task to send the commerical rr data to S3" do
+  context "when given the correct environment variables invoke the task to send the commercial rr data to S3" do
     before do
       ENV["date_from"] = test_date
       ENV["assessment_type"] = "CEPC-RR"
