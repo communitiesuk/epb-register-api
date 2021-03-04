@@ -239,6 +239,16 @@ class HttpStub
     ENV["AWS_REGION"] = "eu-west-1"
   end
 
+  def self.disable_aws_keys
+    ENV["bucket_name"] = nil
+    ENV["AWS_ACCESS_KEY_ID"] = nil
+    ENV["AWS_SECRET_ACCESS_KEY"] = nil
+    ENV["AWS_DEFAULT_REGION"] = nil
+    ENV["AWS_REGION"] = nil
+    ENV["date_from"] = nil
+    ENV["assessment_type"] = nil
+  end
+
   def self.enable_logging
     WebMock
       .stub_request(:post, "https://api.logit.io/v2")

@@ -209,6 +209,10 @@ describe "Acceptance::Reports::OpenDataExport" do
     end
   end
 
+
+
+
+
   context "when given the correct environment variables invoke the task to send the commerical rr data to S3" do
     before do
       ENV["date_from"] = test_date
@@ -218,20 +222,23 @@ describe "Acceptance::Reports::OpenDataExport" do
       WebMock.reset!
       HttpStub.s3_put_csv(file_name)
     end
-    let(:fixture_csv) { read_csv_fixture("commerical-rr") }
+    let(:fixture_csv) { read_csv_fixture("commercial_rr") }
 
     let(:file_name) do
       "open_data_export_#{ENV['assessment_type'].downcase}_#{DateTime.now.strftime('%F')}_1.csv"
     end
 
-    after { WebMock.disable! }
+    after do
+      WebMock.disable!
+      HttpStub.disable_aws_keys
+    end
 
     it "mocks the HTTP Request of the storage gateway and checks the client request was processed" do
       get_task("open_data_export").invoke
       expect(WebMock).to have_requested(
         :put,
         "#{HttpStub::S3_BUCKET_URI}#{file_name}",
-      )
+      ).with(body: Regexp.union(fixture_csv.headers), headers:{ 'Host' => 's3.eu-west-2.amazonaws.com' })
     end
   end
 
@@ -361,13 +368,6 @@ describe "Acceptance::Reports::OpenDataExport" do
 end
 
 private
-
-def read_csv_fixture(file_name)
-  fixture_path = File.dirname __FILE__.gsub("acceptance/reporting", "")
-  fixture_path << "/fixtures/open_data_export/csv/"
-  read_file = File.read("#{fixture_path}#{file_name}.csv")
-  CSV.parse(read_file, headers: true)
-end
 
 def test_date
   "2021-02-22"
