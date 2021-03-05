@@ -239,13 +239,20 @@ describe "Acceptance::Reports::OpenDataExport" do
       "open_data_export_#{ENV['ASSESSMENT_TYPE'].downcase}_#{DateTime.now.strftime('%F')}_1.csv"
     end
 
+    let(:regex_body_pattern) do
+      str = ""
+      fixture_csv.headers.each { |item| str << "(?=^.*?#{item}.*$)" }
+      Regexp.new("#{str}.*$")
+    end
+
     it "mocks the HTTP Request of the storage gateway and checks the client request was processed" do
       get_task("open_data_export").invoke
+
       expect(WebMock).to have_requested(
         :put,
         "#{HttpStub::S3_BUCKET_URI}#{file_name}",
       ).with(
-        body: Regexp.union(fixture_csv.headers),
+        body: regex_body_pattern,
         headers: {
           "Host" => "s3.eu-west-2.amazonaws.com",
         },
