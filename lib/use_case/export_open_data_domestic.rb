@@ -41,7 +41,7 @@ module UseCase
         )
         view_model_hash[:assessment_id] =
           Helper::RrnHelper.hash_rrn(assessment["assessment_id"])
-        if view_model_hash.has_key?(:building_reference_number)
+        unless view_model_hash[:building_reference_number].nil?
           unless view_model_hash[:building_reference_number].include?("UPRN")
             view_model_hash[:building_reference_number] = nil
           end
