@@ -23,7 +23,6 @@ describe UseCase::ExportOpenDataCommercial do
         address1: "Some Unit",
         address2: "2 Lonely Street",
         address3: "Some Area",
-        address4: "Some County",
         posttown: "Whitbury",
         postcode: "A0 0AA",
         building_reference_number: "UPRN-000000000001",

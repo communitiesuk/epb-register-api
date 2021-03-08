@@ -99,7 +99,6 @@ module ViewModel
         address1: @view_model.address_line1,
         address2: @view_model.address_line2,
         address3: @view_model.address_line3,
-        address4: @view_model.address_line4,
         aircon_kw_rating: @view_model.ac_kw_rating,
         aircon_present:
           if !@view_model.ac_present.nil? &&
