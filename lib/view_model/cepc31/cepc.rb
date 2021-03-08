@@ -96,6 +96,10 @@ module ViewModel
       def typical_emissions
         nil
       end
+
+      def renewable_sources
+        xpath(%w[Renewable-Sources])
+      end
     end
   end
 end

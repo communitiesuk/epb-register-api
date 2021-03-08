@@ -335,6 +335,7 @@
         <CEPC:Special-Energy-Uses>Test sp</CEPC:Special-Energy-Uses>
         <CEPC:Building-Level>3</CEPC:Building-Level>
         <CEPC:OR-Availability-Date>2020-01-04</CEPC:OR-Availability-Date>
+        <CEPC:Renewable-Sources>Renewable sources test</CEPC:Renewable-Sources>
       </CEPC:Technical-Information>
       <CEPC:AC-Questionnaire>
         <CEPC:AC-Present>No</CEPC:AC-Present>

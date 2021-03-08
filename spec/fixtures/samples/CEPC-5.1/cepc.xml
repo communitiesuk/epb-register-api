@@ -319,6 +319,7 @@
         <OR-Availability-Date>2020-01-04</OR-Availability-Date>
         <Other-Fuel-Description>Test</Other-Fuel-Description>
         <Special-Energy-Uses>Test sp</Special-Energy-Uses>
+        <Renewable-Sources>Renewable sources test</Renewable-Sources>
       </Technical-Information>
       <AC-Questionnaire>
         <AC-Present>No</AC-Present>

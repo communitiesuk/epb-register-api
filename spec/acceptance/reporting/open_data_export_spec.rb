@@ -370,10 +370,9 @@ describe "Acceptance::Reports::OpenDataExport" do
     let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(test_date)) }
     let(:fixture_csv) { read_csv_fixture("commercial") }
     let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
-    let(:fixture_csv_headers) { fixture_csv.headers - %w[RENEWABLE_SOURCES] }
 
     it "returns an empty array when there are no missing headers in the exported data based on the fixture" do
-      expect(fixture_csv_headers - parsed_exported_data.headers).to eq([])
+      expect(fixture_csv.headers - parsed_exported_data.headers).to eq([])
     end
   end
 

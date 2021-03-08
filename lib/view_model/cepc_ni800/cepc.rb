@@ -108,6 +108,10 @@ module ViewModel
       def typical_emissions
         xpath(%w[TYR])
       end
+
+      def renewable_sources
+        xpath(%w[Renewable-Sources])
+      end
     end
   end
 end

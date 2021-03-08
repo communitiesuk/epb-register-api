@@ -50,6 +50,7 @@ describe UseCase::ExportOpenDataCommercial do
         building_environment: "Air Conditioning",
         primary_energy: "413.22",
         report_type: "3",
+        renewable_sources: "Renewable sources test",
       }
 
       let(:expected_values_index_1) do

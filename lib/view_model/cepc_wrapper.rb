@@ -137,6 +137,7 @@ module ViewModel
         transaction_type: @view_model.transaction_type,
         type_of_assessment: TYPE_OF_ASSESSMENT,
         typical_emissions: @view_model.typical_emissions,
+        renewable_sources: @view_model.renewable_sources,
       }
     end
 

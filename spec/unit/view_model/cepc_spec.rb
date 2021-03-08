@@ -210,6 +210,7 @@ describe ViewModel::CepcWrapper do
         building_environment: "Air Conditioning",
         primary_energy: "413.22",
         report_type: "3",
+        renewable_sources: "Renewable sources test",
       }
     end
 

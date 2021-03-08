@@ -92,6 +92,10 @@ module ViewModel
       def standard_emissions
         xpath(%w[SER])
       end
+
+      def renewable_sources
+        xpath(%w[Renewable-Sources])
+      end
     end
   end
 end
