@@ -276,21 +276,19 @@ describe Helper::XmlEnumsToOutput do
       expect(Helper::XmlEnumsToOutput.glazed_area_rdsap(nil)).to be_nil
       expect(
         Helper::XmlEnumsToOutput.glazed_area_rdsap("Any other value"),
-        ).to be_nil
+      ).to be_nil
     end
     it "and the value is in the lookup, it returns the expected string" do
-      expect(Helper::XmlEnumsToOutput.glazed_area_rdsap("1")).to eq(
-                                                                   "Normal",
-                                                                   )
+      expect(Helper::XmlEnumsToOutput.glazed_area_rdsap("1")).to eq("Normal")
       expect(Helper::XmlEnumsToOutput.glazed_area_rdsap("3")).to eq(
-                                                                   "Less Than Typical",
-                                                                   )
+        "Less Than Typical",
+      )
       expect(Helper::XmlEnumsToOutput.glazed_area_rdsap("5")).to eq(
-                                                                   "Much Less Than Typical",
-                                                                   )
+        "Much Less Than Typical",
+      )
       expect(Helper::XmlEnumsToOutput.glazed_area_rdsap("ND")).to eq(
-                                                                   "Not Defined",
-                                                                   )
+        "Not Defined",
+      )
     end
   end
 
@@ -329,12 +327,8 @@ describe Helper::XmlEnumsToOutput do
 
   context "when the Property-Type xml value is passed to the transaction type enum" do
     it "and the value is in the lookup, it returns the expected string" do
-      expect(Helper::XmlEnumsToOutput.property_type("0")).to eq(
-                                                                    "House",
-                                                                    )
-      expect(Helper::XmlEnumsToOutput.property_type("4")).to eq(
-                                                                    "Park home",
-                                                                    )
+      expect(Helper::XmlEnumsToOutput.property_type("0")).to eq("House")
+      expect(Helper::XmlEnumsToOutput.property_type("4")).to eq("Park home")
     end
   end
 end

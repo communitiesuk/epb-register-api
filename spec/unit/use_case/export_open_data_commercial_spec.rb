@@ -39,7 +39,7 @@ describe UseCase::ExportOpenDataCommercial do
         main_heating_fuel: "Natural Gas",
         building_level: "3",
         floor_area: "403",
-        other_fuel_description: "Test",
+        other_fuel_desc: "Test",
         special_energy_uses: "Test sp",
         aircon_present: "N",
         aircon_kw_rating: "100",

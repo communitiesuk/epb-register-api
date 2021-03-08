@@ -160,7 +160,7 @@ module Helper
       "4" => "Much More Than Typical",
       "5" => "Much Less Than Typical",
       "ND" => "Not Defined",
-    }
+    }.freeze
     TENURE = {
       "1" => "Owner-occupied",
       "2" => "Rented (social)",
@@ -189,11 +189,11 @@ module Helper
       "14RdSAP" => "Stock condition survey",
     }.freeze
     PROPERTY_TYPE = {
-        "0" => "House",
-        "1" => "Bungalow",
-        "2" => "Flat",
-        "3" => "Maisonette",
-        "4" => "Park home",
+      "0" => "House",
+      "1" => "Bungalow",
+      "2" => "Flat",
+      "3" => "Maisonette",
+      "4" => "Park home",
     }.freeze
 
     def self.xml_value_to_string(number)

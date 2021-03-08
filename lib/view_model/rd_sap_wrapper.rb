@@ -159,9 +159,8 @@ module ViewModel
         current_energy_efficiency: @view_model.current_energy_rating.to_s.chomp,
         potential_energy_efficiency:
           @view_model.potential_energy_rating.to_s.chomp,
-        property_type: Helper::XmlEnumsToOutput.property_type(
-            @view_model.property_type,
-            ),
+        property_type:
+          Helper::XmlEnumsToOutput.property_type(@view_model.property_type),
         tenure: Helper::XmlEnumsToOutput.tenure(@view_model.tenure&.first),
         transaction_type:
           Helper::XmlEnumsToOutput.transaction_type(
@@ -189,9 +188,7 @@ module ViewModel
         flat_storey_count: @view_model.storey_count,
         multi_glaze_proportion: @view_model.multiple_glazed_proportion,
         glazed_area:
-          Helper::XmlEnumsToOutput.glazed_area_rdsap(
-            @view_model.glazed_area,
-          ),
+          Helper::XmlEnumsToOutput.glazed_area_rdsap(@view_model.glazed_area),
         number_habitable_rooms: @view_model.habitable_room_count,
         number_heated_rooms: @view_model.heated_room_count,
         low_energy_lighting: @view_model.low_energy_lighting,

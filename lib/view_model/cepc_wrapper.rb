@@ -124,7 +124,6 @@ module ViewModel
         lodgement_date: @view_model.date_of_registration,
         main_heating_fuel: @view_model.main_heating_fuel,
         new_build_benchmark: @view_model.new_build_rating,
-        other_fuel_description: @view_model.other_fuel_description,
         other_fuel_desc: @view_model.other_fuel_description,
         postcode: @view_model.postcode,
         posttown: @view_model.town,
