@@ -1,4 +1,4 @@
-desc "Exporting assessments data for Open Data"
+desc "Exporting assessments data for Open Data Communities"
 
 task :open_data_export do
   bucket = ENV["BUCKET_NAME"]
@@ -23,7 +23,6 @@ task :open_data_export do
   if data.length > 0
     csv_data = Helper::ExportHelper.to_csv(data)
     transmit_file(csv_data)
-    puts "true"
   else
     puts "no data to export"
   end

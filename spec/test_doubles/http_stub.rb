@@ -17,8 +17,8 @@ class HttpStub
 
   def self.s3_put_csv(file_name)
     WebMock.enable!
+    WebMock.reset!
     uri = "#{S3_BUCKET_URI}#{file_name}"
-
     WebMock.stub_request(:put, uri).to_return(status: 200)
   end
 

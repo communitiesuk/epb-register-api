@@ -1,3 +1,5 @@
+require_relative "open_data_export_test_helper"
+
 describe "Acceptance::Reports::OpenDataExport" do
   include RSpecRegisterApiServiceMixin
 
@@ -174,8 +176,6 @@ describe "Acceptance::Reports::OpenDataExport" do
     gateway.fetch_latest_statistics
   end
 
-  let(:expected_output) { ~/A required argument is missing/ }
-
   context "when we call the invoke method without providing environment variables" do
     before do
       EnvironmentStub
@@ -187,7 +187,7 @@ describe "Acceptance::Reports::OpenDataExport" do
 
     it "fails if no bucket or instance name is defined in environment variables" do
       expect { get_task("open_data_export").invoke }.to output(
-        /#{expected_output}/,
+        /A required argument is missing/,
       ).to_stderr
     end
   end
@@ -207,7 +207,7 @@ describe "Acceptance::Reports::OpenDataExport" do
     end
   end
 
-  context "when given the correct environment variables but an invalid date" do
+  context "when given the correct environment variables and export date of now" do
     before do
       EnvironmentStub
         .all
@@ -215,7 +215,7 @@ describe "Acceptance::Reports::OpenDataExport" do
         .with("ASSESSMENT_TYPE", "SAP-RDSAP")
     end
 
-    it "returns a no data to extract error" do
+    it "returns a no data to export error" do
       expect { get_task("open_data_export").invoke }.to output(
         /no data to export/,
       ).to_stdout
@@ -243,30 +243,18 @@ describe "Acceptance::Reports::OpenDataExport" do
         .with("DATE_FROM", test_date)
         .with("ASSESSMENT_TYPE", "SAP-RDSAP")
 
-      WebMock.enable!
-      WebMock.reset!
-      HttpStub.s3_put_csv(file_name)
+      HttpStub.s3_put_csv(file_name("SAP-RDSAP"))
     end
     let(:fixture_csv) { read_csv_fixture("domestic") }
-
-    let(:file_name) do
-      "open_data_export_#{ENV['ASSESSMENT_TYPE'].downcase}_#{DateTime.now.strftime('%F')}_1.csv"
-    end
-
-    let(:regex_body_pattern) do
-      str = ""
-      fixture_csv.headers.each { |item| str << "(?=^.*?#{item}.*$)" }
-      Regexp.new("#{str}.*$")
-    end
 
     it "mocks the HTTP Request of the storage gateway and checks the client request was processed" do
       get_task("open_data_export").invoke
 
       expect(WebMock).to have_requested(
         :put,
-        "#{HttpStub::S3_BUCKET_URI}#{file_name}",
+        "#{HttpStub::S3_BUCKET_URI}#{file_name('SAP-RDSAP')}",
       ).with(
-        body: regex_body_pattern,
+        body: regex_body(fixture_csv.headers),
         headers: {
           "Host" => "s3.eu-west-2.amazonaws.com",
         },
@@ -281,20 +269,40 @@ describe "Acceptance::Reports::OpenDataExport" do
         .with("DATE_FROM", test_date)
         .with("ASSESSMENT_TYPE", "SAP-RDSAP-RR")
 
-      WebMock.enable!
-      WebMock.reset!
-      HttpStub.s3_put_csv(file_name)
+      HttpStub.s3_put_csv(file_name("SAP-RDSAP-RR"))
     end
     let(:fixture_csv) { read_csv_fixture("domestic_rr") }
 
-    let(:file_name) do
-      "open_data_export_#{ENV['ASSESSMENT_TYPE'].downcase}_#{DateTime.now.strftime('%F')}_1.csv"
+    it "mocks the HTTP Request of the storage gateway and checks the client request was processed" do
+      get_task("open_data_export").invoke
+
+      expect(WebMock).to have_requested(
+        :put,
+        "#{HttpStub::S3_BUCKET_URI}#{file_name('SAP-RDSAP-RR')}",
+      ).with(
+        body: regex_body(fixture_csv.headers),
+        headers: {
+          "Host" => "s3.eu-west-2.amazonaws.com",
+        },
+      )
+    end
+  end
+
+  # TODO: Test complete fixture once nodes have been completed
+  context "when given the correct environment variables invoke the task to send the commercial data to S3" do
+    before do
+      EnvironmentStub
+        .all
+        .with("DATE_FROM", test_date)
+        .with("ASSESSMENT_TYPE", "CEPC")
+      HttpStub.s3_put_csv(file_name("CEPC"))
     end
 
     let(:regex_body_pattern) do
-      str = ""
-      fixture_csv.headers.each { |item| str << "(?=^.*?#{item}.*$)" }
-      Regexp.new("#{str}.*$")
+      fixture_headers = %w[
+        AC_INSPECTION_COMMISSIONED,ADDRESS1,ADDRESS2,ADDRESS3,ADDRESS4,AIRCON_KW_RATING,AIRCON_PRESENT,ASSESSMENT_ID,ASSET_RATING,ASSET_RATING_BAND,BUILDING_EMISSIONS,BUILDING_ENVIRONMENT,BUILDING_LEVEL,BUILDING_REFERENCE_NUMBER,ESTIMATED_AIRCON_KW_RATING,EXISTING_STOCK_BENCHMARK,FLOOR_AREA
+      ]
+      regex_body(fixture_headers)
     end
 
     it "mocks the HTTP Request of the storage gateway and checks the client request was processed" do
@@ -302,7 +310,7 @@ describe "Acceptance::Reports::OpenDataExport" do
 
       expect(WebMock).to have_requested(
         :put,
-        "#{HttpStub::S3_BUCKET_URI}#{file_name}",
+        "#{HttpStub::S3_BUCKET_URI}#{file_name('CEPC')}",
       ).with(
         body: regex_body_pattern,
         headers: {
@@ -319,20 +327,40 @@ describe "Acceptance::Reports::OpenDataExport" do
         .with("DATE_FROM", test_date)
         .with("ASSESSMENT_TYPE", "CEPC-RR")
 
-      WebMock.enable!
-      WebMock.reset!
-      HttpStub.s3_put_csv(file_name)
+      HttpStub.s3_put_csv(file_name("CEPC-RR"))
     end
     let(:fixture_csv) { read_csv_fixture("commercial_rr") }
 
-    let(:file_name) do
-      "open_data_export_#{ENV['ASSESSMENT_TYPE'].downcase}_#{DateTime.now.strftime('%F')}_1.csv"
+    it "mocks the HTTP Request of the storage gateway and checks the client request was processed" do
+      get_task("open_data_export").invoke
+
+      expect(WebMock).to have_requested(
+        :put,
+        "#{HttpStub::S3_BUCKET_URI}#{file_name('CEPC-RR')}",
+      ).with(
+        body: regex_body(fixture_csv.headers),
+        headers: {
+          "Host" => "s3.eu-west-2.amazonaws.com",
+        },
+      )
+    end
+  end
+
+  # TODO: Test complete fixture once nodes have been completed
+  context "when given the correct environment variables invoke the task to send the DEC data to S3" do
+    before do
+      EnvironmentStub
+        .all
+        .with("DATE_FROM", test_date)
+        .with("ASSESSMENT_TYPE", "DEC")
+      HttpStub.s3_put_csv(file_name("DEC"))
     end
 
     let(:regex_body_pattern) do
-      str = ""
-      fixture_csv.headers.each { |item| str << "(?=^.*?#{item}.*$)" }
-      Regexp.new("#{str}.*$")
+      fixture_headers = %w[
+        YR1_ELECTRICITY_CO2,YR2_ELECTRICITY_CO2,YR1_HEATING_CO2,YR2_HEATING_CO2,YR1_RENEWABLES_CO2,YR2_RENEWABLES_CO2,AIRCON_PRESENT,AIRCON_KW_RATING,ESTIMATED_AIRCON_KW_RATING
+      ]
+      regex_body(fixture_headers)
     end
 
     it "mocks the HTTP Request of the storage gateway and checks the client request was processed" do
@@ -340,7 +368,7 @@ describe "Acceptance::Reports::OpenDataExport" do
 
       expect(WebMock).to have_requested(
         :put,
-        "#{HttpStub::S3_BUCKET_URI}#{file_name}",
+        "#{HttpStub::S3_BUCKET_URI}#{file_name('DEC')}",
       ).with(
         body: regex_body_pattern,
         headers: {
@@ -356,13 +384,7 @@ describe "Acceptance::Reports::OpenDataExport" do
     let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(test_date)) }
     let(:fixture_csv) { read_csv_fixture("commercial") }
     let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
-    let(:fixture_csv_headers) do
-      fixture_csv.headers - %w[
-        RENEWABLE_SOURCES
-        OTHER_FUEL_DESCRIPTION
-        PRIMARY_ENERGY
-      ]
-    end
+    let(:fixture_csv_headers) { fixture_csv.headers - %w[RENEWABLE_SOURCES] }
 
     it "returns an empty array when there are no missing headers in the exported data based on the fixture" do
       expect(fixture_csv_headers - parsed_exported_data.headers).to eq([])
@@ -388,7 +410,7 @@ describe "Acceptance::Reports::OpenDataExport" do
     end
   end
 
-  # TODO: Test content as well as headers
+  # TODO: once the nodes are complete update to test for content as well as headers
   context "When we call the use case to extract the DEC data" do
     let(:dec_use_case) { UseCase::ExportOpenDataDec.new }
     let(:csv_data) do
@@ -476,7 +498,3 @@ describe "Acceptance::Reports::OpenDataExport" do
 end
 
 private
-
-def test_date
-  "2021-02-22"
-end
