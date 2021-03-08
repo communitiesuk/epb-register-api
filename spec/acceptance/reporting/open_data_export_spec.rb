@@ -101,18 +101,6 @@ describe "Acceptance::Reports::OpenDataExport" do
       schema_name: "CEPC-8.0.0",
     )
 
-    non_domestic_assessment_date.children = test_date
-    non_domestic_assessment_id.children = "0000-0000-0000-0000-0002"
-    lodge_assessment(
-      assessment_body: non_domestic_xml.to_xml,
-      accepted_responses: [201],
-      auth_data: {
-        scheme_ids: [scheme_id],
-      },
-      override: true,
-      schema_name: "CEPC-8.0.0",
-    )
-
     dec_assessment_date.children = test_date
     dec_assessment_id.children = "0000-0000-0000-0000-0003"
     lodge_assessment(
@@ -284,12 +272,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       HttpStub.s3_put_csv(file_name("CEPC"))
     end
 
-    let(:regex_body_pattern) do
-      fixture_headers = %w[
-        AC_INSPECTION_COMMISSIONED,ADDRESS1,ADDRESS2,ADDRESS3,AIRCON_KW_RATING,AIRCON_PRESENT,ASSESSMENT_ID,ASSET_RATING,ASSET_RATING_BAND,BUILDING_EMISSIONS,BUILDING_ENVIRONMENT,BUILDING_LEVEL,BUILDING_REFERENCE_NUMBER,ESTIMATED_AIRCON_KW_RATING,EXISTING_STOCK_BENCHMARK,FLOOR_AREA
-      ]
-      regex_body(fixture_headers)
-    end
+    let(:fixture_csv) { read_csv_fixture("commercial") }
 
     it "mocks the HTTP Request of the storage gateway and checks the client request was processed" do
       get_task("open_data_export").invoke
@@ -298,7 +281,7 @@ describe "Acceptance::Reports::OpenDataExport" do
         :put,
         "#{HttpStub::S3_BUCKET_URI}#{file_name('CEPC')}",
       ).with(
-        body: regex_body_pattern,
+        body: regex_body(fixture_csv.headers),
         headers: {
           "Host" => "s3.eu-west-2.amazonaws.com",
         },
@@ -364,15 +347,37 @@ describe "Acceptance::Reports::OpenDataExport" do
     end
   end
 
-  # TODO: once the nodes are complete update to test for content as well as headers
   context "When we call the use case to extract the commercial/non-domestic data" do
     let(:use_case) { UseCase::ExportOpenDataCommercial.new }
     let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(test_date)) }
     let(:fixture_csv) { read_csv_fixture("commercial") }
     let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
 
+    let(:first_commercial_assesment) do
+      parsed_exported_data.find do |item|
+        item["ASSESSMENT_ID"] ==
+          "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a"
+      end
+    end
+
+    let(:second_commercial_assesment) do
+      parsed_exported_data.find do |item|
+        item["ASSESSMENT_ID"] ==
+          "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a"
+      end
+    end
+
     it "returns an empty array when there are no missing headers in the exported data based on the fixture" do
       expect(fixture_csv.headers - parsed_exported_data.headers).to eq([])
+      expect(parsed_exported_data.length).to eq(3)
+    end
+
+    it "returns the data exported for row 1 object to match same row in the .csv fixture " do
+      expect(first_commercial_assesment.to_a - fixture_csv[0].to_a).to eq([])
+    end
+
+    it "returns the data exported for row 2 object to match same row in the .csv fixture " do
+      expect(second_commercial_assesment.to_a - fixture_csv[0].to_a).to eq([])
     end
   end
 
