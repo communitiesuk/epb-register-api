@@ -43,7 +43,7 @@ describe UseCase::ExportOpenDataDomestic do
         flat_top_storey: "N",
         flat_storey_count: "3",
         multi_glaze_proportion: "100",
-        glazed_area: "1",
+        glazed_area: "Normal",
         number_habitable_rooms: "5",
         number_heated_rooms: "5",
         low_energy_lighting: "100",

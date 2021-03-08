@@ -271,6 +271,29 @@ describe Helper::XmlEnumsToOutput do
     end
   end
 
+  context "when the Glazing-Area XML value is passed to to the RdSAP glazed_area enum" do
+    it "does not find a value in the enum and returns nil" do
+      expect(Helper::XmlEnumsToOutput.glazed_area_rdsap(nil)).to be_nil
+      expect(
+        Helper::XmlEnumsToOutput.glazed_area_rdsap("Any other value"),
+        ).to be_nil
+    end
+    it "and the value is in the lookup, it returns the expected string" do
+      expect(Helper::XmlEnumsToOutput.glazed_area_rdsap("1")).to eq(
+                                                                   "Normal",
+                                                                   )
+      expect(Helper::XmlEnumsToOutput.glazed_area_rdsap("3")).to eq(
+                                                                   "Less Than Typical",
+                                                                   )
+      expect(Helper::XmlEnumsToOutput.glazed_area_rdsap("5")).to eq(
+                                                                   "Much Less Than Typical",
+                                                                   )
+      expect(Helper::XmlEnumsToOutput.glazed_area_rdsap("ND")).to eq(
+                                                                   "Not Defined",
+                                                                   )
+    end
+  end
+
   context "when the Tenure XML value is passed to the tenure enum" do
     it "and the value is in the lookup, it returns the expected string" do
       expect(Helper::XmlEnumsToOutput.tenure("1")).to eq("Owner-occupied")

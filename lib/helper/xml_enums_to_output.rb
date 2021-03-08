@@ -153,6 +153,14 @@ module Helper
       "12" => "triple low-E soft 0.05",
       "13" => "secondary glazing",
     }.freeze
+    RDSAP_GLAZED_AREA = {
+      "1" => "Normal",
+      "2" => "More Than Typical",
+      "3" => "Less Than Typical",
+      "4" => "Much More Than Typical",
+      "5" => "Much Less Than Typical",
+      "ND" => "Not Defined",
+    }
     TENURE = {
       "1" => "Owner-occupied",
       "2" => "Rented (social)",
@@ -206,6 +214,10 @@ module Helper
 
     def self.main_fuel_sap(value)
       SAP_MAIN_FUEL[value]
+    end
+
+    def self.glazed_area_rdsap(value)
+      RDSAP_GLAZED_AREA[value]
     end
 
     def self.glazed_type_rdsap(value)
