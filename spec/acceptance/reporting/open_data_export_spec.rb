@@ -222,20 +222,6 @@ describe "Acceptance::Reports::OpenDataExport" do
     end
   end
 
-  context "when given the incorrect environment variables invoke the task" do
-    before do
-      EnvironmentStub
-        .all
-        .with("DATE_FROM", test_date)
-        .with("ASSESSMENT_TYPE", "CEPC")
-    end
-
-    it "returns an AWS error when connecting to the live S3 gateway" do
-      WebMock.disable!
-      expect { get_task("open_data_export").invoke }.to raise_error(/AWS/)
-    end
-  end
-
   context "when given the correct environment variables invoke the task to send the domestic data to S3" do
     before do
       EnvironmentStub
