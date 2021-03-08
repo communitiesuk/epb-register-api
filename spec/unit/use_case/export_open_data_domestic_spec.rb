@@ -22,7 +22,7 @@ describe UseCase::ExportOpenDataDomestic do
         potential_energy_rating: "c",
         current_energy_efficiency: "50",
         potential_energy_efficiency: "72",
-        property_type: "Mid-terrace house",
+        property_type: "0",
         tenure: "Owner-occupied",
         transaction_type: "marketed sale",
         environment_impact_current: "52",

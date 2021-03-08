@@ -22,5 +22,10 @@ module ViewModel
 
       title
     end
+
+    def property_type
+      xpath(%w[Property-Type])
+    end
+
   end
 end

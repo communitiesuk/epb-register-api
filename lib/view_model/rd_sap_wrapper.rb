@@ -159,7 +159,7 @@ module ViewModel
         current_energy_efficiency: @view_model.current_energy_rating.to_s.chomp,
         potential_energy_efficiency:
           @view_model.potential_energy_rating.to_s.chomp,
-        property_type: @view_model.dwelling_type,
+        property_type: @view_model.property_type,
         tenure: Helper::XmlEnumsToOutput.tenure(@view_model.tenure&.first),
         transaction_type:
           Helper::XmlEnumsToOutput.transaction_type(
