@@ -180,6 +180,13 @@ module Helper
       "13RdSAP" => "ECO assessment",
       "14RdSAP" => "Stock condition survey",
     }.freeze
+    PROPERTY_TYPE = {
+        "0" => "House",
+        "1" => "Bungalow",
+        "2" => "Flat",
+        "3" => "Maisonette",
+        "4" => "Park home",
+    }.freeze
 
     def self.xml_value_to_string(number)
       BUILT_FORM[number]
@@ -219,6 +226,10 @@ module Helper
       else
         TRANSACTION_TYPE[value]
       end
+    end
+
+    def self.property_type(value)
+      PROPERTY_TYPE[value] || value
     end
   end
 end

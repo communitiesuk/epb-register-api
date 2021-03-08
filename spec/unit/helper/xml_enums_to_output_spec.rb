@@ -303,4 +303,15 @@ describe Helper::XmlEnumsToOutput do
       )
     end
   end
+
+  context "when the Property-Type xml value is passed to the transaction type enum" do
+    it "and the value is in the lookup, it returns the expected string" do
+      expect(Helper::XmlEnumsToOutput.property_type("0")).to eq(
+                                                                    "House",
+                                                                    )
+      expect(Helper::XmlEnumsToOutput.property_type("4")).to eq(
+                                                                    "Park home",
+                                                                    )
+    end
+  end
 end
