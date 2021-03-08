@@ -331,4 +331,21 @@ describe Helper::XmlEnumsToOutput do
       expect(Helper::XmlEnumsToOutput.property_type("4")).to eq("Park home")
     end
   end
+
+  context "when the Heat-Loss-Corridor xml value is passed to the transaction type enum" do
+    it "does not find a value in the enum and returns nil" do
+      expect(Helper::XmlEnumsToOutput.heat_loss_corridor(nil)).to be_nil
+      expect(
+        Helper::XmlEnumsToOutput.heat_loss_corridor("Any other value"),
+        ).to be_nil
+    end
+    it "and the value is in the lookup, it returns the expected string" do
+      expect(Helper::XmlEnumsToOutput.heat_loss_corridor("0")).to eq(
+                                                               "no corridor",
+                                                               )
+      expect(Helper::XmlEnumsToOutput.heat_loss_corridor("2")).to eq(
+                                                               "unheated corridor",
+                                                               )
+    end
+  end
 end

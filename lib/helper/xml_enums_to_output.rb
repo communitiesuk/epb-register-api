@@ -195,6 +195,11 @@ module Helper
       "3" => "Maisonette",
       "4" => "Park home",
     }.freeze
+    HEAT_LOSS_CORRIDOR = {
+      "0" =>  "no corridor",
+      "1" =>  "heated corridor",
+      "2" =>  "unheated corridor",
+    }.freeze
 
     def self.xml_value_to_string(number)
       BUILT_FORM[number]
@@ -242,6 +247,10 @@ module Helper
 
     def self.property_type(value)
       PROPERTY_TYPE[value] || value
+    end
+
+    def self.heat_loss_corridor(value)
+      HEAT_LOSS_CORRIDOR[value]
     end
   end
 end

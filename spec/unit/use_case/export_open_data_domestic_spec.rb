@@ -54,7 +54,7 @@ describe UseCase::ExportOpenDataDomestic do
         hot_water_energy_eff: "Good",
         hot_water_env_eff: "Good",
         wind_turbine_count: "0",
-        heat_loss_corridor: "2",
+        heat_loss_corridor: "unheated corridor",
         unheated_corridor_length: "10",
         windows_description: "Fully double glazed",
         windows_energy_eff: "Average",

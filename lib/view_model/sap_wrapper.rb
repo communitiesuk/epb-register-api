@@ -445,7 +445,10 @@ module ViewModel
             @view_model.hot_water_environmental_efficiency_rating,
           ),
         wind_turbine_count: @view_model.wind_turbine_count,
-        heat_loss_corridor: @view_model.heat_loss_corridor,
+        heat_loss_corridor:
+          Helper::XmlEnumsToOutput.heat_loss_corridor(
+            @view_model.heat_loss_corridor,
+          ),
         unheated_corridor_length: @view_model.unheated_corridor_length,
         windows_description: @view_model.window_description,
         windows_energy_eff:
