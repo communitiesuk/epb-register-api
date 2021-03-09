@@ -95,6 +95,7 @@ module ViewModel
     # hash keys will be turned into columns for expected csv
     def to_report
       {
+        assessment_id: @view_model.assessment_id,
         ac_inspection_commissioned: @view_model.ac_inspection_commissioned,
         address1: @view_model.address_line1,
         address2: @view_model.address_line2,
@@ -107,7 +108,6 @@ module ViewModel
           else
             "N"
           end,
-        assessment_id: @view_model.assessment_id,
         asset_rating: @view_model.energy_efficiency_rating,
         asset_rating_band:
           Helper::EnergyBandCalculator.commercial(
