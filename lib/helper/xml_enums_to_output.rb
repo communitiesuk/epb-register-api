@@ -279,6 +279,61 @@ module Helper
         SAP-Schema-11.0
       ].freeze
 
+      schemes_that_use_not_recorded = %w[
+        SAP-Schema-16.3
+        SAP-Schema-16.2
+        SAP-Schema-16.1
+        RdSAP-Schema-20.0.0
+        RdSAP-Schema-19.0
+        RdSAP-Schema-18.0
+        RdSAP-Schema-17.1
+        RdSAP-Schema-17.0
+        RdSAP-Schema-NI-20.0.0
+        RdSAP-Schema-NI-19.0
+        RdSAP-Schema-NI-18.0
+        RdSAP-Schema-NI-17.4
+        RdSAP-Schema-NI-17.3
+      ]
+
+      schemes_that_use_l = %w[
+        SAP-Schema-18.0.0
+        SAP-Schema-17.1
+        SAP-Schema-17.0
+        RdSAP-Schema-20.0.0
+        RdSAP-Schema-19.0
+        RdSAP-Schema-18.0
+        RdSAP-Schema-17.1
+        RdSAP-Schema-17.0
+        RdSAP-Schema-NI-20.0.0
+        RdSAP-Schema-NI-19.0
+        RdSAP-Schema-NI-18.0
+        RdSAP-Schema-NI-17.4
+        RdSAP-Schema-NI-17.3
+      ]
+
+      schemes_that_use_0 = %w[
+        SAP-Schema-16.3
+        SAP-Schema-16.2
+        SAP-Schema-16.1
+        SAP-Schema-16.0
+        SAP-Schema-15.0
+        SAP-Schema-14.2
+        SAP-Schema-14.1
+        SAP-Schema-14.0
+        SAP-Schema-13.0
+        SAP-Schema-12.0
+        RdSAP-Schema-20.0.0
+        RdSAP-Schema-19.0
+        RdSAP-Schema-18.0
+        RdSAP-Schema-17.1
+        RdSAP-Schema-17.0
+        RdSAP-Schema-NI-20.0.0
+        RdSAP-Schema-NI-19.0
+        RdSAP-Schema-NI-18.0
+        RdSAP-Schema-NI-17.4
+        RdSAP-Schema-NI-17.3
+      ]
+
       if value == "K" && schema_type == "SAP-Schema-12.0" && report_type == 2
         return CONSTRUCTION_AGE_BAND["K-12.0"]
       end
@@ -286,6 +341,21 @@ module Helper
       if value == "K" && types_of_sap_pre17.include?(schema_type)
         return CONSTRUCTION_AGE_BAND["K-pre-17.0"]
       end
+
+      if value == "NR" &&
+          !schemes_that_use_not_recorded.include?(schema_type) ||
+          report_type == 3
+        return value
+      end
+
+      return value if value == "L" && !schemes_that_use_l.include?(schema_type)
+
+      if value == "0" && !schemes_that_use_0.include?(schema_type) ||
+          report_type == 3
+        return value
+      end
+
+      return nil if value.nil?
 
       CONSTRUCTION_AGE_BAND[value]
     end

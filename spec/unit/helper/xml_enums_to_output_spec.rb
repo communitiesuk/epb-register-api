@@ -299,7 +299,7 @@ describe Helper::XmlEnumsToOutput do
         "Not defined - use in the case of a new dwelling for which the intended tenure in not known. It is not to be used for an existing dwelling",
       )
     end
-    it "returns the entered value if the value in the lookup" do
+    it "returns the xml value if the entered value is not in the lookup" do
       expect(Helper::XmlEnumsToOutput.tenure("Hello, this is a value")).to eq(
         "Hello, this is a value",
       )
@@ -325,7 +325,7 @@ describe Helper::XmlEnumsToOutput do
     end
   end
 
-  context "when the truncated Construction-Age-Band xml value is passed to the construction age band enum" do
+  context "when the Construction-Age-Band xml value is passed to the construction age band enum" do
     it "and the value is in the lookup, it returns the expected string" do
       expect(
         Helper::XmlEnumsToOutput.construction_age_band_lookup(
@@ -377,6 +377,86 @@ describe Helper::XmlEnumsToOutput do
           "SAP-Schema-10.2",
         ),
       ).to eq("England and Wales: 2007-2011")
+      expect(
+        Helper::XmlEnumsToOutput.construction_age_band_lookup(
+          "K",
+          "RdSAP-Schema-20.0.0",
+        ),
+      ).to eq("England and Wales: 2007-2011")
+      expect(
+        Helper::XmlEnumsToOutput.construction_age_band_lookup(
+          "NR",
+          "SAP-Schema-16.1",
+          2,
+        ),
+      ).to eq("Not recorded")
+      expect(
+        Helper::XmlEnumsToOutput.construction_age_band_lookup(
+          "L",
+          "SAP-Schema-18.0.0",
+        ),
+      ).to eq("England and Wales: 2012 onwards")
+      expect(
+        Helper::XmlEnumsToOutput.construction_age_band_lookup(
+          "0",
+          "SAP-Schema-16.3",
+          2,
+        ),
+      ).to eq("Not applicable")
+    end
+
+    it "returns the xml value if the entered value is not in the lookup" do
+      expect(
+        Helper::XmlEnumsToOutput.construction_age_band_lookup(
+          "NR",
+          "SAP-Schema-16.0",
+          2,
+        ),
+      ).to eq("NR")
+      expect(
+        Helper::XmlEnumsToOutput.construction_age_band_lookup(
+          "NR",
+          "SAP-Schema-16.3",
+          3,
+        ),
+      ).to eq("NR")
+      expect(
+        Helper::XmlEnumsToOutput.construction_age_band_lookup(
+          "L",
+          "SAP-Schema-16.3",
+        ),
+      ).to eq("L")
+      expect(
+        Helper::XmlEnumsToOutput.construction_age_band_lookup(
+          "0",
+          "SAP-Schema-17.0",
+        ),
+      ).to eq("0")
+      expect(
+        Helper::XmlEnumsToOutput.construction_age_band_lookup(
+          "0",
+          "SAP-Schema-16.3",
+          3,
+        ),
+      ).to eq("0")
+      expect(
+        Helper::XmlEnumsToOutput.construction_age_band_lookup(
+          "0",
+          "SAP-Schema-10.2",
+        ),
+      ).to eq("0")
+      expect(
+        Helper::XmlEnumsToOutput.construction_age_band_lookup(
+          nil,
+          "SAP-Schema-18.0.0",
+        ),
+      ).to be_nil
+      expect(
+        Helper::XmlEnumsToOutput.construction_age_band_lookup(
+          "Any other content",
+          "RdSAP-Schema-20.0.0",
+        ),
+      ).to be_nil
     end
   end
 
