@@ -50,7 +50,7 @@ describe UseCase::ExportOpenDataDec do
         building_category: "C1",
         report_type: "1",
         other_fuel: "other",
-        estimated_aircon_kw_rating: "1"
+        estimated_aircon_kw_rating: "1",
       }
 
       let(:expected_values_1) do

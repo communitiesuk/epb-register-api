@@ -456,6 +456,12 @@ describe Helper::XmlEnumsToOutput do
           "Any other content",
           "RdSAP-Schema-20.0.0",
         ),
+      ).to eq("Any other content")
+      expect(
+        Helper::XmlEnumsToOutput.construction_age_band_lookup(
+          "",
+          "RdSAP-Schema-20.0.0",
+        ),
       ).to be_nil
     end
   end

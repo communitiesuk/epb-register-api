@@ -234,7 +234,6 @@ describe "Acceptance::Reports::OpenDataExport" do
 
       it "returns the data exported to a csv object to match the .csv fixture " do
         expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
-
       end
     end
 

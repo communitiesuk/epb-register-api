@@ -355,9 +355,12 @@ module Helper
         return value
       end
 
-      return nil if value.nil?
-
-      CONSTRUCTION_AGE_BAND[value]
+      if value == ""
+        nil
+      else
+        CONSTRUCTION_AGE_BAND[value] || value
+      end
+      # CONSTRUCTION_AGE_BAND[value] || value
     end
 
     def self.property_type(value)
