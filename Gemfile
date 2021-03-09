@@ -17,7 +17,7 @@ source "https://rubygems.org" do
     gem "webmock", "~> 3.11"
   end
 
-  gem "aws-sdk-s3", "~> 1.86"
+  gem "aws-sdk-s3", "~> 1.90"
   gem "epb-auth-tools", "~> 1.0.4"
   gem "geocoder", "~> 1.6.4"
   gem "json-schema", "~> 2.8"
