@@ -164,6 +164,149 @@ describe "Acceptance::Reports::OpenDataExport" do
     gateway.fetch_latest_statistics
   end
 
+  context 'when data returned from the use case is converted into a csv' do
+    context "When we call the use case to extract the commercial/non-domestic data" do
+      let(:use_case) { UseCase::ExportOpenDataCommercial.new }
+      let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(test_date)) }
+      let(:fixture_csv) { read_csv_fixture("commercial") }
+      let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
+
+      let(:first_commercial_assesment) do
+        parsed_exported_data.find do |item|
+          item["ASSESSMENT_ID"] ==
+            "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a"
+        end
+      end
+
+      let(:second_commercial_assesment) do
+        parsed_exported_data.find do |item|
+          item["ASSESSMENT_ID"] ==
+            "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a"
+        end
+      end
+
+      it "returns an empty array when there are no missing headers in the exported data based on the fixture" do
+        expect(fixture_csv.headers - parsed_exported_data.headers).to eq([])
+        expect(parsed_exported_data.length).to eq(3)
+      end
+
+      it "returns the data exported for row 1 object to match same row in the .csv fixture " do
+        expect(first_commercial_assesment.to_a - fixture_csv[0].to_a).to eq([])
+      end
+
+      it "returns the data exported for row 2 object to match same row in the .csv fixture " do
+        expect(second_commercial_assesment.to_a - fixture_csv[0].to_a).to eq([])
+      end
+    end
+
+    context "When we call the use case to extract the commercial/non Domestic RR data" do
+      let(:use_case) { UseCase::ExportOpenDataCepcrr.new }
+      let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(test_date)) }
+      let(:fixture_csv) { read_csv_fixture("commercial_rr") }
+      let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
+      let(:ignore_headers) { %w[ASSESSMENT_ID] }
+
+      it "returns the data exported to a csv object to match the .csv fixture " do
+        expect(parsed_exported_data.length).to eq(fixture_csv.length)
+        expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
+      end
+
+      5.times do |i|
+        it "returns the data exported for row #{i} object to match same row in the .csv fixture " do
+          expect(parsed_exported_data[i].to_a - fixture_csv[i].to_a).to eq([])
+        end
+      end
+    end
+
+    # TODO: once the nodes are complete update to test for content as well as headers
+    context "When we call the use case to extract the DEC data" do
+      let(:dec_use_case) { UseCase::ExportOpenDataDec.new }
+      let(:csv_data) do
+        Helper::ExportHelper.to_csv(dec_use_case.execute(test_date))
+      end
+
+      let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
+
+      let(:fixture_csv) { read_csv_fixture("dec") }
+
+      it "returns the data exported to a csv object to match the .csv fixture " do
+        expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
+      end
+    end
+
+    context "When we call the use case to extract the DEC RR data" do
+      let(:use_case) { UseCase::ExportOpenDataDecrr.new }
+      let(:csv_data) do
+        Helper::ExportHelper.to_csv(
+          use_case.execute(test_date).sort_by! { |key| key[:recommendation_item] },
+          )
+      end
+      let(:export_data_headers_array) { get_exported_data_headers(csv_data) }
+      let(:fixture_csv) { read_csv_fixture("dec_rr") }
+      let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
+      let(:ignore_headers) { %w[ASSESSMENT_ID] }
+
+      it "returns the data exported to a csv object to match the .csv fixture " do
+        expect(parsed_exported_data.length).to eq(fixture_csv.length)
+        expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
+      end
+
+      5.times do |i|
+        it "returns the data exported for row #{i} object to match same row in the .csv fixture " do
+          expect(parsed_exported_data[i].to_a - fixture_csv[i].to_a).to eq([])
+        end
+      end
+    end
+
+    context "When we call the use case to extract the domestic data" do
+      let(:use_case) { UseCase::ExportOpenDataDomestic.new }
+      let(:csv_data) do
+        Helper::ExportHelper.to_csv(
+          use_case.execute(test_date).sort_by! { |item| item[:assessment_id] },
+          )
+      end
+      let(:fixture_csv) { read_csv_fixture("domestic") }
+      let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
+
+      it "returns the data exported to a csv object to match the .csv fixture " do
+        expect(parsed_exported_data.length).to eq(fixture_csv.length)
+        expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
+      end
+
+      2.times do |i|
+        it "returns the data exported for row #{i} object to match same row in the .csv fixture " do
+          expect(parsed_exported_data[i].to_a - fixture_csv[i].to_a).to eq([])
+        end
+      end
+    end
+
+    context "When we call the use case to extract the domestic recommendations data" do
+      let(:use_case) { UseCase::ExportOpenDataDomesticrr.new }
+      let(:csv_data) do
+        Helper::ExportHelper.to_csv(
+          use_case
+            .execute(test_date)
+            .sort_by! { |item| [item[:assessment_id], item[:improvement_item]] },
+          )
+      end
+      let(:fixture_csv) { read_csv_fixture("domestic_rr") }
+      let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
+
+      it "returns the data exported to a csv object to match the .csv fixture " do
+        expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
+        expect(parsed_exported_data.length).to eq(fixture_csv.length)
+      end
+
+      4.times do |i|
+        it "returns the data exported for row #{i} object to match same row in the .csv fixture " do
+          expect(parsed_exported_data[i].to_a - fixture_csv[i].to_a).to eq([])
+        end
+      end
+    end
+  end
+
+  context 'when invoking the Open Data Communities export rake directly' do
+
   context "when we call the invoke method without providing environment variables" do
     before do
       EnvironmentStub
@@ -262,7 +405,6 @@ describe "Acceptance::Reports::OpenDataExport" do
     end
   end
 
-  # TODO: Test complete fixture once nodes have been completed
   context "when given the correct environment variables invoke the task to send the commercial data to S3" do
     before do
       EnvironmentStub
@@ -315,7 +457,6 @@ describe "Acceptance::Reports::OpenDataExport" do
     end
   end
 
-  # TODO: Test complete fixture once nodes have been completed
   context "when given the correct environment variables invoke the task to send the DEC data to S3" do
     before do
       EnvironmentStub
@@ -324,6 +465,7 @@ describe "Acceptance::Reports::OpenDataExport" do
         .with("ASSESSMENT_TYPE", "DEC")
       HttpStub.s3_put_csv(file_name("DEC"))
     end
+
 
     let(:regex_body_pattern) do
       fixture_headers = %w[
@@ -347,143 +489,6 @@ describe "Acceptance::Reports::OpenDataExport" do
     end
   end
 
-  context "When we call the use case to extract the commercial/non-domestic data" do
-    let(:use_case) { UseCase::ExportOpenDataCommercial.new }
-    let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(test_date)) }
-    let(:fixture_csv) { read_csv_fixture("commercial") }
-    let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
-
-    let(:first_commercial_assesment) do
-      parsed_exported_data.find do |item|
-        item["ASSESSMENT_ID"] ==
-          "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a"
-      end
-    end
-
-    let(:second_commercial_assesment) do
-      parsed_exported_data.find do |item|
-        item["ASSESSMENT_ID"] ==
-          "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a"
-      end
-    end
-
-    it "returns an empty array when there are no missing headers in the exported data based on the fixture" do
-      expect(fixture_csv.headers - parsed_exported_data.headers).to eq([])
-      expect(parsed_exported_data.length).to eq(3)
-    end
-
-    it "returns the data exported for row 1 object to match same row in the .csv fixture " do
-      expect(first_commercial_assesment.to_a - fixture_csv[0].to_a).to eq([])
-    end
-
-    it "returns the data exported for row 2 object to match same row in the .csv fixture " do
-      expect(second_commercial_assesment.to_a - fixture_csv[0].to_a).to eq([])
-    end
-  end
-
-  context "When we call the use case to extract the commercial/non Domestic RR data" do
-    let(:use_case) { UseCase::ExportOpenDataCepcrr.new }
-    let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(test_date)) }
-    let(:fixture_csv) { read_csv_fixture("commercial_rr") }
-    let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
-    let(:ignore_headers) { %w[ASSESSMENT_ID] }
-
-    it "returns the data exported to a csv object to match the .csv fixture " do
-      expect(parsed_exported_data.length).to eq(fixture_csv.length)
-      expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
-    end
-
-    5.times do |i|
-      it "returns the data exported for row #{i} object to match same row in the .csv fixture " do
-        expect(parsed_exported_data[i].to_a - fixture_csv[i].to_a).to eq([])
-      end
-    end
-  end
-
-  # TODO: once the nodes are complete update to test for content as well as headers
-  context "When we call the use case to extract the DEC data" do
-    let(:dec_use_case) { UseCase::ExportOpenDataDec.new }
-    let(:csv_data) do
-      Helper::ExportHelper.to_csv(dec_use_case.execute(test_date))
-    end
-
-    let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
-
-    let(:fixture_csv) { read_csv_fixture("dec") }
-
-    it "returns the data exported to a csv object to match the .csv fixture " do
-      expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
-    end
-  end
-
-  context "When we call the use case to extract the DEC RR data" do
-    let(:use_case) { UseCase::ExportOpenDataDecrr.new }
-    let(:csv_data) do
-      Helper::ExportHelper.to_csv(
-        use_case.execute(test_date).sort_by! { |key| key[:recommendation_item] },
-      )
-    end
-    let(:export_data_headers_array) { get_exported_data_headers(csv_data) }
-    let(:fixture_csv) { read_csv_fixture("dec_rr") }
-    let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
-    let(:ignore_headers) { %w[ASSESSMENT_ID] }
-
-    it "returns the data exported to a csv object to match the .csv fixture " do
-      expect(parsed_exported_data.length).to eq(fixture_csv.length)
-      expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
-    end
-
-    5.times do |i|
-      it "returns the data exported for row #{i} object to match same row in the .csv fixture " do
-        expect(parsed_exported_data[i].to_a - fixture_csv[i].to_a).to eq([])
-      end
-    end
-  end
-
-  context "When we call the use case to extract the domestic data" do
-    let(:use_case) { UseCase::ExportOpenDataDomestic.new }
-    let(:csv_data) do
-      Helper::ExportHelper.to_csv(
-        use_case.execute(test_date).sort_by! { |item| item[:assessment_id] },
-      )
-    end
-    let(:fixture_csv) { read_csv_fixture("domestic") }
-    let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
-
-    it "returns the data exported to a csv object to match the .csv fixture " do
-      expect(parsed_exported_data.length).to eq(fixture_csv.length)
-      expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
-    end
-
-    2.times do |i|
-      it "returns the data exported for row #{i} object to match same row in the .csv fixture " do
-        expect(parsed_exported_data[i].to_a - fixture_csv[i].to_a).to eq([])
-      end
-    end
-  end
-
-  context "When we call the use case to extract the domestic recommendations data" do
-    let(:use_case) { UseCase::ExportOpenDataDomesticrr.new }
-    let(:csv_data) do
-      Helper::ExportHelper.to_csv(
-        use_case
-          .execute(test_date)
-          .sort_by! { |item| [item[:assessment_id], item[:improvement_item]] },
-      )
-    end
-    let(:fixture_csv) { read_csv_fixture("domestic_rr") }
-    let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
-
-    it "returns the data exported to a csv object to match the .csv fixture " do
-      expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
-      expect(parsed_exported_data.length).to eq(fixture_csv.length)
-    end
-
-    4.times do |i|
-      it "returns the data exported for row #{i} object to match same row in the .csv fixture " do
-        expect(parsed_exported_data[i].to_a - fixture_csv[i].to_a).to eq([])
-      end
-    end
   end
 end
 
