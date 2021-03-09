@@ -436,7 +436,7 @@ describe ViewModel::RdSapWrapper do
         energy_tariff: "off-peak 7 hour",
         floor_level: "01",
         solar_water_heating_flag: "N",
-        mechanical_ventilation: "0",
+        mechanical_ventilation: "natural",
         floor_height: "2.45",
         main_fuel: "mains gas (not community)",
         floor_description: "Suspended, no insulation (assumed)",

@@ -218,6 +218,14 @@ module Helper
       "1" => "heated corridor",
       "2" => "unheated corridor",
     }.freeze
+    MECHANICAL_VENTILATION = {
+      "0" => "natural",
+      "1" => "mechanical, supply and extract",
+      "2" => "mechanical, extract only",
+      "0-pre12.0" => "none",
+      "1-pre12.0" => "mechanical - heat recovering",
+      "2-pre12.0" => "mechanical - non recovering",
+    }.freeze
 
     def self.xml_value_to_string(number)
       BUILT_FORM[number]
@@ -263,7 +271,7 @@ module Helper
       end
     end
 
-    def self.construction_age_band_lookup(value, schema_type, report_type = "")
+    def self.construction_age_band_lookup(value, schema_type, report_type = 0)
       types_of_sap_pre17 = %w[
         SAP-Schema-16.3
         SAP-Schema-16.2
@@ -369,6 +377,20 @@ module Helper
 
     def self.heat_loss_corridor(value)
       HEAT_LOSS_CORRIDOR[value]
+    end
+
+    def self.mechanical_ventilation(value, schema_type, report_type = 0)
+      types_of_sap_pre12 = %w[
+        SAP-Schema-11.2
+        SAP-Schema-11.0
+        SAP-Schema-10.2
+      ].freeze
+
+      if types_of_sap_pre12.include?(schema_type) && report_type == 2
+        return MECHANICAL_VENTILATION["#{value}-pre12.0"]
+      end
+
+      MECHANICAL_VENTILATION[value]
     end
   end
 end

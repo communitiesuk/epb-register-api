@@ -489,4 +489,25 @@ describe Helper::XmlEnumsToOutput do
       )
     end
   end
+
+  context "when the Mechanical-Ventilation xml value is passed to the transaction type enum" do
+    it "does not find a value in the enum and returns nil" do
+      expect(Helper::XmlEnumsToOutput.mechanical_ventilation(nil, "RdSAP-Schema-20.0.0")).to be_nil
+      expect(Helper::XmlEnumsToOutput.mechanical_ventilation("Any other value", "RdSAP-Schema-20.0.0")).to be_nil
+    end
+    it "and the value is in the lookup, it returns the expected string" do
+      expect(Helper::XmlEnumsToOutput.mechanical_ventilation("0", "RdSAP-Schema-20.0.0")).to eq(
+                                                                    "natural",
+                                                                    )
+      expect(Helper::XmlEnumsToOutput.mechanical_ventilation("2", "RdSAP-Schema-20.0.0")).to eq(
+                                                                    "mechanical, extract only",
+                                                                    )
+      expect(Helper::XmlEnumsToOutput.mechanical_ventilation("0", "SAP-Schema-11.2", 2)).to eq(
+                                                                    "none",
+                                                                    )
+      expect(Helper::XmlEnumsToOutput.mechanical_ventilation("2", "SAP-Schema-11.2", 2)).to eq(
+                                                                    "mechanical - non recovering",
+                                                                    )
+    end
+  end
 end

@@ -284,7 +284,11 @@ module ViewModel
           Helper::XmlEnumsToOutput.energy_tariff(@view_model.meter_type),
         floor_level: @view_model.floor_level,
         solar_water_heating_flag: @view_model.solar_water_heating_flag,
-        mechanical_ventilation: @view_model.mechanical_ventilation,
+        mechanical_ventilation:
+          Helper::XmlEnumsToOutput.mechanical_ventilation(
+            @view_model.mechanical_ventilation,
+            schema_type,
+          ),
         floor_height: @view_model.floor_height.first,
         main_fuel:
           Helper::XmlEnumsToOutput.main_fuel_rdsap(@view_model.main_fuel_type),
