@@ -370,7 +370,7 @@ describe ViewModel::RdSapWrapper do
         address3: "",
         posttown: "Whitbury",
         postcode: "A0 0AA",
-        construction_age_band: "K",
+        construction_age_band: "England and Wales: 2007-2011",
         current_energy_rating: "e",
         potential_energy_rating: "c",
         current_energy_efficiency: "50",

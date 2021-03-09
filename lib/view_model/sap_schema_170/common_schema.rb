@@ -484,10 +484,6 @@ module ViewModel
           .search("Main-Heating/Environmental-Efficiency-Rating")
           .map(&:content)
       end
-
-      def construction_age_band
-        xpath(%w[Construction-Age-Band])
-      end
     end
   end
 end

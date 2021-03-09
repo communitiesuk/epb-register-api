@@ -1304,7 +1304,7 @@ describe ViewModel::SapWrapper do
         address3: "Some County",
         posttown: "Whitbury",
         postcode: "A0 0AA",
-        construction_age_band: "A",
+        construction_age_band: nil,
         current_energy_rating: "e",
         potential_energy_rating: "c",
         current_energy_efficiency: "50",

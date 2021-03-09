@@ -426,10 +426,6 @@ module ViewModel
       def floor_height
         @xml_doc.search("Storey-Height").map(&:content)
       end
-
-      def construction_age_band
-        @xml_doc.search("Construction-Age-Band").map(&:content)
-      end
     end
   end
 end

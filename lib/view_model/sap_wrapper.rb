@@ -1,10 +1,13 @@
 module ViewModel
   class SapWrapper
-    def initialize(xml, schema_type)
-      xml_doc = Nokogiri.XML(xml).remove_namespaces!
-      report_type = xml_doc.at("Report-Type")&.content
+    attr_reader :schema_type, :report_type
 
-      case schema_type
+    def initialize(xml, schema_type)
+      @schema_type = schema_type
+      xml_doc = Nokogiri.XML(xml).remove_namespaces!
+      @report_type = xml_doc.at("Report-Type")&.content
+
+      case @schema_type
       when "SAP-Schema-18.0.0"
         @view_model = ViewModel::SapSchema1800::CommonSchema.new xml
       when "SAP-Schema-17.1"
@@ -13,7 +16,7 @@ module ViewModel
         @view_model = ViewModel::SapSchema170::CommonSchema.new xml
       when "SAP-Schema-16.3"
         @view_model =
-          case report_type
+          case @report_type
           when "2"
             ViewModel::SapSchema163::Rdsap.new(xml)
           when "3"
@@ -21,7 +24,7 @@ module ViewModel
           end
       when "SAP-Schema-16.2"
         @view_model =
-          case report_type
+          case @report_type
           when "2"
             ViewModel::SapSchema162::Rdsap.new(xml)
           when "3"
@@ -29,7 +32,7 @@ module ViewModel
           end
       when "SAP-Schema-16.1"
         @view_model =
-          case report_type
+          case @report_type
           when "2"
             ViewModel::SapSchema161::Rdsap.new(xml)
           when "3"
@@ -37,7 +40,7 @@ module ViewModel
           end
       when "SAP-Schema-16.0"
         @view_model =
-          case report_type
+          case @report_type
           when "2"
             ViewModel::SapSchema160::Rdsap.new(xml)
           when "3"
@@ -45,7 +48,7 @@ module ViewModel
           end
       when "SAP-Schema-15.0"
         @view_model =
-          case report_type
+          case @report_type
           when "2"
             ViewModel::SapSchema150::Rdsap.new(xml)
           when "3"
@@ -53,7 +56,7 @@ module ViewModel
           end
       when "SAP-Schema-14.2"
         @view_model =
-          case report_type
+          case @report_type
           when "2"
             ViewModel::SapSchema142::Rdsap.new(xml)
           when "3"
@@ -61,7 +64,7 @@ module ViewModel
           end
       when "SAP-Schema-14.1"
         @view_model =
-          case report_type
+          case @report_type
           when "2"
             ViewModel::SapSchema141::Rdsap.new(xml)
           when "3"
@@ -69,7 +72,7 @@ module ViewModel
           end
       when "SAP-Schema-14.0"
         @view_model =
-          case report_type
+          case @report_type
           when "2"
             ViewModel::SapSchema140::Rdsap.new(xml)
           when "3"
@@ -77,7 +80,7 @@ module ViewModel
           end
       when "SAP-Schema-13.0"
         @view_model =
-          case report_type
+          case @report_type
           when "2"
             ViewModel::SapSchema130::Rdsap.new(xml)
           when "3"
@@ -85,7 +88,7 @@ module ViewModel
           end
       when "SAP-Schema-12.0"
         @view_model =
-          case report_type
+          case @report_type
           when "2"
             ViewModel::SapSchema120::Rdsap.new(xml)
           when "3"
@@ -93,7 +96,7 @@ module ViewModel
           end
       when "SAP-Schema-11.2"
         @view_model =
-          case report_type
+          case @report_type
           when "2"
             ViewModel::SapSchema112::Rdsap.new(xml)
           when "3"
@@ -101,7 +104,7 @@ module ViewModel
           end
       when "SAP-Schema-11.0"
         @view_model =
-          case report_type
+          case @report_type
           when "2"
             ViewModel::SapSchema110::Rdsap.new(xml)
           when "3"
@@ -109,7 +112,7 @@ module ViewModel
           end
       when "SAP-Schema-10.2"
         @view_model =
-          report_type == "2" ? ViewModel::SapSchema102::Rdsap.new(xml) : nil
+          @report_type == "2" ? ViewModel::SapSchema102::Rdsap.new(xml) : nil
       when "SAP-Schema-NI-18.0.0"
         @view_model = ViewModel::SapSchemaNi1800::CommonSchema.new xml
       when "SAP-Schema-NI-17.4"
@@ -118,7 +121,7 @@ module ViewModel
         @view_model = ViewModel::SapSchemaNi173::CommonSchema.new xml
       when "SAP-Schema-NI-17.2"
         @view_model =
-          case report_type
+          case @report_type
           when "2"
             ViewModel::SapSchemaNi172::Rdsap.new(xml)
           when "3"
@@ -126,7 +129,7 @@ module ViewModel
           end
       when "SAP-Schema-NI-17.1"
         @view_model =
-          case report_type
+          case @report_type
           when "2"
             ViewModel::SapSchemaNi171::Rdsap.new(xml)
           when "3"
@@ -134,7 +137,7 @@ module ViewModel
           end
       when "SAP-Schema-NI-17.0"
         @view_model =
-          case report_type
+          case @report_type
           when "2"
             ViewModel::SapSchemaNi170::Rdsap.new(xml)
           when "3"
@@ -142,7 +145,7 @@ module ViewModel
           end
       when "SAP-Schema-NI-16.1"
         @view_model =
-          case report_type
+          case @report_type
           when "2"
             ViewModel::SapSchemaNi161::Rdsap.new(xml)
           when "3"
@@ -150,7 +153,7 @@ module ViewModel
           end
       when "SAP-Schema-NI-16.0"
         @view_model =
-          case report_type
+          case @report_type
           when "2"
             ViewModel::SapSchemaNi160::Rdsap.new(xml)
           when "3"
@@ -158,7 +161,7 @@ module ViewModel
           end
       when "SAP-Schema-NI-15.0"
         @view_model =
-          case report_type
+          case @report_type
           when "2"
             ViewModel::SapSchemaNi150::Rdsap.new(xml)
           when "3"
@@ -166,7 +169,7 @@ module ViewModel
           end
       when "SAP-Schema-NI-14.2"
         @view_model =
-          case report_type
+          case @report_type
           when "2"
             ViewModel::SapSchemaNi142::Rdsap.new(xml)
           when "3"
@@ -174,7 +177,7 @@ module ViewModel
           end
       when "SAP-Schema-NI-14.1"
         @view_model =
-          case report_type
+          case @report_type
           when "2"
             ViewModel::SapSchemaNi141::Rdsap.new(xml)
           when "3"
@@ -182,7 +185,7 @@ module ViewModel
           end
       when "SAP-Schema-NI-14.0"
         @view_model =
-          case report_type
+          case @report_type
           when "2"
             ViewModel::SapSchemaNi140::Rdsap.new(xml)
           when "3"
@@ -190,7 +193,7 @@ module ViewModel
           end
       when "SAP-Schema-NI-13.0"
         @view_model =
-          case report_type
+          case @report_type
           when "2"
             ViewModel::SapSchemaNi130::Rdsap.new(xml)
           when "3"
@@ -198,7 +201,7 @@ module ViewModel
           end
       when "SAP-Schema-NI-12.0"
         @view_model =
-          case report_type
+          case @report_type
           when "2"
             ViewModel::SapSchemaNi120::Rdsap.new(xml)
           when "3"
@@ -206,7 +209,7 @@ module ViewModel
           end
       when "SAP-Schema-NI-11.2"
         @view_model =
-          case report_type
+          case @report_type
           when "2"
             ViewModel::SapSchemaNi112::Rdsap.new(xml)
           when "3"
@@ -387,7 +390,12 @@ module ViewModel
         address3: @view_model.address_line3,
         posttown: @view_model.town,
         postcode: @view_model.postcode,
-        construction_age_band: @view_model.construction_age_band,
+        construction_age_band:
+          Helper::XmlEnumsToOutput.construction_age_band_lookup(
+            @view_model.construction_age_band,
+            schema_type,
+            report_type,
+          ),
         current_energy_rating:
           Helper::EnergyBandCalculator.domestic(
             @view_model.current_energy_rating,

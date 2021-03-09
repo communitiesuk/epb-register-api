@@ -1,7 +1,11 @@
 module ViewModel
   class RdSapWrapper
+    attr_reader :schema_type
+
     def initialize(xml, schema_type)
-      case schema_type
+      @schema_type = schema_type
+
+      case @schema_type
       when "RdSAP-Schema-20.0.0"
         @view_model = ViewModel::RdSapSchema200::CommonSchema.new xml
       when "RdSAP-Schema-19.0"
@@ -147,7 +151,11 @@ module ViewModel
         address3: @view_model.address_line3,
         posttown: @view_model.town,
         postcode: @view_model.postcode,
-        construction_age_band: @view_model.property_age_band,
+        construction_age_band:
+          Helper::XmlEnumsToOutput.construction_age_band_lookup(
+            @view_model.construction_age_band,
+            schema_type,
+          ),
         current_energy_rating:
           Helper::EnergyBandCalculator.domestic(
             @view_model.current_energy_rating,

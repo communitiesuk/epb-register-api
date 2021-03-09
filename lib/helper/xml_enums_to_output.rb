@@ -188,6 +188,24 @@ module Helper
       "13RdSAP" => "ECO assessment",
       "14RdSAP" => "Stock condition survey",
     }.freeze
+    CONSTRUCTION_AGE_BAND = {
+      "A" => "England and Wales: before 1900",
+      "B" => "England and Wales: 1900-1929",
+      "C" => "England and Wales: 1930-1949",
+      "D" => "England and Wales: 1950-1966",
+      "E" => "England and Wales: 1967-1975",
+      "F" => "England and Wales: 1976-1982",
+      "G" => "England and Wales: 1983-1990",
+      "H" => "England and Wales: 1991-1995",
+      "I" => "England and Wales: 1996-2002",
+      "J" => "England and Wales: 2003-2006",
+      "K" => "England and Wales: 2007-2011",
+      "K-pre-17.0" => "England and Wales: 2007 onwards",
+      "K-12.0" => "Post-2006",
+      "L" => "England and Wales: 2012 onwards",
+      "0" => "Not applicable",
+      "NR" => "Not recorded",
+    }.freeze
     PROPERTY_TYPE = {
       "0" => "House",
       "1" => "Bungalow",
@@ -243,6 +261,33 @@ module Helper
       else
         TRANSACTION_TYPE[value]
       end
+    end
+
+    def self.construction_age_band_lookup(value, schema_type, report_type = "")
+      types_of_sap_pre17 = %w[
+        SAP-Schema-16.3
+        SAP-Schema-16.2
+        SAP-Schema-16.1
+        SAP-Schema-16.0
+        SAP-Schema-15.0
+        SAP-Schema-14.2
+        SAP-Schema-14.1
+        SAP-Schema-14.0
+        SAP-Schema-13.0
+        SAP-Schema-12.0
+        SAP-Schema-11.2
+        SAP-Schema-11.0
+      ].freeze
+
+      if value == "K" && schema_type == "SAP-Schema-12.0" && report_type == 2
+        return CONSTRUCTION_AGE_BAND["K-12.0"]
+      end
+
+      if value == "K" && types_of_sap_pre17.include?(schema_type)
+        return CONSTRUCTION_AGE_BAND["K-pre-17.0"]
+      end
+
+      CONSTRUCTION_AGE_BAND[value]
     end
 
     def self.property_type(value)

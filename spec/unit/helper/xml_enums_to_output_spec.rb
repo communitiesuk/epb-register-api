@@ -325,6 +325,61 @@ describe Helper::XmlEnumsToOutput do
     end
   end
 
+  context "when the truncated Construction-Age-Band xml value is passed to the construction age band enum" do
+    it "and the value is in the lookup, it returns the expected string" do
+      expect(
+        Helper::XmlEnumsToOutput.construction_age_band_lookup(
+          "A",
+          "RdSAP-Schema-20.0.0",
+        ),
+      ).to eq("England and Wales: before 1900")
+      expect(
+        Helper::XmlEnumsToOutput.construction_age_band_lookup(
+          "B",
+          "RdSAP-Schema-18.0",
+        ),
+      ).to eq("England and Wales: 1900-1929")
+      expect(
+        Helper::XmlEnumsToOutput.construction_age_band_lookup(
+          "C",
+          "RdSAP-Schema-17.1",
+        ),
+      ).to eq("England and Wales: 1930-1949")
+      expect(
+        Helper::XmlEnumsToOutput.construction_age_band_lookup(
+          "K",
+          "SAP-Schema-18.0.0",
+        ),
+      ).to eq("England and Wales: 2007-2011")
+      expect(
+        Helper::XmlEnumsToOutput.construction_age_band_lookup(
+          "K",
+          "SAP-Schema-16.3",
+        ),
+      ).to eq("England and Wales: 2007 onwards")
+      expect(
+        Helper::XmlEnumsToOutput.construction_age_band_lookup(
+          "K",
+          "SAP-Schema-12.0",
+          2,
+        ),
+      ).to eq("Post-2006")
+      expect(
+        Helper::XmlEnumsToOutput.construction_age_band_lookup(
+          "K",
+          "SAP-Schema-12.0",
+          3,
+        ),
+      ).to eq("England and Wales: 2007 onwards")
+      expect(
+        Helper::XmlEnumsToOutput.construction_age_band_lookup(
+          "K",
+          "SAP-Schema-10.2",
+        ),
+      ).to eq("England and Wales: 2007-2011")
+    end
+  end
+
   context "when the Property-Type xml value is passed to the transaction type enum" do
     it "and the value is in the lookup, it returns the expected string" do
       expect(Helper::XmlEnumsToOutput.property_type("0")).to eq("House")
