@@ -234,6 +234,28 @@ describe "Acceptance::Reports::OpenDataExport" do
 
       it "returns the data exported to a csv object to match the .csv fixture " do
         expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
+        expect(parsed_exported_data.length).to eq(fixture_csv.length)
+      end
+
+      let(:first_dec_asssement) do
+        parsed_exported_data.find do |item|
+          item["ASSESSMENT_ID"] ==
+            "36ae715ec66a32ed9ffcd7fe9a2c44d91dec1d72ee26263c17f354167be8dd4b"
+        end
+      end
+
+      let(:second_dec_asssement) do
+        parsed_exported_data.find do |item|
+          item["ASSESSMENT_ID"] ==
+            "427ad45e88b1183572234b464ba07b37348243d120db1c478da42eda435e48e4"
+        end
+      end
+      it "returns the data exported for row 1 object to match same row in the .csv fixture " do
+        expect(first_dec_asssement.to_a - fixture_csv[0].to_a).to eq([])
+      end
+
+      it "returns the data exported for row 2 to match same row in the .csv fixture " do
+        expect(second_dec_asssement.to_a - fixture_csv[1].to_a).to eq([])
       end
     end
 
@@ -493,5 +515,3 @@ describe "Acceptance::Reports::OpenDataExport" do
     end
   end
 end
-
-private
