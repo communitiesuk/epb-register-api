@@ -228,6 +228,7 @@ describe ViewModel::DecWrapper do
             date_of_expiry: "2020-12-31",
             postcode: "BT0 0AA",
             building_reference_number: "UPRN-000000000001",
+            estimated_aircon_kw_rating: nil,
           },
         },
         {
@@ -236,6 +237,7 @@ describe ViewModel::DecWrapper do
           different_fields: {
             date_of_expiry: "2020-12-31",
             postcode: "BT0 0AA",
+            estimated_aircon_kw_rating: nil,
           },
         },
         {
@@ -316,7 +318,7 @@ describe ViewModel::DecWrapper do
         {
           schema: "CEPC-3.1",
           type: "dec",
-          unsupported_fields: %i[aircon_kw_rating ac_inspection_commissioned],
+          unsupported_fields: %i[aircon_kw_rating ac_inspection_commissioned estimated_aircon_kw_rating],
           different_fields: {
             aircon_present: "N",
             date_of_expiry: "2020-12-31",
@@ -325,7 +327,7 @@ describe ViewModel::DecWrapper do
         {
           schema: "CEPC-3.1",
           type: "dec-ni",
-          unsupported_fields: %i[aircon_kw_rating ac_inspection_commissioned],
+          unsupported_fields: %i[aircon_kw_rating ac_inspection_commissioned estimated_aircon_kw_rating],
           different_fields: {
             aircon_present: "N",
             date_of_expiry: "2020-12-31",
@@ -380,6 +382,7 @@ describe ViewModel::DecWrapper do
         building_category: "C1",
         report_type: "1",
         other_fuel: "other",
+        estimated_aircon_kw_rating: "1"
       }
     end
 

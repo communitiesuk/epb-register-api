@@ -164,10 +164,12 @@ describe "Acceptance::Reports::OpenDataExport" do
     gateway.fetch_latest_statistics
   end
 
-  context 'when data returned from the use case is converted into a csv' do
+  context "when data returned from the use case is converted into a csv" do
     context "When we call the use case to extract the commercial/non-domestic data" do
       let(:use_case) { UseCase::ExportOpenDataCommercial.new }
-      let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(test_date)) }
+      let(:csv_data) do
+        Helper::ExportHelper.to_csv(use_case.execute(test_date))
+      end
       let(:fixture_csv) { read_csv_fixture("commercial") }
       let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
 
@@ -201,7 +203,9 @@ describe "Acceptance::Reports::OpenDataExport" do
 
     context "When we call the use case to extract the commercial/non Domestic RR data" do
       let(:use_case) { UseCase::ExportOpenDataCepcrr.new }
-      let(:csv_data) { Helper::ExportHelper.to_csv(use_case.execute(test_date)) }
+      let(:csv_data) do
+        Helper::ExportHelper.to_csv(use_case.execute(test_date))
+      end
       let(:fixture_csv) { read_csv_fixture("commercial_rr") }
       let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
       let(:ignore_headers) { %w[ASSESSMENT_ID] }
@@ -218,7 +222,6 @@ describe "Acceptance::Reports::OpenDataExport" do
       end
     end
 
-    # TODO: once the nodes are complete update to test for content as well as headers
     context "When we call the use case to extract the DEC data" do
       let(:dec_use_case) { UseCase::ExportOpenDataDec.new }
       let(:csv_data) do
@@ -231,6 +234,7 @@ describe "Acceptance::Reports::OpenDataExport" do
 
       it "returns the data exported to a csv object to match the .csv fixture " do
         expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
+
       end
     end
 
@@ -238,8 +242,10 @@ describe "Acceptance::Reports::OpenDataExport" do
       let(:use_case) { UseCase::ExportOpenDataDecrr.new }
       let(:csv_data) do
         Helper::ExportHelper.to_csv(
-          use_case.execute(test_date).sort_by! { |key| key[:recommendation_item] },
-          )
+          use_case
+            .execute(test_date)
+            .sort_by! { |key| key[:recommendation_item] },
+        )
       end
       let(:export_data_headers_array) { get_exported_data_headers(csv_data) }
       let(:fixture_csv) { read_csv_fixture("dec_rr") }
@@ -263,7 +269,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       let(:csv_data) do
         Helper::ExportHelper.to_csv(
           use_case.execute(test_date).sort_by! { |item| item[:assessment_id] },
-          )
+        )
       end
       let(:fixture_csv) { read_csv_fixture("domestic") }
       let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
@@ -287,7 +293,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           use_case
             .execute(test_date)
             .sort_by! { |item| [item[:assessment_id], item[:improvement_item]] },
-          )
+        )
       end
       let(:fixture_csv) { read_csv_fixture("domestic_rr") }
       let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
@@ -305,190 +311,187 @@ describe "Acceptance::Reports::OpenDataExport" do
     end
   end
 
-  context 'when invoking the Open Data Communities export rake directly' do
+  context "when invoking the Open Data Communities export rake directly" do
+    context "when we call the invoke method without providing environment variables" do
+      before do
+        EnvironmentStub
+          .all
+          .except("BUCKET_NAME")
+          .except("DATE_FROM")
+          .except("ASSESSMENT_TYPE")
+      end
 
-  context "when we call the invoke method without providing environment variables" do
-    before do
-      EnvironmentStub
-        .all
-        .except("BUCKET_NAME")
-        .except("DATE_FROM")
-        .except("ASSESSMENT_TYPE")
+      it "fails if no bucket or instance name is defined in environment variables" do
+        expect { get_task("open_data_export").invoke }.to output(
+          /A required argument is missing/,
+        ).to_stderr
+      end
     end
 
-    it "fails if no bucket or instance name is defined in environment variables" do
-      expect { get_task("open_data_export").invoke }.to output(
-        /A required argument is missing/,
-      ).to_stderr
-    end
-  end
+    context "when given the incorrect assessment type" do
+      before do
+        EnvironmentStub
+          .all
+          .with("DATE_FROM", DateTime.now.strftime("%F"))
+          .with("ASSESSMENT_TYPE", "TEST")
+      end
 
-  context "when given the incorrect assessment type" do
-    before do
-      EnvironmentStub
-        .all
-        .with("DATE_FROM", DateTime.now.strftime("%F"))
-        .with("ASSESSMENT_TYPE", "TEST")
-    end
-
-    it "returns the type is not valid error message" do
-      expect { get_task("open_data_export").invoke }.to output(
-        /Assessment type is not valid:/,
-      ).to_stderr
-    end
-  end
-
-  context "when given the correct environment variables and export date of now" do
-    before do
-      EnvironmentStub
-        .all
-        .with("DATE_FROM", DateTime.now.strftime("%F"))
-        .with("ASSESSMENT_TYPE", "SAP-RDSAP")
+      it "returns the type is not valid error message" do
+        expect { get_task("open_data_export").invoke }.to output(
+          /Assessment type is not valid:/,
+        ).to_stderr
+      end
     end
 
-    it "returns a no data to export error" do
-      expect { get_task("open_data_export").invoke }.to output(
-        /No data provided for export/,
-      ).to_stderr
-    end
-  end
+    context "when given the correct environment variables and export date of now" do
+      before do
+        EnvironmentStub
+          .all
+          .with("DATE_FROM", DateTime.now.strftime("%F"))
+          .with("ASSESSMENT_TYPE", "SAP-RDSAP")
+      end
 
-  context "when given the correct environment variables invoke the task to send the domestic data to S3" do
-    before do
-      EnvironmentStub
-        .all
-        .with("DATE_FROM", test_date)
-        .with("ASSESSMENT_TYPE", "SAP-RDSAP")
-
-      HttpStub.s3_put_csv(file_name("SAP-RDSAP"))
-    end
-    let(:fixture_csv) { read_csv_fixture("domestic") }
-
-    it "mocks the HTTP Request of the storage gateway and checks the client request was processed" do
-      get_task("open_data_export").invoke
-
-      expect(WebMock).to have_requested(
-        :put,
-        "#{HttpStub::S3_BUCKET_URI}#{file_name('SAP-RDSAP')}",
-      ).with(
-        body: regex_body(fixture_csv.headers),
-        headers: {
-          "Host" => "s3.eu-west-2.amazonaws.com",
-        },
-      )
-    end
-  end
-
-  context "when given the correct environment variables invoke the task to send the domestic rr data to S3" do
-    before do
-      EnvironmentStub
-        .all
-        .with("DATE_FROM", test_date)
-        .with("ASSESSMENT_TYPE", "SAP-RDSAP-RR")
-
-      HttpStub.s3_put_csv(file_name("SAP-RDSAP-RR"))
-    end
-    let(:fixture_csv) { read_csv_fixture("domestic_rr") }
-
-    it "mocks the HTTP Request of the storage gateway and checks the client request was processed" do
-      get_task("open_data_export").invoke
-
-      expect(WebMock).to have_requested(
-        :put,
-        "#{HttpStub::S3_BUCKET_URI}#{file_name('SAP-RDSAP-RR')}",
-      ).with(
-        body: regex_body(fixture_csv.headers),
-        headers: {
-          "Host" => "s3.eu-west-2.amazonaws.com",
-        },
-      )
-    end
-  end
-
-  context "when given the correct environment variables invoke the task to send the commercial data to S3" do
-    before do
-      EnvironmentStub
-        .all
-        .with("DATE_FROM", test_date)
-        .with("ASSESSMENT_TYPE", "CEPC")
-      HttpStub.s3_put_csv(file_name("CEPC"))
+      it "returns a no data to export error" do
+        expect { get_task("open_data_export").invoke }.to output(
+          /No data provided for export/,
+        ).to_stderr
+      end
     end
 
-    let(:fixture_csv) { read_csv_fixture("commercial") }
+    context "when given the correct environment variables invoke the task to send the domestic data to S3" do
+      before do
+        EnvironmentStub
+          .all
+          .with("DATE_FROM", test_date)
+          .with("ASSESSMENT_TYPE", "SAP-RDSAP")
 
-    it "mocks the HTTP Request of the storage gateway and checks the client request was processed" do
-      get_task("open_data_export").invoke
+        HttpStub.s3_put_csv(file_name("SAP-RDSAP"))
+      end
+      let(:fixture_csv) { read_csv_fixture("domestic") }
 
-      expect(WebMock).to have_requested(
-        :put,
-        "#{HttpStub::S3_BUCKET_URI}#{file_name('CEPC')}",
-      ).with(
-        body: regex_body(fixture_csv.headers),
-        headers: {
-          "Host" => "s3.eu-west-2.amazonaws.com",
-        },
-      )
-    end
-  end
+      it "mocks the HTTP Request of the storage gateway and checks the client request was processed" do
+        get_task("open_data_export").invoke
 
-  context "when given the correct environment variables invoke the task to send the commercial rr data to S3" do
-    before do
-      EnvironmentStub
-        .all
-        .with("DATE_FROM", test_date)
-        .with("ASSESSMENT_TYPE", "CEPC-RR")
-
-      HttpStub.s3_put_csv(file_name("CEPC-RR"))
-    end
-    let(:fixture_csv) { read_csv_fixture("commercial_rr") }
-
-    it "mocks the HTTP Request of the storage gateway and checks the client request was processed" do
-      get_task("open_data_export").invoke
-
-      expect(WebMock).to have_requested(
-        :put,
-        "#{HttpStub::S3_BUCKET_URI}#{file_name('CEPC-RR')}",
-      ).with(
-        body: regex_body(fixture_csv.headers),
-        headers: {
-          "Host" => "s3.eu-west-2.amazonaws.com",
-        },
-      )
-    end
-  end
-
-  context "when given the correct environment variables invoke the task to send the DEC data to S3" do
-    before do
-      EnvironmentStub
-        .all
-        .with("DATE_FROM", test_date)
-        .with("ASSESSMENT_TYPE", "DEC")
-      HttpStub.s3_put_csv(file_name("DEC"))
+        expect(WebMock).to have_requested(
+          :put,
+          "#{HttpStub::S3_BUCKET_URI}#{file_name('SAP-RDSAP')}",
+        ).with(
+          body: regex_body(fixture_csv.headers),
+          headers: {
+            "Host" => "s3.eu-west-2.amazonaws.com",
+          },
+        )
+      end
     end
 
+    context "when given the correct environment variables invoke the task to send the domestic rr data to S3" do
+      before do
+        EnvironmentStub
+          .all
+          .with("DATE_FROM", test_date)
+          .with("ASSESSMENT_TYPE", "SAP-RDSAP-RR")
 
-    let(:regex_body_pattern) do
-      fixture_headers = %w[
-        YR1_ELECTRICITY_CO2,YR2_ELECTRICITY_CO2,YR1_HEATING_CO2,YR2_HEATING_CO2,YR1_RENEWABLES_CO2,YR2_RENEWABLES_CO2,AIRCON_PRESENT,AIRCON_KW_RATING,ESTIMATED_AIRCON_KW_RATING
-      ]
-      regex_body(fixture_headers)
+        HttpStub.s3_put_csv(file_name("SAP-RDSAP-RR"))
+      end
+      let(:fixture_csv) { read_csv_fixture("domestic_rr") }
+
+      it "mocks the HTTP Request of the storage gateway and checks the client request was processed" do
+        get_task("open_data_export").invoke
+
+        expect(WebMock).to have_requested(
+          :put,
+          "#{HttpStub::S3_BUCKET_URI}#{file_name('SAP-RDSAP-RR')}",
+        ).with(
+          body: regex_body(fixture_csv.headers),
+          headers: {
+            "Host" => "s3.eu-west-2.amazonaws.com",
+          },
+        )
+      end
     end
 
-    it "mocks the HTTP Request of the storage gateway and checks the client request was processed" do
-      get_task("open_data_export").invoke
+    context "when given the correct environment variables invoke the task to send the commercial data to S3" do
+      before do
+        EnvironmentStub
+          .all
+          .with("DATE_FROM", test_date)
+          .with("ASSESSMENT_TYPE", "CEPC")
+        HttpStub.s3_put_csv(file_name("CEPC"))
+      end
 
-      expect(WebMock).to have_requested(
-        :put,
-        "#{HttpStub::S3_BUCKET_URI}#{file_name('DEC')}",
-      ).with(
-        body: regex_body_pattern,
-        headers: {
-          "Host" => "s3.eu-west-2.amazonaws.com",
-        },
-      )
+      let(:fixture_csv) { read_csv_fixture("commercial") }
+
+      it "mocks the HTTP Request of the storage gateway and checks the client request was processed" do
+        get_task("open_data_export").invoke
+
+        expect(WebMock).to have_requested(
+          :put,
+          "#{HttpStub::S3_BUCKET_URI}#{file_name('CEPC')}",
+        ).with(
+          body: regex_body(fixture_csv.headers),
+          headers: {
+            "Host" => "s3.eu-west-2.amazonaws.com",
+          },
+        )
+      end
     end
-  end
 
+    context "when given the correct environment variables invoke the task to send the commercial rr data to S3" do
+      before do
+        EnvironmentStub
+          .all
+          .with("DATE_FROM", test_date)
+          .with("ASSESSMENT_TYPE", "CEPC-RR")
+
+        HttpStub.s3_put_csv(file_name("CEPC-RR"))
+      end
+      let(:fixture_csv) { read_csv_fixture("commercial_rr") }
+
+      it "mocks the HTTP Request of the storage gateway and checks the client request was processed" do
+        get_task("open_data_export").invoke
+
+        expect(WebMock).to have_requested(
+          :put,
+          "#{HttpStub::S3_BUCKET_URI}#{file_name('CEPC-RR')}",
+        ).with(
+          body: regex_body(fixture_csv.headers),
+          headers: {
+            "Host" => "s3.eu-west-2.amazonaws.com",
+          },
+        )
+      end
+    end
+
+    context "when given the correct environment variables invoke the task to send the DEC data to S3" do
+      before do
+        EnvironmentStub
+          .all
+          .with("DATE_FROM", test_date)
+          .with("ASSESSMENT_TYPE", "DEC")
+        HttpStub.s3_put_csv(file_name("DEC"))
+      end
+
+      let(:regex_body_pattern) do
+        fixture_headers = %w[
+          YR1_ELECTRICITY_CO2,YR2_ELECTRICITY_CO2,YR1_HEATING_CO2,YR2_HEATING_CO2,YR1_RENEWABLES_CO2,YR2_RENEWABLES_CO2,AIRCON_PRESENT,AIRCON_KW_RATING,ESTIMATED_AIRCON_KW_RATING
+        ]
+        regex_body(fixture_headers)
+      end
+
+      it "mocks the HTTP Request of the storage gateway and checks the client request was processed" do
+        get_task("open_data_export").invoke
+
+        expect(WebMock).to have_requested(
+          :put,
+          "#{HttpStub::S3_BUCKET_URI}#{file_name('DEC')}",
+        ).with(
+          body: regex_body_pattern,
+          headers: {
+            "Host" => "s3.eu-west-2.amazonaws.com",
+          },
+        )
+      end
+    end
   end
 end
 
