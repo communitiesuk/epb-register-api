@@ -20,12 +20,11 @@ task :open_data_export do
 
   data = open_data_use_case.execute(date_from, task_id)
 
-  if data.length > 0
-    csv_data = Helper::ExportHelper.to_csv(data)
-    transmit_file(csv_data)
-  else
-    puts "no data to export"
-  end
+  raise Boundary::OpenDataEmpty if data.length.zero?
+
+  csv_data = Helper::ExportHelper.to_csv(data)
+  transmit_file(csv_data)
+
 rescue Boundary::RecoverableError => e
   error_output = {
     error: e.class.name,

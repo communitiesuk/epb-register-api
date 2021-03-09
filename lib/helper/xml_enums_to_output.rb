@@ -196,9 +196,9 @@ module Helper
       "4" => "Park home",
     }.freeze
     HEAT_LOSS_CORRIDOR = {
-      "0" =>  "no corridor",
-      "1" =>  "heated corridor",
-      "2" =>  "unheated corridor",
+      "0" => "no corridor",
+      "1" => "heated corridor",
+      "2" => "unheated corridor",
     }.freeze
 
     def self.xml_value_to_string(number)

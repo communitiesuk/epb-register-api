@@ -205,8 +205,8 @@ describe "Acceptance::Reports::OpenDataExport" do
 
     it "returns a no data to export error" do
       expect { get_task("open_data_export").invoke }.to output(
-        /no data to export/,
-      ).to_stdout
+        /No data provided for export/,
+      ).to_stderr
     end
   end
 

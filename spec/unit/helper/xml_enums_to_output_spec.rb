@@ -337,15 +337,15 @@ describe Helper::XmlEnumsToOutput do
       expect(Helper::XmlEnumsToOutput.heat_loss_corridor(nil)).to be_nil
       expect(
         Helper::XmlEnumsToOutput.heat_loss_corridor("Any other value"),
-        ).to be_nil
+      ).to be_nil
     end
     it "and the value is in the lookup, it returns the expected string" do
       expect(Helper::XmlEnumsToOutput.heat_loss_corridor("0")).to eq(
-                                                               "no corridor",
-                                                               )
+        "no corridor",
+      )
       expect(Helper::XmlEnumsToOutput.heat_loss_corridor("2")).to eq(
-                                                               "unheated corridor",
-                                                               )
+        "unheated corridor",
+      )
     end
   end
 end

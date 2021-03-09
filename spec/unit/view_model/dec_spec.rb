@@ -347,7 +347,7 @@ describe ViewModel::DecWrapper do
         current_operational_rating: "1",
         yr1_operational_rating: "24",
         yr2_operational_rating: "40",
-        energy_efficiency_band: "A",
+        operational_rating_band: "A",
         electric_co2: "7",
         heating_co2: "3",
         renewables_co2: "0",

@@ -131,7 +131,7 @@ module ViewModel
         current_operational_rating: @view_model.energy_efficiency_rating,
         yr1_operational_rating: @view_model.year1_energy_efficiency_rating,
         yr2_operational_rating: @view_model.year2_energy_efficiency_rating,
-        energy_efficiency_band:
+        operational_rating_band:
           Helper::EnergyBandCalculator.commercial(
             @view_model.energy_efficiency_rating.to_i,
           ).upcase,

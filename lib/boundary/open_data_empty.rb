@@ -1,8 +1,8 @@
 module Boundary
   class OpenDataEmpty < Boundary::TerminableError
-    def initialize(argument)
+    def initialize
       super(<<~MSG.strip)
-        No data provided from #{argument}
+        No data provided for export
       MSG
     end
   end
