@@ -82,6 +82,7 @@
         <Building-Environment>Heating and Natural Ventilation</Building-Environment>
         <Floor-Area>99</Floor-Area>
         <Special-Energy-Uses>special</Special-Energy-Uses>
+        <Other-Fuel-Description>other</Other-Fuel-Description>
       </Technical-Information>
     </Display-Certificate>
     <OR-Operational-Rating>

@@ -379,6 +379,7 @@ describe ViewModel::DecWrapper do
         building_environment: "Heating and Natural Ventilation",
         building_category: "C1",
         report_type: "1",
+        other_fuel: "other",
       }
     end
 

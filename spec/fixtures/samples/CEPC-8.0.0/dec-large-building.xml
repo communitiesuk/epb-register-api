@@ -307,6 +307,7 @@
         <Main-Heating-Fuel>Natural Gas</Main-Heating-Fuel>
         <Floor-Area>9000</Floor-Area>
         <Special-Energy-Uses>special</Special-Energy-Uses>
+        <Other-Fuel-Description>other</Other-Fuel-Description>
       </Technical-Information>
       <AC-Questionnaire>
         <AC-Present>Yes</AC-Present>

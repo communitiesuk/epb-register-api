@@ -91,6 +91,10 @@ module ViewModel
       def discounted_energy
         xpath(%w[Special-Energy-Uses])
       end
+
+      def other_fuel
+        xpath(%w[Technical-Information Other-Fuel-Description])
+      end
     end
   end
 end

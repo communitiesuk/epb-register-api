@@ -224,6 +224,10 @@ module ViewModel
       def building_category
         xpath(%w[Building-Category])
       end
+
+      def other_fuel
+        xpath(%w[Technical-Information Other-Fuel-Description])
+      end
     end
   end
 end
