@@ -110,7 +110,7 @@ describe UseCase::ExportOpenDataDomestic do
         potential_energy_rating: "c",
         current_energy_efficiency: "50",
         potential_energy_efficiency: "72",
-        property_type: "House",
+        property_type: "Maisonette",
         tenure: "Owner-occupied",
         transaction_type: "marketed sale",
         environment_impact_current: "52",
@@ -279,6 +279,8 @@ describe UseCase::ExportOpenDataDomestic do
 
         domestic_sap_assessment_date.children = date_today
         domestic_sap_assessment_id.children = "0000-0000-0000-0000-1000"
+        property_type_node = domestic_sap_xml.at("Property-Type")
+        property_type_node.children = "3"
         lodge_assessment(
           assessment_body: domestic_sap_xml.to_xml,
           accepted_responses: [201],
