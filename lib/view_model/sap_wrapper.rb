@@ -553,10 +553,7 @@ module ViewModel
           Helper::XmlEnumsToOutput.energy_rating_string(
             @view_model.all_main_heating_controls_environmental_efficiency.first,
           ),
-        glazed_type:
-          Helper::XmlEnumsToOutput.glazed_type_sap(
-            @view_model.glazing_type.first,
-          ),
+        glazed_type: nil,
       }
     end
 

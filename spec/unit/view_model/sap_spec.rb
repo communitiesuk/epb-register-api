@@ -1377,7 +1377,7 @@ describe ViewModel::SapWrapper do
         floor_env_eff: "N/A",
         mainheatc_energy_eff: "N/A",
         mainheatc_env_eff: "N/A",
-        glazed_type: "not applicable (non-glazed door)",
+        glazed_type: nil,
       }
     end
 
