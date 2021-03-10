@@ -164,8 +164,8 @@ describe "Acceptance::Reports::OpenDataExport" do
     gateway.fetch_latest_statistics
   end
 
-  context "when data returned from the use case is converted into a csv" do
-    context "When we call the use case to extract the commercial/non-domestic data" do
+  context "When data returned from the use case is converted into a csv" do
+    context "Call the use case to extract the commercial/non-domestic data" do
       let(:use_case) { UseCase::ExportOpenDataCommercial.new }
       let(:csv_data) do
         Helper::ExportHelper.to_csv(use_case.execute(test_date))
@@ -201,7 +201,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       end
     end
 
-    context "When we call the use case to extract the commercial/non Domestic RR data" do
+    context "Call the use case to extract the commercial/non Domestic RR data" do
       let(:use_case) { UseCase::ExportOpenDataCepcrr.new }
       let(:csv_data) do
         Helper::ExportHelper.to_csv(use_case.execute(test_date))
@@ -222,7 +222,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       end
     end
 
-    context "When we call the use case to extract the DEC data" do
+    context "Call the use case to extract the DEC data" do
       let(:dec_use_case) { UseCase::ExportOpenDataDec.new }
       let(:csv_data) do
         Helper::ExportHelper.to_csv(dec_use_case.execute(test_date))
@@ -259,7 +259,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       end
     end
 
-    context "When we call the use case to extract the DEC RR data" do
+    context "Call the use case to extract the DEC RR data" do
       let(:use_case) { UseCase::ExportOpenDataDecrr.new }
       let(:csv_data) do
         Helper::ExportHelper.to_csv(
@@ -285,7 +285,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       end
     end
 
-    context "When we call the use case to extract the domestic data" do
+    context "Call the use case to extract the domestic data" do
       let(:use_case) { UseCase::ExportOpenDataDomestic.new }
       let(:csv_data) do
         Helper::ExportHelper.to_csv(
@@ -307,7 +307,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       end
     end
 
-    context "When we call the use case to extract the domestic recommendations data" do
+    context "Call the use case to extract the domestic recommendations data" do
       let(:use_case) { UseCase::ExportOpenDataDomesticrr.new }
       let(:csv_data) do
         Helper::ExportHelper.to_csv(
@@ -332,8 +332,8 @@ describe "Acceptance::Reports::OpenDataExport" do
     end
   end
 
-  context "when invoking the Open Data Communities export rake directly" do
-    context "when we call the invoke method without providing environment variables" do
+  context "When invoking the Open Data Communities export rake directly" do
+    context "provide environment variables" do
       before do
         EnvironmentStub
           .all
@@ -349,7 +349,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       end
     end
 
-    context "when given the incorrect assessment type" do
+    context "Set the incorrect assessment type environment variable" do
       before do
         EnvironmentStub
           .all
@@ -364,7 +364,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       end
     end
 
-    context "when given the correct environment variables and export date of now" do
+    context "Set the correct environment variables anda date of now" do
       before do
         EnvironmentStub
           .all
@@ -379,7 +379,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       end
     end
 
-    context "when given the correct environment variables invoke the task to send the domestic data to S3" do
+    context "Set the correct environment variables invoke the task to send the domestic data to S3" do
       before do
         EnvironmentStub
           .all
@@ -390,12 +390,12 @@ describe "Acceptance::Reports::OpenDataExport" do
       end
       let(:fixture_csv) { read_csv_fixture("domestic") }
 
-      it "mocks the HTTP Request of the storage gateway and checks the client request was processed" do
+      it "check the http stub matches the request disabled in web mock using the filename, body and headers " do
         get_task("open_data_export").invoke
 
         expect(WebMock).to have_requested(
           :put,
-          "#{HttpStub::S3_BUCKET_URI}#{file_name('SAP-RDSAP')}",
+          "#{HttpStub::S3_BUCKET_URI}open_data_export_sap-rdsap_#{DateTime.now.strftime('%F')}_1.csv",
         ).with(
           body: regex_body(fixture_csv.headers),
           headers: {
@@ -405,7 +405,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       end
     end
 
-    context "when given the correct environment variables invoke the task to send the domestic rr data to S3" do
+    context "Set the correct environment variables invoke the task to send the domestic rr data to S3" do
       before do
         EnvironmentStub
           .all
@@ -416,12 +416,12 @@ describe "Acceptance::Reports::OpenDataExport" do
       end
       let(:fixture_csv) { read_csv_fixture("domestic_rr") }
 
-      it "mocks the HTTP Request of the storage gateway and checks the client request was processed" do
+      it "check the http stub matches the request disabled in web mock using the filename, body and headers" do
         get_task("open_data_export").invoke
 
         expect(WebMock).to have_requested(
           :put,
-          "#{HttpStub::S3_BUCKET_URI}#{file_name('SAP-RDSAP-RR')}",
+          "#{HttpStub::S3_BUCKET_URI}open_data_export_sap-rdsap-rr_#{DateTime.now.strftime('%F')}_1.csv",
         ).with(
           body: regex_body(fixture_csv.headers),
           headers: {
@@ -431,7 +431,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       end
     end
 
-    context "when given the correct environment variables invoke the task to send the commercial data to S3" do
+    context "Set the correct environment variables invoke the task to send the commercial/non domestic data to S3" do
       before do
         EnvironmentStub
           .all
@@ -442,12 +442,12 @@ describe "Acceptance::Reports::OpenDataExport" do
 
       let(:fixture_csv) { read_csv_fixture("commercial") }
 
-      it "mocks the HTTP Request of the storage gateway and checks the client request was processed" do
+      it "check the http stub matches the request disabled in web mock using the filename, body and headers" do
         get_task("open_data_export").invoke
 
         expect(WebMock).to have_requested(
           :put,
-          "#{HttpStub::S3_BUCKET_URI}#{file_name('CEPC')}",
+          "#{HttpStub::S3_BUCKET_URI}open_data_export_cepc_#{DateTime.now.strftime('%F')}_1.csv",
         ).with(
           body: regex_body(fixture_csv.headers),
           headers: {
@@ -457,7 +457,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       end
     end
 
-    context "when given the correct environment variables invoke the task to send the commercial rr data to S3" do
+    context "Set the correct environment variables invoke the task to send the commercial/non domestic rr data to S3" do
       before do
         EnvironmentStub
           .all
@@ -468,12 +468,12 @@ describe "Acceptance::Reports::OpenDataExport" do
       end
       let(:fixture_csv) { read_csv_fixture("commercial_rr") }
 
-      it "mocks the HTTP Request of the storage gateway and checks the client request was processed" do
+      it "check the http stub matches the request disabled in web mock using the filename, body and headers" do
         get_task("open_data_export").invoke
 
         expect(WebMock).to have_requested(
           :put,
-          "#{HttpStub::S3_BUCKET_URI}#{file_name('CEPC-RR')}",
+          "#{HttpStub::S3_BUCKET_URI}open_data_export_cepc-rr_#{DateTime.now.strftime('%F')}_1.csv",
         ).with(
           body: regex_body(fixture_csv.headers),
           headers: {
@@ -483,7 +483,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       end
     end
 
-    context "when given the correct environment variables invoke the task to send the DEC data to S3" do
+    context "Set the correct environment variables invoke the task to send the DEC data to S3" do
       before do
         EnvironmentStub
           .all
@@ -499,14 +499,38 @@ describe "Acceptance::Reports::OpenDataExport" do
         regex_body(fixture_headers)
       end
 
-      it "mocks the HTTP Request of the storage gateway and checks the client request was processed" do
+      it "check the http stub matches the request disabled in web mock using the filename, body and headers" do
         get_task("open_data_export").invoke
-
         expect(WebMock).to have_requested(
           :put,
-          "#{HttpStub::S3_BUCKET_URI}#{file_name('DEC')}",
+          "#{HttpStub::S3_BUCKET_URI}open_data_export_dec_#{DateTime.now.strftime('%F')}_1.csv",
         ).with(
           body: regex_body_pattern,
+          headers: {
+            "Host" => "s3.eu-west-2.amazonaws.com",
+          },
+        )
+      end
+    end
+
+    context "Set the correct environment variables invoke the task to send the DEC RR data to S3" do
+      before do
+        EnvironmentStub
+          .all
+          .with("DATE_FROM", test_date)
+          .with("ASSESSMENT_TYPE", "DEC-RR")
+        HttpStub.s3_put_csv(file_name("DEC-RR"))
+      end
+
+      let(:fixture_csv) { read_csv_fixture("dec_rr") }
+
+      it "check the http stub matches the request disabled in web mock using the filename, body and headers" do
+        get_task("open_data_export").invoke
+        expect(WebMock).to have_requested(
+          :put,
+          "#{HttpStub::S3_BUCKET_URI}open_data_export_dec-rr_#{DateTime.now.strftime('%F')}_1.csv",
+        ).with(
+          body: regex_body(fixture_csv.headers),
           headers: {
             "Host" => "s3.eu-west-2.amazonaws.com",
           },

@@ -363,11 +363,7 @@ module Helper
         return value
       end
 
-      if value == ""
-        nil
-      else
-        CONSTRUCTION_AGE_BAND[value] || value
-      end
+      value == "" ? nil : CONSTRUCTION_AGE_BAND[value] || value
       # CONSTRUCTION_AGE_BAND[value] || value
     end
 
