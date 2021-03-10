@@ -151,7 +151,7 @@ module ViewModel
         total_floor_area: @view_model.floor_area,
         occupancy_level: @view_model.occupancy_level,
         annual_thermal_fuel_usage: @view_model.annual_energy_use_fuel_thermal,
-        typical_thermal_use: @view_model.typical_thermal_use,
+        typical_thermal_fuel_usage: @view_model.typical_thermal_use,
         annual_electrical_fuel_usage: @view_model.annual_energy_use_electrical,
         typical_electrical_fuel_usage: @view_model.typical_electrical_use,
         renewables_fuel_thermal: @view_model.renewables_fuel_thermal,

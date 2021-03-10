@@ -372,7 +372,7 @@ describe ViewModel::DecWrapper do
         renewable_sources: "1",
         total_floor_area: "99",
         occupancy_level: "level",
-        typical_thermal_use: "1",
+        typical_thermal_fuel_usage: "1",
         annual_electrical_fuel_usage: "1",
         typical_electrical_fuel_usage: "1",
         renewables_fuel_thermal: "1",
