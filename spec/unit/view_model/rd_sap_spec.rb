@@ -444,7 +444,7 @@ describe ViewModel::RdSapWrapper do
         floor_env_eff: "N/A",
         mainheatc_energy_eff: "Good",
         mainheatc_env_eff: "Good",
-        glazed_type: "double glazing installed before 2002",
+        glazed_type: "double glazing installed during or after 2002",
       }
     end
 

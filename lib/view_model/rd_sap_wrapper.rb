@@ -311,7 +311,7 @@ module ViewModel
           ),
         glazed_type:
           Helper::XmlEnumsToOutput.glazed_type_rdsap(
-            @view_model.glazing_type.first,
+            @view_model.multi_glazing_type,
           ),
       }
     end

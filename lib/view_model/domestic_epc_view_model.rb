@@ -38,5 +38,9 @@ module ViewModel
     def property_type
       xpath(%w[Property-Type])
     end
+
+    def multi_glazing_type
+      xpath(%w[Multiple-Glazing-Type])
+    end
   end
 end
