@@ -409,7 +409,7 @@ module ViewModel
           @view_model.potential_energy_rating.to_s.chomp,
         property_type:
           Helper::XmlEnumsToOutput.property_type(@view_model.property_type),
-        tenure: Helper::XmlEnumsToOutput.tenure(@view_model.tenure&.first),
+        tenure: Helper::XmlEnumsToOutput.tenure(@view_model.tenure),
         transaction_type:
           Helper::XmlEnumsToOutput.transaction_type(
             @view_model.transaction_type&.first,
