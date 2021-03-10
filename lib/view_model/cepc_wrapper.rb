@@ -127,7 +127,7 @@ module ViewModel
         other_fuel_desc: @view_model.other_fuel_description,
         postcode: @view_model.postcode,
         posttown: @view_model.town,
-        primary_energy: @view_model.primary_energy_use,
+        primary_energy_value: @view_model.primary_energy_use,
         property_type: @view_model.property_type,
         report_type: @view_model.report_type,
         special_energy_uses: @view_model.special_energy_uses,

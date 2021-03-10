@@ -130,28 +130,28 @@ describe ViewModel::CepcWrapper do
         {
           schema: "CEPC-7.0",
           type: "cepc",
-          unsupported_fields: %i[primary_energy],
+          unsupported_fields: %i[primary_energy_value],
         },
         {
           schema: "CEPC-6.0",
           type: "cepc",
-          unsupported_fields: %i[primary_energy],
+          unsupported_fields: %i[primary_energy_value],
         },
         {
           schema: "CEPC-5.1",
           type: "cepc",
-          unsupported_fields: %i[primary_energy],
+          unsupported_fields: %i[primary_energy_value],
         },
         {
           schema: "CEPC-5.0",
           type: "cepc",
-          unsupported_fields: %i[primary_energy],
+          unsupported_fields: %i[primary_energy_value],
         },
         {
           schema: "CEPC-4.0",
           type: "cepc",
           unsupported_fields: %i[
-            primary_energy
+            primary_energy_value
             transaction_type
             standard_emissions
             building_emissions
@@ -163,7 +163,7 @@ describe ViewModel::CepcWrapper do
           schema: "CEPC-3.1",
           type: "cepc",
           unsupported_fields: %i[
-            primary_energy
+            primary_energy_value
             transaction_type
             standard_emissions
             building_emissions
@@ -208,7 +208,7 @@ describe ViewModel::CepcWrapper do
         target_emissions: "23.2",
         typical_emissions: "67.98",
         building_environment: "Air Conditioning",
-        primary_energy: "413.22",
+        primary_energy_value: "413.22",
         report_type: "3",
         renewable_sources: "Renewable sources test",
       }

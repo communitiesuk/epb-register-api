@@ -48,7 +48,7 @@ describe UseCase::ExportOpenDataCommercial do
         target_emissions: "23.2",
         typical_emissions: "67.98",
         building_environment: "Air Conditioning",
-        primary_energy: "413.22",
+        primary_energy_value: "413.22",
         report_type: "3",
         renewable_sources: "Renewable sources test",
       }
