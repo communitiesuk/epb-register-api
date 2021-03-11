@@ -103,7 +103,7 @@ describe UseCase::ExportOpenDataDomesticrr do
       end
 
       it "returns the correct number of assessments excluding the NI lodgements and any before the given date" do
-        expect(exported_data.length).to eq(4)
+        expect(exported_data.length).to eq(5)
       end
 
       it "returns the correct number of recommendations for each assessment when grouped" do
@@ -146,20 +146,44 @@ describe UseCase::ExportOpenDataDomesticrr do
             improvement_item: 1,
           },
         )
+
+        expect(exported_data[3]).to eq(
+          {
+            assessment_id:
+              "9ef56d3e0ad9e5e8787715e05fdf61a2a85c7b7eb091827910c3d048ce2aee94",
+            improvement_descr_text: nil,
+            improvement_summary_text: nil,
+            indicative_cost: "2000",
+            improvement_id: "1",
+            improvement_item: 2,
+          },
+        )
+
+        expect(exported_data[4]).to eq(
+          {
+            assessment_id:
+              "9ef56d3e0ad9e5e8787715e05fdf61a2a85c7b7eb091827910c3d048ce2aee94",
+            improvement_descr_text: "Improvement desc",
+            improvement_summary_text: nil,
+            indicative_cost: "1000",
+            improvement_id: nil,
+            improvement_item: 3,
+          },
+        )
       end
 
       it "returns 1 rows when called with a different task_id" do
-        expect(export_object.execute("2019-07-01", 1).length).to eq(4)
-        expect(export_object.execute("2019-07-01", 2).length).to eq(4)
+        expect(export_object.execute("2019-07-01", 1).length).to eq(5)
+        expect(export_object.execute("2019-07-01", 2).length).to eq(5)
       end
 
       it "returns 1 row when no task id is passed" do
-        expect(export_object.execute("2019-07-01").length).to eq(4)
+        expect(export_object.execute("2019-07-01").length).to eq(5)
         expect(statistics.first["num_rows"]).to eq(2)
       end
 
       it "returns 0 rows when called with the existing task_id" do
-        expect(export_object.execute("2019-07-01", 1).length).to eq(4)
+        expect(export_object.execute("2019-07-01", 1).length).to eq(5)
         expect(export_object.execute("2019-07-01", 1).length).to eq(0)
       end
     end
