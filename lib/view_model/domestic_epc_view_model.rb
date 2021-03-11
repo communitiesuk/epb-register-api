@@ -24,15 +24,13 @@ module ViewModel
     end
 
     def construction_age_band
-      building_parts = @xml_doc.xpath("//SAP-Building-Parts/SAP-Building-Part")
-      building_parts.each do |building_part|
-        if building_part
-             .search("Building-Part-Number")
-             .map(&:content)
-             .include?("1")
-          return building_part.search("Construction-Age-Band").children[0].to_s
-        end
-      end
+      building_part_number_node_set =
+        @xml_doc.xpath("//*[local-name() = 'Building-Part-Number']")
+      building_part_parent =
+        building_part_number_node_set.select { |node|
+          node.content == "1"
+        }.first.parent
+      building_part_parent&.search("Construction-Age-Band")&.first&.content
     end
 
     def property_type
