@@ -479,10 +479,6 @@ module ViewModel
           .map(&:content)
       end
 
-      def glazing_type
-        @xml_doc.search("Glazing-Type").map(&:content)
-      end
-
       def all_main_heating_environmental_efficiency
         @xml_doc
           .search("Main-Heating/Environmental-Efficiency-Rating")

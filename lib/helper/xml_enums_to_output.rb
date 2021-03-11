@@ -138,21 +138,6 @@ module Helper
       "8" => "triple, known data",
       "ND" => "not defined",
     }.freeze
-    SAP_GLAZED_TYPE = {
-      "1" => "not applicable (non-glazed door)",
-      "2" => "single",
-      "3" => "double",
-      "4" => "double low-E hard 0.2",
-      "5" => "double low-E hard 0.15",
-      "6" => "double low-E soft 0.1",
-      "7" => "double low-E soft 0.05",
-      "8" => "triple",
-      "9" => "triple low-E hard 0.2",
-      "10" => "triple low-E hard 0.15",
-      "11" => "triple low-E soft 0.1",
-      "12" => "triple low-E soft 0.05",
-      "13" => "secondary glazing",
-    }.freeze
     RDSAP_GLAZED_AREA = {
       "1" => "Normal",
       "2" => "More Than Typical",
@@ -253,10 +238,6 @@ module Helper
 
     def self.glazed_type_rdsap(value)
       RDSAP_GLAZED_TYPE[value]
-    end
-
-    def self.glazed_type_sap(value)
-      SAP_GLAZED_TYPE[value]
     end
 
     def self.tenure(value)
