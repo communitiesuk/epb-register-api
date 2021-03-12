@@ -31,7 +31,7 @@ describe UseCase::ExportOpenDataCommercial do
         property_type: "B1 Offices and Workshop businesses",
         inspection_date: "2020-05-04",
         lodgement_date: "2020-05-04",
-        transaction_type: "1",
+        transaction_type: "Mandatory issue (Marketed sale)",
         new_build_benchmark: "28",
         existing_stock_benchmark: "81",
         standard_emissions: "42.07",

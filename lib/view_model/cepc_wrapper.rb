@@ -133,7 +133,10 @@ module ViewModel
         special_energy_uses: @view_model.special_energy_uses,
         standard_emissions: @view_model.standard_emissions,
         target_emissions: @view_model.target_emissions,
-        transaction_type: @view_model.transaction_type,
+        transaction_type:
+            Helper::XmlEnumsToOutput.cepc_transaction_type(
+                @view_model.transaction_type,
+                ),
         type_of_assessment: TYPE_OF_ASSESSMENT,
         typical_emissions: @view_model.typical_emissions,
         renewable_sources: @view_model.renewable_sources,
