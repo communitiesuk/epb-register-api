@@ -364,7 +364,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       end
     end
 
-    context "Set the correct environment variables anda date of now" do
+    context "Set the correct environment variables and a date of now" do
       before do
         EnvironmentStub
           .all

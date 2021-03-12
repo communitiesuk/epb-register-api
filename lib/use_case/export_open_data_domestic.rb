@@ -11,6 +11,9 @@ module UseCase
     end
 
     def execute(date_from, task_id = 0)
+      pp block_given?
+
+      page_number = 0
       data = []
       new_task_id = @log_gateway.fetch_new_task_id(task_id)
       assessments =
@@ -22,6 +25,8 @@ module UseCase
 
       assessments.each do |assessment|
         xml_data = @assessment_gateway.fetch(assessment["assessment_id"])
+        next if xml_data[:schema_type].include?("NI")
+
         view_model =
           ViewModel::Factory.new.create(
             xml_data[:xml],
@@ -48,8 +53,8 @@ module UseCase
         end
 
         data << view_model_hash
+        page_number += 1
       end
-
       data
     end
   end
