@@ -18,7 +18,7 @@ source "https://rubygems.org" do
   end
 
   gem "aws-sdk-s3", "~> 1.86"
-  gem "epb-auth-tools", "~> 1.0.4"
+  gem "epb-auth-tools", "~> 1.0.7"
   gem "geocoder", "~> 1.6.4"
   gem "json-schema", "~> 2.8"
   gem "nokogiri", "~> 1.11.1"
