@@ -170,7 +170,7 @@ GEM
     unicode-display_width (1.7.0)
     unleash (3.2.1)
       murmurhash3 (~> 0.1.6)
-    webmock (3.11.2)
+    webmock (3.12.1)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
@@ -202,7 +202,7 @@ DEPENDENCIES
   sinatra-contrib!
   sinatra-cross_origin (~> 0.4.0)!
   unleash (~> 3.2.1)!
-  webmock (~> 3.11)!
+  webmock (~> 3.12)!
   zeitwerk (~> 2.4.1)!
 
 RUBY VERSION
