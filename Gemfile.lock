@@ -53,7 +53,7 @@ GEM
       multipart-post (>= 1.2, < 3)
       ruby2_keywords
     faraday-net_http (1.0.1)
-    geocoder (1.6.4)
+    geocoder (1.6.6)
     hashdiff (1.0.1)
     i18n (1.8.9)
       concurrent-ruby (~> 1.0)
@@ -184,7 +184,7 @@ DEPENDENCIES
   database_cleaner!
   debase!
   epb-auth-tools (~> 1.0.7)!
-  geocoder (~> 1.6.4)!
+  geocoder (~> 1.6.6)!
   json-schema (~> 2.8)!
   nokogiri (~> 1.11.1)!
   ougai (~> 1.9)!
