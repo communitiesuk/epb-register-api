@@ -392,7 +392,7 @@ module ViewModel
         postcode: @view_model.postcode,
         construction_age_band:
           Helper::XmlEnumsToOutput.construction_age_band_lookup(
-            @view_model.construction_age_band,
+            @view_model.main_dwelling_construction_age_band_or_year,
             schema_type,
             report_type,
           ),

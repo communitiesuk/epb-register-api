@@ -1,98 +1,56 @@
 describe "ViewModel::Domestic::ConstructionAgeBand" do
-  context "when calling construction-age-band method on a domestic view model" do
-    {
-      'SAP-Schema-18.0.0': {
-        epc: %w[A B C D E F G H I J K L],
-      },
-      'SAP-Schema-17.1': {
-        epc: %w[A B C D E F G H I J K L],
-      },
-      'SAP-Schema-17.0': {
-        epc: %w[A B C D E F G H I J K L],
-      },
-      'SAP-Schema-16.3': {
-        sap: %w[A B C D E F G H I J K],
-        rdsap: %w[A B C D E F G H I J K 0 NR],
-      },
-      'SAP-Schema-16.2': {
-        sap: %w[A B C D E F G H I J K],
-        rdsap: %w[A B C D E F G H I J K 0 NR],
-      },
-      'SAP-Schema-16.1': {
-        sap: %w[A B C D E F G H I J K],
-        rdsap: %w[A B C D E F G H I J K 0 NR],
-      },
-    }.each do |schema, types|
-      types.each do |type, bands|
-        context "when schema is #{schema} and type is #{type}" do
-          bands.each do |band|
-            context "when the band is #{band}" do
-              it "returns the band #{band}" do
-                wrapper =
-                  ViewModel::Factory.new.create(
-                    prepare_sample_xml(schema, type, band).to_s,
-                    schema.to_s,
-                    nil,
-                  )
 
-                expect(wrapper.get_view_model.construction_age_band).to eq(band)
-              end
+  context "when there is a construction age band value or construction year for the Main Dwelling" do
+    def self.retrieve_construction_age_band(schema, type, construction_option)
+      it "returns the value for construction age band or construction year" do
+        document = Nokogiri.XML Samples.xml(schema, type)
+        wrapper = ViewModel::Factory.new.create(document.to_s, schema.to_s)
 
-              it "the band #{band} is valid for this schema" do
-                schema_path = Helper::SchemaListHelper.new(schema).schema_path
-                xsd =
-                  Nokogiri::XML::Schema.from_document Nokogiri.XML(
-                    File.read(schema_path),
-                    schema_path,
-                  )
+        age_band = wrapper.get_view_model.main_dwelling_construction_age_band_or_year
 
-                validation =
-                  xsd.validate(prepare_sample_xml(schema, type, band))
-
-                expect(validation).to be_empty, <<~ERROR
-                  Failed on #{schema}:#{type}
-                    This document does not validate against the chosen schema,
-                      Errors:
-                        #{validation.join("\n      ")}
-                ERROR
-              end
-            end
-          end
-        end
+        expect(age_band).to eq(construction_option)
       end
     end
+
+    retrieve_construction_age_band('SAP-Schema-18.0.0', 'epc', '1750')
+    retrieve_construction_age_band('SAP-Schema-17.1', 'epc', '1750')
+    retrieve_construction_age_band('SAP-Schema-17.0', 'epc', '1750')
+    retrieve_construction_age_band('SAP-Schema-16.3', 'sap', '1750')
+    retrieve_construction_age_band('SAP-Schema-16.3', 'rdsap', 'A')
+    retrieve_construction_age_band('SAP-Schema-16.2', 'sap', '1750')
+    retrieve_construction_age_band('SAP-Schema-16.2', 'rdsap', 'A')
+    retrieve_construction_age_band('SAP-Schema-16.1', 'sap', '1750')
+    retrieve_construction_age_band('SAP-Schema-16.1', 'rdsap', 'A')
+    retrieve_construction_age_band('SAP-Schema-16.0', 'sap', '1750')
+    retrieve_construction_age_band('SAP-Schema-16.0', 'rdsap', 'A')
+    retrieve_construction_age_band('SAP-Schema-15.0', 'sap', '1750')
+    retrieve_construction_age_band('SAP-Schema-15.0', 'rdsap', 'A')
+    retrieve_construction_age_band('SAP-Schema-14.2', 'sap', '1750')
+    retrieve_construction_age_band('SAP-Schema-14.2', 'rdsap', 'A')
+    retrieve_construction_age_band('SAP-Schema-14.1', 'sap', '1750')
+    retrieve_construction_age_band('SAP-Schema-14.1', 'rdsap', 'A')
+    retrieve_construction_age_band('SAP-Schema-14.0', 'sap', '1750')
+    retrieve_construction_age_band('SAP-Schema-14.0', 'rdsap', 'A')
+    retrieve_construction_age_band('SAP-Schema-13.0', 'sap', '1750')
+    retrieve_construction_age_band('SAP-Schema-13.0', 'rdsap', 'A')
+    retrieve_construction_age_band('SAP-Schema-12.0', 'sap', '1750')
+    retrieve_construction_age_band('SAP-Schema-12.0', 'rdsap', 'A')
+    retrieve_construction_age_band('SAP-Schema-11.2', 'sap', '1750')
+    retrieve_construction_age_band('SAP-Schema-11.2', 'rdsap', 'C')
+    retrieve_construction_age_band('SAP-Schema-11.0', 'sap', '1750')
+    retrieve_construction_age_band('SAP-Schema-11.0', 'rdsap', 'C')
+    retrieve_construction_age_band('SAP-Schema-10.2', 'rdsap', 'C')
+
+    retrieve_construction_age_band('RdSAP-Schema-20.0.0', 'epc', 'K')
+    retrieve_construction_age_band('RdSAP-Schema-19.0', 'epc', 'K')
+    retrieve_construction_age_band('RdSAP-Schema-18.0', 'epc', 'K')
+    retrieve_construction_age_band('RdSAP-Schema-17.1', 'epc', 'K')
+    retrieve_construction_age_band('RdSAP-Schema-17.0', 'epc', 'K')
+    retrieve_construction_age_band('RdSAP-Schema-NI-20.0.0', 'epc', 'K')
+    retrieve_construction_age_band('RdSAP-Schema-NI-19.0', 'epc', 'K')
+    retrieve_construction_age_band('RdSAP-Schema-NI-18.0', 'epc', 'K')
+    retrieve_construction_age_band('RdSAP-Schema-NI-17.4', 'epc', 'K')
+    retrieve_construction_age_band('RdSAP-Schema-NI-17.3', 'epc', 'K')
   end
 end
 
-private
-
-def prepare_sample_xml(schema, type, band)
-  document = Nokogiri.XML Samples.xml(schema, type)
-
-  building_part_number_node_set =
-    document.xpath("//*[local-name() = 'Building-Part-Number']")
-
-  building_part_number =
-    building_part_number_node_set.select { |node| node.content == "1" }.first
-
-  building_part = building_part_number.parent
-
-  building_part
-    .xpath("//*[local-name() = 'Construction-Age-Band']")
-    .map { |n| n.remove if n.parent == building_part }
-
-  building_part
-    .xpath("//*[local-name() = 'Identifier']")
-    .map { |n| n.remove if n.parent == building_part }
-
-  building_part
-    .xpath("//*[local-name() = 'Construction-Year']")
-    .map { |n| n.remove if n.parent == building_part }
-
-  namespace = building_part_number.namespace.prefix
-  namespace = namespace ? namespace + ":" : ""
-
-  building_part_number.add_next_sibling "<#{namespace}Construction-Age-Band>#{band}</#{namespace}Construction-Age-Band>"
-
-  document
-end

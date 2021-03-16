@@ -193,6 +193,10 @@ module ViewModel
         xpath(%w[Construction-Year])
       end
 
+      def construction_age_band
+        xpath(%w[Construction-Age-Band])
+      end
+
       def tenure
         nil
       end
