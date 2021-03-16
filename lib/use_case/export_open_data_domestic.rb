@@ -11,7 +11,6 @@ module UseCase
     end
 
     def execute(date_from, task_id = 0)
-      pp block_given?
 
       page_number = 0
       data = []
