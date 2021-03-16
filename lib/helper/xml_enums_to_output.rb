@@ -212,13 +212,13 @@ module Helper
       "2-pre12.0" => "mechanical - non recovering",
     }.freeze
     CEPC_TRANSACTION_TYPE = {
-        "1" => "Mandatory issue (Marketed sale)",
-        "2" => "Mandatory issue (Non-marketed sale)",
-        "3" => "Mandatory issue (Property on construction).",
-        "4" => "Mandatory issue (Property to let).",
-        "5" => "Voluntary re-issue (A valid EPC is already lodged).",
-        "6" => "Voluntary (No legal requirement for an EPC).",
-        "7" => "Not recorded.",
+      "1" => "Mandatory issue (Marketed sale)",
+      "2" => "Mandatory issue (Non-marketed sale)",
+      "3" => "Mandatory issue (Property on construction).",
+      "4" => "Mandatory issue (Property to let).",
+      "5" => "Voluntary re-issue (A valid EPC is already lodged).",
+      "6" => "Voluntary (No legal requirement for an EPC).",
+      "7" => "Not recorded.",
     }.freeze
 
     def self.xml_value_to_string(number)

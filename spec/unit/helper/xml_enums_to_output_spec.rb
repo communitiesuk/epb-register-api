@@ -513,14 +513,12 @@ describe Helper::XmlEnumsToOutput do
   context "when the CECP Transaction-Type xml value is passed to the transaction type enum" do
     it "and the value is in the lookup, it returns the expected string" do
       expect(Helper::XmlEnumsToOutput.cepc_transaction_type("1")).to eq(
-                                                                    "Mandatory issue (Marketed sale)",
-                                                                    )
+        "Mandatory issue (Marketed sale)",
+      )
       expect(Helper::XmlEnumsToOutput.cepc_transaction_type("3")).to eq(
-                                                                    "Mandatory issue (Property on construction).",
-                                                                    )
-      expect(Helper::XmlEnumsToOutput.cepc_transaction_type("12")).to eq(
-                                                                     "12",
-                                                                     )
+        "Mandatory issue (Property on construction).",
+      )
+      expect(Helper::XmlEnumsToOutput.cepc_transaction_type("12")).to eq("12")
     end
   end
 end

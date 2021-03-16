@@ -539,7 +539,6 @@ module ViewModel
           .map(&:content)
       end
 
-
       def all_main_heating_environmental_efficiency
         @xml_doc
           .search("Main-Heating/Environmental-Efficiency-Rating")

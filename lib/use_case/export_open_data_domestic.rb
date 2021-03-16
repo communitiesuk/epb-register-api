@@ -11,7 +11,6 @@ module UseCase
     end
 
     def execute(date_from, task_id = 0)
-
       page_number = 0
       data = []
       new_task_id = @log_gateway.fetch_new_task_id(task_id)
