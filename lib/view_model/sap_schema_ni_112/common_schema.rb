@@ -443,6 +443,18 @@ module ViewModel
       def mechanical_ventilation
         nil
       end
+
+      def main_dwelling_construction_age_band_or_year
+        sap_building_parts = @xml_doc.xpath("//SAP-Building-Parts/SAP-Building-Part")
+        sap_building_parts.each do |sap_building_part|
+          building_part_number = sap_building_part.at("Building-Part-Number")
+          # Identifies the Main Dwelling
+          if building_part_number&.content == "1"
+            return sap_building_part.at_xpath("Construction-Age-Band | Construction-Year")&.content
+          end
+        end
+        return nil
+      end
     end
   end
 end
