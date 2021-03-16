@@ -14,7 +14,7 @@ source "https://rubygems.org" do
     gem "pry", "~> 0.14.0"
     gem "rack-test", "~> 1.1.0"
     gem "rspec", "~>3.10"
-    gem "webmock", "~> 3.11"
+    gem "webmock", "~> 3.12"
   end
 
   gem "aws-sdk-s3", "~> 1.86"
