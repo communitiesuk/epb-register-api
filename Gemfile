@@ -27,7 +27,7 @@ source "https://rubygems.org" do
   gem "rake"
   gem "rubocop-govuk", "~> 3.17"
   gem "rubyzip", "~> 2.3.0"
-  gem "sentry-ruby", "~> 4.2"
+  gem "sentry-ruby", "~> 4.3"
   gem "sinatra", "~> 2.0", ">= 2.0.7"
   gem "sinatra-activerecord", "~> 2.0.22"
   gem "sinatra-cross_origin", "~> 0.4.0"

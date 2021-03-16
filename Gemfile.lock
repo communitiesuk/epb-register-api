@@ -142,11 +142,11 @@ GEM
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.4)
     rubyzip (2.3.0)
-    sentry-ruby (4.2.1)
+    sentry-ruby (4.3.0)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       faraday (>= 1.0)
-      sentry-ruby-core (= 4.2.1)
-    sentry-ruby-core (4.2.1)
+      sentry-ruby-core (= 4.3.0)
+    sentry-ruby-core (4.3.0)
       concurrent-ruby
       faraday
     sinatra (2.1.0)
@@ -196,7 +196,7 @@ DEPENDENCIES
   rspec (~> 3.10)!
   rubocop-govuk (~> 3.17)!
   rubyzip (~> 2.3.0)!
-  sentry-ruby (~> 4.2)!
+  sentry-ruby (~> 4.3)!
   sinatra (~> 2.0, >= 2.0.7)!
   sinatra-activerecord (~> 2.0.22)!
   sinatra-contrib!
