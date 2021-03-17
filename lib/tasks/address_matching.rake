@@ -34,7 +34,9 @@ task :import_address_matching do
   if ENV["file_name"].nil?
     abort("Please set the file_name environment variable")
   end
+
   file_name = ENV["file_name"]
+  zipped = file_name.end_with?("zip")
 
   storage_config_reader = Gateway::StorageConfigurationReader.new(
     bucket_name: ENV["bucket_name"],
@@ -47,15 +49,25 @@ task :import_address_matching do
 
   puts "[#{Time.now}] Starting downloading CSV file #{file_name}"
   file_io = storage_gateway.get_file_io(file_name)
-  csv_contents = CSV.new(file_io)
+  csv_content = CSV.new(file_io, headers: true)
 
   puts "[#{Time.now}] Starting processing CSV file"
-  csv_contents.each do |csv_line|
+  while (csv_row = csv_content.shift)
     i += 1
 
-    # uprn = csv_line[0]
-    lprn = csv_line[1]
-    rrn = csv_line[2]
+    lprn = csv_row["lprn"]
+    # Only present when matching LPRN -> UPRN
+    uprn = csv_row["uprn"]
+    # Only present when matching LPRN -> RRN
+    rrn = csv_row["rrn"]
+
+    if rrn.nil?
+      new_address_id = uprn
+      source = 'os_lprn2uprn'
+    else
+      new_address_id = rrn
+      source = 'lprn_without_os_uprn'
+    end
 
     existing_backup = db.exec_query("SELECT 1 FROM assessments_address_id_backup aab " \
       "INNER JOIN assessments a USING (assessment_id) " \
@@ -64,24 +76,30 @@ task :import_address_matching do
     if existing_backup.empty?
       ActiveRecord::Base.transaction do
         db.exec_query("INSERT INTO assessments_address_id_backup " \
-          "SELECT aa.* FROM assessments_address_id aa " \
+          "SELECT aai.* FROM assessments_address_id aai " \
           "INNER JOIN assessments a USING (assessment_id) " \
-          "WHERE a.address_id = '#{lprn}'")
+          "WHERE a.address_id = '#{lprn}' " \
+          "AND aai.source != 'epb_team_update' " \
+          "AND aai.address_id NOT LIKE 'UPRN-%'")
 
         db.exec_query("UPDATE assessments_address_id " \
-          "SET address_id = '#{rrn}', source = 'lprn_without_os_uprn' " \
-          "WHERE assessment_id IN (SELECT assessment_id from assessments WHERE address_id = '#{lprn}')")
+          "SET address_id = '#{new_address_id}', source = '#{source}' " \
+          "WHERE assessment_id IN (SELECT assessment_id from assessments a " \
+            "INNER JOIN assessments_address_id aai USING (assessment_id) " \
+            "WHERE a.address_id = '#{lprn}' " \
+            "AND aai.source != 'epb_team_update' " \
+            "AND aai.address_id NOT LIKE 'UPRN-%')")
       end
     else
       skipped += 1
     end
 
-    if i % 10_000 == 0
+    if i % 100_000 == 0
       puts "[#{Time.now}] Processed #{i} LPRNs from CSV file, skipped #{skipped} present in backup table"
     end
   end
 
-  puts "[#{Time.now}] Finished processing CSV file, #{i} LPRNs updated"
+  puts "[#{Time.now}] Finished processing CSV file, #{i} LPRNs processed"
 
 rescue StandardError => e
   catch(:sigint) do

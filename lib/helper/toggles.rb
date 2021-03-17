@@ -7,6 +7,7 @@ module Helper
         Unleash.configure do |config|
           config.url = ENV["EPB_UNLEASH_URI"]
           config.app_name = "toggles-" + ENV["STAGE"]
+          config.log_level = Logger::ERROR
         end
 
         @unleash = Unleash::Client.new

@@ -9,7 +9,7 @@ class HttpStub
   def self.s3_get_object(key, body = "", code = 200)
     WebMock.stub_request(
       :get,
-      "https://test-bucket.s3.eu-west-1.amazonaws.com/#{key}",
+      "https://test-bucket.s3.eu-west-2.amazonaws.com/#{key}",
     ).to_return status: code,
                 body:
                                                                                                    body
