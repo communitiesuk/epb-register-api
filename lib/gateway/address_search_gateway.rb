@@ -109,24 +109,23 @@ module Gateway
 
       sql_assessments = <<~SQL
          SELECT
-          a.assessment_id,
-          a.date_of_expiry,
-          a.date_registered,
-          a.cancelled_at,
-          a.not_for_issue_at,
-          a.address_line1,
-          a.address_line2,
-          a.address_line3,
-          a.address_line4,
-          a.town,
-          a.postcode,
-          aai.address_id,
-          a.type_of_assessment
-        FROM assessments a
-        INNER JOIN assessments_address_id aai on a.assessment_id = aai.assessment_id
-        WHERE a.assessment_id = $1
-           OR aai.address_id = $2
-        ORDER BY a.assessment_id
+          assessment_id,
+          date_of_expiry,
+          date_registered,
+          cancelled_at,
+          not_for_issue_at,
+          address_line1,
+          address_line2,
+          address_line3,
+          address_line4,
+          town,
+          postcode,
+          address_id,
+          type_of_assessment
+        FROM assessments
+        WHERE assessment_id = $1
+           OR address_id = $2
+        ORDER BY assessment_id
       SQL
 
       sql_address_base = <<~SQL
