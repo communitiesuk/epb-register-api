@@ -16,26 +16,14 @@ end
 task :import_address_matching do
   Signal.trap("INT") { throw :sigint }
   Signal.trap("TERM") { throw :sigterm }
-
   ActiveRecord::Base.logger = nil
-  db = ActiveRecord::Base.connection
 
-  unless db.table_exists?(:assessments_address_id_backup)
-    db.create_table :assessments_address_id_backup, primary_key: :assessment_id, id: :string do |t|
-      t.string :address_id, index: true
-      t.string :source
-    end
-    puts "[#{Time.now}] Created empty assessments_address_id_backup table"
-  end
-
-  if ENV["bucket_name"].nil? && ENV["instance_name"].nil?
-    abort("Please set the bucket_name or instance_name environment variable")
-  end
-  if ENV["file_name"].nil?
-    abort("Please set the file_name environment variable")
-  end
+  check_address_matching_requirements
+  create_address_table_backup
 
   file_name = ENV["file_name"]
+  counter = Counter.new(processed: 0, skipped: 0)
+
   zipped = file_name.end_with?("zip")
 
   storage_config_reader = Gateway::StorageConfigurationReader.new(
@@ -44,70 +32,34 @@ task :import_address_matching do
   )
   storage_gateway = Gateway::StorageGateway.new(storage_config: storage_config_reader.get_configuration)
 
-  i = 0
-  skipped = 0
-
   puts "[#{Time.now}] Starting downloading CSV file #{file_name}"
   file_io = storage_gateway.get_file_io(file_name)
-  csv_content = CSV.new(file_io, headers: true)
 
   puts "[#{Time.now}] Starting processing CSV file"
-  while (csv_row = csv_content.shift)
-    i += 1
 
-    lprn = csv_row["lprn"]
-    # Only present when matching LPRN -> UPRN
-    uprn = csv_row["uprn"]
-    # Only present when matching LPRN -> RRN
-    rrn = csv_row["rrn"]
-
-    if rrn.nil?
-      new_address_id = uprn
-      source = 'os_lprn2uprn'
-    else
-      new_address_id = rrn
-      source = 'lprn_without_os_uprn'
-    end
-
-    existing_backup = db.exec_query("SELECT 1 FROM assessments_address_id_backup aab " \
-      "INNER JOIN assessments a USING (assessment_id) " \
-      "WHERE a.address_id = '#{lprn}'")
-
-    if existing_backup.empty?
-      ActiveRecord::Base.transaction do
-        db.exec_query("INSERT INTO assessments_address_id_backup " \
-          "SELECT aai.* FROM assessments_address_id aai " \
-          "INNER JOIN assessments a USING (assessment_id) " \
-          "WHERE a.address_id = '#{lprn}' " \
-          "AND aai.source != 'epb_team_update' " \
-          "AND aai.address_id NOT LIKE 'UPRN-%'")
-
-        db.exec_query("UPDATE assessments_address_id " \
-          "SET address_id = '#{new_address_id}', source = '#{source}' " \
-          "WHERE assessment_id IN (SELECT assessment_id from assessments a " \
-            "INNER JOIN assessments_address_id aai USING (assessment_id) " \
-            "WHERE a.address_id = '#{lprn}' " \
-            "AND aai.source != 'epb_team_update' " \
-            "AND aai.address_id NOT LIKE 'UPRN-%')")
+  if zipped
+    Zip::InputStream.open(file_io) do |csv_io|
+      while (entry = csv_io.get_next_entry)
+        next unless entry.size.positive?
+        puts "[#{Time.now}] #{entry.name} was unzipped with a size of #{entry.size} bytes"
+        csv_content = CSV.new(csv_io, headers: true)
+        process_address_matching_csv(csv_content, counter)
       end
-    else
-      skipped += 1
     end
-
-    if i % 100_000 == 0
-      puts "[#{Time.now}] Processed #{i} LPRNs from CSV file, skipped #{skipped} present in backup table"
-    end
+  else
+    csv_content = CSV.new(file_io, headers: true)
+    process_address_matching_csv(csv_content, counter)
   end
 
-  puts "[#{Time.now}] Finished processing CSV file, #{i} LPRNs processed"
+  puts "[#{Time.now}] Finished processing CSV file, #{counter.processed} LPRNs processed"
 
 rescue StandardError => e
   catch(:sigint) do
     puts e.to_s
-    abort "Interrupted while downloading or processing CSV file at line #{i}"
+    abort "Interrupted while downloading or processing CSV file at line #{counter.processed}"
   end
   catch(:sigterm) do
-    abort "Killed while downloading or processing CSV file at line #{i}"
+    abort "Killed while downloading or processing CSV file at line #{counter.processed}"
   end
   puts "Error while downloading or processing CSV file: #{e}"
 end
@@ -190,9 +142,9 @@ task :update_address_lines do
       matching_assessment = nil
 
       if (prev_address_line1 == address_line1) &&
-          (prev_address_line2 == address_line2) &&
-          (prev_address_line3 == address_line3) &&
-          (prev_address_line4 == address_line4)
+        (prev_address_line2 == address_line2) &&
+        (prev_address_line3 == address_line3) &&
+        (prev_address_line4 == address_line4)
         matched_assessments += 1
       else
         ActiveRecord::Base.transaction do
@@ -236,6 +188,93 @@ task :update_address_lines do
   puts "[#{Time.now}] Address lines update complete: #{updated_assessments} assessments updated and #{matched_assessments} assessments matched"
 end
 
+def process_address_matching_csv(csv_content, counter)
+  while (csv_row = csv_content.shift)
+    update_address_from_csv_row(csv_row, counter)
+
+    if counter.processed % 100_000 == 0
+      puts "[#{Time.now}] Processed #{counter.processed} LPRNs from CSV file, skipped #{counter.skipped} present in backup table"
+    end
+  end
+end
+
+def update_address_from_csv_row(csv_row, counter)
+  counter.processed += 1
+
+  lprn = csv_row["lprn"]
+  # Only present when matching LPRN -> UPRN
+  uprn = csv_row["uprn"]
+  # Only present when matching LPRN -> RRN
+  rrn = csv_row["rrn"]
+
+  if rrn.nil?
+    new_address_id = uprn
+    source = 'os_lprn2uprn'
+  else
+    new_address_id = rrn
+    source = 'lprn_without_os_uprn'
+  end
+
+  db = ActiveRecord::Base.connection
+  existing_backup = db.exec_query(
+    "SELECT 1 FROM assessments_address_id_backup aab " \
+      "INNER JOIN assessments a USING (assessment_id) " \
+      "WHERE a.address_id = '#{lprn}'")
+
+  if existing_backup.empty?
+    ActiveRecord::Base.transaction do
+      db.exec_query(
+        "INSERT INTO assessments_address_id_backup " \
+          "SELECT aai.* FROM assessments_address_id aai " \
+          "INNER JOIN assessments a USING (assessment_id) " \
+          "WHERE a.address_id = '#{lprn}' " \
+          "AND aai.source != 'epb_team_update' " \
+          "AND aai.address_id NOT LIKE 'UPRN-%'")
+
+      db.exec_query(
+        "UPDATE assessments_address_id " \
+          "SET address_id = '#{new_address_id}', source = '#{source}' " \
+          "WHERE assessment_id IN (SELECT assessment_id from assessments a " \
+            "INNER JOIN assessments_address_id aai USING (assessment_id) " \
+            "WHERE a.address_id = '#{lprn}' " \
+            "AND aai.source != 'epb_team_update' " \
+            "AND aai.address_id NOT LIKE 'UPRN-%')")
+    end
+  else
+    counter.skipped += 1
+  end
+end
+
+def create_address_table_backup
+  db = ActiveRecord::Base.connection
+
+  unless db.table_exists?(:assessments_address_id_backup)
+    db.create_table :assessments_address_id_backup, primary_key: :assessment_id, id: :string do |t|
+      t.string :address_id, index: true
+      t.string :source
+    end
+    puts "[#{Time.now}] Created empty assessments_address_id_backup table"
+  end
+end
+
+def check_address_matching_requirements
+  if ENV["bucket_name"].nil? && ENV["instance_name"].nil?
+    abort("Please set the bucket_name or instance_name environment variable")
+  end
+  if ENV["file_name"].nil?
+    abort("Please set the file_name environment variable")
+  end
+end
+
 def bind_string_attribute(array, name, value)
   array << ActiveRecord::Relation::QueryAttribute.new(name, value, ActiveRecord::Type::String.new)
+end
+
+class Counter
+  attr_accessor :processed, :skipped
+
+  def initialize(processed:, skipped:)
+    @processed = processed
+    @skipped = skipped
+  end
 end
