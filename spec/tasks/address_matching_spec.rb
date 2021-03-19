@@ -24,9 +24,7 @@ describe "AddressMatching" do
     HttpStub.enable_webmock
   end
 
-  after(:all) do
-    HttpStub.off
-  end
+  after(:all) { HttpStub.off }
 
   let(:assessment_gateway) { Gateway::AssessmentsGateway.new }
   let(:assessment_search_gateway) { Gateway::AssessmentsSearchGateway.new }
@@ -46,8 +44,14 @@ describe "AddressMatching" do
       it "Then both address IDs are updated" do
         get_task("import_address_matching").invoke
 
-        assessment1 = assessment_search_gateway.search_by_assessment_id("0000-0000-0000-0000-0001").first
-        assessment2 = assessment_search_gateway.search_by_assessment_id("0000-0000-0000-0000-0002").first
+        assessment1 =
+          assessment_search_gateway.search_by_assessment_id(
+            "0000-0000-0000-0000-0001",
+          ).first
+        assessment2 =
+          assessment_search_gateway.search_by_assessment_id(
+            "0000-0000-0000-0000-0002",
+          ).first
         expect(assessment1.get("address_id")).to eq("UPRN-0000000011")
         expect(assessment2.get("address_id")).to eq("UPRN-0000000011")
       end
@@ -57,15 +61,21 @@ describe "AddressMatching" do
       before do
         address_id_gateway.update_assessment_address_id_mapping(
           "0000-0000-0000-0000-0001",
-          "UPRN-0000000091"
+          "UPRN-0000000091",
         )
       end
 
       it "Then the related assessment is not updated" do
         get_task("import_address_matching").invoke
 
-        assessment1 = assessment_search_gateway.search_by_assessment_id("0000-0000-0000-0000-0001").first
-        assessment2 = assessment_search_gateway.search_by_assessment_id("0000-0000-0000-0000-0002").first
+        assessment1 =
+          assessment_search_gateway.search_by_assessment_id(
+            "0000-0000-0000-0000-0001",
+          ).first
+        assessment2 =
+          assessment_search_gateway.search_by_assessment_id(
+            "0000-0000-0000-0000-0002",
+          ).first
         expect(assessment1.get("address_id")).to eq("UPRN-0000000091")
         expect(assessment2.get("address_id")).to eq("UPRN-0000000011")
       end
@@ -73,7 +83,7 @@ describe "AddressMatching" do
   end
 
   context "When we call the update_address_lines task" do
-    before {allow(STDOUT).to receive(:puts)}
+    before { allow(STDOUT).to receive(:puts) }
 
     context "With two assessments having no address discrepancy" do
       it "Then both assessments addresses should be matched" do
@@ -99,14 +109,17 @@ describe "AddressMatching" do
 
       it "Then both assessments addresses should be updated" do
         expect { get_task("update_address_lines").invoke }.to output(
-  /2 assessments updated and 0 assessments matched/,
+          /2 assessments updated and 0 assessments matched/,
         ).to_stdout
       end
 
       it "Then the address in the assessments table should match the XML" do
         get_task("update_address_lines").invoke
 
-        assessment = assessment_search_gateway.search_by_assessment_id("0000-0000-0000-0000-0001").first
+        assessment =
+          assessment_search_gateway.search_by_assessment_id(
+            "0000-0000-0000-0000-0001",
+          ).first
         expect(assessment.get("address_line1")).to eq("1 Some Street")
         expect(assessment.get("address_line2")).to eq("")
         expect(assessment.get("address_line3")).to eq("")
@@ -136,7 +149,12 @@ def call_add_assessor(scheme_id)
   )
 end
 
-def call_lodge_assessment(scheme_id, schema_name, xml_document, migrated = false)
+def call_lodge_assessment(
+  scheme_id,
+  schema_name,
+  xml_document,
+  migrated = false
+)
   lodge_assessment(
     assessment_body: xml_document.to_xml,
     accepted_responses: [201],
@@ -152,6 +170,6 @@ end
 
 def get_address_matching_csv
   "lprn,uprn,quality,duplicated\n" \
-  "LPRN-0000000001,UPRN-0000000011,GOOD,false\n" \
-  "LPRN-0000000002,UPRN-0000000022,GOOD,false\n"
+    "LPRN-0000000001,UPRN-0000000011,GOOD,false\n" \
+    "LPRN-0000000002,UPRN-0000000022,GOOD,false\n"
 end

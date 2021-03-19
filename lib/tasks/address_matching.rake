@@ -41,6 +41,7 @@ task :import_address_matching do
     Zip::InputStream.open(file_io) do |csv_io|
       while (entry = csv_io.get_next_entry)
         next unless entry.size.positive?
+
         puts "[#{Time.now}] #{entry.name} was unzipped with a size of #{entry.size} bytes"
         csv_content = CSV.new(csv_io, headers: true)
         process_address_matching_csv(csv_content, counter)
@@ -142,9 +143,9 @@ task :update_address_lines do
       matching_assessment = nil
 
       if (prev_address_line1 == address_line1) &&
-        (prev_address_line2 == address_line2) &&
-        (prev_address_line3 == address_line3) &&
-        (prev_address_line4 == address_line4)
+          (prev_address_line2 == address_line2) &&
+          (prev_address_line3 == address_line3) &&
+          (prev_address_line4 == address_line4)
         matched_assessments += 1
       else
         ActiveRecord::Base.transaction do
@@ -209,17 +210,18 @@ def update_address_from_csv_row(csv_row, counter)
 
   if rrn.nil?
     new_address_id = uprn
-    source = 'os_lprn2uprn'
+    source = "os_lprn2uprn"
   else
     new_address_id = rrn
-    source = 'lprn_without_os_uprn'
+    source = "lprn_without_os_uprn"
   end
 
   db = ActiveRecord::Base.connection
   existing_backup = db.exec_query(
     "SELECT 1 FROM assessments_address_id_backup aab " \
       "INNER JOIN assessments a USING (assessment_id) " \
-      "WHERE a.address_id = '#{lprn}'")
+      "WHERE a.address_id = '#{lprn}'",
+  )
 
   if existing_backup.empty?
     ActiveRecord::Base.transaction do
@@ -229,7 +231,8 @@ def update_address_from_csv_row(csv_row, counter)
           "INNER JOIN assessments a USING (assessment_id) " \
           "WHERE a.address_id = '#{lprn}' " \
           "AND aai.source != 'epb_team_update' " \
-          "AND aai.address_id NOT LIKE 'UPRN-%'")
+          "AND aai.address_id NOT LIKE 'UPRN-%'",
+      )
 
       db.exec_query(
         "UPDATE assessments_address_id " \
@@ -238,7 +241,8 @@ def update_address_from_csv_row(csv_row, counter)
             "INNER JOIN assessments_address_id aai USING (assessment_id) " \
             "WHERE a.address_id = '#{lprn}' " \
             "AND aai.source != 'epb_team_update' " \
-            "AND aai.address_id NOT LIKE 'UPRN-%')")
+            "AND aai.address_id NOT LIKE 'UPRN-%')",
+      )
     end
   else
     counter.skipped += 1
