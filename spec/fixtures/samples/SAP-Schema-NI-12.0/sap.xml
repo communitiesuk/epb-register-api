@@ -194,7 +194,7 @@
             <SAP:Environmental-Impact-Rating>64</SAP:Environmental-Impact-Rating>
             <SAP:Improvement-Summary></SAP:Improvement-Summary>
             <SAP:Improvement-Heading></SAP:Improvement-Heading>
-            <SAP:Improvement-Description></SAP:Improvement-Description>
+            <SAP:Improvement-Description>Improvement desc</SAP:Improvement-Description>
           </SAP:Improvement>
         </SAP:Suggested-Improvements>
         <SAP:LZC-Energy-Sources>

@@ -199,7 +199,9 @@
             <SAP05:Energy-Performance-Rating>60</SAP05:Energy-Performance-Rating>
             <SAP05:Environmental-Impact-Rating>64</SAP05:Environmental-Impact-Rating>
             <SAP05:Improvement-Details>
-              <SAP05:Improvement-Number>1</SAP05:Improvement-Number>
+              <SAP05:Improvement-Texts>
+                <SAP05:Improvement-Description>Improvement desc</SAP05:Improvement-Description>
+              </SAP05:Improvement-Texts>
             </SAP05:Improvement-Details>
           </SAP05:Improvement>
         </SAP05:Suggested-Improvements>

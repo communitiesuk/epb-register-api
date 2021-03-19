@@ -201,7 +201,7 @@
             <Environmental-Impact-Rating>64</Environmental-Impact-Rating>
             <Improvement-Summary></Improvement-Summary>
             <Improvement-Heading></Improvement-Heading>
-            <Improvement-Description></Improvement-Description>
+            <Improvement-Description>Improvement desc</Improvement-Description>
           </Improvement>
         </Suggested-Improvements>
       </Energy-Assessment>

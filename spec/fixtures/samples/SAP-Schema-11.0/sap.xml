@@ -185,7 +185,7 @@
             <SAP05:Improvement-Category>2</SAP05:Improvement-Category>
             <SAP05:Improvement-Type>B</SAP05:Improvement-Type>
             <SAP05:Improvement-Heading></SAP05:Improvement-Heading>
-            <SAP05:Improvement-Description></SAP05:Improvement-Description>
+            <SAP05:Improvement-Description>Improvement desc</SAP05:Improvement-Description>
             <SAP05:Typical-Saving>99</SAP05:Typical-Saving>
             <SAP05:Energy-Performance-Rating>60</SAP05:Energy-Performance-Rating>
             <SAP05:Environmental-Impact-Rating>64</SAP05:Environmental-Impact-Rating>

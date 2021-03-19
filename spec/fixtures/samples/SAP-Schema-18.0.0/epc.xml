@@ -193,7 +193,9 @@
         <Environmental-Impact-Rating>64</Environmental-Impact-Rating>
         <Indicative-Cost>2000</Indicative-Cost>
         <Improvement-Details>
-          <Improvement-Number>1</Improvement-Number>
+          <Improvement-Texts>
+            <Improvement-Description>Improvement desc</Improvement-Description>
+          </Improvement-Texts>
         </Improvement-Details>
         <Green-Deal-Category>3</Green-Deal-Category>
       </Improvement>

@@ -191,7 +191,9 @@
             <HIP:Energy-Performance-Rating>60</HIP:Energy-Performance-Rating>
             <HIP:Environmental-Impact-Rating>64</HIP:Environmental-Impact-Rating>
             <HIP:Improvement-Details>
-              <HIP:Improvement-Number>1</HIP:Improvement-Number>
+              <HIP:Improvement-Texts>
+                <HIP:Improvement-Description>Improvement desc</HIP:Improvement-Description>
+              </HIP:Improvement-Texts>
             </HIP:Improvement-Details>
             <HIP:Indicative-Cost>2000</HIP:Indicative-Cost>
             <HIP:Green-Deal-Category>3</HIP:Green-Deal-Category>

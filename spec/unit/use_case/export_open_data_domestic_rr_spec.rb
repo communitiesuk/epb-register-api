@@ -127,10 +127,10 @@ describe UseCase::ExportOpenDataDomesticrr do
           {
             assessment_id:
               "2da345c51a134b04e2c2a27d6ad48441cddebeba199d11a3a3ff8572ff75d9c8",
-            improvement_descr_text: nil,
+            improvement_descr_text: "Improvement desc",
             improvement_summary_text: nil,
             indicative_cost: "2000",
-            improvement_id: "1",
+            improvement_id: nil,
             improvement_item: 2,
           },
         )

@@ -217,7 +217,9 @@
             <SAP:Environmental-Impact-Rating>64</SAP:Environmental-Impact-Rating>
             <SAP:Indicative-Cost>2000</SAP:Indicative-Cost>
             <SAP:Improvement-Details>
-              <SAP:Improvement-Number>1</SAP:Improvement-Number>
+              <SAP:Improvement-Texts>
+                <SAP:Improvement-Description>Improvement desc</SAP:Improvement-Description>
+              </SAP:Improvement-Texts>
             </SAP:Improvement-Details>
           </SAP:Improvement>
         </SAP:Suggested-Improvements>

@@ -207,7 +207,9 @@
             <Energy-Performance-Rating>60</Energy-Performance-Rating>
             <Environmental-Impact-Rating>64</Environmental-Impact-Rating>
             <Improvement-Details>
-              <Improvement-Number>1</Improvement-Number>
+              <Improvement-Texts>
+                <Improvement-Description>Improvement desc</Improvement-Description>
+              </Improvement-Texts>
             </Improvement-Details>
           </Improvement>
         </Suggested-Improvements>

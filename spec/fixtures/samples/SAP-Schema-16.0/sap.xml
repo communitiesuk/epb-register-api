@@ -220,7 +220,9 @@
             <SAP:Indicative-Cost>2000</SAP:Indicative-Cost>
             <SAP:Green-Deal-Category>3</SAP:Green-Deal-Category>
             <SAP:Improvement-Details>
-              <SAP:Improvement-Number>1</SAP:Improvement-Number>
+              <SAP:Improvement-Texts>
+                <SAP:Improvement-Description>Improvement desc</SAP:Improvement-Description>
+              </SAP:Improvement-Texts>
             </SAP:Improvement-Details>
           </SAP:Improvement>
         </SAP:Suggested-Improvements>
