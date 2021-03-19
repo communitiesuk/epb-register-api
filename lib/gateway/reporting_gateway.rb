@@ -1,8 +1,5 @@
 module Gateway
   class ReportingGateway
-    # OPEN_DATA_EXPORT_DATE_START = "2019-07-01".freeze
-    OPEN_DATA_EXPORT_DATE_START = "2021-02-03".freeze
-
     def assessments_by_region_and_type(start_date, end_date)
       sql = <<~SQL
         SELECT
@@ -97,20 +94,6 @@ module Gateway
 
     def assessments_xml_for_open_data(args = {})
       args = assessments_for_open_data_defaults.merge(args)
-
-      # where = " a.opt_out = false AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL"
-      #
-      # if args[:type_of_assessment]
-      #   where <<
-      #     " AND a.type_of_assessment = " +
-      #       ActiveRecord::Base.connection.quote(args[:type_of_assessment])
-      # end
-      #
-      # if args[:schema_type]
-      #   where <<
-      #     " AND b.schema_type = " +
-      #       ActiveRecord::Base.connection.quote(args[:schema_type])
-      # end
 
       sql = <<~SQL
         SELECT  a.assessment_id, b.schema_type, c.address_id
