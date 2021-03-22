@@ -1,9 +1,11 @@
 module ViewModel
   class DecWrapper
     TYPE_OF_ASSESSMENT = "DEC".freeze
+    attr_accessor :schema_type
 
     def initialize(xml, schema_type)
-      case schema_type
+      @schema_type = schema_type
+      case @schema_type
       when "CEPC-8.0.0"
         @view_model = ViewModel::Cepc800::Dec.new xml
       when "CEPC-NI-8.0.0"
@@ -32,6 +34,7 @@ module ViewModel
     end
 
     def to_hash
+
       {
         assessment_id: @view_model.assessment_id,
         date_of_assessment: @view_model.date_of_assessment,
@@ -47,6 +50,7 @@ module ViewModel
           postcode: @view_model.postcode,
         },
         type_of_assessment: "DEC",
+        schema_type: @schema_type,
         report_type: @view_model.report_type,
         current_assessment: {
           date: @view_model.current_assessment_date,
