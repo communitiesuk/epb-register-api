@@ -1470,7 +1470,6 @@ describe ViewModel::SapWrapper do
           schema: "SAP-Schema-10.2",
           type: "rdsap",
           different_fields: {
-            extension_count: nil,
             tenure: nil,
             environment_impact_potential: "70",
             multi_glaze_proportion: nil,
@@ -1498,6 +1497,61 @@ describe ViewModel::SapWrapper do
             mechanical_ventilation: "natural",
             floor_height: nil,
             main_fuel: "Solid fuel: dual fuel appliance (mineral and wood)",
+          },
+        },
+        {
+          schema: "SAP-Schema-NI-18.0.0",
+          different_fields: {
+            building_reference_number: "UPRN-000000000000",
+            extension_count: nil,
+            construction_age_band: "England and Wales: 2007-2011",
+            multi_glaze_proportion: nil,
+          },
+        },
+        {
+          schema: "SAP-Schema-NI-17.4",
+          different_fields: {
+            extension_count: nil,
+            construction_age_band: "England and Wales: 2007-2011",
+            multi_glaze_proportion: nil,
+          },
+        },
+        {
+          schema: "SAP-Schema-NI-17.3",
+          different_fields: {
+            extension_count: nil,
+            construction_age_band: "England and Wales: 2007-2011",
+            multi_glaze_proportion: nil,
+          },
+        },
+        {
+          schema: "SAP-Schema-NI-17.2",
+          type: "sap",
+          different_fields: {
+            environment_impact_potential: "93",
+            report_type: "3",
+            extension_count: nil,
+            multi_glaze_proportion: nil,
+          },
+        },
+        {
+          schema: "SAP-Schema-NI-17.1",
+          type: "sap",
+          different_fields: {
+            environment_impact_potential: "93",
+            report_type: "3",
+            extension_count: nil,
+            multi_glaze_proportion: nil,
+          },
+        },
+        {
+          schema: "SAP-Schema-NI-17.0",
+          type: "sap",
+          different_fields: {
+            environment_impact_potential: "93",
+            report_type: "3",
+            extension_count: nil,
+            multi_glaze_proportion: nil,
           },
         },
       ]

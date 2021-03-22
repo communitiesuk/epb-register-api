@@ -516,6 +516,58 @@ module ViewModel
         end
         nil
       end
+
+      def all_main_heating_environmental_efficiency
+        @xml_doc
+          .search("Main-Heating/Environmental-Efficiency-Rating")
+          .map(&:content)
+      end
+
+      def all_floor_descriptions
+        @xml_doc.search("Property-Summary/Floor/Description").map(&:content)
+      end
+
+      def all_floor_energy_efficiency_rating
+        @xml_doc
+          .search("Property-Summary/Floor/Energy-Efficiency-Rating")
+          .map(&:content)
+      end
+
+      def all_floor_env_energy_efficiency_rating
+        @xml_doc
+          .search("Property-Summary/Floor/Environmental-Efficiency-Rating")
+          .map(&:content)
+      end
+
+      def all_main_heating_controls_energy_efficiency
+        @xml_doc
+          .search("Main-Heating-Controls/Energy-Efficiency-Rating")
+          .map(&:content)
+      end
+
+      def all_main_heating_controls_environmental_efficiency
+        @xml_doc
+          .search("Main-Heating-Controls/Environmental-Efficiency-Rating")
+          .map(&:content)
+      end
+
+      def main_dwelling_construction_age_band_or_year
+        sap_building_parts =
+          @xml_doc.xpath("//SAP-Building-Parts/SAP-Building-Part")
+        sap_building_parts.each do |sap_building_part|
+          building_part_number = sap_building_part.at("Building-Part-Number")
+
+          # Identifies the Main Dwelling
+          if building_part_number&.content == "1"
+            return(
+              sap_building_part.at_xpath(
+                "Construction-Age-Band | Construction-Year",
+                )&.content
+            )
+          end
+        end
+        nil
+      end
     end
   end
 end
