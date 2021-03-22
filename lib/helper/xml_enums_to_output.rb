@@ -354,7 +354,6 @@ module Helper
       end
 
       value == "" ? nil : CONSTRUCTION_AGE_BAND[value] || value
-      # CONSTRUCTION_AGE_BAND[value] || value
     end
 
     def self.property_type(value)
