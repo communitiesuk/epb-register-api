@@ -454,7 +454,9 @@ describe Helper::XmlEnumsToOutput do
       expect(Helper::XmlEnumsToOutput.heat_loss_corridor(nil)).to be_nil
       expect(
         Helper::XmlEnumsToOutput.heat_loss_corridor("Any other value"),
-      ).to be_nil
+      ).to eq(
+               "Any other value",
+               )
     end
     it "and the value is in the lookup, it returns the expected string" do
       expect(Helper::XmlEnumsToOutput.heat_loss_corridor("0")).to eq(

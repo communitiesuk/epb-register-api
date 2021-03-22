@@ -362,7 +362,7 @@ module Helper
     end
 
     def self.heat_loss_corridor(value)
-      HEAT_LOSS_CORRIDOR[value]
+      HEAT_LOSS_CORRIDOR[value] || value
     end
 
     def self.mechanical_ventilation(value, schema_type, report_type = 0)
