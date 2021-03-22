@@ -257,7 +257,7 @@ module Helper
       if schema_type == "RdSAP" && value.to_i >= 12
         TRANSACTION_TYPE["#{value}RdSAP"]
       else
-        TRANSACTION_TYPE[value]
+        TRANSACTION_TYPE[value] || value
       end
     end
 
