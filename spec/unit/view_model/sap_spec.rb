@@ -1628,6 +1628,52 @@ describe ViewModel::SapWrapper do
             number_open_fireplaces: nil,
           },
         },
+        {
+          schema: "SAP-Schema-NI-13.0",
+          type: "sap",
+          different_fields: {
+            tenure: nil,
+            environment_impact_potential: "93",
+            report_type: "3",
+            extension_count: nil,
+            multi_glaze_proportion: nil,
+            mainheat_description: "Gas boiler",
+            number_open_fireplaces: nil,
+          },
+        },
+        {
+          schema: "SAP-Schema-NI-12.0",
+          type: "sap",
+          different_fields: {
+            tenure: nil,
+            environment_impact_potential: "93",
+            total_floor_area: nil,
+            report_type: "3",
+            extension_count: nil,
+            multi_glaze_proportion: nil,
+            mainheat_description: "Gas boiler",
+            number_open_fireplaces: nil,
+          },
+        },
+        {
+          schema: "SAP-Schema-NI-11.2",
+          type: "sap",
+          different_fields: {
+            tenure: nil,
+            transaction_type: nil,
+            environment_impact_potential: "93",
+            total_floor_area: nil,
+            report_type: "3",
+            extension_count: nil,
+            multi_glaze_proportion: nil,
+            mainheat_description: "Gas boiler",
+            co2_emiss_curr_per_floor_area: nil,
+            low_energy_lighting: "50",
+            low_energy_fixed_lighting_outlets_count: "4",
+            built_form: "Semi-Detached",
+            floor_level: nil,
+          },
+        },
       ]
     end
 
