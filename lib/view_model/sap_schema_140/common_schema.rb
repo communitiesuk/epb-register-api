@@ -427,6 +427,18 @@ module ViewModel
         @xml_doc.search("Roof/Environmental-Efficiency-Rating").map(&:content)
       end
 
+      def all_wall_descriptions
+        @xml_doc.search("Walls/Description").map(&:content)
+      end
+
+      def all_wall_energy_efficiency_rating
+        @xml_doc.search("Walls/Energy-Efficiency-Rating").map(&:content)
+      end
+
+      def all_wall_env_energy_efficiency_rating
+        @xml_doc.search("Walls/Environmental-Efficiency-Rating").map(&:content)
+      end
+
       def energy_tariff
         xpath(%w[Electricity-Tariff])
       end
@@ -467,6 +479,44 @@ module ViewModel
           end
         end
         nil
+      end
+
+      def floor_height
+        @xml_doc.search("Storey-Height").map(&:content)
+      end
+
+      def all_floor_descriptions
+        @xml_doc.search("Property-Summary/Floor/Description").map(&:content)
+      end
+
+      def all_floor_energy_efficiency_rating
+        @xml_doc
+            .search("Property-Summary/Floor/Energy-Efficiency-Rating")
+            .map(&:content)
+      end
+
+      def all_floor_env_energy_efficiency_rating
+        @xml_doc
+            .search("Property-Summary/Floor/Environmental-Efficiency-Rating")
+            .map(&:content)
+      end
+
+      def all_main_heating_controls_energy_efficiency
+        @xml_doc
+            .search("Main-Heating-Controls/Energy-Efficiency-Rating")
+            .map(&:content)
+      end
+
+      def all_main_heating_controls_environmental_efficiency
+        @xml_doc
+            .search("Main-Heating-Controls/Environmental-Efficiency-Rating")
+            .map(&:content)
+      end
+
+      def all_main_heating_environmental_efficiency
+        @xml_doc
+            .search("Main-Heating/Environmental-Efficiency-Rating")
+            .map(&:content)
       end
     end
   end

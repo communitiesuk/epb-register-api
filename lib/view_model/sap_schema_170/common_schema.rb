@@ -445,10 +445,6 @@ module ViewModel
         xpath(%w[SAP-Flat-Details Level])
       end
 
-      def all_main_heating_energy_efficiency
-        @xml_doc.search("Main-Heating/Energy-Efficiency-Rating").map(&:content)
-      end
-
       def extensions_count
         nil
       end
@@ -479,6 +475,10 @@ module ViewModel
         @xml_doc
           .search("Property-Summary/Floor/Environmental-Efficiency-Rating")
           .map(&:content)
+      end
+
+      def all_main_heating_energy_efficiency
+        @xml_doc.search("Main-Heating/Energy-Efficiency-Rating").map(&:content)
       end
 
       def all_main_heating_controls_energy_efficiency

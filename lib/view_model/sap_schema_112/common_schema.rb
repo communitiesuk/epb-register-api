@@ -380,10 +380,6 @@ module ViewModel
         Helper::XmlEnumsToOutput.xml_value_to_string(built_form_value)
       end
 
-      def unheated_corridor_length
-        xpath(%w[Unheated-Corridor-Length])
-      end
-
       def heat_loss_corridor
         xpath(%w[Heat-Loss-Corridor])
       end
@@ -398,10 +394,6 @@ module ViewModel
 
       def all_main_heating_descriptions
         @xml_doc.search("Main-Heating/Description").map(&:content)
-      end
-
-      def extensions_count
-        xpath(%w[Extensions-Count])
       end
 
       def all_main_heating_controls_descriptions
@@ -440,10 +432,6 @@ module ViewModel
         xpath(%w[Electricity-Tariff])
       end
 
-      def all_main_heating_energy_efficiency
-        @xml_doc.search("Main-Heating/Energy-Efficiency-Rating").map(&:content)
-      end
-
       def extensions_count
         xpath(%w[Extensions-Count])
       end
@@ -453,6 +441,56 @@ module ViewModel
       end
 
       def mechanical_ventilation
+        nil
+      end
+
+      def floor_level
+        xpath(%w[SAP-Flat-Details Level])
+      end
+
+      def floor_height
+        @xml_doc.search("Storey-Height").map(&:content)
+      end
+
+      def all_floor_descriptions
+        @xml_doc.search("Property-Summary/Floor/Description").map(&:content)
+      end
+
+      def all_floor_energy_efficiency_rating
+        @xml_doc
+            .search("Property-Summary/Floor/Energy-Efficiency-Rating")
+            .map(&:content)
+      end
+
+      def all_floor_env_energy_efficiency_rating
+        @xml_doc
+            .search("Property-Summary/Floor/Environmental-Efficiency-Rating")
+            .map(&:content)
+      end
+
+      def all_main_heating_energy_efficiency
+        @xml_doc.search("Main-Heating/Energy-Efficiency-Rating").map(&:content)
+      end
+
+      def all_main_heating_controls_energy_efficiency
+        @xml_doc
+            .search("Main-Heating-Controls/Energy-Efficiency-Rating")
+            .map(&:content)
+      end
+
+      def all_main_heating_controls_environmental_efficiency
+        @xml_doc
+            .search("Main-Heating-Controls/Environmental-Efficiency-Rating")
+            .map(&:content)
+      end
+
+      def all_main_heating_environmental_efficiency
+        @xml_doc
+            .search("Main-Heating/Environmental-Efficiency-Rating")
+            .map(&:content)
+      end
+
+      def transaction_type
         nil
       end
     end
