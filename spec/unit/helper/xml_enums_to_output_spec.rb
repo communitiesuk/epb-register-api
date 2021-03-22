@@ -297,9 +297,7 @@ describe Helper::XmlEnumsToOutput do
       expect(Helper::XmlEnumsToOutput.transaction_type("12", "RdSAP")).to eq(
         "RHI application",
       )
-      expect(Helper::XmlEnumsToOutput.transaction_type("13")).to eq(
-                                                                              "13",
-                                                                              )
+      expect(Helper::XmlEnumsToOutput.transaction_type("13")).to eq("13")
     end
   end
 
