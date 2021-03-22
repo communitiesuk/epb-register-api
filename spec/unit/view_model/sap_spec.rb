@@ -1554,6 +1554,80 @@ describe ViewModel::SapWrapper do
             multi_glaze_proportion: nil,
           },
         },
+        {
+          schema: "SAP-Schema-NI-16.1",
+          type: "sap",
+          different_fields: {
+            tenure: nil,
+            environment_impact_potential: "93",
+            report_type: "3",
+            extension_count: nil,
+            multi_glaze_proportion: nil,
+            mainheat_description: "Gas boiler",
+          },
+        },
+        {
+          schema: "SAP-Schema-NI-16.0",
+          type: "sap",
+          different_fields: {
+            tenure: nil,
+            environment_impact_potential: "93",
+            report_type: "3",
+            extension_count: nil,
+            multi_glaze_proportion: nil,
+            mainheat_description: "Gas boiler",
+          },
+        },
+        {
+          schema: "SAP-Schema-NI-15.0",
+          type: "sap",
+          different_fields: {
+            tenure: nil,
+            environment_impact_potential: "93",
+            report_type: "3",
+            extension_count: nil,
+            multi_glaze_proportion: nil,
+            mainheat_description: "Gas boiler",
+          },
+        },
+        {
+          schema: "SAP-Schema-NI-14.2",
+          type: "sap",
+          different_fields: {
+            tenure: nil,
+            environment_impact_potential: "93",
+            report_type: "3",
+            extension_count: nil,
+            multi_glaze_proportion: nil,
+            mainheat_description: "Gas boiler",
+          },
+        },
+        {
+          schema: "SAP-Schema-NI-14.1",
+          type: "sap",
+          different_fields: {
+            tenure: nil,
+            environment_impact_potential: "93",
+            report_type: "3",
+            extension_count: nil,
+            multi_glaze_proportion: nil,
+            mainheat_description: "Gas boiler",
+            number_open_fireplaces: nil,
+          },
+        },
+        {
+          schema: "SAP-Schema-NI-14.0",
+          type: "sap",
+          different_fields: {
+            tenure: nil,
+            environment_impact_potential: "93",
+            report_type: "3",
+            extension_count: nil,
+            multi_glaze_proportion: nil,
+            mainheat_description: "Gas boiler",
+            number_open_fireplaces: nil,
+          },
+        },
       ]
     end
 

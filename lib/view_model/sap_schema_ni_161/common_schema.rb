@@ -448,6 +448,44 @@ module ViewModel
         end
         nil
       end
+
+      def all_main_heating_environmental_efficiency
+        @xml_doc
+          .search("Main-Heating/Environmental-Efficiency-Rating")
+          .map(&:content)
+      end
+
+      def floor_height
+        @xml_doc.search("Storey-Height").map(&:content)
+      end
+
+      def all_floor_descriptions
+        @xml_doc.search("Property-Summary/Floor/Description").map(&:content)
+      end
+
+      def all_floor_energy_efficiency_rating
+        @xml_doc
+          .search("Property-Summary/Floor/Energy-Efficiency-Rating")
+          .map(&:content)
+      end
+
+      def all_floor_env_energy_efficiency_rating
+        @xml_doc
+          .search("Property-Summary/Floor/Environmental-Efficiency-Rating")
+          .map(&:content)
+      end
+
+      def all_main_heating_controls_energy_efficiency
+        @xml_doc
+          .search("Main-Heating-Controls/Energy-Efficiency-Rating")
+          .map(&:content)
+      end
+
+      def all_main_heating_controls_environmental_efficiency
+        @xml_doc
+          .search("Main-Heating-Controls/Environmental-Efficiency-Rating")
+          .map(&:content)
+      end
     end
   end
 end
