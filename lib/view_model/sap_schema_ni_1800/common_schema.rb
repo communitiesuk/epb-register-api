@@ -562,7 +562,7 @@ module ViewModel
             return(
               sap_building_part.at_xpath(
                 "Construction-Age-Band | Construction-Year",
-                )&.content
+              )&.content
             )
           end
         end
