@@ -481,7 +481,7 @@ describe Helper::XmlEnumsToOutput do
           "Any other value",
           "RdSAP-Schema-20.0.0",
         ),
-      ).to be_nil
+      ).to eq("Any other value")
     end
     it "and the value is in the lookup, it returns the expected string" do
       expect(

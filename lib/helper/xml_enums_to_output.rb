@@ -376,7 +376,7 @@ module Helper
         return MECHANICAL_VENTILATION["#{value}-pre12.0"]
       end
 
-      MECHANICAL_VENTILATION[value]
+      MECHANICAL_VENTILATION[value] || value
     end
 
     def self.cepc_transaction_type(value)
