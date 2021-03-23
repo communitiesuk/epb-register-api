@@ -48,7 +48,7 @@ describe ViewModel::DecWrapper do
           type: "dec-ni",
           different_fields: {
             date_of_expiry: "2020-12-31",
-            schema_type: "CEPC-7.0"
+            schema_type: "CEPC-7.0",
           },
           different_buried_fields: {
             address: {
@@ -62,7 +62,7 @@ describe ViewModel::DecWrapper do
           type: "dec-ni",
           different_fields: {
             date_of_expiry: "2020-12-31",
-            schema_type: "CEPC-6.0"
+            schema_type: "CEPC-6.0",
           },
           different_buried_fields: {
             address: {
@@ -76,7 +76,7 @@ describe ViewModel::DecWrapper do
           type: "dec-ni",
           different_fields: {
             date_of_expiry: "2020-12-31",
-            schema_type: "CEPC-5.1"
+            schema_type: "CEPC-5.1",
           },
           different_buried_fields: {
             address: {
@@ -90,7 +90,7 @@ describe ViewModel::DecWrapper do
           type: "dec-ni",
           different_fields: {
             date_of_expiry: "2020-12-31",
-            schema_type: "CEPC-5.0"
+            schema_type: "CEPC-5.0",
           },
           different_buried_fields: {
             address: {
@@ -104,7 +104,7 @@ describe ViewModel::DecWrapper do
           type: "dec-ni",
           different_fields: {
             date_of_expiry: "2020-12-31",
-            schema_type: "CEPC-4.0"
+            schema_type: "CEPC-4.0",
           },
           different_buried_fields: {
             address: {
@@ -118,7 +118,7 @@ describe ViewModel::DecWrapper do
           type: "dec-ni",
           different_fields: {
             date_of_expiry: "2020-12-31",
-            schema_type: "CEPC-3.1"
+            schema_type: "CEPC-3.1",
           },
           different_buried_fields: {
             address: {
@@ -235,7 +235,6 @@ describe ViewModel::DecWrapper do
           type: "dec",
           different_fields: {
             date_of_expiry: "2020-12-31",
-
             postcode: "BT0 0AA",
             building_reference_number: "UPRN-000000000001",
             estimated_aircon_kw_rating: nil,

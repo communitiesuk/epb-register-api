@@ -4,7 +4,7 @@ module UseCase
     end
     class AssessmentGone < StandardError
     end
-    class AssessmentNotDec < StandardError
+    class AssessmentNotDec < StandardErrorgit
     end
 
     def initialize
