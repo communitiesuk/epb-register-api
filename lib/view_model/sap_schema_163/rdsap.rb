@@ -36,6 +36,10 @@ module ViewModel
       def all_wall_env_energy_efficiency_rating
         @xml_doc.search("Wall/Environmental-Efficiency-Rating").map(&:content)
       end
+
+      def glazed_area
+        xpath(%w[Glazed-Area])
+      end
     end
   end
 end

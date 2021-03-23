@@ -1321,6 +1321,7 @@ describe ViewModel::SapWrapper do
             extension_count: "1",
             mechanical_ventilation: "natural",
             floor_height: nil,
+            glazed_area: "Normal",
           },
         },
         {
@@ -1354,6 +1355,7 @@ describe ViewModel::SapWrapper do
             extension_count: "1",
             mechanical_ventilation: "natural",
             floor_height: nil,
+            glazed_area: "Normal",
           },
         },
         {
@@ -1387,6 +1389,7 @@ describe ViewModel::SapWrapper do
             extension_count: "1",
             mechanical_ventilation: "natural",
             floor_height: nil,
+            glazed_area: "Normal",
           },
         },
         {
@@ -1421,6 +1424,7 @@ describe ViewModel::SapWrapper do
             mechanical_ventilation: "natural",
             floor_height: nil,
             tenure: nil,
+            glazed_area: "Normal",
           },
         },
         {
@@ -1455,6 +1459,7 @@ describe ViewModel::SapWrapper do
             mechanical_ventilation: "natural",
             floor_height: nil,
             tenure: nil,
+            glazed_area: "Normal",
           },
         },
         {
@@ -1493,6 +1498,7 @@ describe ViewModel::SapWrapper do
             mainheat_description: "Gas boiler",
             extension_count: "0",
             main_fuel: "Solid fuel: dual fuel appliance (mineral and wood)",
+            glazed_area: "Normal",
           },
         },
         {
@@ -1536,6 +1542,7 @@ describe ViewModel::SapWrapper do
             mainheat_description: "Gas boiler",
             extension_count: "0",
             main_fuel: "Solid fuel: dual fuel appliance (mineral and wood)",
+            glazed_area: "Normal",
           },
         },
         {

@@ -435,7 +435,7 @@ module ViewModel
         flat_top_storey: @view_model.top_storey,
         flat_storey_count: @view_model.storey_count,
         multi_glaze_proportion: @view_model.multiple_glazed_proportion,
-        glazed_area: @view_model.glazed_area,
+        glazed_area: Helper::XmlEnumsToOutput.glazed_area_rdsap(@view_model.glazed_area),
         number_habitable_rooms: @view_model.habitable_room_count,
         number_heated_rooms: @view_model.heated_room_count,
         low_energy_lighting: @view_model.low_energy_lighting,
