@@ -231,7 +231,8 @@ def update_address_from_csv_row(csv_row, counter)
           "INNER JOIN assessments a USING (assessment_id) " \
           "WHERE a.address_id = '#{lprn}' " \
           "AND aai.source != 'epb_team_update' " \
-          "AND aai.address_id NOT LIKE 'UPRN-%'",
+          "AND aai.address_id NOT LIKE 'UPRN-%' " \
+          "AND aai.address_id != '#{new_address_id}'",
       )
 
       db.exec_query(
@@ -241,7 +242,8 @@ def update_address_from_csv_row(csv_row, counter)
             "INNER JOIN assessments_address_id aai USING (assessment_id) " \
             "WHERE a.address_id = '#{lprn}' " \
             "AND aai.source != 'epb_team_update' " \
-            "AND aai.address_id NOT LIKE 'UPRN-%')",
+            "AND aai.address_id NOT LIKE 'UPRN-%' " \
+            "AND aai.address_id != '#{new_address_id}')",
       )
     end
   else
