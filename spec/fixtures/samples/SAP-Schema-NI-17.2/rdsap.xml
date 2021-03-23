@@ -234,10 +234,8 @@
           <HIP:Percent-Draughtproofed>100</HIP:Percent-Draughtproofed>
           <HIP:Habitable-Room-Count>5</HIP:Habitable-Room-Count>
           <HIP:Heated-Room-Count>5</HIP:Heated-Room-Count>
-          <HIP:Fixed-Lighting-Outlets-Count>11
-          </HIP:Fixed-Lighting-Outlets-Count>
-          <HIP:Low-Energy-Fixed-Lighting-Outlets-Count>9
-          </HIP:Low-Energy-Fixed-Lighting-Outlets-Count>
+          <HIP:Fixed-Lighting-Outlets-Count>11</HIP:Fixed-Lighting-Outlets-Count>
+          <HIP:Low-Energy-Fixed-Lighting-Outlets-Count>9</HIP:Low-Energy-Fixed-Lighting-Outlets-Count>
           <HIP:Low-Energy-Lighting>82</HIP:Low-Energy-Lighting>
           <HIP:Measurement-Type>1</HIP:Measurement-Type>
           <HIP:Mechanical-Ventilation>0</HIP:Mechanical-Ventilation>

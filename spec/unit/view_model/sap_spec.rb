@@ -1704,6 +1704,28 @@ describe ViewModel::SapWrapper do
           },
         },
         {
+          schema: "SAP-Schema-NI-17.2",
+          type: "rdsap",
+          different_fields: {
+            construction_age_band: "England and Wales: before 1900",
+            transaction_type: "not sale or rental",
+            environment_impact_potential: "70",
+            co2_emiss_curr_per_floor_area: "56",
+            multi_glaze_proportion: "100",
+            low_energy_lighting: nil,
+            fixed_lighting_outlets_count: "11",
+            low_energy_fixed_lighting_outlets_count: "9",
+            number_open_fireplaces: "2",
+            windows_description: nil,
+            built_form: "End-Terrace",
+            report_type: "2",
+            energy_tariff: nil,
+            floor_level: nil,
+            floor_height: nil,
+            extension_count: "1",
+          },
+        },
+        {
           schema: "SAP-Schema-NI-17.1",
           type: "sap",
           different_fields: {
