@@ -29,6 +29,10 @@ module ViewModel
         end
         nil
       end
+
+      def glazed_area
+        xpath(%w[Glazed-Area])
+      end
     end
   end
 end

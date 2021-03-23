@@ -1666,6 +1666,7 @@ describe ViewModel::SapWrapper do
             mechanical_ventilation: "natural",
             floor_height: nil,
             main_fuel: "Solid fuel: dual fuel appliance (mineral and wood)",
+            glazed_area: "Normal",
           },
         },
         {

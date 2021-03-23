@@ -8,6 +8,10 @@ module ViewModel
       def mechanical_ventilation
         xpath(%w[Mechanical-Ventilation])
       end
+
+      def glazed_area
+        xpath(%w[Glazed-Area])
+      end
     end
   end
 end
