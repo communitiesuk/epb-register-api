@@ -9,6 +9,10 @@ module ViewModel
         xpath(%w[Construction-Age-Band])
       end
 
+      def window_description
+        xpath(%w[Window Description])
+      end
+
       def window_energy_efficiency_rating
         xpath(%w[Window Energy-Efficiency-Rating])
       end
