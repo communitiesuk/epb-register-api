@@ -20,6 +20,8 @@ module Controller
         )
       when UseCase::FetchDecSummary::AssessmentNotDec
         error_response(403, "NOT_A_DEC", "Assessment is not a DEC")
+      when ViewModel::DecSummaryWrapper::AssessmentNotSupported
+        error_response(400, "INVALID_REQUEST", "Unsupported schema type")
       else
         server_error(e)
       end

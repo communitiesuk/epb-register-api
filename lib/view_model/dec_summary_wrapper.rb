@@ -1,5 +1,7 @@
 module ViewModel
   class DecSummaryWrapper
+    class AssessmentNotSupported < StandardError
+    end
     TYPE_OF_ASSESSMENT = "DEC".freeze
 
     def initialize(xml, schema_type)
@@ -17,7 +19,7 @@ module ViewModel
       when "CEPC-6.0"
         @view_model = ViewModel::Cepc60::Dec.new xml
       else
-        raise ArgumentError, "Unsupported schema type"
+        raise AssessmentNotSupported
       end
     end
 

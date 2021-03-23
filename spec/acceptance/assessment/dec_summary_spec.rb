@@ -17,6 +17,7 @@ describe "Acceptance::DECSummary" do
   end
 
   let(:valid_dec_xml) { Samples.xml "CEPC-8.0.0", "dec" }
+  let(:unsupported_dec_xml) { Samples.xml "CEPC-5.0", "dec" }
   let(:valid_cepc_xml) { Samples.xml "CEPC-8.0.0", "cepc" }
 
   context "when getting a DEC" do
@@ -180,6 +181,27 @@ describe "Acceptance::DECSummary" do
         )
 
       expect(response[:errors][0][:title]).to eq("Assessment not for issue")
+    end
+  end
+
+  context "when the assessment is an unsupported schema" do
+    it "returns error 400, assessment is unsupported" do
+      lodge_assessment(
+        assessment_body: unsupported_dec_xml,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        schema_name: "CEPC-5.0",
+      )
+
+      response =
+        JSON.parse(
+          fetch_dec_summary("0000-0000-0000-0000-0000", [400]).body,
+          symbolize_names: true,
+        )
+
+      expect(response[:errors][0][:title]).to eq("Unsupported schema type")
     end
   end
 end
