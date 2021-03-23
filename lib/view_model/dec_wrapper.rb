@@ -49,7 +49,7 @@ module ViewModel
           postcode: @view_model.postcode,
         },
         type_of_assessment: "DEC",
-        schema_type: @schema_type,
+        schema_version: @schema_type.gsub(/[a-zA-Z-]/, "").to_f,
         report_type: @view_model.report_type,
         current_assessment: {
           date: @view_model.current_assessment_date,

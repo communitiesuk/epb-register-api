@@ -21,7 +21,7 @@ describe ViewModel::DecWrapper do
           type: "dec",
           different_fields: {
             date_of_expiry: "2020-12-31",
-            schema_type: "CEPC-NI-8.0.0",
+            schema_version: 8.0,
           },
           different_buried_fields: {
             address: {
@@ -34,7 +34,7 @@ describe ViewModel::DecWrapper do
           type: "dec-ni",
           different_fields: {
             date_of_expiry: "2020-12-31",
-            schema_type: "CEPC-7.1",
+            schema_version: 7.1,
           },
           different_buried_fields: {
             address: {
@@ -48,7 +48,7 @@ describe ViewModel::DecWrapper do
           type: "dec-ni",
           different_fields: {
             date_of_expiry: "2020-12-31",
-            schema_type: "CEPC-7.0",
+            schema_version: 7.0,
           },
           different_buried_fields: {
             address: {
@@ -62,7 +62,7 @@ describe ViewModel::DecWrapper do
           type: "dec-ni",
           different_fields: {
             date_of_expiry: "2020-12-31",
-            schema_type: "CEPC-6.0",
+            schema_version: 6.0,
           },
           different_buried_fields: {
             address: {
@@ -76,7 +76,7 @@ describe ViewModel::DecWrapper do
           type: "dec-ni",
           different_fields: {
             date_of_expiry: "2020-12-31",
-            schema_type: "CEPC-5.1",
+            schema_version: 5.1,
           },
           different_buried_fields: {
             address: {
@@ -90,7 +90,7 @@ describe ViewModel::DecWrapper do
           type: "dec-ni",
           different_fields: {
             date_of_expiry: "2020-12-31",
-            schema_type: "CEPC-5.0",
+            schema_version: 5.0,
           },
           different_buried_fields: {
             address: {
@@ -104,7 +104,7 @@ describe ViewModel::DecWrapper do
           type: "dec-ni",
           different_fields: {
             date_of_expiry: "2020-12-31",
-            schema_type: "CEPC-4.0",
+            schema_version: 4.0,
           },
           different_buried_fields: {
             address: {
@@ -118,7 +118,7 @@ describe ViewModel::DecWrapper do
           type: "dec-ni",
           different_fields: {
             date_of_expiry: "2020-12-31",
-            schema_type: "CEPC-3.1",
+            schema_version: 3.1,
           },
           different_buried_fields: {
             address: {
@@ -133,7 +133,7 @@ describe ViewModel::DecWrapper do
     let(:assertion) do
       {
         assessment_id: "0000-0000-0000-0000-0000",
-        schema_type: "CEPC-8.0.0",
+        schema_version: 8.0,
         date_of_expiry: "2029-12-31",
         date_of_registration: "2020-05-04",
         address: {
