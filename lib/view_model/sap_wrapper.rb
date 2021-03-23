@@ -369,7 +369,8 @@ module ViewModel
         heat_loss_corridor: @view_model.heat_loss_corridor,
         wind_turbine_count: @view_model.wind_turbine_count,
         unheated_corridor_length: @view_model.unheated_corridor_length,
-        built_form: @view_model.built_form,
+        built_form:
+            Helper::XmlEnumsToOutput.xml_value_to_string(@view_model.built_form),
         mainheat_description:
           @view_model.all_main_heating_descriptions.join(", "),
         extensions_count:
