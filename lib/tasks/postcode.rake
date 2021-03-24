@@ -1,35 +1,200 @@
 require "csv"
 require "net/http"
+require "aws-sdk-s3"
 require "geocoder"
 
 desc "Import postcode geolocation data"
 
+task :import_postcode_cleanup do
+  db = ActiveRecord::Base.connection
+
+  db.drop_table :postcode_geolocation_tmp, if_exists: true
+  db.drop_table :postcode_geolocation_legacy, if_exists: true
+  puts "[#{Time.now}] Dropped postcode_geolocation_tmp / postcode_geolocation_legacy tables"
+
+  db.drop_table :postcode_outcode_geolocations_tmp, if_exists: true
+  db.drop_table :postcode_outcode_geolocations_legacy, if_exists: true
+  puts "[#{Time.now}] Dropped postcode_outcode_geolocations_tmp / postcode_outcode_geolocations_legacy tables"
+end
+
 task :import_postcode do
-  internal_url = ENV["url"]
+  check_task_requirements
+  file_name = ENV["file_name"]
+  zipped = file_name.end_with?("zip")
+  file_io = retrieve_file_on_s3(file_name)
 
-  puts "Reading postcodes file from: #{internal_url}"
+  if zipped
+    Zip::InputStream.open(file_io) do |csv_io|
+      while (entry = csv_io.get_next_entry)
+        next unless entry.size.positive?
 
-  uri = URI(internal_url)
+        puts "[#{Time.now}] #{entry.name} was unzipped with a size of #{entry.size} bytes"
+        postcode_csv = CSV.new(csv_io, headers: true)
+        process_postcode_csv(postcode_csv)
+      end
+    end
+  else
+    puts "[#{Time.now}] Reading postcodes CSV file: #{ENV["file_name"]}"
+    postcode_csv = CSV.new(file_io, headers: true)
+    process_postcode_csv(postcode_csv)
+  end
+end
 
-  postcodes_csv = Net::HTTP.start(
-    uri.host,
-    uri.port,
-    use_ssl: uri.scheme == "https",
-    verify_mode: OpenSSL::SSL::VERIFY_NONE,
-  ) do |http|
-    request = Net::HTTP::Get.new uri.request_uri
-    request.basic_auth ENV["username"], ENV["password"]
+def check_task_requirements
+  if ENV["bucket_name"].nil? && ENV["instance_name"].nil?
+    abort("Please set the bucket_name or instance_name environment variable")
+  end
+  if ENV["file_name"].nil?
+    abort("Please set the file_name environment variable")
+  end
+end
 
-    http.request request
+def retrieve_file_on_s3(file_name)
+  storage_config_reader = Gateway::StorageConfigurationReader.new(
+    bucket_name: ENV["bucket_name"],
+    instance_name: ENV["instance_name"],
+  )
+  storage_gateway = Gateway::StorageGateway.new(storage_config: storage_config_reader.get_configuration)
+
+  puts "[#{Time.now}] Retrieving from S3 file: #{file_name}"
+  storage_gateway.get_file_io(file_name)
+end
+
+def process_postcode_csv(postcode_csv, buffer_size = 10000)
+  create_postcode_table
+
+  postcode_geolocation_buffer = []
+  outcodes = {}
+
+  row_number = 1
+  while (row = postcode_csv.shift)
+    postcode = row["pcd"]
+    lat = row["lat"]
+    long = row["long"]
+    region = get_region_codes[row["eer"].to_sym]
+
+    # Only considers England, NI and Wales
+    next if region.nil?
+
+    postcode = postcode.insert(-4, " ") if postcode[-4] != " "
+    new_outcode = postcode.split(" ")[0]
+
+    db = ActiveRecord::Base.connection
+    postcode_geolocation_buffer << [db.quote(postcode), lat, long, db.quote(region)].join(", ")
+    add_outcode(outcodes, new_outcode, lat, long, region)
+
+    if row_number % buffer_size == 0
+      insert_postcode_batch(postcode_geolocation_buffer)
+      postcode_geolocation_buffer.clear
+    end
+
+    row_number += 1
   end
 
-  puts "CSV table fetched"
+  # Insert and clear remaining postcode buffer
+  unless postcode_geolocation_buffer.empty?
+    insert_postcode_batch(postcode_geolocation_buffer)
+    postcode_geolocation_buffer.clear
+  end
 
-  postcode_table = CSV.parse(postcodes_csv.body, headers: true)
+  puts "[#{Time.now}] Inserted #{row_number} postcodes"
 
-  puts "CSV table parsed"
+  create_outcode_table
+  unless outcodes.empty?
+    insert_outcodes(outcodes)
+    puts "[#{Time.now}] Inserted #{outcodes.length} outcodes"
+  end
 
-  region_codes = {
+  switch_postcode_table
+  switch_outcode_table
+
+  puts "[#{Time.now}] Postcode import completed"
+end
+
+def create_postcode_table
+  db = ActiveRecord::Base.connection
+
+  unless db.table_exists?(:postcode_geolocation_tmp)
+    db.create_table :postcode_geolocation_tmp, primary_key: :postcode, id: :string, force: :cascade do |t|
+      t.decimal :latitude
+      t.decimal :longitude
+      t.string :region
+    end
+    puts "[#{Time.now}] Created empty postcode_geolocation_tmp table"
+  end
+end
+
+def create_outcode_table
+  db = ActiveRecord::Base.connection
+
+  unless db.table_exists?(:postcode_outcode_geolocations_tmp)
+    db.create_table :postcode_outcode_geolocations_tmp, primary_key: :outcode, id: :string, force: :cascade do |t|
+      t.decimal :latitude
+      t.decimal :longitude
+      t.string :region
+    end
+    puts "[#{Time.now}] Created empty postcode_outcode_geolocations_tmp table"
+  end
+end
+
+def insert_postcode_batch(postcode_buffer)
+  db = ActiveRecord::Base.connection
+
+  batch = postcode_buffer.join("), (")
+  db.exec_query("INSERT INTO postcode_geolocation_tmp (postcode, latitude, longitude, region) VALUES(" + batch + ")")
+end
+
+def add_outcode(outcodes, new_outcode, lat, long, region)
+  unless outcodes.key?(new_outcode)
+    outcodes[new_outcode] = {
+      latitude: [],
+      longitude: [],
+      region: [],
+    }
+  end
+
+  outcodes[new_outcode][:latitude].push(lat.to_f)
+  outcodes[new_outcode][:longitude].push(long.to_f)
+  outcodes[new_outcode][:region].push(region)
+end
+
+def switch_postcode_table
+  db = ActiveRecord::Base.connection
+
+  db.rename_table :postcode_geolocation, :postcode_geolocation_legacy
+  puts "[#{Time.now}] Renamed table postcode_geolocation to postcode_geolocation_legacy"
+
+  db.rename_table :postcode_geolocation_tmp, :postcode_geolocation
+  puts "[#{Time.now}] Renamed table postcode_geolocation_tmp to postcode_geolocation"
+end
+
+def switch_outcode_table
+  db = ActiveRecord::Base.connection
+
+  db.rename_table :postcode_outcode_geolocations, :postcode_outcode_geolocations_legacy
+  puts "[#{Time.now}] Renamed table postcode_outcode_geolocations to postcode_outcode_geolocations_legacy"
+
+  db.rename_table :postcode_outcode_geolocations_tmp, :postcode_outcode_geolocations
+  puts "[#{Time.now}] Renamed table postcode_outcode_geolocations_tmp to postcode_outcode_geolocations"
+end
+
+def insert_outcodes(outcodes)
+  db = ActiveRecord::Base.connection
+
+  batch = outcodes.map do |outcode, data|
+    [
+      db.quote(outcode),
+      (data[:latitude].reduce(:+) / data[:latitude].size.to_f),
+      (data[:longitude].reduce(:+) / data[:longitude].size.to_f),
+      db.quote(data[:region].max_by { |i| data[:region].count(i) }),
+    ].join(", ")
+  end
+
+  db.exec_query("INSERT INTO postcode_outcode_geolocations_tmp (outcode, latitude, longitude, region) VALUES(" + batch.join("), (") + ")")
+end
+
+def get_region_codes
+  {
     E15000001: "North East",
     E15000002: "North West",
     E15000003: "Yorkshire and The Humber",
@@ -42,101 +207,4 @@ task :import_postcode do
     N07000001: "Northern Ireland",
     W08000001: "Wales",
   }
-
-  db = ActiveRecord::Base.connection
-
-  ActiveRecord::Base.logger = nil
-
-  db.execute("DROP TABLE IF EXISTS postcode_geolocation_tmp")
-  puts "If present update postcode table dropped"
-
-  db.create_table :postcode_geolocation_tmp, force: :cascade do |t|
-    t.string :postcode
-    t.decimal :latitude
-    t.decimal :longitude
-    t.string :region
-  end
-
-  puts "New update postcode table created, number of postcodes in total: #{postcode_table.size}"
-
-  results = []
-  outcodes = {}
-
-  postcode_table.each do |row|
-    postcode = row["pcd"]
-    lat = row["lat"]
-    long = row["long"]
-    region = region_codes[row["eer"].to_sym]
-
-    postcode = postcode.insert(-4, " ") if postcode[-4] != " "
-
-    next if region.nil?
-
-    outcode = postcode.split(" ")[0]
-
-    unless outcodes.key?(outcode)
-      outcodes[outcode] = {
-        latitude: [],
-        longitude: [],
-        region: [],
-      }
-    end
-
-    outcodes[outcode][:latitude].push(lat.to_f)
-    outcodes[outcode][:longitude].push(long.to_f)
-    outcodes[outcode][:region].push(region)
-
-    results << [db.quote(postcode), lat, long, db.quote(region)].join(", ")
-  end
-
-  puts "Results formatted, number of results #{results.count}"
-
-  results.each_slice(50_000) do |batch|
-    batch = batch.join("), (")
-
-    db.execute("INSERT INTO postcode_geolocation_tmp (postcode, latitude, longitude, region) VALUES(" + batch + ")")
-  end
-
-  number_of_rows = db.execute("SELECT COUNT(id) AS count FROM postcode_geolocation_tmp").first["count"]
-
-  puts "Results batched and added to new table, number of results in table #{number_of_rows}"
-
-  if number_of_rows == ENV["expected_number_of_rows"].to_i
-    puts "expected numbers have been met"
-    # Rename the old postcode table
-    db.rename_table :postcode_geolocation, :postcode_geolocation_legacy
-    puts "Previous postcode table renamed"
-    # Rename the temporary table to take its place
-    db.rename_table :postcode_geolocation_tmp, :postcode_geolocation
-    puts "Temporary update postcode table renamed"
-    #  Drop the old table
-    db.drop_table :postcode_geolocation_legacy
-    puts "Previous postcode table dropped"
-
-    if ENV["import_outcodes"] == "yes"
-      db.create_table :postcode_outcode_geolocations_tmp, force: :cascade do |t|
-        t.string :outcode
-        t.decimal :latitude
-        t.decimal :longitude
-        t.string :region
-      end
-
-      outcodes = outcodes.map do |outcode, data|
-        [
-          db.quote(outcode),
-          (data[:latitude].reduce(:+) / data[:latitude].size.to_f),
-          (data[:longitude].reduce(:+) / data[:longitude].size.to_f),
-          db.quote(data[:region].max_by { |i| data[:region].count(i) }),
-        ].join(", ")
-      end
-
-      db.execute("INSERT INTO postcode_outcode_geolocations_tmp (outcode, latitude, longitude, region) VALUES(" + outcodes.join("), (") + ")")
-
-      db.rename_table :postcode_outcode_geolocations, :postcode_outcode_geolocations_legacy
-      db.rename_table :postcode_outcode_geolocations_tmp, :postcode_outcode_geolocations
-      db.drop_table :postcode_outcode_geolocations_legacy
-    end
-  else
-    puts "You expected " + ENV["expected_number_of_rows"] + " rows of data, but there were #{number_of_rows} added to the temporary table. \nIf the number of rows in the temporary table is correct please update your expected_number_of_rows environment variable and rerun the rake task "
-  end
 end

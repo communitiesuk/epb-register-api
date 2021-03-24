@@ -1,7 +1,7 @@
 module Gateway
   class PostcodesGateway
     def fetch(postcode)
-      response = db_response(postcode)
+      response = db_response(postcode: postcode)
       result = []
 
       output(response, result)
@@ -10,7 +10,7 @@ module Gateway
         outcode_array = postcode.split(" ")
         outcode = outcode_array[0]
         response =
-          db_response("outcode", "postcode_outcode_geolocations", outcode)
+          db_response(code: "outcode", table: "postcode_outcode_geolocations", postcode: outcode)
 
         output(response, result, "outcode")
       end
@@ -20,8 +20,8 @@ module Gateway
 
   private
 
-    def db_response(code = "postcode", table = "postcode_geolocation", postcode)
-      ActiveRecord::Base.connection.execute(
+    def db_response(code: "postcode", table: "postcode_geolocation", postcode:)
+      ActiveRecord::Base.connection.exec_query(
         "SELECT #{code}, latitude, longitude FROM #{table} WHERE #{code} = #{
           ActiveRecord::Base.connection.quote(postcode)
         }",

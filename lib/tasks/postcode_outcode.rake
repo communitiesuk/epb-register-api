@@ -5,6 +5,7 @@ desc "Import postcode_outcode geolocation data"
 
 class PostcodeOutcodeGeolocation < ActiveRecord::Base; end
 
+# Deprecated rake task, use postcode.rake instead
 task :import_postcode_outcode do
   db = ActiveRecord::Base.connection
 
