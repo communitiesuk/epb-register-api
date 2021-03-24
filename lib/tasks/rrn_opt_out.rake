@@ -25,7 +25,7 @@ task :update_rrn_opt_out do
 
   ActiveRecord::Base.transaction do
     query = "UPDATE assessments SET opt_out = 'f' WHERE opt_out = 't'"
-    ActiveRecord::Base.connection.execute(query)
+    ActiveRecord::Base.connection.exec_query(query)
   end
 
   puts "Opt out set to false on all assessments"
@@ -39,7 +39,7 @@ task :update_rrn_opt_out do
   ActiveRecord::Base.transaction do
     query = "UPDATE assessments SET opt_out = 't' WHERE assessment_id IN(#{opt_out_rrns.map { |rrn| ActiveRecord::Base.connection.quote(rrn) }.join(', ')})"
 
-    ActiveRecord::Base.connection.execute(query)
+    ActiveRecord::Base.connection.exec_query(query)
   end
 
   puts "Opt out query is complete! :-)"

@@ -481,7 +481,7 @@ describe "Acceptance::Assessment::Lodge" do
     let(:scheme_id) { add_scheme_and_get_id }
 
     let(:migrated_column) do
-      ActiveRecord::Base.connection.execute(
+      ActiveRecord::Base.connection.exec_query(
         "SELECT migrated FROM assessments WHERE assessment_id = '0000-0000-0000-0000-0000'",
       )
     end

@@ -16,7 +16,7 @@ task :update_assessment_column do
             "b.schema_type = " + ActiveRecord::Base.connection.quote(ENV["schema_type"])
           end
 
-  number_of_assessments = ActiveRecord::Base.connection.execute("SELECT
+  number_of_assessments = ActiveRecord::Base.connection.exec_query("SELECT
       COUNT(a.assessment_id) AS number_of_assessments
     FROM
       assessments a
@@ -41,7 +41,7 @@ task :update_assessment_column do
       LIMIT " + ENV["batch"] + "
       OFFSET " + start.to_s
 
-    assessments = ActiveRecord::Base.connection.execute(sql)
+    assessments = ActiveRecord::Base.connection.exec_query(sql)
 
     puts "Done getting batch #{start} from DB at #{Time.now}"
 
@@ -67,7 +67,7 @@ task :update_assessment_column do
         if value == assessment["column_value"]
           skipped += 1
         elsif !value.nil?
-          ActiveRecord::Base.connection.execute("
+          ActiveRecord::Base.connection.exec_query("
             UPDATE
               assessments
             SET

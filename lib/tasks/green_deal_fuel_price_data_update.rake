@@ -10,7 +10,7 @@ task :green_deal_update_fuel_data do
   end
 
   ActiveRecord::Base.transaction do
-    ActiveRecord::Base.connection.execute "DELETE FROM green_deal_fuel_price_data"
+    ActiveRecord::Base.connection.exec_query "DELETE FROM green_deal_fuel_price_data"
 
     price_data.each do |row|
       sql = <<-SQL

@@ -5,7 +5,7 @@ task :truncate_assessor do
     exit
   end
 
-  ActiveRecord::Base.connection.execute("TRUNCATE TABLE assessors RESTART IDENTITY CASCADE")
+  ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE assessors RESTART IDENTITY CASCADE")
 end
 
 desc "Import some random assessors data"
@@ -15,10 +15,10 @@ task :generate_assessor do
     exit
   end
 
-  schemes = ActiveRecord::Base.connection.execute("SELECT * FROM schemes")
+  schemes = ActiveRecord::Base.connection.exec_query("SELECT * FROM schemes")
 
   schemes.each do |scheme|
-    result = ActiveRecord::Base.connection.execute("SELECT * FROM postcode_geolocation ORDER BY random() LIMIT 166")
+    result = ActiveRecord::Base.connection.exec_query("SELECT * FROM postcode_geolocation ORDER BY random() LIMIT 166")
 
     ActiveRecord::Base.logger = nil
 
@@ -182,7 +182,7 @@ task :generate_assessor do
               gda_qualification = '#{gda != 0 ? 'ACTIVE' : 'INACTIVE'}'
           "
 
-      ActiveRecord::Base.connection.execute(query)
+      ActiveRecord::Base.connection.exec_query(query)
     end
   end
 end

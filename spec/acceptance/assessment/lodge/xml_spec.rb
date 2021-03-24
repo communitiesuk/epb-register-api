@@ -19,7 +19,7 @@ describe "Acceptance::LodgeAssessment::XML" do
 
   def get_stored_xml(assessment_id)
     results =
-      ActiveRecord::Base.connection.execute(
+      ActiveRecord::Base.connection.exec_query(
         "SELECT xml FROM assessments_xml WHERE assessment_id = '" +
           ActiveRecord::Base.sanitize_sql(assessment_id) + "'",
       )

@@ -81,7 +81,7 @@ module Gateway
           assessment_id = #{ActiveRecord::Base.connection.quote(assessment_id)}
         ORDER BY b.green_deal_plan_id
       SQL
-      response = GreenDealPlan.connection.execute(sql)
+      response = GreenDealPlan.connection.exec_query(sql)
       result = []
 
       response.each do |row|
@@ -105,11 +105,11 @@ module Gateway
           ActiveRecord::Base.connection.quote(plan_id)
         }"
 
-      GreenDealPlan.connection.execute(sql)
+      GreenDealPlan.connection.exec_query(sql)
     end
 
     def validate_fuel_codes?(fuel_codes)
-      stored_codes = GreenDealPlan.connection.execute <<-SQL
+      stored_codes = GreenDealPlan.connection.exec_query <<-SQL
         SELECT fuel_code FROM green_deal_fuel_code_map
       SQL
 
@@ -134,7 +134,7 @@ module Gateway
         INNER JOIN green_deal_fuel_price_data gdfpd
             ON gdfcm.fuel_heat_source = gdfpd.fuel_heat_source
       SQL
-      fuel_pricing_data = GreenDealPlan.connection.execute(sql).entries
+      fuel_pricing_data = GreenDealPlan.connection.exec_query(sql).entries
       fuel_pricing_data = fuel_pricing_data.map(&:symbolize_keys!)
 
       fuel_savings_data = []

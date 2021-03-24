@@ -156,7 +156,7 @@ module Gateway
         sql += " AND a.type_of_assessment IN(" + ins.join(", ") + ")"
       end
 
-      response = Assessment.connection.execute(sql)
+      response = Assessment.connection.exec_query(sql)
 
       result = []
       response.each do |row|

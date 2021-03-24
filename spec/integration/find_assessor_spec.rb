@@ -3,11 +3,11 @@ describe "Integration::FilterAndOrderAssessorsByPostcode" do
 
   def truncate(postcode = nil)
     if postcode == Regexp.new(Helper::RegexHelper::POSTCODE, Regexp::IGNORECASE)
-      ActiveRecord::Base.connection.execute(
+      ActiveRecord::Base.connection.exec_query(
         "TRUNCATE TABLE postcode_geolocation",
       )
     else
-      ActiveRecord::Base.connection.execute(
+      ActiveRecord::Base.connection.exec_query(
         "TRUNCATE TABLE postcode_outcode_geolocations",
       )
     end

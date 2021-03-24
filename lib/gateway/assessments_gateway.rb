@@ -21,7 +21,7 @@ module Gateway
         " WHERE assessment_id = " +
         ActiveRecord::Base.connection.quote(assessment_id) + ""
 
-      Assessment.connection.execute(sql)
+      Assessment.connection.exec_query(sql)
     end
 
   private

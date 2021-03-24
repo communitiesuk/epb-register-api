@@ -89,7 +89,7 @@ task :seed_test_green_deal_plans do
   ]
 
   ActiveRecord::Base.transaction do
-    assessments = ActiveRecord::Base.connection.execute <<-SQL
+    assessments = ActiveRecord::Base.connection.exec_query <<-SQL
       SELECT assessment_id
       FROM assessments
       ORDER BY RANDOM()
@@ -111,7 +111,7 @@ task :seed_test_green_deal_plans do
       structure_changed = %w[Y N].sample
       measures_removed = %w[Y N].sample
 
-      ActiveRecord::Base.connection.execute "INSERT INTO
+      ActiveRecord::Base.connection.exec_query "INSERT INTO
                                               green_deal_plans
                                               (
                                                 green_deal_plan_id,
@@ -149,7 +149,7 @@ task :seed_test_green_deal_plans do
                                                 '#{savings.sample}'
                                               )"
 
-      ActiveRecord::Base.connection.execute "INSERT INTO
+      ActiveRecord::Base.connection.exec_query "INSERT INTO
                                               green_deal_assessments
                                               (
                                                 green_deal_plan_id,

@@ -3,13 +3,13 @@ require "openssl"
 desc "Truncate green deal plans data"
 
 task :truncate_green_deal_plans do
-  ActiveRecord::Base.connection.execute("TRUNCATE TABLE green_deal_plans RESTART IDENTITY CASCADE")
+  ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE green_deal_plans RESTART IDENTITY CASCADE")
 end
 
 desc "Truncate green deal assessments data"
 
 task :truncate_green_deal_assessments do
-  ActiveRecord::Base.connection.execute("TRUNCATE TABLE green_deal_assessments RESTART IDENTITY CASCADE")
+  ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE green_deal_assessments RESTART IDENTITY CASCADE")
 end
 
 desc "Import green deal plans data"
@@ -79,7 +79,7 @@ task :import_green_deal_plans do
         FROM assessments
         WHERE
           assessment_id = '#{ActiveRecord::Base.sanitize_sql(assessment_id)}'"
-        ActiveRecord::Base.connection.execute(checker_query).each do
+        ActiveRecord::Base.connection.exec_query(checker_query).each do
           has_some_assessments = true
         end
       end
@@ -126,7 +126,7 @@ task :import_green_deal_plans do
                 '#{ActiveRecord::Base.sanitize_sql(savings[row['PLAN_ID']].to_json)}'
               )"
 
-      ActiveRecord::Base.connection.execute(query)
+      ActiveRecord::Base.connection.exec_query(query)
 
       assessment_ids[row["PLAN_KEY"]].each do |assessment_id|
         has_own_assessment = false
@@ -136,7 +136,7 @@ task :import_green_deal_plans do
         FROM assessments
         WHERE
           assessment_id = '#{ActiveRecord::Base.sanitize_sql(assessment_id)}'"
-        ActiveRecord::Base.connection.execute(checker_query).each do
+        ActiveRecord::Base.connection.exec_query(checker_query).each do
           has_own_assessment = true
         end
 
@@ -152,7 +152,7 @@ task :import_green_deal_plans do
                   '#{ActiveRecord::Base.sanitize_sql(row['PLAN_ID'])}',
                   '#{ActiveRecord::Base.sanitize_sql(assessment_id)}'
               )"
-        ActiveRecord::Base.connection.execute(green_deal_assessments_query)
+        ActiveRecord::Base.connection.exec_query(green_deal_assessments_query)
       end
     end
   end

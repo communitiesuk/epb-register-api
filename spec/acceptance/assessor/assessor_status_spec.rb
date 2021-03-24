@@ -69,7 +69,7 @@ describe "Acceptance::AssessorStatus" do
     create_assessor(domesticRdSap: "INACTIVE")
 
     result =
-      ActiveRecord::Base.connection.execute(
+      ActiveRecord::Base.connection.exec_query(
         "SELECT auth_client_id FROM assessors_status_events",
       )
 

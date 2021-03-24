@@ -218,7 +218,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference" do
     end
 
     before(:each) do
-      ActiveRecord::Base.connection.execute(
+      ActiveRecord::Base.connection.exec_query(
         "INSERT INTO address_base (uprn, address_line1, postcode, town) VALUES ('1', '1 Some Street', 'A0 0AA', 'Whitbury')",
       )
       add_assessor(scheme_id, "SPEC000000", VALID_ASSESSOR_REQUEST_BODY)

@@ -49,6 +49,6 @@ class GreenDealPlansGatewayStub
                   'ABC123456DEF',
                   '#{assessment_id}'
               )"
-    ActiveRecord::Base.connection.execute(sql)
+    ActiveRecord::Base.connection.exec_query(sql)
   end
 end

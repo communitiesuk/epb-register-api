@@ -134,7 +134,7 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan" do
 
       context "with a Green Deal Plan" do
         let(:green_deal_plan_id_column) do
-          ActiveRecord::Base.connection.execute <<-SQL
+          ActiveRecord::Base.connection.exec_query <<-SQL
             SELECT green_deal_plan_id
             FROM green_deal_assessments
             WHERE assessment_id = '0000-0000-0000-0000-0000'

@@ -10,7 +10,7 @@ describe "Acceptance::AddressSearch::ByPostcode" do
     let(:cepc_assessment_id) { non_domestic_xml.at("//CEPC:RRN") }
 
     before(:each) do
-      ActiveRecord::Base.connection.execute(
+      ActiveRecord::Base.connection.exec_query(
         "INSERT INTO
               address_base
                 (

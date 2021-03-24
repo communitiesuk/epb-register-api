@@ -40,7 +40,7 @@ module Gateway
         ORDER BY date_of_expiry DESC, assessment_id DESC
       SQL
 
-      results = ActiveRecord::Base.connection.execute(sql)
+      results = ActiveRecord::Base.connection.exec_query(sql)
 
       output =
         results.map do |result|

@@ -24,14 +24,14 @@ task :extract_reporting do
     where << " AND a.date_registered BETWEEN " + ActiveRecord::Base.connection.quote(ENV["from_date"]) + " AND " + ActiveRecord::Base.connection.quote(ENV["to_date"])
   end
 
-  number_of_assessments = ActiveRecord::Base.connection.execute("SELECT COUNT(assessment_id) AS number_of_assessments FROM assessments a WHERE #{where}").first["number_of_assessments"]
+  number_of_assessments = ActiveRecord::Base.connection.exec_query("SELECT COUNT(assessment_id) AS number_of_assessments FROM assessments a WHERE #{where}").first["number_of_assessments"]
 
   puts "Done getting number of assessments. #{number_of_assessments} in total at #{Time.now}"
 
   start = 0
 
   while start <= number_of_assessments
-    assessments = ActiveRecord::Base.connection.execute("
+    assessments = ActiveRecord::Base.connection.exec_query("
       SELECT
         a.assessment_id, b.xml, b.schema_type, c.address_id
       FROM

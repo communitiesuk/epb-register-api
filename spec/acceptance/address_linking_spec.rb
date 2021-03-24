@@ -13,7 +13,7 @@ describe "Acceptance::AddressLinking" do
   let(:non_domestic_xml) { Samples.xml("CEPC-8.0.0", "cepc+rr") }
 
   before(:all) do
-    ActiveRecord::Base.connection.execute(
+    ActiveRecord::Base.connection.exec_query(
       "INSERT INTO
               address_base
                 (
