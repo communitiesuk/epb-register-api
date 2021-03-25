@@ -13,13 +13,13 @@ module Gateway
       send_to_db assessment
     end
 
-    # def update_statuses(assessments_ids, status, value)
-    #   ActiveRecord::Base.transaction do
-    #     assessments_ids.each do |assessment_id|
-    #       update_field(assessment_id, status, value)
-    #     end
-    #   end
-    # end
+    def update_statuses(assessments_ids, status, value)
+      ActiveRecord::Base.transaction do
+        assessments_ids.each do |assessment_id|
+          update_field(assessment_id, status, value)
+        end
+      end
+    end
 
     def update_field(assessment_id, field, value)
       sql =
