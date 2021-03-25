@@ -10,7 +10,11 @@ module Gateway
         outcode_array = postcode.split(" ")
         outcode = outcode_array[0]
         response =
-          db_response(code: "outcode", table: "postcode_outcode_geolocations", postcode: outcode)
+          db_response(
+            code: "outcode",
+            table: "postcode_outcode_geolocations",
+            postcode: outcode,
+          )
 
         output(response, result, "outcode")
       end

@@ -34,7 +34,7 @@ task :import_postcode do
       end
     end
   else
-    puts "[#{Time.now}] Reading postcodes CSV file: #{ENV["file_name"]}"
+    puts "[#{Time.now}] Reading postcodes CSV file: #{ENV['file_name']}"
     postcode_csv = CSV.new(file_io, headers: true)
     process_postcode_csv(postcode_csv)
   end
@@ -60,7 +60,7 @@ def retrieve_file_on_s3(file_name)
   storage_gateway.get_file_io(file_name)
 end
 
-def process_postcode_csv(postcode_csv, buffer_size = 10000)
+def process_postcode_csv(postcode_csv, buffer_size = 10_000)
   create_postcode_table
 
   postcode_geolocation_buffer = []

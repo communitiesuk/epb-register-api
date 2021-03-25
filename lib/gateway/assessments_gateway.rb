@@ -38,15 +38,16 @@ module Gateway
             WHERE assessment_id = $1
       SQL
       binds = [
-          ActiveRecord::Relation::QueryAttribute.new(
-              "assessment_id",
-              assessment_id,
-              ActiveRecord::Type::String.new,
-              ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "assessment_id",
+          assessment_id,
+          ActiveRecord::Type::String.new,
+        ),
       ]
-      result = ActiveRecord::Base.connection.exec_query select_linked_assessment,
-                                                        "SQL",
-                                                        binds
+      result =
+        ActiveRecord::Base.connection.exec_query select_linked_assessment,
+                                                 "SQL",
+                                                 binds
       result.first["linked_assessment_id"] unless result.empty?
     end
 

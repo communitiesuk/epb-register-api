@@ -72,7 +72,7 @@ module Domain
         current_energy_efficiency_band:
           Helper::EnergyBandCalculator.domestic(
             @current_energy_efficiency_rating,
-            ),
+          ),
         opt_out: @opt_out,
         address_id: @address_id,
         address_line1: @address_line1,

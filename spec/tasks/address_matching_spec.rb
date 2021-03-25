@@ -131,8 +131,6 @@ end
 
 private
 
-
-
 def get_address_matching_csv
   "lprn,uprn,quality,duplicated\n" \
     "LPRN-0000000001,UPRN-0000000011,GOOD,false\n" \
