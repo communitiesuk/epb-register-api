@@ -8,7 +8,7 @@ describe "AddressMatching" do
 
   before(:all) do
     scheme_id = add_scheme_and_get_id
-    call_add_assessor(scheme_id)
+    add_super_assessor(scheme_id)
 
     rdsap_xml = Nokogiri.XML Samples.xml(RDSAP_SCHEMA, "epc")
     rdsap_xml.at("RRN").children = "0000-0000-0000-0000-0001"
@@ -131,42 +131,7 @@ end
 
 private
 
-def call_add_assessor(scheme_id)
-  add_assessor(
-    scheme_id,
-    "SPEC000000",
-    AssessorStub.new.fetch_request_body(
-      nonDomesticNos3: "ACTIVE",
-      nonDomesticNos4: "ACTIVE",
-      nonDomesticNos5: "ACTIVE",
-      nonDomesticDec: "ACTIVE",
-      domesticRdSap: "ACTIVE",
-      domesticSap: "ACTIVE",
-      nonDomesticSp3: "ACTIVE",
-      nonDomesticCc4: "ACTIVE",
-      gda: "ACTIVE",
-    ),
-  )
-end
 
-def call_lodge_assessment(
-  scheme_id,
-  schema_name,
-  xml_document,
-  migrated = false
-)
-  lodge_assessment(
-    assessment_body: xml_document.to_xml,
-    accepted_responses: [201],
-    auth_data: {
-      scheme_ids: [scheme_id],
-    },
-    scopes: %w[assessment:lodge migrate:assessment],
-    override: true,
-    schema_name: schema_name,
-    migrated: migrated,
-  )
-end
 
 def get_address_matching_csv
   "lprn,uprn,quality,duplicated\n" \

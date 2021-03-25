@@ -13,6 +13,14 @@ module Gateway
       send_to_db assessment
     end
 
+    # def update_statuses(assessments_ids, status, value)
+    #   ActiveRecord::Base.transaction do
+    #     assessments_ids.each do |assessment_id|
+    #       update_field(assessment_id, status, value)
+    #     end
+    #   end
+    # end
+
     def update_field(assessment_id, field, value)
       sql =
         "UPDATE assessments SET " +
@@ -22,6 +30,24 @@ module Gateway
         ActiveRecord::Base.connection.quote(assessment_id) + ""
 
       Assessment.connection.exec_query(sql)
+    end
+
+    def get_linked_assessment_id(assessment_id)
+      select_linked_assessment = <<-SQL
+            SELECT linked_assessment_id FROM linked_assessments
+            WHERE assessment_id = $1
+      SQL
+      binds = [
+          ActiveRecord::Relation::QueryAttribute.new(
+              "assessment_id",
+              assessment_id,
+              ActiveRecord::Type::String.new,
+              ),
+      ]
+      result = ActiveRecord::Base.connection.exec_query select_linked_assessment,
+                                                        "SQL",
+                                                        binds
+      result.first["linked_assessment_id"] unless result.empty?
     end
 
   private

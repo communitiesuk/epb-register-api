@@ -378,6 +378,43 @@ def add_scheme_then_assessor(body, accepted_responses = [200, 201])
   add_assessor(scheme_id, "TEST_ASSESSOR", body, accepted_responses)
 end
 
+def add_super_assessor(scheme_id)
+  add_assessor(
+      scheme_id,
+      "SPEC000000",
+      AssessorStub.new.fetch_request_body(
+          nonDomesticNos3: "ACTIVE",
+          nonDomesticNos4: "ACTIVE",
+          nonDomesticNos5: "ACTIVE",
+          nonDomesticDec: "ACTIVE",
+          domesticRdSap: "ACTIVE",
+          domesticSap: "ACTIVE",
+          nonDomesticSp3: "ACTIVE",
+          nonDomesticCc4: "ACTIVE",
+          gda: "ACTIVE",
+          ),
+      )
+end
+
+def call_lodge_assessment(
+    scheme_id,
+    schema_name,
+    xml_document,
+    migrated = nil
+)
+  lodge_assessment(
+      assessment_body: xml_document.to_xml,
+      accepted_responses: [201],
+      auth_data: {
+          scheme_ids: [scheme_id],
+      },
+      scopes: %w[assessment:lodge migrate:assessment],
+      override: true,
+      schema_name: schema_name,
+      migrated: migrated,
+      )
+end
+
 def fetch_renewable_heat_incentive(
   assessment_id,
   accepted_responses = [200],
