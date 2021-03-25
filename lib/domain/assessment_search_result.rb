@@ -65,22 +65,22 @@ module Domain
         )
       {
         date_of_assessment: @date_of_assessment.strftime("%Y-%m-%d"),
+        date_of_expiry: @date_of_expiry.strftime("%Y-%m-%d"),
         type_of_assessment: @type_of_assessment,
         assessment_id: @assessment_id,
         current_energy_efficiency_rating: @current_energy_efficiency_rating,
+        current_energy_efficiency_band:
+          Helper::EnergyBandCalculator.domestic(
+            @current_energy_efficiency_rating,
+            ),
         opt_out: @opt_out,
-        postcode: @postcode,
-        date_of_expiry: @date_of_expiry.strftime("%Y-%m-%d"),
         address_id: @address_id,
         address_line1: @address_line1,
         address_line2: @address_line2,
         address_line3: @address_line3,
         address_line4: @address_line4,
         town: @town,
-        current_energy_efficiency_band:
-          Helper::EnergyBandCalculator.domestic(
-            @current_energy_efficiency_rating,
-          ),
+        postcode: @postcode,
         status: expiry_helper.assessment_status,
       }
     end
