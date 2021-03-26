@@ -86,7 +86,7 @@ GEM
     parser (3.0.0.0)
       ast (~> 2.4.1)
     pg (1.2.3)
-    prettier (1.5.4)
+    prettier (1.5.5)
     pry (0.14.0)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -189,7 +189,7 @@ DEPENDENCIES
   nokogiri (~> 1.11.2)!
   ougai (~> 2.0)!
   pg!
-  prettier (~> 1.5.3)!
+  prettier (~> 1.5.5)!
   pry (~> 0.14.0)!
   rack-test (~> 1.1.0)!
   rake!
