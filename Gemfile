@@ -5,7 +5,7 @@ ruby "2.6.6"
 source "https://rubygems.org" do
   group :development do
     gem "debase"
-    gem "prettier", "~> 1.5.3"
+    gem "prettier", "~> 1.5.5"
     gem "sinatra-contrib"
   end
 
