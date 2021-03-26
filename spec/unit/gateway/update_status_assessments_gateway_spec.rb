@@ -34,17 +34,5 @@ describe "Gateway::AssessmentsGateway" do
         ).to eq("0000-0000-0000-0000-0000")
       end
     end
-
-    context "calling update_statuses on both assessments" do
-      assessments = %w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001]
-      field = "cancelled_at"
-
-      xit "it cancels the first assessment" do
-        assessment_gateway.update_statuses(assessments, field, Time.now.to_s)
-      end
-
-      xit "it cancels the second assessment" do
-      end
-    end
   end
 end
