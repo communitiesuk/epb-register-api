@@ -1,13 +1,8 @@
+require "nokogiri"
+
 desc "Backfill linked assessments table from assessments XML"
 
 task :linked_assessments do
-  require "nokogiri"
-  require "zeitwerk"
-
-  loader = Zeitwerk::Loader.new
-  loader.push_dir("#{__dir__}/../")
-  loader.setup
-
   if ENV["from_date"].nil?
     abort("Please set the from_date environment variable")
   end
