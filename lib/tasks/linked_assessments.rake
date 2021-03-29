@@ -62,7 +62,6 @@ task :linked_assessments do
       related_rrn = find_related_rrn(wrapper_hash)
       if related_rrn.nil?
         skipped += 1
-        puts "[#{Time.now}] No related RRN found, skipping #{assessment_id}"
       else
         ActiveRecord::Base.connection.exec_query("INSERT INTO linked_assessments VALUES('#{assessment_id}','#{related_rrn}')")
         inserted += 1
