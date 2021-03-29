@@ -15,15 +15,15 @@ describe "Gateway::AssessmentsGateway" do
         expect(
           assessment_gateway.get_linked_assessment_id(
             "0000-0000-0000-0000-0000",
-            ),
-          ).to eq("0000-0000-0000-0000-0001")
+          ),
+        ).to eq("0000-0000-0000-0000-0001")
       end
       it "will return the second assessment's linked assessment counterpart" do
         expect(
           assessment_gateway.get_linked_assessment_id(
             "0000-0000-0000-0000-0001",
-            ),
-          ).to eq("0000-0000-0000-0000-0000")
+          ),
+        ).to eq("0000-0000-0000-0000-0000")
       end
     end
     context "calling update_statuses on both assessments" do
@@ -34,14 +34,26 @@ describe "Gateway::AssessmentsGateway" do
 
       it "it cancels the first assessment" do
         assessment_gateway.update_statuses(assessments, field, time)
-        assessment1 = assessments_search_gateway.search_by_assessment_id(assessments[0], false).first
-        expect(assessment1.get("cancelled_at")).to eq("Fri, 26 Mar 2021".to_date)
+        assessment1 =
+          assessments_search_gateway.search_by_assessment_id(
+            assessments[0],
+            false,
+          ).first
+        expect(assessment1.get("cancelled_at")).to eq(
+          "Fri, 26 Mar 2021".to_date,
+        )
       end
 
       it "it cancels the second assessment" do
         assessment_gateway.update_statuses(assessments, field, time)
-        assessment2 = assessments_search_gateway.search_by_assessment_id(assessments[1], false).first
-        expect(assessment2.get("cancelled_at")).to eq("Fri, 26 Mar 2021".to_date)
+        assessment2 =
+          assessments_search_gateway.search_by_assessment_id(
+            assessments[1],
+            false,
+          ).first
+        expect(assessment2.get("cancelled_at")).to eq(
+          "Fri, 26 Mar 2021".to_date,
+        )
       end
     end
   end

@@ -219,9 +219,7 @@ describe "Acceptance::Assessment::QualificationAndStatusPerType" do
                 symbolize_names: true,
               )
 
-            expect(assessment_status[:data]).to eq(
-              { status: "NOT_FOR_ISSUE" },
-            )
+            expect(assessment_status[:data]).to eq({ status: "NOT_FOR_ISSUE" })
 
             assessment_settings[:lodged_rrns].each do |rrn|
               fetch_assessment_summary(rrn, [410])

@@ -29,9 +29,7 @@ module UseCase
       assessments = [main_assessment]
 
       linked_assessment_id =
-        @assessments_gateway.get_linked_assessment_id(
-          assessment_id
-        )
+        @assessments_gateway.get_linked_assessment_id(assessment_id)
 
       unless linked_assessment_id.nil?
         linked_assessment =
@@ -44,13 +42,11 @@ module UseCase
 
       validate_status_updates(assessments, scheme_ids)
       update_statuses(assessments, status)
-
     end
 
-    private
+  private
 
     def validate_status_updates(assessments, scheme_ids)
-
       assessments.each do |assessment|
         if %w[CANCELLED NOT_FOR_ISSUE].include? assessment.to_hash[:status]
           raise AssessmentAlreadyCancelled
@@ -65,7 +61,8 @@ module UseCase
     end
 
     def update_statuses(assessments, status)
-      assessment_ids = assessments.map { |assessment| assessment.get("assessment_id") }
+      assessment_ids =
+        assessments.map { |assessment| assessment.get("assessment_id") }
 
       if status == "CANCELLED"
         @assessments_gateway.update_statuses(
@@ -81,6 +78,5 @@ module UseCase
         )
       end
     end
-
   end
 end

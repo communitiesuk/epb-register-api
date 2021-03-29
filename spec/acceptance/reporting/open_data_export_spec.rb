@@ -111,7 +111,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       },
       override: true,
       schema_name: "CEPC-8.0.0",
-      )
+    )
 
     dec_assessment_date.children = test_start_date
     dec_assessment_id.children = "0000-0000-0000-0000-0003"
@@ -135,7 +135,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       },
       override: true,
       schema_name: "CEPC-8.0.0",
-      )
+    )
 
     domestic_rdsap_assessment_date.children = test_start_date
     domestic_rdsap_assessment_id.children = "0000-0000-0000-0000-0004"
@@ -157,7 +157,7 @@ describe "Acceptance::Reports::OpenDataExport" do
         scheme_ids: [scheme_id],
       },
       override: true,
-      )
+    )
 
     lodge_assessment(
       assessment_body: cepc_rr_xml.to_xml,
@@ -172,14 +172,14 @@ describe "Acceptance::Reports::OpenDataExport" do
     cepc_rr_xml
       .xpath("//*[local-name() = 'RRN']")
       .each_with_index do |node, index|
-      node.content = "1112-0000-0000-0000-000#{index + 2}"
-    end
+        node.content = "1112-0000-0000-0000-000#{index + 2}"
+      end
     cepc_rr_xml
       .xpath("//*[local-name() = 'Related-RRN']")
       .reverse
       .each_with_index do |node, index|
-      node.content = "1112-0000-0000-0000-000#{index + 2}"
-    end
+        node.content = "1112-0000-0000-0000-000#{index + 2}"
+      end
     cepc_rr_xml
       .xpath("//*[local-name() = 'Registration-Date']")
       .reverse
@@ -193,7 +193,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       },
       override: true,
       schema_name: "CEPC-8.0.0",
-      )
+    )
 
     lodge_assessment(
       assessment_body: dec_rr_xml.to_xml,
@@ -208,15 +208,15 @@ describe "Acceptance::Reports::OpenDataExport" do
     dec_rr_xml
       .xpath("//*[local-name() = 'RRN']")
       .each_with_index do |node, index|
-      node.content = "1112-0000-0000-0000-000#{index + 4}"
-    end
+        node.content = "1112-0000-0000-0000-000#{index + 4}"
+      end
 
     dec_rr_xml
       .xpath("//*[local-name() = 'Related-RRN']")
       .reverse
       .each_with_index do |node, index|
-      node.content = "1112-0000-0000-0000-000#{index + 4}"
-    end
+        node.content = "1112-0000-0000-0000-000#{index + 4}"
+      end
 
     dec_rr_xml
       .xpath("//*[local-name() = 'Registration-Date']")
@@ -231,8 +231,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       },
       override: true,
       schema_name: "CEPC-8.0.0",
-      )
-
+    )
 
     domestic_sap_assessment_date.children = test_start_date
     domestic_sap_assessment_id.children = "0000-0000-0000-0000-1100"
@@ -258,7 +257,9 @@ describe "Acceptance::Reports::OpenDataExport" do
     context "Call the use case to extract the commercial/non-domestic data" do
       let(:use_case) { UseCase::ExportOpenDataCommercial.new }
       let(:csv_data) do
-        Helper::ExportHelper.to_csv(use_case.execute(test_start_date, 0, "2021-02-28"))
+        Helper::ExportHelper.to_csv(
+          use_case.execute(test_start_date, 0, "2021-02-28"),
+        )
       end
       let(:fixture_csv) { read_csv_fixture("commercial") }
       let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
@@ -294,7 +295,9 @@ describe "Acceptance::Reports::OpenDataExport" do
     context "Call the use case to extract the commercial/non Domestic RR data" do
       let(:use_case) { UseCase::ExportOpenDataCepcrr.new }
       let(:csv_data) do
-        Helper::ExportHelper.to_csv(use_case.execute(test_start_date, 0, "2021-02-28"))
+        Helper::ExportHelper.to_csv(
+          use_case.execute(test_start_date, 0, "2021-02-28"),
+        )
       end
       let(:fixture_csv) { read_csv_fixture("commercial_rr") }
       let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
@@ -315,7 +318,9 @@ describe "Acceptance::Reports::OpenDataExport" do
     context "Call the use case to extract the DEC data" do
       let(:dec_use_case) { UseCase::ExportOpenDataDec.new }
       let(:csv_data) do
-        Helper::ExportHelper.to_csv(dec_use_case.execute(test_start_date, 0, "2021-02-28"))
+        Helper::ExportHelper.to_csv(
+          dec_use_case.execute(test_start_date, 0, "2021-02-28"),
+        )
       end
 
       let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
@@ -379,7 +384,9 @@ describe "Acceptance::Reports::OpenDataExport" do
       let(:use_case) { UseCase::ExportOpenDataDomestic.new }
       let(:csv_data) do
         Helper::ExportHelper.to_csv(
-          use_case.execute(test_start_date, 0, "2021-02-28").sort_by! { |item| item[:assessment_id] },
+          use_case
+            .execute(test_start_date, 0, "2021-02-28")
+            .sort_by! { |item| item[:assessment_id] },
         )
       end
       let(:fixture_csv) { read_csv_fixture("domestic") }
@@ -393,6 +400,20 @@ describe "Acceptance::Reports::OpenDataExport" do
       2.times do |i|
         it "returns the data exported for row #{i} object to match same row in the .csv fixture " do
           expect(parsed_exported_data[i].to_a - fixture_csv[i].to_a).to eq([])
+        end
+      end
+
+      context "when there are no lodged assessments between two dates" do
+        let(:csv_data) do
+          Helper::ExportHelper.to_csv(
+            use_case
+              .execute("2021-03-02", 0, "2021-03-03")
+              .sort_by! { |item| item[:assessment_id] },
+          )
+        end
+
+        it "returns no data" do
+          expect(csv_data.length).to eq(0)
         end
       end
     end
@@ -417,6 +438,20 @@ describe "Acceptance::Reports::OpenDataExport" do
       4.times do |i|
         it "returns the data exported for row #{i} object to match same row in the .csv fixture " do
           expect(parsed_exported_data[i].to_a - fixture_csv[i].to_a).to eq([])
+        end
+      end
+
+      context "when there are no lodged assessments between two dates" do
+        let(:csv_data) do
+          Helper::ExportHelper.to_csv(
+            use_case
+              .execute("2021-03-02", 0, "2021-03-03")
+              .sort_by! { |item| item[:assessment_id] },
+          )
+        end
+
+        it "returns no data" do
+          expect(csv_data.length).to eq(0)
         end
       end
     end

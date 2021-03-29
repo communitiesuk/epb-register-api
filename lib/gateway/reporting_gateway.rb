@@ -225,7 +225,7 @@ module Gateway
           "date_to",
           date_to,
           ActiveRecord::Type::Date.new,
-        )
+        ),
       ]
 
       sql = <<~SQL
