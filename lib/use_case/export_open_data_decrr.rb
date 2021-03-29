@@ -10,7 +10,7 @@ module UseCase
       @log_gateway = Gateway::OpenDataLogGateway.new
     end
 
-    def execute(date_from, task_id = 0)
+    def execute(date_from, task_id = 0, date_to = DateTime.now)
       view_model_array = []
       new_task_id = @log_gateway.fetch_new_task_id(task_id)
 
@@ -19,6 +19,7 @@ module UseCase
           date_from,
           "DEC-RR",
           new_task_id,
+          date_to,
         )
 
       assessments.each do |assessment|

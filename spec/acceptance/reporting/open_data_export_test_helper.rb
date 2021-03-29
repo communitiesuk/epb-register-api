@@ -1,5 +1,9 @@
-def test_date
+def test_start_date
   "2021-02-22"
+end
+
+def test_to_date
+  "2021-03-01"
 end
 
 def file_name(assessment_type)

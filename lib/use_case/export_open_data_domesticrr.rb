@@ -14,7 +14,7 @@ module UseCase
       improvement_code: "improvement_id",
     }.freeze
 
-    def execute(date_from, task_id = 0)
+    def execute(date_from, task_id = 0, date_to = DateTime.now)
       recommendations = []
       new_task_id = @log_gateway.fetch_new_task_id(task_id)
       assessments =
@@ -22,6 +22,7 @@ module UseCase
           date_from,
           %w[RdSAP SAP],
           new_task_id,
+          date_to,
         )
 
       assessments.each do |assessment|

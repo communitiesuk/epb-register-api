@@ -134,7 +134,8 @@ module Gateway
     def assessments_for_open_data(
       date_from,
       type_of_assessment = "",
-      task_id = 0
+      task_id = 0,
+      date_to = DateTime.now
     )
       report_type = Helper::ExportHelper.report_type_to_s(type_of_assessment)
 
@@ -154,13 +155,18 @@ module Gateway
           report_type,
           ActiveRecord::Type::String.new,
         ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "date_to",
+          date_to,
+          ActiveRecord::Type::Date.new,
+        ),
       ]
 
       sql = <<~SQL
         SELECT  a.assessment_id, date_registered
         FROM assessments a
         WHERE a.opt_out = false AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
-        AND a.date_registered >= $1
+        AND a.date_registered BETWEEN $1 AND $4
         AND a.postcode NOT LIKE 'BT%'
         AND NOT EXISTS (SELECT * FROM open_data_logs l
                         WHERE l.assessment_id = a.assessment_id
@@ -196,7 +202,8 @@ module Gateway
     def assessments_for_open_data_recommendation_report(
       date_from,
       type_of_assessment = "",
-      task_id = 0
+      task_id = 0,
+      date_to = DateTime.now
     )
       bindings = [
         ActiveRecord::Relation::QueryAttribute.new(
@@ -214,6 +221,11 @@ module Gateway
           task_id,
           ActiveRecord::Type::Integer.new,
         ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "date_to",
+          date_to,
+          ActiveRecord::Type::Date.new,
+        )
       ]
 
       sql = <<~SQL
@@ -221,7 +233,7 @@ module Gateway
         FROM assessments a
         INNER JOIN linked_assessments la ON a.assessment_id = la.assessment_id
         WHERE a.opt_out = false AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
-        AND a.date_registered >= $1
+        AND a.date_registered BETWEEN $1 AND $4
         AND  type_of_assessment = $2
         AND a.postcode NOT LIKE 'BT%'
         AND NOT EXISTS (SELECT * FROM open_data_logs l

@@ -6,6 +6,7 @@ task :open_data_export do
   assessment_type = ENV["ASSESSMENT_TYPE"]
 
   date_from = ENV["DATE_FROM"]
+  date_to = ENV["DATE_TO"]
   task_id = 0
   unless ENV["TASK_ID"]
     task_id = ENV["TASK_ID"].to_i

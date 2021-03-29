@@ -41,7 +41,7 @@ describe "Acceptance::Reports::OpenDataExport" do
     cepc_rr_xml
       .xpath("//*[local-name() = 'Registration-Date']")
       .reverse
-      .each { |node| node.content = test_date }
+      .each { |node| node.content = test_start_date }
 
     dec_rr_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "dec+rr")
     dec_rr_xml
@@ -60,7 +60,7 @@ describe "Acceptance::Reports::OpenDataExport" do
     dec_rr_xml
       .xpath("//*[local-name() = 'Registration-Date']")
       .reverse
-      .each { |node| node.content = test_date }
+      .each { |node| node.content = test_start_date }
 
     add_assessor(
       scheme_id,
@@ -78,7 +78,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       ),
     )
 
-    non_domestic_assessment_date.children = test_date
+    non_domestic_assessment_date.children = test_start_date
     lodge_assessment(
       assessment_body: non_domestic_xml.to_xml,
       accepted_responses: [201],
@@ -89,7 +89,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       schema_name: "CEPC-8.0.0",
     )
 
-    non_domestic_assessment_date.children = test_date
+    non_domestic_assessment_date.children = test_start_date
     non_domestic_assessment_id.children = "0000-0000-0000-0000-0001"
     lodge_assessment(
       assessment_body: non_domestic_xml.to_xml,
@@ -101,7 +101,19 @@ describe "Acceptance::Reports::OpenDataExport" do
       schema_name: "CEPC-8.0.0",
     )
 
-    dec_assessment_date.children = test_date
+    non_domestic_assessment_date.children = test_to_date
+    non_domestic_assessment_id.children = "0000-0000-0000-0000-0010"
+    lodge_assessment(
+      assessment_body: non_domestic_xml.to_xml,
+      accepted_responses: [201],
+      auth_data: {
+        scheme_ids: [scheme_id],
+      },
+      override: true,
+      schema_name: "CEPC-8.0.0",
+      )
+
+    dec_assessment_date.children = test_start_date
     dec_assessment_id.children = "0000-0000-0000-0000-0003"
     lodge_assessment(
       assessment_body: dec_xml.to_xml,
@@ -113,7 +125,19 @@ describe "Acceptance::Reports::OpenDataExport" do
       schema_name: "CEPC-8.0.0",
     )
 
-    domestic_rdsap_assessment_date.children = test_date
+    dec_assessment_date.children = test_to_date
+    dec_assessment_id.children = "0000-0000-0000-0000-0012"
+    lodge_assessment(
+      assessment_body: dec_xml.to_xml,
+      accepted_responses: [201],
+      auth_data: {
+        scheme_ids: [scheme_id],
+      },
+      override: true,
+      schema_name: "CEPC-8.0.0",
+      )
+
+    domestic_rdsap_assessment_date.children = test_start_date
     domestic_rdsap_assessment_id.children = "0000-0000-0000-0000-0004"
     lodge_assessment(
       assessment_body: domestic_rdsap_xml.to_xml,
@@ -123,6 +147,17 @@ describe "Acceptance::Reports::OpenDataExport" do
       },
       override: true,
     )
+
+    domestic_rdsap_assessment_date.children = test_to_date
+    domestic_rdsap_assessment_id.children = "0000-0000-0000-0000-1004"
+    lodge_assessment(
+      assessment_body: domestic_rdsap_xml.to_xml,
+      accepted_responses: [201],
+      auth_data: {
+        scheme_ids: [scheme_id],
+      },
+      override: true,
+      )
 
     lodge_assessment(
       assessment_body: cepc_rr_xml.to_xml,
@@ -134,6 +169,32 @@ describe "Acceptance::Reports::OpenDataExport" do
       schema_name: "CEPC-8.0.0",
     )
 
+    cepc_rr_xml
+      .xpath("//*[local-name() = 'RRN']")
+      .each_with_index do |node, index|
+      node.content = "1112-0000-0000-0000-000#{index + 2}"
+    end
+    cepc_rr_xml
+      .xpath("//*[local-name() = 'Related-RRN']")
+      .reverse
+      .each_with_index do |node, index|
+      node.content = "1112-0000-0000-0000-000#{index + 2}"
+    end
+    cepc_rr_xml
+      .xpath("//*[local-name() = 'Registration-Date']")
+      .reverse
+      .each { |node| node.content = test_to_date }
+
+    lodge_assessment(
+      assessment_body: cepc_rr_xml.to_xml,
+      accepted_responses: [201],
+      auth_data: {
+        scheme_ids: [scheme_id],
+      },
+      override: true,
+      schema_name: "CEPC-8.0.0",
+      )
+
     lodge_assessment(
       assessment_body: dec_rr_xml.to_xml,
       accepted_responses: [201],
@@ -144,7 +205,36 @@ describe "Acceptance::Reports::OpenDataExport" do
       schema_name: "CEPC-8.0.0",
     )
 
-    domestic_sap_assessment_date.children = test_date
+    dec_rr_xml
+      .xpath("//*[local-name() = 'RRN']")
+      .each_with_index do |node, index|
+      node.content = "1112-0000-0000-0000-000#{index + 4}"
+    end
+
+    dec_rr_xml
+      .xpath("//*[local-name() = 'Related-RRN']")
+      .reverse
+      .each_with_index do |node, index|
+      node.content = "1112-0000-0000-0000-000#{index + 4}"
+    end
+
+    dec_rr_xml
+      .xpath("//*[local-name() = 'Registration-Date']")
+      .reverse
+      .each { |node| node.content = test_to_date }
+
+    lodge_assessment(
+      assessment_body: dec_rr_xml.to_xml,
+      accepted_responses: [201],
+      auth_data: {
+        scheme_ids: [scheme_id],
+      },
+      override: true,
+      schema_name: "CEPC-8.0.0",
+      )
+
+
+    domestic_sap_assessment_date.children = test_start_date
     domestic_sap_assessment_id.children = "0000-0000-0000-0000-1100"
     domestic_sap_building_reference_number.children =
       "RRN-0000-0000-0000-0000-0023"
@@ -168,7 +258,7 @@ describe "Acceptance::Reports::OpenDataExport" do
     context "Call the use case to extract the commercial/non-domestic data" do
       let(:use_case) { UseCase::ExportOpenDataCommercial.new }
       let(:csv_data) do
-        Helper::ExportHelper.to_csv(use_case.execute(test_date))
+        Helper::ExportHelper.to_csv(use_case.execute(test_start_date, 0, "2021-02-28"))
       end
       let(:fixture_csv) { read_csv_fixture("commercial") }
       let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
@@ -204,7 +294,7 @@ describe "Acceptance::Reports::OpenDataExport" do
     context "Call the use case to extract the commercial/non Domestic RR data" do
       let(:use_case) { UseCase::ExportOpenDataCepcrr.new }
       let(:csv_data) do
-        Helper::ExportHelper.to_csv(use_case.execute(test_date))
+        Helper::ExportHelper.to_csv(use_case.execute(test_start_date, 0, "2021-02-28"))
       end
       let(:fixture_csv) { read_csv_fixture("commercial_rr") }
       let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
@@ -225,7 +315,7 @@ describe "Acceptance::Reports::OpenDataExport" do
     context "Call the use case to extract the DEC data" do
       let(:dec_use_case) { UseCase::ExportOpenDataDec.new }
       let(:csv_data) do
-        Helper::ExportHelper.to_csv(dec_use_case.execute(test_date))
+        Helper::ExportHelper.to_csv(dec_use_case.execute(test_start_date, 0, "2021-02-28"))
       end
 
       let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
@@ -264,7 +354,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       let(:csv_data) do
         Helper::ExportHelper.to_csv(
           use_case
-            .execute(test_date)
+            .execute(test_start_date, 0, "2021-02-28")
             .sort_by! { |key| key[:recommendation_item] },
         )
       end
@@ -289,7 +379,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       let(:use_case) { UseCase::ExportOpenDataDomestic.new }
       let(:csv_data) do
         Helper::ExportHelper.to_csv(
-          use_case.execute(test_date).sort_by! { |item| item[:assessment_id] },
+          use_case.execute(test_start_date, 0, "2021-02-28").sort_by! { |item| item[:assessment_id] },
         )
       end
       let(:fixture_csv) { read_csv_fixture("domestic") }
@@ -312,7 +402,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       let(:csv_data) do
         Helper::ExportHelper.to_csv(
           use_case
-            .execute(test_date)
+            .execute(test_start_date, 0, "2021-02-28")
             .sort_by! { |item| [item[:assessment_id], item[:improvement_item]] },
         )
       end
@@ -383,7 +473,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       before do
         EnvironmentStub
           .all
-          .with("DATE_FROM", test_date)
+          .with("DATE_FROM", test_start_date)
           .with("ASSESSMENT_TYPE", "SAP-RDSAP")
 
         HttpStub.s3_put_csv(file_name("SAP-RDSAP"))
@@ -409,7 +499,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       before do
         EnvironmentStub
           .all
-          .with("DATE_FROM", test_date)
+          .with("DATE_FROM", test_start_date)
           .with("ASSESSMENT_TYPE", "SAP-RDSAP-RR")
 
         HttpStub.s3_put_csv(file_name("SAP-RDSAP-RR"))
@@ -435,7 +525,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       before do
         EnvironmentStub
           .all
-          .with("DATE_FROM", test_date)
+          .with("DATE_FROM", test_start_date)
           .with("ASSESSMENT_TYPE", "CEPC")
         HttpStub.s3_put_csv(file_name("CEPC"))
       end
@@ -461,7 +551,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       before do
         EnvironmentStub
           .all
-          .with("DATE_FROM", test_date)
+          .with("DATE_FROM", test_start_date)
           .with("ASSESSMENT_TYPE", "CEPC-RR")
 
         HttpStub.s3_put_csv(file_name("CEPC-RR"))
@@ -487,7 +577,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       before do
         EnvironmentStub
           .all
-          .with("DATE_FROM", test_date)
+          .with("DATE_FROM", test_start_date)
           .with("ASSESSMENT_TYPE", "DEC")
         HttpStub.s3_put_csv(file_name("DEC"))
       end
@@ -517,7 +607,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       before do
         EnvironmentStub
           .all
-          .with("DATE_FROM", test_date)
+          .with("DATE_FROM", test_start_date)
           .with("ASSESSMENT_TYPE", "DEC-RR")
         HttpStub.s3_put_csv(file_name("DEC-RR"))
       end
