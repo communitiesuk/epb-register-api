@@ -175,24 +175,24 @@ describe "Acceptance::Assessment::QualificationAndStatusPerType" do
 
             get_lodgement(assessment_settings[:xml], [201], schema_name)
 
+            first_rrn = assessment_settings[:lodged_rrns].first
+            assessment_status =
+              JSON.parse(
+                update_assessment_status(
+                  assessment_id: first_rrn.to_s,
+                  assessment_status_body: {
+                    "status": "CANCELLED",
+                  },
+                  accepted_responses: [200],
+                  auth_data: {
+                    scheme_ids: [scheme_id],
+                  },
+                ).body,
+                symbolize_names: true,
+              )
+            expect(assessment_status[:data]).to eq({ status: "CANCELLED" })
+
             assessment_settings[:lodged_rrns].each do |rrn|
-              assessment_status =
-                JSON.parse(
-                  update_assessment_status(
-                    assessment_id: rrn.to_s,
-                    assessment_status_body: {
-                      "status": "CANCELLED",
-                    },
-                    accepted_responses: [200],
-                    auth_data: {
-                      scheme_ids: [scheme_id],
-                    },
-                  ).body,
-                  symbolize_names: true,
-                )
-
-              expect(assessment_status[:data]).to eq({ status: "CANCELLED" })
-
               fetch_assessment_summary(rrn, [410])
             end
           end
@@ -203,26 +203,27 @@ describe "Acceptance::Assessment::QualificationAndStatusPerType" do
 
             get_lodgement(assessment_settings[:xml], [201], schema_name)
 
-            assessment_settings[:lodged_rrns].each do |rrn|
-              assessment_status =
-                JSON.parse(
-                  update_assessment_status(
-                    assessment_id: rrn.to_s,
-                    assessment_status_body: {
-                      "status": "NOT_FOR_ISSUE",
-                    },
-                    accepted_responses: [200],
-                    auth_data: {
-                      scheme_ids: [scheme_id],
-                    },
-                  ).body,
-                  symbolize_names: true,
-                )
-
-              expect(assessment_status[:data]).to eq(
-                { status: "NOT_FOR_ISSUE" },
+            first_rrn = assessment_settings[:lodged_rrns].first
+            assessment_status =
+              JSON.parse(
+                update_assessment_status(
+                  assessment_id: first_rrn.to_s,
+                  assessment_status_body: {
+                    "status": "NOT_FOR_ISSUE",
+                  },
+                  accepted_responses: [200],
+                  auth_data: {
+                    scheme_ids: [scheme_id],
+                  },
+                ).body,
+                symbolize_names: true,
               )
 
+            expect(assessment_status[:data]).to eq(
+              { status: "NOT_FOR_ISSUE" },
+            )
+
+            assessment_settings[:lodged_rrns].each do |rrn|
               fetch_assessment_summary(rrn, [410])
             end
           end
