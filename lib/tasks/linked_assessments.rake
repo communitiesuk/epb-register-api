@@ -40,11 +40,34 @@ task :linked_assessments do
       puts "[#{Time.now}] Could not read XML for assessment #{assessment_id}"
       skipped += 1
     else
-      report_model = ViewModel::Factory.new.create(assessment_xml["xml"], assessment_xml["schema_type"], assessment_id)
-      related_rrn = find_related_rrn(report_model.to_hash)
+      schema_type = assessment_xml["schema_type"]
 
+      begin
+        wrapper = ViewModel::Factory.new.create(assessment_xml["xml"], schema_type, assessment_id)
+      rescue Exception => e
+        wrapper = nil
+        skipped += 1
+        puts "[#{Time.now}] Exception in view model creation for #{schema_type}, skipping #{assessment_id}"
+        puts "[#{Time.now}] #{e.message}"
+        puts "[#{Time.now}] #{e.backtrace.first}"
+      end
+      next if wrapper.nil?
+
+      begin
+        wrapper_hash = wrapper.to_hash
+      rescue Exception => e
+        wrapper_hash = nil
+        skipped += 1
+        puts "[#{Time.now}] Exception in wrapper to_hash, skipping #{assessment_id}"
+        puts "[#{Time.now}] #{e.message}"
+        puts "[#{Time.now}] #{e.backtrace.first}"
+      end
+      next if wrapper_hash.nil?
+
+      related_rrn = find_related_rrn(wrapper_hash)
       if related_rrn.nil?
         skipped += 1
+        puts "[#{Time.now}] No related RRN found, skipping #{assessment_id}"
       else
         ActiveRecord::Base.connection.exec_query("INSERT INTO linked_assessments VALUES('#{assessment_id}','#{related_rrn}')")
         inserted += 1
