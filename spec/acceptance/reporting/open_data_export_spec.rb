@@ -504,12 +504,29 @@ describe "Acceptance::Reports::OpenDataExport" do
       end
     end
 
+    context "Set the correct environment variables and a date range with no assessments" do
+      before do
+        EnvironmentStub
+          .all
+          .with("DATE_FROM", "2018-12-01")
+          .with("ASSESSMENT_TYPE", "SAP-RDSAP")
+          .with("DATE_TO", "2019-12-07")
+      end
+
+      it "returns a no data to export error" do
+        expect { get_task("open_data_export").invoke }.to output(
+          /No data provided for export/,
+        ).to_stderr
+      end
+    end
+
     context "Set the correct environment variables invoke the task to send the domestic data to S3" do
       before do
         EnvironmentStub
           .all
           .with("DATE_FROM", test_start_date)
           .with("ASSESSMENT_TYPE", "SAP-RDSAP")
+          .with("DATE_TO", "2021-03-29")
 
         HttpStub.s3_put_csv(file_name("SAP-RDSAP"))
       end
@@ -536,6 +553,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           .all
           .with("DATE_FROM", test_start_date)
           .with("ASSESSMENT_TYPE", "SAP-RDSAP-RR")
+          .except("DATE_TO")
 
         HttpStub.s3_put_csv(file_name("SAP-RDSAP-RR"))
       end
@@ -562,6 +580,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           .all
           .with("DATE_FROM", test_start_date)
           .with("ASSESSMENT_TYPE", "CEPC")
+          .except("DATE_TO")
         HttpStub.s3_put_csv(file_name("CEPC"))
       end
 
@@ -588,7 +607,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           .all
           .with("DATE_FROM", test_start_date)
           .with("ASSESSMENT_TYPE", "CEPC-RR")
-
+          .except("DATE_TO")
         HttpStub.s3_put_csv(file_name("CEPC-RR"))
       end
       let(:fixture_csv) { read_csv_fixture("commercial_rr") }
@@ -614,6 +633,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           .all
           .with("DATE_FROM", test_start_date)
           .with("ASSESSMENT_TYPE", "DEC")
+          .except("DATE_TO")
         HttpStub.s3_put_csv(file_name("DEC"))
       end
 
@@ -644,6 +664,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           .all
           .with("DATE_FROM", test_start_date)
           .with("ASSESSMENT_TYPE", "DEC-RR")
+          .except("DATE_TO")
         HttpStub.s3_put_csv(file_name("DEC-RR"))
       end
 

@@ -6,11 +6,8 @@ task :open_data_export do
   assessment_type = ENV["ASSESSMENT_TYPE"]
 
   date_from = ENV["DATE_FROM"]
-  date_to = ENV["DATE_TO"]
-  task_id = 0
-  unless ENV["TASK_ID"]
-    task_id = ENV["TASK_ID"].to_i
-  end
+  date_to =   ENV["DATE_TO"] || DateTime.now.strftime("%F")
+  task_id =   ENV["TASK_ID"] || ENV["TASK_ID"].to_i
 
   raise Boundary::ArgumentMissing, "assessment_type" unless assessment_type
   raise Boundary::ArgumentMissing, "date_from" unless date_from
@@ -19,7 +16,7 @@ task :open_data_export do
   open_data_use_case = get_use_case_by_assessment_type(assessment_type)
   raise Boundary::InvalidAssessment, ENV["ASSESSMENT_TYPE"] unless open_data_use_case
 
-  data = open_data_use_case.execute(date_from, task_id)
+  data = open_data_use_case.execute(date_from, task_id, date_to)
 
   raise Boundary::OpenDataEmpty if data.length.zero?
 
