@@ -6,235 +6,163 @@ describe "Acceptance::Reports::OpenDataExport" do
   after { WebMock.disable! }
 
   before(:all) do
-    scheme_id = add_scheme_and_get_id
-    non_domestic_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc")
-    non_domestic_assessment_id = non_domestic_xml.at("//CEPC:RRN")
-    non_domestic_assessment_date =
-      non_domestic_xml.at("//CEPC:Registration-Date")
+    scheme_id = lodge_assessor
 
-    # Lodge a dec to ensure it is not exported
-    dec_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "dec")
-    dec_assessment_id = dec_xml.at("RRN")
-    dec_assessment_date = dec_xml.at("Registration-Date")
+    2.times do |i|
+      non_domestic_xml =
+        get_assessment_xml(
+          "CEPC-8.0.0",
+          "0000-0000-0000-0000-000#{i}",
+          test_start_date,
+          "cepc",
+        )
+      lodge_assessment(
+        assessment_body: non_domestic_xml.to_xml,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        override: true,
+        schema_name: "CEPC-8.0.0",
+      )
+    end
 
-    domestic_rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
-    domestic_rdsap_assessment_id = domestic_rdsap_xml.at("RRN")
-    domestic_rdsap_assessment_date = domestic_rdsap_xml.at("Registration-Date")
+    out_of_range_non_domestic_xml =
+      get_assessment_xml(
+        "CEPC-8.0.0",
+        "0000-0000-0000-0000-0010",
+        test_to_date,
+        "cepc",
+      )
+    lodge_assessment(
+      assessment_body: out_of_range_non_domestic_xml.to_xml,
+      accepted_responses: [201],
+      auth_data: {
+        scheme_ids: [scheme_id],
+      },
+      override: true,
+      schema_name: "CEPC-8.0.0",
+    )
 
-    domestic_sap_xml = Nokogiri.XML Samples.xml("SAP-Schema-18.0.0")
-    domestic_sap_assessment_id = domestic_sap_xml.at("RRN")
-    domestic_sap_assessment_date = domestic_sap_xml.at("Registration-Date")
+    dec_xml =
+      get_assessment_xml(
+        "CEPC-8.0.0",
+        "0000-0000-0000-0000-0003",
+        test_start_date,
+        "dec",
+      )
+    lodge_assessment(
+      assessment_body: dec_xml.to_xml,
+      accepted_responses: [201],
+      auth_data: {
+        scheme_ids: [scheme_id],
+      },
+      override: true,
+      schema_name: "CEPC-8.0.0",
+    )
+
+    dec_xml =
+      get_assessment_xml(
+        "CEPC-8.0.0",
+        "0000-0000-0000-0000-0012",
+        test_to_date,
+        "dec",
+      )
+    lodge_assessment(
+      assessment_body: dec_xml.to_xml,
+      accepted_responses: [201],
+      auth_data: {
+        scheme_ids: [scheme_id],
+      },
+      override: true,
+      schema_name: "CEPC-8.0.0",
+    )
+
+    domestic_rdsap_xml =
+      get_assessment_xml(
+        "RdSAP-Schema-20.0.0",
+        "0000-0000-0000-0000-0004",
+        test_start_date,
+      )
+    lodge_assessment(
+      assessment_body: domestic_rdsap_xml.to_xml,
+      accepted_responses: [201],
+      auth_data: {
+        scheme_ids: [scheme_id],
+      },
+      override: true,
+    )
+
+    domestic_rdsap_xml =
+      get_assessment_xml(
+        "RdSAP-Schema-20.0.0",
+        "0000-0000-0000-0000-1004",
+        test_to_date,
+      )
+    lodge_assessment(
+      assessment_body: domestic_rdsap_xml.to_xml,
+      accepted_responses: [201],
+      auth_data: {
+        scheme_ids: [scheme_id],
+      },
+      override: true,
+    )
+
+    cepc_rr_xml =
+      get_recommendations_xml("CEPC-8.0.0", test_start_date, "cepc+rr", "1111")
+    lodge_assessment(
+      assessment_body: cepc_rr_xml.to_xml,
+      accepted_responses: [201],
+      auth_data: {
+        scheme_ids: [scheme_id],
+      },
+      override: true,
+      schema_name: "CEPC-8.0.0",
+    )
+
+    cepc_rr_xml =
+      get_recommendations_xml("CEPC-8.0.0", test_to_date, "cepc+rr", "1112")
+    lodge_assessment(
+      assessment_body: cepc_rr_xml.to_xml,
+      accepted_responses: [201],
+      auth_data: {
+        scheme_ids: [scheme_id],
+      },
+      override: true,
+      schema_name: "CEPC-8.0.0",
+    )
+
+    dec_rr_xml =
+      get_recommendations_xml("CEPC-8.0.0", test_start_date, "dec+rr", "1111")
+    lodge_assessment(
+      assessment_body: dec_rr_xml.to_xml,
+      accepted_responses: [201],
+      auth_data: {
+        scheme_ids: [scheme_id],
+      },
+      override: true,
+      schema_name: "CEPC-8.0.0",
+    )
+
+    dec_rr_xml =
+      get_recommendations_xml("CEPC-8.0.0", test_to_date, "dec+rr", "1112")
+    lodge_assessment(
+      assessment_body: dec_rr_xml.to_xml,
+      accepted_responses: [201],
+      auth_data: {
+        scheme_ids: [scheme_id],
+      },
+      override: true,
+      schema_name: "CEPC-8.0.0",
+    )
+
+    domestic_sap_xml =
+      get_assessment_xml(
+        "SAP-Schema-18.0.0",
+        "0000-0000-0000-0000-1100",
+        test_start_date,
+      )
     domestic_sap_building_reference_number = domestic_sap_xml.at("UPRN")
-
-    cepc_rr_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc+rr")
-    cepc_rr_xml
-      .xpath("//*[local-name() = 'RRN']")
-      .each_with_index do |node, index|
-        node.content = "1111-0000-0000-0000-000#{index + 2}"
-      end
-    cepc_rr_xml
-      .xpath("//*[local-name() = 'Related-RRN']")
-      .reverse
-      .each_with_index do |node, index|
-        node.content = "1111-0000-0000-0000-000#{index + 2}"
-      end
-    cepc_rr_xml
-      .xpath("//*[local-name() = 'Registration-Date']")
-      .reverse
-      .each { |node| node.content = test_start_date }
-
-    dec_rr_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "dec+rr")
-    dec_rr_xml
-      .xpath("//*[local-name() = 'RRN']")
-      .each_with_index do |node, index|
-        node.content = "1111-0000-0000-0000-000#{index + 4}"
-      end
-
-    dec_rr_xml
-      .xpath("//*[local-name() = 'Related-RRN']")
-      .reverse
-      .each_with_index do |node, index|
-        node.content = "1111-0000-0000-0000-000#{index + 4}"
-      end
-
-    dec_rr_xml
-      .xpath("//*[local-name() = 'Registration-Date']")
-      .reverse
-      .each { |node| node.content = test_start_date }
-
-    add_assessor(
-      scheme_id,
-      "SPEC000000",
-      AssessorStub.new.fetch_request_body(
-        nonDomesticNos3: "ACTIVE",
-        nonDomesticNos4: "ACTIVE",
-        nonDomesticNos5: "ACTIVE",
-        nonDomesticDec: "ACTIVE",
-        domesticRdSap: "ACTIVE",
-        domesticSap: "ACTIVE",
-        nonDomesticSp3: "ACTIVE",
-        nonDomesticCc4: "ACTIVE",
-        gda: "ACTIVE",
-      ),
-    )
-
-    non_domestic_assessment_date.children = test_start_date
-    lodge_assessment(
-      assessment_body: non_domestic_xml.to_xml,
-      accepted_responses: [201],
-      auth_data: {
-        scheme_ids: [scheme_id],
-      },
-      override: true,
-      schema_name: "CEPC-8.0.0",
-    )
-
-    non_domestic_assessment_date.children = test_start_date
-    non_domestic_assessment_id.children = "0000-0000-0000-0000-0001"
-    lodge_assessment(
-      assessment_body: non_domestic_xml.to_xml,
-      accepted_responses: [201],
-      auth_data: {
-        scheme_ids: [scheme_id],
-      },
-      override: true,
-      schema_name: "CEPC-8.0.0",
-    )
-
-    non_domestic_assessment_date.children = test_to_date
-    non_domestic_assessment_id.children = "0000-0000-0000-0000-0010"
-    lodge_assessment(
-      assessment_body: non_domestic_xml.to_xml,
-      accepted_responses: [201],
-      auth_data: {
-        scheme_ids: [scheme_id],
-      },
-      override: true,
-      schema_name: "CEPC-8.0.0",
-    )
-
-    dec_assessment_date.children = test_start_date
-    dec_assessment_id.children = "0000-0000-0000-0000-0003"
-    lodge_assessment(
-      assessment_body: dec_xml.to_xml,
-      accepted_responses: [201],
-      auth_data: {
-        scheme_ids: [scheme_id],
-      },
-      override: true,
-      schema_name: "CEPC-8.0.0",
-    )
-
-    dec_assessment_date.children = test_to_date
-    dec_assessment_id.children = "0000-0000-0000-0000-0012"
-    lodge_assessment(
-      assessment_body: dec_xml.to_xml,
-      accepted_responses: [201],
-      auth_data: {
-        scheme_ids: [scheme_id],
-      },
-      override: true,
-      schema_name: "CEPC-8.0.0",
-    )
-
-    domestic_rdsap_assessment_date.children = test_start_date
-    domestic_rdsap_assessment_id.children = "0000-0000-0000-0000-0004"
-    lodge_assessment(
-      assessment_body: domestic_rdsap_xml.to_xml,
-      accepted_responses: [201],
-      auth_data: {
-        scheme_ids: [scheme_id],
-      },
-      override: true,
-    )
-
-    domestic_rdsap_assessment_date.children = test_to_date
-    domestic_rdsap_assessment_id.children = "0000-0000-0000-0000-1004"
-    lodge_assessment(
-      assessment_body: domestic_rdsap_xml.to_xml,
-      accepted_responses: [201],
-      auth_data: {
-        scheme_ids: [scheme_id],
-      },
-      override: true,
-    )
-
-    lodge_assessment(
-      assessment_body: cepc_rr_xml.to_xml,
-      accepted_responses: [201],
-      auth_data: {
-        scheme_ids: [scheme_id],
-      },
-      override: true,
-      schema_name: "CEPC-8.0.0",
-    )
-
-    cepc_rr_xml
-      .xpath("//*[local-name() = 'RRN']")
-      .each_with_index do |node, index|
-        node.content = "1112-0000-0000-0000-000#{index + 2}"
-      end
-    cepc_rr_xml
-      .xpath("//*[local-name() = 'Related-RRN']")
-      .reverse
-      .each_with_index do |node, index|
-        node.content = "1112-0000-0000-0000-000#{index + 2}"
-      end
-    cepc_rr_xml
-      .xpath("//*[local-name() = 'Registration-Date']")
-      .reverse
-      .each { |node| node.content = test_to_date }
-
-    lodge_assessment(
-      assessment_body: cepc_rr_xml.to_xml,
-      accepted_responses: [201],
-      auth_data: {
-        scheme_ids: [scheme_id],
-      },
-      override: true,
-      schema_name: "CEPC-8.0.0",
-    )
-
-    lodge_assessment(
-      assessment_body: dec_rr_xml.to_xml,
-      accepted_responses: [201],
-      auth_data: {
-        scheme_ids: [scheme_id],
-      },
-      override: true,
-      schema_name: "CEPC-8.0.0",
-    )
-
-    dec_rr_xml
-      .xpath("//*[local-name() = 'RRN']")
-      .each_with_index do |node, index|
-        node.content = "1112-0000-0000-0000-000#{index + 4}"
-      end
-
-    dec_rr_xml
-      .xpath("//*[local-name() = 'Related-RRN']")
-      .reverse
-      .each_with_index do |node, index|
-        node.content = "1112-0000-0000-0000-000#{index + 4}"
-      end
-
-    dec_rr_xml
-      .xpath("//*[local-name() = 'Registration-Date']")
-      .reverse
-      .each { |node| node.content = test_to_date }
-
-    lodge_assessment(
-      assessment_body: dec_rr_xml.to_xml,
-      accepted_responses: [201],
-      auth_data: {
-        scheme_ids: [scheme_id],
-      },
-      override: true,
-      schema_name: "CEPC-8.0.0",
-    )
-
-    domestic_sap_assessment_date.children = test_start_date
-    domestic_sap_assessment_id.children = "0000-0000-0000-0000-1100"
     domestic_sap_building_reference_number.children =
       "RRN-0000-0000-0000-0000-0023"
     lodge_assessment(
