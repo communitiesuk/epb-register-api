@@ -31,6 +31,7 @@ describe UseCase::ExportOpenDataCommercial do
         property_type: "B1 Offices and Workshop businesses",
         inspection_date: "2020-05-04",
         lodgement_date: "2020-05-04",
+        lodgement_datetime: "2021-02-18 00:00:00",
         transaction_type: "Mandatory issue (Marketed sale)",
         new_build_benchmark: "28",
         existing_stock_benchmark: "81",
@@ -60,16 +61,7 @@ describe UseCase::ExportOpenDataCommercial do
             assessment_id:
               "833db6da02dadee69b96c96917a5e190473828713f5074bd7d67a2371b315520",
             building_reference_number: nil,
-          },
-        )
-      end
-
-      let(:expected_values_index_2) do
-        Samples.update_test_hash(
-          expected_values,
-          {
-            assessment_id:
-              "a6f818e3dd0ac70cbd2838cb0efe0b4aadf5b43ed33a6e7cd13cb973847652",
+            lodgement_datetime: datetime_today,
           },
         )
       end
@@ -198,19 +190,30 @@ describe UseCase::ExportOpenDataCommercial do
         expect(statistics[0]["num_rows"]).to eq(3)
       end
 
-      expected_values.keys.each do |index|
+      expected_values.reject { |k|
+        %i[lodgement_datetime].include? k
+      }.keys.each do |index|
         it "returns the #{index} that matches the data for the 2nd row" do
           expect(exported_data[0][index.to_sym]).to eq(expected_values[index])
         end
       end
 
-      expected_values.keys.each do |index|
+      expected_values.reject { |k|
+        %i[lodgement_datetime].include? k
+      }.keys.each do |index|
         it "returns the #{index} that matches the data for the 2nd row" do
           expect(exported_data[1][index.to_sym]).to eq(
             expected_values_index_1[index],
           )
         end
       end
+
+      3.times do |i|
+        it "expected valid assessment number #{i} lodged time to be within 3 hours" do
+          expect(exported_data[i][:lodgement_datetime]).to be_between(DateTime.parse(exported_data[i][:lodgement_datetime]).new_offset("-02:00"), DateTime.now)
+        end
+      end
+
 
       it "returns 3 rows when called with a different task_id" do
         expect(export_object.execute("2019-07-01", 1).length).to eq(3)

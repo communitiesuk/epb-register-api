@@ -202,7 +202,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       let(:second_commercial_assesment) do
         parsed_exported_data.find do |item|
           item["ASSESSMENT_ID"] ==
-            "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a"
+            "55ce7d026c13e923d26cbfb0d6ed60734d3270ba981d629a168bb8eb2da3f8c4"
         end
       end
 
@@ -212,11 +212,11 @@ describe "Acceptance::Reports::OpenDataExport" do
       end
 
       it "returns the data exported for row 1 object to match same row in the .csv fixture " do
-        expect(first_commercial_assesment.to_a - fixture_csv[0].to_a).to eq([])
+        expect(redact_lodgement_datetime(first_commercial_assesment) - redact_lodgement_datetime(fixture_csv[0])).to eq([])
       end
 
       it "returns the data exported for row 2 object to match same row in the .csv fixture " do
-        expect(second_commercial_assesment.to_a - fixture_csv[0].to_a).to eq([])
+        expect(redact_lodgement_datetime(second_commercial_assesment) - redact_lodgement_datetime(fixture_csv[1])).to eq([])
       end
     end
 
