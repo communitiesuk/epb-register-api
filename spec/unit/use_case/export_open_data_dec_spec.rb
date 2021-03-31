@@ -187,26 +187,29 @@ describe UseCase::ExportOpenDataDec do
         expect(statistics[0]["num_rows"]).to eq(3)
       end
 
-      expected_values.reject { |k|
-        %i[lodgement_datetime].include? k
-      }.keys.each do |index|
+      expected_values.reject { |k| %i[lodgement_datetime].include? k }.keys
+        .each do |index|
         it "returns the #{index} that matches the test data for the 1st row" do
           expect(exported_data[0][index.to_sym]).to eq(expected_values[index])
         end
       end
 
-      expected_values.reject { |k|
-        %i[lodgement_datetime].include? k
-      }.keys.each do |index|
+      expected_values.reject { |k| %i[lodgement_datetime].include? k }.keys
+        .each do |index|
         it "returns the #{index} that matches the test data for the 2nd row" do
           expect(exported_data[1][index.to_sym]).to eq(expected_values_1[index])
         end
       end
 
       3.times do |i|
-      it "returns assessment number #{i} to have lodged_datetime to be within 3 hours" do
-        expect(exported_data[i][:lodgement_datetime]).to be_between(DateTime.parse(exported_data[i][:lodgement_datetime]).new_offset("-02:00"), DateTime.now)
-      end
+        it "returns assessment number #{i} to have lodged_datetime to be within 3 hours" do
+          expect(exported_data[i][:lodgement_datetime]).to be_between(
+            DateTime
+              .parse(exported_data[i][:lodgement_datetime])
+              .new_offset("-02:00"),
+            DateTime.now,
+          )
+        end
       end
 
       it "returns 2 rows when called with a different task_id" do

@@ -212,11 +212,17 @@ describe "Acceptance::Reports::OpenDataExport" do
       end
 
       it "returns the data exported for row 1 object to match same row in the .csv fixture " do
-        expect(redact_lodgement_datetime(first_commercial_assesment) - redact_lodgement_datetime(fixture_csv[0])).to eq([])
+        expect(
+          redact_lodgement_datetime(first_commercial_assesment) -
+            redact_lodgement_datetime(fixture_csv[0]),
+        ).to eq([])
       end
 
       it "returns the data exported for row 2 object to match same row in the .csv fixture " do
-        expect(redact_lodgement_datetime(second_commercial_assesment) - redact_lodgement_datetime(fixture_csv[1])).to eq([])
+        expect(
+          redact_lodgement_datetime(second_commercial_assesment) -
+            redact_lodgement_datetime(fixture_csv[1]),
+        ).to eq([])
       end
     end
 
@@ -275,11 +281,17 @@ describe "Acceptance::Reports::OpenDataExport" do
       end
 
       it "returns the data exported for row 1 object to match same row in the .csv fixture " do
-        expect(redact_lodgement_datetime(first_dec_asssement) - redact_lodgement_datetime(fixture_csv[0])).to eq([])
+        expect(
+          redact_lodgement_datetime(first_dec_asssement) -
+            redact_lodgement_datetime(fixture_csv[0]),
+        ).to eq([])
       end
 
       it "returns the data exported for row 2 to match same row in the .csv fixture " do
-        expect(redact_lodgement_datetime(second_dec_asssement) - redact_lodgement_datetime(fixture_csv[1])).to eq([])
+        expect(
+          redact_lodgement_datetime(second_dec_asssement) -
+            redact_lodgement_datetime(fixture_csv[1]),
+        ).to eq([])
       end
     end
 
@@ -328,7 +340,10 @@ describe "Acceptance::Reports::OpenDataExport" do
 
       2.times do |i|
         it "returns the data exported for row #{i} object to match same row in the .csv fixture " do
-          expect(redact_lodgement_datetime(parsed_exported_data[i]) - redact_lodgement_datetime(fixture_csv[i])).to eq([])
+          expect(
+            redact_lodgement_datetime(parsed_exported_data[i]) -
+              redact_lodgement_datetime(fixture_csv[i]),
+          ).to eq([])
         end
       end
 

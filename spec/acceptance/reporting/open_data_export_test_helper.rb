@@ -8,7 +8,7 @@ end
 
 def redact_lodgement_datetime(csv_object)
   array = csv_object.to_a
-  array.reject { |k| k[0] == "LODGEMENT_DATETIME"}
+  array.reject { |k| k[0] == "LODGEMENT_DATETIME" }
 end
 
 def file_name(assessment_type)
