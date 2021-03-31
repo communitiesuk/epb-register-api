@@ -25,23 +25,26 @@ describe "Acceptance::Reports::GetAssessmentCountByRegionAndType" do
   let(:valid_ac_report_xml) { Samples.xml "CEPC-8.0.0", "ac-report" }
 
   let(:response) do
-    get_assessment_report(start_date: "2020-05-04", end_date: "2020-05-05").body
+    get_assessment_report(start_date: "2020-08-01", end_date: "2020-08-02").body
   end
 
   context "when getting a report on the number of lodged assessments" do
     before do
       add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
-    end
 
-    before do
-      lodge_assessment(
-        assessment_body: valid_rdsap_xml,
-        accepted_responses: [201],
-        auth_data: {
-          scheme_ids: [scheme_id],
-        },
+      lodge_assessment_with_rrn(
+        valid_rdsap_xml,
+        "0000-0000-0000-0000-0000",
+        "RdSAP-Schema-20.0.0",
+        scheme_id,
+        Time.utc(2020, 8, 1)
       )
     end
+
+    after do
+      Timecop.return
+    end
+
     it "returns a CSV with headers and data included" do
       add_postcodes("A0 0AA", 51.5045, 0.0865, "London")
 
@@ -82,7 +85,9 @@ describe "Acceptance::Reports::GetAssessmentCountByRegionAndType" do
 
       doc = Nokogiri.XML valid_rdsap_xml
       doc.at("RRN").content = "0000-0000-0000-0000-0001"
-      doc.at("Registration-Date").content = "2020-03-04"
+
+      # Registers an assessment a day before the report time frame
+      Timecop.freeze(Time.utc(2020, 5, 4))
       lodge_assessment(
         assessment_body: doc.to_xml,
         accepted_responses: [201],
@@ -109,20 +114,7 @@ describe "Acceptance::Reports::GetAssessmentCountByRegionAndType" do
     end
 
     it "lodgements are not returned if they have been cancelled" do
-      add_postcodes("A0 0AA", 51.5045, 0.0865, "London")
-
-      doc = Nokogiri.XML valid_rdsap_xml
-      doc.at("Registration-Date").content = Date.today
-      doc.at("RRN").content = "0000-0000-0000-0000-0001"
-      lodge_assessment(
-        assessment_body: doc.to_xml,
-        accepted_responses: [201],
-        auth_data: {
-          scheme_ids: [scheme_id],
-        },
-      )
-
-      update_assessment_status assessment_id: "0000-0000-0000-0000-0001",
+      update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
                                assessment_status_body: {
                                  "status": "CANCELLED",
                                },
@@ -130,12 +122,6 @@ describe "Acceptance::Reports::GetAssessmentCountByRegionAndType" do
                                auth_data: {
                                  scheme_ids: [scheme_id],
                                }
-
-      response =
-        get_assessment_report(
-          start_date: Date.yesterday,
-          end_date: Date.tomorrow,
-        ).body
 
       expect(JSON.parse(response, symbolize_names: true)).to eq(
         { data: "No lodgements during this time frame" },
@@ -145,85 +131,64 @@ describe "Acceptance::Reports::GetAssessmentCountByRegionAndType" do
     it "returns a csv of different assessment types " do
       add_postcodes("A0 0AA", 51.5045, 0.0865, "London")
 
-      doc = Nokogiri.XML valid_sap_xml
-      doc.at("RRN").content = "0000-0000-0000-0000-0001"
-      lodge_assessment(
-        assessment_body: doc.to_xml,
-        accepted_responses: [201],
-        auth_data: {
-          scheme_ids: [scheme_id],
-        },
-        schema_name: "SAP-Schema-18.0.0",
+      lodge_assessment_with_rrn(
+        valid_sap_xml,
+        "0000-0000-0000-0000-0001",
+        "SAP-Schema-18.0.0",
+        scheme_id,
+        Time.utc(2020, 8, 1),
+        )
+
+      lodge_assessment_with_rrn(
+        valid_cepc_xml,
+        "0000-0000-0000-0000-0002",
+        "CEPC-8.0.0",
+        scheme_id,
+        Time.utc(2020, 8, 2),
       )
 
-      doc = Nokogiri.XML valid_cepc_xml
-      doc.at("//CEPC:RRN").content = "0000-0000-0000-0000-0002"
-      lodge_assessment(
-        assessment_body: doc.to_xml,
-        accepted_responses: [201],
-        auth_data: {
-          scheme_ids: [scheme_id],
-        },
-        schema_name: "CEPC-8.0.0",
+      lodge_assessment_with_rrn(
+        valid_cepc_rr_xml,
+        "0000-0000-0000-0000-0009",
+        "CEPC-8.0.0",
+        scheme_id,
+        Time.utc(2020, 8, 3),
       )
 
-      doc = Nokogiri.XML valid_cepc_rr_xml
-      doc.at("//CEPC:RRN").content = "0000-0000-0000-0000-0009"
-      lodge_assessment(
-        assessment_body: doc.to_xml,
-        accepted_responses: [201],
-        auth_data: {
-          scheme_ids: [scheme_id],
-        },
-        schema_name: "CEPC-8.0.0",
+      lodge_assessment_with_rrn(
+        valid_dec_xml,
+        "0000-0000-0000-0000-0003",
+        "CEPC-8.0.0",
+        scheme_id,
+        Time.utc(2020, 8, 4),
       )
 
-      doc = Nokogiri.XML valid_dec_xml
-      doc.at("RRN").content = "0000-0000-0000-0000-0003"
-      lodge_assessment(
-        assessment_body: doc.to_xml,
-        accepted_responses: [201],
-        auth_data: {
-          scheme_ids: [scheme_id],
-        },
-        schema_name: "CEPC-8.0.0",
+      lodge_assessment_with_rrn(
+        valid_dec_rr_xml,
+        "0000-0000-0000-0000-0004",
+        "CEPC-8.0.0",
+        scheme_id,
+        Time.utc(2020, 8, 5),
       )
 
-      doc = Nokogiri.XML valid_dec_rr_xml
-      doc.at("RRN").content = "0000-0000-0000-0000-0004"
-      lodge_assessment(
-        assessment_body: doc.to_xml,
-        accepted_responses: [201],
-        auth_data: {
-          scheme_ids: [scheme_id],
-        },
-        schema_name: "CEPC-8.0.0",
+      lodge_assessment_with_rrn(
+        valid_ac_cert_xml,
+        "0000-0000-0000-0000-0005",
+        "CEPC-8.0.0",
+        scheme_id,
+        Time.utc(2020, 8, 6),
       )
 
-      doc = Nokogiri.XML valid_ac_cert_xml
-      doc.at("RRN").content = "0000-0000-0000-0000-0005"
-      lodge_assessment(
-        assessment_body: doc.to_xml,
-        accepted_responses: [201],
-        auth_data: {
-          scheme_ids: [scheme_id],
-        },
-        schema_name: "CEPC-8.0.0",
-      )
-
-      doc = Nokogiri.XML valid_ac_report_xml
-      doc.at("RRN").content = "0000-0000-0000-0000-0006"
-      lodge_assessment(
-        assessment_body: doc.to_xml,
-        accepted_responses: [201],
-        auth_data: {
-          scheme_ids: [scheme_id],
-        },
-        schema_name: "CEPC-8.0.0",
+      lodge_assessment_with_rrn(
+        valid_ac_report_xml,
+        "0000-0000-0000-0000-0006",
+        "CEPC-8.0.0",
+        scheme_id,
+        Time.utc(2020, 8, 7),
       )
 
       response =
-        get_assessment_report(start_date: "2020-05-04", end_date: "2020-06-20")
+        get_assessment_report(start_date: "2020-08-01", end_date: "2020-08-07")
           .body
 
       expect(response).to eq <<~CSV
@@ -239,4 +204,23 @@ describe "Acceptance::Reports::GetAssessmentCountByRegionAndType" do
       CSV
     end
   end
+end
+
+def lodge_assessment_with_rrn(xml, rrn, schema_name, scheme_id, created_at)
+  Timecop.freeze(created_at)
+  doc = Nokogiri.XML xml
+  # Includes commercial certificates excluding DEC
+  if schema_name.include?("CEPC") && doc.at("Report-Type").nil?
+    doc.at("//CEPC:RRN").content = rrn
+  else
+    doc.at("RRN").content = rrn
+  end
+  lodge_assessment(
+    assessment_body: doc.to_xml,
+    accepted_responses: [201],
+    auth_data: {
+      scheme_ids: [scheme_id],
+    },
+    schema_name: schema_name,
+  )
 end

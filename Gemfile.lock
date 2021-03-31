@@ -165,6 +165,7 @@ GEM
       tilt (~> 2.0)
     sinatra-cross_origin (0.4.0)
     tilt (2.0.10)
+    timecop (0.9.4)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     unicode-display_width (1.7.0)
@@ -201,6 +202,7 @@ DEPENDENCIES
   sinatra-activerecord (~> 2.0.22)!
   sinatra-contrib!
   sinatra-cross_origin (~> 0.4.0)!
+  timecop (= 0.9.4)!
   unleash (~> 3.2.1)!
   webmock (~> 3.12)!
   zeitwerk (~> 2.4.1)!

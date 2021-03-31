@@ -18,7 +18,8 @@ module Gateway
           SUBSTRING(a.postcode, 0, LENGTH(a.postcode) - 3) = c.outcode
         )
         WHERE
-          date_registered BETWEEN $1 AND $2
+          a.created_at BETWEEN $1 AND $2
+        AND (a.migrated IS NULL OR a.migrated IS FALSE)
         AND
           (
             cancelled_at IS NULL
