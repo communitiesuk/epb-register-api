@@ -273,12 +273,13 @@ describe "Acceptance::Reports::OpenDataExport" do
             "427ad45e88b1183572234b464ba07b37348243d120db1c478da42eda435e48e4"
         end
       end
+
       it "returns the data exported for row 1 object to match same row in the .csv fixture " do
-        expect(first_dec_asssement.to_a - fixture_csv[0].to_a).to eq([])
+        expect(redact_lodgement_datetime(first_dec_asssement) - redact_lodgement_datetime(fixture_csv[0])).to eq([])
       end
 
       it "returns the data exported for row 2 to match same row in the .csv fixture " do
-        expect(second_dec_asssement.to_a - fixture_csv[1].to_a).to eq([])
+        expect(redact_lodgement_datetime(second_dec_asssement) - redact_lodgement_datetime(fixture_csv[1])).to eq([])
       end
     end
 

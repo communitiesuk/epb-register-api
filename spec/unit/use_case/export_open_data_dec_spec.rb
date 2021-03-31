@@ -26,6 +26,7 @@ describe UseCase::ExportOpenDataDec do
         nominated_date: "2020-01-01",
         or_assessment_end_date: "2020-05-01",
         lodgement_date: "2020-05-04",
+        lodgement_datetime: "2021-02-18 00:00:00",
         main_benchmark: "",
         main_heating_fuel: "Natural Gas",
         special_energy_uses: "special",
@@ -58,6 +59,7 @@ describe UseCase::ExportOpenDataDec do
           {
             assessment_id:
               "55ce7d026c13e923d26cbfb0d6ed60734d3270ba981d629a168bb8eb2da3f8c4",
+            lodgement_datetime: datetime_today,
           },
         )
       end
@@ -68,6 +70,7 @@ describe UseCase::ExportOpenDataDec do
             assessment_id:
               "5cb9fa3be789df637c7c20acac4e19c5ebf691f0f0d78f2a1b5f30c8b336bba6",
             building_reference_number: nil,
+            lodgement_datetime: datetime_today,
           },
         )
       end
@@ -184,20 +187,26 @@ describe UseCase::ExportOpenDataDec do
         expect(statistics[0]["num_rows"]).to eq(3)
       end
 
-      # 1st row to test
-      # write at test for each key in test hash
-      expected_values.keys.each do |index|
+      expected_values.reject { |k|
+        %i[lodgement_datetime].include? k
+      }.keys.each do |index|
         it "returns the #{index} that matches the test data for the 1st row" do
           expect(exported_data[0][index.to_sym]).to eq(expected_values[index])
         end
       end
 
-      # 2nd row to test
-      # write at test for each key in test hash
-      expected_values.keys.each do |index|
+      expected_values.reject { |k|
+        %i[lodgement_datetime].include? k
+      }.keys.each do |index|
         it "returns the #{index} that matches the test data for the 2nd row" do
           expect(exported_data[1][index.to_sym]).to eq(expected_values_1[index])
         end
+      end
+
+      3.times do |i|
+      it "returns assessment number #{i} to have lodged_datetime to be within 3 hours" do
+        expect(exported_data[i][:lodgement_datetime]).to be_between(DateTime.parse(exported_data[i][:lodgement_datetime]).new_offset("-02:00"), DateTime.now)
+      end
       end
 
       it "returns 2 rows when called with a different task_id" do
