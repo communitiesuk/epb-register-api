@@ -327,14 +327,7 @@ describe "Acceptance::Reports::OpenDataExport" do
 
       2.times do |i|
         it "returns the data exported for row #{i} object to match same row in the .csv fixture " do
-
-          fixture_array = fixture_csv[i].to_a
-          redacted_fixture = fixture_array.reject { |k| k[0] == "LODGEMENT_DATETIME"}
-
-          exported_data_array = parsed_exported_data[i].to_a
-          redacted_exported_data = exported_data_array.reject { |k| k[0] == "LODGEMENT_DATETIME"}
-
-          expect(redacted_exported_data - redacted_fixture).to eq([])
+          expect(redact_lodgement_datetime(parsed_exported_data[i]) - redact_lodgement_datetime(fixture_csv[i])).to eq([])
         end
       end
 

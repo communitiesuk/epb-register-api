@@ -6,6 +6,11 @@ def test_to_date
   "2021-03-01"
 end
 
+def redact_lodgement_datetime(csv_object)
+  array = csv_object.to_a
+  array.reject { |k| k[0] == "LODGEMENT_DATETIME"}
+end
+
 def file_name(assessment_type)
   "open_data_export_#{assessment_type.downcase}_#{DateTime.now.strftime('%F')}_1.csv"
 end
