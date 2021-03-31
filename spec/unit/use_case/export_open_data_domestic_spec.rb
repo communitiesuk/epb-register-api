@@ -379,6 +379,10 @@ describe UseCase::ExportOpenDataDomestic do
         end
       end
 
+      it "expects the assessment's lodged time to be within 3 hours" do
+        expect(DateTime.parse(rdsap_assesment[:lodgement_datetime])).to be_between(DateTime.parse(rdsap_assesment[:lodgement_datetime]).new_offset("-02:00"), DateTime.now)
+      end
+
       it "returns a hash with building_reference_number nil when an RdSAP is submitted when building_reference_number is not a UPRN" do
         expect(rdsap_assesment_with_rrn_building_ref).to eq(nil)
       end

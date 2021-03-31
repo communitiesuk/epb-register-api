@@ -37,7 +37,7 @@ module UseCase
         view_model_hash[:lodgement_date] =
           assessment["date_registered"].strftime("%F")
         view_model_hash[:lodgement_datetime] =
-          assessment["date_registered"].strftime("%F %H:%M:%S")
+          assessment["created_at"].strftime("%F %H:%M:%S")
         @log_gateway.create(
           assessment["assessment_id"],
           new_task_id,
