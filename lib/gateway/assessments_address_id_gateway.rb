@@ -38,7 +38,21 @@ module Gateway
       AssessmentsAddressId.create(record) if existing_assessment_address_id.nil?
     end
 
-    def update_assessment_address_id_mapping(
+    def update_assessments_address_id_mapping(
+      assessment_ids,
+      new_address_id,
+      new_source = "epb_team_update"
+    )
+      ActiveRecord::Base.transaction do
+        assessment_ids.each do |assessment_id|
+          update_address_id(assessment_id, new_address_id, new_source)
+        end
+      end
+    end
+
+  private
+
+    def update_address_id(
       assessment_id,
       new_address_id,
       new_source = "epb_team_update"

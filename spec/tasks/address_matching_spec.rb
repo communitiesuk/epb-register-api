@@ -28,7 +28,6 @@ describe "AddressMatching" do
 
   let(:assessment_gateway) { Gateway::AssessmentsGateway.new }
   let(:assessment_search_gateway) { Gateway::AssessmentsSearchGateway.new }
-  let(:address_id_gateway) { Gateway::AssessmentsAddressIdGateway.new }
 
   context "When we call the import_address_matching task" do
     before do
@@ -59,7 +58,8 @@ describe "AddressMatching" do
 
     context "With an address ID was previously updated by EPBR" do
       before do
-        address_id_gateway.update_assessment_address_id_mapping(
+        add_address_base(uprn: 91)
+        update_assessment_address_id(
           "0000-0000-0000-0000-0001",
           "UPRN-0000000091",
         )
