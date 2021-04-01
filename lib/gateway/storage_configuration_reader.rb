@@ -2,7 +2,7 @@ module Gateway
   class StorageConfigurationReader
     attr_reader :instance_name, :bucket_name
 
-    class IllegalCalLException < StandardError
+    class IllegalCallException < StandardError
     end
 
     def initialize(instance_name: nil, bucket_name: nil)
@@ -16,7 +16,7 @@ module Gateway
       elsif local_configuration_present?
         credentials_from_local_keys
       else
-        raise IllegalCalLException,
+        raise IllegalCallException,
               "Local AWS credentials or VCAP_SERVICES not present"
       end
     end
