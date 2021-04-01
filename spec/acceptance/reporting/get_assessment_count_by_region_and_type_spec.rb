@@ -37,13 +37,11 @@ describe "Acceptance::Reports::GetAssessmentCountByRegionAndType" do
         "0000-0000-0000-0000-0000",
         "RdSAP-Schema-20.0.0",
         scheme_id,
-        Time.utc(2020, 8, 1)
+        Time.utc(2020, 8, 1),
       )
     end
 
-    after do
-      Timecop.return
-    end
+    after { Timecop.return }
 
     it "returns a CSV with headers and data included" do
       add_postcodes("A0 0AA", 51.5045, 0.0865, "London")
@@ -137,7 +135,7 @@ describe "Acceptance::Reports::GetAssessmentCountByRegionAndType" do
         "SAP-Schema-18.0.0",
         scheme_id,
         Time.utc(2020, 8, 1),
-        )
+      )
 
       lodge_assessment_with_rrn(
         valid_cepc_xml,
@@ -209,6 +207,7 @@ end
 def lodge_assessment_with_rrn(xml, rrn, schema_name, scheme_id, created_at)
   Timecop.freeze(created_at)
   doc = Nokogiri.XML xml
+
   # Includes commercial certificates excluding DEC
   if schema_name.include?("CEPC") && doc.at("Report-Type").nil?
     doc.at("//CEPC:RRN").content = rrn

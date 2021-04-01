@@ -227,6 +227,8 @@ describe UseCase::ExportOpenDataDomestic do
         domestic_ni_sap_postcode =
           domestic_ni_sap_xml.at("Property Address Postcode")
 
+        Timecop.freeze(2021, 0o3, 31, 9, 30, 0)
+
         add_assessor(
           scheme_id,
           "SPEC000000",
@@ -331,6 +333,8 @@ describe UseCase::ExportOpenDataDomestic do
         )
       end
 
+      after(:all) { Timecop.return }
+
       let(:rdsap_assesment) do
         expected_data_hash =
           exported_data.select do |hash|
@@ -379,25 +383,15 @@ describe UseCase::ExportOpenDataDomestic do
         end
       end
 
-      it "expects the RdSAP assessment's lodged time to be within 3 hours" do
-        expect(
-          DateTime.parse(rdsap_assesment[:lodgement_datetime]),
-        ).to be_between(
-          DateTime
-            .parse(rdsap_assesment[:lodgement_datetime])
-            .new_offset("-02:00"),
-          DateTime.now,
+      it "expects the RdSAP assessment's lodged date time to be now based on a frozen time " do
+        expect(DateTime.parse(rdsap_assesment[:lodgement_datetime])).to eq(
+          Time.now,
         )
       end
 
-      it "expects the SAP assessment's lodged time to be within 3 hours" do
-        expect(
-          DateTime.parse(sap_assesment[:lodgement_datetime]),
-        ).to be_between(
-          DateTime
-            .parse(sap_assesment[:lodgement_datetime])
-            .new_offset("-02:00"),
-          DateTime.now,
+      it "expects the SAP assessment's lodged date time to be now based on a frozen time " do
+        expect(DateTime.parse(sap_assesment[:lodgement_datetime])).to eq(
+          Time.now,
         )
       end
 

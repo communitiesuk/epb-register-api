@@ -95,6 +95,7 @@ describe UseCase::ExportOpenDataDec do
       end
 
       before(:all) do
+        Timecop.freeze(2021, 0o3, 31, 9, 30, 0)
         scheme_id = add_scheme_and_get_id
         dec_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "dec")
         dec_assessment_id = dec_xml.at("RRN")
@@ -178,6 +179,8 @@ describe UseCase::ExportOpenDataDec do
         )
       end
 
+      after(:all) { Timecop.return }
+
       it "returns the correct number of assessments in the Data" do
         expect(exported_data.length).to eq(3)
       end
@@ -202,12 +205,9 @@ describe UseCase::ExportOpenDataDec do
       end
 
       3.times do |i|
-        it "returns assessment number #{i} to have lodged_datetime to be within 3 hours" do
-          expect(exported_data[i][:lodgement_datetime]).to be_between(
-            DateTime
-              .parse(exported_data[i][:lodgement_datetime])
-              .new_offset("-02:00"),
-            DateTime.now,
+        it "returns assessment number #{i} to have lodged_datetime equal to frozen time" do
+          expect(DateTime.parse(exported_data[i][:lodgement_datetime])).to eq(
+            Time.now,
           )
         end
       end

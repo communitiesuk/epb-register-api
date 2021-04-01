@@ -67,6 +67,8 @@ describe UseCase::ExportOpenDataCommercial do
       end
 
       before(:all) do
+        Timecop.freeze(2021, 0o3, 31, 9, 30, 0)
+
         scheme_id = add_scheme_and_get_id
         non_domestic_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc")
         non_domestic_assessment_id = non_domestic_xml.at("//CEPC:RRN")
@@ -176,6 +178,8 @@ describe UseCase::ExportOpenDataCommercial do
         )
       end
 
+      after(:all) { Timecop.return }
+
       let(:rrn_assessment) do
         expected_data_hash =
           exported_data.select do |hash|
@@ -207,12 +211,9 @@ describe UseCase::ExportOpenDataCommercial do
       end
 
       3.times do |i|
-        it "expected valid assessment number #{i} lodged time to be within 3 hours" do
-          expect(exported_data[i][:lodgement_datetime]).to be_between(
-            DateTime
-              .parse(exported_data[i][:lodgement_datetime])
-              .new_offset("-02:00"),
-            DateTime.now,
+        it "expected valid assessment number #{i} lodged time to equal the frozen time" do
+          expect(DateTime.parse(exported_data[i][:lodgement_datetime])).to eq(
+            Time.now,
           )
         end
       end
