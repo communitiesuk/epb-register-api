@@ -37,42 +37,6 @@ describe ViewModel::RdSapWrapper do
             },
           },
         },
-        {
-          schema: "RdSAP-Schema-NI-20.0.0",
-          unsupported_fields: %i[improvement_summary],
-        },
-        {
-          schema: "RdSAP-Schema-NI-19.0",
-          different_buried_fields: {
-            address: {
-              address_id: "LPRN-0000000000",
-            },
-          },
-        },
-        {
-          schema: "RdSAP-Schema-NI-18.0",
-          different_buried_fields: {
-            address: {
-              address_id: "LPRN-0000000000",
-            },
-          },
-        },
-        {
-          schema: "RdSAP-Schema-NI-17.4",
-          different_buried_fields: {
-            address: {
-              address_id: "LPRN-0000000000",
-            },
-          },
-        },
-        {
-          schema: "RdSAP-Schema-NI-17.3",
-          different_buried_fields: {
-            address: {
-              address_id: "LPRN-0000000000",
-            },
-          },
-        },
       ]
     end
 
@@ -349,31 +313,6 @@ describe ViewModel::RdSapWrapper do
         },
         {
           schema: "RdSAP-Schema-17.0",
-          different_fields: {
-            building_reference_number: "LPRN-0000000000",
-          },
-        },
-        { schema: "RdSAP-Schema-NI-20.0.0" },
-        {
-          schema: "RdSAP-Schema-NI-19.0",
-          different_fields: {
-            building_reference_number: "LPRN-0000000000",
-          },
-        },
-        {
-          schema: "RdSAP-Schema-NI-18.0",
-          different_fields: {
-            building_reference_number: "LPRN-0000000000",
-          },
-        },
-        {
-          schema: "RdSAP-Schema-NI-17.4",
-          different_fields: {
-            building_reference_number: "LPRN-0000000000",
-          },
-        },
-        {
-          schema: "RdSAP-Schema-NI-17.3",
           different_fields: {
             building_reference_number: "LPRN-0000000000",
           },
