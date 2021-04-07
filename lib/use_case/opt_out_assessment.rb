@@ -13,15 +13,31 @@ module UseCase
     def execute(assessment_id)
       assessment_id = Helper::RrnHelper.normalise_rrn_format(assessment_id)
 
-      assessment =
+      main_assessment =
         @assessments_search_gateway.search_by_assessment_id(
           assessment_id,
           false,
         ).first
 
-      raise AssessmentNotFound unless assessment
+      raise AssessmentNotFound unless main_assessment
 
-      @assessments_gateway.update_field(assessment_id, "opt_out", true)
+      assessments = [main_assessment]
+      linked_assessment_id =
+        @assessments_gateway.get_linked_assessment_id(assessment_id)
+
+      unless linked_assessment_id.nil?
+        linked_assessment =
+          @assessments_search_gateway.search_by_assessment_id(
+            linked_assessment_id,
+            false,
+          ).first
+        assessments << linked_assessment
+      end
+
+      assessment_ids =
+        assessments.map { |assessment| assessment.get("assessment_id") }
+
+      @assessments_gateway.update_statuses(assessment_ids, "opt_out", true)
     end
   end
 end
