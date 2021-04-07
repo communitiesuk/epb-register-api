@@ -22,7 +22,8 @@ module UseCase
       assessment_id = Helper::RrnHelper.normalise_rrn_format(assessment_id)
 
       assessments_ids = [assessment_id]
-      linked_assessment_id = @assessment_gateway.get_linked_assessment_id(assessment_id)
+      linked_assessment_id =
+        @assessment_gateway.get_linked_assessment_id(assessment_id)
       assessments_ids << linked_assessment_id unless linked_assessment_id.nil?
 
       assessments_ids.each do |current_assessment_id|
@@ -57,14 +58,14 @@ module UseCase
       elsif new_address_id.start_with? "RRN-"
         linking_to_rrn = new_address_id[4..-1]
         if @assessments_search_gateway.search_by_assessment_id(linking_to_rrn)
-                                      .empty?
+             .empty?
           raise AddressIdNotFound
         end
 
         rrn_assessment_address_id =
           @assessments_address_id_gateway.fetch(linking_to_rrn)[:address_id]
         if (new_address_id != rrn_assessment_address_id) &&
-          (linking_to_rrn != assessment_id)
+            (linking_to_rrn != assessment_id)
           raise AddressIdMismatched,
                 "Assessment #{linking_to_rrn} is linked to address ID #{rrn_assessment_address_id}"
         end

@@ -1073,6 +1073,7 @@ describe ViewModel::SapWrapper do
             floor_level: nil,
             floor_height: nil,
             extension_count: "1",
+            glazed_type: "double glazing installed during or after 2002",
           },
         },
         {
@@ -1104,6 +1105,7 @@ describe ViewModel::SapWrapper do
             floor_level: nil,
             floor_height: nil,
             extension_count: "1",
+            glazed_type: "double glazing installed during or after 2002",
           },
         },
         {
@@ -1135,6 +1137,7 @@ describe ViewModel::SapWrapper do
             floor_level: nil,
             floor_height: nil,
             extension_count: "1",
+            glazed_type: "double glazing installed during or after 2002",
           },
         },
         {
@@ -1168,6 +1171,7 @@ describe ViewModel::SapWrapper do
             floor_level: nil,
             floor_height: nil,
             extension_count: "1",
+            glazed_type: "double glazing installed during or after 2002",
           },
         },
         {
@@ -1202,6 +1206,7 @@ describe ViewModel::SapWrapper do
             floor_level: nil,
             floor_height: nil,
             extension_count: "1",
+            glazed_type: "double glazing installed during or after 2002",
           },
         },
         {
@@ -1236,6 +1241,7 @@ describe ViewModel::SapWrapper do
             floor_level: nil,
             floor_height: nil,
             extension_count: "1",
+            glazed_type: "double glazing installed during or after 2002",
           },
         },
         {
@@ -1272,6 +1278,7 @@ describe ViewModel::SapWrapper do
             floor_height: nil,
             extension_count: "1",
             main_fuel: "Solid fuel: dual fuel appliance (mineral and wood)",
+            glazed_type: "double glazing installed during or after 2002",
           },
         },
         {
@@ -1309,6 +1316,7 @@ describe ViewModel::SapWrapper do
             floor_height: nil,
             extension_count: "1",
             main_fuel: "Solid fuel: dual fuel appliance (mineral and wood)",
+            glazed_type: "double glazing installed during or after 2002",
           },
         },
         {
@@ -1346,6 +1354,7 @@ describe ViewModel::SapWrapper do
             floor_height: nil,
             extension_count: "1",
             main_fuel: "Solid fuel: dual fuel appliance (mineral and wood)",
+            glazed_type: "double glazing installed during or after 2002",
           },
         },
         {
@@ -1383,6 +1392,7 @@ describe ViewModel::SapWrapper do
             floor_height: nil,
             extension_count: "1",
             main_fuel: "Solid fuel: dual fuel appliance (mineral and wood)",
+            glazed_type: "double glazing installed during or after 2002",
           },
         },
         {
@@ -1422,6 +1432,7 @@ describe ViewModel::SapWrapper do
             floor_height: nil,
             extension_count: "1",
             main_fuel: "Solid fuel: dual fuel appliance (mineral and wood)",
+            glazed_type: "double glazing installed during or after 2002",
           },
         },
         {

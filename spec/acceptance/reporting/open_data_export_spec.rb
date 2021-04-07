@@ -3,9 +3,7 @@ require_relative "open_data_export_test_helper"
 describe "Acceptance::Reports::OpenDataExport" do
   include RSpecRegisterApiServiceMixin
 
-  before(:all) do
-    @scheme_id = lodge_assessor
-  end
+  before(:all) { @scheme_id = lodge_assessor }
 
   after { WebMock.disable! }
 
@@ -115,7 +113,9 @@ describe "Acceptance::Reports::OpenDataExport" do
             Helper::ExportHelper.to_csv(
               use_case
                 .execute(test_start_date, 0, "2021-02-28")
-                .sort_by! { |item| [item[:assessment_id], item[:improvement_item]] },
+                .sort_by! do |item|
+                  [item[:assessment_id], item[:improvement_item]]
+                end,
             )
           end
           let(:fixture_csv) { read_csv_fixture("domestic_rr") }
@@ -128,7 +128,9 @@ describe "Acceptance::Reports::OpenDataExport" do
 
           4.times do |i|
             it "returns the data exported for row #{i} object to match same row in the .csv fixture " do
-              expect(parsed_exported_data[i].to_a - fixture_csv[i].to_a).to eq([])
+              expect(parsed_exported_data[i].to_a - fixture_csv[i].to_a).to eq(
+                [],
+              )
             end
           end
 
@@ -244,7 +246,12 @@ describe "Acceptance::Reports::OpenDataExport" do
         )
 
         cepc_rr_xml =
-          get_recommendations_xml("CEPC-8.0.0", test_start_date, "cepc+rr", "1111")
+          get_recommendations_xml(
+            "CEPC-8.0.0",
+            test_start_date,
+            "cepc+rr",
+            "1111",
+          )
         lodge_assessment(
           assessment_body: cepc_rr_xml.to_xml,
           accepted_responses: [201],
@@ -334,7 +341,9 @@ describe "Acceptance::Reports::OpenDataExport" do
 
           5.times do |i|
             it "returns the data exported for row #{i} object to match same row in the .csv fixture " do
-              expect(parsed_exported_data[i].to_a - fixture_csv[i].to_a).to eq([])
+              expect(parsed_exported_data[i].to_a - fixture_csv[i].to_a).to eq(
+                [],
+              )
             end
           end
         end
@@ -433,7 +442,12 @@ describe "Acceptance::Reports::OpenDataExport" do
         )
 
         dec_rr_xml =
-          get_recommendations_xml("CEPC-8.0.0", test_start_date, "dec+rr", "1111")
+          get_recommendations_xml(
+            "CEPC-8.0.0",
+            test_start_date,
+            "dec+rr",
+            "1111",
+          )
         lodge_assessment(
           assessment_body: dec_rr_xml.to_xml,
           accepted_responses: [201],
@@ -513,7 +527,9 @@ describe "Acceptance::Reports::OpenDataExport" do
                 .sort_by! { |key| key[:recommendation_item] },
             )
           end
-          let(:export_data_headers_array) { get_exported_data_headers(csv_data) }
+          let(:export_data_headers_array) do
+            get_exported_data_headers(csv_data)
+          end
           let(:fixture_csv) { read_csv_fixture("dec_rr") }
           let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
           let(:ignore_headers) { %w[ASSESSMENT_ID] }
@@ -525,7 +541,9 @@ describe "Acceptance::Reports::OpenDataExport" do
 
           5.times do |i|
             it "returns the data exported for row #{i} object to match same row in the .csv fixture " do
-              expect(parsed_exported_data[i].to_a - fixture_csv[i].to_a).to eq([])
+              expect(parsed_exported_data[i].to_a - fixture_csv[i].to_a).to eq(
+                [],
+              )
             end
           end
         end

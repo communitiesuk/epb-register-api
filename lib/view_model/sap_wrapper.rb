@@ -555,7 +555,10 @@ module ViewModel
           Helper::XmlEnumsToOutput.energy_rating_string(
             @view_model.all_main_heating_controls_environmental_efficiency.first,
           ),
-        glazed_type: nil,
+        glazed_type:
+          Helper::XmlEnumsToOutput.glazed_type_rdsap(
+            @view_model.multi_glazing_type,
+          ),
       }
     end
 
