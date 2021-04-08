@@ -3,6 +3,20 @@ describe UseCase::UpdateAssessmentStatus do
 
   let(:use_case) { described_class.new }
 
+  let(:assessment) {
+    assessments_search_gateway.search_by_assessment_id(
+      "0000-0000-0000-0000-0000",
+      false,
+      ).first
+  }
+
+  let(:linked_assessment) {
+    assessments_search_gateway.search_by_assessment_id(
+      "0000-0000-0000-0000-0001",
+      false,
+      ).first
+  }
+
   before(:all) do
     @scheme_id = add_scheme_and_get_id
     add_super_assessor(@scheme_id)
@@ -18,21 +32,11 @@ describe UseCase::UpdateAssessmentStatus do
     end
 
     it "it cancels the first assessment" do
-      assessment1 =
-        assessments_search_gateway.search_by_assessment_id(
-          "0000-0000-0000-0000-0000",
-          false,
-        ).first
-      expect(assessment1.get("cancelled_at")).not_to be_nil
+      expect(assessment.get("cancelled_at")).not_to be_nil
     end
 
     it "it cancels the linked assessment" do
-      assessment2 =
-        assessments_search_gateway.search_by_assessment_id(
-          "0000-0000-0000-0000-0001",
-          false,
-        ).first
-      expect(assessment2.get("cancelled_at")).not_to be_nil
+      expect(linked_assessment.get("cancelled_at")).not_to be_nil
     end
   end
 end
