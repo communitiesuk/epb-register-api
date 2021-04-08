@@ -12,6 +12,7 @@ module UseCase
     def initialize
       @assessments_gateway = Gateway::AssessmentsGateway.new
       @assessments_search_gateway = Gateway::AssessmentsSearchGateway.new
+      @address_base_search_gateway = Gateway::AddressBaseSearchGateway.new
       @assessors_gateway = Gateway::AssessorsGateway.new
       @assessments_xml_gateway = Gateway::AssessmentsXmlGateway.new
       @assessments_address_id_gateway = Gateway::AssessmentsAddressIdGateway.new
@@ -23,7 +24,7 @@ module UseCase
       unless migrated
         if @assessments_search_gateway.search_by_assessment_id(
           assessment_id,
-          restrictive = false,
+          false,
         ).first
           raise DuplicateAssessmentIdException
         end
@@ -66,13 +67,7 @@ module UseCase
 
       @assessments_gateway.insert_or_update assessment
 
-      @assessments_address_id_gateway.send_to_db(
-        {
-          assessment_id: data[:assessment_id],
-          address_id: data[:address][:address_id],
-          source: "lodgement",
-        },
-      )
+      save_new_address_id assessment
 
       @assessments_xml_gateway.send_to_db(
         {
@@ -147,6 +142,27 @@ module UseCase
         related_rrn = wrapper_hash[:administrative_information][:related_rrn]
       end
       related_rrn
+    end
+
+    def save_new_address_id(assessment)
+      new_address_id = assessment.address_id
+
+      if new_address_id.nil?
+        new_address_id = "RRN-" + assessment.assessment_id
+      elsif new_address_id.start_with?("UPRN-")
+        # TODO: Prevent assessors from lodging non existing UPRNs
+        uprn = new_address_id[5..-1].to_i.to_s
+        uprn_search_result = @address_base_search_gateway.search_by_uprn(uprn)
+        new_address_id = "RRN-" + assessment.assessment_id if uprn_search_result.empty?
+      end
+
+      @assessments_address_id_gateway.send_to_db(
+        {
+          assessment_id: assessment.assessment_id,
+          address_id: new_address_id,
+          source: "lodgement",
+        },
+      )
     end
   end
 end

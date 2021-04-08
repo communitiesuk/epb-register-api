@@ -5,7 +5,8 @@ module Domain
                 :assessment_id,
                 :xml,
                 :scheme_assessor_id,
-                :opt_out
+                :opt_out,
+                :address_id
 
     attr_writer :assessor, :green_deal_plan
 
