@@ -3,19 +3,19 @@ describe UseCase::OptOutAssessment do
 
   let(:use_case) { described_class.new }
   let(:assessments_search_gateway) { Gateway::AssessmentsSearchGateway.new }
-  let(:assessment) {
+  let(:assessment) do
     assessments_search_gateway.search_by_assessment_id(
       "0000-0000-0000-0000-0000",
       false,
-      ).first
-  }
+    ).first
+  end
 
-  let(:linked_assessment) {
+  let(:linked_assessment) do
     assessments_search_gateway.search_by_assessment_id(
       "0000-0000-0000-0000-0001",
       false,
-      ).first
-  }
+    ).first
+  end
 
   before(:all) do
     @scheme_id = add_scheme_and_get_id
@@ -25,20 +25,17 @@ describe UseCase::OptOutAssessment do
     call_lodge_assessment(@scheme_id, cepc_schema, cepc_xml)
   end
 
-  context 'before the update has taken place' do
-    it 'the assesment opt out status is false' do
+  context "before the update has taken place" do
+    it "the assesment opt out status is false" do
       expect(assessment.get("opt_out")).to be false
     end
-    it 'the linked assement opt out status is false' do
+    it "the linked assement opt out status is false" do
       expect(linked_assessment.get("opt_out")).to be false
     end
   end
 
   context "when calling update_statuses for opt outs" do
-
-    before do
-       use_case.execute("0000-0000-0000-0000-0000")
-    end
+    before { use_case.execute("0000-0000-0000-0000-0000") }
 
     it "opts out the assessment by setting the value to true" do
       expect(assessment.get("opt_out")).to be true

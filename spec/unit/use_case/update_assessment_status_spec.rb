@@ -3,19 +3,19 @@ describe UseCase::UpdateAssessmentStatus do
 
   let(:use_case) { described_class.new }
 
-  let(:assessment) {
+  let(:assessment) do
     assessments_search_gateway.search_by_assessment_id(
       "0000-0000-0000-0000-0000",
       false,
-      ).first
-  }
+    ).first
+  end
 
-  let(:linked_assessment) {
+  let(:linked_assessment) do
     assessments_search_gateway.search_by_assessment_id(
       "0000-0000-0000-0000-0001",
       false,
-      ).first
-  }
+    ).first
+  end
 
   before(:all) do
     @scheme_id = add_scheme_and_get_id
