@@ -36,10 +36,6 @@ module ViewModel
       def heated_room_count
         xpath(%w[Heated-Room-Count])
       end
-
-      def heat_loss_corridor
-        xpath(%w[Heat-Loss-Corridor])
-      end
     end
   end
 end
