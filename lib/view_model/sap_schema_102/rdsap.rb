@@ -37,6 +37,10 @@ module ViewModel
       def habitable_room_count
         xpath(%w[Habitable-Room-Count])
       end
+
+      def heated_room_count
+        xpath(%w[Heated-Room-Count])
+      end
     end
   end
 end
