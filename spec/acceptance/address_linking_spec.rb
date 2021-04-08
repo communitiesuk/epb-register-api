@@ -371,7 +371,7 @@ describe "Acceptance::AddressLinking" do
       ).to eq "RRN-0000-0000-0000-0000-0000"
       expect(
         cepc_rr_response[:data][:addressId],
-      ).to eq "RRN-0000-0000-0000-0000-0001"
+      ).to eq "RRN-0000-0000-0000-0000-0000"
 
       update_assessment_address_id(
         "0000-0000-0000-0000-0000",
