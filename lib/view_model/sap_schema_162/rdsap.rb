@@ -44,6 +44,10 @@ module ViewModel
       def glazed_area
         xpath(%w[Glazed-Area])
       end
+
+      def habitable_room_count
+        xpath(%w[Habitable-Room-Count])
+      end
     end
   end
 end
