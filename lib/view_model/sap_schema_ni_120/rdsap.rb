@@ -36,6 +36,10 @@ module ViewModel
       def heated_room_count
         xpath(%w[Heated-Room-Count])
       end
+
+      def photovoltaic_roof_area_percent
+        xpath(%w[Photovoltaic-Supply])
+      end
     end
   end
 end
