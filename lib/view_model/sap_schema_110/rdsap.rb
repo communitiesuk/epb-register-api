@@ -65,6 +65,10 @@ module ViewModel
       def photovoltaic_roof_area_percent
         xpath(%w[Photovoltaic-Supply])
       end
+
+      def solar_water_heating_flag
+        xpath(%w[Solar-Water-Heating])
+      end
     end
   end
 end

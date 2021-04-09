@@ -1077,6 +1077,7 @@ describe ViewModel::SapWrapper do
             number_habitable_rooms: "5",
             number_heated_rooms: "5",
             photo_supply:"0",
+            solar_water_heating_flag: "N",
           },
         },
         {
@@ -1112,6 +1113,7 @@ describe ViewModel::SapWrapper do
             number_habitable_rooms: "5",
             number_heated_rooms: "5",
             photo_supply:"0",
+            solar_water_heating_flag: "N",
           },
         },
         {
@@ -1147,6 +1149,7 @@ describe ViewModel::SapWrapper do
             number_habitable_rooms: "5",
             number_heated_rooms: "5",
             photo_supply:"0",
+            solar_water_heating_flag: "N",
           },
         },
         {
@@ -1184,6 +1187,7 @@ describe ViewModel::SapWrapper do
             number_habitable_rooms: "5",
             number_heated_rooms: "5",
             photo_supply:"0",
+            solar_water_heating_flag: "N",
           },
         },
         {
@@ -1222,6 +1226,7 @@ describe ViewModel::SapWrapper do
             number_habitable_rooms: "5",
             number_heated_rooms: "5",
             photo_supply:"0",
+            solar_water_heating_flag: "N",
           },
         },
         {
@@ -1260,6 +1265,7 @@ describe ViewModel::SapWrapper do
             number_habitable_rooms: "5",
             number_heated_rooms: "5",
             photo_supply:"0",
+            solar_water_heating_flag: "N",
           },
         },
         {
@@ -1300,6 +1306,7 @@ describe ViewModel::SapWrapper do
             number_habitable_rooms: "5",
             number_heated_rooms: "5",
             photo_supply:"0",
+            solar_water_heating_flag: "N",
           },
         },
         {
@@ -1341,6 +1348,7 @@ describe ViewModel::SapWrapper do
             number_habitable_rooms: "5",
             number_heated_rooms: "5",
             photo_supply:"0",
+            solar_water_heating_flag: "N",
           },
         },
         {
@@ -1382,6 +1390,7 @@ describe ViewModel::SapWrapper do
             number_habitable_rooms: "5",
             number_heated_rooms: "5",
             photo_supply:"0",
+            solar_water_heating_flag: "N",
           },
         },
         {
@@ -1423,6 +1432,7 @@ describe ViewModel::SapWrapper do
             number_habitable_rooms: "5",
             number_heated_rooms: "5",
             photo_supply:"0",
+            solar_water_heating_flag: "N",
           },
         },
         {
@@ -1466,6 +1476,7 @@ describe ViewModel::SapWrapper do
             number_habitable_rooms: "5",
             number_heated_rooms: "5",
             photo_supply:"0",
+            solar_water_heating_flag: "N",
           },
         },
         {
@@ -1512,6 +1523,7 @@ describe ViewModel::SapWrapper do
             number_habitable_rooms: "4",
             number_heated_rooms: "4",
             photo_supply:"0",
+            solar_water_heating_flag: "N",
           },
         },
       ]
