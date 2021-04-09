@@ -443,10 +443,6 @@ module ViewModel
         @xml_doc.search("Main-Heating/Energy-Efficiency-Rating").map(&:content)
       end
 
-      def extensions_count
-        xpath(%w[Extensions-Count])
-      end
-
       def solar_water_heating_flag
         nil
       end
