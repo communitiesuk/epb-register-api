@@ -1078,6 +1078,7 @@ describe ViewModel::SapWrapper do
             number_heated_rooms: "5",
             photo_supply: "0",
             solar_water_heating_flag: "N",
+            mechanical_ventilation: "natural",
           },
         },
         {
@@ -1114,6 +1115,7 @@ describe ViewModel::SapWrapper do
             number_heated_rooms: "5",
             photo_supply: "0",
             solar_water_heating_flag: "N",
+            mechanical_ventilation: "natural",
           },
         },
         {
@@ -1150,6 +1152,7 @@ describe ViewModel::SapWrapper do
             number_heated_rooms: "5",
             photo_supply: "0",
             solar_water_heating_flag: "N",
+            mechanical_ventilation: "natural",
           },
         },
         {
@@ -1188,6 +1191,7 @@ describe ViewModel::SapWrapper do
             number_heated_rooms: "5",
             photo_supply: "0",
             solar_water_heating_flag: "N",
+            mechanical_ventilation: "natural",
           },
         },
         {
@@ -1227,6 +1231,7 @@ describe ViewModel::SapWrapper do
             number_heated_rooms: "5",
             photo_supply: "0",
             solar_water_heating_flag: "N",
+            mechanical_ventilation: "natural",
           },
         },
         {
@@ -1266,6 +1271,7 @@ describe ViewModel::SapWrapper do
             number_heated_rooms: "5",
             photo_supply: "0",
             solar_water_heating_flag: "N",
+            mechanical_ventilation: "natural",
           },
         },
         {
@@ -1307,6 +1313,7 @@ describe ViewModel::SapWrapper do
             number_heated_rooms: "5",
             photo_supply: "0",
             solar_water_heating_flag: "N",
+            mechanical_ventilation: "natural",
           },
         },
         {
@@ -1349,6 +1356,7 @@ describe ViewModel::SapWrapper do
             number_heated_rooms: "5",
             photo_supply: "0",
             solar_water_heating_flag: "N",
+            mechanical_ventilation: "natural",
           },
         },
         {
@@ -1391,6 +1399,7 @@ describe ViewModel::SapWrapper do
             number_heated_rooms: "5",
             photo_supply: "0",
             solar_water_heating_flag: "N",
+            mechanical_ventilation: "natural",
           },
         },
         {
@@ -1433,6 +1442,7 @@ describe ViewModel::SapWrapper do
             number_heated_rooms: "5",
             photo_supply: "0",
             solar_water_heating_flag: "N",
+            mechanical_ventilation: "natural",
           },
         },
         {
@@ -1477,6 +1487,7 @@ describe ViewModel::SapWrapper do
             number_heated_rooms: "5",
             photo_supply: "0",
             solar_water_heating_flag: "N",
+            mechanical_ventilation: "natural",
           },
         },
         {
@@ -1524,6 +1535,7 @@ describe ViewModel::SapWrapper do
             number_heated_rooms: "4",
             photo_supply: "0",
             solar_water_heating_flag: "N",
+            mechanical_ventilation: nil,
           },
         },
       ]
