@@ -196,7 +196,7 @@ describe UseCase::ExportOpenDataCommercial do
 
       expected_values.reject { |k| %i[lodgement_datetime].include? k }.keys
         .each do |index|
-        it "returns the #{index} that matches the data for the 2nd row" do
+        it "returns the #{index} that matches the data for the 1st row" do
           expect(exported_data[0][index.to_sym]).to eq(expected_values[index])
         end
       end

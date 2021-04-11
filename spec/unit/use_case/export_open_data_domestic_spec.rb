@@ -335,7 +335,7 @@ describe UseCase::ExportOpenDataDomestic do
 
       after(:all) { Timecop.return }
 
-      let(:rdsap_assesment) do
+      let(:rdsap_assessment) do
         expected_data_hash =
           exported_data.select do |hash|
             hash[:assessment_id] ==
@@ -344,7 +344,7 @@ describe UseCase::ExportOpenDataDomestic do
         expected_data_hash.first
       end
 
-      let(:sap_assesment) do
+      let(:sap_assessment) do
         expected_data_hash =
           exported_data.select do |hash|
             hash[:assessment_id] ==
@@ -353,7 +353,7 @@ describe UseCase::ExportOpenDataDomestic do
         expected_data_hash.first
       end
 
-      let(:rdsap_assesment_with_rrn_building_ref) do
+      let(:rdsap_assessment_with_rrn_building_ref) do
         expected_data_hash =
           exported_data.select do |hash|
             hash[:assessment_id] ==
@@ -362,7 +362,7 @@ describe UseCase::ExportOpenDataDomestic do
         expected_data_hash.first[:building_reference_number]
       end
 
-      let(:sap_assesment_with_rrn_building_ref) do
+      let(:sap_assessment_with_rrn_building_ref) do
         expected_data_hash =
           exported_data.select do |hash|
             hash[:assessment_id] ==
@@ -379,24 +379,24 @@ describe UseCase::ExportOpenDataDomestic do
         %i[lodgement_datetime].include? k
       }.keys.each do |key|
         it "returns the #{key} that matches the RdSAP test data for the equivalent entry in the ODC hash" do
-          expect(rdsap_assesment[key.to_sym]).to eq(rdsap_odc_hash[key])
+          expect(rdsap_assessment[key.to_sym]).to eq(rdsap_odc_hash[key])
         end
       end
 
       it "expects the RdSAP assessment's lodged date time to be now based on a frozen time " do
-        expect(DateTime.parse(rdsap_assesment[:lodgement_datetime])).to eq(
+        expect(DateTime.parse(rdsap_assessment[:lodgement_datetime])).to eq(
           Time.now,
         )
       end
 
       it "expects the SAP assessment's lodged date time to be now based on a frozen time " do
-        expect(DateTime.parse(sap_assesment[:lodgement_datetime])).to eq(
+        expect(DateTime.parse(sap_assessment[:lodgement_datetime])).to eq(
           Time.now,
         )
       end
 
       it "returns a hash with building_reference_number nil when an RdSAP is submitted when building_reference_number is not a UPRN" do
-        expect(rdsap_assesment_with_rrn_building_ref).to eq(nil)
+        expect(rdsap_assessment_with_rrn_building_ref).to eq(nil)
       end
 
       it "contains the expected keys for RdSAP" do
@@ -420,12 +420,12 @@ describe UseCase::ExportOpenDataDomestic do
         ].include? k
       }.keys.each do |key|
         it "returns the #{key} that matches the SAP test data for the equivalent entry in the ODC hash" do
-          expect(sap_assesment[key.to_sym]).to eq(sap_odc_hash[key])
+          expect(sap_assessment[key.to_sym]).to eq(sap_odc_hash[key])
         end
       end
 
       it "returns a hash with building_reference_number nil when a SAP is submitted when building_reference_number is not a UPRN" do
-        expect(sap_assesment_with_rrn_building_ref).to eq(nil)
+        expect(sap_assessment_with_rrn_building_ref).to eq(nil)
       end
 
       it "contains the expected keys for SAP" do

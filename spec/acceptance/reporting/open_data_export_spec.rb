@@ -78,7 +78,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           let(:fixture_csv) { read_csv_fixture("domestic") }
           let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
 
-          it "returns the data exported to a csv object to match the .csv fixture " do
+          it "returns the data exported to a csv object to match the .csv fixture" do
             expect(parsed_exported_data.length).to eq(fixture_csv.length)
             expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
           end
@@ -121,7 +121,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           let(:fixture_csv) { read_csv_fixture("domestic_rr") }
           let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
 
-          it "returns the data exported to a csv object to match the .csv fixture " do
+          it "returns the data exported to a csv object to match the .csv fixture" do
             expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
             expect(parsed_exported_data.length).to eq(fixture_csv.length)
           end
@@ -289,35 +289,35 @@ describe "Acceptance::Reports::OpenDataExport" do
 
           let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
 
-          let(:first_commercial_assesment) do
+          let(:first_commercial_assessment) do
             parsed_exported_data.find do |item|
               item["ASSESSMENT_ID"] ==
                 "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a"
             end
           end
 
-          let(:second_commercial_assesment) do
+          let(:second_commercial_assessment) do
             parsed_exported_data.find do |item|
               item["ASSESSMENT_ID"] ==
                 "55ce7d026c13e923d26cbfb0d6ed60734d3270ba981d629a168bb8eb2da3f8c4"
             end
           end
 
-          it "returns an empty array when there are no missing headers in the exported data based on the fixture" do
+          it "returns the data exported to a csv object to match the .csv fixture" do
             expect(fixture_csv.headers - parsed_exported_data.headers).to eq([])
             expect(parsed_exported_data.length).to eq(3)
           end
 
           it "returns the data exported for row 1 object to match same row in the .csv fixture " do
             expect(
-              redact_lodgement_datetime(first_commercial_assesment) -
+              redact_lodgement_datetime(first_commercial_assessment) -
                 redact_lodgement_datetime(fixture_csv[0]),
             ).to eq([])
           end
 
           it "returns the data exported for row 2 object to match same row in the .csv fixture " do
             expect(
-              redact_lodgement_datetime(second_commercial_assesment) -
+              redact_lodgement_datetime(second_commercial_assessment) -
                 redact_lodgement_datetime(fixture_csv[1]),
             ).to eq([])
           end
@@ -332,9 +332,8 @@ describe "Acceptance::Reports::OpenDataExport" do
           end
           let(:fixture_csv) { read_csv_fixture("commercial_rr") }
           let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
-          let(:ignore_headers) { %w[ASSESSMENT_ID] }
 
-          it "returns the data exported to a csv object to match the .csv fixture " do
+          it "returns the data exported to a csv object to match the .csv fixture" do
             expect(parsed_exported_data.length).to eq(fixture_csv.length)
             expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
           end
@@ -527,12 +526,9 @@ describe "Acceptance::Reports::OpenDataExport" do
                 .sort_by! { |key| key[:recommendation_item] },
             )
           end
-          let(:export_data_headers_array) do
-            get_exported_data_headers(csv_data)
-          end
+
           let(:fixture_csv) { read_csv_fixture("dec_rr") }
           let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
-          let(:ignore_headers) { %w[ASSESSMENT_ID] }
 
           it "returns the data exported to a csv object to match the .csv fixture " do
             expect(parsed_exported_data.length).to eq(fixture_csv.length)
