@@ -107,18 +107,18 @@ describe "Acceptance::AssessmentAddressId" do
           scheme_ids: [scheme_id],
         },
         schema_name: "CEPC-8.0.0",
-    )
+      )
 
       response1 =
         JSON.parse(
           fetch_assessment_summary("0000-0000-0000-0000-0000", [200]).body,
           symbolize_names: true,
-      )
+        )
       response2 =
         JSON.parse(
           fetch_assessment_summary("0000-0000-0000-0000-0001", [200]).body,
           symbolize_names: true,
-      )
+        )
 
       expect(response1[:data][:addressId]).to eq("RRN-0000-0000-0000-0000-0000")
       expect(response2[:data][:addressId]).to eq("RRN-0000-0000-0000-0000-0000")

@@ -153,7 +153,8 @@ module UseCase
         # TODO: Maybe in the future, prevent assessors from lodging non existing UPRNs
         uprn = new_address_id[5..-1].to_i.to_s
         uprn_search_result = @address_base_search_gateway.search_by_uprn(uprn)
-        new_address_id = default_address_id(assessment) if uprn_search_result.empty?
+        new_address_id = default_address_id(assessment) if uprn_search_result
+          .empty?
       end
 
       @assessments_address_id_gateway.send_to_db(
@@ -168,7 +169,10 @@ module UseCase
     def default_address_id(assessment)
       default_address_id = "RRN-" + assessment.assessment_id
       if !assessment.related_rrn.nil? &&
-          (assessment.type_of_assessment.include?("-RR") || assessment.type_of_assessment.include?("-REPORT"))
+          (
+            assessment.type_of_assessment.include?("-RR") ||
+              assessment.type_of_assessment.include?("-REPORT")
+          )
         default_address_id = "RRN-" + assessment.related_rrn
       end
       default_address_id
