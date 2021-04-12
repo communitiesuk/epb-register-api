@@ -52,6 +52,10 @@ module ViewModel
       def solar_water_heating_flag
         xpath(%w[Solar-Water-Heating])
       end
+
+      def floor_height
+        @xml_doc.search("Room-Height").map(&:content)
+      end
     end
   end
 end

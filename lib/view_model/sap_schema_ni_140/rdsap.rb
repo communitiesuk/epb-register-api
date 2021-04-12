@@ -48,6 +48,10 @@ module ViewModel
       def mechanical_ventilation
         xpath(%w[Mechanical-Ventilation])
       end
+
+      def floor_height
+        @xml_doc.search("Room-Height").map(&:content)
+      end
     end
   end
 end
