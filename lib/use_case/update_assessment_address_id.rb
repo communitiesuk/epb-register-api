@@ -64,6 +64,7 @@ module UseCase
 
         rrn_assessment_address_id =
           @assessments_address_id_gateway.fetch(linking_to_rrn)[:address_id]
+        # This a new address ID and the new assessment address ID points to itself
         if (new_address_id != rrn_assessment_address_id) &&
             (linking_to_rrn != assessment_id)
           raise AddressIdMismatched,
