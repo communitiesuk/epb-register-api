@@ -3,23 +3,23 @@ require "rspec"
 describe "AddressMatching" do
   include RSpecRegisterApiServiceMixin
 
-  RDSAP_SCHEMA = "RdSAP-Schema-19.0".freeze
-  SAP_SCHEMA = "SAP-Schema-17.0".freeze
-
   before(:all) do
     scheme_id = add_scheme_and_get_id
     add_super_assessor(scheme_id)
 
-    rdsap_xml = Nokogiri.XML Samples.xml(RDSAP_SCHEMA, "epc")
+    rdsap_schema = "RdSAP-Schema-19.0".freeze
+    sap_schema = "SAP-Schema-17.0".freeze
+
+    rdsap_xml = Nokogiri.XML Samples.xml(rdsap_schema, "epc")
     rdsap_xml.at("RRN").children = "0000-0000-0000-0000-0001"
     rdsap_xml.at("UPRN").children = "0000000001"
 
-    sap_xml = Nokogiri.XML Samples.xml(SAP_SCHEMA, "epc")
+    sap_xml = Nokogiri.XML Samples.xml(sap_schema, "epc")
     sap_xml.at("RRN").children = "0000-0000-0000-0000-0002"
     sap_xml.at("UPRN").children = "0000000001"
 
-    call_lodge_assessment(scheme_id, RDSAP_SCHEMA, rdsap_xml, true)
-    call_lodge_assessment(scheme_id, SAP_SCHEMA, sap_xml, true)
+    call_lodge_assessment(scheme_id, rdsap_schema, rdsap_xml, true)
+    call_lodge_assessment(scheme_id, sap_schema, sap_xml, true)
 
     HttpStub.enable_webmock
   end
