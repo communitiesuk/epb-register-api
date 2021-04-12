@@ -1536,6 +1536,7 @@ describe ViewModel::SapWrapper do
             photo_supply: "0",
             solar_water_heating_flag: "N",
             mechanical_ventilation: nil,
+            flat_storey_count: "3",
           },
         },
       ]

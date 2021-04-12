@@ -1131,6 +1131,7 @@ describe ViewModel::SapWrapper do
             number_heated_rooms: "4",
             photo_supply: "0",
             solar_water_heating_flag: "N",
+            flat_storey_count: "3",
           },
         },
         {
@@ -1179,6 +1180,7 @@ describe ViewModel::SapWrapper do
             number_heated_rooms: "4",
             photo_supply: "0",
             solar_water_heating_flag: "N",
+            flat_storey_count: "3",
           },
         },
         {
@@ -1226,6 +1228,7 @@ describe ViewModel::SapWrapper do
             number_heated_rooms: "4",
             photo_supply: "0",
             solar_water_heating_flag: "N",
+            flat_storey_count: "3",
           },
         },
         {
@@ -1273,6 +1276,7 @@ describe ViewModel::SapWrapper do
             number_heated_rooms: "4",
             photo_supply: "0",
             solar_water_heating_flag: "N",
+            flat_storey_count: "3",
           },
         },
         {
@@ -1322,6 +1326,7 @@ describe ViewModel::SapWrapper do
             number_heated_rooms: "4",
             photo_supply: "0",
             solar_water_heating_flag: "N",
+            flat_storey_count: "3",
           },
         },
         {
@@ -1372,6 +1377,7 @@ describe ViewModel::SapWrapper do
             number_heated_rooms: "4",
             photo_supply: "0",
             solar_water_heating_flag: "N",
+            flat_storey_count: "3",
           },
         },
         {
@@ -1422,6 +1428,7 @@ describe ViewModel::SapWrapper do
             number_heated_rooms: "4",
             photo_supply: "0",
             solar_water_heating_flag: "N",
+            flat_storey_count: "3",
           },
         },
         {
@@ -1460,6 +1467,7 @@ describe ViewModel::SapWrapper do
             number_heated_rooms: "4",
             photo_supply: "0",
             solar_water_heating_flag: "N",
+            flat_storey_count: "3",
           },
         },
       ]

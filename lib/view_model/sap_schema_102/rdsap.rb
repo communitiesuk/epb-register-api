@@ -53,6 +53,10 @@ module ViewModel
       def floor_height
         @xml_doc.search("Room-Height").map(&:content)
       end
+
+      def storey_count
+        xpath(%w[Storey-Count])
+      end
     end
   end
 end
