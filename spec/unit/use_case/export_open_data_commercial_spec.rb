@@ -67,7 +67,7 @@ describe UseCase::ExportOpenDataCommercial do
       end
 
       before(:all) do
-        Timecop.freeze(2021, 0o3, 31, 9, 30, 0)
+        Timecop.freeze(2021, 3, 31, 9, 30, 0)
 
         scheme_id = add_scheme_and_get_id
         non_domestic_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc")

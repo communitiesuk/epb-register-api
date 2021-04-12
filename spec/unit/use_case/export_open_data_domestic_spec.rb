@@ -227,7 +227,7 @@ describe UseCase::ExportOpenDataDomestic do
         domestic_ni_sap_postcode =
           domestic_ni_sap_xml.at("Property Address Postcode")
 
-        Timecop.freeze(2021, 0o3, 31, 9, 30, 0)
+        Timecop.freeze(2021, 3, 31, 9, 30, 0)
 
         add_assessor(
           scheme_id,
