@@ -312,7 +312,7 @@ describe ViewModel::RdSapWrapper do
         walls_description: "Solid brick, as built, no insulation (assumed)",
         walls_energy_eff: "Very Poor",
         walls_env_eff: "Very Poor",
-        energy_tariff: "off-peak 7 hour",
+        energy_tariff: "Single",
         floor_level: "01",
         solar_water_heating_flag: "N",
         mechanical_ventilation: "natural",

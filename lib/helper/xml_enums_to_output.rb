@@ -17,12 +17,19 @@ module Helper
       "6" => "Enclosed Mid-Terrace",
       "NR" => "Not Recorded",
     }.freeze
-    ENERGY_TARIFF = {
+    SAP_ENERGY_TARIFF = {
       "1" => "standard tariff",
       "2" => "off-peak 7 hour",
       "3" => "off-peak 10 hour",
       "4" => "24 hour",
       "ND" => "not applicable",
+    }.freeze
+    RDSAP_ENERGY_TARIFF = {
+        "1" => "dual",
+        "2" => "Single",
+        "3" => "Unknown",
+        "4" => "dual (24 hour)",
+        "5" => "off-peak 18 hour",
     }.freeze
     RDSAP_MAIN_FUEL = {
       "0" =>
@@ -229,8 +236,12 @@ module Helper
       RATINGS[value]
     end
 
-    def self.energy_tariff(value)
-      ENERGY_TARIFF[value]
+    def self.energy_tariff(value, report_type = "2")
+      if report_type.to_s == "3"
+        SAP_ENERGY_TARIFF[value] || value
+      elsif report_type.to_s == "2"
+        RDSAP_ENERGY_TARIFF[value] || value
+      end
     end
 
     def self.main_fuel_rdsap(value)

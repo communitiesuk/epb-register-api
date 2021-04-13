@@ -64,6 +64,10 @@ module ViewModel
       def storey_count
         xpath(%w[Storey-Count])
       end
+
+      def energy_tariff
+        xpath(%w[Meter-Type])
+      end
     end
   end
 end

@@ -169,17 +169,18 @@ describe Helper::XmlEnumsToOutput do
 
   context "when the Energy-Tariff XML value is passed to the ENERGY_TARIFF enum" do
     it "finds the value in the enum and returns the correct string value" do
-      expect(Helper::XmlEnumsToOutput.energy_tariff("1")).to eq(
-        "standard tariff",
+      expect(Helper::XmlEnumsToOutput.energy_tariff("1", 2)).to eq(
+        "dual",
       )
-      expect(Helper::XmlEnumsToOutput.energy_tariff("ND")).to eq(
-        "not applicable",
-      )
+      expect(Helper::XmlEnumsToOutput.energy_tariff("1", 3)).to eq(
+                                                                      "standard tariff",
+                                                                      )
+      expect(Helper::XmlEnumsToOutput.energy_tariff("ND", 3)).to eq(
+                                                                     "not applicable",
+                                                                     )
     end
-    it "does not find the value in the enum and returns nil" do
-      expect(Helper::XmlEnumsToOutput.energy_tariff("test")).to be_nil
-      expect(Helper::XmlEnumsToOutput.energy_tariff("5")).to be_nil
-      expect(Helper::XmlEnumsToOutput.energy_tariff([0, 1])).to be_nil
+    it "does not find the value in the enum and returns the same value" do
+      expect(Helper::XmlEnumsToOutput.energy_tariff("test",)).to eq("test")
     end
   end
 
