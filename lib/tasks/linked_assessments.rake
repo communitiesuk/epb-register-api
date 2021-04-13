@@ -7,6 +7,8 @@ task :linked_assessments_address_id do
   ActiveRecord::Base.logger = nil
   db = ActiveRecord::Base.connection
 
+  create_address_table_backup
+
   # Ensures the linked assessment is a recommendation report
   find_linked_assessments_sql = <<-SQL
     SELECT la.assessment_id, la.linked_assessment_id
@@ -27,9 +29,10 @@ task :linked_assessments_address_id do
     find_different_address_id_sql = <<-SQL
       SELECT aai1.address_id
       FROM assessments_address_id aai1, assessments_address_id aai2
-      WHERE aai1.assessment_id = '#{assessment_id}'
+      WHERE aai1.address_id != aai2.address_id
+      AND aai1.assessment_id = '#{assessment_id}'
       AND aai2.assessment_id = '#{linked_assessment_id}'
-      AND aai1.address_id != aai2.address_id
+      AND aai2.source != 'epb_team_update'
     SQL
 
     different_address_id_match = db.exec_query find_different_address_id_sql
@@ -39,13 +42,22 @@ task :linked_assessments_address_id do
     else
       certificate_address_id = different_address_id_match.first["address_id"]
 
-      update_recommendation_address_id = <<-SQL
+      backup_address_id = <<-SQL
+        INSERT INTO assessments_address_id_backup
+        SELECT * FROM assessments_address_id
+        WHERE assessment_id = '#{linked_assessment_id}'
+      SQL
+
+      update_address_id = <<-SQL
         UPDATE assessments_address_id
         SET address_id = '#{certificate_address_id}'
         WHERE assessment_id = '#{linked_assessment_id}'
       SQL
 
-      db.exec_query update_recommendation_address_id
+      ActiveRecord::Base.transaction do
+        db.exec_query backup_address_id
+        db.exec_query update_address_id
+      end
       changed += 1
     end
   end

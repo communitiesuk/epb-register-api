@@ -26,11 +26,12 @@ describe "LinkedAssessments" do
   context "When the task runs with an address ID mismatch" do
     before do
       allow(STDOUT).to receive(:puts)
-      ActiveRecord::Base.connection.exec_query(
-        "UPDATE assessments_address_id " \
-        "SET address_id = 'RRN-0000-0000-0000-0000-0001' " \
-        "WHERE assessment_id = '0000-0000-0000-0000-0001'",
-      )
+      update_rr_address_id = <<-SQL
+         UPDATE assessments_address_id
+         SET address_id = 'RRN-0000-0000-0000-0000-0001'
+         WHERE assessment_id = '0000-0000-0000-0000-0001'
+      SQL
+      ActiveRecord::Base.connection.exec_query(update_rr_address_id)
     end
 
     it "does find a linked assessment to change" do
@@ -57,6 +58,34 @@ describe "LinkedAssessments" do
         symbolize_names: true,
       )
       expect(rr_assessment[:data][:addressId]).to eq("RRN-0000-0000-0000-0000-0000")
+    end
+  end
+
+  context "When the task runs with an address ID mismatch done by EPBR support" do
+    before do
+      allow(STDOUT).to receive(:puts)
+      update_rr_address_id = <<-SQL
+         UPDATE assessments_address_id
+         SET address_id = 'RRN-0000-0000-0000-0000-0001', source = 'epb_team_update'
+         WHERE assessment_id = '0000-0000-0000-0000-0001'
+      SQL
+      ActiveRecord::Base.connection.exec_query(update_rr_address_id)
+    end
+
+    it "does not find any linked assessment to change" do
+      expect { get_task("linked_assessments_address_id").invoke }
+        .to output(/skipped:1 changed:0/)
+              .to_stdout
+    end
+
+    it "preserves the modified recommendation report address ID" do
+      get_task("linked_assessments_address_id").invoke
+
+      assessment = JSON.parse(
+        fetch_assessment_summary("0000-0000-0000-0000-0001").body,
+        symbolize_names: true,
+      )
+      expect(assessment[:data][:addressId]).to eq("RRN-0000-0000-0000-0000-0001")
     end
   end
 end
