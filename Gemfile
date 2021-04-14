@@ -11,18 +11,18 @@ source "https://rubygems.org" do
 
   group :test do
     gem "database_cleaner"
-    gem "pry", "~> 0.14.0"
+    gem "pry", "~> 0.14.1"
     gem "rack-test", "~> 1.1.0"
     gem "rspec", "~>3.10"
     gem "timecop", "~> 0.9.4"
     gem "webmock", "~> 3.12"
   end
 
-  gem "aws-sdk-s3", "~> 1.91"
+  gem "aws-sdk-s3", "~> 1.93"
   gem "epb-auth-tools", "~> 1.0.7"
   gem "geocoder", "~> 1.6.6"
   gem "json-schema", "~> 2.8"
-  gem "nokogiri", "~> 1.11.2"
+  gem "nokogiri", "~> 1.11.3"
   gem "ougai", "~> 2.0"
   gem "pg"
   gem "rake"

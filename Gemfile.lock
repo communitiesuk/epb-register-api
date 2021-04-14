@@ -19,8 +19,8 @@ GEM
       public_suffix (>= 2.0.2, < 5.0)
     ast (2.4.2)
     aws-eventstream (1.1.1)
-    aws-partitions (1.433.0)
-    aws-sdk-core (3.113.0)
+    aws-partitions (1.444.0)
+    aws-sdk-core (3.113.1)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.239.0)
       aws-sigv4 (~> 1.1)
@@ -28,7 +28,7 @@ GEM
     aws-sdk-kms (1.43.0)
       aws-sdk-core (~> 3, >= 3.112.0)
       aws-sigv4 (~> 1.1)
-    aws-sdk-s3 (1.91.0)
+    aws-sdk-s3 (1.93.1)
       aws-sdk-core (~> 3, >= 3.112.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.1)
@@ -73,7 +73,7 @@ GEM
     murmurhash3 (0.1.6)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
-    nokogiri (1.11.2)
+    nokogiri (1.11.3)
       mini_portile2 (~> 2.5.0)
       racc (~> 1.4)
     oauth2 (1.4.4)
@@ -90,7 +90,7 @@ GEM
       ast (~> 2.4.1)
     pg (1.2.3)
     prettier (1.5.5)
-    pry (0.14.0)
+    pry (0.14.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
     public_suffix (4.0.6)
@@ -145,11 +145,11 @@ GEM
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.4)
     rubyzip (2.3.0)
-    sentry-ruby (4.3.0)
+    sentry-ruby (4.3.2)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       faraday (>= 1.0)
-      sentry-ruby-core (= 4.3.0)
-    sentry-ruby-core (4.3.0)
+      sentry-ruby-core (= 4.3.2)
+    sentry-ruby-core (4.3.2)
       concurrent-ruby
       faraday
     sinatra (2.1.0)
@@ -184,17 +184,17 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  aws-sdk-s3 (~> 1.91)!
+  aws-sdk-s3 (~> 1.93)!
   database_cleaner!
   debase!
   epb-auth-tools (~> 1.0.7)!
   geocoder (~> 1.6.6)!
   json-schema (~> 2.8)!
-  nokogiri (~> 1.11.2)!
+  nokogiri (~> 1.11.3)!
   ougai (~> 2.0)!
   pg!
   prettier (~> 1.5.5)!
-  pry (~> 0.14.0)!
+  pry (~> 0.14.1)!
   rack-test (~> 1.1.0)!
   rake!
   rspec (~> 3.10)!
