@@ -11,7 +11,7 @@ source "https://rubygems.org" do
 
   group :test do
     gem "database_cleaner"
-    gem "pry", "~> 0.14.0"
+    gem "pry", "~> 0.14.1"
     gem "rack-test", "~> 1.1.0"
     gem "rspec", "~>3.10"
     gem "timecop", "~> 0.9.4"
