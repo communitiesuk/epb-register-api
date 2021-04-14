@@ -25,11 +25,11 @@ module Helper
       "ND" => "not applicable",
     }.freeze
     RDSAP_ENERGY_TARIFF = {
-        "1" => "dual",
-        "2" => "Single",
-        "3" => "Unknown",
-        "4" => "dual (24 hour)",
-        "5" => "off-peak 18 hour",
+      "1" => "dual",
+      "2" => "Single",
+      "3" => "Unknown",
+      "4" => "dual (24 hour)",
+      "5" => "off-peak 18 hour",
     }.freeze
     RDSAP_MAIN_FUEL = {
       "0" =>

@@ -17,9 +17,9 @@ describe "LinkedAssessments" do
     before { allow(STDOUT).to receive(:puts) }
 
     it "does not find any linked assessment to change" do
-      expect { get_task("linked_assessments_address_id").invoke }
-        .to output(/skipped:1 changed:0/)
-              .to_stdout
+      expect { get_task("linked_assessments_address_id").invoke }.to output(
+        /skipped:1 changed:0/,
+      ).to_stdout
     end
   end
 
@@ -35,29 +35,35 @@ describe "LinkedAssessments" do
     end
 
     it "does find a linked assessment to change" do
-      expect { get_task("linked_assessments_address_id").invoke }
-        .to output(/skipped:0 changed:1/)
-              .to_stdout
+      expect { get_task("linked_assessments_address_id").invoke }.to output(
+        /skipped:0 changed:1/,
+      ).to_stdout
     end
 
     it "preserves the certificate address ID" do
       get_task("linked_assessments_address_id").invoke
 
-      assessment = JSON.parse(
-        fetch_assessment_summary("0000-0000-0000-0000-0000").body,
-        symbolize_names: true,
+      assessment =
+        JSON.parse(
+          fetch_assessment_summary("0000-0000-0000-0000-0000").body,
+          symbolize_names: true,
+        )
+      expect(assessment[:data][:addressId]).to eq(
+        "RRN-0000-0000-0000-0000-0000",
       )
-      expect(assessment[:data][:addressId]).to eq("RRN-0000-0000-0000-0000-0000")
     end
 
     it "changes the recommendation report address ID" do
       get_task("linked_assessments_address_id").invoke
 
-      rr_assessment = JSON.parse(
-        fetch_assessment_summary("0000-0000-0000-0000-0001").body,
-        symbolize_names: true,
+      rr_assessment =
+        JSON.parse(
+          fetch_assessment_summary("0000-0000-0000-0000-0001").body,
+          symbolize_names: true,
+        )
+      expect(rr_assessment[:data][:addressId]).to eq(
+        "RRN-0000-0000-0000-0000-0000",
       )
-      expect(rr_assessment[:data][:addressId]).to eq("RRN-0000-0000-0000-0000-0000")
     end
   end
 
@@ -73,19 +79,22 @@ describe "LinkedAssessments" do
     end
 
     it "does not find any linked assessment to change" do
-      expect { get_task("linked_assessments_address_id").invoke }
-        .to output(/skipped:1 changed:0/)
-              .to_stdout
+      expect { get_task("linked_assessments_address_id").invoke }.to output(
+        /skipped:1 changed:0/,
+      ).to_stdout
     end
 
     it "preserves the modified recommendation report address ID" do
       get_task("linked_assessments_address_id").invoke
 
-      assessment = JSON.parse(
-        fetch_assessment_summary("0000-0000-0000-0000-0001").body,
-        symbolize_names: true,
+      assessment =
+        JSON.parse(
+          fetch_assessment_summary("0000-0000-0000-0000-0001").body,
+          symbolize_names: true,
+        )
+      expect(assessment[:data][:addressId]).to eq(
+        "RRN-0000-0000-0000-0000-0001",
       )
-      expect(assessment[:data][:addressId]).to eq("RRN-0000-0000-0000-0000-0001")
     end
   end
 end

@@ -514,7 +514,10 @@ module ViewModel
             @view_model.all_wall_env_energy_efficiency_rating.first,
           ),
         energy_tariff:
-          Helper::XmlEnumsToOutput.energy_tariff(@view_model.energy_tariff, report_type),
+          Helper::XmlEnumsToOutput.energy_tariff(
+            @view_model.energy_tariff,
+            report_type,
+          ),
         floor_level: @view_model.floor_level,
         mainheat_energy_eff:
           Helper::XmlEnumsToOutput.energy_rating_string(
