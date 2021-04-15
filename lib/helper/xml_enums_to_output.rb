@@ -264,8 +264,8 @@ module Helper
       TENURE[value] || value
     end
 
-    def self.transaction_type(value, schema_type = "SAP")
-      if schema_type == "RdSAP" && value.to_i >= 12
+    def self.transaction_type(value, report_type = "2")
+      if report_type.to_s == "2" && value.to_i >= 12
         TRANSACTION_TYPE["#{value}RdSAP"]
       else
         TRANSACTION_TYPE[value] || value

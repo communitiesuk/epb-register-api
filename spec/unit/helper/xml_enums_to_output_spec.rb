@@ -287,16 +287,16 @@ describe Helper::XmlEnumsToOutput do
       expect(Helper::XmlEnumsToOutput.transaction_type("1")).to eq(
         "marketed sale",
       )
-      expect(Helper::XmlEnumsToOutput.transaction_type("3")).to eq(
+      expect(Helper::XmlEnumsToOutput.transaction_type("3", "3")).to eq(
         "rental (social) - this is for backwards compatibility only and should not be used",
       )
-      expect(Helper::XmlEnumsToOutput.transaction_type("12")).to eq(
+      expect(Helper::XmlEnumsToOutput.transaction_type("12", "3")).to eq(
         "Stock condition survey",
       )
-      expect(Helper::XmlEnumsToOutput.transaction_type("12", "RdSAP")).to eq(
+      expect(Helper::XmlEnumsToOutput.transaction_type("12")).to eq(
         "RHI application",
       )
-      expect(Helper::XmlEnumsToOutput.transaction_type("13")).to eq("13")
+      expect(Helper::XmlEnumsToOutput.transaction_type("13", "3")).to eq("13")
     end
   end
 

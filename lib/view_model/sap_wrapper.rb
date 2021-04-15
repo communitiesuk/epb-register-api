@@ -414,6 +414,7 @@ module ViewModel
         transaction_type:
           Helper::XmlEnumsToOutput.transaction_type(
             @view_model.transaction_type,
+            report_type,
           ),
         environment_impact_current: @view_model.environmental_impact_current,
         environment_impact_potential:
