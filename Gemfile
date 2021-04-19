@@ -20,7 +20,7 @@ source "https://rubygems.org" do
 
   gem "aws-sdk-s3", "~> 1.93"
   gem "epb-auth-tools", "~> 1.0.7"
-  gem "geocoder", "~> 1.6.6"
+  gem "geocoder", "~> 1.6.7"
   gem "json-schema", "~> 2.8"
   gem "nokogiri", "~> 1.11.3"
   gem "ougai", "~> 2.0"
