@@ -107,24 +107,43 @@ module Gateway
           address_id[5..-1].to_i.to_s
         end
 
+      # Avoid using an OR in the WHERE clause to avoid serious performance issues
       sql_assessments = <<~SQL
          SELECT
-          assessment_id,
-          date_of_expiry,
-          date_registered,
-          cancelled_at,
-          not_for_issue_at,
-          address_line1,
-          address_line2,
-          address_line3,
-          address_line4,
-          town,
-          postcode,
-          address_id,
-          type_of_assessment
-        FROM assessments
-        WHERE assessment_id = $1
-           OR address_id = $2
+          a.assessment_id,
+          a.date_of_expiry,
+          a.date_registered,
+          a.cancelled_at,
+          a.not_for_issue_at,
+          a.address_line1,
+          a.address_line2,
+          a.address_line3,
+          a.address_line4,
+          a.town,
+          a.postcode,
+          aai.address_id,
+          a.type_of_assessment
+        FROM assessments a
+        INNER JOIN assessments_address_id aai USING (assessment_id)
+        WHERE a.assessment_id = $1
+        UNION
+        SELECT
+          a.assessment_id,
+          a.date_of_expiry,
+          a.date_registered,
+          a.cancelled_at,
+          a.not_for_issue_at,
+          a.address_line1,
+          a.address_line2,
+          a.address_line3,
+          a.address_line4,
+          a.town,
+          a.postcode,
+          aai.address_id,
+          a.type_of_assessment
+        FROM assessments a
+        INNER JOIN assessments_address_id aai USING (assessment_id)
+        WHERE aai.address_id = $2
         ORDER BY assessment_id
       SQL
 
@@ -233,7 +252,7 @@ module Gateway
       parse_results(ActiveRecord::Base.connection.exec_query(sql, "SQL", binds))
     end
 
-  private
+    private
 
     def parse_results(results)
       address_ids = {}
@@ -243,35 +262,35 @@ module Gateway
       results
         .enum_for(:each_with_index)
         .each do |res, i|
-          address_id = res["address_id"]
+        address_id = res["address_id"]
 
-          if !res["linked_assessment_id"].nil? &&
-              res["address_id"].start_with?("RRN-") &&
-              res["linked_assessment_id"].to_s > res["address_id"].to_s
-            address_id = "RRN-#{res['linked_assessment_id']}"
-            results[i]["address_id"] = address_id
-          end
-
-          if res["address_id"].nil? || res["address_id"].start_with?("LPRN-")
-            address_id =
-              if res["linked_assessment_id"].to_s > res["assessment_id"].to_s
-                "RRN-#{res['linked_assessment_id']}"
-              else
-                "RRN-#{res['assessment_id']}"
-              end
-
-            results[i]["address_id"] = address_id
-          end
-
-          address_ids[address_id] = [] unless address_ids.key? address_id
-          address_ids[address_id].push i
-
-          address_hash = compact_address(res).downcase.hash
-          unless address_hashes.key? address_hash
-            address_hashes[address_hash] = []
-          end
-          address_hashes[address_hash].push i
+        if !res["linked_assessment_id"].nil? &&
+          res["address_id"].start_with?("RRN-") &&
+          res["linked_assessment_id"].to_s > res["address_id"].to_s
+          address_id = "RRN-#{res['linked_assessment_id']}"
+          results[i]["address_id"] = address_id
         end
+
+        if res["address_id"].nil? || res["address_id"].start_with?("LPRN-")
+          address_id =
+            if res["linked_assessment_id"].to_s > res["assessment_id"].to_s
+              "RRN-#{res['linked_assessment_id']}"
+            else
+              "RRN-#{res['assessment_id']}"
+            end
+
+          results[i]["address_id"] = address_id
+        end
+
+        address_ids[address_id] = [] unless address_ids.key? address_id
+        address_ids[address_id].push i
+
+        address_hash = compact_address(res).downcase.hash
+        unless address_hashes.key? address_hash
+          address_hashes[address_hash] = []
+        end
+        address_hashes[address_hash].push i
+      end
 
       address_ids.each do |_, entries|
         root_entry = results[entries.first]
@@ -291,10 +310,10 @@ module Gateway
       results
         .enum_for(:each_with_index)
         .each do |res, i|
-          address_id = res["address_id"]
-          address_ids[address_id] = [] unless address_ids.key? address_id
-          address_ids[address_id].push i
-        end
+        address_id = res["address_id"]
+        address_ids[address_id] = [] unless address_ids.key? address_id
+        address_ids[address_id].push i
+      end
 
       addresses =
         address_ids.keys.map do |address_id|
