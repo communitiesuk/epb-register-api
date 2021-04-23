@@ -30,5 +30,45 @@ module ViewModel
     def multi_glazing_type
       xpath(%w[Multiple-Glazing-Type])
     end
+
+    def addendum
+      return nil if xpath(%w[Addendum]).nil?
+
+      fetch_addendum_numbers.merge(fetch_addendum_boolean_nodes)
+    end
+
+  private
+
+    def fetch_addendum_numbers
+      return {} if @xml_doc.search("Addendum/Addendum-Number").empty?
+
+      {
+        addendum_number:
+          @xml_doc
+            .search("Addendum/Addendum-Number")
+            .select(&:element?)
+            .map { |n| n.text.to_i },
+      }
+    end
+
+    def fetch_addendum_boolean_nodes
+      nodes_array =
+        @xml_doc
+          .search("Addendum")
+          .select(&:element?)
+          .first
+          .children
+          .select do |child|
+            child.name != "Addendum-Number" && child.name != "text"
+          end
+
+      if nodes_array.empty?
+        {}
+      else
+        nodes_array.map { |node|
+          [node.name.underscore.to_sym, node.children.text]
+        }.to_h
+      end
+    end
   end
 end

@@ -12,12 +12,23 @@ describe ViewModel::RdSapWrapper do
               address_id: "LPRN-0000000000",
             },
           },
+          different_fields: {
+            addendum: {
+              addendum_number: [1],
+            },
+          },
         },
         {
           schema: "RdSAP-Schema-18.0",
           different_buried_fields: {
             address: {
               address_id: "LPRN-0000000000",
+            },
+          },
+          different_fields: {
+            addendum: {
+              stone_walls: "true",
+              system_build: "true",
             },
           },
         },
@@ -28,6 +39,9 @@ describe ViewModel::RdSapWrapper do
               address_id: "LPRN-0000000000",
             },
           },
+          different_fields: {
+            addendum: nil,
+          },
         },
         {
           schema: "RdSAP-Schema-17.0",
@@ -35,6 +49,9 @@ describe ViewModel::RdSapWrapper do
             address: {
               address_id: "LPRN-0000000000",
             },
+          },
+          different_fields: {
+            addendum: nil,
           },
         },
       ]
@@ -234,6 +251,11 @@ describe ViewModel::RdSapWrapper do
         total_floor_area: 55.0,
         status: "ENTERED",
         environmental_impact_current: "52",
+        addendum: {
+          addendum_number: [1, 8],
+          stone_walls: "true",
+          system_build: "true",
+        },
       }
     end
 

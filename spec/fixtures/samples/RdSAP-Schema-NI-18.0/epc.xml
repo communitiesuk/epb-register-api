@@ -153,6 +153,9 @@
         <Impact-Of-Cavity-Insulation>-122</Impact-Of-Cavity-Insulation>
         <Impact-Of-Solid-Wall-Insulation>-3560</Impact-Of-Solid-Wall-Insulation>
       </Renewable-Heat-Incentive>
+      <Addendum>
+        <Addendum-Number>1</Addendum-Number>
+      </Addendum>
     </Energy-Assessment>
     <SAP-Data>
       <SAP-Property-Details>

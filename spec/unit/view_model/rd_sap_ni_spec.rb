@@ -13,9 +13,33 @@ describe ViewModel::RdSapWrapper do
             },
           },
         },
-        { schema: "RdSAP-Schema-NI-19.0" },
-        { schema: "RdSAP-Schema-NI-18.0" },
-        { schema: "RdSAP-Schema-NI-17.4" },
+        {
+          schema: "RdSAP-Schema-NI-19.0",
+          different_fields: {
+            addendum: {
+              stone_walls: "true",
+              system_build: "true",
+            },
+          },
+        },
+        {
+          schema: "RdSAP-Schema-NI-18.0",
+          different_fields: {
+            addendum: {
+              addendum_number: [1],
+            },
+          },
+        },
+        {
+          schema: "RdSAP-Schema-NI-17.4",
+          different_fields: {
+            addendum: {
+              addendum_number: [1, 8],
+              stone_walls: "true",
+              system_build: "true",
+            },
+          },
+        },
         { schema: "RdSAP-Schema-NI-17.3" },
       ]
     end
@@ -214,6 +238,7 @@ describe ViewModel::RdSapWrapper do
         total_floor_area: 55.0,
         status: "ENTERED",
         environmental_impact_current: "52",
+        addendum: nil,
       }
     end
 

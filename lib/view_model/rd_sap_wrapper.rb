@@ -137,6 +137,7 @@ module ViewModel
         environmental_impact_current: @view_model.environmental_impact_current,
         environmental_impact_potential:
           @view_model.environmental_impact_potential,
+        addendum: @view_model.addendum,
       }
     end
 
