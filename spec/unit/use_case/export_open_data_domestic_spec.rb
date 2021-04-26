@@ -207,7 +207,8 @@ describe UseCase::ExportOpenDataDomestic do
         scheme_id = add_scheme_and_get_id
         domestic_rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
         domestic_rdsap_assessment_id = domestic_rdsap_xml.at("RRN")
-        domestic_rdsap_assessment_date = domestic_rdsap_xml.at("Registration-Date")
+        domestic_rdsap_assessment_date =
+          domestic_rdsap_xml.at("Registration-Date")
         domestic_rdsap_building_reference_number = domestic_rdsap_xml.at("UPRN")
 
         domestic_sap_xml = Nokogiri.XML Samples.xml("SAP-Schema-18.0.0")
