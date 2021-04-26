@@ -183,12 +183,12 @@ describe UseCase::ExportOpenDataDomestic do
 
       let(:rdsap_odc_hash) do
         expected_rdsap_values.merge(
-          { lodgement_date: date_today, lodgement_datetime: date_today },
+          { lodgement_date: date_today, lodgement_datetime: datetime_today },
         )
       end
       let(:sap_odc_hash) do
         expected_sap_values.merge(
-          { lodgement_date: date_today, lodgement_datetime: date_today },
+          { lodgement_date: date_today, lodgement_datetime: datetime_today },
         )
       end
       let(:exported_data) do
@@ -205,10 +205,10 @@ describe UseCase::ExportOpenDataDomestic do
 
       before(:all) do
         scheme_id = add_scheme_and_get_id
-        domestic_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
-        domestic_assessment_id = domestic_xml.at("RRN")
-        domestic_assessment_date = domestic_xml.at("Registration-Date")
-        domestic_building_reference_number = domestic_xml.at("UPRN")
+        domestic_rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
+        domestic_rdsap_assessment_id = domestic_rdsap_xml.at("RRN")
+        domestic_rdsap_assessment_date = domestic_rdsap_xml.at("Registration-Date")
+        domestic_rdsap_building_reference_number = domestic_rdsap_xml.at("UPRN")
 
         domestic_sap_xml = Nokogiri.XML Samples.xml("SAP-Schema-18.0.0")
         domestic_sap_assessment_id = domestic_sap_xml.at("RRN")
@@ -244,10 +244,10 @@ describe UseCase::ExportOpenDataDomestic do
             gda: "ACTIVE",
           ),
         )
-        domestic_assessment_date.children = "2017-05-04"
-        domestic_assessment_id.children = "0000-0000-0000-0000-0100"
+        domestic_rdsap_assessment_date.children = "2017-05-04"
+        domestic_rdsap_assessment_id.children = "0000-0000-0000-0000-0100"
         lodge_assessment(
-          assessment_body: domestic_xml.to_xml,
+          assessment_body: domestic_rdsap_xml.to_xml,
           accepted_responses: [201],
           auth_data: {
             scheme_ids: [scheme_id],
@@ -255,10 +255,10 @@ describe UseCase::ExportOpenDataDomestic do
           override: true,
         )
 
-        domestic_assessment_date.children = date_today
-        domestic_assessment_id.children = "0000-0000-0000-0000-0000"
+        domestic_rdsap_assessment_date.children = date_today
+        domestic_rdsap_assessment_id.children = "0000-0000-0000-0000-0000"
         lodge_assessment(
-          assessment_body: domestic_xml.to_xml,
+          assessment_body: domestic_rdsap_xml.to_xml,
           accepted_responses: [201],
           auth_data: {
             scheme_ids: [scheme_id],
@@ -266,12 +266,12 @@ describe UseCase::ExportOpenDataDomestic do
           override: true,
         )
 
-        domestic_assessment_date.children = date_today
-        domestic_assessment_id.children = "0000-0000-0000-0000-0023"
-        domestic_building_reference_number.children =
+        domestic_rdsap_assessment_date.children = date_today
+        domestic_rdsap_assessment_id.children = "0000-0000-0000-0000-0023"
+        domestic_rdsap_building_reference_number.children =
           "RRN-0000-0000-0000-0000-0023"
         lodge_assessment(
-          assessment_body: domestic_xml.to_xml,
+          assessment_body: domestic_rdsap_xml.to_xml,
           accepted_responses: [201],
           auth_data: {
             scheme_ids: [scheme_id],
@@ -371,7 +371,7 @@ describe UseCase::ExportOpenDataDomestic do
         expected_data_hash.first[:building_reference_number]
       end
 
-      it "expects the number of non Northern Irish RdSAP and SAP lodgements within required date range for ODC to be 2" do
+      it "expects the number of non Northern Irish RdSAP and SAP lodgements within required date range for ODC to be 4" do
         expect(exported_data.length).to eq(4)
       end
 
