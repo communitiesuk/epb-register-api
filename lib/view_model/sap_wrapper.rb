@@ -377,6 +377,7 @@ module ViewModel
           if @view_model.respond_to?(:extensions_count)
             @view_model.extensions_count
           end,
+        addendum: @view_model.addendum,
       }
     end
 
