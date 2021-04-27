@@ -5,28 +5,28 @@ describe ViewModel::SapWrapper do
   context "when calling to_hash" do
     let(:schemas) do
       has_stone_walls_addendum = {
-          different_fields: {
-              addendum: {
-                  stone_walls: "true",
-              },
+        different_fields: {
+          addendum: {
+            stone_walls: "true",
           },
+        },
       }
 
       has_addendum_number = {
-          different_fields: {
-              addendum: {
-                  addendum_number: [1],
-              },
+        different_fields: {
+          addendum: {
+            addendum_number: [1],
           },
+        },
       }
 
       has_several_addendum_types = {
-          different_fields: {
-              addendum: {
-                  addendum_number: [1],
-                  stone_walls: "true",
-              },
+        different_fields: {
+          addendum: {
+            addendum_number: [1],
+            stone_walls: "true",
           },
+        },
       }
 
       heat_demand_current_unsupported = {
@@ -507,7 +507,9 @@ describe ViewModel::SapWrapper do
       }
 
       [
-        { schema: "SAP-Schema-18.0.0" }.deep_merge(has_uprn).deep_merge(has_stone_walls_addendum),
+        { schema: "SAP-Schema-18.0.0" }.deep_merge(has_uprn).deep_merge(
+          has_stone_walls_addendum,
+        ),
         { schema: "SAP-Schema-17.1" }.deep_merge(has_stone_walls_addendum),
         { schema: "SAP-Schema-17.0" }.deep_merge(has_stone_walls_addendum),
         {
@@ -516,21 +518,24 @@ describe ViewModel::SapWrapper do
           unsupported_fields: %i[tenure],
         }.deep_merge(is_pre_17).deep_merge(has_stone_walls_addendum),
         { schema: "SAP-Schema-16.3", type: "rdsap" }.deep_merge(is_rdsap)
-          .deep_merge(is_pre_17).deep_merge(has_several_addendum_types),
+          .deep_merge(is_pre_17)
+          .deep_merge(has_several_addendum_types),
         {
           schema: "SAP-Schema-16.2",
           type: "sap",
           unsupported_fields: %i[tenure],
         }.deep_merge(has_stone_walls_addendum),
         { schema: "SAP-Schema-16.2", type: "rdsap" }.deep_merge(is_rdsap)
-          .deep_merge(is_pre_17).deep_merge(has_several_addendum_types),
+          .deep_merge(is_pre_17)
+          .deep_merge(has_several_addendum_types),
         {
           schema: "SAP-Schema-16.1",
           type: "sap",
           unsupported_fields: %i[tenure],
         }.deep_merge(has_stone_walls_addendum),
         { schema: "SAP-Schema-16.1", type: "rdsap" }.deep_merge(is_rdsap)
-          .deep_merge(is_pre_17).deep_merge(has_several_addendum_types),
+          .deep_merge(is_pre_17)
+          .deep_merge(has_several_addendum_types),
         {
           schema: "SAP-Schema-16.0",
           type: "sap",
@@ -540,12 +545,15 @@ describe ViewModel::SapWrapper do
           schema: "SAP-Schema-16.0",
           type: "rdsap",
           unsupported_fields: %i[tenure],
-        }.deep_merge(is_rdsap).deep_merge(is_pre_17).deep_merge(has_several_addendum_types),
+        }.deep_merge(is_rdsap)
+          .deep_merge(is_pre_17)
+          .deep_merge(has_several_addendum_types),
         { schema: "SAP-Schema-15.0", type: "sap" }.deep_merge(is_pre_16)
           .deep_merge(heat_demand_impact_of_unsupported),
         { schema: "SAP-Schema-15.0", type: "rdsap" }.deep_merge(is_rdsap)
           .deep_merge(is_pre_16)
-          .deep_merge(heat_demand_impact_of_unsupported).deep_merge(has_addendum_number),
+          .deep_merge(heat_demand_impact_of_unsupported)
+          .deep_merge(has_addendum_number),
         {
           schema: "SAP-Schema-14.2",
           type: "sap",
@@ -561,7 +569,8 @@ describe ViewModel::SapWrapper do
         }.deep_merge(is_rdsap)
           .deep_merge(is_pre_15)
           .deep_merge(is_pre_15_rdsap)
-          .deep_merge(heat_demand_unsupported).deep_merge(has_addendum_number),
+          .deep_merge(heat_demand_unsupported)
+          .deep_merge(has_addendum_number),
         {
           schema: "SAP-Schema-14.1",
           type: "sap",
@@ -577,7 +586,8 @@ describe ViewModel::SapWrapper do
         }.deep_merge(is_rdsap)
           .deep_merge(is_pre_15)
           .deep_merge(is_pre_15_rdsap)
-          .deep_merge(heat_demand_unsupported).deep_merge(has_addendum_number),
+          .deep_merge(heat_demand_unsupported)
+          .deep_merge(has_addendum_number),
         {
           schema: "SAP-Schema-14.0",
           type: "sap",
@@ -593,7 +603,8 @@ describe ViewModel::SapWrapper do
         }.deep_merge(is_rdsap)
           .deep_merge(is_pre_15)
           .deep_merge(is_pre_15_rdsap)
-          .deep_merge(heat_demand_unsupported).deep_merge(has_addendum_number),
+          .deep_merge(heat_demand_unsupported)
+          .deep_merge(has_addendum_number),
         { schema: "SAP-Schema-13.0", type: "sap" }.deep_merge(is_pre_15)
           .deep_merge(is_pre_14),
         {
