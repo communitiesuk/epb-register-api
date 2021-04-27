@@ -222,6 +222,9 @@
           <HIP:Space-Heating-With-Loft-And-Cavity-Insulation>15</HIP:Space-Heating-With-Loft-And-Cavity-Insulation>
           <HIP:Water-Heating>2285</HIP:Water-Heating>
         </HIP:Renewable-Heat-Incentive>
+        <HIP:Addendum>
+          <HIP:Addendum-Number>1</HIP:Addendum-Number>
+        </HIP:Addendum>
       </HIP:Energy-Assessment>
       <HIP:SAP-Data>
         <HIP:Schema-Version>LIG-16.1</HIP:Schema-Version>

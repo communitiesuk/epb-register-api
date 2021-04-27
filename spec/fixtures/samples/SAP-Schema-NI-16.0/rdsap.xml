@@ -216,6 +216,7 @@
           <HIP:Impact-Of-Solid-Wall-Insulation>-3560</HIP:Impact-Of-Solid-Wall-Insulation>
         </HIP:Renewable-Heat-Incentive>
         <HIP:Addendum>
+          <HIP:Addendum-Number>1</HIP:Addendum-Number>
           <HIP:Stone-Walls>true</HIP:Stone-Walls>
         </HIP:Addendum>
       </SAP:Energy-Assessment>

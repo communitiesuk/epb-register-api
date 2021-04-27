@@ -161,6 +161,9 @@
           <Dwelling-Type>Mid-terrace house</Dwelling-Type>
           <Total-Floor-Area>69</Total-Floor-Area>
         </Property-Summary>
+        <Addendum>
+          <Addendum-Number>1</Addendum-Number>
+        </Addendum>
         <Energy-Use>
           <Energy-Rating-Current>50</Energy-Rating-Current>
           <Energy-Rating-Potential>72</Energy-Rating-Potential>
