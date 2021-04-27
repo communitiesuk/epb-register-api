@@ -143,6 +143,9 @@
 				<Impact-Of-Solid-Wall-Insulation>-3560</Impact-Of-Solid-Wall-Insulation>
 			</RHI-Existing-Dwelling>
 		</Renewable-Heat-Incentive>
+    <Addendum>
+      <Stone-Walls>true</Stone-Walls>
+    </Addendum>
 		<Energy-Use>
 			<Energy-Rating-Current>50</Energy-Rating-Current>
 			<Energy-Rating-Potential>72</Energy-Rating-Potential>

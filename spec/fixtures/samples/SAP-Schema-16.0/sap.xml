@@ -98,6 +98,9 @@
             <SAP:Impact-Of-Solid-Wall-Insulation>-3560</SAP:Impact-Of-Solid-Wall-Insulation>
           </SAP:RHI-Existing-Dwelling>
         </SAP:Renewable-Heat-Incentive>
+        <SAP:Addendum>
+          <SAP:Stone-Walls>true</SAP:Stone-Walls>
+        </SAP:Addendum>
         <SAP:Property-Summary>
           <SAP:Walls>
             <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>

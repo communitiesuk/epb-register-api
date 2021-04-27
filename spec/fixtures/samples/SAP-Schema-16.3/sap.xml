@@ -101,6 +101,9 @@
             <SAP:Impact-Of-Solid-Wall-Insulation>-3560</SAP:Impact-Of-Solid-Wall-Insulation>
           </SAP:RHI-Existing-Dwelling>
         </SAP:Renewable-Heat-Incentive>
+        <SAP:Addendum>
+          <SAP:Stone-Walls>true</SAP:Stone-Walls>
+        </SAP:Addendum>
         <SAP:Property-Summary>
           <SAP:Walls>
             <SAP:Energy-Efficiency-Rating>0</SAP:Energy-Efficiency-Rating>
@@ -181,6 +184,7 @@
           <SAP:Total-Floor-Area>69</SAP:Total-Floor-Area>
           <SAP:Is-Zero-Carbon-Home>true</SAP:Is-Zero-Carbon-Home>
         </SAP:Property-Summary>
+        <
         <SAP:Energy-Use>
           <SAP:Energy-Rating-Current>50</SAP:Energy-Rating-Current>
           <SAP:Energy-Rating-Potential>72</SAP:Energy-Rating-Potential>
