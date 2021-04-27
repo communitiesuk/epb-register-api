@@ -289,12 +289,12 @@ module Gateway
       binds = [
         ActiveRecord::Relation::QueryAttribute.new(
           "first_name",
-          first_name,
+          first_name + "%",
           ActiveRecord::Type::String.new,
         ),
         ActiveRecord::Relation::QueryAttribute.new(
           "last_name",
-          last_name,
+          last_name + "%",
           ActiveRecord::Type::String.new,
         ),
         ActiveRecord::Relation::QueryAttribute.new(
@@ -320,7 +320,7 @@ module Gateway
         FROM assessors a
         LEFT JOIN schemes b ON(a.registered_by = b.scheme_id)
         WHERE
-          first_name = $1 AND last_name = $2 AND date_of_birth = $3
+          first_name ILIKE $1 AND last_name ILIKE $2 AND date_of_birth = $3
       SQL
 
       response = Assessor.connection.exec_query sql, "SQL", binds

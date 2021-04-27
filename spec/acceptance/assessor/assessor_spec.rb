@@ -281,6 +281,26 @@ describe "Acceptance::Assessor" do
         )
       expect(response).to eq(expected_response)
     end
+
+    it "returns the correct details when given names with different capitalization" do
+      add_assessor(scheme_id, "SCHEME4233", valid_assessor_request)
+      request_body = valid_assessor_request.dup
+      request_body[:firstName] = "Stan"
+      add_assessor(scheme_id, "SCHEME4234", request_body)
+      expected_response =
+          JSON.parse({ data: [assessor_response], meta: {} }.to_json)
+
+      response =
+          JSON.parse(
+              fetch_assessor_current_status(
+                  "sOmE",
+                  "pErSoN",
+                  "1991-02-25",
+                  scheme_id,
+                  ).body,
+              )
+      expect(response).to eq(expected_response)
+    end
   end
 
   context "when creating an assessor" do
