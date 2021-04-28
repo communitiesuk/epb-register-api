@@ -13,9 +13,8 @@ module UseCase
 
       def add_data!(hash)
         registered_by!(hash)
-
         related_party_disclosure!(hash)
-
+        related_assessments!(hash)
         hash
       end
     end

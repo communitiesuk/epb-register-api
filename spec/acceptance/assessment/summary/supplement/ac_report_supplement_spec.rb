@@ -20,11 +20,11 @@ describe "Acceptance::AssessmentSummary::Supplement::AC_REPORT" do
     second_assessment =
       Nokogiri.XML(Samples.xml("CEPC-8.0.0", "ac-cert+ac-report"))
     second_assessment.at("RRN").content = "0000-0000-0000-0000-0002"
-    second_assessment.at("UPRN").content = "RRN-0000-0000-0000-0000-0002"
+    second_assessment.at("UPRN").content = "RRN-0000-0000-0000-0000-0000"
     second_assessment.at("Related-RRN").content = "0000-0000-0000-0000-0003"
     second_assessment.search("RRN")[1].content = "0000-0000-0000-0000-0003"
     second_assessment.search("UPRN[1]")[1].content =
-      "RRN-0000-0000-0000-0000-0002"
+      "RRN-0000-0000-0000-0000-0000"
     second_assessment.search("Related-RRN")[1].content =
       "0000-0000-0000-0000-0002"
     second_assessment.search("Energy-Assessor/E-Mail")[1].remove
@@ -63,6 +63,13 @@ describe "Acceptance::AssessmentSummary::Supplement::AC_REPORT" do
     it "returns the value lodged in the related document" do
       disclosure = @regular_summary.dig(:data, :relatedPartyDisclosure)
       expect(disclosure).to eq("1")
+    end
+  end
+
+  context "when there is a UPRN field" do
+    it "returns a related assessment id when there is a matching UPRN" do
+      related_assessments = @second_summary.dig(:data, :relatedAssessments)
+      expect(related_assessments.first[:assessmentId]).to eq("0000-0000-0000-0000-0001")
     end
   end
 end
