@@ -27,8 +27,8 @@ describe ViewModel::RdSapWrapper do
           },
           different_fields: {
             addendum: {
-              stone_walls: "true",
-              system_build: "true",
+              stone_walls: true,
+              system_build: true,
             },
           },
         },
@@ -253,8 +253,8 @@ describe ViewModel::RdSapWrapper do
         environmental_impact_current: "52",
         addendum: {
           addendum_number: [1, 8],
-          stone_walls: "true",
-          system_build: "true",
+          stone_walls: true,
+          system_build: true,
         },
       }
     end

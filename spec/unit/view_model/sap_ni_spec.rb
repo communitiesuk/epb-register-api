@@ -7,7 +7,7 @@ describe ViewModel::SapWrapper do
       has_stone_walls_addendum = {
         different_fields: {
           addendum: {
-            stone_walls: "true",
+            stone_walls: true,
           },
         },
       }
@@ -24,7 +24,7 @@ describe ViewModel::SapWrapper do
         different_fields: {
           addendum: {
             addendum_number: [1],
-            stone_walls: "true",
+            stone_walls: true,
           },
         },
       }

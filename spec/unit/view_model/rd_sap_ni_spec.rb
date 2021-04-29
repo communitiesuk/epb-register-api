@@ -17,8 +17,8 @@ describe ViewModel::RdSapWrapper do
           schema: "RdSAP-Schema-NI-19.0",
           different_fields: {
             addendum: {
-              stone_walls: "true",
-              system_build: "true",
+              stone_walls: true,
+              system_build: true,
             },
           },
         },
@@ -35,8 +35,8 @@ describe ViewModel::RdSapWrapper do
           different_fields: {
             addendum: {
               addendum_number: [1, 8],
-              stone_walls: "true",
-              system_build: "true",
+              stone_walls: true,
+              system_build: true,
             },
           },
         },
