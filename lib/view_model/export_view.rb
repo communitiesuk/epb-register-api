@@ -6,6 +6,7 @@ module ViewModel
 
     def build
       {
+        addendum: @view_model.addendum,
         address_id: @view_model.address_id,
         address_line1: @view_model.address_line1,
         address_line2: @view_model.address_line2,

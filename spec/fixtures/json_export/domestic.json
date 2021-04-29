@@ -1,4 +1,7 @@
 {
+    "addendum": {
+      "stone_walls": true
+    },
     "address_id": "UPRN-000000000000",
     "address_line1": "1 Some Street",
     "address_line2": "Some Area",
