@@ -68,9 +68,10 @@ describe "Acceptance::AssessmentSummary::Supplement::AC_CERT" do
 
   context "when there is a UPRN field" do
     it "returns a related assessment id when there is a matching UPRN" do
-
       related_assessments = @second_summary.dig(:data, :relatedAssessments)
-      expect(related_assessments.first[:assessmentId]).to eq("0000-0000-0000-0000-0000")
+      expect(related_assessments.first[:assessmentId]).to eq(
+        "0000-0000-0000-0000-0000",
+      )
     end
   end
 end
