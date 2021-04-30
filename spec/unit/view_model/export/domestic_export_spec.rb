@@ -1,10 +1,10 @@
-describe ViewModel::ExportView do
+describe ViewModel::Export::DomesticExportView do
   context "When building a domestic SAP export" do
     subject do
       schema_type = "SAP-Schema-18.0.0".freeze
       xml = Samples.xml(schema_type)
       wrapper = ViewModel::SapWrapper.new(xml, schema_type)
-      ViewModel::ExportView.new(wrapper)
+      ViewModel::Export::DomesticExportView.new(wrapper)
     end
 
     let(:export) { read_json_fixture("domestic") }

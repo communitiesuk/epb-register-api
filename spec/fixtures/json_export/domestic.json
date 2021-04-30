@@ -2,11 +2,13 @@
     "addendum": {
       "stone_walls": true
     },
-    "address_id": "UPRN-000000000000",
-    "address_line1": "1 Some Street",
-    "address_line2": "Some Area",
-    "address_line3": "Some County",
-    "address_line4": null,
-    "postcode": "A0 0AA",
-    "town": "Whitbury"
+    "address": {
+      "address_id": "UPRN-000000000000",
+      "address_line1": "1 Some Street",
+      "address_line2": "Some Area",
+      "address_line3": "Some County",
+      "address_line4": null,
+      "postcode": "A0 0AA",
+      "town": "Whitbury"
+    }
 }
