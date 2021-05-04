@@ -312,13 +312,9 @@ describe "Acceptance::Assessor" do
 
       response =
         JSON.parse(
-          fetch_assessor_current_status(
-            "sO",
-            "pErS",
-            "1991-02-25",
-            scheme_id,
-            ).body,
-          )
+          fetch_assessor_current_status("sO", "pErS", "1991-02-25", scheme_id)
+            .body,
+        )
       expect(response).to eq(expected_response)
     end
   end

@@ -66,7 +66,10 @@ module ViewModel
         {}
       else
         nodes_array.map { |node|
-          [node.name.underscore.to_sym, ActiveRecord::Type::Boolean.new.cast(node.children.text)]
+          [
+            node.name.underscore.to_sym,
+            ActiveRecord::Type::Boolean.new.cast(node.children.text),
+          ]
         }.to_h
       end
     end

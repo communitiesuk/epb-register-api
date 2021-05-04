@@ -1,0 +1,12 @@
+{
+  "address": {
+    "address_id": "UPRN-000000000001",
+    "address_line1": "Some Unit",
+    "address_line2": "2 Lonely Street",
+    "address_line3": "Some Area",
+    "address_line4": "Some County",
+    "postcode": "A0 0AA",
+    "town": "Whitbury"
+  }
+
+}
