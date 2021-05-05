@@ -92,6 +92,7 @@ describe UseCase::ExportOpenDataDomestic do
         mainheatc_energy_eff: "Good",
         mainheatc_env_eff: "Good",
         glazed_type: "double glazing installed during or after 2002",
+        region: 'London',
       }
       expected_sap_values = {
         assessment_id:
@@ -179,6 +180,7 @@ describe UseCase::ExportOpenDataDomestic do
         mainheatc_energy_eff: "N/A",
         mainheatc_env_eff: "N/A",
         glazed_type: nil,
+        region: 'London',
       }
 
       let(:rdsap_odc_hash) do
@@ -204,6 +206,9 @@ describe UseCase::ExportOpenDataDomestic do
       end
 
       before(:all) do
+        add_postcodes("A0 0AA", 51.5045, 0.0865, "London")
+        add_outcodes("A0", 51.5045, 0.4865, "London")
+
         scheme_id = add_scheme_and_get_id
         domestic_rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
         domestic_rdsap_assessment_id = domestic_rdsap_xml.at("RRN")

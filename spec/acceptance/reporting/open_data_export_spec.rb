@@ -14,7 +14,10 @@ describe "Acceptance::Reports::OpenDataExport" do
 
   context "When an assessment is lodged" do
     context "And it is a domestic assessment" do
-      before(:all) do
+      before do
+        add_postcodes("A0 0AA", 51.5045, 0.0865, "London")
+        add_outcodes("A0", 51.5045, 0.4865, "London")
+
         domestic_rdsap_xml =
           get_assessment_xml(
             "RdSAP-Schema-20.0.0",
@@ -208,7 +211,10 @@ describe "Acceptance::Reports::OpenDataExport" do
     end
 
     context "And it is a commercial/non-domestic assessment" do
-      before(:all) do
+      before do
+        add_postcodes("A0 0AA", 51.5045, 0.0865, "London")
+        add_outcodes("A0", 51.5045, 0.4865, "London")
+
         2.times do |i|
           non_domestic_xml =
             get_assessment_xml(
@@ -405,7 +411,9 @@ describe "Acceptance::Reports::OpenDataExport" do
     end
 
     context "And it is a DEC assessment" do
-      before(:all) do
+      before do
+        add_postcodes("A0 0AA", 51.5045, 0.0865, "London")
+        add_outcodes("A0", 51.5045, 0.4865, "London")
         dec_xml =
           get_assessment_xml(
             "CEPC-8.0.0",

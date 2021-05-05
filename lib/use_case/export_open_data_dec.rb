@@ -37,6 +37,7 @@ module UseCase
           assessment["created_at"]&.strftime("%F %H:%M:%S")
         view_model_hash[:assessment_id] =
           Helper::RrnHelper.hash_rrn(assessment["assessment_id"])
+        view_model_hash[:region] = assessment["postcode_region"].nil? ? assessment["outcode_region"] : assessment["postcode_region"]
         unless view_model_hash[:building_reference_number].nil?
           unless view_model_hash[:building_reference_number].include?("UPRN")
             view_model_hash[:building_reference_number] = nil

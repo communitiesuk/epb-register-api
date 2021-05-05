@@ -164,8 +164,18 @@ module Gateway
       ]
 
       sql = <<~SQL
-        SELECT  a.assessment_id, date_registered, created_at
+        SELECT  a.assessment_id, a.date_registered, a.created_at, b.region AS postcode_region, c.region AS outcode_region
         FROM assessments a
+          LEFT JOIN
+            postcode_geolocation b
+          ON(a.postcode = b.postcode)
+          LEFT JOIN
+            postcode_outcode_geolocations c
+          ON(
+            b.region IS NULL
+            AND
+            SUBSTRING(a.postcode, 0, LENGTH(a.postcode) - 3) = c.outcode
+          )
         WHERE a.opt_out = false AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
         AND a.date_registered BETWEEN $1 AND $4
         AND a.postcode NOT LIKE 'BT%'

@@ -52,6 +52,7 @@ describe UseCase::ExportOpenDataCommercial do
         primary_energy_value: "413.22",
         report_type: "3",
         renewable_sources: "Renewable sources test",
+        region: 'London'
       }
 
       let(:expected_values_index_1) do
@@ -68,6 +69,9 @@ describe UseCase::ExportOpenDataCommercial do
 
       before(:all) do
         Timecop.freeze(2021, 3, 31, 9, 30, 0)
+
+        add_postcodes("A0 0AA", 51.5045, 0.0865, "London")
+        add_outcodes("A0", 51.5045, 0.4865, "London")
 
         scheme_id = add_scheme_and_get_id
         non_domestic_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc")
