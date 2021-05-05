@@ -90,9 +90,9 @@ task :import_address_base do
 
         i = 0
         csv_contents.each_slice(INSERT_BATCH_SIZE) do |inserts|
-          query = inserts.map do |row|
+          query = inserts.map { |row|
             import_address_data_use_case.execute(row)
-          end.compact
+          }.compact
 
           db.exec_query("INSERT INTO address_base_tmp VALUES " + query.join(", "))
           i += INSERT_BATCH_SIZE

@@ -33,11 +33,14 @@ module ViewModel::Export
 
     def heat_demand
       {
-        current_space_heating_demand: @view_model.current_space_heating_demand&.to_i,
-        current_water_heating_demand: @view_model.current_water_heating_demand&.to_i,
+        current_space_heating_demand:
+          @view_model.current_space_heating_demand&.to_i,
+        current_water_heating_demand:
+          @view_model.current_water_heating_demand&.to_i,
         impact_of_cavity_insulation: @view_model.impact_of_cavity_insulation,
         impact_of_loft_insulation: @view_model.impact_of_loft_insulation,
-        impact_of_solid_wall_insulation: @view_model.impact_of_solid_wall_insulation,
+        impact_of_solid_wall_insulation:
+          @view_model.impact_of_solid_wall_insulation,
       }
     end
   end

@@ -1,7 +1,11 @@
 module UseCase
   class ImportAddressBaseData
     def execute(address_data_line)
-      return nil unless Helper::AddressBaseFilter.filter_certifiable_addresses(address_data_line[5])
+      unless Helper::AddressBaseFilter.filter_certifiable_addresses(
+        address_data_line[5],
+      )
+        return nil
+      end
 
       uprn = ActiveRecord::Base.connection.quote(address_data_line[0])
 
@@ -26,19 +30,35 @@ module UseCase
       if address_data_line[34] != ""
         # If there is a SAO number/range value, it should be inserted either on the same line as the PAO_text (if there is a PAO_text value), if there are both PAO_text and a PAO number/range, then the SAO number/range should appear on the same line as the PAO_text, and the PAO number/range should appear on the street line.
         line = []
-        if address_data_line[24] != "" || address_data_line[25] != "" || address_data_line[26] != "" || address_data_line[27] != ""
-          line.push([[address_data_line[24], address_data_line[25]].join(""), [address_data_line[26], address_data_line[27]].join("")].reject(&:blank?).join("-"))
+        if address_data_line[24] != "" || address_data_line[25] != "" ||
+            address_data_line[26] != "" || address_data_line[27] != ""
+          line.push(
+            [
+              [address_data_line[24], address_data_line[25]].join(""),
+              [address_data_line[26], address_data_line[27]].join(""),
+            ].reject(&:blank?).join("-"),
+          )
         end
         line.push(address_data_line[34])
         lines.push(line.reject(&:blank?).join(" "))
         # or on the same line as the PAO number/range + street name (if there is only a PAO number/range value and no PAO_text value).
-      elsif address_data_line[24] != "" || address_data_line[25] != "" || address_data_line[26] != "" || address_data_line[27] != ""
-        street = [[address_data_line[24], address_data_line[25]].join(""), [address_data_line[26], address_data_line[27]].join("")].reject(&:blank?).join("-")
+      elsif address_data_line[24] != "" || address_data_line[25] != "" ||
+          address_data_line[26] != "" || address_data_line[27] != ""
+        street =
+          [
+            [address_data_line[24], address_data_line[25]].join(""),
+            [address_data_line[26], address_data_line[27]].join(""),
+          ].reject(&:blank?).join("-")
       end
 
       # Generally, if there is a PAO number/range string, it should appear on the same line as the street
-      if address_data_line[30] != "" || address_data_line[31] != "" || !address_data_line[32] != "" || !address_data_line[33] != ""
-        pao = [[address_data_line[30], address_data_line[31]].join(""), [address_data_line[32], address_data_line[33]].join("")].reject(&:blank?).join("-")
+      if address_data_line[30] != "" || address_data_line[31] != "" ||
+          !address_data_line[32] != "" || !address_data_line[33] != ""
+        pao =
+          [
+            [address_data_line[30], address_data_line[31]].join(""),
+            [address_data_line[32], address_data_line[33]].join(""),
+          ].reject(&:blank?).join("-")
         street = [street, pao].reject(&:blank?).join(" ")
       end
 
@@ -55,7 +75,12 @@ module UseCase
       lines = lines.reject(&:blank?)
 
       # Finally, the postcode locator, if present, should be inserted on the final line of the address.
-      postcode = address_data_line[64] == "" ? address_data_line[65] : address_data_line[64]
+      postcode =
+        if address_data_line[64] == ""
+          address_data_line[65]
+        else
+          address_data_line[64]
+        end
 
       # administrative_location if town is not the same
       #
