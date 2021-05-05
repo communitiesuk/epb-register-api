@@ -92,7 +92,7 @@ describe UseCase::ExportOpenDataDomestic do
         mainheatc_energy_eff: "Good",
         mainheatc_env_eff: "Good",
         glazed_type: "double glazing installed during or after 2002",
-        region: 'London',
+        region: "London",
       }
       expected_sap_values = {
         assessment_id:
@@ -180,7 +180,7 @@ describe UseCase::ExportOpenDataDomestic do
         mainheatc_energy_eff: "N/A",
         mainheatc_env_eff: "N/A",
         glazed_type: nil,
-        region: 'London',
+        region: "London",
       }
 
       let(:rdsap_odc_hash) do

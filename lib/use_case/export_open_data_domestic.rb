@@ -38,7 +38,12 @@ module UseCase
           assessment["date_registered"].strftime("%F")
         view_model_hash[:lodgement_datetime] =
           assessment["created_at"]&.strftime("%F %H:%M:%S")
-        view_model_hash[:region] = assessment["postcode_region"].nil? ? assessment["outcode_region"] : assessment["postcode_region"]
+        view_model_hash[:region] =
+          if assessment["postcode_region"].nil?
+            assessment["outcode_region"]
+          else
+            assessment["postcode_region"]
+          end
         @log_gateway.create(
           assessment["assessment_id"],
           new_task_id,

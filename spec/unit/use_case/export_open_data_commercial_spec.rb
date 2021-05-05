@@ -52,7 +52,7 @@ describe UseCase::ExportOpenDataCommercial do
         primary_energy_value: "413.22",
         report_type: "3",
         renewable_sources: "Renewable sources test",
-        region: 'London'
+        region: "London",
       }
 
       let(:expected_values_index_1) do

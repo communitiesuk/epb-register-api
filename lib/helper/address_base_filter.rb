@@ -1,7 +1,6 @@
 module Helper
   class AddressBaseFilter
     def self.filter_certifiable_addresses(class_code)
-
       case class_code[0]
       when "C" # Commercial
         !class_code.start_with?("CC10", # Recycling site
@@ -28,15 +27,18 @@ module Helper
         class_code.start_with?("LB99PI") # Pavilion / changing room
       when "M" # Military
         true
-      when "O" # Other
+      when "O"
+        # Other
         false
-      when "P" # Parent shell
+      when "P"
+        # Parent shell
         false
       when "R" # Residential
         !class_code.start_with?("RC", # Car park space
                                 "RD07", # House boat
         )
-      when "U" # Unclassified
+      when "U"
+        # Unclassified
         true
       when "Z" # Object of interest
         class_code.start_with?("ZM04", # Castle / historic ruin

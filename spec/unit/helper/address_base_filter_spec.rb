@@ -40,10 +40,11 @@ describe "Helper method address_base_filter" do
     "": true,
     "B": true,
   }.each do |class_code, is_accepted|
-
     context "when given an address class that starts with #{class_code}" do
       it is_accepted ? "it accepts it" : "it rejects it" do
-        expect(Helper::AddressBaseFilter.filter_certifiable_addresses(class_code)).to be(is_accepted)
+        expect(
+          Helper::AddressBaseFilter.filter_certifiable_addresses(class_code),
+        ).to be(is_accepted)
       end
     end
   end
