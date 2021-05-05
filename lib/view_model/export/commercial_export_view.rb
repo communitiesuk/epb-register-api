@@ -1,7 +1,6 @@
 module ViewModel::Export
   class CommercialExportView < ViewModel::Export::ExportBaseView
     def build
-
       {
         type_of_assessment: type_of_assessment,
         address: address,
@@ -25,21 +24,20 @@ module ViewModel::Export
         building_complexity: @view_model.building_level,
         energy_efficiency_rating: @view_model.energy_efficiency_rating,
         current_energy_efficiency_rating: @view_model.energy_efficiency_rating,
-        current_energy_efficiency_band: Helper::EnergyBandCalculator.commercial(
-          @view_model.energy_efficiency_rating.to_i,
+        current_energy_efficiency_band:
+          Helper::EnergyBandCalculator.commercial(
+            @view_model.energy_efficiency_rating.to_i,
           ),
         new_build_band:
           Helper::EnergyBandCalculator.commercial(
             @view_model.new_build_rating.to_i,
-            ),
+          ),
         existing_build_rating: @view_model.existing_build_rating,
         existing_build_band:
           Helper::EnergyBandCalculator.commercial(
             @view_model.existing_build_rating.to_i,
-            ),
-
+          ),
       }
-
     end
   end
 end

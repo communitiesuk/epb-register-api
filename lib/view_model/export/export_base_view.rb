@@ -10,7 +10,6 @@ module ViewModel::Export
       @type_of_assessment = certificate_wrapper.type.to_s
     end
 
-
     def address
       {
         address_id: @view_model.address_id,
@@ -62,7 +61,5 @@ module ViewModel::Export
         },
       }
     end
-
-
   end
 end
