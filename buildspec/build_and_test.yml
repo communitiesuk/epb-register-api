@@ -1,7 +1,7 @@
 version: 0.2
 
 runtime-versions:
-  ruby: 2.6
+  ruby: 2.7.2
 
 env:
   parameter-store:
@@ -12,7 +12,7 @@ env:
 phases:
   install:
     runtime-versions:
-      ruby: 2.6
+      ruby: 2.7.2
     commands:
       - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
       - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2&
