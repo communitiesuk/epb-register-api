@@ -7,6 +7,41 @@
     "address_line4": "Some County",
     "postcode": "A0 0AA",
     "town": "Whitbury"
-  }
-
+  },
+  "assessor": {
+    "company_details": {
+      "address": "123 My Street, My City, AB3 4CD",
+      "name": "Trillian Certificates Plc"
+    },
+    "contact_details": {
+      "email": "a@b.c",
+      "telephone": "012345"
+    },
+    "name": "TEST NAME BOI",
+    "scheme_assessor_id": "SPEC000000"
+  },
+  "building_emission_rate": "67.09",
+  "current_energy_efficiency_band": "d",
+  "current_energy_efficiency_rating": "80",
+  "date_of_assessment": "2020-05-04",
+  "date_of_registration": "2020-05-04",
+  "date_of_expiry": "2026-05-04",
+  "energy_efficiency_rating": "80",
+  "existing_build_band": "d",
+  "new_build_band": "b",
+  "new_build_rating": "28",
+  "primary_energy_use": "413.22",
+  "related_rrn": null,
+  "existing_build_rating": "81",
+  "property_type": "B1 Offices and Workshop businesses",
+  "related_party_disclosure": "1",
+  "building_complexity": "3",
+  "report_type": "3",
+  "technical_information": {
+    "building_environment": "Air Conditioning",
+    "building_level": "3",
+    "floor_area": "403",
+    "main_heating_fuel": "Natural Gas"
+  },
+  "type_of_assessment": "CEPC"
 }

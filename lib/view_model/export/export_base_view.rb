@@ -3,9 +3,13 @@ module ViewModel::Export
     REDACTED = "REDACTED".freeze
     private_constant :REDACTED
 
+    attr_accessor :type_of_assessment
+
     def initialize(certificate_wrapper)
       @view_model = certificate_wrapper.get_view_model
+      @type_of_assessment = certificate_wrapper.type.to_s
     end
+
 
     def address
       {
@@ -43,5 +47,22 @@ module ViewModel::Export
           @view_model.impact_of_solid_wall_insulation,
       }
     end
+
+    def assessor
+      {
+        scheme_assessor_id: @view_model.scheme_assessor_id,
+        name: @view_model.assessor_name,
+        contact_details: {
+          email: @view_model.assessor_email,
+          telephone: @view_model.assessor_telephone,
+        },
+        company_details: {
+          name: @view_model.company_name,
+          address: @view_model.company_address,
+        },
+      }
+    end
+
+
   end
 end

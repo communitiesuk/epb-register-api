@@ -8,7 +8,6 @@ describe "Integration::Rackup" do
         expect(response.status).to eq(200)
       end
     end
-
     context "requests to a non-existent page" do
       let(:response) { get("/does-not-exist") }
       it "return a status of 404" do
@@ -21,7 +20,6 @@ describe "Integration::Rackup" do
         expect(json_response[:errors][0][:title]).to eq("Method not found")
       end
     end
-
     context "requests to /api/schemes" do
       let(:response) do
         header("Authorization", "Bearer " + get_valid_jwt(%w[scheme:list]))
@@ -31,7 +29,6 @@ describe "Integration::Rackup" do
         expect(response.status).to eq(200)
       end
     end
-
     context "unauthenticated requests to /api/schemes" do
       let(:response) { get("/api/schemes") }
       it "return a status of 401" do
