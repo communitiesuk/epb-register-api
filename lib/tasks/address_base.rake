@@ -27,12 +27,6 @@ task :restore_legacy_address_base do
 end
 
 task :import_address_base do
-  require "zeitwerk"
-
-  loader = Zeitwerk::Loader.new
-  loader.push_dir("#{__dir__}/../")
-  loader.setup
-
   INSERT_BATCH_SIZE = 50_000
 
   if ENV["file_template"].nil?
