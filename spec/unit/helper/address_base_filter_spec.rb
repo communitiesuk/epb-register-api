@@ -16,6 +16,7 @@ describe "Helper method address_base_filter" do
     "CT11": false, # Transport-related architecture
     "CT12": false, # Overnight lorry park
     "CT13": false, # Harbour / port / dock / dockyard
+    "CU01": false, # Electricity Sub Station
     "CU02": false, # Landfill
     "CU11": false, # Telephone box
     "CU12": false, # Dam
