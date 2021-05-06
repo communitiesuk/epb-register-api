@@ -46,7 +46,5 @@ module ViewModel::Export
           @view_model.impact_of_solid_wall_insulation,
       }
     end
-
-
   end
 end
