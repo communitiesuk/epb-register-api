@@ -47,6 +47,23 @@ module ViewModel::Export
         Helper::EnergyBandCalculator.commercial(
           @view_model.energy_efficiency_rating.to_i,
         )
+      view[:building_environment] = @view_model.building_environment
+      view[:building_level] = @view_model.building_level
+      view[:building_reference_number] = @view_model.address_id
+      view[:estimated_aircon_kw_rating] = @view_model.estimated_ac_kw_rating
+
+      view[:existing_stock_benchmark] =
+        @view_model.existing_build_rating,
+        view[:floor_area] = @view_model.floor_area
+      view[:main_heating_fuel] = @view_model.main_heating_fuel
+      view[:other_fuel_description] = @view_model.other_fuel_description
+      view[:special_energy_uses] = @view_model.special_energy_uses
+      view[:standard_emissions] = @view_model.standard_emissions
+      view[:target_emissions] = @view_model.target_emissions
+      view[:transaction_type] = @view_model.transaction_type
+      view[:typical_emissions] = @view_model.typical_emissions
+      view[:renewable_sources] = @view_model.renewable_sources
+
       view
     end
   end

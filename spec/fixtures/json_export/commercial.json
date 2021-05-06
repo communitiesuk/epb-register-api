@@ -9,31 +9,47 @@
     "postcode": "A0 0AA",
     "town": "Whitbury"
   },
+  "aircon_kw_rating": "100",
+  "aircon_present": "No",
   "assessor": {
-    "scheme_assessor_id": "REDACTED",
-    "name": "REDACTED",
     "email": "REDACTED",
+    "name": "REDACTED",
+    "scheme_assessor_id": "REDACTED",
     "telephone": "REDACTED"
   },
   "asset_rating": "80",
   "asset_rating_band": "d",
+  "building_complexity": "3",
   "building_emission_rate": "67.09",
+  "building_environment": "Air Conditioning",
+  "building_level": "3",
+  "building_reference_number": "UPRN-000000000001",
   "current_energy_efficiency_band": "d",
   "current_energy_efficiency_rating": "80",
   "date_of_assessment": "2020-05-04",
-  "date_of_registration": "2020-05-04",
   "date_of_expiry": "2026-05-04",
+  "date_of_registration": "2020-05-04",
   "energy_efficiency_rating": "80",
+  "estimated_aircon_kw_rating": "3",
   "existing_build_band": "d",
+  "existing_build_rating": "81",
+  "existing_stock_benchmark": [
+    "81",
+    "403"
+  ],
+  "floor_area": "403",
+  "main_heating_fuel": "Natural Gas",
   "new_build_band": "b",
   "new_build_rating": "28",
+  "other_fuel_description": "Test",
   "primary_energy_use": "413.22",
-  "related_rrn": null,
-  "existing_build_rating": "81",
   "property_type": "B1 Offices and Workshop businesses",
   "related_party_disclosure": "1",
-  "building_complexity": "3",
+  "related_rrn": null,
   "report_type": "3",
+  "special_energy_uses": "Test sp",
+  "standard_emissions": "42.07",
+  "target_emissions": "23.2",
   "technical_information": {
     "building_environment": "Air Conditioning",
     "building_level": "3",
@@ -41,6 +57,7 @@
     "main_heating_fuel": "Natural Gas"
   },
   "type_of_assessment": "CEPC",
-  "aircon_kw_rating" : "100",
-  "aircon_present": "No"
+  "transaction_type": "1",
+  "typical_emissions": "67.98",
+  "renewable_sources": "Renewable sources test"
 }
