@@ -9,16 +9,10 @@
     "town": "Whitbury"
   },
   "assessor": {
-    "company_details": {
-      "address": "123 My Street, My City, AB3 4CD",
-      "name": "Trillian Certificates Plc"
-    },
-    "contact_details": {
-      "email": "a@b.c",
-      "telephone": "012345"
-    },
-    "name": "TEST NAME BOI",
-    "scheme_assessor_id": "SPEC000000"
+    "scheme_assessor_id": "REDACTED",
+    "name": "REDACTED",
+    "email": "REDACTED",
+    "telephone": "REDACTED"
   },
   "building_emission_rate": "67.09",
   "current_energy_efficiency_band": "d",
