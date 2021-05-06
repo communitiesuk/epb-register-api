@@ -12,10 +12,11 @@ describe ViewModel::Export::DomesticExportView do
       expect(subject.build).to eq(export)
     end
   end
+
+  def read_json_fixture(file_name)
+    path = File.join(Dir.pwd, "spec/fixtures/json_export/#{file_name}.json")
+    file = File.read(path)
+    JSON.parse(file, symbolize_names: true)
+  end
 end
 
-def read_json_fixture(file_name)
-  path = File.join(Dir.pwd, "spec/fixtures/json_export/#{file_name}.json")
-  file = File.read(path)
-  JSON.parse(file, symbolize_names: true)
-end
