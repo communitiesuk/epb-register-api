@@ -39,20 +39,15 @@ module ViewModel::Export
         @view_model.fixed_lighting_outlets_count.to_i
       view[:glazed_area] = @view_model.glazed_area unless @view_model
         .glazed_area.nil?
-      unless @view_model.habitable_room_count
-        .nil?
-        view[:habitable_room_count] =
-          @view_model.habitable_room_count
+      unless @view_model.habitable_room_count.nil?
+        view[:habitable_room_count] = @view_model.habitable_room_count
       end
       view[:heat_demand] = heat_demand
-      unless @view_model.heat_loss_corridor
-        .nil?
-        view[:heat_loss_corridor] =
-          @view_model.heat_loss_corridor
+      unless @view_model.heat_loss_corridor.nil?
+        view[:heat_loss_corridor] = @view_model.heat_loss_corridor
       end
       unless @view_model.heated_room_count.nil?
-        view[:heated_room_count] =
-          @view_model.heated_room_count
+        view[:heated_room_count] = @view_model.heated_room_count
       end
       view[:heating_cost_current] = @view_model.heating_cost_current.to_f
       view[:heating_cost_potential] = @view_model.heating_cost_potential.to_f
@@ -84,8 +79,7 @@ module ViewModel::Export
       view[:multiple_glazed_proportion] =
         @view_model.multiple_glazed_proportion.to_i
       view[:open_fireplaces_count] = @view_model.open_fireplaces_count.to_i
-      unless @view_model
-        .photovoltaic_roof_area_percent.nil?
+      unless @view_model.photovoltaic_roof_area_percent.nil?
         view[:photovoltaic_roof_area_percent] =
           @view_model.photovoltaic_roof_area_percent
       end
@@ -128,10 +122,8 @@ module ViewModel::Export
       view[:total_floor_area] = @view_model.total_floor_area.to_f
       view[:transaction_type] = @view_model.transaction_type
       view[:type_of_assessment] = @view_model.type_of_assessment
-      unless @view_model
-        .unheated_corridor_length.nil?
-        view[:unheated_corridor_length] =
-          @view_model.unheated_corridor_length
+      unless @view_model.unheated_corridor_length.nil?
+        view[:unheated_corridor_length] = @view_model.unheated_corridor_length
       end
       view[:wind_turbine_count] = @view_model.wind_turbine_count.to_i
       view[:window_description] = @view_model.window_description

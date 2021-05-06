@@ -1,4 +1,5 @@
 {
+  "ac_inspection_commissioned": "1",
   "address": {
     "address_id": "UPRN-000000000001",
     "address_line1": "Some Unit",
@@ -14,6 +15,8 @@
     "email": "REDACTED",
     "telephone": "REDACTED"
   },
+  "asset_rating": "80",
+  "asset_rating_band": "d",
   "building_emission_rate": "67.09",
   "current_energy_efficiency_band": "d",
   "current_energy_efficiency_rating": "80",
@@ -37,5 +40,7 @@
     "floor_area": "403",
     "main_heating_fuel": "Natural Gas"
   },
-  "type_of_assessment": "CEPC"
+  "type_of_assessment": "CEPC",
+  "aircon_kw_rating" : "100",
+  "aircon_present": "No"
 }
