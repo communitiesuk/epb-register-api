@@ -37,6 +37,15 @@ module ViewModel
       fetch_addendum_numbers.merge(fetch_addendum_boolean_nodes)
     end
 
+    def lzc_energy_sources
+      return nil if xpath(%w[LZC-Energy-Sources]).nil?
+
+      @xml_doc
+        .search("LZC-Energy-Sources/LZC-Energy-Source")
+        .select(&:element?)
+        .map { |n| n.text.to_i }
+    end
+
   private
 
     def fetch_addendum_numbers

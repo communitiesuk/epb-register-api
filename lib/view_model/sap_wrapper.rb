@@ -316,6 +316,7 @@ module ViewModel
               )
             improvement
           end,
+        lzc_energy_sources: @view_model.lzc_energy_sources,
         related_party_disclosure_number:
           @view_model.related_party_disclosure_number,
         related_party_disclosure_text:

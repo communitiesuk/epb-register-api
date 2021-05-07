@@ -16,6 +16,7 @@ describe ViewModel::RdSapWrapper do
             addendum: {
               addendum_number: [1],
             },
+            lzc_energy_sources: [11],
           },
         },
         {
@@ -30,6 +31,7 @@ describe ViewModel::RdSapWrapper do
               stone_walls: true,
               system_build: true,
             },
+            lzc_energy_sources: [11, 12],
           },
         },
         {
@@ -244,6 +246,7 @@ describe ViewModel::RdSapWrapper do
             typical_saving: "99",
           },
         ],
+        lzc_energy_sources: nil,
         related_party_disclosure_number: nil,
         related_party_disclosure_text: "No related party",
         tenure: "1",

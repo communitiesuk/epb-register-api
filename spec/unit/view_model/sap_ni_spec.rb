@@ -29,6 +29,18 @@ describe ViewModel::SapWrapper do
         },
       }
 
+      has_single_lzc_energy_source = {
+        different_fields: {
+          lzc_energy_sources: [11],
+        },
+      }
+
+      has_several_lzc_energy_sources = {
+        different_fields: {
+          lzc_energy_sources: [11, 12],
+        },
+      }
+
       heat_demand_current_unsupported = {
         different_buried_fields: {
           heat_demand: {
@@ -521,19 +533,26 @@ describe ViewModel::SapWrapper do
         ),
         { schema: "SAP-Schema-NI-17.4" }.merge(is_ni),
         { schema: "SAP-Schema-NI-17.3" }.merge(is_ni),
-        { schema: "SAP-Schema-NI-17.2", type: "sap" }.merge(is_ni),
+        { schema: "SAP-Schema-NI-17.2", type: "sap" }.merge(is_ni).deep_merge(
+          has_single_lzc_energy_source,
+        ),
         { schema: "SAP-Schema-NI-17.2", type: "rdsap" }.deep_merge(is_rdsap)
           .deep_merge(is_ni_rdsap)
           .deep_merge(has_several_addendum_types),
-        { schema: "SAP-Schema-NI-17.1", type: "sap" }.merge(is_ni),
+        { schema: "SAP-Schema-NI-17.1", type: "sap" }.merge(is_ni).deep_merge(
+          has_single_lzc_energy_source,
+        ),
         { schema: "SAP-Schema-NI-17.1", type: "rdsap" }.deep_merge(is_rdsap)
           .deep_merge(is_ni_rdsap)
           .deep_merge(has_several_addendum_types),
-        { schema: "SAP-Schema-NI-17.0", type: "sap" }.merge(is_ni),
+        { schema: "SAP-Schema-NI-17.0", type: "sap" }.merge(is_ni).deep_merge(
+          has_several_lzc_energy_sources,
+        ),
         { schema: "SAP-Schema-NI-17.0", type: "rdsap" }.deep_merge(is_rdsap)
           .deep_merge(is_ni_rdsap)
           .deep_merge(has_several_addendum_types),
-        { schema: "SAP-Schema-NI-16.1", type: "sap" }.merge(is_ni_pre_17),
+        { schema: "SAP-Schema-NI-16.1", type: "sap" }.merge(is_ni_pre_17)
+          .deep_merge(has_single_lzc_energy_source),
         { schema: "SAP-Schema-NI-16.1", type: "rdsap" }.deep_merge(is_rdsap)
           .deep_merge(is_ni_rdsap)
           .deep_merge(has_several_addendum_types),
@@ -541,7 +560,7 @@ describe ViewModel::SapWrapper do
           schema: "SAP-Schema-NI-16.0",
           type: "sap",
           unsupported_fields: %i[tenure],
-        }.merge(is_ni_pre_17),
+        }.merge(is_ni_pre_17).deep_merge(has_single_lzc_energy_source),
         {
           schema: "SAP-Schema-NI-16.0",
           type: "rdsap",
@@ -549,7 +568,8 @@ describe ViewModel::SapWrapper do
         }.deep_merge(is_rdsap)
           .deep_merge(is_ni_rdsap)
           .deep_merge(has_several_addendum_types),
-        { schema: "SAP-Schema-NI-15.0", type: "sap" }.merge(is_ni_pre_17),
+        { schema: "SAP-Schema-NI-15.0", type: "sap" }.merge(is_ni_pre_17)
+          .deep_merge(has_single_lzc_energy_source),
         {
           schema: "SAP-Schema-NI-15.0",
           type: "rdsap",
@@ -558,7 +578,8 @@ describe ViewModel::SapWrapper do
           .deep_merge(is_ni)
           .deep_merge(heat_demand_impact_of_unsupported)
           .deep_merge(has_addendum_number),
-        { schema: "SAP-Schema-NI-14.2", type: "sap" }.merge(is_ni_pre_17),
+        { schema: "SAP-Schema-NI-14.2", type: "sap" }.merge(is_ni_pre_17)
+          .deep_merge(has_single_lzc_energy_source),
         {
           schema: "SAP-Schema-NI-14.2",
           type: "rdsap",
@@ -572,7 +593,8 @@ describe ViewModel::SapWrapper do
           .deep_merge(is_ni_rdsap_pre_15)
           .deep_merge(heat_demand_unsupported)
           .deep_merge(has_addendum_number),
-        { schema: "SAP-Schema-NI-14.1", type: "sap" }.merge(is_ni_pre_17),
+        { schema: "SAP-Schema-NI-14.1", type: "sap" }.merge(is_ni_pre_17)
+          .deep_merge(has_single_lzc_energy_source),
         {
           schema: "SAP-Schema-NI-14.1",
           type: "rdsap",
@@ -586,7 +608,8 @@ describe ViewModel::SapWrapper do
           .deep_merge(is_ni_rdsap_pre_15)
           .deep_merge(heat_demand_unsupported)
           .deep_merge(has_addendum_number),
-        { schema: "SAP-Schema-NI-14.0", type: "sap" }.merge(is_ni_pre_17),
+        { schema: "SAP-Schema-NI-14.0", type: "sap" }.merge(is_ni_pre_17)
+          .deep_merge(has_single_lzc_energy_source),
         {
           schema: "SAP-Schema-NI-14.0",
           type: "rdsap",
@@ -601,7 +624,8 @@ describe ViewModel::SapWrapper do
           .deep_merge(heat_demand_unsupported)
           .deep_merge(has_addendum_number),
         { schema: "SAP-Schema-NI-13.0", type: "sap" }.merge(is_ni_pre_17)
-          .deep_merge(is_pre_14),
+          .deep_merge(is_pre_14)
+          .deep_merge(has_single_lzc_energy_source),
         {
           schema: "SAP-Schema-NI-13.0",
           type: "rdsap",
@@ -617,7 +641,8 @@ describe ViewModel::SapWrapper do
           .deep_merge(heat_demand_unsupported),
         { schema: "SAP-Schema-NI-12.0", type: "sap" }.merge(is_ni_pre_17)
           .deep_merge(is_pre_14)
-          .deep_merge(is_pre_13),
+          .deep_merge(is_pre_13)
+          .deep_merge(has_single_lzc_energy_source),
         {
           schema: "SAP-Schema-NI-12.0",
           type: "rdsap",
@@ -832,6 +857,7 @@ describe ViewModel::SapWrapper do
             typical_saving: "99",
           },
         ],
+        lzc_energy_sources: nil,
         related_party_disclosure_number: 1,
         related_party_disclosure_text: nil,
         tenure: "1",

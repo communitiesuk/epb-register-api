@@ -1919,6 +1919,9 @@ components:
             anyOf:
               - $ref: '#/components/schemas/DomesticRecommendationWithoutCode'
               - $ref: '#/components/schemas/DomesticRecommendationWithCode'
+        lzcEnergySources:
+          type: array
+          description: Low and zero carbon energy sources for the property
         dateOfExpiry:
           type: string
           format: date

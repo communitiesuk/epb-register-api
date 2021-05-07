@@ -224,6 +224,7 @@
         </SAP:Suggested-Improvements>
         <SAP:LZC-Energy-Sources>
           <SAP:LZC-Energy-Source>11</SAP:LZC-Energy-Source>
+          <SAP:LZC-Energy-Source>12</SAP:LZC-Energy-Source>
         </SAP:LZC-Energy-Sources>
       </SAP:Energy-Assessment>
       <SAP:SAP09-Data>
