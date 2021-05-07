@@ -4,6 +4,7 @@ describe "Helper method address_base_filter" do
     "CR01": true, # Bank
     "CC10": false, # Recycling site
     "CC11": false, # CCTV
+    "CL06QS": false, # Racquet sports facility (= mostly tennis courts)
     "CL09": false, # Beach hut
     "CR11": false, # ATM
     "CT01HT": false, # Heliport / helipad
@@ -20,6 +21,7 @@ describe "Helper method address_base_filter" do
     "CU02": false, # Landfill
     "CU11": false, # Telephone box
     "CU12": false, # Dam
+    "CZ01": false, # Advertising hoarding
     "CZ02": false, # Information signage
     "CZ03": false, # Traffic information signage
     "L": false, # Land
@@ -31,6 +33,7 @@ describe "Helper method address_base_filter" do
     "RD02": true, # Detached house
     "RC": false, # Car park space
     "RD07": false, # House boat
+    "RG02": false, # Garage/ lock-up
     "U": true, # Unclassified
     "Z": false, # Object of interest
     "ZM01OB": false, # Obelisk

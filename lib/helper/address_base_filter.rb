@@ -7,6 +7,7 @@ module Helper
         !class_code.start_with?(
           "CC10", # Recycling site
           "CC11", # CCTV
+          "CL06QS", # Racquet sports facility (tennis court et al)
           "CL09", # Beach hut
           "CR11", # ATM
           "CT01HT", # Heliport / helipad
@@ -23,6 +24,7 @@ module Helper
           "CU02", # Landfill
           "CU11", # Telephone box
           "CU12", # Dam
+          "CZ01", # Advertising hoarding
           "CZ02", # Information signage
           "CZ03", # Traffic information signage
         )
@@ -43,6 +45,7 @@ module Helper
         !class_code.start_with?(
           "RC", # Car park space
           "RD07", # House boat
+          "RG02", # Garage/ lock-up
         )
       when "U"
         # Unclassified
