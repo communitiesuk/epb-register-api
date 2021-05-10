@@ -296,4 +296,18 @@ describe UseCase::ImportAddressBaseData do
       use_case.execute(hashed_data)
     end
   end
+
+  context "when attempting to create a postal address for a residential house in devon with no postal address" do
+    devon_house = ["10023353973",nil,"I",3,2016-01-15,"RD06",10002296559,227014.30,102933.65,50.8000700,-4.4561946,2,1145,"E","2010-07-22","2019-04-28","2010-07-20","","","","","","",nil,nil,"",nil,"","ANNEXE","",nil,"",nil,"","AGENA","",40902264,"1","","","N","",nil,"osgb4000000020915444",8,"osgb1000021646431",3,235095000,nil,"ROAD FROM JEWELLS CROSS TO LITTLE BRIDGE CROSS","","","","","","","","","","","BRIDGERULE","DEVON","","","","EX22 7EX","","","C","","E05011925","E04003251",nil,0,"","",""]
+    use_case = UseCase::ImportAddressBaseData.new
+    hashed_data = Hash[headers.zip(devon_house)]
+    it "returns a geographic address" do
+      expected = "('10023353973', 'EX22 7EX', 'ANNEXE', 'AGENA', 'ROAD FROM JEWELLS CROSS TO LITTLE BRIDGE CROSS', 'BRIDGERULE', 'BRIDGERULE')"
+      partial_clause = use_case.execute(hashed_data)
+      expect(partial_clause).to eq expected
+    end
+    it "raises an error when trying to create a postal address" do
+      expect{use_case.create_delivery_point_address(hashed_data)}.to raise_error(ArgumentError)
+    end
+  end
 end
