@@ -46,5 +46,12 @@ module ViewModel::Export
           @view_model.impact_of_solid_wall_insulation,
       }
     end
+
+    def enum_value(method, *value)
+      {
+        description: Helper::XmlEnumsToOutput.send(method, *value),
+        value: value[0]
+      }
+    end
   end
 end

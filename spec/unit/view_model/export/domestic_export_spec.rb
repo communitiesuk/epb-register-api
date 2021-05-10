@@ -2,8 +2,8 @@ describe ViewModel::Export::DomesticExportView do
   context "When building a domestic SAP export" do
     subject do
       schema_type = "SAP-Schema-18.0.0".freeze
-      xml = Samples.xml(schema_type)
-      wrapper = ViewModel::SapWrapper.new(xml, schema_type)
+      xml = Nokogiri.XML Samples.xml(schema_type)
+      wrapper = ViewModel::Factory.new.create(xml.to_s, schema_type.to_s)
       ViewModel::Export::DomesticExportView.new(wrapper)
     end
 
