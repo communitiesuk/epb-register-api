@@ -50,7 +50,7 @@ module ViewModel::Export
     def enum_value(method, *value)
       {
         description: Helper::XmlEnumsToOutput.send(method, *value),
-        value: value[0]
+        value: value[0],
       }
     end
   end

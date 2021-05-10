@@ -15,7 +15,13 @@ module ViewModel::Export
         Helper::XmlEnumsToOutput.xml_value_to_string(@view_model.built_form)
       view[:co2_emissions_current_per_floor_area] =
         @view_model.co2_emissions_current_per_floor_area.to_i
-      view[:construction_age_band] = enum_value(:construction_age_band_lookup, @view_model.main_dwelling_construction_age_band_or_year, @wrapper.schema_type, @wrapper.report_type)
+      view[:construction_age_band] =
+        enum_value(
+          :construction_age_band_lookup,
+          @view_model.main_dwelling_construction_age_band_or_year,
+          @wrapper.schema_type,
+          @wrapper.report_type,
+        )
       view[:current_carbon_emission] = @view_model.current_carbon_emission.to_f
       view[:current_energy_efficiency_band] =
         Helper::EnergyBandCalculator.domestic(@view_model.current_energy_rating)
@@ -92,7 +98,8 @@ module ViewModel::Export
       view[:primary_energy_use] = @view_model.primary_energy_use.to_i
       view[:property_age_band] = @view_model.property_age_band
       view[:property_summary] = @view_model.property_summary
-      view[:property_type] = enum_value(:property_type, @view_model.property_type)
+      view[:property_type] =
+        enum_value(:property_type, @view_model.property_type)
       view[:recommended_improvements] =
         @view_model.improvements.map do |improvement|
           improvement[:energy_performance_band_improvement] =
@@ -119,7 +126,8 @@ module ViewModel::Export
       view[:tenure] = enum_value(:tenure, @view_model.tenure)
       view[:top_storey] = @view_model.top_storey
       view[:total_floor_area] = @view_model.total_floor_area.to_f
-      view[:transaction_type] = enum_value(:transaction_type, @view_model.transaction_type)
+      view[:transaction_type] =
+        enum_value(:transaction_type, @view_model.transaction_type)
       view[:type_of_assessment] = @view_model.type_of_assessment
       unless @view_model.unheated_corridor_length.nil?
         view[:unheated_corridor_length] = @view_model.unheated_corridor_length

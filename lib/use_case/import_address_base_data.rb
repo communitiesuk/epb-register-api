@@ -37,39 +37,67 @@ module UseCase
       if address_data_line[:PAO_TEXT] != ""
         # If there is a SAO number/range value, it should be inserted either on the same line as the PAO_text (if there is a PAO_text value), if there are both PAO_text and a PAO number/range, then the SAO number/range should appear on the same line as the PAO_text, and the PAO number/range should appear on the street line.
         line = []
-        if address_data_line[:SAO_START_NUMBER] != "" || address_data_line[:SAO_START_SUFFIX] != "" ||
-            address_data_line[:SAO_END_NUMBER] != "" || address_data_line[:SAO_END_SUFFIX] != ""
+        if address_data_line[:SAO_START_NUMBER] != "" ||
+            address_data_line[:SAO_START_SUFFIX] != "" ||
+            address_data_line[:SAO_END_NUMBER] != "" ||
+            address_data_line[:SAO_END_SUFFIX] != ""
           line.push(
             [
-              [address_data_line[:SAO_START_NUMBER], address_data_line[:SAO_START_SUFFIX]].join(""),
-              [address_data_line[:SAO_END_NUMBER], address_data_line[:SAO_END_SUFFIX]].join(""),
+              [
+                address_data_line[:SAO_START_NUMBER],
+                address_data_line[:SAO_START_SUFFIX],
+              ].join(""),
+              [
+                address_data_line[:SAO_END_NUMBER],
+                address_data_line[:SAO_END_SUFFIX],
+              ].join(""),
             ].reject(&:blank?).join("-"),
           )
         end
         line.push(address_data_line[:PAO_TEXT])
         lines.push(line.reject(&:blank?).join(" "))
         # or on the same line as the PAO number/range + street name (if there is only a PAO number/range value and no PAO_text value).
-      elsif address_data_line[:SAO_START_NUMBER] != "" || address_data_line[:SAO_START_SUFFIX] != "" ||
-          address_data_line[:SAO_END_NUMBER] != "" || address_data_line[:SAO_END_SUFFIX] != ""
+      elsif address_data_line[:SAO_START_NUMBER] != "" ||
+          address_data_line[:SAO_START_SUFFIX] != "" ||
+          address_data_line[:SAO_END_NUMBER] != "" ||
+          address_data_line[:SAO_END_SUFFIX] != ""
         street =
           [
-            [address_data_line[:SAO_START_NUMBER], address_data_line[:SAO_START_SUFFIX]].join(""),
-            [address_data_line[:SAO_END_NUMBER], address_data_line[:SAO_END_SUFFIX]].join(""),
+            [
+              address_data_line[:SAO_START_NUMBER],
+              address_data_line[:SAO_START_SUFFIX],
+            ].join(""),
+            [
+              address_data_line[:SAO_END_NUMBER],
+              address_data_line[:SAO_END_SUFFIX],
+            ].join(""),
           ].reject(&:blank?).join("-")
       end
 
       # Generally, if there is a PAO number/range string, it should appear on the same line as the street
-      if address_data_line[:PAO_START_NUMBER] != "" || address_data_line[:PAO_START_SUFFIX] != "" ||
-          !address_data_line[:PAO_END_NUMBER] != "" || !address_data_line[:PAO_END_SUFFIX] != ""
+      if address_data_line[:PAO_START_NUMBER] != "" ||
+          address_data_line[:PAO_START_SUFFIX] != "" ||
+          !address_data_line[:PAO_END_NUMBER] != "" ||
+          !address_data_line[:PAO_END_SUFFIX] != ""
         pao =
           [
-            [address_data_line[:PAO_START_NUMBER], address_data_line[:PAO_START_SUFFIX]].join(""),
-            [address_data_line[:PAO_END_NUMBER], address_data_line[:PAO_END_SUFFIX]].join(""),
+            [
+              address_data_line[:PAO_START_NUMBER],
+              address_data_line[:PAO_START_SUFFIX],
+            ].join(""),
+            [
+              address_data_line[:PAO_END_NUMBER],
+              address_data_line[:PAO_END_SUFFIX],
+            ].join(""),
           ].reject(&:blank?).join("-")
         street = [street, pao].reject(&:blank?).join(" ")
       end
 
-      lines.push([street, address_data_line[:STREET_DESCRIPTION]].reject(&:blank?).join(" "))
+      lines.push(
+        [street, address_data_line[:STREET_DESCRIPTION]].reject(&:blank?).join(
+          " ",
+        ),
+      )
 
       # The locality name (if present) should appear on a separate line beneath the street description,
       lines.push(address_data_line[:LOCALITY])
@@ -95,51 +123,40 @@ module UseCase
 
       town = address_data_line[:TOWN_NAME]
 
-      ImportedAddress.new(
-        uprn,
-        postcode,
-        lines,
-        town,
-      )
+      ImportedAddress.new(uprn, postcode, lines, town)
     end
 
     def create_delivery_point_address(address_data_line)
       uprn = address_data_line[:UPRN]
 
-      lines = %i[
-        DEPARTMENT_NAME
-        ORGANISATION_NAME
-        SUB_BUILDING_NAME
-        BUILDING_NAME
-        BUILDING_NUMBER
-        PO_BOX_NUMBER
-        DEPENDENT_THOROUGHFARE
-        THOROUGHFARE
-        DOUBLE_DEPENDENT_LOCALITY
-        DEPENDENT_LOCALITY
-      ].map do |key|
-        address_data_line[key].to_s
-      end
-      .reject { |line| line.nil? || line.empty? }
-      .inject([]) do |carry, val|
-        if Float(carry[-1], exception: false)
-          carry[0...-1].push([carry[-1], val].join(" "))
-        else
-          carry << val
-          carry
+      lines =
+        %i[
+          DEPARTMENT_NAME
+          ORGANISATION_NAME
+          SUB_BUILDING_NAME
+          BUILDING_NAME
+          BUILDING_NUMBER
+          PO_BOX_NUMBER
+          DEPENDENT_THOROUGHFARE
+          THOROUGHFARE
+          DOUBLE_DEPENDENT_LOCALITY
+          DEPENDENT_LOCALITY
+        ].map { |key| address_data_line[key].to_s }.reject { |line|
+          line.nil? || line.empty?
+        }.inject([]) do |carry, val|
+          if Float(carry[-1], exception: false)
+            carry[0...-1].push([carry[-1], val].join(" "))
+          else
+            carry << val
+            carry
+          end
         end
-      end
 
       postcode = address_data_line[:POSTCODE]
 
       town = address_data_line[:POST_TOWN]
 
-      ImportedAddress.new(
-        uprn,
-        postcode,
-        lines,
-        town,
-      );
+      ImportedAddress.new(uprn, postcode, lines, town)
     end
   end
 end
