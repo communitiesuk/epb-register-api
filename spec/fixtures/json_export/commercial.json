@@ -57,7 +57,7 @@
     "main_heating_fuel": "Natural Gas"
   },
   "type_of_assessment": "CEPC",
-  "transaction_type": "1",
+  "transaction_type": { "description": "marketed sale", "value":"1"},
   "typical_emissions": "67.98",
   "renewable_sources": "Renewable sources test"
 }

@@ -60,7 +60,8 @@ module ViewModel::Export
       view[:special_energy_uses] = @view_model.special_energy_uses
       view[:standard_emissions] = @view_model.standard_emissions
       view[:target_emissions] = @view_model.target_emissions
-      view[:transaction_type] = @view_model.transaction_type
+      view[:transaction_type] =
+        enum_value(:transaction_type, @view_model.transaction_type)
       view[:typical_emissions] = @view_model.typical_emissions
       view[:renewable_sources] = @view_model.renewable_sources
 
