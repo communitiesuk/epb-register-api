@@ -9,7 +9,12 @@ module UseCase
         return nil
       end
 
-      imported_address = create_geographic_address(address_data_line)
+      if address_data_line[:CLASS].start_with?("R")
+        imported_address = create_delivery_point_address(address_data_line)
+      else
+        imported_address = create_geographic_address(address_data_line)
+      end
+
 
       [
         "(#{imported_address.uprn}",

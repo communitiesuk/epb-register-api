@@ -277,4 +277,23 @@ describe UseCase::ImportAddressBaseData do
       expect(imported_address.town).to eq expected.town
     end
   end
+
+  context "when importing the data for a residential property" do
+    use_case = UseCase::ImportAddressBaseData.new
+    hashed_data = Hash[headers.zip(number_ten)]
+    it "returns a delivery point address" do
+      expect(use_case).to receive(:create_delivery_point_address).and_call_original
+      use_case.execute(hashed_data)
+    end
+  end
+
+  context "when importing the data for a commercial property" do
+    use_case = UseCase::ImportAddressBaseData.new
+    number_ten[5] = "C"
+    hashed_data = Hash[headers.zip(number_ten)]
+    it "returns a geographic address" do
+      expect(use_case).to receive(:create_geographic_address).and_call_original
+      use_case.execute(hashed_data)
+    end
+  end
 end
