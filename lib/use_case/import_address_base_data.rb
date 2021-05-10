@@ -1,5 +1,7 @@
 module UseCase
   class ImportAddressBaseData
+    ImportedAddress = Struct.new(:uprn, :postcode, :lines, :town)
+
     def execute(address_data_line)
       unless Helper::AddressBaseFilter.filter_certifiable_addresses(
         address_data_line[:CLASS],
@@ -7,6 +9,20 @@ module UseCase
         return nil
       end
 
+      imported_address = create_geographic_address(address_data_line)
+
+      [
+        "(#{imported_address.uprn}",
+        ActiveRecord::Base.connection.quote(imported_address.postcode),
+        ActiveRecord::Base.connection.quote(imported_address.lines[0]),
+        ActiveRecord::Base.connection.quote(imported_address.lines[1]),
+        ActiveRecord::Base.connection.quote(imported_address.lines[2]),
+        ActiveRecord::Base.connection.quote(imported_address.lines[3]),
+        ActiveRecord::Base.connection.quote(imported_address.town) + ")",
+      ].join(", ")
+    end
+
+    def create_geographic_address(address_data_line)
       uprn = ActiveRecord::Base.connection.quote(address_data_line[:UPRN])
 
       lines = []
@@ -79,15 +95,51 @@ module UseCase
 
       town = address_data_line[:TOWN_NAME]
 
-      [
-        "(#{uprn}",
-        ActiveRecord::Base.connection.quote(postcode),
-        ActiveRecord::Base.connection.quote(lines[0]),
-        ActiveRecord::Base.connection.quote(lines[1]),
-        ActiveRecord::Base.connection.quote(lines[2]),
-        ActiveRecord::Base.connection.quote(lines[3]),
-        ActiveRecord::Base.connection.quote(town) + ")",
-      ].join(", ")
+      ImportedAddress.new(
+        uprn,
+        postcode,
+        lines,
+        town,
+      )
+    end
+
+    def create_delivery_point_address(address_data_line)
+      uprn = address_data_line[:UPRN]
+
+      lines = %i[
+        DEPARTMENT_NAME
+        ORGANISATION_NAME
+        SUB_BUILDING_NAME
+        BUILDING_NAME
+        BUILDING_NUMBER
+        PO_BOX_NUMBER
+        DEPENDENT_THOROUGHFARE
+        THOROUGHFARE
+        DOUBLE_DEPENDENT_LOCALITY
+        DEPENDENT_LOCALITY
+      ].map do |key|
+        address_data_line[key].to_s
+      end
+      .reject { |line| line.nil? || line.empty? }
+      .inject([]) do |carry, val|
+        if Float(carry[-1], exception: false)
+          carry[0...-1].push([carry[-1], val].join(" "))
+        else
+          carry << val
+          carry
+        end
+      end
+
+      postcode = address_data_line[:POSTCODE]
+
+      town = address_data_line[:POST_TOWN]
+
+      ImportedAddress.new(
+        uprn,
+        postcode,
+        lines,
+        town,
+      );
     end
   end
 end
