@@ -1951,6 +1951,11 @@ components:
             impactOfSolidWallInsulation:
               type: integer
               example: -21
+        addendum:
+          anyOf:
+            - $ref: '#/components/schemas/Addendum'
+          nullable: true
+          description: Additional information about the property
 
     PropertySummary:
       type: object
@@ -2335,6 +2340,35 @@ components:
           minimum: -1
           maximum: 1
           example: -0.3
+
+    Addendum:
+      type: object
+      properties:
+        addendumNumber:
+          type: array
+          items:
+            type: integer
+            example: 8
+          nullable: true
+          example: [8]
+        cavityFillRecommended:
+          type: boolean
+          example: true
+        stoneWalls:
+          type: boolean
+          example: true
+        systemBuild:
+          type: boolean
+          example: true
+        accessIssues:
+          type: boolean
+          example: true
+        highExposure:
+          type: boolean
+          example: true
+        narrowCavities:
+          type: boolean
+          example: true
 
     # Schemes
     Scheme:
