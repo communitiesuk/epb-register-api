@@ -151,7 +151,7 @@ module UseCase
           line.nil? || line.empty?
         }
         .inject([]) do |carry, val|
-          if Float(carry[-1], exception: false)
+          if carry[-1] =~ /^\d+[A-Z]?$/
             carry[0...-1].push([carry[-1], val].join(" "))
           else
             carry << val

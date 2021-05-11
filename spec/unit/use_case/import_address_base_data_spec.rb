@@ -310,4 +310,26 @@ describe UseCase::ImportAddressBaseData do
       expect{use_case.create_delivery_point_address(hashed_data)}.to raise_error(ArgumentError)
     end
   end
+
+  context "when forming a delivery point address with a lettered street number" do
+    lettered_number_address = ["90090877","7645063","I",2,"2007-10-09","RD04",nil,394096.94,288199.29,52.4916876,-2.0883638,1,4615,"E","2008-01-03","2020-06-13","2001-02-12","","","","","","8A",nil,nil,"",nil,"","","",8,"A",nil,"","","",11400396,"1","","","Y","osgb1000002247769942",8,"osgb4000000017856380",5,"osgb1000019544958",4,72803239,nil,"HILL STREET","","","HILL STREET","","","","NETHERTON","","","","NETHERTON","DUDLEY","DUDLEY","","DY2 0NZ","DY2 0NZ","S","2T","D","","E05001250","","2012-03-19",0,"","",""];
+    use_case = UseCase::ImportAddressBaseData.new
+    hashed_data = Hash[headers.zip(lettered_number_address)]
+    it "joins the lettered number line onto the following non-empty line" do
+      expected =
+        OpenStruct.new(
+          {
+            uprn: "90090877",
+            postcode: "DY2 0NZ",
+            lines: ["8A HILL STREET", "NETHERTON"],
+            town: "DUDLEY",
+          },
+          )
+      imported_address = use_case.create_delivery_point_address(hashed_data)
+      expect(imported_address.uprn).to eq expected.uprn
+      expect(imported_address.postcode).to eq expected.postcode
+      expect(imported_address.lines).to eq expected.lines
+      expect(imported_address.town).to eq expected.town
+    end
+  end
 end
