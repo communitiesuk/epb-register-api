@@ -9,7 +9,7 @@ describe "Helper method address_base_filter" do
     "CR11": false, # ATM
     "CT01HT": false, # Heliport / helipad
     "CT02": false, # Bus shelter
-    "CT03": false, # Car / coach parking sites
+    "CT03": true, # Car / coach parking sites
     "CT05": false, # Marina
     "CT06": false, # Mooring
     "CT07": false, # Railway asset

@@ -12,7 +12,6 @@ module Helper
           "CR11", # ATM
           "CT01HT", # Heliport / helipad
           "CT02", # Bus shelter
-          "CT03", # Car / coach parking sites
           "CT05", # Marina
           "CT06", # Mooring
           "CT07", # Railway asset
