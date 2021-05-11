@@ -219,7 +219,6 @@
     "cancelled_at": null,
     "created_at": "2021-05-10T16:45:00+00:00",
     "not_for_issue_at": null,
-    "opt_out": false,
-    "related_rrn": null
+    "opt_out": false
   }
 }

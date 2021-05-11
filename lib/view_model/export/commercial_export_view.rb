@@ -2,7 +2,7 @@ module ViewModel::Export
   class CommercialExportView < ViewModel::Export::ExportBaseView
     def build
       view = {}
-      view[:type_of_assessment] = type_of_assessment
+      view[:type_of_assessment] = @wrapper.type.to_s
       view[:address] = address
       view[:assessor] = assessor
       view[:building_emission_rate] = @view_model.building_emission_rate
@@ -64,6 +64,7 @@ module ViewModel::Export
         enum_value(:transaction_type, @view_model.transaction_type)
       view[:typical_emissions] = @view_model.typical_emissions
       view[:renewable_sources] = @view_model.renewable_sources
+      view[:metadata] = metadata
 
       view
     end

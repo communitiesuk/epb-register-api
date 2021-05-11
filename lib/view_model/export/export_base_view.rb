@@ -3,12 +3,10 @@ module ViewModel::Export
     REDACTED = "REDACTED".freeze
     private_constant :REDACTED
 
-    attr_accessor :type_of_assessment
-
-    def initialize(certificate_wrapper, assessment_search)
+    def initialize(certificate_wrapper, assessment)
       @wrapper = certificate_wrapper
       @view_model = certificate_wrapper.get_view_model
-      @assessment_search_gateway = assessment_search
+      @assessment= assessment
     end
 
     def address
@@ -56,20 +54,16 @@ module ViewModel::Export
     end
 
     def metadata
-      result = @assessment_search_gateway.search_by_assessment_id(@view_model.assessment_id).first
       metadata = {}
-
-      metadata[:address_id] = result.get(:address_id)
-      metadata[:created_at] = if result.get(:created_at).nil?
+      metadata[:address_id] = @assessment.get(:address_id)
+      metadata[:created_at] = if @assessment.get(:created_at).nil?
                                     DateTime.new(2020,9,27,8,30).to_formatted_s(:iso8601)
                                   else
-                                    DateTime.parse(result.get(:created_at).to_s).to_formatted_s(:iso8601)
+                                    DateTime.parse(@assessment.get(:created_at).to_s).to_formatted_s(:iso8601)
                                       end
-      metadata[:opt_out] = result.get(:opt_out)
-      metadata[:cancelled_at] = result.get(:cancelled_at)
-      metadata[:not_for_issue_at] = result.get(:not_for_issue_at)
-      metadata[:related_rrn] = result.get(:related_rrn)
-
+      metadata[:opt_out] = @assessment.get(:opt_out)
+      metadata[:cancelled_at] = @assessment.get(:cancelled_at)
+      metadata[:not_for_issue_at] = @assessment.get(:not_for_issue_at)
       metadata
     end
   end

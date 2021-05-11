@@ -59,5 +59,12 @@
   "type_of_assessment": "CEPC",
   "transaction_type": { "description": "marketed sale", "value":"1"},
   "typical_emissions": "67.98",
-  "renewable_sources": "Renewable sources test"
+  "renewable_sources": "Renewable sources test",
+  "metadata": {
+    "address_id": "RRN-0000-0000-0000-0000-0000",
+    "cancelled_at": null,
+    "created_at": "2021-05-10T16:45:00+00:00",
+    "not_for_issue_at": null,
+    "opt_out": false
+  }
 }
