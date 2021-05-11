@@ -17,7 +17,7 @@ module UseCase
         end
 
       [
-        "(#{imported_address.uprn}",
+        "(" + ActiveRecord::Base.connection.quote(imported_address.uprn),
         ActiveRecord::Base.connection.quote(imported_address.postcode),
         ActiveRecord::Base.connection.quote(imported_address.lines[0]),
         ActiveRecord::Base.connection.quote(imported_address.lines[1]),
@@ -28,7 +28,7 @@ module UseCase
     end
 
     def create_geographic_address(address_data_line)
-      uprn = ActiveRecord::Base.connection.quote(address_data_line[:UPRN])
+      uprn = address_data_line[:UPRN]
 
       lines = []
 
@@ -127,6 +127,8 @@ module UseCase
       # STREET_DESCRIPTION
 
       town = address_data_line[:TOWN_NAME]
+
+      lines.pop if lines[-1] == town
 
       ImportedAddress.new(uprn, postcode, lines, town)
     end

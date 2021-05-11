@@ -160,7 +160,7 @@ describe UseCase::ImportAddressBaseData do
   ]
   context "when importing the data for 10 downing street" do
     expected_query_clause =
-      "('100023336956', 'SW1A 2AA', '10 DOWNING STREET', 'LONDON', NULL, NULL, 'LONDON')"
+      "('100023336956', 'SW1A 2AA', '10 DOWNING STREET', NULL, NULL, NULL, 'LONDON')"
     use_case = UseCase::ImportAddressBaseData.new
     it "creates a query clause in the expected form" do
       hashed_data = Hash[headers.zip(number_ten)]
@@ -302,7 +302,7 @@ describe UseCase::ImportAddressBaseData do
     use_case = UseCase::ImportAddressBaseData.new
     hashed_data = Hash[headers.zip(devon_house)]
     it "returns a geographic address" do
-      expected = "('10023353973', 'EX22 7EX', 'ANNEXE', 'AGENA', 'ROAD FROM JEWELLS CROSS TO LITTLE BRIDGE CROSS', 'BRIDGERULE', 'BRIDGERULE')"
+      expected = "('10023353973', 'EX22 7EX', 'ANNEXE', 'AGENA', 'ROAD FROM JEWELLS CROSS TO LITTLE BRIDGE CROSS', NULL, 'BRIDGERULE')"
       partial_clause = use_case.execute(hashed_data)
       expect(partial_clause).to eq expected
     end
@@ -326,6 +326,28 @@ describe UseCase::ImportAddressBaseData do
           },
           )
       imported_address = use_case.create_delivery_point_address(hashed_data)
+      expect(imported_address.uprn).to eq expected.uprn
+      expect(imported_address.postcode).to eq expected.postcode
+      expect(imported_address.lines).to eq expected.lines
+      expect(imported_address.town).to eq expected.town
+    end
+  end
+
+  context "when given a commercial address with duplicate locality information" do
+    rhyl_address = ["100100946350","13523952","I",2,"2009-03-19","CR02",100101059525,300819.00,381603.00,53.3220443,-3.4904488,2,6830,"W","2008-02-27","2020-06-13","2003-02-17","THOMSONS","TUI","","","","UNIT 10",nil,nil,"",nil,"","UNIT 10","UNIT 10",nil,"",nil,"","WHITE ROSE CENTRE","WHITE ROSE CENTRE",46700583,"1","","","N","osgb1000002166013658",14,"osgb5000005161922234",0,"osgb1000034315691",5,nil,262386206,"HIGH STREET","Y STRYD FAWR","WHITE ROSE CENTRE","HIGH STREET","CANOLFAN Y RHOSYN GWYN","STRYD FAWR","","","","","","RHYL","DENBIGHSHIRE","RHYL","Y RHYL","LL18 1EW","LL18 1EW","S","2H","D","","W05000174","W04000173","2012-03-19",0,"CS","249","CYM"]
+    use_case = UseCase::ImportAddressBaseData.new
+    hashed_data = Hash[headers.zip(rhyl_address)]
+    it "removes the duplicate line" do
+      expected =
+        OpenStruct.new(
+          {
+            uprn: "100100946350",
+            postcode: "LL18 1EW",
+            lines: ["UNIT 10", "WHITE ROSE CENTRE", "HIGH STREET"],
+            town: "RHYL",
+          },
+          )
+      imported_address = use_case.create_geographic_address(hashed_data)
       expect(imported_address.uprn).to eq expected.uprn
       expect(imported_address.postcode).to eq expected.postcode
       expect(imported_address.lines).to eq expected.lines
