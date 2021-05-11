@@ -10,7 +10,8 @@ module UseCase
       end
 
       imported_address =
-        if address_data_line[:CLASS].start_with?("R") && !address_data_line[:UDPRN].nil?
+        if address_data_line[:CLASS].start_with?("R") &&
+            !address_data_line[:UDPRN].nil?
           create_delivery_point_address(address_data_line)
         else
           create_geographic_address(address_data_line)
@@ -134,7 +135,10 @@ module UseCase
     end
 
     def create_delivery_point_address(address_data_line)
-      raise ArgumentError.new("Unable to create Delivery Point Address from address data line with no UDPRN") if address_data_line[:UDPRN].nil?
+      if address_data_line[:UDPRN].nil?
+        raise ArgumentError, "Unable to create Delivery Point Address from address data line with no UDPRN"
+      end
+
       uprn = address_data_line[:UPRN]
 
       lines =
@@ -151,8 +155,7 @@ module UseCase
           DEPENDENT_LOCALITY
         ].map { |key| address_data_line[key].to_s }.reject { |line|
           line.nil? || line.empty?
-        }
-        .inject([]) do |carry, val|
+        }.inject([]) do |carry, val|
           if carry[-1] =~ /^\d+[A-Z]?$/
             carry[0...-1].push([carry[-1], val].join(" "))
           else

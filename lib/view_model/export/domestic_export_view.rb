@@ -1,6 +1,5 @@
 module ViewModel::Export
   class DomesticExportView < ExportBaseView
-
     def build
       view = {}
       view[:addendum] = @view_model.addendum

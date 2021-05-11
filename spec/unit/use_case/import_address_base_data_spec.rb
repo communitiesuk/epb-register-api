@@ -282,7 +282,8 @@ describe UseCase::ImportAddressBaseData do
     use_case = UseCase::ImportAddressBaseData.new
     hashed_data = Hash[headers.zip(number_ten)]
     it "returns a delivery point address" do
-      expect(use_case).to receive(:create_delivery_point_address).and_call_original
+      expect(use_case).to receive(:create_delivery_point_address)
+        .and_call_original
       use_case.execute(hashed_data)
     end
   end
@@ -298,21 +299,180 @@ describe UseCase::ImportAddressBaseData do
   end
 
   context "when attempting to create a postal address for a residential house in devon with no postal address" do
-    devon_house = ["10023353973",nil,"I",3,2016-01-15,"RD06",10002296559,227014.30,102933.65,50.8000700,-4.4561946,2,1145,"E","2010-07-22","2019-04-28","2010-07-20","","","","","","",nil,nil,"",nil,"","ANNEXE","",nil,"",nil,"","AGENA","",40902264,"1","","","N","",nil,"osgb4000000020915444",8,"osgb1000021646431",3,235095000,nil,"ROAD FROM JEWELLS CROSS TO LITTLE BRIDGE CROSS","","","","","","","","","","","BRIDGERULE","DEVON","","","","EX22 7EX","","","C","","E05011925","E04003251",nil,0,"","",""]
+    devon_house = [
+      "10023353973",
+      nil,
+      "I",
+      3,
+      2016 - 0o1 - 15,
+      "RD06",
+      10_002_296_559,
+      227_014.30,
+      102_933.65,
+      50.8000700,
+      -4.4561946,
+      2,
+      1145,
+      "E",
+      "2010-07-22",
+      "2019-04-28",
+      "2010-07-20",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      nil,
+      nil,
+      "",
+      nil,
+      "",
+      "ANNEXE",
+      "",
+      nil,
+      "",
+      nil,
+      "",
+      "AGENA",
+      "",
+      40_902_264,
+      "1",
+      "",
+      "",
+      "N",
+      "",
+      nil,
+      "osgb4000000020915444",
+      8,
+      "osgb1000021646431",
+      3,
+      235_095_000,
+      nil,
+      "ROAD FROM JEWELLS CROSS TO LITTLE BRIDGE CROSS",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "BRIDGERULE",
+      "DEVON",
+      "",
+      "",
+      "",
+      "EX22 7EX",
+      "",
+      "",
+      "C",
+      "",
+      "E05011925",
+      "E04003251",
+      nil,
+      0,
+      "",
+      "",
+      "",
+    ]
     use_case = UseCase::ImportAddressBaseData.new
     hashed_data = Hash[headers.zip(devon_house)]
     it "returns a geographic address" do
-      expected = "('10023353973', 'EX22 7EX', 'ANNEXE', 'AGENA', 'ROAD FROM JEWELLS CROSS TO LITTLE BRIDGE CROSS', NULL, 'BRIDGERULE')"
+      expected =
+        "('10023353973', 'EX22 7EX', 'ANNEXE', 'AGENA', 'ROAD FROM JEWELLS CROSS TO LITTLE BRIDGE CROSS', NULL, 'BRIDGERULE')"
       partial_clause = use_case.execute(hashed_data)
       expect(partial_clause).to eq expected
     end
     it "raises an error when trying to create a postal address" do
-      expect{use_case.create_delivery_point_address(hashed_data)}.to raise_error(ArgumentError)
+      expect {
+        use_case.create_delivery_point_address(hashed_data)
+      }.to raise_error(ArgumentError)
     end
   end
 
   context "when forming a delivery point address with a lettered street number" do
-    lettered_number_address = ["90090877","7645063","I",2,"2007-10-09","RD04",nil,394096.94,288199.29,52.4916876,-2.0883638,1,4615,"E","2008-01-03","2020-06-13","2001-02-12","","","","","","8A",nil,nil,"",nil,"","","",8,"A",nil,"","","",11400396,"1","","","Y","osgb1000002247769942",8,"osgb4000000017856380",5,"osgb1000019544958",4,72803239,nil,"HILL STREET","","","HILL STREET","","","","NETHERTON","","","","NETHERTON","DUDLEY","DUDLEY","","DY2 0NZ","DY2 0NZ","S","2T","D","","E05001250","","2012-03-19",0,"","",""];
+    lettered_number_address = [
+      "90090877",
+      "7645063",
+      "I",
+      2,
+      "2007-10-09",
+      "RD04",
+      nil,
+      394_096.94,
+      288_199.29,
+      52.4916876,
+      -2.0883638,
+      1,
+      4615,
+      "E",
+      "2008-01-03",
+      "2020-06-13",
+      "2001-02-12",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "8A",
+      nil,
+      nil,
+      "",
+      nil,
+      "",
+      "",
+      "",
+      8,
+      "A",
+      nil,
+      "",
+      "",
+      "",
+      11_400_396,
+      "1",
+      "",
+      "",
+      "Y",
+      "osgb1000002247769942",
+      8,
+      "osgb4000000017856380",
+      5,
+      "osgb1000019544958",
+      4,
+      72_803_239,
+      nil,
+      "HILL STREET",
+      "",
+      "",
+      "HILL STREET",
+      "",
+      "",
+      "",
+      "NETHERTON",
+      "",
+      "",
+      "",
+      "NETHERTON",
+      "DUDLEY",
+      "DUDLEY",
+      "",
+      "DY2 0NZ",
+      "DY2 0NZ",
+      "S",
+      "2T",
+      "D",
+      "",
+      "E05001250",
+      "",
+      "2012-03-19",
+      0,
+      "",
+      "",
+      "",
+    ]
     use_case = UseCase::ImportAddressBaseData.new
     hashed_data = Hash[headers.zip(lettered_number_address)]
     it "joins the lettered number line onto the following non-empty line" do
@@ -324,7 +484,7 @@ describe UseCase::ImportAddressBaseData do
             lines: ["8A HILL STREET", "NETHERTON"],
             town: "DUDLEY",
           },
-          )
+        )
       imported_address = use_case.create_delivery_point_address(hashed_data)
       expect(imported_address.uprn).to eq expected.uprn
       expect(imported_address.postcode).to eq expected.postcode

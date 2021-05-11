@@ -6,7 +6,7 @@ module ViewModel::Export
     def initialize(certificate_wrapper, assessment)
       @wrapper = certificate_wrapper
       @view_model = certificate_wrapper.get_view_model
-      @assessment= assessment
+      @assessment = assessment
     end
 
     def address
@@ -56,11 +56,14 @@ module ViewModel::Export
     def metadata
       metadata = {}
       metadata[:address_id] = @assessment.get(:address_id)
-      metadata[:created_at] = if @assessment.get(:created_at).nil?
-                                    DateTime.new(2020,9,27,8,30).to_formatted_s(:iso8601)
-                                  else
-                                    DateTime.parse(@assessment.get(:created_at).to_s).to_formatted_s(:iso8601)
-                                      end
+      metadata[:created_at] =
+        if @assessment.get(:created_at).nil?
+          DateTime.new(2020, 9, 27, 8, 30).to_formatted_s(:iso8601)
+        else
+          DateTime
+            .parse(@assessment.get(:created_at).to_s)
+            .to_formatted_s(:iso8601)
+        end
       metadata[:opt_out] = @assessment.get(:opt_out)
       metadata[:cancelled_at] = @assessment.get(:cancelled_at)
       metadata[:not_for_issue_at] = @assessment.get(:not_for_issue_at)
