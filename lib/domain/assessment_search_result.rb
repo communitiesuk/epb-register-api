@@ -19,7 +19,8 @@ module Domain
       not_for_issue_at: nil,
       date_of_assessment: nil,
       scheme_assessor_id: nil,
-      linked_assessment_id: nil
+      linked_assessment_id: nil,
+      created_at: nil
     )
       @migrated = migrated
       @date_of_assessment =
@@ -35,6 +36,7 @@ module Domain
       @current_energy_efficiency_rating = current_energy_efficiency_rating
       @postcode = postcode
       @date_registered = date_registered
+      @created_at = created_at
       @date_of_expiry =
         if !date_of_expiry.nil?
           Date.strptime(date_of_expiry.to_s, "%Y-%m-%d")

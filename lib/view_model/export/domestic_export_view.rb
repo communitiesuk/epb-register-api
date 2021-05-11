@@ -1,9 +1,5 @@
 module ViewModel::Export
   class DomesticExportView < ExportBaseView
-    def initialize(certificate_wrapper)
-      @wrapper = certificate_wrapper
-      @view_model = certificate_wrapper.get_view_model
-    end
 
     def build
       view = {}
@@ -138,10 +134,10 @@ module ViewModel::Export
         @view_model.window_energy_efficiency_rating.to_i
       view[:window_environmental_efficiency_rating] =
         @view_model.window_environmental_efficiency_rating.to_i
+      view[:metadata] = metadata
 
       # date_registered is removed as duplicate of date_of_registration
       # estimated_energy_cost is removed since this is a calculated value
-
       view
     end
   end

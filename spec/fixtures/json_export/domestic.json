@@ -213,5 +213,13 @@
   "wind_turbine_count": 0,
   "window_description": "Glass window",
   "window_energy_efficiency_rating": 0,
-  "window_environmental_efficiency_rating": 0
+  "window_environmental_efficiency_rating": 0,
+  "metadata": {
+    "address_id": "RRN-0000-0000-0000-0000-0000",
+    "cancelled_at": null,
+    "created_at": "2021-05-10T16:45:00+00:00",
+    "not_for_issue_at": null,
+    "opt_out": false,
+    "related_rrn": null
+  }
 }
