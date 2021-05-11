@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_10_155650) do
+ActiveRecord::Schema.define(version: 2021_05_11_111424) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -23,6 +23,8 @@ ActiveRecord::Schema.define(version: 2021_02_10_155650) do
     t.string "address_line3"
     t.string "address_line4"
     t.string "town"
+    t.string "classification_code", limit: 6
+    t.string "address_type", limit: 15
     t.index ["postcode"], name: "index_address_base_on_postcode"
   end
 

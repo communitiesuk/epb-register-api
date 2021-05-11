@@ -160,7 +160,7 @@ describe UseCase::ImportAddressBaseData do
   ]
   context "when importing the data for 10 downing street" do
     expected_query_clause =
-      "('100023336956', 'SW1A 2AA', '10 DOWNING STREET', NULL, NULL, NULL, 'LONDON')"
+      "('100023336956', 'SW1A 2AA', '10 DOWNING STREET', NULL, NULL, NULL, 'LONDON', 'RD04', 'Delivery Point')"
     use_case = UseCase::ImportAddressBaseData.new
     it "creates a query clause in the expected form" do
       hashed_data = Hash[headers.zip(number_ten)]
@@ -290,8 +290,9 @@ describe UseCase::ImportAddressBaseData do
 
   context "when importing the data for a commercial property" do
     use_case = UseCase::ImportAddressBaseData.new
-    number_ten[5] = "C"
-    hashed_data = Hash[headers.zip(number_ten)]
+    commercial_number_ten = number_ten.clone
+    commercial_number_ten[5] = "C"
+    hashed_data = Hash[headers.zip(commercial_number_ten)]
     it "returns a geographic address" do
       expect(use_case).to receive(:create_geographic_address).and_call_original
       use_case.execute(hashed_data)
@@ -381,8 +382,7 @@ describe UseCase::ImportAddressBaseData do
     use_case = UseCase::ImportAddressBaseData.new
     hashed_data = Hash[headers.zip(devon_house)]
     it "returns a geographic address" do
-      expected =
-        "('10023353973', 'EX22 7EX', 'ANNEXE', 'AGENA', 'ROAD FROM JEWELLS CROSS TO LITTLE BRIDGE CROSS', NULL, 'BRIDGERULE')"
+      expected = "('10023353973', 'EX22 7EX', 'ANNEXE', 'AGENA', 'ROAD FROM JEWELLS CROSS TO LITTLE BRIDGE CROSS', NULL, 'BRIDGERULE', 'RD06', 'Geographic')"
       partial_clause = use_case.execute(hashed_data)
       expect(partial_clause).to eq expected
     end
