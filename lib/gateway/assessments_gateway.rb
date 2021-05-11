@@ -51,6 +51,29 @@ module Gateway
       result.first["linked_assessment_id"] unless result.empty?
     end
 
+    def fetch_assessment_ids_by_range(date_from, date_to = DateTime.now)
+      bindings = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "date_from",
+          date_from,
+          ActiveRecord::Type::Date.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "date_from",
+          date_to,
+          ActiveRecord::Type::Date.new,
+        ),
+      ]
+
+      sql = <<-SQL
+           SELECT assessment_id
+            FROM assessments a
+           WHERE a.date_registered BETWEEN $1 AND $2
+      SQL
+
+      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
+    end
+
   private
 
     def send_to_db(assessment)
