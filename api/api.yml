@@ -1921,7 +1921,12 @@ components:
               - $ref: '#/components/schemas/DomesticRecommendationWithCode'
         lzcEnergySources:
           type: array
+          items:
+            type: integer
+            example: 11
+          nullable: true
           description: Low and zero carbon energy sources for the property
+          example: [11]
         dateOfExpiry:
           type: string
           format: date
