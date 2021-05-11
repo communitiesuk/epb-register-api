@@ -62,6 +62,8 @@ task :import_address_base do
     t.string "address_line3"
     t.string "address_line4"
     t.string "town"
+    t.string "classification_code", limit: 6
+    t.string "address_type", limit: 15
   end
   puts "[#{Time.now}] Created empty address_base_tmp table"
 
