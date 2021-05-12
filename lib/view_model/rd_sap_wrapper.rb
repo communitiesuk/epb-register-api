@@ -248,7 +248,8 @@ module ViewModel
             @view_model.lighting_environmental_efficiency_rating,
           ),
         photo_supply: @view_model.photovoltaic_roof_area_percent,
-        built_form: @view_model.built_form,
+        built_form:
+          Helper::XmlEnumsToOutput.xml_value_to_string(@view_model.built_form),
         mainheat_description:
           @view_model.all_main_heating_descriptions.join(", "),
         mainheat_energy_eff:

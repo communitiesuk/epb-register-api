@@ -1,0 +1,254 @@
+{
+  "addendum": {
+    "addendum_number": [
+      1,
+      8
+    ],
+    "system_build": true,
+    "stone_walls": true
+  },
+  "address": {
+    "address_id": "UPRN-000000000000",
+    "address_line1": "1 Some Street",
+    "address_line2": "",
+    "address_line3": "",
+    "address_line4": "",
+    "postcode": "A0 0AA",
+    "town": "Whitbury"
+  },
+  "assessment_id": "0000-0000-0000-0000-0000",
+  "assessor": {
+    "scheme_assessor_id": "REDACTED",
+    "name": "REDACTED",
+    "email": "REDACTED",
+    "telephone": "REDACTED"
+  },
+  "built_form": {
+    "description": "Semi-Detached",
+    "value": "2"
+  },
+  "co2_emissions_current_per_floor_area": 20,
+  "construction_age_band": {
+    "description": "England and Wales: 2007-2011",
+    "value": "K"
+  },
+  "current_carbon_emission": 2.4,
+  "current_energy_efficiency_band": "e",
+  "current_energy_efficiency_rating": 50,
+  "date_of_assessment": "2020-05-04",
+  "date_of_expiry": "2030-05-03",
+  "date_of_registration": "2020-05-04",
+  "dwelling_type": "Mid-terrace house",
+  "energy_consumption_potential": 88,
+  "environmental_impact_current": 52,
+  "environmental_impact_potential": 74,
+  "extensions_count": 0,
+  "fixed_lighting_outlets_count": 16,
+  "glazed_area": 1,
+  "habitable_room_count": 5,
+  "heat_demand": {
+    "current_space_heating_demand": 13120,
+    "current_water_heating_demand": 2285,
+    "impact_of_cavity_insulation": -122,
+    "impact_of_loft_insulation": -2114,
+    "impact_of_solid_wall_insulation": -3560
+  },
+  "heat_loss_corridor": 2,
+  "heated_room_count": 5,
+  "heating_cost_current": 365.98,
+  "heating_cost_potential": 250.34,
+  "hot_water_cost_current": 200.40,
+  "hot_water_cost_potential": 180.43,
+  "hot_water_description": "From main system",
+  "hot_water_energy_efficiency_rating": 4,
+  "hot_water_environmental_efficiency_rating": 4,
+  "level": 1,
+  "lighting_cost_current": 123.45,
+  "lighting_cost_potential": 84.23,
+  "lighting_description": "Low energy lighting in 50% of fixed outlets",
+  "lighting_energy_efficiency_rating": 4,
+  "lighting_environmental_efficiency_rating": 4,
+  "low_energy_fixed_lighting_outlets_count": 16,
+  "low_energy_lighting": 100,
+  "main_fuel_type": "26",
+  "main_heating_controls_descriptions": [
+    "Programmer, room thermostat and TRVs",
+    "Time and temperature zone control"
+  ],
+  "main_heating_descriptions": [
+    "Boiler and radiators, anthracite",
+    "Boiler and radiators, mains gas"
+  ],
+  "mains_gas": "Y",
+  "multiple_glazed_proportion": 100,
+  "open_fireplaces_count": 0,
+  "photovoltaic_roof_area_percent": 0,
+  "potential_carbon_emission": 1.4,
+  "potential_energy_efficiency_band": "c",
+  "potential_energy_efficiency_rating": 72,
+  "primary_energy_use": 230,
+  "property_age_band": "K",
+  "property_summary": [
+    {
+      "description": "Solid brick, as built, no insulation (assumed)",
+      "energy_efficiency_rating": 1,
+      "environmental_efficiency_rating": 1,
+      "name": "wall"
+    },
+    {
+      "description": "Cavity wall, as built, insulated (assumed)",
+      "energy_efficiency_rating": 4,
+      "environmental_efficiency_rating": 4,
+      "name": "wall"
+    },
+    {
+      "description": "Pitched, 25 mm loft insulation",
+      "energy_efficiency_rating": 2,
+      "environmental_efficiency_rating": 2,
+      "name": "roof"
+    },
+    {
+      "description": "Pitched, 250 mm loft insulation",
+      "energy_efficiency_rating": 4,
+      "environmental_efficiency_rating": 4,
+      "name": "roof"
+    },
+    {
+      "description": "Suspended, no insulation (assumed)",
+      "energy_efficiency_rating": 0,
+      "environmental_efficiency_rating": 0,
+      "name": "floor"
+    },
+    {
+      "description": "Solid, insulated (assumed)",
+      "energy_efficiency_rating": 0,
+      "environmental_efficiency_rating": 0,
+      "name": "floor"
+    },
+    {
+      "description": "Fully double glazed",
+      "energy_efficiency_rating": 3,
+      "environmental_efficiency_rating": 3,
+      "name": "window"
+    },
+    {
+      "description": "Boiler and radiators, anthracite",
+      "energy_efficiency_rating": 3,
+      "environmental_efficiency_rating": 1,
+      "name": "main_heating"
+    },
+    {
+      "description": "Boiler and radiators, mains gas",
+      "energy_efficiency_rating": 4,
+      "environmental_efficiency_rating": 4,
+      "name": "main_heating"
+    },
+    {
+      "description": "Programmer, room thermostat and TRVs",
+      "energy_efficiency_rating": 4,
+      "environmental_efficiency_rating": 4,
+      "name": "main_heating_controls"
+    },
+    {
+      "description": "Time and temperature zone control",
+      "energy_efficiency_rating": 5,
+      "environmental_efficiency_rating": 5,
+      "name": "main_heating_controls"
+    },
+    {
+      "description": "From main system",
+      "energy_efficiency_rating": 4,
+      "environmental_efficiency_rating": 4,
+      "name": "hot_water"
+    },
+    {
+      "description": "Low energy lighting in 50% of fixed outlets",
+      "energy_efficiency_rating": 4,
+      "environmental_efficiency_rating": 4,
+      "name": "lighting"
+    },
+    {
+      "description": "Room heaters, electric",
+      "energy_efficiency_rating": 0,
+      "environmental_efficiency_rating": 0,
+      "name": "secondary_heating"
+    }
+  ],
+  "property_type": {
+    "description": "House",
+    "value": "0"
+  },
+  "recommended_improvements": [
+    {
+      "energy_performance_band_improvement": "e",
+      "energy_performance_rating_improvement": 50,
+      "environmental_impact_rating_improvement": 50,
+      "green_deal_category_code": "1",
+      "improvement_category": "6",
+      "improvement_code": "5",
+      "improvement_description": null,
+      "improvement_title": "",
+      "improvement_type": "Z3",
+      "indicative_cost": "£100 - £350",
+      "sequence": 1,
+      "typical_saving": "360"
+    },
+    {
+      "energy_performance_band_improvement": "d",
+      "energy_performance_rating_improvement": 60,
+      "environmental_impact_rating_improvement": 64,
+      "green_deal_category_code": "3",
+      "improvement_category": "2",
+      "improvement_code": "1",
+      "improvement_description": null,
+      "improvement_title": "",
+      "improvement_type": "Z2",
+      "indicative_cost": "2000",
+      "sequence": 2,
+      "typical_saving": "99"
+    },
+    {
+      "energy_performance_band_improvement": "d",
+      "energy_performance_rating_improvement": 60,
+      "environmental_impact_rating_improvement": 64,
+      "green_deal_category_code": "3",
+      "improvement_category": "2",
+      "improvement_code": null,
+      "improvement_description": "Improvement desc",
+      "improvement_title": "",
+      "improvement_type": "Z2",
+      "indicative_cost": "1000",
+      "sequence": 3,
+      "typical_saving": "99"
+    }
+  ],
+  "related_party_disclosure_text": "No related party",
+  "secondary_heating_description": "Room heaters, electric",
+  "secondary_heating_energy_efficiency_rating": 0,
+  "secondary_heating_environmental_efficiency_rating": 0,
+  "status": "ENTERED",
+  "storey_count": 3,
+  "tenure": {
+    "description": "Owner-occupied",
+    "value": "1"
+  },
+  "top_storey": "N",
+  "total_floor_area": 55.0,
+  "transaction_type": {
+    "description": "marketed sale",
+    "value": "1"
+  },
+  "type_of_assessment": "RdSAP",
+  "unheated_corridor_length": 10,
+  "wind_turbine_count": 0,
+  "window_description": "Fully double glazed",
+  "window_energy_efficiency_rating": 3,
+  "window_environmental_efficiency_rating": 3,
+  "metadata": {
+    "address_id": "RRN-0000-0000-0000-0000-0000",
+    "cancelled_at": null,
+    "created_at": "2021-05-10T16:45:00+00:00",
+    "not_for_issue_at": null,
+    "opt_out": false
+  }
+}

@@ -18,7 +18,10 @@
     "email": "REDACTED",
     "telephone": "REDACTED"
   },
-  "built_form": "Detached",
+  "built_form": {
+    "description": "Detached",
+    "value": "1"
+  },
   "co2_emissions_current_per_floor_area": 20,
   "construction_age_band": {
     "description": "1750",
@@ -194,7 +197,6 @@
     }
   ],
   "related_party_disclosure_number": 1,
-  "related_party_disclosure_text": null,
   "status": "ENTERED",
   "secondary_heating_description": "Electric heater",
   "secondary_heating_energy_efficiency_rating": 0,
