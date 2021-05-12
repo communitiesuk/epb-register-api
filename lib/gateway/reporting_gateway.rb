@@ -240,7 +240,7 @@ module Gateway
       ]
 
       sql = <<~SQL
-        SELECT  a.assessment_id, date_registered
+        SELECT  a.assessment_id, date_registered, la.linked_assessment_id
         FROM assessments a
         INNER JOIN linked_assessments la ON a.assessment_id = la.assessment_id
         WHERE a.opt_out = false AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL

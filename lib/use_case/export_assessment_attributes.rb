@@ -37,7 +37,7 @@ module UseCase
       case type_of_assessment.upcase
       when "CEPC"
         ViewModel::Export::CommercialExportView.new(wrapper, xml)
-      when "RDSAP"
+      when "SAP"
         ViewModel::Export::DomesticExportView.new(wrapper, xml)
       end
     end

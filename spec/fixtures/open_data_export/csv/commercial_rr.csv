@@ -1,6 +1,6 @@
 ASSESSMENT_ID,PAYBACK_TYPE,RECOMMENDATION_ITEM,RECOMMENDATION_CODE,RECOMMENDATION,CO2_IMPACT
-"1ed13ff0d6bce834b1cfdcb30f9e113f8832ce75822089cd2d29fa307f147fa0","short",1,"ECP-L5","Consider replacing T8 lamps with retrofit T5 conversion kit.","HIGH"
-"1ed13ff0d6bce834b1cfdcb30f9e113f8832ce75822089cd2d29fa307f147fa0","short",2,"ECP-L5","Introduce HF (high frequency) ballasts for fluorescent tubes: Reduced number of fittings required.","LOW"
-"1ed13ff0d6bce834b1cfdcb30f9e113f8832ce75822089cd2d29fa307f147fa0","medium",3,"EPC-H7","Add optimum start/stop to the heating system.","MEDIUM"
-"1ed13ff0d6bce834b1cfdcb30f9e113f8832ce75822089cd2d29fa307f147fa0","long",4,"EPC-R5","Consider installing an air source heat pump.","HIGH"
-"1ed13ff0d6bce834b1cfdcb30f9e113f8832ce75822089cd2d29fa307f147fa0","other",5,"EPC-R4","Consider installing PV.","HIGH"
+"1ee53a22d6d6ee76091c3e0e08b2b7064964d6c12fc43a25aa333ebf7512fe4c","short",1,"ECP-L5","Consider replacing T8 lamps with retrofit T5 conversion kit.","HIGH"
+"1ee53a22d6d6ee76091c3e0e08b2b7064964d6c12fc43a25aa333ebf7512fe4c","short",2,"ECP-L5","Introduce HF (high frequency) ballasts for fluorescent tubes: Reduced number of fittings required.","LOW"
+"1ee53a22d6d6ee76091c3e0e08b2b7064964d6c12fc43a25aa333ebf7512fe4c","medium",3,"EPC-H7","Add optimum start/stop to the heating system.","MEDIUM"
+"1ee53a22d6d6ee76091c3e0e08b2b7064964d6c12fc43a25aa333ebf7512fe4c","long",4,"EPC-R5","Consider installing an air source heat pump.","HIGH"
+"1ee53a22d6d6ee76091c3e0e08b2b7064964d6c12fc43a25aa333ebf7512fe4c","other",5,"EPC-R4","Consider installing PV.","HIGH"
