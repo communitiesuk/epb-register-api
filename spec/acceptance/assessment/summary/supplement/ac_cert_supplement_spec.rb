@@ -39,14 +39,13 @@ describe "Acceptance::AssessmentSummary::Supplement::AC_CERT",
   end
 
   context "when getting the assessor data supplement" do
-    it "Adds scheme details", set_with_timecop: true do
+    it "Adds scheme details" do
       scheme = @regular_summary.dig(:data, :assessor, :registeredBy)
       expect(scheme[:name]).to eq("test scheme")
       expect(scheme[:schemeId]).to be_a(Integer)
     end
 
-    it "Returns lodged email and phone values by default",
-       set_with_timecop: true do
+    it "Returns lodged email and phone values by default" do
       contact_details = @regular_summary.dig(:data, :assessor, :contactDetails)
 
       expect(contact_details).to eq(
@@ -54,8 +53,7 @@ describe "Acceptance::AssessmentSummary::Supplement::AC_CERT",
       )
     end
 
-    it "Overrides missing assessor email and phone values with DB values",
-       set_with_timecop: true do
+    it "Overrides missing assessor email and phone values with DB values" do
       expect(@second_summary.dig(:data, :assessor, :contactDetails)).to eq(
         { email: "person@person.com", telephone: "010199991010101" },
       )
@@ -63,16 +61,14 @@ describe "Acceptance::AssessmentSummary::Supplement::AC_CERT",
   end
 
   context "when getting the related party disclosure" do
-    it "returns the value lodged in the related document",
-       set_with_timecop: true do
+    it "returns the value lodged in the related document" do
       disclosure = @regular_summary.dig(:data, :relatedPartyDisclosure)
       expect(disclosure).to eq("1")
     end
   end
 
   context "when there is a UPRN field" do
-    it "returns a related assessment id when there is a matching UPRN",
-       set_with_timecop: true do
+    it "returns a related assessment id when there is a matching UPRN" do
       related_assessments = @second_summary.dig(:data, :relatedAssessments)
       expect(related_assessments.first[:assessmentId]).to eq(
         "0000-0000-0000-0000-0000",
