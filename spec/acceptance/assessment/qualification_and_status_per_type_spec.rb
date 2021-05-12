@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe "Acceptance::Assessment::QualificationAndStatusPerType" do
+describe "Acceptance::Assessment::QualificationAndStatusPerType", set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
   def sample(name, schema_name)

@@ -1,4 +1,4 @@
-describe LodgementRules::NonDomestic do
+describe LodgementRules::NonDomestic, set_with_timecop: true do
   let(:docs_under_test) do
     [
       {

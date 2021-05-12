@@ -1,4 +1,4 @@
-describe "Acceptance::AddressSearch::ByStreetAndTown" do
+describe "Acceptance::AddressSearch::ByStreetAndTown", set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
   let(:valid_cepc_xml) { Samples.xml "CEPC-8.0.0", "cepc" }

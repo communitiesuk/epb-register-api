@@ -1,4 +1,4 @@
-describe "Acceptance::AddressSearch::ByPostcode::AssessmentSource" do
+describe "Acceptance::AddressSearch::ByPostcode::AssessmentSource", set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
   context "when there are no address base entries for a postcode" do

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe "Acceptance::Assessment::FetchRenewableHeatIncentive" do
+describe "Acceptance::Assessment::FetchRenewableHeatIncentive", set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
   let(:valid_rdsap_xml) { Samples.xml "RdSAP-Schema-20.0.0" }

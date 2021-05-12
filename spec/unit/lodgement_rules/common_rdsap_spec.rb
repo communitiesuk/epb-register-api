@@ -1,4 +1,4 @@
-describe LodgementRules::DomesticCommon do
+describe LodgementRules::DomesticCommon, set_with_timecop: true do
   let(:docs_under_test) { %w[RdSAP-Schema-20.0.0 RdSAP-Schema-NI-20.0.0] }
 
   def assert_errors(expected_errors, values = nil, new_nodes = [])

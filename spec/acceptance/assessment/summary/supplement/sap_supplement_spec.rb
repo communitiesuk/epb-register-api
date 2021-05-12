@@ -2,7 +2,7 @@
 
 require "date"
 
-describe "Acceptance::AssessmentSummary::Supplement::SAP" do
+describe "Acceptance::AssessmentSummary::Supplement::SAP", set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
   before(:all) do

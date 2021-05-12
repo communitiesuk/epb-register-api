@@ -1,4 +1,4 @@
-describe "Acceptance::AssessmentSummary::Supplement::CEPC" do
+describe "Acceptance::AssessmentSummary::Supplement::CEPC", set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
   before(:all) do

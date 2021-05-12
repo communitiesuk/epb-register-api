@@ -1,4 +1,4 @@
-describe "Acceptance::AddressSearch::ByPostcode::Status" do
+describe "Acceptance::AddressSearch::ByPostcode::Status", set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
   let(:scheme_id) { add_scheme_and_get_id }

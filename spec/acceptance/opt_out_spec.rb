@@ -1,4 +1,4 @@
-describe "Acceptance::OptOut" do
+describe "Acceptance::OptOut", set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
   let(:valid_assessor_request_body) do

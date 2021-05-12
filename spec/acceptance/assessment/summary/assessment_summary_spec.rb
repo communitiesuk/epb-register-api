@@ -2,7 +2,7 @@
 
 require "date"
 
-describe "Acceptance::AssessmentSummary" do
+describe "Acceptance::AssessmentSummary", set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
   it "returns 404 for an assessment that doesnt exist" do

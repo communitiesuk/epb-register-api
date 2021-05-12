@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe "Acceptance::AssessmentAddressId" do
+describe "Acceptance::AssessmentAddressId", set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
   let(:valid_assessor_request_body) do

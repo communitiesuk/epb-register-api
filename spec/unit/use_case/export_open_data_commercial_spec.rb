@@ -1,4 +1,4 @@
-describe UseCase::ExportOpenDataCommercial do
+describe UseCase::ExportOpenDataCommercial, set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
   context "when creating the open data reporting release" do
@@ -68,8 +68,6 @@ describe UseCase::ExportOpenDataCommercial do
       end
 
       before(:all) do
-        Timecop.freeze(2021, 3, 31, 9, 30, 0)
-
         add_postcodes("A0 0AA", 51.5045, 0.0865, "London")
         add_outcodes("A0", 51.5045, 0.4865, "London")
 
@@ -181,8 +179,6 @@ describe UseCase::ExportOpenDataCommercial do
           schema_name: "CEPC-8.0.0",
         )
       end
-
-      after(:all) { Timecop.return }
 
       let(:rrn_assessment) do
         expected_data_hash =

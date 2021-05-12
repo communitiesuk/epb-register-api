@@ -1,4 +1,4 @@
-describe "Acceptance::AddressLinking" do
+describe "Acceptance::AddressLinking", set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
   let(:valid_assessor_request_body) do

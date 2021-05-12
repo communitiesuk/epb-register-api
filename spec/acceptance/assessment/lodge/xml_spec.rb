@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe "Acceptance::LodgeAssessment::XML" do
+describe "Acceptance::LodgeAssessment::XML", set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
   let(:fetch_assessor_stub) { AssessorStub.new }

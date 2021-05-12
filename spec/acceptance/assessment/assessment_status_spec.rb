@@ -1,4 +1,4 @@
-describe "Acceptance::AssessmentStatus" do
+describe "Acceptance::AssessmentStatus", set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
   let(:fetch_assessor_stub) { AssessorStub.new }

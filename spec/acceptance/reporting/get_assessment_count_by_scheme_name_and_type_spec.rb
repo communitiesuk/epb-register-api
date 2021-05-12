@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType" do
+describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType", set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
   let(:valid_assessor_request_body) do

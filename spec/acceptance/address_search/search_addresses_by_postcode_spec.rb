@@ -1,4 +1,4 @@
-describe "Acceptance::AddressSearch::ByPostcode" do
+describe "Acceptance::AddressSearch::ByPostcode", set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
   context "when there are existing assessments at a postcode" do

@@ -1,4 +1,4 @@
-describe UseCase::ExportOpenDataDomestic do
+describe UseCase::ExportOpenDataDomestic, set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
   context "when creating the open data reporting release" do
@@ -233,8 +233,6 @@ describe UseCase::ExportOpenDataDomestic do
         domestic_ni_sap_postcode =
           domestic_ni_sap_xml.at("Property Address Postcode")
 
-        Timecop.freeze(2021, 3, 31, 9, 30, 0)
-
         add_assessor(
           scheme_id,
           "SPEC000000",
@@ -338,8 +336,6 @@ describe UseCase::ExportOpenDataDomestic do
           override: true,
         )
       end
-
-      after(:all) { Timecop.return }
 
       let(:rdsap_assessment) do
         expected_data_hash =

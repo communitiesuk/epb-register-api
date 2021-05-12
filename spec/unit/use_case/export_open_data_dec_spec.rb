@@ -1,4 +1,4 @@
-describe UseCase::ExportOpenDataDec do
+describe UseCase::ExportOpenDataDec, set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
   context "when creating the open data reporting release " do
@@ -95,7 +95,6 @@ describe UseCase::ExportOpenDataDec do
       end
 
       before(:all) do
-        Timecop.freeze(2021, 3, 31, 9, 30, 0)
         scheme_id = add_scheme_and_get_id
         dec_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "dec")
         dec_assessment_id = dec_xml.at("RRN")
@@ -178,8 +177,6 @@ describe UseCase::ExportOpenDataDec do
           schema_name: "CEPC-8.0.0",
         )
       end
-
-      after(:all) { Timecop.return }
 
       it "returns the correct number of assessments in the Data" do
         expect(exported_data.length).to eq(3)
