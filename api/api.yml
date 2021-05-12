@@ -497,7 +497,7 @@ paths:
                       assessments:
                         type: array
                         items:
-                          $ref: '#/components/schemas/DomesticEnergyAssessmentWithBand'
+                          $ref: '#/components/schemas/EnergyAssessmentSearchResult'
         400:
           description: Bad request - missing or malformed parameters
           content:
@@ -720,7 +720,9 @@ paths:
                 type: object
                 properties:
                   data:
-                    $ref: '#/components/schemas/Empty'
+                    oneOf:
+                      - $ref: '#/components/schemas/DomesticEnergyAssessmentSummary'
+                      - $ref: '#/components/schemas/CommercialEnergyAssessmentSummary'
         404:
           description: Assessment not found
           content:
@@ -1836,7 +1838,7 @@ components:
 
     AssessmentStatus:
       type: string
-      example: CANCELLED
+      example: ENTERED
       enum:
         - ENTERED
         - EXPIRED
@@ -1856,58 +1858,221 @@ components:
         - AC-CERT
         - AC-REPORT
 
-    DomesticEnergyAssessmentWithBand:
-      allOf:
-        - $ref: '#/components/schemas/EnergyAssessmentBasicInfo'
-      properties:
-        currentEnergyEfficiencyBand:
-          type: string
-          example: 'a'
-          description: The band, from a to g, the current Energy Rating falls within
-        potentialEnergyEfficiencyBand:
-          type: string
-          example: 'a'
-          description: The band, from a to g, the potential Energy Rating falls within
-
-    EnergyAssessmentBasicInfo:
+    EnergyAssessmentSearchResult:
       type: object
       properties:
         dateOfAssessment:
           type: string
           format: date
           description: The date that the assessor carried out the assessment of the property
-        dateRegistered:
+        dateOfExpiry:
           type: string
           format: date
-          description: The date that the assessment was submitted to the Register
-        totalFloorArea:
-          type: number
-          example: 120.55
+          description: The date that the certificate expires
         typeOfAssessment:
-          type: string
-          enum: [SAP, RdSAP]
-        dwellingType:
-          type: string
-        currentCarbonEmission:
-          type: number
-          description: The current carbon emission of the property
-          example: 4.736
-        potentialCarbonEmission:
-          type: number
-          description: The potential carbon emission of the propety
-          example: 2.839
+          $ref: '#/components/schemas/AssessmentType'
+        assessmentId:
+          $ref: '#/components/schemas/AssessmentId'
         currentEnergyEfficiencyRating:
           type: integer
           minimum: 1
           maximum: 100
+          example: 62
           description: The current energy rating to be submitted to the Register
+        currentEnergyEfficiencyBand:
+          type: string
+          example: 'c'
+          description: The band, from a to g, the current Energy Rating falls within
+        optOut:
+          type: boolean
+          example: false
+        addressId:
+          $ref: '#/components/schemas/AddressId'
+        addressLine1:
+          $ref: '#/components/schemas/AddressLine1'
+        addressLine2:
+          type: string
+          example: ''
+        addressLine3:
+          type: string
+          example: ''
+        addressLine4:
+          type: string
+          example: ''
+        town:
+          $ref: '#/components/schemas/AddressTown'
+        postcode:
+          $ref: '#/components/schemas/AddressPostcode'
+        status:
+          $ref: '#/components/schemas/AssessmentStatus'
+
+
+    CommercialEnergyAssessmentSummary:
+      $ref: '#/components/schemas/Empty'
+
+    DomesticEnergyAssessmentSummary:
+      type: object
+      properties:
+        typeOfAssessment:
+          $ref: '#/components/schemas/AssessmentType'
+        assessmentId:
+          $ref: '#/components/schemas/AssessmentId'
+        dateOfExpiry:
+          type: string
+          format: date
+          description: The date that the certificate expires
+        dateOfAssessment:
+          type: string
+          format: date
+          description: The date that the assessor carried out the assessment of the property
+        dateOfRegistration:
+          type: string
+          format: date
+          description: The date that the assessment was submitted to the Register
+        dateRegistered:
+          type: string
+          format: date
+          description: The date that the assessment was submitted to the Register
+        addressLine1:
+          $ref: '#/components/schemas/AddressLine1'
+        addressLine2:
+          type: string
+          example: ''
+        addressLine3:
+          type: string
+          example: ''
+        addressLine4:
+          type: string
+          example: ''
+        town:
+          $ref: '#/components/schemas/AddressTown'
+        postcode:
+          $ref: '#/components/schemas/AddressPostcode'
+        address:
+          type: object
+          properties:
+            addressId:
+              $ref: '#/components/schemas/AddressId'
+            addressLine1:
+              $ref: '#/components/schemas/AddressLine1'
+            addressLine2:
+              type: string
+              example: ''
+            addressLine3:
+              type: string
+              example: ''
+            addressLine4:
+              type: string
+              example: ''
+            town:
+              $ref: '#/components/schemas/AddressTown'
+            postcode:
+              $ref: '#/components/schemas/AddressPostcode'
+        assessor:
+          type: object
+          properties:
+            firstName:
+              type: string
+              example: 'Joe'
+            lastName:
+              type: string
+              example: 'Bloggs'
+            middleNames:
+              type: string
+              example: 'T'
+            registeredBy:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: 'Stroma Certification Ltd'
+                schemeId:
+                  type: integer
+                  example: 5
+            schemeAssessorId:
+              $ref: '#/components/schemas/AssessorSchemeId'
+            contactDetails:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: 'j.t.bloggs@example.com'
+                telephoneNumber:
+                  type: string
+                  maxLength: 256
+                  example: '01632 960375'
+            searchResultsComparisonPostcode:
+              $ref: '#/components/schemas/AddressPostcode'
+            address:
+              type: object
+            companyDetails:
+              $ref: '#/components/schemas/CompanyDetails'
+            qualifications:
+              $ref: '#/components/schemas/AssessorQualifications'
+            dateOfBirth:
+              type: string
+              format: date
+              example: '1974-12-28'
+        currentCarbonEmission:
+          type: number
+          description: The current carbon emission of the property
+          example: 4.736
+        currentEnergyEfficiencyBand:
+          type: string
+          example: 'c'
+          description: The band, from a to g, the current Energy Rating falls within
+        currentEnergyEfficiencyRating:
+          type: integer
+          minimum: 1
+          maximum: 100
+          example: 62
+          description: The current energy rating to be submitted to the Register
+        dwellingType:
+          type: string
+        estimatedEnergyCost:
+          type: string
+          example: '1307.00'
+        mainFuelType:
+          type: string
+          example: '28'
+        heatDemand:
+          type: object
+          properties:
+            currentSpaceHeatingDemand:
+              type: number
+              example: 456.45
+            currentWaterHeatingDemand:
+              type: number
+              example: 325.33
+            impactOfLoftInsulation:
+              type: integer
+              example: -453
+            impactOfCavityInsulation:
+              type: integer
+              example: -84
+            impactOfSolidWallInsulation:
+              type: integer
+              example: -21
+        totalFloorArea:
+          type: number
+          example: 120.55
+        potentialCarbonEmission:
+          type: number
+          description: The potential carbon emission of the propety
+          example: 2.839
+        potentialEnergyEfficiencyBand:
+          type: string
+          example: 'a'
+          description: The band, from a to g, the potential Energy Rating falls within
         potentialEnergyEfficiencyRating:
           type: integer
           minimum: 1
           maximum: 100
           description: The potential energy rating to be submitted, must be equal to or larger than currentEnergyEfficiencyRating
-        postcode:
-          $ref: '#/components/schemas/AddressPostcode'
+        primaryEnergyUse:
+          type: number
+          example: 598
         propertySummary:
           type: array
           items:
@@ -1927,30 +2092,6 @@ components:
           nullable: true
           description: Low and zero carbon energy sources for the property
           example: [11]
-        dateOfExpiry:
-          type: string
-          format: date
-          description: The date that the certificate expires
-        schemeAssessorId:
-          $ref: '#/components/schemas/AssessorSchemeId'
-        heatDemand:
-          type: object
-          properties:
-            currentSpaceHeatingDemand:
-              type: number
-              example: 456.45
-            currentWaterHeatingDemand:
-              type: number
-              example: 325.33
-            impactOfLoftInsulation:
-              type: integer
-              example: -453
-            impactOfCavityInsulation:
-              type: integer
-              example: -84
-            impactOfSolidWallInsulation:
-              type: integer
-              example: -21
         addendum:
           anyOf:
             - $ref: '#/components/schemas/Addendum'
