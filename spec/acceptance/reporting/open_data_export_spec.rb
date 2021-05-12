@@ -346,7 +346,6 @@ describe "Acceptance::Reports::OpenDataExport" do
 
           5.times do |i|
             it "returns the data exported for row #{i} object to match same row in the .csv fixture " do
-              pp parsed_exported_data[i]["ASSESSMENT_ID"]
               expect(parsed_exported_data[i].to_a - fixture_csv[i].to_a).to eq(
                 [],
               )
