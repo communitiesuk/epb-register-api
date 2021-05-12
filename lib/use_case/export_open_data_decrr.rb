@@ -45,7 +45,9 @@ module UseCase
             item.merge(
               {
                 assessment_id:
-                  Helper::RrnHelper.hash_rrn(assessment["assessment_id"]),
+                  Helper::RrnHelper.hash_rrn(
+                    assessment["linked_assessment_id"],
+                  ),
                 recommendation_item: recommendation_item,
               },
             )

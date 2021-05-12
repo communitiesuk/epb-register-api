@@ -80,7 +80,7 @@ describe UseCase::ExportOpenDataDecrr do
             recommendation_code: "ECP-L5",
             recommendation_item: 1,
             assessment_id:
-              "55ce7d026c13e923d26cbfb0d6ed60734d3270ba981d629a168bb8eb2da3f8c4",
+              "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
           },
         )
         expect(exported_data[1]).to eq(
@@ -92,7 +92,7 @@ describe UseCase::ExportOpenDataDecrr do
             recommendation_code: "EPC-L7",
             recommendation_item: 2,
             assessment_id:
-              "55ce7d026c13e923d26cbfb0d6ed60734d3270ba981d629a168bb8eb2da3f8c4",
+              "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
           },
         )
       end
