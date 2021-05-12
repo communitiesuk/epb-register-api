@@ -171,11 +171,19 @@ module UseCase
           end
         end
 
+      lines = compact_excess_lines(lines) if lines.length >= 5
+
       postcode = address_data_line[:POSTCODE]
 
       town = address_data_line[:POST_TOWN]
 
       ImportedAddress.new(uprn, postcode, lines, town)
+    end
+
+  private
+
+    def compact_excess_lines(lines)
+      lines[0...3].push(lines[3..].join(", "))
     end
   end
 end

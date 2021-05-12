@@ -593,4 +593,107 @@ describe UseCase::ImportAddressBaseData do
       expect(imported_address.town).to eq expected.town
     end
   end
+
+  context "given a line of address data that forms more than four street lines in a delivery point address" do
+    place_in_cheam = [
+      "5870116854",
+      "50537552",
+      "I",
+      2,
+      "2007-10-10",
+      "RD06",
+      "5870117894",
+      524_095.00,
+      163_531.00,
+      51.3573056,
+      -0.2191271,
+      2,
+      5870,
+      "E",
+      "2007-12-13",
+      "2018-09-23",
+      "2006-11-22",
+      "",
+      "",
+      "",
+      "",
+      "FLAT 12",
+      "WELLS COURT",
+      nil,
+      12,
+      "",
+      nil,
+      "",
+      "",
+      "",
+      nil,
+      "",
+      nil,
+      "",
+      "WELLS COURT",
+      "",
+      22_605_929,
+      "1",
+      "",
+      "",
+      "",
+      "osgb1000002230091572",
+      5,
+      "osgb5000005205514380",
+      1,
+      "osgb1000001799485796",
+      4,
+      5_960_011_000,
+      nil,
+      "KILLICK MEWS",
+      "",
+      "KILLICK MEWS",
+      "EWELL ROAD",
+      "",
+      "",
+      "",
+      "CHEAM",
+      "",
+      "",
+      "",
+      "CHEAM",
+      "SUTTON",
+      "SUTTON",
+      "",
+      "SM3 8AR",
+      "SM3 8AR",
+      "S",
+      "1Z",
+      "D",
+      "",
+      "E05000560",
+      "",
+      "2012-03-19",
+      0,
+      "",
+      "",
+      "",
+    ]
+    use_case = UseCase::ImportAddressBaseData.new
+    hashed_data = Hash[headers.zip(place_in_cheam)]
+    it "compacts all lines after line 4 onto one line separated by commas" do
+      expected =
+        OpenStruct.new(
+          uprn: "5870116854",
+          postcode: "SM3 8AR",
+          lines: [
+            "FLAT 12",
+            "WELLS COURT",
+            "KILLICK MEWS",
+            "EWELL ROAD, CHEAM",
+          ],
+          town: "SUTTON",
+        )
+      imported_address = use_case.create_delivery_point_address(hashed_data)
+      expect(imported_address.uprn).to eq expected.uprn
+      expect(imported_address.postcode).to eq expected.postcode
+      expect(imported_address.lines).to eq expected.lines
+      expect(imported_address.town).to eq expected.town
+    end
+  end
 end
