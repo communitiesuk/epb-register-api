@@ -15,7 +15,7 @@ module Gateway
         ON(
           b.region IS NULL
           AND
-          SUBSTRING(a.postcode, 0, LENGTH(a.postcode) - 3) = c.outcode
+          SUBSTRING(a.postcode FROM 1 FOR LENGTH(a.postcode) - 4) = c.outcode
         )
         WHERE
           a.created_at BETWEEN $1 AND $2
@@ -174,7 +174,7 @@ module Gateway
           ON(
             b.region IS NULL
             AND
-            SUBSTRING(a.postcode, 0, LENGTH(a.postcode) - 3) = c.outcode
+            SUBSTRING(a.postcode FROM 1 FOR LENGTH(a.postcode) - 4) = c.outcode
           )
         WHERE a.opt_out = false AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
         AND a.date_registered BETWEEN $1 AND $4
