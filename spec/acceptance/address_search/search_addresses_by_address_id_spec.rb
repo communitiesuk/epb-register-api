@@ -1,4 +1,5 @@
-describe "Acceptance::AddressSearch::ByBuildingReference", set_with_timecop: true do
+describe "Acceptance::AddressSearch::ByBuildingReference",
+         set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
   def lodge_placeholder_assessment(scheme_id, assessment_id, address_id, date)

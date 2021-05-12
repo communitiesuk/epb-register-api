@@ -206,9 +206,7 @@ describe "Acceptance::Reports::GetAssessmentRRNsBySchemeNameAndType" do
       )
     end
 
-    after do
-      Timecop.return
-    end
+    after { Timecop.return }
 
     it "returns a report for a single scheme" do
       response =

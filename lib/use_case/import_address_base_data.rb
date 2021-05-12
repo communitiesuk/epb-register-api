@@ -9,8 +9,10 @@ module UseCase
         return nil
       end
 
-      uses_delivery_point = address_data_line[:CLASS].start_with?("R") && !address_data_line[:UDPRN].nil?
-      address_type = uses_delivery_point ?  "Delivery Point" :  "Geographic"
+      uses_delivery_point =
+        address_data_line[:CLASS].start_with?("R") &&
+        !address_data_line[:UDPRN].nil?
+      address_type = uses_delivery_point ? "Delivery Point" : "Geographic"
 
       imported_address =
         if uses_delivery_point
@@ -28,7 +30,7 @@ module UseCase
         ActiveRecord::Base.connection.quote(imported_address.lines[3]),
         ActiveRecord::Base.connection.quote(imported_address.town),
         ActiveRecord::Base.connection.quote(address_data_line[:CLASS]),
-        ActiveRecord::Base.connection.quote(address_type)+ ")",
+        ActiveRecord::Base.connection.quote(address_type) + ")",
       ].join(", ")
     end
 

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-describe "Acceptance::Assessment::GreenDealPlan:DeleteGreenDealPlan", set_with_timecop: true do
+describe "Acceptance::Assessment::GreenDealPlan:DeleteGreenDealPlan",
+         set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
   describe "deleting a green deal plan" do

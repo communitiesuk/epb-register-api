@@ -382,7 +382,8 @@ describe UseCase::ImportAddressBaseData do
     use_case = UseCase::ImportAddressBaseData.new
     hashed_data = Hash[headers.zip(devon_house)]
     it "returns a geographic address" do
-      expected = "('10023353973', 'EX22 7EX', 'ANNEXE', 'AGENA', 'ROAD FROM JEWELLS CROSS TO LITTLE BRIDGE CROSS', NULL, 'BRIDGERULE', 'RD06', 'Geographic')"
+      expected =
+        "('10023353973', 'EX22 7EX', 'ANNEXE', 'AGENA', 'ROAD FROM JEWELLS CROSS TO LITTLE BRIDGE CROSS', NULL, 'BRIDGERULE', 'RD06', 'Geographic')"
       partial_clause = use_case.execute(hashed_data)
       expect(partial_clause).to eq expected
     end

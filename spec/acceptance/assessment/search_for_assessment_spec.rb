@@ -1,4 +1,5 @@
-describe "Acceptance::Assessment::SearchForAssessments", set_with_timecop: true do
+describe "Acceptance::Assessment::SearchForAssessments",
+         set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
   let(:scheme_id) { add_scheme_and_get_id }

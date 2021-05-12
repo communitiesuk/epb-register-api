@@ -1,4 +1,5 @@
-describe "Acceptance::AssessmentSummary::Supplement::AC_CERT", set_with_timecop: true do
+describe "Acceptance::AssessmentSummary::Supplement::AC_CERT",
+         set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
   before(:all) do
@@ -44,7 +45,8 @@ describe "Acceptance::AssessmentSummary::Supplement::AC_CERT", set_with_timecop:
       expect(scheme[:schemeId]).to be_a(Integer)
     end
 
-    it "Returns lodged email and phone values by default", set_with_timecop: true do
+    it "Returns lodged email and phone values by default",
+       set_with_timecop: true do
       contact_details = @regular_summary.dig(:data, :assessor, :contactDetails)
 
       expect(contact_details).to eq(
@@ -52,7 +54,8 @@ describe "Acceptance::AssessmentSummary::Supplement::AC_CERT", set_with_timecop:
       )
     end
 
-    it "Overrides missing assessor email and phone values with DB values", set_with_timecop: true do
+    it "Overrides missing assessor email and phone values with DB values",
+       set_with_timecop: true do
       expect(@second_summary.dig(:data, :assessor, :contactDetails)).to eq(
         { email: "person@person.com", telephone: "010199991010101" },
       )
@@ -60,14 +63,16 @@ describe "Acceptance::AssessmentSummary::Supplement::AC_CERT", set_with_timecop:
   end
 
   context "when getting the related party disclosure" do
-    it "returns the value lodged in the related document", set_with_timecop: true do
+    it "returns the value lodged in the related document",
+       set_with_timecop: true do
       disclosure = @regular_summary.dig(:data, :relatedPartyDisclosure)
       expect(disclosure).to eq("1")
     end
   end
 
   context "when there is a UPRN field" do
-    it "returns a related assessment id when there is a matching UPRN", set_with_timecop: true do
+    it "returns a related assessment id when there is a matching UPRN",
+       set_with_timecop: true do
       related_assessments = @second_summary.dig(:data, :relatedAssessments)
       expect(related_assessments.first[:assessmentId]).to eq(
         "0000-0000-0000-0000-0000",

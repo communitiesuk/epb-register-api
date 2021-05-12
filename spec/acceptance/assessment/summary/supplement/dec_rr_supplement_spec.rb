@@ -1,4 +1,5 @@
-describe "Acceptance::AssessmentSummary::Supplement::DECRR", set_with_timecop: true do
+describe "Acceptance::AssessmentSummary::Supplement::DECRR",
+         set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
   before(:all) do
