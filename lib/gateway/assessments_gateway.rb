@@ -66,7 +66,7 @@ module Gateway
       ]
 
       sql = <<-SQL
-           SELECT assessment_id
+           SELECT assessment_id, type_of_assessment
             FROM assessments a
            WHERE a.date_registered BETWEEN $1 AND $2
       SQL

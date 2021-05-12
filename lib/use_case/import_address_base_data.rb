@@ -140,7 +140,8 @@ module UseCase
 
     def create_delivery_point_address(address_data_line)
       if address_data_line[:UDPRN].nil?
-        raise ArgumentError, "Unable to create Delivery Point Address from address data line with no UDPRN"
+        raise ArgumentError,
+              "Unable to create Delivery Point Address from address data line with no UDPRN"
       end
 
       uprn = address_data_line[:UPRN]
