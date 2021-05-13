@@ -270,7 +270,10 @@ describe UseCase::ImportAddressBaseData do
         )
       use_case = UseCase::ImportAddressBaseData.new
       imported_address =
-        use_case.create_delivery_point_address(Hash[headers.zip(number_ten)])
+        use_case.send(
+          :create_delivery_point_address,
+          Hash[headers.zip(number_ten)],
+        )
       expect(imported_address.uprn).to eq expected.uprn
       expect(imported_address.postcode).to eq expected.postcode
       expect(imported_address.lines).to eq expected.lines
@@ -389,7 +392,7 @@ describe UseCase::ImportAddressBaseData do
     end
     it "raises an error when trying to create a postal address" do
       expect {
-        use_case.create_delivery_point_address(hashed_data)
+        use_case.send(:create_delivery_point_address, hashed_data)
       }.to raise_error(ArgumentError)
     end
   end
@@ -486,7 +489,8 @@ describe UseCase::ImportAddressBaseData do
             town: "DUDLEY",
           },
         )
-      imported_address = use_case.create_delivery_point_address(hashed_data)
+      imported_address =
+        use_case.send(:create_delivery_point_address, hashed_data)
       expect(imported_address.uprn).to eq expected.uprn
       expect(imported_address.postcode).to eq expected.postcode
       expect(imported_address.lines).to eq expected.lines
@@ -586,7 +590,7 @@ describe UseCase::ImportAddressBaseData do
             town: "RHYL",
           },
         )
-      imported_address = use_case.create_geographic_address(hashed_data)
+      imported_address = use_case.send(:create_geographic_address, hashed_data)
       expect(imported_address.uprn).to eq expected.uprn
       expect(imported_address.postcode).to eq expected.postcode
       expect(imported_address.lines).to eq expected.lines
@@ -689,7 +693,8 @@ describe UseCase::ImportAddressBaseData do
           ],
           town: "SUTTON",
         )
-      imported_address = use_case.create_delivery_point_address(hashed_data)
+      imported_address =
+        use_case.send(:create_delivery_point_address, hashed_data)
       expect(imported_address.uprn).to eq expected.uprn
       expect(imported_address.postcode).to eq expected.postcode
       expect(imported_address.lines).to eq expected.lines

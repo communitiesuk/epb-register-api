@@ -1,6 +1,7 @@
 module UseCase
   class ImportAddressBaseData
-    ImportedAddress = Struct.new(:uprn, :postcode, :lines, :town)
+    ImportedAddress =
+      Struct.new(:uprn, :postcode, :lines, :town, keyword_init: true)
 
     def execute(address_data_line)
       unless Helper::AddressBaseFilter.filter_certifiable_addresses(
@@ -33,6 +34,8 @@ module UseCase
         ActiveRecord::Base.connection.quote(address_type) + ")",
       ].join(", ")
     end
+
+  private
 
     def create_geographic_address(address_data_line)
       uprn = address_data_line[:UPRN]
@@ -137,7 +140,12 @@ module UseCase
 
       lines.pop if lines[-1] == town
 
-      ImportedAddress.new(uprn, postcode, lines, town)
+      ImportedAddress.new(
+        uprn: uprn,
+        postcode: postcode,
+        lines: lines,
+        town: town,
+      )
     end
 
     def create_delivery_point_address(address_data_line)
@@ -177,10 +185,13 @@ module UseCase
 
       town = address_data_line[:POST_TOWN]
 
-      ImportedAddress.new(uprn, postcode, lines, town)
+      ImportedAddress.new(
+        uprn: uprn,
+        postcode: postcode,
+        lines: lines,
+        town: town,
+      )
     end
-
-  private
 
     def compact_excess_lines(lines)
       lines[0...3].push(lines[3..].join(", "))
