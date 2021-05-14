@@ -13,27 +13,31 @@ module UseCase
 
       assessments_ids.each do |assessment|
         xml_data = @xml_gateway.fetch(assessment["assessment_id"])
-        assessment_data = @assessment_search_gateway.search_by_assessment_id(assessment["assessment_id"])
+        assessment_data =
+          @assessment_search_gateway.search_by_assessment_id(
+            assessment["assessment_id"],
+          )
 
-        export_view = get_export_view(
-          xml_data[:xml],
-          assessment_data,
-          assessment["type_of_assessment"],
-          xml_data[:schema_type],
-        )
+        export_view =
+          get_export_view(
+            xml_data[:xml],
+            assessment_data,
+            assessment["type_of_assessment"],
+            xml_data[:schema_type],
+          )
 
-        unless export_view.nil?
-          assessments << {
-            assessment_id: assessment["assessment_id"],
-            type_of_assessment: assessment["type_of_assessment"],
-            data: export_view.build
-          }
-        end
+        next if export_view.nil?
+
+        assessments << {
+          assessment_id: assessment["assessment_id"],
+          type_of_assessment: assessment["type_of_assessment"],
+          data: export_view.build,
+        }
       end
       assessments
     end
 
-    private
+  private
 
     def get_export_view(xml, assessment, type_of_assessment, schema_type)
       wrapper = ViewModel::Factory.new.create(xml.to_s, schema_type)
@@ -44,8 +48,6 @@ module UseCase
         ViewModel::Export::DomesticExportView.new(wrapper, assessment)
       when "RDSAP"
         ViewModel::Export::DomesticExportView.new(wrapper, assessment)
-      else
-        nil
       end
     end
   end

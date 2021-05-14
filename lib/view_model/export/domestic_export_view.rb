@@ -32,10 +32,8 @@ module ViewModel::Export
         @view_model.environmental_impact_current.to_i
       view[:environmental_impact_potential] =
         @view_model.environmental_impact_potential.to_i
-      unless @view_model.extensions_count
-        .nil?
-        view[:extensions_count] =
-          @view_model.extensions_count.to_i
+      unless @view_model.extensions_count.nil?
+        view[:extensions_count] = @view_model.extensions_count.to_i
       end
       view[:fixed_lighting_outlets_count] =
         @view_model.fixed_lighting_outlets_count.to_i

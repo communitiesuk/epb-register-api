@@ -5,7 +5,7 @@ task :json_export do
   instance_name = ENV["instance_name"]
 
   raise Boundary::ArgumentMissing, "start_date" unless start_date
-  raise Boundary::ArgumentMissing, "bucket_name or instance_name" unless bucket_name or instance_name
+  raise Boundary::ArgumentMissing, "bucket_name or instance_name" unless bucket_name || instance_name
 
   puts "[#{Time.now}] Starting JSON export task"
 
@@ -16,10 +16,10 @@ task :json_export do
 
   storage_gateway = ApiFactory.storage_gateway(
     bucket_name: bucket_name,
-    instance_name: instance_name
+    instance_name: instance_name,
   )
   exports.each do |export|
-    filename = export[:assessment_id] + '.json'
+    filename = export[:assessment_id] + ".json"
     data = export[:data]
     storage_gateway.write_file(filename, data.to_json)
   end
