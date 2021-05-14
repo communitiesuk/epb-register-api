@@ -1,5 +1,4 @@
 describe "JsonExport" do
-  include RSpecRegisterApiServiceMixin
 
   subject(:task) { get_task("json_export") }
 
