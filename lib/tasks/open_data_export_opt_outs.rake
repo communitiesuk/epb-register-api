@@ -3,12 +3,16 @@ desc "Exporting hashed assessment_id opt out data for Open Data Communities"
 task :open_data_export_opt_out do
   bucket_name = ENV["BUCKET_NAME"]
   instance_name = ENV["INSTANCE_NAME"]
+  date_from = ENV["DATE_FROM"]
+  date_to =   ENV["DATE_TO"] || DateTime.now.strftime("%F")
 
   raise Boundary::ArgumentMissing, "bucket_name or instance_name" unless bucket_name || instance_name
+  raise Boundary::ArgumentMissing, "date_from" unless date_from
 
   exporter = ApiFactory.export_opt_out_use_case
+  data = exporter.execute(date_from, date_to)
+  csv_data = Helper::ExportHelper.to_csv(data)
 
-  csv_data = Helper::ExportHelper.to_csv(exporter.execute)
   transmit_opt_out_file(csv_data)
 
 rescue Boundary::RecoverableError => e

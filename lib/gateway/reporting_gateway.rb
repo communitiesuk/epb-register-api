@@ -258,12 +258,32 @@ module Gateway
       results.map { |result| result }
     end
 
-    def fetch_opted_out_assessments
+    def fetch_opted_out_assessments(
+      date_from = "2020-09-18",
+      date_to = DateTime.now
+    )
       sql = <<~SQL
-        SELECT assessment_id FROM assessments where opt_out = true
+        SELECT assessment_id
+        FROM assessments
+        WHERE opt_out = true
+        AND date_registered BETWEEN $1 AND $2
+        AND type_of_assessment IN ('SAP', 'RdSAP', 'CECP', 'DEC')
       SQL
 
-      results = ActiveRecord::Base.connection.exec_query(sql, "SQL")
+      bindings = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "date_from",
+          date_from,
+          ActiveRecord::Type::Date.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "date_to",
+          date_to,
+          ActiveRecord::Type::Date.new,
+        ),
+      ]
+
+      results = ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
       results.map { |result| result }
     end
 
