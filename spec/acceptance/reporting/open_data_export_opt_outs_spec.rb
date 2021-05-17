@@ -4,6 +4,8 @@ describe "OpenDataExportOptOuts" do
   after { WebMock.disable! }
   let(:storage_gateway) { instance_double(Gateway::StorageGateway) }
   let(:export_usecase) { instance_double(UseCase::ExportOpenDataOptOuts) }
+  let(:bucket_name) { "bucket_name" }
+  let(:instance_name) { "epb-s3-service" }
 
   let(:export) do
     [
@@ -42,16 +44,20 @@ describe "OpenDataExportOptOuts" do
     end
   end
 
-  context "We invoke the export Rake without data" do
-    before { EnvironmentStub.all.with("DATE_FROM", "2021-03-29") }
+  context "We invoke the export Rake with no mocked data" do
+    before do
+      EnvironmentStub.all.with("DATE_FROM", "2021-03-29")
+
+    end
+
     it "returns a no data to export error" do
-      expect { task.invoke }.to output(/No data provided for export/).to_stderr
+      expect { task.invoke }.to output(/No data provided for export/, ).to_stderr
     end
   end
 
+
+
   context "when bucket_name or instance_name is not provided to the export task" do
-    let(:bucket_name) { "bucket_name" }
-    let(:instance_name) { "epb-s3-service" }
 
     before do
       allow(ENV).to receive(:[])

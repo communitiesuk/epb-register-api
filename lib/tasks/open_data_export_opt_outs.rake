@@ -11,8 +11,10 @@ task :open_data_export_opt_out do
 
   exporter = ApiFactory.export_opt_out_use_case
   data = exporter.execute(date_from, date_to)
-  csv_data = Helper::ExportHelper.to_csv(data)
 
+  raise Boundary::OpenDataEmpty if data.length.zero?
+
+  csv_data = Helper::ExportHelper.to_csv(data)
   transmit_opt_out_file(csv_data)
 
 rescue Boundary::RecoverableError => e

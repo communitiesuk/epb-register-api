@@ -29,7 +29,7 @@ describe UseCase::ExportOpenDataOptOuts do
     end
 
     it "returns an array of hashed assessment_ids" do
-      expect(subject.execute).to eq(hashed_assessments)
+      expect(subject.execute('2020-09-18')).to eq(hashed_assessments)
     end
   end
 end
