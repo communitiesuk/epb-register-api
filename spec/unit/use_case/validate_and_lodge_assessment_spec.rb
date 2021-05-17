@@ -34,9 +34,6 @@ describe UseCase::ValidateAndLodgeAssessment do
   let(:check_assessor_belongs_to_scheme_use_case) do
     CheckAssessorBelongsToSchemeSpy.new
   end
-  let(:lodge_assessment_use_case) { LodgeAssessmentUseCaseSpy.new }
-  let(:validate_lodgement_use_case) { ValidateLodgementUseCaseSpy.new }
-  let(:assessments_xml_gateway) { AssessmentsXmlGatewaySpy.new }
 
   let(:use_case) { described_class.new }
 
