@@ -8,13 +8,17 @@ class AssessorStub
     domesticSap: "INACTIVE",
     nonDomesticSp3: "INACTIVE",
     nonDomesticCc4: "INACTIVE",
-    gda: "INACTIVE"
+    gda: "INACTIVE",
+    firstName: "Someone",
+    middleNames: "Muddle",
+    lastName: "Person",
+    dateOfBirth: "1991-02-25"
   )
     {
-      firstName: "Someone",
-      middleNames: "Muddle",
-      lastName: "Person",
-      dateOfBirth: "1991-02-25",
+      firstName: firstName,
+      middleNames: middleNames,
+      lastName: lastName,
+      dateOfBirth: dateOfBirth,
       searchResultsComparisonPostcode: "",
       qualifications: {
         nonDomesticNos3: nonDomesticNos3,
