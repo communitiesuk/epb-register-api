@@ -15,7 +15,7 @@ source "https://rubygems.org" do
     gem "rack-test", "~> 1.1.0"
     gem "rspec", "~>3.10"
     gem "timecop", "~> 0.9.4"
-    gem "webmock", "~> 3.12"
+    gem "webmock", "~> 3.13"
   end
 
   gem "aws-sdk-s3", "~> 1.93"
