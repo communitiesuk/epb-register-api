@@ -258,6 +258,15 @@ module Gateway
       results.map { |result| result }
     end
 
+    def fetch_opted_out_assessments
+      sql = <<~SQL
+        SELECT assessment_id FROM assessments where opt_out = true
+      SQL
+
+      results = ActiveRecord::Base.connection.exec_query(sql, "SQL")
+      results.map { |result| result }
+    end
+
   private
 
     def assessments_for_open_data_defaults
