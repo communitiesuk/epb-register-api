@@ -16,7 +16,7 @@ describe UseCase::ImportAddressBaseData do
       LOCAL_CUSTODIAN_CODE
       COUNTRY
       LA_START_DATE
-      LAST_UP_DATE
+      LAST_UPDATE_DATE
       ENTRY_DATE
       RM_ORGANISATION_NAME
       LA_ORGANISATION
