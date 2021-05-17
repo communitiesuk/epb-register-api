@@ -6,9 +6,9 @@ task :open_data_export_opt_out do
 
   raise Boundary::ArgumentMissing, "bucket_name or instance_name" unless bucket_name || instance_name
 
-  hashed_assessments = hash_data(export_opted_out_assessments)
+  exporter = ApiFactory.export_opt_out_use_case
 
-  csv_data = Helper::ExportHelper.to_csv(hashed_assessments)
+  csv_data = Helper::ExportHelper.to_csv(exporter.execute)
   transmit_opt_out_file(csv_data)
 
 rescue Boundary::RecoverableError => e
@@ -28,23 +28,6 @@ rescue Boundary::TerminableError => e
 end
 
 private
-
-def export_opted_out_assessments
-  sql = <<~SQL
-    SELECT assessment_id FROM assessments where opt_out = true
-  SQL
-
-  results = ActiveRecord::Base.connection.exec_query(sql, "SQL")
-  results.map { |result| result }
-end
-
-def hash_data(assessments)
-  array = []
-  assessments.each do |assessment|
-    array << { assessment_id: Helper::RrnHelper.hash_rrn(assessment["assessment_id"]) }
-  end
-  array
-end
 
 def transmit_opt_out_file(data)
   filename = "open_data_export_opt_outs_#{DateTime.now.strftime('%F')}.csv"

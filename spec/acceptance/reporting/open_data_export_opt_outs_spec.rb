@@ -18,11 +18,47 @@ describe "OpenDataExportOptOuts" do
   end
 
   context "when bucket_name or instance_name is not provided to the export task" do
-    before { allow(ENV).to receive(:[]) }
+    let(:bucket_name) { "bucket_name" }
+    let(:instance_name) { "epb-s3-service" }
+
+    let(:storage_gateway) { instance_double(Gateway::StorageGateway) }
+
+    let(:export_usecase) { instance_double(UseCase::ExportOpenDataOptOuts) }
+
+    let(:export) do
+      [
+        {
+          assessment_id:
+            "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
+        },
+        {
+          assessment_id:
+            "55ce7d026c13e923d26cbfb0d6ed60734d3270ba981d629a168bb8eb2da3f8c4",
+        },
+      ]
+    end
+
+    before do
+      allow(ENV).to receive(:[])
+      allow(ENV).to receive(:[]).with("instance_name").and_return(instance_name)
+      allow(ENV).to receive(:[]).with("bucket_name").and_return(bucket_name)
+
+      # Prevents logging during tests
+      allow(STDOUT).to receive(:puts)
+
+      # Mocks all dependencies created directly in the task
+      allow(ApiFactory).to receive(:export_opt_out_use_case).and_return(
+        export_usecase,
+      )
+      allow(ApiFactory).to receive(:storage_gateway).and_return(storage_gateway)
+
+      # Define mock expectations
+      allow(export_usecase).to receive(:execute).and_return(export)
+      allow(storage_gateway).to receive(:write_file)
+    end
 
     it "fails to run with the relevant message" do
-      expect { task.invoke }.to output(/A required argument is missing/)
-        .to_stderr
+      expect { task.invoke }.not_to raise_error
     end
   end
 end

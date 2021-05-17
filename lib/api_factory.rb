@@ -3,6 +3,10 @@ class ApiFactory
     @assessments_gateway ||= Gateway::AssessmentsGateway.new
   end
 
+  def self.reporting_gateway
+    @reporting_gateway ||= Gateway::ReportingGateway.new
+  end
+
   def self.assessments_search_gateway
     @assessments_search_gateway ||= Gateway::AssessmentsSearchGateway.new
   end
@@ -18,6 +22,11 @@ class ApiFactory
         assessments_search_gateway,
         assessments_xml_gateway,
       )
+  end
+
+  def self.export_opt_out_use_case
+    @export_opt_out_use_case ||=
+      UseCase::ExportOpenDataOptOuts.new(reporting_gateway)
   end
 
   def self.storage_configuration_reader(bucket_name:, instance_name:)
