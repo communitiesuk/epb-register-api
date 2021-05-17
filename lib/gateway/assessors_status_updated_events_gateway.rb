@@ -1,4 +1,3 @@
-
 module Gateway
   class AssessorsStatusUpdatedEventsGateway
     class AssessorsStatusUpdatedEvents < ActiveRecord::Base
@@ -21,21 +20,21 @@ module Gateway
       SQL
 
       binds = [
-          ActiveRecord::Relation::QueryAttribute.new(
-              "from_date",
-              date.to_s,
-              ActiveRecord::Type::String.new,
-              ),
-          ActiveRecord::Relation::QueryAttribute.new(
-              "to_date",
-              (date + 1).to_s,
-              ActiveRecord::Type::String.new,
-              ),
-          ActiveRecord::Relation::QueryAttribute.new(
-              "scheme_id",
-              scheme_id.to_i,
-              ActiveRecord::Type::String.new,
-              )
+        ActiveRecord::Relation::QueryAttribute.new(
+          "from_date",
+          date.to_s,
+          ActiveRecord::Type::String.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "to_date",
+          (date + 1).to_s,
+          ActiveRecord::Type::String.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "scheme_id",
+          scheme_id.to_i,
+          ActiveRecord::Type::String.new,
+        ),
       ]
 
       response = AssessorsStatusUpdatedEvents.connection.exec_query(sql, "SQL", binds)
@@ -43,13 +42,13 @@ module Gateway
       result = []
       response.each do |row|
         result <<
-            Domain::AssessorsStatusEvent.new(
-                assessor: JSON.parse(row["assessor"]),
-                scheme_assessor_id: row["scheme_assessor_id"],
-                qualification_type: row["qualification_type"],
-                previous_status: row["previous_status"],
-                new_status: row["new_status"],
-                )
+          Domain::AssessorsStatusEvent.new(
+            assessor: JSON.parse(row["assessor"]),
+            scheme_assessor_id: row["scheme_assessor_id"],
+            qualification_type: row["qualification_type"],
+            previous_status: row["previous_status"],
+            new_status: row["new_status"],
+          )
       end
 
       result
