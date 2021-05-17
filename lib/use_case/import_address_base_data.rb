@@ -170,14 +170,9 @@ module UseCase
           DEPENDENT_LOCALITY
         ].map { |key| address_data_line[key].to_s }.reject { |line|
           line.nil? || line.empty?
-        }.inject([]) do |carry, val|
-          if carry[-1] =~ /^\d+[A-Z]?$/
-            carry[0...-1].push([carry[-1], val].join(" "))
-          else
-            carry << val
-            carry
-          end
-        end
+        }
+
+      lines = combine_street_line(lines)
 
       lines = compact_excess_lines(lines) if lines.length >= 5
 
@@ -195,6 +190,17 @@ module UseCase
 
     def compact_excess_lines(lines)
       lines[0...3].push(lines[3..].join(", "))
+    end
+
+    def combine_street_line(lines)
+      lines.inject([]) do |carry, val|
+        if carry[-1] =~ /^\d+[A-Z]?$/
+          carry[0...-1].push([carry[-1], val].join(" "))
+        else
+          carry << val
+          carry
+        end
+      end
     end
   end
 end
