@@ -10,7 +10,9 @@ module UseCase
         @reporting_gateway.fetch_opted_out_assessments(date_from, date_to)
       assessments.each do |assessment|
         array << {
-          assessment_id: Helper::RrnHelper.hash_rrn(assessment["assessment_id"]),
+          assessment_id:
+            Helper::RrnHelper.hash_rrn(assessment["assessment_id"]),
+          type_of_assessment: assessment["type_of_assessment"],
         }
       end
       array

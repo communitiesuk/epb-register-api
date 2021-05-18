@@ -263,7 +263,7 @@ module Gateway
       date_to = DateTime.now
     )
       sql = <<~SQL
-        SELECT assessment_id
+        SELECT assessment_id, type_of_assessment
         FROM assessments
         WHERE opt_out = true
         AND date_registered BETWEEN $1 AND $2

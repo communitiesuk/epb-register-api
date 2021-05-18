@@ -37,7 +37,8 @@ module Gateway
         ),
       ]
 
-      response = AssessorsStatusUpdatedEvents.connection.exec_query(sql, "SQL", binds)
+      response =
+        AssessorsStatusUpdatedEvents.connection.exec_query(sql, "SQL", binds)
 
       result = []
       response.each do |row|
