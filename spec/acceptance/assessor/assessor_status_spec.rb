@@ -2,7 +2,6 @@
 
 describe "Acceptance::AssessorStatus" do
   include RSpecRegisterApiServiceMixin
-  require "pry"
 
   let!(:test_scheme_id) { add_scheme_and_get_id }
   let!(:test_scheme_id2) { add_scheme_and_get_id(name = "test_two") }
