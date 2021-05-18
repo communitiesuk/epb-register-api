@@ -20,7 +20,7 @@ describe "OpenDataExportOptOuts" do
     ]
   end
 
-  context "We invoke the export Rake with mocked data" do
+  context "Invoke the export rake with mocked data" do
     before do
       EnvironmentStub.all.with("DATE_FROM", "2021-03-29")
       allow(ApiFactory).to receive(:export_opt_out_use_case).and_return(
@@ -35,19 +35,23 @@ describe "OpenDataExportOptOuts" do
       )
     end
 
-    it "mocks that s3 put export" do
+    it "makes an s3 PUT request of the correct /csv" do
       task.invoke
       expect(WebMock).to have_requested(
         :put,
         "#{HttpStub::S3_BUCKET_URI}open_data_export_opt_outs_#{DateTime.now.strftime('%F')}.csv",
-      ).with(headers: { "Host" => "s3.eu-west-2.amazonaws.com" })
+      ).with(
+        body: /4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a/,
+        headers: {
+          "Host" => "s3.eu-west-2.amazonaws.com",
+        },
+        )
     end
   end
 
   context "We invoke the export Rake with no mocked data" do
     before do
       EnvironmentStub.all.with("DATE_FROM", "2021-03-29")
-
     end
 
     it "returns a no data to export error" do
@@ -79,7 +83,7 @@ describe "OpenDataExportOptOuts" do
       allow(storage_gateway).to receive(:write_file)
     end
 
-    it "fails to run with the relevant message" do
+    it "fails to run with the relevant error type" do
       expect { task.invoke }.to raise_error(
         Gateway::StorageConfigurationReader::IllegalCallException,
       )
