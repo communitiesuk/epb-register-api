@@ -168,9 +168,9 @@ module UseCase
           THOROUGHFARE
           DOUBLE_DEPENDENT_LOCALITY
           DEPENDENT_LOCALITY
-        ].map { |key| address_data_line[key].to_s }.reject { |line|
+        ].map { |key| address_data_line[key].to_s }.reject do |line|
           line.nil? || line.empty?
-        }
+        end
 
       lines = combine_street_line(lines)
 
