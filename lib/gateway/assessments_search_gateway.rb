@@ -168,7 +168,7 @@ module Gateway
     end
 
     def row_to_domain(row)
-      Domain::AssessmentSearchResult.new(row.symbolize_keys)
+      Domain::AssessmentSearchResult.new(**row.symbolize_keys)
     end
   end
 end

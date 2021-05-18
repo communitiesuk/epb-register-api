@@ -16,7 +16,7 @@ describe "Acceptance::Assessment::QualificationAndStatusPerType",
     add_assessor(
       scheme_id,
       "SPEC000000",
-      AssessorStub.new.fetch_request_body(qualifications),
+      AssessorStub.new.fetch_request_body(**qualifications),
     )
   end
 

@@ -18,7 +18,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessmentXml",
       xml_schema = "CEPC-8.0.0"
     end
 
-    assessor = AssessorStub.new.fetch_request_body(assessor_qualifications)
+    assessor = AssessorStub.new.fetch_request_body(**assessor_qualifications)
     add_assessor(scheme_id, "SPEC000000", assessor)
 
     lodge_assessment(

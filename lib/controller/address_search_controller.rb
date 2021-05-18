@@ -68,7 +68,7 @@ module Controller
         forbidden "INVALID_REQUEST", "#{key} is not valid in this context.", 422
       end
 
-      results = use_case.execute filters
+      results = use_case.execute(**filters)
 
       json_api_response code: 200,
                         data: {

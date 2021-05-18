@@ -33,7 +33,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment",
     address_id_node = xml.at("UPRN")
     address_id_node.children = address_id
 
-    assessor = AssessorStub.new.fetch_request_body assessor_qualifications
+    assessor = AssessorStub.new.fetch_request_body(**assessor_qualifications)
     add_assessor scheme_id, "SPEC000000", assessor
 
     lodge_assessment(
@@ -57,7 +57,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment",
     xml = Samples.xml "CEPC-8.0.0", "cepc"
     xml_schema = "CEPC-8.0.0"
 
-    assessor = AssessorStub.new.fetch_request_body assessor_qualifications
+    assessor = AssessorStub.new.fetch_request_body(**assessor_qualifications)
     add_assessor scheme_id, "SPEC000000", assessor
 
     lodge_assessment(
@@ -118,14 +118,16 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment",
     it "will return error 410" do
       add_assessment_with_green_deal type: "RdSAP"
 
-      update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
-                               assessment_status_body: {
-                                 "status": "CANCELLED",
-                               },
-                               accepted_responses: [200],
-                               auth_data: {
-                                 scheme_ids: [scheme_id],
-                               }
+      update_assessment_status(
+        assessment_id: "0000-0000-0000-0000-0000",
+        assessment_status_body: {
+          "status": "CANCELLED",
+        },
+        accepted_responses: [200],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+      )
 
       error_response =
         fetch_green_deal_assessment(
@@ -157,11 +159,13 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment",
 
   context "when getting a valid RdSAP assessment" do
     it "will return the assessments details" do
-      add_assessment_with_green_deal type: "RdSAP"
-      add_assessment_with_green_deal type: "RdSAP",
-                                     assessment_id: "0000-0000-0000-0000-1111",
-                                     registration_date: "2020-10-10",
-                                     green_deal_plan_id: "ABC654321DEF"
+      add_assessment_with_green_deal(type: "RdSAP")
+      add_assessment_with_green_deal(
+        type: "RdSAP",
+        assessment_id: "0000-0000-0000-0000-1111",
+        registration_date: "2020-10-10",
+        green_deal_plan_id: "ABC654321DEF",
+      )
 
       response =
         fetch_green_deal_assessment(assessment_id: "0000-0000-0000-0000-0000")
@@ -197,12 +201,13 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment",
 
     context "and that assessment was lodged with an LPRN" do
       before do
-        add_assessment_with_green_deal type: "RdSAP",
-                                       assessment_id:
-                                         "0000-0000-0000-0000-0000",
-                                       address_id: "1234567890",
-                                       green_deal_plan_id: "ABC654321DEF",
-                                       schema_version: "RdSAP-Schema-19.0"
+        add_assessment_with_green_deal(
+          type: "RdSAP",
+          assessment_id: "0000-0000-0000-0000-0000",
+          address_id: "1234567890",
+          green_deal_plan_id: "ABC654321DEF",
+          schema_version: "RdSAP-Schema-19.0",
+        )
       end
 
       context "where the address has not been matched to another id" do
@@ -248,11 +253,13 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment",
 
   context "when getting a valid SAP assessment" do
     it "will return the assessments details" do
-      add_assessment_with_green_deal type: "SAP"
-      add_assessment_with_green_deal type: "SAP",
-                                     assessment_id: "0000-0000-0000-0000-1111",
-                                     registration_date: "2020-10-10",
-                                     green_deal_plan_id: "ABC654321DEF"
+      add_assessment_with_green_deal(type: "SAP")
+      add_assessment_with_green_deal(
+        type: "SAP",
+        assessment_id: "0000-0000-0000-0000-1111",
+        registration_date: "2020-10-10",
+        green_deal_plan_id: "ABC654321DEF",
+      )
 
       response =
         fetch_green_deal_assessment(assessment_id: "0000-0000-0000-0000-0000")
@@ -289,15 +296,19 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment",
 
   context "with an LPRN address ID" do
     it "will return the assessments details" do
-      add_assessment_with_green_deal type: "RdSAP",
-                                     address_id: "1234567890",
-                                     schema_version: "RdSAP-Schema-19.0"
-      add_assessment_with_green_deal type: "RdSAP",
-                                     assessment_id: "0000-0000-0000-0000-1111",
-                                     registration_date: "2020-10-10",
-                                     green_deal_plan_id: "ABC654321DEF",
-                                     address_id: "1234567890",
-                                     schema_version: "RdSAP-Schema-19.0"
+      add_assessment_with_green_deal(
+        type: "RdSAP",
+        address_id: "1234567890",
+        schema_version: "RdSAP-Schema-19.0",
+      )
+      add_assessment_with_green_deal(
+        type: "RdSAP",
+        assessment_id: "0000-0000-0000-0000-1111",
+        registration_date: "2020-10-10",
+        green_deal_plan_id: "ABC654321DEF",
+        address_id: "1234567890",
+        schema_version: "RdSAP-Schema-19.0",
+      )
 
       response =
         fetch_green_deal_assessment(assessment_id: "0000-0000-0000-0000-0000")

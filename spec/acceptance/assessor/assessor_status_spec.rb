@@ -14,7 +14,7 @@ describe "Acceptance::AssessorStatus" do
     add_assessor(
       scheme_id,
       assessor_id,
-      AssessorStub.new.fetch_request_body(qualifications),
+      AssessorStub.new.fetch_request_body(**qualifications),
     )
   end
 

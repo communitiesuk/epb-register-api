@@ -91,7 +91,7 @@ module Gateway
         row[:savings] = JSON.parse(row[:savings], symbolize_names: true)
         row[:estimated_savings] = calculate_estimated_savings row[:savings]
 
-        green_deal_hash = Domain::GreenDealPlan.new(row)
+        green_deal_hash = Domain::GreenDealPlan.new(**row)
 
         result.push(green_deal_hash)
       end
