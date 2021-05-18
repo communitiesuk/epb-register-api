@@ -37,8 +37,7 @@ module Helper
         # Other
         false
       when "P"
-        # Parent shell
-        false
+        class_code.start_with?("PP") # Property shell
       when "R"
         # Residential
         !class_code.start_with?(

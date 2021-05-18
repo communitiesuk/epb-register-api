@@ -29,6 +29,8 @@ describe "Helper method address_base_filter" do
     "M": true, # Military
     "O": false, # Other
     "P": false, # Parent shell
+    "PP": true, # Parent property
+    "PS": false, # Parent street record
     "R": true, # Residential
     "RD02": true, # Detached house
     "RC": false, # Car park space
