@@ -288,10 +288,13 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
   end
 
   context "when lodging a valid assessment" do
-    it "returns the correct response for RdSAP" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
+    let(:scheme_id) { add_scheme_and_get_id }
 
+    before do
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
+    end
+
+    it "returns the correct response for RdSAP" do
       response =
         JSON.parse(
           lodge_assessment(
@@ -319,9 +322,6 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
     end
 
     it "returns the correct response for CEPC+RR" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
-
       response =
         JSON.parse(
           lodge_assessment(
@@ -353,9 +353,6 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
     end
 
     it "returns the correct response for DEC+RR" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
-
       response =
         JSON.parse(
           lodge_assessment(
@@ -387,9 +384,6 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
     end
 
     it "returns the correct response for AC-CERT+AC-REPORT" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
-
       response =
         JSON.parse(
           lodge_assessment(
@@ -421,9 +415,6 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
     end
 
     it "accepts negative current energy rating values for CEPC" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
-
       cepc_xml_doc = Nokogiri.XML(valid_cepc_rr_xml)
       cepc_xml_doc.at("//CEPC:Asset-Rating").children = "-50"
 
@@ -438,9 +429,6 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
     end
 
     it "accepts large current energy efficiency rating values for CEPC" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
-
       cepc_xml_doc = Nokogiri.XML(valid_cepc_rr_xml)
       cepc_xml_doc.at("//CEPC:Asset-Rating").children = "-267654"
 
