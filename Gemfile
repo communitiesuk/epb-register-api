@@ -30,7 +30,7 @@ source "https://rubygems.org" do
   gem "rubyzip", "~> 2.3.0"
   gem "sentry-ruby", "~> 4.4"
   gem "sinatra", "~> 2.0", ">= 2.0.7"
-  gem "sinatra-activerecord", "~> 2.0.22"
+  gem "sinatra-activerecord", "~> 2.0.23"
   gem "sinatra-cross_origin", "~> 0.4.0"
   gem "unleash", "~> 3.2.2"
   gem "zeitwerk", "~> 2.4.1"
