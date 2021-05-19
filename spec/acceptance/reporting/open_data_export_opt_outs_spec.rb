@@ -12,12 +12,18 @@ describe "OpenDataExportOptOuts" do
       {
         assessment_id:
           "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
-        type_of_assessment: "CEPC",
+        type_of_assessment: "RdSAP",
+        address_line1: "1 Some Street",
+        address_line2: "",
+        address_line3: "",
       },
       {
         assessment_id:
           "55ce7d026c13e923d26cbfb0d6ed60734d3270ba981d629a168bb8eb2da3f8c4",
         type_of_assessment: "CEPC",
+        address_line1: "1 Some Street",
+        address_line2: "",
+        address_line3: "",
       },
     ]
   end
@@ -37,13 +43,13 @@ describe "OpenDataExportOptOuts" do
       )
     end
 
-    it "makes an s3 PUT request of the correct /csv" do
+    it "send the converted csv to the S3 bucket " do
       task.invoke
       expect(WebMock).to have_requested(
         :put,
         "#{HttpStub::S3_BUCKET_URI}open_data_export_opt_outs_#{DateTime.now.strftime('%F')}.csv",
       ).with(
-        body: /ASSESSMENT_ID,TYPE_OF_ASSESSMENT/,
+        body: /ASSESSMENT_ID,TYPE_OF_ASSESSMENT,ADDRESS_LINE1,ADDRESS_LINE2,ADDRESS_LINE3/,
         headers: {
           "Host" => "s3.eu-west-2.amazonaws.com",
         },
@@ -58,20 +64,11 @@ describe "OpenDataExportOptOuts" do
     end
   end
 
-  context "We invoke the export Rake with no mocked data" do
-    before { EnvironmentStub.all.with("DATE_FROM", "2021-03-29") }
-
-    it "returns a no data to export error" do
-      expect { task.invoke }.to output(/No data provided for export/).to_stderr
-    end
-  end
-
   context "when bucket_name or instance_name is not provided to the export task" do
     before do
       allow(ENV).to receive(:[])
       allow(ENV).to receive(:[]).with("INSTANCE_NAME").and_return(instance_name)
       allow(ENV).to receive(:[]).with("BUCKET_NAME").and_return(bucket_name)
-      allow(ENV).to receive(:[]).with("DATE_FROM").and_return("2020-012-01")
 
       # Prevents logging during tests
       allow(STDOUT).to receive(:puts)
