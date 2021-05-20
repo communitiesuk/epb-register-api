@@ -2,6 +2,7 @@ module ViewModel::Export
   class CommercialExportView < ViewModel::Export::ExportBaseView
     def build
       view = {}
+      view[:assessment_id] = @view_model.assessment_id
       view[:type_of_assessment] = @wrapper.type.to_s
       view[:address] = address
       view[:assessor] = assessor

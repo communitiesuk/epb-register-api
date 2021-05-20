@@ -65,16 +65,19 @@ describe UseCase::ExportAssessmentAttributes do
         .and_return({ xml: sap_xml, schema_type: sap_schema })
     end
 
+    let(:expected_hash_keys) { %i[address assessor assessment_id] }
+
     it "calls the execute method to extract xml data from the gateway" do
       export = subject.execute(date_today)
 
       expect(export[0][:assessment_id]).to eq("0000-0000-0000-0000-0000")
       expect(export[0][:type_of_assessment]).to eq("CEPC")
-      expect(export[0][:data]).to_not be_nil
-
+      expect(export[0][:data]).to be_a(Hash)
+      expect(export[0][:data].keys).to include(*expected_hash_keys)
       expect(export[1][:assessment_id]).to eq("0000-0000-0000-0000-0001")
       expect(export[1][:type_of_assessment]).to eq("SAP")
-      expect(export[1][:data]).to_not be_nil
+      expect(export[1][:data]).to be_a(Hash)
+      expect(export[1][:data].keys).to include(*expected_hash_keys)
     end
   end
 end
