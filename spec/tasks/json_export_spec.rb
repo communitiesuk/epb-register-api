@@ -52,11 +52,11 @@ describe "JsonExport" do
 
     it "calls the storage gateway with the data received from the export use case" do
       expect(storage_gateway).to receive(:write_file).with(
-        "001.json",
+        "export/001.json",
         "{\"attribute\":\"export 001\"}",
       )
       expect(storage_gateway).to receive(:write_file).with(
-        "002.json",
+        "export/002.json",
         "{\"attribute\":\"export 002\"}",
       )
       expect { task.invoke }.to_not raise_error
