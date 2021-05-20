@@ -1,5 +1,5 @@
 describe "OpenDataExportOptOuts" do
-  subject(:task) { get_task("open_data_export_opt_out") }
+  subject(:task) { get_task("open_data_export_opt_outs") }
 
   after { WebMock.disable! }
   let(:storage_gateway) { instance_double(Gateway::StorageGateway) }
@@ -31,7 +31,7 @@ describe "OpenDataExportOptOuts" do
   context "Invoke the export rake with mocked data" do
     before do
       EnvironmentStub.all.with("DATE_FROM", "2021-03-29")
-      allow(ApiFactory).to receive(:export_opt_out_use_case).and_return(
+      allow(ApiFactory).to receive(:export_opt_outs_use_case).and_return(
         export_usecase,
       )
       allow(ApiFactory).to receive(:storage_gateway).and_return(storage_gateway)
@@ -74,7 +74,7 @@ describe "OpenDataExportOptOuts" do
       allow(STDOUT).to receive(:puts)
 
       # Mocks all dependencies created directly in the task
-      allow(ApiFactory).to receive(:export_opt_out_use_case).and_return(
+      allow(ApiFactory).to receive(:export_opt_outs_use_case).and_return(
         export_usecase,
       )
       allow(ApiFactory).to receive(:storage_gateway).and_return(storage_gateway)

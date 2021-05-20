@@ -24,8 +24,8 @@ class ApiFactory
       )
   end
 
-  def self.export_opt_out_use_case
-    @export_opt_out_use_case ||=
+  def self.export_opt_outs_use_case
+    @export_opt_outs_use_case ||=
       UseCase::ExportOpenDataOptOuts.new(reporting_gateway)
   end
 

@@ -1,12 +1,12 @@
 desc "Exporting hashed assessment_id opt out data for Open Data Communities"
 
-task :open_data_export_opt_out do
+task :open_data_export_opt_outs do
   bucket_name = ENV["BUCKET_NAME"]
   instance_name = ENV["INSTANCE_NAME"]
 
   raise Boundary::ArgumentMissing, "bucket_name or instance_name" unless bucket_name || instance_name
 
-  exporter = ApiFactory.export_opt_out_use_case
+  exporter = ApiFactory.export_opt_outs_use_case
   data = exporter.execute
 
   raise Boundary::OpenDataEmpty if data.length.zero?
