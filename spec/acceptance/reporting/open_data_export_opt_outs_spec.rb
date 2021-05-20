@@ -4,8 +4,8 @@ describe "OpenDataExportOptOuts" do
   after { WebMock.disable! }
   let(:storage_gateway) { instance_double(Gateway::StorageGateway) }
   let(:export_usecase) { instance_double(UseCase::ExportOpenDataOptOuts) }
-  let(:bucket_name) { "bucket_name" }
-  let(:instance_name) { "epb-s3-service" }
+  let(:incorrect_bucket_name) { "bucket_name" }
+  let(:incorrect_instance_name) { "epb-s3-service" }
 
   let(:export) do
     [
@@ -30,7 +30,7 @@ describe "OpenDataExportOptOuts" do
 
   context "Invoke the export rake with mocked data" do
     before do
-      EnvironmentStub.all.with("DATE_FROM", "2021-03-29")
+      EnvironmentStub.all
       allow(ApiFactory).to receive(:export_opt_outs_use_case).and_return(
         export_usecase,
       )
@@ -67,8 +67,8 @@ describe "OpenDataExportOptOuts" do
   context "when bucket_name or instance_name is not provided to the export task" do
     before do
       allow(ENV).to receive(:[])
-      allow(ENV).to receive(:[]).with("INSTANCE_NAME").and_return(instance_name)
-      allow(ENV).to receive(:[]).with("BUCKET_NAME").and_return(bucket_name)
+      allow(ENV).to receive(:[]).with("INSTANCE_NAME").and_return(incorrect_instance_name)
+      allow(ENV).to receive(:[]).with("BUCKET_NAME").and_return(incorrect_bucket_name)
 
       # Prevents logging during tests
       allow(STDOUT).to receive(:puts)
