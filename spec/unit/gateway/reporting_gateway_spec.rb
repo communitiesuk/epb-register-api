@@ -35,6 +35,7 @@ describe "Gateway::ReportingGateway" do
         expect(subject.fetch_opted_out_assessments[0]).to eq(expected_data)
       end
     end
+
     context "Insert RdSAP, AC-CERT and opt out the RdSAP" do
       before do
         commercial_schema = "CEPC-8.0.0"
@@ -49,7 +50,26 @@ describe "Gateway::ReportingGateway" do
         opt_out_assessment("0000-0000-0000-0000-0002")
       end
 
-      it "only returns the opted out RdSAP" do
+      it "does not return the AC-CERT" do
+        expect(subject.fetch_opted_out_assessments.count).to eq(1)
+      end
+    end
+
+    context "Insert SAP, DEC-RR and opt out the SAP" do
+      before do
+        commercial_schema = "CEPC-8.0.0"
+        dec_rr_xml = Nokogiri.XML Samples.xml(commercial_schema, "dec-rr")
+        call_lodge_assessment(@scheme_id, commercial_schema, dec_rr_xml)
+        opt_out_assessment("0000-0000-0000-0000-0000")
+
+        sap_schema = "SAP-Schema-18.0.0"
+        sap_xml = Nokogiri.XML Samples.xml(sap_schema)
+        sap_xml.at("RRN").children = "0000-0000-0000-0000-0003"
+        call_lodge_assessment(@scheme_id, sap_schema, sap_xml)
+        opt_out_assessment("0000-0000-0000-0000-0003")
+      end
+
+      it "does not return the DEC-RR" do
         expect(subject.fetch_opted_out_assessments.count).to eq(1)
       end
     end
