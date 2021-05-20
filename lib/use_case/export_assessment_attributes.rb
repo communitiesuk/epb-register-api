@@ -18,10 +18,12 @@ module UseCase
             assessment["assessment_id"],
           )
 
+        next if assessment_data.empty?
+
         export_view =
           get_export_view(
             xml_data[:xml],
-            assessment_data,
+            assessment_data.first,
             assessment["type_of_assessment"],
             xml_data[:schema_type],
           )
