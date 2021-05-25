@@ -22,10 +22,7 @@ module UseCase
       assessment_id = data[:assessment_id]
 
       unless migrated
-        if @assessments_search_gateway.search_by_assessment_id(
-          assessment_id,
-          false,
-        ).first
+        if find_assessment_by_id(assessment_id)
           raise DuplicateAssessmentIdException
         end
       end
@@ -145,17 +142,7 @@ module UseCase
     end
 
     def save_new_address_id(assessment)
-      new_address_id = assessment.address_id
-
-      if new_address_id.nil?
-        new_address_id = default_address_id(assessment)
-      elsif new_address_id.start_with?("UPRN-")
-        # TODO: Maybe in the future, prevent assessors from lodging non existing UPRNs
-        uprn = new_address_id[5..-1].to_i.to_s
-        uprn_search_result = @address_base_search_gateway.search_by_uprn(uprn)
-        new_address_id = default_address_id(assessment) if uprn_search_result
-          .empty?
-      end
+      new_address_id = get_new_address_id(assessment)
 
       @assessments_address_id_gateway.send_to_db(
         {
@@ -164,6 +151,16 @@ module UseCase
           source: "lodgement",
         },
       )
+    end
+
+    def get_new_address_id(assessment)
+      if assessment.address_id&.start_with?("UPRN-")
+        # TODO: Maybe in the future, prevent assessors from lodging non existing UPRNs
+        uprn = assessment.address_id[5..-1]
+        return assessment.address_id if address_base_has_uprn?(uprn)
+      end
+
+      default_address_id(assessment)
     end
 
     def default_address_id(assessment)
@@ -176,6 +173,15 @@ module UseCase
         default_address_id = "RRN-" + assessment.related_rrn
       end
       default_address_id
+    end
+
+    def address_base_has_uprn?(uprn)
+      !@address_base_search_gateway.search_by_uprn(uprn).empty?
+    end
+
+    def find_assessment_by_id(assessment_id)
+      @assessments_search_gateway.search_by_assessment_id(assessment_id, false)
+        .first
     end
   end
 end

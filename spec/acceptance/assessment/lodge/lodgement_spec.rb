@@ -441,6 +441,181 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
         schema_name: "CEPC-8.0.0",
       )
     end
+
+    context "validating and adjusting the addressId" do
+      let(:assessments_address_id_gateway) do
+        Gateway::AssessmentsAddressIdGateway.new
+      end
+
+      context "domestic EPC" do
+        context "when an assessment is lodged with a valid addressId" do
+          let!(:response) do
+            lodge_and_fetch_assessment(
+              rrn_node: "0000-0000-0000-0000-0001",
+              uprn_node: "RRN-0000-0000-0000-0000-0001",
+            )
+          end
+
+          it "doesn't update the addressId if it's lodged with a correct default RRN-based addressId" do
+            expect(response[:data][:addressId]).to eq(
+              "RRN-0000-0000-0000-0000-0001",
+            )
+          end
+
+          it "persists the original UPRN addressId if it exists in the address base" do
+            gateway = instance_double(Gateway::AddressBaseSearchGateway)
+            allow(Gateway::AddressBaseSearchGateway).to receive(:new)
+              .and_return(gateway)
+            address_search_result = [
+              Domain::Address.new(
+                address_id: "UPRN-000000000001",
+                line1: "12 Epc Street",
+                line2: "",
+                line3: "",
+                line4: "",
+                town: "",
+                postcode: "AB1C 2DE",
+                source: "",
+                existing_assessments: [],
+              ),
+            ]
+            allow(gateway).to receive(:search_by_uprn)
+              .with("000000000001")
+              .and_return(address_search_result)
+
+            response =
+              lodge_and_fetch_assessment(
+                rrn_node: "0000-0000-0000-0000-0002",
+                uprn_node: "UPRN-000000000001",
+              )
+
+            expect(response[:data][:addressId]).to eq("UPRN-000000000001")
+          end
+
+          it "saves source as 'lodgement'" do
+            response =
+              assessments_address_id_gateway.fetch("0000-0000-0000-0000-0001")
+
+            expect(response[:source]).to eq("lodgement")
+          end
+        end
+
+        context "when an assessment is lodged with an invalid addressId" do
+          it "updates the addressId to the default address id when it doesn't exist in the address base" do
+            response =
+              lodge_and_fetch_assessment(
+                rrn_node: "0000-0000-0000-0000-0001",
+                uprn_node: "UPRN-000000000000",
+              )
+
+            expect(response[:data][:addressId]).to eq(
+              "RRN-0000-0000-0000-0000-0001",
+            )
+          end
+        end
+      end
+
+      context "CEPC RR (dual lodgements)" do
+        context "when an assessment is lodged with a valid addressId" do
+          let!(:first_assessment) do
+            lodge_and_fetch_non_domestic_assessment(
+              rrn_node: "0000-0000-0000-0000-0001",
+              uprn_node: "RRN-0000-0000-0000-0000-0001",
+              related_rrn_node: "0000-0000-0000-0000-0000",
+            )
+          end
+
+          it "doesn't update the addressId if it's lodged with a correct default RRN-based addressId" do
+            second_assessment =
+              get_assessment_summary("0000-0000-0000-0000-0000")
+
+            expect(first_assessment[:data][:addressId]).to eq(
+              "RRN-0000-0000-0000-0000-0001",
+            )
+            expect(second_assessment[:data][:addressId]).to eq(
+              "RRN-0000-0000-0000-0000-0001",
+            )
+          end
+
+          it "persists the original UPRN addressId if it exists in the address base" do
+            gateway = instance_double(Gateway::AddressBaseSearchGateway)
+            allow(Gateway::AddressBaseSearchGateway).to receive(:new)
+              .and_return(gateway)
+            address_search_result = [
+              Domain::Address.new(
+                address_id: "UPRN-000000000001",
+                line1: "12 Epc Street",
+                line2: "",
+                line3: "",
+                line4: "",
+                town: "",
+                postcode: "AB1C 2DE",
+                source: "",
+                existing_assessments: [],
+              ),
+            ]
+            allow(gateway).to receive(:search_by_uprn)
+              .with("000000000001")
+              .and_return(address_search_result)
+
+            first_assessment =
+              lodge_and_fetch_non_domestic_assessment(
+                rrn_node: "0000-0000-0000-0000-0008",
+                uprn_node: "UPRN-000000000001",
+                related_rrn_node: "0000-0000-0000-0000-0009",
+              )
+
+            second_assessment =
+              get_assessment_summary("0000-0000-0000-0000-0009")
+
+            expect(first_assessment[:data][:addressId]).to eq(
+              "UPRN-000000000001",
+            )
+            expect(second_assessment[:data][:addressId]).to eq(
+              "UPRN-000000000001",
+            )
+          end
+
+          it "saves source as 'lodgement'" do
+            first_assessment =
+              assessments_address_id_gateway.fetch("0000-0000-0000-0000-0001")
+            second_assessment =
+              assessments_address_id_gateway.fetch("0000-0000-0000-0000-0000")
+
+            expect(first_assessment[:source]).to eq("lodgement")
+            expect(second_assessment[:source]).to eq("lodgement")
+          end
+        end
+
+        context "when an assessment is lodged with an invalid addressId" do
+          let!(:first_assessment) do
+            lodge_and_fetch_non_domestic_assessment(
+              rrn_node: "0000-0000-0000-0000-0001",
+              uprn_node: "RRN-0000-0000-0000-0000-0007",
+              related_rrn_node: "0000-0000-0000-0000-0000",
+            )
+          end
+
+          it "updates the addressId to the default address id when it doesn't exist in the address base" do
+            first_assessment =
+              lodge_and_fetch_non_domestic_assessment(
+                rrn_node: "0000-0000-0000-0000-0009",
+                uprn_node: "UPRN-000000000000",
+                related_rrn_node: "0000-0000-0000-0000-0008",
+              )
+            second_assessment =
+              get_assessment_summary("0000-0000-0000-0000-0008")
+
+            expect(first_assessment[:data][:addressId]).to eq(
+              "RRN-0000-0000-0000-0000-0009",
+            )
+            expect(second_assessment[:data][:addressId]).to eq(
+              "RRN-0000-0000-0000-0000-0009",
+            )
+          end
+        end
+      end
+    end
   end
 
   context "when migrating an assessment" do
@@ -555,5 +730,56 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
         },
       )
     end
+  end
+
+  def lodge_and_fetch_assessment(rrn_node:, uprn_node:, xml: valid_rdsap_xml)
+    assessment = Nokogiri.XML(xml)
+    assessment.at("RRN").children = rrn_node
+    assessment.at("UPRN").children = uprn_node
+
+    lodge_assessment(
+      assessment_body: assessment.to_xml,
+      accepted_responses: [201],
+      auth_data: {
+        scheme_ids: [scheme_id],
+      },
+    )
+
+    get_assessment_summary(rrn_node)
+  end
+
+  def lodge_and_fetch_non_domestic_assessment(
+    rrn_node:,
+    uprn_node:,
+    related_rrn_node:
+  )
+    assessment = Nokogiri.XML(valid_cepc_rr_xml)
+    assessment.xpath("//CEPC:RRN").children.first.content = rrn_node
+    assessment.xpath("//CEPC:RRN").children.last.content = related_rrn_node
+
+    assessment.xpath("//CEPC:UPRN").children.first.content = uprn_node
+    assessment.xpath("//CEPC:UPRN").children.last.content = uprn_node
+
+    assessment.xpath("//CEPC:Related-RRN").children.first.content =
+      related_rrn_node
+    assessment.xpath("//CEPC:Related-RRN").children.last.content = rrn_node
+
+    lodge_assessment(
+      assessment_body: assessment.to_xml,
+      accepted_responses: [201],
+      auth_data: {
+        scheme_ids: [scheme_id],
+      },
+      schema_name: "CEPC-8.0.0",
+    )
+
+    get_assessment_summary(rrn_node)
+  end
+
+  def get_assessment_summary(assessment_id)
+    JSON.parse(
+      fetch_assessment_summary(assessment_id, [200]).body,
+      symbolize_names: true,
+    )
   end
 end
