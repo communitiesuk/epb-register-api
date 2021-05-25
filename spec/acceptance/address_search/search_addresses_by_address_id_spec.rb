@@ -28,7 +28,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference",
 
     let(:response) do
       JSON.parse(
-        address_search_by_id("RRN-0000-0000-0000-0000-0001").body,
+        address_search_by_id("RRN-0000-0000-0000-0000-0000").body,
         symbolize_names: true,
       )
     end
@@ -53,14 +53,14 @@ describe "Acceptance::AddressSearch::ByBuildingReference",
       lodge_placeholder_assessment(
         scheme_id,
         "0000-0000-0000-0000-0002",
-        "RRN-0000-0000-0000-0000-0001",
+        "RRN-0000-0000-0000-0000-0002",
         Date.today.prev_day(30).strftime("%Y-%m-%d"),
       )
 
       lodge_placeholder_assessment(
         scheme_id,
         "0000-0000-0000-0000-0003",
-        "RRN-0000-0000-0000-0000-0002",
+        "RRN-0000-0000-0000-0000-0003",
         Date.today.prev_day(20).strftime("%Y-%m-%d"),
       )
     end
@@ -80,12 +80,12 @@ describe "Acceptance::AddressSearch::ByBuildingReference",
               source: "PREVIOUS_ASSESSMENT",
               existingAssessments: [
                 {
-                  assessmentId: "0000-0000-0000-0000-0001",
+                  assessmentId: "0000-0000-0000-0000-0000",
                   assessmentStatus: "ENTERED",
                   assessmentType: "RdSAP",
                 },
                 {
-                  assessmentId: "0000-0000-0000-0000-0002",
+                  assessmentId: "0000-0000-0000-0000-0001",
                   assessmentStatus: "ENTERED",
                   assessmentType: "RdSAP",
                 },
@@ -120,7 +120,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference",
         )
       end
 
-      it "returns the entered assessments in existing assessments" do
+      it "excludes cancelled assessments from existing assessments" do
         expect(response[:data][:addresses][0][:existingAssessments]).to eq(
           [
             {
@@ -128,16 +128,11 @@ describe "Acceptance::AddressSearch::ByBuildingReference",
               assessmentStatus: "ENTERED",
               assessmentType: "RdSAP",
             },
-            {
-              assessmentId: "0000-0000-0000-0000-0002",
-              assessmentStatus: "ENTERED",
-              assessmentType: "RdSAP",
-            },
           ],
         )
       end
 
-      describe "searching by a cancelled rrn" do
+      describe "searching by a not for issue rrn" do
         let(:response) do
           JSON.parse(
             address_search_by_id("RRN-0000-0000-0000-0000-0003").body,
@@ -147,6 +142,10 @@ describe "Acceptance::AddressSearch::ByBuildingReference",
 
         it "allows looking up an address by a not for issue rrn" do
           expect(response[:data][:addresses][0][:line1]).to eq "1 Some Street"
+        end
+
+        it "does not return the related assessment if it was marked not for issue" do
+          expect(response[:data][:addresses][0][:existingAssessments]).to eq []
         end
       end
     end

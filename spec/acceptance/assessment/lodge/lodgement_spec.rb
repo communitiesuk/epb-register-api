@@ -501,6 +501,18 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
         end
 
         context "when an assessment is lodged with an invalid addressId" do
+          it "updates the addressId to the default address id when RRN-based addressId doesn't correspond to an existing assessment id" do
+            response =
+              lodge_and_fetch_assessment(
+                rrn_node: "0000-0000-0000-0000-0001",
+                uprn_node: "RRN-0000-0000-0000-0000-9999",
+              )
+
+            expect(response[:data][:addressId]).to eq(
+              "RRN-0000-0000-0000-0000-0001",
+            )
+          end
+
           it "updates the addressId to the default address id when it doesn't exist in the address base" do
             response =
               lodge_and_fetch_assessment(
@@ -511,6 +523,63 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
             expect(response[:data][:addressId]).to eq(
               "RRN-0000-0000-0000-0000-0001",
             )
+          end
+
+          it "updates the addressId to the RRN-based addressId of an existing assessmeent when trying to link with RRN of the previous assessment" do
+            lodge_and_fetch_assessment(
+              rrn_node: "0000-0000-0000-0000-0000",
+              uprn_node: "RRN-0000-0000-0000-0000-0000",
+            )
+            lodge_and_fetch_assessment(
+              rrn_node: "0000-0000-0000-0000-0001",
+              uprn_node: "RRN-0000-0000-0000-0000-0000",
+            )
+
+            response =
+              lodge_and_fetch_assessment(
+                rrn_node: "0000-0000-0000-0000-0002",
+                uprn_node: "RRN-0000-0000-0000-0000-0001",
+              )
+
+            expect(response[:data][:addressId]).to eq(
+              "RRN-0000-0000-0000-0000-0000",
+            )
+          end
+
+          it "updates the addressId to the UPRN-based addressId of an existing assessmeent when trying to link with RRN" do
+            gateway = instance_double(Gateway::AddressBaseSearchGateway)
+            allow(Gateway::AddressBaseSearchGateway).to receive(:new)
+              .and_return(gateway)
+            address_search_result = [
+              Domain::Address.new(
+                address_id: "UPRN-000000000001",
+                line1: "12 Epc Street",
+                line2: "",
+                line3: "",
+                line4: "",
+                town: "",
+                postcode: "AB1C 2DE",
+                source: "",
+                existing_assessments: [],
+              ),
+            ]
+            allow(gateway).to receive(:search_by_uprn)
+              .with("000000000001")
+              .and_return(address_search_result)
+
+            existing_assessment =
+              lodge_and_fetch_assessment(
+                rrn_node: "0000-0000-0000-0000-0000",
+                uprn_node: "UPRN-000000000001",
+              )
+
+            response =
+              lodge_and_fetch_assessment(
+                rrn_node: "0000-0000-0000-0000-0001",
+                uprn_node: "RRN-0000-0000-0000-0000-0000",
+              )
+
+            expect(response[:data][:addressId]).to eq("UPRN-000000000001")
           end
         end
       end
@@ -596,6 +665,17 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
             )
           end
 
+          it "updates the addressId to the default address id when RRN-based addressId doesn't correspond to an existing assessment id for CEPC+RR" do
+            second_assessment =
+              get_assessment_summary("0000-0000-0000-0000-0000")
+            expect(first_assessment[:data][:addressId]).to eq(
+              "RRN-0000-0000-0000-0000-0001",
+            )
+            expect(second_assessment[:data][:addressId]).to eq(
+              "RRN-0000-0000-0000-0000-0001",
+            )
+          end
+
           it "updates the addressId to the default address id when it doesn't exist in the address base" do
             first_assessment =
               lodge_and_fetch_non_domestic_assessment(
@@ -611,6 +691,81 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
             )
             expect(second_assessment[:data][:addressId]).to eq(
               "RRN-0000-0000-0000-0000-0009",
+            )
+          end
+
+          it "updates the addressId to the RRN-based addressId of an existing assessment when trying to link with RRN of the previous assessment" do
+            lodge_and_fetch_non_domestic_assessment(
+              rrn_node: "0000-0000-0000-0000-0011",
+              uprn_node: "RRN-0000-0000-0000-0000-0011",
+              related_rrn_node: "0000-0000-0000-0000-0022",
+            )
+            lodge_and_fetch_non_domestic_assessment(
+              rrn_node: "0000-0000-0000-0000-0033",
+              uprn_node: "RRN-0000-0000-0000-0000-0011",
+              related_rrn_node: "0000-0000-0000-0000-0044",
+            )
+
+            first_assessment =
+              lodge_and_fetch_non_domestic_assessment(
+                rrn_node: "0000-0000-0000-0000-0055",
+                uprn_node: "RRN-0000-0000-0000-0000-0022",
+                related_rrn_node: "0000-0000-0000-0000-0066",
+              )
+
+            second_assessment =
+              get_assessment_summary("0000-0000-0000-0000-0066")
+
+            expect(first_assessment[:data][:addressId]).to eq(
+              "RRN-0000-0000-0000-0000-0011",
+            )
+            expect(second_assessment[:data][:addressId]).to eq(
+              "RRN-0000-0000-0000-0000-0011",
+            )
+          end
+
+          it "updates the addressId to the UPRN-based addressId of an existing assessment when trying to link with RRN" do
+            gateway = instance_double(Gateway::AddressBaseSearchGateway)
+            allow(Gateway::AddressBaseSearchGateway).to receive(:new)
+              .and_return(gateway)
+            address_search_result = [
+              Domain::Address.new(
+                address_id: "UPRN-000000000001",
+                line1: "12 Epc Street",
+                line2: "",
+                line3: "",
+                line4: "",
+                town: "",
+                postcode: "AB1C 2DE",
+                source: "",
+                existing_assessments: [],
+              ),
+            ]
+            allow(gateway).to receive(:search_by_uprn)
+              .with("000000000001")
+              .and_return(address_search_result)
+
+            lodge_and_fetch_non_domestic_assessment(
+              rrn_node: "0000-0000-0000-0000-1111",
+              uprn_node: "UPRN-000000000001",
+              related_rrn_node: "0000-0000-0000-0000-2222",
+            )
+
+            first_assessment =
+              lodge_and_fetch_non_domestic_assessment(
+                rrn_node: "0000-0000-0000-0000-3333",
+                uprn_node: "RRN-0000-0000-0000-0000-1111",
+                related_rrn_node: "0000-0000-0000-0000-4444",
+              )
+
+            second_assessment =
+              get_assessment_summary("0000-0000-0000-0000-4444")
+
+            expect(first_assessment[:data][:addressId]).to eq(
+              "UPRN-000000000001",
+            )
+            expect(second_assessment[:data][:addressId]).to eq(
+              "UPRN-000000000001",
             )
           end
         end

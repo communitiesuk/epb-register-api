@@ -158,6 +158,16 @@ module UseCase
         # TODO: Maybe in the future, prevent assessors from lodging non existing UPRNs
         uprn = assessment.address_id[5..-1]
         return assessment.address_id if address_base_has_uprn?(uprn)
+      elsif assessment.address_id&.start_with?("RRN-")
+        related_assessment_id = assessment.address_id[4..-1]
+        begin
+          related_assessment =
+            @assessments_address_id_gateway.fetch(related_assessment_id)
+        rescue StandardError => e
+          related_assessment = nil
+        end
+
+        return related_assessment[:address_id] if related_assessment
       end
 
       default_address_id(assessment)

@@ -296,18 +296,26 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment",
 
   context "with an LPRN address ID" do
     it "will return the assessments details" do
-      add_assessment_with_green_deal(
-        type: "RdSAP",
-        address_id: "1234567890",
-        schema_version: "RdSAP-Schema-19.0",
+      add_assessment_with_green_deal type: "RdSAP",
+                                     address_id: "1234567890",
+                                     schema_version: "RdSAP-Schema-19.0"
+      add_assessment_with_green_deal type: "RdSAP",
+                                     assessment_id: "0000-0000-0000-0000-1111",
+                                     registration_date: "2020-10-10",
+                                     green_deal_plan_id: "ABC654321DEF",
+                                     address_id: "1234567890",
+                                     schema_version: "RdSAP-Schema-19.0"
+
+      # The new lodgement method modified adddress_id to RRN-based ones
+      # but the validations for the older schema versions don't allow letters in the address_id
+      # so to keep the assessments linked we are updating the address_ids:
+      update_assessment_address_id(
+        "0000-0000-0000-0000-0000",
+        "LPRN-1234567890",
       )
-      add_assessment_with_green_deal(
-        type: "RdSAP",
-        assessment_id: "0000-0000-0000-0000-1111",
-        registration_date: "2020-10-10",
-        green_deal_plan_id: "ABC654321DEF",
-        address_id: "1234567890",
-        schema_version: "RdSAP-Schema-19.0",
+      update_assessment_address_id(
+        "0000-0000-0000-0000-1111",
+        "LPRN-1234567890",
       )
 
       response =
