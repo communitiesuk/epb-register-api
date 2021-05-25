@@ -67,8 +67,12 @@ describe "OpenDataExportOptOuts" do
   context "when bucket_name or instance_name is not provided to the export task" do
     before do
       allow(ENV).to receive(:[])
-      allow(ENV).to receive(:[]).with("INSTANCE_NAME").and_return(incorrect_instance_name)
-      allow(ENV).to receive(:[]).with("BUCKET_NAME").and_return(incorrect_bucket_name)
+      allow(ENV).to receive(:[])
+        .with("INSTANCE_NAME")
+        .and_return(incorrect_instance_name)
+      allow(ENV).to receive(:[])
+        .with("BUCKET_NAME")
+        .and_return(incorrect_bucket_name)
 
       # Prevents logging during tests
       allow(STDOUT).to receive(:puts)
