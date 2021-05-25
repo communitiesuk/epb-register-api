@@ -948,54 +948,6 @@ paths:
         500:
           description: Server error
 
-  /reports/assessors/status:
-    get:
-      tags:
-        - Manage Assessors
-        - Reports
-      summary: >-
-        Report of assessors who were suspended and struck off on a particular
-        day
-      security:
-        - oauth:
-            - 'report:assessor:status'
-      parameters:
-        - in: query
-          name: date
-          required: true
-          description: The date of the report
-          schema:
-            type: string
-            format: date
-            example: '2020-01-30'
-      responses:
-        200:
-          description: Report returned succesfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                    properties:
-                      assessorStatusEvents:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/AssessorQualificationChangeEvent'
-        403:
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        404:
-          description: Report not found, likely because the date is in the future
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-
   /reports/{schemeId}/assessors/status:
       get:
         tags:
