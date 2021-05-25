@@ -143,12 +143,17 @@ module UseCase
 
     def save_new_address_id(assessment)
       new_address_id = get_new_address_id(assessment)
+      source =
+        get_assessments_address_id_source(
+          current_address_id: assessment.address_id,
+          new_address_id: new_address_id,
+        )
 
       @assessments_address_id_gateway.send_to_db(
         {
           assessment_id: assessment.assessment_id,
           address_id: new_address_id,
-          source: "lodgement",
+          source: source,
         },
       )
     end
@@ -192,6 +197,14 @@ module UseCase
     def find_assessment_by_id(assessment_id)
       @assessments_search_gateway.search_by_assessment_id(assessment_id, false)
         .first
+    end
+
+    def get_assessments_address_id_source(current_address_id:, new_address_id:)
+      if current_address_id == new_address_id
+        "lodgement"
+      else
+        "adjusted_at_lodgement"
+      end
     end
   end
 end

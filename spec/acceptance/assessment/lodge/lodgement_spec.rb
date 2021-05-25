@@ -501,6 +501,18 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
         end
 
         context "when an assessment is lodged with an invalid addressId" do
+          it "saves source as 'adjusted_at_lodgement'" do
+            lodge_and_fetch_assessment(
+              rrn_node: "0000-0000-0000-0000-0001",
+              uprn_node: "UPRN-000000000000",
+            )
+
+            response =
+              assessments_address_id_gateway.fetch("0000-0000-0000-0000-0001")
+
+            expect(response[:source]).to eq("adjusted_at_lodgement")
+          end
+
           it "updates the addressId to the default address id when RRN-based addressId doesn't correspond to an existing assessment id" do
             response =
               lodge_and_fetch_assessment(
@@ -663,6 +675,16 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
               uprn_node: "RRN-0000-0000-0000-0000-0007",
               related_rrn_node: "0000-0000-0000-0000-0000",
             )
+          end
+
+          it "saves source as 'adjusted_at_lodgement'" do
+            first_response =
+              assessments_address_id_gateway.fetch("0000-0000-0000-0000-0001")
+            second_response =
+              assessments_address_id_gateway.fetch("0000-0000-0000-0000-0000")
+
+            expect(first_response[:source]).to eq("adjusted_at_lodgement")
+            expect(second_response[:source]).to eq("adjusted_at_lodgement")
           end
 
           it "updates the addressId to the default address id when RRN-based addressId doesn't correspond to an existing assessment id for CEPC+RR" do
