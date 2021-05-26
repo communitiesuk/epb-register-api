@@ -31,11 +31,11 @@ describe "Acceptance::AssessorStatus" do
         JSON.parse(
           fetch_assessors_updated_status(test_scheme_id, "", [400]).body,
           symbolize_names: true,
-          )
+        )
 
       expect(response).to eq(
-                            { errors: [{ code: "INVALID_REQUEST", title: "invalid date" }] },
-                            )
+        { errors: [{ code: "INVALID_REQUEST", title: "invalid date" }] },
+      )
     end
 
     it "doesn't show any assessor status changes when none has happened" do
@@ -49,27 +49,28 @@ describe "Acceptance::AssessorStatus" do
         firstName: "Jane",
         lastName: "Doe",
         domesticRdSap: "ACTIVE",
-        )
+      )
       create_assessor(
         test_scheme_id2,
         "SPEC000001",
         firstName: "Jane",
         lastName: "Doe",
         domesticRdSap: "ACTIVE",
-        )
+      )
       create_assessor(
         test_scheme_id2,
         "SPEC000001",
         firstName: "Jane",
         lastName: "Doe",
         domesticRdSap: "INACTIVE",
-        )
+      )
 
       response =
         JSON.parse(
-          fetch_assessors_updated_status(test_scheme_id, Date.tomorrow.to_s).body,
+          fetch_assessors_updated_status(test_scheme_id, Date.tomorrow.to_s)
+            .body,
           symbolize_names: true,
-          )
+        )
 
       expect(response[:data]).to eq(assessorStatusEvents: [])
     end

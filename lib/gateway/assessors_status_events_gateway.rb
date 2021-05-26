@@ -24,21 +24,20 @@ module Gateway
           "from_date",
           date.to_s,
           ActiveRecord::Type::String.new,
-          ),
+        ),
         ActiveRecord::Relation::QueryAttribute.new(
           "to_date",
           (date + 1).to_s,
           ActiveRecord::Type::String.new,
-          ),
+        ),
         ActiveRecord::Relation::QueryAttribute.new(
           "scheme_id",
           scheme_id.to_i,
           ActiveRecord::Type::String.new,
-          ),
+        ),
       ]
 
-      response =
-        AssessorsStatusEvents.connection.exec_query(sql, "SQL", binds)
+      response = AssessorsStatusEvents.connection.exec_query(sql, "SQL", binds)
 
       result = []
       response.each do |row|
@@ -49,7 +48,7 @@ module Gateway
             qualification_type: row["qualification_type"],
             previous_status: row["previous_status"],
             new_status: row["new_status"],
-            )
+          )
       end
 
       result
