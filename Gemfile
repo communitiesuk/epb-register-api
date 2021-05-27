@@ -22,7 +22,7 @@ source "https://rubygems.org" do
   gem "epb-auth-tools", "~> 1.0.7"
   gem "geocoder", "~> 1.6.6"
   gem "json-schema", "~> 2.8"
-  gem "nokogiri", "~> 1.11.5"
+  gem "nokogiri", "~> 1.11.6"
   gem "ougai", "~> 2.0"
   gem "pg"
   gem "rake"
