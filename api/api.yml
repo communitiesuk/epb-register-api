@@ -955,7 +955,7 @@ paths:
           - Reports
         summary: >-
           Report of assessors who were suspended and struck off on a particular
-          day filtered by matching a last name and date of brith to an assessor registered by the queuing scheme
+          day filtered by matching a last name and date of birth to an assessor registered by the queuing scheme
         security:
           - oauth:
               - 'report:assessor:status'
