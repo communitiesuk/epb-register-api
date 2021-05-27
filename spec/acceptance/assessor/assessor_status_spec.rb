@@ -153,14 +153,14 @@ describe "Acceptance::AssessorStatus" do
       create_assessor(
         test_scheme_id2,
         "SPEC000003",
-        firstName: "Jim",
+        firstName: "Ash",
         lastName: "Doe",
         domesticRdSap: "ACTIVE",
       )
       create_assessor(
         test_scheme_id2,
         "SPEC000003",
-        firstName: "Jim",
+        firstName: "Ash",
         lastName: "Doe",
         domesticRdSap: "INACTIVE",
       )
@@ -168,7 +168,7 @@ describe "Acceptance::AssessorStatus" do
       expect(response[:data]).to eq(
         assessorStatusEvents: [
           {
-            firstName: "Jim",
+            firstName: "Ash",
             lastName: "Doe",
             middleNames: nil,
             schemeAssessorId: "SPEC000003",
