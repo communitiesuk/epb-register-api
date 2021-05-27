@@ -76,7 +76,7 @@ paths:
               $ref: '#/components/schemas/SchemeBody'
       responses:
         201:
-          description: Scheme succesfully created
+          description: Scheme successfully created
           content:
             application/json:
               schema:
@@ -270,7 +270,7 @@ paths:
                   data:
                     $ref: '#/components/schemas/AssessorBody'
         201:
-          description: New assessor succesfully registered
+          description: New assessor successfully registered
           content:
             application/json:
               schema:
@@ -467,19 +467,19 @@ paths:
           example: 'RdSAP'
         - in: query
           name: street_name
-          description: The street of the assesssment being searched for
+          description: The street of the assessment being searched for
           schema:
             type: string
           example: 'High Road'
         - in: query
           name: town
-          description: The city or town of the assesssment being searched for
+          description: The city or town of the assessment being searched for
           schema:
             $ref: '#/components/schemas/AddressTown'
           example: 'Woking'
         - in: query
           name: assessment_id
-          description: The RRN of the assesssment being searched for
+          description: The RRN of the assessment being searched for
           schema:
             $ref: '#/components/schemas/AssessmentId'
           example: '1234-2345-3456-4567-6789'
@@ -976,7 +976,7 @@ paths:
               example: '2020-01-30'
         responses:
           200:
-            description: Report returned succesfully
+            description: Report returned successfully
             content:
               application/json:
                 schema:
@@ -1016,14 +1016,14 @@ paths:
         - in: query
           name: firstName
           required: true
-          description: The first name of the asssessor
+          description: The first name of the assessor
           schema:
             type: string
             example: 'Richard'
         - in: query
           name: lastName
           required: true
-          description: The last name of the asssessor
+          description: The last name of the assessor
           schema:
             type: string
             format: date
