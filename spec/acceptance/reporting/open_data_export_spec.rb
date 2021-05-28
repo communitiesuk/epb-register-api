@@ -155,6 +155,8 @@ describe "Acceptance::Reports::OpenDataExport" do
 
       context "Then we invoke the Open Data Communities export Rake directly" do
         context "And we set the correct environment variables to send the certificate data to S3" do
+          let(:fixture_csv) { read_csv_fixture("domestic") }
+
           before do
             EnvironmentStub
               .all
@@ -164,10 +166,9 @@ describe "Acceptance::Reports::OpenDataExport" do
 
             HttpStub.s3_put_csv(file_name("SAP-RDSAP"))
           end
-          let(:fixture_csv) { read_csv_fixture("domestic") }
 
-          it "check the http stub matches the request disabled in web mock using the filename, body and headers " do
-            get_task("open_data_export").invoke
+          it "transfers the file to the S3 bucket with the correct filename, body and headers " do
+            get_task("open_data_export").invoke("for_odc")
 
             expect(WebMock).to have_requested(
               :put,
@@ -178,6 +179,21 @@ describe "Acceptance::Reports::OpenDataExport" do
                 "Host" => "s3.eu-west-2.amazonaws.com",
               },
             )
+          end
+
+          context "when running a test export" do
+            it "prefixes the csv filename with `test/` so it's stored in a separate folder in the S3 bucket" do
+              HttpStub.s3_put_csv(
+                "test/open_data_export_sap-rdsap_#{DateTime.now.strftime('%F')}_1.csv",
+              )
+
+              get_task("open_data_export").invoke("not_for_odc")
+
+              expect(WebMock).to have_requested(
+                :put,
+                "#{HttpStub::S3_BUCKET_URI}test/open_data_export_sap-rdsap_#{DateTime.now.strftime('%F')}_1.csv",
+              )
+            end
           end
         end
 
@@ -194,7 +210,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           let(:fixture_csv) { read_csv_fixture("domestic_rr") }
 
           it "check the http stub matches the request disabled in web mock using the filename, body and headers" do
-            get_task("open_data_export").invoke
+            get_task("open_data_export").invoke("for_odc")
 
             expect(WebMock).to have_requested(
               :put,
@@ -368,7 +384,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           let(:fixture_csv) { read_csv_fixture("commercial") }
 
           it "check the http stub matches the request disabled in web mock using the filename, body and headers" do
-            get_task("open_data_export").invoke
+            get_task("open_data_export").invoke("for_odc")
 
             expect(WebMock).to have_requested(
               :put,
@@ -394,7 +410,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           let(:fixture_csv) { read_csv_fixture("commercial_rr") }
 
           it "check the http stub matches the request disabled in web mock using the filename, body and headers" do
-            get_task("open_data_export").invoke
+            get_task("open_data_export").invoke("for_odc")
 
             expect(WebMock).to have_requested(
               :put,
@@ -572,7 +588,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           end
 
           it "check the http stub matches the request disabled in web mock using the filename, body and headers" do
-            get_task("open_data_export").invoke
+            get_task("open_data_export").invoke("for_odc")
             expect(WebMock).to have_requested(
               :put,
               "#{HttpStub::S3_BUCKET_URI}open_data_export_dec_#{DateTime.now.strftime('%F')}_1.csv",
@@ -598,7 +614,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           let(:fixture_csv) { read_csv_fixture("dec_rr") }
 
           it "check the http stub matches the request disabled in web mock using the filename, body and headers" do
-            get_task("open_data_export").invoke
+            get_task("open_data_export").invoke("for_odc")
             expect(WebMock).to have_requested(
               :put,
               "#{HttpStub::S3_BUCKET_URI}open_data_export_dec-rr_#{DateTime.now.strftime('%F')}_1.csv",
@@ -625,8 +641,26 @@ describe "Acceptance::Reports::OpenDataExport" do
       end
 
       it "fails if no bucket or instance name is defined in environment variables" do
-        expect { get_task("open_data_export").invoke }.to output(
+        expect { get_task("open_data_export").invoke("for_odc") }.to output(
           /A required argument is missing/,
+        ).to_stderr
+      end
+
+      it "raises an error when type of export is not provided" do
+        expected_message =
+          "A required argument is missing: type_of_export. You  must specify 'for_odc' or 'not_for_odc'"
+
+        expect { get_task("open_data_export").invoke }.to output(
+          /#{expected_message}/,
+        ).to_stderr
+      end
+
+      it "raises an error when a wrong type of export is provided" do
+        expected_message =
+          "A required argument is missing: type_of_export. You  must specify 'for_odc' or 'not_for_odc'"
+
+        expect { get_task("open_data_export").invoke("for_dean") }.to output(
+          /#{expected_message}/,
         ).to_stderr
       end
     end
@@ -640,7 +674,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       end
 
       it "returns the type is not valid error message" do
-        expect { get_task("open_data_export").invoke }.to output(
+        expect { get_task("open_data_export").invoke("for_odc") }.to output(
           /Assessment type is not valid:/,
         ).to_stderr
       end
@@ -655,7 +689,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       end
 
       it "returns a no data to export error" do
-        expect { get_task("open_data_export").invoke }.to output(
+        expect { get_task("open_data_export").invoke("for_odc") }.to output(
           /No data provided for export/,
         ).to_stderr
       end
@@ -671,7 +705,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       end
 
       it "returns a no data to export error" do
-        expect { get_task("open_data_export").invoke }.to output(
+        expect { get_task("open_data_export").invoke("for_odc") }.to output(
           /No data provided for export/,
         ).to_stderr
       end
