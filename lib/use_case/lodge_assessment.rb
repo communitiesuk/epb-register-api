@@ -159,11 +159,13 @@ module UseCase
     end
 
     def get_new_address_id(assessment)
-      if assessment.address_id&.start_with?("UPRN-")
+      if assessment.address_id.nil?
+        return default_address_id(assessment)
+      elsif assessment.address_id.start_with?("UPRN-")
         # TODO: Maybe in the future, prevent assessors from lodging non existing UPRNs
         uprn = assessment.address_id[5..-1]
         return assessment.address_id if address_base_has_uprn?(uprn)
-      elsif assessment.address_id&.start_with?("RRN-")
+      elsif assessment.address_id.start_with?("RRN-")
         related_assessment_id = assessment.address_id[4..-1]
         begin
           related_assessment =
