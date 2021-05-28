@@ -170,7 +170,7 @@ module UseCase
         begin
           related_assessment =
             @assessments_address_id_gateway.fetch(related_assessment_id)
-        rescue StandardError => e
+        rescue ActiveRecord::RecordNotFound => e
           related_assessment = nil
         end
 
