@@ -295,7 +295,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment",
   end
 
   context "with an LPRN address ID" do
-    it "will return the assessments details" do
+    before do
       add_assessment_with_green_deal type: "RdSAP",
                                      address_id: "1234567890",
                                      schema_version: "RdSAP-Schema-19.0"
@@ -306,18 +306,17 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment",
                                      address_id: "1234567890",
                                      schema_version: "RdSAP-Schema-19.0"
 
-      # The new lodgement method modified adddress_id to RRN-based ones
-      # but the validations for the older schema versions don't allow letters in the address_id
-      # so to keep the assessments linked we are updating the address_ids:
-      update_assessment_address_id(
-        "0000-0000-0000-0000-0000",
-        "LPRN-1234567890",
-      )
-      update_assessment_address_id(
-        "0000-0000-0000-0000-1111",
-        "LPRN-1234567890",
-      )
+     # The new lodgement method modified adddress_id to RRN-based ones
+     # but the validations for the older schema versions don't allow letters in the address_id
+     # so to keep the assessments linked we are updating the address_ids:
+      ActiveRecord::Base.connection.exec_query <<~SQL
+        UPDATE assessments_address_id
+        SET address_id = 'LPRN-1234567890'
+        WHERE assessment_id IN('0000-0000-0000-0000-0000', '0000-0000-0000-0000-1111')
+      SQL
+    end
 
+    it "will return the assessments details" do
       response =
         fetch_green_deal_assessment(assessment_id: "0000-0000-0000-0000-0000")
           .body
