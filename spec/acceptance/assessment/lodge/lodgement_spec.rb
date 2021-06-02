@@ -254,10 +254,11 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
   context "when lodging and overriding the rules" do
     let(:cepc_xml_doc) { Nokogiri.XML(valid_cepc_rr_xml) }
 
-    it "logs the events to the overidden_lodgement_events table" do
-      scheme_id = add_scheme_and_get_id
+    before do
       add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
+    end
 
+    it "logs the events to the overidden_lodgement_events table" do
       cepc_xml_doc.at("//CEPC:Registration-Date").children = "2030-05-04"
 
       lodge_assessment(
@@ -285,11 +286,31 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
         "[{\"code\": \"DATES_CANT_BE_IN_FUTURE\", \"title\": \"Inspection-Date\\\", \\\"Registration-Date\\\", \\\"Issue-Date\\\", \\\"Effective-Date\\\", \\\"OR-Availability-Date\\\", \\\"Start-Date\\\" and \\\"OR-Assessment-Start-Date\\\" must not be in the future\"}]",
       )
     end
+
+    it "updates the addressId to the default address id when it's lodged with LPRN-based addressId" do
+        rdsap = Nokogiri.XML(Samples.xml "RdSAP-Schema-17.0")
+        rdsap.at("RRN").children = "0000-0000-0000-0000-0001"
+        rdsap.at("UPRN").children = "1234567890"
+
+        lodge_assessment(
+          assessment_body: rdsap.to_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          override: true,
+          schema_name: "RdSAP-Schema-17.0",
+        )
+
+        response = get_assessment_summary("0000-0000-0000-0000-0001")
+
+      expect(response[:data][:addressId]).to eq(
+        "RRN-0000-0000-0000-0000-0001",
+      )
+    end
   end
 
   context "when lodging a valid assessment" do
-    let(:scheme_id) { add_scheme_and_get_id }
-
     before do
       add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
     end
