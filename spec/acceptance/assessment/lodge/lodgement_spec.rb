@@ -19,6 +19,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
   let(:valid_ac_cert_report_xml) do
     Samples.xml "CEPC-8.0.0", "ac-cert+ac-report"
   end
+  let(:scheme_id) { add_scheme_and_get_id }
 
   context "rejecting lodgements" do
     let(:scheme_id) { add_scheme_and_get_id }
@@ -477,40 +478,24 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
             )
           end
 
-          it "doesn't update the addressId if it's lodged with a correct default RRN-based addressId" do
-            expect(response[:data][:addressId]).to eq(
-              "RRN-0000-0000-0000-0000-0001",
-            )
+          context "when the UPRN exists in the the address_base" do
+            before { add_address_base(uprn: 1) }
+
+            it "persists the original UPRN addressId if it exists in the address base" do
+              response =
+                lodge_and_fetch_assessment(
+                  rrn_node: "0000-0000-0000-0000-0002",
+                  uprn_node: "UPRN-000000000001",
+                )
+
+              expect(response[:data][:addressId]).to eq("UPRN-000000000001")
+            end
           end
 
-          it "persists the original UPRN addressId if it exists in the address base" do
-            gateway = instance_double(Gateway::AddressBaseSearchGateway)
-            allow(Gateway::AddressBaseSearchGateway).to receive(:new)
-              .and_return(gateway)
-            address_search_result = [
-              Domain::Address.new(
-                address_id: "UPRN-000000000001",
-                line1: "12 Epc Street",
-                line2: "",
-                line3: "",
-                line4: "",
-                town: "",
-                postcode: "AB1C 2DE",
-                source: "",
-                existing_assessments: [],
-              ),
-            ]
-            allow(gateway).to receive(:search_by_uprn)
-              .with("000000000001")
-              .and_return(address_search_result)
-
-            response =
-              lodge_and_fetch_assessment(
-                rrn_node: "0000-0000-0000-0000-0002",
-                uprn_node: "UPRN-000000000001",
-              )
-
-            expect(response[:data][:addressId]).to eq("UPRN-000000000001")
+          it "doesn't update the addressId if it's lodged with a correct default RRN-based addressId" do
+          expect(response[:data][:addressId]).to eq(
+            "RRN-0000-0000-0000-0000-0001",
+          )
           end
 
           it "saves source as 'lodgement'" do
@@ -640,25 +625,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
           end
 
           it "persists the original UPRN addressId if it exists in the address base" do
-            gateway = instance_double(Gateway::AddressBaseSearchGateway)
-            allow(Gateway::AddressBaseSearchGateway).to receive(:new)
-              .and_return(gateway)
-            address_search_result = [
-              Domain::Address.new(
-                address_id: "UPRN-000000000001",
-                line1: "12 Epc Street",
-                line2: "",
-                line3: "",
-                line4: "",
-                town: "",
-                postcode: "AB1C 2DE",
-                source: "",
-                existing_assessments: [],
-              ),
-            ]
-            allow(gateway).to receive(:search_by_uprn)
-              .with("000000000001")
-              .and_return(address_search_result)
+            add_address_base(uprn: 1)
 
             first_assessment =
               lodge_and_fetch_non_domestic_assessment(
