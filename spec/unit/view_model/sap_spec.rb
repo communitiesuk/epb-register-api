@@ -936,7 +936,6 @@ describe ViewModel::SapWrapper do
         {
           schema: "SAP-Schema-18.0.0",
           different_fields: {
-            building_reference_number: "UPRN-000000000000",
             extension_count: nil,
           },
         },
@@ -1537,7 +1536,7 @@ describe ViewModel::SapWrapper do
         assessment_id: "0000-0000-0000-0000-0000",
         inspection_date: "2020-05-04",
         lodgement_date: "2020-05-04",
-        building_reference_number: "LPRN-0000000000",
+        building_reference_number: "UPRN-0000000123",
         address1: "1 Some Street",
         address2: "Some Area",
         address3: "Some County",
@@ -1618,6 +1617,25 @@ describe ViewModel::SapWrapper do
         mainheatc_env_eff: "N/A",
         glazed_type: nil,
       }
+    end
+
+    let(:assessments_address_id_gateway) do
+      instance_double(Gateway::AssessmentsAddressIdGateway)
+    end
+
+    before do
+      allow(Gateway::AssessmentsAddressIdGateway).to receive(:new).and_return(
+        assessments_address_id_gateway,
+      )
+      allow(assessments_address_id_gateway).to receive(:fetch)
+        .with("0000-0000-0000-0000-0000")
+        .and_return(
+          {
+            assessment_id: "0000-0000-0000-0000-0000",
+            address_id: "UPRN-0000000123",
+            source: "adjusted_at_lodgment",
+          },
+        )
     end
 
     it "reads the appropriate values" do

@@ -147,7 +147,7 @@ module ViewModel
         assessment_id: @view_model.assessment_id,
         inspection_date: @view_model.date_of_assessment,
         lodgement_date: @view_model.date_of_registration,
-        building_reference_number: @view_model.address_id,
+        building_reference_number: @view_model.building_reference_number,
         address1: @view_model.address_line1,
         address2: @view_model.address_line2,
         address3: @view_model.address_line3,

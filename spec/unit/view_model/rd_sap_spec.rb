@@ -318,30 +318,10 @@ describe ViewModel::RdSapWrapper do
     let(:schemas) do
       [
         { schema: "RdSAP-Schema-20.0.0" },
-        {
-          schema: "RdSAP-Schema-19.0",
-          different_fields: {
-            building_reference_number: "LPRN-0000000000",
-          },
-        },
-        {
-          schema: "RdSAP-Schema-18.0",
-          different_fields: {
-            building_reference_number: "LPRN-0000000000",
-          },
-        },
-        {
-          schema: "RdSAP-Schema-17.1",
-          different_fields: {
-            building_reference_number: "LPRN-0000000000",
-          },
-        },
-        {
-          schema: "RdSAP-Schema-17.0",
-          different_fields: {
-            building_reference_number: "LPRN-0000000000",
-          },
-        },
+        { schema: "RdSAP-Schema-19.0" },
+        { schema: "RdSAP-Schema-18.0" },
+        { schema: "RdSAP-Schema-17.1" },
+        { schema: "RdSAP-Schema-17.0" },
       ]
     end
 
@@ -350,7 +330,7 @@ describe ViewModel::RdSapWrapper do
         assessment_id: "0000-0000-0000-0000-0000",
         inspection_date: "2020-05-04",
         lodgement_date: "2020-05-04",
-        building_reference_number: "UPRN-000000000000",
+        building_reference_number: "UPRN-000000000123",
         address1: "1 Some Street",
         address2: "",
         address3: "",
@@ -432,6 +412,25 @@ describe ViewModel::RdSapWrapper do
         mainheatc_env_eff: "Good",
         glazed_type: "double glazing installed during or after 2002",
       }
+    end
+
+    let(:assessments_address_id_gateway) do
+      instance_double(Gateway::AssessmentsAddressIdGateway)
+    end
+
+    before do
+      allow(Gateway::AssessmentsAddressIdGateway).to receive(:new).and_return(
+        assessments_address_id_gateway,
+      )
+      allow(assessments_address_id_gateway).to receive(:fetch)
+        .with("0000-0000-0000-0000-0000")
+        .and_return(
+          {
+            assessment_id: "0000-0000-0000-0000-0000",
+            address_id: "UPRN-000000000123",
+            source: "adjusted_at_lodgment",
+          },
+        )
     end
 
     it "should read the appropriate values" do
