@@ -27,12 +27,6 @@ module ViewModel
       xpath(%w[Property-Type])
     end
 
-    def building_reference_number
-      assessment_id = xpath(%w[RRN]) # TODO: maybe move #assessment_id to the base_view_model or here
-      assessments_address_id_gateway = Gateway::AssessmentsAddressIdGateway.new
-      assessments_address_id_gateway.fetch(assessment_id)[:address_id]
-    end
-
     def multi_glazing_type
       xpath(%w[Multiple-Glazing-Type])
     end

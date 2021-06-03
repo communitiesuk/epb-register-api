@@ -219,7 +219,6 @@ describe ViewModel::DecWrapper do
           different_fields: {
             date_of_expiry: "2020-12-31",
             total_floor_area: "9000",
-            building_reference_number: "UPRN-000000000001",
           },
         },
         {
@@ -227,7 +226,6 @@ describe ViewModel::DecWrapper do
           type: "dec",
           different_fields: {
             date_of_expiry: "2020-12-31",
-            building_reference_number: "UPRN-000000000001",
           },
         },
         {
@@ -236,7 +234,6 @@ describe ViewModel::DecWrapper do
           different_fields: {
             date_of_expiry: "2020-12-31",
             postcode: "BT0 0AA",
-            building_reference_number: "UPRN-000000000001",
             estimated_aircon_kw_rating: nil,
           },
         },
@@ -357,7 +354,7 @@ describe ViewModel::DecWrapper do
     let(:assertion) do
       {
         assessment_id: "0000-0000-0000-0000-0000",
-        building_reference_number: "LPRN-000000000001",
+        building_reference_number: "UPRN-000000000123",
         address1: "Some Unit",
         address2: "2 Lonely Street",
         address3: "Some Area",
@@ -401,6 +398,25 @@ describe ViewModel::DecWrapper do
         other_fuel: "other",
         estimated_aircon_kw_rating: "1",
       }
+    end
+
+    let(:assessments_address_id_gateway) do
+      instance_double(Gateway::AssessmentsAddressIdGateway)
+    end
+
+    before do
+      allow(Gateway::AssessmentsAddressIdGateway).to receive(:new).and_return(
+        assessments_address_id_gateway,
+      )
+      allow(assessments_address_id_gateway).to receive(:fetch)
+        .with("0000-0000-0000-0000-0000")
+        .and_return(
+          {
+            assessment_id: "0000-0000-0000-0000-0000",
+            address_id: "UPRN-000000000123",
+            source: "lodgment",
+          },
+        )
     end
 
     it "reads the appropriate values" do

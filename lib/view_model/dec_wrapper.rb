@@ -125,7 +125,7 @@ module ViewModel
     def to_report
       {
         assessment_id: @view_model.assessment_id,
-        building_reference_number: @view_model.address_id,
+        building_reference_number: @view_model.building_reference_number,
         address1: @view_model.address_line1,
         address2: @view_model.address_line2,
         address3: @view_model.address_line3,

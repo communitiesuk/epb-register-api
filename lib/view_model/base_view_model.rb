@@ -14,5 +14,10 @@ module ViewModel
       end
       node ? node.content : nil
     end
+
+    def building_reference_number
+      assessments_address_id_gateway = Gateway::AssessmentsAddressIdGateway.new
+      assessments_address_id_gateway.fetch(assessment_id)[:address_id]
+    end
   end
 end
