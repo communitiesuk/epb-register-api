@@ -73,7 +73,7 @@ GEM
       addressable (>= 2.4)
     jwt (2.2.3)
     method_source (1.0.0)
-    mini_portile2 (2.5.1)
+    mini_portile2 (2.5.3)
     minitest (5.14.4)
     multi_json (1.15.0)
     multi_xml (0.6.0)
@@ -81,7 +81,7 @@ GEM
     murmurhash3 (0.1.6)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
-    nokogiri (1.11.6)
+    nokogiri (1.11.7)
       mini_portile2 (~> 2.5.0)
       racc (~> 1.4)
     oauth2 (1.4.7)
@@ -198,7 +198,7 @@ DEPENDENCIES
   epb-auth-tools (~> 1.0.7)!
   geocoder (~> 1.6.6)!
   json-schema (~> 2.8)!
-  nokogiri (~> 1.11.6)!
+  nokogiri (~> 1.11.7)!
   ougai (~> 2.0)!
   pg!
   prettier (~> 1.5.5)!
