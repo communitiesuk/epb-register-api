@@ -115,7 +115,7 @@ module ViewModel
         building_emissions: @view_model.building_emission_rate,
         building_environment: @view_model.building_environment,
         building_level: @view_model.building_level,
-        building_reference_number: @view_model.address_id,
+        building_reference_number: @view_model.building_reference_number,
         estimated_aircon_kw_rating: @view_model.estimated_ac_kw_rating,
         existing_stock_benchmark: @view_model.existing_build_rating,
         floor_area: @view_model.floor_area,

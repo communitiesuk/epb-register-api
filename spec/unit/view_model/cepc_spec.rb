@@ -112,20 +112,8 @@ describe ViewModel::CepcWrapper do
   context "when calling to_report" do
     let(:schemas) do
       [
-        {
-          schema: "CEPC-8.0.0",
-          type: "cepc",
-          different_fields: {
-            building_reference_number: "UPRN-000000000001",
-          },
-        },
-        {
-          schema: "CEPC-NI-8.0.0",
-          type: "cepc",
-          different_fields: {
-            building_reference_number: "UPRN-000000000001",
-          },
-        },
+        { schema: "CEPC-8.0.0", type: "cepc" },
+        { schema: "CEPC-NI-8.0.0", type: "cepc" },
         { schema: "CEPC-7.1", type: "cepc" },
         {
           schema: "CEPC-7.0",
@@ -185,7 +173,7 @@ describe ViewModel::CepcWrapper do
         address3: "Some Area",
         posttown: "Whitbury",
         postcode: "A0 0AA",
-        building_reference_number: "LPRN-000000000001",
+        building_reference_number: "UPRN-000000000123",
         asset_rating: "80",
         asset_rating_band: "d",
         property_type: "B1 Offices and Workshop businesses",
@@ -212,6 +200,25 @@ describe ViewModel::CepcWrapper do
         report_type: "3",
         renewable_sources: "Renewable sources test",
       }
+    end
+
+    let(:assessments_address_id_gateway) do
+      instance_double(Gateway::AssessmentsAddressIdGateway)
+    end
+
+    before do
+      allow(Gateway::AssessmentsAddressIdGateway).to receive(:new).and_return(
+        assessments_address_id_gateway,
+      )
+      allow(assessments_address_id_gateway).to receive(:fetch)
+        .with("0000-0000-0000-0000-0000")
+        .and_return(
+          {
+            assessment_id: "0000-0000-0000-0000-0000",
+            address_id: "UPRN-000000000123",
+            source: "lodgment",
+          },
+        )
     end
 
     it "reads the appropriate values" do
