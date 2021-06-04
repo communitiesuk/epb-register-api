@@ -64,7 +64,7 @@ module UseCase
 
       @assessments_gateway.insert_or_update assessment
 
-      save_new_address_id assessment
+      insert_assessment_address_id assessment
 
       @assessments_xml_gateway.send_to_db(
         {
@@ -141,24 +141,24 @@ module UseCase
       related_rrn
     end
 
-    def save_new_address_id(assessment)
-      new_address_id = get_new_address_id(assessment)
+    def insert_assessment_address_id(assessment)
+      canonical_address_id = get_canonical_address_id(assessment)
       source =
         get_assessments_address_id_source(
-          current_address_id: assessment.address_id,
-          new_address_id: new_address_id,
+          lodged_address_id: assessment.address_id,
+          canonical_address_id: canonical_address_id,
         )
 
       @assessments_address_id_gateway.send_to_db(
         {
           assessment_id: assessment.assessment_id,
-          address_id: new_address_id,
+          address_id: canonical_address_id,
           source: source,
         },
       )
     end
 
-    def get_new_address_id(assessment)
+    def get_canonical_address_id(assessment)
       if assessment.address_id.nil?
         return default_address_id(assessment)
       elsif assessment.address_id.start_with?("UPRN-")
@@ -182,11 +182,7 @@ module UseCase
 
     def default_address_id(assessment)
       default_address_id = "RRN-" + assessment.assessment_id
-      if !assessment.related_rrn.nil? &&
-          (
-            assessment.type_of_assessment.include?("-RR") ||
-              assessment.type_of_assessment.include?("-REPORT")
-          )
+      if !assessment.related_rrn.nil? && is_related_report?(assessment)
         default_address_id = "RRN-" + assessment.related_rrn
       end
       default_address_id
@@ -196,13 +192,23 @@ module UseCase
       !@address_base_search_gateway.search_by_uprn(uprn).empty?
     end
 
+    def is_related_report?(assessment)
+      (
+        assessment.type_of_assessment.include?("-RR") ||
+          assessment.type_of_assessment.include?("-REPORT")
+      )
+    end
+
     def find_assessment_by_id(assessment_id)
       @assessments_search_gateway.search_by_assessment_id(assessment_id, false)
         .first
     end
 
-    def get_assessments_address_id_source(current_address_id:, new_address_id:)
-      if current_address_id == new_address_id
+    def get_assessments_address_id_source(
+      lodged_address_id:,
+      canonical_address_id:
+    )
+      if lodged_address_id == canonical_address_id
         "lodgement"
       else
         "adjusted_at_lodgement"

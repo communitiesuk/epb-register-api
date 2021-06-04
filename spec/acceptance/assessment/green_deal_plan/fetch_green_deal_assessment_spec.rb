@@ -306,12 +306,12 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment",
                                      address_id: "1234567890",
                                      schema_version: "RdSAP-Schema-19.0"
 
-     # The new lodgement method modified adddress_id to RRN-based ones
-     # but the validations for the older schema versions don't allow letters in the address_id
-     # so to keep the assessments linked we are updating the address_ids:
+      # Lodgement of these two will not set the same canonical address_id for
+      # each, but we need it to be the same for "isLatestAssessmentForAddress"
+      # to work, so update manually here
       ActiveRecord::Base.connection.exec_query <<~SQL
         UPDATE assessments_address_id
-        SET address_id = 'LPRN-1234567890'
+        SET address_id = 'UPRN-121212121212'
         WHERE assessment_id IN('0000-0000-0000-0000-0000', '0000-0000-0000-0000-1111')
       SQL
     end
@@ -336,7 +336,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment",
             town: "Whitbury",
           },
           addressId: "LPRN-1234567890",
-          addressIdentifiers: %w[LPRN-1234567890],
+          addressIdentifiers: %w[UPRN-121212121212 LPRN-1234567890],
           countryCode: "EAW",
           inspectionDate: "2020-05-04",
           lodgementDate: "2020-05-04",

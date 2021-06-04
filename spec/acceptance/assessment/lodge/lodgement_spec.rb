@@ -289,25 +289,23 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
     end
 
     it "updates the addressId to the default address id when it's lodged with LPRN-based addressId" do
-        rdsap = Nokogiri.XML(Samples.xml "RdSAP-Schema-17.0")
-        rdsap.at("RRN").children = "0000-0000-0000-0000-0001"
-        rdsap.at("UPRN").children = "1234567890"
+      rdsap = Nokogiri.XML(Samples.xml("RdSAP-Schema-17.0"))
+      rdsap.at("RRN").children = "0000-0000-0000-0000-0001"
+      rdsap.at("UPRN").children = "1234567890"
 
-        lodge_assessment(
-          assessment_body: rdsap.to_xml,
-          accepted_responses: [201],
-          auth_data: {
-            scheme_ids: [scheme_id],
-          },
-          override: true,
-          schema_name: "RdSAP-Schema-17.0",
-        )
-
-        response = get_assessment_summary("0000-0000-0000-0000-0001")
-
-      expect(response[:data][:addressId]).to eq(
-        "RRN-0000-0000-0000-0000-0001",
+      lodge_assessment(
+        assessment_body: rdsap.to_xml,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        override: true,
+        schema_name: "RdSAP-Schema-17.0",
       )
+
+      response = get_assessment_summary("0000-0000-0000-0000-0001")
+
+      expect(response[:data][:addressId]).to eq("RRN-0000-0000-0000-0000-0001")
     end
   end
 
@@ -493,9 +491,9 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
           end
 
           it "doesn't update the addressId if it's lodged with a correct default RRN-based addressId" do
-          expect(response[:data][:addressId]).to eq(
-            "RRN-0000-0000-0000-0000-0001",
-          )
+            expect(response[:data][:addressId]).to eq(
+              "RRN-0000-0000-0000-0000-0001",
+            )
           end
 
           it "saves source as 'lodgement'" do
