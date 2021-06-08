@@ -221,6 +221,18 @@ describe "Acceptance::Assessment::SearchForAssessments",
       )
     end
 
+    it "rejects an invalid postcode" do
+      response_body = assessments_search_by_postcode("FPV04170EN", [400]).body
+
+      expect(JSON.parse(response_body, symbolize_names: true)).to eq(
+        {
+          errors: [
+            { code: "INVALID_REQUEST", title: "The requested postcode is not valid" },
+          ],
+        },
+      )
+    end
+
     it "allows missing assessment types" do
       assessments_search_by_postcode "A0 0AA",
                                      [200],
