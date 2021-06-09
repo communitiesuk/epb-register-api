@@ -7,50 +7,69 @@ module Helper
 
         address_a =
           [
-            a[:address_line1],
-            a[:address_line2],
-            a[:address_line3],
-            a[:address_line4],
-            b[:postcode],
+            a[:postcode],
             a[:town],
-          ].reverse
-            .compact
-            .join(" ")
-            .gsub(",", "")
-            .gsub("  ", " ")
-            .upcase
-            .split(" ")
+            a[:address_line4],
+            a[:address_line3],
+            a[:address_line2],
+            a[:address_line1],
+          ].map { |item| item.strip.upcase }
 
         address_b =
           [
-            b[:address_line1],
-            b[:address_line2],
-            b[:address_line3],
-            b[:address_line4],
             b[:postcode],
             b[:town],
-          ].reverse
-            .compact
-            .join(" ")
-            .gsub(",", "")
-            .gsub("  ", " ")
-            .upcase
-            .split(" ")
+            b[:address_line4],
+            b[:address_line3],
+            b[:address_line2],
+            b[:address_line1],
+          ].map { |item| item.strip.upcase }
 
-        res = 0
+        if compare_postcode(address_a, address_b) == 0
+          check_address_line_for_number(address_a, address_b)
+        else
+          compare_postcode(address_a, address_b)
+        end
+      end
+    end
 
-        address_a.each_with_index do |line, index|
-          compare_to = address_b[index].nil? ? "" : address_b[index]
-          if line.to_i != compare_to.to_i
-            res = line.to_i < compare_to.to_i ? -1 : 1
-            break
-          elsif line != compare_to
-            res = line <=> compare_to
+    def self.compare_postcode(a, b)
+      compare_to(a[0],b[0])
+    end
+
+    def self.check_address_line_for_number(a,b)
+      address_lines_a = [a[2], a[3], a[4], a[5]]
+      address_lines_b = [b[2], b[3], b[4], b[5]]
+
+      property_a_number = 0
+      property_a_letter = ""
+      property_b_number = 0
+      property_b_letter = ""
+
+      address_lines_a.each do |line|
+        if line.to_i != 0
+          property_a_number = line.to_i
+          if property_a_number.to_s != line.split(" ").first
+            property_a_letter = line.split(" ").first[-1]
           end
         end
-
-        res
       end
+
+      address_lines_b.each do |line|
+        if line.to_i != 0
+          property_b_number = line.to_i
+          if property_b_number.to_s != line.split(" ").first
+            property_b_letter = line.split(" ").first[-1]
+          end
+        end
+      end
+
+      compared = compare_to(property_a_number, property_b_number)
+      compared == 0 ? compare_to(property_a_letter, property_b_letter) : compared
+    end
+
+    def self.compare_to(a,b)
+      a <=> b
     end
   end
 end
