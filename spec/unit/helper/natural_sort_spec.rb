@@ -76,7 +76,7 @@ describe Helper::NaturalSort do
       )
     end
 
-    it "sorts by  property number when on the first address line" do
+    it "sorts by property number when on the first address line" do
       addresses = [
         {
           address_line1: "2 Harvard Street",
@@ -272,8 +272,84 @@ describe Helper::NaturalSort do
      )
     end
 
-  it "can sort addresses on the same street with differing town values" do
-    cooked = [
+    it "sorts when an address has no property number" do
+      addresses = [
+        {
+          address_line1: "20 Harvard Street",
+          address_line2: "",
+          address_line3: "",
+          address_line4: "",
+          town: "London",
+          postcode: "W1D 1BS",
+        },
+        {
+          address_line1: "The Cottage",
+          address_line2: "Harvard Street",
+          address_line3: "",
+          address_line4: "",
+          town: "London",
+          postcode: "W1D 1BS",
+        },
+        {
+          address_line1: "14 Harvard Street",
+          address_line2: "",
+          address_line3: "",
+          address_line4: "",
+          town: "London",
+          postcode: "W1D 1BS",
+        },
+        {
+          address_line1: "British Cottage",
+          address_line2: "Harvard Street",
+          address_line3: "",
+          address_line4: "",
+          town: "London",
+          postcode: "W1D 1BS",
+        },
+      ]
+
+      Helper::NaturalSort.sort!(addresses)
+
+      expect(addresses).to eq(
+       [
+         {
+           address_line1: "The Cottage",
+           address_line2: "Harvard Street",
+           address_line3: "",
+           address_line4: "",
+           town: "London",
+           postcode: "W1D 1BS",
+         },
+         {
+           address_line1: "British Cottage",
+           address_line2: "Harvard Street",
+           address_line3: "",
+           address_line4: "",
+           town: "London",
+           postcode: "W1D 1BS",
+         },
+         {
+           address_line1: "14 Harvard Street",
+           address_line2: "",
+           address_line3: "",
+           address_line4: "",
+           town: "London",
+           postcode: "W1D 1BS",
+         },
+         {
+           address_line1: "20 Harvard Street",
+           address_line2: "",
+           address_line3: "",
+           address_line4: "",
+           town: "London",
+           postcode: "W1D 1BS",
+         },
+       ]
+     )
+    end
+
+    it "can sort addresses on the same street with differing town values" do
+      addresses = [
       {
         address_line1: "199 THORPE ROAD",
         address_line2: "KIRBY CROSS",
@@ -300,9 +376,9 @@ describe Helper::NaturalSort do
       }
     ]
 
-    Helper::NaturalSort.sort!(cooked)
+    Helper::NaturalSort.sort!(addresses)
 
-    expect(cooked).to eq(
+    expect(addresses).to eq(
       [
         {
           address_line1: "171, Thorpe Road",
@@ -330,5 +406,9 @@ describe Helper::NaturalSort do
         }
       ]
     )
-  end
+    end
+
+    it "can sort addresses which contain flats" do
+
+    end
 end

@@ -8,7 +8,6 @@ module Helper
         address_a =
           [
             a[:postcode],
-            a[:town],
             a[:address_line4],
             a[:address_line3],
             a[:address_line2],
@@ -18,7 +17,6 @@ module Helper
         address_b =
           [
             b[:postcode],
-            b[:town],
             b[:address_line4],
             b[:address_line3],
             b[:address_line2],
@@ -39,8 +37,8 @@ module Helper
     end
 
     def self.check_address_line_for_number(a,b)
-      address_lines_a = [a[2], a[3], a[4], a[5]]
-      address_lines_b = [b[2], b[3], b[4], b[5]]
+      address_lines_a = [a[1], a[2], a[3], a[4]]
+      address_lines_b = [b[1], b[2], b[3], b[4]]
 
       property_a_number, property_a_letter = property_number_and_letter(address_lines_a)
       property_b_number, property_b_letter = property_number_and_letter(address_lines_b)
