@@ -227,7 +227,10 @@ describe "Acceptance::Assessment::SearchForAssessments",
       expect(JSON.parse(response_body, symbolize_names: true)).to eq(
         {
           errors: [
-            { code: "INVALID_REQUEST", title: "The requested postcode is not valid" },
+            {
+              code: "INVALID_REQUEST",
+              title: "The requested postcode is not valid",
+            },
           ],
         },
       )

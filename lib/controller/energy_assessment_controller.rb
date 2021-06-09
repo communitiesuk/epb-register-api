@@ -33,7 +33,7 @@ module Controller
           400,
           "INVALID_REQUEST",
           "The requested postcode is not valid",
-          )
+        )
       when UseCase::FindAssessmentsByPostcode::AssessmentTypeNotValid
         error_response(
           400,
