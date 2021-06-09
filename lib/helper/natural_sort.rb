@@ -25,10 +25,11 @@ module Helper
             b[:address_line1],
           ].map { |item| item.strip.upcase }
 
-        if compare_postcode(address_a, address_b) == 0
+        postcode_comparison = compare_postcode(address_a, address_b)
+        if postcode_comparison == 0
           check_address_line_for_number(address_a, address_b)
         else
-          compare_postcode(address_a, address_b)
+          postcode_comparison
         end
       end
     end
@@ -41,31 +42,25 @@ module Helper
       address_lines_a = [a[2], a[3], a[4], a[5]]
       address_lines_b = [b[2], b[3], b[4], b[5]]
 
-      property_a_number = 0
-      property_a_letter = ""
-      property_b_number = 0
-      property_b_letter = ""
-
-      address_lines_a.each do |line|
-        if line.to_i != 0
-          property_a_number = line.to_i
-          if property_a_number.to_s != line.split(" ").first
-            property_a_letter = line.split(" ").first[-1]
-          end
-        end
-      end
-
-      address_lines_b.each do |line|
-        if line.to_i != 0
-          property_b_number = line.to_i
-          if property_b_number.to_s != line.split(" ").first
-            property_b_letter = line.split(" ").first[-1]
-          end
-        end
-      end
+      property_a_number, property_a_letter = property_number_and_letter(address_lines_a)
+      property_b_number, property_b_letter = property_number_and_letter(address_lines_b)
 
       compared = compare_to(property_a_number, property_b_number)
       compared == 0 ? compare_to(property_a_letter, property_b_letter) : compared
+    end
+
+    def self.property_number_and_letter(address_block)
+      property_number = 0
+      property_letter = ""
+      address_block.each do |line|
+        if line.to_i != 0
+          property_number = line.to_i
+          if property_number.to_s != line.split(" ").first
+            property_letter = line.split(" ").first[-1]
+          end
+        end
+      end
+      return property_number, property_letter
     end
 
     def self.compare_to(a,b)
