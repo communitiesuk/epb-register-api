@@ -18,6 +18,12 @@ describe "UseCase::CreateCipFile" do
         allow(gateway_double).to receive(:read_degrees_day_data).and_return(gateway_file_names)
         expect(subject.execute).to eq(non_scottish_file_names)
       end
+
+      it "raises an error if there are no file names" do
+        gateway_file_names = []
+        allow(gateway_double).to receive(:read_degrees_day_data).and_return(gateway_file_names)
+        expect{subject.execute}.to raise_error(UseCase::CreateCipFile::NoFiles)
+      end
     end
 
   end
