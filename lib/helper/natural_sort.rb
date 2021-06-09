@@ -25,7 +25,7 @@ module Helper
 
         postcode_comparison = compare_postcode(address_a, address_b)
         if postcode_comparison == 0
-          check_address_line_for_number(address_a, address_b)
+          compare_address_line_for_number(address_a, address_b)
         else
           postcode_comparison
         end
@@ -36,18 +36,18 @@ module Helper
       compare_to(a[0],b[0])
     end
 
-    def self.check_address_line_for_number(a,b)
+    def self.compare_address_line_for_number(a,b)
       address_lines_a = [a[1], a[2], a[3], a[4]]
       address_lines_b = [b[1], b[2], b[3], b[4]]
 
-      property_a_number, property_a_letter = property_number_and_letter(address_lines_a)
-      property_b_number, property_b_letter = property_number_and_letter(address_lines_b)
+      property_a_number, property_a_letter = get_property_number_and_letter(address_lines_a)
+      property_b_number, property_b_letter = get_property_number_and_letter(address_lines_b)
 
       compared = compare_to(property_a_number, property_b_number)
       compared == 0 ? compare_to(property_a_letter, property_b_letter) : compared
     end
 
-    def self.property_number_and_letter(address_block)
+    def self.get_property_number_and_letter(address_block)
       property_number = 0
       property_letter = ""
       address_block.each do |line|
