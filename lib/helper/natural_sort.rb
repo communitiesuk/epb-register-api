@@ -61,6 +61,13 @@ module Helper
       return property_number, property_letter
     end
 
+    def self.get_flat_number(address_block)
+      numbers_in_address = address_block.join(" ").scan(/\d+/)
+      if numbers_in_address != [] && numbers_in_address.count > 1
+        numbers_in_address.first.to_i #flat number e.g ["3007", "8"]
+      end
+    end
+
     def self.compare_to(a,b)
       a <=> b
     end
