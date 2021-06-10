@@ -43,16 +43,11 @@ module UseCase
         raise SchemaNotSupportedException
       end
 
-      lodgement_data = lodgement.fetch_data
+      ensure_lodgement_xml_valid xml, schema_name
+
+      lodgement_data = extract_data_from_lodgement_xml lodgement
 
       raise AddressIdsDoNotMatch unless address_ids_match?(lodgement_data)
-
-      unless @validate_assessment_use_case.execute(
-        xml,
-        Helper::SchemaListHelper.new(schema_name).schema_path,
-      )
-        raise ValidationErrorException
-      end
 
       raise RelatedReportError unless reports_refer_to_each_other?(xml)
 
@@ -145,6 +140,19 @@ module UseCase
       else
         true
       end
+    end
+
+    def ensure_lodgement_xml_valid(xml, schema_name)
+      unless @validate_assessment_use_case.execute(
+        xml,
+        Helper::SchemaListHelper.new(schema_name).schema_path,
+      )
+        raise ValidationErrorException
+      end
+    end
+
+    def extract_data_from_lodgement_xml(lodgement)
+      lodgement.fetch_data
     end
   end
 end
