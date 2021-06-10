@@ -69,14 +69,19 @@ describe "UseCase::CreateCipFile" do
 
       it "parses each file into a Ruby object" do
         ordered_met_office_directory.each do |file_name|
-          expect{CSV.parse(File.read(file_name), headers: true)}.not_to raise_error
+          expect{CSV.parse(File.read(file_name))}.not_to raise_error
         end
       end
 
-      it "reads the CSV and outputs data as a Ruby object" do
-        parsed_data = CSV.parse(File.read(ordered_met_office_directory.first), headers:true)
-        expect(parsed_data).not_to eq([])
-        expect(parsed_data.first).to include("Region 1 - Thames Valley - Heathrow")
+      it "finds the value for Jan 2021 in the Heating deg days table" do
+        parsed_data = CSV.parse(File.read(ordered_met_office_directory.first))
+        heating_table_start = parsed_data.find_index { |row| row.first == "Heating deg days - base temp 15.5C"}
+        cooling_table_start = parsed_data.find_index { |row| row.first == "Cooling deg days - base temp 15.5C"}
+        heating_table_full = parsed_data[(heating_table_start + 3)..(cooling_table_start - 2)]
+        number_of_columns = 13
+
+        expect(heating_table_full[0].length).to eq(number_of_columns)
+        expect(heating_table_full.find {|year| year.first == "2021"}[1]).to eq("56.7")
       end
     end
 
