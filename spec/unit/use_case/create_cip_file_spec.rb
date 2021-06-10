@@ -52,5 +52,33 @@ describe "UseCase::CreateCipFile" do
         )
       end
     end
+
+    context "it reads the data from the CSV" do
+      before { Timecop.freeze(2021, 06, 10) }
+      after { Timecop.return }
+
+      let(:date_today) { Time.new.strftime("%Y-%m") }
+      let(:ordered_met_office_directory) { Dir.glob("spec/fixtures/met_office_data/#{date_today}/*").sort }
+
+      it "reads the files from the latest directory from the Met Office" do
+        expected_file_names = %w"Region_01-Thames_Valley.csv Region_05-Severn_Valley.csv Region_16-Wales.csv Region_14-East_Scotland.csv"
+        expected_file_names.each do |file_name|
+          expect(ordered_met_office_directory.find{ |item| item.include?(file_name) }).not_to be_nil
+        end
+      end
+
+      it "parses each file into a Ruby object" do
+        ordered_met_office_directory.each do |file_name|
+          expect{CSV.parse(File.read(file_name), headers: true)}.not_to raise_error
+        end
+      end
+
+      it "reads the CSV and outputs data as a Ruby object" do
+        parsed_data = CSV.parse(File.read(ordered_met_office_directory.first), headers:true)
+        expect(parsed_data).not_to eq([])
+        expect(parsed_data.first).to include("Region 1 - Thames Valley - Heathrow")
+      end
+    end
+
   end
 end
