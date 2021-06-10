@@ -198,9 +198,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
           lodge_assessment(assessment_body: xml, accepted_responses: [400]).body,
         )
 
-      expect(
-        response_body["errors"][0]["title"],
-      ).to include "Invalid attribute name: <<Property-Summary>"
+      expect(response_body["errors"][0]["code"]).to eq "INVALID_REQUEST"
     end
 
     it "rejects a dual lodgement when related RRNs dont match" do

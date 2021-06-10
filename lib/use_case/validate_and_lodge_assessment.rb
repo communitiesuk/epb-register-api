@@ -37,19 +37,17 @@ module UseCase
     def execute(xml, schema_name, scheme_ids, migrated, overidden)
       raise SchemaNotDefined unless schema_name
 
-      lodgement = Domain::Lodgement.new(xml, schema_name)
-
       unless Helper::SchemaListHelper.new(schema_name).schema_exists?
         raise SchemaNotSupportedException
       end
 
       ensure_lodgement_xml_valid xml, schema_name
 
-      lodgement_data = extract_data_from_lodgement_xml lodgement
-
-      raise AddressIdsDoNotMatch unless address_ids_match?(lodgement_data)
+      lodgement_data =
+        extract_data_from_lodgement_xml Domain::Lodgement.new(xml, schema_name)
 
       raise RelatedReportError unless reports_refer_to_each_other?(xml)
+      raise AddressIdsDoNotMatch unless address_ids_match?(lodgement_data)
 
       unless migrated
         wrapper = ViewModel::Factory.new.create(xml, schema_name, false)
