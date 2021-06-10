@@ -313,7 +313,7 @@ describe Helper::NaturalSort do
       expect(addresses).to eq(
        [
          {
-           address_line1: "The Cottage",
+           address_line1: "British Cottage",
            address_line2: "Harvard Street",
            address_line3: "",
            address_line4: "",
@@ -321,7 +321,7 @@ describe Helper::NaturalSort do
            postcode: "W1D 1BS",
          },
          {
-           address_line1: "British Cottage",
+           address_line1: "The Cottage",
            address_line2: "Harvard Street",
            address_line3: "",
            address_line4: "",
@@ -346,7 +346,83 @@ describe Helper::NaturalSort do
          },
        ]
      )
-    end
+  end
+
+  it "sorts alphabetically when addresses have no property numbers" do
+    addresses = [
+      {
+        address_line1: "SCHOOL HOUSE",
+        address_line2: "BRADSHAW LANE",
+        address_line3: "SLAITHWAITE",
+        address_line4: "",
+        town: "HUDDERSFIELD",
+        postcode: "HD7 5UZ",
+      },
+      {
+        address_line1: "Cockley Top Laund Road",
+        address_line2: "Slaithwaite",
+        address_line3: "",
+        address_line4: "",
+        town: "HUDDERSFIELD",
+        postcode: "HD7 5UZ",
+      },
+      {
+        address_line1: "Lower Bradshaw Barn",
+        address_line2: "Bradshaw Lane",
+        address_line3: "Slaithwaite",
+        address_line4: "",
+        town: "HUDDERSFIELD",
+        postcode: "HD7 5UZ",
+      },
+      {
+        address_line1: "Cargate Foot Farm",
+        address_line2: "Slaithwaite",
+        address_line3: "",
+        address_line4: "",
+        town: "HUDDERSFIELD",
+        postcode: "HD7 5UZ",
+      }
+    ]
+
+    Helper::NaturalSort.sort!(addresses)
+
+    expect(addresses).to eq(
+       [
+         {
+           address_line1: "Cargate Foot Farm",
+           address_line2: "Slaithwaite",
+           address_line3: "",
+           address_line4: "",
+           town: "HUDDERSFIELD",
+           postcode: "HD7 5UZ",
+         },
+         {
+           address_line1: "Cockley Top Laund Road",
+           address_line2: "Slaithwaite",
+           address_line3: "",
+           address_line4: "",
+           town: "HUDDERSFIELD",
+           postcode: "HD7 5UZ",
+         },
+         {
+           address_line1: "Lower Bradshaw Barn",
+           address_line2: "Bradshaw Lane",
+           address_line3: "Slaithwaite",
+           address_line4: "",
+           town: "HUDDERSFIELD",
+           postcode: "HD7 5UZ",
+         },
+         {
+           address_line1: "SCHOOL HOUSE",
+           address_line2: "BRADSHAW LANE",
+           address_line3: "SLAITHWAITE",
+           address_line4: "",
+           town: "HUDDERSFIELD",
+           postcode: "HD7 5UZ",
+         },
+       ]
+     )
+  end
 
   it "can sort addresses on the same street with differing town values" do
       addresses = [
@@ -416,7 +492,7 @@ describe Helper::NaturalSort do
         address_line3: "LONDON",
         address_line4: "",
         town: "LONDON",
-        postcode: "SE1 6EJ1",
+        postcode: "SE1 6EJ",
       },
       {
         address_line1: "APARTMENT 2911",
@@ -424,7 +500,7 @@ describe Helper::NaturalSort do
         address_line3: "LONDON",
         address_line4: "",
         town: "LONDON",
-        postcode: "SE1 6EJ2",
+        postcode: "SE1 6EJ",
       },
       {
         address_line1: "APARTMENT 3205",
@@ -432,7 +508,7 @@ describe Helper::NaturalSort do
         address_line3: "LONDON",
         address_line4: "",
         town: "LONDON",
-        postcode: "SE1 6EJ2",
+        postcode: "SE1 6EJ",
       },
     ]
 
@@ -446,7 +522,7 @@ describe Helper::NaturalSort do
          address_line3: "LONDON",
          address_line4: "",
          town: "LONDON",
-         postcode: "SE1 6EJ2",
+         postcode: "SE1 6EJ",
        },
        {
          address_line1: "APARTMENT 3007",
@@ -454,7 +530,7 @@ describe Helper::NaturalSort do
          address_line3: "LONDON",
          address_line4: "",
          town: "LONDON",
-         postcode: "SE1 6EJ1",
+         postcode: "SE1 6EJ",
        },
        {
          address_line1: "APARTMENT 3205",
@@ -462,9 +538,509 @@ describe Helper::NaturalSort do
          address_line3: "LONDON",
          address_line4: "",
          town: "LONDON",
-         postcode: "SE1 6EJ3",
+         postcode: "SE1 6EJ",
        }
      ]
     )
+  end
+
+  it "can sort addresses which are prefixed with a mix of flats & apartments at the same property number" do
+    addresses = [
+      {
+        address_line1: "APARTMENT 3007",
+        address_line2: "8 WALWORTH ROAD",
+        address_line3: "LONDON",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
+      {
+        address_line1: "FLAT 2000",
+        address_line2: "8 WALWORTH ROAD",
+        address_line3: "LONDON",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
+      {
+        address_line1: "APARTMENT 3205",
+        address_line2: "8 WALWORTH ROAD",
+        address_line3: "LONDON",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
+      {
+        address_line1: "6000",
+        address_line2: "8 WALWORTH ROAD",
+        address_line3: "LONDON",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
+      {
+        address_line1: "FLAT 5000",
+        address_line2: "8 WALWORTH ROAD",
+        address_line3: "LONDON",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
+    ]
+
+    Helper::NaturalSort.sort!(addresses)
+
+    expect(addresses).to eq(
+     [
+       {
+         address_line1: "FLAT 2000",
+         address_line2: "8 WALWORTH ROAD",
+         address_line3: "LONDON",
+         address_line4: "",
+         town: "LONDON",
+         postcode: "SE1 6EJ",
+       },
+       {
+         address_line1: "APARTMENT 3007",
+         address_line2: "8 WALWORTH ROAD",
+         address_line3: "LONDON",
+         address_line4: "",
+         town: "LONDON",
+         postcode: "SE1 6EJ",
+       },
+       {
+         address_line1: "APARTMENT 3205",
+         address_line2: "8 WALWORTH ROAD",
+         address_line3: "LONDON",
+         address_line4: "",
+         town: "LONDON",
+         postcode: "SE1 6EJ",
+       },
+       {
+         address_line1: "FLAT 5000",
+         address_line2: "8 WALWORTH ROAD",
+         address_line3: "LONDON",
+         address_line4: "",
+         town: "LONDON",
+         postcode: "SE1 6EJ",
+       },
+       {
+         address_line1: "6000",
+         address_line2: "8 WALWORTH ROAD",
+         address_line3: "LONDON",
+         address_line4: "",
+         town: "LONDON",
+         postcode: "SE1 6EJ",
+       },
+     ]
+   )
+  end
+
+  it "can sort addresses which contain the same flat number at different property numbers" do
+    addresses = [
+      {
+        address_line1: "APARTMENT 1",
+        address_line2: "9 WALWORTH ROAD",
+        address_line3: "LONDON",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
+      {
+        address_line1: "APARTMENT 1",
+        address_line2: "8 WALWORTH ROAD",
+        address_line3: "LONDON",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
+      {
+        address_line1: "APARTMENT 1",
+        address_line2: "10 WALWORTH ROAD",
+        address_line3: "LONDON",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
+    ]
+
+    Helper::NaturalSort.sort!(addresses)
+
+    expect(addresses).to eq(
+      [
+       {
+         address_line1: "APARTMENT 1",
+         address_line2: "8 WALWORTH ROAD",
+         address_line3: "LONDON",
+         address_line4: "",
+         town: "LONDON",
+         postcode: "SE1 6EJ",
+       },
+       {
+         address_line1: "APARTMENT 1",
+         address_line2: "9 WALWORTH ROAD",
+         address_line3: "LONDON",
+         address_line4: "",
+         town: "LONDON",
+         postcode: "SE1 6EJ",
+       },
+       {
+         address_line1: "APARTMENT 1",
+         address_line2: "10 WALWORTH ROAD",
+         address_line3: "LONDON",
+         address_line4: "",
+         town: "LONDON",
+         postcode: "SE1 6EJ",
+       }
+     ]
+   )
+  end
+
+  it "can sort addresses when the same numbered address appears twice" do
+    addresses = [
+      {
+        address_line1: "10 WALWORTH ROAD",
+        address_line2: "LONDON",
+        address_line3: "",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
+      {
+        address_line1: "10 WALWORTH ROAD",
+        address_line2: "LONDON",
+        address_line3: "",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
+      {
+        address_line1: "9 WALWORTH ROAD",
+        address_line2: "LONDON",
+        address_line3: "",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
+    ]
+
+    Helper::NaturalSort.sort!(addresses)
+
+    expect(addresses).to eq(
+    [
+      {
+        address_line1: "9 WALWORTH ROAD",
+        address_line2: "LONDON",
+        address_line3: "",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
+      {
+        address_line1: "10 WALWORTH ROAD",
+        address_line2: "LONDON",
+        address_line3: "",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
+      {
+        address_line1: "10 WALWORTH ROAD",
+        address_line2: "LONDON",
+        address_line3: "",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
+    ]
+   )
+  end
+
+  it "can sort addresses when the same address with flats appears twice" do
+    addresses = [
+      {
+        address_line1: "APARTMENT 1",
+        address_line2: "10 WALWORTH ROAD",
+        address_line3: "LONDON",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
+      {
+        address_line1: "APARTMENT 192",
+        address_line2: "9 WALWORTH ROAD",
+        address_line3: "LONDON",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
+      {
+        address_line1: "APARTMENT 192",
+        address_line2: "9 WALWORTH ROAD",
+        address_line3: "LONDON",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
+    ]
+
+    Helper::NaturalSort.sort!(addresses)
+
+    expect(addresses).to eq(
+     [
+       {
+         address_line1: "APARTMENT 192",
+         address_line2: "9 WALWORTH ROAD",
+         address_line3: "LONDON",
+         address_line4: "",
+         town: "LONDON",
+         postcode: "SE1 6EJ",
+       },
+       {
+         address_line1: "APARTMENT 192",
+         address_line2: "9 WALWORTH ROAD",
+         address_line3: "LONDON",
+         address_line4: "",
+         town: "LONDON",
+         postcode: "SE1 6EJ",
+       },
+       {
+         address_line1: "APARTMENT 1",
+         address_line2: "10 WALWORTH ROAD",
+         address_line3: "LONDON",
+         address_line4: "",
+         town: "LONDON",
+         postcode: "SE1 6EJ",
+       },
+     ]
+   )
+  end
+
+  it "can sort addresses when the same address that is non-numbered appears twice" do
+    addresses = [
+      {
+        address_line1: "THE BARN",
+        address_line2: "LONDON",
+        address_line3: "",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
+      {
+        address_line1: "9 WALWORTH ROAD",
+        address_line2: "LONDON",
+        address_line3: "",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
+      {
+        address_line1: "THE BARN",
+        address_line2: "LONDON",
+        address_line3: "",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
+    ]
+
+    Helper::NaturalSort.sort!(addresses)
+
+    expect(addresses).to eq(
+      [
+       {
+         address_line1: "THE BARN",
+         address_line2: "LONDON",
+         address_line3: "",
+         address_line4: "",
+         town: "LONDON",
+         postcode: "SE1 6EJ",
+       },
+       {
+         address_line1: "THE BARN",
+         address_line2: "LONDON",
+         address_line3: "",
+         address_line4: "",
+         town: "LONDON",
+         postcode: "SE1 6EJ",
+       },
+       {
+         address_line1: "9 WALWORTH ROAD",
+         address_line2: "LONDON",
+         address_line3: "",
+         address_line4: "",
+         town: "LONDON",
+         postcode: "SE1 6EJ",
+       },
+     ]
+   )
+  end
+
+  it "can sort addresses when the flat identifier is a letter and not a number" do
+    addresses = [
+      {
+        address_line1: "Flat B",
+        address_line2: "246, Walworth Road",
+        address_line3: "",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
+      {
+        address_line1: "Flat 22",
+        address_line2: "244, Walworth Road",
+        address_line3: "",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
+      {
+        address_line1: "Flat A",
+        address_line2: "246, Walworth Road",
+        address_line3: "",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
+      {
+        address_line1: "Flat 1",
+        address_line2: "244, Walworth Road",
+        address_line3: "",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
+    ]
+
+      Helper::NaturalSort.sort!(addresses)
+
+      expect(addresses).to eq(
+       [
+         {
+           address_line1: "Flat 1",
+           address_line2: "244, Walworth Road",
+           address_line3: "",
+           address_line4: "",
+           town: "LONDON",
+           postcode: "SE1 6EJ",
+         },
+         {
+           address_line1: "Flat 22",
+           address_line2: "244, Walworth Road",
+           address_line3: "",
+           address_line4: "",
+           town: "LONDON",
+           postcode: "SE1 6EJ",
+         },
+         {
+           address_line1: "Flat A",
+           address_line2: "246, Walworth Road",
+           address_line3: "",
+           address_line4: "",
+           town: "LONDON",
+           postcode: "SE1 6EJ",
+         },
+         {
+           address_line1: "Flat B",
+           address_line2: "246, Walworth Road",
+           address_line3: "",
+           address_line4: "",
+           town: "LONDON",
+           postcode: "SE1 6EJ",
+         },
+     ]
+   )
+  end
+
+  it "can sort addresses when the property number contains hyphens" do
+    addresses = [
+      {
+        address_line1: "Flat 2",
+        address_line2: "220-222, Walworth Road",
+        address_line3: "",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
+      {
+        address_line1: "221, Walworth Road",
+        address_line2: "",
+        address_line3: "",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
+      {
+        address_line1: "Flat 1",
+        address_line2: "220-222, Walworth Road",
+        address_line3: "",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
+      {
+        address_line1: "220, Walworth Road",
+        address_line2: "",
+        address_line3: "",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
+      {
+        address_line1: "Flat 10",
+        address_line2: "225, Walworth Road",
+        address_line3: "",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
+    ]
+
+    Helper::NaturalSort.sort!(addresses)
+
+    expect(addresses).to eq(
+     [
+       {
+         address_line1: "220, Walworth Road",
+         address_line2: "",
+         address_line3: "",
+         address_line4: "",
+         town: "LONDON",
+         postcode: "SE1 6EJ",
+       },
+       {
+         address_line1: "Flat 1",
+         address_line2: "220-222, Walworth Road",
+         address_line3: "",
+         address_line4: "",
+         town: "LONDON",
+         postcode: "SE1 6EJ",
+       },
+       {
+         address_line1: "Flat 2",
+         address_line2: "220-222, Walworth Road",
+         address_line3: "",
+         address_line4: "",
+         town: "LONDON",
+         postcode: "SE1 6EJ",
+       },
+       {
+         address_line1: "221, Walworth Road",
+         address_line2: "",
+         address_line3: "",
+         address_line4: "",
+         town: "LONDON",
+         postcode: "SE1 6EJ",
+       },
+       {
+         address_line1: "Flat 10",
+         address_line2: "225, Walworth Road",
+         address_line3: "",
+         address_line4: "",
+         town: "LONDON",
+         postcode: "SE1 6EJ",
+       },
+     ]
+   )
   end
 end

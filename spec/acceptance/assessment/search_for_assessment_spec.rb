@@ -244,7 +244,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
 
       second_xml = Nokogiri.XML(Samples.xml("RdSAP-Schema-20.0.0"))
       second_xml.at("RRN").content = "0000-0000-0000-0000-0001"
-      second_xml.at("Property Address Post-Town").content = "Londres"
+      second_xml.at("Property Address Address-Line-1").content = "2 Some Street"
 
       lodge_assessment(
         assessment_body: second_xml.to_xml,
@@ -266,10 +266,10 @@ describe "Acceptance::Assessment::SearchForAssessments",
       response_json = JSON.parse(response.body, symbolize_names: true)
 
       expect(response_json[:data][:assessments][0][:assessmentId]).to eq(
-        "0000-0000-0000-0000-0001",
+        "0000-0000-0000-0000-0000",
       )
       expect(response_json[:data][:assessments][1][:assessmentId]).to eq(
-        "0000-0000-0000-0000-0000",
+        "0000-0000-0000-0000-0001",
       )
     end
   end
