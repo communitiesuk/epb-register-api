@@ -12,7 +12,7 @@ module Helper
             a[:address_line3],
             a[:address_line2],
             a[:address_line1],
-          ].map { |item| item.strip.upcase }
+          ].map { |item| item.strip.upcase.tr(",","") }
 
         address_b =
           [
@@ -21,7 +21,7 @@ module Helper
             b[:address_line3],
             b[:address_line2],
             b[:address_line1],
-          ].map { |item| item.strip.upcase }
+          ].map { |item| item.strip.upcase.tr(",","") }
 
         postcode_comparison = compare_postcode(address_a, address_b)
         if postcode_comparison == 0
@@ -62,13 +62,15 @@ module Helper
         if line.to_i != 0
           property_number = line.to_i
           line_split = line.split(" ")
-          remove_punctuation = line_split.first.sub(",","").sub("-"," ")
 
           if property_number.to_s != line_split.first
-            if remove_punctuation.split(" ")[1]&.scan(/\d+/) != []
-              property_letter = remove_punctuation.split(" ")[1].to_s
+            remove_hyphen = line_split.first.tr("-"," ")
+            address_line_digits = remove_hyphen.split(" ")[1]&.scan(/\d+/)
+
+            if address_line_digits != [] && !address_line_digits.nil?
+              property_letter = remove_hyphen.split(" ")[1].to_s
             else
-            property_letter = line_split.first[-1]
+              property_letter = line_split.first[-1]
            end
           end
         end

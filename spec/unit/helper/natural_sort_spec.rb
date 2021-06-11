@@ -270,7 +270,67 @@ describe Helper::NaturalSort do
          },
        ]
      )
-    end
+  end
+
+  it "sorts by property number when address line 1 is empty" do
+    addresses = [
+      {
+        address_line1: "",
+        address_line2: "20 Harvard Street",
+        address_line3: "",
+        address_line4: "",
+        town: "London",
+        postcode: "W1D 1BS",
+      },
+      {
+        address_line1: "",
+        address_line2: "15 Harvard Street",
+        address_line3: "",
+        address_line4: "",
+        town: "London",
+        postcode: "W1D 1BS",
+      },
+      {
+        address_line1: "14 Harvard Street",
+        address_line2: "",
+        address_line3: "",
+        address_line4: "",
+        town: "London",
+        postcode: "W1D 1BS",
+      },
+    ]
+
+    Helper::NaturalSort.sort!(addresses)
+
+    expect(addresses).to eq(
+                           [
+                             {
+                               address_line1: "14 Harvard Street",
+                               address_line2: "",
+                               address_line3: "",
+                               address_line4: "",
+                               town: "London",
+                               postcode: "W1D 1BS",
+                             },
+                             {
+                               address_line1: "",
+                               address_line2: "15 Harvard Street",
+                               address_line3: "",
+                               address_line4: "",
+                               town: "London",
+                               postcode: "W1D 1BS",
+                             },
+                             {
+                               address_line1: "",
+                               address_line2: "20 Harvard Street",
+                               address_line3: "",
+                               address_line4: "",
+                               town: "London",
+                               postcode: "W1D 1BS",
+                             },
+                           ]
+                         )
+  end
 
   it "sorts when an address has no property number" do
       addresses = [
@@ -887,16 +947,16 @@ describe Helper::NaturalSort do
         postcode: "SE1 6EJ",
       },
       {
-        address_line1: "Flat 22",
-        address_line2: "244, Walworth Road",
+        address_line1: "Flat A",
+        address_line2: "246, Walworth Road",
         address_line3: "",
         address_line4: "",
         town: "LONDON",
         postcode: "SE1 6EJ",
       },
       {
-        address_line1: "Flat A",
-        address_line2: "246, Walworth Road",
+        address_line1: "Flat 22",
+        address_line2: "244, Walworth Road",
         address_line3: "",
         address_line4: "",
         town: "LONDON",
