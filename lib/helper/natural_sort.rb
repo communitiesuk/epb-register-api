@@ -87,6 +87,8 @@ module Helper
       numbers_in_address = a[1..4].reverse.join(" ").scan(/\d+/)
       if numbers_in_address != [] && numbers_in_address.count > 1
         numbers_in_address.first.to_i
+      else
+        0
       end
     end
 
