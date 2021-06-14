@@ -12,7 +12,7 @@ module Helper
             a[:address_line3],
             a[:address_line2],
             a[:address_line1],
-          ].map { |item| item.strip.upcase.tr(",","") }
+          ].map { |item| item.to_s.strip.upcase.tr(",","") }
 
         address_b =
           [
@@ -21,7 +21,7 @@ module Helper
             b[:address_line3],
             b[:address_line2],
             b[:address_line1],
-          ].map { |item| item.strip.upcase.tr(",","") }
+          ].map { |item| item.to_s.strip.upcase.tr(",","") }
 
         postcode_comparison = compare_postcode(address_a, address_b)
         if postcode_comparison == 0

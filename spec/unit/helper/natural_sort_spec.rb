@@ -1180,6 +1180,80 @@ describe Helper::NaturalSort do
    )
   end
 
+  it "can sort  where address_line one has been left nil" do
+    addresses = [
+      {
+        address_line1: "55, Main Street",
+        address_line2: "",
+        address_line3: "",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
+      {
+        address_line1: nil,
+        address_line2: "55, Main Street",
+        address_line3: "",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
+      {
+        address_line1: "56, Main Street",
+        address_line2: "",
+        address_line3: "",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
+      {
+        address_line1: "",
+        address_line2: "56, Main Street",
+        address_line3: "",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
+    ]
+    Helper::NaturalSort.sort!(addresses)
+    expect(addresses).to eq(
+     [
+       {
+         address_line1: nil,
+         address_line2: "55, Main Street",
+         address_line3: "",
+         address_line4: "",
+         town: "LONDON",
+         postcode: "SE1 6EJ",
+       },
+       {
+         address_line1: "55, Main Street",
+         address_line2: "",
+         address_line3: "",
+         address_line4: "",
+         town: "LONDON",
+         postcode: "SE1 6EJ",
+       },
+       {
+         address_line1: "",
+         address_line2: "56, Main Street",
+         address_line3: "",
+         address_line4: "",
+         town: "LONDON",
+         postcode: "SE1 6EJ",
+       },
+       {
+         address_line1: "56, Main Street",
+         address_line2: "",
+         address_line3: "",
+         address_line4: "",
+         town: "LONDON",
+         postcode: "SE1 6EJ",
+       },
+     ]
+   )
+  end
+
   it "can sort addresses of a variety of address formats" do
     addresses = [
       {
@@ -1310,14 +1384,6 @@ describe Helper::NaturalSort do
         town: "LONDON",
         postcode: "SE1 6EJ",
       },
-      {
-        address_line1: "Atrium",
-        address_line2: "LONDON",
-        address_line3: "",
-        address_line4: "",
-        town: "LONDON",
-        postcode: "ABC 123",
-      },
 
     ]
 
@@ -1325,14 +1391,6 @@ describe Helper::NaturalSort do
 
     expect(addresses).to eq(
        [
-         {
-           address_line1: "Atrium",
-           address_line2: "LONDON",
-           address_line3: "",
-           address_line4: "",
-           town: "LONDON",
-           postcode: "ABC 123",
-         },
          {
            address_line1: "55, Main Street",
            address_line2: "",
