@@ -44,6 +44,7 @@ task :fix_blank_assessors do
 
     if scheme_assessor_id.empty? or assessor_name.empty?
       skipped += 1
+      puts "Skipping assessment #{assessment_id}"
       next
     end
 
