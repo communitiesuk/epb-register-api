@@ -7,14 +7,14 @@ describe "Acceptance::AssessorStatus" do
   let!(:test_scheme_id2) { add_scheme_and_get_id("test_two") }
 
   def create_assessor(
-    scheme_id,
-    assessor_id,
-    qualifications
+    scheme_id: test_scheme_id,
+    assessor_id: "SPEC000000",
+    **other_args
   )
     add_assessor(
       scheme_id,
       assessor_id,
-      AssessorStub.new.fetch_request_body(**qualifications),
+      AssessorStub.new.fetch_request_body(**other_args),
     )
   end
 
@@ -44,25 +44,25 @@ describe "Acceptance::AssessorStatus" do
 
     it "doesn't show an assessor status change done on a different date" do
       create_assessor(
-        test_scheme_id,
-        "SPEC000004",
         first_name: "Jane",
         last_name: "Doe",
         domestic_rd_sap: "ACTIVE",
+        scheme_id: test_scheme_id,
+        assessor_id: "SPEC000004",
       )
       create_assessor(
-        test_scheme_id2,
-        "SPEC000001",
         first_name: "Jane",
         last_name: "Doe",
         domestic_rd_sap: "ACTIVE",
+        scheme_id: test_scheme_id2,
+        assessor_id: "SPEC000001",
       )
       create_assessor(
-        test_scheme_id2,
-        "SPEC000001",
         first_name: "Jane",
         last_name: "Doe",
         domestic_rd_sap: "INACTIVE",
+        scheme_id: test_scheme_id2,
+        assessor_id: "SPEC000001",
       )
 
       response =
@@ -77,25 +77,25 @@ describe "Acceptance::AssessorStatus" do
 
     it "returns only assessors registered to other schemes who might also be registered to this scheme" do
       create_assessor(
-        test_scheme_id,
-        "SPEC000004",
         first_name: "Jane",
         last_name: "Doe",
         domestic_rd_sap: "ACTIVE",
+        scheme_id: test_scheme_id,
+        assessor_id: "SPEC000004",
       )
       create_assessor(
-        test_scheme_id2,
-        "SPEC000001",
         first_name: "Jane",
         last_name: "Doe",
         domestic_rd_sap: "ACTIVE",
+        scheme_id: test_scheme_id2,
+        assessor_id: "SPEC000001",
       )
       create_assessor(
-        test_scheme_id2,
-        "SPEC000001",
         first_name: "Jane",
         last_name: "Doe",
         domestic_rd_sap: "INACTIVE",
+        scheme_id: test_scheme_id2,
+        assessor_id: "SPEC000001",
       )
 
       expect(response[:data]).to eq(
@@ -118,23 +118,23 @@ describe "Acceptance::AssessorStatus" do
 
     it "does not return an assessor with the same name but different date of birth" do
       create_assessor(
-        test_scheme_id,
-        "SPEC000001",
+        scheme_id: test_scheme_id,
+        assessor_id: "SPEC000001",
         first_name: "Jane",
         last_name: "Doe",
         domestic_rd_sap: "ACTIVE",
       )
       create_assessor(
-        test_scheme_id2,
-        "SPEC000002",
+        scheme_id: test_scheme_id2,
+        assessor_id: "SPEC000002",
         first_name: "Jane",
         last_name: "Doe",
         domestic_rd_sap: "ACTIVE",
         date_of_birth: "1976-02-25",
       )
       create_assessor(
-        test_scheme_id2,
-        "SPEC000002",
+        scheme_id: test_scheme_id2,
+        assessor_id: "SPEC000002",
         first_name: "Jane",
         last_name: "Doe",
         domestic_rd_sap: "INACTIVE",
@@ -146,22 +146,22 @@ describe "Acceptance::AssessorStatus" do
 
     it "returns assessors with the same date of birth and last name but a different first name" do
       create_assessor(
-        test_scheme_id,
-        "SPEC000001",
+        scheme_id: test_scheme_id,
+        assessor_id: "SPEC000001",
         first_name: "Jane",
         last_name: "Doe",
         domestic_rd_sap: "ACTIVE",
       )
       create_assessor(
-        test_scheme_id2,
-        "SPEC000003",
+        scheme_id: test_scheme_id2,
+        assessor_id: "SPEC000003",
         first_name: "Ash",
         last_name: "Doe",
         domestic_rd_sap: "ACTIVE",
       )
       create_assessor(
-        test_scheme_id2,
-        "SPEC000003",
+        scheme_id: test_scheme_id2,
+        assessor_id: "SPEC000003",
         first_name: "Ash",
         last_name: "Doe",
         domestic_rd_sap: "INACTIVE",
@@ -187,22 +187,22 @@ describe "Acceptance::AssessorStatus" do
 
     it "does not return assessors who have the same date of birth but different last names" do
       create_assessor(
-        test_scheme_id,
-        "SPEC000001",
+        scheme_id: test_scheme_id,
+        assessor_id: "SPEC000001",
         first_name: "Jane",
         last_name: "Doe",
         domestic_rd_sap: "ACTIVE",
       )
       create_assessor(
-        test_scheme_id2,
-        "SPEC000003",
+        scheme_id: test_scheme_id2,
+        assessor_id: "SPEC000003",
         first_name: "Jane",
         last_name: "Done",
         domestic_rd_sap: "ACTIVE",
       )
       create_assessor(
-        test_scheme_id2,
-        "SPEC000003",
+        scheme_id: test_scheme_id2,
+        assessor_id: "SPEC000003",
         first_name: "Jane",
         last_name: "Done",
         domestic_rd_sap: "INACTIVE",
@@ -213,15 +213,15 @@ describe "Acceptance::AssessorStatus" do
 
     it "does not return assessors who have been updated by the scheme making the request" do
       create_assessor(
-        test_scheme_id,
-        "SPEC000001",
+        scheme_id: test_scheme_id,
+        assessor_id: "SPEC000001",
         first_name: "Jane",
         last_name: "Doe",
         domestic_rd_sap: "ACTIVE",
       )
       create_assessor(
-        test_scheme_id,
-        "SPEC000001",
+        scheme_id: test_scheme_id,
+        assessor_id: "SPEC000001",
         first_name: "Jane",
         last_name: "Doe",
         domestic_rd_sap: "INACTIVE",

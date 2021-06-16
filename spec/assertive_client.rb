@@ -697,11 +697,10 @@ def update_assessment_address_id(
 end
 
 def fetch_assessment_meta_data(
-  assessment_id,
-  accepted_responses = [200],
-  authenticate = true,
-  auth_data = {},
-  scopes
+  assessment_id:,
+  scopes:, accepted_responses: [200],
+  authenticate: true,
+  auth_data: {}
 )
 
   assertive_get("/api/assessments/#{assessment_id}/meta-data",

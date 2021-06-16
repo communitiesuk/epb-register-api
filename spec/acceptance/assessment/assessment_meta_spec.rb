@@ -32,14 +32,26 @@ describe "Acceptance::AssessmentMeta" do
   end
 
   it "returns a 200 when calling the meta data end point" do
-    fetch_assessment_meta_data("0000-0000-0000-0000-0000", [200], true, {}, %w[assessmentmetadata:fetch])
+    fetch_assessment_meta_data(
+      assessment_id: "0000-0000-0000-0000-0000",
+      accepted_responses: [200],
+      scopes: %w[assessmentmetadata:fetch],
+    )
   end
 
   it "returns a 404 when calling the meta data end point and returns no data" do
-    fetch_assessment_meta_data("0000-0000-0000-0000-0001", [404], true, {}, %w[assessmentmetadata:fetch])
+    fetch_assessment_meta_data(
+      assessment_id: "0000-0000-0000-0000-0001",
+      accepted_responses: [404],
+      scopes: %w[assessmentmetadata:fetch],
+    )
   end
 
   it "returns a 403 when calling the meta data end point with the wrong scopes" do
-    fetch_assessment_meta_data("0000-0000-0000-0000-0001", [403], true, %w[wrong:scope])
+    fetch_assessment_meta_data(
+      assessment_id: "0000-0000-0000-0000-0001",
+      accepted_responses: [403],
+      scopes: %w[wrong:scope],
+    )
   end
 end
