@@ -26,7 +26,6 @@ module Helper
         postcode_comparison = compare_postcode(address_a, address_b)
         if postcode_comparison == 0
           address_line_comparison = compare_address_line_for_number(address_a, address_b)
-          address_line_comparison == 0 ? compare_flat_numbers(address_a,address_b) : address_line_comparison
 
           if address_line_comparison == 0
             flat_number_comparison = compare_flat_numbers(address_a,address_b)
@@ -87,9 +86,10 @@ module Helper
 
     def self.get_flat_number(a)
       numbers_in_address = a[1..4].reverse.join(" ").scan(/\d+/)
-      if numbers_in_address != [] && numbers_in_address.count > 1
+      if !numbers_in_address.empty? && numbers_in_address.count > 1
         numbers_in_address.first.to_i
       else
+        # No numbers or only single number present (can't assume flat number)
         0
       end
     end
@@ -98,23 +98,7 @@ module Helper
       address_a = a[1..4].reverse.join(" ")
       address_b = b[1..4].reverse.join(" ")
 
-      numbers_in_address_a = address_a.scan(/\d+/)
-      numbers_in_address_b = address_b.scan(/\d+/)
-
-      if numbers_in_address_a.count < 2 && numbers_in_address_b.count < 2
-        comparison_result = 0
-        address_a.split("").each_with_index do |char, index|
-          if char == address_b[index]
-            next
-          else
-            comparison_result = compare_to(char, address_b[index])
-            break
-          end
-        end
-        comparison_result
-      else
-        0
-      end
+      return compare_to(address_a, address_b)
     end
 
     def self.compare_to(a,b)

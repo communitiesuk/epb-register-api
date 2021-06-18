@@ -1,5 +1,50 @@
 describe Helper::NaturalSort do
 
+  it "handles same addresses on multiple lines" do
+    # Order here is important
+    # 20_Oxford_Street_London__ (first)
+    # 20_Oxford_Street_London_  (second)
+    addresses = [
+      {
+        address_line1: "20 Oxford Street",
+        address_line2: "London",
+        address_line3: "",
+        address_line4: "",
+        town: "",
+        postcode: "W2D 1BS",
+      },
+      {
+        address_line1: "20",
+        address_line2: "Oxford Street",
+        address_line3: "London",
+        address_line4: "",
+        town: "",
+        postcode: "W2D 1BS",
+      }
+    ]
+
+    Helper::NaturalSort.sort!(addresses)
+
+    expect(addresses).to eq(
+                           [
+                             {
+                               address_line1: "20",
+                               address_line2: "Oxford Street",
+                               address_line3: "London",
+                               address_line4: "",
+                               town: "",
+                               postcode: "W2D 1BS",
+                             },
+                             {
+                               address_line1: "20 Oxford Street",
+                               address_line2: "London",
+                               address_line3: "",
+                               address_line4: "",
+                               town: "",
+                               postcode: "W2D 1BS",
+                             }])
+  end
+
   it "sorts by comparing postcode" do
       addresses = [
         {
