@@ -691,6 +691,14 @@ describe Helper::NaturalSort do
         town: "LONDON",
         postcode: "SE1 6EJ",
       },
+      {
+        address_line1: "100",
+        address_line2: "8 WALWORTH ROAD",
+        address_line3: "LONDON",
+        address_line4: "",
+        town: "LONDON",
+        postcode: "SE1 6EJ",
+      },
     ]
 
     Helper::NaturalSort.sort!(addresses)
@@ -723,6 +731,14 @@ describe Helper::NaturalSort do
        },
        {
          address_line1: "FLAT 5000",
+         address_line2: "8 WALWORTH ROAD",
+         address_line3: "LONDON",
+         address_line4: "",
+         town: "LONDON",
+         postcode: "SE1 6EJ",
+       },
+       {
+         address_line1: "100",
          address_line2: "8 WALWORTH ROAD",
          address_line3: "LONDON",
          address_line4: "",
