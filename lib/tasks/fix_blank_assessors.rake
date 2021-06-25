@@ -42,7 +42,7 @@ task :fix_blank_assessors do
     )
     assessor_name = wrapper.get_view_model.assessor_name
 
-    if scheme_assessor_id.empty? or assessor_name.empty?
+    if scheme_assessor_id.empty? || assessor_name.empty?
       skipped += 1
       puts "Skipping assessment #{assessment_id}"
       next

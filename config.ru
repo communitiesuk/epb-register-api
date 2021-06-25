@@ -5,9 +5,7 @@ loader = Zeitwerk::Loader.new
 loader.push_dir("#{__dir__}/lib/")
 loader.setup
 
-Sentry.init do |config|
-  config.environment = ENV['STAGE']
-end
+Sentry.init { |config| config.environment = ENV['STAGE'] }
 use Sentry::Rack::CaptureExceptions
 
 run RegisterApiService

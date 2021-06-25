@@ -148,7 +148,9 @@ module Gateway
             end
 
           fuel_savings_data <<
-            saving&.slice(:fuel_saving, :standing_charge_fraction)&.merge(pricing)
+            saving
+              &.slice(:fuel_saving, :standing_charge_fraction)
+              &.merge(pricing)
         end
 
       Helper::GreenDealSavingsCalculator.calculate fuel_savings_data

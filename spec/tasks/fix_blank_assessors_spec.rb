@@ -33,17 +33,18 @@ describe "FixBlankAssessors" do
             telephoneNumber: "",
             email: "fake@email.org",
           },
-        })
+        },
+      )
       call_lodge_assessment(scheme_id, sap_schema, sap_xml, true)
     end
 
-    it 'should output one updated assessors' do
-      expect { get_task("fix_blank_assessors").invoke }
-        .to output(/1 records updated and 0 records skipped/)
-              .to_stdout
+    it "should output one updated assessors" do
+      expect { get_task("fix_blank_assessors").invoke }.to output(
+        /1 records updated and 0 records skipped/,
+      ).to_stdout
     end
 
-    it 'should update the assessor first_name' do
+    it "should update the assessor first_name" do
       get_task("fix_blank_assessors").invoke
 
       response = JSON.parse(fetch_assessor(scheme_id, scheme_assessor_id).body)
@@ -79,17 +80,18 @@ describe "FixBlankAssessors" do
             telephoneNumber: "",
             email: "fake@email.org",
           },
-        })
+        },
+      )
       call_lodge_assessment(scheme_id, sap_schema, sap_xml, true)
     end
 
-    it 'should output zero updated assessors' do
-      expect { get_task("fix_blank_assessors").invoke }
-        .to output(/0 records updated and 0 records skipped/)
-              .to_stdout
+    it "should output zero updated assessors" do
+      expect { get_task("fix_blank_assessors").invoke }.to output(
+        /0 records updated and 0 records skipped/,
+      ).to_stdout
     end
 
-    it 'should not update the assessor' do
+    it "should not update the assessor" do
       get_task("fix_blank_assessors").invoke
 
       response = JSON.parse(fetch_assessor(scheme_id, scheme_assessor_id).body)
@@ -125,19 +127,20 @@ describe "FixBlankAssessors" do
             telephoneNumber: "",
             email: "fake@email.org",
           },
-        })
+        },
+      )
       corrected_sap_xml = sap_xml
       corrected_sap_xml.at("Home-Inspector Name").children = ""
       call_lodge_assessment(scheme_id, sap_schema, corrected_sap_xml, true)
     end
 
-    it 'should output one record skipped' do
-      expect { get_task("fix_blank_assessors").invoke }
-        .to output(/0 records updated and 1 records skipped/)
-              .to_stdout
+    it "should output one record skipped" do
+      expect { get_task("fix_blank_assessors").invoke }.to output(
+        /0 records updated and 1 records skipped/,
+      ).to_stdout
     end
 
-    it 'should not update the assessor' do
+    it "should not update the assessor" do
       get_task("fix_blank_assessors").invoke
 
       response = JSON.parse(fetch_assessor(scheme_id, scheme_assessor_id).body)
