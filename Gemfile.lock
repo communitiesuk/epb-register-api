@@ -48,7 +48,7 @@ GEM
       debase-ruby_core_source (>= 0.10.2)
     debase-ruby_core_source (0.10.12)
     diff-lcs (1.4.4)
-    epb-auth-tools (1.0.7)
+    epb-auth-tools (1.0.8)
       jwt (~> 2.2)
       oauth2 (~> 1.4)
     faraday (1.4.3)
@@ -195,7 +195,7 @@ DEPENDENCIES
   aws-sdk-s3 (~> 1.96)!
   database_cleaner!
   debase!
-  epb-auth-tools (~> 1.0.7)!
+  epb-auth-tools (~> 1.0.8)!
   geocoder (~> 1.6.6)!
   json-schema (~> 2.8)!
   nokogiri (~> 1.11.7)!
