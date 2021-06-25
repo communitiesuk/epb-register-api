@@ -36,8 +36,7 @@ describe UseCase::ExportOpenDataCepcrr do
 
         xml
           .xpath("//*[local-name() = 'Postcode']")
-          .reverse
-          .each { |node| node.content = "BT1 2TD" }
+          .reverse_each { |node| node.content = "BT1 2TD" }
 
         xml
       end
@@ -59,8 +58,7 @@ describe UseCase::ExportOpenDataCepcrr do
 
         xml
           .xpath("//*[local-name() = 'Registration-Date']")
-          .reverse
-          .each { |node| node.content = "2018-07-01" }
+          .reverse_each { |node| node.content = "2018-07-01" }
 
         xml
       end

@@ -26,6 +26,7 @@ source "https://rubygems.org" do
   gem "pg"
   gem "rake"
   gem "rubocop-govuk", "~> 3.17"
+  gem "rubocop-performance", require: false
   gem "rubyzip", "~> 2.3.0"
   gem "sentry-ruby", "~> 4.5"
   gem "sinatra", "~> 2.0", ">= 2.0.7"

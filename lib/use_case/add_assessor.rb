@@ -22,7 +22,7 @@ module UseCase
     end
 
     def execute(add_assessor_request, auth_client_id)
-      unless add_assessor_request.scheme_assessor_id =~ ASSESSOR_ID_REGEX
+      unless ASSESSOR_ID_REGEX.match?(add_assessor_request.scheme_assessor_id)
         raise InvalidAssessorIdException,
               "The ID provided for the assessor is not in the expected format: \"%s\"" %
           add_assessor_request.scheme_assessor_id

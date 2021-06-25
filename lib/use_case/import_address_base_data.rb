@@ -194,7 +194,7 @@ module UseCase
 
     def combine_street_line(lines)
       lines.inject([]) do |carry, val|
-        if carry[-1] =~ /^\d+[A-Z]?$/
+        if /^\d+[A-Z]?$/.match?(carry[-1])
           carry[0...-1].push([carry[-1], val].join(" "))
         else
           carry << val

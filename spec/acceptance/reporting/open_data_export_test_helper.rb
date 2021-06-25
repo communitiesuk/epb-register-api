@@ -82,8 +82,7 @@ def get_recommendations_xml(schema, date_registered, type, assesment_id_part)
 
   rr_xml
     .xpath("//*[local-name() = 'Registration-Date']")
-    .reverse
-    .each { |node| node.content = date_registered }
+    .reverse_each { |node| node.content = date_registered }
 
   rr_xml
 end

@@ -1,5 +1,6 @@
 require:
   - rubocop-rspec
+  - rubocop-performance
 
 inherit_gem:
   rubocop-govuk:
