@@ -38,13 +38,13 @@ describe "FixBlankAssessors" do
       call_lodge_assessment(scheme_id, sap_schema, sap_xml, true)
     end
 
-    it "should output one updated assessors" do
+    it "outputs one updated assessors" do
       expect { get_task("fix_blank_assessors").invoke }.to output(
         /1 records updated and 0 records skipped/,
       ).to_stdout
     end
 
-    it "should update the assessor first_name" do
+    it "updates the assessor first_name" do
       get_task("fix_blank_assessors").invoke
 
       response = JSON.parse(fetch_assessor(scheme_id, scheme_assessor_id).body)
@@ -85,13 +85,13 @@ describe "FixBlankAssessors" do
       call_lodge_assessment(scheme_id, sap_schema, sap_xml, true)
     end
 
-    it "should output zero updated assessors" do
+    it "outputs zero updated assessors" do
       expect { get_task("fix_blank_assessors").invoke }.to output(
         /0 records updated and 0 records skipped/,
       ).to_stdout
     end
 
-    it "should not update the assessor" do
+    it "does not update the assessor" do
       get_task("fix_blank_assessors").invoke
 
       response = JSON.parse(fetch_assessor(scheme_id, scheme_assessor_id).body)
@@ -134,13 +134,13 @@ describe "FixBlankAssessors" do
       call_lodge_assessment(scheme_id, sap_schema, corrected_sap_xml, true)
     end
 
-    it "should output one record skipped" do
+    it "outputs one record skipped" do
       expect { get_task("fix_blank_assessors").invoke }.to output(
         /0 records updated and 1 records skipped/,
       ).to_stdout
     end
 
-    it "should not update the assessor" do
+    it "does not update the assessor" do
       get_task("fix_blank_assessors").invoke
 
       response = JSON.parse(fetch_assessor(scheme_id, scheme_assessor_id).body)

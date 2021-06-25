@@ -257,6 +257,7 @@ describe UseCase::ImportAddressBaseData do
       expect(use_case.execute(hashed_data)).to be nil
     end
   end
+
   context "when forming a delivery point address for 10 downing street" do
     it "responds with an address struct with the expected fields" do
       expected =
@@ -390,6 +391,7 @@ describe UseCase::ImportAddressBaseData do
       partial_clause = use_case.execute(hashed_data)
       expect(partial_clause).to eq expected
     end
+
     it "raises an error when trying to create a postal address" do
       expect {
         use_case.send(:create_delivery_point_address, hashed_data)

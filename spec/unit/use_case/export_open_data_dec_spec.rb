@@ -3,8 +3,6 @@ describe UseCase::ExportOpenDataDec, set_with_timecop: true do
 
   context "when creating the open data reporting release " do
     describe "for the DEC and reports" do
-      let(:export_object) { described_class.new }
-
       expected_values = {
         assessment_id:
           "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
@@ -54,6 +52,7 @@ describe UseCase::ExportOpenDataDec, set_with_timecop: true do
         estimated_aircon_kw_rating: "1",
       }
 
+      let(:export_object) { described_class.new }
       let(:expected_values_1) do
         expected_values.merge(
           {
@@ -63,7 +62,6 @@ describe UseCase::ExportOpenDataDec, set_with_timecop: true do
           },
         )
       end
-
       let(:expected_values_2) do
         expected_values.merge(
           {
@@ -74,19 +72,16 @@ describe UseCase::ExportOpenDataDec, set_with_timecop: true do
           },
         )
       end
-
       let(:exported_data) do
         described_class
           .new
           .execute("2019-07-01", 3)
           .sort_by! { |key| key[:assessment_id] }
       end
-
       let(:statistics) do
         gateway = Gateway::OpenDataLogGateway.new
         gateway.fetch_log_statistics
       end
-
       let(:first_exported_dec) do
         exported_data.select do |hash|
           hash[:assessment_id] ==

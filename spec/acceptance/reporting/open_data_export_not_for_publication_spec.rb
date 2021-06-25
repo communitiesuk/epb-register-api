@@ -2,6 +2,7 @@ describe "OpenDataExportNotForPublication" do
   subject(:task) { get_task("open_data_export_not_for_publication") }
 
   after { WebMock.disable! }
+
   let(:storage_gateway) { instance_double(Gateway::StorageGateway) }
   let(:export_usecase) { instance_double(UseCase::ExportOpenDataNotForPublication) }
   let(:incorrect_bucket_name) { "bucket_name" }

@@ -42,12 +42,12 @@ describe "JsonExport" do
         bucket_name: bucket_name,
         instance_name: instance_name,
       )
-      expect { task.invoke }.to_not raise_error
+      expect { task.invoke }.not_to raise_error
     end
 
     it "calls the export use_case with the start_date parameter" do
       expect(export_usecase).to receive(:execute).with(start_date)
-      expect { task.invoke }.to_not raise_error
+      expect { task.invoke }.not_to raise_error
     end
 
     it "calls the storage gateway with the data received from the export use case" do
@@ -59,7 +59,7 @@ describe "JsonExport" do
         "export/002.json",
         "{\"attribute\":\"export 002\"}",
       )
-      expect { task.invoke }.to_not raise_error
+      expect { task.invoke }.not_to raise_error
     end
   end
 

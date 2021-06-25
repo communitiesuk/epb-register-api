@@ -3,20 +3,6 @@ describe UseCase::ExportOpenDataCommercial, set_with_timecop: true do
 
   context "when creating the open data reporting release" do
     describe "for the commercial certificates and reports" do
-      let(:export_object) { described_class.new }
-
-      let(:exported_data) do
-        described_class
-          .new
-          .execute("2019-07-01", 1)
-          .sort_by! { |key| key[:assessment_id] }
-      end
-
-      let(:statistics) do
-        gateway = Gateway::OpenDataLogGateway.new
-        gateway.fetch_log_statistics
-      end
-
       expected_values = {
         assessment_id:
           "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
@@ -55,6 +41,7 @@ describe UseCase::ExportOpenDataCommercial, set_with_timecop: true do
         region: "London",
       }
 
+      let(:export_object) { described_class.new }
       let(:expected_values_index_1) do
         Samples.update_test_hash(
           expected_values,
@@ -65,6 +52,26 @@ describe UseCase::ExportOpenDataCommercial, set_with_timecop: true do
             lodgement_datetime: datetime_today,
           },
         )
+      end
+      let(:rrn_assessment) do
+        expected_data_hash =
+          exported_data.select do |hash|
+            hash[:assessment_id] ==
+              "833db6da02dadee69b96c96917a5e190473828713f5074bd7d67a2371b315520"
+          end
+        expected_data_hash.first
+      end
+
+      let(:exported_data) do
+        described_class
+          .new
+          .execute("2019-07-01", 1)
+          .sort_by! { |key| key[:assessment_id] }
+      end
+
+      let(:statistics) do
+        gateway = Gateway::OpenDataLogGateway.new
+        gateway.fetch_log_statistics
       end
 
       before(:all) do
@@ -179,15 +186,6 @@ describe UseCase::ExportOpenDataCommercial, set_with_timecop: true do
           override: true,
           schema_name: "CEPC-8.0.0",
         )
-      end
-
-      let(:rrn_assessment) do
-        expected_data_hash =
-          exported_data.select do |hash|
-            hash[:assessment_id] ==
-              "833db6da02dadee69b96c96917a5e190473828713f5074bd7d67a2371b315520"
-          end
-        expected_data_hash.first
       end
 
       it "returns the correct number of assessments in the CSV and the logs" do

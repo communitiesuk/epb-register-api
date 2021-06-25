@@ -3,8 +3,6 @@ describe UseCase::ExportOpenDataDomestic, set_with_timecop: true do
 
   context "when creating the open data reporting release" do
     describe "for the domestic certificates and reports" do
-      let(:export_object) { described_class.new }
-
       expected_rdsap_values = {
         assessment_id:
           "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a",
@@ -183,6 +181,7 @@ describe UseCase::ExportOpenDataDomestic, set_with_timecop: true do
         region: "London",
       }
 
+      let(:export_object) { described_class.new }
       let(:rdsap_odc_hash) do
         expected_rdsap_values.merge(
           { lodgement_date: date_today, lodgement_datetime: datetime_today },
@@ -199,10 +198,41 @@ describe UseCase::ExportOpenDataDomestic, set_with_timecop: true do
           .execute("2019-07-01", 2)
           .sort_by! { |key| key[:assessment_id] }
       end
-
       let(:statistics) do
         gateway = Gateway::OpenDataLogGateway.new
         gateway.fetch_log_statistics
+      end
+      let(:rdsap_assessment) do
+        expected_data_hash =
+          exported_data.select do |hash|
+            hash[:assessment_id] ==
+              "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a"
+          end
+        expected_data_hash.first
+      end
+      let(:sap_assessment) do
+        expected_data_hash =
+          exported_data.select do |hash|
+            hash[:assessment_id] ==
+              "a154b93d62db9b77c82f6b11ba4a4a4056816572180c95e0bc5d486b905d4996"
+          end
+        expected_data_hash.first
+      end
+      let(:rdsap_assessment_with_rrn_building_ref) do
+        expected_data_hash =
+          exported_data.select do |hash|
+            hash[:assessment_id] ==
+              "46cd39a5a7ccc7e4abab6e99577831f3c6dff2ce98bea5858195063694967ff4"
+          end
+        expected_data_hash.first[:building_reference_number]
+      end
+      let(:sap_assessment_with_rrn_building_ref) do
+        expected_data_hash =
+          exported_data.select do |hash|
+            hash[:assessment_id] ==
+              "c721f7c21520e8dc97d9746d0747c285d057971acee9e2ef3b8d94f8d7a1ed43"
+          end
+        expected_data_hash.first[:building_reference_number]
       end
 
       before(:all) do
@@ -336,42 +366,6 @@ describe UseCase::ExportOpenDataDomestic, set_with_timecop: true do
           schema_name: "SAP-Schema-NI-18.0.0",
           override: true,
         )
-      end
-
-      let(:rdsap_assessment) do
-        expected_data_hash =
-          exported_data.select do |hash|
-            hash[:assessment_id] ==
-              "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a"
-          end
-        expected_data_hash.first
-      end
-
-      let(:sap_assessment) do
-        expected_data_hash =
-          exported_data.select do |hash|
-            hash[:assessment_id] ==
-              "a154b93d62db9b77c82f6b11ba4a4a4056816572180c95e0bc5d486b905d4996"
-          end
-        expected_data_hash.first
-      end
-
-      let(:rdsap_assessment_with_rrn_building_ref) do
-        expected_data_hash =
-          exported_data.select do |hash|
-            hash[:assessment_id] ==
-              "46cd39a5a7ccc7e4abab6e99577831f3c6dff2ce98bea5858195063694967ff4"
-          end
-        expected_data_hash.first[:building_reference_number]
-      end
-
-      let(:sap_assessment_with_rrn_building_ref) do
-        expected_data_hash =
-          exported_data.select do |hash|
-            hash[:assessment_id] ==
-              "c721f7c21520e8dc97d9746d0747c285d057971acee9e2ef3b8d94f8d7a1ed43"
-          end
-        expected_data_hash.first[:building_reference_number]
       end
 
       it "expects the number of non Northern Irish RdSAP and SAP lodgements within required date range for ODC to be 4" do

@@ -4,6 +4,7 @@ describe "Acceptance::LodgeAssessment::XML", set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
   let(:fetch_assessor_stub) { AssessorStub.new }
+  let(:scheme_id) { add_scheme_and_get_id }
 
   let(:valid_cepc_xml) { Samples.xml "CEPC-8.0.0", "ac-cert" }
   let(:valid_sap_xml) { Samples.xml "SAP-Schema-18.0.0" }
@@ -30,8 +31,6 @@ describe "Acceptance::LodgeAssessment::XML", set_with_timecop: true do
 
     xml
   end
-
-  let(:scheme_id) { add_scheme_and_get_id }
 
   context "when retrieving lodged xml" do
     let(:database_xml) { get_stored_xml "0000-0000-0000-0000-0000" }

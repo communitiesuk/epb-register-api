@@ -43,6 +43,7 @@ describe "Acceptance::SearchForAssessor" do
         %w[assessor:search],
       )
     end
+
     it "returns status 400 for no parameters" do
       add_postcodes("SE1 7EZ")
       assertive_get("/api/assessors", [400], true, {}, %w[assessor:search])
@@ -570,6 +571,7 @@ describe "Acceptance::SearchForAssessor" do
     it "returns a 401 when not authenticated" do
       assessors_search("SE1 7EZ", "domesticRdSap", [401], false)
     end
+
     it "returns a 403 when the right scopes are not present" do
       assessors_search(
         "SE1 7EZ",

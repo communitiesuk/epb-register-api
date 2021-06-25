@@ -9,7 +9,7 @@ describe "Acceptance::AddressSearch::ByPostcode::Status",
   let(:non_domestic_xml) { Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc") }
   let(:non_domestic_assessment_id) { non_domestic_xml.at("//CEPC:RRN") }
 
-  before(:each) do
+  before do
     ActiveRecord::Base.connection.exec_query(
       "INSERT INTO
               address_base

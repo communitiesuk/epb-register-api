@@ -12,6 +12,7 @@ describe "Gateway::AssessmentsGateway" do
 
   context "given a dual lodgement" do
     let(:assessment_gateway) { Gateway::AssessmentsGateway.new }
+
     context "calling get_linked_assessment_id on both assessments" do
       it "will return the first assessment's linked assessment counterpart" do
         expect(
@@ -20,6 +21,7 @@ describe "Gateway::AssessmentsGateway" do
           ),
         ).to eq("0000-0000-0000-0000-0001")
       end
+
       it "will return the second assessment's linked assessment counterpart" do
         expect(
           assessment_gateway.get_linked_assessment_id(
@@ -28,13 +30,15 @@ describe "Gateway::AssessmentsGateway" do
         ).to eq("0000-0000-0000-0000-0000")
       end
     end
+
     context "calling update_statuses on both assessments" do
       let(:assessments_search_gateway) { Gateway::AssessmentsSearchGateway.new }
+
       assessments = %w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001]
       field = "cancelled_at"
       time = "2021-03-26 10:53:18 +0000"
 
-      it "it cancels the first assessment" do
+      it "cancels the first assessment" do
         assessment_gateway.update_statuses(assessments, field, time)
         assessment1 =
           assessments_search_gateway.search_by_assessment_id(
@@ -46,7 +50,7 @@ describe "Gateway::AssessmentsGateway" do
         )
       end
 
-      it "it cancels the second assessment" do
+      it "cancels the second assessment" do
         assessment_gateway.update_statuses(assessments, field, time)
         assessment2 =
           assessments_search_gateway.search_by_assessment_id(

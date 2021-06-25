@@ -219,11 +219,11 @@ RSpec.configure do |config|
 
   config.after(:all, set_with_timecop: true) { Timecop.return }
 
-  config.before(:each) { DatabaseCleaner.strategy = :transaction }
+  config.before { DatabaseCleaner.strategy = :transaction }
 
-  config.before(:each) { DatabaseCleaner.start }
+  config.before { DatabaseCleaner.start }
 
-  config.after(:each) { DatabaseCleaner.clean }
+  config.after { DatabaseCleaner.clean }
 
   config.before(:all) { DatabaseCleaner.start }
 

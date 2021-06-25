@@ -9,6 +9,7 @@ describe UseCase::ExportAssessmentAttributes do
     end
 
     let(:assessments_gateway) { instance_double(Gateway::AssessmentsGateway) }
+    let(:expected_hash_keys) { %i[address assessor assessment_id] }
     let(:assessments_search_gateway) do
       instance_double(Gateway::AssessmentsSearchGateway)
     end
@@ -64,8 +65,6 @@ describe UseCase::ExportAssessmentAttributes do
         .with("0000-0000-0000-0000-0001")
         .and_return({ xml: sap_xml, schema_type: sap_schema })
     end
-
-    let(:expected_hash_keys) { %i[address assessor assessment_id] }
 
     it "calls the execute method to extract xml data from the gateway" do
       export = subject.execute(date_today)

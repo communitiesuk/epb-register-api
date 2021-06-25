@@ -817,7 +817,7 @@ describe ViewModel::AcReportWrapper do
       }
     end
 
-    it "should read the appropriate values from the XML doc" do
+    it "reads the appropriate values from the XML doc" do
       test_xml_doc(schemas, assertion)
     end
   end

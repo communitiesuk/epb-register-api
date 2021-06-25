@@ -95,6 +95,7 @@ describe "Acceptance::LodgeExamples", set_with_timecop: true do
         schema_name: "CEPC-8.0.0",
       )
     end
+
     it "can lodge the example DEC Advisory Report" do
       lodge_assessment(
         assessment_body: ar_xml,

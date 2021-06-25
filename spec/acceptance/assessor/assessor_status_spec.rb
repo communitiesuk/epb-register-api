@@ -75,7 +75,7 @@ describe "Acceptance::AssessorStatus" do
       expect(response[:data]).to eq(assessorStatusEvents: [])
     end
 
-    it "should return only assessors registered to other schemes who might also be registered to this scheme" do
+    it "returns only assessors registered to other schemes who might also be registered to this scheme" do
       create_assessor(
         test_scheme_id,
         "SPEC000004",
@@ -115,6 +115,7 @@ describe "Acceptance::AssessorStatus" do
         ],
       )
     end
+
     it "does not return an assessor with the same name but different date of birth" do
       create_assessor(
         test_scheme_id,

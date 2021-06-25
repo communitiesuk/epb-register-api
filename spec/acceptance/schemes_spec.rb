@@ -6,6 +6,7 @@ describe "Acceptance::Schemes" do
       it "returns status 401 with no authentication" do
         schemes_list([401], false)
       end
+
       it "returns status 403 without the right scope" do
         schemes_list([403], true, {}, %w[wrong:scope])
       end
@@ -77,10 +78,12 @@ describe "Acceptance::Schemes" do
       it "returns status 401 with no authentication" do
         update_scheme(123, {}, [401], false)
       end
+
       it "returns status 403 without the right scope" do
         update_scheme(123, {}, [403], true, {}, %w[wrong:scope])
       end
     end
+
     it "returns 404 for a scheme that doesnt exist" do
       update_scheme(123, { name: "name", active: true }, [404])
     end

@@ -369,7 +369,7 @@ describe ViewModel::RdSapWrapper do
         )
     end
 
-    it "should read the appropriate values" do
+    it "reads the appropriate values" do
       test_xml_doc(schemas, assertion, :to_report)
     end
   end

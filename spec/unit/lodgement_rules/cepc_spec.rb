@@ -173,6 +173,7 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
       assert_errors("Transaction-Type", "7", [error])
     end
   end
+
   context "MUST_RECORD_EPC_DISCLOSURE" do
     let(:error) do
       {

@@ -21,7 +21,7 @@ describe "Acceptance::AddressSearch::ByPostcode::AssessmentSource",
       )
     end
 
-    before(:each) do
+    before do
       add_assessor(
         scheme_id,
         "SPEC000000",

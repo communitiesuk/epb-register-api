@@ -20,7 +20,7 @@ describe "Acceptance::LodgementRules", set_with_timecop: true do
     let(:xml_doc) { Nokogiri.XML Samples.xml "CEPC-8.0.0", "cepc" }
 
     context "that breaks two rules" do
-      it "should reject the assessment" do
+      it "rejects the assessment" do
         xml_doc.at("//CEPC:Registration-Date").children = Date.tomorrow.to_s
         xml_doc.at("//CEPC:Issue-Date").children = (Date.today << 12 * 5).to_s
 
@@ -34,7 +34,7 @@ describe "Acceptance::LodgementRules", set_with_timecop: true do
         )
       end
 
-      it "should accept a migrated assessment" do
+      it "accepts a migrated assessment" do
         xml_doc.at("//CEPC:Registration-Date").children = Date.tomorrow.to_s
         xml_doc.at("//CEPC:Issue-Date").children = (Date.today << 12 * 5).to_s
 
@@ -52,7 +52,7 @@ describe "Acceptance::LodgementRules", set_with_timecop: true do
     end
 
     context "that breaks one rule" do
-      it "should reject the assessment" do
+      it "rejects the assessment" do
         xml_doc.at("//CEPC:Registration-Date").children = Date.tomorrow.to_s
 
         result =
@@ -89,7 +89,7 @@ describe "Acceptance::LodgementRules", set_with_timecop: true do
     let(:xml_doc) { Nokogiri.XML Samples.xml "RdSAP-Schema-20.0.0" }
 
     context "that breaks a rule" do
-      it "should reject the assessment" do
+      it "rejects the assessment" do
         xml_doc.at("Habitable-Room-Count").children = "0"
 
         response =

@@ -27,15 +27,16 @@ describe UseCase::UpdateAssessmentStatus do
 
   context "when calling update_statuses" do
     let(:assessments_search_gateway) { Gateway::AssessmentsSearchGateway.new }
+
     before do
       use_case.execute("0000-0000-0000-0000-0000", "CANCELLED", [@scheme_id])
     end
 
-    it "it cancels the first assessment" do
+    it "cancels the first assessment" do
       expect(assessment.get("cancelled_at")).not_to be_nil
     end
 
-    it "it cancels the linked assessment" do
+    it "cancels the linked assessment" do
       expect(linked_assessment.get("cancelled_at")).not_to be_nil
     end
   end

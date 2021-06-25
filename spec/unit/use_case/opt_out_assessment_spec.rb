@@ -29,6 +29,7 @@ describe UseCase::OptOutAssessment do
     it "the assesment opt out status is false" do
       expect(assessment.get("opt_out")).to be false
     end
+
     it "the linked assement opt out status is false" do
       expect(linked_assessment.get("opt_out")).to be false
     end

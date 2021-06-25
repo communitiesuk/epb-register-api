@@ -208,6 +208,7 @@ describe "Acceptance::Reports::OpenDataExport" do
 
             HttpStub.s3_put_csv(file_name("SAP-RDSAP-RR"))
           end
+
           let(:fixture_csv) { read_csv_fixture("domestic_rr") }
 
           it "check the http stub matches the request disabled in web mock using the filename, body and headers" do
@@ -409,6 +410,7 @@ describe "Acceptance::Reports::OpenDataExport" do
               .except("DATE_TO")
             HttpStub.s3_put_csv(file_name("CEPC-RR"))
           end
+
           let(:fixture_csv) { read_csv_fixture("commercial_rr") }
 
           it "check the http stub matches the request disabled in web mock using the filename, body and headers" do
@@ -501,6 +503,18 @@ describe "Acceptance::Reports::OpenDataExport" do
       context "Then it calls the use case to extract the data" do
         context "for the DEC certificates" do
           let(:dec_use_case) { UseCase::ExportOpenDataDec.new }
+          let(:first_dec_asssement) do
+            parsed_exported_data.find do |item|
+              item["ASSESSMENT_ID"] ==
+                "36ae715ec66a32ed9ffcd7fe9a2c44d91dec1d72ee26263c17f354167be8dd4b"
+            end
+          end
+          let(:second_dec_asssement) do
+            parsed_exported_data.find do |item|
+              item["ASSESSMENT_ID"] ==
+                "427ad45e88b1183572234b464ba07b37348243d120db1c478da42eda435e48e4"
+            end
+          end
           let(:csv_data) do
             Helper::ExportHelper.to_csv(
               dec_use_case.execute(test_start_date, 0, "2021-02-28"),
@@ -511,11 +525,12 @@ describe "Acceptance::Reports::OpenDataExport" do
 
           let(:fixture_csv) { read_csv_fixture("dec") }
 
-          it "returns the data exported to a csv object to match the .csv fixture " do
-            expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
-            expect(parsed_exported_data.length).to eq(fixture_csv.length)
+          let(:second_dec_asssement) do
+            parsed_exported_data.find do |item|
+              item["ASSESSMENT_ID"] ==
+                "427ad45e88b1183572234b464ba07b37348243d120db1c478da42eda435e48e4"
+            end
           end
-
           let(:first_dec_asssement) do
             parsed_exported_data.find do |item|
               item["ASSESSMENT_ID"] ==
@@ -523,11 +538,9 @@ describe "Acceptance::Reports::OpenDataExport" do
             end
           end
 
-          let(:second_dec_asssement) do
-            parsed_exported_data.find do |item|
-              item["ASSESSMENT_ID"] ==
-                "427ad45e88b1183572234b464ba07b37348243d120db1c478da42eda435e48e4"
-            end
+          it "returns the data exported to a csv object to match the .csv fixture " do
+            expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
+            expect(parsed_exported_data.length).to eq(fixture_csv.length)
           end
 
           it "returns the data exported for row 1 object to match same row in the .csv fixture " do

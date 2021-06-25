@@ -117,6 +117,7 @@ end
 
 describe Helper::XmlEnumsToOutput do
   let(:helper) { described_class }
+
   include_context("common")
 
   context "when a Built-Form XML value is passed to the BUILT_FORM enum" do
@@ -177,6 +178,7 @@ describe Helper::XmlEnumsToOutput do
         "not applicable",
       )
     end
+
     it "does not find the value in the enum and returns the same value" do
       expect(Helper::XmlEnumsToOutput.energy_tariff("test")).to eq("test")
     end
@@ -187,6 +189,7 @@ describe Helper::XmlEnumsToOutput do
       expect(Helper::XmlEnumsToOutput.main_fuel_rdsap(nil)).to be_nil
       expect(Helper::XmlEnumsToOutput.main_fuel_rdsap("hello")).to be_nil
     end
+
     it "returns nil if the value is not the correct type" do
       expect(Helper::XmlEnumsToOutput.main_fuel_rdsap({ "hello": 1 })).to be_nil
       expect(Helper::XmlEnumsToOutput.main_fuel_rdsap(1)).to be_nil
@@ -207,10 +210,12 @@ describe Helper::XmlEnumsToOutput do
         Helper::XmlEnumsToOutput.main_fuel_sap("any other value"),
       ).to be_nil
     end
+
     it "returns nil if the value is not the correct type" do
       expect(Helper::XmlEnumsToOutput.main_fuel_sap({ "hello": 1 })).to be_nil
       expect(Helper::XmlEnumsToOutput.main_fuel_sap(1)).to be_nil
     end
+
     it "and the value is in the lookup it return the expected string" do
       @enum_sap_main_fuel.each do |key, value|
         response = helper.main_fuel_sap(key)
@@ -226,6 +231,7 @@ describe Helper::XmlEnumsToOutput do
         Helper::XmlEnumsToOutput.glazed_type_rdsap("Any other value"),
       ).to be_nil
     end
+
     it "and the value is in the lookup, it returns the expected string" do
       expect(Helper::XmlEnumsToOutput.glazed_type_rdsap("1")).to eq(
         "double glazing installed before 2002",
@@ -237,6 +243,7 @@ describe Helper::XmlEnumsToOutput do
         "single glazing",
       )
     end
+
     it "returns nil if the value is not the correct type" do
       expect(
         Helper::XmlEnumsToOutput.glazed_type_rdsap({ "hash": "3" }),
@@ -252,6 +259,7 @@ describe Helper::XmlEnumsToOutput do
         Helper::XmlEnumsToOutput.glazed_area_rdsap("Any other value"),
       ).to be_nil
     end
+
     it "and the value is in the lookup, it returns the expected string" do
       expect(Helper::XmlEnumsToOutput.glazed_area_rdsap("1")).to eq("Normal")
       expect(Helper::XmlEnumsToOutput.glazed_area_rdsap("3")).to eq(
@@ -273,6 +281,7 @@ describe Helper::XmlEnumsToOutput do
         "Not defined - use in the case of a new dwelling for which the intended tenure in not known. It is not to be used for an existing dwelling",
       )
     end
+
     it "returns the xml value if the entered value is not in the lookup" do
       expect(Helper::XmlEnumsToOutput.tenure("Hello, this is a value")).to eq(
         "Hello, this is a value",
@@ -455,6 +464,7 @@ describe Helper::XmlEnumsToOutput do
         Helper::XmlEnumsToOutput.heat_loss_corridor("Any other value"),
       ).to eq("Any other value")
     end
+
     it "and the value is in the lookup, it returns the expected string" do
       expect(Helper::XmlEnumsToOutput.heat_loss_corridor("0")).to eq(
         "no corridor",
@@ -480,6 +490,7 @@ describe Helper::XmlEnumsToOutput do
         ),
       ).to eq("Any other value")
     end
+
     it "and the value is in the lookup, it returns the expected string" do
       expect(
         Helper::XmlEnumsToOutput.mechanical_ventilation(

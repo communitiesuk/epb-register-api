@@ -774,7 +774,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
                        migrated: "true"
     end
 
-    it "should be true in migrated column" do
+    it "is true in migrated column" do
       expect(migrated_column.entries.first["migrated"]).to be_truthy
     end
 
@@ -789,7 +789,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
                          migrated: true
       end
 
-      it "should be true in migrated column" do
+      it "is true in migrated column" do
         expect(migrated_column.entries.first["migrated"]).to be_truthy
       end
     end
@@ -809,7 +809,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
         xml.to_s
       end
 
-      it "should be true in migrated column" do
+      it "is true in migrated column" do
         lodge_assessment assessment_body: rdsap_xml,
                          accepted_responses: [201],
                          scopes: %w[assessment:lodge migrate:assessment],

@@ -2,15 +2,16 @@ describe ViewModel::Export::DomesticExportView do
   include RSpecRegisterApiServiceMixin
 
   context "When building a domestic SAP export" do
-    before { Timecop.freeze(Time.utc(2021, 5, 10, 16, 45)) }
-    after { Timecop.return }
-
-    let(:export) { read_json_fixture("sap") }
-
     subject do
       schema_type = "SAP-Schema-18.0.0".freeze
       build_subject(schema_type)
     end
+
+    before { Timecop.freeze(Time.utc(2021, 5, 10, 16, 45)) }
+
+    after { Timecop.return }
+
+    let(:export) { read_json_fixture("sap") }
 
     it "matches the expected JSON" do
       expect(subject.build).to eq(export)
@@ -18,15 +19,16 @@ describe ViewModel::Export::DomesticExportView do
   end
 
   context "When building a domestic RdSAP export" do
-    before { Timecop.freeze(Time.utc(2021, 5, 10, 16, 45)) }
-    after { Timecop.return }
-
-    let(:export) { read_json_fixture("rdsap") }
-
     subject do
       schema_type = "RdSAP-Schema-20.0.0".freeze
       build_subject(schema_type)
     end
+
+    before { Timecop.freeze(Time.utc(2021, 5, 10, 16, 45)) }
+
+    after { Timecop.return }
+
+    let(:export) { read_json_fixture("rdsap") }
 
     it "matches the expected JSON" do
       expect(subject.build).to eq(export)

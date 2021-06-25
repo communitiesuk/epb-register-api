@@ -3,6 +3,9 @@ describe UseCase::ExportOpenDataDomesticrr do
   context "when creating the open data domestic recommendations report release" do
     describe "for the domestic recommendation report" do
       let(:export_object) { described_class.new }
+      let(:grouped_results) do
+        exported_data.group_by { |item| item[:assessment_id] }
+      end
       let(:exported_data) do
         export_object
           .execute("2019-07-01")
@@ -96,10 +99,6 @@ describe UseCase::ExportOpenDataDomesticrr do
           schema_name: "SAP-Schema-NI-18.0.0",
           override: true,
         )
-      end
-
-      let(:grouped_results) do
-        exported_data.group_by { |item| item[:assessment_id] }
       end
 
       it "returns the correct number of assessments excluding the NI lodgements and any before the given date" do

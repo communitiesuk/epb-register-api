@@ -30,11 +30,7 @@ module Helper
 
           if address_line_comparison == 0
             flat_number_comparison = compare_flat_numbers(address_a, address_b)
-            if flat_number_comparison == 0
-              compare_addresses_alphabetically(address_a, address_b)
-            else
-              flat_number_comparison
-            end
+            flat_number_comparison == 0 ? compare_addresses_alphabetically(address_a, address_b) : flat_number_comparison
           else
             address_line_comparison
           end

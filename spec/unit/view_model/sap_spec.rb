@@ -1713,7 +1713,7 @@ describe ViewModel::SapWrapper do
       }
     end
 
-    it "should read the appropriate values" do
+    it "reads the appropriate values" do
       test_xml_doc(schemas, recommendation_assertion, :to_recommendation_report)
     end
   end

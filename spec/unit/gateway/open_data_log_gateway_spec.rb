@@ -76,7 +76,7 @@ describe "Gateway::OpenDataLogGateway" do
       ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE open_data_logs")
     end
 
-    it "should should return the latest task Id as 1" do
+    it "returns the latest task Id as 1" do
       expect(gateway.fetch_new_task_id).to eq(1)
     end
   end

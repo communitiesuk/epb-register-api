@@ -1,6 +1,7 @@
 describe UseCase::ExportOpenDataNotForPublication do
   context "when exporting not_for_publication data for open data communities" do
     subject { described_class.new(reporting_gateway) }
+
     let(:reporting_gateway) { instance_double(Gateway::ReportingGateway) }
 
     let(:fetch_ids_response) do

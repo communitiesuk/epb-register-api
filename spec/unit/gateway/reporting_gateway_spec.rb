@@ -2,12 +2,31 @@ describe "Gateway::ReportingGateway" do
   include RSpecRegisterApiServiceMixin
   context "test data extracted from the reporting gateway" do
     subject { Gateway::ReportingGateway.new }
+
     before(:all) do
       @scheme_id = add_scheme_and_get_id
       add_super_assessor(@scheme_id)
     end
+
     context "Insert four assessments and opt out one of them, cancel one and mark one not for issue" do
       let(:assessment_gateway) { Gateway::AssessmentsGateway.new }
+      let(:expected_data) do
+        {
+          "assessment_id" => "0000-0000-0000-0000-0001",
+          "type_of_assessment" => "RdSAP",
+          "address_line1" => "1 Some Street",
+          "address_line2" => "",
+          "address_line3" => "",
+          "town" => "Whitbury",
+          "postcode" => "A0 0AA",
+          "date_registered" => "2020-05-04",
+          "address_id" => "UPRN-000000000000",
+          "not_for_issue_at" => nil,
+          "opt_out" => true,
+          "cancelled_at" => nil,
+        }
+      end
+
       assessment2 = %w[0000-0000-0000-0000-0002]
       assessment3 = %w[0000-0000-0000-0000-0003]
       cancelled = "cancelled_at"
@@ -27,23 +46,6 @@ describe "Gateway::ReportingGateway" do
         opt_out_assessment("0000-0000-0000-0000-0001")
         assessment_gateway.update_statuses(assessment2, cancelled, time)
         assessment_gateway.update_statuses(assessment3, not_for_issue, time)
-      end
-
-      let(:expected_data) do
-        {
-          "assessment_id" => "0000-0000-0000-0000-0001",
-          "type_of_assessment" => "RdSAP",
-          "address_line1" => "1 Some Street",
-          "address_line2" => "",
-          "address_line3" => "",
-          "town" => "Whitbury",
-          "postcode" => "A0 0AA",
-          "date_registered" => "2020-05-04",
-          "address_id" => "UPRN-000000000000",
-          "not_for_issue_at" => nil,
-          "opt_out" => true,
-          "cancelled_at" => nil,
-        }
       end
 
       it "returns the opted out assessments only" do

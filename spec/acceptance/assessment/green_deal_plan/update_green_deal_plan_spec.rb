@@ -48,6 +48,7 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan",
       ],
     }
   end
+  let(:valid_rdsap_xml) { Samples.xml "RdSAP-Schema-20.0.0" }
 
   let(:updated_green_deal_plan_request_body) do
     {
@@ -109,8 +110,6 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan",
 
     updated_green_deal_plan_request_body.tap { |field| field.delete key }
   end
-
-  let(:valid_rdsap_xml) { Samples.xml "RdSAP-Schema-20.0.0" }
 
   describe "update a Green Deal Plan" do
     context "when unauthenticated" do

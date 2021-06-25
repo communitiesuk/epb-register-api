@@ -7,6 +7,7 @@ describe Gateway::AddressBaseSearchGateway do
       end
       expect(gateway.check_uprn_exists("0000-0000-0000-0023")).to be false
     end
+
     it "returns true if there are one or more results from a UPRN search" do
       gateway = Gateway::AddressBaseSearchGateway.new
       def gateway.search_by_uprn(uprn)

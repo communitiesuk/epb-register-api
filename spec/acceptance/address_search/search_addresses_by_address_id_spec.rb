@@ -33,7 +33,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference",
       )
     end
 
-    before(:each) do
+    before do
       add_assessor(scheme_id, "SPEC000000", VALID_ASSESSOR_REQUEST_BODY)
 
       lodge_placeholder_assessment(
@@ -190,6 +190,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference",
       end
     end
   end
+
   context "when there are no matching addresses for the ID" do
     it "returns an empty result set" do
       response =
@@ -217,7 +218,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference",
       )
     end
 
-    before(:each) do
+    before do
       ActiveRecord::Base.connection.exec_query(
         "INSERT INTO address_base (uprn, address_line1, postcode, town) VALUES ('1', '1 Some Street', 'A0 0AA', 'Whitbury')",
       )

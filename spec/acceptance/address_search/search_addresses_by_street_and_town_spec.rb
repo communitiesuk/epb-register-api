@@ -28,7 +28,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", set_with_timecop: true do
       non_domestic_xml.at("//CEPC:Address-Line-4")
     end
 
-    before(:each) do
+    before do
       add_assessor(
         scheme_id,
         "SPEC000000",

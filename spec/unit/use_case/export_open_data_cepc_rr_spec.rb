@@ -65,7 +65,7 @@ describe UseCase::ExportOpenDataCepcrr do
         xml
       end
 
-      before(:example) do
+      before do
         scheme_id = add_scheme_and_get_id
         cepc_plus_rr_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc+rr")
         rr_minus_cepc_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc-rr") # should not be present in export

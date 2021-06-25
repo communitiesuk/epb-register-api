@@ -4,11 +4,6 @@ describe ViewModel::Export::CommercialExportView do
   include RSpecRegisterApiServiceMixin
 
   context "When building a Commercial EPC export" do
-    before { Timecop.freeze(Time.utc(2021, 5, 10, 16, 45)) }
-    after { Timecop.return }
-
-    let(:export) { read_json_fixture("commercial") }
-
     subject do
       schema_type = "CEPC-8.0.0"
       xml = Nokogiri.XML Samples.xml(schema_type, "cepc")
@@ -29,6 +24,12 @@ describe ViewModel::Export::CommercialExportView do
       assessment = gateway.search_by_assessment_id(assessment_id).first
       ViewModel::Export::CommercialExportView.new(wrapper, assessment)
     end
+
+    before { Timecop.freeze(Time.utc(2021, 5, 10, 16, 45)) }
+
+    after { Timecop.return }
+
+    let(:export) { read_json_fixture("commercial") }
 
     it "matches the expected JSON" do
       expect(subject.build).to eq(export)
