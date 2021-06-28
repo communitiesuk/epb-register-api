@@ -1,6 +1,11 @@
 module UseCase
   class AddAssessor
+    ASSESSOR_ID_REGEX = /[A-Z\/_]{4}[0-9]{6}/.freeze
+
     class SchemeNotFoundException < StandardError
+    end
+
+    class InvalidAssessorIdException < StandardError
     end
 
     class InvalidAssessorDetailsException < StandardError
@@ -17,6 +22,12 @@ module UseCase
     end
 
     def execute(add_assessor_request, auth_client_id)
+      unless add_assessor_request.scheme_assessor_id =~ ASSESSOR_ID_REGEX
+        raise InvalidAssessorIdException,
+              "The ID provided for the assessor is not in the expected format: \"\"" %
+          add_assessor_request.scheme_assessor_id
+      end
+
       scheme =
         @schemes_gateway.all.select { |scheme|
           scheme[:scheme_id].to_s == add_assessor_request.registered_by_id.to_s

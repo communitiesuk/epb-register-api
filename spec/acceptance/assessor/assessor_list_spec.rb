@@ -99,7 +99,7 @@ describe "Acceptance::AssessorList" do
   context "when a scheme has one assessor" do
     it "returns an array of assessors" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "SCHEME4233", valid_assessor_request_body)
+      add_assessor(scheme_id, "SCHE423344", valid_assessor_request_body)
       response =
         fetch_assessors(scheme_id, [200], true, { 'scheme_ids': [scheme_id] })
 
@@ -111,7 +111,7 @@ describe "Acceptance::AssessorList" do
               "schemeId" => scheme_id,
               "name" => "test scheme",
             },
-            "schemeAssessorId" => "SCHEME4233",
+            "schemeAssessorId" => "SCHE423344",
             "firstName" => valid_assessor_request_body[:firstName],
             "middleNames" => valid_assessor_request_body[:middleNames],
             "lastName" => valid_assessor_request_body[:lastName],
@@ -145,8 +145,8 @@ describe "Acceptance::AssessorList" do
   context "when a scheme has multiple assessors" do
     it "returns an array of assessors" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "SCHEME1234", valid_assessor_request_body)
-      add_assessor(scheme_id, "SCHEME5678", valid_assessor_request_body)
+      add_assessor(scheme_id, "SCHE123456", valid_assessor_request_body)
+      add_assessor(scheme_id, "SCHE567890", valid_assessor_request_body)
 
       response =
         fetch_assessors(scheme_id, [200], true, { 'scheme_ids': [scheme_id] })
@@ -158,7 +158,7 @@ describe "Acceptance::AssessorList" do
               "schemeId" => scheme_id,
               "name" => "test scheme",
             },
-            "schemeAssessorId" => "SCHEME5678",
+            "schemeAssessorId" => "SCHE123456",
             "firstName" => valid_assessor_request_body[:firstName],
             "middleNames" => valid_assessor_request_body[:middleNames],
             "lastName" => valid_assessor_request_body[:lastName],
@@ -187,7 +187,7 @@ describe "Acceptance::AssessorList" do
               "schemeId" => scheme_id,
               "name" => "test scheme",
             },
-            "schemeAssessorId" => "SCHEME1234",
+            "schemeAssessorId" => "SCHE567890",
             "firstName" => valid_assessor_request_body[:firstName],
             "middleNames" => valid_assessor_request_body[:middleNames],
             "lastName" => valid_assessor_request_body[:lastName],

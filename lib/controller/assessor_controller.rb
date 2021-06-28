@@ -360,6 +360,8 @@ module Controller
           "ASSESSOR_ID_ON_ANOTHER_SCHEME",
           "The assessor ID you are trying to update is registered by a different scheme",
         )
+      when UseCase::AddAssessor::InvalidAssessorIdException
+        error_response(422, "INVALID REQUEST", e.message)
       when JSON::ParserError
         error_response(400, "INVALID_REQUEST", e.message)
       when JSON::Schema::ValidationError

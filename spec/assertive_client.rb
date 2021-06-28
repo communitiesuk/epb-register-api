@@ -393,7 +393,7 @@ end
 
 def add_scheme_then_assessor(body, accepted_responses = [200, 201])
   scheme_id = add_scheme_and_get_id
-  add_assessor(scheme_id, "TEST_ASSESSOR", body, accepted_responses)
+  add_assessor(scheme_id, "ACME123456", body, accepted_responses)
 end
 
 def add_super_assessor(scheme_id)

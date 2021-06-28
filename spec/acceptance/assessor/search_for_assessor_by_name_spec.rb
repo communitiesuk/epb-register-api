@@ -36,7 +36,7 @@ describe "Searching for an assessor by name" do
   context "when there are results" do
     it "returns the assessors details" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "SCHE55443", valid_assessor_request)
+      add_assessor(scheme_id, "SCHE554433", valid_assessor_request)
       search_response = assessors_search_by_name("Some%20Person").body
       response = JSON.parse(search_response)
 
@@ -47,7 +47,7 @@ describe "Searching for an assessor by name" do
               schemeId: scheme_id,
               name: "test scheme",
             },
-            schemeAssessorId: "SCHE55443",
+            schemeAssessorId: "SCHE554433",
             firstName: valid_assessor_request[:firstName],
             lastName: valid_assessor_request[:lastName],
             middleNames: valid_assessor_request[:middleNames],
@@ -88,7 +88,7 @@ describe "Searching for an assessor by name" do
 
     it "doesn't return assessors from inactive schemes" do
       scheme_id = add_scheme_and_get_id("My scheme")
-      add_assessor(scheme_id, "SCHE55443", valid_assessor_request)
+      add_assessor(scheme_id, "SCHE554433", valid_assessor_request)
       update_scheme(scheme_id, { name: "My new scheme", active: false })
       search_response = assessors_search_by_name("Per%20Some")
       response = JSON.parse(search_response.body)
