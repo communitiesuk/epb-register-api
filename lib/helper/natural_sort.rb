@@ -79,11 +79,12 @@ module Helper
         remove_hyphen = line_split.first.tr("-", " ")
         address_line_digits = remove_hyphen.split(" ")[1]&.scan(/\d+/)
 
-        property_letter = if address_line_digits != [] && !address_line_digits.nil?
-                            remove_hyphen.split(" ")[1].to_s
-                          else
-                            line_split.first[-1]
-                          end
+        property_letter =
+          if address_line_digits != [] && !address_line_digits.nil?
+            remove_hyphen.split(" ")[1].to_s
+          else
+            line_split.first[-1]
+          end
       end
       [property_number, property_letter]
     end
