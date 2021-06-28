@@ -189,7 +189,7 @@ module UseCase
     end
 
     def address_base_has_uprn?(uprn)
-      !@address_base_search_gateway.search_by_uprn(uprn).empty?
+      @address_base_search_gateway.check_uprn_exists(uprn)
     end
 
     def is_related_report?(assessment)

@@ -70,6 +70,10 @@ module Gateway
       parse_results ActiveRecord::Base.connection.exec_query sql, "SQL", binds
     end
 
+    def check_uprn_exists(uprn)
+      !search_by_uprn(uprn).empty?
+    end
+
   private
 
     def parse_results(results)
@@ -85,7 +89,7 @@ module Gateway
         addresses[i]["existing_assessments"] = []
       end
 
-      if uprns.length > 0
+      unless uprns.empty?
         sql =
           'SELECT
               assessment_id, type_of_assessment, cancelled_at, not_for_issue_at, date_of_expiry, address_id

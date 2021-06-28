@@ -564,22 +564,9 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
             gateway = instance_double(Gateway::AddressBaseSearchGateway)
             allow(Gateway::AddressBaseSearchGateway).to receive(:new)
               .and_return(gateway)
-            address_search_result = [
-              Domain::Address.new(
-                address_id: "UPRN-000000000001",
-                line1: "12 Epc Street",
-                line2: "",
-                line3: "",
-                line4: "",
-                town: "",
-                postcode: "AB1C 2DE",
-                source: "",
-                existing_assessments: [],
-              ),
-            ]
-            allow(gateway).to receive(:search_by_uprn)
+            allow(gateway).to receive(:check_uprn_exists)
               .with("000000000001")
-              .and_return(address_search_result)
+              .and_return(true)
 
             existing_assessment =
               lodge_and_fetch_assessment(
@@ -734,22 +721,9 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
             gateway = instance_double(Gateway::AddressBaseSearchGateway)
             allow(Gateway::AddressBaseSearchGateway).to receive(:new)
               .and_return(gateway)
-            address_search_result = [
-              Domain::Address.new(
-                address_id: "UPRN-000000000001",
-                line1: "12 Epc Street",
-                line2: "",
-                line3: "",
-                line4: "",
-                town: "",
-                postcode: "AB1C 2DE",
-                source: "",
-                existing_assessments: [],
-              ),
-            ]
-            allow(gateway).to receive(:search_by_uprn)
+            allow(gateway).to receive(:check_uprn_exists)
               .with("000000000001")
-              .and_return(address_search_result)
+              .and_return(true)
 
             lodge_and_fetch_non_domestic_assessment(
               rrn_node: "0000-0000-0000-0000-1111",
