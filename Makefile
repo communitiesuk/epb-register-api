@@ -72,11 +72,6 @@ run:
 format:
 	@bundle exec rubocop --auto-correct --format offenses || true
 
-.PHONY: slow-format
-slow-format:
-	@bundle exec rbprettier --write `find . -name '*.rb' -not -path './db/schema.rb'` *.ru Gemfile
-	@bundle exec rubocop --auto-correct --format offenses || true
-
 .PHONY: cf-check-api-db-migration-task
 cf-check-api-db-migration-task: ## Get the status for the last migrate-db task
 	@cf curl /v3/apps/`cf app --guid ${DEPLOY_APPNAME}`/tasks?order_by=-created_at | jq -r ".resources[0].state"
