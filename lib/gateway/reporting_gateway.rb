@@ -258,7 +258,7 @@ module Gateway
       results.map { |result| result }
     end
 
-    def fetch_opted_out_assessments
+    def fetch_not_for_publication_assessments
       sql = <<~SQL
         SELECT assessment_id, type_of_assessment, address_id, address_line1, address_line2, address_line3,
         town, postcode, to_char(date_registered, 'YYYY-MM-DD') as date_registered, opt_out, cancelled_at,

@@ -6,7 +6,7 @@ describe "Gateway::ReportingGateway" do
       @scheme_id = add_scheme_and_get_id
       add_super_assessor(@scheme_id)
     end
-    context "Insert two assessments and opt out one of them" do
+    context "Insert four assessments and opt out one of them, cancel one and mark one not for issue" do
       let(:assessment_gateway) { Gateway::AssessmentsGateway.new }
       assessment2 = %w[0000-0000-0000-0000-0002]
       assessment3 = %w[0000-0000-0000-0000-0003]
@@ -47,8 +47,8 @@ describe "Gateway::ReportingGateway" do
       end
 
       it "returns the opted out assessments only" do
-        expect(subject.fetch_opted_out_assessments.count).to eq(3)
-        expect(subject.fetch_opted_out_assessments[0]).to eq(expected_data)
+        expect(subject.fetch_not_for_publication_assessments.count).to eq(3)
+        expect(subject.fetch_not_for_publication_assessments[0]).to eq(expected_data)
       end
     end
 
@@ -67,7 +67,7 @@ describe "Gateway::ReportingGateway" do
       end
 
       it "does not return the AC-CERT" do
-        expect(subject.fetch_opted_out_assessments.count).to eq(1)
+        expect(subject.fetch_not_for_publication_assessments.count).to eq(1)
       end
     end
 
@@ -86,7 +86,7 @@ describe "Gateway::ReportingGateway" do
       end
 
       it "does not return the DEC-RR" do
-        expect(subject.fetch_opted_out_assessments.count).to eq(1)
+        expect(subject.fetch_not_for_publication_assessments.count).to eq(1)
       end
     end
   end

@@ -1,5 +1,5 @@
-describe UseCase::ExportOpenDataOptOuts do
-  context "when exporting opt out data for open data communities" do
+describe UseCase::ExportOpenDataNotForPublication do
+  context "when exporting not_for_publication data for open data communities" do
     subject { described_class.new(reporting_gateway) }
     let(:reporting_gateway) { instance_double(Gateway::ReportingGateway) }
 
@@ -31,7 +31,7 @@ describe UseCase::ExportOpenDataOptOuts do
     end
 
     before do
-      allow(reporting_gateway).to receive(:fetch_opted_out_assessments)
+      allow(reporting_gateway).to receive(:fetch_not_for_publication_assessments)
         .and_return(fetch_ids_response)
     end
 

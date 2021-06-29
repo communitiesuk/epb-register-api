@@ -1,6 +1,6 @@
 desc "Exporting hashed assessment_id opt out, cancelled or not for issue data for Open Data Communities"
 
-task :open_data_export_opt_outs, %i[type_of_export] do |_, arg|
+task :open_data_export_not_for_publication, %i[type_of_export] do |_, arg|
   type_of_export = arg.type_of_export
   bucket_name = ENV["BUCKET_NAME"]
   instance_name = ENV["INSTANCE_NAME"]
@@ -9,13 +9,13 @@ task :open_data_export_opt_outs, %i[type_of_export] do |_, arg|
 
   raise Boundary::ArgumentMissing, "bucket_name or instance_name" unless bucket_name || instance_name
 
-  exporter = ApiFactory.export_opt_outs_use_case
+  exporter = ApiFactory.export_not_for_publication_use_case
   data = exporter.execute
 
   raise Boundary::OpenDataEmpty if data.length.zero?
 
   csv_data = Helper::ExportHelper.to_csv(data)
-  transmit_opt_out_file(csv_data, type_of_export)
+  transmit_not_for_publication_file(csv_data, type_of_export)
 
 rescue Boundary::RecoverableError => e
   error_output = {
@@ -35,12 +35,12 @@ end
 
 private
 
-def transmit_opt_out_file(data, type_of_export)
+def transmit_not_for_publication_file(data, type_of_export)
   filename =
     if type_of_export == "for_odc"
-      "open_data_export_opt_outs_#{DateTime.now.strftime('%F')}.csv"
+      "open_data_export_not_for_publication_#{DateTime.now.strftime('%F')}.csv"
     else
-      "test/open_data_export_opt_outs_#{DateTime.now.strftime('%F')}.csv"
+      "test/open_data_export_not_for_publication_#{DateTime.now.strftime('%F')}.csv"
     end
 
   storage_config_reader = Gateway::StorageConfigurationReader.new(

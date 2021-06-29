@@ -24,9 +24,9 @@ class ApiFactory
       )
   end
 
-  def self.export_opt_outs_use_case
-    @export_opt_outs_use_case ||=
-      UseCase::ExportOpenDataOptOuts.new(reporting_gateway)
+  def self.export_not_for_publication_use_case
+    @export_not_for_publication_use_case ||=
+      UseCase::ExportOpenDataNotForPublication.new(reporting_gateway)
   end
 
   def self.storage_configuration_reader(bucket_name:, instance_name:)
