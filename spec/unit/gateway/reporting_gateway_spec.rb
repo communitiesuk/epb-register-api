@@ -42,7 +42,7 @@ describe "Gateway::ReportingGateway" do
           "address_id" => "UPRN-000000000000",
           "not_for_issue_at" => nil,
           "opt_out" => true,
-          "cancelled_at" => nil
+          "cancelled_at" => nil,
         }
       end
 
