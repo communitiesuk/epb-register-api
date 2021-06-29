@@ -1,4 +1,4 @@
-desc "Exporting hashed assessment_id opt out data for Open Data Communities"
+desc "Exporting hashed assessment_id opt out, cancelled or not for issue data for Open Data Communities"
 
 task :open_data_export_opt_outs, %i[type_of_export] do |_, arg|
   type_of_export = arg.type_of_export

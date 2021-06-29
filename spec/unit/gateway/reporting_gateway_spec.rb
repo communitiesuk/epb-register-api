@@ -7,13 +7,26 @@ describe "Gateway::ReportingGateway" do
       add_super_assessor(@scheme_id)
     end
     context "Insert two assessments and opt out one of them" do
+      let(:assessment_gateway) { Gateway::AssessmentsGateway.new }
+      assessment2 = %w[0000-0000-0000-0000-0002]
+      assessment3 = %w[0000-0000-0000-0000-0003]
+      cancelled = "cancelled_at"
+      not_for_issue = "not_for_issue_at"
+      time = "2021-03-26 10:53:18 +0000"
+
       before do
         schema = "RdSAP-Schema-20.0.0"
         xml = Nokogiri.XML Samples.xml(schema)
         call_lodge_assessment(@scheme_id, schema, xml)
         xml.at("RRN").children = "0000-0000-0000-0000-0001"
         call_lodge_assessment(@scheme_id, schema, xml)
+        xml.at("RRN").children = "0000-0000-0000-0000-0002"
+        call_lodge_assessment(@scheme_id, schema, xml)
+        xml.at("RRN").children = "0000-0000-0000-0000-0003"
+        call_lodge_assessment(@scheme_id, schema, xml)
         opt_out_assessment("0000-0000-0000-0000-0001")
+        assessment_gateway.update_statuses(assessment2, cancelled, time)
+        assessment_gateway.update_statuses(assessment3, not_for_issue, time)
       end
 
       let(:expected_data) do
@@ -27,11 +40,14 @@ describe "Gateway::ReportingGateway" do
           "postcode" => "A0 0AA",
           "date_registered" => "2020-05-04",
           "address_id" => "UPRN-000000000000",
+          "not_for_issue_at" => nil,
+          "opt_out" => true,
+          "cancelled_at" => nil
         }
       end
 
       it "returns the opted out assessments only" do
-        expect(subject.fetch_opted_out_assessments.count).to eq(1)
+        expect(subject.fetch_opted_out_assessments.count).to eq(3)
         expect(subject.fetch_opted_out_assessments[0]).to eq(expected_data)
       end
     end

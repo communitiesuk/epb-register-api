@@ -261,10 +261,11 @@ module Gateway
     def fetch_opted_out_assessments
       sql = <<~SQL
         SELECT assessment_id, type_of_assessment, address_id, address_line1, address_line2, address_line3,
-        town, postcode, to_char(date_registered, 'YYYY-MM-DD') as date_registered
+        town, postcode, to_char(date_registered, 'YYYY-MM-DD') as date_registered, opt_out, cancelled_at,
+        not_for_issue_at
         FROM assessments
-        WHERE opt_out = true
-        AND type_of_assessment IN ('SAP', 'RdSAP', 'CEPC', 'DEC')
+        WHERE type_of_assessment IN ('SAP', 'RdSAP', 'CEPC', 'DEC')
+        AND ( opt_out = true OR cancelled_at NOTNULL OR not_for_issue_at NOTNULL)
       SQL
 
       results = ActiveRecord::Base.connection.exec_query(sql, "SQL")
