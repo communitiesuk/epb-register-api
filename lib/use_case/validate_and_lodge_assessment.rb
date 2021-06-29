@@ -14,6 +14,8 @@ module UseCase
     end
     class AddressIdsDoNotMatch < StandardError
     end
+    class NonexistentUprn < StandardError
+    end
     class SchemaNotDefined < StandardError
     end
     class LodgementRulesException < StandardError
@@ -48,6 +50,8 @@ module UseCase
 
       raise RelatedReportError unless reports_refer_to_each_other?(xml)
       raise AddressIdsDoNotMatch unless address_ids_match?(lodgement_data)
+
+      ensure_uprns_exist lodgement_data
 
       unless migrated
         wrapper = ViewModel::Factory.new.create(xml, schema_name, false)
@@ -151,6 +155,23 @@ module UseCase
 
     def extract_data_from_lodgement_xml(lodgement)
       lodgement.fetch_data
+    end
+
+    def ensure_uprns_exist(lodgement_data)
+      address_ids_from(lodgement_data).each do |address_id|
+        return if address_id.nil? || !address_id.start_with?("UPRN-")
+
+        raise NonexistentUprn, "The given UPRN %s does not exist in the AddressBase data set." % address_id unless uprn_exists? address_id[5..-1]
+      end
+    end
+
+    def uprn_exists?(uprn)
+      @address_base_gateway ||= Gateway::AddressBaseSearchGateway.new
+      @address_base_gateway.check_uprn_exists(uprn)
+    end
+
+    def address_ids_from(lodgement_data)
+      lodgement_data.map { |data| data.dig(:address, :address_id) }
     end
   end
 end

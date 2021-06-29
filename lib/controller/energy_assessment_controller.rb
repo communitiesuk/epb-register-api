@@ -186,6 +186,8 @@ module Controller
           "UNAUTHORISED",
           "Not authorised to lodge reports as this scheme",
         )
+      when UseCase::ValidateAndLodgeAssessment::NonexistentUprn
+        error_response(400, "INVALID_REQUEST", e.message)
       when UseCase::LodgeAssessment::InactiveAssessorException
         error_response(400, "INVALID_REQUEST", "Assessor is not active.")
       when UseCase::LodgeAssessment::DuplicateAssessmentIdException

@@ -16,7 +16,6 @@ describe ViewModel::Export::CommercialExportView do
         auth_data: {
           scheme_ids: [scheme_id],
         },
-        ensure_uprns: false,
       )
 
       wrapper = ViewModel::Factory.new.create(xml.to_s, schema_type)

@@ -53,7 +53,6 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", set_with_timecop: true do
         auth_data: {
           scheme_ids: [scheme_id],
         },
-        ensure_uprns: false,
       )
 
       assessment_id.children = "0000-0000-0000-0000-0001"
@@ -65,7 +64,6 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", set_with_timecop: true do
         auth_data: {
           scheme_ids: [scheme_id],
         },
-        ensure_uprns: false,
       )
 
       cepc_assessment_id.children = "0000-0000-0000-0000-0002"
@@ -81,7 +79,6 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", set_with_timecop: true do
           scheme_ids: [scheme_id],
         },
         schema_name: "CEPC-8.0.0",
-        ensure_uprns: false,
       )
 
       assessment_id.children = "0000-0000-0000-0000-0003"
@@ -95,7 +92,6 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", set_with_timecop: true do
         auth_data: {
           scheme_ids: [scheme_id],
         },
-        ensure_uprns: false,
       )
 
       assessment_id.children = "0000-0000-0000-0000-0004"
@@ -110,7 +106,6 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", set_with_timecop: true do
         auth_data: {
           scheme_ids: [scheme_id],
         },
-        ensure_uprns: false,
       )
 
       assessment_id.children = "0000-0000-0000-0000-0005"
@@ -125,7 +120,6 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", set_with_timecop: true do
         auth_data: {
           scheme_ids: [scheme_id],
         },
-        ensure_uprns: false,
       )
     end
 
@@ -480,14 +474,14 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", set_with_timecop: true do
         it "returns the expected address" do
           expect(response[:data][:addresses][0]).to eq(
             {
-              addressId: "RRN-0000-0000-0000-0000-0002",
+              addressId: "UPRN-000000000001",
               line1: "3 Other Street",
               line2: nil,
               line3: nil,
               line4: nil,
               town: "Whitbury",
               postcode: "A0 0AA",
-              source: "PREVIOUS_ASSESSMENT",
+              source: "GAZETTEER",
               existingAssessments: [
                 {
                   assessmentId: "0000-0000-0000-0000-0002",
@@ -521,14 +515,14 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", set_with_timecop: true do
         it "returns the expected address" do
           expect(response[:data][:addresses][0]).to eq(
             {
-              addressId: "RRN-0000-0000-0000-0000-0003",
+              addressId: "UPRN-000000000000",
               line1: "The House",
               line2: "123 Test Street",
               line3: nil,
               line4: nil,
               town: "Whitbury",
               postcode: "A0 0AA",
-              source: "PREVIOUS_ASSESSMENT",
+              source: "GAZETTEER",
               existingAssessments: [
                 {
                   assessmentId: "0000-0000-0000-0000-0003",

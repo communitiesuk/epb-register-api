@@ -60,4 +60,19 @@ describe UseCase::ValidateAndLodgeAssessment do
       )
     end
   end
+
+  context "when validating a lodgement where the referenced UPRN does not exist" do
+    it "raises the error NonexistentUprn" do
+      remove_from_address_base(uprn: "0")
+      expect {
+        use_case.execute(
+          valid_xml,
+          "RdSAP-Schema-20.0.0",
+          "1",
+          false,
+          false,
+          )
+      }.to raise_error UseCase::ValidateAndLodgeAssessment::NonexistentUprn
+    end
+  end
 end

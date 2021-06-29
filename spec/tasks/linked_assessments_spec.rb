@@ -10,7 +10,7 @@ describe "LinkedAssessments" do
     cepc_schema = "CEPC-8.0.0".freeze
 
     cepc_xml = Nokogiri.XML Samples.xml(cepc_schema, "cepc+rr")
-    call_lodge_assessment(scheme_id: scheme_id, schema_name: cepc_schema, xml_document: cepc_xml, ensure_uprns: false)
+    call_lodge_assessment(scheme_id: scheme_id, schema_name: cepc_schema, xml_document: cepc_xml)
   end
 
   context "When the task runs without any address ID mismatch" do
@@ -49,7 +49,7 @@ describe "LinkedAssessments" do
           symbolize_names: true,
         )
       expect(assessment[:data][:addressId]).to eq(
-        "RRN-0000-0000-0000-0000-0000",
+        "UPRN-000000000001",
       )
     end
 
@@ -62,7 +62,7 @@ describe "LinkedAssessments" do
           symbolize_names: true,
         )
       expect(rr_assessment[:data][:addressId]).to eq(
-        "RRN-0000-0000-0000-0000-0000",
+        "UPRN-000000000001",
       )
     end
   end

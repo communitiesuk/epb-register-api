@@ -334,8 +334,8 @@ def lodge_assessment(
   override: nil,
   ensure_uprns: true
 )
-  # ensure "good" range of UPRNs added to address_base table
-  add_uprns_to_address_base("0", "1") if ensure_uprns
+  # ensure "good" set of UPRNs (ones that are present in sample XML files) added to address_base table
+  add_uprns_to_address_base("0", "1", "432167890000") if ensure_uprns
 
   path =
     if !migrated.nil?

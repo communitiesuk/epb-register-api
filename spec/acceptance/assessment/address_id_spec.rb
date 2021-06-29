@@ -17,58 +17,6 @@ describe "Acceptance::AssessmentAddressId", set_with_timecop: true do
   context "when lodging a valid CEPC dual assessment" do
     let(:cepc_xml_doc) { Nokogiri.XML(valid_cepc_rr_xml) }
 
-    it "falls back to the RRN for the address_id when UPRN doesn't exist" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
-
-      lodge_assessment(
-        assessment_body: cepc_xml_doc.to_xml,
-        accepted_responses: [201],
-        auth_data: {
-          scheme_ids: [scheme_id],
-        },
-        schema_name: "CEPC-8.0.0",
-        ensure_uprns: false,
-      )
-
-      response =
-        JSON.parse(
-          fetch_assessment_summary("0000-0000-0000-0000-0000", [200]).body,
-          symbolize_names: true,
-        )
-
-      expect(response[:data][:addressId]).to eq("RRN-0000-0000-0000-0000-0000")
-    end
-
-    it "assign the same address ID to both assessments when when UPRN doesn't exist" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
-
-      lodge_assessment(
-        assessment_body: cepc_xml_doc.to_xml,
-        accepted_responses: [201],
-        auth_data: {
-          scheme_ids: [scheme_id],
-        },
-        schema_name: "CEPC-8.0.0",
-        ensure_uprns: false,
-      )
-
-      response1 =
-        JSON.parse(
-          fetch_assessment_summary("0000-0000-0000-0000-0000", [200]).body,
-          symbolize_names: true,
-        )
-      response2 =
-        JSON.parse(
-          fetch_assessment_summary("0000-0000-0000-0000-0001", [200]).body,
-          symbolize_names: true,
-        )
-
-      expect(response1[:data][:addressId]).to eq("RRN-0000-0000-0000-0000-0000")
-      expect(response2[:data][:addressId]).to eq("RRN-0000-0000-0000-0000-0000")
-    end
-
     it "successfully saves the UPRN when it exists" do
       scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
@@ -121,8 +69,10 @@ describe "Acceptance::AssessmentAddressId", set_with_timecop: true do
           symbolize_names: true,
         )
 
-      expect(response1[:data][:addressId]).to eq("RRN-0000-0000-0000-0000-0000")
-      expect(response2[:data][:addressId]).to eq("RRN-0000-0000-0000-0000-0000")
+      expected_address_id = "UPRN-432167890000"
+
+      expect(response1[:data][:addressId]).to eq expected_address_id
+      expect(response2[:data][:addressId]).to eq expected_address_id
     end
   end
 end

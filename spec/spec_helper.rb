@@ -159,6 +159,13 @@ def add_address_base(uprn:)
   )
 end
 
+def remove_from_address_base(uprn:)
+  ActiveRecord::Base.connection.exec_query(
+    "DELETE FROM address_base WHERE uprn=%s" %
+      ActiveRecord::Base.connection.quote(uprn),
+  )
+end
+
 def get_task(name)
   rake = Rake::Application.new
   Rake.application = rake

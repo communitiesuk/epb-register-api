@@ -115,7 +115,6 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
         auth_data: {
           scheme_ids: [scheme_id],
         },
-        ensure_uprns: false,
       )
 
       response =
@@ -141,7 +140,6 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
         auth_data: {
           scheme_ids: [scheme_id],
         },
-        ensure_uprns: false,
       )
 
       response =
@@ -150,7 +148,7 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
           symbolize_names: true,
         )
 
-      expect(response[:data][:addressId]).to eq "RRN-0000-0000-0000-0000-0000"
+      expect(response[:data][:addressId]).to eq "UPRN-000000000000"
 
       update_assessment_address_id(
         "0000-0000-0000-0000-0000",
@@ -176,7 +174,6 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
         auth_data: {
           scheme_ids: [scheme_id],
         },
-        ensure_uprns: false,
       )
 
       update_assessment_address_id(
@@ -205,7 +202,6 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
         auth_data: {
           scheme_ids: [scheme_id],
         },
-        ensure_uprns: false,
       )
 
       update_assessment_address_id(
@@ -244,7 +240,6 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
         auth_data: {
           scheme_ids: [scheme_id],
         },
-        ensure_uprns: false,
       )
 
       second_assessment = Nokogiri.XML rdsap_xml
@@ -261,7 +256,7 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
       response =
         update_assessment_address_id(
           "0000-0000-0000-0000-0001",
-          "RRN-0000-0000-0000-0000-0000",
+          "UPRN-000000000000",
           [200],
         )
       expect(JSON.parse(response.body, symbolize_names: true)[:data]).to eq(
@@ -281,7 +276,6 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
         auth_data: {
           scheme_ids: [scheme_id],
         },
-        ensure_uprns: false,
       )
 
       second_assessment = Nokogiri.XML rdsap_xml
@@ -329,7 +323,6 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
         auth_data: {
           scheme_ids: [scheme_id],
         },
-        ensure_uprns: false,
       )
 
       update_assessment_address_id(
@@ -361,7 +354,6 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
           scheme_ids: [scheme_id],
         },
         schema_name: "CEPC-8.0.0",
-        ensure_uprns: false,
       )
 
       cepc_response =
@@ -375,12 +367,14 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
           symbolize_names: true,
         )
 
+      expected_address_id = "UPRN-000000000001"
+
       expect(
         cepc_response[:data][:addressId],
-      ).to eq "RRN-0000-0000-0000-0000-0000"
+      ).to eq expected_address_id
       expect(
         cepc_rr_response[:data][:addressId],
-      ).to eq "RRN-0000-0000-0000-0000-0000"
+      ).to eq expected_address_id
 
       update_assessment_address_id(
         "0000-0000-0000-0000-0000",

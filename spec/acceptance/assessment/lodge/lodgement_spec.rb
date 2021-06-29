@@ -166,6 +166,17 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
       )
     end
 
+    it "rejects an assessment where the given address ID is a UPRN not present in AddressBase" do
+      lodge_assessment(
+        assessment_body: doc.to_xml,
+        accepted_responses: [400],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        ensure_uprns: false,
+      )
+    end
+
     it "rejects an assessment with an invalid XML element" do
       register_assessor
 
@@ -501,37 +512,11 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
         end
 
         context "when an assessment is lodged with an invalid addressId" do
-          it "saves source as 'adjusted_at_lodgement'" do
-            lodge_and_fetch_assessment(
-              rrn_node: "0000-0000-0000-0000-0001",
-              uprn_node: "UPRN-000000000000",
-              ensure_uprns: false,
-            )
-
-            response =
-              assessments_address_id_gateway.fetch("0000-0000-0000-0000-0001")
-
-            expect(response[:source]).to eq("adjusted_at_lodgement")
-          end
-
           it "updates the addressId to the default address id when RRN-based addressId doesn't correspond to an existing assessment id" do
             response =
               lodge_and_fetch_assessment(
                 rrn_node: "0000-0000-0000-0000-0001",
                 uprn_node: "RRN-0000-0000-0000-0000-9999",
-              )
-
-            expect(response[:data][:addressId]).to eq(
-              "RRN-0000-0000-0000-0000-0001",
-            )
-          end
-
-          it "updates the addressId to the default address id when it doesn't exist in the address base" do
-            response =
-              lodge_and_fetch_assessment(
-                rrn_node: "0000-0000-0000-0000-0001",
-                uprn_node: "UPRN-000000000000",
-                ensure_uprns: false,
               )
 
             expect(response[:data][:addressId]).to eq(
@@ -665,25 +650,6 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
             )
             expect(second_assessment[:data][:addressId]).to eq(
               "RRN-0000-0000-0000-0000-0001",
-            )
-          end
-
-          it "updates the addressId to the default address id when it doesn't exist in the address base" do
-            first_assessment =
-              lodge_and_fetch_non_domestic_assessment(
-                rrn_node: "0000-0000-0000-0000-0009",
-                uprn_node: "UPRN-000000000000",
-                related_rrn_node: "0000-0000-0000-0000-0008",
-                ensure_uprns: false,
-              )
-            second_assessment =
-              get_assessment_summary("0000-0000-0000-0000-0008")
-
-            expect(first_assessment[:data][:addressId]).to eq(
-              "RRN-0000-0000-0000-0000-0009",
-            )
-            expect(second_assessment[:data][:addressId]).to eq(
-              "RRN-0000-0000-0000-0000-0009",
             )
           end
 
