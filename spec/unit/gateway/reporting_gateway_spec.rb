@@ -11,7 +11,7 @@ describe "Gateway::ReportingGateway" do
     context "Insert four RdSAP assessments and opt out one of them, cancel one and mark one not for issue" do
       let(:assessment_gateway) { Gateway::AssessmentsGateway.new }
       let(:expected_data) do
-        {
+        [{
           "assessment_id" => "0000-0000-0000-0000-0001",
           "type_of_assessment" => "RdSAP",
           "address_line1" => "1 Some Street",
@@ -24,7 +24,10 @@ describe "Gateway::ReportingGateway" do
           "not_for_issue_at" => nil,
           "opt_out" => true,
           "cancelled_at" => nil,
-        }
+        }]
+      end
+      let(:selected_data) do
+        subject.fetch_not_for_publication_assessments.select{ |n| n["assessment_id"] == "0000-0000-0000-0000-0001" }
       end
 
       assessment2 = %w[0000-0000-0000-0000-0002]
@@ -50,7 +53,7 @@ describe "Gateway::ReportingGateway" do
 
       it "returns the opted out assessments only" do
         expect(subject.fetch_not_for_publication_assessments.count).to eq(3)
-        expect(subject.fetch_not_for_publication_assessments[0]).to eq(expected_data)
+        expect(selected_data).to eq(expected_data)
       end
     end
 
