@@ -65,6 +65,13 @@ describe "OpenDataExportNotForPublication" do
         .to_stderr
     end
 
+    it "raises an error if there is no data" do
+      expected_message = "No data provided for export"
+      allow(export_usecase).to receive(:execute).and_return([])
+
+      expect{task.invoke("for_odc")}.to output(/#{expected_message}/).to_stderr
+    end
+
     it "doesn't prefix csv filename with `test/` so it's stored in the main directory in the S3 bucket" do
       allow(Gateway::StorageGateway).to receive(:new).and_return(
         storage_gateway,
