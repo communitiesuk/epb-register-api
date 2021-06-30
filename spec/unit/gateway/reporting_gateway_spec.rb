@@ -8,7 +8,7 @@ describe "Gateway::ReportingGateway" do
       add_super_assessor(@scheme_id)
     end
 
-    context "Insert four assessments and opt out one of them, cancel one and mark one not for issue" do
+    context "Insert four RdSAP assessments and opt out one of them, cancel one and mark one not for issue" do
       let(:assessment_gateway) { Gateway::AssessmentsGateway.new }
       let(:expected_data) do
         {
@@ -52,6 +52,54 @@ describe "Gateway::ReportingGateway" do
         expect(subject.fetch_not_for_publication_assessments.count).to eq(3)
         expect(subject.fetch_not_for_publication_assessments[0]).to eq(expected_data)
       end
+    end
+
+    context "Insert 2 CEPC & DEC and opt out one CEPC and DEC" do
+      let(:expected_data) do
+        [{
+           "assessment_id" => "0000-0000-0000-0000-0003",
+           "type_of_assessment" => "DEC",
+           "address_line1" => "Some Unit",
+           "address_line2" => "2 Lonely Street",
+           "address_line3" => "Some Area",
+           "town" => "Whitbury",
+           "postcode" => "A0 0AA",
+           "date_registered" => "2020-05-04",
+           "address_id" => "UPRN-000000000001",
+           "not_for_issue_at" => nil,
+           "opt_out" => true,
+           "cancelled_at" => nil,
+         }]
+      end
+
+      let(:selected_data) do
+        subject.fetch_not_for_publication_assessments.select{ |n| n["assessment_id"] == "0000-0000-0000-0000-0003" }
+        end
+
+      before do
+        commercial_schema = "CEPC-8.0.0"
+        cepc_xml = Nokogiri.XML(Samples.xml(commercial_schema, "cepc"))
+        dec_xml = Nokogiri.XML Samples.xml(commercial_schema, "dec")
+
+        cepc_xml.at("//CEPC:RRN").children = "0000-0000-0000-0000-0001"
+        call_lodge_assessment(@scheme_id, commercial_schema, cepc_xml)
+
+        cepc_xml.at("//CEPC:RRN").children = "0000-0000-0000-0000-0002"
+        call_lodge_assessment(@scheme_id, commercial_schema, cepc_xml)
+
+        dec_xml.at("RRN").children = "0000-0000-0000-0000-0003"
+        call_lodge_assessment(@scheme_id, commercial_schema, dec_xml)
+
+        opt_out_assessment("0000-0000-0000-0000-0001")
+        opt_out_assessment("0000-0000-0000-0000-0003")
+      end
+
+
+      it "returns only 1 SAP and the DEC" do
+        expect(subject.fetch_not_for_publication_assessments.count).to eq(2)
+        expect(selected_data).to eq(expected_data)
+      end
+
     end
 
     context "Insert RdSAP, AC-CERT and opt out the RdSAP" do
