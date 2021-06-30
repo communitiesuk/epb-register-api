@@ -331,8 +331,12 @@ def lodge_assessment(
   schema_name: "RdSAP-Schema-20.0.0",
   headers: {},
   migrated: nil,
-  override: nil
+  override: nil,
+  ensure_uprns: true
 )
+  # ensure "good" range of UPRNs added to address_base table
+  add_uprns_to_address_base("0", "1") if ensure_uprns
+
   path =
     if !migrated.nil?
       "api/assessments?migrated#{(migrated === true ? '' : '=' + migrated)}"
@@ -414,7 +418,7 @@ def add_super_assessor(scheme_id)
   )
 end
 
-def call_lodge_assessment(scheme_id:, schema_name:, xml_document:, migrated: nil)
+def call_lodge_assessment(scheme_id:, schema_name:, xml_document:, migrated: nil, ensure_uprns: true)
   lodge_assessment(
     assessment_body: xml_document.to_xml,
     accepted_responses: [201],
@@ -425,6 +429,7 @@ def call_lodge_assessment(scheme_id:, schema_name:, xml_document:, migrated: nil
     override: true,
     schema_name: schema_name,
     migrated: migrated,
+    ensure_uprns: ensure_uprns,
   )
 end
 

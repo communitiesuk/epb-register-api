@@ -143,7 +143,16 @@ def truncate(postcode)
   end
 end
 
+def add_uprns_to_address_base(*uprns)
+  uprns.each { |uprn| add_address_base(uprn: uprn) }
+end
+
 def add_address_base(uprn:)
+  count = ActiveRecord::Base.connection.exec_query(
+    "SELECT COUNT(*) AS address_count FROM address_base WHERE uprn=%s" % ActiveRecord::Base.connection.quote(uprn.to_s),
+  )[0]["address_count"].to_i
+  return if count > 0
+
   ActiveRecord::Base.connection.exec_query(
     "INSERT INTO address_base (uprn) VALUES(" +
       ActiveRecord::Base.connection.quote(uprn) + ")",

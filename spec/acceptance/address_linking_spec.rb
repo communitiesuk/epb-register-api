@@ -115,6 +115,7 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
         auth_data: {
           scheme_ids: [scheme_id],
         },
+        ensure_uprns: false,
       )
 
       response =
@@ -140,6 +141,7 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
         auth_data: {
           scheme_ids: [scheme_id],
         },
+        ensure_uprns: false,
       )
 
       response =
@@ -174,6 +176,7 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
         auth_data: {
           scheme_ids: [scheme_id],
         },
+        ensure_uprns: false,
       )
 
       update_assessment_address_id(
@@ -202,6 +205,7 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
         auth_data: {
           scheme_ids: [scheme_id],
         },
+        ensure_uprns: false,
       )
 
       update_assessment_address_id(
@@ -240,6 +244,7 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
         auth_data: {
           scheme_ids: [scheme_id],
         },
+        ensure_uprns: false,
       )
 
       second_assessment = Nokogiri.XML rdsap_xml
@@ -250,6 +255,7 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
         auth_data: {
           scheme_ids: [scheme_id],
         },
+        ensure_uprns: false,
       )
 
       response =
@@ -275,6 +281,7 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
         auth_data: {
           scheme_ids: [scheme_id],
         },
+        ensure_uprns: false,
       )
 
       second_assessment = Nokogiri.XML rdsap_xml
@@ -285,6 +292,7 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
         auth_data: {
           scheme_ids: [scheme_id],
         },
+        ensure_uprns: false,
       )
 
       update_assessment_address_id(
@@ -321,6 +329,7 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
         auth_data: {
           scheme_ids: [scheme_id],
         },
+        ensure_uprns: false,
       )
 
       update_assessment_address_id(
@@ -352,6 +361,7 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
           scheme_ids: [scheme_id],
         },
         schema_name: "CEPC-8.0.0",
+        ensure_uprns: false,
       )
 
       cepc_response =

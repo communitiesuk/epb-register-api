@@ -507,6 +507,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
             lodge_and_fetch_assessment(
               rrn_node: "0000-0000-0000-0000-0001",
               uprn_node: "UPRN-000000000000",
+              ensure_uprns: false,
             )
 
             response =
@@ -532,6 +533,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
               lodge_and_fetch_assessment(
                 rrn_node: "0000-0000-0000-0000-0001",
                 uprn_node: "UPRN-000000000000",
+                ensure_uprns: false,
               )
 
             expect(response[:data][:addressId]).to eq(
@@ -645,6 +647,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
               rrn_node: "0000-0000-0000-0000-0001",
               uprn_node: "RRN-0000-0000-0000-0000-0007",
               related_rrn_node: "0000-0000-0000-0000-0000",
+              ensure_uprns: false,
             )
           end
 
@@ -675,6 +678,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
                 rrn_node: "0000-0000-0000-0000-0009",
                 uprn_node: "UPRN-000000000000",
                 related_rrn_node: "0000-0000-0000-0000-0008",
+                ensure_uprns: false,
               )
             second_assessment =
               get_assessment_summary("0000-0000-0000-0000-0008")
@@ -867,7 +871,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
     end
   end
 
-  def lodge_and_fetch_assessment(rrn_node:, uprn_node:, xml: valid_rdsap_xml)
+  def lodge_and_fetch_assessment(rrn_node:, uprn_node:, xml: valid_rdsap_xml, ensure_uprns: true)
     assessment = Nokogiri.XML(xml)
     assessment.at("RRN").children = rrn_node
     assessment.at("UPRN").children = uprn_node
@@ -878,6 +882,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
       auth_data: {
         scheme_ids: [scheme_id],
       },
+      ensure_uprns: ensure_uprns,
     )
 
     get_assessment_summary(rrn_node)
@@ -886,7 +891,8 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
   def lodge_and_fetch_non_domestic_assessment(
     rrn_node:,
     uprn_node:,
-    related_rrn_node:
+    related_rrn_node:,
+    ensure_uprns: true
   )
     assessment = Nokogiri.XML(valid_cepc_rr_xml)
     assessment.xpath("//CEPC:RRN").children.first.content = rrn_node
@@ -906,6 +912,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
         scheme_ids: [scheme_id],
       },
       schema_name: "CEPC-8.0.0",
+      ensure_uprns: ensure_uprns,
     )
 
     get_assessment_summary(rrn_node)

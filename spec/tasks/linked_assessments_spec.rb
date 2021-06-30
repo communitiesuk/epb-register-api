@@ -10,7 +10,7 @@ describe "LinkedAssessments" do
     cepc_schema = "CEPC-8.0.0".freeze
 
     cepc_xml = Nokogiri.XML Samples.xml(cepc_schema, "cepc+rr")
-    call_lodge_assessment(scheme_id: scheme_id, schema_name: cepc_schema, xml_document: cepc_xml)
+    call_lodge_assessment(scheme_id: scheme_id, schema_name: cepc_schema, xml_document: cepc_xml, ensure_uprns: false)
   end
 
   context "When the task runs without any address ID mismatch" do

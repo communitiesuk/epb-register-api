@@ -84,6 +84,7 @@ describe "Acceptance::AddressSearch::ByPostcode", set_with_timecop: true do
           scheme_ids: [scheme_id],
         },
         override: true,
+        ensure_uprns: false,
       )
 
       cepc_assessment_id.children = "0000-0000-0000-0000-0002"
@@ -94,6 +95,7 @@ describe "Acceptance::AddressSearch::ByPostcode", set_with_timecop: true do
           scheme_ids: [scheme_id],
         },
         schema_name: "CEPC-8.0.0",
+        ensure_uprns: false,
       )
     end
 
@@ -224,6 +226,7 @@ describe "Acceptance::AddressSearch::ByPostcode", set_with_timecop: true do
               scheme_ids: [scheme_id],
             },
             override: true,
+            ensure_uprns: false,
           )
         end
 
@@ -246,6 +249,7 @@ describe "Acceptance::AddressSearch::ByPostcode", set_with_timecop: true do
             schema_name: "CEPC-7.0",
             override: true,
             migrated: true,
+            ensure_uprns: false,
           )
         end
 
@@ -301,6 +305,7 @@ describe "Acceptance::AddressSearch::ByPostcode", set_with_timecop: true do
                 scheme_ids: [scheme_id],
               },
               schema_name: "CEPC-8.0.0",
+              ensure_uprns: false,
             )
           end
 

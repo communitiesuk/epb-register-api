@@ -28,6 +28,7 @@ describe "Acceptance::AssessmentAddressId", set_with_timecop: true do
           scheme_ids: [scheme_id],
         },
         schema_name: "CEPC-8.0.0",
+        ensure_uprns: false,
       )
 
       response =
@@ -50,6 +51,7 @@ describe "Acceptance::AssessmentAddressId", set_with_timecop: true do
           scheme_ids: [scheme_id],
         },
         schema_name: "CEPC-8.0.0",
+        ensure_uprns: false,
       )
 
       response1 =
