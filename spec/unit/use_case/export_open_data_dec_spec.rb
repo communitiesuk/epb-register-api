@@ -90,7 +90,6 @@ describe UseCase::ExportOpenDataDec, set_with_timecop: true do
       end
 
       before(:all) do
-        add_address_base(uprn: 1)
         scheme_id = add_scheme_and_get_id
         dec_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "dec")
         dec_assessment_id = dec_xml.at("RRN")

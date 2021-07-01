@@ -238,7 +238,6 @@ describe UseCase::ExportOpenDataDomestic, set_with_timecop: true do
       before(:all) do
         add_postcodes("A0 0AA", 51.5045, 0.0865, "London")
         add_outcodes("A0", 51.5045, 0.4865, "London")
-        add_address_base(uprn: 0)
 
         scheme_id = add_scheme_and_get_id
         domestic_rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")

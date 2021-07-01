@@ -15,8 +15,6 @@ describe "Acceptance::AssessmentSummary::Supplement::RdSAP",
       )
     add_assessor(scheme_id, "SPEC000000", assessor)
 
-    add_address_base(uprn: "0")
-
     # DATA SETUP:
     # 0000 = RdSAP with address ID UPRN-000000000000
     # 0001 = RdSAP with address ID UPRN-000000000000, no contact details

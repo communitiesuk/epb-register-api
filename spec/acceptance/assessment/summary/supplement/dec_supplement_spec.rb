@@ -6,7 +6,6 @@ describe "Acceptance::AssessmentSummary::Supplement::DEC",
     scheme_id = add_scheme_and_get_id
     assessor = AssessorStub.new.fetch_request_body(nonDomesticDec: "ACTIVE")
     add_assessor(scheme_id, "SPEC000000", assessor)
-    add_address_base(uprn: "1")
 
     lodge_dec(Samples.xml("CEPC-8.0.0", "dec"), scheme_id)
 

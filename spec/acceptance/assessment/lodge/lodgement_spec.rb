@@ -475,8 +475,6 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
           end
 
           context "when the UPRN exists in the the address_base" do
-            before { add_address_base(uprn: 1) }
-
             it "persists the original UPRN addressId if it exists in the address base" do
               response =
                 lodge_and_fetch_assessment(
@@ -610,8 +608,6 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
           end
 
           it "persists the original UPRN addressId if it exists in the address base" do
-            add_address_base(uprn: 1)
-
             first_assessment =
               lodge_and_fetch_non_domestic_assessment(
                 rrn_node: "0000-0000-0000-0000-0008",

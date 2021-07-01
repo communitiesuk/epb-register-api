@@ -15,8 +15,6 @@ describe "Acceptance::AssessmentSummary::Supplement::SAP",
       )
     add_assessor(scheme_id, "SPEC000000", assessor)
 
-    add_address_base(uprn: "0")
-
     # DATA SETUP:
     # 0000 = SAP with address ID UPRN-000000000000
     # 0001 = SAP with address ID UPRN-000000000000

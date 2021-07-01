@@ -7,8 +7,6 @@ describe "Acceptance::AssessmentSummary::Supplement::DECRR",
     assessor = AssessorStub.new.fetch_request_body(nonDomesticDec: "ACTIVE")
     add_assessor(scheme_id, "SPEC000000", assessor)
 
-    add_address_base(uprn: "1")
-
     regular_assessment = Nokogiri.XML(Samples.xml("CEPC-8.0.0", "dec+rr"))
     regular_assessment
       .css("UPRN")

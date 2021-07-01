@@ -17,7 +17,6 @@ describe "Acceptance::Reports::OpenDataExport" do
       before do
         add_postcodes("A0 0AA", 51.5045, 0.0865, "London")
         add_outcodes("A0", 51.5045, 0.4865, "London")
-        add_address_base(uprn: 0)
 
         domestic_rdsap_xml =
           get_assessment_xml(
@@ -232,7 +231,6 @@ describe "Acceptance::Reports::OpenDataExport" do
       before do
         add_postcodes("A0 0AA", 51.5045, 0.0865, "London")
         add_outcodes("A0", 51.5045, 0.4865, "London")
-        add_address_base(uprn: 1)
 
         2.times do |i|
           non_domestic_xml =
@@ -434,7 +432,6 @@ describe "Acceptance::Reports::OpenDataExport" do
       before do
         add_postcodes("A0 0AA", 51.5045, 0.0865, "London")
         add_outcodes("A0", 51.5045, 0.4865, "London")
-        add_address_base(uprn: 1)
 
         dec_xml =
           get_assessment_xml(

@@ -14,8 +14,6 @@ describe "Acceptance::Assessment::SearchForAssessments",
       ),
     )
 
-    add_address_base(uprn: "0")
-
     if non_domestic
       lodge_assessment(
         assessment_body: Samples.xml("CEPC-8.0.0", "cepc+rr"),
