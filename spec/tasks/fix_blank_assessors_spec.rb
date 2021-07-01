@@ -35,7 +35,7 @@ describe "FixBlankAssessors" do
           },
         },
       )
-      call_lodge_assessment(scheme_id, sap_schema, sap_xml, true)
+      call_lodge_assessment(scheme_id: scheme_id, schema_name: sap_schema, xml_document: sap_xml, migrated: true)
     end
 
     it "outputs one updated assessors" do
@@ -82,7 +82,7 @@ describe "FixBlankAssessors" do
           },
         },
       )
-      call_lodge_assessment(scheme_id, sap_schema, sap_xml, true)
+      call_lodge_assessment(scheme_id: scheme_id, schema_name: sap_schema, xml_document: sap_xml, migrated: true)
     end
 
     it "outputs zero updated assessors" do
@@ -131,7 +131,7 @@ describe "FixBlankAssessors" do
       )
       corrected_sap_xml = sap_xml
       corrected_sap_xml.at("Home-Inspector Name").children = ""
-      call_lodge_assessment(scheme_id, sap_schema, corrected_sap_xml, true)
+      call_lodge_assessment(scheme_id: scheme_id, schema_name: sap_schema, xml_document: corrected_sap_xml, migrated: true)
     end
 
     it "outputs one record skipped" do

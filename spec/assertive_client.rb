@@ -414,7 +414,7 @@ def add_super_assessor(scheme_id)
   )
 end
 
-def call_lodge_assessment(scheme_id, schema_name, xml_document, migrated = nil)
+def call_lodge_assessment(scheme_id:, schema_name:, xml_document:, migrated: nil)
   lodge_assessment(
     assessment_body: xml_document.to_xml,
     accepted_responses: [201],

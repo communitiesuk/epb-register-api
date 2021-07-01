@@ -69,7 +69,7 @@ describe "OpenDataExportNotForPublication" do
       expected_message = "No data provided for export"
       allow(export_usecase).to receive(:execute).and_return([])
 
-      expect{task.invoke("for_odc")}.to output(/#{expected_message}/).to_stderr
+      expect { task.invoke("for_odc") }.to output(/#{expected_message}/).to_stderr
     end
 
     it "doesn't prefix csv filename with `test/` so it's stored in the main directory in the S3 bucket" do

@@ -27,7 +27,7 @@ describe "Gateway::ReportingGateway" do
         }]
       end
       let(:selected_data) do
-        subject.fetch_not_for_publication_assessments.select{ |n| n["assessment_id"] == "0000-0000-0000-0000-0001" }
+        subject.fetch_not_for_publication_assessments.select { |n| n["assessment_id"] == "0000-0000-0000-0000-0001" }
       end
 
       assessment2 = %w[0000-0000-0000-0000-0002]
@@ -39,13 +39,13 @@ describe "Gateway::ReportingGateway" do
       before do
         schema = "RdSAP-Schema-20.0.0"
         xml = Nokogiri.XML Samples.xml(schema)
-        call_lodge_assessment(@scheme_id, schema, xml)
+        call_lodge_assessment(scheme_id: @scheme_id, schema_name: schema, xml_document: xml)
         xml.at("RRN").children = "0000-0000-0000-0000-0001"
-        call_lodge_assessment(@scheme_id, schema, xml)
+        call_lodge_assessment(scheme_id: @scheme_id, schema_name: schema, xml_document: xml)
         xml.at("RRN").children = "0000-0000-0000-0000-0002"
-        call_lodge_assessment(@scheme_id, schema, xml)
+        call_lodge_assessment(scheme_id: @scheme_id, schema_name: schema, xml_document: xml)
         xml.at("RRN").children = "0000-0000-0000-0000-0003"
-        call_lodge_assessment(@scheme_id, schema, xml)
+        call_lodge_assessment(scheme_id: @scheme_id, schema_name: schema, xml_document: xml)
         opt_out_assessment("0000-0000-0000-0000-0001")
         assessment_gateway.update_statuses(assessment2, cancelled, time)
         assessment_gateway.update_statuses(assessment3, not_for_issue, time)
@@ -60,24 +60,24 @@ describe "Gateway::ReportingGateway" do
     context "Insert 2 CEPC & DEC and opt out one CEPC and DEC" do
       let(:expected_data) do
         [{
-           "assessment_id" => "0000-0000-0000-0000-0003",
-           "type_of_assessment" => "DEC",
-           "address_line1" => "Some Unit",
-           "address_line2" => "2 Lonely Street",
-           "address_line3" => "Some Area",
-           "town" => "Whitbury",
-           "postcode" => "A0 0AA",
-           "date_registered" => "2020-05-04",
-           "address_id" => "UPRN-000000000001",
-           "not_for_issue_at" => nil,
-           "opt_out" => true,
-           "cancelled_at" => nil,
-         }]
+          "assessment_id" => "0000-0000-0000-0000-0003",
+          "type_of_assessment" => "DEC",
+          "address_line1" => "Some Unit",
+          "address_line2" => "2 Lonely Street",
+          "address_line3" => "Some Area",
+          "town" => "Whitbury",
+          "postcode" => "A0 0AA",
+          "date_registered" => "2020-05-04",
+          "address_id" => "UPRN-000000000001",
+          "not_for_issue_at" => nil,
+          "opt_out" => true,
+          "cancelled_at" => nil,
+        }]
       end
 
       let(:selected_data) do
-        subject.fetch_not_for_publication_assessments.select{ |n| n["assessment_id"] == "0000-0000-0000-0000-0003" }
-        end
+        subject.fetch_not_for_publication_assessments.select { |n| n["assessment_id"] == "0000-0000-0000-0000-0003" }
+      end
 
       before do
         commercial_schema = "CEPC-8.0.0"
@@ -85,37 +85,35 @@ describe "Gateway::ReportingGateway" do
         dec_xml = Nokogiri.XML Samples.xml(commercial_schema, "dec")
 
         cepc_xml.at("//CEPC:RRN").children = "0000-0000-0000-0000-0001"
-        call_lodge_assessment(@scheme_id, commercial_schema, cepc_xml)
+        call_lodge_assessment(scheme_id: @scheme_id, schema_name: commercial_schema, xml_document: cepc_xml)
 
         cepc_xml.at("//CEPC:RRN").children = "0000-0000-0000-0000-0002"
-        call_lodge_assessment(@scheme_id, commercial_schema, cepc_xml)
+        call_lodge_assessment(scheme_id: @scheme_id, schema_name: commercial_schema, xml_document: cepc_xml)
 
         dec_xml.at("RRN").children = "0000-0000-0000-0000-0003"
-        call_lodge_assessment(@scheme_id, commercial_schema, dec_xml)
+        call_lodge_assessment(scheme_id: @scheme_id, schema_name: commercial_schema, xml_document: dec_xml)
 
         opt_out_assessment("0000-0000-0000-0000-0001")
         opt_out_assessment("0000-0000-0000-0000-0003")
       end
 
-
       it "returns only 1 SAP and the DEC" do
         expect(subject.fetch_not_for_publication_assessments.count).to eq(2)
         expect(selected_data).to eq(expected_data)
       end
-
     end
 
     context "Insert RdSAP, AC-CERT and opt out the RdSAP" do
       before do
         commercial_schema = "CEPC-8.0.0"
         ac_cert_xml = Nokogiri.XML Samples.xml(commercial_schema, "ac-cert")
-        call_lodge_assessment(@scheme_id, commercial_schema, ac_cert_xml)
+        call_lodge_assessment(scheme_id: @scheme_id, schema_name: commercial_schema, xml_document: ac_cert_xml)
         opt_out_assessment("0000-0000-0000-0000-0000")
 
         rdsap_schema = "RdSAP-Schema-20.0.0"
         rdsap_xml = Nokogiri.XML Samples.xml(rdsap_schema)
         rdsap_xml.at("RRN").children = "0000-0000-0000-0000-0002"
-        call_lodge_assessment(@scheme_id, rdsap_schema, rdsap_xml)
+        call_lodge_assessment(scheme_id: @scheme_id, schema_name: rdsap_schema, xml_document: rdsap_xml)
         opt_out_assessment("0000-0000-0000-0000-0002")
       end
 
@@ -128,13 +126,13 @@ describe "Gateway::ReportingGateway" do
       before do
         commercial_schema = "CEPC-8.0.0"
         dec_rr_xml = Nokogiri.XML Samples.xml(commercial_schema, "dec-rr")
-        call_lodge_assessment(@scheme_id, commercial_schema, dec_rr_xml)
+        call_lodge_assessment(scheme_id: @scheme_id, schema_name: commercial_schema, xml_document: dec_rr_xml)
         opt_out_assessment("0000-0000-0000-0000-0000")
 
         sap_schema = "SAP-Schema-18.0.0"
         sap_xml = Nokogiri.XML Samples.xml(sap_schema)
         sap_xml.at("RRN").children = "0000-0000-0000-0000-0003"
-        call_lodge_assessment(@scheme_id, sap_schema, sap_xml)
+        call_lodge_assessment(scheme_id: @scheme_id, schema_name: sap_schema, xml_document: sap_xml)
         opt_out_assessment("0000-0000-0000-0000-0003")
       end
 
