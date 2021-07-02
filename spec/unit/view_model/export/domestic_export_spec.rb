@@ -1,3 +1,5 @@
+require_relative "export_test_helper"
+
 describe ViewModel::Export::DomesticExportView do
   include RSpecRegisterApiServiceMixin
 
@@ -54,11 +56,5 @@ describe ViewModel::Export::DomesticExportView do
     assessment_id = wrapper.get_view_model.assessment_id
     assessment = gateway.search_by_assessment_id(assessment_id).first
     ViewModel::Export::DomesticExportView.new(wrapper, assessment)
-  end
-
-  def read_json_fixture(file_name)
-    path = File.join(Dir.pwd, "spec/fixtures/json_export/#{file_name}.json")
-    file = File.read(path)
-    JSON.parse(file, symbolize_names: true)
   end
 end
