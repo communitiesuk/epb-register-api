@@ -9,9 +9,9 @@ source "https://rubygems.org" do
   end
 
   group :worker do
+    gem "redis", "~> 4.3.1"
     gem "sidekiq", "~> 6.2.1"
     gem "sidekiq-cron", "~> 1.2.0"
-    gem "redis", "~> 4.3.1"
   end
 
   group :test do

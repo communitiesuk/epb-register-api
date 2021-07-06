@@ -7,4 +7,3 @@ module Worker
     end
   end
 end
-

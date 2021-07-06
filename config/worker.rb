@@ -1,12 +1,12 @@
-require 'sidekiq'
-require 'sidekiq-cron'
-require 'zeitwerk'
+require "sidekiq"
+require "sidekiq-cron"
+require "zeitwerk"
 
 loader = Zeitwerk::Loader.new
 loader.push_dir("#{__dir__}/../lib")
 loader.setup
 
-environment = ENV['STAGE']
+environment = ENV["STAGE"]
 
 redis_url = Helper::RedisConfigurationReader.read_configuration_url("mhclg-epb-redis-scheduler-#{environment}")
 

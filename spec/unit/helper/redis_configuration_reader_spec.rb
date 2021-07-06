@@ -29,7 +29,7 @@ describe Helper::RedisConfigurationReader do
 
     it "raises a configuration error" do
       expect { subject.read_configuration_url("missing_name") }.to raise_error(
-                                                                     Helper::RedisConfigurationReader::ConfigurationError,
+        Helper::RedisConfigurationReader::ConfigurationError,
         "missing_name is not a valid redis instance",
       )
     end
@@ -42,7 +42,7 @@ describe Helper::RedisConfigurationReader do
       expect {
         subject.read_configuration_url("my_instance_name")
       }.to raise_error(
-                   Helper::RedisConfigurationReader::ConfigurationError,
+        Helper::RedisConfigurationReader::ConfigurationError,
         "No Redis configuration found in VCAP_SERVICES",
       )
     end
