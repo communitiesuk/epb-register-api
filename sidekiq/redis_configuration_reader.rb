@@ -19,4 +19,3 @@ class RedisConfigurationReader
           "#{instance_name} is not a valid redis instance"
   end
 end
-
