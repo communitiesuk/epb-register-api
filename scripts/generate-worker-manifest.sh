@@ -10,7 +10,7 @@ applications:
   - name: $APPLICATION_NAME
     memory: 256M
     instances: 1
-    command: bundle exec sidekiq
+    command: bundle exec sidekiq -r ./config/worker.rb
     no-route: true
     buildpacks:
       - ruby_buildpack
