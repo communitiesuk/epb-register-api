@@ -20,7 +20,7 @@ end
 class DevAssessmentsHelper
 
   def self.production?
-    ActiveRecord::Base.connection.exec_query("SELECT COUNT(*) as cnt FROM assessments ", "SQL")
+    result = ActiveRecord::Base.connection.exec_query("SELECT COUNT(*) as cnt FROM assessments ", "SQL")
     result.first["cnt"].to_i  > 1000000 ? true :false
   end
 
