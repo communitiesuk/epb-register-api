@@ -35,7 +35,12 @@ module Domain
       @opt_out = opt_out
       @current_energy_efficiency_rating = current_energy_efficiency_rating
       @postcode = postcode
-      @date_registered = date_registered
+      @date_registered =
+        if !date_registered.nil?
+          Date.strptime(date_registered.to_s, "%Y-%m-%d")
+        else
+          ""
+        end
       @created_at = created_at
       @date_of_expiry =
         if !date_of_expiry.nil?
@@ -68,6 +73,7 @@ module Domain
       {
         date_of_assessment: @date_of_assessment.strftime("%Y-%m-%d"),
         date_of_expiry: @date_of_expiry.strftime("%Y-%m-%d"),
+        date_of_registration: @date_registered.strftime("%Y-%m-%d"),
         type_of_assessment: @type_of_assessment,
         assessment_id: @assessment_id,
         current_energy_efficiency_rating: @current_energy_efficiency_rating,

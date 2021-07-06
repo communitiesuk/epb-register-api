@@ -1871,6 +1871,10 @@ components:
           type: string
           format: date
           description: The date that the assessor carried out the assessment of the property
+        dateOfRegistration:
+          type: string
+          format: date
+          description: The date that the assessment was submitted to the register
         dateOfExpiry:
           type: string
           format: date
