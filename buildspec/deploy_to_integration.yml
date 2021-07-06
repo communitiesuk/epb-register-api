@@ -33,7 +33,7 @@ phases:
     commands:
       - make deploy-app
       - make migrate-db-and-wait-for-success
-      - make deploy-sidekiq
+      - make deploy-worker
   post_build:
     commands:
       - cf logout
