@@ -6,7 +6,7 @@ runtime-versions:
 env:
   variables:
     DEPLOY_APPNAME: "mhclg-epb-register-api-integration"
-    DEPLOY_WORKER: "mhclg-epb-sidekiq-integration"
+    DEPLOY_WORKER: "mhclg-epb-worker-integration"
 
   parameter-store:
     PAAS_LOGIN: "epbr-govpaas-integration-login"
