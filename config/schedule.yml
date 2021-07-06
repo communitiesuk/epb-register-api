@@ -1,0 +1,6 @@
+my_first_job:
+#  cron: "0 9-17 * * 1-5"
+  cron: "*/1 * * * *"
+  class: "TestWorker"
+  name: "Little worker -- every hour Mon-Fri"
+  queue: default

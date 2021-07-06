@@ -8,6 +8,12 @@ source "https://rubygems.org" do
     gem "sinatra-contrib"
   end
 
+  group :worker do
+    gem "sidekiq", "~> 6.2.1"
+    gem "sidekiq-cron", "~> 1.2.0"
+    gem "redis", "~> 4.3.1"
+  end
+
   group :test do
     gem "database_cleaner"
     gem "pry", "~> 0.14.1"

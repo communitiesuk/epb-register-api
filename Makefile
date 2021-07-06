@@ -21,6 +21,12 @@ generate-manifest: ## Generate manifest file for PaaS
 	$(if ${PAAS_SPACE},,$(error Must specify PAAS_SPACE))
 	@scripts/generate-paas-manifest.sh ${DEPLOY_APPNAME} ${PAAS_SPACE} > manifest.yml
 
+.PHONY: generate-worker-manifest
+generate-worker-manifest:
+	$(if ${DEPLOY_WORKER},,$(error Must specify DEPLOY_WORKER))
+	$(if ${PAAS_SPACE},,$(error Must specify PAAS_SPACE))
+	@scripts/generate-worker-manifest.sh ${DEPLOY_WORKER} ${PAAS_SPACE} > worker_manifest.yml
+
 .PHONY: deploy-app
 deploy-app: ## Deploys the app to PaaS
 	$(call check_space)
@@ -30,7 +36,7 @@ deploy-app: ## Deploys the app to PaaS
 
 	cf apply-manifest -f manifest.yml
 
-	cf set-env "${DEPLOY_APPNAME}" BUNDLE_WITHOUT "test"
+	cf set-env "${DEPLOY_APPNAME}" BUNDLE_WITHOUT "test:worker"
 	cf set-env "${DEPLOY_APPNAME}" JWT_ISSUER "${JWT_ISSUER}"
 	cf set-env "${DEPLOY_APPNAME}" JWT_SECRET "${JWT_SECRET}"
 	cf set-env "${DEPLOY_APPNAME}" STAGE "${PAAS_SPACE}"
@@ -38,6 +44,18 @@ deploy-app: ## Deploys the app to PaaS
 	cf set-env "${DEPLOY_APPNAME}" SENTRY_DSN "${SENTRY_DSN}"
 
 	cf push "${DEPLOY_APPNAME}" --strategy rolling
+
+.PHONY: deploy-worker
+deploy-worker:
+	$(call check_space)
+	$(if ${DEPLOY_WORKER},,$(error Must specify DEPLOY_WORKER))
+
+	@$(MAKE) generate-worker-manifest
+
+	cf set-env "${DEPLOY_WORKER}" BUNDLE_WITHOUT "test"
+	cf set-env "${DEPLOY_WORKER}" STAGE "${PAAS_SPACE}"
+
+	cf push "${DEPLOY_WORKER}" -f worker_manifest.yml
 
 .PHONY: setup-db
 setup-db:
