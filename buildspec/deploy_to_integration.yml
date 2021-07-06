@@ -6,7 +6,7 @@ runtime-versions:
 env:
   variables:
     DEPLOY_APPNAME: "mhclg-epb-register-api-integration"
-    DEPLOY_WORKER: "mhclg-epb-worker-integration"
+    DEPLOY_WORKER: "mhclg-epb-sidekiq-integration"
 
   parameter-store:
     PAAS_LOGIN: "epbr-govpaas-integration-login"
@@ -33,7 +33,7 @@ phases:
     commands:
       - make deploy-app
       - make migrate-db-and-wait-for-success
-      - make deploy-worker
+      - make deploy-sidekiq
   post_build:
     commands:
       - cf logout
