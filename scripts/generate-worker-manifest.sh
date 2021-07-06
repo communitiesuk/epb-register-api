@@ -14,6 +14,7 @@ applications:
     no-route: true
     buildpacks:
       - ruby_buildpack
+    health-check-type: process
     services:
       - mhclg-epb-redis-scheduler-$STAGE
 EOF
