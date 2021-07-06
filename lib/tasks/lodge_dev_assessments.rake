@@ -1,8 +1,6 @@
 desc "Lodge assessments to the dev databse for testing"
 
 task :lodge_dev_assessments do
-
-
   if !DevAssessmentsHelper.production?
     scheme_id = DevAssessmentsHelper.add_rake_scheme
     DevAssessmentsHelper.add_assessor(scheme_id)
@@ -13,18 +11,18 @@ task :lodge_dev_assessments do
   end
 end
 
-
 class DevAssessmentsHelper
   def self.scheme_array
     %w[CEPC-8.0.0 CEPC-NI-8.0.0 RdSAP-Schema-20.0.0 RdSAP-Schema-NI-20.0.0 SAP-Schema-18.0.0 SAP-Schema-NI-18.0.0]
   end
+
   def self.assessor_id
     "RAKE000001"
   end
+
   def self.scheme_name
     "rake-scheme01"
   end
-
 
   def self.production?
     result = ActiveRecord::Base.connection.exec_query("SELECT COUNT(*) as cnt FROM assessments ", "SQL")
@@ -45,14 +43,14 @@ class DevAssessmentsHelper
     use_case = UseCase::LodgeAssessment.new
     id = get_latest_assessment_id
 
-    file_array.each_with_index do |hash, index|
+    file_array.each_with_index do |hash, _index|
       id = id.next
       schema_type = hash[:scheme]
       type_of_assessment = schema_type&.split("-").first
-      xml_doc  = update_xml(hash[:xml],type_of_assessment.downcase,id)
+      xml_doc = update_xml(hash[:xml], type_of_assessment.downcase, id)
       data = { assessment_id: id,
                assessor_id: assessor_id,
-               raw_data:  Helper::SanitizeXmlHelper.new.sanitize(xml_doc.to_s),
+               raw_data: Helper::SanitizeXmlHelper.new.sanitize(xml_doc.to_s),
                date_of_registration: DateTime.yesterday,
                type_of_assessment: type_of_assessment,
                date_of_assessment: Time.now,
@@ -89,18 +87,18 @@ class DevAssessmentsHelper
     file_array = []
     scheme_array.each do |scheme|
       file_content = read_xml(scheme, scheme.include?("CEPC") ? "cepc" : "epc")
-      file_array << { xml: Nokogiri.XML(file_content), scheme: scheme}
+      file_array << { xml: Nokogiri.XML(file_content), scheme: scheme }
     end
     file_array
   end
 
   def self.read_commercial_fixtures
     file_array = []
-    commercial_fixtures  = %w[ac-cert ac-report cepc+rr dec dec+rr]
+    commercial_fixtures = %w[ac-cert ac-report cepc+rr dec dec+rr]
 
-    commercial_fixtures.each do | item|
+    commercial_fixtures.each do |item|
       file_content = read_xml("CEPC-8.0.0", item)
-      file_array << { xml: Nokogiri.XML(file_content), scheme: item.upcase}
+      file_array << { xml: Nokogiri.XML(file_content), scheme: item.upcase }
     end
     file_array
   end
