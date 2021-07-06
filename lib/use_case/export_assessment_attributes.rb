@@ -1,6 +1,6 @@
 module UseCase
   class ExportAssessmentAttributes
-    def initialize(assessment_gateway, assessment_search_gateway, xml_gateway)
+    def initialize(assessment_gateway, assessment_search_gateway, g)
       @assessment_gateway = assessment_gateway
       @assessment_search_gateway = assessment_search_gateway
       @xml_gateway = xml_gateway
