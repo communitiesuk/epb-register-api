@@ -52,6 +52,8 @@ deploy-worker:
 
 	@$(MAKE) generate-worker-manifest
 
+	cf apply-manifest -f worker_manifest.yml
+
 	cf set-env "${DEPLOY_WORKER}" BUNDLE_WITHOUT "test"
 	cf set-env "${DEPLOY_WORKER}" STAGE "${PAAS_SPACE}"
 
