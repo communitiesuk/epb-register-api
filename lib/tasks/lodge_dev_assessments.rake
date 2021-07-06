@@ -1,49 +1,60 @@
 desc "Lodge assessments to the dev databse for testing"
 
-SCHEME_ARRAY = %w[CEPC-8.0.0 CEPC-NI-8.0.0 RdSAP-Schema-20.0.0 RdSAP-Schema-NI-20.0.0 SAP-Schema-18.0.0 SAP-Schema-NI-18.0.0].freeze
-ASSESSOR_ID = "RAKE000001".freeze
-SCHEME_NAME = "rake-scheme01".freeze
-
 task :lodge_dev_assessments do
+
+
   if !DevAssessmentsHelper.production?
     scheme_id = DevAssessmentsHelper.add_rake_scheme
     DevAssessmentsHelper.add_assessor(scheme_id)
-    DevAssessmentsHelper.clean_tables(ASSESSOR_ID)
-    DevAssessmentsHelper.lodge_assessments(DevAssessmentsHelper.read_fixtures(SCHEME_ARRAY))
+    DevAssessmentsHelper.clean_tables
+    DevAssessmentsHelper.lodge_assessments(DevAssessmentsHelper.read_fixtures)
   else
     pp "aborted as in production"
   end
 end
 
+
 class DevAssessmentsHelper
+  def self.scheme_array
+    %w[CEPC-8.0.0 CEPC-NI-8.0.0 RdSAP-Schema-20.0.0 RdSAP-Schema-NI-20.0.0 SAP-Schema-18.0.0 SAP-Schema-NI-18.0.0]
+  end
+  def self.assessor_id
+    "RAKE000001"
+  end
+  def self.scheme_name
+    "rake-scheme01"
+  end
+
+
   def self.production?
     result = ActiveRecord::Base.connection.exec_query("SELECT COUNT(*) as cnt FROM assessments ", "SQL")
     result.first["cnt"].to_i > 1_000_000
   end
 
-  def self.clean_tables(assessor_id)
+  def self.clean_tables
     sql = <<-SQL
     DELETE FROM assessments_xml x
         USING assessments a WHERE a.assessment_id = x.assessment_id AND scheme_assessor_id =  '#{assessor_id}'
     SQL
 
     ActiveRecord::Base.connection.exec_query(sql, "SQL")
-    ActiveRecord::Base.connection.exec_query("DELETE FROM assessments WHERE scheme_assessor_id =  '#{ASSESSOR_ID}'", "SQL")
+    ActiveRecord::Base.connection.exec_query("DELETE FROM assessments WHERE scheme_assessor_id =  '#{assessor_id}'", "SQL")
   end
 
   def self.lodge_assessments(file_array)
     use_case = UseCase::LodgeAssessment.new
     id = get_latest_assessment_id
 
-    file_array.each_with_index do |xml, index|
-      sanitised_xml = Helper::SanitizeXmlHelper.new.sanitize(xml.to_s)
+    file_array.each_with_index do |hash, index|
       id = id.next
-      assessment_type = SCHEME_ARRAY[index]
+      schema_type = hash[:scheme]
+      type_of_assessment = schema_type&.split("-").first
+      xml_doc  = update_xml(hash[:xml],type_of_assessment.downcase,id)
       data = { assessment_id: id,
-               assessor_id: ASSESSOR_ID,
-               raw_data: sanitised_xml,
+               assessor_id: assessor_id,
+               raw_data:  Helper::SanitizeXmlHelper.new.sanitize(xml_doc.to_s),
                date_of_registration: DateTime.yesterday,
-               type_of_assessment: assessment_type,
+               type_of_assessment: type_of_assessment,
                date_of_assessment: Time.now,
                date_of_expiry: Time.now + 10.years,
                current_energy_efficiency_rating: 1,
@@ -57,19 +68,39 @@ class DevAssessmentsHelper
                           postcode: "SW1A 2AA" } }
 
       begin
-        use_case.execute(data, false, SCHEME_ARRAY[index])
-        pp "Lodged assessment ID:#{id}, Type: '#{assessment_type}'"
+        use_case.execute(data, false, schema_type)
+        pp "Lodged assessment ID:#{id}, Type: '#{type_of_assessment}'"
       rescue UseCase::LodgeAssessment::DuplicateAssessmentIdException
         pp "skipped lodged assessment ID:#{id}"
       end
     end
   end
 
-  def self.read_fixtures(scheme_array)
+  def self.update_xml(xml_doc, type, id)
+    xml = xml_doc.remove_namespaces!
+    assessment_id_node = type == "cepc" ? xml.at("//*[local-name() = 'RRN']") : xml.at("RRN")
+    assessment_id_node.children = id
+    schema_node = xml_doc.at("//Certificate-Number")
+    schema_node.children = assessor_id
+    xml_doc
+  end
+
+  def self.read_fixtures
     file_array = []
     scheme_array.each do |scheme|
       file_content = read_xml(scheme, scheme.include?("CEPC") ? "cepc" : "epc")
-      file_array << Nokogiri.XML(file_content)
+      file_array << { xml: Nokogiri.XML(file_content), scheme: scheme}
+    end
+    file_array
+  end
+
+  def self.read_commercial_fixtures
+    file_array = []
+    commercial_fixtures  = %w[ac-cert ac-report cepc+rr dec dec+rr]
+
+    commercial_fixtures.each do | item|
+      file_content = read_xml("CEPC-8.0.0", item)
+      file_array << { xml: Nokogiri.XML(file_content), scheme: item.upcase}
     end
     file_array
   end
@@ -90,12 +121,12 @@ class DevAssessmentsHelper
   def self.add_rake_scheme
     insert_sql = <<-SQL
             INSERT INTO schemes(name,active)
-            VALUES ('#{SCHEME_NAME}', true)
+            VALUES ('#{scheme_name}', true)
     SQL
     begin
       ActiveRecord::Base.connection.insert(insert_sql, "SQL")
     rescue ActiveRecord::RecordNotUnique
-      ActiveRecord::Base.connection.exec_query("SELECT scheme_id FROM schemes WHERE name ='#{SCHEME_NAME}'", "SQL").first["scheme_id"]
+      ActiveRecord::Base.connection.exec_query("SELECT scheme_id FROM schemes WHERE name ='#{scheme_name}'", "SQL").first["scheme_id"]
     end
   end
 
@@ -103,7 +134,7 @@ class DevAssessmentsHelper
     insert_sql = <<~SQL
                   INSERT INTO assessors(scheme_assessor_id, first_name,last_name,date_of_birth,registered_by,telephone_number,email,domestic_rd_sap_qualification,non_domestic_sp3_qualification,non_domestic_cc4_qualification,
       non_domestic_dec_qualification,non_domestic_nos3_qualification,non_domestic_nos5_qualification,non_domestic_nos4_qualification,domestic_sap_qualification,gda_qualification)
-                  VALUES ('#{ASSESSOR_ID}', 'test_forename', 'test_surname', '1970-01-05', #{scheme_id}, '0202207459', 'test@barr.com', 'ACTIVE', 'ACTIVE', 'ACTIVE', 'ACTIVE', 'ACTIVE','ACTIVE','ACTIVE','ACTIVE','ACTIVE')
+                  VALUES ('#{assessor_id}', 'test_forename', 'test_surname', '1970-01-05', #{scheme_id}, '0202207459', 'test@barr.com', 'ACTIVE', 'ACTIVE', 'ACTIVE', 'ACTIVE', 'ACTIVE','ACTIVE','ACTIVE','ACTIVE','ACTIVE')
     SQL
     begin
       ActiveRecord::Base.connection.insert(insert_sql, "SQL")
