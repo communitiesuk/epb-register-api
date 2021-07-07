@@ -6,7 +6,9 @@ describe "linked_dev_assessments rake" do
       allow(STDOUT).to receive(:puts)
       allow(STDOUT).to receive(:write)
       get_task("lodge_dev_assessments").invoke
-    end    let!(:exported_data) do
+    end
+
+    let!(:exported_data) do
       ActiveRecord::Base.connection.exec_query("SELECT * FROM assessments")
     end
 
