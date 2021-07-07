@@ -26,17 +26,17 @@ describe UseCase::OptOutAssessment do
   end
 
   context "before the update has taken place" do
-    it "the assesment opt out status is false" do
+    it "the assessment opt out status is false" do
       expect(assessment.get("opt_out")).to be false
     end
 
-    it "the linked assement opt out status is false" do
+    it "the linked assessment opt out status is false" do
       expect(linked_assessment.get("opt_out")).to be false
     end
   end
 
   context "when calling update_statuses for opt outs" do
-    before { use_case.execute("0000-0000-0000-0000-0000") }
+    before { use_case.execute("0000-0000-0000-0000-0000", true ) }
 
     it "opts out the assessment by setting the value to true" do
       expect(assessment.get("opt_out")).to be true

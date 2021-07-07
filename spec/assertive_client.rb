@@ -663,6 +663,7 @@ end
 
 def opt_out_assessment(
   assessment_id,
+  opt_out = true,
   accepted_responses = [200],
   authenticate = true,
   auth_data = {},
@@ -670,7 +671,7 @@ def opt_out_assessment(
 )
   assertive_put(
     "/api/assessments/#{assessment_id}/opt-out",
-    "",
+    { "optOut": opt_out },
     accepted_responses,
     authenticate,
     auth_data,

@@ -750,7 +750,7 @@ paths:
     put:
       tags:
         - Manage Assessments
-      summary: Mark an assessment as opted out from search and open data publication
+      summary: Mark an assessment as opted in or out from search and open data publication
       security:
         - oauth:
             - 'admin:opt-out'
@@ -758,12 +758,21 @@ paths:
         - in: path
           name: assessmentId
           required: true
-          description: 'The ID of the assessment being opted out'
+          description: 'The ID of the assessment being opted in or out'
           schema:
             $ref: '#/components/schemas/AssessmentId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                optOut:
+                  type: boolean
+                  example: true
       responses:
         200:
-          description: Confirmation of opt-out
+          description: Confirmation of opt-out status update
           content:
             application/json:
               schema:
@@ -774,6 +783,12 @@ paths:
                     example: "Your opt out request was successful"
                   meta:
                     type: object
+        400:
+          description: Opt-out value should be a boolean
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         404:
           description: Assessment not found
           content:

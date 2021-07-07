@@ -253,11 +253,22 @@ module Controller
       end
     end
 
+    UPDATE_OPT_OUT_PUT_SCHEMA = {
+      type: "object",
+      required: %w[optOut],
+      properties: {
+        optOut: {
+          type: "boolean",
+        },
+      },
+    }.freeze
+
     put "/api/assessments/:assessment_id/opt-out",
         auth_token_has_all: %w[admin:opt_out] do
       assessment_id = params[:assessment_id]
+      new_opt_out_status = request_body(UPDATE_OPT_OUT_PUT_SCHEMA)[:opt_out]
 
-      UseCase::OptOutAssessment.new.execute(assessment_id)
+      UseCase::OptOutAssessment.new.execute(assessment_id, new_opt_out_status)
 
       json_api_response(code: 200, data: "Your opt out request was successful")
     rescue StandardError => e
@@ -266,6 +277,8 @@ module Controller
         not_found_error("Assessment not found")
       when Helper::RrnHelper::RrnNotValid
         error_response(400, "INVALID_QUERY", "Assessment ID not valid")
+      when JSON::Schema::ValidationError
+        error_response(422, "INVALID_REQUEST", e.message)
       else
         server_error(e)
       end

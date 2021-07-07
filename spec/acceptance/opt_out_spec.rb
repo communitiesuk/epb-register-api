@@ -92,15 +92,95 @@ describe "Acceptance::OptOut", set_with_timecop: true do
     end
   end
 
+  context "when opting in an assessment" do
+    it "adds them to the certificate search" do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
+
+      lodge_assessment(
+        assessment_body: valid_rdsap_xml,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        )
+
+      response =
+        JSON.parse(
+          assessments_search_by_postcode("A0 0AA", [200]).body,
+          symbolize_names: true,
+          )
+
+      expect(response[:data][:assessments].length).to eq 1
+
+      opt_out_assessment("0000-0000-0000-0000-0000")
+
+      response =
+        JSON.parse(
+          assessments_search_by_postcode("A0 0AA", [200]).body,
+          symbolize_names: true,
+          )
+
+      expect(response[:data][:assessments].length).to eq 0
+
+      opt_out_assessment("0000-0000-0000-0000-0000", false)
+
+      response =
+        JSON.parse(
+          assessments_search_by_postcode("A0 0AA", [200]).body,
+          symbolize_names: true,
+          )
+
+      expect(response[:data][:assessments].length).to eq 1
+    end
+
+    it "shows as opted in in the assessment summary JSON" do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
+      lodge_assessment(
+        assessment_body: valid_rdsap_xml,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        )
+      opt_out_assessment("0000-0000-0000-0000-0000")
+
+      summary =
+        JSON.parse(
+          fetch_assessment_summary("0000-0000-0000-0000-0000").body,
+          symbolize_names: true,
+          )
+
+      expect(summary[:data][:optOut]).to eq true
+
+      opt_out_assessment("0000-0000-0000-0000-0000", false)
+
+      summary =
+        JSON.parse(
+          fetch_assessment_summary("0000-0000-0000-0000-0000").body,
+          symbolize_names: true,
+          )
+
+      expect(summary[:data][:optOut]).to eq false
+    end
+  end
+
   context "when opting out an assessment that doesnt exist" do
     it "returns 404" do
-      opt_out_assessment("0000-0000-0000-0000-0000", [404])
+      opt_out_assessment("0000-0000-0000-0000-0000", true, [404])
     end
   end
 
   context "when opting out an assessment id that is not valid" do
     it "returns 400" do
-      opt_out_assessment("0000-0000-0000-0000-0000%23", [400])
+      opt_out_assessment("0000-0000-0000-0000-0000%23", true, [400])
+    end
+  end
+
+  context "when opt out value s not a boolean" do
+    it "returns 422" do
+      opt_out_assessment("0000-0000-0000-0000-0000%23", "true", [422])
     end
   end
 end

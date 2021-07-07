@@ -10,7 +10,7 @@ module UseCase
       @assessments_search_gateway = Gateway::AssessmentsSearchGateway.new
     end
 
-    def execute(assessment_id)
+    def execute(assessment_id, opt_out_status)
       assessment_id = Helper::RrnHelper.normalise_rrn_format(assessment_id)
 
       main_assessment =
@@ -36,8 +36,7 @@ module UseCase
 
       assessment_ids =
         assessments.map { |assessment| assessment.get("assessment_id") }
-
-      @assessments_gateway.update_statuses(assessment_ids, "opt_out", true)
+      @assessments_gateway.update_statuses(assessment_ids, "opt_out", opt_out_status)
     end
   end
 end
