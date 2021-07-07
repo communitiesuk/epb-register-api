@@ -1,28 +1,25 @@
 describe "linked_dev_assessments rake" do
   include RSpecRegisterApiServiceMixin
 
-
   context "call the rake task in production" do
     before do
       allow(STDOUT).to receive(:puts)
       allow(STDOUT).to receive(:write)
-      ENV["STAGE"] = 'production'
+      ENV["STAGE"] = "production"
       get_task("lodge_dev_assessments").invoke
-
     end
 
     after do
-      ENV["STAGE"] = 'test'
+      ENV["STAGE"] = "test"
     end
 
     let!(:exported_data) do
       ActiveRecord::Base.connection.exec_query("SELECT * FROM assessments")
     end
 
-    it 'should not have exported any data' do
+    it "does not have exported any data" do
       expect(exported_data.rows.length).to eq(0)
     end
-
   end
 
   context "call the rake task and extract the saved data" do
