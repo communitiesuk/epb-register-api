@@ -1,13 +1,15 @@
 desc "Lodge assessments to the dev databse for testing"
 
 task :lodge_dev_assessments do
-  if !DevAssessmentsHelper.production?
+
+
+  if ENV["STAGE"] != "production"
     scheme_id = DevAssessmentsHelper.add_rake_scheme
     DevAssessmentsHelper.add_assessor(scheme_id)
     DevAssessmentsHelper.clean_tables
     DevAssessmentsHelper.lodge_assessments(DevAssessmentsHelper.read_fixtures)
   else
-    pp "aborted as in production"
+    pp 'abort for production'
   end
 end
 
