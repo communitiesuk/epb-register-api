@@ -24,11 +24,6 @@ class DevAssessmentsHelper
     "rake-scheme01"
   end
 
-  def self.production?
-    result = ActiveRecord::Base.connection.exec_query("SELECT COUNT(*) as cnt FROM assessments ", "SQL")
-    result.first["cnt"].to_i > 1_000_000
-  end
-
   def self.clean_tables
     sql = <<-SQL
     DELETE FROM assessments_xml x
