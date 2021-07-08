@@ -1,12 +1,5 @@
 require 'rake'
 
-class DatabaseSidekiqError < StandardError
-  def initialize(msg="This is a database exception for sidekiq", exception_type="custom")
-    @exception_type = exception_type
-    super(msg)
-  end
-end
-
 class RakeSidekiqError < StandardError
   def initialize(msg="This is a rake exception for sidekiq", exception_type="custom")
     @exception_type = exception_type
@@ -20,13 +13,10 @@ module Worker
     include Sidekiq::Worker
 
     def perform
-      # get_task("qa_rake").invoke
       begin
-      results = ActiveRecord::Base.connection.exec_query("SELECT COUNT(*) as cnt FROM assessors", "SQL")
-      pp "sidekiq results:" + results.first["cnt"]
-      rescue StandardError => e
-        raise DatabaseSidekiqError.new
-      end
+      get_task("qa_rake").invoke
+      rescue StandardError
+        raise RakeSidekiqError.new
     end
 
     def get_task(name)
