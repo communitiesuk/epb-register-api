@@ -1,3 +1,5 @@
+require 'rake'
+
 module Worker
   class QaWorker
     include Sidekiq::Worker
@@ -7,15 +9,10 @@ module Worker
     end
 
     def get_task(name)
-      rake = Rake::Application.new
+      rake = ::Rake::Application.new
       Rake.application = rake
       rake.load_rakefile
       rake.tasks.find { |task| task.to_s == name }
     end
-
   end
 end
-
-
-
-
