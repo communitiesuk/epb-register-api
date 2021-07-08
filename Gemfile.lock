@@ -54,19 +54,23 @@ GEM
       oauth2 (~> 1.4)
     et-orbi (1.2.4)
       tzinfo
-    faraday (1.4.3)
+    faraday (1.5.0)
       faraday-em_http (~> 1.0)
       faraday-em_synchrony (~> 1.0)
       faraday-excon (~> 1.1)
+      faraday-httpclient (~> 1.0.1)
       faraday-net_http (~> 1.0)
       faraday-net_http_persistent (~> 1.1)
+      faraday-patron (~> 1.0)
       multipart-post (>= 1.2, < 3)
       ruby2_keywords (>= 0.0.4)
     faraday-em_http (1.0.0)
     faraday-em_synchrony (1.0.0)
     faraday-excon (1.1.0)
+    faraday-httpclient (1.0.1)
     faraday-net_http (1.0.1)
     faraday-net_http_persistent (1.1.0)
+    faraday-patron (1.0.0)
     fugit (1.5.0)
       et-orbi (~> 1.1, >= 1.1.8)
       raabro (~> 1.4)
@@ -163,11 +167,11 @@ GEM
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.4)
     rubyzip (2.3.0)
-    sentry-ruby (4.5.2)
+    sentry-ruby (4.6.1)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       faraday (>= 1.0)
-      sentry-ruby-core (= 4.5.2)
-    sentry-ruby-core (4.5.2)
+      sentry-ruby-core (= 4.6.1)
+    sentry-ruby-core (4.6.1)
       concurrent-ruby
       faraday
     sidekiq (6.2.1)
@@ -226,7 +230,7 @@ DEPENDENCIES
   rubocop-govuk (~> 3.17)!
   rubocop-performance!
   rubyzip (~> 2.3.0)!
-  sentry-ruby (~> 4.5)!
+  sentry-ruby (~> 4.6)!
   sidekiq (~> 6.2.1)!
   sidekiq-cron (~> 1.2.0)!
   sinatra (~> 2.0, >= 2.0.7)!
