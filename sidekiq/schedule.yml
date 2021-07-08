@@ -3,3 +3,10 @@ my_first_job:
   class: "Worker::TestWorker"
   name: "Little worker -- every hour Mon-Fri"
   queue: default
+
+
+qa_task:
+  cron: "*/5 * * * 4"
+  class: "Worker::QaWorker"
+  name: "QA rake task - every five minutes on a Thursday"
+  queue: default
