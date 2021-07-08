@@ -753,7 +753,7 @@ paths:
       summary: Mark an assessment as opted in or out from search and open data publication
       security:
         - oauth:
-            - 'admin:opt-out'
+            - 'admin:opt_out'
       parameters:
         - in: path
           name: assessmentId
