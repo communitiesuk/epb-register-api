@@ -103,13 +103,13 @@ describe "Acceptance::OptOut", set_with_timecop: true do
         auth_data: {
           scheme_ids: [scheme_id],
         },
-      )
+        )
 
       response =
         JSON.parse(
           assessments_search_by_postcode("A0 0AA", [200]).body,
           symbolize_names: true,
-        )
+          )
 
       expect(response[:data][:assessments].length).to eq 1
 
@@ -119,7 +119,7 @@ describe "Acceptance::OptOut", set_with_timecop: true do
         JSON.parse(
           assessments_search_by_postcode("A0 0AA", [200]).body,
           symbolize_names: true,
-        )
+          )
 
       expect(response[:data][:assessments].length).to eq 0
 
@@ -129,7 +129,7 @@ describe "Acceptance::OptOut", set_with_timecop: true do
         JSON.parse(
           assessments_search_by_postcode("A0 0AA", [200]).body,
           symbolize_names: true,
-        )
+          )
 
       expect(response[:data][:assessments].length).to eq 1
     end
@@ -143,14 +143,14 @@ describe "Acceptance::OptOut", set_with_timecop: true do
         auth_data: {
           scheme_ids: [scheme_id],
         },
-      )
+        )
       opt_out_assessment("0000-0000-0000-0000-0000")
 
       summary =
         JSON.parse(
           fetch_assessment_summary("0000-0000-0000-0000-0000").body,
           symbolize_names: true,
-        )
+          )
 
       expect(summary[:data][:optOut]).to eq true
 
@@ -160,7 +160,7 @@ describe "Acceptance::OptOut", set_with_timecop: true do
         JSON.parse(
           fetch_assessment_summary("0000-0000-0000-0000-0000").body,
           symbolize_names: true,
-        )
+          )
 
       expect(summary[:data][:optOut]).to eq false
     end
