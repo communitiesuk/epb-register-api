@@ -380,7 +380,7 @@ describe ViewModel::SapWrapper do
           tenure
         ],
         different_fields: {
-          total_floor_area: "",
+          total_floor_area: 98.0,
           recommended_improvements: [
             {
               energy_performance_band_improvement: "e",
@@ -1352,7 +1352,7 @@ describe ViewModel::SapWrapper do
             built_form: "Semi-Detached",
             mainheat_description: "Gas boiler",
             floor_level: nil,
-            total_floor_area: nil,
+            total_floor_area: "98",
           },
         },
         {
@@ -1377,7 +1377,7 @@ describe ViewModel::SapWrapper do
             mainheat_description: "Gas boiler",
             extension_count: "0",
             main_fuel: "Solid fuel: dual fuel appliance (mineral and wood)",
-            total_floor_area: nil,
+            total_floor_area: "98",
             glazed_area: "Normal",
             glazed_type: "double glazing installed during or after 2002",
             number_habitable_rooms: "4",
