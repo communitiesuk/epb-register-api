@@ -40,4 +40,21 @@ describe UseCase::UpdateAssessmentStatus do
       expect(linked_assessment.get("cancelled_at")).not_to be_nil
     end
   end
+
+  context "when one half of a linked pair is already cancelled" do
+    let(:assessments_gateway) { Gateway::AssessmentsGateway.new }
+    let(:assessments_search_gateway) { Gateway::AssessmentsSearchGateway.new }
+    before do
+      assessments_gateway.update_statuses(
+        %w[0000-0000-0000-0000-0001],
+        "cancelled_at",
+        Time.now.to_s,
+      )
+    end
+
+    it "cancels the uncancelled certificate" do
+      use_case.execute("0000-0000-0000-0000-0000", "CANCELLED", [@scheme_id])
+      expect(assessment.get("cancelled_at")).not_to be_nil
+    end
+  end
 end

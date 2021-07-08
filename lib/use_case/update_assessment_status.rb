@@ -37,7 +37,11 @@ module UseCase
             linked_assessment_id,
             false,
           ).first
-        assessments << linked_assessment
+
+        unless linked_assessment.get(:cancelled_at) ||
+            linked_assessment.get(:not_for_issue_at)
+          assessments << linked_assessment
+        end
       end
 
       validate_status_updates(assessments, scheme_ids)
