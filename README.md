@@ -42,14 +42,9 @@ The values for these should match those on the auth server being connected to.
 This will make the API available at `http://localhost:9191`. 
 
 ## Code Formatting 
-Use Rubocop + Prettier to format ruby code to save arguing about it.
-
-`make slow-format`
-
-To run Rubocop on its own, run:
+To run Rubocop:
 
 `make format`
-
 
 # CI
 Build commands are stored in the buildspec directory
