@@ -356,7 +356,7 @@
                 <SAP05:SAP-Floor-Dimension>
                   <SAP05:Storey>0</SAP05:Storey>
                   <SAP05:Floor-Type>2</SAP05:Floor-Type>
-                  <SAP05:Total-Floor-Area>28.80</SAP05:Total-Floor-Area>
+                  <SAP05:Total-Floor-Area>48.80</SAP05:Total-Floor-Area>
                   <SAP05:Storey-Height>2.4</SAP05:Storey-Height>
                   <SAP05:Heat-Loss-Area>28.80</SAP05:Heat-Loss-Area>
                   <SAP05:U-Value>0.22</SAP05:U-Value>
