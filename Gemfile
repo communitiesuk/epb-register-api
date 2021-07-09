@@ -33,7 +33,7 @@ source "https://rubygems.org" do
   gem "rake"
   gem "rubocop-govuk", "~> 3.17"
   gem "rubocop-performance", require: false
-  gem "rubyzip", "~> 2.3.0"
+  gem "rubyzip", "~> 2.3.2"
   gem "sentry-ruby", "~> 4.6"
   gem "sinatra", "~> 2.0", ">= 2.0.7"
   gem "sinatra-activerecord", "~> 2.0.23"
