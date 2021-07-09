@@ -1504,7 +1504,7 @@ describe ViewModel::SapWrapper do
             built_form: nil,
             mainheat_description: "Gas boiler",
             floor_level: nil,
-            total_floor_area: nil,
+            total_floor_area: "98",
             co2_emiss_curr_per_floor_area: nil,
             construction_age_band: "England and Wales: 1930-1949",
             wind_turbine_count: nil,
