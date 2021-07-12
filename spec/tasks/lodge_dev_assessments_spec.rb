@@ -38,7 +38,7 @@ describe "linked_dev_assessments rake" do
     end
 
     it "writes the correct data to the database" do
-      expect(exported_data.rows.length).to eq(10)
+      expect(exported_data.rows.length).to eq(12)
       expect(exported_data.first["type_of_assessment"]).to eq("CEPC")
     end
 

@@ -21,11 +21,11 @@ class DevAssessmentsHelper
   end
 
   def self.commercial_fixtures
-    %w[ac-cert ac-report cepc+rr dec]
+    %w[ac-cert ac-report cepc cepc-rr dec dec-rr]
   end
 
   def self.scheme_name
-    "rake-scheme01"
+    "ecmk"
   end
 
   def self.clean_tables
