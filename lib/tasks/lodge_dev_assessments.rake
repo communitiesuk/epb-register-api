@@ -40,8 +40,13 @@ class DevAssessmentsHelper
 
     file_array.each_with_index do |hash, _index|
       id = id.next
-      schema_type = hash[:scheme]
-      type_of_assessment = schema_type&.split("-").first
+      if ["DEC", 'AC-CERT', 'AC-REPORT', "CEPC+RR"].include? hash[:scheme]
+        schema_type = "CEPC-8.0.0"
+        type_of_assessment =  hash[:scheme]
+      else
+        schema_type = hash[:scheme]
+        type_of_assessment = schema_type&.split("-").first
+      end
       xml_doc = update_xml(hash[:xml], type_of_assessment.downcase, id)
       data = { assessment_id: id,
                assessor_id: assessor_id,
@@ -62,7 +67,7 @@ class DevAssessmentsHelper
 
       begin
         use_case.execute(data, false, schema_type)
-        pp "Lodged assessment ID:#{id}, Type: '#{type_of_assessment}'"
+        pp "Lodged assessment ID:#{id}, Type: '#{type_of_assessment}', Schema: '#{schema_type}'"
       rescue UseCase::LodgeAssessment::DuplicateAssessmentIdException
         pp "skipped lodged assessment ID:#{id}"
       end
@@ -84,12 +89,12 @@ class DevAssessmentsHelper
       file_content = read_xml(scheme, scheme.include?("CEPC") ? "cepc" : "epc")
       file_array << { xml: Nokogiri.XML(file_content), scheme: scheme }
     end
-    file_array
+    file_array + read_commercial_fixtures
   end
 
   def self.read_commercial_fixtures
     file_array = []
-    commercial_fixtures = %w[ac-cert ac-report cepc+rr dec dec+rr]
+    commercial_fixtures = %w[ac-cert ac-report cepc+rr dec]
 
     commercial_fixtures.each do |item|
       file_content = read_xml("CEPC-8.0.0", item)
