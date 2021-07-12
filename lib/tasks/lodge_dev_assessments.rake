@@ -20,6 +20,10 @@ class DevAssessmentsHelper
     "RAKE000001"
   end
 
+  def self.commercial_fixtures
+    %w[ac-cert ac-report cepc+rr dec]
+  end
+
   def self.scheme_name
     "rake-scheme01"
   end
@@ -40,7 +44,7 @@ class DevAssessmentsHelper
 
     file_array.each_with_index do |hash, _index|
       id = id.next
-      if ["DEC", 'AC-CERT', 'AC-REPORT', "CEPC+RR"].include? hash[:scheme]
+      if commercial_fixtures.include? hash[:scheme]
         schema_type = "CEPC-8.0.0"
         type_of_assessment =  hash[:scheme]
       else
@@ -94,7 +98,6 @@ class DevAssessmentsHelper
 
   def self.read_commercial_fixtures
     file_array = []
-    commercial_fixtures = %w[ac-cert ac-report cepc+rr dec]
 
     commercial_fixtures.each do |item|
       file_content = read_xml("CEPC-8.0.0", item)
