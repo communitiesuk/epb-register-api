@@ -36,7 +36,7 @@ describe UseCase::OptOutAssessment do
   end
 
   context "when calling update_statuses for opt outs" do
-    before { use_case.execute("0000-0000-0000-0000-0000", true ) }
+    before { use_case.execute("0000-0000-0000-0000-0000", true) }
 
     it "opts out the assessment by setting the value to true" do
       expect(assessment.get("opt_out")).to be true

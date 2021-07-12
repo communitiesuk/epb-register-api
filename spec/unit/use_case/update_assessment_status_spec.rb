@@ -44,6 +44,7 @@ describe UseCase::UpdateAssessmentStatus do
   context "when one half of a linked pair is already cancelled" do
     let(:assessments_gateway) { Gateway::AssessmentsGateway.new }
     let(:assessments_search_gateway) { Gateway::AssessmentsSearchGateway.new }
+
     before do
       assessments_gateway.update_statuses(
         %w[0000-0000-0000-0000-0001],
