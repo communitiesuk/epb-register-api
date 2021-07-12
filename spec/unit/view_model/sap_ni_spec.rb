@@ -275,7 +275,7 @@ describe ViewModel::SapWrapper do
           tenure
         ],
         different_fields: {
-          total_floor_area: "",
+          total_floor_area: 98.0,
           recommended_improvements: [
             {
               energy_performance_band_improvement: "e",
@@ -1308,7 +1308,7 @@ describe ViewModel::SapWrapper do
             tenure: nil,
             environment_impact_potential: "93",
             report_type: "3",
-            total_floor_area: nil,
+            total_floor_area: "98",
             extension_count: nil,
             multi_glaze_proportion: nil,
             mainheat_description: "Gas boiler",
@@ -1324,7 +1324,7 @@ describe ViewModel::SapWrapper do
             transaction_type: "not sale or rental",
             environment_impact_potential: "70",
             co2_emiss_curr_per_floor_area: "56",
-            total_floor_area: nil,
+            total_floor_area: "98",
             multi_glaze_proportion: "100",
             low_energy_lighting: nil,
             fixed_lighting_outlets_count: nil,
@@ -1353,7 +1353,7 @@ describe ViewModel::SapWrapper do
             tenure: nil,
             transaction_type: nil,
             environment_impact_potential: "93",
-            total_floor_area: nil,
+            total_floor_area: "98",
             report_type: "3",
             extension_count: nil,
             multi_glaze_proportion: nil,
@@ -1374,7 +1374,7 @@ describe ViewModel::SapWrapper do
             transaction_type: nil,
             environment_impact_potential: "70",
             co2_emiss_curr_per_floor_area: nil,
-            total_floor_area: nil,
+            total_floor_area: "98",
             multi_glaze_proportion: nil,
             low_energy_lighting: nil,
             fixed_lighting_outlets_count: nil,
