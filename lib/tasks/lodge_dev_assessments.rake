@@ -44,7 +44,8 @@ class DevAssessmentsHelper
 
     file_array.each_with_index do |hash, _index|
       id = id.next
-      if commercial_fixtures.include? hash[:scheme]
+
+      if commercial_fixtures.include? hash[:scheme].to_s.downcase
         schema_type = "CEPC-8.0.0"
         type_of_assessment =  hash[:scheme]
       else
