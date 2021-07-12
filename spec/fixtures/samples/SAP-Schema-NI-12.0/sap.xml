@@ -303,7 +303,7 @@
                   <SAP:Storey>1</SAP:Storey>
                   <SAP:Description>Exposed Floor</SAP:Description>
                   <SAP:Floor-Type>2</SAP:Floor-Type>
-                  <SAP:Total-Floor-Area>69.64</SAP:Total-Floor-Area>
+                  <SAP:Total-Floor-Area>98</SAP:Total-Floor-Area>
                   <SAP:Storey-Height>2.4</SAP:Storey-Height>
                   <SAP:Heat-Loss-Area>3.67</SAP:Heat-Loss-Area>
                   <SAP:U-Value>0.23</SAP:U-Value>

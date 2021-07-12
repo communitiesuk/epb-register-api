@@ -169,7 +169,10 @@ module ViewModel
       end
 
       def total_floor_area
-        xpath(%w[Property-Summary Total-Floor-Area])
+        building_part_areas = @xml_doc.search("//SAP-Building-Part/SAP-Floor-Dimensions/SAP-Floor-Dimension/Total-Floor-Area").map(&:content)
+        room_in_roof_areas = @xml_doc.search("//SAP-Building-Part/SAP-Room-In-Roof/Floor-Area").map(&:content)
+        all_areas = (building_part_areas + room_in_roof_areas).map(&:to_f)
+        all_areas.sum.round.to_i.to_s
       end
 
       def dwelling_type
