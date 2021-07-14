@@ -15,6 +15,7 @@ env:
     PAAS_API: "epbr-govpaas-api"
     PAAS_ORG: "epbr-govpaas-orgname"
     EPB_UNLEASH_URI: "epbr-unleash-integration-uri"
+    EPB_UNLEASH_AUTH_TOKEN: "epbr-unleash-integration-auth-token"
     JWT_ISSUER: "epbr-jwt-issuer-integration"
     JWT_SECRET: "epbr-jwt-secret-integration"
     SENTRY_DSN: "epbr-sentry-dsn-register-api"
