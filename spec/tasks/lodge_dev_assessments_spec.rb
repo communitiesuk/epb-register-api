@@ -67,7 +67,6 @@ describe "linked_dev_assessments rake" do
     end
 
     it "gets the report type from the xpath used in the factory" do
-      filter_results_for = "0000-0000-0000-0000-0000"
       xml_doc.remove_namespaces!
       expect(xml_doc.at("//Certificate-Number").text).to eq("SPEC000000")
     end
