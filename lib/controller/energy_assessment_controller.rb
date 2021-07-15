@@ -227,6 +227,10 @@ module Controller
 
       auth_scheme_ids = env[:auth_token].supplemental("scheme_ids")
 
+      if Helper::Toggles.enabled?("test-flag")
+        @logger.info("The test-flag feature flag is switched on in this environment.")
+      end
+
       result =
         UseCase::FetchAssessment.new.execute(assessment_id, auth_scheme_ids)
 
