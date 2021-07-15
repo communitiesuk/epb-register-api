@@ -1,7 +1,7 @@
 require "ougai"
 
 module Helper
-  class LogHelper
+  class EventLogger
     def initialize
       $stdout.sync = true
       @logger = Ougai::Logger.new(STDOUT)

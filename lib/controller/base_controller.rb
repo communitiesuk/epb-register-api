@@ -16,7 +16,7 @@ module Controller
       @json_helper = Helper::JsonHelper.new
       @logger = Logger.new(STDOUT)
       @logger.level = Logger::ERROR
-      @events = Helper::LogHelper.new
+      @events = Helper::EventLogger.new
     end
 
     configure :development do
