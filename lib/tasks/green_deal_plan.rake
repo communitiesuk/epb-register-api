@@ -3,18 +3,21 @@ require "openssl"
 desc "Truncate green deal plans data"
 
 task :truncate_green_deal_plans do
+  Tasks::TaskHelpers.quit_if_production
   ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE green_deal_plans RESTART IDENTITY CASCADE")
 end
 
 desc "Truncate green deal assessments data"
 
 task :truncate_green_deal_assessments do
+  Tasks::TaskHelpers.quit_if_production
   ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE green_deal_assessments RESTART IDENTITY CASCADE")
 end
 
 desc "Import green deal plans data"
 
 task :import_green_deal_plans do
+  Tasks::TaskHelpers.quit_if_production
   ActiveRecord::Base.logger = nil
 
   uri = URI(ENV["url"])

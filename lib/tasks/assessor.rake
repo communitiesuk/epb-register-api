@@ -1,9 +1,7 @@
 desc "Truncate assessors data"
 
 task :truncate_assessor do
-  if ENV["STAGE"] == "production"
-    exit
-  end
+  Tasks::TaskHelpers.quit_if_production
 
   ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE assessors RESTART IDENTITY CASCADE")
 end
@@ -11,9 +9,7 @@ end
 desc "Import some random assessors data"
 
 task :generate_assessor do
-  if ENV["STAGE"] == "production"
-    exit
-  end
+  Tasks::TaskHelpers.quit_if_production
 
   schemes = ActiveRecord::Base.connection.exec_query("SELECT * FROM schemes")
 

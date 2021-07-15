@@ -1,9 +1,7 @@
 desc "Seed green deal assessments test data"
 
 task :seed_test_green_deal_plans do
-  if ENV["STAGE"] == "production"
-    raise StandardError, "I will not seed the production db"
-  end
+  Tasks::TaskHelpers.quit_if_production
 
   ActiveRecord::Base.logger = nil
 

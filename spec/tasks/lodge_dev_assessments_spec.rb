@@ -6,7 +6,6 @@ describe "linked_dev_assessments rake" do
       allow(STDOUT).to receive(:puts)
       allow(STDOUT).to receive(:write)
       ENV["STAGE"] = "production"
-      get_task("lodge_dev_assessments").invoke
     end
 
     after do
@@ -17,7 +16,10 @@ describe "linked_dev_assessments rake" do
       ActiveRecord::Base.connection.exec_query("SELECT * FROM assessments")
     end
 
-    it "does not have exported any data" do
+    it "raises an error and does not have any exported data" do
+      expect { get_task("lodge_dev_assessments").invoke }.to raise_error(
+        StandardError,
+      ).with_message("This task can only be run if the STAGE is test, development, integration or staging")
       expect(exported_data.rows.length).to eq(0)
     end
   end
