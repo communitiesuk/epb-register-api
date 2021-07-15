@@ -189,6 +189,7 @@ module ViewModel
         all_areas = (building_part_areas + room_in_roof_areas).map(&:to_f)
         all_areas.sum.round.to_i.to_s
       end
+
       def dwelling_type; end
 
       def potential_energy_saving; end
