@@ -1,6 +1,6 @@
 module UseCase
   class SearchAddressesByStreetAndTown
-    def initialize(address_search_gateway=nil)
+    def initialize(address_search_gateway = nil)
       @address_search_gateway = address_search_gateway || Gateway::AddressSearchGateway.new
     end
 

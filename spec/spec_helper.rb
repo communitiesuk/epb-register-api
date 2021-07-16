@@ -170,7 +170,6 @@ def insert_into_address_base(rrn, post_code, address1, address2, town)
             classification_code,
             address_type)
             VALUES ('#{rrn}', '#{post_code}', '#{address1}', '#{address2}', '', '', '#{town}', 'D', 'Delivery Point')")
-
 end
 
 def get_task(name)

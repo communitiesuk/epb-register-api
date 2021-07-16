@@ -275,17 +275,15 @@ module Gateway
           ActiveRecord::Base.connection.exec_query(
             sql_address_base,
             "SQL",
-            binds
-            ),
+            binds,
+          ),
           ActiveRecord::Base.connection.exec_query(
             sql_assessments,
             "SQL",
-            binds
-            ),
+            binds,
+          ),
         ].flatten,
-        )
-
-
+      )
     end
 
   private
