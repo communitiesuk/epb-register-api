@@ -463,4 +463,117 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
       assert_errors([error], { "Roof-Room-Connected": "Y" })
     end
   end
+
+  context "INSPECTION_DATE_LATER_THAN_COMPLETION_DATE" do
+    let(:error) do
+      {
+        "code": "INSPECTION_DATE_LATER_THAN_COMPLETION_DATE",
+        "title":
+          'The "Completion-Date" must be equal to or later than "Inspection-Date"',
+      }.freeze
+    end
+
+    it "allows lodgement when the Completion-Date is after the Inspection-Date" do
+      assert_errors([], {
+        "Inspection-Date": Date.yesterday.to_s ,
+        "Completion-Date": Date.today.to_s,
+      })
+    end
+
+    it "allows lodgement when the Inspection-Date and the Completion-Date are equal" do
+      assert_errors([], {
+        "Inspection-Date": Date.today.to_s ,
+        "Completion-Date": Date.today.to_s,
+      })
+    end
+
+    it "throws an error when the Inspection-Date is later than the Completion-Date" do
+      assert_errors([error], {
+        "Inspection-Date": Date.today.to_s ,
+        "Completion-Date": Date.yesterday.to_s,
+      })
+    end
+
+  end
+
+  context "COMPLETION_DATE_LATER_THAN_REGISTRATION_DATE" do
+    let(:error) do
+      {
+        "code": "COMPLETION_DATE_LATER_THAN_REGISTRATION_DATE",
+        "title":
+          'The "Completion-Date" must be before or equal to the "Registration-Date"',
+      }.freeze
+      end
+
+      it "allows lodgement when the Registration-Date is after the Completion-Date" do
+        assert_errors([], {
+          "Completion-Date": Date.yesterday.to_s,
+          "Registration-Date": Date.today.to_s ,
+        })
+      end
+
+      it "allows lodgement when the Completion-Date and the Registration-Date are equal" do
+        assert_errors([], {
+          "Completion-Date": Date.today.to_s ,
+          "Registration-Date": Date.today.to_s,
+        })
+      end
+
+      it "throws an error when the Completion-Date is later than the Registration-Date" do
+        assert_errors([error], {
+          "Completion-Date": Date.today.to_s,
+          "Registration-Date": Date.yesterday.to_s
+        })
+      end
+
+  end
+
+  context "Both INSPECTION_DATE_LATER_THAN_COMPLETION_DATE and COMPLETION_DATE_LATER_THAN_REGISTRATION_DATE" do
+    let(:inspection_date_error) do
+      {
+        "code": "INSPECTION_DATE_LATER_THAN_COMPLETION_DATE",
+        "title":
+          'The "Completion-Date" must be equal to or later than "Inspection-Date"',
+      }.freeze
+    end
+    let(:completion_date_error) do
+      {
+        "code": "COMPLETION_DATE_LATER_THAN_REGISTRATION_DATE",
+        "title":
+          'The "Completion-Date" must be before or equal to the "Registration-Date"',
+      }.freeze
+    end
+
+    it "allows lodgement when the Completion-Date is after the Inspection-Date and the Registration-Date is after the Completion-Date" do
+      assert_errors([], {
+        "Inspection-Date": Date.yesterday.prev_day.to_s,
+        "Completion-Date": Date.yesterday.to_s,
+        "Registration-Date": Date.today.to_s
+      })
+    end
+
+    it "allows lodgement when all the dates are equal" do
+      assert_errors([], {
+        "Inspection-Date": Date.today.to_s,
+        "Completion-Date": Date.today.to_s,
+        "Registration-Date": Date.today.to_s
+      })
+    end
+
+    it "throws an error when the Registration-Date is before the Inspection-Date and Completion-Date" do
+      assert_errors([], {
+        "Inspection-Date": Date.yesterday.to_s ,
+        "Completion-Date": Date.today.to_s,
+        "Registration-Date": Date.yesterday.prev_day.to_s
+      })
+    end
+
+    it "throws an error when both the Inspection-Date is later than the Completion-Date and when the Completion-Date is later than the Registration-Date" do
+      assert_errors([], {
+        "Inspection-Date": Date.today.to_s ,
+        "Completion-Date": Date.yesterday.to_s,
+        "Registration-Date": Date.yesterday.prev_day.to_s
+      })
+    end
+  end
 end

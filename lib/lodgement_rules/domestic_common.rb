@@ -250,6 +250,38 @@ module LodgementRules
             !(roof_room_connected && building_parts.length <= 1)
           end,
       },
+      {
+        name: "INSPECTION_DATE_LATER_THAN_COMPLETION_DATE",
+        title:
+          'The "Completion-Date" must be equal to or later than "Inspection-Date"',
+        test:
+          lambda do |adapter|
+            dates = [
+              Date.parse(method_or_nil(adapter, :date_of_assessment)),
+              # Inspection-Date
+              Date.parse(method_or_nil(adapter, :date_of_completion)),
+              # Completion-Date
+            ]
+
+            dates[0] <= dates[1]
+          end,
+      },
+      {
+        name: "COMPLETION_DATE_LATER_THAN_REGISTRATION_DATE",
+        title:
+          'The "Completion-Date" must be before or equal to the "Registration-Date"',
+        test:
+          lambda do |adapter|
+            dates = [
+              Date.parse(method_or_nil(adapter, :date_of_completion)),
+              # Completion-Date
+              Date.parse(method_or_nil(adapter, :date_of_registration)),
+              # Registration-Date
+            ]
+
+            dates[0] <= dates[1]
+          end,
+      },
     ].freeze
 
     def validate(xml_adaptor)
