@@ -190,7 +190,7 @@ module Gateway
     end
 
     def search_by_street_and_town(street, town, address_type)
-      sql = <<~SQL
+      sql_assessments = <<~SQL
         SELECT aai.address_id,
                address_line1,
                address_line2,
@@ -229,12 +229,33 @@ module Gateway
       if address_type
         list_of_types = ADDRESS_TYPES[address_type.to_sym].map { |n| "'#{n}'" }
 
-        sql << <<~SQL_TYPE_OF_ASSESSMENT
+        sql_assessments << <<~SQL_TYPE_OF_ASSESSMENT
           AND type_of_assessment IN(#{list_of_types.join(',')})
         SQL_TYPE_OF_ASSESSMENT
       end
 
-      sql << " ORDER BY assessment_id "
+      sql_address_base = <<~SQL_ADDRESS_BASE
+        SELECT CONCAT('UPRN-', LPAD(uprn, 12, '0')) AS address_id,
+               address_line1,
+               address_line2,
+               address_line3,
+               address_line4,
+               town,
+               postcode
+        FROM address_base
+        WHERE (
+              LOWER(town) LIKE $2
+              OR
+              LOWER(address_line2) LIKE $2
+        )
+        AND (
+              LOWER(address_line1) LIKE $1
+              OR
+              LOWER(address_line2) LIKE $1
+        )
+      SQL_ADDRESS_BASE
+
+      sql_assessments << " ORDER BY assessment_id "
 
       binds = [
         ActiveRecord::Relation::QueryAttribute.new(
@@ -249,7 +270,22 @@ module Gateway
         ),
       ]
 
-      parse_results(ActiveRecord::Base.connection.exec_query(sql, "SQL", binds))
+      parse_results(
+        [
+          ActiveRecord::Base.connection.exec_query(
+            sql_address_base,
+            "SQL",
+            binds
+            ),
+          ActiveRecord::Base.connection.exec_query(
+            sql_assessments,
+            "SQL",
+            binds
+            ),
+        ].flatten,
+        )
+
+
     end
 
   private

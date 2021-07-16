@@ -159,6 +159,20 @@ def add_address_base(uprn:)
   )
 end
 
+def insert_into_address_base(rrn, post_code, address1, address2, town)
+  ActiveRecord::Base.connection.exec_query("INSERT INTO address_base (uprn,
+            postcode,
+            address_line1,
+            address_line2,
+            address_line3,
+            address_line4,
+            town,
+            classification_code,
+            address_type)
+            VALUES ('#{rrn}', '#{post_code}', '#{address1}', '#{address2}', '', '', '#{town}', 'D', 'Delivery Point')")
+
+end
+
 def get_task(name)
   rake = Rake::Application.new
   Rake.application = rake
