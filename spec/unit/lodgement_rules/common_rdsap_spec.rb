@@ -242,55 +242,44 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
           '"Inspection-Date", "Registration-Date" and "Completion-Date" must not be in the future and must not be more than 18 months ago',
       }.freeze
     end
-    let(:expected_inspection_test_error) do
-      {
-        "code": "INSPECTION_DATE_LATER_THAN_COMPLETION_DATE",
-        "title":
-          'The "Completion-Date" must be equal to or later than "Inspection-Date"',
-      }.freeze
-    end
-    let(:expected_completion_test_error) do
-      {
-        "code": "COMPLETION_DATE_LATER_THAN_REGISTRATION_DATE",
-        "title":
-          'The "Completion-Date" must be before or equal to the "Registration-Date"',
-      }.freeze
-    end
 
     it "Allows an inspection date that is today" do
-      assert_errors([expected_inspection_test_error, expected_completion_test_error], { "Inspection-Date": Date.today.to_s })
-    end
-
-    it "returns an error when inspection date is in the future" do
-      assert_errors([rule_under_test_error], { "Inspection-Date": Date.tomorrow.to_s })
-    end
-
-    it "returns an error when inspection date is more than 18 months ago" do
-      assert_errors(
-        [rule_under_test_error],
-        { "Inspection-Date": Date.today.prev_month(19).to_s },
+      assert_errors([],
+                    {
+                      "Inspection-Date": Date.today.to_s,
+                      "Registration-Date": Date.today.to_s,
+                      "Completion-Date": Date.today.to_s
+                    }
       )
     end
 
-    it "returns an error when registration date is in the future" do
-      assert_errors([rule_under_test_error], { "Registration-Date": Date.tomorrow.to_s })
+    it "returns an error when any of the dates are in the future" do
+      assert_errors([rule_under_test_error],
+  {
+          "Inspection-Date": Date.tomorrow.to_s,
+          "Registration-Date": Date.tomorrow.to_s,
+          "Completion-Date": Date.tomorrow.to_s
+        }
+      )
     end
 
-    it "returns an error when registration date is more than 18 months ago" do
+    it "returns an error when any of the dates are more than 18 months ago" do
       assert_errors(
         [rule_under_test_error],
-        { "Registration-Date": Date.today.prev_month(19).to_s },
+        {
+          "Inspection-Date": Date.today.prev_month(19).to_s,
+          "Registration-Date": Date.today.prev_month(19).to_s,
+          "Completion-Date": Date.today.prev_month(19).to_s
+        },
       )
     end
 
     it "returns an error when completion date is in the future" do
-      assert_errors([rule_under_test_error], { "Completion-Date": Date.tomorrow.to_s })
-    end
-
-    it "returns an error when completion date is more than 18 months ago" do
-      assert_errors(
-        [rule_under_test_error],
-        { "Completion-Date": Date.today.prev_month(19).to_s },
+      assert_errors([rule_under_test_error],
+                    {
+                      "Completion-Date": Date.tomorrow.to_s,
+                      "Registration-Date": Date.tomorrow.to_s,
+                    }
       )
     end
   end
@@ -491,6 +480,8 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
       assert_errors([], {
         "Inspection-Date": Date.yesterday.to_s ,
         "Completion-Date": Date.today.to_s,
+        "Registration-Date": Date.today.to_s,
+
       })
     end
 
@@ -498,6 +489,7 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
       assert_errors([], {
         "Inspection-Date": Date.today.to_s ,
         "Completion-Date": Date.today.to_s,
+        "Registration-Date": Date.today.to_s,
       })
     end
 
@@ -505,6 +497,7 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
       assert_errors([error], {
         "Inspection-Date": Date.today.to_s ,
         "Completion-Date": Date.yesterday.to_s,
+        "Registration-Date": Date.today.to_s,
       })
     end
 

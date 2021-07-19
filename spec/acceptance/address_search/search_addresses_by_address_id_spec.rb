@@ -8,11 +8,14 @@ describe "Acceptance::AddressSearch::ByBuildingReference",
     assessment_id_node = assessment.at("RRN")
     assessment_registration_node = assessment.at("Registration-Date")
     assessment_inspection_node = assessment.at("Inspection-Date")
+    assessment_completion_node = assessment.at("Completion-Date")
 
     assessment_id_node.children = assessment_id
     address_id_node.children = address_id
     assessment_inspection_node.children = date
     assessment_registration_node.children = date
+    assessment_completion_node.children = date
+
 
     lodge_assessment(
       assessment_body: assessment.to_xml,
