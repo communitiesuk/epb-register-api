@@ -16,7 +16,6 @@ describe "Acceptance::AddressSearch::ByBuildingReference",
     assessment_registration_node.children = date
     assessment_completion_node.children = date
 
-
     lodge_assessment(
       assessment_body: assessment.to_xml,
       accepted_responses: [201],

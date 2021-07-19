@@ -248,19 +248,17 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
                     {
                       "Inspection-Date": Date.today.to_s,
                       "Registration-Date": Date.today.to_s,
-                      "Completion-Date": Date.today.to_s
-                    }
-      )
+                      "Completion-Date": Date.today.to_s,
+                    })
     end
 
     it "returns an error when any of the dates are in the future" do
       assert_errors([rule_under_test_error],
-  {
-          "Inspection-Date": Date.tomorrow.to_s,
-          "Registration-Date": Date.tomorrow.to_s,
-          "Completion-Date": Date.tomorrow.to_s
-        }
-      )
+                    {
+                      "Inspection-Date": Date.tomorrow.to_s,
+                      "Registration-Date": Date.tomorrow.to_s,
+                      "Completion-Date": Date.tomorrow.to_s,
+                    })
     end
 
     it "returns an error when any of the dates are more than 18 months ago" do
@@ -269,7 +267,7 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
         {
           "Inspection-Date": Date.today.prev_month(19).to_s,
           "Registration-Date": Date.today.prev_month(19).to_s,
-          "Completion-Date": Date.today.prev_month(19).to_s
+          "Completion-Date": Date.today.prev_month(19).to_s,
         },
       )
     end
@@ -279,8 +277,7 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
                     {
                       "Completion-Date": Date.tomorrow.to_s,
                       "Registration-Date": Date.tomorrow.to_s,
-                    }
-      )
+                    })
     end
   end
 
@@ -478,7 +475,7 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
 
     it "allows lodgement when the Completion-Date is after the Inspection-Date" do
       assert_errors([], {
-        "Inspection-Date": Date.yesterday.to_s ,
+        "Inspection-Date": Date.yesterday.to_s,
         "Completion-Date": Date.today.to_s,
         "Registration-Date": Date.today.to_s,
 
@@ -487,7 +484,7 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
 
     it "allows lodgement when the Inspection-Date and the Completion-Date are equal" do
       assert_errors([], {
-        "Inspection-Date": Date.today.to_s ,
+        "Inspection-Date": Date.today.to_s,
         "Completion-Date": Date.today.to_s,
         "Registration-Date": Date.today.to_s,
       })
@@ -495,12 +492,11 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
 
     it "throws an error when the Inspection-Date is later than the Completion-Date" do
       assert_errors([error], {
-        "Inspection-Date": Date.today.to_s ,
+        "Inspection-Date": Date.today.to_s,
         "Completion-Date": Date.yesterday.to_s,
         "Registration-Date": Date.today.to_s,
       })
     end
-
   end
 
   context "COMPLETION_DATE_LATER_THAN_REGISTRATION_DATE" do
@@ -510,29 +506,28 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
         "title":
           'The "Completion-Date" must be before or equal to the "Registration-Date"',
       }.freeze
-      end
+    end
 
-      it "allows lodgement when the Registration-Date is after the Completion-Date" do
-        assert_errors([], {
-          "Completion-Date": Date.yesterday.to_s,
-          "Registration-Date": Date.today.to_s ,
-        })
-      end
+    it "allows lodgement when the Registration-Date is after the Completion-Date" do
+      assert_errors([], {
+        "Completion-Date": Date.yesterday.to_s,
+        "Registration-Date": Date.today.to_s,
+      })
+    end
 
-      it "allows lodgement when the Completion-Date and the Registration-Date are equal" do
-        assert_errors([], {
-          "Completion-Date": Date.today.to_s ,
-          "Registration-Date": Date.today.to_s,
-        })
-      end
+    it "allows lodgement when the Completion-Date and the Registration-Date are equal" do
+      assert_errors([], {
+        "Completion-Date": Date.today.to_s,
+        "Registration-Date": Date.today.to_s,
+      })
+    end
 
-      it "throws an error when the Completion-Date is later than the Registration-Date" do
-        assert_errors([error], {
-          "Completion-Date": Date.today.to_s,
-          "Registration-Date": Date.yesterday.to_s
-        })
-      end
-
+    it "throws an error when the Completion-Date is later than the Registration-Date" do
+      assert_errors([error], {
+        "Completion-Date": Date.today.to_s,
+        "Registration-Date": Date.yesterday.to_s,
+      })
+    end
   end
 
   context "Both INSPECTION_DATE_LATER_THAN_COMPLETION_DATE and COMPLETION_DATE_LATER_THAN_REGISTRATION_DATE" do
@@ -555,7 +550,7 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
       assert_errors([], {
         "Inspection-Date": Date.yesterday.prev_day.to_s,
         "Completion-Date": Date.yesterday.to_s,
-        "Registration-Date": Date.today.to_s
+        "Registration-Date": Date.today.to_s,
       })
     end
 
@@ -563,23 +558,23 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
       assert_errors([], {
         "Inspection-Date": Date.today.to_s,
         "Completion-Date": Date.today.to_s,
-        "Registration-Date": Date.today.to_s
+        "Registration-Date": Date.today.to_s,
       })
     end
 
     it "throws the Inspection error when the Completion-Date is before the Inspection-Date" do
       assert_errors([inspection_date_error], {
-        "Inspection-Date": Date.yesterday.to_s ,
+        "Inspection-Date": Date.yesterday.to_s,
         "Completion-Date": Date.yesterday.prev_day.to_s,
-        "Registration-Date": Date.today.to_s
+        "Registration-Date": Date.today.to_s,
       })
     end
 
     it "throws the Completion error when the Registration-Date is before the Completion-Date" do
       assert_errors([completion_date_error], {
-        "Inspection-Date": Date.yesterday.prev_day.to_s ,
+        "Inspection-Date": Date.yesterday.prev_day.to_s,
         "Completion-Date": Date.today.to_s,
-        "Registration-Date": Date.yesterday.to_s
+        "Registration-Date": Date.yesterday.to_s,
       })
     end
 
@@ -587,15 +582,15 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
       assert_errors([inspection_date_error, completion_date_error], {
         "Inspection-Date": Date.today.to_s,
         "Completion-Date": Date.yesterday.to_s,
-        "Registration-Date": Date.yesterday.prev_day.to_s
+        "Registration-Date": Date.yesterday.prev_day.to_s,
       })
     end
 
     it "throws Completion error when the Registration-Date is before the Inspection- and Completion-Date" do
       assert_errors([completion_date_error], {
-        "Inspection-Date": Date.yesterday.to_s ,
+        "Inspection-Date": Date.yesterday.to_s,
         "Completion-Date": Date.today.to_s,
-        "Registration-Date": Date.yesterday.prev_day.to_s
+        "Registration-Date": Date.yesterday.prev_day.to_s,
       })
     end
   end
