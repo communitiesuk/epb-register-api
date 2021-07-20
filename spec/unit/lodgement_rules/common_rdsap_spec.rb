@@ -275,6 +275,7 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
     it "returns an error when completion date is in the future" do
       assert_errors([rule_under_test_error],
                     {
+                      "Inspection-Date": Date.today.to_s,
                       "Completion-Date": Date.tomorrow.to_s,
                       "Registration-Date": Date.tomorrow.to_s,
                     })
