@@ -1,7 +1,7 @@
 describe "linked_dev_assessments rake" do
   include RSpecRegisterApiServiceMixin
 
-  context "call the rake task in production" do
+  context "calling the rake task in production" do
     before do
       allow(STDOUT).to receive(:puts)
       allow(STDOUT).to receive(:write)
@@ -16,7 +16,7 @@ describe "linked_dev_assessments rake" do
       ActiveRecord::Base.connection.exec_query("SELECT * FROM assessments")
     end
 
-    it "raises an error and does not have any exported data" do
+    it "raises an error and does not add anything to the database" do
       expect { get_task("lodge_dev_assessments").invoke }.to raise_error(
         StandardError,
       ).with_message("This task can only be run if the STAGE is test, development, integration or staging")
@@ -24,7 +24,7 @@ describe "linked_dev_assessments rake" do
     end
   end
 
-  context "call the rake task and extract the saved data" do
+  context "calling the rake task in test (not production)" do
     before do
       allow(STDOUT).to receive(:puts)
       allow(STDOUT).to receive(:write)
@@ -32,16 +32,15 @@ describe "linked_dev_assessments rake" do
     end
 
     let!(:exported_data) do
-      ActiveRecord::Base.connection.exec_query("SELECT * FROM assessments")
+      ActiveRecord::Base.connection.exec_query("SELECT * FROM assessments ORDER BY assessment_id")
     end
 
-    let!(:exported_xml) do
-      ActiveRecord::Base.connection.exec_query("SELECT * FROM assessments_xml")
-    end
-
-    it "writes the correct data to the database" do
+    it "loads the seed data into the database" do
       expect(exported_data.rows.length).to eq(12)
-      expect(exported_data.first["type_of_assessment"]).to eq("CEPC")
+      first_result = exported_data.first
+      expect(first_result["type_of_assessment"]).to eq("CEPC")
+      expect(first_result["assessment_id"]).to eq("0000-0000-0000-0000-0001")
+      expect(first_result["scheme_assessor_id"]).to eq("RAKE000001")
     end
 
     it "loads the xml from the factory" do
@@ -49,7 +48,7 @@ describe "linked_dev_assessments rake" do
     end
   end
 
-  context "read cepc data from fixure" do
+  context "read cepc data from fixture" do
     let!(:xml_doc) do
       Nokogiri.XML Samples.xml "CEPC-8.0.0", "cepc+rr"
     end
@@ -63,7 +62,7 @@ describe "linked_dev_assessments rake" do
     end
   end
 
-  context "read SAP data from fixure" do
+  context "read SAP data from fixture" do
     let!(:xml_doc) do
       Nokogiri.XML Samples.xml "SAP-Schema-18.0.0", "epc"
     end
