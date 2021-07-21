@@ -1,6 +1,13 @@
 module Helper
   class AddressBaseFilter
-    def self.filter_certifiable_addresses(class_code)
+    FILTERS = %i[filter_by_class filter_by_country].freeze
+
+    def self.filter_certifiable_addresses(address_base_entry)
+      FILTERS.all? { |filter| send filter, address_base_entry }
+    end
+
+    def self.filter_by_class(address_base_entry)
+      class_code = address_base_entry[:CLASS]
       case class_code[0]
       when "C"
         # Commercial
@@ -59,6 +66,10 @@ module Helper
       else
         true
       end
+    end
+
+    def self.filter_by_country(address_base_entry)
+      address_base_entry[:COUNTRY] != "S" # filter out Scottish addresses
     end
   end
 end

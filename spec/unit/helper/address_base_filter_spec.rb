@@ -1,4 +1,19 @@
-describe "Helper method address_base_filter" do
+DEFAULT_GOOD_ENTRY = {
+  CLASS: "RD02", # detached house
+  COUNTRY: "E", # England
+}.freeze
+
+COUNTRIES = {
+  E: "England",
+  W: "Wales",
+  S: "Scotland",
+  N: "Northern Ireland",
+  L: "the Channel Islands",
+  M: "the Isle of Man",
+  J: "an unassigned country",
+}.freeze
+
+describe Helper::AddressBaseFilter do
   {
     "C": true, # Commercial
     "CR01": true, # Bank
@@ -46,10 +61,32 @@ describe "Helper method address_base_filter" do
     "": true,
     "B": true,
   }.each do |class_code, is_accepted|
-    context "when given an address class that starts with #{class_code}" do
+    context "when given an AddressBase entry with a class that starts with #{class_code}" do
       it is_accepted ? "it accepts it" : "it rejects it" do
         expect(
-          Helper::AddressBaseFilter.filter_certifiable_addresses(class_code),
+          described_class.filter_certifiable_addresses(
+            DEFAULT_GOOD_ENTRY.merge({ CLASS: class_code }),
+          ),
+        ).to be(is_accepted)
+      end
+    end
+  end
+
+  {
+    E: true, # England
+    W: true, # Wales
+    S: false, # Scotland
+    N: true, # Northern Ireland
+    L: true, # Channel Islands
+    M: true, # Isle of Man
+    J: true, # an unassigned country
+  }.each do |country_code_sym, is_accepted|
+    context "when given an AddressBase entry with a country code denoting it is in #{COUNTRIES[country_code_sym]}" do
+      it is_accepted ? "it accepts it" : "it rejects it" do
+        expect(
+          described_class.filter_certifiable_addresses(
+            DEFAULT_GOOD_ENTRY.merge({ COUNTRY: country_code_sym.to_s }),
+          ),
         ).to be(is_accepted)
       end
     end

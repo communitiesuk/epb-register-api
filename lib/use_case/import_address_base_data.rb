@@ -4,9 +4,7 @@ module UseCase
       Struct.new(:uprn, :postcode, :lines, :town, keyword_init: true)
 
     def execute(address_data_line)
-      unless Helper::AddressBaseFilter.filter_certifiable_addresses(
-        address_data_line[:CLASS],
-      )
+      unless Helper::AddressBaseFilter.filter_certifiable_addresses(address_data_line)
         return nil
       end
 
