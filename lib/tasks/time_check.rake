@@ -1,5 +1,4 @@
-
-task :time_rake do
+task :time_check do
   pp "_____Time.now_____"
   pp Time.now
   pp "_____Time.now.zone______"
@@ -7,6 +6,6 @@ task :time_rake do
   pp "_____Time.now.utc_______"
   pp Time.now.utc
   pp "____Date.now________"
-  pp Date.now
+  pp Date.today
   pp "________________"
 end
