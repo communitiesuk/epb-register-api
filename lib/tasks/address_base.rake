@@ -93,6 +93,8 @@ task :import_address_base do
 
         i = 0
         csv_contents.each_slice(INSERT_BATCH_SIZE) do |inserts|
+          return if inserts.empty?
+
           query = inserts.map { |row|
             import_address_data_use_case.execute(row)
           }.compact
