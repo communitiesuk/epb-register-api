@@ -1,10 +1,12 @@
 
 task :time_rake do
-  pp "______________"
+  pp "_____Time.now_____"
   pp Time.now
-  pp "______________"
+  pp "_____Time.now.zone______"
   pp Time.now.zone
-  pp "______________"
+  pp "_____Time.now.utc_______"
   pp Time.now.utc
-  pp "______________"
+  pp "____Date.now________"
+  pp Date.now
+  pp "________________"
 end
