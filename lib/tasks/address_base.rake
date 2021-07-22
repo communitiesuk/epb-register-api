@@ -92,12 +92,12 @@ task :import_address_base do
         puts "[#{Time.now}] #{entry.name} parsed successfully as CSV"
 
         i = 0
-        csv_contents.each_slice(INSERT_BATCH_SIZE) do |inserts|
-          return if inserts.empty?
-
+        csv_contents.each_slice(INSERT_BATCH_SIZE).reject(&:empty?).each do |inserts|
           query = inserts.map { |row|
             import_address_data_use_case.execute(row)
           }.compact
+
+          next if query.empty?
 
           db.exec_query("INSERT INTO address_base_tmp VALUES " + query.join(", "))
           i += INSERT_BATCH_SIZE
