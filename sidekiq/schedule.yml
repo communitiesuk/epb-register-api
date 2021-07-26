@@ -6,7 +6,7 @@ my_first_job:
 
 
 test_library_job:
-  cron: "*/2 11-17 * * 1-5"
+  cron: "*/2 * 11-17 * * 1-5"
   class: "Worker::TestLib"
   name: "Library test worker -- every 2 minutes between 11:00- 17:00"
   queue: default
