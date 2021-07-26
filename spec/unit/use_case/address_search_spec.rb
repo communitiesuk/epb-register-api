@@ -67,8 +67,6 @@ describe UseCase::SearchAddressesByStreetAndTown do
     end
   end
 
-
-
   context "When there are the same addresses in both the assessments and address base" do
     before do
       insert_into_address_base("000005689782", "SW1 2AA", "Flat 3", "1 Some Street", "London")
@@ -109,8 +107,7 @@ describe UseCase::SearchAddressesByStreetAndTown do
     end
   end
 
-
-  context "When there are the more than one certificate for the same addresses ", set_with_time_cop:true  do
+  context "When there are the more than one certificate for the same addresses ", set_with_time_cop: true do
     before do
       scheme_id = add_scheme_and_get_id
       add_assessor(
@@ -126,11 +123,10 @@ describe UseCase::SearchAddressesByStreetAndTown do
           nonDomesticSp3: "ACTIVE",
           nonDomesticCc4: "ACTIVE",
           gda: "ACTIVE",
-          ),
-        )
+        ),
+      )
 
-
-      day_before_yesterday =  Time.now.prev_day(2).strftime("%Y-%m-%d")
+      day_before_yesterday = Time.now.prev_day(2).strftime("%Y-%m-%d")
       domestic_assessment = Nokogiri.XML Samples.xml "RdSAP-Schema-20.0.0"
       domestic_assessment.at("Inspection-Date").children = day_before_yesterday
       domestic_assessment.at("Completion-Date").children = day_before_yesterday
@@ -143,13 +139,13 @@ describe UseCase::SearchAddressesByStreetAndTown do
           scheme_ids: [scheme_id],
         },
         ensure_uprns: false,
-        )
+      )
 
-      yesterday =  Time.now.prev_day(1).strftime("%Y-%m-%d")
+      yesterday = Time.now.prev_day(1).strftime("%Y-%m-%d")
       domestic_assessment_two = Nokogiri.XML Samples.xml "RdSAP-Schema-20.0.0"
-      domestic_assessment_two.at("RRN").children = '0000-0000-0000-0000-0001'
-      domestic_assessment_two.at("Address/Address-Line-1").children = 'Another New House'
-      domestic_assessment_two.at("RRN").children = '0000-0000-0000-0000-0001'
+      domestic_assessment_two.at("RRN").children = "0000-0000-0000-0000-0001"
+      domestic_assessment_two.at("Address/Address-Line-1").children = "Another New House"
+      domestic_assessment_two.at("RRN").children = "0000-0000-0000-0000-0001"
       domestic_assessment_two.at("Inspection-Date").children = yesterday
       domestic_assessment_two.at("Completion-Date").children = yesterday
       domestic_assessment_two.at("Registration-Date").children = yesterday
@@ -161,14 +157,14 @@ describe UseCase::SearchAddressesByStreetAndTown do
           scheme_ids: [scheme_id],
         },
         ensure_uprns: false,
-        )
+      )
 
-      today =  Time.now.strftime("%Y-%m-%d")
+      today = Time.now.strftime("%Y-%m-%d")
 
       domestic_assessment_three = Nokogiri.XML Samples.xml "RdSAP-Schema-20.0.0"
-      domestic_assessment_three.at("RRN").children = '0000-0000-0000-0000-0001'
-      domestic_assessment_three.at("Address/Address-Line-1").children = '1 New House'
-      domestic_assessment_three.at("RRN").children = '0000-0000-0000-0000-0002'
+      domestic_assessment_three.at("RRN").children = "0000-0000-0000-0000-0001"
+      domestic_assessment_three.at("Address/Address-Line-1").children = "1 New House"
+      domestic_assessment_three.at("RRN").children = "0000-0000-0000-0000-0002"
       domestic_assessment_two.at("Inspection-Date").children = today
       domestic_assessment_two.at("Completion-Date").children = today
       domestic_assessment_two.at("Registration-Date").children = today
@@ -180,7 +176,7 @@ describe UseCase::SearchAddressesByStreetAndTown do
           scheme_ids: [scheme_id],
         },
         ensure_uprns: false,
-        )
+      )
 
       ActiveRecord::Base.connection.exec_query("UPDATE assessments_address_id
         SET address_id = 'RRN-0000-0000-0000-0000-0000'
@@ -189,16 +185,13 @@ describe UseCase::SearchAddressesByStreetAndTown do
       ActiveRecord::Base.connection.exec_query("UPDATE assessments_address_id
         SET address_id = 'RRN-0000-0000-0000-0000-0000'
         WHERE assessment_id = '0000-0000-0000-0000-0002'")
-
     end
 
-      # it 'returns the address of newest certificate' do
-      #   result = subject.execute(street: "New House", town: "Whitbury")
-      #   expect(result.first.address_id).to eq("RRN-0000-0000-0000-0000-0000")
-      #   expect(result.first.line1).to eq("1 New House")
-      # end
-
-
+    # it 'returns the address of newest certificate' do
+    #   result = subject.execute(street: "New House", town: "Whitbury")
+    #   expect(result.first.address_id).to eq("RRN-0000-0000-0000-0000-0000")
+    #   expect(result.first.line1).to eq("1 New House")
+    # end
 
     # it 'returns the address of newest certificate for postcode search' do
     #   post_code_use_case = UseCase::SearchAddressesByPostcode.new
@@ -206,9 +199,5 @@ describe UseCase::SearchAddressesByStreetAndTown do
     #   expect(result.first.address_id).to eq("RRN-0000-0000-0000-0000-0000")
     #   expect(result.first.line1).to eq("1 New House")
     # end
-
-
-
   end
-
 end

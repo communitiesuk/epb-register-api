@@ -3,13 +3,11 @@ module Worker
     include Sidekiq::Worker
 
     def perform
-      begin
-        use_case =  UseCase::FetchSchemes.new
-        use_case.execute
-        pp 'sidekiq can load object and execute code'
-        rescue => e
-          pp "sidekiq error #{e.message}"
-      end
+      use_case = UseCase::FetchSchemes.new
+      use_case.execute
+      pp "sidekiq can load object and execute code"
+    rescue StandardError => e
+      pp "sidekiq error #{e.message}"
     end
   end
 end

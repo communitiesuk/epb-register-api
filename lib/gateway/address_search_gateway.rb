@@ -190,7 +190,6 @@ module Gateway
     end
 
     def search_by_street_and_town(street, town, address_type)
-
       ranking_sql = <<~SQL
         ,
         ((1 - TS_RANK_CD(
@@ -203,7 +202,6 @@ module Gateway
           0, 1, 1
         ) AS matched_difference
       SQL
-
 
       sql_assessments = <<~SQL
         SELECT aai.address_id,
