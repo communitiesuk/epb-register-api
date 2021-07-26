@@ -67,21 +67,7 @@ describe UseCase::SearchAddressesByStreetAndTown do
     end
   end
 
-  context "When searching for an address with many results" do
-    before do
-      insert_into_address_base("000005689782", "SW1V 2SS", "2b Some Street", "",  "London")
-      insert_into_address_base("078956456456", "SW1V 2SS", "Main Office", "2 Some Street", "London")
-      insert_into_address_base("000896454564", "SW1V 2SS", "1 Some Street", "", "London")
-    end
 
-    it "finds all 3 rows in the correct order" do
-      result = subject.execute(street: "Some", town: "London")
-      expect(result.length).to eq(3)
-      expect(result.first.address_id).to eq("UPRN-000896454564")
-      expect(result[1].address_id).to eq("UPRN-000005689782")
-      expect(result[2].address_id).to eq("UPRN-078956456456")
-    end
-  end
 
   context "When there are the same addresses in both the assessments and address base" do
     before do
@@ -122,4 +108,107 @@ describe UseCase::SearchAddressesByStreetAndTown do
       expect(result.first.address_id).to eq("UPRN-000005689782")
     end
   end
+
+
+  context "When there are the more than one certificate for the same addresses ", set_with_time_cop:true  do
+    before do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(
+        scheme_id,
+        "SPEC000000",
+        AssessorStub.new.fetch_request_body(
+          nonDomesticNos3: "ACTIVE",
+          nonDomesticNos4: "ACTIVE",
+          nonDomesticNos5: "ACTIVE",
+          nonDomesticDec: "ACTIVE",
+          domesticRdSap: "ACTIVE",
+          domesticSap: "ACTIVE",
+          nonDomesticSp3: "ACTIVE",
+          nonDomesticCc4: "ACTIVE",
+          gda: "ACTIVE",
+          ),
+        )
+
+
+      day_before_yesterday =  Time.now.prev_day(2).strftime("%Y-%m-%d")
+      domestic_assessment = Nokogiri.XML Samples.xml "RdSAP-Schema-20.0.0"
+      domestic_assessment.at("Inspection-Date").children = day_before_yesterday
+      domestic_assessment.at("Completion-Date").children = day_before_yesterday
+      domestic_assessment.at("Registration-Date").children = day_before_yesterday
+      domestic_assessment.at("Address/Address-Line-1").children = "A New House"
+      lodge_assessment(
+        assessment_body: domestic_assessment.to_xml,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        ensure_uprns: false,
+        )
+
+      yesterday =  Time.now.prev_day(1).strftime("%Y-%m-%d")
+      domestic_assessment_two = Nokogiri.XML Samples.xml "RdSAP-Schema-20.0.0"
+      domestic_assessment_two.at("RRN").children = '0000-0000-0000-0000-0001'
+      domestic_assessment_two.at("Address/Address-Line-1").children = 'Another New House'
+      domestic_assessment_two.at("RRN").children = '0000-0000-0000-0000-0001'
+      domestic_assessment_two.at("Inspection-Date").children = yesterday
+      domestic_assessment_two.at("Completion-Date").children = yesterday
+      domestic_assessment_two.at("Registration-Date").children = yesterday
+
+      lodge_assessment(
+        assessment_body: domestic_assessment_two.to_xml,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        ensure_uprns: false,
+        )
+
+      today =  Time.now.strftime("%Y-%m-%d")
+
+      domestic_assessment_three = Nokogiri.XML Samples.xml "RdSAP-Schema-20.0.0"
+      domestic_assessment_three.at("RRN").children = '0000-0000-0000-0000-0001'
+      domestic_assessment_three.at("Address/Address-Line-1").children = '1 New House'
+      domestic_assessment_three.at("RRN").children = '0000-0000-0000-0000-0002'
+      domestic_assessment_two.at("Inspection-Date").children = today
+      domestic_assessment_two.at("Completion-Date").children = today
+      domestic_assessment_two.at("Registration-Date").children = today
+
+      lodge_assessment(
+        assessment_body: domestic_assessment_three.to_xml,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        ensure_uprns: false,
+        )
+
+      ActiveRecord::Base.connection.exec_query("UPDATE assessments_address_id
+        SET address_id = 'RRN-0000-0000-0000-0000-0000'
+        WHERE assessment_id = '0000-0000-0000-0000-0001'")
+
+      ActiveRecord::Base.connection.exec_query("UPDATE assessments_address_id
+        SET address_id = 'RRN-0000-0000-0000-0000-0000'
+        WHERE assessment_id = '0000-0000-0000-0000-0002'")
+
+    end
+
+      # it 'returns the address of newest certificate' do
+      #   result = subject.execute(street: "New House", town: "Whitbury")
+      #   expect(result.first.address_id).to eq("RRN-0000-0000-0000-0000-0000")
+      #   expect(result.first.line1).to eq("1 New House")
+      # end
+
+
+
+    # it 'returns the address of newest certificate for postcode search' do
+    #   post_code_use_case = UseCase::SearchAddressesByPostcode.new
+    #   result = post_code_use_case.execute(postcode:"A0 0AA")
+    #   expect(result.first.address_id).to eq("RRN-0000-0000-0000-0000-0000")
+    #   expect(result.first.line1).to eq("1 New House")
+    # end
+
+
+
+  end
+
 end

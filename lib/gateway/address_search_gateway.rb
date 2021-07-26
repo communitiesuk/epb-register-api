@@ -190,6 +190,21 @@ module Gateway
     end
 
     def search_by_street_and_town(street, town, address_type)
+
+      ranking_sql = <<~SQL
+        ,
+        ((1 - TS_RANK_CD(
+          TO_TSVECTOR('english', LOWER(CONCAT_WS(' ', address_line1, address_line2, address_line3))),
+          TO_TSQUERY('english', LOWER($2))
+        )) * 100) AS matched_rank,
+        LEVENSHTEIN(
+          LOWER($2),
+          LOWER(CONCAT_WS(' ', address_line1, address_line2, address_line3)),
+          0, 1, 1
+        ) AS matched_difference
+      SQL
+
+
       sql_assessments = <<~SQL
         SELECT aai.address_id,
                address_line1,
@@ -205,6 +220,7 @@ module Gateway
                not_for_issue_at,
                type_of_assessment,
                linked_assessment_id
+               #{ranking_sql}
         FROM assessments a
                LEFT JOIN linked_assessments la ON a.assessment_id = la.assessment_id
                INNER JOIN assessments_address_id aai on a.assessment_id = aai.assessment_id
@@ -242,6 +258,7 @@ module Gateway
                address_line4,
                town,
                postcode
+                #{ranking_sql}
         FROM address_base
         WHERE (
               LOWER(town) LIKE $2

@@ -290,4 +290,7 @@ module LodgementRules
       errors.map { |error| { code: error[:name], title: error[:title] } }
     end
   end
+
+
+
 end
