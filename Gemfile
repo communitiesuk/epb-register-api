@@ -2,6 +2,8 @@
 
 ruby "2.7.3"
 
+gem "epb_view_models"
+
 source "https://rubygems.org" do
   group :development do
     gem "debase"

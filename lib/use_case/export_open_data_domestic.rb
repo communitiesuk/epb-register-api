@@ -8,12 +8,13 @@ module UseCase
       @gateway = Gateway::ReportingGateway.new
       @assessment_gateway = Gateway::AssessmentsXmlGateway.new
       @log_gateway = Gateway::OpenDataLogGateway.new
+      @assessments_address_id_gateway = Gateway::AssessmentsAddressIdGateway.new
     end
 
     def execute(date_from, task_id = 0, date_to = DateTime.now)
-      page_number = 0
-      data = []
+      reports = []
       new_task_id = @log_gateway.fetch_new_task_id(task_id)
+
       assessments =
         @gateway.assessments_for_open_data(
           date_from,
@@ -25,42 +26,34 @@ module UseCase
       assessments.each do |assessment|
         xml_data = @assessment_gateway.fetch(assessment["assessment_id"])
         next if xml_data[:schema_type].include?("NI")
+        updated_address_id = @assessments_address_id_gateway.fetch(assessment["assessment_id"])[:address_id]
 
-        view_model =
+        additional_data = {
+          address_id: updated_address_id,
+          date_registered: assessment["date_registered"],
+          created_at: assessment["created_at"],
+          outcode_region: assessment["outcode_region"],
+          postcode_region: assessment["postcode_region"]
+        }
+        additional_data.compact!
+
+        wrapper =
           ViewModel::Factory.new.create(
             xml_data[:xml],
             xml_data[:schema_type],
             assessment["assessment_id"],
+            additional_data
           )
-        view_model_hash = view_model.to_report
 
-        view_model_hash[:lodgement_date] =
-          assessment["date_registered"].strftime("%F")
-        view_model_hash[:lodgement_datetime] =
-          assessment["created_at"]&.strftime("%F %H:%M:%S")
-        view_model_hash[:region] =
-          if assessment["postcode_region"].nil?
-            assessment["outcode_region"]
-          else
-            assessment["postcode_region"]
-          end
+        reports << wrapper.to_report
         @log_gateway.create(
           assessment["assessment_id"],
           new_task_id,
           Helper::ExportHelper.report_type_to_s(ASSESSMENT_TYPE),
         )
-        view_model_hash[:assessment_id] =
-          Helper::RrnHelper.hash_rrn(assessment["assessment_id"])
-        unless view_model_hash[:building_reference_number].nil?
-          unless view_model_hash[:building_reference_number].include?("UPRN")
-            view_model_hash[:building_reference_number] = nil
-          end
-        end
-
-        data << view_model_hash
-        page_number += 1
       end
-      data
+
+      reports
     end
   end
 end

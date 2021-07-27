@@ -1,6 +1,7 @@
 require_relative "../helper/toggles"
 require "sinatra/cross_origin"
 require "epb-auth-tools"
+require "epb_view_models"
 require "nokogiri"
 require "sinatra/activerecord"
 require "csv"
