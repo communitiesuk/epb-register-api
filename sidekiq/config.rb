@@ -1,19 +1,22 @@
 require "sidekiq"
 require "sidekiq-cron"
 require "zeitwerk"
+require 'rake'
 
 loader = Zeitwerk::Loader.new
 loader.push_dir("#{__dir__}/../lib")
 loader.push_dir("#{__dir__}/../sidekiq")
 loader.setup
 
-environment = ENV["STAGE"]
+environment = ENV["STAGE"] || 'development'
 
+unless  %w[development test].include? environment
 redis_url = RedisConfigurationReader.read_configuration_url("mhclg-epb-redis-sidekiq-#{environment}")
-
-Sidekiq.configure_server do |config|
-  config.redis = { url: redis_url, network_timeout: 5 }
+  Sidekiq.configure_server do |config|
+    config.redis = { url: redis_url, network_timeout: 5 }
+  end
 end
+
 
 schedule_file = "./sidekiq/schedule.yml"
 

@@ -17,4 +17,5 @@ applications:
     health-check-type: process
     services:
       - mhclg-epb-redis-sidekiq-$STAGE
+      - mhclg-epb-db-$STAGE
 EOF
