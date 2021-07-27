@@ -25,7 +25,7 @@ source "https://rubygems.org" do
 
   gem "aws-sdk-s3", "~> 1.96"
   gem "epb-auth-tools", "~> 1.0.8"
-  gem "epb_view_models", "~> 1.0.0"
+  gem "epb_view_models", "~> 1.0.1"
   gem "geocoder", "~> 1.6.6"
   gem "json-schema", "~> 2.8"
   gem "nokogiri", "~> 1.11.7"
