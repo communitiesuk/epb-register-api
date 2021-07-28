@@ -32,7 +32,7 @@ module UseCase
           date_registered: assessment["date_registered"],
           created_at: assessment["created_at"],
           outcode_region: assessment["outcode_region"],
-          postcode_region: assessment["postcode_region"]
+          postcode_region: assessment["postcode_region"],
         }
         additional_data.compact!
 
@@ -41,7 +41,7 @@ module UseCase
             xml_data[:xml],
             xml_data[:schema_type],
             assessment["assessment_id"],
-            additional_data
+            additional_data,
           )
         next if wrapper.nil?
 

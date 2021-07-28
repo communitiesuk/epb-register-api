@@ -26,6 +26,7 @@ module UseCase
       assessments.each do |assessment|
         xml_data = @assessment_gateway.fetch(assessment["assessment_id"])
         next if xml_data[:schema_type].include?("NI")
+
         updated_address_id = @assessments_address_id_gateway.fetch(assessment["assessment_id"])[:address_id]
 
         additional_data = {
@@ -33,7 +34,7 @@ module UseCase
           date_registered: assessment["date_registered"],
           created_at: assessment["created_at"],
           outcode_region: assessment["outcode_region"],
-          postcode_region: assessment["postcode_region"]
+          postcode_region: assessment["postcode_region"],
         }
         additional_data.compact!
 
@@ -42,7 +43,7 @@ module UseCase
             xml_data[:xml],
             xml_data[:schema_type],
             assessment["assessment_id"],
-            additional_data
+            additional_data,
           )
 
         reports << wrapper.to_report
