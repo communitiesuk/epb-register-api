@@ -86,3 +86,7 @@ def get_recommendations_xml(schema, date_registered, type, assesment_id_part)
 
   rr_xml
 end
+
+def validate_date_range(date_from, date_to)
+  date_from <= date_to
+end

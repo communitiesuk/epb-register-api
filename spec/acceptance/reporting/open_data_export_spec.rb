@@ -160,15 +160,14 @@ describe "Acceptance::Reports::OpenDataExport" do
           before do
             EnvironmentStub
               .all
-              .with("DATE_FROM", test_start_date)
-              .with("ASSESSMENT_TYPE", "SAP-RDSAP")
-              .with("DATE_TO", "2021-03-29")
 
             HttpStub.s3_put_csv(file_name("SAP-RDSAP"))
           end
 
           it "transfers the file to the S3 bucket with the correct filename, body and headers " do
-            get_task("open_data_export").invoke("for_odc")
+            assessment_type = "SAP-RDSAP"
+            date_from = test_start_date
+            get_task("open_data_export").invoke("for_odc", assessment_type, date_from)
 
             expect(WebMock).to have_requested(
               :put,
@@ -183,11 +182,13 @@ describe "Acceptance::Reports::OpenDataExport" do
 
           context "when running a test export" do
             it "prefixes the csv filename with `test/` so it's stored in a separate folder in the S3 bucket" do
+              assessment_type = "SAP-RDSAP"
+              date_from = test_start_date
               HttpStub.s3_put_csv(
                 "test/open_data_export_sap-rdsap_#{DateTime.now.strftime('%F')}_1.csv",
               )
 
-              get_task("open_data_export").invoke("not_for_odc")
+              get_task("open_data_export").invoke("not_for_odc", assessment_type, date_from)
 
               expect(WebMock).to have_requested(
                 :put,
@@ -201,9 +202,6 @@ describe "Acceptance::Reports::OpenDataExport" do
           before do
             EnvironmentStub
               .all
-              .with("DATE_FROM", test_start_date)
-              .with("ASSESSMENT_TYPE", "SAP-RDSAP-RR")
-              .except("DATE_TO")
 
             HttpStub.s3_put_csv(file_name("SAP-RDSAP-RR"))
           end
@@ -211,7 +209,9 @@ describe "Acceptance::Reports::OpenDataExport" do
           let(:fixture_csv) { read_csv_fixture("domestic_rr") }
 
           it "check the http stub matches the request disabled in web mock using the filename, body and headers" do
-            get_task("open_data_export").invoke("for_odc")
+            assessment_type = "SAP-RDSAP-RR"
+            date_from = test_start_date
+            get_task("open_data_export").invoke("for_odc", assessment_type, date_from)
 
             expect(WebMock).to have_requested(
               :put,
@@ -376,16 +376,15 @@ describe "Acceptance::Reports::OpenDataExport" do
           before do
             EnvironmentStub
               .all
-              .with("DATE_FROM", test_start_date)
-              .with("ASSESSMENT_TYPE", "CEPC")
-              .except("DATE_TO")
             HttpStub.s3_put_csv(file_name("CEPC"))
           end
 
           let(:fixture_csv) { read_csv_fixture("commercial") }
 
           it "check the http stub matches the request disabled in web mock using the filename, body and headers" do
-            get_task("open_data_export").invoke("for_odc")
+            assessment_type = "CEPC"
+            date_from = test_start_date
+            get_task("open_data_export").invoke("for_odc", assessment_type, date_from)
 
             expect(WebMock).to have_requested(
               :put,
@@ -403,16 +402,16 @@ describe "Acceptance::Reports::OpenDataExport" do
           before do
             EnvironmentStub
               .all
-              .with("DATE_FROM", test_start_date)
-              .with("ASSESSMENT_TYPE", "CEPC-RR")
-              .except("DATE_TO")
+
             HttpStub.s3_put_csv(file_name("CEPC-RR"))
           end
 
           let(:fixture_csv) { read_csv_fixture("commercial_rr") }
 
           it "check the http stub matches the request disabled in web mock using the filename, body and headers" do
-            get_task("open_data_export").invoke("for_odc")
+            assessment_type = "CEPC-RR"
+            date_from = test_start_date
+            get_task("open_data_export").invoke("for_odc", assessment_type, date_from)
 
             expect(WebMock).to have_requested(
               :put,
@@ -588,9 +587,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           before do
             EnvironmentStub
               .all
-              .with("DATE_FROM", test_start_date)
-              .with("ASSESSMENT_TYPE", "DEC")
-              .except("DATE_TO")
+
             HttpStub.s3_put_csv(file_name("DEC"))
           end
 
@@ -602,7 +599,10 @@ describe "Acceptance::Reports::OpenDataExport" do
           end
 
           it "check the http stub matches the request disabled in web mock using the filename, body and headers" do
-            get_task("open_data_export").invoke("for_odc")
+            assessment_type = "DEC"
+            date_from = test_start_date
+            get_task("open_data_export").invoke("for_odc", assessment_type, date_from)
+
             expect(WebMock).to have_requested(
               :put,
               "#{HttpStub::S3_BUCKET_URI}open_data_export_dec_#{DateTime.now.strftime('%F')}_1.csv",
@@ -619,16 +619,16 @@ describe "Acceptance::Reports::OpenDataExport" do
           before do
             EnvironmentStub
               .all
-              .with("DATE_FROM", test_start_date)
-              .with("ASSESSMENT_TYPE", "DEC-RR")
-              .except("DATE_TO")
+
             HttpStub.s3_put_csv(file_name("DEC-RR"))
           end
 
           let(:fixture_csv) { read_csv_fixture("dec_rr") }
 
           it "check the http stub matches the request disabled in web mock using the filename, body and headers" do
-            get_task("open_data_export").invoke("for_odc")
+            assessment_type = "DEC-RR"
+            date_from = test_start_date
+            get_task("open_data_export").invoke("for_odc", assessment_type, date_from)
             expect(WebMock).to have_requested(
               :put,
               "#{HttpStub::S3_BUCKET_URI}open_data_export_dec-rr_#{DateTime.now.strftime('%F')}_1.csv",
@@ -645,22 +645,10 @@ describe "Acceptance::Reports::OpenDataExport" do
   end
 
   context "When invoking the Open Data Communities export rake directly" do
-    context "And we provide environment variables" do
-      before do
-        EnvironmentStub
-          .all
-          .except("BUCKET_NAME")
-          .except("DATE_FROM")
-          .except("ASSESSMENT_TYPE")
-      end
-
-      it "fails if no bucket or instance name is defined in environment variables" do
-        expect { get_task("open_data_export").invoke("for_odc") }.to output(
-          /A required argument is missing/,
-        ).to_stderr
-      end
+    context "And we invoke with incorrect arguments" do
 
       it "raises an error when type of export is not provided" do
+
         expected_message =
           "A required argument is missing: type_of_export. You  must specify 'for_odc' or 'not_for_odc'"
 
@@ -677,49 +665,51 @@ describe "Acceptance::Reports::OpenDataExport" do
           /#{expected_message}/,
         ).to_stderr
       end
-    end
 
-    context "And we set the incorrect assessment type environment variable" do
-      before do
-        EnvironmentStub
-          .all
-          .with("DATE_FROM", DateTime.now.strftime("%F"))
-          .with("ASSESSMENT_TYPE", "TEST")
+      it "raises an error when type of export is provided but assessment_type argument is not" do
+
+        expected_message =
+          "A required argument is missing: assessment_type, eg: 'SAP-RDSAP', 'DEC' etc"
+
+        expect { get_task("open_data_export").invoke("for_odc") }.to output(
+                                                                       /#{expected_message}/,
+                                                                       ).to_stderr
       end
 
-      it "returns the type is not valid error message" do
-        expect { get_task("open_data_export").invoke("for_odc") }.to output(
+      it "returns an error when the wrong type of assessment type is provided" do
+        expect { get_task("open_data_export").invoke("for_odc", "TEST", DateTime.now.strftime("%F")) }.to output(
           /Assessment type is not valid:/,
         ).to_stderr
       end
     end
 
-    context "And we set the correct environment variables and a date of now" do
-      before do
-        EnvironmentStub
-          .all
-          .with("DATE_FROM", DateTime.now.strftime("%F"))
-          .with("ASSESSMENT_TYPE", "SAP-RDSAP")
-      end
+    context "And we set the correct arguments and a date_from equivalent to now" do
 
       it "returns a no data to export error" do
-        expect { get_task("open_data_export").invoke("for_odc") }.to output(
+        assessment_type = "SAP-RDSAP"
+        date_from = DateTime.now.strftime("%F")
+        expect { get_task("open_data_export").invoke("for_odc", assessment_type, date_from) }.to output(
           /No data provided for export/,
         ).to_stderr
       end
+
+      it "returns a date validation error when date_from is greater than date_to" do
+        assessment_type = "SAP-RDSAP"
+        date_from = DateTime.now.strftime("%F")
+        date_to = DateTime.yesterday.strftime("%F")
+        expect { get_task("open_data_export").invoke("for_odc", assessment_type, date_from, date_to) }.to output(
+                                                                                                   /date_from cannot be greater than date_to/,
+                                                                                                   ).to_stderr
+      end
     end
 
-    context "And we set the correct environment variables and a date range with no assessments" do
-      before do
-        EnvironmentStub
-          .all
-          .with("DATE_FROM", "2018-12-01")
-          .with("ASSESSMENT_TYPE", "SAP-RDSAP")
-          .with("DATE_TO", "2019-12-07")
-      end
+    context "And we set the correct arguments and a date range with no assessments" do
 
       it "returns a no data to export error" do
-        expect { get_task("open_data_export").invoke("for_odc") }.to output(
+        assessment_type = "SAP-RDSAP"
+        date_from = "2018-12-01"
+        date_to = "2019-12-07"
+        expect { get_task("open_data_export").invoke("for_odc", assessment_type, date_from, date_to) }.to output(
           /No data provided for export/,
         ).to_stderr
       end
