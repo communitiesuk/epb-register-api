@@ -35,6 +35,20 @@ module Gateway
     NON_DOMESTIC_NOS5_COLUMN = :non_domestic_nos5_qualification
     GDA_COLUMN = :gda_qualification
     REGISTERED_BY_COLUMN = :registered_by
+    QUALIFICATION_TYPES = {
+      domestic: %w[
+        domestic_sap_qualification
+        domestic_rd_sap_qualification
+      ],
+      non_domestic: %w[
+        non_domestic_sp3_qualification
+        non_domestic_cc4_qualification
+        non_domestic_dec_qualification
+        non_domestic_nos3_qualification
+        non_domestic_nos4_qualification
+        non_domestic_nos5_qualification
+      ],
+    }.freeze
 
     def row_to_assessor_domain(row)
       scheme_name = row["scheme_name"]
@@ -206,10 +220,12 @@ module Gateway
 
     def search_by(
       name: "",
+      qualification_type: "",
       max_response_size: 20,
       loose_match: false,
       exclude: []
     )
+
       sql = <<-SQL
         SELECT
           first_name, last_name, middle_names, registered_by,
@@ -229,6 +245,18 @@ module Gateway
         WHERE
           b.active = true
       SQL
+
+      if qualification_type.present?
+        qualification_type = qualification_type.underscore
+        raise ArgumentError, "The type of qualification must be either 'domestic' or 'nonDomestic'" unless QUALIFICATION_TYPES.keys.include?(qualification_type.to_sym)
+
+        qualifications =
+          QUALIFICATION_TYPES[qualification_type.to_sym].map do |qualification|
+            "#{qualification} = 'ACTIVE'"
+          end
+
+        sql << "AND (#{qualifications.join(' OR ')})"
+      end
 
       unless exclude.empty?
         sql << "AND scheme_assessor_id NOT IN('" + exclude.join("', '") + "')"
