@@ -311,9 +311,9 @@ paths:
       summary: 'Search for an assessor by postcode or full name
                 Clients with scope assessor:search can search by
                   EITHER:
-                  - a postcode (with scope assessor:search)
+                  - a postcode (with scope assessor:search) and optional qualification
                   OR
-                  - full name (with scope assessor:search)
+                  - full name (with scope assessor:search) and optional qualification type (domestic or non-domestic)
 
                 Clients with scope scheme:assessor:fetch can search by
                   - firstName AND lastName AND dateOfBirth'
@@ -334,9 +334,14 @@ paths:
             $ref: '#/components/schemas/AssessorFullName'
         - in: query
           name: qualification
-          description: Only show assessors who have this qualification
+          description: Only show assessors who have this specific qualification
           schema:
             $ref: '#/components/schemas/AssessorQualificationSearchOptions'
+        - in: query
+          name: qualificationType
+          description: Only show assessors who have this type of qualification
+          schema:
+            $ref: '#/components/schemas/AssessorQualificationTypeSearchOptions'
         - in: query
           name: firstName
           description: The first name of the assessor
@@ -1791,6 +1796,7 @@ components:
 
     AssessorQualificationSearchOptions:
       type: string
+      example: domesticRdSap
       enum:
         - domesticRdSap
         - domesticSap
@@ -1801,6 +1807,13 @@ components:
         - nonDomesticSp3
         - nonDomesticCc4
         - gda
+
+    AssessorQualificationTypeSearchOptions:
+      type: string
+      example: domestic
+      enum:
+        - domestic
+        - nonDomestic
 
     AssessorQualificationStatus:
       type: string
