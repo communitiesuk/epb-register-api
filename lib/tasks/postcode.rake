@@ -17,9 +17,10 @@ task :import_postcode_cleanup do
   puts "[#{Time.now}] Dropped postcode_outcode_geolocations_tmp / postcode_outcode_geolocations_legacy tables"
 end
 
-task :import_postcode do
-  check_task_requirements
-  file_name = ENV["file_name"]
+task :import_postcode, %i[file_name] do |_, args|
+  file_name = args.file_name
+
+  check_task_requirements(file_name)
   zipped = file_name.end_with?("zip")
   file_io = retrieve_file_on_s3(file_name)
 
@@ -34,18 +35,18 @@ task :import_postcode do
       end
     end
   else
-    puts "[#{Time.now}] Reading postcodes CSV file: #{ENV['file_name']}"
+    puts "[#{Time.now}] Reading postcodes CSV file: #{file_name}"
     postcode_csv = CSV.new(file_io, headers: true)
     process_postcode_csv(postcode_csv)
   end
 end
 
-def check_task_requirements
+def check_task_requirements(file_name)
   if ENV["bucket_name"].nil? && ENV["instance_name"].nil?
     abort("Please set the bucket_name or instance_name environment variable")
   end
-  if ENV["file_name"].nil?
-    abort("Please set the file_name environment variable")
+  if file_name.nil?
+    abort("Please set the file_name argument")
   end
 end
 

@@ -17,12 +17,12 @@ describe "Postcode" do
       EnvironmentStub
         .all
         .with("bucket_name", "test-bucket")
-        .with("file_name", FILE_NAME)
+
       HttpStub.s3_get_object(FILE_NAME, get_postcode_csv)
     end
 
     it "Then we can fetch an existing postcode" do
-      get_task("import_postcode").invoke
+      get_task("import_postcode").invoke(FILE_NAME)
 
       postcodes = postcode_gateway.fetch("BR8 7QP")
 
@@ -32,7 +32,7 @@ describe "Postcode" do
     end
 
     it "Then we can fetch an existing outcode for an non existing postcode" do
-      get_task("import_postcode").invoke
+      get_task("import_postcode").invoke(FILE_NAME)
 
       postcodes = postcode_gateway.fetch("BR8 AAA")
 
