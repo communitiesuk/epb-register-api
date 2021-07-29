@@ -8,7 +8,7 @@ module UseCase
       @schemes_gateway = Gateway::SchemesGateway.new
     end
 
-    def execute(name, max_response_size = 20)
+    def execute(name, qualification_type = nil, max_response_size = 20)
       raise OnlyFirstNameGiven if name.split.size < 2
 
       schemes = []
@@ -19,7 +19,7 @@ module UseCase
 
       loose_match = false
 
-      response = @assessor_gateway.search_by(name: name, max_response_size: 0)
+      response = @assessor_gateway.search_by(name: name, qualification_type: qualification_type, max_response_size: 0)
 
       if response.size <= max_response_size
         excluded = []
@@ -30,6 +30,7 @@ module UseCase
         second_response =
           @assessor_gateway.search_by(
             name: name,
+            qualification_type: qualification_type,
             max_response_size: 0,
             loose_match: true,
             exclude: excluded,

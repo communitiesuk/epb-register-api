@@ -150,8 +150,8 @@ module Controller
       json_api_response(code: 200, data: result)
     end
 
-    def search_by_name(name)
-      result = UseCase::FindAssessorsByName.new.execute(name)
+    def search_by_name(name, qualification_type)
+      result = UseCase::FindAssessorsByName.new.execute(name, qualification_type)
 
       result[:data] = assessor_list_results_filter(result)
       json_api_response(code: 200, data: result, burrow_key: :assessors)
@@ -259,7 +259,7 @@ module Controller
       end
 
       if params.key?(:name)
-        search_by_name(params[:name])
+        search_by_name(params[:name], params[:qualificationType])
       elsif params.key?(:postcode) && params.key?(:qualification)
         search_by_postcode(params[:postcode], params[:qualification])
       else

@@ -576,13 +576,14 @@ end
 
 def assessors_search_by_name(
   name,
+  qualification_type = nil,
   accepted_responses = [200],
   authenticate = true,
   auth_data = nil,
   scopes = %w[assessor:search]
 )
   assertive_get(
-    "/api/assessors?name=#{name}",
+    "/api/assessors?name=#{name}&qualificationType=#{qualification_type}",
     accepted_responses,
     authenticate,
     auth_data,
