@@ -14,7 +14,7 @@ describe "Gateway::StorageConfigurationReader" do
         Gateway::StorageConfigurationReader.new(instance_name: INSTANCE_NAME)
       allow(ENV).to receive(:[])
         .with("VCAP_SERVICES")
-        .and_return(get_vcap_services)
+        .and_return(get_vcap_services_stub)
     end
 
     let(:credentials) { @storage_configuration.get_configuration }
@@ -94,7 +94,7 @@ describe "Gateway::StorageConfigurationReader" do
       @storage_configuration = Gateway::StorageConfigurationReader.new
       allow(ENV).to receive(:[])
         .with("VCAP_SERVICE")
-        .and_return(get_vcap_services)
+        .and_return(get_vcap_services_stub)
     end
 
     it "we get back an exception" do

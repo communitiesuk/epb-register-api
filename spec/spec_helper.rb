@@ -186,7 +186,7 @@ def datetime_today
   DateTime.now.strftime("%F %H:%M:%S")
 end
 
-def get_vcap_services
+def get_vcap_services_stub
   '{
     "aws-s3-bucket": [
       {
