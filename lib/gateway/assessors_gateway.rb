@@ -39,6 +39,7 @@ module Gateway
       domestic: %w[
         domestic_sap_qualification
         domestic_rd_sap_qualification
+        gda_qualification
       ],
       non_domestic: %w[
         non_domestic_sp3_qualification
@@ -47,6 +48,7 @@ module Gateway
         non_domestic_nos3_qualification
         non_domestic_nos4_qualification
         non_domestic_nos5_qualification
+        gda_qualification
       ],
     }.freeze
 

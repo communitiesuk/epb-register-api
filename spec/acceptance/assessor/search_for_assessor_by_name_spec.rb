@@ -70,7 +70,7 @@ describe "Searching for an assessor by name" do
         nonDomesticNos3: "ACTIVE",
         nonDomesticNos4: "ACTIVE",
         nonDomesticNos5: "ACTIVE",
-        gda: "ACTIVE",
+        gda: "INACTIVE",
       },
     }
   end
@@ -161,7 +161,7 @@ describe "Searching for an assessor by name" do
       scheme_id = add_scheme_and_get_id
       add_assessor(scheme_id, "SCHE554433", valid_domestic_assessor_request)
       add_assessor(scheme_id, "SCHE665544", valid_non_domestic_assessor_request)
-      non_domestic_qualifications = { "domesticRdSap" => "INACTIVE", "domesticSap" => "INACTIVE", "gda" => "ACTIVE", "nonDomesticCc4" => "ACTIVE", "nonDomesticDec" => "ACTIVE", "nonDomesticNos3" => "ACTIVE", "nonDomesticNos4" => "ACTIVE", "nonDomesticNos5" => "ACTIVE", "nonDomesticSp3" => "ACTIVE" }
+      non_domestic_qualifications = { "domesticRdSap" => "INACTIVE", "domesticSap" => "INACTIVE", "gda" => "INACTIVE", "nonDomesticCc4" => "ACTIVE", "nonDomesticDec" => "ACTIVE", "nonDomesticNos3" => "ACTIVE", "nonDomesticNos4" => "ACTIVE", "nonDomesticNos5" => "ACTIVE", "nonDomesticSp3" => "ACTIVE" }
       search_response = assessors_search_by_name("Per%20Some", "nonDomestic")
       response = JSON.parse(search_response.body)
 
