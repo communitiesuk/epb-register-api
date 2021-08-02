@@ -2,12 +2,15 @@
 
 require "date"
 
+green_deal_plan_id = "SPC123456SPC"
+
 describe "Acceptance::AssessmentSummary::Supplement::RdSAP",
          set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
   before(:all) do
     scheme_id = add_scheme_and_get_id
+    green_deal_plan_id
     assessor =
       AssessorStub.new.fetch_request_body(
         domesticRdSap: "ACTIVE",
@@ -24,7 +27,7 @@ describe "Acceptance::AssessmentSummary::Supplement::RdSAP",
     lodge_rdsap(Samples.xml("RdSAP-Schema-20.0.0"), scheme_id)
     add_green_deal_plan(
       assessment_id: "0000-0000-0000-0000-0000",
-      body: GreenDealPlanStub.new.request_body,
+      body: GreenDealPlanStub.new.request_body(green_deal_plan_id),
     )
 
     rdsap_without_contacts = Nokogiri.XML(Samples.xml("RdSAP-Schema-20.0.0"))
@@ -121,13 +124,17 @@ describe "Acceptance::AssessmentSummary::Supplement::RdSAP",
   end
 
   context "when getting the green deal plan" do
-    it "does not add a green deal plan when there isn't one" do
-      expect(@summary_0001.dig(:data, :greenDealPlan)).to eq([])
-    end
-
     it "adds a green deal plan when there is one" do
       green_deal_plan = @summary_0000.dig(:data, :greenDealPlan).first
       expect(green_deal_plan[:savings].find { |saving| saving[:fuelCode] == "41" }[:fuelSaving]).to eq(-15_561)
+    end
+
+    it "adds a green deal plan for subsequent certificates for the same address" do
+      expect(@summary_0001.dig(:data, :greenDealPlan)).to match [a_hash_including(greenDealPlanId: green_deal_plan_id)]
+    end
+
+    it "does not add a green deal plan for a subsequent certificate for a different address" do
+      expect(@summary_0002.dig(:data, :greenDealPlan)).to eq []
     end
   end
 end

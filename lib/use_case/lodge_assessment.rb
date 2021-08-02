@@ -16,6 +16,8 @@ module UseCase
       @assessors_gateway = Gateway::AssessorsGateway.new
       @assessments_xml_gateway = Gateway::AssessmentsXmlGateway.new
       @assessments_address_id_gateway = Gateway::AssessmentsAddressIdGateway.new
+      @related_assessments_gateway = Gateway::RelatedAssessmentsGateway.new
+      @green_deal_plans_gateway = Gateway::GreenDealPlansGateway.new
     end
 
     def execute(data, migrated, schema_name)
@@ -65,6 +67,8 @@ module UseCase
       @assessments_gateway.insert_or_update assessment
 
       insert_assessment_address_id assessment
+
+      associate_related_green_deals assessment if assessment.type_of_assessment == "RdSAP"
 
       @assessments_xml_gateway.send_to_db(
         {
@@ -156,6 +160,19 @@ module UseCase
           source: source,
         },
       )
+    end
+
+    def associate_related_green_deals(assessment)
+      canonical_address_id = @assessments_address_id_gateway.fetch(assessment.assessment_id)[:address_id]
+      related_assessment_ids = @related_assessments_gateway.related_assessment_ids(canonical_address_id).reject { |id| id == assessment.assessment_id }
+      green_deal_plan_sets = related_assessment_ids.map { |assessment_id| @green_deal_plans_gateway.fetch assessment_id }
+      flat_mapped = green_deal_plan_sets.flat_map(&:itself)
+      green_deal_plan_ids = flat_mapped.map(&:green_deal_plan_id).uniq
+      green_deal_plan_ids.each do |green_deal_plan_id|
+        @green_deal_plans_gateway.link_green_deal_to_assessment green_deal_plan_id, assessment.assessment_id
+      end
+    rescue StandardError => e
+      Logger.new(STDOUT).error "Associating related green deals for the assessment #{assessment.assessment_id} failed with error #{e.class}, message #{e.message}, backtrace #{e.backtrace.join('; ')}"
     end
 
     def get_canonical_address_id(assessment)
