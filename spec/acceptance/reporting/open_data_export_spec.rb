@@ -646,9 +646,7 @@ describe "Acceptance::Reports::OpenDataExport" do
 
   context "When invoking the Open Data Communities export rake directly" do
     context "And we invoke with incorrect arguments" do
-
       it "raises an error when type of export is not provided" do
-
         expected_message =
           "A required argument is missing: type_of_export. You  must specify 'for_odc' or 'not_for_odc'"
 
@@ -667,13 +665,12 @@ describe "Acceptance::Reports::OpenDataExport" do
       end
 
       it "raises an error when type of export is provided but assessment_type argument is not" do
-
         expected_message =
           "A required argument is missing: assessment_type, eg: 'SAP-RDSAP', 'DEC' etc"
 
         expect { get_task("open_data_export").invoke("for_odc") }.to output(
-                                                                       /#{expected_message}/,
-                                                                       ).to_stderr
+          /#{expected_message}/,
+        ).to_stderr
       end
 
       it "returns an error when the wrong type of assessment type is provided" do
@@ -684,7 +681,6 @@ describe "Acceptance::Reports::OpenDataExport" do
     end
 
     context "And we set the correct arguments and a date_from equivalent to now" do
-
       it "returns a no data to export error" do
         assessment_type = "SAP-RDSAP"
         date_from = DateTime.now.strftime("%F")
@@ -698,13 +694,12 @@ describe "Acceptance::Reports::OpenDataExport" do
         date_from = DateTime.now.strftime("%F")
         date_to = DateTime.yesterday.strftime("%F")
         expect { get_task("open_data_export").invoke("for_odc", assessment_type, date_from, date_to) }.to output(
-                                                                                                   /date_from cannot be greater than date_to/,
-                                                                                                   ).to_stderr
+          /date_from cannot be greater than date_to/,
+        ).to_stderr
       end
     end
 
     context "And we set the correct arguments and a date range with no assessments" do
-
       it "returns a no data to export error" do
         assessment_type = "SAP-RDSAP"
         date_from = "2018-12-01"
