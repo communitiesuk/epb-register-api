@@ -30,7 +30,10 @@ module Gateway
 
     def add(green_deal_plan, assessment_id)
       GreenDealPlan.create green_deal_plan.to_record
+      link_green_deal_to_assessment green_deal_plan.green_deal_plan_id, assessment_id
+    end
 
+    def link_green_deal_to_assessment(green_deal_plan_id, assessment_id)
       sql = <<-SQL
         INSERT INTO green_deal_assessments (green_deal_plan_id, assessment_id)
         VALUES ($1, $2)
@@ -42,7 +45,7 @@ module Gateway
         [
           ActiveRecord::Relation::QueryAttribute.new(
             "green_deal_plan_id",
-            green_deal_plan.green_deal_plan_id,
+            green_deal_plan_id,
             ActiveRecord::Type::String.new,
           ),
           ActiveRecord::Relation::QueryAttribute.new(
