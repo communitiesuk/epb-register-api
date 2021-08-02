@@ -142,11 +142,11 @@ describe Gateway::AssessorsGateway do
             gda: "ACTIVE",
           ),
         )
-        domestic_seach_result = assessors_gateway.search_by(name: "Someone Person", qualification_type: "domestic")
-        non_domestic_seach_result = assessors_gateway.search_by(name: "Someone Person", qualification_type: "nonDomestic")
+        domestic_search_result = assessors_gateway.search_by(name: "Someone Person", qualification_type: "domestic")
+        non_domestic_search_result = assessors_gateway.search_by(name: "Someone Person", qualification_type: "nonDomestic")
 
-        expect(domestic_seach_result).to match_array([expected_domestic_assessor, expected_gdp_assessor])
-        expect(non_domestic_seach_result).to match_array([expected_non_domestic_assessor, expected_gdp_assessor])
+        expect(domestic_search_result).to match_array([expected_domestic_assessor, expected_gdp_assessor])
+        expect(non_domestic_search_result).to match_array([expected_non_domestic_assessor, expected_gdp_assessor])
       end
     end
   end
