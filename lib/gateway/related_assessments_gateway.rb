@@ -3,26 +3,30 @@ module Gateway
     class Assessment < ActiveRecord::Base
     end
 
-    def by_address_id(address_id)
+    def related_assessment_ids(address_id)
       return [] if address_id.blank?
 
-      assessment_ids =
-        ActiveRecord::Base
-          .connection
-          .exec_query(
-            "SELECT assessment_id FROM assessments_address_id WHERE address_id = $1",
-            "SQL",
-            [
-              ActiveRecord::Relation::QueryAttribute.new(
-                "address_id",
-                address_id,
-                ActiveRecord::Type::String.new,
-              ),
-            ],
-          )
-          .map do |assessment_id|
-            ActiveRecord::Base.connection.quote(assessment_id["assessment_id"])
-          end
+      ActiveRecord::Base
+        .connection
+        .exec_query(
+          "SELECT assessment_id FROM assessments_address_id WHERE address_id = $1",
+          "SQL",
+          [
+            ActiveRecord::Relation::QueryAttribute.new(
+              "address_id",
+              address_id,
+              ActiveRecord::Type::String.new,
+            ),
+          ],
+        ).map do |row|
+          row["assessment_id"]
+        end
+    end
+
+    def by_address_id(address_id)
+      assessment_ids = related_assessment_ids(address_id).map do |assessment_id|
+        ActiveRecord::Base.connection.quote(assessment_id)
+      end
 
       return [] if assessment_ids.empty?
 
