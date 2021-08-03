@@ -86,6 +86,8 @@ task :seed_test_green_deal_plans do
     ].to_json,
   ]
 
+  added_plans = 0
+
   ActiveRecord::Base.transaction do
     assessments = ActiveRecord::Base.connection.exec_query <<-SQL
       SELECT assessment_id
@@ -157,6 +159,9 @@ task :seed_test_green_deal_plans do
                                                   '#{green_deal_plan_id}',
                                                   '#{row['assessment_id']}'
                                               )"
+      added_plans += 1
     end
   end
+
+  puts "Added data for #{added_plans} test green deal plans"
 end
