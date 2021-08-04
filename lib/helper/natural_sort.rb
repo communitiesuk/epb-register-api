@@ -24,13 +24,13 @@ module Helper
           ].map { |item| item.to_s.strip.upcase.tr(",", "") }
 
         postcode_comparison = compare_postcode(address_a, address_b)
-        if postcode_comparison == 0
+        if postcode_comparison.zero?
           address_line_comparison =
             compare_address_line_for_number(address_a, address_b)
 
-          if address_line_comparison == 0
+          if address_line_comparison.zero?
             flat_number_comparison = compare_flat_numbers(address_a, address_b)
-            flat_number_comparison == 0 ? compare_addresses_alphabetically(address_a, address_b) : flat_number_comparison
+            flat_number_comparison.zero? ? compare_addresses_alphabetically(address_a, address_b) : flat_number_comparison
           else
             address_line_comparison
           end
@@ -40,13 +40,13 @@ module Helper
       end
     end
 
-    def self.compare_postcode(a, b)
-      compare_to(a[0], b[0])
+    def self.compare_postcode(first, second)
+      compare_to(first[0], second[0])
     end
 
-    def self.compare_address_line_for_number(a, b)
-      address_lines_a = [a[1], a[2], a[3], a[4]]
-      address_lines_b = [b[1], b[2], b[3], b[4]]
+    def self.compare_address_line_for_number(first, second)
+      address_lines_a = [first[1], first[2], first[3], first[4]]
+      address_lines_b = [second[1], second[2], second[3], second[4]]
 
       property_a_number, property_a_letter =
         get_property_number_and_letter(address_lines_a)
@@ -54,7 +54,7 @@ module Helper
         get_property_number_and_letter(address_lines_b)
 
       compared = compare_to(property_a_number, property_b_number)
-      if compared == 0
+      if compared.zero?
         compare_to(property_a_letter, property_b_letter)
       else
         compared
@@ -85,15 +85,15 @@ module Helper
       [property_number, property_letter]
     end
 
-    def self.compare_flat_numbers(a, b)
-      flat_number_a = get_flat_number(a)
-      flat_number_b = get_flat_number(b)
+    def self.compare_flat_numbers(first, second)
+      flat_number_a = get_flat_number(first)
+      flat_number_b = get_flat_number(second)
 
       compare_to(flat_number_a, flat_number_b)
     end
 
-    def self.get_flat_number(a)
-      numbers_in_address = a[1..4].reverse.join(" ").scan(/\d+/)
+    def self.get_flat_number(address)
+      numbers_in_address = address[1..4].reverse.join(" ").scan(/\d+/)
       if !numbers_in_address.empty? && numbers_in_address.count > 1
         numbers_in_address.first.to_i
       else
@@ -102,15 +102,15 @@ module Helper
       end
     end
 
-    def self.compare_addresses_alphabetically(a, b)
-      address_a = a[1..4].reverse.join(" ")
-      address_b = b[1..4].reverse.join(" ")
+    def self.compare_addresses_alphabetically(first, second)
+      address_a = first[1..4].reverse.join(" ")
+      address_b = second[1..4].reverse.join(" ")
 
       compare_to(address_a, address_b)
     end
 
-    def self.compare_to(a, b)
-      a <=> b
+    def self.compare_to(first, second)
+      first <=> second
     end
   end
 end

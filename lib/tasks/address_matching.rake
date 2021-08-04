@@ -193,7 +193,7 @@ def process_address_matching_csv(csv_content, counter)
   while (csv_row = csv_content.shift)
     update_address_from_csv_row(csv_row, counter)
 
-    if counter.processed % 100_000 == 0
+    if counter.processed % 100_000.zero?
       puts "[#{Time.now}] Processed #{counter.processed} LPRNs from CSV file, skipped #{counter.skipped} present in backup table"
     end
   end

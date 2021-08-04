@@ -96,7 +96,7 @@ task :extract_reporting do
       request = Net::HTTP::Post.new uri.request_uri
       request.basic_auth ENV["username"], ENV["password"]
       request.body = CSV.generate(
-        write_headers: (start == 0), headers: data.first ? data.first.keys : [],
+        write_headers: start.zero?, headers: data.first ? data.first.keys : [],
       ) { |csv| data.each { |row| csv << row } }
 
       http.request request

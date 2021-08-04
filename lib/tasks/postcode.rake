@@ -84,7 +84,7 @@ def process_postcode_csv(postcode_csv, buffer_size = 10_000)
     postcode_geolocation_buffer << [db.quote(postcode), lat, long, db.quote(region)].join(", ")
     add_outcode(outcodes, new_outcode, lat, long, region)
 
-    if row_number % buffer_size == 0
+    if (row_number % buffer_size).zero?
       insert_postcode_batch(postcode_geolocation_buffer)
       postcode_geolocation_buffer.clear
     end
