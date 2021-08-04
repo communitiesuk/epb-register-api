@@ -94,6 +94,7 @@ GEM
     murmurhash3 (0.1.6)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
+    namecase (2.0.0)
     nokogiri (1.12.2)
       mini_portile2 (~> 2.6.1)
       racc (~> 1.4)
@@ -223,6 +224,7 @@ DEPENDENCIES
   epb_view_models (~> 1.0.2)!
   geocoder (~> 1.6.6)!
   json-schema (~> 2.8)!
+  namecase (~> 2.0)!
   nokogiri (~> 1.12.2)!
   ougai (~> 2.0)!
   pg!

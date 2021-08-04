@@ -159,7 +159,7 @@ def add_address_base(uprn:)
 end
 
 def insert_into_address_base(rrn, post_code, address1, address2, town)
-  ActiveRecord::Base.connection.exec_query("INSERT INTO address_base (uprn,
+  sql = "INSERT INTO address_base (uprn,
             postcode,
             address_line1,
             address_line2,
@@ -168,7 +168,37 @@ def insert_into_address_base(rrn, post_code, address1, address2, town)
             town,
             classification_code,
             address_type)
-            VALUES ('#{rrn}', '#{post_code}', '#{address1}', '#{address2}', '', '', '#{town}', 'D', 'Delivery Point')")
+            VALUES ($1, $2, $3, $4, '', '', $5, 'D', 'Delivery Point')"
+
+  binds = [
+    ActiveRecord::Relation::QueryAttribute.new(
+      "uprn",
+      rrn.to_i.to_s,
+      ActiveRecord::Type::String.new,
+    ),
+    ActiveRecord::Relation::QueryAttribute.new(
+      "postcode",
+      post_code,
+      ActiveRecord::Type::String.new,
+    ),
+    ActiveRecord::Relation::QueryAttribute.new(
+      "address1",
+      address1,
+      ActiveRecord::Type::String.new,
+    ),
+    ActiveRecord::Relation::QueryAttribute.new(
+      "address2",
+      address2,
+      ActiveRecord::Type::String.new,
+    ),
+    ActiveRecord::Relation::QueryAttribute.new(
+      "town",
+      town,
+      ActiveRecord::Type::String.new,
+    ),
+  ]
+
+  ActiveRecord::Base.connection.exec_query sql, "SQL", binds
 end
 
 def get_task(name)

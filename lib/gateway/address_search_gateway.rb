@@ -89,7 +89,7 @@ module Gateway
             sql_address_base,
             "SQL",
             binds,
-          ),
+          ).map { |address| title_case_address(address) },
           ActiveRecord::Base.connection.exec_query(
             sql_assessments,
             "SQL",
@@ -173,7 +173,7 @@ module Gateway
             sql_address_base,
             "SQL",
             binds,
-          ),
+          ).map { |address| title_case_address(address) },
           ActiveRecord::Base.connection.exec_query(
             sql_assessments,
             "SQL",
@@ -291,7 +291,7 @@ module Gateway
             sql_address_base,
             "SQL",
             binds,
-          ),
+          ).map { |address| title_case_address(address) },
           ActiveRecord::Base.connection.exec_query(
             sql_assessments,
             "SQL",
@@ -457,6 +457,10 @@ module Gateway
         stringified["town"],
         stringified["postcode"],
       ].compact.reject { |a| a.to_s.strip.chomp.empty? }.join(" ")
+    end
+
+    def title_case_address(address)
+      Gateway::AddressBaseHelper.title_case_address(address)
     end
   end
 end

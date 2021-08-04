@@ -28,6 +28,7 @@ source "https://rubygems.org" do
   gem "epb_view_models", "~> 1.0.2"
   gem "geocoder", "~> 1.6.6"
   gem "json-schema", "~> 2.8"
+  gem "namecase", "~> 2.0"
   gem "nokogiri", "~> 1.12.2"
   gem "ougai", "~> 2.0"
   gem "pg"

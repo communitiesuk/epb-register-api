@@ -42,7 +42,9 @@ module Gateway
 
       sql << "uprn"
 
-      parse_results ActiveRecord::Base.connection.exec_query sql, "SQL", binds
+      parse_results(
+        ActiveRecord::Base.connection.exec_query(sql, "SQL", binds).map { |address| title_case_address address },
+      )
     end
 
     def search_by_uprn(uprn)
@@ -67,7 +69,9 @@ module Gateway
         ),
       ]
 
-      parse_results ActiveRecord::Base.connection.exec_query sql, "SQL", binds
+      parse_results(
+        ActiveRecord::Base.connection.exec_query(sql, "SQL", binds).map { |address| title_case_address address },
+      )
     end
 
     def check_uprn_exists(uprn)
@@ -148,6 +152,10 @@ module Gateway
                           postcode: row["postcode"],
                           source: "GAZETTEER",
                           existing_assessments: row["existing_assessments"]
+    end
+
+    def title_case_address(address)
+      Gateway::AddressBaseHelper.title_case_address(address)
     end
   end
 end
