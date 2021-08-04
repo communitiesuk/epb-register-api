@@ -130,11 +130,11 @@ describe "Acceptance::AssessmentSummary::Supplement::RdSAP",
     end
 
     it "adds a green deal plan for subsequent certificates for the same address" do
-      expect(@summary_0001.dig(:data, :greenDealPlan)).to match [a_hash_including(greenDealPlanId: green_deal_plan_id)]
+      expect(@summary0001.dig(:data, :greenDealPlan)).to match [a_hash_including(greenDealPlanId: green_deal_plan_id)]
     end
 
     it "does not add a green deal plan for a subsequent certificate for a different address" do
-      expect(@summary_0002.dig(:data, :greenDealPlan)).to eq []
+      expect(@summary0002.dig(:data, :greenDealPlan)).to eq []
     end
   end
 end
