@@ -322,9 +322,9 @@ describe "Acceptance::AddressSearch::ByPostcode", set_with_timecop: true do
 
           it "includes both assessments in the existing assessments for the address" do
             entry =
-              response[:data][:addresses].select { |address|
+              response[:data][:addresses].find do |address|
                 address[:addressId] == "UPRN-000073546792"
-              }.first
+              end
 
             expect(entry[:existingAssessments]).to eq [
               {

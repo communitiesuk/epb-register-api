@@ -49,14 +49,16 @@ module UseCase
         related_assessments =
           Gateway::RelatedAssessmentsGateway.new.by_address_id hash[:address_id]
 
+        domestic_types = %w[RdSAP SAP]
+
         other_assessments_without_self =
           related_assessments.filter do |assessment|
             related = assessment.to_hash
 
             (
               (
-                %w[RdSAP SAP].include?(related[:assessment_type]) &&
-                  %w[RdSAP SAP].include?(hash[:type_of_assessment])
+                domestic_types.include?(related[:assessment_type]) &&
+                  domestic_types.include?(hash[:type_of_assessment])
               ) || related[:assessment_type] == hash[:type_of_assessment]
             ) && related[:assessment_id] != hash[:assessment_id]
           end

@@ -364,6 +364,8 @@ module Gateway
           address_ids[address_id].push i
         end
 
+      statuses_to_exclude = %w[NOT_FOR_ISSUE CANCELLED]
+
       addresses =
         address_ids.keys.map do |address_id|
           entries = address_ids[address_id]
@@ -375,7 +377,7 @@ module Gateway
 
               status = update_expiry_and_status(res)
 
-              next if %w[NOT_FOR_ISSUE CANCELLED].include? status
+              next if statuses_to_exclude.include? status
 
               {
                 assessmentId: res["assessment_id"],

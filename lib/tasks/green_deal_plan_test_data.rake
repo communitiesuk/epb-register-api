@@ -96,20 +96,27 @@ task :seed_test_green_deal_plans do
       LIMIT 25
     SQL
 
+    provider_names = ["My Company", "Your Company", "Big Organisation", "Much Profit LTD", "The Business", "An Organisation"]
+    provider_telephones = %w[019192983 93746537398 0922665 826472665 09813784]
+    provider_emails = %w[testemail@email.com emailtest@email.com practiceemail@email.com emailpractice@email.com]
+    interest_rates = [14.61, 12.21, 26.30, 10.10, 15.70]
+    yes_or_no = %w[Y N]
+    uplift_amounts = [0, 1.24, 1.50, 0.90, 1]
+
     assessments.each do |row|
       green_deal_plan_id = ("A" + ("A".."Z").to_a.sample + rand(100...2000).to_s.rjust(10, "0"))
       start_date = "20" + rand(14..21).to_s.rjust(2, "0") + rand(1..12).to_s.rjust(2, "0") + rand(1..28).to_s.rjust(2, "0")
       end_date = (Date.parse(start_date) + rand(5..20).year).strftime("%Y-%m-%d")
-      provider_name = ["My Company", "Your Company", "Big Organisation", "Much Profit LTD", "The Business", "An Organisation"].sample
-      provider_telephone = %w[019192983 93746537398 0922665 826472665 09813784].sample
-      provider_email = %w[testemail@email.com emailtest@email.com practiceemail@email.com emailpractice@email.com].sample
-      interest_rate = [14.61, 12.21, 26.30, 10.10, 15.70].sample
-      fixed_interest_rate = %w[Y N].sample
-      charge_uplift_amount = [0, 1.24, 1.50, 0.90, 1].sample
+      provider_name = provider_names.sample
+      provider_telephone = provider_telephones.sample
+      provider_email = provider_emails.sample
+      interest_rate = interest_rates.sample
+      fixed_interest_rate = yes_or_no.sample
+      charge_uplift_amount = uplift_amounts.sample
       charge_uplift_date = (Date.parse(start_date) + rand(1..20).year).strftime("%Y-%m-%d")
-      cca_regulated = %w[Y N].sample
-      structure_changed = %w[Y N].sample
-      measures_removed = %w[Y N].sample
+      cca_regulated = yes_or_no.sample
+      structure_changed = yes_or_no.sample
+      measures_removed = yes_or_no.sample
 
       ActiveRecord::Base.connection.exec_query "INSERT INTO
                                               green_deal_plans

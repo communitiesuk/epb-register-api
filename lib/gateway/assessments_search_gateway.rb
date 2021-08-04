@@ -36,18 +36,19 @@ module Gateway
       ]
 
       unless assessment_types.nil? || assessment_types.empty?
+        known_types = %w[
+          RdSAP
+          SAP
+          CEPC
+          CEPC-RR
+          DEC
+          DEC-RR
+          AC-CERT
+          AC-REPORT
+        ]
         sanitized_assessment_types =
           assessment_types.map do |assessment_type|
-            unless %w[
-              RdSAP
-              SAP
-              CEPC
-              CEPC-RR
-              DEC
-              DEC-RR
-              AC-CERT
-              AC-REPORT
-            ].include? assessment_type
+            unless known_types.include? assessment_type
               raise InvalidAssessmentType
             end
 

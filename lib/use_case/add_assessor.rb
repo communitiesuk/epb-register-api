@@ -29,9 +29,9 @@ module UseCase
       end
 
       scheme =
-        @schemes_gateway.all.select { |scheme|
+        @schemes_gateway.all.find do |scheme|
           scheme[:scheme_id].to_s == add_assessor_request.registered_by_id.to_s
-        }.first
+        end
 
       raise SchemeNotFoundException unless scheme
 

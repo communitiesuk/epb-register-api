@@ -182,14 +182,14 @@ describe UseCase::ExportOpenDataDec, set_with_timecop: true do
         expect(statistics[0]["num_rows"]).to eq(3)
       end
 
-      expected_values.reject { |k| %i[lodgement_datetime].include? k }.keys
+      expected_values.reject { |k| k == :lodgement_datetime }.keys
         .each do |index|
         it "returns the #{index} that matches the test data for the 1st row" do
           expect(exported_data[0][index.to_sym]).to eq(expected_values[index])
         end
       end
 
-      expected_values.reject { |k| %i[lodgement_datetime].include? k }.keys
+      expected_values.reject { |k| k == :lodgement_datetime }.keys
         .each do |index|
         it "returns the #{index} that matches the test data for the 2nd row" do
           expect(exported_data[1][index.to_sym]).to eq(expected_values_1[index])

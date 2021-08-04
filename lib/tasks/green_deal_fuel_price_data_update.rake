@@ -5,8 +5,10 @@ task :green_deal_update_fuel_data do
 
   price_data = raw_data.scan(/^[\d],[\d]+,[\d]+,[\d]+\.[\d]+,[\d]{4}\/[\S]+\/[\d]+ [\d]{2}:[\d]{2}/mi)
 
+  headers = %i[category heat_source standing_charge price date]
+
   price_data = price_data.map do |row|
-    %i[category heat_source standing_charge price date].zip(row.split(",")).to_h
+    headers.zip(row.split(",")).to_h
   end
 
   ActiveRecord::Base.transaction do

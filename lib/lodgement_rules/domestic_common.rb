@@ -47,7 +47,7 @@ module LodgementRules
             walls = method_or_nil(adapter, :all_wall_descriptions)
             unless walls.nil?
               unless walls.compact.select { |desc|
-                       desc.downcase == "wall"
+                       desc.casecmp("wall").zero?
                      }.empty?
                 return false
               end
@@ -55,7 +55,7 @@ module LodgementRules
             roofs = method_or_nil(adapter, :all_roof_descriptions)
             unless roofs.nil?
               unless roofs.compact.select { |desc|
-                       desc.downcase == "roof"
+                       desc.casecmp("roof").zero?
                      }.empty?
                 return false
               end
@@ -63,7 +63,7 @@ module LodgementRules
             floors = method_or_nil(adapter, :all_floor_descriptions)
             unless floors.nil?
               unless floors.compact.select { |desc|
-                       desc.downcase == "floor"
+                       desc.casecmp("floor").zero?
                      }.empty?
                 return false
               end
@@ -71,7 +71,7 @@ module LodgementRules
             windows = method_or_nil(adapter, :all_window_descriptions)
             unless windows.nil?
               unless windows.compact.select { |desc|
-                       desc.downcase == "window"
+                       desc.casecmp("window").zero?
                      }.empty?
                 return false
               end
@@ -80,7 +80,7 @@ module LodgementRules
               method_or_nil(adapter, :all_main_heating_descriptions)
             unless main_heating.nil?
               unless main_heating.compact.select { |desc|
-                       desc.downcase == "main-heating"
+                       desc.casecmp("main-heating").zero?
                      }.empty?
                 return false
               end
@@ -89,7 +89,7 @@ module LodgementRules
               method_or_nil(adapter, :all_main_heating_controls_descriptions)
             unless main_heating_controls.nil?
               unless main_heating_controls.compact.select { |desc|
-                       desc.downcase == "main-heating-controls"
+                       desc.casecmp("main-heating-controls").zero?
                      }.empty?
                 return false
               end
@@ -97,7 +97,7 @@ module LodgementRules
             hot_water = method_or_nil(adapter, :all_hot_water_descriptions)
             unless hot_water.nil?
               unless hot_water.compact.select { |desc|
-                       desc.downcase == "hot-water"
+                       desc.casecmp("hot-water").zero?
                      }.empty?
                 return false
               end
@@ -105,7 +105,7 @@ module LodgementRules
             lighting = method_or_nil(adapter, :all_lighting_descriptions)
             unless lighting.nil?
               unless lighting.compact.select { |desc|
-                       desc.downcase == "lighting"
+                       desc.casecmp("lighting").zero?
                      }.empty?
                 return false
               end
@@ -114,7 +114,7 @@ module LodgementRules
               method_or_nil(adapter, :all_secondary_heating_descriptions)
             unless secondary_heating.nil?
               unless secondary_heating.compact.select { |desc|
-                       desc.downcase == "secondary-heating"
+                       desc.casecmp("secondary-heating").zero?
                      }.empty?
                 return false
               end
@@ -232,7 +232,7 @@ module LodgementRules
                 part[:flat_roof_insulation_thickness],
                 part[:sloping_ceiling_insulation_thickness],
                 part[:roof_u_value],
-              ].reject(&:nil?).length > 1
+              ].count { |p| !p.nil? } > 1
             }.empty?
           end,
       },

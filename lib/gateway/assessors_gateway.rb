@@ -250,7 +250,7 @@ module Gateway
 
       if qualification_type.present?
         qualification_type = qualification_type.underscore
-        raise ArgumentError, "The type of qualification must be either 'domestic' or 'nonDomestic'" unless QUALIFICATION_TYPES.keys.include?(qualification_type.to_sym)
+        raise ArgumentError, "The type of qualification must be either 'domestic' or 'nonDomestic'" unless QUALIFICATION_TYPES.key?(qualification_type.to_sym)
 
         qualifications =
           QUALIFICATION_TYPES[qualification_type.to_sym].map do |qualification|

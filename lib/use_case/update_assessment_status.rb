@@ -51,8 +51,9 @@ module UseCase
   private
 
     def validate_status_updates(assessments, scheme_ids)
+      cancelled_status = %w[CANCELLED NOT_FOR_ISSUE]
       assessments.each do |assessment|
-        if %w[CANCELLED NOT_FOR_ISSUE].include? assessment.to_hash[:status]
+        if cancelled_status.include? assessment.to_hash[:status]
           raise AssessmentAlreadyCancelled
         end
 
