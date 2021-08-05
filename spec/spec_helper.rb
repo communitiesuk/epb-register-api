@@ -76,7 +76,7 @@ def authenticate_and(request = nil, scopes = [], supplementary = {})
   response
 end
 
-def authenticate_with_data(data = {}, scopes)
+def authenticate_with_data(data, scopes)
   authenticate_and(nil, scopes, data) { yield }
 end
 
@@ -148,7 +148,7 @@ end
 
 def add_address_base(uprn:)
   count = ActiveRecord::Base.connection.exec_query(
-    "SELECT COUNT(*) AS address_count FROM address_base WHERE uprn=%s" % ActiveRecord::Base.connection.quote(uprn.to_s),
+    sprintf("SELECT COUNT(*) AS address_count FROM address_base WHERE uprn=%s", ActiveRecord::Base.connection.quote(uprn.to_s)),
   )[0]["address_count"].to_i
   return if count > 0
 

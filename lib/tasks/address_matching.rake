@@ -107,8 +107,7 @@ task :update_address_lines do
 
       begin
         wrapper = ViewModel::Factory.new.create(assessment_xml["xml"], assessment_xml["schema_type"], assessment_id)
-        assessment_xml = nil
-      rescue Exception => e
+      rescue StandardError => e
         puts "[#{Time.now}] Exception in view model creation, skipping #{assessment_id}"
         puts "[#{Time.now}] #{e.message}"
         puts "[#{Time.now}] #{e.backtrace.first}"
@@ -118,8 +117,7 @@ task :update_address_lines do
 
       begin
         wrapper_hash = wrapper.to_hash
-        wrapper = nil
-      rescue Exception => e
+      rescue StandardError => e
         puts "[#{Time.now}] Exception in wrapper to_hash, skipping #{assessment_id}"
         puts "[#{Time.now}] #{e.message}"
         puts "[#{Time.now}] #{e.backtrace.first}"
@@ -131,7 +129,6 @@ task :update_address_lines do
       address_line2 = wrapper_hash[:address][:address_line2]&.strip || ""
       address_line3 = wrapper_hash[:address][:address_line3]&.strip || ""
       address_line4 = wrapper_hash[:address][:address_line4]&.strip || ""
-      wrapper_hash = nil
 
       matching_assessment = db.exec_query("SELECT assessment_id, address_line1, address_line2, address_line3, address_line4 " \
         "FROM assessments WHERE assessment_id = '#{assessment_id}'").first
@@ -140,7 +137,6 @@ task :update_address_lines do
       prev_address_line2 = matching_assessment["address_line2"] || ""
       prev_address_line3 = matching_assessment["address_line3"] || ""
       prev_address_line4 = matching_assessment["address_line4"] || ""
-      matching_assessment = nil
 
       if (prev_address_line1 == address_line1) &&
           (prev_address_line2 == address_line2) &&

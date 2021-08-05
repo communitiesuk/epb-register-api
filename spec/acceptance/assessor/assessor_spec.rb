@@ -240,7 +240,7 @@ describe "Acceptance::Assessor" do
             [403],
             true,
             nil,
-            scopes = %w[assessor:search],
+            %w[assessor:search],
           ).body,
         )
       expect(response["errors"].first["title"]).to eq(

@@ -17,14 +17,14 @@ describe "Integration::EndpointSecurity" do
   routes_to_test = []
 
   controllers_to_test.each do |controller|
-    routes =
+    route_definitions =
       Controller.const_get(controller).routes.map { |method, routes|
         routes.map { |route| route.first.to_s }.map do |route|
           { verb: method.downcase, path: route }
         end
       }.map(&:first)
 
-    routes_to_test |= routes
+    routes_to_test |= route_definitions
   end
 
   total_route_definitions = 27

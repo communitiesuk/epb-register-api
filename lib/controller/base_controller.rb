@@ -86,7 +86,7 @@ module Controller
       @json_helper.convert_to_ruby_hash(request.body.read.to_s, schema)
     end
 
-    def json_response(code = 200, object)
+    def json_response(object, code = 200)
       content_type :json
       status code
 
@@ -107,10 +107,10 @@ module Controller
         data[burrow_key] = meta.delete(data_key)
       end
 
-      json_response(code, { data: data, meta: meta })
+      json_response({ data: data, meta: meta }, code)
     end
 
-    def xml_response(code = 200, xml)
+    def xml_response(xml, code = 200)
       content_type :xml
       status code
 
@@ -119,8 +119,8 @@ module Controller
       body xml
     end
 
-    def error_response(response_code = 500, error_code, title)
-      json_response(response_code, errors: [{ code: error_code, title: title }])
+    def error_response(response_code, error_code, title)
+      json_response({ errors: [{ code: error_code, title: title }] }, response_code)
     end
 
     def server_error(exception)
@@ -151,7 +151,7 @@ module Controller
     end
 
     def forbidden(error_code, title, code = 403)
-      halt json_response(code, { errors: [{ code: error_code, title: title }] })
+      halt json_response({ errors: [{ code: error_code, title: title }] }, code)
     end
 
     def boolean_parameter_true?(key)

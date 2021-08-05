@@ -11,7 +11,7 @@ module UseCase
               related_cert[:current_assessment][:energy_efficiency_band]
             end
           )
-      rescue StandardError => e
+      rescue StandardError
         hash[:energy_band_from_related_certificate] = nil
       end
 

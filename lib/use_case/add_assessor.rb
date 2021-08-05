@@ -24,13 +24,12 @@ module UseCase
     def execute(add_assessor_request, auth_client_id)
       unless ASSESSOR_ID_REGEX.match?(add_assessor_request.scheme_assessor_id)
         raise InvalidAssessorIdException,
-              "The ID provided for the assessor is not in the expected format: \"%s\"" %
-          add_assessor_request.scheme_assessor_id
+              sprintf("The ID provided for the assessor is not in the expected format: \"%s\"", add_assessor_request.scheme_assessor_id)
       end
 
       scheme =
-        @schemes_gateway.all.find do |scheme|
-          scheme[:scheme_id].to_s == add_assessor_request.registered_by_id.to_s
+        @schemes_gateway.all.find do |known_scheme|
+          known_scheme[:scheme_id].to_s == add_assessor_request.registered_by_id.to_s
         end
 
       raise SchemeNotFoundException unless scheme

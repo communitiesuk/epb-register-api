@@ -568,11 +568,10 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
               .with("000000000001")
               .and_return(true)
 
-            existing_assessment =
-              lodge_and_fetch_assessment(
-                rrn_node: "0000-0000-0000-0000-0000",
-                uprn_node: "UPRN-000000000001",
-              )
+            lodge_and_fetch_assessment(
+              rrn_node: "0000-0000-0000-0000-0000",
+              uprn_node: "UPRN-000000000001",
+            )
 
             response =
               lodge_and_fetch_assessment(

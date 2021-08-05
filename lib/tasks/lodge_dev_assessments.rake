@@ -48,7 +48,7 @@ class DevAssessmentsHelper
         type_of_assessment =  hash[:scheme]
       else
         schema_type = hash[:scheme]
-        type_of_assessment = schema_type&.split("-").first
+        type_of_assessment = schema_type.split("-").first
       end
       xml_doc = update_xml(hash[:xml], type_of_assessment.downcase, id)
       data = { assessment_id: id,
@@ -139,6 +139,7 @@ class DevAssessmentsHelper
     begin
       ActiveRecord::Base.connection.insert(insert_sql, "SQL")
     rescue ActiveRecord::RecordNotUnique
+      # the assessor was already present in the database - this is OK for the purposes here
     end
   end
 

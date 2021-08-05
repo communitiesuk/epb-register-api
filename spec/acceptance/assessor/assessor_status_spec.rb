@@ -4,11 +4,11 @@ describe "Acceptance::AssessorStatus" do
   include RSpecRegisterApiServiceMixin
 
   let!(:test_scheme_id) { add_scheme_and_get_id }
-  let!(:test_scheme_id2) { add_scheme_and_get_id(name = "test_two") }
+  let!(:test_scheme_id2) { add_scheme_and_get_id("test_two") }
 
   def create_assessor(
-    scheme_id = test_scheme_id,
-    assessor_id = "SPEC000000",
+    scheme_id,
+    assessor_id,
     qualifications
   )
     add_assessor(

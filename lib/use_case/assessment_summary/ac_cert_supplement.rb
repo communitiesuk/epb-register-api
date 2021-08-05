@@ -7,7 +7,7 @@ module UseCase
 
         hash[:related_party_disclosure] =
           (related_report[:related_party_disclosure] if related_report)
-      rescue StandardError => e
+      rescue StandardError
         hash[:related_party_disclosure] = nil
       end
 

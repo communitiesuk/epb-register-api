@@ -119,9 +119,9 @@ describe "Acceptance::Assessment::QualificationAndStatusPerType",
       },
     }
 
-    assessments.each do |schema_name, assessments|
+    assessments.each do |schema_name, schema_assessments|
       context "when lodging with schema " + schema_name.to_s do
-        assessments.each do |assessment_name, assessment_settings|
+        schema_assessments.each do |assessment_name, assessment_settings|
           if assessment_settings[:response_code].nil?
             assessment_settings[:response_code] = [201]
           end

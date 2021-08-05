@@ -339,9 +339,9 @@ def lodge_assessment(
 
   path =
     if !migrated.nil?
-      "api/assessments?migrated#{(migrated === true ? '' : '=' + migrated)}"
+      "api/assessments?migrated#{(migrated == true ? '' : '=' + migrated)}"
     elsif !override.nil?
-      "api/assessments?override#{(override === true ? '' : '=' + override)}"
+      "api/assessments?override#{(override == true ? '' : '=' + override)}"
     else
       "api/assessments"
     end
@@ -476,8 +476,7 @@ def fetch_assessment_summary(
   accepted_responses = [200],
   authenticate = true,
   auth_data = nil,
-  scopes = %w[assessment:fetch],
-  headers: {}
+  scopes = %w[assessment:fetch]
 )
   assertive_get(
     "api/assessments/#{assessment_id}/summary",
@@ -493,8 +492,7 @@ def fetch_dec_summary(
   accepted_responses = [200],
   authenticate = true,
   auth_data = nil,
-  scopes = %w[dec_summary:fetch],
-  headers: {}
+  scopes = %w[dec_summary:fetch]
 )
   assertive_get(
     "api/dec_summary/#{assessment_id}",

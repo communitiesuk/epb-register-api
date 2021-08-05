@@ -28,7 +28,7 @@ module Controller
         )
 
       if raw_data.empty?
-        json_response(200, { data: "No lodgements during this time frame" })
+        json_response({ data: "No lodgements during this time frame" }, 200)
       else
         content_type "text/csv"
         attachment params[:start_date] + "_to_" + params[:end_date] + ".csv"
@@ -57,7 +57,7 @@ module Controller
         )
 
       if raw_data.empty?
-        json_response(200, { data: "No lodgements during this time frame" })
+        json_response({ data: "No lodgements during this time frame" }, 200)
       else
         content_type "text/csv"
         attachment params[:start_date] + "_to_" + params[:end_date] + ".csv"
@@ -87,7 +87,7 @@ module Controller
         )
 
       if raw_data.empty?
-        json_response(200, { data: "No lodgements during this time frame" })
+        json_response({ data: "No lodgements during this time frame" }, 200)
       else
         content_type "text/csv"
         attachment parsed_params[:start_date] + "_to_" +

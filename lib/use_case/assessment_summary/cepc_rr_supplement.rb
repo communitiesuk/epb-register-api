@@ -9,7 +9,7 @@ module UseCase
 
         hash[:energy_band_from_related_certificate] =
           (related_cert[:current_energy_efficiency_band] if related_cert)
-      rescue StandardError => e
+      rescue StandardError
         hash[:energy_band_from_related_certificate] = nil
       end
 
@@ -25,7 +25,7 @@ module UseCase
               related_certificate[:related_party_disclosure]
             end
           )
-      rescue StandardError => e
+      rescue StandardError
         hash[:related_party_disclosure] = nil
       end
 

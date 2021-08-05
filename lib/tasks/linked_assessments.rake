@@ -103,7 +103,7 @@ task :linked_assessments do
 
       begin
         wrapper = ViewModel::Factory.new.create(assessment_xml["xml"], schema_type, assessment_id)
-      rescue Exception => e
+      rescue StandardError => e
         wrapper = nil
         skipped += 1
         puts "[#{Time.now}] Exception in view model creation for #{schema_type}, skipping #{assessment_id}"
@@ -114,7 +114,7 @@ task :linked_assessments do
 
       begin
         wrapper_hash = wrapper.to_hash
-      rescue Exception => e
+      rescue StandardError => e
         wrapper_hash = nil
         skipped += 1
         puts "[#{Time.now}] Exception in wrapper to_hash, skipping #{assessment_id}"

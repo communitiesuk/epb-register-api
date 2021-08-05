@@ -5,7 +5,7 @@ module Helper
 
       matching = @toggles_enabled_features[toggle_name]
 
-      return !!matching if matching
+      return matching if matching
 
       default
     end
@@ -13,7 +13,7 @@ module Helper
     def self.set_feature(toggle_name, value)
       @toggles_enabled_features ||= {}
 
-      @toggles_enabled_features[toggle_name] = !!value
+      @toggles_enabled_features[toggle_name] = value
 
       @toggles_enabled_features[toggle_name]
     end

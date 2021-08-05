@@ -30,7 +30,7 @@ module UseCase
       # are cancelled or not for issue
       raise AssessmentGone unless related_assessments.first
 
-      latest_assessment_id = related_assessments.first&.to_hash[:assessment_id]
+      latest_assessment_id = related_assessments.first.to_hash[:assessment_id]
 
       renewable_heat_incentive =
         @renewable_heat_incentive_gateway.fetch latest_assessment_id

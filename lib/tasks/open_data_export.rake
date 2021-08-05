@@ -1,9 +1,6 @@
 desc "Exporting assessments data for Open Data Communities"
 
 task :open_data_export, %i[type_of_export assessment_type date_from date_to task_id] do |_, args|
-  bucket = ENV["BUCKET_NAME"]
-  instance_name = ENV["INSTANCE_NAME"]
-
   type_of_export = args.type_of_export
   assessment_type = args.assessment_type&.upcase
   date_from = args.date_from

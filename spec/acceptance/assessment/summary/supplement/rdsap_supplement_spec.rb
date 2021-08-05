@@ -2,15 +2,15 @@
 
 require "date"
 
-green_deal_plan_id = "SPC123456SPC"
-
 describe "Acceptance::AssessmentSummary::Supplement::RdSAP",
          set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
+  green_deal_plan_id = "SPC123456SPC"
+
   before(:all) do
     scheme_id = add_scheme_and_get_id
-    green_deal_plan_id
+
     assessor =
       AssessorStub.new.fetch_request_body(
         domestic_rd_sap: "ACTIVE",

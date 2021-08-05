@@ -138,7 +138,7 @@ module Controller
             end
           end
 
-        xml_response(201, builder.to_xml)
+        xml_response builder.to_xml, 201
       else
         json_api_response code: 201,
                           data: {
@@ -206,7 +206,6 @@ module Controller
         error_response(400, "INVALID_REQUEST", e.message)
       when UseCase::ValidateAndLodgeAssessment::LodgementRulesException
         json_response(
-          400,
           {
             errors: e.errors,
             meta: {
@@ -215,6 +214,7 @@ module Controller
               },
             },
           },
+          400,
         )
       else
         server_error(e)
@@ -230,7 +230,7 @@ module Controller
       result =
         UseCase::FetchAssessment.new.execute(assessment_id, auth_scheme_ids)
 
-      return xml_response(200, result)
+      return xml_response result, 200
     rescue StandardError => e
       case e
       when UseCase::FetchAssessment::NotFoundException
