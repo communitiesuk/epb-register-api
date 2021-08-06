@@ -1518,6 +1518,61 @@ paths:
         500:
           description: Server error
 
+  /reports/assessments/scheme-and-type/rrn:
+    get:
+      tags:
+        - Reporting
+      summary: >-
+        Creates a report of lodgements made by each assessor scheme used for invoicing
+      security:
+        - oauth:
+            - 'reporting:assessment_by_scheme_and_type'
+      parameters:
+        - in: query
+          name: start_date
+          required: true
+          description: 'The start date of the range'
+          schema:
+            type: string
+            format: date
+            example: '2020-11-01'
+        - in: query
+          name: end_date
+          required: true
+          description: 'The end date of the range'
+          schema:
+            type: string
+            format: date
+            example: '2020-12-01'
+        - in: query
+          name: scheme_id
+          required: false
+          description: 'Filter by scheme id'
+          schema:
+            type: integer
+            format: string
+            example: '1'
+      responses:
+        200:
+          description: Report of lodgements by type and scheme
+          content:
+            text/csv:
+              example: >-
+                rrn,scheme_name,type_of_assessment,related_rrn,lodged_at
+                0000-0000-0000-0000-0001,Quidos Limited,RdSAP,,2021-07-01 00:02:45 UTC
+                0000-0000-0000-0000-0002,Elmhurst Energy Systems Ltd,RdSAP,,2021-07-01 00:06:07 UTC
+                0000-0000-0000-0000-0003,Elmhurst Energy Systems Ltd,RdSAP,,2021-07-01 00:07:17 UTC
+                0000-0000-0000-0000-0004,Stroma Certification Ltd,RdSAP,,2021-07-01 00:07:20 UTC
+                0000-0000-0000-0000-0004,Elmhurst Energy Systems Ltd,RdSAP,,2021-07-01 00:08:13 UTC
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Server error
+
 components:
   securitySchemes:
     oauth:
