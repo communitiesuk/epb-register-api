@@ -29,9 +29,9 @@ describe "Acceptance::AssessmentSummary", set_with_timecop: true do
       xml_file = Samples.xml "CEPC-8.0.0", "cepc+rr"
       assessor =
         AssessorStub.new.fetch_request_body(
-          nonDomesticNos3: "ACTIVE",
-          nonDomesticNos4: "ACTIVE",
-          nonDomesticNos5: "ACTIVE",
+          non_domestic_nos3: "ACTIVE",
+          non_domestic_nos4: "ACTIVE",
+          non_domestic_nos5: "ACTIVE",
         )
       add_assessor(scheme_id, "SPEC000000", assessor)
       cepc_and_rr = Nokogiri.XML(xml_file)
@@ -72,9 +72,9 @@ describe "Acceptance::AssessmentSummary", set_with_timecop: true do
       xml_file = Samples.xml "CEPC-8.0.0", "cepc+rr"
       assessor =
         AssessorStub.new.fetch_request_body(
-          nonDomesticNos3: "ACTIVE",
-          nonDomesticNos4: "ACTIVE",
-          nonDomesticNos5: "ACTIVE",
+          non_domestic_nos3: "ACTIVE",
+          non_domestic_nos4: "ACTIVE",
+          non_domestic_nos5: "ACTIVE",
         )
       add_assessor(scheme_id, "SPEC000000", assessor)
       cepc_and_rr = Nokogiri.XML(xml_file)
@@ -96,8 +96,8 @@ describe "Acceptance::AssessmentSummary", set_with_timecop: true do
       scheme_id = add_scheme_and_get_id
       assessor =
         AssessorStub.new.fetch_request_body(
-          domesticRdSap: "ACTIVE",
-          domesticSap: "ACTIVE",
+          domestic_rd_sap: "ACTIVE",
+          domestic_sap: "ACTIVE",
         )
       add_assessor(scheme_id, "SPEC000000", assessor)
       lodge_assessment(

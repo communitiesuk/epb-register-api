@@ -307,9 +307,9 @@ describe "Acceptance::AddressSearch::ByBuildingReference",
         scheme_id,
         "SPEC000000",
         AssessorStub.new.fetch_request_body(
-          nonDomesticNos3: "ACTIVE",
-          nonDomesticNos4: "ACTIVE",
-          nonDomesticNos5: "ACTIVE",
+          non_domestic_nos3: "ACTIVE",
+          non_domestic_nos4: "ACTIVE",
+          non_domestic_nos5: "ACTIVE",
         ),
       )
 

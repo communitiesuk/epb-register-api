@@ -5,11 +5,11 @@ describe "Acceptance::Reports::GetAssessmentCountByRegionAndType" do
 
   let(:valid_assessor_request_body) do
     AssessorStub.new.fetch_request_body(
-      nonDomesticNos3: "ACTIVE",
-      nonDomesticDec: "ACTIVE",
-      domesticRdSap: "ACTIVE",
-      domesticSap: "ACTIVE",
-      nonDomesticSp3: "ACTIVE",
+      non_domestic_nos3: "ACTIVE",
+      non_domestic_dec: "ACTIVE",
+      domestic_rd_sap: "ACTIVE",
+      domestic_sap: "ACTIVE",
+      non_domestic_sp3: "ACTIVE",
     )
   end
 

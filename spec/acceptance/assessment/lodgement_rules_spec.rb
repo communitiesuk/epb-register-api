@@ -8,8 +8,8 @@ describe "Acceptance::LodgementRules", set_with_timecop: true do
       scheme_id,
       "SPEC000000",
       fetch_assessor_stub.fetch_request_body(
-        nonDomesticNos3: "ACTIVE",
-        domesticRdSap: "ACTIVE",
+        non_domestic_nos3: "ACTIVE",
+        domestic_rd_sap: "ACTIVE",
       ),
     )
 

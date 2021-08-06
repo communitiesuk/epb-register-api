@@ -48,7 +48,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive",
     before do
       add_assessor scheme_id,
                    "SPEC000000",
-                   AssessorStub.new.fetch_request_body(domesticRdSap: "ACTIVE")
+                   AssessorStub.new.fetch_request_body(domestic_rd_sap: "ACTIVE")
 
       lodge_assessment assessment_body: valid_rdsap_xml,
                        accepted_responses: [201],
@@ -80,8 +80,8 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive",
       add_assessor scheme_id,
                    "SPEC000000",
                    AssessorStub.new.fetch_request_body(
-                     domesticRdSap: "ACTIVE",
-                     domesticSap: "ACTIVE",
+                     domestic_rd_sap: "ACTIVE",
+                     domestic_sap: "ACTIVE",
                    )
 
       lodge_assessment assessment_body: valid_rdsap_xml,
@@ -424,8 +424,8 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive",
         add_assessor scheme_id,
                      "SPEC000000",
                      AssessorStub.new.fetch_request_body(
-                       domesticRdSap: "ACTIVE",
-                       domesticSap: "ACTIVE",
+                       domestic_rd_sap: "ACTIVE",
+                       domestic_sap: "ACTIVE",
                      )
         first_assessment = Nokogiri.XML(valid_sap_xml)
         first_assessment.at("RRN").content = "0000-0000-0000-0000-0001"

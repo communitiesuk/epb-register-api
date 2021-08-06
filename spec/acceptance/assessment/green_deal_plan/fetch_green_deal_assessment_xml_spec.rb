@@ -9,11 +9,11 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessmentXml",
   def add_assessment_with_green_deal(type = "RdSAP")
     case type
     when "RdSAP"
-      assessor_qualifications = { domesticRdSap: "ACTIVE" }
+      assessor_qualifications = { domestic_rd_sap: "ACTIVE" }
       xml = Samples.xml("RdSAP-Schema-20.0.0")
       xml_schema = "RdSAP-Schema-20.0.0"
     when "CEPC"
-      assessor_qualifications = { nonDomesticNos3: "ACTIVE" }
+      assessor_qualifications = { non_domestic_nos3: "ACTIVE" }
       xml = Samples.xml("CEPC-8.0.0", "cepc")
       xml_schema = "CEPC-8.0.0"
     end

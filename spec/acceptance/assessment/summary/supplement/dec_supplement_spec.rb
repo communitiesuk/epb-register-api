@@ -4,7 +4,7 @@ describe "Acceptance::AssessmentSummary::Supplement::DEC",
 
   before(:all) do
     scheme_id = add_scheme_and_get_id
-    assessor = AssessorStub.new.fetch_request_body(nonDomesticDec: "ACTIVE")
+    assessor = AssessorStub.new.fetch_request_body(non_domestic_dec: "ACTIVE")
     add_assessor(scheme_id, "SPEC000000", assessor)
 
     lodge_dec(Samples.xml("CEPC-8.0.0", "dec"), scheme_id)

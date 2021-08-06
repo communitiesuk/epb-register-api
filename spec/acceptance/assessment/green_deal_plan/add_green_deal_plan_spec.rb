@@ -119,7 +119,7 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan",
         add_assessor scheme_id,
                      "SPEC000000",
                      AssessorStub.new.fetch_request_body(
-                       domesticRdSap: "ACTIVE",
+                       domestic_rd_sap: "ACTIVE",
                      )
 
         lodge_assessment assessment_body: valid_rdsap_xml,
@@ -282,7 +282,7 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan",
           add_assessor scheme_id,
                        "SPEC000000",
                        AssessorStub.new.fetch_request_body(
-                         domesticSap: "ACTIVE",
+                         domestic_sap: "ACTIVE",
                        )
 
           assessment_id.children = "0000-0000-0000-0000-0001"
@@ -321,7 +321,7 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan",
           add_assessor scheme_id,
                        "SPEC000000",
                        AssessorStub.new.fetch_request_body(
-                         domesticRdSap: "ACTIVE",
+                         domestic_rd_sap: "ACTIVE",
                        )
 
           assessment_id.children = "0000-0000-0000-0000-0001"
@@ -457,7 +457,7 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan",
         add_assessor scheme_id,
                      "SPEC000000",
                      AssessorStub.new.fetch_request_body(
-                       domesticRdSap: "ACTIVE",
+                       domestic_rd_sap: "ACTIVE",
                      )
 
         assessment_date.children = Date.today.prev_year(11).strftime("%Y-%m-%d")

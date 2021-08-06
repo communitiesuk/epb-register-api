@@ -46,23 +46,23 @@ describe "Acceptance::AssessorStatus" do
       create_assessor(
         test_scheme_id,
         "SPEC000004",
-        firstName: "Jane",
-        lastName: "Doe",
-        domesticRdSap: "ACTIVE",
+        first_name: "Jane",
+        last_name: "Doe",
+        domestic_rd_sap: "ACTIVE",
       )
       create_assessor(
         test_scheme_id2,
         "SPEC000001",
-        firstName: "Jane",
-        lastName: "Doe",
-        domesticRdSap: "ACTIVE",
+        first_name: "Jane",
+        last_name: "Doe",
+        domestic_rd_sap: "ACTIVE",
       )
       create_assessor(
         test_scheme_id2,
         "SPEC000001",
-        firstName: "Jane",
-        lastName: "Doe",
-        domesticRdSap: "INACTIVE",
+        first_name: "Jane",
+        last_name: "Doe",
+        domestic_rd_sap: "INACTIVE",
       )
 
       response =
@@ -79,23 +79,23 @@ describe "Acceptance::AssessorStatus" do
       create_assessor(
         test_scheme_id,
         "SPEC000004",
-        firstName: "Jane",
-        lastName: "Doe",
-        domesticRdSap: "ACTIVE",
+        first_name: "Jane",
+        last_name: "Doe",
+        domestic_rd_sap: "ACTIVE",
       )
       create_assessor(
         test_scheme_id2,
         "SPEC000001",
-        firstName: "Jane",
-        lastName: "Doe",
-        domesticRdSap: "ACTIVE",
+        first_name: "Jane",
+        last_name: "Doe",
+        domestic_rd_sap: "ACTIVE",
       )
       create_assessor(
         test_scheme_id2,
         "SPEC000001",
-        firstName: "Jane",
-        lastName: "Doe",
-        domesticRdSap: "INACTIVE",
+        first_name: "Jane",
+        last_name: "Doe",
+        domestic_rd_sap: "INACTIVE",
       )
 
       expect(response[:data]).to eq(
@@ -120,25 +120,25 @@ describe "Acceptance::AssessorStatus" do
       create_assessor(
         test_scheme_id,
         "SPEC000001",
-        firstName: "Jane",
-        lastName: "Doe",
-        domesticRdSap: "ACTIVE",
+        first_name: "Jane",
+        last_name: "Doe",
+        domestic_rd_sap: "ACTIVE",
       )
       create_assessor(
         test_scheme_id2,
         "SPEC000002",
-        firstName: "Jane",
-        lastName: "Doe",
-        domesticRdSap: "ACTIVE",
-        dateOfBirth: "1976-02-25",
+        first_name: "Jane",
+        last_name: "Doe",
+        domestic_rd_sap: "ACTIVE",
+        date_of_birth: "1976-02-25",
       )
       create_assessor(
         test_scheme_id2,
         "SPEC000002",
-        firstName: "Jane",
-        lastName: "Doe",
-        domesticRdSap: "INACTIVE",
-        dateOfBirth: "1976-02-25",
+        first_name: "Jane",
+        last_name: "Doe",
+        domestic_rd_sap: "INACTIVE",
+        date_of_birth: "1976-02-25",
       )
 
       expect(response[:data]).to eq(assessorStatusEvents: [])
@@ -148,23 +148,23 @@ describe "Acceptance::AssessorStatus" do
       create_assessor(
         test_scheme_id,
         "SPEC000001",
-        firstName: "Jane",
-        lastName: "Doe",
-        domesticRdSap: "ACTIVE",
+        first_name: "Jane",
+        last_name: "Doe",
+        domestic_rd_sap: "ACTIVE",
       )
       create_assessor(
         test_scheme_id2,
         "SPEC000003",
-        firstName: "Ash",
-        lastName: "Doe",
-        domesticRdSap: "ACTIVE",
+        first_name: "Ash",
+        last_name: "Doe",
+        domestic_rd_sap: "ACTIVE",
       )
       create_assessor(
         test_scheme_id2,
         "SPEC000003",
-        firstName: "Ash",
-        lastName: "Doe",
-        domesticRdSap: "INACTIVE",
+        first_name: "Ash",
+        last_name: "Doe",
+        domestic_rd_sap: "INACTIVE",
       )
 
       expect(response[:data]).to eq(
@@ -189,23 +189,23 @@ describe "Acceptance::AssessorStatus" do
       create_assessor(
         test_scheme_id,
         "SPEC000001",
-        firstName: "Jane",
-        lastName: "Doe",
-        domesticRdSap: "ACTIVE",
+        first_name: "Jane",
+        last_name: "Doe",
+        domestic_rd_sap: "ACTIVE",
       )
       create_assessor(
         test_scheme_id2,
         "SPEC000003",
-        firstName: "Jane",
-        lastName: "Done",
-        domesticRdSap: "ACTIVE",
+        first_name: "Jane",
+        last_name: "Done",
+        domestic_rd_sap: "ACTIVE",
       )
       create_assessor(
         test_scheme_id2,
         "SPEC000003",
-        firstName: "Jane",
-        lastName: "Done",
-        domesticRdSap: "INACTIVE",
+        first_name: "Jane",
+        last_name: "Done",
+        domestic_rd_sap: "INACTIVE",
       )
 
       expect(response[:data]).to eq(assessorStatusEvents: [])
@@ -215,16 +215,16 @@ describe "Acceptance::AssessorStatus" do
       create_assessor(
         test_scheme_id,
         "SPEC000001",
-        firstName: "Jane",
-        lastName: "Doe",
-        domesticRdSap: "ACTIVE",
+        first_name: "Jane",
+        last_name: "Doe",
+        domestic_rd_sap: "ACTIVE",
       )
       create_assessor(
         test_scheme_id,
         "SPEC000001",
-        firstName: "Jane",
-        lastName: "Doe",
-        domesticRdSap: "INACTIVE",
+        first_name: "Jane",
+        last_name: "Doe",
+        domestic_rd_sap: "INACTIVE",
       )
 
       expect(response[:data]).to eq(assessorStatusEvents: [])

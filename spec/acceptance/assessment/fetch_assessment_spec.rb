@@ -74,7 +74,7 @@ describe "Acceptance::Assessment", set_with_timecop: true do
     before do
       add_assessor scheme_id,
                    "SPEC000000",
-                   fetch_assessor_stub.fetch_request_body(domesticSap: "ACTIVE")
+                   fetch_assessor_stub.fetch_request_body(domestic_sap: "ACTIVE")
 
       lodge_assessment assessment_body: valid_sap_xml,
                        accepted_responses: [201],
@@ -116,7 +116,7 @@ describe "Acceptance::Assessment", set_with_timecop: true do
     before do
       add_assessor scheme_id,
                    "SPEC000000",
-                   fetch_assessor_stub.fetch_request_body(domesticSap: "ACTIVE")
+                   fetch_assessor_stub.fetch_request_body(domestic_sap: "ACTIVE")
 
       lodge_assessment assessment_body: valid_sap_xml,
                        accepted_responses: [201],

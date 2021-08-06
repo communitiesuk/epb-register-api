@@ -5,9 +5,9 @@ describe "Acceptance::AssessmentAddressId", set_with_timecop: true do
 
   let(:valid_assessor_request_body) do
     AssessorStub.new.fetch_request_body(
-      domesticRdSap: "ACTIVE",
-      nonDomesticNos3: "ACTIVE",
-      nonDomesticCc4: "ACTIVE",
+      domestic_rd_sap: "ACTIVE",
+      non_domestic_nos3: "ACTIVE",
+      non_domestic_cc4: "ACTIVE",
     )
   end
 

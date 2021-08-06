@@ -62,14 +62,14 @@ describe "Acceptance::LodgeExamples", set_with_timecop: true do
         scheme_id,
         "JASE000000",
         AssessorStub.new.fetch_request_body(
-          nonDomesticNos3: "ACTIVE",
-          nonDomesticNos4: "ACTIVE",
-          nonDomesticNos5: "ACTIVE",
-          nonDomesticDec: "ACTIVE",
-          nonDomesticSp3: "ACTIVE",
-          nonDomesticCc4: "ACTIVE",
-          domesticSap: "ACTIVE",
-          domesticRdSap: "ACTIVE",
+          non_domestic_nos3: "ACTIVE",
+          non_domestic_nos4: "ACTIVE",
+          non_domestic_nos5: "ACTIVE",
+          non_domestic_dec: "ACTIVE",
+          non_domestic_sp3: "ACTIVE",
+          non_domestic_cc4: "ACTIVE",
+          domestic_sap: "ACTIVE",
+          domestic_rd_sap: "ACTIVE",
         ),
       )
     end

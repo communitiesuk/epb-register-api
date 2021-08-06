@@ -3,10 +3,10 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
 
   let(:valid_assessor_request_body) do
     AssessorStub.new.fetch_request_body(
-      domesticRdSap: "ACTIVE",
-      nonDomesticNos3: "ACTIVE",
-      nonDomesticNos4: "ACTIVE",
-      nonDomesticNos5: "ACTIVE",
+      domestic_rd_sap: "ACTIVE",
+      non_domestic_nos3: "ACTIVE",
+      non_domestic_nos4: "ACTIVE",
+      non_domestic_nos5: "ACTIVE",
     )
   end
   let(:rdsap_xml) { Samples.xml("RdSAP-Schema-20.0.0") }

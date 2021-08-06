@@ -5,11 +5,11 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
 
   let(:valid_assessor_request_body) do
     AssessorStub.new.fetch_request_body(
-      domesticRdSap: "ACTIVE",
-      nonDomesticNos3: "ACTIVE",
-      nonDomesticDec: "ACTIVE",
-      nonDomesticCc4: "ACTIVE",
-      nonDomesticSp3: "ACTIVE",
+      domestic_rd_sap: "ACTIVE",
+      non_domestic_nos3: "ACTIVE",
+      non_domestic_dec: "ACTIVE",
+      non_domestic_cc4: "ACTIVE",
+      non_domestic_sp3: "ACTIVE",
     )
   end
 
@@ -799,7 +799,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
         add_assessor scheme_id,
                      "UNQU000000",
                      AssessorStub.new.fetch_request_body(
-                       domesticRdSap: "INACTIVE",
+                       domestic_rd_sap: "INACTIVE",
                      )
 
         xml = Nokogiri.XML valid_rdsap_xml

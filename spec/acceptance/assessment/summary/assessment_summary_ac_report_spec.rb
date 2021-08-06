@@ -9,8 +9,8 @@ describe "Acceptance::AssessmentSummary::AC-REPORT", set_with_timecop: true do
         scheme_id,
         "SPEC000000",
         AssessorStub.new.fetch_request_body(
-          nonDomesticSp3: "ACTIVE",
-          nonDomesticCc4: "ACTIVE",
+          non_domestic_sp3: "ACTIVE",
+          non_domestic_cc4: "ACTIVE",
         ),
       )
     end

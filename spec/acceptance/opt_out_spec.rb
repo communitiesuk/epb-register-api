@@ -2,7 +2,7 @@ describe "Acceptance::OptOut", set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
   let(:valid_assessor_request_body) do
-    AssessorStub.new.fetch_request_body(domesticRdSap: "ACTIVE")
+    AssessorStub.new.fetch_request_body(domestic_rd_sap: "ACTIVE")
   end
 
   let(:valid_rdsap_xml) { Samples.xml "RdSAP-Schema-20.0.0" }
@@ -65,9 +65,9 @@ describe "Acceptance::OptOut", set_with_timecop: true do
       xml_file = Samples.xml "CEPC-8.0.0", "cepc+rr"
       assessor =
         AssessorStub.new.fetch_request_body(
-          nonDomesticNos3: "ACTIVE",
-          nonDomesticNos4: "ACTIVE",
-          nonDomesticNos5: "ACTIVE",
+          non_domestic_nos3: "ACTIVE",
+          non_domestic_nos4: "ACTIVE",
+          non_domestic_nos5: "ACTIVE",
         )
       add_assessor(scheme_id, "SPEC000000", assessor)
       cepc_and_rr = Nokogiri.XML(xml_file)

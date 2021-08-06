@@ -16,11 +16,11 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment",
   )
     case type
     when "RdSAP"
-      assessor_qualifications = { domesticRdSap: "ACTIVE" }
+      assessor_qualifications = { domestic_rd_sap: "ACTIVE" }
       xml = Samples.xml(schema_version)
       xml_schema = schema_version
     when "SAP"
-      assessor_qualifications = { domesticSap: "ACTIVE" }
+      assessor_qualifications = { domestic_sap: "ACTIVE" }
       xml = Samples.xml("SAP-Schema-18.0.0")
       xml_schema = "SAP-Schema-18.0.0"
     end
@@ -53,7 +53,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment",
   end
 
   def add_non_domestic_assessment
-    assessor_qualifications = { nonDomesticNos3: "ACTIVE" }
+    assessor_qualifications = { non_domestic_nos3: "ACTIVE" }
     xml = Samples.xml "CEPC-8.0.0", "cepc"
     xml_schema = "CEPC-8.0.0"
 

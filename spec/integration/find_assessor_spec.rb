@@ -33,7 +33,7 @@ describe "Integration::FilterAndOrderAssessorsByPostcode" do
       dateOfBirth: "1991-02-25",
       searchResultsComparisonPostcode: "BF1 3AD",
       qualifications: {
-        domesticRdSap: "ACTIVE",
+        domestic_rd_sap: "ACTIVE",
       },
     }
   end

@@ -8,8 +8,8 @@ describe "Acceptance::DECSummary", set_with_timecop: true do
       scheme_id,
       "SPEC000000",
       fetch_assessor_stub.fetch_request_body(
-        nonDomesticDec: "ACTIVE",
-        nonDomesticNos3: "ACTIVE",
+        non_domestic_dec: "ACTIVE",
+        non_domestic_nos3: "ACTIVE",
       ),
     )
 

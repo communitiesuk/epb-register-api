@@ -13,8 +13,8 @@ describe "Acceptance::AssessmentSummary::Supplement::RdSAP",
     green_deal_plan_id
     assessor =
       AssessorStub.new.fetch_request_body(
-        domesticRdSap: "ACTIVE",
-        domesticSap: "ACTIVE",
+        domestic_rd_sap: "ACTIVE",
+        domestic_sap: "ACTIVE",
       )
     add_assessor(scheme_id, "SPEC000000", assessor)
 

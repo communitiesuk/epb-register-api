@@ -40,7 +40,7 @@ describe "Acceptance::Assessment::QualificationAndStatusPerType",
         "valid_rdsap": {
           xml: "epc",
           assessor_qualification: {
-            domesticRdSap: "ACTIVE",
+            domestic_rd_sap: "ACTIVE",
           },
         },
       },
@@ -48,7 +48,7 @@ describe "Acceptance::Assessment::QualificationAndStatusPerType",
         "valid_sap": {
           xml: "epc",
           assessor_qualification: {
-            domesticSap: "ACTIVE",
+            domestic_sap: "ACTIVE",
           },
         },
       },
@@ -56,17 +56,17 @@ describe "Acceptance::Assessment::QualificationAndStatusPerType",
         "valid_cepc": {
           xml: "cepc",
           assessor_qualification: {
-            nonDomesticNos3: "ACTIVE",
-            nonDomesticNos4: "ACTIVE",
-            nonDomesticNos5: "ACTIVE",
+            non_domestic_nos3: "ACTIVE",
+            non_domestic_nos4: "ACTIVE",
+            non_domestic_nos5: "ACTIVE",
           },
         },
         "valid_cepc+rr": {
           xml: "cepc+rr",
           assessor_qualification: {
-            nonDomesticNos3: "ACTIVE",
-            nonDomesticNos4: "ACTIVE",
-            nonDomesticNos5: "ACTIVE",
+            non_domestic_nos3: "ACTIVE",
+            non_domestic_nos4: "ACTIVE",
+            non_domestic_nos5: "ACTIVE",
           },
           expected_response: "dual_lodgement",
           lodged_rrns: %w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001],
@@ -74,13 +74,13 @@ describe "Acceptance::Assessment::QualificationAndStatusPerType",
         "valid_dec": {
           xml: "dec",
           assessor_qualification: {
-            nonDomesticDec: "ACTIVE",
+            non_domestic_dec: "ACTIVE",
           },
         },
         "valid_dec+rr": {
           xml: "dec+rr",
           assessor_qualification: {
-            nonDomesticDec: "ACTIVE",
+            non_domestic_dec: "ACTIVE",
           },
           expected_response: "dual_lodgement",
           lodged_rrns: %w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001],
@@ -88,30 +88,30 @@ describe "Acceptance::Assessment::QualificationAndStatusPerType",
         "valid_rr": {
           xml: "cepc-rr",
           assessor_qualification: {
-            nonDomesticNos3: "ACTIVE",
-            nonDomesticNos4: "ACTIVE",
-            nonDomesticNos5: "ACTIVE",
+            non_domestic_nos3: "ACTIVE",
+            non_domestic_nos4: "ACTIVE",
+            non_domestic_nos5: "ACTIVE",
           },
         },
         "valid_ac-report": {
           xml: "ac-report",
           assessor_qualification: {
-            nonDomesticSp3: "ACTIVE",
-            nonDomesticCc4: "ACTIVE",
+            non_domestic_sp3: "ACTIVE",
+            non_domestic_cc4: "ACTIVE",
           },
         },
         "valid_ac-cert": {
           xml: "ac-cert",
           assessor_qualification: {
-            nonDomesticSp3: "ACTIVE",
-            nonDomesticCc4: "ACTIVE",
+            non_domestic_sp3: "ACTIVE",
+            non_domestic_cc4: "ACTIVE",
           },
         },
         "valid_ac-cert+ac-report": {
           xml: "ac-cert+ac-report",
           assessor_qualification: {
-            nonDomesticCc4: "ACTIVE",
-            nonDomesticSp3: "ACTIVE",
+            non_domestic_cc4: "ACTIVE",
+            non_domestic_sp3: "ACTIVE",
           },
           expected_response: "dual_lodgement",
           lodged_rrns: %w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001],
@@ -150,14 +150,14 @@ describe "Acceptance::Assessment::QualificationAndStatusPerType",
             it "gives error 400 when lodging with insufficient qualification" do
               create_assessor(
                 {
-                  nonDomesticNos3: "INACTIVE",
-                  nonDomesticNos4: "SUSPENDED",
-                  nonDomesticNos5: "INACTIVE",
-                  nonDomesticDec: "SUSPENDED",
-                  domesticRdSap: "INACTIVE",
-                  domesticSap: "SUSPENDED",
-                  nonDomesticSp3: "INACTIVE",
-                  nonDomesticCc4: "INACTIVE",
+                  non_domestic_nos3: "INACTIVE",
+                  non_domestic_nos4: "SUSPENDED",
+                  non_domestic_nos5: "INACTIVE",
+                  non_domestic_dec: "SUSPENDED",
+                  domestic_rd_sap: "INACTIVE",
+                  domestic_sap: "SUSPENDED",
+                  non_domestic_sp3: "INACTIVE",
+                  non_domestic_cc4: "INACTIVE",
                   gda: "INACTIVE",
                 },
               )

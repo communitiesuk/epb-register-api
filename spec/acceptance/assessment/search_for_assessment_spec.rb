@@ -9,8 +9,8 @@ describe "Acceptance::Assessment::SearchForAssessments",
       scheme_id,
       "SPEC000000",
       AssessorStub.new.fetch_request_body(
-        domesticRdSap: "ACTIVE",
-        nonDomesticNos3: "ACTIVE",
+        domestic_rd_sap: "ACTIVE",
+        non_domestic_nos3: "ACTIVE",
       ),
     )
 

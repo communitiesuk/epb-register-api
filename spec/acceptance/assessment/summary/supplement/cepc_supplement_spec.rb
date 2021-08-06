@@ -4,7 +4,7 @@ describe "Acceptance::AssessmentSummary::Supplement::CEPC",
 
   before(:all) do
     scheme_id = add_scheme_and_get_id
-    assessor = AssessorStub.new.fetch_request_body(nonDomesticNos3: "ACTIVE")
+    assessor = AssessorStub.new.fetch_request_body(non_domestic_nos3: "ACTIVE")
     add_assessor(scheme_id, "SPEC000000", assessor)
 
     lodge_cepc(Samples.xml("CEPC-8.0.0", "cepc"), scheme_id)

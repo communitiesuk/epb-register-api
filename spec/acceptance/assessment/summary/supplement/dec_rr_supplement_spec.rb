@@ -4,7 +4,7 @@ describe "Acceptance::AssessmentSummary::Supplement::DECRR",
 
   before(:all) do
     scheme_id = add_scheme_and_get_id
-    assessor = AssessorStub.new.fetch_request_body(nonDomesticDec: "ACTIVE")
+    assessor = AssessorStub.new.fetch_request_body(non_domestic_dec: "ACTIVE")
     add_assessor(scheme_id, "SPEC000000", assessor)
 
     regular_assessment = Nokogiri.XML(Samples.xml("CEPC-8.0.0", "dec+rr"))

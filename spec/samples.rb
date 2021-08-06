@@ -5,7 +5,7 @@ VALID_ASSESSOR_REQUEST_BODY = {
   dateOfBirth: "1991-02-25",
   searchResultsComparisonPostcode: "",
   qualifications: {
-    domesticRdSap: "ACTIVE",
+    domestic_rd_sap: "ACTIVE",
   },
   contactDetails: {
     telephoneNumber: "010199991010101",

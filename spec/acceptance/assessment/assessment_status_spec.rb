@@ -7,7 +7,7 @@ describe "Acceptance::AssessmentStatus", set_with_timecop: true do
     add_assessor(
       scheme_id,
       "SPEC000000",
-      fetch_assessor_stub.fetch_request_body(domesticRdSap: "ACTIVE"),
+      fetch_assessor_stub.fetch_request_body(domestic_rd_sap: "ACTIVE"),
     )
 
     scheme_id
@@ -150,7 +150,7 @@ describe "Acceptance::AssessmentStatus", set_with_timecop: true do
         add_assessor(
           scheme_id,
           "SPEC000000",
-          fetch_assessor_stub.fetch_request_body(domesticRdSap: "ACTIVE"),
+          fetch_assessor_stub.fetch_request_body(domestic_rd_sap: "ACTIVE"),
         )
 
         lodge_assessment(
