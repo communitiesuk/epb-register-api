@@ -1,6 +1,6 @@
 describe "Gateway::AssessmentMetaGateway" do
   include RSpecRegisterApiServiceMixin
-  context "when given a RRN " do
+  context "when extracting meta data for an asesssment given a RRN " do
     subject { Gateway::AssessmentMetaGateway.new }
 
     before do
@@ -12,17 +12,17 @@ describe "Gateway::AssessmentMetaGateway" do
         scheme_id,
         "SPEC000000",
         AssessorStub.new.fetch_request_body(
-          nonDomesticNos3: "ACTIVE",
-          nonDomesticNos4: "ACTIVE",
-          nonDomesticNos5: "ACTIVE",
-          nonDomesticDec: "ACTIVE",
-          domesticRdSap: "ACTIVE",
-          domesticSap: "ACTIVE",
-          nonDomesticSp3: "ACTIVE",
-          nonDomesticCc4: "ACTIVE",
+          non_domestic_nos3: "ACTIVE",
+          non_domestic_nos4: "ACTIVE",
+          non_domestic_nos5: "ACTIVE",
+          non_domestic_dec: "ACTIVE",
+          domestic_rd_sap: "ACTIVE",
+          domestic_sap: "ACTIVE",
+          non_domestic_sp3: "ACTIVE",
+          non_domestic_cc4: "ACTIVE",
           gda: "ACTIVE",
-        ),
-      )
+          ),
+        )
       lodge_assessment(
         assessment_body: domestic_rdsap_xml.to_xml,
         accepted_responses: [201],
