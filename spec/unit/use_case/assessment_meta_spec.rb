@@ -3,7 +3,7 @@ describe UseCase::AssessmentMeta do
     subject { UseCase::AssessmentMeta.new(gateway) }
 
     let(:gateway) do
-      instance_double("AssessmentMetaGateway")
+      instance_double(Gateway::AssessmentMetaGateway)
     end
 
     before do
