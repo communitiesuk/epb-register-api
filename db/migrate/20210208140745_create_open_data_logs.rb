@@ -6,5 +6,5 @@ class CreateOpenDataLogs < ActiveRecord::Migration[6.1]
       t.datetime :created_at, null: false
       t.integer  :task_id, null: false
     end
-    end
+  end
 end
