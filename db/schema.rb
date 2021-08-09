@@ -14,7 +14,9 @@ ActiveRecord::Schema.define(version: 2021_07_15_142113) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
+  enable_extension "pg_trgm"
   enable_extension "plpgsql"
+  enable_extension "tablefunc"
 
   create_table "address_base", primary_key: "uprn", id: :string, force: :cascade do |t|
     t.string "postcode"
@@ -29,6 +31,35 @@ ActiveRecord::Schema.define(version: 2021_07_15_142113) do
     t.index ["address_line2"], name: "index_address_base_on_address_line2"
     t.index ["postcode"], name: "index_address_base_on_postcode"
     t.index ["town"], name: "index_address_base_on_town"
+  end
+
+  create_table "assessment_attribute_values", id: false, force: :cascade do |t|
+    t.integer "attribute_id", null: false
+    t.string "assessment_id", null: false
+    t.string "attribute_value", null: false
+    t.integer "attribute_value_int"
+    t.float "attribute_value_float"
+    t.index ["assessment_id", "attribute_id"], name: "index_assessment_id_attribute_id_on_aav", unique: true
+    t.index ["assessment_id"], name: "index_assessment_attribute_values_on_assessment_id"
+    t.index ["attribute_id"], name: "index_assessment_attribute_values_on_attribute_id"
+    t.index ["attribute_value"], name: "index_assessment_attribute_values_on_attribute_value"
+  end
+
+  create_table "assessment_attributes", primary_key: "attribute_id", force: :cascade do |t|
+    t.string "attribute_name", null: false
+    t.string "parent_name"
+    t.index ["parent_name"], name: "index_assessment_attributes_on_parent_name"
+  end
+
+  create_table "assessment_look_ups", force: :cascade do |t|
+    t.string "look_up_name", null: false
+    t.string "look_up_value", null: false
+    t.integer "attribute_id", null: false
+    t.string "schema", null: false
+    t.string "schema_version"
+    t.index ["attribute_id"], name: "index_assessment_look_ups_on_attribute_id"
+    t.index ["look_up_name"], name: "index_assessment_look_ups_on_look_up_name"
+    t.index ["look_up_value"], name: "index_assessment_look_ups_on_look_up_value"
   end
 
   create_table "assessments", primary_key: "assessment_id", id: :string, force: :cascade do |t|
@@ -59,6 +90,7 @@ ActiveRecord::Schema.define(version: 2021_07_15_142113) do
     t.index ["cancelled_at"], name: "index_assessments_on_cancelled_at"
     t.index ["not_for_issue_at"], name: "index_assessments_on_not_for_issue_at"
     t.index ["postcode"], name: "index_assessments_on_postcode"
+    t.index ["town"], name: "index_towns_on_assessments_trigram", opclass: :gist_trgm_ops, using: :gist
     t.index ["type_of_assessment"], name: "index_assessments_on_type_of_assessment"
   end
 
@@ -203,6 +235,7 @@ ActiveRecord::Schema.define(version: 2021_07_15_142113) do
     t.index ["name"], name: "index_schemes_on_name", unique: true
   end
 
+  add_foreign_key "assessment_attribute_values", "assessment_attributes", column: "attribute_id", primary_key: "attribute_id"
   add_foreign_key "assessments", "assessors", column: "scheme_assessor_id", primary_key: "scheme_assessor_id"
   add_foreign_key "assessments_xml", "assessments", primary_key: "assessment_id"
   add_foreign_key "assessors", "schemes", column: "registered_by", primary_key: "scheme_id"

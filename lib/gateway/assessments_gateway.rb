@@ -74,6 +74,7 @@ module Gateway
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
     end
 
+
   private
 
     def send_to_db(assessment)

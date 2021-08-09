@@ -1,4 +1,4 @@
-desc "Export assessment data to a JSON format"
+ desc "Export assessment data to a JSON format"
 task :json_export do
   start_date = ENV["start_date"]
   bucket_name = ENV["bucket_name"]
