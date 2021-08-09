@@ -21,8 +21,8 @@ describe "Gateway::AssessmentMetaGateway" do
           non_domestic_sp3: "ACTIVE",
           non_domestic_cc4: "ACTIVE",
           gda: "ACTIVE",
-          ),
-        )
+        ),
+      )
       lodge_assessment(
         assessment_body: domestic_rdsap_xml.to_xml,
         accepted_responses: [201],
