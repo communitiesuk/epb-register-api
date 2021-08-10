@@ -15,7 +15,7 @@ module Gateway
       x.schema_type,
       a.address_id
       FROM assessments a
-      JOIN assessments_xml x on a.assessment_id = x.assessment_id
+      INNER JOIN assessments_xml x on a.assessment_id = x.assessment_id
       WHERE a.assessment_id = $1
       SQL
 

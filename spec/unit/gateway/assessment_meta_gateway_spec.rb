@@ -66,11 +66,11 @@ describe "Gateway::AssessmentMetaGateway" do
 
     context "when the certificate has been opted_out" do
       before do
-        ActiveRecord::Base.connection.exec_query("UPDATE Assessments SET opt_out= false")
+        ActiveRecord::Base.connection.exec_query("UPDATE assessments SET opt_out= true")
       end
 
       it "returns the expected data set with the cancelled at date to be now" do
-        expect(subject.fetch("0000-0000-0000-0000-0000")["opt_out"]).to eq(false)
+        expect(subject.fetch("0000-0000-0000-0000-0000")["opt_out"]).to eq(true)
       end
     end
 

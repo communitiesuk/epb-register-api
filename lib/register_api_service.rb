@@ -39,4 +39,5 @@ class RegisterApiService < Controller::BaseController
   use Controller::AssessorStatusController
   use Controller::DecSummaryController
   use Controller::ReportingController
+  use Controller::AssessmentMetaController
 end

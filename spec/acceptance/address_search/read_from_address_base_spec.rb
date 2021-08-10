@@ -20,5 +20,7 @@ describe "reading out from address_base table" do
         "ANYTOWN",
       ]
     end
+
+
   end
 end
