@@ -95,7 +95,7 @@ GEM
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
     namecase (2.0.0)
-    nokogiri (1.12.2)
+    nokogiri (1.12.3)
       mini_portile2 (~> 2.6.1)
       racc (~> 1.4)
     oauth2 (1.4.7)
@@ -225,7 +225,7 @@ DEPENDENCIES
   geocoder (~> 1.6.6)!
   json-schema (~> 2.8)!
   namecase (~> 2.0)!
-  nokogiri (~> 1.12.2)!
+  nokogiri (~> 1.12.3)!
   ougai (~> 2.0)!
   pg!
   pry (~> 0.14.1)!
