@@ -1,7 +1,5 @@
-
 module Controller
   class AssessmentMetaController < Controller::BaseController
-
     get "/api/assessments/:assessment_id/meta-data",
         auth_token_has_all: %w[assessmentmetadata:fetch] do
       assessment_id = params[:assessment_id]
@@ -22,6 +20,5 @@ module Controller
         server_error(e)
       end
     end
-
   end
 end
