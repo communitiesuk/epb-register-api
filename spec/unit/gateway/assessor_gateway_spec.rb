@@ -126,7 +126,7 @@ describe Gateway::AssessorsGateway do
         expect(result).to eq([expected_non_domestic_assessor])
       end
 
-      it "returns assessors with only active green deal plan qualifications in both searches" do
+      it "does not return assessors with only active green deal plan qualifications in both searches" do
         add_assessor(
           @scheme_id,
           "ASSR888888",
@@ -145,8 +145,11 @@ describe Gateway::AssessorsGateway do
         domestic_search_result = assessors_gateway.search_by(name: "Someone Person", qualification_type: "domestic")
         non_domestic_search_result = assessors_gateway.search_by(name: "Someone Person", qualification_type: "nonDomestic")
 
-        expect(domestic_search_result).to match_array([expected_domestic_assessor, expected_gdp_assessor])
-        expect(non_domestic_search_result).to match_array([expected_non_domestic_assessor, expected_gdp_assessor])
+        expect(domestic_search_result).to eq([expected_domestic_assessor])
+        expect(domestic_search_result).not_to eq([expected_gdp_assessor])
+
+        expect(non_domestic_search_result).to eq([expected_non_domestic_assessor])
+        expect(non_domestic_search_result).not_to eq([expected_gdp_assessor])
       end
     end
   end
