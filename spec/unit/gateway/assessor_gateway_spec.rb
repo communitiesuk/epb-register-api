@@ -146,10 +146,7 @@ describe Gateway::AssessorsGateway do
         non_domestic_search_result = assessors_gateway.search_by(name: "Someone Person", qualification_type: "nonDomestic")
 
         expect(domestic_search_result).to eq([expected_domestic_assessor])
-        expect(domestic_search_result).not_to eq([expected_gdp_assessor])
-
         expect(non_domestic_search_result).to eq([expected_non_domestic_assessor])
-        expect(non_domestic_search_result).not_to eq([expected_gdp_assessor])
       end
     end
   end
