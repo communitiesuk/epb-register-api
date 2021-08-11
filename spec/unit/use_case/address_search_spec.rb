@@ -186,18 +186,5 @@ describe UseCase::SearchAddressesByStreetAndTown do
         SET address_id = 'RRN-0000-0000-0000-0000-0000'
         WHERE assessment_id = '0000-0000-0000-0000-0002'")
     end
-
-    # it 'returns the address of newest certificate' do
-    #   result = subject.execute(street: "New House", town: "Whitbury")
-    #   expect(result.first.address_id).to eq("RRN-0000-0000-0000-0000-0000")
-    #   expect(result.first.line1).to eq("1 New House")
-    # end
-
-    # it 'returns the address of newest certificate for postcode search' do
-    #   post_code_use_case = UseCase::SearchAddressesByPostcode.new
-    #   result = post_code_use_case.execute(postcode:"A0 0AA")
-    #   expect(result.first.address_id).to eq("RRN-0000-0000-0000-0000-0000")
-    #   expect(result.first.line1).to eq("1 New House")
-    # end
   end
 end
