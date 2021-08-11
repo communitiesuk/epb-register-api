@@ -130,6 +130,20 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", set_with_timecop: true do
     end
 
     describe "searching by street and town" do
+      it "can handle towns consisting of multiple words" do
+        response = JSON.parse(
+          assertive_get(
+            "/api/search/addresses?street=Some%20Stre&town=Welwyn%20Garden%20City",
+            [200],
+            true,
+            {},
+            %w[address:search],
+          ).body,
+          symbolize_names: true,
+        )
+        expect(response[:errors]).to eq(nil)
+      end
+
       context "when a lodgement has a legacy address id" do
         before do
           lodge_assessment(

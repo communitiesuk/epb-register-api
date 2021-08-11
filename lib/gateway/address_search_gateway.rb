@@ -190,11 +190,13 @@ module Gateway
     end
 
     def search_by_street_and_town(street, town, address_type)
+      town_text_search = town.include?(" ") ? "PLAINTO_TSQUERY" : "TO_TSQUERY"
+
       ranking_sql = <<~SQL
         ,
         ((1 - TS_RANK_CD(
           TO_TSVECTOR('english', LOWER(CONCAT_WS(' ', address_line1, address_line2, address_line3))),
-          TO_TSQUERY('english', LOWER($2))
+          #{town_text_search}('english', LOWER($2))
         )) * 100) AS matched_rank,
         LEVENSHTEIN(
           LOWER($2),
