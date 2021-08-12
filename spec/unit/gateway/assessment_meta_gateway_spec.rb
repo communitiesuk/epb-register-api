@@ -8,6 +8,8 @@ describe "Gateway::AssessmentMetaGateway" do
 
       scheme_id = add_scheme_and_get_id
       domestic_rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
+      domestic_rdsap_xml.at("UPRN").children = "RRN-0000-0000-0000-0000-0000"
+
       add_assessor(
         scheme_id,
         "SPEC000000",
@@ -31,16 +33,18 @@ describe "Gateway::AssessmentMetaGateway" do
         },
         override: true,
       )
+
+      ActiveRecord::Base.connection.exec_query("UPDATE assessments_address_id SET address_id='UPRN-000000000123'")
     end
 
     after do
       Timecop.return
     end
 
-    let(:expcted_data) do
+    let(:expected_data) do
       {
         assessment_id: "0000-0000-0000-0000-0000",
-        address_id: "UPRN-000000000000",
+        assessment_address_id: "UPRN-000000000123",
         cancelled_at: nil,
         opt_out: false,
         not_for_issue_at: nil,
@@ -51,7 +55,7 @@ describe "Gateway::AssessmentMetaGateway" do
     end
 
     it "returns the expected data set" do
-      expect(subject.fetch("0000-0000-0000-0000-0000").symbolize_keys).to eq(expcted_data)
+      expect(subject.fetch("0000-0000-0000-0000-0000").symbolize_keys).to eq(expected_data)
     end
 
     context "when the certificate has been cancelled" do
