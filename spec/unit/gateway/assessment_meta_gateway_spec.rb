@@ -57,6 +57,10 @@ describe "Gateway::AssessmentMetaGateway" do
       expect(subject.fetch("0000-0000-0000-0000-0000").symbolize_keys).to eq(expected_data)
     end
 
+    it "returns no data if there is no assessment" do
+      expect(subject.fetch("0000-0000-0000-0000-0001")).to be_nil
+    end
+
     context "when the certificate has been cancelled" do
       before do
         ActiveRecord::Base.connection.exec_query("UPDATE Assessments SET cancelled_at= '#{Time.now.utc}'")
