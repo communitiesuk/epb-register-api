@@ -6,7 +6,6 @@ module Gateway
     def fetch(assessment_id)
       sql = <<-SQL
       SELECT
-      a.assessment_id,
       a.type_of_assessment,
       a.opt_out,
       a.created_at,

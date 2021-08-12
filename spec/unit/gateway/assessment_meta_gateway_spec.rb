@@ -43,7 +43,6 @@ describe "Gateway::AssessmentMetaGateway" do
 
     let(:expected_data) do
       {
-        assessment_id: "0000-0000-0000-0000-0000",
         assessment_address_id: "UPRN-000000000123",
         cancelled_at: nil,
         opt_out: false,
