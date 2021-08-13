@@ -2,7 +2,7 @@ describe UseCase::SearchAddressesByStreetAndTown do
   include RSpecRegisterApiServiceMixin
 
   context "When searching the same address in both the assessments and address_base tables" do
-    subject { UseCase::SearchAddressesByStreetAndTown.new }
+    subject { described_class.new }
 
     before do
       scheme_id = add_scheme_and_get_id

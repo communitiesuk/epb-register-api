@@ -9,7 +9,7 @@ describe UseCase::AddAssessor do
           registered_by_id: 1,
         )
       expect {
-        UseCase::AddAssessor.new.execute(add_assessor_request, "fake_token")
+        described_class.new.execute(add_assessor_request, "fake_token")
       }.to raise_error UseCase::AddAssessor::InvalidAssessorIdException,
                        /#{Regexp.quote(bad_assessor_id)}/
     end

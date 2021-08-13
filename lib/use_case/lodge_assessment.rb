@@ -172,7 +172,7 @@ module UseCase
         @green_deal_plans_gateway.link_green_deal_to_assessment green_deal_plan_id, assessment.assessment_id
       end
     rescue StandardError => e
-      Logger.new(STDOUT).error "Associating related green deals for the assessment #{assessment.assessment_id} failed with error #{e.class}, message #{e.message}, backtrace #{e.backtrace.join('; ')}"
+      Logger.new($stdout).error "Associating related green deals for the assessment #{assessment.assessment_id} failed with error #{e.class}, message #{e.message}, backtrace #{e.backtrace.join('; ')}"
     end
 
     def get_canonical_address_id(assessment)
@@ -180,10 +180,10 @@ module UseCase
         return default_address_id(assessment)
       elsif assessment.address_id.start_with?("UPRN-")
         # TODO: Maybe in the future, prevent assessors from lodging non existing UPRNs
-        uprn = assessment.address_id[5..-1]
+        uprn = assessment.address_id[5..]
         return assessment.address_id if address_base_has_uprn?(uprn)
       elsif assessment.address_id.start_with?("RRN-")
-        related_assessment_id = assessment.address_id[4..-1]
+        related_assessment_id = assessment.address_id[4..]
         begin
           related_assessment =
             @assessments_address_id_gateway.fetch(related_assessment_id)
@@ -198,9 +198,9 @@ module UseCase
     end
 
     def default_address_id(assessment)
-      default_address_id = "RRN-" + assessment.assessment_id
+      default_address_id = "RRN-#{assessment.assessment_id}"
       if !assessment.related_rrn.nil? && is_related_report?(assessment)
-        default_address_id = "RRN-" + assessment.related_rrn
+        default_address_id = "RRN-#{assessment.related_rrn}"
       end
       default_address_id
     end

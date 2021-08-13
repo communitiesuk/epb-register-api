@@ -30,8 +30,8 @@ describe "OpenDataExportNotForPublication" do
   end
 
   let(:csv_data) do
-    "ASSESSMENT_ID,TYPE_OF_ASSESSMENT,ADDRESS_LINE1,ADDRESS_LINE2,ADDRESS_LINE3\n" +
-      "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a,RdSAP,1 Some Street,\"\",\"\"\n" +
+    "ASSESSMENT_ID,TYPE_OF_ASSESSMENT,ADDRESS_LINE1,ADDRESS_LINE2,ADDRESS_LINE3\n" \
+      "4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a,RdSAP,1 Some Street,\"\",\"\"\n" \
       "55ce7d026c13e923d26cbfb0d6ed60734d3270ba981d629a168bb8eb2da3f8c4,CEPC,1 Some Street,\"\",\"\"\n"
   end
 
@@ -137,7 +137,7 @@ describe "OpenDataExportNotForPublication" do
         .and_return(incorrect_bucket_name)
 
       # Prevents logging during tests
-      allow(STDOUT).to receive(:puts)
+      allow($stdout).to receive(:puts)
 
       # Mocks all dependencies created directly in the task
       allow(ApiFactory).to receive(:export_not_for_publication_use_case).and_return(

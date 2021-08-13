@@ -161,7 +161,7 @@ describe UseCase::ImportAddressBaseData do
   context "when importing the data for 10 downing street" do
     expected_query_clause =
       "('100023336956', 'SW1A 2AA', '10 DOWNING STREET', NULL, NULL, NULL, 'LONDON', 'RD04', 'Delivery Point')"
-    use_case = UseCase::ImportAddressBaseData.new
+    use_case = described_class.new
     it "creates a query clause in the expected form" do
       hashed_data = Hash[headers.zip(number_ten)]
       expect(use_case.execute(hashed_data)).to eq expected_query_clause
@@ -251,7 +251,7 @@ describe UseCase::ImportAddressBaseData do
       "",
       "",
     ]
-    use_case = UseCase::ImportAddressBaseData.new
+    use_case = described_class.new
     it "responds with nil because ponds are not certifiable" do
       hashed_data = Hash[headers.zip(pond)]
       expect(use_case.execute(hashed_data)).to be nil
@@ -269,7 +269,7 @@ describe UseCase::ImportAddressBaseData do
             town: "LONDON",
           },
         )
-      use_case = UseCase::ImportAddressBaseData.new
+      use_case = described_class.new
       imported_address =
         use_case.send(
           :create_delivery_point_address,
@@ -283,7 +283,7 @@ describe UseCase::ImportAddressBaseData do
   end
 
   context "when importing the data for a residential property" do
-    use_case = UseCase::ImportAddressBaseData.new
+    use_case = described_class.new
     hashed_data = Hash[headers.zip(number_ten)]
     it "returns a delivery point address" do
       expect(use_case).to receive(:create_delivery_point_address)
@@ -293,7 +293,7 @@ describe UseCase::ImportAddressBaseData do
   end
 
   context "when importing the data for a commercial property" do
-    use_case = UseCase::ImportAddressBaseData.new
+    use_case = described_class.new
     commercial_number_ten = number_ten.clone
     commercial_number_ten[5] = "C"
     hashed_data = Hash[headers.zip(commercial_number_ten)]
@@ -383,7 +383,7 @@ describe UseCase::ImportAddressBaseData do
       "",
       "",
     ]
-    use_case = UseCase::ImportAddressBaseData.new
+    use_case = described_class.new
     hashed_data = Hash[headers.zip(devon_house)]
     it "returns a geographic address" do
       expected =
@@ -479,7 +479,7 @@ describe UseCase::ImportAddressBaseData do
       "",
       "",
     ]
-    use_case = UseCase::ImportAddressBaseData.new
+    use_case = described_class.new
     hashed_data = Hash[headers.zip(lettered_number_address)]
     it "joins the lettered number line onto the following non-empty line" do
       expected =
@@ -580,7 +580,7 @@ describe UseCase::ImportAddressBaseData do
       "249",
       "CYM",
     ]
-    use_case = UseCase::ImportAddressBaseData.new
+    use_case = described_class.new
     hashed_data = Hash[headers.zip(rhyl_address)]
     it "removes the duplicate line" do
       expected =
@@ -680,7 +680,7 @@ describe UseCase::ImportAddressBaseData do
       "",
       "",
     ]
-    use_case = UseCase::ImportAddressBaseData.new
+    use_case = described_class.new
     hashed_data = Hash[headers.zip(place_in_cheam)]
     it "compacts all lines after line 4 onto one line separated by commas" do
       expected =

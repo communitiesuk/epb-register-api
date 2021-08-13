@@ -6,7 +6,7 @@ module Helper
       unless @unleash
         Unleash.configure do |config|
           config.url = ENV["EPB_UNLEASH_URI"]
-          config.app_name = "toggles-" + ENV["STAGE"]
+          config.app_name = "toggles-#{ENV['STAGE']}"
           config.log_level = Logger::ERROR
           config.custom_http_headers = { 'Authorization': ENV["EPB_UNLEASH_AUTH_TOKEN"] } if ENV["EPB_UNLEASH_AUTH_TOKEN"]
         end

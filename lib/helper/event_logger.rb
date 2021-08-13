@@ -4,7 +4,7 @@ module Helper
   class EventLogger
     def initialize
       $stdout.sync = true
-      @logger = Ougai::Logger.new(STDOUT)
+      @logger = Ougai::Logger.new($stdout)
     end
 
     def event(event_code, message = "No message", raw = false)

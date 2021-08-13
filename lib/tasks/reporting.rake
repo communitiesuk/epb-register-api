@@ -13,15 +13,15 @@ task :extract_reporting do
   where = "a.opt_out = false AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL"
 
   if ENV["type_of_assessment"]
-    where << " AND a.type_of_assessment = " + ActiveRecord::Base.connection.quote(ENV["type_of_assessment"])
+    where << " AND a.type_of_assessment = #{ActiveRecord::Base.connection.quote(ENV['type_of_assessment'])}"
   end
 
   if ENV["schema_type"]
-    where << " AND b.schema_type = " + ActiveRecord::Base.connection.quote(ENV["schema_type"])
+    where << " AND b.schema_type = #{ActiveRecord::Base.connection.quote(ENV['schema_type'])}"
   end
 
   if ENV["from_date"] && ENV["to_date"]
-    where << " AND a.date_registered BETWEEN " + ActiveRecord::Base.connection.quote(ENV["from_date"]) + " AND " + ActiveRecord::Base.connection.quote(ENV["to_date"])
+    where << " AND a.date_registered BETWEEN #{ActiveRecord::Base.connection.quote(ENV['from_date'])} AND #{ActiveRecord::Base.connection.quote(ENV['to_date'])}"
   end
 
   number_of_assessments = ActiveRecord::Base.connection.exec_query("SELECT COUNT(assessment_id) AS number_of_assessments FROM assessments a WHERE #{where}").first["number_of_assessments"]
@@ -105,7 +105,7 @@ task :extract_reporting do
     puts "Done sending the request at #{Time.now}"
 
     if response.body != "DONE"
-      puts "Failed batch " + start.to_s + " with error " + response.body
+      puts "Failed batch #{start} with error #{response.body}"
     end
 
     start += ENV["batch"].to_i

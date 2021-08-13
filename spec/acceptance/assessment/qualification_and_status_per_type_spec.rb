@@ -6,8 +6,7 @@ describe "Acceptance::Assessment::QualificationAndStatusPerType",
 
   def sample(name, schema_name)
     File.read File.join Dir.pwd,
-                        "spec/fixtures/samples/" + schema_name + "/" + name +
-                          ".xml"
+                        "spec/fixtures/samples/#{schema_name}/#{name}.xml"
   end
 
   let(:scheme_id) { add_scheme_and_get_id }
@@ -120,7 +119,7 @@ describe "Acceptance::Assessment::QualificationAndStatusPerType",
     }
 
     assessments.each do |schema_name, schema_assessments|
-      context "when lodging with schema " + schema_name.to_s do
+      context "when lodging with schema #{schema_name}" do
         schema_assessments.each do |assessment_name, assessment_settings|
           if assessment_settings[:response_code].nil?
             assessment_settings[:response_code] = [201]
@@ -134,9 +133,7 @@ describe "Acceptance::Assessment::QualificationAndStatusPerType",
             assessment_settings[:lodged_rrns] = %w[0000-0000-0000-0000-0000]
           end
 
-          it "tries to lodge a " + assessment_name.to_s +
-            " with response code " +
-            assessment_settings[:response_code].join(", ") do
+          it "tries to lodge a #{assessment_name} with response code #{assessment_settings[:response_code].join(', ')}" do
             create_assessor(assessment_settings[:assessor_qualification])
 
             get_lodgement(
@@ -171,7 +168,7 @@ describe "Acceptance::Assessment::QualificationAndStatusPerType",
             end
           end
 
-          it "can cancel the report " + assessment_name.to_s do
+          it "can cancel the report #{assessment_name}" do
             create_assessor(assessment_settings[:assessor_qualification])
 
             get_lodgement(assessment_settings[:xml], [201], schema_name)
@@ -198,8 +195,7 @@ describe "Acceptance::Assessment::QualificationAndStatusPerType",
             end
           end
 
-          it "can change report type " + assessment_name.to_s +
-            " to NOT_FOR_ISSUE" do
+          it "can change report type #{assessment_name} to NOT_FOR_ISSUE" do
             create_assessor(assessment_settings[:assessor_qualification])
 
             get_lodgement(assessment_settings[:xml], [201], schema_name)

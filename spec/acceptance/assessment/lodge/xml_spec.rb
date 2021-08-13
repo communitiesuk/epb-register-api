@@ -21,8 +21,7 @@ describe "Acceptance::LodgeAssessment::XML", set_with_timecop: true do
   def get_stored_xml(assessment_id)
     results =
       ActiveRecord::Base.connection.exec_query(
-        "SELECT xml FROM assessments_xml WHERE assessment_id = '" +
-          ActiveRecord::Base.sanitize_sql(assessment_id) + "'",
+        "SELECT xml FROM assessments_xml WHERE assessment_id = '#{ActiveRecord::Base.sanitize_sql(assessment_id)}'",
       )
 
     xml = ""
@@ -57,7 +56,7 @@ describe "Acceptance::LodgeAssessment::XML", set_with_timecop: true do
       it "will remove the <PDF> element" do
         expect(valid_sap_xml).to include("<PDF>")
         expect(cleaned_sap_xml).to eq(
-          '<?xml version="1.0" encoding="UTF-8"?>' + "\n" + database_xml,
+          "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n#{database_xml}",
         )
       end
     end

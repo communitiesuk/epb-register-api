@@ -8,12 +8,12 @@ task :update_assessment_column do
   loader.push_dir("#{__dir__}/../")
   loader.setup
 
-  puts "Starting column update for " + ENV["column"] + " at #{Time.now}"
+  puts "Starting column update for #{ENV['column']} at #{Time.now}"
 
   where = if ENV["type_of_assessment"]
-            "a.type_of_assessment = " + ActiveRecord::Base.connection.quote(ENV["type_of_assessment"])
+            "a.type_of_assessment = #{ActiveRecord::Base.connection.quote(ENV['type_of_assessment'])}"
           elsif ENV["schema_type"]
-            "b.schema_type = " + ActiveRecord::Base.connection.quote(ENV["schema_type"])
+            "b.schema_type = #{ActiveRecord::Base.connection.quote(ENV['schema_type'])}"
           end
 
   number_of_assessments = ActiveRecord::Base.connection.exec_query("SELECT

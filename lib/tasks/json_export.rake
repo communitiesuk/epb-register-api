@@ -19,7 +19,7 @@ task :json_export do
     instance_name: instance_name,
   )
   exports.each do |export|
-    filename = "export/" + export[:assessment_id] + ".json"
+    filename = "export/#{export[:assessment_id]}.json"
     data = export[:data]
     storage_gateway.write_file(filename, data.to_json)
   end

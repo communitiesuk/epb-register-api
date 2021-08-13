@@ -14,7 +14,7 @@ describe "LinkedAssessments" do
   end
 
   context "When the task runs without any address ID mismatch" do
-    before { allow(STDOUT).to receive(:puts) }
+    before { allow($stdout).to receive(:puts) }
 
     it "does not find any linked assessment to change" do
       expect { get_task("linked_assessments_address_id").invoke }.to output(
@@ -25,7 +25,7 @@ describe "LinkedAssessments" do
 
   context "When the task runs with an address ID mismatch" do
     before do
-      allow(STDOUT).to receive(:puts)
+      allow($stdout).to receive(:puts)
       update_rr_address_id = <<-SQL
          UPDATE assessments_address_id
          SET address_id = 'RRN-0000-0000-0000-0000-0001'
@@ -69,7 +69,7 @@ describe "LinkedAssessments" do
 
   context "When the task runs with an address ID mismatch done by EPBR support" do
     before do
-      allow(STDOUT).to receive(:puts)
+      allow($stdout).to receive(:puts)
       update_rr_address_id = <<-SQL
          UPDATE assessments_address_id
          SET address_id = 'RRN-0000-0000-0000-0000-0001', source = 'epb_team_update'

@@ -13,7 +13,7 @@ describe "Postcode" do
 
   context "When we call the import_address_matching task" do
     before do
-      allow(STDOUT).to receive(:puts)
+      allow($stdout).to receive(:puts)
       EnvironmentStub
         .all
         .with("bucket_name", "test-bucket")

@@ -1,7 +1,7 @@
 describe Gateway::AddressBaseSearchGateway do
   context "when given a UPRN to check existence" do
     it "returns false if there are no results from a UPRN search" do
-      gateway = Gateway::AddressBaseSearchGateway.new
+      gateway = described_class.new
       def gateway.search_by_uprn(_uprn)
         []
       end
@@ -9,7 +9,7 @@ describe Gateway::AddressBaseSearchGateway do
     end
 
     it "returns true if there are one or more results from a UPRN search" do
-      gateway = Gateway::AddressBaseSearchGateway.new
+      gateway = described_class.new
       def gateway.search_by_uprn(uprn)
         [OpenStruct.new(address_id: uprn)]
       end

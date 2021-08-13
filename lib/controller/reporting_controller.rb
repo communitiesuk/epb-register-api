@@ -31,7 +31,7 @@ module Controller
         json_response({ data: "No lodgements during this time frame" }, 200)
       else
         content_type "text/csv"
-        attachment params[:start_date] + "_to_" + params[:end_date] + ".csv"
+        attachment "#{params[:start_date]}_to_#{params[:end_date]}.csv"
         body CSV.generate(
           write_headers: true,
           headers: raw_data.first.keys,
@@ -60,7 +60,7 @@ module Controller
         json_response({ data: "No lodgements during this time frame" }, 200)
       else
         content_type "text/csv"
-        attachment params[:start_date] + "_to_" + params[:end_date] + ".csv"
+        attachment "#{params[:start_date]}_to_#{params[:end_date]}.csv"
         body CSV.generate(
           write_headers: true,
           headers: raw_data.first.keys,
@@ -90,8 +90,7 @@ module Controller
         json_response({ data: "No lodgements during this time frame" }, 200)
       else
         content_type "text/csv"
-        attachment parsed_params[:start_date] + "_to_" +
-          parsed_params[:end_date] + ".csv"
+        attachment "#{parsed_params[:start_date]}_to_#{parsed_params[:end_date]}.csv"
         body CSV.generate(
           write_headers: true,
           headers: raw_data.first.keys,

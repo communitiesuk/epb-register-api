@@ -24,7 +24,7 @@ describe "JsonExport" do
       allow(ENV).to receive(:[]).with("bucket_name").and_return(bucket_name)
 
       # Prevents logging during tests
-      allow(STDOUT).to receive(:puts)
+      allow($stdout).to receive(:puts)
 
       # Mocks all dependencies created directly in the task
       allow(ApiFactory).to receive(:assessments_export_use_case).and_return(

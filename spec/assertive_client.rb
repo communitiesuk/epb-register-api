@@ -156,7 +156,7 @@ def fetch_assessors_status(
 )
   auth_data ||= { 'scheme_ids': [scheme_id] }
   assertive_get(
-    "/api/reports/assessors/status?date=" + date,
+    "/api/reports/assessors/status?date=#{date}",
     accepted_responses,
     authenticate,
     auth_data,
@@ -339,15 +339,15 @@ def lodge_assessment(
 
   path =
     if !migrated.nil?
-      "api/assessments?migrated#{migrated == true ? '' : '=' + migrated}"
+      "api/assessments?migrated#{migrated == true ? '' : "=#{migrated}"}"
     elsif !override.nil?
-      "api/assessments?override#{override == true ? '' : '=' + override}"
+      "api/assessments?override#{override == true ? '' : "=#{override}"}"
     else
       "api/assessments"
     end
 
   unless schema_name.nil?
-    header "Content-type", "application/xml+" + schema_name
+    header "Content-type", "application/xml+#{schema_name}"
   end
 
   headers.each { |key, value| header key.to_s, value.to_s }
@@ -371,7 +371,7 @@ def update_assessment_status(
   auth_data: nil,
   scopes: %w[assessment:lodge]
 )
-  path = "api/assessments/" + assessment_id + "/status"
+  path = "api/assessments/#{assessment_id}/status"
   header "Content-type", "application/json"
 
   assertive_post(
@@ -515,7 +515,7 @@ def assessments_search_by_postcode(
 
   assessment_types.each do |assessment_type|
     path <<
-      (path.include?("?") ? "&" : "?") + "assessment_type[]=" + assessment_type
+      "#{path.include?('?') ? '&' : '?'}assessment_type[]=#{assessment_type}"
   end
 
   assertive_get(path, accepted_responses, authenticate, auth_data, scopes)
@@ -549,7 +549,7 @@ def assessments_search_by_street_name_and_town(
   path = "/api/assessments/search?street_name=#{street_name}&town=#{town}"
   assessment_types.each do |assessment_type|
     path <<
-      (path.include?("?") ? "&" : "?") + "assessment_type[]=" + assessment_type
+      "#{path.include?('?') ? '&' : '?'}assessment_type[]=#{assessment_type}"
   end
 
   assertive_get(path, accepted_responses, authenticate, auth_data, scopes)

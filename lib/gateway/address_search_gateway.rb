@@ -102,9 +102,9 @@ module Gateway
     def search_by_address_id(address_id)
       stripped_id =
         if address_id.start_with?("RRN")
-          address_id[4..-1]
+          address_id[4..]
         elsif address_id.start_with?("UPRN")
-          address_id[5..-1].to_i.to_s
+          address_id[5..].to_i.to_s
         end
 
       # Avoid using an OR in the WHERE clause to avoid serious performance issues
@@ -277,7 +277,7 @@ module Gateway
       binds = [
         ActiveRecord::Relation::QueryAttribute.new(
           "street",
-          "%" + street.downcase + "%",
+          "%#{street.downcase}%",
           ActiveRecord::Type::String.new,
         ),
         ActiveRecord::Relation::QueryAttribute.new(

@@ -56,8 +56,7 @@ module Gateway
           end
 
         sql +=
-          " AND type_of_assessment IN(" +
-          sanitized_assessment_types.join(", ") + ")"
+          " AND type_of_assessment IN(#{sanitized_assessment_types.join(', ')})"
       end
 
       response = Assessment.connection.exec_query sql, "SQL", binds
@@ -75,14 +74,14 @@ module Gateway
       assessment_type,
       restrictive = true
     )
-      sql = ASSESSMENT_SEARCH_INDEX_SELECT + " WHERE "
+      sql = "#{ASSESSMENT_SEARCH_INDEX_SELECT} WHERE "
 
       unless assessment_type.nil? || assessment_type.empty?
         ins = []
         assessment_type.each do |type|
           ins.push(ActiveRecord::Base.connection.quote(type))
         end
-        sql += "a.type_of_assessment IN(" + ins.join(", ") + ") AND "
+        sql += "a.type_of_assessment IN(#{ins.join(', ')}) AND "
       end
 
       sql += <<-SQL
@@ -106,7 +105,7 @@ module Gateway
       binds = [
         ActiveRecord::Relation::QueryAttribute.new(
           "street",
-          "%" + street_name.downcase + "%",
+          "%#{street_name.downcase}%",
           ActiveRecord::Type::String.new,
         ),
         ActiveRecord::Relation::QueryAttribute.new(
@@ -154,7 +153,7 @@ module Gateway
         assessment_type.each do |type|
           ins.push(ActiveRecord::Base.connection.quote(type))
         end
-        sql += " AND a.type_of_assessment IN(" + ins.join(", ") + ")"
+        sql += " AND a.type_of_assessment IN(#{ins.join(', ')})"
       end
 
       response = Assessment.connection.exec_query(sql)

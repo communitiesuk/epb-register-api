@@ -22,7 +22,7 @@ describe Helper::NaturalSort do
       },
     ]
 
-    Helper::NaturalSort.sort!(addresses)
+    described_class.sort!(addresses)
 
     expect(addresses).to eq(
       [
@@ -82,7 +82,7 @@ describe Helper::NaturalSort do
       },
     ]
 
-    Helper::NaturalSort.sort!(addresses)
+    described_class.sort!(addresses)
 
     expect(addresses).to eq(
       [
@@ -158,7 +158,7 @@ describe Helper::NaturalSort do
       },
     ]
 
-    Helper::NaturalSort.sort!(addresses)
+    described_class.sort!(addresses)
 
     expect(addresses).to eq(
       [
@@ -226,7 +226,7 @@ describe Helper::NaturalSort do
       },
     ]
 
-    Helper::NaturalSort.sort!(addresses)
+    described_class.sort!(addresses)
 
     expect(addresses).to eq(
       [
@@ -286,7 +286,7 @@ describe Helper::NaturalSort do
       },
     ]
 
-    Helper::NaturalSort.sort!(addresses)
+    described_class.sort!(addresses)
 
     expect(addresses).to eq(
       [
@@ -346,7 +346,7 @@ describe Helper::NaturalSort do
       },
     ]
 
-    Helper::NaturalSort.sort!(addresses)
+    described_class.sort!(addresses)
 
     expect(addresses).to eq(
       [
@@ -414,7 +414,7 @@ describe Helper::NaturalSort do
       },
     ]
 
-    Helper::NaturalSort.sort!(addresses)
+    described_class.sort!(addresses)
 
     expect(addresses).to eq(
       [
@@ -490,7 +490,7 @@ describe Helper::NaturalSort do
       },
     ]
 
-    Helper::NaturalSort.sort!(addresses)
+    described_class.sort!(addresses)
 
     expect(addresses).to eq(
       [
@@ -558,7 +558,7 @@ describe Helper::NaturalSort do
       },
     ]
 
-    Helper::NaturalSort.sort!(addresses)
+    described_class.sort!(addresses)
 
     expect(addresses).to eq(
       [
@@ -618,7 +618,7 @@ describe Helper::NaturalSort do
       },
     ]
 
-    Helper::NaturalSort.sort!(addresses)
+    described_class.sort!(addresses)
 
     expect(addresses).to eq(
       [
@@ -702,7 +702,7 @@ describe Helper::NaturalSort do
       },
     ]
 
-    Helper::NaturalSort.sort!(addresses)
+    described_class.sort!(addresses)
 
     expect(addresses).to eq(
       [
@@ -786,7 +786,7 @@ describe Helper::NaturalSort do
       },
     ]
 
-    Helper::NaturalSort.sort!(addresses)
+    described_class.sort!(addresses)
 
     expect(addresses).to eq(
       [
@@ -846,7 +846,7 @@ describe Helper::NaturalSort do
       },
     ]
 
-    Helper::NaturalSort.sort!(addresses)
+    described_class.sort!(addresses)
 
     expect(addresses).to eq(
       [
@@ -906,7 +906,7 @@ describe Helper::NaturalSort do
       },
     ]
 
-    Helper::NaturalSort.sort!(addresses)
+    described_class.sort!(addresses)
 
     expect(addresses).to eq(
       [
@@ -966,7 +966,7 @@ describe Helper::NaturalSort do
       },
     ]
 
-    Helper::NaturalSort.sort!(addresses)
+    described_class.sort!(addresses)
 
     expect(addresses).to eq(
       [
@@ -1034,7 +1034,7 @@ describe Helper::NaturalSort do
       },
     ]
 
-    Helper::NaturalSort.sort!(addresses)
+    described_class.sort!(addresses)
 
     expect(addresses).to eq(
       [
@@ -1118,7 +1118,7 @@ describe Helper::NaturalSort do
       },
     ]
 
-    Helper::NaturalSort.sort!(addresses)
+    described_class.sort!(addresses)
 
     expect(addresses).to eq(
       [
@@ -1202,7 +1202,7 @@ describe Helper::NaturalSort do
       },
     ]
 
-    Helper::NaturalSort.sort!(addresses)
+    described_class.sort!(addresses)
 
     expect(addresses).to eq(
       [
@@ -1277,7 +1277,7 @@ describe Helper::NaturalSort do
         postcode: "SE1 6EJ",
       },
     ]
-    Helper::NaturalSort.sort!(addresses)
+    described_class.sort!(addresses)
     expect(addresses).to eq(
       [
         {
@@ -1448,7 +1448,7 @@ describe Helper::NaturalSort do
       },
     ]
 
-    Helper::NaturalSort.sort!(addresses)
+    described_class.sort!(addresses)
 
     expect(addresses).to eq(
       [

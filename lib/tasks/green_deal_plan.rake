@@ -120,7 +120,7 @@ task :import_green_deal_plans do
                 '#{ActiveRecord::Base.sanitize_sql(row['INTEREST_RATE'])}',
                 '#{ActiveRecord::Base.sanitize_sql(row['FIXED_INTEREST_RATE_IND'])}',
                 '#{ActiveRecord::Base.sanitize_sql(row['INTEREST_UPLIFT'])}',
-                #{row['INTEREST_UPLIFT_DATE'] ? "'" + ActiveRecord::Base.sanitize_sql(row['INTEREST_UPLIFT_DATE']) + "'" : 'NULL'},
+                #{row['INTEREST_UPLIFT_DATE'] ? "'#{ActiveRecord::Base.sanitize_sql(row['INTEREST_UPLIFT_DATE'])}'" : 'NULL'},
                 '#{ActiveRecord::Base.sanitize_sql(row['CCA_IND'])}',
                 '#{ActiveRecord::Base.sanitize_sql(row['STRUCTURE_CHANGED_IND'])}',
                 '#{ActiveRecord::Base.sanitize_sql(row['MEASURES_REMOVED_IND'])}',

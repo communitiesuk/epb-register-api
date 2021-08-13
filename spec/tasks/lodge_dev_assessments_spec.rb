@@ -3,8 +3,8 @@ describe "linked_dev_assessments rake" do
 
   context "calling the rake task in production" do
     before do
-      allow(STDOUT).to receive(:puts)
-      allow(STDOUT).to receive(:write)
+      allow($stdout).to receive(:puts)
+      allow($stdout).to receive(:write)
       ENV["STAGE"] = "production"
     end
 
@@ -26,8 +26,8 @@ describe "linked_dev_assessments rake" do
 
   context "calling the rake task in test (not production)" do
     before do
-      allow(STDOUT).to receive(:puts)
-      allow(STDOUT).to receive(:write)
+      allow($stdout).to receive(:puts)
+      allow($stdout).to receive(:write)
       get_task("lodge_dev_assessments").invoke
     end
 

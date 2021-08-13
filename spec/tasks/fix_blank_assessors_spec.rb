@@ -8,7 +8,7 @@ describe "FixBlankAssessors" do
 
   context "When a lodging assessor exists and has no name" do
     before do
-      allow(STDOUT).to receive(:puts)
+      allow($stdout).to receive(:puts)
       add_assessor(
         scheme_id,
         scheme_assessor_id,
@@ -55,7 +55,7 @@ describe "FixBlankAssessors" do
 
   context "When a lodging assessor exists and has a name" do
     before do
-      allow(STDOUT).to receive(:puts)
+      allow($stdout).to receive(:puts)
       add_assessor(
         scheme_id,
         scheme_assessor_id,
@@ -102,7 +102,7 @@ describe "FixBlankAssessors" do
 
   context "When a lodging assessor exists, assessor has no name on any assessments" do
     before do
-      allow(STDOUT).to receive(:puts)
+      allow($stdout).to receive(:puts)
       add_assessor(
         scheme_id,
         scheme_assessor_id,

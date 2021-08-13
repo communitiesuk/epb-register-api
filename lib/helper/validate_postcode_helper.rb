@@ -7,7 +7,7 @@ module Helper
       if postcode.length < 4
         raise PostcodeNotValid
       else
-        postcode = postcode.insert(-4, " ") unless postcode[-4] == " "
+        postcode.insert(-4, " ") unless postcode[-4] == " "
       end
 
       postcode.upcase

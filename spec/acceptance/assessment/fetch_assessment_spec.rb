@@ -100,7 +100,7 @@ describe "Acceptance::Assessment", set_with_timecop: true do
 
       it "returns the XML as expected" do
         expect(
-          "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + response.body,
+          "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n#{response.body}",
         ).to eq(sanitised_sap_xml)
       end
     end

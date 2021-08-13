@@ -77,7 +77,7 @@ def process_postcode_csv(postcode_csv, buffer_size = 10_000)
     # Only considers England, NI and Wales
     next if region.nil?
 
-    postcode = postcode.insert(-4, " ") if postcode[-4] != " "
+    postcode.insert(-4, " ") if postcode[-4] != " "
     new_outcode = postcode.split(" ")[0]
 
     db = ActiveRecord::Base.connection
@@ -142,7 +142,7 @@ def insert_postcode_batch(postcode_buffer)
   db = ActiveRecord::Base.connection
 
   batch = postcode_buffer.join("), (")
-  db.exec_query("INSERT INTO postcode_geolocation_tmp (postcode, latitude, longitude, region) VALUES(" + batch + ")")
+  db.exec_query("INSERT INTO postcode_geolocation_tmp (postcode, latitude, longitude, region) VALUES(#{batch})")
 end
 
 def add_outcode(outcodes, new_outcode, lat, long, region)
@@ -191,7 +191,7 @@ def insert_outcodes(outcodes)
     ].join(", ")
   end
 
-  db.exec_query("INSERT INTO postcode_outcode_geolocations_tmp (outcode, latitude, longitude, region) VALUES(" + batch.join("), (") + ")")
+  db.exec_query("INSERT INTO postcode_outcode_geolocations_tmp (outcode, latitude, longitude, region) VALUES(#{batch.join('), (')})")
 end
 
 def get_region_codes

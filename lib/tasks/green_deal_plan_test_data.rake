@@ -104,8 +104,8 @@ task :seed_test_green_deal_plans do
     uplift_amounts = [0, 1.24, 1.50, 0.90, 1]
 
     assessments.each do |row|
-      green_deal_plan_id = ("A" + ("A".."Z").to_a.sample + rand(100...2000).to_s.rjust(10, "0"))
-      start_date = "20" + rand(14..21).to_s.rjust(2, "0") + rand(1..12).to_s.rjust(2, "0") + rand(1..28).to_s.rjust(2, "0")
+      green_deal_plan_id = "A#{('A'..'Z').to_a.sample}#{rand(100...2000).to_s.rjust(10, '0')}"
+      start_date = "20#{rand(14..21).to_s.rjust(2, '0')}#{rand(1..12).to_s.rjust(2, '0')}#{rand(1..28).to_s.rjust(2, '0')}"
       end_date = (Date.parse(start_date) + rand(5..20).year).strftime("%Y-%m-%d")
       provider_name = provider_names.sample
       provider_telephone = provider_telephones.sample

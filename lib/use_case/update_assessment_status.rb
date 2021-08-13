@@ -69,13 +69,14 @@ module UseCase
       assessment_ids =
         assessments.map { |assessment| assessment.get("assessment_id") }
 
-      if status == "CANCELLED"
+      case status
+      when "CANCELLED"
         @assessments_gateway.update_statuses(
           assessment_ids,
           "cancelled_at",
           Time.now.to_s,
         )
-      elsif status == "NOT_FOR_ISSUE"
+      when "NOT_FOR_ISSUE"
         @assessments_gateway.update_statuses(
           assessment_ids,
           "not_for_issue_at",

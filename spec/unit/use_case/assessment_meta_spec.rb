@@ -1,6 +1,6 @@
 describe UseCase::AssessmentMeta do
   context "Extract meta data from the database for an assessment" do
-    subject { UseCase::AssessmentMeta.new(gateway) }
+    subject { described_class.new(gateway) }
 
     let(:gateway) do
       instance_double(Gateway::AssessmentMetaGateway)

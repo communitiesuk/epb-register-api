@@ -129,8 +129,7 @@ module Controller
                 document.links do
                   document.assessments do
                     results.map do |result|
-                      document.assessment "/api/assessments/" +
-                        result.get(:assessment_id)
+                      document.assessment "/api/assessments/#{result.get(:assessment_id)}"
                     end
                   end
                 end
@@ -149,7 +148,7 @@ module Controller
                             links: {
                               assessments:
                                 results.map do |id|
-                                  "/api/assessments/" + id.get(:assessment_id)
+                                  "/api/assessments/#{id.get(:assessment_id)}"
                                 end,
                             },
                           }

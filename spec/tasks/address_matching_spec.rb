@@ -31,7 +31,7 @@ describe "AddressMatching" do
 
   context "When we call the import_address_matching task" do
     before do
-      allow(STDOUT).to receive(:puts)
+      allow($stdout).to receive(:puts)
       EnvironmentStub
         .all
         .with("bucket_name", "test-bucket")
@@ -83,7 +83,7 @@ describe "AddressMatching" do
   end
 
   context "When we call the update_address_lines task" do
-    before { allow(STDOUT).to receive(:puts) }
+    before { allow($stdout).to receive(:puts) }
 
     context "With two assessments having no address discrepancy" do
       it "Then both assessments addresses should be matched" do

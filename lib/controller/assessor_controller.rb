@@ -159,7 +159,7 @@ module Controller
 
     def search_by_postcode(postcode, qualifications)
       postcode = postcode.upcase
-      postcode = postcode.insert(-4, " ") if postcode[-4] != " "
+      postcode.insert(-4, " ") if postcode[-4] != " "
 
       result =
         UseCase::FindAssessorsByPostcode.new.execute(

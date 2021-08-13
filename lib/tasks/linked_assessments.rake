@@ -85,7 +85,7 @@ task :linked_assessments do
   %w[DEC DEC-RR CEPC CEPC-RR AC-REPORT AC-CERT].each do |type|
     assessment_types.push(ActiveRecord::Base.connection.quote(type))
   end
-  find_assessments_sql += " AND a.type_of_assessment IN(" + assessment_types.join(", ") + ")"
+  find_assessments_sql += " AND a.type_of_assessment IN(#{assessment_types.join(', ')})"
 
   assessments = ActiveRecord::Base.connection.exec_query find_assessments_sql
   puts "[#{Time.now}] Found #{assessments.length} assessments to process"

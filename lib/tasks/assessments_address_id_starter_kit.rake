@@ -9,7 +9,7 @@ task :rrn2uprn do
 
   CSV.foreach(ENV["rrn2lprn"], "r", { col_sep: "\t" }) do |row|
     if row[1].start_with?("LPRN-")
-      lprn = row[1][5..-1].to_i.to_s
+      lprn = row[1][5..].to_i.to_s
 
       unless lprn2rrn.key?(lprn)
         lprn2rrn[lprn] = []
