@@ -76,8 +76,8 @@ def authenticate_and(request = nil, scopes = [], supplementary = {})
   response
 end
 
-def authenticate_with_data(data, scopes)
-  authenticate_and(nil, scopes, data) { yield }
+def authenticate_with_data(data, scopes, &block)
+  authenticate_and(nil, scopes, data, &block)
 end
 
 def get_valid_jwt(scopes = [], sup = {})

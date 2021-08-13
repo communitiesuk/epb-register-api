@@ -2,6 +2,7 @@ module UseCase
   class FindAssessorsByPostcode
     class PostcodeNotValid < StandardError
     end
+
     class PostcodeNotRegistered < StandardError
     end
 

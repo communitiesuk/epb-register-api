@@ -2,6 +2,7 @@ module UseCase
   class FetchRenewableHeatIncentive
     class NotFoundException < StandardError
     end
+
     class AssessmentGone < StandardError
     end
 

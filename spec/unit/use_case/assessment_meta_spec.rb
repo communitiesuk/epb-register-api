@@ -22,9 +22,8 @@ describe UseCase::AssessmentMeta do
       end
 
       it "raises an error when there is no data for an assessment" do
-        expect{subject.execute("0000-0000-0000-0000-0001")}.to raise_error(UseCase::AssessmentMeta::NoDataException)
+        expect { subject.execute("0000-0000-0000-0000-0001") }.to raise_error(UseCase::AssessmentMeta::NoDataException)
       end
     end
-
   end
 end

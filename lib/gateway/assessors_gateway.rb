@@ -98,6 +98,7 @@ module Gateway
 
     class Assessor < ActiveRecord::Base
     end
+
     class Scheme < ActiveRecord::Base
     end
 

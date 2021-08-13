@@ -14,20 +14,18 @@ module Helper
       columns = view_model_array.first.keys.clone
       headers = columns.map { |item| item.to_s.upcase.strip }.clone
 
-      csv_object =
-        CSV.generate do |csv|
-          csv << headers
-          view_model_array.each do |hash|
-            csv << columns.map do |key, _value|
-              if hash[key.to_sym].is_a?(String)
-                (hash[key.to_sym]).to_s
-              else
-                hash[key.to_sym]
-              end
+      CSV.generate do |csv|
+        csv << headers
+        view_model_array.each do |hash|
+          csv << columns.map do |key, _value|
+            if hash[key.to_sym].is_a?(String)
+              (hash[key.to_sym]).to_s
+            else
+              hash[key.to_sym]
             end
           end
         end
-      csv_object
+      end
     end
 
     def self.report_type_to_s(type_of_assessment)

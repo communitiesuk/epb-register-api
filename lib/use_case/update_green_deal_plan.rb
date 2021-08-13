@@ -2,8 +2,10 @@ module UseCase
   class UpdateGreenDealPlan
     class NotFoundException < StandardError
     end
+
     class PlanIdMismatchException < StandardError
     end
+
     class InvalidFuelCode < StandardError
     end
 

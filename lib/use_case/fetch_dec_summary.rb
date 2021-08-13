@@ -2,8 +2,10 @@ module UseCase
   class FetchDecSummary
     class AssessmentNotFound < StandardError
     end
+
     class AssessmentGone < StandardError
     end
+
     class AssessmentNotDec < StandardError
     end
 
