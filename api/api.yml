@@ -781,9 +781,7 @@ paths:
                 type: object
                 properties:
                   data:
-                    oneOf:
-                      - $ref: '#/components/schemas/DomesticEnergyAssessmentSummary'
-                      - $ref: '#/components/schemas/CommercialEnergyAssessmentSummary'
+                    $ref: '#/components/schemas/EnergyAssessmentMetadata'
         404:
           description: Assessment not found
           content:
@@ -1719,6 +1717,11 @@ components:
         - PREVIOUS_ASSESSMENT
       example: 'GAZETTEER'
 
+    SchemaName:
+      type: string
+      description: 'An identifier for the versioned XML schema used for the lodged assessment XML'
+      example: 'RdSAP-Schema-20.0.0'
+
     AddressSearchResults:
       type: object
       properties:
@@ -2246,6 +2249,32 @@ components:
             - $ref: '#/components/schemas/Addendum'
           nullable: true
           description: Additional information about the property
+
+    EnergyAssessmentMetadata:
+      type: object
+      properties:
+        typeOfAssessment:
+          $ref: '#/components/schemas/AssessmentType'
+        assessmentId:
+          $ref: '#/components/schemas/AssessmentId'
+        optOut:
+          type: boolean
+          example: false
+        createdAt:
+          type: date-time
+          example: '2020-08-09T12:34:56.789Z'
+        cancelledAt:
+          type: date-time
+          example: '2021-04-26T16:32:01.703Z'
+          nullable: true
+        notForIssueAt:
+          type: date-time
+          example: '2020-11-21T05:34:21.623Z'
+          nullable: true
+        schemaType:
+          $ref: '#/components/schemas/SchemaName'
+        addressId:
+          $ref: '#/components/schemas/AddressId'
 
     PropertySummary:
       type: object
