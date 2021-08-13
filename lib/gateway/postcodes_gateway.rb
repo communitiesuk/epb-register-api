@@ -24,7 +24,7 @@ module Gateway
 
   private
 
-    def db_response(code: "postcode", table: "postcode_geolocation", postcode:)
+    def db_response(postcode:, code: "postcode", table: "postcode_geolocation")
       ActiveRecord::Base.connection.exec_query(
         "SELECT #{code}, latitude, longitude FROM #{table} WHERE #{code} = #{
           ActiveRecord::Base.connection.quote(postcode)

@@ -2,8 +2,10 @@ module UseCase
   class FindAssessmentsByPostcode
     class PostcodeNotValid < StandardError
     end
+
     class ParameterMissing < StandardError
     end
+
     class AssessmentTypeNotValid < StandardError
     end
 

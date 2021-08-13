@@ -2,14 +2,19 @@ module UseCase
   class AddGreenDealPlan
     class AssessmentGoneException < StandardError
     end
+
     class AssessmentExpiredException < StandardError
     end
+
     class DuplicateException < StandardError
     end
+
     class InvalidTypeException < StandardError
     end
+
     class NotFoundException < StandardError
     end
+
     class InvalidFuelCode < StandardError
     end
 

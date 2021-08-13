@@ -7,7 +7,7 @@ describe "Acceptance::Assessment::QualificationAndStatusPerType",
   def sample(name, schema_name)
     File.read File.join Dir.pwd,
                         "spec/fixtures/samples/" + schema_name + "/" + name +
-      ".xml"
+                          ".xml"
   end
 
   let(:scheme_id) { add_scheme_and_get_id }

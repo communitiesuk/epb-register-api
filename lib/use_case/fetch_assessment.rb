@@ -2,8 +2,10 @@ module UseCase
   class FetchAssessment
     class NotFoundException < StandardError
     end
+
     class AssessmentGone < StandardError
     end
+
     class SchemeIdsDoNotMatch < StandardError
     end
 

@@ -7,7 +7,7 @@ module Helper
       if permissiveness
         "LEVENSHTEIN_LESS_EQUAL(LOWER(#{property}), LOWER(#{bind}), #{
           permissiveness
-        }) < #{(permissiveness.to_i + 1)}"
+        }) < #{permissiveness.to_i + 1}"
       else
         "LEVENSHTEIN(LOWER(#{property}), LOWER(#{bind}))"
       end

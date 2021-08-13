@@ -3,6 +3,7 @@ module UseCase
     class Fetch
       class NotFoundException < StandardError
       end
+
       class AssessmentGone < StandardError
       end
 
@@ -48,29 +49,26 @@ module UseCase
         summary_data[:address_id] = assessment_table_values[:address_id]
         summary_data[:opt_out] = assessment_table_values[:opt_out]
 
-        summary =
-          case lodged_values.type
-          when :AC_CERT
-            AcCertSupplement.new.add_data!(summary_data)
-          when :AC_REPORT
-            AcReportSupplement.new.add_data!(summary_data)
-          when :CEPC
-            CepcSupplement.new.add_data!(summary_data)
-          when :CEPC_RR
-            CepcRrSupplement.new.add_data!(summary_data)
-          when :DEC
-            DecSupplement.new.add_data!(summary_data)
-          when :DEC_RR
-            DecRrSupplement.new.add_data!(summary_data)
-          when :SAP
-            SapSupplement.new.add_data!(summary_data)
-          when :RdSAP
-            RdSapSupplement.new.add_data!(summary_data)
-          else
-            summary_data
-          end
-
-        summary
+        case lodged_values.type
+        when :AC_CERT
+          AcCertSupplement.new.add_data!(summary_data)
+        when :AC_REPORT
+          AcReportSupplement.new.add_data!(summary_data)
+        when :CEPC
+          CepcSupplement.new.add_data!(summary_data)
+        when :CEPC_RR
+          CepcRrSupplement.new.add_data!(summary_data)
+        when :DEC
+          DecSupplement.new.add_data!(summary_data)
+        when :DEC_RR
+          DecRrSupplement.new.add_data!(summary_data)
+        when :SAP
+          SapSupplement.new.add_data!(summary_data)
+        when :RdSAP
+          RdSapSupplement.new.add_data!(summary_data)
+        else
+          summary_data
+        end
       end
     end
   end

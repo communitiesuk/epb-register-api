@@ -2,8 +2,10 @@ module UseCase
   class FetchGreenDealAssessment
     class NotFoundException < StandardError
     end
+
     class AssessmentGone < StandardError
     end
+
     class InvalidAssessmentTypeException < StandardError
     end
 

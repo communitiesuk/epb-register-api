@@ -4,20 +4,28 @@ module UseCase
   class ValidateAndLodgeAssessment
     class OveriddenLodgementEvent < ActiveRecord::Base
     end
+
     class ValidationErrorException < StandardError
     end
+
     class UnauthorisedToLodgeAsThisSchemeException < StandardError
     end
+
     class SchemaNotSupportedException < StandardError
     end
+
     class RelatedReportError < StandardError
     end
+
     class AddressIdsDoNotMatch < StandardError
     end
+
     class SchemaNotDefined < StandardError
     end
+
     class LodgementRulesException < StandardError
       attr_reader :errors
+
       def initialize(errors)
         @errors = errors
       end

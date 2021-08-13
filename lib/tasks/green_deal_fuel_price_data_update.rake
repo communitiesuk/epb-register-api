@@ -3,7 +3,7 @@ desc "Import up to date data for green deal fuel prices"
 task :green_deal_update_fuel_data do
   raw_data = Net::HTTP.get URI "http://www.boilers.org.uk/data1/pcdf2012.dat"
 
-  price_data = raw_data.scan(/^[\d],[\d]+,[\d]+,[\d]+\.[\d]+,[\d]{4}\/[\S]+\/[\d]+ [\d]{2}:[\d]{2}/mi)
+  price_data = raw_data.scan(/^\d,\d+,\d+,\d+\.\d+,\d{4}\/\S+\/\d+ \d{2}:\d{2}/mi)
 
   headers = %i[category heat_source standing_charge price date]
 

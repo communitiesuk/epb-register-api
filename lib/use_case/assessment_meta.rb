@@ -2,7 +2,6 @@ module UseCase
   class AssessmentMeta
     class NoDataException < StandardError; end
 
-
     def initialize(gateway)
       @gateway = gateway
     end
@@ -15,7 +14,6 @@ module UseCase
       else
         result
       end
-
     end
   end
 end

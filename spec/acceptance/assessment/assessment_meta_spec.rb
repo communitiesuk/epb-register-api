@@ -1,8 +1,6 @@
 describe "Acceptance::AssessmentMeta" do
   include RSpecRegisterApiServiceMixin
 
-
-
   before(:all) do
     scheme_id = add_scheme_and_get_id
     domestic_rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
@@ -20,8 +18,8 @@ describe "Acceptance::AssessmentMeta" do
         non_domestic_sp3: "ACTIVE",
         non_domestic_cc4: "ACTIVE",
         gda: "ACTIVE",
-        ),
-      )
+      ),
+    )
 
     lodge_assessment(
       assessment_body: domestic_rdsap_xml.to_xml,
@@ -30,7 +28,7 @@ describe "Acceptance::AssessmentMeta" do
         scheme_ids: [scheme_id],
       },
       override: true,
-      )
+    )
   end
 
   it "returns a 200 when calling the meta data end point" do
