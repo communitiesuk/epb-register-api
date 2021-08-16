@@ -3,8 +3,8 @@ require "net/http"
 require "aws-sdk-s3"
 require "geocoder"
 
-desc "Import postcode geolocation data"
 
+desc "Clean up temporary tables following postcode data update"
 task :import_postcode_cleanup do
   db = ActiveRecord::Base.connection
 
@@ -17,6 +17,7 @@ task :import_postcode_cleanup do
   puts "[#{Time.now}] Dropped postcode_outcode_geolocations_tmp / postcode_outcode_geolocations_legacy tables"
 end
 
+desc "Import postcode geolocation data"
 task :import_postcode, %i[file_name] do |_, args|
   file_name = args.file_name
 
