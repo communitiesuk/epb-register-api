@@ -764,7 +764,7 @@ paths:
       summary: Get assessment meta data attributes used by data-warehouse in JSON format
       security:
         - oauth:
-            - 'assessment:fetch'
+            - 'assessmentmetadata:fetch'
       parameters:
         - in: path
           name: assessmentId
@@ -1636,6 +1636,7 @@ components:
             'scheme:assessor:update': Add or Update assessors
             'scheme:assessor:fetch': Get full details of an individual assessor
             'assessment:fetch': Get full details of an individual assessment
+            'assessmentmetadata:fetch': Get the additional attributes we require for assessments
             'assessment:lodge': Lodge a new assessment with the register
             'assessment:search': Search the register for an assessment
             'assessor:search': Search the register for an assessor
