@@ -5,3 +5,6 @@ require:
 inherit_gem:
   rubocop-govuk:
     - config/default.yml
+
+RSpec/ExampleLength:
+  CountAsOne: ['array', 'hash']
