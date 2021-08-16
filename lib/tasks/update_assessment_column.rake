@@ -1,5 +1,11 @@
+# This task can be used to update the values in a column of the assessments
+# table from values lodged in the XML, via the view models.  Historically this
+# has been used to overwrite some bad expiry date values in the assessments
+# table, and to backfill a new column on the assessments table from previously
+# lodged XML.
+#
+# Use with caution!!!
 desc "Update assessments table column from XML"
-
 task :update_assessment_column do
   require "nokogiri"
   require "zeitwerk"
