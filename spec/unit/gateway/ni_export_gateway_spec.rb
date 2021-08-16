@@ -1,17 +1,14 @@
 describe Gateway::NiExportGateway do
-
   include RSpecRegisterApiServiceMixin
 
-  subject{ described_class.new }
+  subject { described_class.new }
 
   context "when extracting Northern Ireland data for export " do
-
-    it 'call the gateway without error' do
-      expect{ subject}.not_to raise_error
+    it "call the gateway without error" do
+      expect { subject }.not_to raise_error
     end
 
-    describe '.fetch_assessments' do
-
+    describe ".fetch_assessments" do
       before(:all) do
         scheme_id = add_scheme_and_get_id
         add_super_assessor(scheme_id)
@@ -38,8 +35,7 @@ describe Gateway::NiExportGateway do
           },
           schema_name: "SAP-Schema-NI-18.0.0",
           override: true,
-          )
-
+        )
 
         domestic_ni_rdsap_assessment_id.children = "0000-0000-0000-0000-0002"
         lodge_assessment(
@@ -50,8 +46,7 @@ describe Gateway::NiExportGateway do
           },
           schema_name: "RdSAP-Schema-NI-20.0.0",
           override: true,
-          )
-
+        )
 
         domestic_sap_assessment_id.children = "1000-0000-0000-0000-1010"
         domestic_sap_postcode = domestic_sap_xml.at("Property Address Postcode")
@@ -64,23 +59,21 @@ describe Gateway::NiExportGateway do
           },
           schema_name: "SAP-Schema-18.0.0",
           override: true,
-          )
+        )
       end
 
-      let!(:exported_data){
+      let!(:exported_data) do
         subject.fetch_assessments(%w[RdSAP SAP])
-      }
+      end
 
-      let(:expectation){
-        [{"assessment_id" => "0000-0000-0000-0000-0000"},
-         {"assessment_id" => "0000-0000-0000-0000-0002"}
-        ]
-      }
+      let(:expectation) do
+        [{ "assessment_id" => "0000-0000-0000-0000-0000" },
+         { "assessment_id" => "0000-0000-0000-0000-0002" }]
+      end
 
-      it 'exports only lodged certificates that have a BT postcode and a NI schema' do
-         expect(exported_data).to eq(expectation)
+      it "exports only lodged certificates that have a BT postcode and a NI schema" do
+        expect(exported_data).to eq(expectation)
+      end
     end
-
-  end
   end
 end

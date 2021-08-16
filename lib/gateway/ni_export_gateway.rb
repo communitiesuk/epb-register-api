@@ -1,7 +1,6 @@
 module Gateway
   class NiExportGateway
-
-    def fetch_assessments(type_of_assessment)
+    def fetch_assessments(_type_of_assessment)
       sql = <<-SQL
       SELECT
       a.assessment_id
@@ -11,8 +10,7 @@ module Gateway
         ax.schema_type LIKE '%NI%'
       SQL
 
-
-      #TOD0 extract this to helper method
+      # TOD0 extract this to helper method
       # if type_of_assessment.is_a?(Array)
       #   valid_type = %w[RdSAP SAP]
       #   invalid_types = type_of_assessment - valid_type
@@ -36,9 +34,6 @@ module Gateway
       results = ActiveRecord::Base.connection.exec_query(sql)
 
       results.map { |result| result }
-
     end
-
   end
-
 end
