@@ -1,4 +1,4 @@
-describe Gateway::NiExportGateway do
+describe Gateway::ExportNiGateway do
   include RSpecRegisterApiServiceMixin
 
   subject { described_class.new }
