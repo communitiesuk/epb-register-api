@@ -2,7 +2,7 @@ require "openssl"
 require "csv"
 require "zip"
 
-namespace :adddress_base do
+namespace :address_base do
   desc "Drop temporary tables associated with AddressBase imports"
   task :cleanup do
     ActiveRecord::Base.logger = nil
@@ -15,7 +15,7 @@ namespace :adddress_base do
     puts "[#{Time.now}] Dropped address_base_legacy table"
   end
 
-  desc "Rollback to previous AdddressBase table (eg following a borked import)"
+  desc "Rollback to previous addressBase table (eg following a borked import)"
   task :restore do
     ActiveRecord::Base.logger = nil
     db = ActiveRecord::Base.connection
