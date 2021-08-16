@@ -1,5 +1,8 @@
-desc "Import up to date data for green deal fuel prices"
-
+# New fuel price data is published every 6 months (in June and December)
+# This data is used to calculate the savings from Green Deal measures, and so
+# this rake needs to be run every 6 months so we have the latest fuel prices in
+# the register database.
+desc "Import up-to-date data for Green Deal fuel prices"
 task :green_deal_update_fuel_data do
   raw_data = Net::HTTP.get URI "http://www.boilers.org.uk/data1/pcdf2012.dat"
 
