@@ -1,4 +1,5 @@
 namespace :open_data do
+
   desc "Exporting hashed assessment_id opt out, cancelled or not for issue data for Open Data Communities"
   task :export_not_for_publication, %i[type_of_export] do |_, arg|
     type_of_export = arg.type_of_export
