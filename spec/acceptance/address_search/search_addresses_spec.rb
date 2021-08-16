@@ -4,12 +4,9 @@ describe "Acceptance::AddressSearch", set_with_timecop: true do
   context "with an invalid combination of parameters" do
     describe "no parameters" do
       let(:response) do
-        assertive_get(
+        assertive_get_in_search_scope(
           "/api/search/addresses",
-          [422],
-          true,
-          nil,
-          %w[address:search],
+          accepted_responses: [422],
         ).body
       end
 
@@ -21,36 +18,27 @@ describe "Acceptance::AddressSearch", set_with_timecop: true do
     context "with an incorrect combination of parameters" do
       describe "building reference number and another parameter" do
         it "returns a validation failure" do
-          assertive_get(
+          assertive_get_in_search_scope(
             "/api/search/addresses?addressId=RRN-0000-0000-0000-0000-0000&something=test",
-            [422],
-            true,
-            nil,
-            %w[address:search],
+            accepted_responses: [422],
           )
         end
       end
 
       describe "postcode and another parameter" do
         it "returns a validation failure" do
-          assertive_get(
+          assertive_get_in_search_scope(
             "/api/search/addresses?postcode=A0%200AA&something=test",
-            [422],
-            true,
-            nil,
-            %w[address:search],
+            accepted_responses: [422],
           )
         end
       end
 
       describe "street, town and another parameter" do
         it "returns a validation failure" do
-          assertive_get(
+          assertive_get_in_search_scope(
             "/api/search/addresses?street=place&town=place&something=test",
-            [422],
-            true,
-            nil,
-            %w[address:search],
+            accepted_responses: [422],
           )
         end
       end
@@ -60,13 +48,20 @@ describe "Acceptance::AddressSearch", set_with_timecop: true do
   context "with invalid auth details" do
     describe "with no authentication token" do
       it "returns a 401" do
-        assertive_get("/api/search/addresses", [401], false, nil, nil)
+        assertive_get(
+          "/api/search/addresses",
+          accepted_responses: [401],
+          should_authenticate: false,
+        )
       end
     end
 
     describe "without the scope address:search" do
       it "returns a 403" do
-        assertive_get("/api/search/addresses", [403], true, nil, nil)
+        assertive_get(
+          "/api/search/addresses",
+          accepted_responses: [403],
+        )
       end
     end
   end
@@ -77,19 +72,15 @@ describe "Acceptance::AddressSearch", set_with_timecop: true do
 
       let(:response) do
         JSON.parse(
-          assertive_get(
+          assertive_get_in_search_scope(
             "/api/search/addresses?postcode=A0%200AA",
-            [200],
-            true,
-            nil,
-            %w[address:search],
           ).body,
           symbolize_names: true,
         )
       end
 
       before do
-        add_assessor(scheme_id, "SPEC000000", VALID_ASSESSOR_REQUEST_BODY)
+        add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: VALID_ASSESSOR_REQUEST_BODY)
 
         lodge_assessment(
           assessment_body: Samples.xml("RdSAP-Schema-20.0.0"),

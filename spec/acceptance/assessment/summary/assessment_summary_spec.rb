@@ -6,20 +6,20 @@ describe "Acceptance::AssessmentSummary", set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
   it "returns 404 for an assessment that doesnt exist" do
-    fetch_assessment_summary("0000-0000-0000-0000-0000", [404])
+    fetch_assessment_summary(id: "0000-0000-0000-0000-0000", accepted_responses: [404])
   end
 
   it "returns 400 for an assessment id that is not valid" do
-    fetch_assessment_summary("0000-0000-0000-0000-0000%23", [400])
+    fetch_assessment_summary(id: "0000-0000-0000-0000-0000%23", accepted_responses: [400])
   end
 
   context "security" do
     it "rejects a request that is not authenticated" do
-      fetch_assessment_summary("123", [401], false)
+      fetch_assessment_summary(id: "123", accepted_responses: [401], should_authenticate: false)
     end
 
     it "rejects a request with the wrong scopes" do
-      fetch_assessment_summary("124", [403], true, {}, %w[wrong:scope])
+      fetch_assessment_summary(id: "124", accepted_responses: [403], scopes: %w[wrong:scope])
     end
   end
 
@@ -33,7 +33,7 @@ describe "Acceptance::AssessmentSummary", set_with_timecop: true do
           non_domestic_nos4: "ACTIVE",
           non_domestic_nos5: "ACTIVE",
         )
-      add_assessor(scheme_id, "SPEC000000", assessor)
+      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: assessor)
       cepc_and_rr = Nokogiri.XML(xml_file)
 
       lodge_assessment(
@@ -46,12 +46,12 @@ describe "Acceptance::AssessmentSummary", set_with_timecop: true do
 
       cepc_response =
         JSON.parse(
-          fetch_assessment_summary("0000-0000-0000-0000-0000").body,
+          fetch_assessment_summary(id: "0000-0000-0000-0000-0000").body,
           symbolize_names: true,
         )
       cepc_rr_response =
         JSON.parse(
-          fetch_assessment_summary("0000-0000-0000-0000-0001").body,
+          fetch_assessment_summary(id: "0000-0000-0000-0000-0001").body,
           symbolize_names: true,
         )
 
@@ -76,7 +76,7 @@ describe "Acceptance::AssessmentSummary", set_with_timecop: true do
           non_domestic_nos4: "ACTIVE",
           non_domestic_nos5: "ACTIVE",
         )
-      add_assessor(scheme_id, "SPEC000000", assessor)
+      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: assessor)
       cepc_and_rr = Nokogiri.XML(xml_file)
 
       lodge_assessment(
@@ -87,7 +87,7 @@ describe "Acceptance::AssessmentSummary", set_with_timecop: true do
         schema_name: "CEPC-8.0.0",
       )
 
-      fetch_assessment_summary("00000000000000000000").body
+      fetch_assessment_summary(id: "00000000000000000000").body
     end
   end
 
@@ -99,7 +99,7 @@ describe "Acceptance::AssessmentSummary", set_with_timecop: true do
           domestic_rd_sap: "ACTIVE",
           domestic_sap: "ACTIVE",
         )
-      add_assessor(scheme_id, "SPEC000000", assessor)
+      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: assessor)
       lodge_assessment(
         assessment_body:
           Samples.xml(
@@ -115,7 +115,7 @@ describe "Acceptance::AssessmentSummary", set_with_timecop: true do
 
       response =
         JSON.parse(
-          fetch_assessment_summary("6666-7777-8888-9999-9999", [200]).body,
+          fetch_assessment_summary(id: "6666-7777-8888-9999-9999").body,
           symbolize_names: true,
         )
       improvements = response[:data][:recommendedImprovements]

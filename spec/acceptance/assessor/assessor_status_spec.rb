@@ -4,7 +4,7 @@ describe "Acceptance::AssessorStatus" do
   include RSpecRegisterApiServiceMixin
 
   let!(:test_scheme_id) { add_scheme_and_get_id }
-  let!(:test_scheme_id2) { add_scheme_and_get_id("test_two") }
+  let!(:test_scheme_id2) { add_scheme_and_get_id(name: "test_two") }
 
   def create_assessor(
     scheme_id: test_scheme_id,
@@ -12,16 +12,16 @@ describe "Acceptance::AssessorStatus" do
     **other_args
   )
     add_assessor(
-      scheme_id,
-      assessor_id,
-      AssessorStub.new.fetch_request_body(**other_args),
+      scheme_id: scheme_id,
+      assessor_id: assessor_id,
+      body: AssessorStub.new.fetch_request_body(**other_args),
     )
   end
 
   context "when a scheme requests a list of assessors whose statuses have been updated" do
     let(:response) do
       JSON.parse(
-        fetch_assessors_updated_status(test_scheme_id, Date.today.to_s).body,
+        fetch_assessors_updated_status(scheme_id: test_scheme_id, date: Date.today.to_s).body,
         symbolize_names: true,
       )
     end
@@ -29,7 +29,7 @@ describe "Acceptance::AssessorStatus" do
     it "will give an error if date param is empty" do
       response =
         JSON.parse(
-          fetch_assessors_updated_status(test_scheme_id, "", [400]).body,
+          fetch_assessors_updated_status(scheme_id: test_scheme_id, date: "", accepted_responses: [400]).body,
           symbolize_names: true,
         )
 
@@ -67,7 +67,7 @@ describe "Acceptance::AssessorStatus" do
 
       response =
         JSON.parse(
-          fetch_assessors_updated_status(test_scheme_id, Date.tomorrow.to_s)
+          fetch_assessors_updated_status(scheme_id: test_scheme_id, date: Date.tomorrow.to_s)
             .body,
           symbolize_names: true,
         )

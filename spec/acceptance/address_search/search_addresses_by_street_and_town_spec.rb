@@ -30,9 +30,9 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", set_with_timecop: true do
 
     before do
       add_assessor(
-        scheme_id,
-        "SPEC000000",
-        AssessorStub.new.fetch_request_body(
+        scheme_id: scheme_id,
+        assessor_id: "SPEC000000",
+        body: AssessorStub.new.fetch_request_body(
           non_domestic_nos3: "ACTIVE",
           non_domestic_nos4: "ACTIVE",
           non_domestic_nos5: "ACTIVE",
@@ -132,12 +132,8 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", set_with_timecop: true do
     describe "searching by street and town" do
       it "can handle towns consisting of multiple words" do
         response = JSON.parse(
-          assertive_get(
+          assertive_get_in_search_scope(
             "/api/search/addresses?street=Some%20Stre&town=Welwyn%20Garden%20City",
-            [200],
-            true,
-            {},
-            %w[address:search],
           ).body,
           symbolize_names: true,
         )
@@ -162,12 +158,8 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", set_with_timecop: true do
 
         let(:response) do
           JSON.parse(
-            assertive_get(
+            assertive_get_in_search_scope(
               "/api/search/addresses?street=Lonely%20Street&town=Whitbury",
-              [200],
-              true,
-              {},
-              %w[address:search],
             ).body,
             symbolize_names: true,
           )
@@ -183,12 +175,8 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", set_with_timecop: true do
       context "when street is missing some letters" do
         let(:response) do
           JSON.parse(
-            assertive_get(
+            assertive_get_in_search_scope(
               "/api/search/addresses?street=Some%20Stre&town=Whitbury",
-              [200],
-              true,
-              {},
-              %w[address:search],
             ).body,
             symbolize_names: true,
           )
@@ -224,12 +212,8 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", set_with_timecop: true do
       context "with an expired assessment" do
         let(:response) do
           JSON.parse(
-            assertive_get(
+            assertive_get_in_search_scope(
               "/api/search/addresses?street=Some%20Street&town=Whitbury",
-              [200],
-              true,
-              {},
-              %w[address:search],
             ).body,
             symbolize_names: true,
           )
@@ -265,12 +249,8 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", set_with_timecop: true do
       context "with a cancelled assessment" do
         let(:response) do
           JSON.parse(
-            assertive_get(
+            assertive_get_in_search_scope(
               "/api/search/addresses?street=Some%20Street&town=Whitbury",
-              [200],
-              true,
-              {},
-              %w[address:search],
             ).body,
             symbolize_names: true,
           )
@@ -303,12 +283,8 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", set_with_timecop: true do
       context "with a not-for-issue assessment" do
         let(:response) do
           JSON.parse(
-            assertive_get(
+            assertive_get_in_search_scope(
               "/api/search/addresses?street=Some%20Street&town=Whitbury",
-              [200],
-              true,
-              {},
-              %w[address:search],
             ).body,
             symbolize_names: true,
           )
@@ -341,12 +317,8 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", set_with_timecop: true do
       context "with an entered assessment" do
         let(:response) do
           JSON.parse(
-            assertive_get(
+            assertive_get_in_search_scope(
               "/api/search/addresses?street=Some%20Street&town=Whitbury",
-              [200],
-              true,
-              {},
-              %w[address:search],
             ).body,
             symbolize_names: true,
           )
@@ -381,12 +353,8 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", set_with_timecop: true do
         context "when the town name is not in the same case as the search string" do
           let(:response) do
             JSON.parse(
-              assertive_get(
+              assertive_get_in_search_scope(
                 "/api/search/addresses?street=Some%20Street&town=Whitbury",
-                [200],
-                true,
-                {},
-                %w[address:search],
               ).body,
               symbolize_names: true,
             )
@@ -423,12 +391,8 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", set_with_timecop: true do
       context "when an address type of domestic is provided" do
         let(:response) do
           JSON.parse(
-            assertive_get(
+            assertive_get_in_search_scope(
               "/api/search/addresses?street=Some%20Street&town=Whitbury&addressType=DOMESTIC",
-              [200],
-              true,
-              {},
-              %w[address:search],
             ).body,
             symbolize_names: true,
           )
@@ -463,12 +427,9 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", set_with_timecop: true do
 
       context "when an invalid address type is provided" do
         it "returns status 422" do
-          assertive_get(
+          assertive_get_in_search_scope(
             "/api/search/addresses?street=Other%20Street&town=Whitbury&addressType=asdf",
-            [422],
-            true,
-            {},
-            %w[address:search],
+            accepted_responses: [422],
           )
         end
       end
@@ -476,12 +437,8 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", set_with_timecop: true do
       context "when an address type of commercial is provided" do
         let(:response) do
           JSON.parse(
-            assertive_get(
+            assertive_get_in_search_scope(
               "/api/search/addresses?street=Other%20Street&town=Whitbury&addressType=COMMERCIAL",
-              [200],
-              true,
-              {},
-              %w[address:search],
             ).body,
             symbolize_names: true,
           )
@@ -517,12 +474,8 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", set_with_timecop: true do
       context "with street on address line 2" do
         let(:response) do
           JSON.parse(
-            assertive_get(
+            assertive_get_in_search_scope(
               "/api/search/addresses?street=Test%20Street&town=Whitbury",
-              [200],
-              true,
-              {},
-              %w[address:search],
             ).body,
             symbolize_names: true,
           )

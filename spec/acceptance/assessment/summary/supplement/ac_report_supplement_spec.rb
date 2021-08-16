@@ -9,12 +9,12 @@ describe "Acceptance::AssessmentSummary::Supplement::AC_REPORT",
         non_domestic_sp3: "ACTIVE",
         non_domestic_cc4: "ACTIVE",
       )
-    add_assessor(scheme_id, "SPEC000000", assessor)
+    add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: assessor)
 
     lodge_ac_report(Samples.xml("CEPC-8.0.0", "ac-cert+ac-report"), scheme_id)
     @regular_summary =
       JSON.parse(
-        fetch_assessment_summary("0000-0000-0000-0000-0001").body,
+        fetch_assessment_summary(id: "0000-0000-0000-0000-0001").body,
         symbolize_names: true,
       )
 
@@ -33,7 +33,7 @@ describe "Acceptance::AssessmentSummary::Supplement::AC_REPORT",
     lodge_ac_report(second_assessment.to_xml, scheme_id)
     @second_summary =
       JSON.parse(
-        fetch_assessment_summary("0000-0000-0000-0000-0003").body,
+        fetch_assessment_summary(id: "0000-0000-0000-0000-0003").body,
         symbolize_names: true,
       )
   end

@@ -5,7 +5,7 @@ describe "AddressMatching" do
 
   before(:all) do
     scheme_id = add_scheme_and_get_id
-    add_super_assessor(scheme_id)
+    add_super_assessor(scheme_id: scheme_id)
 
     rdsap_schema = "RdSAP-Schema-19.0".freeze
     sap_schema = "SAP-Schema-17.0".freeze
@@ -60,8 +60,8 @@ describe "AddressMatching" do
       before do
         add_address_base(uprn: 91)
         update_assessment_address_id(
-          "0000-0000-0000-0000-0001",
-          "UPRN-0000000091",
+          assessment_id: "0000-0000-0000-0000-0001",
+          new_address_id: "UPRN-0000000091",
         )
       end
 

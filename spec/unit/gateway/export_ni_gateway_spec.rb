@@ -11,7 +11,7 @@ describe Gateway::ExportNiGateway do
     describe ".fetch_assessments" do
       before(:all) do
         scheme_id = add_scheme_and_get_id
-        add_super_assessor(scheme_id)
+        add_super_assessor(scheme_id: scheme_id)
 
         domestic_ni_sap_xml = Nokogiri.XML Samples.xml("SAP-Schema-NI-18.0.0")
         domestic_ni_sap_assessment_id = domestic_ni_sap_xml.at("RRN")

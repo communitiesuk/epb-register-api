@@ -10,9 +10,9 @@ describe "FixBlankAssessors" do
     before do
       allow($stdout).to receive(:puts)
       add_assessor(
-        scheme_id,
-        scheme_assessor_id,
-        {
+        scheme_id: scheme_id,
+        assessor_id: scheme_assessor_id,
+        body: {
           firstName: "",
           middleNames: "",
           lastName: "",
@@ -47,7 +47,7 @@ describe "FixBlankAssessors" do
     it "updates the assessor first_name" do
       get_task("fix_blank_assessors").invoke
 
-      response = JSON.parse(fetch_assessor(scheme_id, scheme_assessor_id).body)
+      response = JSON.parse(fetch_assessor(scheme_id: scheme_id, assessor_id: scheme_assessor_id).body)
       expect(response["data"]["firstName"]).to eq("Mr Test Boi TST")
       expect(response["data"]["lastName"]).to eq("")
     end
@@ -57,9 +57,9 @@ describe "FixBlankAssessors" do
     before do
       allow($stdout).to receive(:puts)
       add_assessor(
-        scheme_id,
-        scheme_assessor_id,
-        {
+        scheme_id: scheme_id,
+        assessor_id: scheme_assessor_id,
+        body: {
           firstName: "John",
           middleNames: "",
           lastName: "Smith",
@@ -94,7 +94,7 @@ describe "FixBlankAssessors" do
     it "does not update the assessor" do
       get_task("fix_blank_assessors").invoke
 
-      response = JSON.parse(fetch_assessor(scheme_id, scheme_assessor_id).body)
+      response = JSON.parse(fetch_assessor(scheme_id: scheme_id, assessor_id: scheme_assessor_id).body)
       expect(response["data"]["firstName"]).to eq("John")
       expect(response["data"]["lastName"]).to eq("Smith")
     end
@@ -104,9 +104,9 @@ describe "FixBlankAssessors" do
     before do
       allow($stdout).to receive(:puts)
       add_assessor(
-        scheme_id,
-        scheme_assessor_id,
-        {
+        scheme_id: scheme_id,
+        assessor_id: scheme_assessor_id,
+        body: {
           firstName: "",
           middleNames: "",
           lastName: "",
@@ -143,7 +143,7 @@ describe "FixBlankAssessors" do
     it "does not update the assessor" do
       get_task("fix_blank_assessors").invoke
 
-      response = JSON.parse(fetch_assessor(scheme_id, scheme_assessor_id).body)
+      response = JSON.parse(fetch_assessor(scheme_id: scheme_id, assessor_id: scheme_assessor_id).body)
       expect(response["data"]["firstName"]).to eq("")
       expect(response["data"]["lastName"]).to eq("")
     end

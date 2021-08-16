@@ -35,9 +35,9 @@ describe "Acceptance::LodgeAssessment::XML", set_with_timecop: true do
     let(:database_xml) { get_stored_xml "0000-0000-0000-0000-0000" }
 
     before do
-      add_assessor scheme_id,
-                   "SPEC000000",
-                   fetch_assessor_stub.fetch_request_body(
+      add_assessor scheme_id: scheme_id,
+                   assessor_id: "SPEC000000",
+                   body: fetch_assessor_stub.fetch_request_body(
                      non_domestic_cc4: "ACTIVE",
                      domestic_sap: "ACTIVE",
                    )
@@ -78,9 +78,9 @@ describe "Acceptance::LodgeAssessment::XML", set_with_timecop: true do
     end
 
     before do
-      add_assessor scheme_id,
-                   "SPEC000000",
-                   fetch_assessor_stub.fetch_request_body(domestic_sap: "ACTIVE")
+      add_assessor scheme_id: scheme_id,
+                   assessor_id: "SPEC000000",
+                   body: fetch_assessor_stub.fetch_request_body(domestic_sap: "ACTIVE")
     end
 
     it "returns an XML response" do
@@ -119,9 +119,9 @@ describe "Acceptance::LodgeAssessment::XML", set_with_timecop: true do
       end
 
       before do
-        add_assessor scheme_id,
-                     "SPEC000000",
-                     AssessorStub.new.fetch_request_body(
+        add_assessor scheme_id: scheme_id,
+                     assessor_id: "SPEC000000",
+                     body: AssessorStub.new.fetch_request_body(
                        non_domestic_nos3: "ACTIVE",
                      )
       end

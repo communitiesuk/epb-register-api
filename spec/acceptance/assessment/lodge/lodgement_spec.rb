@@ -25,7 +25,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
     let(:scheme_id) { add_scheme_and_get_id }
     let(:doc) { Nokogiri.XML valid_rdsap_xml }
     let(:register_assessor) do
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
+      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body)
     end
 
     it "rejects an assessment with a schema that does not exist" do
@@ -254,7 +254,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
     let(:cepc_xml_doc) { Nokogiri.XML(valid_cepc_rr_xml) }
 
     before do
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
+      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body)
     end
 
     it "logs the events to the overidden_lodgement_events table" do
@@ -309,7 +309,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
 
   context "when lodging a valid assessment" do
     before do
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
+      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body)
     end
 
     it "returns the correct response for RdSAP" do
@@ -761,7 +761,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
       )
     end
 
-    before { add_assessor scheme_id, "SPEC000000", valid_assessor_request_body }
+    before { add_assessor scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body }
 
     before do
       lodge_assessment assessment_body: valid_rdsap_xml,
@@ -795,9 +795,9 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
 
     context "when migrating an assessment submitted by an assessor who is now unqualified" do
       let(:rdsap_xml) do
-        add_assessor scheme_id,
-                     "UNQU000000",
-                     AssessorStub.new.fetch_request_body(
+        add_assessor scheme_id: scheme_id,
+                     assessor_id: "UNQU000000",
+                     body: AssessorStub.new.fetch_request_body(
                        domestic_rd_sap: "INACTIVE",
                      )
 
@@ -853,8 +853,8 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
 
     it "returns 403 if it is being lodged by the wrong scheme" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
-      different_scheme_id = add_scheme_and_get_id("BADSCHEME")
+      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body)
+      different_scheme_id = add_scheme_and_get_id(name: "BADSCHEME")
 
       lodge_assessment(
         assessment_body: valid_rdsap_xml,
@@ -915,7 +915,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
 
   def get_assessment_summary(assessment_id)
     JSON.parse(
-      fetch_assessment_summary(assessment_id, [200]).body,
+      fetch_assessment_summary(id: assessment_id).body,
       symbolize_names: true,
     )
   end

@@ -11,9 +11,9 @@ describe "Gateway::AssessmentMetaGateway" do
       domestic_rdsap_xml.at("UPRN").children = "RRN-0000-0000-0000-0000-0000"
 
       add_assessor(
-        scheme_id,
-        "SPEC000000",
-        AssessorStub.new.fetch_request_body(
+        scheme_id: scheme_id,
+        assessor_id: "SPEC000000",
+        body: AssessorStub.new.fetch_request_body(
           non_domestic_nos3: "ACTIVE",
           non_domestic_nos4: "ACTIVE",
           non_domestic_nos5: "ACTIVE",

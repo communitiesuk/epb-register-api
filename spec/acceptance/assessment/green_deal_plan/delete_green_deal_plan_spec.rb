@@ -82,9 +82,9 @@ describe "Acceptance::Assessment::GreenDealPlan:DeleteGreenDealPlan",
       let(:scheme_id) { add_scheme_and_get_id }
 
       before do
-        add_assessor scheme_id,
-                     "SPEC000000",
-                     AssessorStub.new.fetch_request_body(
+        add_assessor scheme_id: scheme_id,
+                     assessor_id: "SPEC000000",
+                     body: AssessorStub.new.fetch_request_body(
                        domestic_rd_sap: "ACTIVE",
                      )
 
@@ -98,7 +98,7 @@ describe "Acceptance::Assessment::GreenDealPlan:DeleteGreenDealPlan",
       end
 
       def response
-        JSON.parse(fetch_assessment_summary("0000-0000-0000-0000-0000").body)
+        JSON.parse(fetch_assessment_summary(id: "0000-0000-0000-0000-0000").body)
       end
 
       it "returns status code 204" do

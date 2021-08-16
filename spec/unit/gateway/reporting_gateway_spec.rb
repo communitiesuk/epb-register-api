@@ -5,7 +5,7 @@ describe "Gateway::ReportingGateway" do
 
     before(:all) do
       @scheme_id = add_scheme_and_get_id
-      add_super_assessor(@scheme_id)
+      add_super_assessor(scheme_id: @scheme_id)
     end
 
     context "Insert four RdSAP assessments and opt out one of them, cancel one and mark one not for issue" do
@@ -46,7 +46,7 @@ describe "Gateway::ReportingGateway" do
         call_lodge_assessment(scheme_id: @scheme_id, schema_name: schema, xml_document: xml)
         xml.at("RRN").children = "0000-0000-0000-0000-0003"
         call_lodge_assessment(scheme_id: @scheme_id, schema_name: schema, xml_document: xml)
-        opt_out_assessment("0000-0000-0000-0000-0001")
+        opt_out_assessment(assessment_id: "0000-0000-0000-0000-0001")
         assessment_gateway.update_statuses(assessment2, cancelled, time)
         assessment_gateway.update_statuses(assessment3, not_for_issue, time)
       end
@@ -93,8 +93,8 @@ describe "Gateway::ReportingGateway" do
         dec_xml.at("RRN").children = "0000-0000-0000-0000-0003"
         call_lodge_assessment(scheme_id: @scheme_id, schema_name: commercial_schema, xml_document: dec_xml)
 
-        opt_out_assessment("0000-0000-0000-0000-0001")
-        opt_out_assessment("0000-0000-0000-0000-0003")
+        opt_out_assessment(assessment_id: "0000-0000-0000-0000-0001")
+        opt_out_assessment(assessment_id: "0000-0000-0000-0000-0003")
       end
 
       it "returns only 1 SAP and the DEC" do
@@ -108,13 +108,13 @@ describe "Gateway::ReportingGateway" do
         commercial_schema = "CEPC-8.0.0"
         ac_cert_xml = Nokogiri.XML Samples.xml(commercial_schema, "ac-cert")
         call_lodge_assessment(scheme_id: @scheme_id, schema_name: commercial_schema, xml_document: ac_cert_xml)
-        opt_out_assessment("0000-0000-0000-0000-0000")
+        opt_out_assessment(assessment_id: "0000-0000-0000-0000-0000")
 
         rdsap_schema = "RdSAP-Schema-20.0.0"
         rdsap_xml = Nokogiri.XML Samples.xml(rdsap_schema)
         rdsap_xml.at("RRN").children = "0000-0000-0000-0000-0002"
         call_lodge_assessment(scheme_id: @scheme_id, schema_name: rdsap_schema, xml_document: rdsap_xml)
-        opt_out_assessment("0000-0000-0000-0000-0002")
+        opt_out_assessment(assessment_id: "0000-0000-0000-0000-0002")
       end
 
       it "does not return the AC-CERT" do
@@ -127,13 +127,13 @@ describe "Gateway::ReportingGateway" do
         commercial_schema = "CEPC-8.0.0"
         dec_rr_xml = Nokogiri.XML Samples.xml(commercial_schema, "dec-rr")
         call_lodge_assessment(scheme_id: @scheme_id, schema_name: commercial_schema, xml_document: dec_rr_xml)
-        opt_out_assessment("0000-0000-0000-0000-0000")
+        opt_out_assessment(assessment_id: "0000-0000-0000-0000-0000")
 
         sap_schema = "SAP-Schema-18.0.0"
         sap_xml = Nokogiri.XML Samples.xml(sap_schema)
         sap_xml.at("RRN").children = "0000-0000-0000-0000-0003"
         call_lodge_assessment(scheme_id: @scheme_id, schema_name: sap_schema, xml_document: sap_xml)
-        opt_out_assessment("0000-0000-0000-0000-0003")
+        opt_out_assessment(assessment_id: "0000-0000-0000-0000-0003")
       end
 
       it "does not return the DEC-RR" do

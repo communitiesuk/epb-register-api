@@ -77,7 +77,7 @@ describe "Searching for an assessor by name" do
 
   context "when there are no results" do
     it "returns an empty list" do
-      add_scheme_then_assessor(valid_assessor_request)
+      add_scheme_then_assessor(body: valid_assessor_request)
       response = JSON.parse(assessors_search_by_name("Marten%20Sheikh").body)
       expect(response["data"]["assessors"]).to eq([])
     end
@@ -86,7 +86,7 @@ describe "Searching for an assessor by name" do
   context "when there are results" do
     it "returns the assessors details" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "SCHE554433", valid_assessor_request)
+      add_assessor(scheme_id: scheme_id, assessor_id: "SCHE554433", body: valid_assessor_request)
       search_response = assessors_search_by_name("Some%20Person").body
       response = JSON.parse(search_response)
 
@@ -111,7 +111,7 @@ describe "Searching for an assessor by name" do
     end
 
     it "lets you search for swapped names" do
-      add_scheme_then_assessor(valid_assessor_request)
+      add_scheme_then_assessor(body: valid_assessor_request)
       search_response = assessors_search_by_name("Person%20Some")
       response = JSON.parse(search_response.body)
 
@@ -119,8 +119,8 @@ describe "Searching for an assessor by name" do
     end
 
     it "raises an error if only one name is given" do
-      add_scheme_then_assessor(valid_assessor_request)
-      search_response = assessors_search_by_name("Person", "", [400])
+      add_scheme_then_assessor(body: valid_assessor_request)
+      search_response = assessors_search_by_name("Person", qualification_type: "", accepted_responses: [400])
       response = JSON.parse(search_response.body)
 
       expect(response["errors"][0]["title"]).to eq(
@@ -129,7 +129,7 @@ describe "Searching for an assessor by name" do
     end
 
     it "lets you search for half names" do
-      add_scheme_then_assessor(valid_assessor_request)
+      add_scheme_then_assessor(body: valid_assessor_request)
       search_response = assessors_search_by_name("Per%20Some")
       response = JSON.parse(search_response.body)
 
@@ -137,9 +137,9 @@ describe "Searching for an assessor by name" do
     end
 
     it "doesn't return assessors from inactive schemes" do
-      scheme_id = add_scheme_and_get_id("My scheme")
-      add_assessor(scheme_id, "SCHE554433", valid_assessor_request)
-      update_scheme(scheme_id, { name: "My new scheme", active: false })
+      scheme_id = add_scheme_and_get_id(name: "My scheme")
+      add_assessor(scheme_id: scheme_id, assessor_id: "SCHE554433", body: valid_assessor_request)
+      update_scheme(scheme_id: scheme_id, body: { name: "My new scheme", active: false })
       search_response = assessors_search_by_name("Per%20Some")
       response = JSON.parse(search_response.body)
       expect(response["data"]["assessors"].size).to eq(0)
@@ -147,10 +147,10 @@ describe "Searching for an assessor by name" do
 
     it "only returns assessors with domestic qualifications when specifed" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "SCHE554433", valid_domestic_assessor_request)
-      add_assessor(scheme_id, "SCHE665544", valid_non_domestic_assessor_request)
+      add_assessor(scheme_id: scheme_id, assessor_id: "SCHE554433", body: valid_domestic_assessor_request)
+      add_assessor(scheme_id: scheme_id, assessor_id: "SCHE665544", body: valid_non_domestic_assessor_request)
       domestic_qualifications = { "domesticRdSap" => "ACTIVE", "domesticSap" => "ACTIVE", "gda" => "INACTIVE", "nonDomesticCc4" => "INACTIVE", "nonDomesticDec" => "INACTIVE", "nonDomesticNos3" => "INACTIVE", "nonDomesticNos4" => "INACTIVE", "nonDomesticNos5" => "INACTIVE", "nonDomesticSp3" => "INACTIVE" }
-      search_response = assessors_search_by_name("Per%20Some", "domestic")
+      search_response = assessors_search_by_name("Per%20Some", qualification_type: "domestic")
       response = JSON.parse(search_response.body)
 
       expect(response["data"]["assessors"].size).to eq(1)
@@ -159,10 +159,10 @@ describe "Searching for an assessor by name" do
 
     it "only returns assessors with non domestic (commercial) qualifications when specifed" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id, "SCHE554433", valid_domestic_assessor_request)
-      add_assessor(scheme_id, "SCHE665544", valid_non_domestic_assessor_request)
+      add_assessor(scheme_id: scheme_id, assessor_id: "SCHE554433", body: valid_domestic_assessor_request)
+      add_assessor(scheme_id: scheme_id, assessor_id: "SCHE665544", body: valid_non_domestic_assessor_request)
       non_domestic_qualifications = { "domesticRdSap" => "INACTIVE", "domesticSap" => "INACTIVE", "gda" => "INACTIVE", "nonDomesticCc4" => "ACTIVE", "nonDomesticDec" => "ACTIVE", "nonDomesticNos3" => "ACTIVE", "nonDomesticNos4" => "ACTIVE", "nonDomesticNos5" => "ACTIVE", "nonDomesticSp3" => "ACTIVE" }
-      search_response = assessors_search_by_name("Per%20Some", "nonDomestic")
+      search_response = assessors_search_by_name("Per%20Some", qualification_type: "nonDomestic")
       response = JSON.parse(search_response.body)
 
       expect(response["data"]["assessors"].size).to eq(1)

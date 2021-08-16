@@ -53,7 +53,7 @@ describe "Acceptance::Reports::GetAssessmentCountBySchemeNameAndType",
 
   context "when there are lodgements" do
     before do
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
+      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body)
     end
 
     it "returns a report with the correct numbers of lodgements" do

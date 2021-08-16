@@ -5,7 +5,7 @@ describe "LinkedAssessments" do
 
   before(:all) do
     scheme_id = add_scheme_and_get_id
-    add_super_assessor(scheme_id)
+    add_super_assessor(scheme_id: scheme_id)
 
     cepc_schema = "CEPC-8.0.0".freeze
 
@@ -45,7 +45,7 @@ describe "LinkedAssessments" do
 
       assessment =
         JSON.parse(
-          fetch_assessment_summary("0000-0000-0000-0000-0000").body,
+          fetch_assessment_summary(id: "0000-0000-0000-0000-0000").body,
           symbolize_names: true,
         )
       expect(assessment[:data][:addressId]).to eq(
@@ -58,7 +58,7 @@ describe "LinkedAssessments" do
 
       rr_assessment =
         JSON.parse(
-          fetch_assessment_summary("0000-0000-0000-0000-0001").body,
+          fetch_assessment_summary(id: "0000-0000-0000-0000-0001").body,
           symbolize_names: true,
         )
       expect(rr_assessment[:data][:addressId]).to eq(
@@ -89,7 +89,7 @@ describe "LinkedAssessments" do
 
       assessment =
         JSON.parse(
-          fetch_assessment_summary("0000-0000-0000-0000-0001").body,
+          fetch_assessment_summary(id: "0000-0000-0000-0000-0001").body,
           symbolize_names: true,
         )
       expect(assessment[:data][:addressId]).to eq(

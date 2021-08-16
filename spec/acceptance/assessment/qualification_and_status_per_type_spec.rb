@@ -13,9 +13,9 @@ describe "Acceptance::Assessment::QualificationAndStatusPerType",
 
   def create_assessor(qualifications)
     add_assessor(
-      scheme_id,
-      "SPEC000000",
-      AssessorStub.new.fetch_request_body(**qualifications),
+      scheme_id: scheme_id,
+      assessor_id: "SPEC000000",
+      body: AssessorStub.new.fetch_request_body(**qualifications),
     )
   end
 
@@ -191,7 +191,7 @@ describe "Acceptance::Assessment::QualificationAndStatusPerType",
             expect(assessment_status[:data]).to eq({ status: "CANCELLED" })
 
             assessment_settings[:lodged_rrns].each do |rrn|
-              fetch_assessment_summary(rrn, [410])
+              fetch_assessment_summary(id: rrn, accepted_responses: [410])
             end
           end
 
@@ -219,7 +219,7 @@ describe "Acceptance::Assessment::QualificationAndStatusPerType",
             expect(assessment_status[:data]).to eq({ status: "NOT_FOR_ISSUE" })
 
             assessment_settings[:lodged_rrns].each do |rrn|
-              fetch_assessment_summary(rrn, [410])
+              fetch_assessment_summary(id: rrn, accepted_responses: [410])
             end
           end
         end

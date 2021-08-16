@@ -6,9 +6,9 @@ describe "Acceptance::AssessmentMeta" do
     domestic_rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
 
     add_assessor(
-      scheme_id,
-      "SPEC000000",
-      AssessorStub.new.fetch_request_body(
+      scheme_id: scheme_id,
+      assessor_id: "SPEC000000",
+      body: AssessorStub.new.fetch_request_body(
         non_domestic_nos3: "ACTIVE",
         non_domestic_nos4: "ACTIVE",
         non_domestic_nos5: "ACTIVE",

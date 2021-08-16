@@ -30,7 +30,7 @@ describe "Acceptance::Reports::GetAssessmentCountByRegionAndType" do
 
   context "when getting a report on the number of lodged assessments" do
     before do
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
+      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body)
 
       lodge_assessment_with_rrn(
         valid_rdsap_xml,

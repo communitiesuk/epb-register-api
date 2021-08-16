@@ -101,9 +101,9 @@ describe UseCase::ExportOpenDataDec, set_with_timecop: true do
         non_domestic_assessment_id = non_domestic_xml.at("//CEPC:RRN")
 
         add_assessor(
-          scheme_id,
-          "SPEC000000",
-          AssessorStub.new.fetch_request_body(
+          scheme_id: scheme_id,
+          assessor_id: "SPEC000000",
+          body: AssessorStub.new.fetch_request_body(
             non_domestic_nos3: "ACTIVE",
             non_domestic_nos4: "ACTIVE",
             non_domestic_nos5: "ACTIVE",

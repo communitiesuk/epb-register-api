@@ -5,9 +5,9 @@ describe "Acceptance::DECSummary", set_with_timecop: true do
   let(:scheme_id) do
     scheme_id = add_scheme_and_get_id
     add_assessor(
-      scheme_id,
-      "SPEC000000",
-      fetch_assessor_stub.fetch_request_body(
+      scheme_id: scheme_id,
+      assessor_id: "SPEC000000",
+      body: fetch_assessor_stub.fetch_request_body(
         non_domestic_dec: "ACTIVE",
         non_domestic_nos3: "ACTIVE",
       ),
@@ -40,7 +40,7 @@ describe "Acceptance::DECSummary", set_with_timecop: true do
       it "returns the expected XML summary" do
         response =
           JSON.parse(
-            fetch_dec_summary("0000-0000-0000-0000-0000", [200]).body,
+            fetch_dec_summary(assessment_id: "0000-0000-0000-0000-0000").body,
             symbolize_names: true,
           )
 
@@ -64,7 +64,7 @@ describe "Acceptance::DECSummary", set_with_timecop: true do
 
         response =
           JSON.parse(
-            fetch_dec_summary("0000-0000-0000-0000-0000", [200]).body,
+            fetch_dec_summary(assessment_id: "0000-0000-0000-0000-0000").body,
             symbolize_names: true,
           )
         expect(response[:data]).to eq(Samples.xml("CEPC-8.0.0", "dec_summary"))
@@ -88,7 +88,7 @@ describe "Acceptance::DECSummary", set_with_timecop: true do
 
         response =
           JSON.parse(
-            fetch_dec_summary("6666-7777-8888-9999-9999", [200]).body,
+            fetch_dec_summary(assessment_id: "6666-7777-8888-9999-9999").body,
             symbolize_names: true,
           )
 
@@ -115,7 +115,7 @@ describe "Acceptance::DECSummary", set_with_timecop: true do
 
       response =
         JSON.parse(
-          fetch_dec_summary("0000-0000-0000-0000-0000", [403]).body,
+          fetch_dec_summary(assessment_id: "0000-0000-0000-0000-0000", accepted_responses: [403]).body,
           symbolize_names: true,
         )
 
@@ -127,7 +127,7 @@ describe "Acceptance::DECSummary", set_with_timecop: true do
     it "returns error 400, assessment id is not valid" do
       response =
         JSON.parse(
-          fetch_dec_summary("malformed-rrn", [400]).body,
+          fetch_dec_summary(assessment_id: "malformed-rrn", accepted_responses: [400]).body,
           symbolize_names: true,
         )
 
@@ -141,7 +141,7 @@ describe "Acceptance::DECSummary", set_with_timecop: true do
     it "returns error 404, assessment not found" do
       response =
         JSON.parse(
-          fetch_dec_summary("0000-0000-0000-0000-0000", [404]).body,
+          fetch_dec_summary(assessment_id: "0000-0000-0000-0000-0000", accepted_responses: [404]).body,
           symbolize_names: true,
         )
 
@@ -176,7 +176,7 @@ describe "Acceptance::DECSummary", set_with_timecop: true do
 
       response =
         JSON.parse(
-          fetch_dec_summary("0000-0000-0000-0000-0000", [410]).body,
+          fetch_dec_summary(assessment_id: "0000-0000-0000-0000-0000", accepted_responses: [410]).body,
           symbolize_names: true,
         )
 
@@ -197,7 +197,7 @@ describe "Acceptance::DECSummary", set_with_timecop: true do
 
       response =
         JSON.parse(
-          fetch_dec_summary("0000-0000-0000-0000-0000", [400]).body,
+          fetch_dec_summary(assessment_id: "0000-0000-0000-0000-0000", accepted_responses: [400]).body,
           symbolize_names: true,
         )
 

@@ -62,9 +62,9 @@ describe "Acceptance::AddressSearch::ByPostcode::WithAddressType",
     )
 
     add_assessor(
-      scheme_id,
-      "SPEC000000",
-      AssessorStub.new.fetch_request_body(
+      scheme_id: scheme_id,
+      assessor_id: "SPEC000000",
+      body: AssessorStub.new.fetch_request_body(
         non_domestic_nos3: "ACTIVE",
         non_domestic_nos4: "ACTIVE",
         non_domestic_nos5: "ACTIVE",
@@ -105,10 +105,8 @@ describe "Acceptance::AddressSearch::ByPostcode::WithAddressType",
       it "returns status 422" do
         assertive_get(
           "/api/search/addresses?postcode=A0%200AA&addressType=asdf",
-          [422],
-          true,
-          {},
-          %w[address:search],
+          accepted_responses: [422],
+          scopes: %w[address:search],
         )
       end
     end
@@ -118,10 +116,7 @@ describe "Acceptance::AddressSearch::ByPostcode::WithAddressType",
         JSON.parse(
           assertive_get(
             "/api/search/addresses?postcode=A0%200AA&addressType=DOMESTIC",
-            [200],
-            true,
-            {},
-            %w[address:search],
+            scopes: %w[address:search],
           ).body,
           symbolize_names: true,
         )
@@ -175,10 +170,8 @@ describe "Acceptance::AddressSearch::ByPostcode::WithAddressType",
         JSON.parse(
           assertive_get(
             "/api/search/addresses?postcode=A0%200AA&addressType=COMMERCIAL",
-            [200],
-            true,
-            {},
-            %w[address:search],
+            accepted_responses: [200],
+            scopes: %w[address:search],
           ).body,
           symbolize_names: true,
         )

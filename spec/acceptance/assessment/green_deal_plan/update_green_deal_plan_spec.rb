@@ -202,9 +202,9 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan",
       end
 
       before do
-        add_assessor scheme_id,
-                     "SPEC000000",
-                     AssessorStub.new.fetch_request_body(
+        add_assessor scheme_id: scheme_id,
+                     assessor_id: "SPEC000000",
+                     body: AssessorStub.new.fetch_request_body(
                        domestic_rd_sap: "ACTIVE",
                      )
 
@@ -224,7 +224,7 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan",
       context "when updating a Green Deal Plan" do
         let(:response) do
           JSON.parse(
-            fetch_assessment_summary("0000-0000-0000-0000-0000").body,
+            fetch_assessment_summary(id: "0000-0000-0000-0000-0000").body,
             symbolize_names: true,
           )
         end
@@ -282,9 +282,9 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan",
         end
 
         before do
-          add_assessor scheme_id,
-                       "SPEC000000",
-                       AssessorStub.new.fetch_request_body(
+          add_assessor scheme_id: scheme_id,
+                       assessor_id: "SPEC000000",
+                       body: AssessorStub.new.fetch_request_body(
                          domestic_rd_sap: "ACTIVE",
                        )
 

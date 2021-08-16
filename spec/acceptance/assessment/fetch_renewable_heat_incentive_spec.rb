@@ -10,24 +10,28 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive",
 
   context "security" do
     it "rejects a request that is not authenticated" do
-      fetch_renewable_heat_incentive "123", [401], false
+      fetch_renewable_heat_incentive assessment_id: "123",
+                                     accepted_responses: [401],
+                                     should_authenticate: false
     end
 
     it "rejects a request with the wrong scopes" do
-      fetch_renewable_heat_incentive "124", [403], true, {}, %w[wrong:scope]
+      fetch_renewable_heat_incentive assessment_id: "124",
+                                     accepted_responses: [403],
+                                     scopes: %w[wrong:scope]
     end
   end
 
   context "when a domestic assessment does not exist" do
     let(:response) do
       JSON.parse(
-        fetch_renewable_heat_incentive("DOESNT-EXIST", [404]).body,
+        fetch_renewable_heat_incentive(assessment_id: "DOESNT-EXIST", accepted_responses: [404]).body,
         symbolize_names: true,
       )
     end
 
     it "returns status 404 for a get" do
-      fetch_renewable_heat_incentive "DOESNT-EXIST", [404]
+      fetch_renewable_heat_incentive assessment_id: "DOESNT-EXIST", accepted_responses: [404]
     end
 
     it "returns the expected error response" do
@@ -40,15 +44,15 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive",
 
     let(:response) do
       JSON.parse(
-        fetch_renewable_heat_incentive("0000-0000-0000-0000-0000", [410]).body,
+        fetch_renewable_heat_incentive(assessment_id: "0000-0000-0000-0000-0000", accepted_responses: [410]).body,
         symbolize_names: true,
       )
     end
 
     before do
-      add_assessor scheme_id,
-                   "SPEC000000",
-                   AssessorStub.new.fetch_request_body(domestic_rd_sap: "ACTIVE")
+      add_assessor scheme_id: scheme_id,
+                   assessor_id: "SPEC000000",
+                   body: AssessorStub.new.fetch_request_body(domestic_rd_sap: "ACTIVE")
 
       lodge_assessment assessment_body: valid_rdsap_xml,
                        accepted_responses: [201],
@@ -74,12 +78,12 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive",
   context "when fetching a Renewable Heat Incentive" do
     let(:scheme_id) { add_scheme_and_get_id }
 
-    let(:response) { fetch_renewable_heat_incentive "0000-0000-0000-0000-0000" }
+    let(:response) { fetch_renewable_heat_incentive assessment_id: "0000-0000-0000-0000-0000" }
 
     before do
-      add_assessor scheme_id,
-                   "SPEC000000",
-                   AssessorStub.new.fetch_request_body(
+      add_assessor scheme_id: scheme_id,
+                   assessor_id: "SPEC000000",
+                   body: AssessorStub.new.fetch_request_body(
                      domestic_rd_sap: "ACTIVE",
                      domestic_sap: "ACTIVE",
                    )
@@ -98,7 +102,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive",
     context "with an RdSAP assessment type" do
       let(:response) do
         JSON.parse(
-          fetch_renewable_heat_incentive("0000-0000-0000-0000-0000").body,
+          fetch_renewable_heat_incentive(assessment_id: "0000-0000-0000-0000-0000").body,
           symbolize_names: true,
         )
       end
@@ -136,7 +140,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive",
 
         let(:response) do
           JSON.parse(
-            fetch_renewable_heat_incentive("1000-0000-0000-0000-0000").body,
+            fetch_renewable_heat_incentive(assessment_id: "1000-0000-0000-0000-0000").body,
             symbolize_names: true,
           )
         end
@@ -164,7 +168,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive",
 
         let(:response) do
           JSON.parse(
-            fetch_renewable_heat_incentive("1000-0000-0000-0000-0001").body,
+            fetch_renewable_heat_incentive(assessment_id: "1000-0000-0000-0000-0001").body,
             symbolize_names: true,
           )
         end
@@ -192,7 +196,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive",
 
       let(:response) do
         JSON.parse(
-          fetch_renewable_heat_incentive("2000-0000-0000-0000-0000").body,
+          fetch_renewable_heat_incentive(assessment_id: "2000-0000-0000-0000-0000").body,
           symbolize_names: true,
         )
       end
@@ -241,7 +245,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive",
 
         let(:response) do
           JSON.parse(
-            fetch_renewable_heat_incentive("2000-0000-0000-0000-0001").body,
+            fetch_renewable_heat_incentive(assessment_id: "2000-0000-0000-0000-0001").body,
             symbolize_names: true,
           )
         end
@@ -270,7 +274,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive",
 
         let(:response) do
           JSON.parse(
-            fetch_renewable_heat_incentive("2000-0000-0000-0000-0002").body,
+            fetch_renewable_heat_incentive(assessment_id: "2000-0000-0000-0000-0002").body,
             symbolize_names: true,
           )
         end
@@ -305,7 +309,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive",
 
         let(:response) do
           JSON.parse(
-            fetch_renewable_heat_incentive("2000-0000-0000-0000-0003").body,
+            fetch_renewable_heat_incentive(assessment_id: "2000-0000-0000-0000-0003").body,
             symbolize_names: true,
           )
         end
@@ -335,7 +339,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive",
 
       let(:response) do
         JSON.parse(
-          fetch_renewable_heat_incentive("0000-0000-0000-0000-0001").body,
+          fetch_renewable_heat_incentive(assessment_id: "0000-0000-0000-0000-0001").body,
           symbolize_names: true,
         )
       end
@@ -384,7 +388,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive",
 
       let(:response) do
         JSON.parse(
-          fetch_renewable_heat_incentive("3000-0000-0000-0000-0000").body,
+          fetch_renewable_heat_incentive(assessment_id: "3000-0000-0000-0000-0000").body,
           symbolize_names: true,
         )
       end
@@ -414,16 +418,16 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive",
 
       let(:response) do
         JSON.parse(
-          fetch_renewable_heat_incentive("0000-0000-0000-0000-0001", [200])
+          fetch_renewable_heat_incentive(assessment_id: "0000-0000-0000-0000-0001", accepted_responses: [200])
             .body,
           symbolize_names: true,
         )
       end
 
       before do
-        add_assessor scheme_id,
-                     "SPEC000000",
-                     AssessorStub.new.fetch_request_body(
+        add_assessor scheme_id: scheme_id,
+                     assessor_id: "SPEC000000",
+                     body: AssessorStub.new.fetch_request_body(
                        domestic_rd_sap: "ACTIVE",
                        domestic_sap: "ACTIVE",
                      )

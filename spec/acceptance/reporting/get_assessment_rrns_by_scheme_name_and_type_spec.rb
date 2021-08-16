@@ -54,7 +54,7 @@ describe "Acceptance::Reports::GetAssessmentRRNsBySchemeNameAndType" do
     before do
       Timecop.freeze(2021, 6, 21, 10)
 
-      add_assessor(scheme_id, "SPEC000000", valid_assessor_request_body)
+      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body)
 
       doc = Nokogiri.XML valid_rdsap_xml
       doc.at("RRN").content = "0000-0000-0000-0000-0000"
@@ -189,9 +189,9 @@ describe "Acceptance::Reports::GetAssessmentRRNsBySchemeNameAndType" do
         schema_name: "CEPC-8.0.0",
       )
 
-      @second_scheme = add_scheme_and_get_id("test scheme two")
+      @second_scheme = add_scheme_and_get_id(name: "test scheme two")
 
-      add_assessor(@second_scheme, "SPEC000010", valid_assessor_request_body)
+      add_assessor(scheme_id: @second_scheme, assessor_id: "SPEC000010", body: valid_assessor_request_body)
 
       doc = Nokogiri.XML valid_rdsap_xml
       doc.at("RRN").content = "1100-0000-0000-0000-0011"

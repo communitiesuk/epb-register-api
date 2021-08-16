@@ -5,9 +5,9 @@ describe "Acceptance::AssessmentStatus", set_with_timecop: true do
   let(:scheme_id) do
     scheme_id = add_scheme_and_get_id
     add_assessor(
-      scheme_id,
-      "SPEC000000",
-      fetch_assessor_stub.fetch_request_body(domestic_rd_sap: "ACTIVE"),
+      scheme_id: scheme_id,
+      assessor_id: "SPEC000000",
+      body: fetch_assessor_stub.fetch_request_body(domestic_rd_sap: "ACTIVE"),
     )
 
     scheme_id
@@ -131,7 +131,7 @@ describe "Acceptance::AssessmentStatus", set_with_timecop: true do
                                  accepted_responses: [401],
                                  authenticate: false
 
-        fetch_assessment("123", [401], false)
+        fetch_assessment(id: "123", accepted_responses: [401], should_authenticate: false)
       end
 
       it "rejects a request with the wrong scopes" do
@@ -148,9 +148,9 @@ describe "Acceptance::AssessmentStatus", set_with_timecop: true do
       it "then gives error 403 and the correct error message" do
         scheme_id = add_scheme_and_get_id
         add_assessor(
-          scheme_id,
-          "SPEC000000",
-          fetch_assessor_stub.fetch_request_body(domestic_rd_sap: "ACTIVE"),
+          scheme_id: scheme_id,
+          assessor_id: "SPEC000000",
+          body: fetch_assessor_stub.fetch_request_body(domestic_rd_sap: "ACTIVE"),
         )
 
         lodge_assessment(

@@ -61,7 +61,7 @@ module RSpecRegisterApiServiceMixin
   end
 end
 
-def authenticate_and(request = nil, scopes = [], supplementary = {})
+def authenticate_and(request: nil, scopes: [], supplementary: {})
   auth = "Bearer #{get_valid_jwt(scopes, supplementary)}"
 
   if request.nil?
@@ -76,8 +76,8 @@ def authenticate_and(request = nil, scopes = [], supplementary = {})
   response
 end
 
-def authenticate_with_data(data, scopes, &block)
-  authenticate_and(nil, scopes, data, &block)
+def authenticate_with_data(data: {}, scopes: [], &block)
+  authenticate_and(scopes: scopes, supplementary: data, &block)
 end
 
 def get_valid_jwt(scopes = [], sup = {})

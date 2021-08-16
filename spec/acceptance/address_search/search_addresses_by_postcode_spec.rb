@@ -62,9 +62,9 @@ describe "Acceptance::AddressSearch::ByPostcode", set_with_timecop: true do
       )
 
       add_assessor(
-        scheme_id,
-        "SPEC000000",
-        AssessorStub.new.fetch_request_body(
+        scheme_id: scheme_id,
+        assessor_id: "SPEC000000",
+        body: AssessorStub.new.fetch_request_body(
           non_domestic_nos3: "ACTIVE",
           non_domestic_nos4: "ACTIVE",
           non_domestic_nos5: "ACTIVE",
@@ -104,10 +104,7 @@ describe "Acceptance::AddressSearch::ByPostcode", set_with_timecop: true do
         JSON.parse(
           assertive_get(
             "/api/search/addresses?postcode=EH353NDMD",
-            [200],
-            true,
-            {},
-            %w[address:search],
+            scopes: %w[address:search],
           ).body,
           symbolize_names: true,
         )
@@ -123,10 +120,8 @@ describe "Acceptance::AddressSearch::ByPostcode", set_with_timecop: true do
         JSON.parse(
           assertive_get(
             "/api/search/addresses?postcode=HA",
-            [422],
-            true,
-            {},
-            %w[address:search],
+            accepted_responses: [422],
+            scopes: %w[address:search],
           ).body,
           symbolize_names: true,
         )
@@ -149,12 +144,8 @@ describe "Acceptance::AddressSearch::ByPostcode", set_with_timecop: true do
       context "when there are entered assessments" do
         let(:response) do
           JSON.parse(
-            assertive_get(
+            assertive_get_in_search_scope(
               "/api/search/addresses?postcode=A0%200AA",
-              [200],
-              true,
-              {},
-              %w[address:search],
             ).body,
             symbolize_names: true,
           )
@@ -205,10 +196,7 @@ describe "Acceptance::AddressSearch::ByPostcode", set_with_timecop: true do
           JSON.parse(
             assertive_get(
               "/api/search/addresses?postcode=A0%200AA",
-              [200],
-              true,
-              {},
-              %w[address:search],
+              scopes: %w[address:search],
             ).body,
             symbolize_names: true,
           )
@@ -257,10 +245,7 @@ describe "Acceptance::AddressSearch::ByPostcode", set_with_timecop: true do
           JSON.parse(
             assertive_get(
               "/api/search/addresses?postcode=A0%200AA",
-              [200],
-              true,
-              {},
-              %w[address:search],
+              scopes: %w[address:search],
             ).body,
             symbolize_names: true,
           )
@@ -310,12 +295,8 @@ describe "Acceptance::AddressSearch::ByPostcode", set_with_timecop: true do
           end
 
           let(:response) do
-            JSON.parse assertive_get(
+            JSON.parse assertive_get_in_search_scope(
               "/api/search/addresses?postcode=A0+0AA&address_type=COMMERCIAL",
-              [200],
-              true,
-              {},
-              %w[address:search],
             ).body,
                        symbolize_names: true
           end
@@ -348,10 +329,7 @@ describe "Acceptance::AddressSearch::ByPostcode", set_with_timecop: true do
         JSON.parse(
           assertive_get(
             "/api/search/addresses?postcode=A00AA",
-            [200],
-            true,
-            {},
-            %w[address:search],
+            scopes: %w[address:search],
           ).body,
           symbolize_names: true,
         )
@@ -378,12 +356,8 @@ describe "Acceptance::AddressSearch::ByPostcode", set_with_timecop: true do
     context "when the input postcode is not in the same case as the recorded postcode" do
       let(:response) do
         JSON.parse(
-          assertive_get(
+          assertive_get_in_search_scope(
             "/api/search/addresses?postcode=a00aa",
-            [200],
-            true,
-            {},
-            %w[address:search],
           ).body,
           symbolize_names: true,
         )

@@ -5,7 +5,7 @@ describe "Acceptance::AssessmentSummary::Supplement::DECRR",
   before(:all) do
     scheme_id = add_scheme_and_get_id
     assessor = AssessorStub.new.fetch_request_body(non_domestic_dec: "ACTIVE")
-    add_assessor(scheme_id, "SPEC000000", assessor)
+    add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: assessor)
 
     regular_assessment = Nokogiri.XML(Samples.xml("CEPC-8.0.0", "dec+rr"))
     regular_assessment
@@ -14,7 +14,7 @@ describe "Acceptance::AssessmentSummary::Supplement::DECRR",
     lodge_dec_rr(regular_assessment.to_xml, scheme_id)
     @regular_summary =
       JSON.parse(
-        fetch_assessment_summary("0000-0000-0000-0000-0001").body,
+        fetch_assessment_summary(id: "0000-0000-0000-0000-0001").body,
         symbolize_names: true,
       )
 
@@ -26,7 +26,7 @@ describe "Acceptance::AssessmentSummary::Supplement::DECRR",
     lodge_dec_rr(second_assessment.to_xml, scheme_id)
     @second_summary =
       JSON.parse(
-        fetch_assessment_summary("0000-0000-0000-0000-0002").body,
+        fetch_assessment_summary(id: "0000-0000-0000-0000-0002").body,
         symbolize_names: true,
       )
 
@@ -36,7 +36,7 @@ describe "Acceptance::AssessmentSummary::Supplement::DECRR",
     lodge_dec_rr(third_assessment.to_xml, scheme_id)
     @third_summary =
       JSON.parse(
-        fetch_assessment_summary("0000-0000-0000-0000-0003").body,
+        fetch_assessment_summary(id: "0000-0000-0000-0000-0003").body,
         symbolize_names: true,
       )
   end

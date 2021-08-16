@@ -5,7 +5,7 @@ describe "Acceptance::AssessmentSummary::Supplement::DEC",
   before(:all) do
     scheme_id = add_scheme_and_get_id
     assessor = AssessorStub.new.fetch_request_body(non_domestic_dec: "ACTIVE")
-    add_assessor(scheme_id, "SPEC000000", assessor)
+    add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: assessor)
 
     lodge_dec(Samples.xml("CEPC-8.0.0", "dec"), scheme_id)
 
@@ -23,21 +23,21 @@ describe "Acceptance::AssessmentSummary::Supplement::DEC",
 
   let(:regular_summary) do
     JSON.parse(
-      fetch_assessment_summary("0000-0000-0000-0000-0000").body,
+      fetch_assessment_summary(id: "0000-0000-0000-0000-0000").body,
       symbolize_names: true,
     )
   end
 
   let(:second_summary) do
     JSON.parse(
-      fetch_assessment_summary("0000-0000-0000-0000-0001").body,
+      fetch_assessment_summary(id: "0000-0000-0000-0000-0001").body,
       symbolize_names: true,
     )
   end
 
   let(:third_summary) do
     JSON.parse(
-      fetch_assessment_summary("0000-0000-0000-0000-0002").body,
+      fetch_assessment_summary(id: "0000-0000-0000-0000-0002").body,
       symbolize_names: true,
     )
   end

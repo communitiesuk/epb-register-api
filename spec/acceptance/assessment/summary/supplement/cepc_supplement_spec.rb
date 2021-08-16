@@ -5,12 +5,12 @@ describe "Acceptance::AssessmentSummary::Supplement::CEPC",
   before(:all) do
     scheme_id = add_scheme_and_get_id
     assessor = AssessorStub.new.fetch_request_body(non_domestic_nos3: "ACTIVE")
-    add_assessor(scheme_id, "SPEC000000", assessor)
+    add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: assessor)
 
     lodge_cepc(Samples.xml("CEPC-8.0.0", "cepc"), scheme_id)
     @regular_summary =
       JSON.parse(
-        fetch_assessment_summary("0000-0000-0000-0000-0000").body,
+        fetch_assessment_summary(id: "0000-0000-0000-0000-0000").body,
         symbolize_names: true,
       )
 
@@ -22,7 +22,7 @@ describe "Acceptance::AssessmentSummary::Supplement::CEPC",
     lodge_cepc(second_assessment.to_xml, scheme_id)
     @second_summary =
       JSON.parse(
-        fetch_assessment_summary("0000-0000-0000-0000-0002").body,
+        fetch_assessment_summary(id: "0000-0000-0000-0000-0002").body,
         symbolize_names: true,
       )
 
@@ -32,7 +32,7 @@ describe "Acceptance::AssessmentSummary::Supplement::CEPC",
     lodge_cepc(third_assessment.to_xml, scheme_id)
     @third_summary =
       JSON.parse(
-        fetch_assessment_summary("0000-0000-0000-0000-0003").body,
+        fetch_assessment_summary(id: "0000-0000-0000-0000-0003").body,
         symbolize_names: true,
       )
   end

@@ -6,9 +6,9 @@ describe "Acceptance::Assessment::SearchForAssessments",
 
   def setup_scheme_and_lodge(non_domestic = false)
     add_assessor(
-      scheme_id,
-      "SPEC000000",
-      AssessorStub.new.fetch_request_body(
+      scheme_id: scheme_id,
+      assessor_id: "SPEC000000",
+      body: AssessorStub.new.fetch_request_body(
         domestic_rd_sap: "ACTIVE",
         non_domestic_nos3: "ACTIVE",
       ),
@@ -37,16 +37,14 @@ describe "Acceptance::Assessment::SearchForAssessments",
 
   context "Security" do
     it "rejects a request without authentication" do
-      domestic_assessments_search_by_assessment_id("123", [401], false)
+      domestic_assessments_search_by_assessment_id("123", accepted_responses: [401], should_authenticate: false)
     end
 
     it "rejects a request without the right scope" do
       domestic_assessments_search_by_assessment_id(
         "123",
-        [403],
-        true,
-        {},
-        %w[wrong:scope],
+        accepted_responses: [403],
+        scopes: %w[wrong:scope],
       )
     end
   end
@@ -63,7 +61,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
 
     it "can handle a postcode with excessive whitespace" do
       setup_scheme_and_lodge
-      response = assessments_search_by_postcode("  A0 0AA    ", [200])
+      response = assessments_search_by_postcode("  A0 0AA    ")
 
       response_json = JSON.parse(response.body)
 
@@ -109,7 +107,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
 
       expect(before_assessments[:data][:assessments][0]).not_to eq(nil)
 
-      opt_out_assessment("0000-0000-0000-0000-0000")
+      opt_out_assessment(assessment_id: "0000-0000-0000-0000-0000")
 
       after_assessments =
         JSON.parse(
@@ -186,11 +184,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
       response =
         assessments_search_by_postcode(
           "A0 0AA",
-          [200],
-          true,
-          nil,
-          %w[assessment:search],
-          %w[CEPC],
+          assessment_types: %w[CEPC],
         )
       response_json = JSON.parse(response.body, symbolize_names: true)
 
@@ -209,7 +203,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
     end
 
     it "rejects a missing postcode" do
-      response_body = assessments_search_by_postcode("", [400]).body
+      response_body = assessments_search_by_postcode("", accepted_responses: [400]).body
 
       expect(JSON.parse(response_body, symbolize_names: true)).to eq(
         {
@@ -221,7 +215,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
     end
 
     it "rejects an invalid postcode" do
-      response_body = assessments_search_by_postcode("FPV04170EN", [400]).body
+      response_body = assessments_search_by_postcode("FPV04170EN", accepted_responses: [400]).body
 
       expect(JSON.parse(response_body, symbolize_names: true)).to eq(
         {
@@ -237,20 +231,13 @@ describe "Acceptance::Assessment::SearchForAssessments",
 
     it "allows missing assessment types" do
       assessments_search_by_postcode "A0 0AA",
-                                     [200],
-                                     true,
-                                     nil,
-                                     %w[assessment:search],
-                                     []
+                                     assessment_types: []
     end
 
     it "rejects invalid assessment types" do
       assessments_search_by_postcode "A0 0AA",
-                                     [400],
-                                     true,
-                                     nil,
-                                     %w[assessment:search],
-                                     %w[rdap]
+                                     accepted_responses: [400],
+                                     assessment_types: %w[rdap]
     end
 
     it "will sort the results" do
@@ -271,11 +258,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
       response =
         assessments_search_by_postcode(
           "A0 0AA",
-          [200],
-          true,
-          nil,
-          %w[assessment:search],
-          %w[RdSAP],
+          assessment_types: %w[RdSAP],
         )
       response_json = JSON.parse(response.body, symbolize_names: true)
 
@@ -293,7 +276,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
       response_body =
         domestic_assessments_search_by_assessment_id(
           "123-123-123-123-123",
-          [400],
+          accepted_responses: [400],
         ).body
 
       expect(JSON.parse(response_body, symbolize_names: true)).to eq(
@@ -364,7 +347,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
 
     it "rejects a missing town" do
       response_body =
-        assessments_search_by_street_name_and_town("Palmtree Road", "", [400])
+        assessments_search_by_street_name_and_town(street_name: "Palmtree Road", town: "", accepted_responses: [400])
           .body
       expect(JSON.parse(response_body, symbolize_names: true)).to eq(
         {
@@ -377,7 +360,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
 
     it "rejects a missing street name" do
       response_body =
-        assessments_search_by_street_name_and_town("", "Brighton", [400]).body
+        assessments_search_by_street_name_and_town(street_name: "", town: "Brighton", accepted_responses: [400]).body
       expect(JSON.parse(response_body, symbolize_names: true)).to eq(
         {
           errors: [
@@ -388,16 +371,15 @@ describe "Acceptance::Assessment::SearchForAssessments",
     end
 
     it "allows missing assessment types" do
-      assessments_search_by_street_name_and_town "Palmtree Road",
-                                                 "Brighton",
-                                                 [200],
-                                                 []
+      assessments_search_by_street_name_and_town street_name: "Palmtree Road",
+                                                 town: "Brighton",
+                                                 assessment_types: []
     end
 
     it "returns matching assessments" do
       setup_scheme_and_lodge
       response =
-        assessments_search_by_street_name_and_town("1 Some Street", "Whitbury")
+        assessments_search_by_street_name_and_town(street_name: "1 Some Street", town: "Whitbury")
 
       response_json = JSON.parse(response.body)
 
@@ -407,7 +389,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
     it "returns matching assessments with missing property number" do
       setup_scheme_and_lodge
       response =
-        assessments_search_by_street_name_and_town("Some Street", "Whitbury")
+        assessments_search_by_street_name_and_town(street_name: "Some Street", town: "Whitbury")
 
       response_json = JSON.parse(response.body)
 
@@ -417,7 +399,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
     it "returns matching assessments with missing letters in street" do
       setup_scheme_and_lodge
       response =
-        assessments_search_by_street_name_and_town("ome Street", "Whitbury")
+        assessments_search_by_street_name_and_town(street_name: "ome Street", town: "Whitbury")
 
       response_json = JSON.parse(response.body)
 
@@ -426,10 +408,10 @@ describe "Acceptance::Assessment::SearchForAssessments",
 
     it "does not return opted out assessments" do
       setup_scheme_and_lodge
-      opt_out_assessment("0000-0000-0000-0000-0000")
+      opt_out_assessment(assessment_id: "0000-0000-0000-0000-0000")
 
       response =
-        assessments_search_by_street_name_and_town("1 Some Street", "Whitbury")
+        assessments_search_by_street_name_and_town(street_name: "1 Some Street", town: "Whitbury")
       response_json = JSON.parse(response.body)
 
       expect(response_json["data"]["assessments"].length).to eq(0)
@@ -439,10 +421,9 @@ describe "Acceptance::Assessment::SearchForAssessments",
       setup_scheme_and_lodge(true)
       response =
         assessments_search_by_street_name_and_town(
-          "2 Lonely Street",
-          "Whitbury",
-          [200],
-          %w[CEPC],
+          street_name: "2 Lonely Street",
+          town: "Whitbury",
+          assessment_types: %w[CEPC],
         )
       response_json = JSON.parse(response.body, symbolize_names: true)
 
@@ -480,7 +461,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
       )
 
       response =
-        assessments_search_by_street_name_and_town("Some Street", "Whitbury")
+        assessments_search_by_street_name_and_town(street_name: "Some Street", town: "Whitbury")
 
       response_json = JSON.parse(response.body, symbolize_names: true)
 

@@ -16,7 +16,7 @@ describe "Acceptance::AssessmentSummary::Supplement::RdSAP",
         domestic_rd_sap: "ACTIVE",
         domestic_sap: "ACTIVE",
       )
-    add_assessor(scheme_id, "SPEC000000", assessor)
+    add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: assessor)
 
     # DATA SETUP:
     # 0000 = RdSAP with address ID UPRN-000000000000
@@ -54,17 +54,17 @@ describe "Acceptance::AssessmentSummary::Supplement::RdSAP",
 
     @summary0000 =
       JSON.parse(
-        fetch_assessment_summary("0000-0000-0000-0000-0000").body,
+        fetch_assessment_summary(id: "0000-0000-0000-0000-0000").body,
         symbolize_names: true,
       )
     @summary0001 =
       JSON.parse(
-        fetch_assessment_summary("0000-0000-0000-0000-0001").body,
+        fetch_assessment_summary(id: "0000-0000-0000-0000-0001").body,
         symbolize_names: true,
       )
     @summary0002 =
       JSON.parse(
-        fetch_assessment_summary("0000-0000-0000-0000-0002").body,
+        fetch_assessment_summary(id: "0000-0000-0000-0000-0002").body,
         symbolize_names: true,
       )
   end
@@ -102,11 +102,11 @@ describe "Acceptance::AssessmentSummary::Supplement::RdSAP",
     end
 
     it "does not return opted out related assessments" do
-      opt_out_assessment("0000-0000-0000-0000-0000")
+      opt_out_assessment(assessment_id: "0000-0000-0000-0000-0000")
 
       @summary0001 =
         JSON.parse(
-          fetch_assessment_summary("0000-0000-0000-0000-0001").body,
+          fetch_assessment_summary(id: "0000-0000-0000-0000-0001").body,
           symbolize_names: true,
         )
 

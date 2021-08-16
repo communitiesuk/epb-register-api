@@ -59,9 +59,9 @@ describe "Acceptance::LodgeExamples", set_with_timecop: true do
   describe "when trying to lodge an example XML" do
     before do
       add_assessor(
-        scheme_id,
-        "JASE000000",
-        AssessorStub.new.fetch_request_body(
+        scheme_id: scheme_id,
+        assessor_id: "JASE000000",
+        body: AssessorStub.new.fetch_request_body(
           non_domestic_nos3: "ACTIVE",
           non_domestic_nos4: "ACTIVE",
           non_domestic_nos5: "ACTIVE",

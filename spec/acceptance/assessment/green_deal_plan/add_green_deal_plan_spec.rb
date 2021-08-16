@@ -116,9 +116,9 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan",
       end
 
       before do
-        add_assessor scheme_id,
-                     "SPEC000000",
-                     AssessorStub.new.fetch_request_body(
+        add_assessor scheme_id: scheme_id,
+                     assessor_id: "SPEC000000",
+                     body: AssessorStub.new.fetch_request_body(
                        domestic_rd_sap: "ACTIVE",
                      )
 
@@ -144,7 +144,7 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan",
 
         let(:response) do
           JSON.parse(
-            fetch_assessment_summary("0000-0000-0000-0000-0000").body,
+            fetch_assessment_summary(id: "0000-0000-0000-0000-0000").body,
             symbolize_names: true,
           )
         end
@@ -279,9 +279,9 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan",
         let(:assessment_id) { sap_assessment.at "RRN" }
 
         before do
-          add_assessor scheme_id,
-                       "SPEC000000",
-                       AssessorStub.new.fetch_request_body(
+          add_assessor scheme_id: scheme_id,
+                       assessor_id: "SPEC000000",
+                       body: AssessorStub.new.fetch_request_body(
                          domestic_sap: "ACTIVE",
                        )
 
@@ -318,9 +318,9 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan",
         end
 
         before do
-          add_assessor scheme_id,
-                       "SPEC000000",
-                       AssessorStub.new.fetch_request_body(
+          add_assessor scheme_id: scheme_id,
+                       assessor_id: "SPEC000000",
+                       body: AssessorStub.new.fetch_request_body(
                          domestic_rd_sap: "ACTIVE",
                        )
 
@@ -454,9 +454,9 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan",
       let(:assessment_date) { doc.at("Registration-Date") }
 
       before do
-        add_assessor scheme_id,
-                     "SPEC000000",
-                     AssessorStub.new.fetch_request_body(
+        add_assessor scheme_id: scheme_id,
+                     assessor_id: "SPEC000000",
+                     body: AssessorStub.new.fetch_request_body(
                        domestic_rd_sap: "ACTIVE",
                      )
 

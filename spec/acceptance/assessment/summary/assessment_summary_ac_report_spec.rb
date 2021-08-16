@@ -6,9 +6,9 @@ describe "Acceptance::AssessmentSummary::AC-REPORT", set_with_timecop: true do
 
     before do
       add_assessor(
-        scheme_id,
-        "SPEC000000",
-        AssessorStub.new.fetch_request_body(
+        scheme_id: scheme_id,
+        assessor_id: "SPEC000000",
+        body: AssessorStub.new.fetch_request_body(
           non_domestic_sp3: "ACTIVE",
           non_domestic_cc4: "ACTIVE",
         ),
@@ -30,7 +30,7 @@ describe "Acceptance::AssessmentSummary::AC-REPORT", set_with_timecop: true do
 
         let(:summary) do
           JSON.parse(
-            fetch_assessment_summary("0000-0000-0000-0000-0000").body,
+            fetch_assessment_summary(id: "0000-0000-0000-0000-0000").body,
             symbolize_names: true,
           )
         end
