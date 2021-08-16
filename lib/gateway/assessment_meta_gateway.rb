@@ -27,6 +27,8 @@ module Gateway
         ),
       ]
 
+
+
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings).first
     end
   end

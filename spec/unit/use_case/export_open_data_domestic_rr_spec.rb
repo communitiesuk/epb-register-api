@@ -99,6 +99,8 @@ describe UseCase::ExportOpenDataDomesticrr do
           schema_name: "SAP-Schema-NI-18.0.0",
           override: true,
         )
+
+
       end
 
       it "returns the correct number of assessments excluding the NI lodgements and any before the given date" do
