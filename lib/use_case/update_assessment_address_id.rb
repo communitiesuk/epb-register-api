@@ -44,7 +44,7 @@ module UseCase
       assessment =
         @assessments_search_gateway.search_by_assessment_id(
           assessment_id,
-          false,
+          restrictive: false,
         ).first
 
       raise AssessmentNotFound unless assessment

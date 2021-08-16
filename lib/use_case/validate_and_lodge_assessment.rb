@@ -28,6 +28,7 @@ module UseCase
 
       def initialize(errors)
         @errors = errors
+        super
       end
     end
 

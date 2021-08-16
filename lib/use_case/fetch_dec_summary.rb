@@ -18,7 +18,7 @@ module UseCase
       assessment_id = Helper::RrnHelper.normalise_rrn_format(assessment_id)
 
       result =
-        @assessment_gateway.search_by_assessment_id(assessment_id, false).first
+        @assessment_gateway.search_by_assessment_id(assessment_id, restrictive: false).first
 
       raise AssessmentNotFound unless result
 

@@ -2,7 +2,7 @@ require "unleash"
 
 module Helper
   class Toggles
-    def self.enabled?(toggle_name, default = false)
+    def self.enabled?(toggle_name, default: false)
       unless @unleash
         Unleash.configure do |config|
           config.url = ENV["EPB_UNLEASH_URI"]

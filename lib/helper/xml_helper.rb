@@ -7,7 +7,7 @@ module Helper
   end
 
   class XmlHelper
-    def convert_to_hash(xml, schema)
+    def convert_to_hash(xml, schema:)
       xsddoc = Nokogiri.XML(File.read(schema), schema)
       xsd = Nokogiri::XML::Schema.from_document(xsddoc)
       file = Nokogiri.XML(xml)

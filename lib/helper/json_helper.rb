@@ -44,7 +44,7 @@ module Helper
       )
     end
 
-    def convert_to_ruby_hash(json_string, schema = false)
+    def convert_to_ruby_hash(json_string, schema: false)
       json = JSON.parse(json_string)
 
       JSON::Validator.validate!(schema, json) if schema

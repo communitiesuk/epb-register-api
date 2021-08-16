@@ -22,7 +22,7 @@ module UseCase
         assessment =
           Gateway::AssessmentsSearchGateway
             .new
-            .search_by_assessment_id(assessment_id, false)
+            .search_by_assessment_id(assessment_id, restrictive: false)
             .first
 
         if assessment

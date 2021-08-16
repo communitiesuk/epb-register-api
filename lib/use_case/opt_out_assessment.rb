@@ -16,7 +16,7 @@ module UseCase
       main_assessment =
         @assessments_search_gateway.search_by_assessment_id(
           assessment_id,
-          false,
+          restrictive: false,
         ).first
 
       raise AssessmentNotFound unless main_assessment
@@ -29,7 +29,7 @@ module UseCase
         linked_assessment =
           @assessments_search_gateway.search_by_assessment_id(
             linked_assessment_id,
-            false,
+            restrictive: false,
           ).first
         assessments << linked_assessment
       end

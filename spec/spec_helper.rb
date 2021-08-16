@@ -98,7 +98,7 @@ def add_postcodes(
   latitude = 0,
   longitude = 0,
   region = nil,
-  clean = true
+  clean: true
 )
   db = ActiveRecord::Base
 
@@ -118,7 +118,7 @@ def add_outcodes(
   latitude = 0,
   longitude = 0,
   region = nil,
-  clean = true
+  clean: true
 )
   db = ActiveRecord::Base
 

@@ -77,7 +77,7 @@ module Controller
           request_headers: headers,
           request_body_truncated: sanitised_xml.length > logit_char_limit,
         },
-        true,
+        raw: true,
       )
 
       sup = env[:auth_token].supplemental("scheme_ids")
@@ -110,7 +110,7 @@ module Controller
             assessment_id: result.get(:assessment_id),
             schema: xml_schema_type,
           },
-          true,
+          raw: true,
         )
       end
 
@@ -163,7 +163,7 @@ module Controller
           error_message: e.to_s,
           schema: xml_schema_type.nil? ? "Schema not defined" : xml_schema_type,
         },
-        true,
+        raw: true,
       )
 
       case e

@@ -28,7 +28,7 @@ module Gateway
       DEC-RR
       AC-CERT
       AC-REPORT
-    ]
+    ].freeze
 
     def search_by_postcode(postcode, assessment_types = [])
       sql = ASSESSMENT_SEARCH_INDEX_SELECT + <<-SQL
@@ -67,7 +67,7 @@ module Gateway
       street_name,
       town,
       assessment_type,
-      restrictive = true
+      restrictive: true
     )
       sql = "#{ASSESSMENT_SEARCH_INDEX_SELECT} WHERE "
 
@@ -126,8 +126,8 @@ module Gateway
 
     def search_by_assessment_id(
       assessment_id,
-      restrictive = true,
-      assessment_type = []
+      assessment_type = [],
+      restrictive: true
     )
       sql = ASSESSMENT_SEARCH_INDEX_SELECT + <<-SQL
         WHERE a.assessment_id = #{

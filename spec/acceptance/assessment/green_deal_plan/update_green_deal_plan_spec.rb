@@ -98,9 +98,7 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan",
   def green_deal_plan_without(key, root = nil)
     if root
       if updated_green_deal_plan_request_body[root].is_a? Array
-        updated_green_deal_plan_request_body[root].each do |hashes|
-          return hashes.tap { |hash| hash.delete key }
-        end
+        return updated_green_deal_plan_request_body[root].first.tap { |hash| hash.delete key }
       end
 
       updated_green_deal_plan_request_body[root].tap do |field|

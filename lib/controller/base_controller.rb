@@ -72,15 +72,15 @@ module Controller
     end
 
     def xml_request_body(schema)
-      @xml_helper.convert_to_hash(request.body.read.to_s, schema)
+      @xml_helper.convert_to_hash(request.body.read.to_s, schema: schema)
     end
 
-    def params_body(schema = false)
-      @json_helper.convert_to_ruby_hash(params.to_json, schema)
+    def params_body(schema)
+      @json_helper.convert_to_ruby_hash(params.to_json, schema: schema)
     end
 
-    def request_body(schema = false)
-      @json_helper.convert_to_ruby_hash(request.body.read.to_s, schema)
+    def request_body(schema)
+      @json_helper.convert_to_ruby_hash(request.body.read.to_s, schema: schema)
     end
 
     def json_response(object, code = 200)

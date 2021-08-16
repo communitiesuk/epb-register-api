@@ -217,7 +217,7 @@ module UseCase
     end
 
     def find_assessment_by_id(assessment_id)
-      @assessments_search_gateway.search_by_assessment_id(assessment_id, false)
+      @assessments_search_gateway.search_by_assessment_id(assessment_id, restrictive: false)
         .first
     end
 

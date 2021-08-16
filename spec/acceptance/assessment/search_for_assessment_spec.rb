@@ -4,7 +4,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
 
   let(:scheme_id) { add_scheme_and_get_id }
 
-  def setup_scheme_and_lodge(non_domestic = false)
+  def setup_scheme_and_lodge(non_domestic: false)
     add_assessor(
       scheme_id: scheme_id,
       assessor_id: "SPEC000000",
@@ -180,7 +180,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
     end
 
     it "can filter for commercial results" do
-      setup_scheme_and_lodge(true)
+      setup_scheme_and_lodge(non_domestic: true)
 
       response =
         assessments_search_by_postcode(
@@ -195,7 +195,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
     end
 
     it "can filter for domestic results" do
-      setup_scheme_and_lodge(true)
+      setup_scheme_and_lodge(non_domestic: true)
 
       response = assessments_search_by_postcode("A0 0AA")
       response_json = JSON.parse(response.body)
@@ -421,7 +421,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
     end
 
     it "can filter for commercial assessments" do
-      setup_scheme_and_lodge(true)
+      setup_scheme_and_lodge(non_domestic: true)
       response =
         assessments_search_by_street_name_and_town(
           street_name: "2 Lonely Street",

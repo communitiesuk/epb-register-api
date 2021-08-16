@@ -94,15 +94,16 @@ module Gateway
       end
 
       unless uprns.empty?
-        sql =
+        sql = sprintf(
           'SELECT
               assessment_id, type_of_assessment, cancelled_at, not_for_issue_at, date_of_expiry, address_id
             FROM assessments
             WHERE
-              address_id IN(' +
+              address_id IN(%s)',
           uprns.keys.map { |uprn|
             ActiveRecord::Base.connection.quote(uprn)
-          }.join(", ") + ")"
+          }.join(", "),
+        )
 
         existing_assessments = ActiveRecord::Base.connection.exec_query(sql)
 

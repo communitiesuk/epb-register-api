@@ -20,7 +20,7 @@ module UseCase
     def execute(assessment_id)
       assessment_id = Helper::RrnHelper.normalise_rrn_format assessment_id
       assessment =
-        @assessments_gateway.search_by_assessment_id(assessment_id, false).first
+        @assessments_gateway.search_by_assessment_id(assessment_id, restrictive: false).first
 
       raise NotFoundException unless assessment
 

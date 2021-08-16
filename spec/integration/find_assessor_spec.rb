@@ -13,7 +13,7 @@ describe "Integration::FilterAndOrderAssessorsByPostcode" do
     end
   end
 
-  def add_postcodes(postcode, latitude = 0, longitude = 0, clean = true)
+  def add_postcodes(postcode, latitude = 0, longitude = 0, clean: true)
     db = ActiveRecord::Base
 
     truncate(postcode) if clean

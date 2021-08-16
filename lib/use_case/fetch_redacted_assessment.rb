@@ -39,7 +39,7 @@ module UseCase
     def execute(assessment_id)
       assessment_id = Helper::RrnHelper.normalise_rrn_format(assessment_id)
       assessments =
-        @assessments_gateway.search_by_assessment_id assessment_id, false
+        @assessments_gateway.search_by_assessment_id assessment_id, restrictive: false
 
       assessment = assessments.first
 

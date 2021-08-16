@@ -43,7 +43,7 @@ describe "Gateway::AssessmentsGateway" do
         assessment1 =
           assessments_search_gateway.search_by_assessment_id(
             assessments[0],
-            false,
+            restrictive: false,
           ).first
         expect(assessment1.get("cancelled_at")).to eq(
           "Fri, 26 Mar 2021".to_date,
@@ -55,7 +55,7 @@ describe "Gateway::AssessmentsGateway" do
         assessment2 =
           assessments_search_gateway.search_by_assessment_id(
             assessments[1],
-            false,
+            restrictive: false,
           ).first
         expect(assessment2.get("cancelled_at")).to eq(
           "Fri, 26 Mar 2021".to_date,

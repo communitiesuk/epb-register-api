@@ -19,17 +19,14 @@ describe Helper::JsonHelper do
     end
 
     it "changes nested level keys to snake case" do
-      result =
-        helper.convert_to_ruby_hash(
-          { "fooBar" => { "barBaz" => "boo" } }.to_json,
-        )
+      result = helper.convert_to_ruby_hash( { "fooBar" => { "barBaz" => "boo" } }.to_json)
       expect(result.keys).to include(:foo_bar)
       expect(result[:foo_bar].keys).to include(:bar_baz)
     end
 
     it "throws an error when validation doesnt match type" do
       schema = { type: "object", required: "firstName" }
-      expect { helper.convert_to_ruby_hash("4", schema) }.to raise_exception(
+      expect { helper.convert_to_ruby_hash("4", schema: schema) }.to raise_exception(
         JSON::Schema::ValidationError,
       )
     end

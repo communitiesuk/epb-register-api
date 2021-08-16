@@ -22,7 +22,6 @@ describe Gateway::ExportNiGateway do
         add_super_assessor(scheme_id: scheme_id)
 
         domestic_ni_sap_xml = Nokogiri.XML Samples.xml("SAP-Schema-NI-18.0.0")
-        domestic_ni_sap_assessment_id = domestic_ni_sap_xml.at("RRN")
 
         domestic_ni_rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-NI-20.0.0")
         domestic_ni_rdsap_assessment_id = domestic_ni_rdsap_xml.at("RRN")

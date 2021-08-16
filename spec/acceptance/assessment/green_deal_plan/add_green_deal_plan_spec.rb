@@ -14,9 +14,7 @@ describe "Acceptance::Assessment::GreenDealPlan:AddGreenDealPlan",
   def green_deal_plan_without(key, root = nil)
     if root
       if valid_green_deal_plan_request_body[root].is_a? Array
-        valid_green_deal_plan_request_body[root].each do |hashes|
-          return hashes.tap { |hash| hash.delete key }
-        end
+        return valid_green_deal_plan_request_body[root].first.tap { |hash| hash.delete key }
       end
 
       valid_green_deal_plan_request_body[root].tap { |field| field.delete key }

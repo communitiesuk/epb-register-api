@@ -6,14 +6,14 @@ describe UseCase::UpdateAssessmentStatus do
   let(:assessment) do
     assessments_search_gateway.search_by_assessment_id(
       "0000-0000-0000-0000-0000",
-      false,
+      restrictive: false,
     ).first
   end
 
   let(:linked_assessment) do
     assessments_search_gateway.search_by_assessment_id(
       "0000-0000-0000-0000-0001",
-      false,
+      restrictive: false,
     ).first
   end
 
