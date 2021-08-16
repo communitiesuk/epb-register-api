@@ -10,6 +10,7 @@ unless defined? Zeitwerk
 end
 
 Dir.glob("lib/tasks/*.rake").each { |r| load r }
+Dir.glob("lib/tasks/*/*.rake").each { |r| load r }
 
 namespace :tasks do
   desc "Run all tasks in lib/tasks"
