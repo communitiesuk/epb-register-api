@@ -14,7 +14,7 @@ Dir.glob("lib/tasks/*/*.rake").each { |r| load r }
 
 namespace :tasks do
   desc "Run developer data bootstrap tasks in lib/tasks"
-  task bootstrap_dev_data: %i[import_postcode import_postcode_outcode generate_schemes generate_assessor]
+  task bootstrap_dev_data: %i[import_postcode import_postcode_outcode generate_schemes dev_data:generate_assessors]
 end
 
 begin
