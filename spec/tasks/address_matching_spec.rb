@@ -41,7 +41,7 @@ describe "AddressMatching" do
 
     context "With two addresses using an LPRN belong to the same property" do
       it "Then both address IDs are updated" do
-        get_task("import_address_matching").invoke
+        get_task("oneoff:address_matching:import_address_matching").invoke
 
         assessment1 =
           assessment_search_gateway.search_by_assessment_id(
@@ -66,7 +66,7 @@ describe "AddressMatching" do
       end
 
       it "Then the related assessment is not updated" do
-        get_task("import_address_matching").invoke
+        get_task("oneoff:address_matching:import_address_matching").invoke
 
         assessment1 =
           assessment_search_gateway.search_by_assessment_id(
@@ -87,7 +87,7 @@ describe "AddressMatching" do
 
     context "With two assessments having no address discrepancy" do
       it "Then both assessments addresses should be matched" do
-        expect { get_task("update_address_lines").invoke }.to output(
+        expect { get_task("oneoff:address_matching:update_address_lines").invoke }.to output(
           /0 assessments updated and 2 assessments matched/,
         ).to_stdout
       end
@@ -108,13 +108,13 @@ describe "AddressMatching" do
       end
 
       it "Then both assessments addresses should be updated" do
-        expect { get_task("update_address_lines").invoke }.to output(
+        expect { get_task("oneoff:address_matching:update_address_lines").invoke }.to output(
           /2 assessments updated and 0 assessments matched/,
         ).to_stdout
       end
 
       it "Then the address in the assessments table should match the XML" do
-        get_task("update_address_lines").invoke
+        get_task("oneoff:address_matching:update_address_lines").invoke
 
         assessment =
           assessment_search_gateway.search_by_assessment_id(

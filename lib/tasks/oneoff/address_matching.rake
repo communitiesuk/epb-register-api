@@ -2,7 +2,6 @@ require "json"
 require "csv"
 require "aws-sdk-s3"
 require "nokogiri"
-require_relative "../task_helpers.rb"
 
 namespace :oneoff do
   namespace :address_matching do

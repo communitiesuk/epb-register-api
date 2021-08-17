@@ -1,5 +1,3 @@
-require_relative "../task_helpers.rb"
-
 namespace :dev_data do
 
   desc "Create 25 green deal assessments as test data"

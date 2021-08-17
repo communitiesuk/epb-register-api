@@ -6,12 +6,11 @@ unless defined? Zeitwerk
   require "zeitwerk"
   loader = Zeitwerk::Loader.new
   loader.push_dir("#{__dir__}/lib/")
-  loader.ignore("#{__dir__}/lib/tasks/*")
+  loader.ignore("#{__dir__}/lib/tasks/**/")
   loader.setup
 end
 
-Dir.glob("lib/tasks/*.rake").each { |r| load r }
-Dir.glob("lib/tasks/*/*.rake").each { |r| load r }
+Dir.glob("lib/tasks/**/*.rake").each { |r| load r }
 
 namespace :tasks do
   desc "Run developer data bootstrap tasks in lib/tasks"

@@ -3,7 +3,7 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateFuelCostData" do
     describe "running the fuel price data update task" do
       before do
         @fuel_price_mock = GreenDealFuelDataMock.new
-        Rake::Task["green_deal_update_fuel_data"].invoke
+        Rake::Task["maintenance:green_deal_update_fuel_data"].invoke
       end
 
       after { @fuel_price_mock.disable }

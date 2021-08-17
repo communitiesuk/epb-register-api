@@ -17,7 +17,7 @@ describe "LinkedAssessments" do
     before { allow($stdout).to receive(:puts) }
 
     it "does not find any linked assessment to change" do
-      expect { get_task("linked_assessments_address_id").invoke }.to output(
+      expect { get_task("oneoff:linked_assessments_address_id").invoke }.to output(
         /skipped:1 changed:0/,
       ).to_stdout
     end
@@ -35,13 +35,13 @@ describe "LinkedAssessments" do
     end
 
     it "does find a linked assessment to change" do
-      expect { get_task("linked_assessments_address_id").invoke }.to output(
+      expect { get_task("oneoff:linked_assessments_address_id").invoke }.to output(
         /skipped:0 changed:1/,
       ).to_stdout
     end
 
     it "preserves the certificate address ID" do
-      get_task("linked_assessments_address_id").invoke
+      get_task("oneoff:linked_assessments_address_id").invoke
 
       assessment =
         JSON.parse(
@@ -54,7 +54,7 @@ describe "LinkedAssessments" do
     end
 
     it "changes the recommendation report address ID" do
-      get_task("linked_assessments_address_id").invoke
+      get_task("oneoff:linked_assessments_address_id").invoke
 
       rr_assessment =
         JSON.parse(
@@ -79,13 +79,13 @@ describe "LinkedAssessments" do
     end
 
     it "does not find any linked assessment to change" do
-      expect { get_task("linked_assessments_address_id").invoke }.to output(
+      expect { get_task("oneoff:linked_assessments_address_id").invoke }.to output(
         /skipped:1 changed:0/,
       ).to_stdout
     end
 
     it "preserves the modified recommendation report address ID" do
-      get_task("linked_assessments_address_id").invoke
+      get_task("oneoff:linked_assessments_address_id").invoke
 
       assessment =
         JSON.parse(

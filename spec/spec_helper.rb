@@ -261,7 +261,7 @@ RSpec.configure do |config|
     Rake::Task["db:seed"].invoke
 
     fuel_price_mock = GreenDealFuelDataMock.new
-    Rake::Task["green_deal_update_fuel_data"].invoke
+    Rake::Task["maintenance:green_deal_update_fuel_data"].invoke
     fuel_price_mock.disable
   end
 

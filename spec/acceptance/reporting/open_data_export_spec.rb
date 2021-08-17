@@ -167,7 +167,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           it "transfers the file to the S3 bucket with the correct filename, body and headers " do
             assessment_type = "SAP-RDSAP"
             date_from = test_start_date
-            get_task("open_data_export").invoke("for_odc", assessment_type, date_from)
+            get_task("open_data:export_assessments").invoke("for_odc", assessment_type, date_from)
 
             expect(WebMock).to have_requested(
               :put,
@@ -188,7 +188,7 @@ describe "Acceptance::Reports::OpenDataExport" do
                 "test/open_data_export_sap-rdsap_#{DateTime.now.strftime('%F')}_1.csv",
               )
 
-              get_task("open_data_export").invoke("not_for_odc", assessment_type, date_from)
+              get_task("open_data:export_assessments").invoke("not_for_odc", assessment_type, date_from)
 
               expect(WebMock).to have_requested(
                 :put,
@@ -211,7 +211,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           it "check the http stub matches the request disabled in web mock using the filename, body and headers" do
             assessment_type = "SAP-RDSAP-RR"
             date_from = test_start_date
-            get_task("open_data_export").invoke("for_odc", assessment_type, date_from)
+            get_task("open_data:export_assessments").invoke("for_odc", assessment_type, date_from)
 
             expect(WebMock).to have_requested(
               :put,
@@ -384,7 +384,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           it "check the http stub matches the request disabled in web mock using the filename, body and headers" do
             assessment_type = "CEPC"
             date_from = test_start_date
-            get_task("open_data_export").invoke("for_odc", assessment_type, date_from)
+            get_task("open_data:export_assessments").invoke("for_odc", assessment_type, date_from)
 
             expect(WebMock).to have_requested(
               :put,
@@ -411,7 +411,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           it "check the http stub matches the request disabled in web mock using the filename, body and headers" do
             assessment_type = "CEPC-RR"
             date_from = test_start_date
-            get_task("open_data_export").invoke("for_odc", assessment_type, date_from)
+            get_task("open_data:export_assessments").invoke("for_odc", assessment_type, date_from)
 
             expect(WebMock).to have_requested(
               :put,
@@ -601,7 +601,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           it "check the http stub matches the request disabled in web mock using the filename, body and headers" do
             assessment_type = "DEC"
             date_from = test_start_date
-            get_task("open_data_export").invoke("for_odc", assessment_type, date_from)
+            get_task("open_data:export_assessments").invoke("for_odc", assessment_type, date_from)
 
             expect(WebMock).to have_requested(
               :put,
@@ -628,7 +628,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           it "check the http stub matches the request disabled in web mock using the filename, body and headers" do
             assessment_type = "DEC-RR"
             date_from = test_start_date
-            get_task("open_data_export").invoke("for_odc", assessment_type, date_from)
+            get_task("open_data:export_assessments").invoke("for_odc", assessment_type, date_from)
             expect(WebMock).to have_requested(
               :put,
               "#{HttpStub::S3_BUCKET_URI}open_data_export_dec-rr_#{DateTime.now.strftime('%F')}_1.csv",
@@ -650,7 +650,7 @@ describe "Acceptance::Reports::OpenDataExport" do
         expected_message =
           "A required argument is missing: type_of_export. You  must specify 'for_odc' or 'not_for_odc'"
 
-        expect { get_task("open_data_export").invoke }.to output(
+        expect { get_task("open_data:export_assessments").invoke }.to output(
           /#{expected_message}/,
         ).to_stderr
       end
@@ -659,7 +659,7 @@ describe "Acceptance::Reports::OpenDataExport" do
         expected_message =
           "A required argument is missing: type_of_export. You  must specify 'for_odc' or 'not_for_odc'"
 
-        expect { get_task("open_data_export").invoke("for_dean") }.to output(
+        expect { get_task("open_data:export_assessments").invoke("for_dean") }.to output(
           /#{expected_message}/,
         ).to_stderr
       end
@@ -668,13 +668,13 @@ describe "Acceptance::Reports::OpenDataExport" do
         expected_message =
           "A required argument is missing: assessment_type, eg: 'SAP-RDSAP', 'DEC' etc"
 
-        expect { get_task("open_data_export").invoke("for_odc") }.to output(
+        expect { get_task("open_data:export_assessments").invoke("for_odc") }.to output(
           /#{expected_message}/,
         ).to_stderr
       end
 
       it "returns an error when the wrong type of assessment type is provided" do
-        expect { get_task("open_data_export").invoke("for_odc", "TEST", DateTime.now.strftime("%F")) }.to output(
+        expect { get_task("open_data:export_assessments").invoke("for_odc", "TEST", DateTime.now.strftime("%F")) }.to output(
           /Assessment type is not valid:/,
         ).to_stderr
       end
@@ -684,7 +684,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       it "returns a no data to export error" do
         assessment_type = "SAP-RDSAP"
         date_from = DateTime.now.strftime("%F")
-        expect { get_task("open_data_export").invoke("for_odc", assessment_type, date_from) }.to output(
+        expect { get_task("open_data:export_assessments").invoke("for_odc", assessment_type, date_from) }.to output(
           /No data provided for export/,
         ).to_stderr
       end
@@ -693,7 +693,7 @@ describe "Acceptance::Reports::OpenDataExport" do
         assessment_type = "SAP-RDSAP"
         date_from = DateTime.now.strftime("%F")
         date_to = DateTime.yesterday.strftime("%F")
-        expect { get_task("open_data_export").invoke("for_odc", assessment_type, date_from, date_to) }.to output(
+        expect { get_task("open_data:export_assessments").invoke("for_odc", assessment_type, date_from, date_to) }.to output(
           /date_from cannot be greater than date_to/,
         ).to_stderr
       end
@@ -704,7 +704,7 @@ describe "Acceptance::Reports::OpenDataExport" do
         assessment_type = "SAP-RDSAP"
         date_from = "2018-12-01"
         date_to = "2019-12-07"
-        expect { get_task("open_data_export").invoke("for_odc", assessment_type, date_from, date_to) }.to output(
+        expect { get_task("open_data:export_assessments").invoke("for_odc", assessment_type, date_from, date_to) }.to output(
           /No data provided for export/,
         ).to_stderr
       end

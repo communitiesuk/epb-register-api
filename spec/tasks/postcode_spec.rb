@@ -22,7 +22,7 @@ describe "Postcode" do
     end
 
     it "Then we can fetch an existing postcode" do
-      get_task("import_postcode").invoke(FILE_NAME)
+      get_task("maintenance:import_postcode").invoke(FILE_NAME)
 
       postcodes = postcode_gateway.fetch("BR8 7QP")
 
@@ -32,7 +32,7 @@ describe "Postcode" do
     end
 
     it "Then we can fetch an existing outcode for an non existing postcode" do
-      get_task("import_postcode").invoke(FILE_NAME)
+      get_task("maintenance:import_postcode").invoke(FILE_NAME)
 
       postcodes = postcode_gateway.fetch("BR8 AAA")
 
