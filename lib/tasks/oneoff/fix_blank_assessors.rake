@@ -1,3 +1,5 @@
+require_relative "../task_helpers.rb"
+
 namespace :oneoff do
   desc "Fetch latest certificate information to fill blank assessors"
   # Some old certificate migrations created assessor records that had an

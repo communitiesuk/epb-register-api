@@ -1,4 +1,5 @@
 require "openssl"
+require_relative "../task_helpers.rb"
 
 namespace :oneoff do
   desc "Truncate green deal plans data"

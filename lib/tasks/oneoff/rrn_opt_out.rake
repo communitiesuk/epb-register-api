@@ -1,5 +1,6 @@
 # This task requires a list of opted-out RRNs in a CSV format (`.csv`)
 require "csv"
+require_relative "../task_helpers.rb"
 
 namespace :oneoff do
   # This task was used to opt out all RRNs that had previously been opted out on

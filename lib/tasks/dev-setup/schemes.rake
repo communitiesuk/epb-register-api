@@ -1,3 +1,5 @@
+require_relative "../task_helpers.rb"
+
 namespace :dev_data do
 
   desc "Insert schemes data"

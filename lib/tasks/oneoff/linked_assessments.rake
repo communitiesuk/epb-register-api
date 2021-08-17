@@ -1,4 +1,6 @@
 require "nokogiri"
+require_relative "../task_helpers.rb"
+
 namespace :oneoff do
   # These tasks were used to backfill existing data when the linked assessments
   # table was first introduced

@@ -1,5 +1,6 @@
 require "csv"
 require "open-uri"
+require_relative "../task_helpers.rb"
 
 namespace :dev_data do
   # This has been superceded for use in production by postcode.rake, but remains a
