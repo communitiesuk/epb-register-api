@@ -7,6 +7,7 @@ namespace :oneoff do
 
     desc "Clean up temporary table following address matching import"
     task :import_address_matching_cleanup do
+      Tasks::TaskHelpers.quit_if_production
       ActiveRecord::Base.logger = nil
       db = ActiveRecord::Base.connection
 
@@ -19,6 +20,7 @@ namespace :oneoff do
     # all Landmark property identifiers to OS UPRNs.  This sets the address-matched
     # UPRN if it exists, and otherwise falls back to a RRN-based identifier
     task :import_address_matching do
+      Tasks::TaskHelpers.quit_if_production
       Signal.trap("INT") { throw :sigint }
       Signal.trap("TERM") { throw :sigterm }
       ActiveRecord::Base.logger = nil
@@ -72,6 +74,7 @@ namespace :oneoff do
 
     desc "Clean up temporary table following missing address lines update"
     task :update_address_lines_cleanup do
+      Tasks::TaskHelpers.quit_if_production
       ActiveRecord::Base.logger = nil
       db = ActiveRecord::Base.connection
 
@@ -84,6 +87,7 @@ namespace :oneoff do
     # table properly.  This task was made to back-fill empty addresses from the
     # source XML.
     task :update_address_lines do
+      Tasks::TaskHelpers.quit_if_production
       ActiveRecord::Base.logger = nil
       db = ActiveRecord::Base.connection
 

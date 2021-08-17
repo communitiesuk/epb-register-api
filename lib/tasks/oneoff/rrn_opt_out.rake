@@ -5,6 +5,7 @@ namespace :oneoff do
   # the legacy system.
   desc "Update rrn opt-out data"
   task :update_rrn_opt_out do
+    Tasks::TaskHelpers.quit_if_production
     internal_url = ENV["url"]
 
     puts "Reading opt-out file from: #{internal_url}"

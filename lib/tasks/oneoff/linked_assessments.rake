@@ -4,6 +4,7 @@ namespace :oneoff do
   # table was first introduced
   desc "Ensures dual lodgements have the same address ID"
   task :linked_assessments_address_id do
+    Tasks::TaskHelpers.quit_if_production
     puts "[#{Time.now}] Starting correcting linked assessment address IDs"
 
     ActiveRecord::Base.logger = nil
@@ -69,6 +70,7 @@ namespace :oneoff do
 
   desc "Backfill linked assessments table from assessments XML"
   task :linked_assessments do
+    Tasks::TaskHelpers.quit_if_production
     if ENV["from_date"].nil?
       abort("Please set the from_date environment variable")
     end

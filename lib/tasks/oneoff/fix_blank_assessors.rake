@@ -4,6 +4,7 @@ namespace :oneoff do
   # assessor ID number but no assessor names to display on the certificate
   # pages. This task back-filled empty assessor names
   task :fix_blank_assessors do
+    Tasks::TaskHelpers.quit_if_production
     db = ActiveRecord::Base.connection
 
     assessments_query = <<-SQL

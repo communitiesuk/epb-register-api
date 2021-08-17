@@ -6,6 +6,7 @@ namespace :oneoff do
     # This is an early hacked-together version of getting data together for the
     # import_address_matching task
     task :rrn2uprn do
+      Tasks::TaskHelpers.quit_if_production
       lprn2rrn = {}
 
       i = 0
@@ -51,6 +52,7 @@ namespace :oneoff do
     desc "Merge two CSVs together, but not overwriting the primary key of the former CSV"
 
     task :merge_csv do
+      Tasks::TaskHelpers.quit_if_production
       done = {}
 
       i = 0
