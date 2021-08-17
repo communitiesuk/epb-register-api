@@ -2256,8 +2256,6 @@ components:
       properties:
         typeOfAssessment:
           $ref: '#/components/schemas/AssessmentType'
-        assessmentId:
-          $ref: '#/components/schemas/AssessmentId'
         optOut:
           type: boolean
           example: false
@@ -2274,7 +2272,7 @@ components:
           nullable: true
         schemaType:
           $ref: '#/components/schemas/SchemaName'
-        addressId:
+        assessmentAddressId:
           $ref: '#/components/schemas/AddressId'
 
     PropertySummary:
