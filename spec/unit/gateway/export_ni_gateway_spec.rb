@@ -72,7 +72,7 @@ describe Gateway::ExportNiGateway do
       end
 
       it "exports only lodged certificates that have a BT postcode and a NI schema" do
-        expect(exported_data).to eq(expectation)
+        expect(exported_data).to match_array(expectation)
       end
     end
   end
