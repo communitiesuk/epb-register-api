@@ -1,3 +1,14 @@
+# This task POSTs data in batches to a URL to create a report in CSV format.
+# The URL supplied needs to accept an HTTP POST request, where the contents are
+# appended to a file.
+#
+# USAGE:
+# $ bundle exec rake extract_reporting batch={batch} url="{url}" max_runs={max_runs}
+#
+# Where:
+#   "batch" defines how many slices are needed
+#   "max_runs" determines how many assessments to extract
+
 namespace :ad_hoc_data do
   desc "Create report in CSV that POSTs data in batches to a URL"
   # This task is a proof-of-concept for using the view models to process XML into

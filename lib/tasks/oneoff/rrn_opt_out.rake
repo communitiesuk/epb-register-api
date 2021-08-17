@@ -1,3 +1,4 @@
+# This task requires a list of opted-out RRNs in a CSV format (`.csv`)
 require "csv"
 
 namespace :oneoff do
