@@ -13,7 +13,7 @@ namespace :dev_data do
   end
 
   class DevAssessmentsHelper
-    def self.scheme_array
+    def self.schema_array
       %w[CEPC-8.0.0 CEPC-NI-8.0.0 RdSAP-Schema-20.0.0 RdSAP-Schema-NI-20.0.0 SAP-Schema-18.0.0 SAP-Schema-NI-18.0.0]
     end
 
@@ -46,11 +46,11 @@ namespace :dev_data do
       file_array.each_with_index do |hash, _index|
         id = id.next
 
-        if commercial_fixtures.include? hash[:scheme].to_s.downcase
+        if commercial_fixtures.include? hash[:schema].to_s.downcase
           schema_type = "CEPC-8.0.0"
-          type_of_assessment =  hash[:scheme]
+          type_of_assessment =  hash[:schema]
         else
-          schema_type = hash[:scheme]
+          schema_type = hash[:schema]
           type_of_assessment = schema_type.split("-").first
         end
         xml_doc = update_xml(hash[:xml], type_of_assessment.downcase, id)
@@ -91,9 +91,9 @@ namespace :dev_data do
 
     def self.read_fixtures
       file_array = []
-      scheme_array.each do |scheme|
-        file_content = read_xml(scheme, scheme.include?("CEPC") ? "cepc" : "epc")
-        file_array << { xml: Nokogiri.XML(file_content), scheme: scheme }
+      schema_array.each do |schema|
+        file_content = read_xml(schema, schema.include?("CEPC") ? "cepc" : "epc")
+        file_array << { xml: Nokogiri.XML(file_content), schema: schema }
       end
       file_array + read_commercial_fixtures
     end
@@ -103,7 +103,7 @@ namespace :dev_data do
 
       commercial_fixtures.each do |item|
         file_content = read_xml("CEPC-8.0.0", item)
-        file_array << { xml: Nokogiri.XML(file_content), scheme: item.upcase }
+        file_array << { xml: Nokogiri.XML(file_content), schema: item.upcase }
       end
       file_array
     end
