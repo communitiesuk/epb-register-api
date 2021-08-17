@@ -95,6 +95,7 @@ namespace :dev_data do
       assessments = ActiveRecord::Base.connection.exec_query <<-SQL
         SELECT assessment_id
         FROM assessments
+        WHERE type_of_assessment = 'RdSAP'
         ORDER BY RANDOM()
         LIMIT 25
       SQL
