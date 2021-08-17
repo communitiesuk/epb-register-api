@@ -2260,14 +2260,17 @@ components:
           type: boolean
           example: false
         createdAt:
-          type: date-time
+          type: string
+          format: date-time
           example: '2020-08-09T12:34:56.789Z'
         cancelledAt:
-          type: date-time
+          type: string
+          format: date-time
           example: '2021-04-26T16:32:01.703Z'
           nullable: true
         notForIssueAt:
-          type: date-time
+          type: string
+          format: date-time
           example: '2020-11-21T05:34:21.623Z'
           nullable: true
         schemaType:
