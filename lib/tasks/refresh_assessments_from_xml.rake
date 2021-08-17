@@ -5,8 +5,8 @@
 # lodged XML.
 #
 # Use with caution!!!
-desc "Update assessments table column from XML"
-task :update_assessment_column do
+desc "Update all values in an assessments table column from the lodged XML"
+task :refresh_assessments_from_xml do
   require "nokogiri"
   require "zeitwerk"
 
