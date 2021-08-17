@@ -1,5 +1,3 @@
-require_relative "../task_helpers.rb"
-
 namespace :dev_data do
 
   desc "Lodge assessments to the dev database for testing"

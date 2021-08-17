@@ -1,5 +1,3 @@
-require_relative "../task_helpers.rb"
-
 require "csv"
 
 namespace :oneoff do

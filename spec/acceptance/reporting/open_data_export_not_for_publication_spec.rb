@@ -1,5 +1,5 @@
 describe "OpenDataExportNotForPublication" do
-  subject(:task) { get_task("open_data_export_not_for_publication") }
+  subject(:task) { get_task("open_data:export_not_for_publication") }
 
   after { WebMock.disable! }
 

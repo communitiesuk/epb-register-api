@@ -39,13 +39,13 @@ describe "FixBlankAssessors" do
     end
 
     it "outputs one updated assessors" do
-      expect { get_task("fix_blank_assessors").invoke }.to output(
+      expect { get_task("oneoff:fix_blank_assessors").invoke }.to output(
         /1 records updated and 0 records skipped/,
       ).to_stdout
     end
 
     it "updates the assessor first_name" do
-      get_task("fix_blank_assessors").invoke
+      get_task("oneoff:fix_blank_assessors").invoke
 
       response = JSON.parse(fetch_assessor(scheme_id: scheme_id, assessor_id: scheme_assessor_id).body)
       expect(response["data"]["firstName"]).to eq("Mr Test Boi TST")
@@ -86,13 +86,13 @@ describe "FixBlankAssessors" do
     end
 
     it "outputs zero updated assessors" do
-      expect { get_task("fix_blank_assessors").invoke }.to output(
+      expect { get_task("oneoff:fix_blank_assessors").invoke }.to output(
         /0 records updated and 0 records skipped/,
       ).to_stdout
     end
 
     it "does not update the assessor" do
-      get_task("fix_blank_assessors").invoke
+      get_task("oneoff:fix_blank_assessors").invoke
 
       response = JSON.parse(fetch_assessor(scheme_id: scheme_id, assessor_id: scheme_assessor_id).body)
       expect(response["data"]["firstName"]).to eq("John")
@@ -135,13 +135,13 @@ describe "FixBlankAssessors" do
     end
 
     it "outputs one record skipped" do
-      expect { get_task("fix_blank_assessors").invoke }.to output(
+      expect { get_task("oneoff:fix_blank_assessors").invoke }.to output(
         /0 records updated and 1 records skipped/,
       ).to_stdout
     end
 
     it "does not update the assessor" do
-      get_task("fix_blank_assessors").invoke
+      get_task("oneoff:fix_blank_assessors").invoke
 
       response = JSON.parse(fetch_assessor(scheme_id: scheme_id, assessor_id: scheme_assessor_id).body)
       expect(response["data"]["firstName"]).to eq("")

@@ -1,5 +1,5 @@
 describe "JsonExport" do
-  subject(:task) { get_task("json_export") }
+  subject(:task) { get_task("ad_hoc_data:json_export") }
 
   context "when the export task runs with all needed parameters" do
     let(:storage_gateway) { instance_double(Gateway::StorageGateway) }

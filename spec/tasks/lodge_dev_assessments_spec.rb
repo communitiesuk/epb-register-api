@@ -17,7 +17,7 @@ describe "linked_dev_assessments rake" do
     end
 
     it "raises an error and does not add anything to the database" do
-      expect { get_task("lodge_dev_assessments").invoke }.to raise_error(
+      expect { get_task("dev_data:lodge_dev_assessments").invoke }.to raise_error(
         StandardError,
       ).with_message("This task can only be run if the STAGE is test, development, integration or staging")
       expect(exported_data.rows.length).to eq(0)
@@ -28,7 +28,7 @@ describe "linked_dev_assessments rake" do
     before do
       allow($stdout).to receive(:puts)
       allow($stdout).to receive(:write)
-      get_task("lodge_dev_assessments").invoke
+      get_task("dev_data:lodge_dev_assessments").invoke
     end
 
     let!(:exported_data) do
