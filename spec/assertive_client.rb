@@ -535,7 +535,7 @@ def assessors_search_by_name(
 end
 
 def schemes_list(
-  scopes = %w[scheme:list],
+  scopes: %w[scheme:list],
   **assertive_kwargs
 )
   assertive_get(
@@ -559,7 +559,7 @@ end
 
 def address_search_by_postcode(
   postcode,
-  scopes = %w[address:search],
+  scopes: %w[address:search],
   **assertive_kwargs
 )
   assertive_get(
