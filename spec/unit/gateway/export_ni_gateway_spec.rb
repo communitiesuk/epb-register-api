@@ -21,10 +21,7 @@ describe Gateway::ExportNiGateway do
 
         domestic_sap_xml = Nokogiri.XML Samples.xml("SAP-Schema-18.0.0")
         domestic_sap_assessment_id = domestic_sap_xml.at("RRN")
-        domestic_ni_sap_postcode = domestic_ni_sap_xml.at("Property Address Postcode")
-        domestic_ni_rdsap_postcode = domestic_ni_rdsap_xml.at("Property Address Postcode")
-        domestic_ni_sap_postcode.children = "BT4 3NE"
-        domestic_ni_rdsap_postcode.children = "BT1 3NE"
+
 
         lodge_assessment(
           assessment_body: domestic_ni_sap_xml.to_xml,
@@ -48,8 +45,7 @@ describe Gateway::ExportNiGateway do
         )
 
         domestic_sap_assessment_id.children = "1000-0000-0000-0000-1010"
-        domestic_sap_postcode = domestic_sap_xml.at("Property Address Postcode")
-        domestic_sap_postcode = "BT0 2SA"
+
         lodge_assessment(
           assessment_body: domestic_sap_xml.to_xml,
           accepted_responses: [201],
