@@ -5,7 +5,6 @@ namespace :dev_data do
   # This has been superceded for use in production by postcode.rake, but remains a
   # handy way to hack postcode data into local dev environment
   desc "Import postcode_outcode geolocation data to local dev environment"
-  class PostcodeOutcodeGeolocation < ActiveRecord::Base; end
 
   task :import_postcode_outcode do
     Tasks::TaskHelpers.quit_if_production
@@ -27,3 +26,5 @@ namespace :dev_data do
     end
   end
 end
+
+class PostcodeOutcodeGeolocation < ActiveRecord::Base; end

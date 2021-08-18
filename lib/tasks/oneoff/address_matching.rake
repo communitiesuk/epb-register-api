@@ -285,14 +285,14 @@ namespace :oneoff do
     def bind_string_attribute(array, name, value)
       array << ActiveRecord::Relation::QueryAttribute.new(name, value, ActiveRecord::Type::String.new)
     end
+  end
+end
 
-    class Counter
-      attr_accessor :processed, :skipped
+class Counter
+  attr_accessor :processed, :skipped
 
-      def initialize(processed:, skipped:)
-        @processed = processed
-        @skipped = skipped
-      end
-    end
+  def initialize(processed:, skipped:)
+    @processed = processed
+    @skipped = skipped
   end
 end
