@@ -1,5 +1,4 @@
 namespace :dev_data do
-
   desc "Truncate assessors data"
   task :truncate_assessors do
     Tasks::TaskHelpers.quit_if_production

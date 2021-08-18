@@ -1,5 +1,4 @@
 namespace :dev_data do
-
   desc "Insert schemes data"
   task :generate_schemes do
     Tasks::TaskHelpers.quit_if_production

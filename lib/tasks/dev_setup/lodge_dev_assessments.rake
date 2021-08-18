@@ -1,5 +1,4 @@
 namespace :dev_data do
-
   desc "Lodge assessments to the dev database for testing"
   task :lodge_dev_assessments do
     Tasks::TaskHelpers.quit_if_production

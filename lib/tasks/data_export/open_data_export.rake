@@ -1,5 +1,4 @@
 namespace :open_data do
-
   desc "Exporting assessments data for Open Data Communities"
   task :export_assessments, %i[type_of_export assessment_type date_from date_to task_id] do |_, args|
     type_of_export = args.type_of_export
@@ -39,7 +38,7 @@ namespace :open_data do
     warn e.message
   end
 
-  private
+private
 
   def set_date_time
     DateTime.now.strftime("%Y%m%dT%H%M")

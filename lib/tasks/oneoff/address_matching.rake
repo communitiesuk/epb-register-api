@@ -5,7 +5,6 @@ require "nokogiri"
 
 namespace :oneoff do
   namespace :address_matching do
-
     desc "Clean up temporary table following address matching import"
     task :import_address_matching_cleanup do
       Tasks::TaskHelpers.quit_if_production

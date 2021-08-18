@@ -1,5 +1,4 @@
 namespace :dev_data do
-
   desc "Create 25 green deal assessments as test data"
   task :seed_test_green_deal_plans do
     Tasks::TaskHelpers.quit_if_production
