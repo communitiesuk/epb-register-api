@@ -78,7 +78,7 @@
             <SAP:Address-Line-2>Some Area</SAP:Address-Line-2>
             <SAP:Address-Line-3>Some County</SAP:Address-Line-3>
             <SAP:Post-Town>Whitbury</SAP:Post-Town>
-            <SAP:Postcode>A0 0AA</SAP:Postcode>
+            <SAP:Postcode>BT1 0AA</SAP:Postcode>
           </SAP:Address>
           <SAP:UPRN>0000000000</SAP:UPRN>
         </SAP:Property>

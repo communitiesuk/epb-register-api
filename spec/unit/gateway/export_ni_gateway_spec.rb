@@ -90,7 +90,7 @@ describe Gateway::ExportNiGateway do
       end
 
       it "exports only domestic certificates that have a BT postcode and a NI schema" do
-        expect(subject.fetch_assessments(%w[RdSAP SAP])).to eq(domestic_expectation)
+        expect(subject.fetch_assessments(%w[RdSAP SAP]).sort_by! { |k| k["assessment_id"]}).to eq(domestic_expectation)
       end
 
       it "exports only commercial certificates that have a BT postcode and a NI schema" do
