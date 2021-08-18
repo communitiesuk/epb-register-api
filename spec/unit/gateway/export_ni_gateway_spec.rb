@@ -66,7 +66,6 @@ describe Gateway::ExportNiGateway do
         non_domestic_xml_postcode = non_domestic_xml.at("Postcode")
         non_domestic_xml_postcode.children = "BT5 2SA"
 
-
         lodge_assessment(
           assessment_body: non_domestic_xml.to_xml,
           accepted_responses: [201],
@@ -75,9 +74,8 @@ describe Gateway::ExportNiGateway do
           },
           override: true,
           schema_name: "CEPC-NI-8.0.0",
-          )
+        )
       end
-
 
       let(:domestic_expectation) do
         [{ "assessment_id" => "0000-0000-0000-0000-0000" },
@@ -85,16 +83,15 @@ describe Gateway::ExportNiGateway do
       end
 
       let(:commercial_expectation) do
-        [{ "assessment_id" => "9000-0000-0000-0000-1019" },
-         ]
+        [{ "assessment_id" => "9000-0000-0000-0000-1019" }]
       end
 
       it "exports only domestic certificates that have a BT postcode and a NI schema" do
-        expect(subject.fetch_assessments(%w[RdSAP SAP]).sort_by! { |k| k["assessment_id"]}).to eq(domestic_expectation)
+        expect(subject.fetch_assessments(%w[RdSAP SAP]).sort_by! { |k| k["assessment_id"] }).to eq(domestic_expectation)
       end
 
       it "exports only commercial certificates that have a BT postcode and a NI schema" do
-        expect(subject.fetch_assessments('CEPC')).to eq(commercial_expectation)
+        expect(subject.fetch_assessments("CEPC")).to eq(commercial_expectation)
       end
     end
   end
