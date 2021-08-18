@@ -22,7 +22,6 @@ describe Gateway::ExportNiGateway do
         domestic_sap_xml = Nokogiri.XML Samples.xml("SAP-Schema-18.0.0")
         domestic_sap_assessment_id = domestic_sap_xml.at("RRN")
 
-
         lodge_assessment(
           assessment_body: domestic_ni_sap_xml.to_xml,
           accepted_responses: [201],
