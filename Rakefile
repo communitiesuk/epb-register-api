@@ -1,6 +1,7 @@
 require "sinatra"
 require "sinatra/activerecord"
 require "sinatra/activerecord/rake"
+require "epb_view_models"
 
 unless defined? Zeitwerk
   require "zeitwerk"
