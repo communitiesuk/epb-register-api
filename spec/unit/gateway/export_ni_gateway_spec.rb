@@ -26,6 +26,8 @@ describe Gateway::ExportNiGateway do
 
         domestic_ni_rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-NI-20.0.0")
         domestic_ni_rdsap_assessment_id = domestic_ni_rdsap_xml.at("RRN")
+        domestic_ni_rdsap_address_id = domestic_ni_rdsap_xml.at("UPRN")
+        domestic_ni_rdsap_address_id.remove
 
         domestic_sap_xml = Nokogiri.XML Samples.xml("SAP-Schema-18.0.0")
         domestic_sap_assessment_id = domestic_sap_xml.at("RRN")
@@ -88,7 +90,7 @@ describe Gateway::ExportNiGateway do
          { "assessment_id" => "0000-0000-0000-0000-0002",
            "lodgement_date" => "2020-05-04",
            "lodgement_datetime" => "2021-02-22 00:00:00",
-           "uprn" => "UPRN-000000000000" }]
+           "uprn" => nil }]
       end
 
       let(:commercial_expectation) do

@@ -6,7 +6,8 @@ module Gateway
       a.assessment_id,
       a.date_registered as lodgement_date,
       a.created_at as lodgement_datetime,
-      aa.address_id as uprn
+      CASE WHEN UPPER(aa.address_id) NOT LIKE 'UPRN-%' THEN null ELSE
+      aa.address_id END as uprn
       FROM assessments a
       INNER JOIN assessments_xml ax USING(assessment_id)
       LEFT JOIN assessments_address_id aa USING(assessment_id)
