@@ -5,7 +5,7 @@ describe Gateway::ExportNiGateway do
 
   context "when extracting Northern Ireland data for export " do
     before(:all) do
-      Timecop.freeze(2021, 0o2, 22, 0, 0, 0)
+      Timecop.freeze(2021, 2, 22, 0, 0, 0)
     end
 
     after(:all) do
