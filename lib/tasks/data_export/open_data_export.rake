@@ -83,4 +83,8 @@ private
     end
     open_data_use_case
   end
+
+  def validate_date_range(date_from, date_to)
+    date_from <= date_to
+  end
 end
