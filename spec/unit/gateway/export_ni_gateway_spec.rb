@@ -3,7 +3,18 @@ describe Gateway::ExportNiGateway do
 
   subject { described_class.new }
 
+
+
   context "when extracting Northern Ireland data for export " do
+    before(:all) do
+      Timecop.freeze(2021,02,22,0,0,0)
+    end
+
+    after(:all) do
+      Timecop.return
+    end
+
+
     it "call the gateway without error" do
       expect { subject }.not_to raise_error
     end
@@ -73,12 +84,22 @@ describe Gateway::ExportNiGateway do
       end
 
       let(:domestic_expectation) do
-        [{ "assessment_id" => "0000-0000-0000-0000-0000" },
-         { "assessment_id" => "0000-0000-0000-0000-0002" }]
+        [{ "assessment_id" => "0000-0000-0000-0000-0000",
+           "lodgement_date" => '2020-05-04',
+           "lodgement_datetime" => "2021-02-22 00:00:00",
+           "uprn" => "UPRN-000000000000",},
+           { "assessment_id" => "0000-0000-0000-0000-0002",
+           "lodgement_date" => '2020-05-04',
+           "lodgement_datetime" => "2021-02-22 00:00:00",
+           "uprn" => "UPRN-000000000000",
+         }]
       end
 
       let(:commercial_expectation) do
-        [{ "assessment_id" => "9000-0000-0000-0000-1019" }]
+        [{"assessment_id"=>"9000-0000-0000-0000-1019",
+          "lodgement_date" => '2020-05-04',
+          "lodgement_datetime" => "2021-02-22 00:00:00",
+          "uprn"=>"UPRN-000000000001"}]
       end
 
       it "exports only domestic certificates that have a BT postcode and a NI schema" do

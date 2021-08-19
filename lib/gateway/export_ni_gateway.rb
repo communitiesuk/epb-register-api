@@ -3,9 +3,13 @@ module Gateway
     def fetch_assessments(type_of_assessment)
       sql = <<-SQL
       SELECT
-      a.assessment_id
+      a.assessment_id,
+      a.date_registered as lodgement_date,
+      a.created_at as lodgement_datetime,
+      aa.address_id as uprn
       FROM assessments a
       INNER JOIN assessments_xml ax USING(assessment_id)
+      LEFT JOIN assessments_address_id aa USING(assessment_id)
       WHERE  a.postcode LIKE 'BT%' AND
         ax.schema_type LIKE '%NI%'
       SQL
