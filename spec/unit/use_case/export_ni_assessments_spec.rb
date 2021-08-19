@@ -14,7 +14,10 @@ describe UseCase::ExportNiAssessments do
 
     before do
       domestic_ni_sap_xml = Nokogiri.XML Samples.xml("SAP-Schema-NI-18.0.0")
-      allow(ni_gateway).to receive(:fetch_assessments).with(%w[RdSAP SAP]).and_return([{ "assessment_id" => "0000-0000-0000-0000-0000" }, { "assessment_id" => "8888-0000-0000-0000-0002" }, { "assessment_id" => "9999-0000-0000-0000-0000" }])
+      allow(ni_gateway).to receive(:fetch_assessments).with(%w[RdSAP SAP]).and_return([
+                                                                                        { "assessment_id" => "0000-0000-0000-0000-0000", "lodgement_date" => "2020-05-04", "lodgement_datetime" => "2021-02-22 00:00:00", "uprn" => "UPRN-000000000001" },
+                                                                                        { "assessment_id" => "8888-0000-0000-0000-0002", "lodgement_date" => "2020-05-04", "lodgement_datetime" => "2021-02-22 00:00:00", "uprn" => "UPRN-000000000000" },
+                                                                                        { "assessment_id" => "9999-0000-0000-0000-0000", "lodgement_date" => "2020-05-04", "lodgement_datetime" => "2021-02-22 00:00:00", "uprn" => nil }])
       allow(xml_gateway).to receive(:fetch).and_return({ xml: domestic_ni_sap_xml.to_xml, schema_type: "RdSAP-Schema-NI-20.0.0" })
     end
 
@@ -28,7 +31,13 @@ describe UseCase::ExportNiAssessments do
     end
 
     it "returns a single hash in an array " do
-      expect(subject.execute(%w[RdSAP SAP]).first).to match a_hash_including(assessment_id: "0000-0000-0000-0000-0000", address_line1: "1 Some Street")
+      expect(subject.execute(%w[RdSAP SAP]).first).to match a_hash_including(
+                                                              assessment_id: "0000-0000-0000-0000-0000",
+                                                              address_line1: "1 Some Street",
+                                                              lodgement_date: "2020-05-04",
+                                                              lodgement_datetime: "2021-02-22 00:00:00",
+                                                              uprn: "UPRN-000000000001"
+                                                            )
     end
   end
 end
