@@ -19,6 +19,17 @@ module Gateway
         LEFT JOIN linked_assessments la USING(assessment_id)
     SQL
 
+    VALID_ASSESSMENT_TYPES = %w[
+      RdSAP
+      SAP
+      CEPC
+      CEPC-RR
+      DEC
+      DEC-RR
+      AC-CERT
+      AC-REPORT
+    ]
+
     def search_by_postcode(postcode, assessment_types = [])
       sql = ASSESSMENT_SEARCH_INDEX_SELECT + <<-SQL
         WHERE a.postcode = $1
@@ -36,21 +47,9 @@ module Gateway
       ]
 
       unless assessment_types.nil? || assessment_types.empty?
-        known_types = %w[
-          RdSAP
-          SAP
-          CEPC
-          CEPC-RR
-          DEC
-          DEC-RR
-          AC-CERT
-          AC-REPORT
-        ]
         sanitized_assessment_types =
           assessment_types.map do |assessment_type|
-            unless known_types.include? assessment_type
-              raise InvalidAssessmentType
-            end
+            raise InvalidAssessmentType unless VALID_ASSESSMENT_TYPES.include? assessment_type
 
             ActiveRecord::Base.connection.quote(assessment_type)
           end
@@ -59,13 +58,9 @@ module Gateway
           " AND type_of_assessment IN(#{sanitized_assessment_types.join(', ')})"
       end
 
-      response = Assessment.connection.exec_query sql, "SQL", binds
+      result = Assessment.connection.exec_query sql, "SQL", binds
 
-      result = []
-
-      response.each { |row| result << row_to_domain(row) }
-
-      result
+      result.map { |row| row_to_domain(row) }
     end
 
     def search_by_street_name_and_town(
@@ -124,12 +119,9 @@ module Gateway
 
       sql += " LIMIT 200"
 
-      response = Assessment.connection.exec_query sql, "SQL", binds
+      result = Assessment.connection.exec_query sql, "SQL", binds
 
-      result = []
-      response.each { |row| result << row_to_domain(row) }
-
-      result
+      result.map { |row| row_to_domain(row) }
     end
 
     def search_by_assessment_id(
@@ -156,15 +148,9 @@ module Gateway
         sql += " AND a.type_of_assessment IN(#{ins.join(', ')})"
       end
 
-      response = Assessment.connection.exec_query(sql)
+      result = Assessment.connection.exec_query(sql)
 
-      result = []
-      response.each do |row|
-        search_domain = row_to_domain(row)
-        result << search_domain
-      end
-
-      result
+      result.map { |row| row_to_domain(row) }
     end
 
     def row_to_domain(row)
