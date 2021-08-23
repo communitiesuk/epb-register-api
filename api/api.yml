@@ -2062,8 +2062,8 @@ components:
           type: string
           format: date-time
           nullable: true
-          description: Date and time of lodgement for assessments post September 2020
-          example: '2020-08-09T12:34:56.789Z'
+          description: Date and time of lodgement in UTC timezone for assessments post September 2020
+          example: '2020-09-19T09:00:00Z'
 
     CommercialEnergyAssessmentSummary:
       $ref: '#/components/schemas/Empty'
