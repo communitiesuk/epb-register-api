@@ -18,6 +18,7 @@ describe UseCase::FindAssessmentsByPostcode do
       address_line4: "",
       town: "Whitbury",
       date_of_assessment: Time.new(2020, 5, 4).to_date,
+      created_at: Time.new(2030, 5, 4, 9, 0, 0),
     )
   end
   let(:assessment2) do
@@ -36,6 +37,7 @@ describe UseCase::FindAssessmentsByPostcode do
       address_line4: "",
       town: "Whitbury",
       date_of_assessment: Time.new(2020, 5, 4).to_date,
+      created_at: Time.new(2030, 5, 4, 10, 0, 0),
     )
   end
 
@@ -47,6 +49,7 @@ describe UseCase::FindAssessmentsByPostcode do
         address_line3: "",
         address_line4: "",
         assessment_id: "0000-0000-0000-0000-0000",
+        created_at: "2030-05-04T09:00:00+01:00",
         current_energy_efficiency_band: "e",
         current_energy_efficiency_rating: 50,
         date_of_assessment: "2020-05-04",
@@ -63,6 +66,7 @@ describe UseCase::FindAssessmentsByPostcode do
         address_line3: "",
         address_line4: "",
         assessment_id: "0000-0000-0000-0000-0001",
+        created_at: "2030-05-04T10:00:00+01:00",
         current_energy_efficiency_band: "e",
         current_energy_efficiency_rating: 50,
         date_of_assessment: "2020-05-04",

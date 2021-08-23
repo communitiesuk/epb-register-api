@@ -90,6 +90,7 @@ module Domain
         town: @town,
         postcode: @postcode,
         status: expiry_helper.assessment_status,
+        created_at: @created_at&.iso8601,
       }
     end
 
