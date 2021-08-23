@@ -2058,7 +2058,12 @@ components:
           $ref: '#/components/schemas/AddressPostcode'
         status:
           $ref: '#/components/schemas/AssessmentStatus'
-
+        createdAt:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date and time of lodgement for assessments post September 2020
+          example: '2020-08-09T12:34:56.789Z'
 
     CommercialEnergyAssessmentSummary:
       $ref: '#/components/schemas/Empty'
