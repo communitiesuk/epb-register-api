@@ -91,7 +91,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
             addressLine3: "",
             addressLine4: "",
             status: "ENTERED",
-            createdAt: "2021-06-20T23:00:00Z",
+            createdAt: "2021-06-21T00:00:00Z",
           }.to_json,
         )
 
@@ -316,7 +316,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
             addressLine3: "",
             addressLine4: "",
             status: "ENTERED",
-            createdAt: "2021-06-20T23:00:00Z",
+            createdAt: "2021-06-21T00:00:00Z",
           }.to_json,
         )
 
@@ -344,7 +344,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
           addressLine3: "",
           addressLine4: "",
           status: "ENTERED",
-          createdAt: "2021-06-20T23:00:00Z",
+          createdAt: "2021-06-21T00:00:00Z",
         }.to_json,
       )
 

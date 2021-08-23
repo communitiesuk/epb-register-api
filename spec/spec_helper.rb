@@ -265,7 +265,7 @@ RSpec.configure do |config|
     fuel_price_mock.disable
   end
 
-  config.before(:all, set_with_timecop: true) { Timecop.freeze(2021, 6, 21) }
+  config.before(:all, set_with_timecop: true) { Timecop.freeze(Time.utc(2021, 6, 21)) }
 
   config.after(:all, set_with_timecop: true) { Timecop.return }
 
