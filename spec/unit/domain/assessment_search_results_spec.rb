@@ -15,7 +15,7 @@ describe Domain::AssessmentSearchResult do
       address_line4: "",
       town: "Whitbury",
       date_of_assessment: Time.new(2020, 5, 4).to_date,
-      created_at: Time.utc(2030, 5, 4, 9, 0, 0)
+      created_at: Time.utc(2030, 5, 4, 9, 0, 0),
     }
   end
 

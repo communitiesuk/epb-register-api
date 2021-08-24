@@ -270,6 +270,35 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
     end
   end
 
+  context "when updating the address of an assessment with a linked assessment to an RRN- identifier derived from one of them that is not currently in use" do
+    let(:valid_cepc_rr_xml) { Samples.xml "CEPC-8.0.0", "cepc+rr" }
+
+    before do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body)
+
+      lodge_assessment(
+        assessment_body: valid_cepc_rr_xml,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        schema_name: "CEPC-8.0.0",
+      )
+    end
+
+    it "returns 200 and a success message" do
+      response = update_assessment_address_id(
+        assessment_id: "0000-0000-0000-0000-0000",
+        new_address_id: "RRN-0000-0000-0000-0000-0001",
+        accepted_responses: [200],
+      )
+      expect(JSON.parse(response.body, symbolize_names: true)[:data]).to eq(
+        "Address ID has been updated",
+      )
+    end
+  end
+
   context "when updating the linked address of an assessment to an RRN- identifier that doesn't match the linked address for that RRN" do
     it "returns 400 with a message that suggests what the addressId should be instead" do
       scheme_id = add_scheme_and_get_id

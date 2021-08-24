@@ -28,8 +28,9 @@ module UseCase
 
       assessments_ids.each do |current_assessment_id|
         check_assessment_exists(current_assessment_id)
-        validate_new_address_id(current_assessment_id, new_address_id)
       end
+
+      validate_new_address_id(assessments_ids, new_address_id)
 
       @assessments_address_id_gateway.update_assessments_address_id_mapping(
         assessments_ids,
@@ -49,7 +50,7 @@ module UseCase
       raise AssessmentNotFound unless assessment
     end
 
-    def validate_new_address_id(assessment_id, new_address_id)
+    def validate_new_address_id(assessment_ids, new_address_id)
       if new_address_id.start_with? "UPRN-"
         linking_to_uprn = new_address_id[5..]
         unless @address_base_gateway.check_uprn_exists(linking_to_uprn)
@@ -58,7 +59,7 @@ module UseCase
       elsif new_address_id.start_with? "RRN-"
         linking_to_rrn = new_address_id[4..]
         if @assessments_search_gateway.search_by_assessment_id(linking_to_rrn)
-             .empty?
+                                      .empty?
           raise AddressIdNotFound
         end
 
@@ -66,8 +67,8 @@ module UseCase
           @assessments_address_id_gateway.fetch(linking_to_rrn)[:address_id]
 
         # This a new address ID and the new assessment address ID points to itself
-        if (new_address_id != rrn_assessment_address_id) &&
-            (linking_to_rrn != assessment_id)
+        if new_address_id != rrn_assessment_address_id &&
+            !assessment_ids.include?(linking_to_rrn)
           raise AddressIdMismatched,
                 "Assessment #{linking_to_rrn} is linked to address ID #{rrn_assessment_address_id}"
         end
