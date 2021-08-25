@@ -3,7 +3,14 @@
 This directory contains the specification for the Energy performance register 
 API.
 
-The API is currently under development, so many of the aspects of the API
-detailed here may not be available.
+## What is the .spectral.yaml file?
 
-For a snapshot of the API as it currently is implemented, see `/config/apidoc.yml`
+It's a config file for [Spectral](https://stoplight.io/open-source/spectral/), a linter for API spec files.
+
+## How do I run Spectral against the API spec file?
+
+From within the `api/` directory, run:
+
+```sh
+npx spectral lint api.yml
+```
