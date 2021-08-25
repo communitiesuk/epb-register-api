@@ -1,7 +1,7 @@
 describe UseCase::FindAssessmentsByPostcode do
   subject { described_class.new }
 
-  let(:assessments_seach_gateway) { instance_double(Gateway::AssessmentsSearchGateway) }
+  let(:assessments_search_gateway) { instance_double(Gateway::AssessmentsSearchGateway) }
   let(:assessment1) do
     Domain::AssessmentSearchResult.new(
       type_of_assessment: "RdSAP",
@@ -82,8 +82,8 @@ describe UseCase::FindAssessmentsByPostcode do
   end
 
   before do
-    allow(Gateway::AssessmentsSearchGateway).to receive(:new).and_return(assessments_seach_gateway)
-    allow(assessments_seach_gateway).to receive(:search_by_postcode).with("A0 0AA", []).and_return([assessment1, assessment2])
+    allow(Gateway::AssessmentsSearchGateway).to receive(:new).and_return(assessments_search_gateway)
+    allow(assessments_search_gateway).to receive(:search_by_postcode).with("A0 0AA", []).and_return([assessment1, assessment2])
   end
 
   describe ".execute" do
