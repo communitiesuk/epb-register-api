@@ -45,11 +45,11 @@ module UseCase
       wrapper = ViewModel::Factory.new.create(xml.to_s, schema_type)
       case type_of_assessment.upcase
       when "CEPC"
-        ViewModel::Export::CommercialExportView.new(wrapper, assessment)
+        Presenter::Export::Commercial.new(wrapper, assessment)
       when "SAP"
-        ViewModel::Export::DomesticExportView.new(wrapper, assessment)
+        Presenter::Export::Domestic.new(wrapper, assessment)
       when "RDSAP"
-        ViewModel::Export::DomesticExportView.new(wrapper, assessment)
+        Presenter::Export::Domestic.new(wrapper, assessment)
       end
     end
   end
