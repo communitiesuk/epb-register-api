@@ -60,7 +60,7 @@ describe Domain::AssessmentSearchResult do
       expect(domain.to_hash[:created_at]).to eq("2030-05-04T09:00:00Z")
     end
 
-    it "returns nil if created_at doesn't exists for lodgements prior to September 2020" do
+    it "returns nil if created_at doesn't exist for lodgements prior to September 2020" do
       args_without_created_at = arguments
       args_without_created_at[:created_at] = nil
       domain = described_class.new(args_without_created_at)
