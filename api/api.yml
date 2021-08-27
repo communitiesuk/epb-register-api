@@ -3,6 +3,9 @@ openapi: 3.0.0
 info:
   title: Energy Performance of Buildings Register API
   description: Public API for EPBR integrations
+  contact:
+    name: MHCLG Digital helpdesk (prefix email subject with "EPB")
+    email: mhclg.digital-services@communities.gov.uk
   version: 1.0.0-rc4
 
 servers:
@@ -28,6 +31,8 @@ tags:
     description: Endpoints used to migrate information from the legacy system
   - name: Green Deal
     description: Endpoints used by the Green Deal register integration, including Renewable Heat Initiative
+  - name: Reports
+    description: Endpoints providing reports, i.e. specific data views of operational interest
 
 paths:
   /schemes:
@@ -35,12 +40,14 @@ paths:
       tags:
         - Manage Schemes
       summary: Get a list of all energy assessment schemes in the register
+      description: List the energy assessment schemes
+      operationId: list-schemes
       security:
         - oauth:
             - 'scheme:list'
       parameters: []
       responses:
-        200:
+        '200':
           description: List of all schemes
           content:
             application/json:
@@ -54,7 +61,7 @@ paths:
                         type: array
                         items:
                           $ref: '#/components/schemas/Scheme'
-        403:
+        '403':
           description: Forbidden
           content:
             application/json:
@@ -64,6 +71,8 @@ paths:
       tags:
         - Manage Schemes
       summary: Add a new energy assessment scheme to the register
+      description: Add an energy assessment scheme
+      operationId: add-scheme
       security:
         - oauth:
             - 'scheme:create'
@@ -75,7 +84,7 @@ paths:
             schema:
               $ref: '#/components/schemas/SchemeBody'
       responses:
-        201:
+        '201':
           description: Scheme successfully created
           content:
             application/json:
@@ -84,19 +93,19 @@ paths:
                 properties:
                   data:
                     $ref: '#/components/schemas/Scheme'
-        400:
+        '400':
           description: Bad request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        403:
+        '403':
           description: Forbidden
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        409:
+        '409':
           description: Scheme already exists
           content:
             application/json:
@@ -122,10 +131,11 @@ paths:
       tags:
         - Manage Schemes
       description: Update a scheme
+      operationId: update-scheme
       responses:
-        204:
+        '204':
           description: Update successful
-        404:
+        '404':
           description: Scheme not found
           content:
             application/json:
@@ -150,6 +160,8 @@ paths:
       tags:
         - Manage Assessors
       summary: List a summary of assessors belonging to a scheme
+      description: List assessors for a scheme
+      operationId: list-scheme-assessors
       security:
         - oauth:
             - 'scheme:assessor:list'
@@ -161,7 +173,7 @@ paths:
           schema:
             type: integer
       responses:
-        200:
+        '200':
           description: List of assessors for a scheme
           content:
             application/json:
@@ -175,13 +187,13 @@ paths:
                         type: array
                         items:
                           $ref: '#/components/schemas/AssessorBody'
-        403:
+        '403':
           description: Forbidden
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        404:
+        '404':
           description: Scheme not found
           content:
             application/json:
@@ -193,6 +205,8 @@ paths:
       tags:
         - Manage Assessors
       summary: Get all details for an individual assessor registration
+      description: Get details for an assessor on a scheme
+      operationId: get-scheme-assessor
       security:
         - oauth:
             - 'scheme:assessor:fetch'
@@ -210,7 +224,7 @@ paths:
           schema:
             $ref: '#/components/schemas/AssessorSchemeId'
       responses:
-        200:
+        '200':
           description: Assessor found
           content:
             application/json:
@@ -219,13 +233,13 @@ paths:
                 properties:
                   data:
                     $ref: '#/components/schemas/AssessorBody'
-        403:
+        '403':
           description: Forbidden
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        404:
+        '404':
           description: Assessor not found
           content:
             application/json:
@@ -238,6 +252,8 @@ paths:
       summary: >-
         Register a new assessor to associate them with your scheme,
         or update details of an assessor already on your scheme.
+      description: Update or add an assessor
+      operationId: upsert-assessor
       security:
         - oauth:
             - 'scheme:assessor:update'
@@ -260,7 +276,7 @@ paths:
             schema:
               $ref: '#/components/schemas/AssessorBody'
       responses:
-        200:
+        '200':
           description: Existing assessor updated
           content:
             application/json:
@@ -269,7 +285,7 @@ paths:
                 properties:
                   data:
                     $ref: '#/components/schemas/AssessorBody'
-        201:
+        '201':
           description: New assessor successfully registered
           content:
             application/json:
@@ -278,25 +294,25 @@ paths:
                 properties:
                   data:
                     $ref: '#/components/schemas/AssessorBody'
-        400:
+        '400':
           description: Problem with assessor registration record
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        403:
+        '403':
           description: Forbidden
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        409:
+        '409':
           description: Assessor already exists on a different scheme
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        422:
+        '422':
           description: Assessor data is invalid
           content:
             application/json:
@@ -317,6 +333,8 @@ paths:
 
                 Clients with scope scheme:assessor:fetch can search by
                   - firstName AND lastName AND dateOfBirth'
+      description: Search for an assessor
+      operationId: search-assessors
       security:
         - oauth:
             - 'assessor:search'
@@ -358,7 +376,7 @@ paths:
           schema:
             $ref: '#/components/schemas/DateOfBirth'
       responses:
-        200:
+        '200':
           description: List of assessors matching the search criteria
           content:
             application/json:
@@ -367,13 +385,13 @@ paths:
                   - $ref: '#/components/schemas/AssessorSearchResults'
                   - $ref: '#/components/schemas/AssessorSearchByPostcodeResults'
                   - $ref: '#/components/schemas/AssessorBody'
-        400:
+        '400':
           description: Invalid query
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        403:
+        '403':
           description: Forbidden
           content:
             application/json:
@@ -392,6 +410,8 @@ paths:
                 - a street AND town
                 OR
                 - a building reference number (UPRN or RRN)'
+      description: Search for usable addresses for an assessment
+      operationId: search-addresses
       security:
         - oauth:
             - 'search:addresses'
@@ -434,13 +454,13 @@ paths:
               - DOMESTIC
               - COMMERCIAL
       responses:
-        200:
+        '200':
           description: Address search results
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/AddressSearchResults'
-        403:
+        '403':
           description: Forbidden
           content:
             application/json:
@@ -460,6 +480,7 @@ paths:
                      - a street AND town AND assessment type
                     OR
                      - an assessment reference number (RRN)'
+      operationId: search-assessments
       security:
         - oauth:
             - 'assessment:search'
@@ -495,7 +516,7 @@ paths:
             $ref: '#/components/schemas/AssessmentId'
           example: '1234-2345-3456-4567-6789'
       responses:
-        200:
+        '200':
           description: Assessment search results
           content:
             application/json:
@@ -509,13 +530,13 @@ paths:
                         type: array
                         items:
                           $ref: '#/components/schemas/EnergyAssessmentSearchResult'
-        400:
+        '400':
           description: Bad request - missing or malformed parameters
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        403:
+        '403':
           description: Forbidden
           content:
             application/json:
@@ -540,6 +561,7 @@ paths:
                     * A single <Report> for DEC recommendation report
                     * DEC and DEC-RR in a single XML payload with two <Report>
                       elements'
+      operationId: lodge-assessment
       security:
         - oauth:
             - 'assessment:lodge'
@@ -582,7 +604,7 @@ paths:
             schema:
               $ref: '#/components/schemas/Empty'
       responses:
-        201:
+        '201':
           description: New assessment(s) successfully lodged
           content:
             application/json:
@@ -611,7 +633,7 @@ paths:
                             items:
                               type: string
                             example: ["/api/assessments/9876-9876-9876-9876-9876", "/api/assessments/8765-8765-8765-8765-8765"]
-        400:
+        '400':
           description: Bad request - assessment violates lodgement rules. Re-POST to the override link to lodge anyway.
           content:
             application/json:
@@ -638,19 +660,19 @@ paths:
                           override:
                             type: string
                             example: "/assessments?override=true"
-        403:
+        '403':
           description: Forbidden
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        409:
+        '409':
           description: Assessment with that assessmentId already exists - retry with different RRN
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        500:
+        '500':
           description: Server error
 
   /assessments/{assessmentId}:
@@ -658,6 +680,8 @@ paths:
       tags:
         - Manage Assessments
       summary: Get an Energy Performance Assessment
+      description: Get an assessment's XML
+      operationId: get-assessment-xml
       security:
         - oauth:
             - 'assessment:fetch'
@@ -669,7 +693,7 @@ paths:
           schema:
             $ref: '#/components/schemas/AssessmentId'
       responses:
-        200:
+        '200':
           description: Energy Performance Assessment
           content:
             application/xml:
@@ -678,25 +702,25 @@ paths:
                 properties:
                   data:
                     $ref: '#/components/schemas/Empty'
-        400:
+        '400':
           description: Bad request - The assessmentId parameter is badly formatted
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        403:
+        '403':
           description: Forbidden
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        404:
+        '404':
           description: Assessment not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        410:
+        '410':
           description: >-
             Assessment no long accessible
             (could have been cancelled or marked not for issue)
@@ -704,7 +728,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        500:
+        '500':
           description: Server error
 
   /assessments/{assessmentId}/summary:
@@ -712,6 +736,8 @@ paths:
       tags:
         - Manage Assessments
       summary: Get assessment details in use by frontend in JSON format
+      description: Get summary of assessment for use by frontend
+      operationId: get-assessment-summary
       security:
         - oauth:
             - 'assessment:fetch'
@@ -723,7 +749,7 @@ paths:
           schema:
             $ref: '#/components/schemas/AssessmentId'
       responses:
-        200:
+        '200':
           description: Energy Performance Assessment
           content:
             application/json:
@@ -734,19 +760,19 @@ paths:
                     oneOf:
                       - $ref: '#/components/schemas/DomesticEnergyAssessmentSummary'
                       - $ref: '#/components/schemas/CommercialEnergyAssessmentSummary'
-        404:
+        '404':
           description: Assessment not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        400:
+        '400':
           description: Bad request - The assessmentId parameter is badly formatted
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        410:
+        '410':
           description: >-
             Assessment no long accessible
             (could have been cancelled or marked not for issue)
@@ -754,14 +780,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        500:
+        '500':
           description: Server error
 
   /assessments/{assessmentId}/meta-data:
     get:
       tags:
         - Manage Assessments
-      summary: Get assessment meta data attributes used by data-warehouse in JSON format
+      summary: Get assessment metadata attributes used by data-warehouse in JSON format
+      description: Get assessment metadata
+      operationId: get-assessment-metadata
       security:
         - oauth:
             - 'assessmentmetadata:fetch'
@@ -773,7 +801,7 @@ paths:
           schema:
             $ref: '#/components/schemas/AssessmentId'
       responses:
-        200:
+        '200':
           description: Energy Performance Assessment
           content:
             application/json:
@@ -782,19 +810,19 @@ paths:
                 properties:
                   data:
                     $ref: '#/components/schemas/EnergyAssessmentMetadata'
-        404:
+        '404':
           description: Assessment not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        400:
+        '400':
           description: Bad request - The assessmentId parameter is badly formatted
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        410:
+        '410':
           description: >-
             Assessment no long accessible
             (could have been cancelled or marked not for issue)
@@ -802,7 +830,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        500:
+        '500':
           description: Server error
 
   /assessments/{assessmentId}/opt-out:
@@ -810,6 +838,8 @@ paths:
       tags:
         - Manage Assessments
       summary: Mark an assessment as opted in or out from search and open data publication
+      description: Update opt-out status of an assessment
+      operationId: update-assessment-optout-status
       security:
         - oauth:
             - 'admin:opt_out'
@@ -830,7 +860,7 @@ paths:
                   type: boolean
                   example: true
       responses:
-        200:
+        '200':
           description: Confirmation of opt-out status update
           content:
             application/json:
@@ -842,13 +872,13 @@ paths:
                     example: "Your opt out request was successful"
                   meta:
                     type: object
-        400:
+        '400':
           description: Opt-out value should be a boolean
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        404:
+        '404':
           description: Assessment not found
           content:
             application/json:
@@ -860,6 +890,8 @@ paths:
       tags:
         - Manage Assessments
       summary: Update the address ID used to link this assessment with other assessments
+      description: Update the canonical address ID for an assessment
+      operationId: update-canonical-address-id
       security:
         - oauth:
             - 'admin:update-address-id'
@@ -879,7 +911,7 @@ paths:
                 addressId:
                   $ref: '#/components/schemas/AddressId'
       responses:
-        200:
+        '200':
           description: Confirmation of successful update
           content:
             application/json:
@@ -891,13 +923,13 @@ paths:
                     example: "Address ID for assessment 1234-1234-1234-1234-1234 has been updated successfully"
                   meta:
                     type: object
-        400:
+        '400':
           description: Bad request - the assessmentId or addressId is badly formatted
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        404:
+        '404':
           description: Assessment not found
           content:
             application/json:
@@ -909,6 +941,8 @@ paths:
       tags:
         - Manage Assessments
       summary: Get XML from DEC that can be used by AECOM software
+      description: Get the XML for a DEC
+      operationId: get-dec-xml
       security:
         - oauth:
             - 'dec_summary:fetch'
@@ -920,31 +954,31 @@ paths:
           schema:
             $ref: '#/components/schemas/AssessmentId'
       responses:
-        200:
+        '200':
           description: Energy Performance Assessment
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Empty'
-        404:
+        '404':
           description: Assessment not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        403:
+        '403':
           description: Assessment is not a DEC
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        400:
+        '400':
           description: Bad request - The assessmentId parameter is badly formatted
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        410:
+        '410':
           description: >-
             Assessment no long accessible
             (could have been cancelled or marked not for issue)
@@ -952,7 +986,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        500:
+        '500':
           description: Server error
 
   /assessments/{assessmentId}/status:
@@ -960,6 +994,8 @@ paths:
       tags:
         - Manage Assessments
       summary: Update the status of an assessment
+      description: Update assessment status
+      operationId: update-assessment-status
       security:
         - oauth:
             - 'assessment:lodge'
@@ -979,7 +1015,7 @@ paths:
                 status:
                   $ref: '#/components/schemas/AssessmentStatus'
       responses:
-        200:
+        '200':
           description: Assessment report status updated
           content:
             application/json:
@@ -991,13 +1027,13 @@ paths:
                     properties:
                       status:
                         $ref: '#/components/schemas/AssessmentStatus'
-        400:
+        '400':
           description: Bad request - assessmentId parameter was badly formatted
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        403:
+        '403':
           description: >-
             Forbidden - the assessment with that assessmentId does not
             belong to your scheme
@@ -1005,13 +1041,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        404:
+        '404':
           description: Assessment with that assessmentId not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        410:
+        '410':
           description: >-
             Assessment with that assessmentId has already been
             cancelled or marked not for issue
@@ -1019,7 +1055,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        500:
+        '500':
           description: Server error
 
   /reports/{schemeId}/assessors/status:
@@ -1030,6 +1066,8 @@ paths:
         summary: >-
           Report of assessors who were suspended and struck off on a particular
           day filtered by matching a last name and date of birth to an assessor registered by the queuing scheme
+        description: Get report of assessors who were struck off on a particular day
+        operationId: get-assessor-status-report
         security:
           - oauth:
               - 'report:assessor:status'
@@ -1049,7 +1087,7 @@ paths:
               format: date
               example: '2020-01-30'
         responses:
-          200:
+          '200':
             description: Report returned successfully
             content:
               application/json:
@@ -1063,13 +1101,13 @@ paths:
                           type: array
                           items:
                             $ref: '#/components/schemas/AssessorQualificationChangeEvent'
-          403:
+          '403':
             description: Forbidden
             content:
               application/json:
                 schema:
                   $ref: '#/components/schemas/ErrorResponse'
-          404:
+          '404':
             description: Report not found, likely because the date is in the future
             content:
               application/json:
@@ -1083,6 +1121,8 @@ paths:
         - Reports
       summary: >-
         Look up energy assessor records to check all scheme registrations
+      description: Look up scheme assessor entries for an individual
+      operationId: lookup-assessors-across-schemes
       security:
         - oauth:
             - 'report:assessor:status'
@@ -1100,7 +1140,6 @@ paths:
           description: The last name of the assessor
           schema:
             type: string
-            format: date
             example: 'James'
         - in: query
           name: dateOfBirth
@@ -1111,7 +1150,7 @@ paths:
             format: date
             example: '1971-08-18'
       responses:
-        200:
+        '200':
           description: >-
             Assessor registration list successfully returned
             (an empty list is returned if there are no matching assessors)
@@ -1119,13 +1158,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AssessorSearchResults'
-        400:
+        '400':
           description: Bad request - probably a missing or badly formed parameter
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        403:
+        '403':
           description: Forbidden
           content:
             application/json:
@@ -1138,6 +1177,8 @@ paths:
         - Green Deal
       summary: 'Get the Green Deal details from the assessment with reference
                 {assessmentId}'
+      description: Get any Green Deals against an assessment
+      operationId: get-assessment-green-deals
       security:
         - oauth:
             - 'greendeal:plans'
@@ -1149,7 +1190,7 @@ paths:
           schema:
             $ref: '#/components/schemas/AssessmentId'
       responses:
-        200:
+        '200':
           description: Green Deal Energy Performance data
           content:
             application/json:
@@ -1161,31 +1202,31 @@ paths:
                     properties:
                       assessment:
                         $ref: '#/components/schemas/AssessmentGreenDealDetails'
-        400:
+        '400':
           description: The assessmentId parameter is badly formatted
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        403:
+        '403':
           description: Forbidden
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        404:
+        '404':
           description: Assessment not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        410:
+        '410':
           description: Gone - Assessment with ID assessmentId exists but has been cancelled/marked not for issue
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        500:
+        '500':
           description: Server error
 
   /greendeal/assessments/{assessmentId}/xml:
@@ -1211,6 +1252,8 @@ paths:
                 <Address>
                 <Related-Party-Disclosure>
                 <Insurance-Details>'
+      description: Get RdSAP assessment XML with sensitive nodes redacted
+      operationId: get-redacted-assessment-xml
       security:
         - oauth:
             - 'greendeal:plans'
@@ -1222,7 +1265,7 @@ paths:
           schema:
             $ref: '#/components/schemas/AssessmentId'
       responses:
-        200:
+        '200':
           description: Green Deal redacted EPC XML data
           content:
             application/xml:
@@ -1231,33 +1274,33 @@ paths:
                 properties:
                   data:
                     $ref: '#/components/schemas/Empty'
-        400:
+        '400':
           description: 'The assessmentId parameter is badly formatted, or does
                         not relate to an RdSAP assessment'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        403:
+        '403':
           description: Forbidden
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        404:
+        '404':
           description: Assessment not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        410:
+        '410':
           description: 'Gone - Assessment with ID assessmentId exists but has
                         been cancelled/marked not for issue'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        500:
+        '500':
           description: Server error
 
   /greendeal/rhi/assessments/{assessmentId}/latest:
@@ -1267,6 +1310,8 @@ paths:
       summary: 'Get the RHI details of the most recent Energy Performance
                 Assessment for the address of the assessment with reference
                 {assessmentId}'
+      description: Get RHI details for assessment address's most recent assessment
+      operationId: get-latest-rhi
       security:
         - oauth:
             - 'greendeal:plans'
@@ -1278,7 +1323,7 @@ paths:
           schema:
             $ref: '#/components/schemas/AssessmentId'
       responses:
-        200:
+        '200':
           description: RHI Energy Performance data
           content:
             application/json:
@@ -1290,31 +1335,31 @@ paths:
                     properties:
                       assessment:
                         $ref: '#/components/schemas/AssessmentRHIDetails'
-        400:
+        '400':
           description: The assessmentId parameter is badly formatted
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        403:
+        '403':
           description: Forbidden
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        404:
+        '404':
           description: Assessment with this ID not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        410:
+        '410':
           description: Assessment with this ID exists but has been CANCELLED
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        500:
+        '500':
           description: Server error
 
   /greendeal/disclosure/assessments/{assessmentId}/plans:
@@ -1323,6 +1368,8 @@ paths:
         - Green Deal
       summary: 'Disclose new live Green Deal plan to appear on EPC with RRN
                 {assessmentId}'
+      description: Accept disclosure of new live Green Deal plan against assessment
+      operationId: accept-green-deal-disclosure
       security:
         - oauth:
             - 'greendeal:plans'
@@ -1341,7 +1388,7 @@ paths:
             schema:
               $ref: '#/components/schemas/GreenDealPlan'
       responses:
-        201:
+        '201':
           description: Green Deal disclosure successfully added
           content:
             application/json:
@@ -1350,37 +1397,37 @@ paths:
                 properties:
                   data:
                     $ref: '#/components/schemas/GreenDealPlan'
-        400:
+        '400':
           description: Problem with Green Deal record request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        403:
+        '403':
           description: Forbidden
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        404:
+        '404':
           description: Energy assessment with RRN assessmentId can not be found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        409:
+        '409':
           description: Plan with the submitted ID already exists
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        410:
+        '410':
           description: Assessment has been cancelled or not for issue
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        500:
+        '500':
           description: Server error
 
   /greendeal/disclosure/plans/{planId}:
@@ -1388,6 +1435,8 @@ paths:
       tags:
         - Green Deal
       summary: 'Update an existing Green Deal plan'
+      description: Update a Green Deal plan
+      operationId: update-green-deal-plan
       security:
         - oauth:
             - 'greendeal:plans'
@@ -1406,7 +1455,7 @@ paths:
             schema:
               $ref: '#/components/schemas/GreenDealPlan'
       responses:
-        200:
+        '200':
           description: Green Deal disclosure successfully updated
           content:
             application/json:
@@ -1415,36 +1464,38 @@ paths:
                 properties:
                   data:
                     $ref: '#/components/schemas/GreenDealPlan'
-        400:
+        '400':
           description: Problem with Green Deal record request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        403:
+        '403':
           description: Forbidden
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        404:
+        '404':
           description: Green Deal plan with ID planId can not be found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        409:
+        '409':
           description: Identifier in request body doesn't match the planId in the URL
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        500:
+        '500':
           description: Server error
     delete:
       tags:
         - Green Deal
       summary: 'Delete an existing Green Deal plan'
+      description: Delete an existing Green Deal plan
+      operationId: delete-green-deal-plan
       security:
         - oauth:
             - 'greendeal:plans'
@@ -1456,28 +1507,30 @@ paths:
           schema:
             $ref: '#/components/schemas/GreenDealPlanId'
       responses:
-        204:
+        '204':
           description: Green Deal disclosure successfully deleted
-        403:
+        '403':
           description: Forbidden
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        404:
+        '404':
           description: Green Deal plan with ID planId can not be found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        500:
+        '500':
           description: Server error
 
   /reports/assessments/region-and-type:
     get:
       tags:
-        - Reporting
+        - Reports
       summary: 'Gets the data regarding matching postcodes to regions'
+      description: Get region and type assessment data
+      operationId: get-region-and-type-report
       security:
         - oauth:
             - 'reporting:assessment_by_type_and_region'
@@ -1499,26 +1552,28 @@ paths:
             format: date
             example: '2020-12-01'
       responses:
-        200:
+        '200':
           description: ONS postcodes
           content:
             text/csv: {}
-        403:
+        '403':
           description: Forbidden
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        500:
+        '500':
           description: Server error
 
   /reports/assessments/scheme-and-type:
     get:
       tags:
-        - Reporting
+        - Reports
       summary: >-
         Creates a report of the number of assessments lodged between
         two dates broken down by assessment type and lodging scheme
+      description: Get report of assessment counts split by type and scheme
+      operationId: get-assessment-counts-by-scheme-and-type-report
       security:
         - oauth:
             - 'reporting:assessment_by_scheme_and_type'
@@ -1540,7 +1595,7 @@ paths:
             format: date
             example: '2020-12-01'
       responses:
-        200:
+        '200':
           description: Report of lodgements by type and scheme
           content:
             text/csv:
@@ -1557,21 +1612,23 @@ paths:
                 1,test scheme,DEC-RR
                 1,test scheme,RdSAP
                 1,test scheme,SAP
-        403:
+        '403':
           description: Forbidden
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        500:
+        '500':
           description: Server error
 
   /reports/assessments/scheme-and-type/rrn:
     get:
       tags:
-        - Reporting
+        - Reports
       summary: >-
         Creates a report of lodgements made by each assessor scheme used for invoicing
+      description: Get a report of lodgements by scheme
+      operationId: get-assessments-by-scheme-report
       security:
         - oauth:
             - 'reporting:assessment_by_scheme_and_type'
@@ -1598,10 +1655,9 @@ paths:
           description: 'Filter by scheme id'
           schema:
             type: integer
-            format: string
-            example: '1'
+            example: 1
       responses:
-        200:
+        '200':
           description: Report of lodgements by type and scheme
           content:
             text/csv:
@@ -1612,13 +1668,13 @@ paths:
                 0000-0000-0000-0000-0003,Elmhurst Energy Systems Ltd,RdSAP,,2021-07-01 00:07:17 UTC
                 0000-0000-0000-0000-0004,Stroma Certification Ltd,RdSAP,,2021-07-01 00:07:20 UTC
                 0000-0000-0000-0000-0004,Elmhurst Energy Systems Ltd,RdSAP,,2021-07-01 00:08:13 UTC
-        403:
+        '403':
           description: Forbidden
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        500:
+        '500':
           description: Server error
 
 components:
@@ -1669,9 +1725,6 @@ components:
           $ref: '#/components/schemas/AddressTown'
         postcode:
           $ref: '#/components/schemas/AddressPostcode'
-
-    AddressBody:
-      $ref: '#/components/schemas/Address'
 
     AddressDetail:
       allOf:
