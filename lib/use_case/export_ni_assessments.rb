@@ -17,8 +17,7 @@ module UseCase
             xml_data[:schema_type],
             assessment["assessment_id"],
           )
-        # TODO: when new view model gem is released, change .to_hash method to .to_hash_ni and update expectations
-        view_model_data = view_model.to_hash
+        view_model_data = view_model.to_hash_ni
         combined_data = view_model_data.merge(assessment.symbolize_keys)
         assessments_array << combined_data
       end

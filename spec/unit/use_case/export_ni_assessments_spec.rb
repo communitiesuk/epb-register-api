@@ -31,10 +31,10 @@ describe UseCase::ExportNiAssessments do
       expect { subject.execute(%w[RdSAP SAP]) }.not_to raise_error
     end
 
-    it "returns a single hash in an array " do
+    it "returns a single hash in an array that include the nodes from both to_hash_ni and the database " do
       expect(subject.execute(%w[RdSAP SAP]).first).to match a_hash_including(
         assessment_id: "0000-0000-0000-0000-0000",
-        address_line1: "1 Some Street",
+        address1: "1 Some Street",
         lodgement_date: "2020-05-04",
         lodgement_datetime: "2021-02-22 00:00:00",
         uprn: "UPRN-000000000001",
