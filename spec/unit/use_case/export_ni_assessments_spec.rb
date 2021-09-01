@@ -39,8 +39,7 @@ describe UseCase::ExportNiAssessments do
         lodgement_datetime: "2021-02-22 00:00:00",
         uprn: "UPRN-000000000001",
         opt_out: false,
-        cancelled: false
-
+        cancelled: false,
       )
     end
   end
