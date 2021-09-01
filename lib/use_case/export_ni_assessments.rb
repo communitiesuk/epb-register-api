@@ -19,6 +19,7 @@ module UseCase
           )
         view_model_data = view_model.to_hash_ni
         combined_data = view_model_data.merge(assessment.symbolize_keys)
+
         assessments_array << combined_data
       end
       assessments_array

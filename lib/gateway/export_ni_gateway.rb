@@ -8,7 +8,7 @@ module Gateway
       a.created_at as lodgement_datetime,
       CASE WHEN UPPER(aa.address_id) NOT LIKE 'UPRN-%' THEN null ELSE
       aa.address_id END as uprn,
-      opt_out,
+     CASE WHEN opt_out IS NULL THEN false else opt_out end as opt_out,
         CASE WHEN cancelled_at IS NOT NULL OR  not_for_issue_at IS NOT NULL THEN true ELSE false end as cancelled
       FROM assessments a
       INNER JOIN assessments_xml ax USING(assessment_id)

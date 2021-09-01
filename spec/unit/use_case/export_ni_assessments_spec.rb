@@ -15,7 +15,7 @@ describe UseCase::ExportNiAssessments do
     before do
       domestic_ni_sap_xml = Nokogiri.XML Samples.xml("SAP-Schema-NI-18.0.0")
       allow(ni_gateway).to receive(:fetch_assessments).with(%w[RdSAP SAP]).and_return([
-        { "assessment_id" => "0000-0000-0000-0000-0000", "lodgement_date" => "2020-05-04", "lodgement_datetime" => "2021-02-22 00:00:00", "uprn" => "UPRN-000000000001" },
+        { "assessment_id" => "0000-0000-0000-0000-0000", "lodgement_date" => "2020-05-04", "lodgement_datetime" => "2021-02-22 00:00:00", "uprn" => "UPRN-000000000001", "opt_out" => false, "cancelled" => false },
         { "assessment_id" => "8888-0000-0000-0000-0002", "lodgement_date" => "2020-05-04", "lodgement_datetime" => "2021-02-22 00:00:00", "uprn" => "UPRN-000000000000" },
         { "assessment_id" => "9999-0000-0000-0000-0000", "lodgement_date" => "2020-05-04", "lodgement_datetime" => "2021-02-22 00:00:00", "uprn" => nil },
       ])
@@ -38,6 +38,9 @@ describe UseCase::ExportNiAssessments do
         lodgement_date: "2020-05-04",
         lodgement_datetime: "2021-02-22 00:00:00",
         uprn: "UPRN-000000000001",
+        opt_out: false,
+        cancelled: false
+
       )
     end
   end
