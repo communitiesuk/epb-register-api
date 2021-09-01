@@ -86,18 +86,26 @@ describe Gateway::ExportNiGateway do
         [{ "assessment_id" => "0000-0000-0000-0000-0000",
            "lodgement_date" => "2020-05-04",
            "lodgement_datetime" => "2021-02-22 00:00:00",
-           "uprn" => "UPRN-000000000000" },
+           "uprn" => "UPRN-000000000000",
+            "opt_out" => false,
+            "cancelled" => false
+            },
          { "assessment_id" => "0000-0000-0000-0000-0002",
            "lodgement_date" => "2020-05-04",
            "lodgement_datetime" => "2021-02-22 00:00:00",
-           "uprn" => nil }]
+           "uprn" => nil,
+           "opt_out" => false,
+           "cancelled" => false
+         }]
       end
 
       let(:commercial_expectation) do
         [{ "assessment_id" => "9000-0000-0000-0000-1019",
            "lodgement_date" => "2020-05-04",
            "lodgement_datetime" => "2021-02-22 00:00:00",
-           "uprn" => "UPRN-000000000001" }]
+           "uprn" => "UPRN-000000000001",
+           "opt_out" => false,
+           "cancelled" => false }]
       end
 
       it "exports only domestic certificates that have a BT postcode and a NI schema" do
@@ -107,6 +115,78 @@ describe Gateway::ExportNiGateway do
       it "exports only commercial certificates that have a BT postcode and a NI schema" do
         expect(subject.fetch_assessments("CEPC")).to eq(commercial_expectation)
       end
+
+      context "when a certificate is opted out" do
+        before do
+          ActiveRecord::Base.connection.exec_query("UPDATE assessments SET opt_out = true WHERE assessment_id = '0000-0000-0000-0000-0002'")
+        end
+
+        let(:results) {
+          subject.fetch_assessments(%w[RdSAP SAP]).sort_by! { |k| k["assessment_id"] }
+
+        }
+
+        it 'return false for the 1st row which was not opted out' do
+          expect(results.first["opt_out"]).to eq(false)
+        end
+
+        it 'return true for 2nd row which was opted out' do
+          expect(results[1]["opt_out"]).to eq(true)
+        end
+
+      end
+
+      context "when a certificate is cancelled" do
+        before do
+          ActiveRecord::Base.connection.exec_query("UPDATE assessments SET cancelled_at = Now() WHERE assessment_id = '0000-0000-0000-0000-0002'")
+        end
+
+        let(:results) {
+          subject.fetch_assessments(%w[RdSAP SAP]).sort_by! { |k| k["assessment_id"] }
+
+        }
+
+        it 'return false for the 1st row which was not cancelled' do
+          expect(results.first["cancelled"]).to eq(false)
+        end
+
+        it 'return true for 2nd row which has been cancelled' do
+          expect(results[1]["cancelled"]).to eq(true)
+        end
+
+      end
+
+      context "when a certificate is not for issue" do
+        before do
+          ActiveRecord::Base.connection.exec_query("UPDATE assessments SET not_for_issue_at = Now() WHERE assessment_id = '0000-0000-0000-0000-0000'")
+          ActiveRecord::Base.connection.exec_query("UPDATE assessments SET cancelled_at = Now() WHERE assessment_id = '0000-0000-0000-0000-0002'")
+        end
+
+        let!(:results) {
+          subject.fetch_assessments(%w[RdSAP SAP]).sort_by! { |k| k["assessment_id"] }
+        }
+
+        let!(:commercial_results){
+          subject.fetch_assessments("CEPC")
+        }
+
+        it 'return true for the 1st row which was been opted out' do
+          expect(results.first["cancelled"]).to eq(true)
+        end
+
+        it 'return true for 2nd which was cancelled' do
+          expect(results[1]["cancelled"]).to eq(true)
+        end
+
+        it "returns false for commercial certificate opt out " do
+          expect(commercial_results.first["opt_out"]).to eq(false)
+        end
+
+        it "returns false for commercial certificate cancelled " do
+          expect(commercial_results.first["cancelled"]).to eq(false)
+        end
+      end
+
     end
   end
 end
