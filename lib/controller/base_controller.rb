@@ -8,11 +8,7 @@ require "csv"
 
 module Controller
   class BaseController < Sinatra::Base
-    attr_reader :toggles
-
-    @toggles = nil
-
-    def initialize(toggles = false)
+    def initialize(*args)
       super
       @xml_helper = Helper::XmlHelper.new
       @json_helper = Helper::JsonHelper.new
