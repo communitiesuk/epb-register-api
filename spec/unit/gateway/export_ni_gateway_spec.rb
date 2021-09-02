@@ -130,6 +130,11 @@ describe Gateway::ExportNiGateway do
         it "return true for 2nd row which was opted out" do
           expect(results[1]["opt_out"]).to eq(true)
         end
+
+        it "updates the opt_out value to false when it is null" do
+          ActiveRecord::Base.connection.exec_query("UPDATE assessments SET opt_out = null WHERE assessment_id = '0000-0000-0000-0000-0002'")
+          expect(results[1]["opt_out"]).to eq(false)
+        end
       end
 
       context "when a certificate is cancelled" do
