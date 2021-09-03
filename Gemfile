@@ -22,6 +22,7 @@ source "https://rubygems.org" do
     gem "rspec", "~>3.10"
     gem "timecop", "~> 0.9.4"
     gem "webmock", "~> 3.14"
+    gem "wisper-rspec", "~> 1.0", ">= 1.0.1"
   end
 
   gem "aws-sdk-s3", "~> 1.102"
@@ -42,5 +43,6 @@ source "https://rubygems.org" do
   gem "sinatra-activerecord", "~> 2.0.23"
   gem "sinatra-cross_origin", "~> 0.4.0"
   gem "unleash", "~> 3.2.2"
+  gem "wisper", "~> 2.0", ">= 2.0.1"
   gem "zeitwerk", "~> 2.4.1"
 end

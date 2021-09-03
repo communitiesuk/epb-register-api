@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
+require "wisper"
+
 module UseCase
   class LodgeAssessment
+    include Wisper::Publisher
+
     class InactiveAssessorException < StandardError
     end
 
@@ -86,6 +90,8 @@ module UseCase
           schema_type: schema_name,
         },
       )
+
+      broadcast(:assessment_lodged, assessment.assessment_id)
 
       assessment
     end

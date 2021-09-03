@@ -220,5 +220,9 @@ describe UseCase::LodgeAssessment do
         },
       )
     end
+
+    it "broadcasts the assessment lodged event" do
+      expect { use_case.execute(data, true, "RdSAP-Schema-20.0.0") }.to broadcast(:assessment_lodged)
+    end
   end
 end

@@ -63,7 +63,9 @@ class ApiFactory
   end
 
   def self.lodge_assessment_use_case
-    @lodge_assessment_use_case ||=
+    return @lodge_assessment_use_case unless @lodge_assessment_use_case.nil?
+
+    @lodge_assessment_use_case =
       UseCase::LodgeAssessment.new(
         assessments_gateway: assessments_gateway,
         assessments_search_gateway: assessments_search_gateway,
@@ -74,6 +76,11 @@ class ApiFactory
         related_assessments_gateway: related_assessments_gateway,
         green_deal_plans_gateway: green_deal_plans_gateway,
       )
+    @lodge_assessment_use_case.subscribe(
+      Listener::NotifyNewAssessmentToDataWarehouse.new(
+        notify_use_case: notify_new_assessment_to_data_warehouse_use_case,
+      ),
+    )
   end
 
   def self.validate_assessment_use_case
@@ -88,6 +95,10 @@ class ApiFactory
   def self.export_not_for_publication_use_case
     @export_not_for_publication_use_case ||=
       UseCase::ExportOpenDataNotForPublication.new(reporting_gateway)
+  end
+
+  def self.notify_new_assessment_to_data_warehouse_use_case
+    @notify_new_assessment_to_data_warehouse_use_case ||= UseCase::NotifyNewAssessmentToDataWarehouse.new(redis_gateway: redis_gateway)
   end
 
   def self.storage_configuration_reader(bucket_name:, instance_name:)
@@ -105,5 +116,9 @@ class ApiFactory
           instance_name: instance_name,
         ).get_configuration,
     )
+  end
+
+  def self.redis_gateway
+    @redis_gateway ||= Gateway::RedisGateway.new
   end
 end

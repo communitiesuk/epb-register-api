@@ -13,6 +13,7 @@ require "rspec"
 require "sinatra/activerecord"
 require "timecop"
 require "webmock"
+require "wisper/rspec/matchers"
 require "zeitwerk"
 require "webmock/rspec"
 
@@ -255,6 +256,8 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 
+  config.include Wisper::RSpec::BroadcastMatcher
+
   config.shared_context_metadata_behavior = :apply_to_host_groups
 
   config.before(:suite) do
@@ -264,6 +267,8 @@ RSpec.configure do |config|
     fuel_price_mock = GreenDealFuelDataMock.new
     Rake::Task["maintenance:green_deal_update_fuel_data"].invoke
     fuel_price_mock.disable
+
+    Gateway::RedisGateway.redis_client_class = MockRedis
   end
 
   config.before(:all, set_with_timecop: true) { Timecop.freeze(Time.utc(2021, 6, 21)) }

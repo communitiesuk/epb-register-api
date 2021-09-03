@@ -11,7 +11,7 @@ describe Gateway::RedisGateway do
     it "can push assessment ids to an empty queue" do
       gateway.push_to_queue("assessments", ids)
 
-      expect(gateway.redis.lrange("assessments", 0, -1).reverse).to eq(ids)
+      expect(redis.lrange("assessments", 0, -1).reverse).to eq(ids)
     end
   end
 end
