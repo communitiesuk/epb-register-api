@@ -12,8 +12,8 @@ describe "Acceptance::Reports::OpenDataExport" do
     gateway.fetch_latest_statistics
   end
 
-  context "When an assessment is lodged" do
-    context "And it is a domestic assessment" do
+  context "when an assessment is lodged" do
+    context "when it is a domestic assessment" do
       before do
         add_postcodes("A0 0AA", 51.5045, 0.0865, "London")
         add_outcodes("A0", 51.5045, 0.4865, "London")
@@ -68,8 +68,8 @@ describe "Acceptance::Reports::OpenDataExport" do
         )
       end
 
-      context "Then it calls the use case to extract the data" do
-        context "for the domestic certificates" do
+      context "when it calls the use case to extract the data" do
+        context "with the domestic certificates" do
           let(:use_case) { UseCase::ExportOpenDataDomestic.new }
           let(:csv_data) do
             Helper::ExportHelper.to_csv(
@@ -110,7 +110,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           end
         end
 
-        context "for the domestic recommendation reports" do
+        context "with the domestic recommendation reports" do
           let(:use_case) { UseCase::ExportOpenDataDomesticrr.new }
           let(:csv_data) do
             Helper::ExportHelper.to_csv(
@@ -153,8 +153,8 @@ describe "Acceptance::Reports::OpenDataExport" do
         end
       end
 
-      context "Then we invoke the Open Data Communities export Rake directly" do
-        context "And we set the correct environment variables to send the certificate data to S3" do
+      context "when we invoke the Open Data Communities export Rake directly" do
+        context "when we set the correct environment variables to send the certificate data to S3" do
           let(:fixture_csv) { read_csv_fixture("domestic") }
 
           before do
@@ -198,7 +198,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           end
         end
 
-        context "And we set correct environment variables to send the recommendation report data to S3" do
+        context "when we set correct environment variables to send the recommendation report data to S3" do
           before do
             EnvironmentStub
               .all
@@ -227,7 +227,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       end
     end
 
-    context "And it is a commercial/non-domestic assessment" do
+    context "when it is a commercial/non-domestic assessment" do
       before do
         add_postcodes("A0 0AA", 51.5045, 0.0865, "London")
         add_outcodes("A0", 51.5045, 0.4865, "London")
@@ -298,8 +298,8 @@ describe "Acceptance::Reports::OpenDataExport" do
         )
       end
 
-      context "Then it calls the use case to extract the data" do
-        context "for the commercial/non-domestic certificates" do
+      context "when it calls the use case to extract the data" do
+        context "with the commercial/non-domestic certificates" do
           let(:use_case) { UseCase::ExportOpenDataCommercial.new }
 
           let(:csv_data) do
@@ -346,7 +346,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           end
         end
 
-        context "for the commercial/non Domestic recommendation reports" do
+        context "with the commercial/non Domestic recommendation reports" do
           let(:use_case) { UseCase::ExportOpenDataCepcrr.new }
           let(:csv_data) do
             Helper::ExportHelper.to_csv(
@@ -371,8 +371,8 @@ describe "Acceptance::Reports::OpenDataExport" do
         end
       end
 
-      context "Then we invoke the Open Data Communities export Rake directly" do
-        context "And we set the correct environment variables to send the certificate data to S3" do
+      context "when we invoke the Open Data Communities export Rake directly" do
+        context "when we set the correct environment variables to send the certificate data to S3" do
           before do
             EnvironmentStub
               .all
@@ -398,7 +398,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           end
         end
 
-        context "Set the correct environment variables invoke the task to send the recommendation report data to S3" do
+        context "when setting the correct environment variables invoke the task to send the recommendation report data to S3" do
           before do
             EnvironmentStub
               .all
@@ -427,7 +427,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       end
     end
 
-    context "And it is a DEC assessment" do
+    context "when it is a DEC assessment" do
       before do
         add_postcodes("A0 0AA", 51.5045, 0.0865, "London")
         add_outcodes("A0", 51.5045, 0.4865, "London")
@@ -496,8 +496,8 @@ describe "Acceptance::Reports::OpenDataExport" do
         )
       end
 
-      context "Then it calls the use case to extract the data" do
-        context "for the DEC certificates" do
+      context "when it calls the use case to extract the data" do
+        context "with the DEC certificates" do
           let(:dec_use_case) { UseCase::ExportOpenDataDec.new }
           let(:first_dec_asssement) do
             parsed_exported_data.find do |item|
@@ -521,19 +521,6 @@ describe "Acceptance::Reports::OpenDataExport" do
 
           let(:fixture_csv) { read_csv_fixture("dec") }
 
-          let(:second_dec_asssement) do
-            parsed_exported_data.find do |item|
-              item["ASSESSMENT_ID"] ==
-                "427ad45e88b1183572234b464ba07b37348243d120db1c478da42eda435e48e4"
-            end
-          end
-          let(:first_dec_asssement) do
-            parsed_exported_data.find do |item|
-              item["ASSESSMENT_ID"] ==
-                "36ae715ec66a32ed9ffcd7fe9a2c44d91dec1d72ee26263c17f354167be8dd4b"
-            end
-          end
-
           it "returns the data exported to a csv object to match the .csv fixture " do
             expect(parsed_exported_data.headers - fixture_csv.headers).to eq([])
             expect(parsed_exported_data.length).to eq(fixture_csv.length)
@@ -554,7 +541,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           end
         end
 
-        context "for the DEC recommendation reports" do
+        context "with the DEC recommendation reports" do
           let(:use_case) { UseCase::ExportOpenDataDecrr.new }
           let(:csv_data) do
             Helper::ExportHelper.to_csv(
@@ -582,8 +569,8 @@ describe "Acceptance::Reports::OpenDataExport" do
         end
       end
 
-      context "Then we invoke the Open Data Communities export Rake directly" do
-        context "And we set the correct environment variables to send the certificate data to S3" do
+      context "when we invoke the Open Data Communities export Rake directly" do
+        context "when we set the correct environment variables to send the certificate data to S3" do
           before do
             EnvironmentStub
               .all
@@ -615,7 +602,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           end
         end
 
-        context "And we set correct environment variables to send the recommendation report data to S3" do
+        context "when we set correct environment variables to send the recommendation report data to S3" do
           before do
             EnvironmentStub
               .all
@@ -644,8 +631,8 @@ describe "Acceptance::Reports::OpenDataExport" do
     end
   end
 
-  context "When invoking the Open Data Communities export rake directly" do
-    context "And we invoke with incorrect arguments" do
+  context "when invoking the Open Data Communities export rake directly" do
+    context "when we invoke with incorrect arguments" do
       it "raises an error when type of export is not provided" do
         expected_message =
           "A required argument is missing: type_of_export. You  must specify 'for_odc' or 'not_for_odc'"
@@ -680,7 +667,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       end
     end
 
-    context "And we set the correct arguments and a date_from equivalent to now" do
+    context "when we set the correct arguments and a date_from equivalent to now" do
       it "returns a no data to export error" do
         assessment_type = "SAP-RDSAP"
         date_from = DateTime.now.strftime("%F")
@@ -699,7 +686,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       end
     end
 
-    context "And we set the correct arguments and a date range with no assessments" do
+    context "when we set the correct arguments and a date range with no assessments" do
       it "returns a no data to export error" do
         assessment_type = "SAP-RDSAP"
         date_from = "2018-12-01"

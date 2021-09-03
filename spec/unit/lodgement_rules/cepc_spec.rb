@@ -48,7 +48,7 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
     end
   end
 
-  context "DATES_CANT_BE_IN_FUTURE" do
+  context "when dates for assessment are in the future" do
     let(:error) do
       {
         "code": "DATES_CANT_BE_IN_FUTURE",
@@ -86,7 +86,7 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
     end
   end
 
-  context "DATES_CANT_BE_MORE_THAN_4_YEARS_AGO" do
+  context "when dates are from more than 4 years ago" do
     let(:error) do
       {
         "code": "DATES_CANT_BE_MORE_THAN_4_YEARS_AGO",
@@ -111,7 +111,7 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
     end
   end
 
-  context "FLOOR_AREA_CANT_BE_LESS_THAN_ZERO" do
+  context "when floor area is less than zero" do
     let(:error) do
       {
         "code": "FLOOR_AREA_CANT_BE_LESS_THAN_ZERO",
@@ -136,7 +136,7 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
     end
   end
 
-  context "EMISSION_RATINGS_MUST_NOT_BE_NEGATIVE" do
+  context "when emission ratings are negative" do
     let(:error) do
       {
         "code": "EMISSION_RATINGS_MUST_NOT_BE_NEGATIVE",
@@ -161,7 +161,7 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
     end
   end
 
-  context "MUST_RECORD_TRANSACTION_TYPE" do
+  context "when transaction type is 7" do
     let(:error) do
       {
         "code": "MUST_RECORD_TRANSACTION_TYPE",
@@ -174,7 +174,7 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
     end
   end
 
-  context "MUST_RECORD_EPC_DISCLOSURE" do
+  context "when EPC related party disclosure is 13" do
     let(:error) do
       {
         "code": "MUST_RECORD_EPC_DISCLOSURE",
@@ -187,7 +187,7 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
     end
   end
 
-  context "MUST_RECORD_ENERGY_TYPE" do
+  context "when energy type is 4" do
     let(:error) do
       {
         "code": "MUST_RECORD_ENERGY_TYPE",

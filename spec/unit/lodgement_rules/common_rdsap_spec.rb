@@ -24,7 +24,7 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
     end
   end
 
-  it "Returns an empty list for a valid file" do
+  it "returns an empty list for a valid file" do
     docs_under_test.each do |doc|
       wrapper =
         ViewModel::Factory.new.create(
@@ -38,7 +38,7 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
     end
   end
 
-  context "MUST_HAVE_HABITABLE_ROOMS" do
+  context "when the habitable room count has an illegal value" do
     let(:error) do
       {
         "code": "MUST_HAVE_HABITABLE_ROOMS",
@@ -60,7 +60,7 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
     end
   end
 
-  context "RATINGS_MUST_BE_POSITIVE" do
+  context "when energy ratings and environmental impacts are zero" do
     let(:error) do
       {
         "code": "RATINGS_MUST_BE_POSITIVE",
@@ -86,7 +86,7 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
     end
   end
 
-  context "MUST_HAVE_DESCRIPTION" do
+  context "when an element that needs a description is missing one" do
     let(:error) do
       {
         "code": "MUST_HAVE_DESCRIPTION",
@@ -138,7 +138,7 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
     end
   end
 
-  context "SAP_FLOOR_AREA_RANGE" do
+  context "when floor area has an illegal value" do
     let(:error) do
       {
         "code": "SAP_FLOOR_AREA_RANGE",
@@ -168,7 +168,7 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
     end
   end
 
-  context "GROUND_FLOOR_HEAT_LOSS_ON_UPPER_FLOOR" do
+  context "when 'Level' is greater than 1 and 'Building-Part-Number' is 1" do
     let(:error) do
       {
         "code": "GROUND_FLOOR_HEAT_LOSS_ON_UPPER_FLOOR",
@@ -177,7 +177,7 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
       }.freeze
     end
 
-    it "returns an error when the described scenario is triggered" do
+    it "returns an error when the described scenario is triggered (Floor-Heat-Loss being given as 7)" do
       assert_errors(
         [error],
         { "Level": "2", "Building-Part-Number": "1", "Floor-Heat-Loss": "7" },
@@ -185,7 +185,7 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
     end
   end
 
-  context "SUPPLY_IMMERSION_HEATER_TYPE" do
+  context "when 'Water-Heating-Code' has a value of 903" do
     let(:error) do
       {
         "code": "SUPPLY_IMMERSION_HEATER_TYPE",
@@ -194,7 +194,7 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
       }.freeze
     end
 
-    it "returns an error when the described scenario is triggered" do
+    it "returns an error when the described scenario is triggered (Immersion-Heating-Type is 'NA')" do
       assert_errors(
         [error],
         { "Water-Heating-Code": "903", "Immersion-Heating-Type": "NA" },
@@ -202,7 +202,7 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
     end
   end
 
-  context "SUPPLY_BOILER_FLUE_TYPE" do
+  context "when 'Main-Heating-Category' is 2 and 'Main-Fuel-Type' is 17, 18, 26, 27, 28, 34, 35, 36, 37 or 51" do
     let(:error) do
       {
         "code": "SUPPLY_BOILER_FLUE_TYPE",
@@ -234,7 +234,7 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
     end
   end
 
-  context "DATES_IN_RANGE" do
+  describe "date scenarios" do
     let(:rule_under_test_error) do
       {
         "code": "DATES_IN_RANGE",
@@ -282,7 +282,7 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
     end
   end
 
-  context "INVALID_HEATING_FOR_SINGLE_METER" do
+  context "when 'Meter-Type' is 2" do
     let(:error) do
       {
         "code": "INVALID_HEATING_FOR_SINGLE_METER",
@@ -303,7 +303,7 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
     end
   end
 
-  context "SUPPLY_ROOF_U_VALUE_OR_INSULATION_THICKNESS" do
+  describe "insulation thickness scenarios" do
     let(:error) do
       {
         "code": "SUPPLY_ROOF_U_VALUE_OR_INSULATION_THICKNESS",
@@ -430,7 +430,7 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
     end
   end
 
-  context "SUPPLY_MULTIPLE_BUILDING_PARTS" do
+  context "when 'Roof-Room-Connected' is 'Y' or 'y'" do
     let(:error) do
       {
         "code": "SUPPLY_MULTIPLE_BUILDING_PARTS",
@@ -465,7 +465,7 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
     end
   end
 
-  context "INSPECTION_DATE_LATER_THAN_COMPLETION_DATE" do
+  context "when the inspection date is later than the completion date" do
     let(:error) do
       {
         "code": "INSPECTION_DATE_LATER_THAN_COMPLETION_DATE",
@@ -500,7 +500,7 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
     end
   end
 
-  context "COMPLETION_DATE_LATER_THAN_REGISTRATION_DATE" do
+  context "when the completion date is later than the registration date" do
     let(:error) do
       {
         "code": "COMPLETION_DATE_LATER_THAN_REGISTRATION_DATE",
@@ -531,7 +531,7 @@ describe LodgementRules::DomesticCommon, set_with_timecop: true do
     end
   end
 
-  context "Both INSPECTION_DATE_LATER_THAN_COMPLETION_DATE and COMPLETION_DATE_LATER_THAN_REGISTRATION_DATE" do
+  context "when the inspection date is later than the completion date, which is in turn later than the registration date" do
     let(:inspection_date_error) do
       {
         "code": "INSPECTION_DATE_LATER_THAN_COMPLETION_DATE",

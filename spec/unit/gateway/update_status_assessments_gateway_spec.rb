@@ -10,10 +10,10 @@ describe "Gateway::AssessmentsGateway" do
     call_lodge_assessment(scheme_id: scheme_id, schema_name: cepc_schema, xml_document: cepc_xml)
   end
 
-  context "given a dual lodgement" do
+  context "when given a dual lodgement" do
     let(:assessment_gateway) { Gateway::AssessmentsGateway.new }
 
-    context "calling get_linked_assessment_id on both assessments" do
+    context "when calling get_linked_assessment_id on both assessments" do
       it "will return the first assessment's linked assessment counterpart" do
         expect(
           assessment_gateway.get_linked_assessment_id(
@@ -31,7 +31,7 @@ describe "Gateway::AssessmentsGateway" do
       end
     end
 
-    context "calling update_statuses on both assessments" do
+    context "when calling update_statuses on both assessments" do
       let(:assessments_search_gateway) { Gateway::AssessmentsSearchGateway.new }
 
       assessments = %w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001]

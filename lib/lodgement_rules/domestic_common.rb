@@ -122,9 +122,7 @@ module LodgementRules
             sap_floor_dimensions =
               method_or_nil(adapter, :all_sap_floor_dimensions)
 
-            sap_floor_dimensions.compact.map { |dimension|
-              dimension[:total_floor_area]
-            }.compact.select { |area| area <= 0 || area > 3000 }.empty?
+            sap_floor_dimensions.compact.map { |dimension| dimension[:total_floor_area] }.compact.select { |area| area <= 0 || area > 3000 }.empty?
           end,
       },
       {
@@ -234,10 +232,7 @@ module LodgementRules
         test:
           lambda do |adapter|
             building_parts = method_or_nil(adapter, :all_building_parts)
-            roof_room_connected =
-              !building_parts.map { |part|
-                part[:roof_room_connected]
-              }.select { |flag| flag&.upcase == "Y" }.empty?
+            roof_room_connected = !building_parts.map { |part| part[:roof_room_connected] }.select { |flag| flag&.upcase == "Y" }.empty?
             !(roof_room_connected && building_parts.length <= 1)
           end,
       },

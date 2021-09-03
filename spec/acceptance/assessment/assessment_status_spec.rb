@@ -15,7 +15,7 @@ describe "Acceptance::AssessmentStatus", set_with_timecop: true do
 
   let(:valid_rdsap_xml) { Samples.xml "RdSAP-Schema-20.0.0" }
 
-  context "an assessment that does not exist" do
+  context "with an assessment that does not exist" do
     describe "cancelling an assessment" do
       it "responds that the assessment cannot be found" do
         update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
@@ -43,7 +43,7 @@ describe "Acceptance::AssessmentStatus", set_with_timecop: true do
     end
   end
 
-  context "an assessment that has already been cancelled" do
+  context "with an assessment that has already been cancelled" do
     describe "cancelling an assessment" do
       it "responds that the assessment has already been cancelled" do
         lodge_assessment assessment_body: valid_rdsap_xml,
@@ -101,7 +101,7 @@ describe "Acceptance::AssessmentStatus", set_with_timecop: true do
     end
   end
 
-  context "security" do
+  describe "security scenarios" do
     context "when cancelling an assessment" do
       it "rejects a request that is not authenticated" do
         update_assessment_status assessment_id: "0000-0000-0000-0000-0000",

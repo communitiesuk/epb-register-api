@@ -94,7 +94,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessmentXml",
     end
   end
 
-  context "when getting a not for issue certificate" do
+  context "when getting a cancelled certificate" do
     it "will return error 410, assessment is gone" do
       add_assessment_with_green_deal
 

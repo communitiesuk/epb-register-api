@@ -199,7 +199,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment",
       )
     end
 
-    context "and that assessment was lodged with an LPRN" do
+    context "when that assessment was lodged with an LPRN" do
       before do
         add_assessment_with_green_deal(
           type: "RdSAP",
@@ -210,7 +210,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment",
         )
       end
 
-      context "where the address has not been matched to another id" do
+      context "when the address has not been matched to another id" do
         it "will return the LPRN as lodged" do
           response =
             fetch_green_deal_assessment(
@@ -226,7 +226,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment",
         end
       end
 
-      context "where the address has been matched to an OS address id" do
+      context "when the address has been matched to an OS address id" do
         before { ActiveRecord::Base.connection.exec_query <<~SQL }
           UPDATE assessments_address_id
           SET address_id = 'UPRN-129308571212', source = 'os_lprn2uprn'

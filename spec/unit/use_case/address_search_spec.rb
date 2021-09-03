@@ -1,7 +1,7 @@
 describe UseCase::SearchAddressesByStreetAndTown do
   include RSpecRegisterApiServiceMixin
 
-  context "When searching the same address in both the assessments and address_base tables" do
+  context "when searching the same address in both the assessments and address_base tables" do
     subject { described_class.new }
 
     before do
@@ -46,7 +46,7 @@ describe UseCase::SearchAddressesByStreetAndTown do
     end
   end
 
-  context "When searching an address not found in the assessment but present in address base" do
+  context "when searching an address not found in the assessment but present in address base" do
     before do
       insert_into_address_base("000000000001", "SW1V 2SS", "2 Some Street", "", "London")
     end
@@ -67,7 +67,7 @@ describe UseCase::SearchAddressesByStreetAndTown do
     end
   end
 
-  context "When there are the same addresses in both the assessments and address base" do
+  context "when there are the same addresses in both the assessments and address base" do
     before do
       insert_into_address_base("000005689782", "SW1 2AA", "Flat 3", "1 Some Street", "London")
 
@@ -107,7 +107,7 @@ describe UseCase::SearchAddressesByStreetAndTown do
     end
   end
 
-  xcontext "When there are the more than one certificate for the same address", set_with_time_cop: true do
+  xcontext "when there are the more than one certificate for the same address", set_with_time_cop: true do
     before do
       scheme_id = add_scheme_and_get_id
       add_assessor(

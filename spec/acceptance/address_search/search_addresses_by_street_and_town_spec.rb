@@ -3,7 +3,7 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", set_with_timecop: true do
 
   let(:valid_cepc_xml) { Samples.xml "CEPC-8.0.0", "cepc" }
 
-  context "an address that has a report lodged" do
+  context "when searching an address that has a report lodged" do
     let(:scheme_id) { add_scheme_and_get_id }
 
     let(:assessment) { Nokogiri.XML Samples.xml "RdSAP-Schema-20.0.0" }

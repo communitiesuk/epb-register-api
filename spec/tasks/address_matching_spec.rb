@@ -29,7 +29,7 @@ describe "AddressMatching" do
   let(:assessment_gateway) { Gateway::AssessmentsGateway.new }
   let(:assessment_search_gateway) { Gateway::AssessmentsSearchGateway.new }
 
-  context "When we call the import_address_matching task" do
+  context "when we call the import_address_matching task" do
     before do
       allow($stdout).to receive(:puts)
       EnvironmentStub
@@ -39,7 +39,7 @@ describe "AddressMatching" do
       HttpStub.s3_get_object("uprn_matching.csv", get_address_matching_csv)
     end
 
-    context "With two addresses using an LPRN belong to the same property" do
+    context "with two addresses using an LPRN belong to the same property" do
       it "Then both address IDs are updated" do
         get_task("oneoff:address_matching:import_address_matching").invoke
 
@@ -56,7 +56,7 @@ describe "AddressMatching" do
       end
     end
 
-    context "With an address ID was previously updated by EPBR" do
+    context "with an address ID was previously updated by EPBR" do
       before do
         add_address_base(uprn: 91)
         update_assessment_address_id(
@@ -65,7 +65,7 @@ describe "AddressMatching" do
         )
       end
 
-      it "Then the related assessment is not updated" do
+      it "then the related assessment is not updated" do
         get_task("oneoff:address_matching:import_address_matching").invoke
 
         assessment1 =
@@ -82,10 +82,10 @@ describe "AddressMatching" do
     end
   end
 
-  context "When we call the update_address_lines task" do
+  context "when we call the update_address_lines task" do
     before { allow($stdout).to receive(:puts) }
 
-    context "With two assessments having no address discrepancy" do
+    context "with two assessments having no address discrepancy" do
       it "Then both assessments addresses should be matched" do
         expect { get_task("oneoff:address_matching:update_address_lines").invoke }.to output(
           /0 assessments updated and 2 assessments matched/,
@@ -93,7 +93,7 @@ describe "AddressMatching" do
       end
     end
 
-    context "With two assessments having modified addresses" do
+    context "with two assessments having modified addresses" do
       before do
         assessment_gateway.update_field(
           "0000-0000-0000-0000-0001",

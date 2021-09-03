@@ -1,7 +1,7 @@
 describe "Acceptance::Responses" do
   include RSpecRegisterApiServiceMixin
 
-  context "responses from /healthcheck" do
+  context "when getting a response from /healthcheck" do
     let(:response) { get "/healthcheck" }
 
     it "returns status 200" do
@@ -9,7 +9,7 @@ describe "Acceptance::Responses" do
     end
   end
 
-  context "responses from a 404-page" do
+  context "when getting a responses from a page that does not exist" do
     let(:response) { get "/does-not-exist" }
 
     it "returns status 404" do
@@ -17,7 +17,7 @@ describe "Acceptance::Responses" do
     end
   end
 
-  context "responses to pre-flight request" do
+  context "when getting responses to pre-flight request" do
     let(:response) { options "/api/schemes" }
 
     it "returns 200" do

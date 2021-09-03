@@ -1,6 +1,6 @@
 describe "Gateway::ReportingGateway" do
   include RSpecRegisterApiServiceMixin
-  context "test data extracted from the reporting gateway" do
+  context "when extracting data from the reporting gateway" do
     subject { Gateway::ReportingGateway.new }
 
     before(:all) do
@@ -8,7 +8,7 @@ describe "Gateway::ReportingGateway" do
       add_super_assessor(scheme_id: @scheme_id)
     end
 
-    context "Insert four RdSAP assessments and opt out one of them, cancel one and mark one not for issue" do
+    context "when inserting four RdSAP assessments, opting out one of them, cancelling one and marking one not for issue" do
       let(:assessment_gateway) { Gateway::AssessmentsGateway.new }
       let(:expected_data) do
         [{
@@ -57,7 +57,7 @@ describe "Gateway::ReportingGateway" do
       end
     end
 
-    context "Insert 2 CEPC & DEC and opt out one CEPC and DEC" do
+    context "when inserting 2 CEPC & DEC and opting out one CEPC and DEC" do
       let(:expected_data) do
         [{
           "assessment_id" => "0000-0000-0000-0000-0003",
@@ -103,7 +103,7 @@ describe "Gateway::ReportingGateway" do
       end
     end
 
-    context "Insert RdSAP, AC-CERT and opt out the RdSAP" do
+    context "when inserting RdSAP, AC-CERT and opting out the RdSAP" do
       before do
         commercial_schema = "CEPC-8.0.0"
         ac_cert_xml = Nokogiri.XML Samples.xml(commercial_schema, "ac-cert")
@@ -122,7 +122,7 @@ describe "Gateway::ReportingGateway" do
       end
     end
 
-    context "Insert SAP, DEC-RR and opt out the SAP" do
+    context "when inserting SAP, DEC-RR and opting out the SAP" do
       before do
         commercial_schema = "CEPC-8.0.0"
         dec_rr_xml = Nokogiri.XML Samples.xml(commercial_schema, "dec-rr")

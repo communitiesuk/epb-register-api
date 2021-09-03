@@ -19,7 +19,7 @@ describe Helper::JsonHelper do
     end
 
     it "changes nested level keys to snake case" do
-      result = helper.convert_to_ruby_hash( { "fooBar" => { "barBaz" => "boo" } }.to_json)
+      result = helper.convert_to_ruby_hash({ "fooBar" => { "barBaz" => "boo" } }.to_json)
       expect(result.keys).to include(:foo_bar)
       expect(result[:foo_bar].keys).to include(:bar_baz)
     end

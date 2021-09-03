@@ -1,5 +1,5 @@
 describe Helper::GreenDealSavingsCalculator do
-  context "known working example" do
+  context "with known working example" do
     let(:fuel_saving_data) do
       [
         {

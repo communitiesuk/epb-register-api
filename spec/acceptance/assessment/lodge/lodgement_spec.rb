@@ -21,7 +21,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
   end
   let(:scheme_id) { add_scheme_and_get_id }
 
-  context "rejecting lodgements" do
+  context "when rejecting lodgements" do
     let(:scheme_id) { add_scheme_and_get_id }
     let(:doc) { Nokogiri.XML valid_rdsap_xml }
     let(:register_assessor) do
@@ -460,12 +460,12 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
       )
     end
 
-    context "validating and adjusting the addressId" do
+    context "when validating and adjusting the addressId" do
       let(:assessments_address_id_gateway) do
         Gateway::AssessmentsAddressIdGateway.new
       end
 
-      context "domestic EPC" do
+      describe "domestic EPC" do
         context "when an assessment is lodged with a valid addressId" do
           let!(:response) do
             lodge_and_fetch_assessment(
@@ -584,7 +584,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
         end
       end
 
-      context "CEPC RR (dual lodgements)" do
+      describe "CEPC RR (dual lodgements)" do
         context "when an assessment is lodged with a valid addressId" do
           let!(:first_assessment) do
             lodge_and_fetch_non_domestic_assessment(
@@ -761,9 +761,8 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
       )
     end
 
-    before { add_assessor scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body }
-
     before do
+      add_assessor scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body
       lodge_assessment assessment_body: valid_rdsap_xml,
                        accepted_responses: [201],
                        scopes: %w[assessment:lodge migrate:assessment],
@@ -831,7 +830,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
     end
   end
 
-  context "security" do
+  describe "security" do
     it "returns 401 with no authentication" do
       lodge_assessment(
         assessment_body: "body",

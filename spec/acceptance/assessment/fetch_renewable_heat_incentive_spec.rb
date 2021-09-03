@@ -8,7 +8,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive",
 
   let(:valid_sap_xml) { Samples.xml "SAP-Schema-18.0.0" }
 
-  context "security" do
+  describe "security scenarios" do
     it "rejects a request that is not authenticated" do
       fetch_renewable_heat_incentive assessment_id: "123",
                                      accepted_responses: [401],

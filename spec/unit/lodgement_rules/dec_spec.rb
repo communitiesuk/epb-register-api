@@ -37,7 +37,7 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
     end
   end
 
-  context "MUST_RECORD_REASON_TYPE" do
+  context "when reason type is 7" do
     let(:error) do
       {
         "code": "MUST_RECORD_REASON_TYPE",
@@ -50,7 +50,7 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
     end
   end
 
-  context "MUST_RECORD_DEC_DISCLOSURE" do
+  context "when DEC-Related-Party-Disclosure is 8" do
     let(:error) do
       {
         "code": "MUST_RECORD_DEC_DISCLOSURE",
@@ -63,7 +63,7 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
     end
   end
 
-  context "NOMINATED_DATE_TOO_LATE" do
+  context "when the nominated date is more than three months after the assessment end date" do
     let(:error) do
       {
         "code": "NOMINATED_DATE_TOO_LATE",

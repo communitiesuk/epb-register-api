@@ -2,7 +2,7 @@ require "rspec"
 require "aws-sdk-s3"
 
 describe "Gateway::StorageGateway" do
-  context "When storage is initialised" do
+  context "when storage is initialised" do
     before do
       @storage_gateway =
         Gateway::StorageGateway.new(

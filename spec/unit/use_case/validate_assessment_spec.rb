@@ -1,5 +1,5 @@
 describe UseCase::ValidateAssessment do
-  context "given an existing RdSAP schema name" do
+  context "when given an existing RdSAP schema name" do
     let(:valid_xml) { Samples.xml "RdSAP-Schema-20.0.0" }
 
     it "will return a boolean true when the XML is valid" do

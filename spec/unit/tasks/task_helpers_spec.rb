@@ -1,5 +1,5 @@
 describe Tasks::TaskHelpers do
-  context "When the stage is production" do
+  context "when the stage is production" do
     before do
       allow(ENV).to receive(:[]).and_call_original
     end
@@ -12,7 +12,7 @@ describe Tasks::TaskHelpers do
     end
   end
 
-  context "When the stage is not production" do
+  context "when the stage is not production" do
     before do
       allow(ENV).to receive(:[]).and_call_original
     end

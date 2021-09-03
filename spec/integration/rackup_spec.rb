@@ -2,7 +2,7 @@ describe "Integration::Rackup" do
   include RSpecRegisterApiServiceMixin
 
   context "when rackup has started" do
-    context "requests to /healthcheck" do
+    context "when a request is made to /healthcheck" do
       let(:response) { get("/healthcheck") }
 
       it "return a status of 200" do
@@ -10,10 +10,8 @@ describe "Integration::Rackup" do
       end
     end
 
-    context "requests to a non-existent page" do
+    context "when a request is made to a non-existent page" do
       let(:response) { get("/does-not-exist") }
-      let(:response) { get("/energy-certificate/:%0000-0000-0000-0000-0000") }
-      let(:response) { get("/energy-certificate/:%0000-0000-0000-0000-0000") }
 
       it "return a status of 404" do
         expect(response.status).to eq(404)
@@ -25,7 +23,7 @@ describe "Integration::Rackup" do
       end
     end
 
-    context "requests to /api/schemes" do
+    context "when a request is made to /api/schemes" do
       let(:response) do
         header("Authorization", "Bearer #{get_valid_jwt(%w[scheme:list])}")
         get("/api/schemes")
@@ -36,7 +34,7 @@ describe "Integration::Rackup" do
       end
     end
 
-    context "unauthenticated requests to /api/schemes" do
+    context "when an unauthenticated request is made to /api/schemes" do
       let(:response) { get("/api/schemes") }
 
       it "return a status of 401" do

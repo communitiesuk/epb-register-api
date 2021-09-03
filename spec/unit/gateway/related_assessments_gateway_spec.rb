@@ -1,7 +1,7 @@
 describe Gateway::RelatedAssessmentsGateway do
   include RSpecRegisterApiServiceMixin
 
-  context "test getting related assessments" do
+  context "when getting related assessments" do
     subject { described_class.new }
 
     related_assessment_ids = %w[

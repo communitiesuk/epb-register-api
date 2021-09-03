@@ -108,14 +108,13 @@ describe Gateway::AssessorsGateway do
     end
 
     context "when searching for assessors with specific qualifications" do
-      it "returns the assessor with at least one active domestic qualification" do
+      it "raises an error when the passed qualification type is unknown" do
         expect { assessors_gateway.search_by(name: "Someone Person", qualification_type: "something_made_up") }.to raise_error(ArgumentError, "The type of qualification must be either 'domestic' or 'nonDomestic'")
       end
 
       it "returns the assessor with at least one active domestic qualification" do
         result = assessors_gateway.search_by(name: "Someone Person", qualification_type: "domestic")
 
-        expect(result.count).to eq(1)
         expect(result).to eq([expected_domestic_assessor])
       end
 

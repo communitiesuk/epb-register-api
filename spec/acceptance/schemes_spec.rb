@@ -1,8 +1,8 @@
 describe "Acceptance::Schemes" do
   include RSpecRegisterApiServiceMixin
 
-  context "getting a list of schemes" do
-    context "security" do
+  context "when getting a list of schemes" do
+    describe "security" do
       it "returns status 401 with no authentication" do
         schemes_list(accepted_responses: [401], should_authenticate: false)
       end
@@ -27,8 +27,8 @@ describe "Acceptance::Schemes" do
       end
     end
 
-    context "adding a scheme" do
-      context "security" do
+    context "when adding a scheme" do
+      describe "security" do
         it "returns status 401 with no authentication" do
           add_scheme(name: "TEST", accepted_responses: [401], should_authenticate: false)
         end
@@ -73,8 +73,8 @@ describe "Acceptance::Schemes" do
     end
   end
 
-  context "updating a scheme" do
-    context "security" do
+  context "when updating a scheme" do
+    describe "security" do
       it "returns status 401 with no authentication" do
         update_scheme(scheme_id: 123, accepted_responses: [401], should_authenticate: false)
       end

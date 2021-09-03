@@ -14,7 +14,7 @@ describe "Acceptance::Assessment", set_with_timecop: true do
     File.read File.join Dir.pwd, "spec/fixtures/sanitised/sap.xml"
   end
 
-  context "security" do
+  describe "security scenarios" do
     it "rejects a request that is not authenticated" do
       fetch_assessment(id: "123", accepted_responses: [401], should_authenticate: false)
     end
@@ -105,7 +105,7 @@ describe "Acceptance::Assessment", set_with_timecop: true do
     end
   end
 
-  context "When schemes attempt to download data lodged by another scheme" do
+  context "when schemes attempt to download data lodged by another scheme" do
     let(:scheme_id) { add_scheme_and_get_id }
     let(:other_scheme_id) { add_scheme_and_get_id(name: "another one") }
     let(:response) do

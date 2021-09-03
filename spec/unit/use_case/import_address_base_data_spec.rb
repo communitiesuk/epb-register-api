@@ -600,7 +600,7 @@ describe UseCase::ImportAddressBaseData do
     end
   end
 
-  context "given a line of address data that forms more than four street lines in a delivery point address" do
+  context "when given a line of address data that forms more than four street lines in a delivery point address" do
     place_in_cheam = [
       "5870116854",
       "50537552",

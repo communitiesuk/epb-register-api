@@ -1,5 +1,5 @@
 describe UseCase::AddAssessor do
-  context "given a command to add an assessor with an invalid assessor ID" do
+  context "when given a command to add an assessor with an invalid assessor ID" do
     it "raises an invalid assessor ID exception" do
       bad_assessor_id = "this_is_bad"
       add_assessor_request =

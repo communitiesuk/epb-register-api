@@ -35,7 +35,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
     scheme_id
   end
 
-  context "Security" do
+  describe "security scenarios" do
     it "rejects a request without authentication" do
       domestic_assessments_search_by_assessment_id("123", accepted_responses: [401], should_authenticate: false)
     end
@@ -49,7 +49,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
     end
   end
 
-  context "searching by postcode" do
+  context "when searching by postcode" do
     it "can handle a lowercase postcode" do
       setup_scheme_and_lodge
       response = assessments_search_by_postcode("A00aa")
@@ -272,7 +272,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
     end
   end
 
-  context "searching by ID" do
+  context "when searching by ID" do
     it "returns an error for badly formed IDs" do
       response_body =
         domestic_assessments_search_by_assessment_id(
@@ -324,7 +324,7 @@ describe "Acceptance::Assessment::SearchForAssessments",
     end
   end
 
-  context "searching by town and street name" do
+  context "when searching by town and street name" do
     expected_response =
       JSON.parse(
         {

@@ -13,7 +13,7 @@ describe "Acceptance::AssessmentSummary", set_with_timecop: true do
     fetch_assessment_summary(id: "0000-0000-0000-0000-0000%23", accepted_responses: [400])
   end
 
-  context "security" do
+  describe "security scenarios" do
     it "rejects a request that is not authenticated" do
       fetch_assessment_summary(id: "123", accepted_responses: [401], should_authenticate: false)
     end
@@ -23,7 +23,7 @@ describe "Acceptance::AssessmentSummary", set_with_timecop: true do
     end
   end
 
-  context "dual lodgement" do
+  context "when there is dual lodgement" do
     it "Can give summaries for both documents in a CEPC+RR combo" do
       scheme_id = add_scheme_and_get_id
       xml_file = Samples.xml "CEPC-8.0.0", "cepc+rr"
@@ -66,7 +66,7 @@ describe "Acceptance::AssessmentSummary", set_with_timecop: true do
     end
   end
 
-  context "RRN format" do
+  context "when fetching a summar" do
     it "Returns the summary for a URL without hyphens" do
       scheme_id = add_scheme_and_get_id
       xml_file = Samples.xml "CEPC-8.0.0", "cepc+rr"

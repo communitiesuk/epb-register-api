@@ -81,7 +81,7 @@ describe "Acceptance::Assessor" do
   end
 
   context "when getting an assessor" do
-    context "and the assessor exists on the correct scheme" do
+    context "when the assessor exists on the correct scheme" do
       it "returns status 200 for a get" do
         add_assessor(scheme_id: scheme_id, assessor_id: "SCHE423344", body: valid_assessor_request)
         expect(fetch_assessor(scheme_id: scheme_id, assessor_id: "SCHE423344").status).to eq(200)
@@ -147,7 +147,7 @@ describe "Acceptance::Assessor" do
       end
     end
 
-    context "security" do
+    describe "security scenarios" do
       it "rejects a request that is not authenticated" do
         fetch_assessor(scheme_id: 2, assessor_id: "test", accepted_responses: [401], should_authenticate: false)
       end
@@ -238,9 +238,7 @@ describe "Acceptance::Assessor" do
             scopes: %w[assessor:search],
           ).body,
         )
-      expect(response["errors"].first["title"]).to eq(
-        "You are not authorised to perform this request",
-      )
+      expect(response["errors"].first["title"]).to eq("You are not authorised to perform this request")
     end
 
     it "returns an empty array when there are no matching assessors" do
@@ -313,7 +311,7 @@ describe "Acceptance::Assessor" do
   end
 
   context "when creating an assessor" do
-    context "security" do
+    describe "security scenarios" do
       it "rejects a request which is not authenticated" do
         add_assessor(
           scheme_id: 20,
@@ -347,7 +345,7 @@ describe "Acceptance::Assessor" do
       end
     end
 
-    context "which is valid with all fields" do
+    context "with all fields valid" do
       it "returns 201 created" do
         assessor_response =
           add_assessor(scheme_id: scheme_id, assessor_id: "SCHE554433", body: valid_assessor_request)
@@ -411,7 +409,7 @@ describe "Acceptance::Assessor" do
       end
     end
 
-    context "which is valid with optional fields missing" do
+    context "with optional fields missing (but otherwise valid)" do
       it "returns 201 created" do
         assessor_response =
           add_assessor(
@@ -460,7 +458,7 @@ describe "Acceptance::Assessor" do
       end
     end
 
-    context "which is invalid" do
+    context "with invalid fields" do
       it "rejects anything that isn't JSON" do
         assertive_put(
           "/api/schemes/#{scheme_id}/assessors/thebrokenassessor",
@@ -556,7 +554,7 @@ describe "Acceptance::Assessor" do
       end
     end
 
-    context "which has a clashing ID for an assessor on another scheme" do
+    context "with a clashing ID for an assessor on another scheme" do
       it "Returns a status code 409" do
         first_scheme = add_scheme_and_get_id name: "scheme two"
         second_scheme = add_scheme_and_get_id name: "scheme three"
@@ -566,7 +564,7 @@ describe "Acceptance::Assessor" do
       end
     end
 
-    context "which has an escaped assessor scheme id" do
+    context "with an escaped assessor scheme id" do
       let(:escaped_assessor_scheme_id) { "TEST%2F000000" }
 
       it "adds an assessor" do
@@ -592,7 +590,7 @@ describe "Acceptance::Assessor" do
   end
 
   context "when updating an assessor" do
-    context "which is valid with all fields" do
+    context "with valid fields" do
       it "returns 200 on the update" do
         assessor = valid_assessor_request
         add_assessor(scheme_id: scheme_id, assessor_id: "ASSR000999", body: assessor)
@@ -623,7 +621,7 @@ describe "Acceptance::Assessor" do
       end
     end
 
-    context "which has an invalid email" do
+    context "with an invalid email" do
       it "rejects the assessor" do
         invalid_request_body = valid_assessor_request
         invalid_request_body[:contactDetails][:email] = "54"
@@ -631,7 +629,7 @@ describe "Acceptance::Assessor" do
       end
     end
 
-    context "which has a valid email" do
+    context "with a valid email" do
       it "saves it successfully" do
         request_body = valid_assessor_request
         request_body[:contactDetails][:email] = "mar@ten.com"
@@ -647,7 +645,7 @@ describe "Acceptance::Assessor" do
       end
     end
 
-    context "which has an invalid phone number" do
+    context "with an invalid phone number" do
       it "returns error 400" do
         request_body = valid_assessor_request
         request_body[:contactDetails][:telephoneNumber] = "0" * 257
@@ -655,7 +653,7 @@ describe "Acceptance::Assessor" do
       end
     end
 
-    context "which has a valid phone number" do
+    context "with a valid phone number" do
       it "successfully saves it" do
         valid_telephone = "0" * 256
 

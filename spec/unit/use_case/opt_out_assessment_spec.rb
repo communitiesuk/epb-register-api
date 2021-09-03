@@ -25,7 +25,7 @@ describe UseCase::OptOutAssessment do
     call_lodge_assessment(scheme_id: @scheme_id, schema_name: cepc_schema, xml_document: cepc_xml)
   end
 
-  context "before the update has taken place" do
+  context "when not having performed an update" do
     it "the assessment opt out status is false" do
       expect(assessment.get("opt_out")).to be false
     end

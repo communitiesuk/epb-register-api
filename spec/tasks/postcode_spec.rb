@@ -11,7 +11,7 @@ describe "Postcode" do
 
   after(:all) { HttpStub.off }
 
-  context "When we call the import_address_matching task" do
+  context "when we call the import_address_matching task" do
     before do
       allow($stdout).to receive(:puts)
       EnvironmentStub

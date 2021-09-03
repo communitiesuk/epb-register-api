@@ -102,7 +102,7 @@ describe "Acceptance::DECSummary", set_with_timecop: true do
     end
   end
 
-  context "an assessment that is not a DEC" do
+  context "when fetching an assessment that is not a DEC" do
     it "returns error 403, assessment is not a DEC" do
       lodge_assessment(
         assessment_body: valid_cepc_xml,

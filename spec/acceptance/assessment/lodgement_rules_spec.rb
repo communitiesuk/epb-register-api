@@ -19,7 +19,7 @@ describe "Acceptance::LodgementRules", set_with_timecop: true do
   context "when lodging CEPC" do
     let(:xml_doc) { Nokogiri.XML Samples.xml "CEPC-8.0.0", "cepc" }
 
-    context "that breaks two rules" do
+    context "with two rules that are broken by it" do
       it "rejects the assessment" do
         xml_doc.at("//CEPC:Registration-Date").children = Date.tomorrow.to_s
         xml_doc.at("//CEPC:Issue-Date").children = (Date.today << 12 * 5).to_s
@@ -51,7 +51,7 @@ describe "Acceptance::LodgementRules", set_with_timecop: true do
       end
     end
 
-    context "that breaks one rule" do
+    context "with one rule that is broken by it" do
       it "rejects the assessment" do
         xml_doc.at("//CEPC:Registration-Date").children = Date.tomorrow.to_s
 
@@ -88,7 +88,7 @@ describe "Acceptance::LodgementRules", set_with_timecop: true do
   context "when lodging RdSAP" do
     let(:xml_doc) { Nokogiri.XML Samples.xml "RdSAP-Schema-20.0.0" }
 
-    context "that breaks a rule" do
+    context "when it breaks a rule" do
       it "rejects the assessment" do
         xml_doc.at("Habitable-Room-Count").children = "0"
 

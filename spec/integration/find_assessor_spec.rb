@@ -44,14 +44,14 @@ describe "Integration::FilterAndOrderAssessorsByPostcode" do
   end
 
   context "when searching for a postcode" do
-    context "and postcode_geolocation table is empty" do
+    context "when the postcode_geolocation table is empty" do
       it "returns an empty hash" do
         response = Gateway::PostcodesGateway.new.fetch("BF1 3AD")
         expect(response).to eq([])
       end
     end
 
-    context "and postcode_geolocation table is not empty" do
+    context "when the postcode_geolocation table is not empty" do
       it "returns a single record" do
         populate_postcode_geolocation
 

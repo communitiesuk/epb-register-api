@@ -354,7 +354,7 @@ describe "Acceptance::SearchForAssessor" do
   end
 
   context "when searching by qualification" do
-    context "for domestic sap assessors" do
+    context "when searching domestic sap assessors" do
       it "returns only the assessors qualified" do
         add_postcodes("SE1 7EZ", 51.5045, 0.0865)
         scheme_id = add_scheme_and_get_id
@@ -383,7 +383,7 @@ describe "Acceptance::SearchForAssessor" do
       end
     end
 
-    context "for air conditioning level 3 assessors" do
+    context "when searching air conditioning level 3 assessors" do
       it "returns only the assessors qualified" do
         add_postcodes("SE1 7EZ", 51.5045, 0.0865)
         scheme_id = add_scheme_and_get_id
@@ -411,7 +411,7 @@ describe "Acceptance::SearchForAssessor" do
       end
     end
 
-    context "for non domestic dec assessors" do
+    context "when searching non domestic dec assessors" do
       it "returns only the assessors qualified" do
         add_postcodes("SE1 7EZ", 51.5045, 0.0865)
         scheme_id = add_scheme_and_get_id
@@ -440,7 +440,7 @@ describe "Acceptance::SearchForAssessor" do
       end
     end
 
-    context "for non domestic level 3 assessors" do
+    context "when searching non domestic level 3 assessors" do
       it "returns only the assessors qualified" do
         add_postcodes("SE1 7EZ", 51.5045, 0.0865)
         scheme_id = add_scheme_and_get_id
@@ -469,7 +469,7 @@ describe "Acceptance::SearchForAssessor" do
       end
     end
 
-    context "for non domestic level 4 assessors" do
+    context "when searching non domestic level 4 assessors" do
       it "returns only the assessors qualified" do
         add_postcodes("SE1 7EZ", 51.5045, 0.0865)
         scheme_id = add_scheme_and_get_id
@@ -498,7 +498,7 @@ describe "Acceptance::SearchForAssessor" do
       end
     end
 
-    context "for non domestic level 5 assessors" do
+    context "when searching non domestic level 5 assessors" do
       it "returns only the assessors qualified" do
         add_postcodes("SE1 7EZ", 51.5045, 0.0865)
         scheme_id = add_scheme_and_get_id
@@ -527,7 +527,7 @@ describe "Acceptance::SearchForAssessor" do
       end
     end
 
-    context "for multiple types of qualification" do
+    context "when searching multiple types of qualification" do
       it "returns each of the assessors with matching qualifications" do
         add_postcodes("SE1 7EZ", 51.5045, 0.0865)
         scheme_id = add_scheme_and_get_id
@@ -569,7 +569,7 @@ describe "Acceptance::SearchForAssessor" do
     end
   end
 
-  context "security" do
+  describe "security scenarios" do
     it "returns a 401 when not authenticated" do
       assessors_search(
         postcode: "SE1 7EZ",

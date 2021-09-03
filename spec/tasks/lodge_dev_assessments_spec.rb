@@ -1,7 +1,7 @@
 describe "linked_dev_assessments rake" do
   include RSpecRegisterApiServiceMixin
 
-  context "calling the rake task in production" do
+  context "when calling the rake task in production" do
     before do
       allow($stdout).to receive(:puts)
       allow($stdout).to receive(:write)
@@ -24,7 +24,7 @@ describe "linked_dev_assessments rake" do
     end
   end
 
-  context "calling the rake task in test (not production)" do
+  context "when calling the rake task in test (not production)" do
     before do
       allow($stdout).to receive(:puts)
       allow($stdout).to receive(:write)
@@ -48,7 +48,7 @@ describe "linked_dev_assessments rake" do
     end
   end
 
-  context "read cepc data from fixture" do
+  context "when reading cepc data from fixture" do
     let!(:xml_doc) do
       Nokogiri.XML Samples.xml "CEPC-8.0.0", "cepc+rr"
     end
@@ -62,7 +62,7 @@ describe "linked_dev_assessments rake" do
     end
   end
 
-  context "read SAP data from fixture" do
+  context "when reading SAP data from fixture" do
     let!(:xml_doc) do
       Nokogiri.XML Samples.xml "SAP-Schema-18.0.0", "epc"
     end

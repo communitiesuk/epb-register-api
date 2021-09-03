@@ -13,7 +13,7 @@ describe "LinkedAssessments" do
     call_lodge_assessment(scheme_id: scheme_id, schema_name: cepc_schema, xml_document: cepc_xml, ensure_uprns: false)
   end
 
-  context "When the task runs without any address ID mismatch" do
+  context "when the task runs without any address ID mismatch" do
     before { allow($stdout).to receive(:puts) }
 
     it "does not find any linked assessment to change" do
@@ -23,7 +23,7 @@ describe "LinkedAssessments" do
     end
   end
 
-  context "When the task runs with an address ID mismatch" do
+  context "when the task runs with an address ID mismatch" do
     before do
       allow($stdout).to receive(:puts)
       update_rr_address_id = <<-SQL
@@ -67,7 +67,7 @@ describe "LinkedAssessments" do
     end
   end
 
-  context "When the task runs with an address ID mismatch done by EPBR support" do
+  context "when the task runs with an address ID mismatch done by EPBR support" do
     before do
       allow($stdout).to receive(:puts)
       update_rr_address_id = <<-SQL

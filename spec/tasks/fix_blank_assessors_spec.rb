@@ -6,7 +6,7 @@ describe "FixBlankAssessors" do
   let(:sap_schema) { "SAP-Schema-18.0.0".freeze }
   let(:sap_xml) { Nokogiri.XML Samples.xml(sap_schema, "epc") }
 
-  context "When a lodging assessor exists and has no name" do
+  context "when a lodging assessor exists and has no name" do
     before do
       allow($stdout).to receive(:puts)
       add_assessor(
@@ -53,7 +53,7 @@ describe "FixBlankAssessors" do
     end
   end
 
-  context "When a lodging assessor exists and has a name" do
+  context "when a lodging assessor exists and has a name" do
     before do
       allow($stdout).to receive(:puts)
       add_assessor(
@@ -100,7 +100,7 @@ describe "FixBlankAssessors" do
     end
   end
 
-  context "When a lodging assessor exists, assessor has no name on any assessments" do
+  context "when a lodging assessor exists, assessor has no name on any assessments" do
     before do
       allow($stdout).to receive(:puts)
       add_assessor(
