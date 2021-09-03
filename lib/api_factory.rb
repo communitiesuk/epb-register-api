@@ -3,6 +3,10 @@ class ApiFactory
     @assessments_gateway ||= Gateway::AssessmentsGateway.new
   end
 
+  def self.ni_assessments_gateway
+    @ni_assessments_gateway ||= Gateway::ExportNiGateway.new
+  end
+
   def self.reporting_gateway
     @reporting_gateway ||= Gateway::ReportingGateway.new
   end
@@ -22,6 +26,11 @@ class ApiFactory
         assessments_search_gateway,
         assessments_xml_gateway,
       )
+  end
+
+  def self.ni_assessments_export_use_case
+    @ni_assessments_export_use_case ||= UseCase::ExportNiAssessments.new(export_ni_gateway: ni_assessments_gateway,
+                                       xml_gateway: assessments_xml_gateway)
   end
 
   def self.export_not_for_publication_use_case
