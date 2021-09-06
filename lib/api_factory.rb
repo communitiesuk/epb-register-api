@@ -19,6 +19,26 @@ class ApiFactory
     @assessments_xml_gateway ||= Gateway::AssessmentsXmlGateway.new
   end
 
+  def self.assessors_gateway
+    @assessors_gateway ||= Gateway::AssessorsGateway.new
+  end
+
+  def self.address_base_search_gateway
+    @address_base_search_gateway ||= Gateway::AddressBaseSearchGateway.new
+  end
+
+  def self.assessments_address_id_gateway
+    @assessments_address_id_gateway ||= Gateway::AssessmentsAddressIdGateway.new
+  end
+
+  def self.related_assessments_gateway
+    @related_assessments_gateway ||= Gateway::RelatedAssessmentsGateway.new
+  end
+
+  def self.green_deal_plans_gateway
+    @green_deal_plans_gateway ||= Gateway::GreenDealPlansGateway.new
+  end
+
   def self.assessments_export_use_case
     @assessments_export_use_case ||=
       UseCase::ExportAssessmentAttributes.new(
@@ -26,6 +46,38 @@ class ApiFactory
         assessments_search_gateway,
         assessments_xml_gateway,
       )
+  end
+
+  def self.validate_and_lodge_assessment_use_case
+    @validate_and_lodge_assessment_use_case ||=
+      UseCase::ValidateAndLodgeAssessment.new(
+        lodge_assessment_use_case: lodge_assessment_use_case,
+        validate_assessment_use_case: validate_assessment_use_case,
+        check_assessor_belongs_to_scheme_use_case: check_assessor_belongs_to_scheme_use_case,
+      )
+  end
+
+  def self.check_assessor_belongs_to_scheme_use_case
+    @check_assessor_belongs_to_scheme_use_case ||=
+      UseCase::CheckAssessorBelongsToScheme.new(assessors_gateway: assessors_gateway)
+  end
+
+  def self.lodge_assessment_use_case
+    @lodge_assessment_use_case ||=
+      UseCase::LodgeAssessment.new(
+        assessments_gateway: assessments_gateway,
+        assessments_search_gateway: assessments_search_gateway,
+        address_base_search_gateway: address_base_search_gateway,
+        assessors_gateway: assessors_gateway,
+        assessments_xml_gateway: assessments_xml_gateway,
+        assessments_address_id_gateway: assessments_address_id_gateway,
+        related_assessments_gateway: related_assessments_gateway,
+        green_deal_plans_gateway: green_deal_plans_gateway,
+      )
+  end
+
+  def self.validate_assessment_use_case
+    @validate_assessment_use_case ||= UseCase::ValidateAssessment.new
   end
 
   def self.ni_assessments_export_use_case

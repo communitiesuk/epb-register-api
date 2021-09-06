@@ -11,15 +11,24 @@ module UseCase
     class DuplicateAssessmentIdException < StandardError
     end
 
-    def initialize
-      @assessments_gateway = Gateway::AssessmentsGateway.new
-      @assessments_search_gateway = Gateway::AssessmentsSearchGateway.new
-      @address_base_search_gateway = Gateway::AddressBaseSearchGateway.new
-      @assessors_gateway = Gateway::AssessorsGateway.new
-      @assessments_xml_gateway = Gateway::AssessmentsXmlGateway.new
-      @assessments_address_id_gateway = Gateway::AssessmentsAddressIdGateway.new
-      @related_assessments_gateway = Gateway::RelatedAssessmentsGateway.new
-      @green_deal_plans_gateway = Gateway::GreenDealPlansGateway.new
+    def initialize(
+      assessments_gateway:,
+      assessments_search_gateway:,
+      address_base_search_gateway:,
+      assessors_gateway:,
+      assessments_xml_gateway:,
+      assessments_address_id_gateway:,
+      related_assessments_gateway:,
+      green_deal_plans_gateway:
+    )
+      @assessments_gateway = assessments_gateway
+      @assessments_search_gateway = assessments_search_gateway
+      @address_base_search_gateway = address_base_search_gateway
+      @assessors_gateway = assessors_gateway
+      @assessments_xml_gateway = assessments_xml_gateway
+      @assessments_address_id_gateway = assessments_address_id_gateway
+      @related_assessments_gateway = related_assessments_gateway
+      @green_deal_plans_gateway = green_deal_plans_gateway
     end
 
     def execute(data, migrated, schema_name)

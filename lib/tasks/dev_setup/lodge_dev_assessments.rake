@@ -38,7 +38,7 @@ class DevAssessmentsHelper
   end
 
   def self.lodge_assessments(file_array)
-    use_case = UseCase::LodgeAssessment.new
+    use_case = ApiFactory.lodge_assessment_use_case
     id = get_latest_assessment_id
 
     file_array.each_with_index do |hash, _index|

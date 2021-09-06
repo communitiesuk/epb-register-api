@@ -81,7 +81,7 @@ module Controller
       )
 
       sup = env[:auth_token].supplemental("scheme_ids")
-      validate_and_lodge_assessment = UseCase::ValidateAndLodgeAssessment.new
+      validate_and_lodge_assessment = ApiFactory.validate_and_lodge_assessment_use_case
 
       xml_schema_type =
         if request.env["CONTENT_TYPE"]

@@ -1,10 +1,21 @@
 describe UseCase::LodgeAssessment do
-  let(:use_case) { described_class.new }
-  let(:assessors_gateway) { instance_double(Gateway::AssessorsGateway) }
-  let(:assessments_gateway) { instance_double(Gateway::AssessmentsGateway) }
-  let(:assessments_xml_gateway) { instance_double(Gateway::AssessmentsXmlGateway) }
+  subject(:use_case) do
+    described_class.new(
+      assessments_gateway: assessments_gateway,
+      assessments_search_gateway: instance_double(Gateway::AssessmentsSearchGateway),
+      address_base_search_gateway: instance_spy(Gateway::AddressBaseSearchGateway),
+      assessors_gateway: assessors_gateway,
+      assessments_xml_gateway: assessments_xml_gateway,
+      assessments_address_id_gateway: instance_spy(Gateway::AssessmentsAddressIdGateway),
+      related_assessments_gateway: instance_double(Gateway::RelatedAssessmentsGateway),
+      green_deal_plans_gateway: instance_double(Gateway::GreenDealPlansGateway),
+    )
+  end
+
+  let(:assessments_gateway) { instance_spy(Gateway::AssessmentsGateway) }
+  let(:assessors_gateway) { instance_spy(Gateway::AssessorsGateway) }
+  let(:assessments_xml_gateway) { instance_spy(Gateway::AssessmentsXmlGateway) }
   let(:assessor) { instance_double(Domain::Assessor) }
-  let(:assessment_index_record) { class_double(Domain::AssessmentIndexRecord) }
 
   let(:data) do
     { type_of_assessment: "SAP",
@@ -189,13 +200,6 @@ describe UseCase::LodgeAssessment do
 
     allow(assessor).to receive(:domestic_rd_sap_qualification).and_return("ACTIVE")
     allow(assessor).to receive(:scheme_assessor_id).and_return("SPEC000000")
-    allow(assessment_index_record).to receive(:new)
-
-    allow(Gateway::AssessmentsGateway).to receive(:new).and_return(assessments_gateway)
-    allow(assessments_gateway).to receive(:insert_or_update)
-
-    allow(Gateway::AssessmentsXmlGateway).to receive(:new).and_return(assessments_xml_gateway)
-    allow(assessments_xml_gateway).to receive(:send_to_db)
   end
 
   describe ".execute" do

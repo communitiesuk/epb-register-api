@@ -36,11 +36,14 @@ module UseCase
     LATEST_DOM_EW = %w[SAP-Schema-18.0.0 RdSAP-Schema-20.0.0].freeze
     LATEST_DOM_NI = %w[SAP-Schema-NI-18.0.0 RdSAP-Schema-NI-20.0.0].freeze
 
-    def initialize
-      @validate_assessment_use_case = UseCase::ValidateAssessment.new
-      @lodge_assessment_use_case = UseCase::LodgeAssessment.new
-      @check_assessor_belongs_to_scheme_use_case =
-        UseCase::CheckAssessorBelongsToScheme.new
+    def initialize(
+      validate_assessment_use_case:,
+      lodge_assessment_use_case:,
+      check_assessor_belongs_to_scheme_use_case:
+    )
+      @validate_assessment_use_case = validate_assessment_use_case
+      @lodge_assessment_use_case = lodge_assessment_use_case
+      @check_assessor_belongs_to_scheme_use_case = check_assessor_belongs_to_scheme_use_case
     end
 
     def execute(xml, schema_name, scheme_ids, migrated, overidden)
