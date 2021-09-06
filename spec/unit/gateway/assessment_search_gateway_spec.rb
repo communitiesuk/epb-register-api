@@ -1,7 +1,7 @@
 describe Gateway::AssessmentsSearchGateway do
   include RSpecRegisterApiServiceMixin
 
-  subject { described_class.new }
+  subject(:gateway) { described_class.new }
 
   before do
     scheme_id = add_scheme_and_get_id
@@ -20,7 +20,7 @@ describe Gateway::AssessmentsSearchGateway do
 
   describe ".search_by_postcode" do
     it "returns the expected data" do
-      result = subject.search_by_postcode("A0 0AA")
+      result = gateway.search_by_postcode("A0 0AA")
 
       expect(result.count).to eq(1)
       expect(result.first).to be_a(Domain::AssessmentSearchResult)

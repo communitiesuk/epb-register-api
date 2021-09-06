@@ -1,6 +1,6 @@
 describe UseCase::ExportNiAssessments do
   context "when exporting NI data call the use case" do
-    subject do
+    subject(:use_case) do
       described_class.new(export_ni_gateway: ni_gateway, xml_gateway: xml_gateway)
     end
 
@@ -23,16 +23,16 @@ describe UseCase::ExportNiAssessments do
     end
 
     it "loops over the lodged assessments and extract the correct certificates" do
-      subject.execute(%w[RdSAP SAP])
+      use_case.execute(%w[RdSAP SAP])
       expect(xml_gateway).to have_received(:fetch).exactly(3).times
     end
 
     it "passes the xml to the view model" do
-      expect { subject.execute(%w[RdSAP SAP]) }.not_to raise_error
+      expect { use_case.execute(%w[RdSAP SAP]) }.not_to raise_error
     end
 
     it "returns a single hash in an array that include the nodes from both to_hash_ni and the database " do
-      expect(subject.execute(%w[RdSAP SAP]).first).to match a_hash_including(
+      expect(use_case.execute(%w[RdSAP SAP]).first).to match a_hash_including(
         assessment_id: "0000-0000-0000-0000-0000",
         address1: "1 Some Street",
         lodgement_date: "2020-05-04",

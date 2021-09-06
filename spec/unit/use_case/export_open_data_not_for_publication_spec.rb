@@ -1,6 +1,6 @@
 describe UseCase::ExportOpenDataNotForPublication do
   context "when exporting not_for_publication data for open data communities" do
-    subject { described_class.new(reporting_gateway) }
+    subject(:use_case) { described_class.new(reporting_gateway) }
 
     let(:reporting_gateway) { instance_double(Gateway::ReportingGateway) }
 
@@ -41,13 +41,13 @@ describe UseCase::ExportOpenDataNotForPublication do
         4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a
         55ce7d026c13e923d26cbfb0d6ed60734d3270ba981d629a168bb8eb2da3f8c4
       ]
-      expect(subject.execute.map { |hash| hash[:assessment_id] }).to eq(
+      expect(use_case.execute.map { |hash| hash[:assessment_id] }).to eq(
         expected_values,
       )
     end
 
     it "returns the correct keys sent from the gateway columns" do
-      expect(subject.execute[0].keys).to eq(
+      expect(use_case.execute[0].keys).to eq(
         fetch_ids_response[0].symbolize_keys.keys,
       )
     end

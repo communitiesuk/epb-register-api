@@ -1,9 +1,9 @@
 describe UseCase::SearchAddressesByStreetAndTown do
   include RSpecRegisterApiServiceMixin
+  
+  subject(:use_case) { described_class.new }
 
   context "when searching the same address in both the assessments and address_base tables" do
-    subject { described_class.new }
-
     before do
       scheme_id = add_scheme_and_get_id
       add_assessor(
@@ -37,7 +37,7 @@ describe UseCase::SearchAddressesByStreetAndTown do
     end
 
     it "returns only one address for the relevant property " do
-      result = subject.execute(street: "1 Some Street", town: "Whitbury")
+      result = use_case.execute(street: "1 Some Street", town: "Whitbury")
       expect(result.length).to eq(1)
       expect(result.first.address_id).to eq("UPRN-000000000000")
       expect(result.first.line1).to eq("1 Some Street")
@@ -52,7 +52,7 @@ describe UseCase::SearchAddressesByStreetAndTown do
     end
 
     it "returns a single address line from address base " do
-      result = subject.execute(street: "2 Some Street", town: "London")
+      result = use_case.execute(street: "2 Some Street", town: "London")
       expect(result.length).to eq(1)
       expect(result.first.address_id).to eq("UPRN-000000000001")
       expect(result.first.line1).to eq("2 Some Street")
@@ -61,7 +61,7 @@ describe UseCase::SearchAddressesByStreetAndTown do
     end
 
     it "returns an address from address base with a fuzzy look up" do
-      result = subject.execute(street: "Some", town: "London")
+      result = use_case.execute(street: "Some", town: "London")
       expect(result.length).to eq(1)
       expect(result.first.address_id).to eq("UPRN-000000000001")
     end
@@ -101,7 +101,7 @@ describe UseCase::SearchAddressesByStreetAndTown do
     end
 
     it "returns only the address from address base not from the assesment" do
-      result = subject.execute(street: "Some", town: "London")
+      result = use_case.execute(street: "Some", town: "London")
       expect(result.length).to eq(1)
       expect(result.first.address_id).to eq("UPRN-000005689782")
     end
@@ -188,7 +188,7 @@ describe UseCase::SearchAddressesByStreetAndTown do
     end
 
     it "returns the address of newest certificate" do
-      result = subject.execute(street: "New House", town: "Whitbury")
+      result = use_case.execute(street: "New House", town: "Whitbury")
       expect(result.first.address_id).to eq("RRN-0000-0000-0000-0000-0000")
       expect(result.first.line1).to eq("1 New House")
     end

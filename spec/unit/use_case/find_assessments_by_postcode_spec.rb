@@ -1,5 +1,5 @@
 describe UseCase::FindAssessmentsByPostcode do
-  subject { described_class.new }
+  subject(:use_case) { described_class.new }
 
   let(:assessments_search_gateway) { instance_double(Gateway::AssessmentsSearchGateway) }
   let(:assessment1) do
@@ -88,7 +88,7 @@ describe UseCase::FindAssessmentsByPostcode do
 
   describe ".execute" do
     it "returns the expected data" do
-      expect(subject.execute("A0 0AA")).to eq(expected_data)
+      expect(use_case.execute("A0 0AA")).to eq(expected_data)
     end
   end
 end

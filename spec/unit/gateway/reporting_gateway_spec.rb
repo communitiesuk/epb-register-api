@@ -1,7 +1,7 @@
-describe "Gateway::ReportingGateway" do
+describe Gateway::ReportingGateway do
   include RSpecRegisterApiServiceMixin
   context "when extracting data from the reporting gateway" do
-    subject { Gateway::ReportingGateway.new }
+    subject(:gateway) { described_class.new }
 
     before(:all) do
       @scheme_id = add_scheme_and_get_id
@@ -52,7 +52,7 @@ describe "Gateway::ReportingGateway" do
       end
 
       it "returns the opted out assessments only" do
-        expect(subject.fetch_not_for_publication_assessments.count).to eq(3)
+        expect(gateway.fetch_not_for_publication_assessments.count).to eq(3)
         expect(selected_data).to eq(expected_data)
       end
     end
@@ -98,7 +98,7 @@ describe "Gateway::ReportingGateway" do
       end
 
       it "returns only 1 SAP and the DEC" do
-        expect(subject.fetch_not_for_publication_assessments.count).to eq(2)
+        expect(gateway.fetch_not_for_publication_assessments.count).to eq(2)
         expect(selected_data).to eq(expected_data)
       end
     end
@@ -118,7 +118,7 @@ describe "Gateway::ReportingGateway" do
       end
 
       it "does not return the AC-CERT" do
-        expect(subject.fetch_not_for_publication_assessments.count).to eq(1)
+        expect(gateway.fetch_not_for_publication_assessments.count).to eq(1)
       end
     end
 
@@ -137,7 +137,7 @@ describe "Gateway::ReportingGateway" do
       end
 
       it "does not return the DEC-RR" do
-        expect(subject.fetch_not_for_publication_assessments.count).to eq(1)
+        expect(gateway.fetch_not_for_publication_assessments.count).to eq(1)
       end
     end
   end

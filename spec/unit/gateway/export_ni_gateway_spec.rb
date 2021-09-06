@@ -1,7 +1,7 @@
 describe Gateway::ExportNiGateway do
   include RSpecRegisterApiServiceMixin
 
-  subject { described_class.new }
+  subject(:gateway) { described_class.new }
 
   context "when extracting Northern Ireland data for export " do
     before(:all) do
@@ -13,7 +13,7 @@ describe Gateway::ExportNiGateway do
     end
 
     it "call the gateway without error" do
-      expect { subject }.not_to raise_error
+      expect { gateway }.not_to raise_error
     end
 
     describe ".fetch_assessments" do
@@ -106,11 +106,11 @@ describe Gateway::ExportNiGateway do
       end
 
       it "exports only domestic certificates that have a BT postcode and a NI schema" do
-        expect(subject.fetch_assessments(%w[RdSAP SAP]).sort_by! { |k| k["assessment_id"] }).to eq(domestic_expectation)
+        expect(gateway.fetch_assessments(%w[RdSAP SAP]).sort_by! { |k| k["assessment_id"] }).to eq(domestic_expectation)
       end
 
       it "exports only commercial certificates that have a BT postcode and a NI schema" do
-        expect(subject.fetch_assessments("CEPC")).to eq(commercial_expectation)
+        expect(gateway.fetch_assessments("CEPC")).to eq(commercial_expectation)
       end
 
       context "when a certificate is opted out" do
@@ -119,7 +119,7 @@ describe Gateway::ExportNiGateway do
         end
 
         let(:results) do
-          subject.fetch_assessments(%w[RdSAP SAP]).sort_by! { |k| k["assessment_id"] }
+          gateway.fetch_assessments(%w[RdSAP SAP]).sort_by! { |k| k["assessment_id"] }
         end
 
         it "return false for the 1st row which was not opted out" do
@@ -142,7 +142,7 @@ describe Gateway::ExportNiGateway do
         end
 
         let(:results) do
-          subject.fetch_assessments(%w[RdSAP SAP]).sort_by! { |k| k["assessment_id"] }
+          gateway.fetch_assessments(%w[RdSAP SAP]).sort_by! { |k| k["assessment_id"] }
         end
 
         it "return false for the 1st row which was not cancelled" do
@@ -161,11 +161,11 @@ describe Gateway::ExportNiGateway do
         end
 
         let!(:results) do
-          subject.fetch_assessments(%w[RdSAP SAP]).sort_by! { |k| k["assessment_id"] }
+          gateway.fetch_assessments(%w[RdSAP SAP]).sort_by! { |k| k["assessment_id"] }
         end
 
         let!(:commercial_results) do
-          subject.fetch_assessments("CEPC")
+          gateway.fetch_assessments("CEPC")
         end
 
         it "return true for the 1st row which was been opted out" do

@@ -1,7 +1,7 @@
-describe "Gateway::AssessmentMetaGateway" do
+describe Gateway::AssessmentMetaGateway do
   include RSpecRegisterApiServiceMixin
   context "when extracting meta data for an asesssment given a RRN " do
-    subject { Gateway::AssessmentMetaGateway.new }
+    subject(:gateway) { described_class.new }
 
     before do
       Timecop.freeze(2021, 6, 21, 12, 0, 0)
@@ -54,11 +54,11 @@ describe "Gateway::AssessmentMetaGateway" do
     end
 
     it "returns the expected data set" do
-      expect(subject.fetch("0000-0000-0000-0000-0000").symbolize_keys).to eq(expected_data)
+      expect(gateway.fetch("0000-0000-0000-0000-0000").symbolize_keys).to eq(expected_data)
     end
 
     it "returns no data if there is no assessment" do
-      expect(subject.fetch("0000-0000-0000-0000-0001")).to be_nil
+      expect(gateway.fetch("0000-0000-0000-0000-0001")).to be_nil
     end
 
     context "when the certificate has been cancelled" do
@@ -67,7 +67,7 @@ describe "Gateway::AssessmentMetaGateway" do
       end
 
       it "returns the expected data set with the cancelled at date to be now" do
-        expect(subject.fetch("0000-0000-0000-0000-0000")["cancelled_at"]).to eq(Time.now)
+        expect(gateway.fetch("0000-0000-0000-0000-0000")["cancelled_at"]).to eq(Time.now)
       end
     end
 
@@ -77,7 +77,7 @@ describe "Gateway::AssessmentMetaGateway" do
       end
 
       it "returns the expected data set with the cancelled at date to be now" do
-        expect(subject.fetch("0000-0000-0000-0000-0000")["opt_out"]).to eq(true)
+        expect(gateway.fetch("0000-0000-0000-0000-0000")["opt_out"]).to eq(true)
       end
     end
 
@@ -87,7 +87,7 @@ describe "Gateway::AssessmentMetaGateway" do
       end
 
       it "returns the expected data set with the cancelled at date to be now" do
-        expect(subject.fetch("0000-0000-0000-0000-0000")["not_for_issue_at"]).to eq(Time.now)
+        expect(gateway.fetch("0000-0000-0000-0000-0000")["not_for_issue_at"]).to eq(Time.now)
       end
     end
   end

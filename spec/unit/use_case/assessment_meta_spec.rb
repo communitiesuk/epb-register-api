@@ -1,6 +1,6 @@
 describe UseCase::AssessmentMeta do
   context "when extracting meta data from the database for an assessment" do
-    subject { described_class.new(gateway) }
+    subject(:use_case) { described_class.new(gateway) }
 
     let(:gateway) do
       instance_double(Gateway::AssessmentMetaGateway)
@@ -12,7 +12,7 @@ describe UseCase::AssessmentMeta do
       end
 
       it "executes the use case which calls the gateway" do
-        expect(subject.execute("0000-0000-0000-0000-0000")).to eq({ assessment: "0000-0000-0000-0000-0000" })
+        expect(use_case.execute("0000-0000-0000-0000-0000")).to eq({ assessment: "0000-0000-0000-0000-0000" })
       end
     end
 
@@ -22,7 +22,7 @@ describe UseCase::AssessmentMeta do
       end
 
       it "raises an error when there is no data for an assessment" do
-        expect { subject.execute("0000-0000-0000-0000-0001") }.to raise_error(UseCase::AssessmentMeta::NoDataException)
+        expect { use_case.execute("0000-0000-0000-0000-0001") }.to raise_error(UseCase::AssessmentMeta::NoDataException)
       end
     end
   end

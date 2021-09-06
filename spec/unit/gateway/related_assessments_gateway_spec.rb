@@ -2,7 +2,7 @@ describe Gateway::RelatedAssessmentsGateway do
   include RSpecRegisterApiServiceMixin
 
   context "when getting related assessments" do
-    subject { described_class.new }
+    subject(:gateway) { described_class.new }
 
     related_assessment_ids = %w[
       0000-0000-0000-0000-0001
@@ -25,11 +25,11 @@ describe Gateway::RelatedAssessmentsGateway do
     end
 
     it "returns related assessment reference objects when calling by_address_id" do
-      expect(subject.by_address_id(address_id).map { |assessment| assessment.to_hash[:assessment_id] }.sort).to eq related_assessment_ids
+      expect(gateway.by_address_id(address_id).map { |assessment| assessment.to_hash[:assessment_id] }.sort).to eq related_assessment_ids
     end
 
     it "returns related assessment IDs when calling related_assessment_ids" do
-      expect(subject.related_assessment_ids(address_id).sort).to eq related_assessment_ids
+      expect(gateway.related_assessment_ids(address_id).sort).to eq related_assessment_ids
     end
   end
 end

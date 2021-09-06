@@ -1,6 +1,6 @@
 describe UseCase::ExportAssessmentAttributes do
   context "when exporting data for attribute storage call the use case" do
-    subject do
+    subject(:use_case) do
       described_class.new(
         assessments_gateway,
         assessments_search_gateway,
@@ -67,7 +67,7 @@ describe UseCase::ExportAssessmentAttributes do
     end
 
     it "calls the execute method to extract xml data from the gateway" do
-      export = subject.execute(date_today)
+      export = use_case.execute(date_today)
 
       expect(export[0][:assessment_id]).to eq("0000-0000-0000-0000-0000")
       expect(export[0][:type_of_assessment]).to eq("CEPC")
