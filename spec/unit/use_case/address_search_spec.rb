@@ -1,6 +1,6 @@
 describe UseCase::SearchAddressesByStreetAndTown do
   include RSpecRegisterApiServiceMixin
-  
+
   subject(:use_case) { described_class.new }
 
   context "when searching the same address in both the assessments and address_base tables" do

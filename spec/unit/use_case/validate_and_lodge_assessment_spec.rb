@@ -3,7 +3,7 @@ describe UseCase::ValidateAndLodgeAssessment do
     described_class.new(
       validate_assessment_use_case: double("validate_assessment"),
       lodge_assessment_use_case: double("lodge_assessment"),
-      check_assessor_belongs_to_scheme_use_case: double("check_assessor_belongs_to_scheme")
+      check_assessor_belongs_to_scheme_use_case: double("check_assessor_belongs_to_scheme"),
     )
   end
 
