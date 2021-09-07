@@ -268,7 +268,7 @@ RSpec.configure do |config|
     Rake::Task["maintenance:green_deal_update_fuel_data"].invoke
     fuel_price_mock.disable
 
-    Gateway::RedisGateway.redis_client_class = MockRedis
+    EventBroadcaster.disable!
   end
 
   config.before(:all, set_with_timecop: true) { Timecop.freeze(Time.utc(2021, 6, 21)) }

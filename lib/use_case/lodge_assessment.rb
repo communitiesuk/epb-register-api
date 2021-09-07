@@ -1,11 +1,7 @@
 # frozen_string_literal: true
 
-require "wisper"
-
 module UseCase
   class LodgeAssessment
-    include Wisper::Publisher
-
     class InactiveAssessorException < StandardError
     end
 
@@ -23,7 +19,8 @@ module UseCase
       assessments_xml_gateway:,
       assessments_address_id_gateway:,
       related_assessments_gateway:,
-      green_deal_plans_gateway:
+      green_deal_plans_gateway:,
+      event_broadcaster:
     )
       @assessments_gateway = assessments_gateway
       @assessments_search_gateway = assessments_search_gateway
@@ -33,6 +30,7 @@ module UseCase
       @assessments_address_id_gateway = assessments_address_id_gateway
       @related_assessments_gateway = related_assessments_gateway
       @green_deal_plans_gateway = green_deal_plans_gateway
+      @event_broadcaster = event_broadcaster
     end
 
     def execute(data, migrated, schema_name)
@@ -91,7 +89,7 @@ module UseCase
         },
       )
 
-      broadcast(:assessment_lodged, assessment.assessment_id)
+      @event_broadcaster.broadcast :assessment_lodged, assessment.assessment_id
 
       assessment
     end

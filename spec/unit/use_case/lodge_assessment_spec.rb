@@ -9,6 +9,7 @@ describe UseCase::LodgeAssessment do
       assessments_address_id_gateway: instance_spy(Gateway::AssessmentsAddressIdGateway),
       related_assessments_gateway: instance_double(Gateway::RelatedAssessmentsGateway),
       green_deal_plans_gateway: instance_double(Gateway::GreenDealPlansGateway),
+      event_broadcaster: EventBroadcaster.new,
     )
   end
 
@@ -221,8 +222,16 @@ describe UseCase::LodgeAssessment do
       )
     end
 
-    it "broadcasts the assessment lodged event" do
-      expect { use_case.execute(data, true, "RdSAP-Schema-20.0.0") }.to broadcast(:assessment_lodged)
+    context "when event broadcaster is enabled" do
+      around do |test|
+        EventBroadcaster.enable!
+        test.run
+        EventBroadcaster.disable!
+      end
+
+      it "broadcasts the assessment lodged event" do
+        expect { use_case.execute(data, true, "RdSAP-Schema-20.0.0") }.to broadcast(:assessment_lodged)
+      end
     end
   end
 end

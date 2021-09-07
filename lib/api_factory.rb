@@ -63,9 +63,7 @@ class ApiFactory
   end
 
   def self.lodge_assessment_use_case
-    return @lodge_assessment_use_case unless @lodge_assessment_use_case.nil?
-
-    @lodge_assessment_use_case =
+    @lodge_assessment_use_case ||=
       UseCase::LodgeAssessment.new(
         assessments_gateway: assessments_gateway,
         assessments_search_gateway: assessments_search_gateway,
@@ -75,12 +73,8 @@ class ApiFactory
         assessments_address_id_gateway: assessments_address_id_gateway,
         related_assessments_gateway: related_assessments_gateway,
         green_deal_plans_gateway: green_deal_plans_gateway,
+        event_broadcaster: event_broadcaster,
       )
-    @lodge_assessment_use_case.subscribe(
-      Listener::NotifyNewAssessmentToDataWarehouse.new(
-        notify_use_case: notify_new_assessment_to_data_warehouse_use_case,
-      ),
-    )
   end
 
   def self.validate_assessment_use_case
@@ -120,5 +114,20 @@ class ApiFactory
 
   def self.redis_gateway
     @redis_gateway ||= Gateway::RedisGateway.new
+  end
+
+  def self.event_broadcaster
+    return @event_broadcaster unless @event_broadcaster.nil?
+
+    @event_broadcaster = EventBroadcaster.new
+
+    # wire up listeners
+    @event_broadcaster.subscribe(
+      Listener::NotifyNewAssessmentToDataWarehouse.new(
+        notify_use_case: notify_new_assessment_to_data_warehouse_use_case,
+      ),
+    )
+
+    @event_broadcaster
   end
 end
