@@ -122,11 +122,14 @@ class ApiFactory
     @event_broadcaster = EventBroadcaster.new
 
     # wire up listeners
-    @event_broadcaster.subscribe(
-      Listener::NotifyNewAssessmentToDataWarehouse.new(
-        notify_use_case: notify_new_assessment_to_data_warehouse_use_case,
-      ),
-    )
+    #
+    # don't send out to data warehouse queue yet
+    #
+    # @event_broadcaster.subscribe(
+    #   Listener::NotifyNewAssessmentToDataWarehouse.new(
+    #     notify_use_case: notify_new_assessment_to_data_warehouse_use_case,
+    #   ),
+    # )
 
     @event_broadcaster
   end
