@@ -11,10 +11,16 @@ module UseCase
     class AssessmentNotLodgedByScheme < StandardError
     end
 
-    def initialize
-      @assessments_gateway = Gateway::AssessmentsGateway.new
-      @assessments_search_gateway = Gateway::AssessmentsSearchGateway.new
-      @assessors_gateway = Gateway::AssessorsGateway.new
+    def initialize(
+      assessments_gateway:,
+      assessments_search_gateway:,
+      assessors_gateway:,
+      event_broadcaster:
+    )
+      @assessments_gateway = assessments_gateway
+      @assessments_search_gateway = assessments_search_gateway
+      @assessors_gateway = assessors_gateway
+      @event_broadcaster = event_broadcaster
     end
 
     def execute(assessment_id, status, scheme_ids)
@@ -76,13 +82,19 @@ module UseCase
           "cancelled_at",
           Time.now.to_s,
         )
+        broadcast :assessment_cancelled, assessment_ids
       when "NOT_FOR_ISSUE"
         @assessments_gateway.update_statuses(
           assessment_ids,
           "not_for_issue_at",
           Time.now.to_s,
         )
+        broadcast :assessment_marked_not_for_issue, assessment_ids
       end
+    end
+
+    def broadcast(event_name, assessment_ids)
+      assessment_ids.each { |id| @event_broadcaster.broadcast(event_name, assessment_id: id) }
     end
   end
 end

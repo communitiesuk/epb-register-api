@@ -6,10 +6,24 @@ describe Listener::NotifyAssessmentStatusUpdateToDataWarehouse do
   let(:assessment_id) { "0000-1111-2222-3333-4444" }
 
   describe "#assessment_status_update" do
-    it "executes the notify use case when assesment is cancelled or marked not-for-issue" do
-      listener.assessment_status_update(assessment_id)
+    context "when assessment is cancelled" do
+      before do
+        listener.assessment_cancelled assessment_id: assessment_id
+      end
 
-      expect(notify_use_case).to have_received(:execute).with(assessment_id: assessment_id)
+      it "executes the notify use case" do
+        expect(notify_use_case).to have_received(:execute).with(assessment_id: assessment_id)
+      end
+    end
+
+    context "when assessment is marked not for issue" do
+      before do
+        listener.assessment_marked_not_for_issue assessment_id: assessment_id
+      end
+
+      it "executes the notify use case" do
+        expect(notify_use_case).to have_received(:execute).with(assessment_id: assessment_id)
+      end
     end
   end
 end

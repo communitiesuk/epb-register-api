@@ -1,7 +1,17 @@
 describe UseCase::UpdateAssessmentStatus do
   include RSpecRegisterApiServiceMixin
 
-  let(:use_case) { described_class.new }
+  subject(:use_case) do
+    described_class.new(
+      assessments_gateway: assessments_gateway,
+      assessments_search_gateway: assessments_search_gateway,
+      assessors_gateway: Gateway::AssessorsGateway.new,
+      event_broadcaster: EventBroadcaster.new,
+    )
+  end
+
+  let(:assessments_gateway) { Gateway::AssessmentsGateway.new }
+  let(:assessments_search_gateway) { Gateway::AssessmentsSearchGateway.new }
 
   let(:assessment) do
     assessments_search_gateway.search_by_assessment_id(
@@ -26,8 +36,6 @@ describe UseCase::UpdateAssessmentStatus do
   end
 
   context "when calling update_statuses" do
-    let(:assessments_search_gateway) { Gateway::AssessmentsSearchGateway.new }
-
     before do
       use_case.execute("0000-0000-0000-0000-0000", "CANCELLED", [@scheme_id])
     end
@@ -42,9 +50,6 @@ describe UseCase::UpdateAssessmentStatus do
   end
 
   context "when one half of a linked pair is already cancelled" do
-    let(:assessments_gateway) { Gateway::AssessmentsGateway.new }
-    let(:assessments_search_gateway) { Gateway::AssessmentsSearchGateway.new }
-
     before do
       assessments_gateway.update_statuses(
         %w[0000-0000-0000-0000-0001],
@@ -56,6 +61,18 @@ describe UseCase::UpdateAssessmentStatus do
     it "cancels the uncancelled certificate" do
       use_case.execute("0000-0000-0000-0000-0000", "CANCELLED", [@scheme_id])
       expect(assessment.get("cancelled_at")).not_to be_nil
+    end
+  end
+
+  context "when an assessment is cancelled" do
+    it "broadcasts an assessment_cancelled event" do
+      expect { use_case.execute("0000-0000-0000-0000-0000", "CANCELLED", [@scheme_id]) }.to broadcast(:assessment_cancelled, assessment_id: "0000-0000-0000-0000-0000")
+    end
+  end
+
+  context "when an assessment is marked not for issue" do
+    it "broadcasts an assessment_marked_not_for_issue event" do
+      expect { use_case.execute("0000-0000-0000-0000-0000", "NOT_FOR_ISSUE", [@scheme_id]) }.to broadcast(:assessment_marked_not_for_issue, assessment_id: "0000-0000-0000-0000-0000")
     end
   end
 end

@@ -77,6 +77,16 @@ class ApiFactory
       )
   end
 
+  def self.update_assessment_status_use_case
+    @update_assessment_status_use_case ||=
+      UseCase::UpdateAssessmentStatus.new(
+        assessments_gateway: assessments_gateway,
+        assessments_search_gateway: assessments_search_gateway,
+        assessors_gateway: assessors_gateway,
+        event_broadcaster: event_broadcaster,
+      )
+  end
+
   def self.validate_assessment_use_case
     @validate_assessment_use_case ||= UseCase::ValidateAssessment.new
   end
@@ -93,6 +103,10 @@ class ApiFactory
 
   def self.notify_new_assessment_to_data_warehouse_use_case
     @notify_new_assessment_to_data_warehouse_use_case ||= UseCase::NotifyNewAssessmentToDataWarehouse.new(redis_gateway: redis_gateway)
+  end
+
+  def self.notify_assessment_status_update_to_data_warehouse_use_case
+    @notify_assessment_status_update_to_data_warehouse_use_case ||= UseCase::NotifyAssessmentStatusUpdateToDataWarehouse.new(redis_gateway: redis_gateway)
   end
 
   def self.storage_configuration_reader(bucket_name:, instance_name:)
@@ -137,6 +151,10 @@ class ApiFactory
     # @event_broadcaster.subscribe(
     #   Listener::NotifyNewAssessmentToDataWarehouse.new(
     #     notify_use_case: notify_new_assessment_to_data_warehouse_use_case,
+    #   ),
+    # @event_broadcaster.subscribe(
+    #   Listener::NotifyAssessmentStatusUpdateToDataWarehouse.new(
+    #     notify_use_case: notify_assessment_status_update_to_data_warehouse_use_case,
     #   ),
     # )
 
