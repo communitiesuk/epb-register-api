@@ -1,9 +1,9 @@
 describe UseCase::ValidateAndLodgeAssessment do
   subject(:use_case) do
     described_class.new(
-      validate_assessment_use_case: double("validate_assessment"),
-      lodge_assessment_use_case: double("lodge_assessment"),
-      check_assessor_belongs_to_scheme_use_case: double("check_assessor_belongs_to_scheme"),
+      validate_assessment_use_case: instance_double(UseCase::ValidateAssessment),
+      lodge_assessment_use_case: instance_double(UseCase::LodgeAssessment),
+      check_assessor_belongs_to_scheme_use_case: instance_double(UseCase::CheckAssessorBelongsToScheme),
     )
   end
 

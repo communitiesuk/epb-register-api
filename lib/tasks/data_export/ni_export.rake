@@ -3,8 +3,6 @@ namespace :data_export do
 
   task :ni_assessments, %i[type_of_assessments] do |_, args|
     type_of_assessments = args.type_of_assessments
-    bucket_name = ENV["BUCKET_NAME"]
-    instance_name = ENV["INSTANCE_NAME"]
 
     raise Boundary::ArgumentMissing, "type_of_assessments" unless type_of_assessments
 
