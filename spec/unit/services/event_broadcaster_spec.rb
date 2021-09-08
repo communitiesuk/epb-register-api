@@ -1,5 +1,7 @@
 describe EventBroadcaster do
-  subject(:broadcaster) { described_class.new }
+  subject(:broadcaster) { described_class.new(logger: logger) }
+
+  let(:logger) { instance_spy(Logger) }
 
   around do |test|
     described_class.enable!
@@ -48,6 +50,21 @@ describe EventBroadcaster do
       it "does not notify the listener" do
         expect(listener_triggered).to be false
       end
+    end
+  end
+
+  context "when a listener leaks an error and an event is broadcast" do
+    before do
+      broadcaster.on(:exploding_event) { raise "the listener exploded" }
+    end
+
+    it "does not raise an error" do
+      expect { broadcaster.broadcast(:exploding_event) }.not_to raise_error
+    end
+
+    it "logs out a message including raised error type and message" do
+      broadcaster.broadcast(:exploding_event)
+      expect(logger).to have_received(:error).with include("RuntimeError", "the listener exploded")
     end
   end
 end

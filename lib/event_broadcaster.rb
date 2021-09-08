@@ -95,8 +95,14 @@ class EventBroadcaster
 
   @enabled = true
 
+  def initialize(logger: nil)
+    @logger = logger || Logger.new($stdout)
+  end
+
   def broadcast(event, *args)
     super if self.class.enabled?
+  rescue StandardError => e
+    logger.error "Event broadcaster caught #{e.class} from a listener: #{e.message}"
   end
 
   def self.disable!
@@ -110,4 +116,8 @@ class EventBroadcaster
   def self.enabled?
     @enabled
   end
+
+private
+
+  attr_reader :logger
 end
