@@ -116,6 +116,15 @@ class ApiFactory
     @redis_gateway ||= Gateway::RedisGateway.new
   end
 
+  def self.logger
+    return @logger unless @logger.nil?
+
+    @logger = Logger.new($stdout)
+    @logger.level = Logger::ERROR
+
+    @logger
+  end
+
   def self.event_broadcaster
     return @event_broadcaster unless @event_broadcaster.nil?
 
