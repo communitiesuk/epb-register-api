@@ -9,3 +9,6 @@ inherit_gem:
 
 RSpec/ExampleLength:
   CountAsOne: ['array', 'hash']
+
+RSpec/BeforeAfterAll:
+  Enabled: false
