@@ -95,6 +95,19 @@ namespace :oneoff do
     assessments = ActiveRecord::Base.connection.exec_query find_assessments_sql
     puts "[#{Time.now}] Found #{assessments.length} assessments to process"
 
+    find_related_rrn = lambda do |wrapper_hash|
+      related_rrn = nil
+      # related-rrn: AC-CERT AC-REPORT CEPC DEC-RR
+      related_rrn = wrapper_hash[:related_rrn] unless wrapper_hash[:related_rrn].nil?
+      # related_certificate: CEPC-RR
+      related_rrn = wrapper_hash[:related_certificate] unless wrapper_hash[:related_certificate].nil?
+      # administrative_information->related_rrn: DEC
+      if related_rrn.nil? && !wrapper_hash.dig(:administrative_information, :related_rrn).nil?
+        related_rrn = wrapper_hash[:administrative_information][:related_rrn]
+      end
+      related_rrn
+    end
+
     inserted = 0
     skipped = 0
     assessments.each do |assessment|
@@ -128,7 +141,7 @@ namespace :oneoff do
         end
         next if wrapper_hash.nil?
 
-        related_rrn = find_related_rrn(wrapper_hash)
+        related_rrn = find_related_rrn.call(wrapper_hash)
         if related_rrn.nil?
           skipped += 1
         else
@@ -138,18 +151,5 @@ namespace :oneoff do
       end
     end
     puts "[#{Time.now}] Finished processing linked assessment, skipped:#{skipped} inserted:#{inserted}"
-  end
-
-  def find_related_rrn(wrapper_hash)
-    related_rrn = nil
-    # related-rrn: AC-CERT AC-REPORT CEPC DEC-RR
-    related_rrn = wrapper_hash[:related_rrn] unless wrapper_hash[:related_rrn].nil?
-    # related_certificate: CEPC-RR
-    related_rrn = wrapper_hash[:related_certificate] unless wrapper_hash[:related_certificate].nil?
-    # administrative_information->related_rrn: DEC
-    if related_rrn.nil? && !wrapper_hash.dig(:administrative_information, :related_rrn).nil?
-      related_rrn = wrapper_hash[:administrative_information][:related_rrn]
-    end
-    related_rrn
   end
 end
