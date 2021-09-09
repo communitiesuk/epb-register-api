@@ -12,4 +12,10 @@ describe "Helper::EnergyBandCalculator" do
       expect(Helper::EnergyBandCalculator.commercial(-1)).to eq "a+"
     end
   end
+
+  context "When calculating energy band for commercial property" do
+    it "returns a band of A for a rating of " do
+      expect(Helper::EnergyBandCalculator.commercial(0)).to eq "a"
+    end
+  end
 end

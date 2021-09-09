@@ -21,7 +21,7 @@ module Helper
 
     def self.commercial(number)
       case number
-      when proc { |n| n <= 0 }
+      when proc { |n| n <= -1 }
         "a+"
       when 0..25
         "a"
