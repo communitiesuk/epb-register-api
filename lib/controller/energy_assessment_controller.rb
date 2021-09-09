@@ -267,7 +267,7 @@ module Controller
       assessment_id = params[:assessment_id]
       new_opt_out_status = request_body(UPDATE_OPT_OUT_PUT_SCHEMA)[:opt_out]
 
-      UseCase::OptOutAssessment.new.execute(assessment_id, new_opt_out_status)
+      ApiFactory.opt_out_assessment_use_case.execute(assessment_id, new_opt_out_status)
 
       json_api_response(code: 200, data: "Your opt out request was successful")
     rescue StandardError => e

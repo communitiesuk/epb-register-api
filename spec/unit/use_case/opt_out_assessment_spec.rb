@@ -1,7 +1,14 @@
 describe UseCase::OptOutAssessment do
   include RSpecRegisterApiServiceMixin
 
-  let(:use_case) { described_class.new }
+  subject(:use_case) do
+    described_class.new(
+      assessments_gateway: Gateway::AssessmentsGateway.new,
+      assessments_search_gateway: assessments_search_gateway,
+      event_broadcaster: EventBroadcaster.new,
+    )
+  end
+
   let(:assessments_search_gateway) { Gateway::AssessmentsSearchGateway.new }
   let(:assessment) do
     assessments_search_gateway.search_by_assessment_id(
@@ -44,6 +51,34 @@ describe UseCase::OptOutAssessment do
 
     it "opts out the linked assessment by setting the value to true" do
       expect(linked_assessment.get("opt_out")).to be true
+    end
+  end
+
+  describe "event broadcasting" do
+    around do |test|
+      EventBroadcaster.enable!
+      test.run
+      EventBroadcaster.disable!
+    end
+
+    context "when an opt out is run with opt_out set to true" do
+      it "broadcasts an assessment opt out status changed event with new_status set to true" do
+        expect { use_case.execute("0000-0000-0000-0000-0000", true) }.to broadcast(
+          :assessment_opt_out_status_changed,
+          assessment_id: "0000-0000-0000-0000-0000",
+          new_status: true,
+        )
+      end
+    end
+
+    context "when an opt out is run with opt_out set to false" do
+      it "broadcasts an assessment opt out status changed event with new_status set to false" do
+        expect { use_case.execute("0000-0000-0000-0000-0000", false) }.to broadcast(
+          :assessment_opt_out_status_changed,
+          assessment_id: "0000-0000-0000-0000-0000",
+          new_status: false,
+        )
+      end
     end
   end
 end

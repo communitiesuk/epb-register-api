@@ -11,6 +11,7 @@ describe UseCase::UpdateAssessmentStatus do
   end
 
   let(:assessments_gateway) { Gateway::AssessmentsGateway.new }
+
   let(:assessments_search_gateway) { Gateway::AssessmentsSearchGateway.new }
 
   let(:assessment) do

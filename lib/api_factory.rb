@@ -62,6 +62,23 @@ class ApiFactory
       UseCase::CheckAssessorBelongsToScheme.new(assessors_gateway: assessors_gateway)
   end
 
+  def self.update_assessment_status_use_case
+    @update_assessment_status_use_case ||= UseCase::UpdateAssessmentStatus.new(
+      assessments_gateway: assessments_gateway,
+      assessments_search_gateway: assessments_search_gateway,
+      assessors_gateway: assessors_gateway,
+      event_broadcaster: event_broadcaster,
+    )
+  end
+
+  def self.opt_out_assessment_use_case
+    @opt_out_assessment_use_case ||= UseCase::OptOutAssessment.new(
+      assessments_gateway: assessments_gateway,
+      assessments_search_gateway: assessments_search_gateway,
+      event_broadcaster: event_broadcaster,
+    )
+  end
+
   def self.lodge_assessment_use_case
     @lodge_assessment_use_case ||=
       UseCase::LodgeAssessment.new(
@@ -73,16 +90,6 @@ class ApiFactory
         assessments_address_id_gateway: assessments_address_id_gateway,
         related_assessments_gateway: related_assessments_gateway,
         green_deal_plans_gateway: green_deal_plans_gateway,
-        event_broadcaster: event_broadcaster,
-      )
-  end
-
-  def self.update_assessment_status_use_case
-    @update_assessment_status_use_case ||=
-      UseCase::UpdateAssessmentStatus.new(
-        assessments_gateway: assessments_gateway,
-        assessments_search_gateway: assessments_search_gateway,
-        assessors_gateway: assessors_gateway,
         event_broadcaster: event_broadcaster,
       )
   end

@@ -5,9 +5,10 @@ module UseCase
     class AssessmentNotFound < StandardError
     end
 
-    def initialize
-      @assessments_gateway = Gateway::AssessmentsGateway.new
-      @assessments_search_gateway = Gateway::AssessmentsSearchGateway.new
+    def initialize(assessments_gateway:, assessments_search_gateway:, event_broadcaster:)
+      @assessments_gateway = assessments_gateway
+      @assessments_search_gateway = assessments_search_gateway
+      @event_broadcaster = event_broadcaster
     end
 
     def execute(assessment_id, opt_out_status)
@@ -37,6 +38,12 @@ module UseCase
       assessment_ids =
         assessments.map { |assessment| assessment.get("assessment_id") }
       @assessments_gateway.update_statuses(assessment_ids, "opt_out", opt_out_status)
+
+      assessment_ids.each do |id|
+        @event_broadcaster.broadcast :assessment_opt_out_status_changed,
+                                     assessment_id: id,
+                                     new_status: opt_out_status
+      end
     end
   end
 end
