@@ -3,6 +3,10 @@ describe Gateway::ExportNiGateway do
 
   subject(:gateway) { described_class.new }
 
+  let(:scheme_id) do
+    add_scheme_and_get_id
+  end
+
   context "when extracting Northern Ireland data for export " do
     before(:all) do
       Timecop.freeze(2021, 2, 22, 0, 0, 0)
@@ -106,11 +110,11 @@ describe Gateway::ExportNiGateway do
       end
 
       it "exports only domestic certificates that have a BT postcode and a NI schema" do
-        expect(gateway.fetch_assessments(%w[RdSAP SAP]).sort_by! { |k| k["assessment_id"] }).to eq(domestic_expectation)
+        expect(gateway.fetch_assessments(type_of_assessment: %w[RdSAP SAP]).sort_by! { |k| k["assessment_id"] }).to eq(domestic_expectation)
       end
 
       it "exports only commercial certificates that have a BT postcode and a NI schema" do
-        expect(gateway.fetch_assessments("CEPC")).to eq(commercial_expectation)
+        expect(gateway.fetch_assessments(type_of_assessment: "CEPC")).to eq(commercial_expectation)
       end
 
       context "when a certificate is opted out" do
@@ -119,7 +123,7 @@ describe Gateway::ExportNiGateway do
         end
 
         let(:results) do
-          gateway.fetch_assessments(%w[RdSAP SAP]).sort_by! { |k| k["assessment_id"] }
+          gateway.fetch_assessments(type_of_assessment: %w[RdSAP SAP]).sort_by! { |k| k["assessment_id"] }
         end
 
         it "return false for the 1st row which was not opted out" do
@@ -142,7 +146,7 @@ describe Gateway::ExportNiGateway do
         end
 
         let(:results) do
-          gateway.fetch_assessments(%w[RdSAP SAP]).sort_by! { |k| k["assessment_id"] }
+          gateway.fetch_assessments(type_of_assessment: %w[RdSAP SAP]).sort_by! { |k| k["assessment_id"] }
         end
 
         it "return false for the 1st row which was not cancelled" do
@@ -161,11 +165,11 @@ describe Gateway::ExportNiGateway do
         end
 
         let!(:results) do
-          gateway.fetch_assessments(%w[RdSAP SAP]).sort_by! { |k| k["assessment_id"] }
+          gateway.fetch_assessments(type_of_assessment: %w[RdSAP SAP]).sort_by! { |k| k["assessment_id"] }
         end
 
         let!(:commercial_results) do
-          gateway.fetch_assessments("CEPC")
+          gateway.fetch_assessments(type_of_assessment: "CEPC")
         end
 
         it "return true for the 1st row which was been opted out" do
@@ -182,6 +186,21 @@ describe Gateway::ExportNiGateway do
 
         it "returns false for commercial certificate cancelled " do
           expect(commercial_results.first["cancelled"]).to eq(false)
+        end
+      end
+
+      context "when filtering certificates by a date range" do
+        before do
+          ActiveRecord::Base.connection.exec_query("UPDATE Assessments SET date_registered = '2021-08-04 00:00:00' WHERE assessment_id= '0000-0000-0000-0000-0002'")
+        end
+
+        it "the export should only include the certificate lodged after  2021-08-01" do
+          expect(gateway.fetch_assessments(type_of_assessment: %w[RdSAP SAP], date_from: "2021-08-01", date_to: "2021-08-28").length).to eq(1)
+          expect(gateway.fetch_assessments(type_of_assessment: %w[RdSAP SAP], date_from: "2021-08-01", date_to: "2021-08-28").first["assessment_id"]).to eq("0000-0000-0000-0000-0002")
+        end
+
+        it "there are still a valid certificate to export when date does not include that lodged on 2021-08-01" do
+          expect(gateway.fetch_assessments(type_of_assessment: %w[RdSAP SAP], date_from:  "1991-08-01", date_to: "2021-08-03").first["assessment_id"]).to eq("0000-0000-0000-0000-0000")
         end
       end
     end

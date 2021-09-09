@@ -1,6 +1,6 @@
 module Gateway
   class ExportNiGateway
-    def fetch_assessments(type_of_assessment)
+    def fetch_assessments(type_of_assessment:, date_from: "1990-01-01", date_to: Time.now)
       sql = <<-SQL
       SELECT
       a.assessment_id,
@@ -13,9 +13,22 @@ module Gateway
       FROM assessments a
       INNER JOIN assessments_xml ax USING(assessment_id)
       LEFT JOIN assessments_address_id aa USING(assessment_id)
-      WHERE  a.postcode LIKE 'BT%' AND
-        ax.schema_type LIKE '%NI%'
+      WHERE a.date_registered BETWEEN $1 AND $2 AND (a.postcode LIKE 'BT%' AND
+        ax.schema_type LIKE '%NI%')
       SQL
+
+      bindings = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "date_from",
+          date_from,
+          ActiveRecord::Type::Date.new,
+        ),
+        ActiveRecord::Relation::QueryAttribute.new(
+          "date_to",
+          date_to,
+          ActiveRecord::Type::Date.new,
+        ),
+      ]
 
       # TOD0 extract this to helper method
       if type_of_assessment.is_a?(Array)
@@ -38,7 +51,7 @@ module Gateway
         SQL_TYPE_OF_ASSESSMENT
       end
 
-      results = ActiveRecord::Base.connection.exec_query(sql)
+      results = ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
 
       results.map { |result| result }
     end
