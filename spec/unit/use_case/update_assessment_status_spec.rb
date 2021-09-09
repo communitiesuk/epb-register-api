@@ -64,15 +64,23 @@ describe UseCase::UpdateAssessmentStatus do
     end
   end
 
-  context "when an assessment is cancelled" do
-    it "broadcasts an assessment_cancelled event" do
-      expect { use_case.execute("0000-0000-0000-0000-0000", "CANCELLED", [@scheme_id]) }.to broadcast(:assessment_cancelled, assessment_id: "0000-0000-0000-0000-0000")
+  describe "event broadcasting" do
+    around do |test|
+      EventBroadcaster.enable!
+      test.run
+      EventBroadcaster.disable!
     end
-  end
 
-  context "when an assessment is marked not for issue" do
-    it "broadcasts an assessment_marked_not_for_issue event" do
-      expect { use_case.execute("0000-0000-0000-0000-0000", "NOT_FOR_ISSUE", [@scheme_id]) }.to broadcast(:assessment_marked_not_for_issue, assessment_id: "0000-0000-0000-0000-0000")
+    context "when an assessment is cancelled" do
+      it "broadcasts an assessment_cancelled event" do
+        expect { use_case.execute("0000-0000-0000-0000-0000", "CANCELLED", [@scheme_id]) }.to broadcast(:assessment_cancelled, assessment_id: "0000-0000-0000-0000-0000")
+      end
+    end
+
+    context "when an assessment is marked not for issue" do
+      it "broadcasts an assessment_marked_not_for_issue event" do
+        expect { use_case.execute("0000-0000-0000-0000-0000", "NOT_FOR_ISSUE", [@scheme_id]) }.to broadcast(:assessment_marked_not_for_issue, assessment_id: "0000-0000-0000-0000-0000")
+      end
     end
   end
 end
