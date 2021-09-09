@@ -298,7 +298,7 @@ module Controller
       assessment_id = params[:assessment_id]
       new_address_id = request_body(UPDATE_ADDRESS_ID_PUT_SCHEMA)[:address_id]
 
-      UseCase::UpdateAssessmentAddressId.new.execute(
+      ApiFactory.update_assessment_address_id_use_case.execute(
         assessment_id,
         new_address_id,
       )

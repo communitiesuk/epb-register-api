@@ -11,11 +11,18 @@ module UseCase
     class AssessmentNotFound < StandardError
     end
 
-    def initialize
-      @address_base_gateway = Gateway::AddressBaseSearchGateway.new
-      @assessments_address_id_gateway = Gateway::AssessmentsAddressIdGateway.new
-      @assessments_search_gateway = Gateway::AssessmentsSearchGateway.new
-      @assessment_gateway = Gateway::AssessmentsGateway.new
+    def initialize(
+      address_base_gateway:,
+      assessments_address_id_gateway:,
+      assessments_search_gateway:,
+      assessments_gateway:,
+      event_broadcaster:
+    )
+      @address_base_gateway = address_base_gateway
+      @assessments_address_id_gateway = assessments_address_id_gateway
+      @assessments_search_gateway = assessments_search_gateway
+      @assessments_gateway = assessments_gateway
+      @event_broadcaster = event_broadcaster
     end
 
     def execute(assessment_id, new_address_id)
@@ -23,7 +30,7 @@ module UseCase
 
       assessments_ids = [assessment_id]
       linked_assessment_id =
-        @assessment_gateway.get_linked_assessment_id(assessment_id)
+        @assessments_gateway.get_linked_assessment_id(assessment_id)
       assessments_ids << linked_assessment_id unless linked_assessment_id.nil?
 
       assessments_ids.each do |current_assessment_id|
@@ -36,6 +43,12 @@ module UseCase
         assessments_ids,
         new_address_id,
       )
+
+      assessments_ids.each do |id|
+        @event_broadcaster.broadcast :assessment_address_id_updated,
+                                     assessment_id: id,
+                                     new_address_id: new_address_id
+      end
     end
 
   private

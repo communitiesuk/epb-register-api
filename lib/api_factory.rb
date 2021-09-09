@@ -79,6 +79,16 @@ class ApiFactory
     )
   end
 
+  def self.update_assessment_address_id_use_case
+    @update_assessment_address_id_use_case ||= UseCase::UpdateAssessmentAddressId.new(
+      address_base_gateway: address_base_search_gateway,
+      assessments_address_id_gateway: assessments_address_id_gateway,
+      assessments_search_gateway: assessments_search_gateway,
+      assessments_gateway: assessments_gateway,
+      event_broadcaster: event_broadcaster,
+    )
+  end
+
   def self.lodge_assessment_use_case
     @lodge_assessment_use_case ||=
       UseCase::LodgeAssessment.new(
