@@ -53,7 +53,7 @@ describe "Acceptance::Reports::ExportNIAssessments" do
     let(:ni_gateway) { instance_double(Gateway::ExportNiGateway) }
     let(:xml_gateway) { instance_double(Gateway::AssessmentsXmlGateway) }
     let(:use_case_export) { instance_double(UseCase::ExportNiAssessments) }
-    let(:file_name) { "ni_assessments_export_rdsap_sap_#{Time.now.strftime('%F')}.csv" }
+    let(:file_name) { "ni_assessments_export_rdsap-sap_#{Time.now.strftime('%F')}.csv" }
     let(:export_use_case) { instance_double(UseCase::ExportNiAssessments) }
     let(:export) do
       [
@@ -79,7 +79,7 @@ describe "Acceptance::Reports::ExportNIAssessments" do
     end
 
     it "sends the converted csv to the S3 bucket " do
-      task.invoke(%w[RdSAP SAP])
+      task.invoke("RdSAP-SAP")
 
       expect(WebMock).to have_requested(
         :put,

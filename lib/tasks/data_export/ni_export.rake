@@ -6,8 +6,9 @@ namespace :data_export do
 
     raise Boundary::ArgumentMissing, "type_of_assessments" unless type_of_assessments
 
+
     exporter = ApiFactory.ni_assessments_export_use_case
-    data = exporter.execute(type_of_assessments)
+    data = exporter.execute(type_of_assessments.split('-'))
 
     raise Boundary::OpenDataEmpty if data.length.zero?
 
