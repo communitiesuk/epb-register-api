@@ -9,17 +9,25 @@ describe "Acceptance::Reports::ExportNIAssessments" do
     let(:csv_data) do
       Helper::ExportHelper.to_csv(
         use_case
-          .execute(%w[RdSAP SAP])
+          .execute(type_of_assessment: %w[RdSAP SAP])
           .sort_by! { |item| item[:assessment_id] },
       )
     end
     let(:fixture_csv) { read_ni_csv_fixture("domestic") }
     let(:parsed_exported_data) { CSV.parse(csv_data, headers: true) }
 
+    before(:all) do
+      Timecop.freeze(2021, 2, 22, 0, 0, 0)
+    end
+
+    after(:all) do
+      Timecop.return
+    end
+
     before do
       domestic_ni_sap_xml = Nokogiri.XML Samples.xml("SAP-Schema-NI-18.0.0")
       domestic_ni_rdsap_xml = Nokogiri.XML Samples.xml("SAP-Schema-NI-18.0.0")
-      allow(ni_gateway).to receive(:fetch_assessments).with(%w[RdSAP SAP]).and_return([
+      allow(ni_gateway).to receive(:fetch_assessments).with(type_of_assessment: %w[RdSAP SAP], date_from: "1990-01-01", date_to: Time.now).and_return([
         { "assessment_id" => "0000-0000-0000-0000-0000", "lodgement_date" => "2020-05-04", "lodgement_datetime" => "2021-02-22 00:00:00", "uprn" => "UPRN-000000000001", "opt_out" => false, "cancelled" => false },
         { "assessment_id" => "0000-0000-0000-0000-0002", "lodgement_date" => "2020-05-04", "lodgement_datetime" => "2021-02-22 00:00:00", "uprn" => "UPRN-000000000000", "opt_out" => false, "cancelled" => false },
 

@@ -1,14 +1,16 @@
 namespace :data_export do
   desc "Exporting assessments data for Northern Ireland"
 
-  task :ni_assessments, %i[type_of_assessments] do |_, args|
+  task :ni_assessments, %i[type_of_assessments date_from date_to] do |_, args|
     type_of_assessments = args.type_of_assessments
+    date_from = args.date_from || "1990-01-01"
+    date_to =   args.date_to || Time.now.strftime("%F")
 
     raise Boundary::ArgumentMissing, "type_of_assessments" unless type_of_assessments
 
 
     exporter = ApiFactory.ni_assessments_export_use_case
-    data = exporter.execute(type_of_assessments.split('-'))
+    data = exporter.execute(type_of_assessment: type_of_assessments.split('-'), date_from: "1990-01-01", date_to: Time.now )
 
     raise Boundary::OpenDataEmpty if data.length.zero?
 
