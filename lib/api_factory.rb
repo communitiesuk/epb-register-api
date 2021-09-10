@@ -130,7 +130,7 @@ class ApiFactory
     @notify_assessment_address_id_update_to_data_warehouse_use_case ||= UseCase::NotifyAssessmentAddressIdUpdateToDataWarehouse.new(redis_gateway: redis_gateway)
   end
 
-  def self.notify_opt_out_status_update_to_data_warehouse
+  def self.notify_opt_out_status_update_to_data_warehouse_use_case
     @notify_opt_out_status_update_to_data_warehouse_use_case ||= UseCase::NotifyOptOutStatusUpdateToDataWarehouse.new(redis_gateway: redis_gateway)
   end
 
@@ -189,7 +189,7 @@ class ApiFactory
     # )
     # @event_broadcaster.subscribe(
     #   Listener::NotifyOptOutStatusUpdateToDataWarehouse.new(
-    #     notify_use_case: notify_opt_out_status_update_to_data_warehouse
+    #     notify_use_case: notify_opt_out_status_update_to_data_warehouse_use_case,
     #   )
     # )
 
