@@ -179,13 +179,11 @@ class ApiFactory
     #   )
     # end
     #
-    # notify_status_update = lambda do |assessment_id:|
+    # @event_broadcaster.on :assessment_cancelled, :assessment_marked_not_for_issue do |assessment_id:|
     #   notify_assessment_status_update_to_data_warehouse_use_case.execute(
     #     assessment_id: assessment_id,
     #   )
     # end
-    # @event_broadcaster.on :assessment_cancelled, &notify_status_update
-    # @event_broadcaster.on :assessment_marked_not_for_issue, &notify_status_update
     #
     # @event_broadcaster.on :assessment_address_id_updated do |assessment_id:|
     #   notify_assessment_address_id_update_to_data_warehouse_use_case.execute(
