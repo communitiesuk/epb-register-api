@@ -10,7 +10,7 @@ namespace :data_export do
 
 
     exporter = ApiFactory.ni_assessments_export_use_case
-    data = exporter.execute(type_of_assessment: type_of_assessments.split('-'), date_from: "1990-01-01", date_to: Time.now )
+    data = exporter.execute(type_of_assessment: type_of_assessments.split('-'), date_from: date_from, date_to: date_to )
 
     raise Boundary::OpenDataEmpty if data.length.zero?
 
