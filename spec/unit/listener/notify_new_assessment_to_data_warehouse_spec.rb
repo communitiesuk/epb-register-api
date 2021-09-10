@@ -7,7 +7,7 @@ describe Listener::NotifyNewAssessmentToDataWarehouse do
 
   context "when assessment_lodged notification is made" do
     before do
-      listener.assessment_lodged assessment_id
+      listener.assessment_lodged assessment_id: assessment_id
     end
 
     it "executes the notify use case" do
