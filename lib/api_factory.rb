@@ -173,29 +173,29 @@ class ApiFactory
     #
     # don't send out to data warehouse queue yet
     #
-    # @event_broadcaster.on :assessment_lodged do |assessment_id:|
-    #   notify_new_assessment_to_data_warehouse_use_case.execute(
-    #     assessment_id: assessment_id,
-    #   )
-    # end
-    #
-    # @event_broadcaster.on :assessment_cancelled, :assessment_marked_not_for_issue do |assessment_id:|
-    #   notify_assessment_status_update_to_data_warehouse_use_case.execute(
-    #     assessment_id: assessment_id,
-    #   )
-    # end
-    #
-    # @event_broadcaster.on :assessment_address_id_updated do |assessment_id:|
-    #   notify_assessment_address_id_update_to_data_warehouse_use_case.execute(
-    #     assessment_id: assessment_id,
-    #   )
-    # end
-    #
-    # @event_broadcaster.on :assessment_opt_out_status_changed do |assessment_id:|
-    #   notify_opt_out_status_update_to_data_warehouse_use_case.execute(
-    #     assessment_id: assessment_id,
-    #   )
-    # end
+    @event_broadcaster.on :assessment_lodged do |assessment_id:|
+      notify_new_assessment_to_data_warehouse_use_case.execute(
+        assessment_id: assessment_id,
+      )
+    end
+
+    @event_broadcaster.on :assessment_cancelled, :assessment_marked_not_for_issue do |assessment_id:|
+      notify_assessment_status_update_to_data_warehouse_use_case.execute(
+        assessment_id: assessment_id,
+      )
+    end
+
+    @event_broadcaster.on :assessment_address_id_updated do |assessment_id:|
+      notify_assessment_address_id_update_to_data_warehouse_use_case.execute(
+        assessment_id: assessment_id,
+      )
+    end
+
+    @event_broadcaster.on :assessment_opt_out_status_changed do |assessment_id:|
+      notify_opt_out_status_update_to_data_warehouse_use_case.execute(
+        assessment_id: assessment_id,
+      )
+    end
 
     @event_broadcaster
   end
