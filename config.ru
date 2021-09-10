@@ -10,6 +10,4 @@ environment = ENV['STAGE']
 Sentry.init { |config| config.environment = environment }
 use Sentry::Rack::CaptureExceptions
 
-EventBroadcaster.disable!
-
 run RegisterApiService
