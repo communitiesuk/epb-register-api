@@ -89,7 +89,7 @@ module UseCase
         },
       )
 
-      @event_broadcaster.broadcast :assessment_lodged, assessment.assessment_id
+      @event_broadcaster.broadcast :assessment_lodged, assessment_id: assessment.assessment_id
 
       assessment
     end
