@@ -218,5 +218,4 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
       ]
     end
   end
-
-  end
+end
