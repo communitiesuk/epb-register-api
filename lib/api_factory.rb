@@ -173,25 +173,31 @@ class ApiFactory
     #
     # don't send out to data warehouse queue yet
     #
-    # @event_broadcaster.subscribe(
-    #   Listener::NotifyNewAssessmentToDataWarehouse.new(
-    #     notify_use_case: notify_new_assessment_to_data_warehouse_use_case,
-    #   ),
-    # @event_broadcaster.subscribe(
-    #   Listener::NotifyAssessmentStatusUpdateToDataWarehouse.new(
-    #     notify_use_case: notify_assessment_status_update_to_data_warehouse_use_case,
-    #   ),
-    # )
-    # @event_broadcaster.subscribe(
-    #   Listener::NotifyAssessmentAddressIdUpdateToDataWarehouse.new(
-    #     notify_use_case: notify_assessment_address_id_update_to_data_warehouse_use_case,
-    #   ),
-    # )
-    # @event_broadcaster.subscribe(
-    #   Listener::NotifyOptOutStatusUpdateToDataWarehouse.new(
-    #     notify_use_case: notify_opt_out_status_update_to_data_warehouse_use_case,
+    # @event_broadcaster.on :assessment_lodged do |assessment_id:|
+    #   notify_new_assessment_to_data_warehouse_use_case.execute(
+    #     assessment_id: assessment_id,
     #   )
-    # )
+    # end
+    #
+    # notify_status_update = lambda do |assessment_id:|
+    #   notify_assessment_status_update_to_data_warehouse_use_case.execute(
+    #     assessment_id: assessment_id,
+    #   )
+    # end
+    # @event_broadcaster.on :assessment_cancelled, &notify_status_update
+    # @event_broadcaster.on :assessment_marked_not_for_issue, &notify_status_update
+    #
+    # @event_broadcaster.on :assessment_address_id_updated do |assessment_id:|
+    #   notify_assessment_address_id_update_to_data_warehouse_use_case.execute(
+    #     assessment_id: assessment_id,
+    #   )
+    # end
+    #
+    # @event_broadcaster.on :assessment_opt_out_status_changed do |assessment_id:|
+    #   notify_opt_out_status_update_to_data_warehouse_use_case.execute(
+    #     assessment_id: assessment_id,
+    #   )
+    # end
 
     @event_broadcaster
   end
