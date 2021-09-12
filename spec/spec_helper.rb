@@ -269,6 +269,8 @@ RSpec.configure do |config|
     fuel_price_mock.disable
 
     EventBroadcaster.disable!
+
+    Gateway::RedisGateway.redis_client_class = MockRedis
   end
 
   config.before(:all, set_with_timecop: true) { Timecop.freeze(Time.utc(2021, 6, 21)) }
@@ -278,6 +280,8 @@ RSpec.configure do |config|
   config.before { DatabaseCleaner.strategy = :transaction }
 
   config.before { DatabaseCleaner.start }
+
+  config.before { ApiFactory.clear! }
 
   config.after { DatabaseCleaner.clean }
 

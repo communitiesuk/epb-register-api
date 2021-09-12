@@ -181,31 +181,36 @@ class ApiFactory
       end
     end
 
-    @event_broadcaster.on :assessment_cancelled, :assessment_marked_not_for_issue do |assessment_id:|
+    @event_broadcaster.on :assessment_cancelled, :assessment_marked_not_for_issue do |**data|
       if notify_data_warehouse_enabled?
         notify_assessment_status_update_to_data_warehouse_use_case.execute(
-          assessment_id: assessment_id,
+          assessment_id: data[:assessment_id],
         )
       end
     end
 
-    @event_broadcaster.on :assessment_address_id_updated do |assessment_id:|
+    @event_broadcaster.on :assessment_address_id_updated do |**data|
       if notify_data_warehouse_enabled?
         notify_assessment_address_id_update_to_data_warehouse_use_case.execute(
-          assessment_id: assessment_id,
+          assessment_id: data[:assessment_id],
         )
       end
     end
 
-    @event_broadcaster.on :assessment_opt_out_status_changed do |assessment_id:|
+    @event_broadcaster.on :assessment_opt_out_status_changed do |**data|
       if notify_data_warehouse_enabled?
         notify_opt_out_status_update_to_data_warehouse_use_case.execute(
-          assessment_id: assessment_id,
+          assessment_id: data[:assessment_id],
         )
       end
     end
 
     @event_broadcaster
+  end
+
+  # Clears out all memoized service instances. Useful for tests.
+  def self.clear!
+    instance_variables.each { |variable| instance_variable_set variable, nil }
   end
 
   def self.notify_data_warehouse_enabled?
