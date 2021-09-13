@@ -8,7 +8,7 @@ module Gateway
 
     class InvalidRedisQueueNameError < StandardError; end
 
-    QUEUE_NAMES = %i[assessments cancelled opt-outs].freeze
+    DATA_WAREHOUSE_QUEUES = %i[assessments cancelled opt-outs].freeze
 
     @redis_client_class = Redis
 
@@ -40,11 +40,11 @@ module Gateway
     end
 
     def validate_queue_name(name)
-      raise InvalidRedisQueueNameError, "You can only accress #{QUEUE_NAMES}" unless valid_queue_name?(name)
+      raise InvalidRedisQueueNameError, "You can only access #{DATA_WAREHOUSE_QUEUES}" unless valid_queue_name?(name)
     end
 
     def valid_queue_name?(name)
-      QUEUE_NAMES.include?(name)
+      DATA_WAREHOUSE_QUEUES.include?(name)
     end
   end
 end
