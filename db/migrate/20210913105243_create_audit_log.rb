@@ -7,9 +7,6 @@ class CreateAuditLog < ActiveRecord::Migration[6.1]
       t.string  :entity_type, null: false
       t.jsonb  :data, null: true
 
-      # add_index :audit_log, :entity_id
-      # add_index :audit_log, :timestamp
-      # add_index :audit_log, :event_type
     end
   end
 end
