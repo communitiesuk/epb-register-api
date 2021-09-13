@@ -8,7 +8,7 @@ module Gateway
 
     class InvalidRedisQueueNameError < StandardError; end
 
-    DATA_WAREHOUSE_QUEUES = %i[assessments cancelled opt-outs].freeze
+    DATA_WAREHOUSE_QUEUES = %i[assessments cancelled opt_outs].freeze
 
     @redis_client_class = Redis
 
