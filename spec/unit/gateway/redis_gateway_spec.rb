@@ -14,6 +14,12 @@ describe Gateway::RedisGateway do
       expect(redis.lrange("assessments", 0, -1).reverse).to eq(ids)
     end
 
+    it "raises an error for an invalid queue name" do
+      expect { gateway.push_to_queue(:none_exisitng_queue, ids) }.to raise_error(
+        Gateway::RedisGateway::InvalidRedisQueueNameError,
+      )
+    end
+
     context "when there is an error is writing to Redis" do
       erroring_gateway = nil
 
