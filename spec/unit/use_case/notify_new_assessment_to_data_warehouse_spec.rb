@@ -13,7 +13,7 @@ describe UseCase::NotifyNewAssessmentToDataWarehouse do
       end
 
       it "calls down to the redis gateway to push to the queue" do
-        expect(redis_gateway).to have_received(:push_to_queue).with("assessments", assessment_id)
+        expect(redis_gateway).to have_received(:push_to_queue).with(:assessments, assessment_id)
       end
     end
 

@@ -5,7 +5,7 @@ module UseCase
     end
 
     def execute(assessment_id:)
-      @redis_gateway.push_to_queue("cancelled", assessment_id)
+      @redis_gateway.push_to_queue(:cancelled, assessment_id)
     end
   end
 end

@@ -11,7 +11,7 @@ describe UseCase::NotifyAssessmentAddressIdUpdateToDataWarehouse do
     it "calls down to the redis gateway to push to the queue" do
       use_case.execute(assessment_id: assessment_id)
 
-      expect(redis_gateway).to have_received(:push_to_queue).with("assessments", assessment_id)
+      expect(redis_gateway).to have_received(:push_to_queue).with(:assessments, assessment_id)
     end
 
     context "when the gateway is unable to push and raises an error" do

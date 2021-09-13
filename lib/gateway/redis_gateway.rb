@@ -13,7 +13,7 @@ module Gateway
     end
 
     def push_to_queue(queue_name, assessment_id)
-      redis.lpush(queue_name, assessment_id)
+      redis.lpush(queue_name.to_s, assessment_id)
     rescue Redis::BaseError => e
       raise PushFailedError, "Got Redis error #{e.class} when pushing to the queue: #{e.message}"
     end

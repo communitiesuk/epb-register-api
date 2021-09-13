@@ -9,7 +9,7 @@ describe Gateway::RedisGateway do
 
   describe ".push_to_queue" do
     it "can push assessment ids to an empty queue" do
-      gateway.push_to_queue("assessments", ids)
+      gateway.push_to_queue(:assessments, ids)
 
       expect(redis.lrange("assessments", 0, -1).reverse).to eq(ids)
     end
@@ -29,7 +29,7 @@ describe Gateway::RedisGateway do
       end
 
       it "raises a PushFailedError" do
-        expect { erroring_gateway.push_to_queue("assessments", ids) }.to raise_error Gateway::RedisGateway::PushFailedError
+        expect { erroring_gateway.push_to_queue(:assessments, ids) }.to raise_error Gateway::RedisGateway::PushFailedError
       end
     end
   end

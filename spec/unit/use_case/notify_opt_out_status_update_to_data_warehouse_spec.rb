@@ -12,7 +12,7 @@ describe UseCase::NotifyOptOutStatusUpdateToDataWarehouse do
       end
 
       it "calls down to the redis gateway to push to the queue" do
-        expect(redis_gateway).to have_received(:push_to_queue).with("opt_outs", assessment_id)
+        expect(redis_gateway).to have_received(:push_to_queue).with(:opt_outs, assessment_id)
       end
     end
 
