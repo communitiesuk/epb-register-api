@@ -208,8 +208,6 @@ class ApiFactory
     @event_broadcaster
   end
 
-private
-
   def self.notify_data_warehouse_enabled?
     Helper::Toggles.enabled? "sync_to_data_warehouse"
   end
