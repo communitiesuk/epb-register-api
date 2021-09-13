@@ -27,7 +27,7 @@ describe Gateway::AuditLogsGateway do
       expect(saved_data.first["timestamp"].strftime("%Y%m%d")).to eq(Time.now.strftime("%Y%m%d"))
     end
 
-    xit "saves the correct data into the database for an another event type " do
+    it "saves the correct data into the database for an another event type " do
       obj = Domain::AuditEvent.new(entity_type: "assessment", entity_id: "0000-0000-0000-0000-0002", event_type: "opt_in")
       gateway.add_audit_event(obj)
       expect(saved_data.length).to eq(1)

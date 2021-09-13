@@ -23,4 +23,9 @@ describe UseCase::SaveAuditEvent do
     expect{use_case.execute(domian_object)}.not_to raise_error
   end
 
+  it 'raises a error if the argument passed in not the the correct domian object' do
+    expect{use_case.execute("domian_object")}.to raise_error(ArgumentError)
+    expect{use_case.execute(gateway)}.to raise_error(ArgumentError)
+  end
+
   end
