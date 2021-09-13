@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_15_142113) do
+ActiveRecord::Schema.define(version: 2021_09_13_110930) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -157,6 +157,17 @@ ActiveRecord::Schema.define(version: 2021_07_15_142113) do
     t.string "new_status"
     t.datetime "recorded_at"
     t.string "auth_client_id"
+  end
+
+  create_table "audit_logs", force: :cascade do |t|
+    t.string "event_type", null: false
+    t.datetime "timestamp", default: "2021-09-13 11:05:38", null: false
+    t.string "entity_id", null: false
+    t.string "entity_type", null: false
+    t.jsonb "data"
+    t.index ["entity_id"], name: "index_audit_logs_on_entity_id"
+    t.index ["event_type"], name: "index_audit_logs_on_event_type"
+    t.index ["timestamp"], name: "index_audit_logs_on_timestamp"
   end
 
   create_table "green_deal_assessments", id: false, force: :cascade do |t|
