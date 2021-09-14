@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_13_110930) do
-
+ActiveRecord::Schema.define(version: 20_210_914_083_822) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
@@ -27,10 +26,10 @@ ActiveRecord::Schema.define(version: 2021_09_13_110930) do
     t.string "town"
     t.string "classification_code", limit: 6
     t.string "address_type", limit: 15
-    t.index ["address_line1"], name: "index_address_base_on_address_line1"
-    t.index ["address_line2"], name: "index_address_base_on_address_line2"
-    t.index ["postcode"], name: "index_address_base_on_postcode"
-    t.index ["town"], name: "index_address_base_on_town"
+    t.index %w[address_line1], name: "index_address_base_on_address_line1"
+    t.index %w[address_line2], name: "index_address_base_on_address_line2"
+    t.index %w[postcode], name: "index_address_base_on_postcode"
+    t.index %w[town], name: "index_address_base_on_town"
   end
 
   create_table "assessment_attribute_values", id: false, force: :cascade do |t|
@@ -39,16 +38,16 @@ ActiveRecord::Schema.define(version: 2021_09_13_110930) do
     t.string "attribute_value", null: false
     t.integer "attribute_value_int"
     t.float "attribute_value_float"
-    t.index ["assessment_id", "attribute_id"], name: "index_assessment_id_attribute_id_on_aav", unique: true
-    t.index ["assessment_id"], name: "index_assessment_attribute_values_on_assessment_id"
-    t.index ["attribute_id"], name: "index_assessment_attribute_values_on_attribute_id"
-    t.index ["attribute_value"], name: "index_assessment_attribute_values_on_attribute_value"
+    t.index %w[assessment_id attribute_id], name: "index_assessment_id_attribute_id_on_aav", unique: true
+    t.index %w[assessment_id], name: "index_assessment_attribute_values_on_assessment_id"
+    t.index %w[attribute_id], name: "index_assessment_attribute_values_on_attribute_id"
+    t.index %w[attribute_value], name: "index_assessment_attribute_values_on_attribute_value"
   end
 
   create_table "assessment_attributes", primary_key: "attribute_id", force: :cascade do |t|
     t.string "attribute_name", null: false
     t.string "parent_name"
-    t.index ["parent_name"], name: "index_assessment_attributes_on_parent_name"
+    t.index %w[parent_name], name: "index_assessment_attributes_on_parent_name"
   end
 
   create_table "assessment_look_ups", force: :cascade do |t|
@@ -57,9 +56,9 @@ ActiveRecord::Schema.define(version: 2021_09_13_110930) do
     t.integer "attribute_id", null: false
     t.string "schema", null: false
     t.string "schema_version"
-    t.index ["attribute_id"], name: "index_assessment_look_ups_on_attribute_id"
-    t.index ["look_up_name"], name: "index_assessment_look_ups_on_look_up_name"
-    t.index ["look_up_value"], name: "index_assessment_look_ups_on_look_up_value"
+    t.index %w[attribute_id], name: "index_assessment_look_ups_on_attribute_id"
+    t.index %w[look_up_name], name: "index_assessment_look_ups_on_look_up_name"
+    t.index %w[look_up_value], name: "index_assessment_look_ups_on_look_up_value"
   end
 
   create_table "assessments", primary_key: "assessment_id", id: :string, force: :cascade do |t|
@@ -86,24 +85,24 @@ ActiveRecord::Schema.define(version: 2021_09_13_110930) do
     t.index "lower((address_line3)::text)", name: "index_assessments_on_address_line3"
     t.index "lower((address_line4)::text)", name: "index_assessments_on_address_line4"
     t.index "lower((town)::text)", name: "index_assessments_on_town"
-    t.index ["address_id"], name: "index_assessments_on_address_id"
-    t.index ["cancelled_at"], name: "index_assessments_on_cancelled_at"
-    t.index ["not_for_issue_at"], name: "index_assessments_on_not_for_issue_at"
-    t.index ["postcode"], name: "index_assessments_on_postcode"
-    t.index ["town"], name: "index_towns_on_assessments_trigram", opclass: :gist_trgm_ops, using: :gist
-    t.index ["type_of_assessment"], name: "index_assessments_on_type_of_assessment"
+    t.index %w[address_id], name: "index_assessments_on_address_id"
+    t.index %w[cancelled_at], name: "index_assessments_on_cancelled_at"
+    t.index %w[not_for_issue_at], name: "index_assessments_on_not_for_issue_at"
+    t.index %w[postcode], name: "index_assessments_on_postcode"
+    t.index %w[town], name: "index_towns_on_assessments_trigram", opclass: :gist_trgm_ops, using: :gist
+    t.index %w[type_of_assessment], name: "index_assessments_on_type_of_assessment"
   end
 
   create_table "assessments_address_id", primary_key: "assessment_id", id: :string, force: :cascade do |t|
     t.string "address_id"
     t.string "source"
-    t.index ["address_id"], name: "index_assessments_address_id_on_address_id"
+    t.index %w[address_id], name: "index_assessments_address_id_on_address_id"
   end
 
   create_table "assessments_address_id_backup", primary_key: "assessment_id", id: :string, force: :cascade do |t|
     t.string "address_id"
     t.string "source"
-    t.index ["address_id"], name: "index_assessments_address_id_backup_on_address_id"
+    t.index %w[address_id], name: "index_assessments_address_id_backup_on_address_id"
   end
 
   create_table "assessments_xml", primary_key: "assessment_id", id: :string, default: "", force: :cascade do |t|
@@ -145,8 +144,8 @@ ActiveRecord::Schema.define(version: 2021_09_13_110930) do
     t.string "company_email"
     t.string "company_name"
     t.string "gda_qualification"
-    t.index ["registered_by"], name: "index_assessors_on_registered_by"
-    t.index ["search_results_comparison_postcode"], name: "index_assessors_on_search_results_comparison_postcode"
+    t.index %w[registered_by], name: "index_assessors_on_registered_by"
+    t.index %w[search_results_comparison_postcode], name: "index_assessors_on_search_results_comparison_postcode"
   end
 
   create_table "assessors_status_events", force: :cascade do |t|
@@ -161,19 +160,19 @@ ActiveRecord::Schema.define(version: 2021_09_13_110930) do
 
   create_table "audit_logs", force: :cascade do |t|
     t.string "event_type", null: false
-    t.datetime "timestamp", default: "2021-09-13 11:05:38", null: false
+    t.datetime "timestamp", default: -> { "now()" }, null: false
     t.string "entity_id", null: false
     t.string "entity_type", null: false
     t.jsonb "data"
-    t.index ["entity_id"], name: "index_audit_logs_on_entity_id"
-    t.index ["event_type"], name: "index_audit_logs_on_event_type"
-    t.index ["timestamp"], name: "index_audit_logs_on_timestamp"
+    t.index %w[entity_id], name: "index_audit_logs_on_entity_id"
+    t.index %w[event_type], name: "index_audit_logs_on_event_type"
+    t.index %w[timestamp], name: "index_audit_logs_on_timestamp"
   end
 
   create_table "green_deal_assessments", id: false, force: :cascade do |t|
     t.string "green_deal_plan_id", null: false
     t.string "assessment_id", null: false
-    t.index ["green_deal_plan_id", "assessment_id"], name: "index_green_deal_assessments_on_plan_id_and_assessment_id", unique: true
+    t.index %w[green_deal_plan_id assessment_id], name: "index_green_deal_assessments_on_plan_id_and_assessment_id", unique: true
   end
 
   create_table "green_deal_fuel_code_map", id: false, force: :cascade do |t|
@@ -208,7 +207,7 @@ ActiveRecord::Schema.define(version: 2021_09_13_110930) do
 
   create_table "linked_assessments", primary_key: "assessment_id", id: :string, force: :cascade do |t|
     t.string "linked_assessment_id", null: false
-    t.index ["linked_assessment_id"], name: "index_linked_assessments_on_linked_assessment_id"
+    t.index %w[linked_assessment_id], name: "index_linked_assessments_on_linked_assessment_id"
   end
 
   create_table "open_data_logs", force: :cascade do |t|
@@ -216,8 +215,8 @@ ActiveRecord::Schema.define(version: 2021_09_13_110930) do
     t.datetime "created_at", null: false
     t.integer "task_id", null: false
     t.string "report_type"
-    t.index ["assessment_id"], name: "index_open_data_logs_on_assessment_id"
-    t.index ["task_id"], name: "index_open_data_logs_on_task_id"
+    t.index %w[assessment_id], name: "index_open_data_logs_on_assessment_id"
+    t.index %w[task_id], name: "index_open_data_logs_on_task_id"
   end
 
   create_table "overidden_lodgement_events", id: false, force: :cascade do |t|
@@ -243,7 +242,7 @@ ActiveRecord::Schema.define(version: 2021_09_13_110930) do
   create_table "schemes", primary_key: "scheme_id", force: :cascade do |t|
     t.string "name"
     t.boolean "active", default: true
-    t.index ["name"], name: "index_schemes_on_name", unique: true
+    t.index %w[name], name: "index_schemes_on_name", unique: true
   end
 
   add_foreign_key "assessment_attribute_values", "assessment_attributes", column: "attribute_id", primary_key: "attribute_id"
