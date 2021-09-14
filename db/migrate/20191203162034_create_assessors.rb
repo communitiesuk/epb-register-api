@@ -12,6 +12,6 @@ class CreateAssessors < ActiveRecord::Migration[6.0]
     add_foreign_key :assessors,
                     :schemes,
                     column: :registered_by, primary_key: :scheme_id
-    execute('ALTER TABLE assessors ADD PRIMARY KEY (scheme_assessor_id)')
+    execute("ALTER TABLE assessors ADD PRIMARY KEY (scheme_assessor_id)")
   end
 end
