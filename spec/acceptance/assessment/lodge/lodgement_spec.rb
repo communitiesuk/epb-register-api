@@ -750,6 +750,27 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
         end
       end
     end
+
+    context "when event broadcasting is enabled" do
+      before do
+        EventBroadcaster.enable!
+        lodge_assessment(
+          assessment_body: valid_rdsap_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+        )
+      end
+
+      let(:saved_data) do
+        ActiveRecord::Base.connection.exec_query("SELECT * FROM audit_logs")
+      end
+
+      it "saves the event to the audit log" do
+        expect(saved_data).to match [a_hash_including({ "entity_type" => "assessment", "entity_id" => "0000-0000-0000-0000-0000", "event_type" => "lodgement" })]
+      end
+    end
   end
 
   context "when migrating an assessment" do

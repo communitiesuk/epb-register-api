@@ -3,7 +3,7 @@ describe Gateway::AuditLogsGateway do
 
   subject(:gateway) { described_class.new }
 
-  context "when adding data to the audit log table " do
+  context "when adding data to the audit_logs log table " do
     let(:saved_data) do
       ActiveRecord::Base.connection.exec_query("SELECT * FROM audit_logs")
     end
@@ -30,6 +30,13 @@ describe Gateway::AuditLogsGateway do
       obj = Domain::AuditEvent.new(entity_type: "assessment", entity_id: "0000-0000-0000-0000-0002", event_type: "opt_in")
       gateway.add_audit_event(obj)
       expect(saved_data).to match [a_hash_including({ "entity_type" => "assessment", "entity_id" => "0000-0000-0000-0000-0002", "event_type" => "opt_in" })]
+    end
+
+    it "save the complex data to the jsonb column in the database" do
+      hash = { data: "data_tests", body: "some body", referrer: "test" }
+      obj = Domain::AuditEvent.new(entity_type: "assessment", entity_id: "0000-0000-0000-0000-0002", event_type: "opt_in", data: hash.to_json)
+      gateway.add_audit_event(obj)
+      expect(JSON.parse(saved_data.first["data"])).to eq(hash.stringify_keys)
     end
   end
 end
