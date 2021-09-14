@@ -94,13 +94,14 @@ class EventBroadcaster
   include Wisper::Publisher
 
   @enabled = true
+  @accept_only = []
 
   def initialize(logger: nil)
     @logger = logger || Logger.new($stdout)
   end
 
   def broadcast(event, *args)
-    super if self.class.enabled?
+    super if self.class.enabled? && accepts?(event)
   rescue StandardError => e
     logger.error "Event broadcaster caught #{e.class} from a listener: #{e.message}"
   end
@@ -117,7 +118,25 @@ class EventBroadcaster
     @enabled
   end
 
+  def self.accept_only!(*events)
+    @accept_only = events
+  end
+
+  def self.accept_any!
+    @accept_only = []
+  end
+
+  class << self
+    attr_reader :accept_only
+  end
+
 private
 
   attr_reader :logger
+
+  def accepts?(event)
+    return true if self.class.accept_only.empty?
+
+    self.class.accept_only.include? event
+  end
 end

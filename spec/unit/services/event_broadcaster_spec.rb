@@ -53,6 +53,28 @@ describe EventBroadcaster do
     end
   end
 
+  context "when certain events are ignored" do
+    let(:broadcasted) { [] }
+
+    before do
+      described_class.accept_only! :accepted_event_1, :accepted_event_2
+      broadcaster.on(:accepted_event_1) { broadcasted << :accepted_event_1 }
+      broadcaster.on(:accepted_event_2) { broadcasted << :accepted_event_2 }
+      broadcaster.on(:ignored_event_1) { broadcasted << :ignored_event_1 }
+    end
+
+    after do
+      described_class.accept_any!
+    end
+
+    it "only allows accepted events to be listened to" do
+      broadcaster.broadcast :accepted_event_1
+      broadcaster.broadcast :accepted_event_2
+      broadcaster.broadcast :ignored_event_1
+      expect(broadcasted).to match_array %i[accepted_event_1 accepted_event_2]
+    end
+  end
+
   context "when a listener leaks an error and an event is broadcast" do
     before do
       broadcaster.on(:exploding_event) { raise "the listener exploded" }
