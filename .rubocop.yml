@@ -7,6 +7,10 @@ inherit_gem:
     - config/default.yml
     - config/rspec.yml
 
+AllCops:
+  Exclude:
+    - db/schema.rb
+
 Style/EmptyElse:
   EnforcedStyle: empty
 
