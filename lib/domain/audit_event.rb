@@ -9,5 +9,4 @@ module Domain
       @data = data
     end
   end
-
 end

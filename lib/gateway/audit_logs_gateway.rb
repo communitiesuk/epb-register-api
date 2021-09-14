@@ -1,7 +1,6 @@
 module Gateway
   class AuditLogsGateway
     def add_audit_event(audit_domain_object)
-
       insert_sql = <<-SQL
             INSERT INTO audit_logs(event_type, entity_id, entity_type, data)
             VALUES ($1, $2, $3, $4)
