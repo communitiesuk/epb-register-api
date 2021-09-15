@@ -12,7 +12,7 @@ def redact_lodgement_datetime(csv_object)
 end
 
 def file_name(assessment_type)
-  "open_data_export_#{assessment_type.downcase}_#{DateTime.now.strftime('%F')}_1.csv"
+  "open_data_export_#{assessment_type.downcase}_#{Time.now.strftime('%F')}_1.csv"
 end
 
 def regex_body(array)

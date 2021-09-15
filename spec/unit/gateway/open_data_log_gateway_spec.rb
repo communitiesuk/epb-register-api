@@ -30,8 +30,8 @@ describe "Gateway::OpenDataLogGateway" do
     end
 
     it "returns the the today as the created at date " do
-      expect(statistics[0]["date_start"].to_datetime.strftime("%F")).to eq(
-        DateTime.now.strftime("%F"),
+      expect(statistics[0]["date_start"].to_time.strftime("%F")).to eq(
+        Time.now.strftime("%F"),
       )
     end
 

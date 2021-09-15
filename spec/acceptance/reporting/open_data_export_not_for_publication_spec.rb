@@ -46,7 +46,7 @@ describe "OpenDataExportNotForPublication" do
       # Define mock expectations
       allow(export_usecase).to receive(:execute).and_return(export)
       HttpStub.s3_put_csv(
-        "open_data_export_not_for_publication_#{DateTime.now.strftime('%F')}.csv",
+        "open_data_export_not_for_publication_#{Time.now.strftime('%F')}.csv",
       )
     end
 
@@ -81,7 +81,7 @@ describe "OpenDataExportNotForPublication" do
       task.invoke("for_odc")
 
       expect(storage_gateway).to have_received(:write_file).with(
-        "open_data_export_not_for_publication_#{DateTime.now.strftime('%F')}.csv",
+        "open_data_export_not_for_publication_#{Time.now.strftime('%F')}.csv",
         csv_data,
       )
     end
@@ -90,7 +90,7 @@ describe "OpenDataExportNotForPublication" do
       task.invoke("for_odc")
       expect(WebMock).to have_requested(
         :put,
-        "#{HttpStub::S3_BUCKET_URI}open_data_export_not_for_publication_#{DateTime.now.strftime('%F')}.csv",
+        "#{HttpStub::S3_BUCKET_URI}open_data_export_not_for_publication_#{Time.now.strftime('%F')}.csv",
       ).with(
         body: /ASSESSMENT_ID,TYPE_OF_ASSESSMENT,ADDRESS_LINE1,ADDRESS_LINE2,ADDRESS_LINE3/,
         headers: {
@@ -100,7 +100,7 @@ describe "OpenDataExportNotForPublication" do
 
       expect(WebMock).to have_requested(
         :put,
-        "#{HttpStub::S3_BUCKET_URI}open_data_export_not_for_publication_#{DateTime.now.strftime('%F')}.csv",
+        "#{HttpStub::S3_BUCKET_URI}open_data_export_not_for_publication_#{Time.now.strftime('%F')}.csv",
       ).with(
         body: /4af9d2c31cf53e72ef6f59d3f59a1bfc500ebc2b1027bc5ca47361435d988e1a/,
       )
@@ -109,7 +109,7 @@ describe "OpenDataExportNotForPublication" do
     context "when running a test export" do
       it "prefixes the csv filename with `test/` so it's stored in a separate folder in the S3 bucket" do
         HttpStub.s3_put_csv(
-          "test/open_data_export_not_for_publication_#{DateTime.now.strftime('%F')}.csv",
+          "test/open_data_export_not_for_publication_#{Time.now.strftime('%F')}.csv",
         )
         allow(Gateway::StorageGateway).to receive(:new).and_return(
           storage_gateway,
@@ -119,7 +119,7 @@ describe "OpenDataExportNotForPublication" do
         task.invoke("not_for_odc")
 
         expect(storage_gateway).to have_received(:write_file).with(
-          "test/open_data_export_not_for_publication_#{DateTime.now.strftime('%F')}.csv",
+          "test/open_data_export_not_for_publication_#{Time.now.strftime('%F')}.csv",
           csv_data,
         )
       end

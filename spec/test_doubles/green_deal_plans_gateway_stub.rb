@@ -14,13 +14,13 @@ class GreenDealPlansGatewayStub
   def create_green_deal_plan(assessment_id)
     GreenDealPlans.create(
       green_deal_plan_id: "ABC123456DEF",
-      start_date: DateTime.new(2_020, 1, 30),
-      end_date: DateTime.new(2_030, 2, 28),
+      start_date: Time.new(2_020, 1, 30),
+      end_date: Time.new(2_030, 2, 28),
       provider_name: "The Bank",
       provider_telephone: "0800 0000000",
       provider_email: "lender@example.com",
       fixed_interest_rate: true,
-      charge_uplift_date: DateTime.new(2_030, 2, 28),
+      charge_uplift_date: Time.new(2_030, 2, 28),
       measures: [
         {
           measureType: "Loft insulation",

@@ -194,7 +194,7 @@ describe UseCase::ExportOpenDataDec, set_with_timecop: true do
 
       3.times do |i|
         it "returns assessment number #{i} to have lodged_datetime equal to frozen time" do
-          expect(DateTime.parse(exported_data[i][:lodgement_datetime])).to eq(
+          expect(Time.find_zone("UTC").parse(exported_data[i][:lodgement_datetime])).to eq(
             Time.now,
           )
         end

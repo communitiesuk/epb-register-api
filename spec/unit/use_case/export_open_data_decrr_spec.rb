@@ -3,7 +3,7 @@ describe UseCase::ExportOpenDataDecrr do
   context "when creating the open data reporting release" do
     describe "for the DEC recommendation reports" do
       let(:scheme_id) { add_scheme_and_get_id }
-      let(:date_today) { DateTime.now.strftime("%F") }
+      let(:date_today) { Time.now.strftime("%F") }
       let(:export_object) { described_class.new }
       let(:number_of_recommendations_expected) { 5 }
       let(:dec_plus_rr_xml) { Nokogiri.XML Samples.xml("CEPC-8.0.0", "dec+rr") }

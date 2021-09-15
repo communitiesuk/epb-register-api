@@ -378,13 +378,13 @@ describe UseCase::ExportOpenDataDomestic, set_with_timecop: true do
       end
 
       it "expects the RdSAP assessment's lodged date time to be now based on a frozen time " do
-        expect(DateTime.parse(rdsap_assessment[:lodgement_datetime])).to eq(
+        expect(Time.find_zone("UTC").parse(rdsap_assessment[:lodgement_datetime])).to eq(
           Time.now,
         )
       end
 
       it "expects the SAP assessment's lodged date time to be now based on a frozen time " do
-        expect(DateTime.parse(sap_assessment[:lodgement_datetime])).to eq(
+        expect(Time.find_zone("UTC").parse(sap_assessment[:lodgement_datetime])).to eq(
           Time.now,
         )
       end
