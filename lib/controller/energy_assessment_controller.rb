@@ -56,6 +56,8 @@ module Controller
       migrated = boolean_parameter_true?("migrated")
       overridden = boolean_parameter_true?("override")
 
+      RequestModule.relevant_request_headers = relevant_request_headers(request)
+
       if migrated && !env[:auth_token].scopes?(%w[migrate:assessment])
         forbidden(
           "UNAUTHORISED",

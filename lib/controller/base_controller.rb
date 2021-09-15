@@ -82,6 +82,11 @@ module Controller
       @json_helper.convert_to_ruby_hash(request.body.read.to_s, schema: schema)
     end
 
+    def relevant_request_headers(request)
+      relevant_keys = %w[REQUEST_METHOD SERVER_NAME QUERY_STRING PATH_INFO CONTENT_LENGTH REMOTE_ADDR CONTENT_TYPE HTTP_AUTHORIZATION]
+      request.env.select { |key, _value| relevant_keys.include?(key) }.to_json
+    end
+
     def json_response(object, code = 200)
       content_type :json
       status code
@@ -158,5 +163,11 @@ module Controller
       content_type :text
       error_response(404, "NOT_FOUND", "Method not found")
     end
+  end
+end
+
+module RequestModule
+  class << self
+    attr_accessor :relevant_request_headers
   end
 end

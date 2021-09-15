@@ -1,3 +1,5 @@
+require_relative "./notify_factory"
+
 class ApiFactory
   def self.assessments_gateway
     @assessments_gateway ||= Gateway::AssessmentsGateway.new
@@ -178,12 +180,13 @@ class ApiFactory
     #
     # don't send out to data warehouse queue yet
     #
-    @event_broadcaster.on :assessment_lodged do |assessment_id:|
+    @event_broadcaster.on :assessment_lodged do |**data|
       if notify_data_warehouse_enabled?
         notify_new_assessment_to_data_warehouse_use_case.execute(
-          assessment_id: assessment_id,
+          assessment_id: data[:assessment_id],
         )
       end
+      NotifyFactory.lodgement_to_audit_log(entity_id: data[:assessment_id])
     end
 
     @event_broadcaster.on :assessment_cancelled, :assessment_marked_not_for_issue do |**data|
