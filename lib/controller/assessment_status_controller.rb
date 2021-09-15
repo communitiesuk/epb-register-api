@@ -18,6 +18,8 @@ module Controller
       assessment_id = params[:assessment_id]
       assessment_body = request_body(POST_SCHEMA)
 
+      RequestModule.relevant_request_headers = relevant_request_headers(request)
+
       ApiFactory.update_assessment_status_use_case.execute(
         assessment_id,
         assessment_body[:status],

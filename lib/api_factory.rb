@@ -195,6 +195,7 @@ class ApiFactory
           assessment_id: data[:assessment_id],
         )
       end
+      NotifyFactory.cancelled_to_audit_log(entity_id: data[:assessment_id])
     end
 
     @event_broadcaster.on :assessment_address_id_updated do |**data|

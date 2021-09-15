@@ -70,4 +70,51 @@ describe "Audit events" do
       )
     end
   end
+
+
+    context "when cancelling an assessment" do
+      before do
+        update_assessment_status(
+          assessment_id: "0000-0000-0000-0000-0000",
+          assessment_status_body: {
+            status: "CANCELLED",
+          },
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          accepted_responses: [200],
+        )
+      end
+
+      it "saves the event to the audit log" do
+        expect(saved_data.last).to match a_hash_including(
+          { "entity_type" => "assessment",
+            "entity_id" => "0000-0000-0000-0000-0000",
+            "event_type" => "cancelled" },
+        )
+      end
+    end
+
+    context "when marking an assessment not for issue" do
+      before do
+        update_assessment_status(
+          assessment_id: "0000-0000-0000-0000-0000",
+          assessment_status_body: {
+            status: "NOT_FOR_ISSUE",
+          },
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          accepted_responses: [200],
+        )
+      end
+
+      it "saves the event to the audit log" do
+        expect(saved_data.last).to match a_hash_including(
+          { "entity_type" => "assessment",
+            "entity_id" => "0000-0000-0000-0000-0000",
+            "event_type" => "cancelled" },
+        )
+      end
+    end
 end
