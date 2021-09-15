@@ -14,4 +14,19 @@ class NotifyFactory
                        data: RequestModule.relevant_request_headers,
                      ))
   end
+
+  def self.opt_out_to_audit_log(entity_id:, is_opt_out:)
+    save_audit_event_use_case.execute(Domain::AuditEvent.new(
+                                        entity_type: ENTITY_TYPES[0],
+                                        event_type: is_opt_out ? "opt out" : "opt in",
+                                        entity_id: entity_id,
+                                        data: RequestModule.relevant_request_headers,
+                                      ))
+  end
+
+  def self.save_audit_event_use_case
+    @save_audit_event_use_case ||= UseCase::SaveAuditEvent.new(Gateway::AuditLogsGateway.new)
+  end
+
+  private_class_method :save_audit_event_use_case
 end

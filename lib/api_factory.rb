@@ -211,6 +211,7 @@ class ApiFactory
           assessment_id: data[:assessment_id],
         )
       end
+      NotifyFactory.opt_out_to_audit_log(entity_id: data[:assessment_id], is_opt_out: data[:new_status])
     end
 
     @event_broadcaster
