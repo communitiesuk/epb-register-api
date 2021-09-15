@@ -1,12 +1,15 @@
 describe Gateway::ReportingGateway do
   include RSpecRegisterApiServiceMixin
+
+  scheme_id = nil
+
+  before(:all) do
+    scheme_id = add_scheme_and_get_id
+    add_super_assessor(scheme_id: scheme_id)
+  end
+
   context "when extracting data from the reporting gateway" do
     subject(:gateway) { described_class.new }
-
-    before(:all) do
-      @scheme_id = add_scheme_and_get_id
-      add_super_assessor(scheme_id: @scheme_id)
-    end
 
     context "when inserting four RdSAP assessments, opting out one of them, cancelling one and marking one not for issue" do
       let(:assessment_gateway) { Gateway::AssessmentsGateway.new }
@@ -39,13 +42,13 @@ describe Gateway::ReportingGateway do
       before do
         schema = "RdSAP-Schema-20.0.0"
         xml = Nokogiri.XML Samples.xml(schema)
-        call_lodge_assessment(scheme_id: @scheme_id, schema_name: schema, xml_document: xml)
+        call_lodge_assessment(scheme_id: scheme_id, schema_name: schema, xml_document: xml)
         xml.at("RRN").children = "0000-0000-0000-0000-0001"
-        call_lodge_assessment(scheme_id: @scheme_id, schema_name: schema, xml_document: xml)
+        call_lodge_assessment(scheme_id: scheme_id, schema_name: schema, xml_document: xml)
         xml.at("RRN").children = "0000-0000-0000-0000-0002"
-        call_lodge_assessment(scheme_id: @scheme_id, schema_name: schema, xml_document: xml)
+        call_lodge_assessment(scheme_id: scheme_id, schema_name: schema, xml_document: xml)
         xml.at("RRN").children = "0000-0000-0000-0000-0003"
-        call_lodge_assessment(scheme_id: @scheme_id, schema_name: schema, xml_document: xml)
+        call_lodge_assessment(scheme_id: scheme_id, schema_name: schema, xml_document: xml)
         opt_out_assessment(assessment_id: "0000-0000-0000-0000-0001")
         assessment_gateway.update_statuses(assessment2, cancelled, time)
         assessment_gateway.update_statuses(assessment3, not_for_issue, time)
@@ -85,13 +88,13 @@ describe Gateway::ReportingGateway do
         dec_xml = Nokogiri.XML Samples.xml(commercial_schema, "dec")
 
         cepc_xml.at("//CEPC:RRN").children = "0000-0000-0000-0000-0001"
-        call_lodge_assessment(scheme_id: @scheme_id, schema_name: commercial_schema, xml_document: cepc_xml)
+        call_lodge_assessment(scheme_id: scheme_id, schema_name: commercial_schema, xml_document: cepc_xml)
 
         cepc_xml.at("//CEPC:RRN").children = "0000-0000-0000-0000-0002"
-        call_lodge_assessment(scheme_id: @scheme_id, schema_name: commercial_schema, xml_document: cepc_xml)
+        call_lodge_assessment(scheme_id: scheme_id, schema_name: commercial_schema, xml_document: cepc_xml)
 
         dec_xml.at("RRN").children = "0000-0000-0000-0000-0003"
-        call_lodge_assessment(scheme_id: @scheme_id, schema_name: commercial_schema, xml_document: dec_xml)
+        call_lodge_assessment(scheme_id: scheme_id, schema_name: commercial_schema, xml_document: dec_xml)
 
         opt_out_assessment(assessment_id: "0000-0000-0000-0000-0001")
         opt_out_assessment(assessment_id: "0000-0000-0000-0000-0003")
@@ -107,13 +110,13 @@ describe Gateway::ReportingGateway do
       before do
         commercial_schema = "CEPC-8.0.0"
         ac_cert_xml = Nokogiri.XML Samples.xml(commercial_schema, "ac-cert")
-        call_lodge_assessment(scheme_id: @scheme_id, schema_name: commercial_schema, xml_document: ac_cert_xml)
+        call_lodge_assessment(scheme_id: scheme_id, schema_name: commercial_schema, xml_document: ac_cert_xml)
         opt_out_assessment(assessment_id: "0000-0000-0000-0000-0000")
 
         rdsap_schema = "RdSAP-Schema-20.0.0"
         rdsap_xml = Nokogiri.XML Samples.xml(rdsap_schema)
         rdsap_xml.at("RRN").children = "0000-0000-0000-0000-0002"
-        call_lodge_assessment(scheme_id: @scheme_id, schema_name: rdsap_schema, xml_document: rdsap_xml)
+        call_lodge_assessment(scheme_id: scheme_id, schema_name: rdsap_schema, xml_document: rdsap_xml)
         opt_out_assessment(assessment_id: "0000-0000-0000-0000-0002")
       end
 
@@ -126,13 +129,13 @@ describe Gateway::ReportingGateway do
       before do
         commercial_schema = "CEPC-8.0.0"
         dec_rr_xml = Nokogiri.XML Samples.xml(commercial_schema, "dec-rr")
-        call_lodge_assessment(scheme_id: @scheme_id, schema_name: commercial_schema, xml_document: dec_rr_xml)
+        call_lodge_assessment(scheme_id: scheme_id, schema_name: commercial_schema, xml_document: dec_rr_xml)
         opt_out_assessment(assessment_id: "0000-0000-0000-0000-0000")
 
         sap_schema = "SAP-Schema-18.0.0"
         sap_xml = Nokogiri.XML Samples.xml(sap_schema)
         sap_xml.at("RRN").children = "0000-0000-0000-0000-0003"
-        call_lodge_assessment(scheme_id: @scheme_id, schema_name: sap_schema, xml_document: sap_xml)
+        call_lodge_assessment(scheme_id: scheme_id, schema_name: sap_schema, xml_document: sap_xml)
         opt_out_assessment(assessment_id: "0000-0000-0000-0000-0003")
       end
 

@@ -3,28 +3,27 @@ require "aws-sdk-s3"
 
 describe "Gateway::StorageGateway" do
   context "when storage is initialised" do
-    before do
-      @storage_gateway =
-        Gateway::StorageGateway.new(
-          storage_config:
-            Gateway::StorageConfiguration.new(
-              access_key_id: "",
-              secret_access_key: "",
-              bucket_name: "my-bucket",
-            ),
-          stub_responses: true,
-        )
+    subject(:storage_gateway) do
+      Gateway::StorageGateway.new(
+        storage_config:
+          Gateway::StorageConfiguration.new(
+            access_key_id: "",
+            secret_access_key: "",
+            bucket_name: "my-bucket",
+          ),
+        stub_responses: true,
+      )
     end
 
     it "retrieves an existing file" do
-      stub_file_response(@storage_gateway.client)
-      expect(@storage_gateway.get_file_io("my-file").string).to eq "Hello!"
+      stub_file_response(storage_gateway.client)
+      expect(storage_gateway.get_file_io("my-file").string).to eq "Hello!"
     end
 
     it "fails when the file is not existing" do
-      stub_file_response(@storage_gateway.client)
+      stub_file_response(storage_gateway.client)
       expect {
-        @storage_gateway.get_file_io("fake_name")
+        storage_gateway.get_file_io("fake_name")
       }.to raise_error Aws::S3::Errors::NoSuchKey
     end
   end

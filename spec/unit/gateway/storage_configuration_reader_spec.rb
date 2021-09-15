@@ -9,15 +9,15 @@ describe "Gateway::StorageConfigurationReader" do
   before { allow(ENV).to receive(:[]).and_return(nil) }
 
   context "when VCAP_SERVICES is present and we provide a GOV.UK PaaS S3 instance name" do
+    subject(:storage_configuration) { Gateway::StorageConfigurationReader.new(instance_name: instance_name) }
+
     before do
-      @storage_configuration =
-        Gateway::StorageConfigurationReader.new(instance_name: instance_name)
       allow(ENV).to receive(:[])
         .with("VCAP_SERVICES")
         .and_return(get_vcap_services_stub)
     end
 
-    let(:credentials) { @storage_configuration.get_configuration }
+    let(:credentials) { storage_configuration.get_configuration }
 
     it "the credentials extractor return an access key ID" do
       expect(credentials.access_key_id).to eq expected_access_key
@@ -33,24 +33,19 @@ describe "Gateway::StorageConfigurationReader" do
   end
 
   context "when VCAP_SERVICES is not present and we provide a GOV.UK PaaS S3 instance name" do
-    before do
-      @storage_configuration =
-        Gateway::StorageConfigurationReader.new(instance_name: instance_name)
-    end
+    subject(:storage_configuration) { Gateway::StorageConfigurationReader.new(instance_name: instance_name) }
 
     it "we get back an exception" do
-      expect { @storage_configuration.get_configuration }.to raise_error(
+      expect { storage_configuration.get_configuration }.to raise_error(
         "Local AWS credentials or VCAP_SERVICES not present",
       )
     end
   end
 
   context "when AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY are present and we provide an S3 bucket name" do
+    subject(:storage_configuration) { Gateway::StorageConfigurationReader.new(bucket_name: expected_bucket_name) }
+
     before do
-      @storage_configuration =
-        Gateway::StorageConfigurationReader.new(
-          bucket_name: expected_bucket_name,
-        )
       allow(ENV).to receive(:[])
         .with("AWS_ACCESS_KEY_ID")
         .and_return(expected_access_key)
@@ -59,7 +54,7 @@ describe "Gateway::StorageConfigurationReader" do
         .and_return(expected_secret_access_key)
     end
 
-    let(:credentials) { @storage_configuration.get_configuration }
+    let(:credentials) { storage_configuration.get_configuration }
 
     it "the credentials extractor return an access key ID" do
       expect(credentials.access_key_id).to eq expected_access_key
@@ -75,38 +70,35 @@ describe "Gateway::StorageConfigurationReader" do
   end
 
   context "when AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY are not present and we provide an S3 bucket name" do
-    before do
-      @storage_configuration =
-        Gateway::StorageConfigurationReader.new(
-          bucket_name: expected_bucket_name,
-        )
-    end
+    subject(:storage_configuration) { Gateway::StorageConfigurationReader.new(bucket_name: expected_bucket_name) }
 
     it "we get back an exception" do
-      expect { @storage_configuration.get_configuration }.to raise_error(
+      expect { storage_configuration.get_configuration }.to raise_error(
         "Local AWS credentials or VCAP_SERVICES not present",
       )
     end
   end
 
   context "when VCAP_SERVICES is present and no GOV.UK PaaS S3 instance name is provided" do
+    subject(:storage_configuration) { Gateway::StorageConfigurationReader.new }
+
     before do
-      @storage_configuration = Gateway::StorageConfigurationReader.new
       allow(ENV).to receive(:[])
         .with("VCAP_SERVICE")
         .and_return(get_vcap_services_stub)
     end
 
     it "we get back an exception" do
-      expect { @storage_configuration.get_configuration }.to raise_error(
+      expect { storage_configuration.get_configuration }.to raise_error(
         "Local AWS credentials or VCAP_SERVICES not present",
       )
     end
   end
 
   context "when AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY are present and no S3 bucket name is provided" do
+    subject(:storage_configuration) { Gateway::StorageConfigurationReader.new }
+
     before do
-      @storage_configuration = Gateway::StorageConfigurationReader.new
       allow(ENV).to receive(:[])
         .with("AWS_ACCESS_KEY_ID")
         .and_return(expected_access_key)
@@ -116,7 +108,7 @@ describe "Gateway::StorageConfigurationReader" do
     end
 
     it "we get back an exception" do
-      expect { @storage_configuration.get_configuration }.to raise_error(
+      expect { storage_configuration.get_configuration }.to raise_error(
         "Local AWS credentials or VCAP_SERVICES not present",
       )
     end

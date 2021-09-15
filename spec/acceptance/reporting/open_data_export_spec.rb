@@ -3,7 +3,9 @@ require_relative "open_data_export_test_helper"
 describe "Acceptance::Reports::OpenDataExport" do
   include RSpecRegisterApiServiceMixin
 
-  before(:all) { @scheme_id = lodge_assessor }
+  scheme_id = nil
+
+  before(:all) { scheme_id = lodge_assessor }
 
   after { WebMock.disable! }
 
@@ -28,7 +30,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           assessment_body: domestic_rdsap_xml.to_xml,
           accepted_responses: [201],
           auth_data: {
-            scheme_ids: [@scheme_id],
+            scheme_ids: [scheme_id],
           },
           override: true,
         )
@@ -43,7 +45,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           assessment_body: domestic_rdsap_xml.to_xml,
           accepted_responses: [201],
           auth_data: {
-            scheme_ids: [@scheme_id],
+            scheme_ids: [scheme_id],
           },
           override: true,
         )
@@ -61,7 +63,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           assessment_body: domestic_sap_xml.to_xml,
           accepted_responses: [201],
           auth_data: {
-            scheme_ids: [@scheme_id],
+            scheme_ids: [scheme_id],
           },
           override: true,
           schema_name: "SAP-Schema-18.0.0",
@@ -171,7 +173,7 @@ describe "Acceptance::Reports::OpenDataExport" do
 
             expect(WebMock).to have_requested(
               :put,
-              "#{HttpStub::S3_BUCKET_URI}open_data_export_sap-rdsap_#{DateTime.now.strftime('%F')}_1.csv",
+              "#{HttpStub::S3_BUCKET_URI}open_data_export_sap-rdsap_#{Time.now.strftime('%F')}_1.csv",
             ).with(
               body: regex_body(fixture_csv.headers),
               headers: {
@@ -185,14 +187,14 @@ describe "Acceptance::Reports::OpenDataExport" do
               assessment_type = "SAP-RDSAP"
               date_from = test_start_date
               HttpStub.s3_put_csv(
-                "test/open_data_export_sap-rdsap_#{DateTime.now.strftime('%F')}_1.csv",
+                "test/open_data_export_sap-rdsap_#{Time.now.strftime('%F')}_1.csv",
               )
 
               get_task("open_data:export_assessments").invoke("not_for_odc", assessment_type, date_from)
 
               expect(WebMock).to have_requested(
                 :put,
-                "#{HttpStub::S3_BUCKET_URI}test/open_data_export_sap-rdsap_#{DateTime.now.strftime('%F')}_1.csv",
+                "#{HttpStub::S3_BUCKET_URI}test/open_data_export_sap-rdsap_#{Time.now.strftime('%F')}_1.csv",
               )
             end
           end
@@ -215,7 +217,7 @@ describe "Acceptance::Reports::OpenDataExport" do
 
             expect(WebMock).to have_requested(
               :put,
-              "#{HttpStub::S3_BUCKET_URI}open_data_export_sap-rdsap-rr_#{DateTime.now.strftime('%F')}_1.csv",
+              "#{HttpStub::S3_BUCKET_URI}open_data_export_sap-rdsap-rr_#{Time.now.strftime('%F')}_1.csv",
             ).with(
               body: regex_body(fixture_csv.headers),
               headers: {
@@ -244,7 +246,7 @@ describe "Acceptance::Reports::OpenDataExport" do
             assessment_body: non_domestic_xml.to_xml,
             accepted_responses: [201],
             auth_data: {
-              scheme_ids: [@scheme_id],
+              scheme_ids: [scheme_id],
             },
             override: true,
             schema_name: "CEPC-8.0.0",
@@ -262,7 +264,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           assessment_body: out_of_range_non_domestic_xml.to_xml,
           accepted_responses: [201],
           auth_data: {
-            scheme_ids: [@scheme_id],
+            scheme_ids: [scheme_id],
           },
           override: true,
           schema_name: "CEPC-8.0.0",
@@ -279,7 +281,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           assessment_body: cepc_rr_xml.to_xml,
           accepted_responses: [201],
           auth_data: {
-            scheme_ids: [@scheme_id],
+            scheme_ids: [scheme_id],
           },
           override: true,
           schema_name: "CEPC-8.0.0",
@@ -291,7 +293,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           assessment_body: cepc_rr_xml.to_xml,
           accepted_responses: [201],
           auth_data: {
-            scheme_ids: [@scheme_id],
+            scheme_ids: [scheme_id],
           },
           override: true,
           schema_name: "CEPC-8.0.0",
@@ -388,7 +390,7 @@ describe "Acceptance::Reports::OpenDataExport" do
 
             expect(WebMock).to have_requested(
               :put,
-              "#{HttpStub::S3_BUCKET_URI}open_data_export_cepc_#{DateTime.now.strftime('%F')}_1.csv",
+              "#{HttpStub::S3_BUCKET_URI}open_data_export_cepc_#{Time.now.strftime('%F')}_1.csv",
             ).with(
               body: regex_body(fixture_csv.headers),
               headers: {
@@ -415,7 +417,7 @@ describe "Acceptance::Reports::OpenDataExport" do
 
             expect(WebMock).to have_requested(
               :put,
-              "#{HttpStub::S3_BUCKET_URI}open_data_export_cepc-rr_#{DateTime.now.strftime('%F')}_1.csv",
+              "#{HttpStub::S3_BUCKET_URI}open_data_export_cepc-rr_#{Time.now.strftime('%F')}_1.csv",
             ).with(
               body: regex_body(fixture_csv.headers),
               headers: {
@@ -443,7 +445,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           assessment_body: dec_xml.to_xml,
           accepted_responses: [201],
           auth_data: {
-            scheme_ids: [@scheme_id],
+            scheme_ids: [scheme_id],
           },
           override: true,
           schema_name: "CEPC-8.0.0",
@@ -460,7 +462,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           assessment_body: dec_xml.to_xml,
           accepted_responses: [201],
           auth_data: {
-            scheme_ids: [@scheme_id],
+            scheme_ids: [scheme_id],
           },
           override: true,
           schema_name: "CEPC-8.0.0",
@@ -477,7 +479,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           assessment_body: dec_rr_xml.to_xml,
           accepted_responses: [201],
           auth_data: {
-            scheme_ids: [@scheme_id],
+            scheme_ids: [scheme_id],
           },
           override: true,
           schema_name: "CEPC-8.0.0",
@@ -489,7 +491,7 @@ describe "Acceptance::Reports::OpenDataExport" do
           assessment_body: dec_rr_xml.to_xml,
           accepted_responses: [201],
           auth_data: {
-            scheme_ids: [@scheme_id],
+            scheme_ids: [scheme_id],
           },
           override: true,
           schema_name: "CEPC-8.0.0",
@@ -592,7 +594,7 @@ describe "Acceptance::Reports::OpenDataExport" do
 
             expect(WebMock).to have_requested(
               :put,
-              "#{HttpStub::S3_BUCKET_URI}open_data_export_dec_#{DateTime.now.strftime('%F')}_1.csv",
+              "#{HttpStub::S3_BUCKET_URI}open_data_export_dec_#{Time.now.strftime('%F')}_1.csv",
             ).with(
               body: regex_body_pattern,
               headers: {
@@ -618,7 +620,7 @@ describe "Acceptance::Reports::OpenDataExport" do
             get_task("open_data:export_assessments").invoke("for_odc", assessment_type, date_from)
             expect(WebMock).to have_requested(
               :put,
-              "#{HttpStub::S3_BUCKET_URI}open_data_export_dec-rr_#{DateTime.now.strftime('%F')}_1.csv",
+              "#{HttpStub::S3_BUCKET_URI}open_data_export_dec-rr_#{Time.now.strftime('%F')}_1.csv",
             ).with(
               body: regex_body(fixture_csv.headers),
               headers: {
@@ -661,7 +663,7 @@ describe "Acceptance::Reports::OpenDataExport" do
       end
 
       it "returns an error when the wrong type of assessment type is provided" do
-        expect { get_task("open_data:export_assessments").invoke("for_odc", "TEST", DateTime.now.strftime("%F")) }.to output(
+        expect { get_task("open_data:export_assessments").invoke("for_odc", "TEST", Time.now.strftime("%F")) }.to output(
           /Assessment type is not valid:/,
         ).to_stderr
       end
@@ -670,7 +672,7 @@ describe "Acceptance::Reports::OpenDataExport" do
     context "when we set the correct arguments and a date_from equivalent to now" do
       it "returns a no data to export error" do
         assessment_type = "SAP-RDSAP"
-        date_from = DateTime.now.strftime("%F")
+        date_from = Time.now.strftime("%F")
         expect { get_task("open_data:export_assessments").invoke("for_odc", assessment_type, date_from) }.to output(
           /No data provided for export/,
         ).to_stderr
@@ -678,8 +680,8 @@ describe "Acceptance::Reports::OpenDataExport" do
 
       it "returns a date validation error when date_from is greater than date_to" do
         assessment_type = "SAP-RDSAP"
-        date_from = DateTime.now.strftime("%F")
-        date_to = DateTime.yesterday.strftime("%F")
+        date_from = Time.now.strftime("%F")
+        date_to = (Time.now - 3600 * 24).strftime("%F")
         expect { get_task("open_data:export_assessments").invoke("for_odc", assessment_type, date_from, date_to) }.to output(
           /date_from cannot be greater than date_to/,
         ).to_stderr

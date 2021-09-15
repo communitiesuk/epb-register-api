@@ -51,6 +51,8 @@ describe "Acceptance::Reports::GetAssessmentRRNsBySchemeNameAndType" do
   end
 
   context "when there are lodgements" do
+    second_scheme = nil
+
     before do
       Timecop.freeze(2021, 6, 21, 10)
 
@@ -189,9 +191,9 @@ describe "Acceptance::Reports::GetAssessmentRRNsBySchemeNameAndType" do
         schema_name: "CEPC-8.0.0",
       )
 
-      @second_scheme = add_scheme_and_get_id(name: "test scheme two")
+      second_scheme = add_scheme_and_get_id(name: "test scheme two")
 
-      add_assessor(scheme_id: @second_scheme, assessor_id: "SPEC000010", body: valid_assessor_request_body)
+      add_assessor(scheme_id: second_scheme, assessor_id: "SPEC000010", body: valid_assessor_request_body)
 
       doc = Nokogiri.XML valid_rdsap_xml
       doc.at("RRN").content = "1100-0000-0000-0000-0011"
@@ -200,7 +202,7 @@ describe "Acceptance::Reports::GetAssessmentRRNsBySchemeNameAndType" do
         assessment_body: doc.to_xml,
         accepted_responses: [201],
         auth_data: {
-          scheme_ids: [@second_scheme],
+          scheme_ids: [second_scheme],
         },
         schema_name: "RdSAP-Schema-20.0.0",
       )
@@ -213,7 +215,7 @@ describe "Acceptance::Reports::GetAssessmentRRNsBySchemeNameAndType" do
         get_assessment_report(
           start_date: Date.yesterday.strftime("%F"),
           end_date: Date.tomorrow.strftime("%F"),
-          scheme_id: @second_scheme,
+          scheme_id: second_scheme,
           type: "scheme-and-type/rrn",
         ).body
 

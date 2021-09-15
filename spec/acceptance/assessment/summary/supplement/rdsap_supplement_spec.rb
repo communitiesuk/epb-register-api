@@ -8,6 +8,10 @@ describe "Acceptance::AssessmentSummary::Supplement::RdSAP",
 
   green_deal_plan_id = "SPC123456SPC"
 
+  summary0000 = nil
+  summary0001 = nil
+  summary0002 = nil
+
   before(:all) do
     scheme_id = add_scheme_and_get_id
 
@@ -52,17 +56,17 @@ describe "Acceptance::AssessmentSummary::Supplement::RdSAP",
       schema_name: "SAP-Schema-18.0.0",
     )
 
-    @summary0000 =
+    summary0000 =
       JSON.parse(
         fetch_assessment_summary(id: "0000-0000-0000-0000-0000").body,
         symbolize_names: true,
       )
-    @summary0001 =
+    summary0001 =
       JSON.parse(
         fetch_assessment_summary(id: "0000-0000-0000-0000-0001").body,
         symbolize_names: true,
       )
-    @summary0002 =
+    summary0002 =
       JSON.parse(
         fetch_assessment_summary(id: "0000-0000-0000-0000-0002").body,
         symbolize_names: true,
@@ -71,20 +75,20 @@ describe "Acceptance::AssessmentSummary::Supplement::RdSAP",
 
   context "when getting the assessor data supplement" do
     it "Adds scheme details" do
-      scheme = @summary0000.dig(:data, :assessor, :registeredBy)
+      scheme = summary0000.dig(:data, :assessor, :registeredBy)
       expect(scheme[:name]).to eq("test scheme")
       expect(scheme[:schemeId]).to be_a(Integer)
     end
 
     it "Returns lodged email and phone values by default" do
-      contact_details = @summary0000.dig(:data, :assessor, :contactDetails)
+      contact_details = summary0000.dig(:data, :assessor, :contactDetails)
       expect(contact_details).to eq(
         { telephoneNumber: "0555 497 2848", email: "a@b.c" },
       )
     end
 
     it "Overrides missing assessor email and phone values with DB values" do
-      expect(@summary0001.dig(:data, :assessor, :contactDetails)).to eq(
+      expect(summary0001.dig(:data, :assessor, :contactDetails)).to eq(
         { email: "person@person.com", telephoneNumber: "010199991010101" },
       )
     end
@@ -92,11 +96,11 @@ describe "Acceptance::AssessmentSummary::Supplement::RdSAP",
 
   context "when getting the related certificates" do
     it "returns an empty list when there are no related certificates" do
-      expect(@summary0002.dig(:data, :relatedAssessments)).to eq([])
+      expect(summary0002.dig(:data, :relatedAssessments)).to eq([])
     end
 
     it "returns SAP and RdSAP assessments lodged against the same address" do
-      related_assessments = @summary0001.dig(:data, :relatedAssessments)
+      related_assessments = summary0001.dig(:data, :relatedAssessments)
       related_ids = related_assessments.map { |x| x[:assessmentId] }
       expect(related_ids.sort).to contain_exactly("0000-0000-0000-0000-0000", "0000-0000-0000-0000-0003")
     end
@@ -104,13 +108,13 @@ describe "Acceptance::AssessmentSummary::Supplement::RdSAP",
     it "does not return opted out related assessments" do
       opt_out_assessment(assessment_id: "0000-0000-0000-0000-0000")
 
-      @summary0001 =
+      second_summary0001 =
         JSON.parse(
           fetch_assessment_summary(id: "0000-0000-0000-0000-0001").body,
           symbolize_names: true,
         )
 
-      related_assessments = @summary0001.dig(:data, :relatedAssessments)
+      related_assessments = second_summary0001.dig(:data, :relatedAssessments)
       expect(related_assessments).to match [
         a_hash_including(assessmentId: "0000-0000-0000-0000-0003"),
       ]
@@ -118,23 +122,23 @@ describe "Acceptance::AssessmentSummary::Supplement::RdSAP",
 
     context "when there is no UPRN field" do
       it "returns an empty list when there are no related assessments" do
-        expect(@summary0002.dig(:data, :relatedAssessments)).to eq([])
+        expect(summary0002.dig(:data, :relatedAssessments)).to eq([])
       end
     end
   end
 
   context "when getting the green deal plan" do
     it "adds a green deal plan when there is one" do
-      green_deal_plan = @summary0000.dig(:data, :greenDealPlan).first
+      green_deal_plan = summary0000.dig(:data, :greenDealPlan).first
       expect(green_deal_plan[:savings].find { |saving| saving[:fuelCode] == "41" }[:fuelSaving]).to eq(-15_561)
     end
 
     it "adds a green deal plan for subsequent certificates for the same address" do
-      expect(@summary0001.dig(:data, :greenDealPlan)).to match [a_hash_including(greenDealPlanId: green_deal_plan_id)]
+      expect(summary0001.dig(:data, :greenDealPlan)).to match [a_hash_including(greenDealPlanId: green_deal_plan_id)]
     end
 
     it "does not add a green deal plan for a subsequent certificate for a different address" do
-      expect(@summary0002.dig(:data, :greenDealPlan)).to eq []
+      expect(summary0002.dig(:data, :greenDealPlan)).to eq []
     end
   end
 end

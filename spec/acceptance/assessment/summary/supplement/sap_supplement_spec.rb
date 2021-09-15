@@ -6,6 +6,10 @@ describe "Acceptance::AssessmentSummary::Supplement::SAP",
          set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
+  summary0000_when_sole_cert = nil
+  summary0001 = nil
+  summary0002 = nil
+
   before(:all) do
     scheme_id = add_scheme_and_get_id
     assessor =
@@ -22,7 +26,7 @@ describe "Acceptance::AssessmentSummary::Supplement::SAP",
     # 0003 = RdSAP with address ID UPRN-000000000000
 
     lodge_sap(Samples.xml("SAP-Schema-18.0.0"), scheme_id)
-    @summary0000_when_sole_cert =
+    summary0000_when_sole_cert =
       JSON.parse(
         fetch_assessment_summary(id: "0000-0000-0000-0000-0000").body,
         symbolize_names: true,
@@ -47,13 +51,13 @@ describe "Acceptance::AssessmentSummary::Supplement::SAP",
       schema_name: "RdSAP-Schema-20.0.0",
     )
 
-    @summary0001 =
+    summary0001 =
       JSON.parse(
         fetch_assessment_summary(id: "0000-0000-0000-0000-0001").body,
         symbolize_names: true,
       )
 
-    @summary0002 =
+    summary0002 =
       JSON.parse(
         fetch_assessment_summary(id: "0000-0000-0000-0000-0002").body,
         symbolize_names: true,
@@ -62,14 +66,14 @@ describe "Acceptance::AssessmentSummary::Supplement::SAP",
 
   context "when getting the assessor data supplement" do
     it "Adds scheme details" do
-      scheme = @summary0000_when_sole_cert.dig(:data, :assessor, :registeredBy)
+      scheme = summary0000_when_sole_cert.dig(:data, :assessor, :registeredBy)
       expect(scheme[:name]).to eq("test scheme")
       expect(scheme[:schemeId]).to be_a(Integer)
     end
 
     it "Returns the assessor contact details from the database" do
       contact_details =
-        @summary0000_when_sole_cert.dig(:data, :assessor, :contactDetails)
+        summary0000_when_sole_cert.dig(:data, :assessor, :contactDetails)
       expect(contact_details).to eq(
         { telephoneNumber: "111222333", email: "a@b.c" },
       )
@@ -79,12 +83,12 @@ describe "Acceptance::AssessmentSummary::Supplement::SAP",
   context "when getting the related certificates" do
     it "returns an empty list when there are no related certificates" do
       expect(
-        @summary0000_when_sole_cert.dig(:data, :relatedAssessments),
+        summary0000_when_sole_cert.dig(:data, :relatedAssessments),
       ).to eq([])
     end
 
     it "returns SAP and RdSAP assessments lodged against the same address" do
-      related_assessments = @summary0001.dig(:data, :relatedAssessments)
+      related_assessments = summary0001.dig(:data, :relatedAssessments)
       related_ids = related_assessments.map { |x| x[:assessmentId] }
       expect(related_ids.count).to eq(2)
       expect(related_ids).to include "0000-0000-0000-0000-0000"
@@ -94,13 +98,13 @@ describe "Acceptance::AssessmentSummary::Supplement::SAP",
     it "does not return opted out related assessments" do
       opt_out_assessment(assessment_id: "0000-0000-0000-0000-0000")
 
-      @summary0001 =
+      second_summary0001 =
         JSON.parse(
           fetch_assessment_summary(id: "0000-0000-0000-0000-0001").body,
           symbolize_names: true,
         )
 
-      related_assessments = @summary0001.dig(:data, :relatedAssessments)
+      related_assessments = second_summary0001.dig(:data, :relatedAssessments)
       expect(related_assessments.count).to eq(1)
       expect(
         related_assessments[0][:assessmentId],
@@ -109,7 +113,7 @@ describe "Acceptance::AssessmentSummary::Supplement::SAP",
 
     context "when there is no UPRN field" do
       it "returns an empty list when there are no related assessments" do
-        expect(@summary0002.dig(:data, :relatedAssessments)).to eq([])
+        expect(summary0002.dig(:data, :relatedAssessments)).to eq([])
       end
     end
   end

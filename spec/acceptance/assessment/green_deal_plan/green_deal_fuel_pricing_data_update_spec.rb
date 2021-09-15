@@ -1,12 +1,14 @@
 describe "Acceptance::Assessment::GreenDealPlan:UpdateFuelCostData" do
   context "when there is no fuel data in the database" do
     describe "running the fuel price data update task" do
-      before do
-        @fuel_price_mock = GreenDealFuelDataMock.new
+      around do |test|
+        fuel_price_mock = GreenDealFuelDataMock.new
         Rake::Task["maintenance:green_deal_update_fuel_data"].invoke
-      end
 
-      after { @fuel_price_mock.disable }
+        test.run
+
+        fuel_price_mock.disable
+      end
 
       it "populates the database with the expected values" do
         fuel_price_data =
