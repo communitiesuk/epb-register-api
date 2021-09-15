@@ -14,7 +14,7 @@ module UseCase
       improvement_code: "improvement_id",
     }.freeze
 
-    def execute(date_from, task_id = 0, date_to = DateTime.now)
+    def execute(date_from, task_id = 0, date_to = Time.now.utc)
       recommendations = []
       new_task_id = @log_gateway.fetch_new_task_id(task_id)
       assessments =

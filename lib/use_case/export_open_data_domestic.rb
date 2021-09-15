@@ -11,7 +11,7 @@ module UseCase
       @assessments_address_id_gateway = Gateway::AssessmentsAddressIdGateway.new
     end
 
-    def execute(date_from, task_id = 0, date_to = DateTime.now)
+    def execute(date_from, task_id = 0, date_to = Time.now.utc)
       reports = []
       new_task_id = @log_gateway.fetch_new_task_id(task_id)
 

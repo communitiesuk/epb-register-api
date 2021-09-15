@@ -55,7 +55,7 @@ class DevAssessmentsHelper
       data = { assessment_id: id,
                assessor_id: assessor_id,
                raw_data: Helper::SanitizeXmlHelper.new.sanitize(xml_doc.to_s),
-               date_of_registration: DateTime.yesterday,
+               date_of_registration: Time.now.utc - 3600 * 24,
                type_of_assessment: type_of_assessment,
                date_of_assessment: Time.now,
                date_of_expiry: Time.now + 10.years,

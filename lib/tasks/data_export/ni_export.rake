@@ -4,7 +4,7 @@ namespace :data_export do
   task :ni_assessments, %i[type_of_assessments date_from date_to] do |_, args|
     type_of_assessments = args.type_of_assessments
     date_from = args.date_from || "1990-01-01"
-    date_to =   args.date_to || Time.now.strftime("%F")
+    date_to =   args.date_to || Time.now.utc.strftime("%F")
 
     raise Boundary::ArgumentMissing, "type_of_assessments" unless type_of_assessments
 
@@ -22,7 +22,7 @@ private
 
 def transmit_ni_file(data, type_of_assessments)
   assessment_types = type_of_assessments.is_a?(Array) ? type_of_assessments.join("_") : type_of_assessments
-  filename = "ni_assessments_export_#{assessment_types.downcase}_#{DateTime.now.strftime('%F')}.csv"
+  filename = "ni_assessments_export_#{assessment_types.downcase}_#{Time.now.utc.strftime('%F')}.csv"
 
   storage_config_reader = Gateway::StorageConfigurationReader.new(
     instance_name: ENV["INSTANCE_NAME"],

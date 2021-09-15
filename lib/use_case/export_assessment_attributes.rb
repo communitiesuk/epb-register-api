@@ -6,7 +6,7 @@ module UseCase
       @xml_gateway = xml_gateway
     end
 
-    def execute(date_from, date_to = DateTime.now)
+    def execute(date_from, date_to = Time.now.utc)
       assessments = []
       assessments_ids =
         @assessment_gateway.fetch_assessment_ids_by_range(date_from, date_to)

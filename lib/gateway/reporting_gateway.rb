@@ -97,7 +97,7 @@ module Gateway
       date_from,
       type_of_assessment = "",
       task_id = 0,
-      date_to = DateTime.now
+      date_to = Time.now.utc
     )
       report_type = Helper::ExportHelper.report_type_to_s(type_of_assessment)
 
@@ -175,7 +175,7 @@ module Gateway
       date_from,
       type_of_assessment = "",
       task_id = 0,
-      date_to = DateTime.now
+      date_to = Time.now.utc
     )
       bindings = [
         ActiveRecord::Relation::QueryAttribute.new(
