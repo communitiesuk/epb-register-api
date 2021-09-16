@@ -35,7 +35,7 @@ source "https://rubygems.org" do
   gem "ougai", "~> 2.0"
   gem "pg"
   gem "rake"
-  gem "rubocop-govuk", "~> 4.0"
+  gem "rubocop-govuk", "~> 4.1"
   gem "rubocop-performance", require: false
   gem "rubyzip", "~> 2.3.2"
   gem "sentry-ruby", "~> 4.7"
