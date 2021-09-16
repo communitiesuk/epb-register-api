@@ -2,6 +2,8 @@ require "json"
 require "csv"
 require "aws-sdk-s3"
 require "nokogiri"
+require_relative "./address_matching_helper"
+require_relative "./address_table_helper"
 
 namespace :oneoff do
   namespace :address_matching do
@@ -25,11 +27,11 @@ namespace :oneoff do
       Signal.trap("TERM") { throw :sigterm }
       ActiveRecord::Base.logger = nil
 
-      check_address_matching_requirements
-      create_address_table_backup
+      AddressMatchingHelper.check_address_matching_requirements env: ENV
+      AddressTableHelper.create_backup
 
       file_name = ENV["file_name"]
-      counter = Counter.new(processed: 0, skipped: 0)
+      counter = AddressMatchingHelper::Counter.new(processed: 0, skipped: 0)
 
       zipped = file_name.end_with?("zip")
 
@@ -51,12 +53,12 @@ namespace :oneoff do
 
             puts "[#{Time.now}] #{entry.name} was unzipped with a size of #{entry.size} bytes"
             csv_content = CSV.new(csv_io, headers: true)
-            process_address_matching_csv(csv_content, counter)
+            AddressMatchingHelper.process_address_matching_csv csv_content, counter: counter
           end
         end
       else
         csv_content = CSV.new(file_io, headers: true)
-        process_address_matching_csv(csv_content, counter)
+        AddressMatchingHelper.process_address_matching_csv csv_content, counter: counter
       end
 
       puts "[#{Time.now}] Finished processing CSV file, #{counter.processed} LPRNs processed"
@@ -169,11 +171,11 @@ namespace :oneoff do
               SQL
 
               update_binds = []
-              bind_string_attribute(update_binds, "address_line1", address_line1)
-              bind_string_attribute(update_binds, "address_line2", address_line2)
-              bind_string_attribute(update_binds, "address_line3", address_line3)
-              bind_string_attribute(update_binds, "address_line4", address_line4)
-              bind_string_attribute(update_binds, "assessment_id", assessment_id)
+              AddressMatchingHelper.bind_string_attribute(update_binds, "address_line1", address_line1)
+              AddressMatchingHelper.bind_string_attribute(update_binds, "address_line2", address_line2)
+              AddressMatchingHelper.bind_string_attribute(update_binds, "address_line3", address_line3)
+              AddressMatchingHelper.bind_string_attribute(update_binds, "address_line4", address_line4)
+              AddressMatchingHelper.bind_string_attribute(update_binds, "assessment_id", assessment_id)
               db.exec_query(update_query, "SQL", update_binds)
 
               backup_query = <<-SQL
@@ -182,11 +184,11 @@ namespace :oneoff do
               SQL
 
               backup_binds = []
-              bind_string_attribute(backup_binds, "address_line1", prev_address_line1)
-              bind_string_attribute(backup_binds, "address_line2", prev_address_line2)
-              bind_string_attribute(backup_binds, "address_line3", prev_address_line3)
-              bind_string_attribute(backup_binds, "address_line4", prev_address_line4)
-              bind_string_attribute(backup_binds, "assessment_id", assessment_id)
+              AddressMatchingHelper.bind_string_attribute(backup_binds, "address_line1", prev_address_line1)
+              AddressMatchingHelper.bind_string_attribute(backup_binds, "address_line2", prev_address_line2)
+              AddressMatchingHelper.bind_string_attribute(backup_binds, "address_line3", prev_address_line3)
+              AddressMatchingHelper.bind_string_attribute(backup_binds, "address_line4", prev_address_line4)
+              AddressMatchingHelper.bind_string_attribute(backup_binds, "assessment_id", assessment_id)
               db.exec_query(backup_query, "SQL", backup_binds)
 
               updated_assessments += 1
@@ -198,101 +200,5 @@ namespace :oneoff do
 
       puts "[#{Time.now}] Address lines update complete: #{updated_assessments} assessments updated and #{matched_assessments} assessments matched"
     end
-
-    def process_address_matching_csv(csv_content, counter)
-      while (csv_row = csv_content.shift)
-        update_address_from_csv_row(csv_row, counter)
-
-        if (counter.processed % 100_000).zero?
-          puts "[#{Time.now}] Processed #{counter.processed} LPRNs from CSV file, skipped #{counter.skipped} present in backup table"
-        end
-      end
-    end
-
-    def update_address_from_csv_row(csv_row, counter)
-      counter.processed += 1
-
-      lprn = csv_row["lprn"]
-      # Only present when matching LPRN -> UPRN
-      uprn = csv_row["uprn"]
-      # Only present when matching LPRN -> RRN
-      rrn = csv_row["rrn"]
-
-      if rrn.nil?
-        new_address_id = uprn
-        source = "os_lprn2uprn"
-      else
-        new_address_id = rrn
-        source = "lprn_without_os_uprn"
-      end
-
-      db = ActiveRecord::Base.connection
-      existing_backup = db.exec_query(
-        "SELECT 1 FROM assessments_address_id_backup aab " \
-          "INNER JOIN assessments a USING (assessment_id) " \
-          "WHERE a.address_id = '#{lprn}'",
-      )
-
-      if existing_backup.empty?
-        ActiveRecord::Base.transaction do
-          db.exec_query(
-            "INSERT INTO assessments_address_id_backup " \
-              "SELECT aai.* FROM assessments_address_id aai " \
-              "INNER JOIN assessments a USING (assessment_id) " \
-              "WHERE a.address_id = '#{lprn}' " \
-              "AND aai.source != 'epb_team_update' " \
-              "AND aai.address_id NOT LIKE 'UPRN-%' " \
-              "AND aai.address_id != '#{new_address_id}'",
-          )
-
-          db.exec_query(
-            "UPDATE assessments_address_id " \
-              "SET address_id = '#{new_address_id}', source = '#{source}' " \
-              "WHERE assessment_id IN (SELECT assessment_id from assessments a " \
-                "INNER JOIN assessments_address_id aai USING (assessment_id) " \
-                "WHERE a.address_id = '#{lprn}' " \
-                "AND aai.source != 'epb_team_update' " \
-                "AND aai.address_id NOT LIKE 'UPRN-%' " \
-                "AND aai.address_id != '#{new_address_id}')",
-          )
-        end
-      else
-        counter.skipped += 1
-      end
-    end
-
-    def create_address_table_backup
-      db = ActiveRecord::Base.connection
-
-      unless db.table_exists?(:assessments_address_id_backup)
-        db.create_table :assessments_address_id_backup, primary_key: :assessment_id, id: :string do |t|
-          t.string :address_id, index: true
-          t.string :source
-        end
-        puts "[#{Time.now}] Created empty assessments_address_id_backup table"
-      end
-    end
-
-    def check_address_matching_requirements
-      if ENV["bucket_name"].nil? && ENV["instance_name"].nil?
-        abort("Please set the bucket_name or instance_name environment variable")
-      end
-      if ENV["file_name"].nil?
-        abort("Please set the file_name environment variable")
-      end
-    end
-
-    def bind_string_attribute(array, name, value)
-      array << ActiveRecord::Relation::QueryAttribute.new(name, value, ActiveRecord::Type::String.new)
-    end
-  end
-end
-
-class Counter
-  attr_accessor :processed, :skipped
-
-  def initialize(processed:, skipped:)
-    @processed = processed
-    @skipped = skipped
   end
 end

@@ -1,4 +1,5 @@
 require "nokogiri"
+require_relative "./address_table_helper"
 
 namespace :oneoff do
   # These tasks were used to backfill existing data when the linked assessments
@@ -11,7 +12,7 @@ namespace :oneoff do
     ActiveRecord::Base.logger = nil
     db = ActiveRecord::Base.connection
 
-    create_address_table_backup
+    AddressTableHelper.create_backup
 
     # Ensures the linked assessment is a recommendation report
     find_linked_assessments_sql = <<-SQL
