@@ -1,3 +1,5 @@
+require_relative "./open_data_export_helper"
+
 namespace :open_data do
   desc "Exporting hashed assessment_id opt out, cancelled or not for issue data for Open Data Communities"
   task :export_not_for_publication, %i[type_of_export] do |_, arg|
@@ -15,7 +17,9 @@ namespace :open_data do
     raise Boundary::OpenDataEmpty if data.length.zero?
 
     csv_data = Helper::ExportHelper.to_csv(data)
-    transmit_not_for_publication_file(csv_data, type_of_export)
+    OpenDataExportHelper.transmit_not_for_publication_file data: csv_data,
+                                                           type_of_export: type_of_export,
+                                                           env: ENV
 
   rescue Boundary::RecoverableError => e
     error_output = {
@@ -31,23 +35,5 @@ namespace :open_data do
 
   rescue Boundary::TerminableError => e
     warn e.message
-  end
-
-private
-
-  def transmit_not_for_publication_file(data, type_of_export)
-    filename =
-      if type_of_export == "for_odc"
-        "open_data_export_not_for_publication_#{Time.now.utc.strftime('%F')}.csv"
-      else
-        "test/open_data_export_not_for_publication_#{Time.now.utc.strftime('%F')}.csv"
-      end
-
-    storage_config_reader = Gateway::StorageConfigurationReader.new(
-      instance_name: ENV["INSTANCE_NAME"],
-      bucket_name: ENV["BUCKET_NAME"],
-    )
-    storage_gateway = Gateway::StorageGateway.new(storage_config: storage_config_reader.get_configuration)
-    storage_gateway.write_file(filename, data)
   end
 end
