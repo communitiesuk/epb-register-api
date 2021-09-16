@@ -52,11 +52,8 @@ namespace :maintenance do
   end
 
   def retrieve_file_on_s3(file_name)
-    storage_config_reader = Gateway::StorageConfigurationReader.new(
-      bucket_name: ENV["bucket_name"],
-      instance_name: ENV["instance_name"],
-    )
-    storage_gateway = Gateway::StorageGateway.new(storage_config: storage_config_reader.get_configuration)
+    storage_gateway = ApiFactory.storage_gateway bucket_name: ENV["bucket_name"],
+                                                 instance_name: ENV["instance_name"]
 
     puts "[#{Time.now}] Retrieving from S3 file: #{file_name}"
     storage_gateway.get_file_io(file_name)
