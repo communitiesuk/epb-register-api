@@ -20,17 +20,13 @@ describe "Audit events" do
     ActiveRecord::Base.connection.exec_query("SELECT * FROM audit_logs ORDER BY timestamp DESC")
   end
 
-  it "saves the request headers as JSON" do
-    expect(JSON.parse(saved_data.first["data"])).to match a_hash_including(
-      { "REQUEST_METHOD" => "POST",
-        "SERVER_NAME" => "example.org",
-        "QUERY_STRING" => "",
-        "PATH_INFO" => "/api/assessments",
-        "CONTENT_LENGTH" => "16479",
-        "REMOTE_ADDR" => "127.0.0.1",
-        "CONTENT_TYPE" => "application/xml+RdSAP-Schema-20.0.0" },
+  it "saves the decoded auth token from the request headers as JSON" do
+    expect(JSON.parse(saved_data.first["data"])["auth_token"]["payload"]).to match a_hash_including(
+      { "iss" => "test.issuer",
+        "scopes" => ["assessment:lodge"],
+        "sub" => "test-subject",
+        "sup" => { "scheme_ids" => [scheme_id] } },
     )
-    expect(JSON.parse(saved_data.first["data"])).to have_key("HTTP_AUTHORIZATION")
   end
 
   context "when lodging an assessment" do

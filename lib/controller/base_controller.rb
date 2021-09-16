@@ -83,7 +83,7 @@ module Controller
     end
 
     def relevant_request_headers(request)
-      relevant_keys = %w[REQUEST_METHOD SERVER_NAME QUERY_STRING PATH_INFO CONTENT_LENGTH REMOTE_ADDR CONTENT_TYPE HTTP_AUTHORIZATION]
+      relevant_keys = [:auth_token]
       request.env.select { |key, _value| relevant_keys.include?(key) }.to_json
     end
 
