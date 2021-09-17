@@ -18,18 +18,19 @@ module UseCase
     class InvalidFuelCode < StandardError
     end
 
-    def initialize
-      @assessments_gateway = Gateway::AssessmentsSearchGateway.new
-      @green_deal_plan_gateway = Gateway::GreenDealPlansGateway.new
+    def initialize(assessments_search_gateway:, green_deal_plans_gateway:, event_broadcaster:)
+      @assessments_search_gateway = assessments_search_gateway
+      @green_deal_plans_gateway = green_deal_plans_gateway
+      @event_broadcaster = event_broadcaster
     end
 
     def execute(assessment_id, data)
-      if @green_deal_plan_gateway.exists? data[:green_deal_plan_id]
+      if @green_deal_plans_gateway.exists? data[:green_deal_plan_id]
         raise DuplicateException
       end
 
       assessments =
-        @assessments_gateway.search_by_assessment_id assessment_id, restrictive: false
+        @assessments_search_gateway.search_by_assessment_id assessment_id, restrictive: false
 
       assessment = assessments.first
 
@@ -49,7 +50,7 @@ module UseCase
 
       fuel_codes = data[:savings].map { |saving| saving[:fuel_code] }
 
-      unless @green_deal_plan_gateway.validate_fuel_codes?(fuel_codes)
+      unless @green_deal_plans_gateway.validate_fuel_codes?(fuel_codes)
         raise InvalidFuelCode,
               "One of [#{fuel_codes.join(', ')}] is not a valid fuel code"
       end
@@ -74,7 +75,7 @@ module UseCase
           savings: data[:savings],
         )
 
-      @green_deal_plan_gateway.add green_deal_plan, assessment_id
+      @green_deal_plans_gateway.add(green_deal_plan, assessment_id)
 
       @green_deal_plan_gateway.fetch(assessment_id).first
     end

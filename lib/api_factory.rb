@@ -125,6 +125,15 @@ class ApiFactory
       UseCase::ExportOpenDataNotForPublication.new(reporting_gateway)
   end
 
+  def self.add_green_deal_plan_use_case
+    @add_green_deal_plan_use_case ||=
+      UseCase::AddGreenDealPlan.new(
+        assessments_search_gateway: assessments_search_gateway,
+        green_deal_plans_gateway: green_deal_plans_gateway,
+        event_broadcaster: event_broadcaster,
+      )
+  end
+
   def self.notify_new_assessment_to_data_warehouse_use_case
     @notify_new_assessment_to_data_warehouse_use_case ||= UseCase::NotifyNewAssessmentToDataWarehouse.new(redis_gateway: redis_gateway)
   end
