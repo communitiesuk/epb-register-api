@@ -1,5 +1,3 @@
-require "notify_factory"
-
 class ApiFactory
   def self.assessments_gateway
     @assessments_gateway ||= Gateway::AssessmentsGateway.new
@@ -181,7 +179,6 @@ class ApiFactory
           assessment_id: assessment_id,
         )
       end
-      NotifyFactory.lodgement_to_audit_log(assessment_id, "")
     end
 
     @event_broadcaster.on :assessment_cancelled, :assessment_marked_not_for_issue do |**data|
