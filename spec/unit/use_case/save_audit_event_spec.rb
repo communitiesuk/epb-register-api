@@ -8,7 +8,7 @@ describe UseCase::SaveAuditEvent do
   end
 
   let(:domain_object) do
-    Domain::AuditEvent.new(entity_type: "assessment", entity_id: "0000-0000-0000-0000-0001", event_type: "opt_out")
+    Domain::AuditEvent.new(entity_type: :assessment, entity_id: "0000-0000-0000-0000-0001", event_type: :opt_out)
   end
 
   before do

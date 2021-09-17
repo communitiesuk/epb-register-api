@@ -3,22 +3,19 @@ require_relative "./controller/base_controller"
 class NotifyFactory
   include RequestModule
 
-  ENTITY_TYPES = %w[assessment assessor].freeze
-
   def self.lodgement_to_audit_log(entity_id:)
-    use_case = UseCase::SaveAuditEvent.new(Gateway::AuditLogsGateway.new)
-    use_case.execute(Domain::AuditEvent.new(
-                       entity_type: ENTITY_TYPES[0],
-                       event_type: "lodgement",
-                       entity_id: entity_id,
-                       data: RequestModule.relevant_request_headers,
-                     ))
+    save_audit_event_use_case.execute(Domain::AuditEvent.new(
+                                        entity_type: :assessment,
+                                        event_type: :lodgement,
+                                        entity_id: entity_id,
+                                        data: RequestModule.relevant_request_headers,
+                                      ))
   end
 
   def self.opt_out_to_audit_log(entity_id:, is_opt_out:)
     save_audit_event_use_case.execute(Domain::AuditEvent.new(
-                                        entity_type: ENTITY_TYPES[0],
-                                        event_type: is_opt_out ? "opt out" : "opt in",
+                                        entity_type: :assessment,
+                                        event_type: is_opt_out ? :opt_out : :opt_in,
                                         entity_id: entity_id,
                                         data: RequestModule.relevant_request_headers,
                                       ))
@@ -26,8 +23,8 @@ class NotifyFactory
 
   def self.cancelled_to_audit_log(entity_id:)
     save_audit_event_use_case.execute(Domain::AuditEvent.new(
-                                        entity_type: ENTITY_TYPES[0],
-                                        event_type: "cancelled",
+                                        entity_type: :assessment,
+                                        event_type: :cancelled,
                                         entity_id: entity_id,
                                         data: RequestModule.relevant_request_headers,
                                       ))
@@ -35,8 +32,8 @@ class NotifyFactory
 
   def self.address_id_updated_to_audit_log(entity_id:)
     save_audit_event_use_case.execute(Domain::AuditEvent.new(
-                                        entity_type: ENTITY_TYPES[0],
-                                        event_type: "address_id_updated",
+                                        entity_type: :assessment,
+                                        event_type: :address_id_updated,
                                         entity_id: entity_id,
                                         data: RequestModule.relevant_request_headers,
                                       ))

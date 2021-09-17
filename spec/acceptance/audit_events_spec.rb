@@ -52,7 +52,7 @@ describe "Audit events" do
       expect(saved_data.last).to match a_hash_including(
         { "entity_type" => "assessment",
           "entity_id" => "0000-0000-0000-0000-0000",
-          "event_type" => "opt out" },
+          "event_type" => "opt_out" },
       )
     end
   end
@@ -66,7 +66,7 @@ describe "Audit events" do
       expect(saved_data.last).to match a_hash_including(
         { "entity_type" => "assessment",
           "entity_id" => "0000-0000-0000-0000-0000",
-          "event_type" => "opt in" },
+          "event_type" => "opt_in" },
       )
     end
   end
