@@ -3,7 +3,7 @@ module Domain
     attr_reader :event_type, :entity_type, :data, :entity_id
 
     VALID_TYPES = {
-      assessment: %i[lodgement opt_out opt_in cancelled address_id_updated],
+      assessment: %i[lodgement opt_out opt_in cancelled address_id_updated green_deal_plan_added],
     }.freeze
 
     def initialize(event_type:, entity_id:, entity_type:, data: nil)

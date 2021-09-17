@@ -112,4 +112,37 @@ describe "Audit events" do
       )
     end
   end
+
+  context "when updating assessment's address id" do
+    before do
+      add_address_base(uprn: 73_546_793)
+      update_assessment_address_id(
+        assessment_id: "0000-0000-0000-0000-0000",
+        new_address_id: "UPRN-000073546793",
+      )
+    end
+
+    it "saves the event to the audit log" do
+      expect(saved_data.last).to match a_hash_including(
+        { "entity_type" => "assessment",
+          "entity_id" => "0000-0000-0000-0000-0000",
+          "event_type" => "address_id_updated" },
+      )
+    end
+  end
+
+  context "when a green deal plan is added" do
+    before do
+      add_green_deal_plan(assessment_id: "0000-0000-0000-0000-0000",
+                          body: GreenDealPlanStub.new.request_body)
+    end
+
+    it "saves the event to the audit log" do
+      expect(saved_data.last).to match a_hash_including(
+        { "entity_type" => "assessment",
+          "entity_id" => "0000-0000-0000-0000-0000",
+          "event_type" => "green_deal_plan_added" },
+      )
+    end
+  end
 end

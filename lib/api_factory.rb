@@ -225,6 +225,10 @@ class ApiFactory
       NotifyFactory.opt_out_to_audit_log(entity_id: data[:assessment_id], is_opt_out: data[:new_status])
     end
 
+    @event_broadcaster.on :green_deal_plan_added do |**data|
+      NotifyFactory.green_deal_plan_added_to_audit_log(entity_id: data[:assessment_id])
+    end
+
     @event_broadcaster
   end
 

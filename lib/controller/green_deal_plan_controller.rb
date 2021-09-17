@@ -154,6 +154,8 @@ module Controller
       assessment_id = params[:assessment_id]
       plan = request_body SCHEMA
 
+      RequestModule.relevant_request_headers = relevant_request_headers(request)
+
       results = ApiFactory.add_green_deal_plan_use_case.execute(assessment_id, plan)
 
       json_api_response code: 201, data: results.to_hash
