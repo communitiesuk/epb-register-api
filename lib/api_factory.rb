@@ -204,6 +204,7 @@ class ApiFactory
           assessment_id: data[:assessment_id],
         )
       end
+      NotifyFactory.address_id_updated_to_audit_log(entity_id: data[:assessment_id])
     end
 
     @event_broadcaster.on :assessment_opt_out_status_changed do |**data|

@@ -33,6 +33,15 @@ class NotifyFactory
                                       ))
   end
 
+  def self.address_id_updated_to_audit_log(entity_id:)
+    save_audit_event_use_case.execute(Domain::AuditEvent.new(
+                                        entity_type: ENTITY_TYPES[0],
+                                        event_type: "address_id_updated",
+                                        entity_id: entity_id,
+                                        data: RequestModule.relevant_request_headers,
+                                      ))
+  end
+
   def self.save_audit_event_use_case
     @save_audit_event_use_case ||= UseCase::SaveAuditEvent.new(Gateway::AuditLogsGateway.new)
   end
