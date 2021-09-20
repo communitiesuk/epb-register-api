@@ -27,6 +27,14 @@ module UseCase
     end
   end
 
+  # The domestic software list, if it exists, is assumed to be provided as a JSON string encoding a hash with the single key "software",
+  # which in turn contains a hash that has software names (as strings) as keys, with each entry containing a list of software versions
+  # (not necessarily ordered).
+  #
+  # example JSON string:
+  #
+  #   {"software":{"Acme Scheme Lodgerator":["1.23", "1.24"],"Lodg-o":["6.5","6.6","6.7"]}}
+  #
   class DomesticSoftwareList
     def initialize
       @software = case ENV["DOMESTIC_APPROVED_SOFTWARE"].nil?
@@ -50,6 +58,13 @@ module UseCase
     attr_reader :software
   end
 
+  # The non-domestic software list, if it exists, is assumed to be provided as a JSON string encoding a hash with the single key "software",
+  # which in turn contains a list of known software identifiers (including versioning, with software names duplicated where necessary).
+  #
+  # example JSON string:
+  #
+  #   {"software":["Bentley Lodgement Ace, V2.4","Sentinel, v4.6h","Xyzzy, Official, 2.0"]}
+  #
   class NonDomesticSoftwareList
     def initialize
       @software = case ENV["NON_DOMESTIC_APPROVED_SOFTWARE"].nil?
