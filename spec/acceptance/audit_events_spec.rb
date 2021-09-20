@@ -209,4 +209,20 @@ describe "Audit events" do
       )
     end
   end
+
+  context "when a green deal plan is deleted" do
+    before do
+      add_green_deal_plan(assessment_id: "0000-0000-0000-0000-0000",
+                          body: GreenDealPlanStub.new.request_body)
+      delete_green_deal_plan(plan_id: "ABC123456DEF")
+    end
+
+    it "saves the event to the audit log" do
+      expect(saved_data.last).to match a_hash_including(
+        { "entity_type" => "assessment",
+          "entity_id" => "0000-0000-0000-0000-0000",
+          "event_type" => "green_deal_plan_deleted" },
+      )
+    end
+  end
 end

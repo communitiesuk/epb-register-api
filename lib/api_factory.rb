@@ -249,6 +249,10 @@ class ApiFactory
       NotifyFactory.green_deal_plan_updated_to_audit_log(entity_id: data[:assessment_id])
     end
 
+    @event_broadcaster.on :green_deal_plan_deleted do |**data|
+      NotifyFactory.green_deal_plan_deleted_to_audit_log(entity_id: data[:assessment_id])
+    end
+
     @event_broadcaster
   end
 
