@@ -23,7 +23,9 @@ describe UseCase::ValidateAndLodgeAssessment do
         UseCase::ValidateAndLodgeAssessment::SchemaNotSupportedException,
       )
     end
+  end
 
+  context "when validating without having been passed a schema name" do
     it "raises the error SchemaNotDefined" do
       expect {
         use_case.execute(valid_xml, nil, "1", false, false)
