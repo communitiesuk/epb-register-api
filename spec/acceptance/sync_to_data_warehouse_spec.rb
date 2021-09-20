@@ -12,6 +12,7 @@ describe "syncing to data warehouse on various assessment data changes" do
   end
 
   before do
+    allow(Helper::Toggles).to receive(:enabled?)
     allow(Helper::Toggles).to receive(:enabled?).with("sync_to_data_warehouse").and_return(true)
   end
 

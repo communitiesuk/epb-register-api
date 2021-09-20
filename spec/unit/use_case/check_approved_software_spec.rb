@@ -22,7 +22,7 @@ describe UseCase::CheckApprovedSoftware do
         end
 
         it "returns true" do
-          expect(use_case.execute(assessment_xml: domestic_xml, schema_name: "RdSAP")).to be true
+          expect(use_case.execute(assessment_xml: domestic_xml, schema_name: "RdSAP-Schema-20.0.0")).to be true
         end
       end
 
@@ -33,7 +33,7 @@ describe UseCase::CheckApprovedSoftware do
         end
 
         it "returns false" do
-          expect(use_case.execute(assessment_xml: domestic_xml, schema_name: "RdSAP")).to be false
+          expect(use_case.execute(assessment_xml: domestic_xml, schema_name: "RdSAP-Schema-20.0.0")).to be false
         end
       end
 
@@ -44,7 +44,7 @@ describe UseCase::CheckApprovedSoftware do
         end
 
         it "returns false" do
-          expect(use_case.execute(assessment_xml: domestic_xml, schema_name: "RdSAP")).to be false
+          expect(use_case.execute(assessment_xml: domestic_xml, schema_name: "RdSAP-Schema-20.0.0")).to be false
         end
       end
     end
@@ -56,7 +56,7 @@ describe UseCase::CheckApprovedSoftware do
       end
 
       it "returns true" do
-        expect(use_case.execute(assessment_xml: domestic_xml, schema_name: "RdSAP")).to be true
+        expect(use_case.execute(assessment_xml: domestic_xml, schema_name: "RdSAP-Schema-20.0.0 ")).to be true
       end
     end
   end
@@ -81,7 +81,7 @@ describe UseCase::CheckApprovedSoftware do
         end
 
         it "returns true" do
-          expect(use_case.execute(assessment_xml: non_domestic_xml, schema_name: "CEPC")).to be true
+          expect(use_case.execute(assessment_xml: non_domestic_xml, schema_name: "CEPC-8.0.0")).to be true
         end
       end
 
@@ -91,7 +91,7 @@ describe UseCase::CheckApprovedSoftware do
         end
 
         it "returns false" do
-          expect(use_case.execute(assessment_xml: non_domestic_xml, schema_name: "CEPC")).to be false
+          expect(use_case.execute(assessment_xml: non_domestic_xml, schema_name: "CEPC-8.0.0")).to be false
         end
       end
     end
@@ -103,7 +103,7 @@ describe UseCase::CheckApprovedSoftware do
       end
 
       it "returns true" do
-        expect(use_case.execute(assessment_xml: non_domestic_xml, schema_name: "CEPC")).to be true
+        expect(use_case.execute(assessment_xml: non_domestic_xml, schema_name: "CEPC-8.0.0")).to be true
       end
     end
   end

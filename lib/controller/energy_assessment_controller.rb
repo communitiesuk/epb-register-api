@@ -179,6 +179,12 @@ module Controller
           "INVALID_REQUEST",
           'Schema is not defined. Set content-type on the request to "application/xml+RdSAP-Schema-19.0" for example.',
         )
+      when UseCase::ValidateAndLodgeAssessment::SoftwareNotApprovedError
+        error_response(
+          400,
+          "INVALID_REQUEST",
+          "The calculation software used to create the assessment is not on the approved list.",
+        )
       when UseCase::ValidateAndLodgeAssessment::UnauthorisedToLodgeAsThisSchemeException
         error_response(
           403,

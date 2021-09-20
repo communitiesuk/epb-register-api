@@ -1,8 +1,7 @@
 module UseCase
   class CheckApprovedSoftware
     def execute(assessment_xml:, schema_name:)
-      case schema_name
-      when *domestic_schemas
+      if domestic_schema? schema_name
         !domestic_software.list_exists? || domestic_software.match?(
           name: assessment_xml.at("Calculation-Software-Name")&.children.to_s,
           version: assessment_xml.at("Calculation-Software-Version")&.children.to_s,
@@ -24,6 +23,10 @@ module UseCase
 
     def domestic_schemas
       %w[RdSAP SAP]
+    end
+
+    def domestic_schema?(schema_name)
+      domestic_schemas.include?(schema_name.split("-").first)
     end
   end
 

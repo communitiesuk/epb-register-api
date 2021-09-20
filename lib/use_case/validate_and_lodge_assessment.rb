@@ -2,26 +2,21 @@
 
 module UseCase
   class ValidateAndLodgeAssessment
-    class OveriddenLodgementEvent < ActiveRecord::Base
-    end
+    class OveriddenLodgementEvent < ActiveRecord::Base; end
 
-    class ValidationErrorException < StandardError
-    end
+    class ValidationErrorException < StandardError; end
 
-    class UnauthorisedToLodgeAsThisSchemeException < StandardError
-    end
+    class UnauthorisedToLodgeAsThisSchemeException < StandardError; end
 
-    class SchemaNotSupportedException < StandardError
-    end
+    class SchemaNotSupportedException < StandardError; end
 
-    class RelatedReportError < StandardError
-    end
+    class RelatedReportError < StandardError; end
 
-    class AddressIdsDoNotMatch < StandardError
-    end
+    class AddressIdsDoNotMatch < StandardError; end
 
-    class SchemaNotDefined < StandardError
-    end
+    class SchemaNotDefined < StandardError; end
+
+    class SoftwareNotApprovedError < StandardError; end
 
     class LodgementRulesException < StandardError
       attr_reader :errors
@@ -39,11 +34,13 @@ module UseCase
     def initialize(
       validate_assessment_use_case:,
       lodge_assessment_use_case:,
-      check_assessor_belongs_to_scheme_use_case:
+      check_assessor_belongs_to_scheme_use_case:,
+      check_approved_software_use_case:
     )
       @validate_assessment_use_case = validate_assessment_use_case
       @lodge_assessment_use_case = lodge_assessment_use_case
       @check_assessor_belongs_to_scheme_use_case = check_assessor_belongs_to_scheme_use_case
+      @check_approved_software_use_case = check_approved_software_use_case
     end
 
     def execute(assessment_xml:, schema_name:, scheme_ids:, migrated:, overidden:)
@@ -58,7 +55,15 @@ module UseCase
       lodgement_data =
         extract_data_from_lodgement_xml Domain::Lodgement.new(assessment_xml, schema_name)
 
-      raise RelatedReportError unless reports_refer_to_each_other?(assessment_xml)
+      xml_doc = as_parsed_document assessment_xml
+
+      Helper::Toggles.enabled? "validate-software" do
+        raise SoftwareNotApprovedError unless migrated || software_is_approved?(
+          assessment_xml_doc: xml_doc,
+          schema_name: schema_name,
+        )
+      end
+      raise RelatedReportError unless reports_refer_to_each_other?(xml_doc)
       raise AddressIdsDoNotMatch unless address_ids_match?(lodgement_data)
 
       unless migrated
@@ -131,8 +136,6 @@ module UseCase
     end
 
     def reports_refer_to_each_other?(xml)
-      xml = Nokogiri.XML(xml)
-      xml.remove_namespaces!
       reports = xml.search("Report")
 
       if reports.count == 2
@@ -152,6 +155,11 @@ module UseCase
       end
     end
 
+    def software_is_approved?(assessment_xml_doc:, schema_name:)
+      @check_approved_software_use_case.execute assessment_xml: assessment_xml_doc,
+                                                schema_name: schema_name
+    end
+
     def ensure_lodgement_xml_valid(xml, schema_name)
       unless @validate_assessment_use_case.execute(
         xml,
@@ -163,6 +171,13 @@ module UseCase
 
     def extract_data_from_lodgement_xml(lodgement)
       lodgement.fetch_data
+    end
+
+    def as_parsed_document(xml)
+      xml_doc = Nokogiri.XML xml
+      xml_doc.remove_namespaces!
+
+      xml_doc
     end
   end
 end

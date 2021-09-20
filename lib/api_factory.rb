@@ -54,12 +54,17 @@ class ApiFactory
         lodge_assessment_use_case: lodge_assessment_use_case,
         validate_assessment_use_case: validate_assessment_use_case,
         check_assessor_belongs_to_scheme_use_case: check_assessor_belongs_to_scheme_use_case,
+        check_approved_software_use_case: check_approved_software_use_case,
       )
   end
 
   def self.check_assessor_belongs_to_scheme_use_case
     @check_assessor_belongs_to_scheme_use_case ||=
       UseCase::CheckAssessorBelongsToScheme.new(assessors_gateway: assessors_gateway)
+  end
+
+  def self.check_approved_software_use_case
+    @check_approved_software_use_case ||= UseCase::CheckApprovedSoftware.new
   end
 
   def self.update_assessment_status_use_case
