@@ -9,18 +9,19 @@ module UseCase
     class InvalidFuelCode < StandardError
     end
 
-    def initialize
-      @green_deal_plan_gateway = Gateway::GreenDealPlansGateway.new
+    def initialize(green_deal_plans_gateway:, event_broadcaster:)
+      @green_deal_plans_gateway = green_deal_plans_gateway
+      @event_broadcaster = event_broadcaster
     end
 
     def execute(plan_id, data)
-      raise NotFoundException unless @green_deal_plan_gateway.exists? plan_id
+      raise NotFoundException unless @green_deal_plans_gateway.exists? plan_id
 
       raise PlanIdMismatchException unless plan_id == data[:green_deal_plan_id]
 
       fuel_codes = data[:savings].map { |saving| saving[:fuel_code] }
 
-      unless @green_deal_plan_gateway.validate_fuel_codes?(fuel_codes)
+      unless @green_deal_plans_gateway.validate_fuel_codes?(fuel_codes)
         raise InvalidFuelCode,
               "One of [#{fuel_codes.join(', ')}] is not a valid fuel code"
       end
@@ -45,7 +46,7 @@ module UseCase
           savings: data[:savings],
         )
 
-      @green_deal_plan_gateway.update green_deal_plan, plan_id
+      @green_deal_plans_gateway.update green_deal_plan, plan_id
     end
   end
 end
