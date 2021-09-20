@@ -14,7 +14,10 @@ module Helper
         @unleash = Unleash::Client.new
       end
 
-      @unleash.is_enabled? toggle_name, nil, default
+      enabled = @unleash.is_enabled? toggle_name, nil, default
+      yield if block_given? && enabled
+
+      enabled
     end
 
     def self.shutdown!
