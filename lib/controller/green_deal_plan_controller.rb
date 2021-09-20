@@ -280,7 +280,7 @@ module Controller
            auth_token_has_all: %w[greendeal:plans] do
       plan_id = params[:plan_id]
 
-      result = UseCase::DeleteGreenDealPlan.new.execute(plan_id)
+      result = ApiFactory.delete_green_deal_plan_use_case.execute(plan_id)
 
       json_api_response code: 204, data: result.to_hash
     rescue StandardError => e

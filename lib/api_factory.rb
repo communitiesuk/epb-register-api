@@ -142,6 +142,14 @@ class ApiFactory
       )
   end
 
+  def self.delete_green_deal_plan_use_case
+    @delete_green_deal_plan_use_case ||=
+      UseCase::DeleteGreenDealPlan.new(
+        green_deal_plans_gateway: green_deal_plans_gateway,
+        event_broadcaster: event_broadcaster,
+      )
+  end
+
   def self.notify_new_assessment_to_data_warehouse_use_case
     @notify_new_assessment_to_data_warehouse_use_case ||= UseCase::NotifyNewAssessmentToDataWarehouse.new(redis_gateway: redis_gateway)
   end
