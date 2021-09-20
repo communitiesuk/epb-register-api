@@ -187,6 +187,8 @@ module Controller
       plan_id = params[:plan_id]
       green_deal_plan = request_body SCHEMA
 
+      RequestModule.relevant_request_headers = relevant_request_headers(request)
+
       result = ApiFactory.update_green_deal_plan_use_case.execute(plan_id, green_deal_plan)
 
       json_api_response code: 200, data: result.to_hash

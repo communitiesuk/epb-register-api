@@ -46,7 +46,18 @@ module UseCase
           savings: data[:savings],
         )
 
-      @green_deal_plans_gateway.update green_deal_plan, plan_id
+      green_deal_plan_record = @green_deal_plans_gateway.update(green_deal_plan, plan_id)
+
+      @event_broadcaster.broadcast(:green_deal_plan_updated,
+                                   green_deal_plan_id: plan_id,
+                                   assessment_id: assessment_id_for_gdp(plan_id))
+      green_deal_plan_record
+    end
+
+  private
+
+    def assessment_id_for_gdp(plan_id)
+      @green_deal_plans_gateway.fetch_assessment_id(plan_id: plan_id)
     end
   end
 end
