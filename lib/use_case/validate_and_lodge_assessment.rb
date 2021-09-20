@@ -46,23 +46,23 @@ module UseCase
       @check_assessor_belongs_to_scheme_use_case = check_assessor_belongs_to_scheme_use_case
     end
 
-    def execute(xml, schema_name, scheme_ids, migrated, overidden)
+    def execute(assessment_xml:, schema_name:, scheme_ids:, migrated:, overidden:)
       raise SchemaNotDefined unless schema_name
 
       unless Helper::SchemaListHelper.new(schema_name).schema_exists?
         raise SchemaNotSupportedException
       end
 
-      ensure_lodgement_xml_valid xml, schema_name
+      ensure_lodgement_xml_valid assessment_xml, schema_name
 
       lodgement_data =
-        extract_data_from_lodgement_xml Domain::Lodgement.new(xml, schema_name)
+        extract_data_from_lodgement_xml Domain::Lodgement.new(assessment_xml, schema_name)
 
-      raise RelatedReportError unless reports_refer_to_each_other?(xml)
+      raise RelatedReportError unless reports_refer_to_each_other?(assessment_xml)
       raise AddressIdsDoNotMatch unless address_ids_match?(lodgement_data)
 
       unless migrated
-        wrapper = ViewModel::Factory.new.create(xml, schema_name, false)
+        wrapper = ViewModel::Factory.new.create(assessment_xml, schema_name, false)
         if (
              (
                LATEST_COMMERCIAL + LATEST_DOM_EW + LATEST_DOM_NI

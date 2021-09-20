@@ -93,11 +93,11 @@ module Controller
 
       results =
         validate_and_lodge_assessment.execute(
-          sanitised_xml,
-          xml_schema_type,
-          scheme_ids,
-          migrated,
-          overridden,
+          assessment_xml: sanitised_xml,
+          schema_name: xml_schema_type,
+          scheme_ids: scheme_ids,
+          migrated: migrated,
+          overidden: overridden,
         )
 
       results.each do |result|

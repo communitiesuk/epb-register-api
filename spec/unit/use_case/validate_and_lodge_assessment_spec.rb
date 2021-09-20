@@ -12,13 +12,11 @@ describe UseCase::ValidateAndLodgeAssessment do
   context "when validating an invalid schema name" do
     it "raises the error SchemaNotAccepted" do
       expect {
-        use_case.execute(
-          valid_xml,
-          "Non-existent-RdSAP-Schema-20.0.0",
-          "1",
-          false,
-          false,
-        )
+        use_case.execute assessment_xml: valid_xml,
+                         schema_name: "Non-existent-RdSAP-Schema-20.0.0",
+                         scheme_ids: "1",
+                         migrated: false,
+                         overidden: false
       }.to raise_exception(
         UseCase::ValidateAndLodgeAssessment::SchemaNotSupportedException,
       )
@@ -28,7 +26,11 @@ describe UseCase::ValidateAndLodgeAssessment do
   context "when validating without having been passed a schema name" do
     it "raises the error SchemaNotDefined" do
       expect {
-        use_case.execute(valid_xml, nil, "1", false, false)
+        use_case.execute assessment_xml: valid_xml,
+                         schema_name: nil,
+                         scheme_ids: "1",
+                         migrated: false,
+                         overidden: false
       }.to raise_exception(
         UseCase::ValidateAndLodgeAssessment::SchemaNotDefined,
       )
