@@ -331,6 +331,7 @@ module Controller
       end
 
       assessor_details = request_body(PUT_SCHEMA)
+      RequestModule.relevant_request_headers = relevant_request_headers(request)
 
       create_assessor_response =
         ApiFactory.add_assessor_use_case.execute(

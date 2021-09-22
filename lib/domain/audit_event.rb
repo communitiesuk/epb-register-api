@@ -13,6 +13,7 @@ module Domain
         green_deal_plan_updated
         green_deal_plan_deleted
       ],
+      assessor: [:added],
     }.freeze
 
     def initialize(event_type:, entity_id:, entity_type:, data: nil)

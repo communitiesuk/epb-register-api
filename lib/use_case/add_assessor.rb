@@ -112,6 +112,9 @@ module UseCase
             ),
           )
         end
+      else
+        @event_broadcaster.broadcast(:assessor_added,
+                                     assessor_id: assessor.scheme_assessor_id)
       end
 
       { assessor_was_newly_created: existing_assessor.nil?, assessor: assessor }

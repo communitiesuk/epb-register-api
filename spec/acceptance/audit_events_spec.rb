@@ -20,22 +20,41 @@ describe "Audit events" do
     ActiveRecord::Base.connection.exec_query("SELECT * FROM audit_logs ORDER BY timestamp DESC")
   end
 
-  it "saves the decoded auth token from the request headers as JSON" do
-    expect(JSON.parse(saved_data.first["data"])["auth_token"]["payload"]).to match a_hash_including(
-      { "iss" => "test.issuer",
-        "scopes" => ["assessment:lodge"],
-        "sub" => "test-subject",
-        "sup" => { "scheme_ids" => [scheme_id] } },
-    )
+  context "when adding a new assessor" do
+    it "saves addingthe assessor the event to the audit log" do
+      expect(saved_data.first).to match a_hash_including(
+        { "entity_type" => "assessor",
+          "entity_id" => "SPEC000000",
+          "event_type" => "added" },
+      )
+    end
+
+    it "saves the decoded auth token from the request headers as JSON" do
+      expect(JSON.parse(saved_data.first["data"])["auth_token"]["payload"]).to match a_hash_including(
+        { "iss" => "test.issuer",
+          "scopes" => ["scheme:assessor:update"],
+          "sub" => "test-subject",
+          "sup" => { "scheme_ids" => [scheme_id] } },
+      )
+    end
   end
 
   context "when lodging an assessment" do
     it "saves the event to the audit log" do
-      expect(saved_data).to match [a_hash_including(
+      expect(saved_data.last).to match a_hash_including(
         { "entity_type" => "assessment",
           "entity_id" => "0000-0000-0000-0000-0000",
           "event_type" => "lodgement" },
-      )]
+      )
+    end
+
+    it "saves the decoded auth token from the request headers as JSON" do
+      expect(JSON.parse(saved_data.last["data"])["auth_token"]["payload"]).to match a_hash_including(
+        { "iss" => "test.issuer",
+          "scopes" => ["assessment:lodge"],
+          "sub" => "test-subject",
+          "sup" => { "scheme_ids" => [scheme_id] } },
+      )
     end
   end
 
