@@ -333,7 +333,7 @@ module Controller
       assessor_details = request_body(PUT_SCHEMA)
 
       create_assessor_response =
-        UseCase::AddAssessor.new.execute(
+        ApiFactory.add_assessor_use_case.execute(
           Boundary::AssessorRequest.new(
             body: assessor_details,
             scheme_assessor_id: scheme_assessor_id,

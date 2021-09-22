@@ -14,11 +14,11 @@ module UseCase
     class AssessorRegisteredOnAnotherScheme < StandardError
     end
 
-    def initialize
-      @schemes_gateway = Gateway::SchemesGateway.new
-      @assessors_gateway = Gateway::AssessorsGateway.new
-      @assessors_status_events_gateway =
-        Gateway::AssessorsStatusEventsGateway.new
+    def initialize(schemes_gateway:, assessors_gateway:, assessors_status_events_gateway:, event_broadcaster:)
+      @schemes_gateway = schemes_gateway
+      @assessors_gateway = assessors_gateway
+      @assessors_status_events_gateway = assessors_status_events_gateway
+      @event_broadcaster = event_broadcaster
     end
 
     def execute(add_assessor_request, auth_client_id)

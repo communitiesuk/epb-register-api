@@ -41,6 +41,14 @@ class ApiFactory
     @green_deal_plans_gateway ||= Gateway::GreenDealPlansGateway.new
   end
 
+  def self.schemes_gateway
+    @schemes_gateway ||= Gateway::SchemesGateway.new
+  end
+
+  def self.assessors_status_events_gateway
+    @assessors_status_events_gateway ||= Gateway::AssessorsStatusEventsGateway.new
+  end
+
   def self.assessments_export_use_case
     @assessments_export_use_case ||=
       UseCase::ExportAssessmentAttributes.new(
@@ -146,6 +154,16 @@ class ApiFactory
     @delete_green_deal_plan_use_case ||=
       UseCase::DeleteGreenDealPlan.new(
         green_deal_plans_gateway: green_deal_plans_gateway,
+        event_broadcaster: event_broadcaster,
+      )
+  end
+
+  def self.add_assessor_use_case
+    @add_assessor_use_case ||=
+      UseCase::AddAssessor.new(
+        schemes_gateway: schemes_gateway,
+        assessors_gateway: assessors_gateway,
+        assessors_status_events_gateway: assessors_status_events_gateway,
         event_broadcaster: event_broadcaster,
       )
   end
