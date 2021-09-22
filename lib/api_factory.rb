@@ -217,7 +217,7 @@ class ApiFactory
   def self.event_broadcaster
     return @event_broadcaster unless @event_broadcaster.nil?
 
-    @event_broadcaster = EventBroadcaster.new
+    @event_broadcaster = EventBroadcaster.new(logger: logger)
 
     # wire up listeners
     #
