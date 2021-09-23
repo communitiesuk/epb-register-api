@@ -5,7 +5,7 @@ APPLICATION_NAME=$1  # e.g. mhclg-epb-something-api-integration
 STAGE=$2 # i.e. [integration, staging, production]
 
 case "$STAGE" in
- production) MEMORY="4G" ;;
+ production) MEMORY="6G" ;;
  *) MEMORY="1G" ;;
 esac
 
