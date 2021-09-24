@@ -1,4 +1,5 @@
 require "sinatra"
+configure { set :server, :puma }
 require "sinatra/activerecord"
 require "sinatra/activerecord/rake"
 require "epb_view_models"

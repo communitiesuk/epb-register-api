@@ -34,6 +34,7 @@ source "https://rubygems.org" do
   gem "nokogiri", "~> 1.12.4"
   gem "ougai", "~> 2.0"
   gem 'pg', '~> 1.2', '>= 1.2.3'
+  gem 'puma', '~> 5.5'
   gem 'rake', '~> 13.0', '>= 13.0.6'
   gem "rubocop-govuk", "~> 4.1"
   gem "rubocop-performance", require: false

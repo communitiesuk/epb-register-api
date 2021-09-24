@@ -99,6 +99,7 @@ GEM
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
     namecase (2.0.0)
+    nio4r (2.5.8)
     nokogiri (1.12.4)
       mini_portile2 (~> 2.6.1)
       racc (~> 1.4)
@@ -119,6 +120,8 @@ GEM
       coderay (~> 1.1)
       method_source (~> 1.0)
     public_suffix (4.0.6)
+    puma (5.5.0)
+      nio4r (~> 2.0)
     raabro (1.4.0)
     racc (1.5.2)
     rack (2.2.3)
@@ -235,10 +238,11 @@ DEPENDENCIES
   namecase (~> 2.0)!
   nokogiri (~> 1.12.4)!
   ougai (~> 2.0)!
-  pg!
+  pg (~> 1.2, >= 1.2.3)!
   pry (~> 0.14.1)!
+  puma (~> 5.5)!
   rack-test (~> 1.1.0)!
-  rake!
+  rake (~> 13.0, >= 13.0.6)!
   redis (~> 4.4.0)!
   rspec (~> 3.10)!
   rubocop-govuk (~> 4.1)!
