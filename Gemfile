@@ -33,8 +33,8 @@ source "https://rubygems.org" do
   gem "namecase", "~> 2.0"
   gem "nokogiri", "~> 1.12.4"
   gem "ougai", "~> 2.0"
-  gem "pg"
-  gem "rake"
+  gem 'pg', '~> 1.2', '>= 1.2.3'
+  gem 'rake', '~> 13.0', '>= 13.0.6'
   gem "rubocop-govuk", "~> 4.1"
   gem "rubocop-performance", require: false
   gem "rubyzip", "~> 2.3.2"
