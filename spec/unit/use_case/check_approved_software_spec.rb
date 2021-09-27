@@ -1,5 +1,7 @@
 describe UseCase::CheckApprovedSoftware do
-  subject(:use_case) { described_class.new }
+  subject(:use_case) { described_class.new(logger: logger) }
+
+  let(:logger) { instance_spy Logger }
 
   context "when a domestic assessment XML is provided" do
     let(:domestic_xml) do
@@ -49,6 +51,19 @@ describe UseCase::CheckApprovedSoftware do
       end
     end
 
+    context "and a domestic software list is available but has a parse error" do
+      before do
+        allow(ENV).to receive(:[])
+        allow(ENV).to receive(:[]).with("DOMESTIC_APPROVED_SOFTWARE").and_return('["bad software list"]]')
+
+        use_case.execute(assessment_xml: domestic_xml, schema_name: "RdSAP-Schema-20.0.0")
+      end
+
+      it "logs out an error" do
+        expect(logger).to have_received :error
+      end
+    end
+
     context "and there is no domestic software list available" do
       before do
         allow(ENV).to receive(:[])
@@ -93,6 +108,19 @@ describe UseCase::CheckApprovedSoftware do
         it "returns false" do
           expect(use_case.execute(assessment_xml: non_domestic_xml, schema_name: "CEPC-8.0.0")).to be false
         end
+      end
+    end
+
+    context "and a non-domestic software list is available but has a parse error" do
+      before do
+        allow(ENV).to receive(:[])
+        allow(ENV).to receive(:[]).with("NON_DOMESTIC_APPROVED_SOFTWARE").and_return('["bad software list"]]')
+
+        use_case.execute(assessment_xml: non_domestic_xml, schema_name: "CEPC-8.0.0")
+      end
+
+      it "logs out an error" do
+        expect(logger).to have_received :error
       end
     end
 

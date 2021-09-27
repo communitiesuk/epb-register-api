@@ -74,7 +74,7 @@ class ApiFactory
   end
 
   def self.check_approved_software_use_case
-    @check_approved_software_use_case ||= UseCase::CheckApprovedSoftware.new
+    @check_approved_software_use_case ||= UseCase::CheckApprovedSoftware.new logger: logger
   end
 
   def self.update_assessment_status_use_case

@@ -1,5 +1,9 @@
 module UseCase
   class CheckApprovedSoftware
+    def initialize(logger: nil)
+      @logger = logger || Logger.new($stdout)
+    end
+
     def execute(assessment_xml:, schema_name:)
       if domestic_schema? schema_name
         !domestic_software.list_exists? || domestic_software.match?(
@@ -14,11 +18,11 @@ module UseCase
   private
 
     def domestic_software
-      @domestic_software ||= DomesticSoftwareList.new
+      @domestic_software ||= DomesticSoftwareList.new logger: logger
     end
 
     def non_domestic_software
-      @non_domestic_software ||= NonDomesticSoftwareList.new
+      @non_domestic_software ||= NonDomesticSoftwareList.new logger: logger
     end
 
     def domestic_schemas
@@ -28,6 +32,8 @@ module UseCase
     def domestic_schema?(schema_name)
       domestic_schemas.include?(schema_name.split("-").first)
     end
+
+    attr_reader :logger
   end
 
   # The domestic software list, if it exists, is assumed to be provided as a JSON string encoding a hash with the single key "software",
@@ -39,13 +45,16 @@ module UseCase
   #   {"software":{"Acme Scheme Lodgerator":["1.23", "1.24"],"Lodg-o":["6.5","6.6","6.7"]}}
   #
   class DomesticSoftwareList
-    def initialize
+    def initialize(logger: nil)
       @software = case ENV["DOMESTIC_APPROVED_SOFTWARE"].nil?
                   when false
                     JSON.parse(ENV["DOMESTIC_APPROVED_SOFTWARE"])["software"]
                   when true
                     {}
                   end
+    rescue JSON::ParserError => e
+      logger.error("The domestic software list (JSON) has a syntax error, meaning the software validation cannot occur. Parse error: #{e.message}") if logger
+      @software = {}
     end
 
     def match?(name:, version:)
@@ -69,13 +78,16 @@ module UseCase
   #   {"software":["Bentley Lodgement Ace, V2.4","Sentinel, v4.6h","Xyzzy, Official, 2.0"]}
   #
   class NonDomesticSoftwareList
-    def initialize
+    def initialize(logger: nil)
       @software = case ENV["NON_DOMESTIC_APPROVED_SOFTWARE"].nil?
                   when false
                     JSON.parse(ENV["NON_DOMESTIC_APPROVED_SOFTWARE"])["software"]
                   when true
                     []
                   end
+    rescue JSON::ParserError => e
+      logger.error("The non-domestic software list (JSON) has a syntax error, meaning the software validation cannot occur. Parse error: #{e.message}") if logger
+      @software = {}
     end
 
     def match?(identifier:)
