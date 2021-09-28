@@ -4,7 +4,7 @@ describe UseCase::AddAssessor do
       schemes_gateway: instance_double(Gateway::SchemesGateway),
       assessors_gateway: instance_double(Gateway::AssessorsGateway),
       assessors_status_events_gateway: instance_double(Gateway::AssessorsStatusEventsGateway),
-      event_broadcaster: instance_double(EventBroadcaster),
+      event_broadcaster: instance_double(Events::Broadcaster),
     )
   end
 

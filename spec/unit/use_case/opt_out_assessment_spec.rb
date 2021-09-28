@@ -5,7 +5,7 @@ describe UseCase::OptOutAssessment do
     described_class.new(
       assessments_gateway: Gateway::AssessmentsGateway.new,
       assessments_search_gateway: assessments_search_gateway,
-      event_broadcaster: EventBroadcaster.new,
+      event_broadcaster: Events::Broadcaster.new,
     )
   end
 
@@ -56,9 +56,9 @@ describe UseCase::OptOutAssessment do
 
   describe "event broadcasting" do
     around do |test|
-      EventBroadcaster.enable!
+      Events::Broadcaster.enable!
       test.run
-      EventBroadcaster.disable!
+      Events::Broadcaster.disable!
     end
 
     context "when an opt out is run with opt_out set to true" do

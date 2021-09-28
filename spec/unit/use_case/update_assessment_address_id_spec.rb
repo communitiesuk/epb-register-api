@@ -5,7 +5,7 @@ describe UseCase::UpdateAssessmentAddressId do
       assessments_address_id_gateway: assessments_address_id_gateway,
       assessments_search_gateway: assessments_search_gateway,
       assessments_gateway: assessments_gateway,
-      event_broadcaster: EventBroadcaster.new,
+      event_broadcaster: Events::Broadcaster.new,
     )
   end
 
@@ -34,9 +34,9 @@ describe UseCase::UpdateAssessmentAddressId do
 
     describe "event examples" do
       around do |test|
-        EventBroadcaster.enable!
+        Events::Broadcaster.enable!
         test.run
-        EventBroadcaster.disable!
+        Events::Broadcaster.disable!
       end
 
       it "broadcasts an assessment_address_id_updated event" do

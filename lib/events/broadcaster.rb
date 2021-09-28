@@ -90,7 +90,8 @@ require "wisper"
 #   use_case.execute
 #   # => the important thing happens, and "event fired with data: some ID" is printed out
 #
-class EventBroadcaster
+module Events
+class Broadcaster
   include Wisper::Publisher
 
   @enabled = true
@@ -130,7 +131,7 @@ class EventBroadcaster
     attr_reader :accept_only
   end
 
-private
+  private
 
   attr_reader :logger
 
@@ -139,4 +140,5 @@ private
 
     self.class.accept_only.include? event
   end
+end
 end

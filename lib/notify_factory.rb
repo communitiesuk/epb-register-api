@@ -91,7 +91,6 @@ class NotifyFactory
     @opt_out_status_update_to_data_warehouse_use_case ||= UseCase::NotifyOptOutStatusUpdateToDataWarehouse.new(redis_gateway: ApiFactory.redis_gateway)
   end
 
-
   def self.save_audit_event_use_case
     @save_audit_event_use_case ||= UseCase::SaveAuditEvent.new(Gateway::AuditLogsGateway.new)
   end

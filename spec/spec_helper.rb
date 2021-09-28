@@ -268,7 +268,7 @@ RSpec.configure do |config|
     Rake::Task["maintenance:green_deal_update_fuel_data"].invoke
     fuel_price_mock.disable
 
-    EventBroadcaster.disable!
+    Events::Broadcaster.disable!
 
     Gateway::RedisGateway.redis_client_class = MockRedis
   end
