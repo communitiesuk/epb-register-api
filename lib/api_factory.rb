@@ -1,8 +1,6 @@
 require_relative "./notify_factory"
 
 class ApiFactory
-  include EventsManager
-
   def self.assessments_gateway
     @assessments_gateway ||= Gateway::AssessmentsGateway.new
   end
@@ -217,13 +215,12 @@ class ApiFactory
   end
 
   def self.event_broadcaster
-    EventsManager.attach_listeners
+    listener = Events::Listener.new(Events::Broadcaster.new(logger: logger))
+    listener.attach_listeners
   end
 
   # Clears out all memoized service instances. Useful for tests.
   def self.clear!
     instance_variables.each { |variable| instance_variable_set variable, nil }
   end
-
-
 end

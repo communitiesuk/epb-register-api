@@ -2,7 +2,7 @@ describe "Audit events" do
   include RSpecRegisterApiServiceMixin
 
   before do
-    EventBroadcaster.enable!
+    Events::Broadcaster.enable!
 
     add_super_assessor(scheme_id: scheme_id)
     lodge_assessment(

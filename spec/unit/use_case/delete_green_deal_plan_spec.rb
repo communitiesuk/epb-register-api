@@ -2,7 +2,7 @@ describe UseCase::DeleteGreenDealPlan do
   subject(:use_case) do
     described_class.new(
       green_deal_plans_gateway: green_deal_plans_gateway,
-      event_broadcaster: EventBroadcaster.new,
+      event_broadcaster: Events::Broadcaster.new,
     )
   end
 
@@ -10,9 +10,9 @@ describe UseCase::DeleteGreenDealPlan do
 
   describe "event broadcasting" do
     around do |test|
-      EventBroadcaster.enable!
+      Events::Broadcaster.enable!
       test.run
-      EventBroadcaster.disable!
+      Events::Broadcaster.disable!
     end
 
     before do

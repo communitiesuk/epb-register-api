@@ -9,7 +9,7 @@ describe UseCase::LodgeAssessment do
       assessments_address_id_gateway: instance_spy(Gateway::AssessmentsAddressIdGateway),
       related_assessments_gateway: instance_double(Gateway::RelatedAssessmentsGateway),
       green_deal_plans_gateway: instance_double(Gateway::GreenDealPlansGateway),
-      event_broadcaster: EventBroadcaster.new,
+      event_broadcaster: Events::Broadcaster.new,
     )
   end
 
@@ -224,9 +224,9 @@ describe UseCase::LodgeAssessment do
 
     context "when event broadcaster is enabled" do
       around do |test|
-        EventBroadcaster.enable!
+        Events::Broadcaster.enable!
         test.run
-        EventBroadcaster.disable!
+        Events::Broadcaster.disable!
       end
 
       it "broadcasts the assessment lodged event" do

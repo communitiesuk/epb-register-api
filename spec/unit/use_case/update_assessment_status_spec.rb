@@ -8,7 +8,7 @@ describe UseCase::UpdateAssessmentStatus do
       assessments_gateway: assessments_gateway,
       assessments_search_gateway: assessments_search_gateway,
       assessors_gateway: Gateway::AssessorsGateway.new,
-      event_broadcaster: EventBroadcaster.new,
+      event_broadcaster: Events::Broadcaster.new,
     )
   end
 
@@ -69,9 +69,9 @@ describe UseCase::UpdateAssessmentStatus do
 
   describe "event broadcasting" do
     around do |test|
-      EventBroadcaster.enable!
+      Events::Broadcaster.enable!
       test.run
-      EventBroadcaster.disable!
+      Events::Broadcaster.disable!
     end
 
     context "when an assessment is cancelled" do

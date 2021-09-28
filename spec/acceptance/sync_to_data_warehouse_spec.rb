@@ -6,9 +6,9 @@ describe "syncing to data warehouse on various assessment data changes" do
   assessment_id = nil
 
   around do |test|
-    EventBroadcaster.enable!
+    Events::Broadcaster.enable!
     test.run
-    EventBroadcaster.disable!
+    Events::Broadcaster.disable!
   end
 
   before do
@@ -17,7 +17,7 @@ describe "syncing to data warehouse on various assessment data changes" do
   end
 
   after do
-    EventBroadcaster.accept_any!
+    Events::Broadcaster.accept_any!
   end
 
   context "when an assessment is lodged" do
@@ -51,7 +51,7 @@ describe "syncing to data warehouse on various assessment data changes" do
     before do
       allow(Gateway::RedisGateway).to receive(:new).and_return(redis_gateway)
 
-      EventBroadcaster.accept_only! :assessment_opt_out_status_changed
+      Events::Broadcaster.accept_only! :assessment_opt_out_status_changed
 
       scheme_id = add_scheme_and_get_id
       assessor =
@@ -84,7 +84,7 @@ describe "syncing to data warehouse on various assessment data changes" do
     before do
       allow(Gateway::RedisGateway).to receive(:new).and_return(redis_gateway)
 
-      EventBroadcaster.accept_only! :assessment_address_id_updated
+      Events::Broadcaster.accept_only! :assessment_address_id_updated
 
       add_uprns_to_address_base new_address_id[-3, 3]
 
@@ -117,7 +117,7 @@ describe "syncing to data warehouse on various assessment data changes" do
     before do
       allow(Gateway::RedisGateway).to receive(:new).and_return(redis_gateway)
 
-      EventBroadcaster.accept_only! :assessment_cancelled, :assessment_marked_not_for_issue
+      Events::Broadcaster.accept_only! :assessment_cancelled, :assessment_marked_not_for_issue
 
       scheme_id = add_scheme_and_get_id
       assessor =
