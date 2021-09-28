@@ -15,7 +15,7 @@ module Events
       attach_assessor_added
     end
 
-    private
+  private
 
     def attach_assessment_lodged
       @event_broadcaster.on :assessment_lodged do |**data|
