@@ -75,6 +75,23 @@ class NotifyFactory
                                       ))
   end
 
+  def self.new_assessment_to_data_warehouse_use_case
+    @new_assessment_to_data_warehouse_use_case ||= UseCase::NotifyNewAssessmentToDataWarehouse.new(redis_gateway: ApiFactory.redis_gateway)
+  end
+
+  def self.assessment_status_update_to_data_warehouse_use_case
+    @assessment_status_update_to_data_warehouse_use_case ||= UseCase::NotifyAssessmentStatusUpdateToDataWarehouse.new(redis_gateway: ApiFactory.redis_gateway)
+  end
+
+  def self.assessment_address_id_update_to_data_warehouse_use_case
+    @assessment_address_id_update_to_data_warehouse_use_case ||= UseCase::NotifyAssessmentAddressIdUpdateToDataWarehouse.new(redis_gateway: ApiFactory.redis_gateway)
+  end
+
+  def self.opt_out_status_update_to_data_warehouse_use_case
+    @opt_out_status_update_to_data_warehouse_use_case ||= UseCase::NotifyOptOutStatusUpdateToDataWarehouse.new(redis_gateway: ApiFactory.redis_gateway)
+  end
+
+
   def self.save_audit_event_use_case
     @save_audit_event_use_case ||= UseCase::SaveAuditEvent.new(Gateway::AuditLogsGateway.new)
   end
