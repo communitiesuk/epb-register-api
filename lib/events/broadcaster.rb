@@ -91,54 +91,54 @@ require "wisper"
 #   # => the important thing happens, and "event fired with data: some ID" is printed out
 #
 module Events
-class Broadcaster
-  include Wisper::Publisher
+  class Broadcaster
+    include Wisper::Publisher
 
-  @enabled = true
-  @accept_only = []
-
-  def initialize(logger: nil)
-    @logger = logger || Logger.new($stdout)
-  end
-
-  def broadcast(event, *args)
-    super if self.class.enabled? && accepts?(event)
-  rescue StandardError => e
-    logger.error "Event broadcaster caught #{e.class} from a listener: #{e.message}"
-  end
-
-  def self.disable!
-    @enabled = false
-  end
-
-  def self.enable!
     @enabled = true
-  end
-
-  def self.enabled?
-    @enabled
-  end
-
-  def self.accept_only!(*events)
-    @accept_only = events
-  end
-
-  def self.accept_any!
     @accept_only = []
-  end
 
-  class << self
-    attr_reader :accept_only
-  end
+    def initialize(logger: nil)
+      @logger = logger || Logger.new($stdout)
+    end
+
+    def broadcast(event, *args)
+      super if self.class.enabled? && accepts?(event)
+    rescue StandardError => e
+      logger.error "Event broadcaster caught #{e.class} from a listener: #{e.message}"
+    end
+
+    def self.disable!
+      @enabled = false
+    end
+
+    def self.enable!
+      @enabled = true
+    end
+
+    def self.enabled?
+      @enabled
+    end
+
+    def self.accept_only!(*events)
+      @accept_only = events
+    end
+
+    def self.accept_any!
+      @accept_only = []
+    end
+
+    class << self
+      attr_reader :accept_only
+    end
 
   private
 
-  attr_reader :logger
+    attr_reader :logger
 
-  def accepts?(event)
-    return true if self.class.accept_only.empty?
+    def accepts?(event)
+      return true if self.class.accept_only.empty?
 
-    self.class.accept_only.include? event
+      self.class.accept_only.include? event
+    end
   end
-end
 end

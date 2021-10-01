@@ -168,22 +168,6 @@ class ApiFactory
       )
   end
 
-  # def self.notify_new_assessment_to_data_warehouse_use_case
-  #   @notify_new_assessment_to_data_warehouse_use_case ||= UseCase::NotifyNewAssessmentToDataWarehouse.new(redis_gateway: redis_gateway)
-  # end
-  #
-  # def self.notify_assessment_status_update_to_data_warehouse_use_case
-  #   @notify_assessment_status_update_to_data_warehouse_use_case ||= UseCase::NotifyAssessmentStatusUpdateToDataWarehouse.new(redis_gateway: redis_gateway)
-  # end
-  #
-  # def self.notify_assessment_address_id_update_to_data_warehouse_use_case
-  #   @notify_assessment_address_id_update_to_data_warehouse_use_case ||= UseCase::NotifyAssessmentAddressIdUpdateToDataWarehouse.new(redis_gateway: redis_gateway)
-  # end
-  #
-  # def self.notify_opt_out_status_update_to_data_warehouse_use_case
-  #   @notify_opt_out_status_update_to_data_warehouse_use_case ||= UseCase::NotifyOptOutStatusUpdateToDataWarehouse.new(redis_gateway: redis_gateway)
-  # end
-
   def self.storage_configuration_reader(bucket_name:, instance_name:)
     Gateway::StorageConfigurationReader.new(
       bucket_name: bucket_name,
