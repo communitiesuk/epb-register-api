@@ -1,13 +1,10 @@
 module UseCase
   class FindAssessmentsByPostcode
-    class PostcodeNotValid < StandardError
-    end
+    class PostcodeNotValid < StandardError; end
 
-    class ParameterMissing < StandardError
-    end
+    class ParameterMissing < StandardError; end
 
-    class AssessmentTypeNotValid < StandardError
-    end
+    class AssessmentTypeNotValid < StandardError; end
 
     def initialize
       @assessments_gateway = Gateway::AssessmentsSearchGateway.new
@@ -19,13 +16,9 @@ module UseCase
 
       raise ParameterMissing if postcode.blank?
 
-      postcode = Helper::ValidatePostcodeHelper.new.validate_postcode(postcode)
+      raise PostcodeNotValid unless Helper::ValidatePostcodeHelper.valid_postcode?(postcode)
 
-      unless Regexp
-               .new(Helper::RegexHelper::POSTCODE, Regexp::IGNORECASE)
-               .match(postcode)
-        raise PostcodeNotValid
-      end
+      postcode = Helper::ValidatePostcodeHelper.format_postcode(postcode)
 
       result =
         @assessments_gateway.search_by_postcode(postcode, assessment_types)

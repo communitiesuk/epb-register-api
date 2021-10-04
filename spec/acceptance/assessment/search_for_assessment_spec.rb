@@ -230,6 +230,19 @@ describe "Acceptance::Assessment::SearchForAssessments",
       )
     end
 
+    it "rejects an invalid postcode when other arguments are provided" do
+      path = "api/assessments/search?postcode=%27&assessment_type%5B%5D=RdSAP&street_name=High+Road&town=Woking&assessment_id=1234-2345-3456-4567-6789"
+      response_body = assertive_get(path, accepted_responses: [400], scopes: %w[assessment:search]).body
+
+      expect(JSON.parse(response_body, symbolize_names: true)).to eq(
+        {
+          errors: [
+            { code: "INVALID_REQUEST", title: "The requested postcode is not valid" },
+          ],
+        },
+      )
+    end
+
     it "allows missing assessment types" do
       assessments_search_by_postcode "A0 0AA",
                                      assessment_types: []

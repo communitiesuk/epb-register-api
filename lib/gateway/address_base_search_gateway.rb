@@ -1,7 +1,7 @@
 module Gateway
   class AddressBaseSearchGateway
     def search_by_postcode(postcode, building_name_number, _address_type)
-      postcode = Helper::ValidatePostcodeHelper.new.validate_postcode(postcode)
+      postcode = Helper::ValidatePostcodeHelper.format_postcode(postcode)
 
       sql =
         'SELECT

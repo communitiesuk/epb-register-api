@@ -90,5 +90,13 @@ describe UseCase::FindAssessmentsByPostcode do
     it "returns the expected data" do
       expect(use_case.execute("A0 0AA")).to eq(expected_data)
     end
+
+    it "raises an error when postcode is not provided" do
+      expect { use_case.execute("") }.to raise_error(described_class::ParameterMissing)
+    end
+
+    it "raises an error for an invalid postcode" do
+      expect { use_case.execute("A0") }.to raise_error(described_class::PostcodeNotValid)
+    end
   end
 end

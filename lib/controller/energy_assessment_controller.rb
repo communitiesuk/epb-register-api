@@ -29,23 +29,11 @@ module Controller
       when UseCase::FindAssessmentsByPostcode::ParameterMissing
         error_response 400, "INVALID_REQUEST", "Required query params missing"
       when UseCase::FindAssessmentsByPostcode::PostcodeNotValid
-        error_response(
-          400,
-          "INVALID_REQUEST",
-          "The requested postcode is not valid",
-        )
+        error_response(400, "INVALID_REQUEST", "The requested postcode is not valid")
       when UseCase::FindAssessmentsByPostcode::AssessmentTypeNotValid
-        error_response(
-          400,
-          "INVALID_REQUEST",
-          "The requested assessment type is not valid",
-        )
+        error_response(400, "INVALID_REQUEST", "The requested assessment type is not valid")
       when Helper::RrnHelper::RrnNotValid
-        error_response(
-          400,
-          "INVALID_REQUEST",
-          "The requested assessment id is not valid",
-        )
+        error_response(400, "INVALID_REQUEST", "The requested assessment id is not valid")
       else
         server_error(e)
       end

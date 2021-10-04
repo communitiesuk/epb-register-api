@@ -6,7 +6,7 @@ module Gateway
     }.freeze
 
     def search_by_postcode(postcode, building_name_number, address_type)
-      postcode = Helper::ValidatePostcodeHelper.new.validate_postcode(postcode)
+      postcode = Helper::ValidatePostcodeHelper.format_postcode(postcode)
 
       ranking_sql = <<~SQL
         ,
