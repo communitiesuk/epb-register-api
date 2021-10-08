@@ -307,14 +307,12 @@ module Controller
       case e
       when UseCase::UpdateAssessmentAddressId::AssessmentNotFound
         not_found_error("Assessment not found")
+      when UseCase::UpdateAssessmentAddressId::InvalidAddressIdFormat
+        error_response(400, "BAD_REQUEST", e.message.to_s)
       when UseCase::UpdateAssessmentAddressId::AddressIdNotFound
         error_response(400, "BAD_REQUEST", "Address ID does not exist")
       when UseCase::UpdateAssessmentAddressId::AddressIdMismatched
-        error_response(
-          400,
-          "BAD_REQUEST",
-          "Address ID mismatched: #{e.message}",
-        )
+        error_response(400, "BAD_REQUEST", "Address ID mismatched: #{e.message}")
       when Helper::RrnHelper::RrnNotValid
         error_response(400, "INVALID_QUERY", "Assessment ID not valid")
       else

@@ -2,14 +2,15 @@
 
 module UseCase
   class UpdateAssessmentAddressId
-    class AddressIdMismatched < StandardError
-    end
+    class AddressIdMismatched < StandardError; end
 
-    class AddressIdNotFound < StandardError
-    end
+    class AddressIdNotFound < StandardError; end
 
-    class AssessmentNotFound < StandardError
-    end
+    class AssessmentNotFound < StandardError; end
+
+    class InvalidAddressId < StandardError; end
+
+    class InvalidAddressIdFormat < StandardError; end
 
     def initialize(
       address_base_gateway:,
@@ -26,6 +27,8 @@ module UseCase
     end
 
     def execute(assessment_id, new_address_id)
+      raise InvalidAddressIdFormat, "AddressId has to begin with UPRN- or RRN-" unless valid_address_id_format?(new_address_id)
+
       assessment_id = Helper::RrnHelper.normalise_rrn_format(assessment_id)
 
       assessments_ids = [assessment_id]
@@ -61,6 +64,10 @@ module UseCase
         ).first
 
       raise AssessmentNotFound unless assessment
+    end
+
+    def valid_address_id_format?(new_address_id)
+      new_address_id.start_with?("UPRN-", "RRN-")
     end
 
     def validate_new_address_id(assessment_ids, new_address_id)

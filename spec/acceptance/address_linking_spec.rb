@@ -79,6 +79,31 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
     end
   end
 
+  context "when trying to update addressId to an addressId in an invalid format" do
+    it "returns 400" do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body)
+
+      lodge_assessment(
+        assessment_body: rdsap_xml,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+      )
+
+      response =
+        update_assessment_address_id(
+          assessment_id: "0000-0000-0000-0000-0000",
+          new_address_id: "MY-PRETTY-HOUSE",
+          accepted_responses: [400],
+        )
+      expect(JSON.parse(response.body, symbolize_names: true)[:errors]).to eq(
+        [{ code: "BAD_REQUEST", title: "AddressId has to begin with UPRN- or RRN-" }],
+      )
+    end
+  end
+
   context "when updating the linked address of an assessment to a UPRN- identifier that doesn't exist" do
     it "returns 400" do
       scheme_id = add_scheme_and_get_id

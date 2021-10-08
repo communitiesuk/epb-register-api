@@ -26,6 +26,12 @@ describe UseCase::UpdateAssessmentAddressId do
   end
 
   describe ".execute" do
+    it "raises an exception for an invalid address_id format" do
+      expect { use_case.execute("2000-0000-0000-0000-0001", "00000000001") }.to raise_error(
+        described_class::InvalidAddressIdFormat, "AddressId has to begin with UPRN- or RRN-"
+      )
+    end
+
     it "calls AssessmentsAddressIdGateway to update the assessment data in the assessments_address_id table" do
       use_case.execute("2000-0000-0000-0000-0001", "UPRN-00000000001")
 
