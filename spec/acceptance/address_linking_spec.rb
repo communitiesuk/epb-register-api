@@ -403,6 +403,33 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
     end
   end
 
+  context "when invalid body is provided" do
+    it "returns an INVALID_REQUEST error response" do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body)
+
+      lodge_assessment(
+        assessment_body: rdsap_xml,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        ensure_uprns: false,
+      )
+      response_body = assertive_put(
+        "/api/assessments/0000-0000-0000-0000-0000/address-id",
+        body: { "prettyPleaseUpdateAddressIdTo": "bla-bla" },
+        accepted_responses: [422],
+        scopes: %w[admin:update-address-id],
+      ).body
+
+      error = JSON.parse(response_body, symbolize_names: true)[:errors].first
+
+      expect(error[:code]).to eq("INVALID_REQUEST")
+      expect(error[:title]).to include("did not contain a required property of 'addressId'")
+    end
+  end
+
   context "when updating the address ID linked to an assessment with a related report" do
     it "updates both the records for the requested RRN and its related reports" do
       scheme_id = add_scheme_and_get_id
