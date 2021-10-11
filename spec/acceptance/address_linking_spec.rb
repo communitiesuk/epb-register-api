@@ -1,17 +1,6 @@
 describe "Acceptance::AddressLinking", set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
-  let(:valid_assessor_request_body) do
-    AssessorStub.new.fetch_request_body(
-      domestic_rd_sap: "ACTIVE",
-      non_domestic_nos3: "ACTIVE",
-      non_domestic_nos4: "ACTIVE",
-      non_domestic_nos5: "ACTIVE",
-    )
-  end
-  let(:rdsap_xml) { Samples.xml("RdSAP-Schema-20.0.0") }
-  let(:non_domestic_xml) { Samples.xml("CEPC-8.0.0", "cepc+rr") }
-
   before(:all) do
     ActiveRecord::Base.connection.exec_query(
       "INSERT INTO
@@ -65,11 +54,11 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
     )
   end
 
-  context "when updating the linked address of an assessment that doesnt exist" do
+  context "when assessment doesn't exist" do
     it "returns 404" do
       response =
         update_assessment_address_id(
-          assessment_id: "0000-0000-0000-0000-0000",
+          assessment_id: "1234-0000-0000-0000-0000",
           new_address_id: "UPRN-000073546793",
           accepted_responses: [404],
         )
@@ -79,19 +68,21 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
     end
   end
 
-  context "when trying to update addressId to an addressId in an invalid format" do
-    it "returns 400" do
+  context "when assessment exists" do
+    before do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body)
+      add_super_assessor(scheme_id: scheme_id)
 
       lodge_assessment(
-        assessment_body: rdsap_xml,
+        assessment_body: Samples.xml("RdSAP-Schema-20.0.0"),
         accepted_responses: [201],
         auth_data: {
           scheme_ids: [scheme_id],
         },
       )
+    end
 
+    it "returns 400 for an addressId in an invalid format" do
       response =
         update_assessment_address_id(
           assessment_id: "0000-0000-0000-0000-0000",
@@ -102,81 +93,46 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
         [{ code: "BAD_REQUEST", title: "AddressId has to begin with UPRN- or RRN-" }],
       )
     end
-  end
 
-  context "when updating the linked address of an assessment to a UPRN- identifier that doesn't exist" do
-    it "returns 400" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body)
-
-      lodge_assessment(
-        assessment_body: rdsap_xml,
-        accepted_responses: [201],
-        auth_data: {
-          scheme_ids: [scheme_id],
-        },
-      )
-
+    it "returns 400 for UPRN- identifier that doesn't exist" do
       response =
         update_assessment_address_id(
           assessment_id: "0000-0000-0000-0000-0000",
-          new_address_id: "UPRN-999999999999",
+          new_address_id: "UPRN-999912399999",
           accepted_responses: [400],
         )
       expect(JSON.parse(response.body, symbolize_names: true)[:errors]).to eq(
         [{ code: "BAD_REQUEST", title: "Address ID does not exist" }],
       )
     end
-  end
 
-  context "when updating the linked address of an assessment to an RRN- identifier that doesn't exist" do
-    it "returns 400" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body)
-
-      lodge_assessment(
-        assessment_body: rdsap_xml,
-        accepted_responses: [201],
-        auth_data: {
-          scheme_ids: [scheme_id],
-        },
-        ensure_uprns: false,
-      )
-
+    it "returns 400 for RRN- identifier that doesn't exist" do
       response =
         update_assessment_address_id(
           assessment_id: "0000-0000-0000-0000-0000",
-          new_address_id: "RRN-9999-9999-9999-9999-9999",
+          new_address_id: "RRN-9999-9999-9999-9999-0000",
           accepted_responses: [400],
         )
       expect(JSON.parse(response.body, symbolize_names: true)[:errors]).to eq(
         [{ code: "BAD_REQUEST", title: "Address ID does not exist" }],
       )
     end
-  end
 
-  context "when updating the address ID linked to an assessment to a UPRN that exists" do
-    it "changes the address id returned in the assessment summary JSON" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body)
+    it "returns 422 for an invalid response body" do
+      response_body = assertive_put(
+        "/api/assessments/0000-0000-0000-0000-0000/address-id",
+        body: { "prettyPleaseUpdateAddressIdTo": "bla-bla" },
+        accepted_responses: [422],
+        scopes: %w[admin:update-address-id],
+      ).body
 
-      lodge_assessment(
-        assessment_body: rdsap_xml,
-        accepted_responses: [201],
-        auth_data: {
-          scheme_ids: [scheme_id],
-        },
-        ensure_uprns: false,
-      )
+      error = JSON.parse(response_body, symbolize_names: true)[:errors].first
 
-      response =
-        JSON.parse(
-          fetch_assessment_summary(id: "0000-0000-0000-0000-0000").body,
-          symbolize_names: true,
-        )
+      expect(error[:code]).to eq("INVALID_REQUEST")
+      expect(error[:title]).to include("did not contain a required property of 'addressId'")
+    end
 
-      expect(response[:data][:addressId]).to eq "RRN-0000-0000-0000-0000-0000"
-
+    it "changes the address id for to a valid addressId (UPRN- identifier)" do
       update_assessment_address_id(
         assessment_id: "0000-0000-0000-0000-0000",
         new_address_id: "UPRN-000073546793",
@@ -191,19 +147,24 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
       expect(response[:data][:addressId]).to eq "UPRN-000073546793"
     end
 
-    it "shows the assessment as an existing assessment for the new linked address in address search results when searching by address id" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body)
-
-      lodge_assessment(
-        assessment_body: rdsap_xml,
-        accepted_responses: [201],
-        auth_data: {
-          scheme_ids: [scheme_id],
-        },
-        ensure_uprns: false,
+    it "updates UPRN- identifier to the RRN- identifier that is assessment's own RRN" do
+      update_assessment_address_id(
+        assessment_id: "0000-0000-0000-0000-0000",
+        new_address_id: "UPRN-000073546793",
+        accepted_responses: [200],
       )
+      response =
+        update_assessment_address_id(
+          assessment_id: "0000-0000-0000-0000-0000",
+          new_address_id: "RRN-0000-0000-0000-0000-0000",
+          accepted_responses: [200],
+        )
+      expect(JSON.parse(response.body, symbolize_names: true)[:data]).to eq(
+        "Address ID has been updated",
+      )
+    end
 
+    it "shows the assessment as an existing assessment for the new linked address in address search results when searching by address id" do
       update_assessment_address_id(
         assessment_id: "0000-0000-0000-0000-0000",
         new_address_id: "UPRN-000073546793",
@@ -221,23 +182,10 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
     end
 
     it "shows the assessment as an existing assessment for the new linked address in address search results when searching by postcode" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body)
-
-      lodge_assessment(
-        assessment_body: rdsap_xml,
-        accepted_responses: [201],
-        auth_data: {
-          scheme_ids: [scheme_id],
-        },
-        ensure_uprns: false,
-      )
-
       update_assessment_address_id(
         assessment_id: "0000-0000-0000-0000-0000",
         new_address_id: "UPRN-000073546793",
       )
-
       response =
         JSON.parse(
           address_search_by_postcode("A0 0AA").body,
@@ -258,13 +206,13 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
     end
   end
 
-  context "when updating the linked address of an assessment to an RRN- identifier that exists" do
-    it "returns 200 and a success message" do
+  context "when two assessments exist" do
+    before do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body)
+      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: AssessorStub.new.fetch_request_body(domestic_rd_sap: "ACTIVE"))
 
       lodge_assessment(
-        assessment_body: rdsap_xml,
+        assessment_body: Samples.xml("RdSAP-Schema-20.0.0"),
         accepted_responses: [201],
         auth_data: {
           scheme_ids: [scheme_id],
@@ -272,7 +220,7 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
         ensure_uprns: false,
       )
 
-      second_assessment = Nokogiri.XML rdsap_xml
+      second_assessment = Nokogiri.XML(Samples.xml("RdSAP-Schema-20.0.0"))
       second_assessment.at("RRN").content = "0000-0000-0000-0000-0001"
       lodge_assessment(
         assessment_body: second_assessment.to_s,
@@ -282,7 +230,9 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
         },
         ensure_uprns: false,
       )
+    end
 
+    it "returns 200 when updating to valid RRN- identifier (assessment with the RRN exists)" do
       response =
         update_assessment_address_id(
           assessment_id: "0000-0000-0000-0000-0001",
@@ -293,62 +243,8 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
         "Address ID has been updated",
       )
     end
-  end
 
-  context "when updating the address of an assessment with a linked assessment to an RRN- identifier derived from one of them that is not currently in use" do
-    let(:valid_cepc_rr_xml) { Samples.xml "CEPC-8.0.0", "cepc+rr" }
-
-    before do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body)
-
-      lodge_assessment(
-        assessment_body: valid_cepc_rr_xml,
-        accepted_responses: [201],
-        auth_data: {
-          scheme_ids: [scheme_id],
-        },
-        schema_name: "CEPC-8.0.0",
-      )
-    end
-
-    it "returns 200 and a success message" do
-      response = update_assessment_address_id(
-        assessment_id: "0000-0000-0000-0000-0000",
-        new_address_id: "RRN-0000-0000-0000-0000-0001",
-        accepted_responses: [200],
-      )
-      expect(JSON.parse(response.body, symbolize_names: true)[:data]).to eq(
-        "Address ID has been updated",
-      )
-    end
-  end
-
-  context "when updating the linked address of an assessment to an RRN- identifier that doesn't match the linked address for that RRN" do
-    it "returns 400 with a message that suggests what the addressId should be instead" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body)
-
-      lodge_assessment(
-        assessment_body: rdsap_xml,
-        accepted_responses: [201],
-        auth_data: {
-          scheme_ids: [scheme_id],
-        },
-        ensure_uprns: false,
-      )
-
-      second_assessment = Nokogiri.XML rdsap_xml
-      second_assessment.at("RRN").content = "0000-0000-0000-0000-0001"
-      lodge_assessment(
-        assessment_body: second_assessment.to_s,
-        accepted_responses: [201],
-        auth_data: {
-          scheme_ids: [scheme_id],
-        },
-        ensure_uprns: false,
-      )
-
+    it "returns 400 with a message that suggests what the addressId should be instead when updating the linked address of an assessment to an RRN- identifier that doesn't match the linked address for that RRN" do
       update_assessment_address_id(
         assessment_id: "0000-0000-0000-0000-0000",
         new_address_id: "UPRN-000073546793",
@@ -372,71 +268,13 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
     end
   end
 
-  context "when updating the linked address of an assessment to an RRN- identifier that is its own RRN" do
-    it "returns 200 and a success message even if the address_id is currently different" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body)
-
-      lodge_assessment(
-        assessment_body: rdsap_xml,
-        accepted_responses: [201],
-        auth_data: {
-          scheme_ids: [scheme_id],
-        },
-        ensure_uprns: false,
-      )
-
-      update_assessment_address_id(
-        assessment_id: "0000-0000-0000-0000-0000",
-        new_address_id: "UPRN-000073546793",
-        accepted_responses: [200],
-      )
-      response =
-        update_assessment_address_id(
-          assessment_id: "0000-0000-0000-0000-0000",
-          new_address_id: "RRN-0000-0000-0000-0000-0000",
-          accepted_responses: [200],
-        )
-      expect(JSON.parse(response.body, symbolize_names: true)[:data]).to eq(
-        "Address ID has been updated",
-      )
-    end
-  end
-
-  context "when invalid body is provided" do
-    it "returns an INVALID_REQUEST error response" do
-      scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body)
-
-      lodge_assessment(
-        assessment_body: rdsap_xml,
-        accepted_responses: [201],
-        auth_data: {
-          scheme_ids: [scheme_id],
-        },
-        ensure_uprns: false,
-      )
-      response_body = assertive_put(
-        "/api/assessments/0000-0000-0000-0000-0000/address-id",
-        body: { "prettyPleaseUpdateAddressIdTo": "bla-bla" },
-        accepted_responses: [422],
-        scopes: %w[admin:update-address-id],
-      ).body
-
-      error = JSON.parse(response_body, symbolize_names: true)[:errors].first
-
-      expect(error[:code]).to eq("INVALID_REQUEST")
-      expect(error[:title]).to include("did not contain a required property of 'addressId'")
-    end
-  end
-
   context "when updating the address ID linked to an assessment with a related report" do
-    it "updates both the records for the requested RRN and its related reports" do
+    before do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body)
+      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: AssessorStub.new.fetch_request_body(non_domestic_nos3: "ACTIVE"))
 
       lodge_assessment(
-        assessment_body: non_domestic_xml,
+        assessment_body: Samples.xml("CEPC-8.0.0", "cepc+rr"),
         accepted_responses: [201],
         auth_data: {
           scheme_ids: [scheme_id],
@@ -444,30 +282,24 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
         schema_name: "CEPC-8.0.0",
         ensure_uprns: false,
       )
+    end
 
-      cepc_response =
-        JSON.parse(
-          fetch_assessment_summary(id: "0000-0000-0000-0000-0000").body,
-          symbolize_names: true,
-        )
-      cepc_rr_response =
-        JSON.parse(
-          fetch_assessment_summary(id: "0000-0000-0000-0000-0001").body,
-          symbolize_names: true,
-        )
+    it "returns 200 and a success message" do
+      response = update_assessment_address_id(
+        assessment_id: "0000-0000-0000-0000-0000",
+        new_address_id: "RRN-0000-0000-0000-0000-0001",
+        accepted_responses: [200],
+      )
+      expect(JSON.parse(response.body, symbolize_names: true)[:data]).to eq(
+        "Address ID has been updated",
+      )
+    end
 
-      expect(
-        cepc_response[:data][:addressId],
-      ).to eq "RRN-0000-0000-0000-0000-0000"
-      expect(
-        cepc_rr_response[:data][:addressId],
-      ).to eq "RRN-0000-0000-0000-0000-0000"
-
+    it "updates both the records for the requested RRN and its related reports" do
       update_assessment_address_id(
         assessment_id: "0000-0000-0000-0000-0000",
         new_address_id: "UPRN-000073546793",
       )
-
       cepc_response =
         JSON.parse(
           fetch_assessment_summary(id: "0000-0000-0000-0000-0000").body,
@@ -478,8 +310,9 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
           fetch_assessment_summary(id: "0000-0000-0000-0000-0001").body,
           symbolize_names: true,
         )
-      expect(cepc_response[:data][:addressId]).to eq "UPRN-000073546793"
-      expect(cepc_rr_response[:data][:addressId]).to eq "UPRN-000073546793"
+
+      expect(cepc_response[:data][:addressId]).to eq("UPRN-000073546793")
+      expect(cepc_rr_response[:data][:addressId]).to eq("UPRN-000073546793")
     end
   end
 end
