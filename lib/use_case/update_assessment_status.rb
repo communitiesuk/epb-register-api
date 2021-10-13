@@ -66,7 +66,7 @@ module UseCase
         assessor = @assessors_gateway.fetch(assessment.get(:scheme_assessor_id))
 
         unless scheme_ids.include?(assessor.registered_by_id)
-          raise AssessmentNotLodgedByScheme
+          raise AssessmentNotLodgedByScheme, "Only the scheme which lodged the assessment can change the status"
         end
       end
     end

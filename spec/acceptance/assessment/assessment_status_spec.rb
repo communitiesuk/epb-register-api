@@ -99,7 +99,7 @@ describe "Acceptance::AssessmentStatus", set_with_timecop: true do
                                           auth_data: { scheme_ids: [scheme_id + 1] })
 
       expect(JSON.parse(response.body, symbolize_names: true)[:errors]).to eq(
-        [{ code: "NOT_ALLOWED", title: "UseCase::UpdateAssessmentStatus::AssessmentNotLodgedByScheme" }],
+        [{ code: "NOT_ALLOWED", title: "Only the scheme which lodged the assessment can change the status" }],
       )
     end
 
