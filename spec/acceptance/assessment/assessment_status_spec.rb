@@ -15,171 +15,118 @@ describe "Acceptance::AssessmentStatus", set_with_timecop: true do
 
   let(:valid_rdsap_xml) { Samples.xml "RdSAP-Schema-20.0.0" }
 
-  context "with an assessment that does not exist" do
-    describe "cancelling an assessment" do
-      it "responds that the assessment cannot be found" do
-        update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
-                                 assessment_status_body: {
-                                   status: "CANCELLED",
-                                 },
-                                 accepted_responses: [404],
-                                 auth_data: {
-                                   scheme_ids: [scheme_id],
-                                 }
-      end
+  context "when assessment does not exist" do
+    it "responds with 404 not found when cancelling an assessment" do
+      response = update_assessment_status(assessment_id: "0000-0000-0000-0000-0000",
+                                          assessment_status_body: {
+                                            status: "CANCELLED",
+                                          },
+                                          accepted_responses: [404],
+                                          auth_data: { scheme_ids: [scheme_id] })
+
+      expect(JSON.parse(response.body, symbolize_names: true)[:errors]).to eq(
+        [{ code: "NOT_FOUND", title: "Assessment not found" }],
+      )
     end
 
-    describe "marking an assessment not for issue" do
-      it "responds that the assessment cannot be found" do
-        update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
-                                 assessment_status_body: {
-                                   status: "NOT_FOR_ISSUE",
-                                 },
-                                 accepted_responses: [404],
-                                 auth_data: {
-                                   scheme_ids: [scheme_id],
-                                 }
-      end
-    end
-  end
+    it "responds with 404 not found when marking the assessment as not for issue" do
+      response = update_assessment_status(assessment_id: "0000-0000-0000-0000-0000",
+                                          assessment_status_body: {
+                                            status: "NOT_FOR_ISSUE",
+                                          },
+                                          accepted_responses: [404],
+                                          auth_data: { scheme_ids: [scheme_id] })
 
-  context "with an assessment that has already been cancelled" do
-    describe "cancelling an assessment" do
-      it "responds that the assessment has already been cancelled" do
-        lodge_assessment assessment_body: valid_rdsap_xml,
-                         accepted_responses: [201],
-                         auth_data: {
-                           scheme_ids: [scheme_id],
-                         }
-
-        update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
-                                 assessment_status_body: {
-                                   "status": "CANCELLED",
-                                 },
-                                 accepted_responses: [200],
-                                 auth_data: {
-                                   scheme_ids: [scheme_id],
-                                 }
-
-        update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
-                                 assessment_status_body: {
-                                   status: "CANCELLED",
-                                 },
-                                 accepted_responses: [410],
-                                 auth_data: {
-                                   scheme_ids: [scheme_id],
-                                 }
-      end
-    end
-
-    describe "marking an assessment not for issue" do
-      it "responds that the assessment has already been marked not for issue" do
-        lodge_assessment assessment_body: valid_rdsap_xml,
-                         accepted_responses: [201],
-                         auth_data: {
-                           scheme_ids: [scheme_id],
-                         }
-
-        update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
-                                 assessment_status_body: {
-                                   "status": "NOT_FOR_ISSUE",
-                                 },
-                                 accepted_responses: [200],
-                                 auth_data: {
-                                   scheme_ids: [scheme_id],
-                                 }
-
-        update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
-                                 assessment_status_body: {
-                                   status: "NOT_FOR_ISSUE",
-                                 },
-                                 accepted_responses: [410],
-                                 auth_data: {
-                                   scheme_ids: [scheme_id],
-                                 }
-      end
+      expect(JSON.parse(response.body, symbolize_names: true)[:errors]).to eq(
+        [{ code: "NOT_FOUND", title: "Assessment not found" }],
+      )
     end
   end
 
-  describe "security scenarios" do
-    context "when cancelling an assessment" do
-      it "rejects a request that is not authenticated" do
-        update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
-                                 assessment_status_body: {
-                                   status: "CANCELLED",
-                                 },
-                                 accepted_responses: [401],
-                                 authenticate: false
-      end
-
-      it "rejects a request with the wrong scopes" do
-        update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
-                                 assessment_status_body: {
-                                   status: "CANCELLED",
-                                 },
-                                 accepted_responses: [403],
-                                 scopes: %w[wrong:scope]
-      end
+  context "when assessment exists" do
+    before do
+      lodge_assessment(assessment_body: valid_rdsap_xml,
+                       accepted_responses: [201],
+                       auth_data: { scheme_ids: [scheme_id] })
     end
 
-    context "when making an assessment not for issue" do
-      it "rejects a request that is not authenticated" do
-        update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
-                                 assessment_status_body: {
-                                   status: "NOT_FOR_ISSUE",
-                                 },
-                                 accepted_responses: [401],
-                                 authenticate: false
+    it "responds that the assessment has already been cancelled for a previously cancelled assessment" do
+      update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
+                               assessment_status_body: {
+                                 "status": "CANCELLED",
+                               },
+                               accepted_responses: [200],
+                               auth_data: { scheme_ids: [scheme_id] }
 
-        fetch_assessment(id: "123", accepted_responses: [401], should_authenticate: false)
-      end
+      response = update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
+                                          assessment_status_body: {
+                                            status: "CANCELLED",
+                                          },
+                                          accepted_responses: [410],
+                                          auth_data: { scheme_ids: [scheme_id] }
 
-      it "rejects a request with the wrong scopes" do
-        update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
-                                 assessment_status_body: {
-                                   status: "NOT_FOR_ISSUE",
-                                 },
-                                 accepted_responses: [403],
-                                 scopes: %w[wrong:scope]
-      end
+      expect(JSON.parse(response.body, symbolize_names: true)[:errors]).to eq(
+        [{ code: "GONE", title: "Assessment has already been cancelled" }],
+      )
     end
 
-    context "when updating an assessment status that doesn't belong to the scheme" do
-      it "then gives error 403 and the correct error message" do
-        scheme_id = add_scheme_and_get_id
-        add_assessor(
-          scheme_id: scheme_id,
-          assessor_id: "SPEC000000",
-          body: fetch_assessor_stub.fetch_request_body(domestic_rd_sap: "ACTIVE"),
-        )
+    it "responds that the assessment has already been cancelled for a previously marked 'not for issue' assessment" do
+      update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
+                               assessment_status_body: {
+                                 "status": "NOT_FOR_ISSUE",
+                               },
+                               accepted_responses: [200],
+                               auth_data: { scheme_ids: [scheme_id] }
 
-        lodge_assessment(
-          assessment_body: valid_rdsap_xml,
-          accepted_responses: [201],
-          auth_data: {
-            scheme_ids: [scheme_id],
-          },
-        )
+      response = update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
+                                          assessment_status_body: {
+                                            status: "NOT_FOR_ISSUE",
+                                          },
+                                          accepted_responses: [410],
+                                          auth_data: { scheme_ids: [scheme_id] }
 
-        assessment_update_response =
-          JSON.parse(
-            update_assessment_status(
-              assessment_id: "0000-0000-0000-0000-0000",
-              assessment_status_body: {
-                "status": "NOT_FOR_ISSUE",
-              },
-              accepted_responses: [403],
-              auth_data: {
-                scheme_ids: [scheme_id + 1],
-              },
-            ).body,
-            symbolize_names: true,
-          )
+      expect(JSON.parse(response.body, symbolize_names: true)[:errors]).to eq(
+        [{ code: "GONE", title: "Assessment has already been cancelled" }],
+      )
+    end
 
-        expect(assessment_update_response[:errors][0][:code]).to eq(
-          "NOT_ALLOWED",
-        )
-      end
+    it "rejects a request when the assessment doesn't belong to the scheme" do
+      response = update_assessment_status(assessment_id: "0000-0000-0000-0000-0000",
+                                          assessment_status_body: {
+                                            "status": "NOT_FOR_ISSUE",
+                                          },
+                                          accepted_responses: [403],
+                                          auth_data: { scheme_ids: [scheme_id + 1] })
+
+      expect(JSON.parse(response.body, symbolize_names: true)[:errors]).to eq(
+        [{ code: "NOT_ALLOWED", title: "UseCase::UpdateAssessmentStatus::AssessmentNotLodgedByScheme" }],
+      )
+    end
+
+    it "rejects a request that is not authenticated" do
+      response = update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
+                                          assessment_status_body: {
+                                            status: "CANCELLED",
+                                          },
+                                          accepted_responses: [401],
+                                          authenticate: false
+
+      expect(JSON.parse(response.body, symbolize_names: true)[:errors]).to eq(
+        [{ code: "Auth::Errors::TokenMissing" }],
+      )
+    end
+
+    it "rejects a request with the wrong authorisation scopes" do
+      response = update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
+                                          assessment_status_body: {
+                                            status: "CANCELLED",
+                                          },
+                                          accepted_responses: [403],
+                                          scopes: %w[wrong:scope]
+
+      expect(JSON.parse(response.body, symbolize_names: true)[:errors]).to eq(
+        [{ code: "UNAUTHORISED", title: "You are not authorised to perform this request" }],
+      )
     end
   end
 end
