@@ -35,6 +35,8 @@ module Controller
         gone_error("Assessment has already been cancelled")
       when UseCase::UpdateAssessmentStatus::AssessmentNotFound
         not_found_error("Assessment not found")
+      when JSON::Schema::ValidationError
+        error_response(422, "INVALID_REQUEST", e.message)
       else
         server_error(e)
       end

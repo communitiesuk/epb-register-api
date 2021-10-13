@@ -128,5 +128,18 @@ describe "Acceptance::AssessmentStatus", set_with_timecop: true do
         [{ code: "UNAUTHORISED", title: "You are not authorised to perform this request" }],
       )
     end
+
+    it "rejects a request with invalid request body" do
+      response = assertive_post(
+        "/api/assessments/0000-0000-0000-0000-0000/status",
+        body: { invalid_status_key: "CANCELLED" },
+        accepted_responses: [422],
+        scopes: %w[assessment:lodge],
+      )
+
+      expect(JSON.parse(response.body, symbolize_names: true)[:errors]).to eq(
+        [{ code: "INVALID_REQUEST", title: "The property '#/' did not contain a required property of 'status'" }],
+      )
+    end
   end
 end
