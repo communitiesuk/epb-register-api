@@ -70,7 +70,7 @@ describe "Acceptance::AssessmentStatus", set_with_timecop: true do
       )
     end
 
-    it "responds that the assessment has already been cancelled for a previously marked 'not for issue' assessment" do
+    it "responds that the assessment has already been been marked as not for issue for a previously marked 'not for issue' assessment" do
       update_assessment_status assessment_id: "0000-0000-0000-0000-0000",
                                assessment_status_body: {
                                  "status": "NOT_FOR_ISSUE",
@@ -86,7 +86,7 @@ describe "Acceptance::AssessmentStatus", set_with_timecop: true do
                                           auth_data: { scheme_ids: [scheme_id] }
 
       expect(JSON.parse(response.body, symbolize_names: true)[:errors]).to eq(
-        [{ code: "GONE", title: "Assessment has already been cancelled" }],
+        [{ code: "GONE", title: "Assessment has already been marked as not for issue" }],
       )
     end
 

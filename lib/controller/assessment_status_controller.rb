@@ -32,7 +32,7 @@ module Controller
       when UseCase::UpdateAssessmentStatus::AssessmentNotLodgedByScheme
         error_response(403, "NOT_ALLOWED", e.message)
       when UseCase::UpdateAssessmentStatus::AssessmentAlreadyCancelled
-        gone_error("Assessment has already been cancelled")
+        gone_error(e.message)
       when UseCase::UpdateAssessmentStatus::AssessmentNotFound
         not_found_error("Assessment not found")
       when JSON::Schema::ValidationError

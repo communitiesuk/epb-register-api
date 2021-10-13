@@ -2,14 +2,13 @@
 
 module UseCase
   class UpdateAssessmentStatus
-    class AssessmentNotFound < StandardError
-    end
+    class AssessmentNotFound < StandardError; end
 
-    class AssessmentAlreadyCancelled < StandardError
-    end
+    class AssessmentAlreadyCancelled < StandardError; end
 
-    class AssessmentNotLodgedByScheme < StandardError
-    end
+    class AssessmentNotLodgedByScheme < StandardError; end
+
+    CANCELLED_STATUSES = %w[CANCELLED NOT_FOR_ISSUE].freeze
 
     def initialize(
       assessments_gateway:,
@@ -57,10 +56,11 @@ module UseCase
   private
 
     def validate_status_updates(assessments, scheme_ids)
-      cancelled_status = %w[CANCELLED NOT_FOR_ISSUE]
       assessments.each do |assessment|
-        if cancelled_status.include? assessment.to_hash[:status]
-          raise AssessmentAlreadyCancelled
+        assessment_status = assessment.to_hash[:status]
+        if CANCELLED_STATUSES.include? assessment_status
+          message = "Assessment has already been #{assessment_status == 'CANCELLED' ? assessment_status.downcase : 'marked as not for issue'}"
+          raise AssessmentAlreadyCancelled, message
         end
 
         assessor = @assessors_gateway.fetch(assessment.get(:scheme_assessor_id))
