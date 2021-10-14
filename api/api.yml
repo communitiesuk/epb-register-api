@@ -884,6 +884,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Request data is invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /assessments/{assessmentId}/address-id:
     put:
@@ -931,6 +937,12 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
         '404':
           description: Assessment not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Request data is invalid
           content:
             application/json:
               schema:
@@ -1051,6 +1063,12 @@ paths:
           description: >-
             Assessment with that assessmentId has already been
             cancelled or marked not for issue
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Request data is invalid
           content:
             application/json:
               schema:
