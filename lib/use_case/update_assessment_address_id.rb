@@ -8,8 +8,6 @@ module UseCase
 
     class AssessmentNotFound < StandardError; end
 
-    class InvalidAddressId < StandardError; end
-
     class InvalidAddressIdFormat < StandardError; end
 
     def initialize(
