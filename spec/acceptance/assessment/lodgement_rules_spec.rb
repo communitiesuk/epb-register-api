@@ -90,7 +90,7 @@ describe "Acceptance::LodgementRules", set_with_timecop: true do
 
     context "with one rule that is broken by it" do
       it "with a broken rule which cannot be over ridden" do
-        xml_doc.at("DEC-Status").children = '2'
+        xml_doc.at("DEC-Status").children = "2"
 
         result =
           lodge_assessment(
@@ -101,19 +101,19 @@ describe "Acceptance::LodgementRules", set_with_timecop: true do
             },
             schema_name: "CEPC-8.0.0",
             override: true,
-            )
+          )
 
         expect(JSON.parse(result.body, symbolize_names: true)).to eq(
-                                                                    {
-                                                                      errors: [
-                                                                        {
-                                                                          code: "INVALID_REQUEST",
-                                                                          title:
-                                                                            "This lodgement rule cannot be overridden",
-                                                                        },
-                                                                      ],
-                                                                    },
-                                                                    )
+          {
+            errors: [
+              {
+                code: "INVALID_REQUEST",
+                title:
+                  "This lodgement rule cannot be overridden",
+              },
+            ],
+          },
+        )
       end
     end
   end

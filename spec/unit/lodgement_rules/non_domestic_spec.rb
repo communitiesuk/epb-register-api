@@ -268,7 +268,6 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
       end
     end
 
-
     context "when the DEC Status Code is 2" do
       let(:error) do
         {

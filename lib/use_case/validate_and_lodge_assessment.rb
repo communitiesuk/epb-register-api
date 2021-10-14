@@ -87,7 +87,7 @@ module UseCase
 
           unless validation_result.empty?
             if overidden
-              validation_result_codes = validation_result.map { |result| result[:code]}
+              validation_result_codes = validation_result.map { |result| result[:code] }
 
               unless (validation_result_codes & NOT_OVERRIDABLE_LODGEMENT_RULES).empty?
                 raise NotOverridableLodgementRuleError
