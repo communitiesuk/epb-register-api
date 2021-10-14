@@ -128,6 +128,17 @@ module LodgementRules
             Date.parse(current_nominated_date) <= latest_nominated_date
           end,
       },
+      {
+        name: "DEC_STATUS_INVALID",
+        title: 'Asset rating only DECs with a "DEC-Status" of 2 are no longer valid',
+        test:
+          lambda do |adapter|
+            dec_status_code =  method_or_nil(adapter, :dec_status)
+            return true unless dec_status_code
+
+            dec_status_code.to_i != 2
+          end,
+      },
     ].freeze
 
     def validate(xml_adaptor)

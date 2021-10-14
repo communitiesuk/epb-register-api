@@ -197,6 +197,12 @@ module Controller
           "INVALID_REQUEST",
           "Both parts of a dual lodgement must share the same address id.",
         )
+      when UseCase::ValidateAndLodgeAssessment::NotOverridableLodgementRuleError
+        error_response(
+          400,
+          "INVALID_REQUEST",
+          "This lodgement rule cannot be overridden",
+          )
       when REXML::ParseException
         error_response(400, "INVALID_REQUEST", e.message)
       when UseCase::ValidateAndLodgeAssessment::LodgementRulesException

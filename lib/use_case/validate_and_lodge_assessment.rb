@@ -27,9 +27,12 @@ module UseCase
       end
     end
 
+    class NotOverridableLodgementRuleError < StandardError; end
+
     LATEST_COMMERCIAL = %w[CEPC-8.0.0 CEPC-NI-8.0.0].freeze
     LATEST_DOM_EW = %w[SAP-Schema-18.0.0 RdSAP-Schema-20.0.0].freeze
     LATEST_DOM_NI = %w[SAP-Schema-NI-18.0.0 RdSAP-Schema-NI-20.0.0].freeze
+    NOT_OVERRIDABLE_LODGEMENT_RULES = %w[DEC_STATUS_INVALID].freeze
 
     def initialize(
       validate_assessment_use_case:,
@@ -84,6 +87,12 @@ module UseCase
 
           unless validation_result.empty?
             if overidden
+              validation_result_codes = validation_result.map { |result| result[:code]}
+
+              unless (validation_result_codes & NOT_OVERRIDABLE_LODGEMENT_RULES).empty?
+                raise NotOverridableLodgementRuleError
+              end
+
               lodgement_data.each do |lodgement|
                 Gateway::OverridenLodgmentEventsGateway.new.add(
                   lodgement[:assessment_id],

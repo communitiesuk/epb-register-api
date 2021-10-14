@@ -85,6 +85,39 @@ describe "Acceptance::LodgementRules", set_with_timecop: true do
     end
   end
 
+  context "when lodging DEC" do
+    let(:xml_doc) { Nokogiri.XML Samples.xml "CEPC-8.0.0", "dec" }
+
+    context "with one rule that is broken by it" do
+      it "with a broken rule which cannot be over ridden" do
+        xml_doc.at("DEC-Status").children = '2'
+
+        result =
+          lodge_assessment(
+            assessment_body: xml_doc.to_xml,
+            accepted_responses: [400],
+            auth_data: {
+              scheme_ids: [scheme_id],
+            },
+            schema_name: "CEPC-8.0.0",
+            override: true,
+            )
+
+        expect(JSON.parse(result.body, symbolize_names: true)).to eq(
+                                                                    {
+                                                                      errors: [
+                                                                        {
+                                                                          code: "INVALID_REQUEST",
+                                                                          title:
+                                                                            "This lodgement rule cannot be overridden",
+                                                                        },
+                                                                      ],
+                                                                    },
+                                                                    )
+      end
+    end
+  end
+
   context "when lodging RdSAP" do
     let(:xml_doc) { Nokogiri.XML Samples.xml "RdSAP-Schema-20.0.0" }
 
