@@ -102,7 +102,19 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
           accepted_responses: [400],
         )
       expect(JSON.parse(response.body, symbolize_names: true)[:errors]).to eq(
-        [{ code: "BAD_REQUEST", title: "RRN number is not in the correct format" }],
+        [{ code: "BAD_REQUEST", title: "RRN is not in the correct format" }],
+      )
+    end
+
+    it "returns 400 for an UPRN-based addressId with incorrect UPRN format" do
+      response =
+        update_assessment_address_id(
+          assessment_id: "0000-0000-0000-0000-0000",
+          new_address_id: "UPRN-0000735467939999",
+          accepted_responses: [400],
+        )
+      expect(JSON.parse(response.body, symbolize_names: true)[:errors]).to eq(
+        [{ code: "BAD_REQUEST", title: "UPRN is not in the correct format" }],
       )
     end
 
