@@ -27,5 +27,9 @@ module Helper
       rrn_array << rrn_array[1]
       Digest::SHA256.hexdigest rrn_array.join("-")
     end
+
+    def self.valid_format?(rrn)
+      rrn.delete("-").length == 20 && Regexp.new(VALID_RRN).match?(rrn)
+    end
   end
 end

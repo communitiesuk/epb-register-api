@@ -98,4 +98,24 @@ describe Helper::RrnHelper do
       end
     end
   end
+
+  describe ".valid_format?" do
+    it "returns true for a valid RRN format" do
+      expect(
+        described_class.valid_format?("1234-5678-1234-5678-1234"),
+      ).to eq(true)
+    end
+
+    it "returns false for a wrong number of digits" do
+      expect(
+        described_class.valid_format?("1234-5678-1234-5678-1"),
+      ).to eq(false)
+    end
+
+    it "returns false for incorrectly placed hyphens" do
+      expect(
+        described_class.valid_format?("1234-5678-1234-56781234"),
+      ).to eq(false)
+    end
+  end
 end

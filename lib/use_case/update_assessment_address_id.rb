@@ -27,7 +27,7 @@ module UseCase
     end
 
     def execute(assessment_id, new_address_id)
-      raise InvalidAddressIdFormat, "AddressId has to begin with UPRN- or RRN-" unless valid_address_id_format?(new_address_id)
+      validate_address_id_format(new_address_id)
 
       assessment_id = Helper::RrnHelper.normalise_rrn_format(assessment_id)
 
@@ -66,8 +66,10 @@ module UseCase
       raise AssessmentNotFound unless assessment
     end
 
-    def valid_address_id_format?(new_address_id)
-      new_address_id.start_with?("UPRN-", "RRN-")
+    def validate_address_id_format(new_address_id)
+      raise InvalidAddressIdFormat, "AddressId has to begin with UPRN- or RRN-" unless new_address_id.start_with?("UPRN-", "RRN-")
+
+      raise InvalidAddressIdFormat, "RRN number is not in the correct format" if new_address_id.start_with?("RRN-") && !Helper::RrnHelper.valid_format?(new_address_id[4..])
     end
 
     def validate_new_address_id(assessment_ids, new_address_id)

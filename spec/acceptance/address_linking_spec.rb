@@ -94,6 +94,18 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
       )
     end
 
+    it "returns 400 for an RRN-based addressId with incorrect RRN format" do
+      response =
+        update_assessment_address_id(
+          assessment_id: "0000-0000-0000-0000-0000",
+          new_address_id: "RRN-0000-00000000-0000-0",
+          accepted_responses: [400],
+        )
+      expect(JSON.parse(response.body, symbolize_names: true)[:errors]).to eq(
+        [{ code: "BAD_REQUEST", title: "RRN number is not in the correct format" }],
+      )
+    end
+
     it "returns 400 for UPRN- identifier that doesn't exist" do
       response =
         update_assessment_address_id(
