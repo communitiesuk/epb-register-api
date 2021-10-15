@@ -6,6 +6,7 @@ runtime-versions:
 env:
   variables:
     DEPLOY_APPNAME: "mhclg-epb-register-api-staging"
+    DEPLOY_WORKER: "dluhc-epb-worker-staging"
 
   parameter-store:
     PAAS_LOGIN: "epbr-govpaas-staging-login"
@@ -28,10 +29,12 @@ phases:
       - echo ">>>>>>>> DEPLOY TO STAGING ENV"
       - cf login -a $PAAS_API -u $PAAS_LOGIN -p "$PAAS_PW" -o $PAAS_ORG -s $PAAS_SPACE
       - cf cancel-deployment ${DEPLOY_APPNAME} || true
+      - cf cancel-deployment ${DEPLOY_WORKER} || true
   build:
     commands:
       - make deploy-app
       - make migrate-db-and-wait-for-success
+      - make deploy-worker
   post_build:
     commands:
       - cf logout
