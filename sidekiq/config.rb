@@ -11,7 +11,7 @@ loader.setup
 environment = ENV["STAGE"] || "development"
 
 unless %w[development test].include? environment
-  redis_url = RedisConfigurationReader.read_configuration_url("mhclg-epb-redis-sidekiq-#{environment}")
+  redis_url = RedisConfigurationReader.read_configuration_url("dluhc-epb-redis-sidekiq-#{environment}")
   Sidekiq.configure_server do |config|
     config.redis = { url: redis_url, network_timeout: 5 }
   end
