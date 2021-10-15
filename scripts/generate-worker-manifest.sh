@@ -16,6 +16,6 @@ applications:
       - ruby_buildpack
     health-check-type: process
     services:
-      - mhclg-epb-redis-sidekiq-$STAGE
+      - dluhc-epb-redis-sidekiq-$STAGE
       - mhclg-epb-db-$STAGE
 EOF
