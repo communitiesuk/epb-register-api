@@ -4,7 +4,7 @@ require "sinatra/activerecord"
 require "sinatra/activerecord/rake"
 require "epb_view_models"
 
-unless defined? TestLoader
+unless defined?(TestLoader) || defined?(SidekiqLoader)
   require "zeitwerk"
   loader = Zeitwerk::Loader.new
   loader.push_dir("#{__dir__}/lib/")
