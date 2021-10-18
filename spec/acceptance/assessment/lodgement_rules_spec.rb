@@ -94,8 +94,8 @@ describe "Acceptance::LodgementRules", set_with_timecop: true do
   context "when lodging DEC" do
     let(:xml_doc) { Nokogiri.XML Samples.xml "CEPC-8.0.0", "dec" }
 
-    context "with one rule that is broken by it" do
-      it "with a broken rule which cannot be over ridden" do
+    context "with a broken rule which cannot be over ridden" do
+      it "rejects the assessment" do
         xml_doc.at("DEC-Status").children = "2"
 
         result =
@@ -115,11 +115,34 @@ describe "Acceptance::LodgementRules", set_with_timecop: true do
               {
                 code: "INVALID_REQUEST",
                 title:
-                  "This lodgement rule cannot be overridden",
+                  "Lodgement rule cannot be overridden: Asset rating only DECs with a \"DEC-Status\" of 2 are no longer valid",
               },
             ],
           },
         )
+      end
+
+      context "with two broken rules including one which cannot be over ridden" do
+        it "rejects the assessment and returns INVALID_REQUEST error" do
+          xml_doc.at("Registration-Date").children = Date.tomorrow.to_s
+          xml_doc.at("DEC-Status").children = "2"
+
+          result =
+            lodge_assessment(
+              assessment_body: xml_doc.to_xml,
+              accepted_responses: [400],
+              auth_data: {
+                scheme_ids: [scheme_id],
+              },
+              schema_name: "CEPC-8.0.0",
+              override: true,
+            )
+
+          expect(JSON.parse(result.body, symbolize_names: true)[:errors]).to eq([
+            { code: "INVALID_REQUEST",
+              title: "Lodgement rule cannot be overridden: Asset rating only DECs with a \"DEC-Status\" of 2 are no longer valid" },
+          ])
+        end
       end
     end
   end

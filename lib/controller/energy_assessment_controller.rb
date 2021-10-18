@@ -201,7 +201,7 @@ module Controller
         error_response(
           400,
           "INVALID_REQUEST",
-          "This lodgement rule cannot be overridden",
+          "Lodgement rule cannot be overridden: #{e.message}",
         )
       when REXML::ParseException
         error_response(400, "INVALID_REQUEST", e.message)

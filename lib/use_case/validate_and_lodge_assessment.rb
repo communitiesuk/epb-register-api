@@ -90,7 +90,9 @@ module UseCase
               validation_result_codes = validation_result.map { |result| result[:code] }
 
               unless (validation_result_codes & NOT_OVERRIDABLE_LODGEMENT_RULES).empty?
-                raise NotOverridableLodgementRuleError
+                error_message = validation_result.select { |error| NOT_OVERRIDABLE_LODGEMENT_RULES.include?(error[:code]) }
+                                                 .map { |non_overridable_error| non_overridable_error[:title] }.join(",")
+                raise NotOverridableLodgementRuleError, error_message
               end
 
               lodgement_data.each do |lodgement|
