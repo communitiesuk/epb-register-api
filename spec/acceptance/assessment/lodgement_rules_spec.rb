@@ -24,13 +24,19 @@ describe "Acceptance::LodgementRules", set_with_timecop: true do
         xml_doc.at("//CEPC:Registration-Date").children = Date.tomorrow.to_s
         xml_doc.at("//CEPC:Issue-Date").children = (Date.today << 12 * 5).to_s
 
-        lodge_assessment(
+        result = lodge_assessment(
           assessment_body: xml_doc.to_xml,
           accepted_responses: [400],
           auth_data: {
             scheme_ids: [scheme_id],
           },
           schema_name: "CEPC-8.0.0",
+        )
+        expect(JSON.parse(result.body, symbolize_names: true)[:errors]).to eq(
+          [{ code: "DATES_CANT_BE_IN_FUTURE",
+             title: "Inspection-Date\", \"Registration-Date\", \"Issue-Date\", \"Effective-Date\", \"OR-Availability-Date\", \"Start-Date\" and \"OR-Assessment-Start-Date\" must not be in the future" },
+           { code: "DATES_CANT_BE_MORE_THAN_4_YEARS_AGO",
+             title: "\"Inspection-Date\", \"Registration-Date\" and \"Issue-Date\" must not be more than 4 years ago" }],
         )
       end
 
