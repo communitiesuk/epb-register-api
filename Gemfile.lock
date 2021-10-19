@@ -52,7 +52,7 @@ GEM
     epb-auth-tools (1.0.8)
       jwt (~> 2.2)
       oauth2 (~> 1.4)
-    epb_view_models (1.0.11)
+    epb_view_models (1.0.13)
       nokogiri (~> 1.11)
       zeitwerk (~> 2.4.2)
     et-orbi (1.2.5)
@@ -123,7 +123,7 @@ GEM
     puma (5.5.2)
       nio4r (~> 2.0)
     raabro (1.4.0)
-    racc (1.5.2)
+    racc (1.6.0)
     rack (2.2.3)
     rack-protection (2.1.0)
       rack
@@ -231,7 +231,7 @@ DEPENDENCIES
   database_cleaner!
   debase!
   epb-auth-tools (~> 1.0.8)!
-  epb_view_models (~> 1.0.11)!
+  epb_view_models (~> 1.0.13)!
   geocoder (~> 1.7.0)!
   json-schema (~> 2.8)!
   mock_redis (~> 0.29.0)!
