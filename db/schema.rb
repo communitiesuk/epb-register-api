@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_14_083822) do
+ActiveRecord::Schema.define(version: 2021_10_22_092711) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(version: 2021_09_14_083822) do
     t.index "lower((town)::text)", name: "index_assessments_on_town"
     t.index ["address_id"], name: "index_assessments_on_address_id"
     t.index ["cancelled_at"], name: "index_assessments_on_cancelled_at"
+    t.index ["created_at"], name: "index_assessments_on_created_at"
     t.index ["not_for_issue_at"], name: "index_assessments_on_not_for_issue_at"
     t.index ["postcode"], name: "index_assessments_on_postcode"
     t.index ["type_of_assessment"], name: "index_assessments_on_type_of_assessment"
