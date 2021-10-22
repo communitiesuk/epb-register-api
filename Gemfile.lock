@@ -231,7 +231,7 @@ DEPENDENCIES
   database_cleaner!
   debase!
   epb-auth-tools (~> 1.0.8)!
-  epb_view_models (~> 1.0.13)!
+  epb_view_models (~> 1.0.13, ~> 1.0)!
   geocoder (~> 1.7.0)!
   json-schema (~> 2.8)!
   mock_redis (~> 0.29.0)!
