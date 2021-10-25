@@ -70,6 +70,25 @@ module Gateway
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
     end
 
+    def fetch_assessments_by_date(date)
+      bindings = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "date",
+          date,
+          ActiveRecord::Type::String.new,
+        ),
+      ]
+
+      sql = <<-SQL
+           SELECT assessment_id, type_of_assessment, ae.registered_by AS scheme_id
+             FROM assessments a
+           JOIN assessors ae on a.scheme_assessor_id = ae.scheme_assessor_id
+           WHERE to_char(created_at, 'YYYY-MM-DD') = $1
+      SQL
+
+      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
+    end
+
   private
 
     def send_to_db(assessment)
