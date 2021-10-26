@@ -31,10 +31,12 @@ describe UseCase::SaveDailyAssessmentsStats do
       sap_xml_eighty_nine = sap_xml.clone
       energy_rating = sap_xml_eighty_nine.at("Energy-Rating-Current")
       energy_rating.children = "89"
+      transaction_type = sap_xml_eighty_nine.at("Transaction-Type")
+      transaction_type.children = "2"
       allow(assessments_xml_gateway).to receive(:fetch).with("0000-0000-0000-0004").and_return({ "xml" => sap_xml_eighty_nine, "schema_type" => "SAP-Schema-18.0.0" })
     end
 
-    it "calculates the average and groups them by assessment type and scheme id" do
+    it "calculates the average and groups them by assessment type, scheme id and transaction type" do
       expect(use_case.execute(date: "2021-10-25")).to eq(
         [
           {
@@ -42,18 +44,28 @@ describe UseCase::SaveDailyAssessmentsStats do
             assessments_count: 1,
             rating_average: 50,
             scheme_id: 1,
+            transaction_type: "1",
           },
           {
             assessment_type: "SAP",
             assessments_count: 1,
             rating_average: 50,
             scheme_id: 1,
+            transaction_type: "1",
           },
           {
             assessment_type: "SAP",
-            assessments_count: 3,
-            rating_average: 56,
+            assessments_count: 2,
+            rating_average: 40,
             scheme_id: 2,
+            transaction_type: "1",
+          },
+          {
+            assessment_type: "SAP",
+            assessments_count: 1,
+            rating_average: 89,
+            scheme_id: 2,
+            transaction_type: "2",
           },
         ],
       )

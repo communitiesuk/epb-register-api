@@ -19,16 +19,20 @@ module UseCase
 
     def format_stats_data
       result = []
-      grouped_by_type_and_scheme.each do |assessment_type, scheme_assessments|
-        scheme_assessments.each do |scheme_id, assessments|
-          hash = {}
-          hash[:assessment_type] = assessment_type
-          hash[:scheme_id] = scheme_id
-          hash[:assessments_count] = assessments.size
 
-          hash[:rating_average] = average_rating(assessments)
+      grouped_by_type_scheme_transaction_type.each do |assessment_type, schemes|
+        schemes.each do |scheme_id, transaction_types|
+          transaction_types.each do |transaction_type, assessments|
+            hash = {
+              assessment_type: assessment_type,
+              scheme_id: scheme_id,
+              transaction_type: transaction_type,
+              assessments_count: assessments.size,
+              rating_average: average_rating(assessments)
+            }
 
-          result << hash
+            result << hash
+          end
         end
       end
 
@@ -45,9 +49,11 @@ module UseCase
       Presenter::Export::Statistics.new(wrapper).build
     end
 
-    def grouped_by_type_and_scheme
-      @assessments.group_by { |assessment| assessment["assessment_type"] }.transform_values do |a|
-        a.group_by { |b| b[:scheme_id] }
+    def grouped_by_type_scheme_transaction_type
+      @assessments.group_by { |assessment| assessment["assessment_type"] }.transform_values do |assessments_for_assessment_type|
+        assessments_for_assessment_type.group_by { |assessment| assessment[:scheme_id] }.transform_values do |assessments_for_scheme|
+          assessments_for_scheme.group_by { |assessment| assessment[:transaction_type] }
+        end
       end
     end
   end
