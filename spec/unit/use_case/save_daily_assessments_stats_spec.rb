@@ -19,21 +19,28 @@ describe UseCase::SaveDailyAssessmentsStats do
           { "assessment_id" => "0000-0000-0000-0004", "assessment_type" => "SAP", "scheme_id": 2 },
         ],
       )
-      allow(assessments_xml_gateway).to receive(:fetch)
-      allow(use_case).to receive(:stats_from_xml).with("0000-0000-0000-0000").and_return({ current_energy_rating: 58, transaction_type: "1" }) # rubocop:disable RSpec/SubjectStub
-      allow(use_case).to receive(:stats_from_xml).with("0000-0000-0000-0001").and_return({ current_energy_rating: 50, transaction_type: "1" }) # rubocop:disable RSpec/SubjectStub
-      allow(use_case).to receive(:stats_from_xml).with("0000-0000-0000-0002").and_return({ current_energy_rating: 30, transaction_type: "1" }) # rubocop:disable RSpec/SubjectStub
-      allow(use_case).to receive(:stats_from_xml).with("0000-0000-0000-0003").and_return({ current_energy_rating: 50, transaction_type: "1" }) # rubocop:disable RSpec/SubjectStub
-      allow(use_case).to receive(:stats_from_xml).with("0000-0000-0000-0004").and_return({ current_energy_rating: 89, transaction_type: "1" }) # rubocop:disable RSpec/SubjectStub
+      rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
+      sap_xml = Nokogiri.XML Samples.xml("SAP-Schema-18.0.0")
+      allow(assessments_xml_gateway).to receive(:fetch).with("0000-0000-0000-0000").and_return({ "xml" => rdsap_xml, "schema_type" => "RdSAP-Schema-20.0.0" })
+      allow(assessments_xml_gateway).to receive(:fetch).with("0000-0000-0000-0001").and_return({ "xml" => sap_xml, "schema_type" => "SAP-Schema-18.0.0" })
+      sap_xml_thirty = sap_xml.clone
+      energy_rating =  sap_xml_thirty.at("Energy-Rating-Current")
+      energy_rating.children = "30"
+      allow(assessments_xml_gateway).to receive(:fetch).with("0000-0000-0000-0002").and_return({ "xml" => sap_xml_thirty, "schema_type" => "SAP-Schema-18.0.0" })
+      allow(assessments_xml_gateway).to receive(:fetch).with("0000-0000-0000-0003").and_return({ "xml" => sap_xml, "schema_type" => "SAP-Schema-18.0.0" })
+      sap_xml_eighty_nine = sap_xml.clone
+      energy_rating = sap_xml_eighty_nine.at("Energy-Rating-Current")
+      energy_rating.children = "89"
+      allow(assessments_xml_gateway).to receive(:fetch).with("0000-0000-0000-0004").and_return({ "xml" => sap_xml_eighty_nine, "schema_type" => "SAP-Schema-18.0.0" })
     end
 
-    it "calculates the avarage and groups them by assessment type and scheme id" do
+    it "calculates the average and groups them by assessment type and scheme id" do
       expect(use_case.execute(date: "2021-10-25")).to eq(
         [
           {
             assessment_type: "RdSAP",
             assessments_count: 1,
-            rating_average: 58,
+            rating_average: 50,
             scheme_id: 1,
           },
           {
@@ -50,7 +57,7 @@ describe UseCase::SaveDailyAssessmentsStats do
           },
         ],
       )
-      # expect(assessments_xml_gateway).to have_received(:fetch).exactly(5).times
+      expect(assessments_xml_gateway).to have_received(:fetch).exactly(5).times
     end
   end
 end

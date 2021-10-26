@@ -25,6 +25,7 @@ module UseCase
           hash[:assessment_type] = assessment_type
           hash[:scheme_id] = scheme_id
           hash[:assessments_count] = assessments.size
+
           hash[:rating_average] = average_rating(assessments)
 
           result << hash
@@ -39,15 +40,14 @@ module UseCase
     end
 
     def stats_from_xml(assessment_id)
-      # TODO
-      # xml_data = @assessments_xml_gateway.fetch(assessment_id)
-      # wrapper = ViewModel::Factory.new.create(xml_data["xml"].to_s, xml_data["schema_type"])
-      # Presenter::Export::Statistics.new(wrapper).build
+      xml_data = @assessments_xml_gateway.fetch(assessment_id)
+      wrapper = ViewModel::Factory.new.create(xml_data["xml"].to_s, xml_data["schema_type"])
+      Presenter::Export::Statistics.new(wrapper).build
     end
 
     def grouped_by_type_and_scheme
-      @assessments.group_by { |assessment| assessment["assessment_type"] }.transform_values do |x|
-        x.group_by { |y| y[:scheme_id] }
+      @assessments.group_by { |assessment| assessment["assessment_type"] }.transform_values do |a|
+        a.group_by { |b| b[:scheme_id] }
       end
     end
   end
