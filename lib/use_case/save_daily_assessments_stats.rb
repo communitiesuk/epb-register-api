@@ -1,12 +1,16 @@
 module UseCase
   class SaveDailyAssessmentsStats
-    def initialize(assessment_statistics_gateway:, assessments_gateway:)
+    def initialize(assessment_statistics_gateway:, assessments_gateway:, assessments_xml_gateway:)
       @assessment_statistics_gateway = assessment_statistics_gateway
       @assessments_gateway = assessments_gateway
+      @assessments_xml_gateway = assessments_xml_gateway
     end
 
     def execute(date:)
       @assessments = @assessments_gateway.fetch_assessments_by_date(date)
+      @assessments.each do |assessment|
+        assessment.merge!(stats_from_xml(assessment["assessment_id"]))
+      end
 
       format_stats_data
     end
@@ -21,13 +25,24 @@ module UseCase
           hash[:assessment_type] = assessment_type
           hash[:scheme_id] = scheme_id
           hash[:assessments_count] = assessments.size
-          # TODO: get it from the XML
-          hash[:rating_average] = assessments.map { |a| a[:current_energy_rating] }.sum / assessments.size
+          hash[:rating_average] = average_rating(assessments)
+
           result << hash
         end
       end
 
       result
+    end
+
+    def average_rating(assessments)
+      assessments.map { |assessment| assessment[:current_energy_rating] }.sum / assessments.size
+    end
+
+    def stats_from_xml(assessment_id)
+      # TODO
+      # xml_data = @assessments_xml_gateway.fetch(assessment_id)
+      # wrapper = ViewModel::Factory.new.create(xml_data["xml"].to_s, xml_data["schema_type"])
+      # Presenter::Export::Statistics.new(wrapper).build
     end
 
     def grouped_by_type_and_scheme
