@@ -56,7 +56,7 @@ describe Gateway::AssessmentsGateway do
         "INSERT INTO assessments (assessment_id, scheme_assessor_id, type_of_assessment, date_of_assessment, date_registered, created_at, date_of_expiry)
         VALUES ('0000-0000-0000-0000-0002', 'TEST123456', 'RdSAP', '2010-01-04', '2010-01-05', '2010-01-05', '2070-01-05')",
       )
-      
+
       expect(gateway.fetch_assessments_by_date("2010-01-05", assessment_types: %w[SAP])).to match([
         a_hash_including(
           { "assessment_id" => "0000-0000-0000-0000-0000",
