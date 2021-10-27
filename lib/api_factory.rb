@@ -49,6 +49,10 @@ class ApiFactory
     @assessors_status_events_gateway ||= Gateway::AssessorsStatusEventsGateway.new
   end
 
+  def self.assessment_statistics_gateway
+    @assessment_statistics_gateway ||= Gateway::AssessmentStatisticsGateway.new
+  end
+
   def self.assessments_export_use_case
     @assessments_export_use_case ||=
       UseCase::ExportAssessmentAttributes.new(
@@ -131,6 +135,14 @@ class ApiFactory
   def self.export_not_for_publication_use_case
     @export_not_for_publication_use_case ||=
       UseCase::ExportOpenDataNotForPublication.new(reporting_gateway)
+  end
+
+  def self.save_daily_assessments_stats_use_case
+    @save_daily_assessments_stats_use_case ||= UseCase::SaveDailyAssessmentsStats.new(
+      assessment_statistics_gateway: assessment_statistics_gateway,
+      assessments_gateway: assessments_gateway,
+      assessments_xml_gateway: assessments_xml_gateway,
+    )
   end
 
   def self.add_green_deal_plan_use_case
