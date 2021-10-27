@@ -245,6 +245,8 @@ def get_vcap_services_stub
 end
 
 RSpec.configure do |config|
+  config.filter_run focus: true
+  config.run_all_when_everything_filtered = true
   config.include Rack::Test::Methods
   config.order = :random
 

@@ -9,7 +9,9 @@ module UseCase
     def execute(date:)
       @assessments = @assessments_gateway.fetch_assessments_by_date(date)
       @assessments.each do |assessment|
-        assessment.merge!(stats_from_xml(assessment["assessment_id"]))
+        stats = stats_from_xml(assessment["assessment_id"])
+
+        assessment.merge!(stats) unless stats.nil?
       end
 
       format_stats_data
@@ -40,7 +42,10 @@ module UseCase
     end
 
     def average_rating(assessments)
-      assessments.map { |assessment| assessment[:current_energy_rating] }.sum / assessments.size
+      ratings = assessments.map { |assessment| assessment[:current_energy_rating] }
+      return nil if ratings.include?(nil)
+
+      ratings.sum / assessments.size
     end
 
     def stats_from_xml(assessment_id)
