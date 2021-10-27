@@ -2,11 +2,20 @@
 
 module Gateway
   class AssessmentsGateway
-    class Assessment < ActiveRecord::Base
-    end
+    class Assessment < ActiveRecord::Base; end
 
-    class InvalidAssessmentType < StandardError
-    end
+    class InvalidAssessmentType < StandardError; end
+
+    VALID_ASSESSMENT_TYPES = %w[
+      RdSAP
+      SAP
+      CEPC
+      CEPC-RR
+      DEC
+      DEC-RR
+      AC-CERT
+      AC-REPORT
+    ].freeze
 
     def insert_or_update(assessment)
       check_valid_energy_ratings assessment
@@ -70,7 +79,7 @@ module Gateway
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
     end
 
-    def fetch_assessments_by_date(date)
+    def fetch_assessments_by_date(date, assessment_types: nil)
       bindings = [
         ActiveRecord::Relation::QueryAttribute.new(
           "date",
@@ -85,6 +94,16 @@ module Gateway
            JOIN assessors ae on a.scheme_assessor_id = ae.scheme_assessor_id
            WHERE to_char(created_at, 'YYYY-MM-DD') = $1
       SQL
+
+      if assessment_types.is_a?(Array)
+        invalid_types = assessment_types - VALID_ASSESSMENT_TYPES
+        raise StandardError, "Invalid types" unless invalid_types.empty?
+
+        list_of_types = assessment_types.map { |n| "'#{n}'" }
+        sql += <<~SQL_TYPE_OF_ASSESSMENT
+          AND type_of_assessment IN(#{list_of_types.join(',')})
+        SQL_TYPE_OF_ASSESSMENT
+      end
 
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
     end
