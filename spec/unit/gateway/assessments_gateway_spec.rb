@@ -19,7 +19,7 @@ describe Gateway::AssessmentsGateway do
     end
 
     it "returns the assessment data for a given day" do
-      expect(gateway.fetch_assessments_by_date("2010-01-05")).to match([
+      expect(gateway.fetch_assessments_by_date(date: "2010-01-05")).to match([
         a_hash_including(
           { "assessment_id" => "0000-0000-0000-0000-0000",
             "type_of_assessment" => "SAP",
@@ -29,7 +29,7 @@ describe Gateway::AssessmentsGateway do
     end
 
     it "raises an error when an invalid type is provided" do
-      expect { gateway.fetch_assessments_by_date("2010-01-05", assessment_types: %w[Non-Existing]) }.to raise_error(StandardError, "Invalid types")
+      expect { gateway.fetch_assessments_by_date(date: "2010-01-05", assessment_types: %w[Non-Existing]) }.to raise_error(StandardError, "Invalid types")
     end
 
     it "allows to filter by assessment type" do
@@ -38,7 +38,7 @@ describe Gateway::AssessmentsGateway do
         VALUES ('0000-0000-0000-0000-0002', 'TEST123456', 'RdSAP', '2010-01-04', '2010-01-05', '2010-01-05', '2070-01-05')",
       )
 
-      expect(gateway.fetch_assessments_by_date("2010-01-05", assessment_types: %w[SAP])).to match([
+      expect(gateway.fetch_assessments_by_date(date: "2010-01-05", assessment_types: %w[SAP])).to match([
         a_hash_including(
           { "assessment_id" => "0000-0000-0000-0000-0000",
             "type_of_assessment" => "SAP",

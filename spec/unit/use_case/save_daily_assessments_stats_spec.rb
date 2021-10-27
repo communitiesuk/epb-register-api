@@ -71,6 +71,15 @@ describe UseCase::SaveDailyAssessmentsStats do
       )
       expect(assessments_xml_gateway).to have_received(:fetch).exactly(5).times
     end
+
+    it "allows for filter by specified assessment types" do
+      allow(assessments_gateway).to receive(:fetch_assessments_by_date).with(date: "2021-10-25", assessment_types: %w[RdSAP]).and_return(
+        [{ "assessment_id" => "0000-0000-0000-0000", "assessment_type" => "RdSAP", "scheme_id": 1 }],
+      )
+
+      use_case.execute(date: "2021-10-25", assessment_types: %w[RdSAP])
+      expect(assessments_gateway).to have_received(:fetch_assessments_by_date).with(date: "2021-10-25", assessment_types: %w[RdSAP])
+    end
   end
 
   context "when deriving the statistics for assessments which don't have rating or transaction type" do

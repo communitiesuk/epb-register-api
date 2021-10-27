@@ -6,8 +6,8 @@ module UseCase
       @assessments_xml_gateway = assessments_xml_gateway
     end
 
-    def execute(date:)
-      @assessments = @assessments_gateway.fetch_assessments_by_date(date)
+    def execute(date:, assessment_types: nil)
+      @assessments = @assessments_gateway.fetch_assessments_by_date(date: date, assessment_types: assessment_types)
       @assessments.each do |assessment|
         stats = stats_from_xml(assessment["assessment_id"])
 

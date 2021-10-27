@@ -79,7 +79,7 @@ module Gateway
       ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
     end
 
-    def fetch_assessments_by_date(date, assessment_types: nil)
+    def fetch_assessments_by_date(date:, assessment_types: nil)
       bindings = [
         ActiveRecord::Relation::QueryAttribute.new(
           "date",
