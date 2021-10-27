@@ -1,5 +1,7 @@
 module UseCase
   class SaveDailyAssessmentsStats
+    class NoDataException < StandardError; end
+
     def initialize(assessment_statistics_gateway:, assessments_gateway:, assessments_xml_gateway:)
       @assessment_statistics_gateway = assessment_statistics_gateway
       @assessments_gateway = assessments_gateway
@@ -8,6 +10,9 @@ module UseCase
 
     def execute(date:, assessment_types: nil)
       @assessments = @assessments_gateway.fetch_assessments_by_date(date: date, assessment_types: assessment_types)
+
+      raise NoDataException, "No assessments for #{date}" if @assessments.empty?
+
       @assessments.each do |assessment|
         stats = stats_from_xml(assessment["assessment_id"])
 

@@ -7,6 +7,17 @@ describe UseCase::SaveDailyAssessmentsStats do
   let(:assessments_gateway) { instance_double(Gateway::AssessmentsGateway) }
   let(:assessments_xml_gateway) { instance_double(Gateway::AssessmentsXmlGateway) }
 
+  context "when there are not assessments for a given date" do
+    before do
+      allow(statistics_gateway).to receive(:save)
+      allow(assessments_gateway).to receive(:fetch_assessments_by_date).and_return([])
+    end
+
+    it "raises an exeption" do
+      expect { use_case.execute(date: "2021-10-26") }.to raise_error(described_class::NoDataException, "No assessments for 2021-10-26")
+    end
+  end
+
   context "when deriving the statistics for a given date" do
     before do
       allow(statistics_gateway).to receive(:save)
