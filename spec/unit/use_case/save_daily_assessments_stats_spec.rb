@@ -118,41 +118,4 @@ describe UseCase::SaveDailyAssessmentsStats do
       )
     end
   end
-
-  context "when deriving the statistics for assessments which don't have rating or transaction type" do
-    before do
-      allow(statistics_gateway).to receive(:save)
-      allow(assessments_gateway).to receive(:fetch_assessments_by_date).and_return(
-        [
-          { "assessment_id" => "0000-0000-0000-0000", "assessment_type" => "RdSAP", "scheme_id": 1 },
-          { "assessment_id" => "0000-0000-0000-0001", "assessment_type" => "AC-Report", "scheme_id": 1 },
-        ],
-      )
-      rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
-      ac_report_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "ac-report")
-      allow(assessments_xml_gateway).to receive(:fetch).with("0000-0000-0000-0000").and_return({ "xml" => rdsap_xml, "schema_type" => "RdSAP-Schema-20.0.0" })
-      allow(assessments_xml_gateway).to receive(:fetch).with("0000-0000-0000-0001").and_return({ "xml" => ac_report_xml, "schema_type" => "CEPC-8.0.0" })
-    end
-
-    it "calculates the average and groups them by assessment type, scheme id and transaction type" do
-      expect(use_case.execute(date: "2021-10-25")).to eq(
-        [
-          {
-            assessment_type: "RdSAP",
-            assessments_count: 1,
-            rating_average: 50,
-            scheme_id: 1,
-            transaction_type: "1",
-          },
-          {
-            assessment_type: "AC-Report",
-            assessments_count: 1,
-            rating_average: nil,
-            scheme_id: 1,
-            transaction_type: nil,
-          },
-        ],
-      )
-    end
-  end
 end
