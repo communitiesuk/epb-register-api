@@ -9,7 +9,7 @@ namespace :maintenance do
 
       puts "Statistics for #{yesterday} saved"
     rescue UseCase::SaveDailyAssessmentsStats::NoDataException
-      puts "No data to be saved"
+      raise UseCase::SaveDailyAssessmentsStats::NoDataException, "No data to be saved"
     end
   end
 end
