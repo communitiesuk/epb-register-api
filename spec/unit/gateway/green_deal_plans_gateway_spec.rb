@@ -1,6 +1,4 @@
 describe Gateway::GreenDealPlansGateway do
-  include RSpecRegisterApiServiceMixin
-
   subject(:gateway) { described_class.new }
 
   describe "#fetch_assessment_id" do

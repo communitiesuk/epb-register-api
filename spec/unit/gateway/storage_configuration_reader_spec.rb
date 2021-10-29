@@ -1,5 +1,3 @@
-require "rspec"
-
 describe "Gateway::StorageConfigurationReader" do
   let(:instance_name) { "myinstance" }
   let(:expected_bucket_name) { "mybucket" }

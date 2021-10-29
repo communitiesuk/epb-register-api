@@ -1,5 +1,6 @@
 describe UseCase::ExportOpenDataCepcrr do
   include RSpecRegisterApiServiceMixin
+
   context "when creating the open data reporting release" do
     describe "for the CEPC recommendation reports" do
       let(:number_of_recommendations_returned) { 5 }

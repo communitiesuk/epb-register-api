@@ -1,6 +1,4 @@
 describe Gateway::AuditLogsGateway do
-  include RSpecRegisterApiServiceMixin
-
   subject(:gateway) { described_class.new }
 
   context "when adding data to the audit_logs log table " do

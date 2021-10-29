@@ -1,6 +1,3 @@
-require "rspec"
-require "aws-sdk-s3"
-
 describe "Gateway::StorageGateway" do
   context "when storage is initialised" do
     subject(:storage_gateway) do

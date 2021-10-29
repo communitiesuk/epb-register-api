@@ -1,4 +1,3 @@
-require "rspec"
 describe "Gateway::AssessmentsGateway" do
   include RSpecRegisterApiServiceMixin
 

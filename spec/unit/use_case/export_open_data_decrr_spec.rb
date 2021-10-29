@@ -1,5 +1,6 @@
 describe UseCase::ExportOpenDataDecrr do
   include RSpecRegisterApiServiceMixin
+
   context "when creating the open data reporting release" do
     describe "for the DEC recommendation reports" do
       let(:scheme_id) { add_scheme_and_get_id }

@@ -1,6 +1,4 @@
 describe UseCase::SaveAuditEvent do
-  include RSpecRegisterApiServiceMixin
-
   subject(:use_case) { described_class.new(gateway) }
 
   let(:gateway) do
