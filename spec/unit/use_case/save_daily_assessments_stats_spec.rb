@@ -120,17 +120,17 @@ describe UseCase::SaveDailyAssessmentsStats do
             scheme_id: 1,
             transaction_type: "1",
           },
-          # {
-          #   assessment_type: "AC-Report",
-          #   assessments_count: 1,
-          #   rating_average: nil,
-          #   scheme_id: 1,
-          #   transaction_type: nil,
-          # },
+          {
+            assessment_type: "AC-Report",
+            assessments_count: 1,
+            rating_average: nil,
+            scheme_id: 1,
+            transaction_type: nil,
+          },
         ],
       )
 
-      expect(statistics_gateway).to have_received(:save).exactly(1).times
+      expect(statistics_gateway).to have_received(:save).exactly(2).times
     end
   end
 end

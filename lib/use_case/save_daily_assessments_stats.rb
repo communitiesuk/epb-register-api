@@ -15,10 +15,9 @@ module UseCase
 
       @assessments.each do |assessment|
         stats = stats_from_xml(assessment[:assessment_id])
+
         assessment.merge!(stats) unless stats.nil?
       end
-
-      @assessments.select! { |hash| hash.key?(:transaction_type) && !hash[:transaction_type].nil? }
 
       format_stats_data.each do |stat|
         @assessment_statistics_gateway.save(assessments_count: stat[:assessments_count], assessment_type: stat[:assessment_type],
