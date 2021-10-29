@@ -1,7 +1,7 @@
-describe "Gateway::StorageGateway" do
+describe Gateway::StorageGateway do
   context "when storage is initialised" do
     subject(:storage_gateway) do
-      Gateway::StorageGateway.new(
+      described_class.new(
         storage_config:
           Gateway::StorageConfiguration.new(
             access_key_id: "",

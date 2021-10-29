@@ -1,4 +1,4 @@
-describe "Gateway::StorageConfigurationReader" do
+describe Gateway::StorageConfigurationReader do
   let(:instance_name) { "myinstance" }
   let(:expected_bucket_name) { "mybucket" }
   let(:expected_access_key) { "myaccesskey" }
@@ -7,7 +7,7 @@ describe "Gateway::StorageConfigurationReader" do
   before { allow(ENV).to receive(:[]).and_return(nil) }
 
   context "when VCAP_SERVICES is present and we provide a GOV.UK PaaS S3 instance name" do
-    subject(:storage_configuration) { Gateway::StorageConfigurationReader.new(instance_name: instance_name) }
+    subject(:storage_configuration) { described_class.new(instance_name: instance_name) }
 
     before do
       allow(ENV).to receive(:[])

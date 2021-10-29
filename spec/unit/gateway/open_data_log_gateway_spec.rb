@@ -1,6 +1,6 @@
-describe "Gateway::OpenDataLogGateway" do
+describe Gateway::OpenDataLogGateway do
   context "when there is no log data in the database insert it and return the statistics" do
-    let(:gateway) { Gateway::OpenDataLogGateway.new }
+    let(:gateway) { described_class.new }
 
     let(:statistics) { gateway.fetch_log_statistics }
     let(:latest_statistics) { gateway.fetch_latest_statistics }
@@ -8,7 +8,7 @@ describe "Gateway::OpenDataLogGateway" do
     let(:latest_task_id) { gateway.fetch_latest_task_id }
 
     before(:all) do
-      gateway = Gateway::OpenDataLogGateway.new
+      gateway = described_class.new
       report_type = "CEPC"
 
       gateway.create("0000-0000-0000-0000-0001", 1, report_type)
