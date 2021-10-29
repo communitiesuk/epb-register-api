@@ -89,7 +89,7 @@ module Gateway
       ]
 
       sql = <<-SQL
-           SELECT assessment_id, type_of_assessment, ae.registered_by AS scheme_id
+           SELECT assessment_id, type_of_assessment, ae.registered_by AS scheme_id, current_energy_efficiency_rating
              FROM assessments a
            JOIN assessors ae on a.scheme_assessor_id = ae.scheme_assessor_id
            WHERE to_char(created_at, 'YYYY-MM-DD') = $1

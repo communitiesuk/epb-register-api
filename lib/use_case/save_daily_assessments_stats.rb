@@ -52,7 +52,7 @@ module UseCase
     end
 
     def average_rating(assessments)
-      ratings = assessments.map { |assessment| assessment[:current_energy_rating] }
+      ratings = assessments.map { |assessment| assessment[:current_energy_efficiency_rating] }
       return nil if ratings.include?(nil)
 
       ratings.sum / assessments.size

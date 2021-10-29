@@ -9,12 +9,12 @@ describe Gateway::AssessmentsGateway do
         VALUES ('TEST123456', 'test_forename', 'test_surname', '1970-01-05', 9999)",
       )
       ActiveRecord::Base.connection.exec_query(
-        "INSERT INTO assessments (assessment_id, scheme_assessor_id, type_of_assessment, date_of_assessment, date_registered, created_at, date_of_expiry)
-        VALUES ('0000-0000-0000-0000-0000', 'TEST123456', 'SAP', '2010-01-04', '2010-01-05', '2010-01-05', '2070-01-05')",
+        "INSERT INTO assessments (assessment_id, scheme_assessor_id, type_of_assessment, date_of_assessment, date_registered, created_at, date_of_expiry, current_energy_efficiency_rating)
+        VALUES ('0000-0000-0000-0000-0000', 'TEST123456', 'SAP', '2010-01-04', '2010-01-05', '2010-01-05', '2070-01-05', 50)",
       )
       ActiveRecord::Base.connection.exec_query(
-        "INSERT INTO assessments (assessment_id, scheme_assessor_id, type_of_assessment, date_of_assessment, date_registered, created_at, date_of_expiry)
-        VALUES ('0000-0000-0000-0000-0001', 'TEST123456', 'SAP', '2010-01-01', '2010-01-01', '2010-01-02', '2070-01-02')",
+        "INSERT INTO assessments (assessment_id, scheme_assessor_id, type_of_assessment, date_of_assessment, date_registered, created_at, date_of_expiry, current_energy_efficiency_rating)
+        VALUES ('0000-0000-0000-0000-0001', 'TEST123456', 'SAP', '2010-01-01', '2010-01-01', '2010-01-02', '2070-01-02', 50)",
       )
     end
 
@@ -23,7 +23,8 @@ describe Gateway::AssessmentsGateway do
         a_hash_including(
           { "assessment_id" => "0000-0000-0000-0000-0000",
             "type_of_assessment" => "SAP",
-            "scheme_id" => 9999 },
+            "scheme_id" => 9999,
+            "current_energy_efficiency_rating" => 50 },
         ),
       ])
     end

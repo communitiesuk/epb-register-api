@@ -23,11 +23,11 @@ describe UseCase::SaveDailyAssessmentsStats do
       allow(statistics_gateway).to receive(:save)
       allow(assessments_gateway).to receive(:fetch_assessments_by_date).and_return(
         [
-          { "assessment_id" => "0000-0000-0000-0000", "type_of_assessment" => "RdSAP", "scheme_id": 1 },
-          { "assessment_id" => "0000-0000-0000-0001", "type_of_assessment" => "SAP", "scheme_id": 1 },
-          { "assessment_id" => "0000-0000-0000-0002", "type_of_assessment" => "SAP", "scheme_id": 2 },
-          { "assessment_id" => "0000-0000-0000-0003", "type_of_assessment" => "SAP", "scheme_id": 2 },
-          { "assessment_id" => "0000-0000-0000-0004", "type_of_assessment" => "SAP", "scheme_id": 2 },
+          { "assessment_id" => "0000-0000-0000-0000", "type_of_assessment" => "RdSAP", "scheme_id": 1, "current_energy_efficiency_rating" => 50 },
+          { "assessment_id" => "0000-0000-0000-0001", "type_of_assessment" => "SAP", "scheme_id": 1, "current_energy_efficiency_rating" => 50 },
+          { "assessment_id" => "0000-0000-0000-0002", "type_of_assessment" => "SAP", "scheme_id": 2, "current_energy_efficiency_rating" => 30 },
+          { "assessment_id" => "0000-0000-0000-0003", "type_of_assessment" => "SAP", "scheme_id": 2, "current_energy_efficiency_rating" => 50  },
+          { "assessment_id" => "0000-0000-0000-0004", "type_of_assessment" => "SAP", "scheme_id": 2, "current_energy_efficiency_rating" => 89  },
         ],
       )
       rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
@@ -35,13 +35,9 @@ describe UseCase::SaveDailyAssessmentsStats do
       allow(assessments_xml_gateway).to receive(:fetch).with("0000-0000-0000-0000").and_return({ xml: rdsap_xml, schema_type: "RdSAP-Schema-20.0.0" })
       allow(assessments_xml_gateway).to receive(:fetch).with("0000-0000-0000-0001").and_return({ xml: sap_xml, schema_type: "SAP-Schema-18.0.0" })
       sap_xml_thirty = sap_xml.clone
-      energy_rating =  sap_xml_thirty.at("Energy-Rating-Current")
-      energy_rating.children = "30"
       allow(assessments_xml_gateway).to receive(:fetch).with("0000-0000-0000-0002").and_return({ xml: sap_xml_thirty, "schema_type" => "SAP-Schema-18.0.0" })
       allow(assessments_xml_gateway).to receive(:fetch).with("0000-0000-0000-0003").and_return({ xml: sap_xml, schema_type: "SAP-Schema-18.0.0" })
       sap_xml_eighty_nine = sap_xml.clone
-      energy_rating = sap_xml_eighty_nine.at("Energy-Rating-Current")
-      energy_rating.children = "89"
       transaction_type = sap_xml_eighty_nine.at("Transaction-Type")
       transaction_type.children = "2"
       allow(assessments_xml_gateway).to receive(:fetch).with("0000-0000-0000-0004").and_return({ xml: sap_xml_eighty_nine, schema_type: "SAP-Schema-18.0.0" })
@@ -100,8 +96,8 @@ describe UseCase::SaveDailyAssessmentsStats do
       allow(statistics_gateway).to receive(:save)
       allow(assessments_gateway).to receive(:fetch_assessments_by_date).and_return(
         [
-          { "assessment_id" => "0000-0000-0000-0000", "type_of_assessment" => "RdSAP", "scheme_id": 1 },
-          { "assessment_id" => "0000-0000-0000-0001", "type_of_assessment" => "AC-Report", "scheme_id": 1 },
+          { "assessment_id" => "0000-0000-0000-0000", "type_of_assessment" => "RdSAP", "scheme_id": 1, "current_energy_efficiency_rating" => 50  },
+          { "assessment_id" => "0000-0000-0000-0001", "type_of_assessment" => "AC-Report", "scheme_id": 1, "current_energy_efficiency_rating" => 0 },
         ],
       )
       rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
@@ -123,7 +119,7 @@ describe UseCase::SaveDailyAssessmentsStats do
           {
             assessment_type: "AC-Report",
             assessments_count: 1,
-            rating_average: nil,
+            rating_average: 0,
             scheme_id: 1,
             transaction_type: nil,
           },
