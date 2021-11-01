@@ -1,5 +1,7 @@
-describe Gateway::AssessmentsGateway do
+describe "Updating assessment status" do
   include RSpecRegisterApiServiceMixin
+
+  let(:assessment_gateway) { Gateway::AssessmentsGateway.new }
 
   before(:all) do
     scheme_id = add_scheme_and_get_id
@@ -10,8 +12,6 @@ describe Gateway::AssessmentsGateway do
   end
 
   context "when given a dual lodgement" do
-    let(:assessment_gateway) { described_class.new }
-
     context "when calling get_linked_assessment_id on both assessments" do
       it "will return the first assessment's linked assessment counterpart" do
         expect(

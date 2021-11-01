@@ -70,7 +70,7 @@ describe Gateway::OpenDataLogGateway do
   end
 
   context "when the log table is empty" do
-    let(:gateway) { Gateway::OpenDataLogGateway.new }
+    let(:gateway) { described_class.new }
 
     before do
       ActiveRecord::Base.connection.exec_query("TRUNCATE TABLE open_data_logs")

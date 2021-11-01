@@ -31,7 +31,7 @@ describe Gateway::StorageConfigurationReader do
   end
 
   context "when VCAP_SERVICES is not present and we provide a GOV.UK PaaS S3 instance name" do
-    subject(:storage_configuration) { Gateway::StorageConfigurationReader.new(instance_name: instance_name) }
+    subject(:storage_configuration) { described_class.new(instance_name: instance_name) }
 
     it "we get back an exception" do
       expect { storage_configuration.get_configuration }.to raise_error(
@@ -41,7 +41,7 @@ describe Gateway::StorageConfigurationReader do
   end
 
   context "when AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY are present and we provide an S3 bucket name" do
-    subject(:storage_configuration) { Gateway::StorageConfigurationReader.new(bucket_name: expected_bucket_name) }
+    subject(:storage_configuration) { described_class.new(bucket_name: expected_bucket_name) }
 
     before do
       allow(ENV).to receive(:[])
@@ -68,7 +68,7 @@ describe Gateway::StorageConfigurationReader do
   end
 
   context "when AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY are not present and we provide an S3 bucket name" do
-    subject(:storage_configuration) { Gateway::StorageConfigurationReader.new(bucket_name: expected_bucket_name) }
+    subject(:storage_configuration) { described_class.new(bucket_name: expected_bucket_name) }
 
     it "we get back an exception" do
       expect { storage_configuration.get_configuration }.to raise_error(
@@ -78,7 +78,7 @@ describe Gateway::StorageConfigurationReader do
   end
 
   context "when VCAP_SERVICES is present and no GOV.UK PaaS S3 instance name is provided" do
-    subject(:storage_configuration) { Gateway::StorageConfigurationReader.new }
+    subject(:storage_configuration) { described_class.new }
 
     before do
       allow(ENV).to receive(:[])
@@ -94,7 +94,7 @@ describe Gateway::StorageConfigurationReader do
   end
 
   context "when AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY are present and no S3 bucket name is provided" do
-    subject(:storage_configuration) { Gateway::StorageConfigurationReader.new }
+    subject(:storage_configuration) { described_class.new }
 
     before do
       allow(ENV).to receive(:[])
