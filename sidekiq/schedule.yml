@@ -10,3 +10,9 @@ test_library_job:
   class: "Worker::TestRake"
   name: "Test rake worker -- every hour Mon-Fri"
   queue: default
+
+save_previous_day_statistics_job:
+  cron: "0 3 * * *"
+  class: "Worker::SavePreviousDayStatistics"
+  name: "Save previous day statistics -- every day at 3 am"
+  queue: default
