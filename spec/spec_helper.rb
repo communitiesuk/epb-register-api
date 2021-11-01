@@ -10,6 +10,7 @@ require "nokogiri"
 require "rack/test"
 require "rake"
 require "rspec"
+require "sidekiq"
 require "sinatra/activerecord"
 require "timecop"
 require "webmock"
@@ -22,6 +23,7 @@ class TestLoader
     @loader = Zeitwerk::Loader.new
     @loader.push_dir("#{__dir__}/../lib/")
     @loader.push_dir("#{__dir__}/../spec/test_doubles/")
+    @loader.push_dir("#{__dir__}/../sidekiq")
     @loader.setup
   end
 
