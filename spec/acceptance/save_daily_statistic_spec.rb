@@ -26,10 +26,14 @@ describe "Perform end to end test of exporting and saving assessments as statist
     end
 
     it "the rake saves the statistics as a single row" do
-      expect(ActiveRecord::Base.connection.exec_query("SELECT assessment_type,assessments_count,rating_average, to_char(day_date, 'YYYY-MM-DD') as day_date  FROM assessment_statistics").first).to match a_hash_including({ "assessment_type" => "RdSAP",
-                                                                                                                                                                                                                             "assessments_count" => 1,
-                                                                                                                                                                                                                             "rating_average" => 50.0,
-                                                                                                                                                                                                                             "day_date" => "2021-06-21" })
+      sql = "SELECT assessment_type,assessments_count,rating_average, to_char(day_date, 'YYYY-MM-DD') as day_date  FROM assessment_statistics"
+
+      expect(ActiveRecord::Base.connection.exec_query(sql).first).to match a_hash_including({
+        "assessment_type" => "RdSAP",
+        "assessments_count" => 1,
+        "rating_average" => 50.0,
+        "day_date" => "2021-06-21",
+      })
     end
   end
 end

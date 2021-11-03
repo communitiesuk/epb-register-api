@@ -50,34 +50,24 @@ describe UseCase::SaveDailyAssessmentsStats do
             assessment_type: "RdSAP",
             assessments_count: 1,
             rating_average: 50,
-            scheme_id: 1,
             transaction_type: "1",
           },
           {
             assessment_type: "SAP",
-            assessments_count: 1,
-            rating_average: 50,
-            scheme_id: 1,
-            transaction_type: "1",
-          },
-          {
-            assessment_type: "SAP",
-            assessments_count: 2,
-            rating_average: 40,
-            scheme_id: 2,
+            assessments_count: 3,
+            rating_average: 43,
             transaction_type: "1",
           },
           {
             assessment_type: "SAP",
             assessments_count: 1,
             rating_average: 89,
-            scheme_id: 2,
             transaction_type: "2",
           },
         ],
       )
       expect(assessments_xml_gateway).to have_received(:fetch).exactly(5).times
-      expect(statistics_gateway).to have_received(:save).exactly(4).times
+      expect(statistics_gateway).to have_received(:save).exactly(3).times
     end
 
     it "allows for filter by specified assessment types" do
@@ -113,14 +103,12 @@ describe UseCase::SaveDailyAssessmentsStats do
             assessment_type: "RdSAP",
             assessments_count: 1,
             rating_average: 50,
-            scheme_id: 1,
             transaction_type: "1",
           },
           {
             assessment_type: "AC-Report",
             assessments_count: 1,
             rating_average: 0,
-            scheme_id: 1,
             transaction_type: nil,
           },
         ],

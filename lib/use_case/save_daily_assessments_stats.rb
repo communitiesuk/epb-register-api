@@ -20,8 +20,13 @@ module UseCase
       end
 
       format_stats_data.each do |stat|
-        @assessment_statistics_gateway.save(assessments_count: stat[:assessments_count], assessment_type: stat[:assessment_type],
-                                            rating_average: stat[:rating_average], day_date: date, scheme_id: stat[:scheme_id], transaction_type: stat[:transaction_type])
+        @assessment_statistics_gateway.save(
+          day_date: date,
+          assessment_type: stat[:assessment_type],
+          transaction_type: stat[:transaction_type],
+          assessments_count: stat[:assessments_count],
+          rating_average: stat[:rating_average],
+        )
       end
 
       format_stats_data
@@ -32,19 +37,16 @@ module UseCase
     def format_stats_data
       result = []
 
-      grouped_by_type_scheme_transaction_type.each do |assessment_type, schemes|
-        schemes.each do |scheme_id, transaction_types|
-          transaction_types.each do |transaction_type, assessments|
-            hash = {
-              assessment_type: assessment_type,
-              scheme_id: scheme_id,
-              transaction_type: transaction_type,
-              assessments_count: assessments.size,
-              rating_average: average_rating(assessments),
-            }
+      grouped_by_assessment_type_and_transaction.each do |assessment_type, transaction_types|
+        transaction_types.each do |transaction_type, assessments|
+          hash = {
+            assessment_type: assessment_type,
+            transaction_type: transaction_type,
+            assessments_count: assessments.size,
+            rating_average: average_rating(assessments),
+          }
 
-            result << hash
-          end
+          result << hash
         end
       end
 
@@ -64,11 +66,9 @@ module UseCase
       Presenter::Export::Statistics.new(wrapper).build
     end
 
-    def grouped_by_type_scheme_transaction_type
+    def grouped_by_assessment_type_and_transaction
       @assessments.group_by { |assessment| assessment[:type_of_assessment] }.transform_values do |assessments_for_assessment_type|
-        assessments_for_assessment_type.group_by { |assessment| assessment[:scheme_id] }.transform_values do |assessments_for_scheme|
-          assessments_for_scheme.group_by { |assessment| assessment[:transaction_type] }
-        end
+        assessments_for_assessment_type.group_by { |assessment| assessment[:transaction_type] }
       end
     end
   end
