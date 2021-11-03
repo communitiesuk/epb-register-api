@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_27_112429) do
+ActiveRecord::Schema.define(version: 2021_11_03_142738) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -36,7 +36,6 @@ ActiveRecord::Schema.define(version: 2021_10_27_112429) do
     t.string "assessment_type", null: false
     t.float "rating_average"
     t.datetime "day_date", null: false
-    t.integer "scheme_id", null: false
     t.integer "transaction_type"
   end
 
