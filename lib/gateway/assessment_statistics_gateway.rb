@@ -1,9 +1,9 @@
 module Gateway
   class AssessmentStatisticsGateway
-    def save(assessments_count:, assessment_type:, rating_average:, day_date:, scheme_id:, transaction_type:)
+    def save(assessments_count:, assessment_type:, rating_average:, day_date:, transaction_type:)
       insert_sql = <<-SQL
-            INSERT INTO assessment_statistics(assessments_count, assessment_type, rating_average, day_date, scheme_id, transaction_type)
-            VALUES ($1, $2, $3, $4, $5, $6)
+            INSERT INTO assessment_statistics(assessments_count, assessment_type, rating_average, day_date, transaction_type)
+            VALUES ($1, $2, $3, $4, $5)
       SQL
 
       bindings = [
@@ -25,11 +25,6 @@ module Gateway
         ActiveRecord::Relation::QueryAttribute.new(
           "day_date",
           day_date,
-          ActiveRecord::Type::String.new,
-        ),
-        ActiveRecord::Relation::QueryAttribute.new(
-          "scheme_id",
-          scheme_id,
           ActiveRecord::Type::String.new,
         ),
         ActiveRecord::Relation::QueryAttribute.new(
