@@ -5,7 +5,7 @@ namespace :maintenance do
 
     begin
       ApiFactory.save_daily_assessments_stats_use_case
-        .execute(date: yesterday, assessment_types: %w[SAP RdSAP CEPC])
+        .execute(date: yesterday, assessment_types: %w[SAP RdSAP CEPC DEC AC-CERT AC-REPORT])
 
       puts "Statistics for #{yesterday} saved"
     rescue UseCase::SaveDailyAssessmentsStats::NoDataException
