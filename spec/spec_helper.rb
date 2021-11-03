@@ -1,6 +1,7 @@
 ENV["RACK_ENV"] = "test"
 ENV["STAGE"] = "test"
 ENV["EPB_UNLEASH_URI"] = "https://test-toggle-server/api"
+ENV["EPB_TEAM_SLACK_URL"] = nil # ensure tests don't send Slack notifications
 
 require "assertive_client"
 require "samples"
