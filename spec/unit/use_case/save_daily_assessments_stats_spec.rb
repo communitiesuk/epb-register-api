@@ -13,8 +13,8 @@ describe UseCase::SaveDailyAssessmentsStats do
       allow(assessments_gateway).to receive(:fetch_assessments_by_date).and_return([])
     end
 
-    it "raises an exeption" do
-      expect { use_case.execute(date: "2021-10-26") }.to raise_error(described_class::NoDataException, "No assessments for 2021-10-26")
+    it "raises an the correct exception" do
+      expect { use_case.execute(date: "2021-10-26") }.to raise_error(Boundary::NoData, "no data to be saved for: 2021-10-26")
     end
   end
 

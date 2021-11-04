@@ -8,8 +8,8 @@ namespace :maintenance do
         .execute(date: yesterday, assessment_types: %w[SAP RdSAP CEPC DEC AC-CERT AC-REPORT])
 
       puts "Statistics for #{yesterday} saved"
-    rescue UseCase::SaveDailyAssessmentsStats::NoDataException
-      raise UseCase::SaveDailyAssessmentsStats::NoDataException, "No data to be saved"
+    rescue Boundary::TerminableError
+      raise Boundary::NoData, yesterday
     end
   end
 end

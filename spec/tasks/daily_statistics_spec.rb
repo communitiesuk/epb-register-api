@@ -32,8 +32,9 @@ describe "daily statistics rake" do
 
   it "prints that there is no assessment data to save" do
     allow(assessments_gateway).to receive(:fetch_assessments_by_date).and_return([])
-    allow(save_daily_assessments_stats_use_case).to receive(:execute).and_raise(UseCase::SaveDailyAssessmentsStats::NoDataException)
 
-    expect { daily_statistics_rake }.to raise_error(UseCase::SaveDailyAssessmentsStats::NoDataException, "No data to be saved")
+    allow(save_daily_assessments_stats_use_case).to receive(:execute).and_raise(Boundary::NoData.new("today"))
+
+    expect { daily_statistics_rake }.to raise_error(Boundary::NoData)
   end
 end

@@ -16,8 +16,8 @@ namespace :maintenance do
                   .execute(date: assessment_date, assessment_types: %w[SAP RdSAP CEPC DEC AC-CERT AC-REPORT])
 
         days_saved += 1
-      rescue UseCase::SaveDailyAssessmentsStats::NoDataException
-        pp "unable to save stats data for #{assessment_date}"
+      rescue Boundary::TerminableError => e
+        warn e.message
       end
     end
 

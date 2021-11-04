@@ -7,7 +7,7 @@ module Worker
 
     def perform
       rake_task("maintenance:daily_statistics").invoke
-    rescue UseCase::SaveDailyAssessmentsStats::NoDataException
+    rescue Boundary::NoData
       puts "No assessments lodged yesterday to calculate statistics"
     end
   end
