@@ -142,11 +142,11 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
       )
     end
 
-    it "returns 422 for an invalid response body" do
+    it "returns 400 for an invalid response body" do
       response_body = assertive_put(
         "/api/assessments/0000-0000-0000-0000-0000/address-id",
         body: { "prettyPleaseUpdateAddressIdTo": "bla-bla" },
-        accepted_responses: [422],
+        accepted_responses: [400],
         scopes: %w[admin:update-address-id],
       ).body
 
@@ -154,6 +154,21 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
 
       expect(error[:code]).to eq("INVALID_REQUEST")
       expect(error[:title]).to include("did not contain a required property of 'addressId'")
+    end
+
+    it "returns 400 when body cannot be parsed to JSON" do
+      request_body = '{ "addressId": "UPRN-010033533123" " }'
+      response = assertive_request(
+        accepted_responses: [400],
+        should_authenticate: true,
+        auth_data: {},
+        scopes: %w[admin:update-address-id],
+      ) { put("/api/assessments/0000-0000-0000-0000-0000/address-id", request_body) }
+
+      error = JSON.parse(response.body, symbolize_names: true)[:errors].first
+
+      expect(error[:code]).to eq("INVALID_REQUEST")
+      expect(error[:title]).to include("unexpected token at '{ \"addressId\": \"UPRN-010033533123\" \" }'")
     end
 
     it "changes the address id for to a valid addressId (UPRN- identifier)" do
