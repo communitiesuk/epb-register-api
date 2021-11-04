@@ -41,5 +41,17 @@ module Gateway
 
       ActiveRecord::Base.connection.exec_query(insert_sql, "SQL", bindings)
     end
+
+    def min_assessment_date
+      sql = <<-SQL
+              SELECT MIN(a.day_date) as day_date
+              FROM assessment_statistics a
+      SQL
+
+      min_date = ActiveRecord::Base.connection.exec_query(sql).first["day_date"]
+      return (Time.now.to_date - 1) if min_date.nil?
+
+      min_date
+    end
   end
 end
