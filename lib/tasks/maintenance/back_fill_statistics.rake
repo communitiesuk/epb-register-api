@@ -10,15 +10,17 @@ namespace :maintenance do
     last_day = gateway.min_assessment_date
 
     number_days.times.each do |i|
-      yesterday = (last_day - i).strftime("%F")
+      assessment_date = (last_day - i).strftime("%F")
       begin
         ApiFactory.save_daily_assessments_stats_use_case
-                  .execute(date: yesterday, assessment_types: %w[SAP RdSAP CEPC DEC AC-CERT AC-REPORT])
+                  .execute(date: assessment_date, assessment_types: %w[SAP RdSAP CEPC DEC AC-CERT AC-REPORT])
 
-        puts "Statistics for #{yesterday} saved"
+        # puts "Statistics for #{assessment_date} saved"
       rescue UseCase::SaveDailyAssessmentsStats::NoDataException
         raise UseCase::SaveDailyAssessmentsStats::NoDataException, "No data to be saved"
       end
     end
+
+    puts "Statistics for the last #{number_days} days saved"
   end
 end
