@@ -25,10 +25,19 @@ ActiveRecord::Schema.define(version: 2021_11_03_142738) do
     t.string "town"
     t.string "classification_code", limit: 6
     t.string "address_type", limit: 15
-    t.index ["address_line1"], name: "index_address_base_on_address_line1"
-    t.index ["address_line2"], name: "index_address_base_on_address_line2"
     t.index ["postcode"], name: "index_address_base_on_postcode"
-    t.index ["town"], name: "index_address_base_on_town"
+  end
+
+  create_table "address_base_legacy", primary_key: "uprn", id: :string, force: :cascade do |t|
+    t.string "postcode"
+    t.string "address_line1"
+    t.string "address_line2"
+    t.string "address_line3"
+    t.string "address_line4"
+    t.string "town"
+    t.string "classification_code", limit: 6
+    t.string "address_type", limit: 15
+    t.index ["postcode"], name: "index_address_base_legacy_on_postcode"
   end
 
   create_table "assessment_statistics", force: :cascade do |t|
