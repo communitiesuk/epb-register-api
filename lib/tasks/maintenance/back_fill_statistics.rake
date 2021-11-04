@@ -9,7 +9,7 @@ namespace :maintenance do
 
     last_day = gateway.min_assessment_date
 
-    number_days.times.each do |i|
+    number_days.to_i.times.each do |i|
       assessment_date = (last_day - i).strftime("%F")
       begin
         ApiFactory.save_daily_assessments_stats_use_case
@@ -17,7 +17,7 @@ namespace :maintenance do
 
         # puts "Statistics for #{assessment_date} saved"
       rescue UseCase::SaveDailyAssessmentsStats::NoDataException
-        raise UseCase::SaveDailyAssessmentsStats::NoDataException, "No data to be saved"
+        # pp UseCase::SaveDailyAssessmentsStats::NoDataException, "No data to be saved"
       end
     end
 
