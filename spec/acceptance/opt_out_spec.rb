@@ -178,9 +178,24 @@ describe "Acceptance::OptOut", set_with_timecop: true do
     end
   end
 
-  context "when opt out value s not a boolean" do
-    it "returns 422" do
-      opt_out_assessment(assessment_id: "0000-0000-0000-0000-0000%23", opt_out: "true", accepted_responses: [422])
+  context "when opt out value is not a boolean" do
+    it "returns 400" do
+      opt_out_assessment(assessment_id: "0000-0000-0000-0000-000023", opt_out: "true", accepted_responses: [400])
     end
+  end
+
+  it "returns 400 when body cannot be parsed to JSON" do
+    request_body = " something wrong "
+    response = assertive_request(
+      accepted_responses: [400],
+      should_authenticate: true,
+      auth_data: {},
+      scopes: %w[admin:opt_out],
+    ) { put("/api/assessments/0000-0000-0000-0000-0000/opt-out", request_body) }
+
+    error = JSON.parse(response.body, symbolize_names: true)[:errors].first
+
+    expect(error[:code]).to eq("INVALID_REQUEST")
+    expect(error[:title]).to include("unexpected token at 'something wrong '")
   end
 end
