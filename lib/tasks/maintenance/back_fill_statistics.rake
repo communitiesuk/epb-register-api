@@ -16,8 +16,8 @@ namespace :maintenance do
                   .execute(date: assessment_date, assessment_types: %w[SAP RdSAP CEPC DEC AC-CERT AC-REPORT])
 
         days_saved += 1
-      rescue Boundary::TerminableError => e
-        warn e.message
+      rescue Boundary::NoData
+        pp "back_fill_statistics error - no data saved for #{assessment_date} "
       end
     end
 
