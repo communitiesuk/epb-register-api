@@ -9,11 +9,10 @@ namespace :maintenance do
 
     last_day = gateway.min_assessment_date
 
-    number_days.to_i.times.each do |i|
-      assessment_date = (last_day - i).strftime("%F")
+    number_days.to_i.times do |i|
+      assessment_date = (last_day - i + 1).strftime("%F")
       begin
-        ApiFactory.save_daily_assessments_stats_use_case
-                  .execute(date: assessment_date, assessment_types: %w[SAP RdSAP CEPC DEC AC-CERT AC-REPORT])
+        ApiFactory.save_daily_assessments_stats_use_case.execute(date: assessment_date, assessment_types: %w[SAP RdSAP CEPC DEC AC-CERT AC-REPORT])
 
         days_saved += 1
       rescue Boundary::NoData
