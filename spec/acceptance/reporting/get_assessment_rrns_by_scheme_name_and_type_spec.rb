@@ -331,13 +331,13 @@ describe "Acceptance::Reports::GetAssessmentRRNsBySchemeNameAndType" do
           accepted_responses: [422],
         ).body
 
-      expect(JSON.parse(response, symbolize_names: true)).to eq(
+      expect(JSON.parse(response, symbolize_names: true)).to match(
         {
           errors: [
             {
               code: "INVALID_REQUEST",
               title:
-                "The property '#/startDate' Must be date in format YYYY-MM-DD",
+                include("The property '#/startDate' Must be date in format YYYY-MM-DD"),
             },
           ],
         },
@@ -353,13 +353,13 @@ describe "Acceptance::Reports::GetAssessmentRRNsBySchemeNameAndType" do
           accepted_responses: [422],
         ).body
 
-      expect(JSON.parse(response, symbolize_names: true)).to eq(
+      expect(JSON.parse(response, symbolize_names: true)).to match(
         {
           errors: [
             {
               code: "INVALID_REQUEST",
               title:
-                "The property '#/endDate' Must be date in format YYYY-MM-DD",
+                include("The property '#/endDate' Must be date in format YYYY-MM-DD"),
             },
           ],
         },

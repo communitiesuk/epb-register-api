@@ -300,7 +300,7 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan",
             before { green_deal_plan_without field.to_sym }
 
             it "returns the expected error response" do
-              expect(response[:errors][0][:title]).to eq(
+              expect(response[:errors][0][:title]).to include(
                 "The property '#/' did not contain a required property of '#{
                   field
                 }'",
@@ -315,7 +315,7 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan",
             before { green_deal_plan_without field.to_sym, :providerDetails }
 
             it "returns the expected error response" do
-              expect(response[:errors][0][:title]).to eq(
+              expect(response[:errors][0][:title]).to include(
                 "The property '#/providerDetails' did not contain a required property of '#{
                   field
                 }'",
@@ -330,7 +330,7 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan",
             before { green_deal_plan_without field.to_sym, :interest }
 
             it "returns the expected error response" do
-              expect(response[:errors][0][:title]).to eq(
+              expect(response[:errors][0][:title]).to include(
                 "The property '#/interest' did not contain a required property of '#{
                   field
                 }'",
@@ -343,7 +343,7 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan",
           before { green_deal_plan_without :amount, :chargeUplift }
 
           it "returns the expected error response" do
-            expect(response[:errors][0][:title]).to eq(
+            expect(response[:errors][0][:title]).to include(
               "The property '#/chargeUplift' did not contain a required property of 'amount'",
             )
           end
@@ -353,7 +353,7 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan",
           before { green_deal_plan_without :product, :measures }
 
           it "returns the expected error response" do
-            expect(response[:errors][0][:title]).to eq(
+            expect(response[:errors][0][:title]).to include(
               "The property '#/measures/0' did not contain a required property of 'product'",
             )
           end
@@ -365,7 +365,7 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan",
             before { green_deal_plan_without field.to_sym, :charges }
 
             it "returns the expected error response" do
-              expect(response[:errors][0][:title]).to eq(
+              expect(response[:errors][0][:title]).to include(
                 "The property '#/charges/0' did not contain a required property of '#{
                   field
                 }'",
@@ -380,7 +380,7 @@ describe "Acceptance::Assessment::GreenDealPlan:UpdateGreenDealPlan",
             before { green_deal_plan_without field.to_sym, :savings }
 
             it "returns the expected error response" do
-              expect(response[:errors][0][:title]).to eq(
+              expect(response[:errors][0][:title]).to include(
                 "The property '#/savings/0' did not contain a required property of '#{
                   field
                 }'",

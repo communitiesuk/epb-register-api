@@ -27,7 +27,7 @@ describe Helper::JsonHelper do
     it "throws an error when validation doesnt match type" do
       schema = { type: "object", required: "firstName" }
       expect { helper.convert_to_ruby_hash("4", schema: schema) }.to raise_exception(
-        JSON::Schema::ValidationError,
+        Boundary::Json::ValidationError,
       )
     end
   end

@@ -128,12 +128,12 @@ describe "Acceptance::AddressSearch::ByPostcode", set_with_timecop: true do
       end
 
       it "returns the expected error response" do
-        expect(response[:errors]).to eq(
+        expect(response[:errors]).to match(
           [
             {
               code: "INVALID_REQUEST",
               title:
-                "The property '#/' of type object did not match any of the required schemas",
+                include("The property '#/' of type object did not match any of the required schemas"),
             },
           ],
         )

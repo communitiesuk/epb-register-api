@@ -137,8 +137,8 @@ describe "Acceptance::AssessmentStatus", set_with_timecop: true do
         scopes: %w[assessment:lodge],
       )
 
-      expect(JSON.parse(response.body, symbolize_names: true)[:errors]).to eq(
-        [{ code: "INVALID_REQUEST", title: "The property '#/' did not contain a required property of 'status'" }],
+      expect(JSON.parse(response.body, symbolize_names: true)[:errors]).to match(
+        [{ code: "INVALID_REQUEST", title: include("The property '#/' did not contain a required property of 'status'") }],
       )
     end
   end

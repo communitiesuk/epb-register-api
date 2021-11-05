@@ -173,7 +173,7 @@ module Controller
         error_response 409,
                        "INVALID_REQUEST",
                        "Green Deal Plan ID already exists"
-      when JSON::Schema::ValidationError
+      when Boundary::Json::Error
         error_response 400, "INVALID_REQUEST", e.message
       when UseCase::AddGreenDealPlan::InvalidFuelCode
         error_response 400, "INVALID_REQUEST", e.message
@@ -200,7 +200,7 @@ module Controller
         error_response 409,
                        "INVALID_REQUEST",
                        "Green Deal Plan ID does not match"
-      when JSON::Schema::ValidationError
+      when Boundary::Json::Error
         error_response 400, "INVALID_REQUEST", e.message
       when UseCase::UpdateGreenDealPlan::InvalidFuelCode
         error_response 400, "INVALID_REQUEST", e.message

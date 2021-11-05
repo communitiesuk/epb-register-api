@@ -35,7 +35,7 @@ module Controller
         gone_error(e.message)
       when UseCase::UpdateAssessmentStatus::AssessmentNotFound
         not_found_error("Assessment not found")
-      when JSON::Schema::ValidationError
+      when Boundary::Json::Error
         error_response(422, "INVALID_REQUEST", e.message)
       else
         server_error(e)

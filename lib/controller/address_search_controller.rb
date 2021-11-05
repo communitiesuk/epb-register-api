@@ -79,7 +79,7 @@ module Controller
                         }
     rescue StandardError => e
       case e
-      when JSON::Schema::ValidationError
+      when Boundary::Json::Error
         error_response 422, "INVALID_REQUEST", e.message
       else
         server_error e

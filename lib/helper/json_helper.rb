@@ -45,9 +45,17 @@ module Helper
     end
 
     def convert_to_ruby_hash(json_string, schema: false)
-      json = JSON.parse(json_string)
+      begin
+        json = JSON.parse(json_string)
+      rescue JSON::ParserError => e
+        raise Boundary::Json::ParseError, e.message
+      end
 
-      JSON::Validator.validate!(schema, json) if schema
+      begin
+        JSON::Validator.validate!(schema, json) if schema
+      rescue JSON::Schema::ValidationError => e
+        raise Boundary::Json::ValidationError, e.message
+      end
 
       json.deep_transform_keys { |k| k.to_s.underscore.to_sym }
     end

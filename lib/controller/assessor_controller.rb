@@ -363,9 +363,9 @@ module Controller
         )
       when UseCase::AddAssessor::InvalidAssessorIdException
         error_response(422, "INVALID REQUEST", e.message)
-      when JSON::ParserError
+      when Boundary::Json::ParseError
         error_response(400, "INVALID_REQUEST", e.message)
-      when JSON::Schema::ValidationError
+      when Boundary::Json::ValidationError
         error_response(422, "INVALID_REQUEST", e.message)
       else
         server_error(e)

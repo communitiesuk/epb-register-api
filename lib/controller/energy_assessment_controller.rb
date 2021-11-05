@@ -280,7 +280,7 @@ module Controller
         not_found_error("Assessment not found")
       when Helper::RrnHelper::RrnNotValid
         error_response(400, "INVALID_QUERY", "Assessment ID not valid")
-      when JSON::Schema::ValidationError, JSON::ParserError
+      when Boundary::Json::Error
         error_response(400, "INVALID_REQUEST", e.message)
       else
         server_error(e)
@@ -321,7 +321,7 @@ module Controller
         error_response(400, "BAD_REQUEST", "Address ID mismatched: #{e.message}")
       when Helper::RrnHelper::RrnNotValid
         error_response(400, "INVALID_QUERY", "Assessment ID not valid")
-      when JSON::Schema::ValidationError, JSON::ParserError
+      when Boundary::Json::Error
         error_response(400, "INVALID_REQUEST", e.message)
       else
         server_error(e)
