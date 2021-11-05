@@ -1,4 +1,4 @@
-describe "syncing to data warehouse on various assessment data changes" do
+describe "syncing to data warehouse on various assessment data changes", set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
   let(:redis_gateway) { instance_spy(Gateway::RedisGateway) }

@@ -1,4 +1,4 @@
-describe UseCase::SearchAddressesByStreetAndTown do
+describe UseCase::SearchAddressesByStreetAndTown, set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
   subject(:use_case) { described_class.new }

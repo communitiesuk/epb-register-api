@@ -1,4 +1,4 @@
-describe "Audit events" do
+describe "Audit events", set_with_timecop: true do
   include RSpecRegisterApiServiceMixin
 
   before do
