@@ -56,7 +56,7 @@ module Gateway
               GROUP BY assessment_type, transaction_type, to_char(day_date, 'MM-YYYY')
 
       SQL
-      results =  ActiveRecord::Base.connection.exec_query(sql)
+      results = ActiveRecord::Base.connection.exec_query(sql)
       results.map { |result| result }
     end
   end
