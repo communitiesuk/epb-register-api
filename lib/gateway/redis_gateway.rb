@@ -36,7 +36,9 @@ module Gateway
     def redis
       return @redis if @redis
 
-      @redis = self.class.redis_client_class.new
+      options = ENV.key?("EPB_DATA_WAREHOUSE_QUEUES_URI") ? { url: ENV["EPB_DATA_WAREHOUSE_QUEUES_URI"] } : {}
+
+      @redis = self.class.redis_client_class.new(**options)
     end
 
     def validate_queue_name(name)
