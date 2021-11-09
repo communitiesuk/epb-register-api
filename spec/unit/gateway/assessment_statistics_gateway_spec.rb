@@ -36,4 +36,28 @@ describe Gateway::AssessmentStatisticsGateway do
       expect(gateway.min_assessment_date.strftime("%F")).to eq("2021-08-02")
     end
   end
+
+  describe "#fetch_monthly_stats" do
+    before do
+      gateway.save(assessment_type: "SAP", assessments_count: 82, rating_average: 78, day_date:  Date.parse("04-07-2021"), transaction_type: 1)
+      gateway.save(assessment_type: "SAP", assessments_count: 82, rating_average: 78, day_date:  Date.parse("04-09-2021"), transaction_type: 2)
+      gateway.save(assessment_type: "SAP", assessments_count: 56, rating_average: 29, day_date:  Date.parse("03-09-2021"), transaction_type: 2)
+      gateway.save(assessment_type: "RdSAP", assessments_count: 2, rating_average: 60, day_date:  Date.parse("30-09-2021"), transaction_type: 1)
+      gateway.save(assessment_type: "RdSAP", assessments_count: 79, rating_average: 61, day_date: Date.parse("01-09-2021"), transaction_type: 1)
+      gateway.save(assessment_type: "RdSAP", assessments_count: 24, rating_average: 28, day_date: Date.parse("02-08-2021"), transaction_type: 4)
+    end
+
+    let(:expected_results){
+      [{"num_assessments"=>82, "rating_average"=>78.0, "month_year"=>"07-2021",  "assessment_type" => "SAP", "transaction_type"=>1},
+       {"num_assessments"=>24, "rating_average"=>28.0, "month_year"=>"08-2021",  "assessment_type" => "RdSAP", "transaction_type"=>4},
+       {"num_assessments"=>138, "rating_average"=>53.5, "month_year"=>"09-2021",  "assessment_type" => "SAP",  "transaction_type"=>2},
+       {"num_assessments"=>81, "rating_average"=>60.5, "month_year"=>"09-2021",  "assessment_type" => "RdSAP",  "transaction_type"=>1},
+      ]
+    }
+
+    it "returns the expected aggregate data for last month" do
+      results = gateway.fetch_monthly_stats.sort_by { | h | h["month_year"] }
+      expect(results).to eq(expected_results)
+    end
+  end
 end
