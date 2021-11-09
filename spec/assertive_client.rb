@@ -646,6 +646,21 @@ def fetch_assessment_meta_data(
   )
 end
 
+def fetch_statistics(
+  scopes:, accepted_responses: [200],
+  authenticate: true,
+  auth_data: {}
+)
+
+  assertive_get(
+    "/api/statistics",
+    accepted_responses: accepted_responses,
+    should_authenticate: authenticate,
+    auth_data: auth_data,
+    scopes: scopes,
+  )
+end
+
 def assertive_get_in_search_scope(path, accepted_responses: [200])
   assertive_get(
     path,
