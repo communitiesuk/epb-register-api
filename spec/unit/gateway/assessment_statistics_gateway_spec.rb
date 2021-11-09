@@ -17,6 +17,11 @@ describe Gateway::AssessmentStatisticsGateway do
     it "can save nil values for rating_average and transaction_type" do
       expect { gateway.save(assessment_type: "AC-Report", assessments_count: 20, rating_average: nil, day_date: Time.now.to_date, transaction_type: nil) }.not_to raise_error
     end
+
+    it "raises and key constraint error if the same data is saved more then once" do
+      gateway.save(assessment_type: "RdSAP", assessments_count: 56, rating_average: 29, day_date: Time.now.to_date, transaction_type: 2)
+      expect { gateway.save(assessment_type: "RdSAP", assessments_count: 79, rating_average: 28, day_date: Time.now.to_date, transaction_type: 2) }.to raise_error(ActiveRecord::RecordNotUnique)
+    end
   end
 
   describe "#min_assessment_date" do

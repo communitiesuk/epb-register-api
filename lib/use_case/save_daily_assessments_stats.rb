@@ -25,6 +25,8 @@ module UseCase
           assessments_count: stat[:assessments_count],
           rating_average: stat[:rating_average],
         )
+      rescue ActiveRecord::RecordNotUnique
+        raise Boundary::NoData
       end
     end
 
