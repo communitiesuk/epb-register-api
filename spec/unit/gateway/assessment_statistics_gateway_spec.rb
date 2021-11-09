@@ -48,14 +48,14 @@ describe Gateway::AssessmentStatisticsGateway do
     end
 
     let(:expected_results) do
-      [{ "num_assessments" => 82, "rating_average" => 78.0, "month_year" => "07-2021",  "assessment_type" => "SAP", "transaction_type" => 1 },
-       { "num_assessments" => 24, "rating_average" => 28.0, "month_year" => "08-2021",  "assessment_type" => "RdSAP", "transaction_type" => 4 },
-       { "num_assessments" => 138, "rating_average" => 53.5, "month_year" => "09-2021", "assessment_type" => "SAP",  "transaction_type" => 2 },
-       { "num_assessments" => 81, "rating_average" => 60.5, "month_year" => "09-2021", "assessment_type" => "RdSAP", "transaction_type" => 1 }]
+      [{ "num_assessments" => 82, "rating_average" => 78.0, "month_year" => "07-2021",  "assessment_type" => "SAP" },
+       { "num_assessments" => 24, "rating_average" => 28.0, "month_year" => "08-2021",  "assessment_type" => "RdSAP" },
+       { "num_assessments" => 81, "rating_average" => 60.5, "month_year" => "09-2021", "assessment_type" => "RdSAP" },
+       { "num_assessments" => 138, "rating_average" => 53.5, "month_year" => "09-2021", "assessment_type" => "SAP" }]
     end
 
     it "returns the expected aggregate data for last month" do
-      results = gateway.fetch_monthly_stats.sort_by { |h| h["month_year"] }
+      results = gateway.fetch_monthly_stats.sort_by { |h| [h["month_year"], h["assessment_type"]] }
       expect(results).to eq(expected_results)
     end
   end

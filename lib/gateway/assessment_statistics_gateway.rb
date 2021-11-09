@@ -51,9 +51,9 @@ module Gateway
 
     def fetch_monthly_stats
       sql = <<-SQL
-              SELECT SUM(assessments_count) as num_assessments, assessment_type, transaction_type,  AVG(rating_average) as rating_average, to_char(day_date, 'MM-YYYY') as month_year
+              SELECT SUM(assessments_count) as num_assessments, assessment_type,  AVG(rating_average) as rating_average, to_char(day_date, 'MM-YYYY') as month_year
               FROM assessment_statistics a
-              GROUP BY assessment_type, transaction_type, to_char(day_date, 'MM-YYYY')
+              GROUP BY assessment_type, to_char(day_date, 'MM-YYYY')
 
       SQL
       results = ActiveRecord::Base.connection.exec_query(sql)
