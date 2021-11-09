@@ -211,8 +211,12 @@ class ApiFactory
   end
 
   def self.event_broadcaster
-    listener = Events::Listener.new(Events::Broadcaster.new(logger: logger))
-    listener.attach_listeners
+    return @event_broadcaster unless @event_broadcaster.nil?
+
+    @event_broadcaster = Events::Broadcaster.new(logger: logger)
+    Events::Listener.new(@event_broadcaster).attach_listeners
+
+    @event_broadcaster
   end
 
   # Clears out all memoized service instances. Useful for tests.
