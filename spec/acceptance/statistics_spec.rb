@@ -19,7 +19,14 @@ describe "Acceptance::AssessmentStatistics" do
   it "returns a 200 when calling the statistics data end point" do
     fetch_statistics(
       accepted_responses: [200],
-      scopes: %w[assessment:fetch],
+      scopes: %w[statistics:fetch],
+    )
+  end
+
+  it "returns a 403 when calling the statistics data with the wrong scope" do
+    fetch_statistics(
+      accepted_responses: [403],
+      scopes: %w[assessments:fetch],
     )
   end
 end
