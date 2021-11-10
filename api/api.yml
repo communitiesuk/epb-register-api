@@ -1683,6 +1683,37 @@ paths:
         '500':
           description: Server error
 
+  /statistics:
+    get:
+      tags:
+          - Kpi-Dashboard
+      summary: >-
+        Gets the statistics data used to create the KPI dashboard page for the front end. The JSON contains the assessment statistics per month per type
+      description: Get statistics data for epcs
+      security:
+        - oauth:
+            - 'statistics:fetch'
+      responses:
+        '200':
+          description: Statistics of lodgements by type and month
+          content:
+            text/csv:
+              example: >-
+                assessmentType,monthYear,numAssessments,ratingAverage
+                RdSAP,09-2021,812,56.9
+                SAP,09-2021,784,68.3
+                RdSAP,08-2021,758,81.3
+                SAP,08-2021,789,68.8
+
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+
 components:
   securitySchemes:
     oauth:
