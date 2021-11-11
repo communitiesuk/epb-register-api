@@ -1700,13 +1700,11 @@ paths:
         '200':
           description: Statistics of lodgements by type and month
           content:
-            text/csv:
-              example: >-
-                assessmentType,monthYear,numAssessments,ratingAverage
-                RdSAP,09-2021,812,56.9
-                SAP,09-2021,784,68.3
-                RdSAP,08-2021,758,81.3
-                SAP,08-2021,789,68.8
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MonthAssessmentStatistic'
 
         '403':
           description: Forbidden
@@ -2788,6 +2786,21 @@ components:
         narrowCavities:
           type: boolean
           example: true
+
+    MonthAssessmentStatistic:
+      type: object
+      properties:
+        numAssessments:
+          type: integer
+          example: 64
+        assessmentType:
+          $ref: '#/components/schemas/AssessmentType'
+        ratingAverage:
+          type: number
+          example: 74.35
+        month:
+          type: string
+          example: '2021-07'
 
     # Schemes
     Scheme:
