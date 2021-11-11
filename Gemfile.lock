@@ -179,11 +179,11 @@ GEM
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
-    sentry-ruby (4.7.3)
+    sentry-ruby (4.8.0)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       faraday (>= 1.0)
-      sentry-ruby-core (= 4.7.3)
-    sentry-ruby-core (4.7.3)
+      sentry-ruby-core (= 4.8.0)
+    sentry-ruby-core (4.8.0)
       concurrent-ruby
       faraday
     sidekiq (6.2.2)
@@ -248,7 +248,7 @@ DEPENDENCIES
   rubocop-govuk (~> 4.1)!
   rubocop-performance!
   rubyzip (~> 2.3.2)!
-  sentry-ruby (~> 4.7)!
+  sentry-ruby (~> 4.8)!
   sidekiq (~> 6.2.2)!
   sidekiq-cron (~> 1.2.0)!
   sinatra (~> 2.0, >= 2.0.7)!
