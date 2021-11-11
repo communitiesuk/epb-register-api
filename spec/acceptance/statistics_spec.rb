@@ -23,7 +23,7 @@ describe "Acceptance::AssessmentStatistics", set_with_timecop: true do
         scheme_ids: [scheme_id],
       },
       override: true,
-      )
+    )
 
     ApiFactory.save_daily_assessments_stats_use_case
               .execute(date: Time.now.strftime("%F"), assessment_types: %w[SAP RdSAP CEPC DEC AC-CERT AC-REPORT])
@@ -37,14 +37,13 @@ describe "Acceptance::AssessmentStatistics", set_with_timecop: true do
       )
     end
 
-  it "produces a json object of the aggregated data" do
-
-    response =   fetch_statistics(
-          accepted_responses: [200],
-          scopes: %w[statistics:fetch],
-          )
-    expect(JSON.parse(response.body, symbolize_names: true)[:data]).to eq([{:assessmentType=>"RdSAP", :monthYear=>Time.now.strftime("%m-%Y"), :numAssessments=>2, :ratingAverage=>50.0}])
-  end
+    it "produces a json object of the aggregated data" do
+      response =   fetch_statistics(
+        accepted_responses: [200],
+        scopes: %w[statistics:fetch],
+      )
+      expect(JSON.parse(response.body, symbolize_names: true)[:data]).to eq([{ assessmentType: "RdSAP", monthYear: Time.now.strftime("%m-%Y"), numAssessments: 2, ratingAverage: 50.0 }])
+    end
   end
 
   context "when calling the calling the statistics data end point with the wrong token" do

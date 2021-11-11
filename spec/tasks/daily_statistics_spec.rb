@@ -26,7 +26,7 @@ describe "daily statistics rake" do
     ).to_stdout
     expect(save_daily_assessments_stats_use_case).to have_received(:execute).with(
       date: yesterday,
-      assessment_types: %w[SAP RdSAP CEPC DEC AC-CERT AC-REPORT],
+      assessment_types: %w[SAP RdSAP CEPC DEC AC-CERT DEC-RR],
     )
   end
 
