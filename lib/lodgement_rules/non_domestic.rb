@@ -10,7 +10,7 @@ module LodgementRules
       {
         name: "DATES_CANT_BE_IN_FUTURE",
         title:
-          'Inspection-Date", "Registration-Date", "Issue-Date", "Effective-Date", "OR-Availability-Date", "Start-Date" and "OR-Assessment-Start-Date" must not be in the future',
+          '"Inspection-Date", "Registration-Date", "Issue-Date", "Effective-Date", "OR-Availability-Date", "Start-Date" and "OR-Assessment-Start-Date" must not be in the future',
         test:
           lambda do |adapter|
             dates =
@@ -126,17 +126,6 @@ module LodgementRules
 
             latest_nominated_date = Date.parse(or_end_date) >> 3
             Date.parse(current_nominated_date) <= latest_nominated_date
-          end,
-      },
-      {
-        name: "DEC_STATUS_INVALID",
-        title: 'Asset rating only DECs with a "DEC-Status" of 2 are no longer valid',
-        test:
-          lambda do |adapter|
-            dec_status_code =  method_or_nil(adapter, :dec_status)
-            return true unless dec_status_code
-
-            dec_status_code.to_i != 2
           end,
       },
     ].freeze

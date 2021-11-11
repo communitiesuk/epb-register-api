@@ -258,7 +258,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
     end
 
     it "logs the events to the overidden_lodgement_events table" do
-      cepc_xml_doc.at("//CEPC:Registration-Date").children = "2030-05-04"
+      cepc_xml_doc.at("//CEPC:Registration-Date").children = "2006-05-04"
 
       lodge_assessment(
         assessment_body: cepc_xml_doc.to_xml,
@@ -282,7 +282,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
         "0000-0000-0000-0000-0000",
       )
       expect(overidden_lodgement_event["rule_triggers"]).to eq(
-        "[{\"code\": \"DATES_CANT_BE_IN_FUTURE\", \"title\": \"Inspection-Date\\\", \\\"Registration-Date\\\", \\\"Issue-Date\\\", \\\"Effective-Date\\\", \\\"OR-Availability-Date\\\", \\\"Start-Date\\\" and \\\"OR-Assessment-Start-Date\\\" must not be in the future\"}]",
+          '[{"code": "DATES_CANT_BE_MORE_THAN_4_YEARS_AGO", "title": "\\"Inspection-Date\\", \\"Registration-Date\\" and \\"Issue-Date\\" must not be more than 4 years ago"}]',
       )
     end
 

@@ -54,7 +54,7 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
         {
           "code": "DATES_CANT_BE_IN_FUTURE",
           "title":
-            'Inspection-Date", "Registration-Date", "Issue-Date", "Effective-Date", "OR-Availability-Date", "Start-Date" and "OR-Assessment-Start-Date" must not be in the future',
+            '"Inspection-Date", "Registration-Date", "Issue-Date", "Effective-Date", "OR-Availability-Date", "Start-Date" and "OR-Assessment-Start-Date" must not be in the future',
         }.freeze
       end
 
@@ -265,20 +265,6 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
 
       it "returns an error if the nominated date is more than three months after the or-assessment-end-date" do
         assert_errors("OR-Assessment-End-Date", "2019-09-30", [error])
-      end
-    end
-
-    context "when the DEC Status Code is 2" do
-      let(:error) do
-        {
-          "code": "DEC_STATUS_INVALID",
-          "title":
-            'Asset rating only DECs with a "DEC-Status" of 2 are no longer valid',
-        }.freeze
-      end
-
-      it "returns an error if the status code is for an invalid DEC type" do
-        assert_errors("DEC-Status", "2", [error])
       end
     end
   end

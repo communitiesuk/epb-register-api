@@ -34,7 +34,7 @@ describe "Acceptance::LodgementRules", set_with_timecop: true do
         )
         expect(JSON.parse(result.body, symbolize_names: true)[:errors]).to eq(
           [{ code: "DATES_CANT_BE_IN_FUTURE",
-             title: "Inspection-Date\", \"Registration-Date\", \"Issue-Date\", \"Effective-Date\", \"OR-Availability-Date\", \"Start-Date\" and \"OR-Assessment-Start-Date\" must not be in the future" },
+             title: "\"Inspection-Date\", \"Registration-Date\", \"Issue-Date\", \"Effective-Date\", \"OR-Availability-Date\", \"Start-Date\" and \"OR-Assessment-Start-Date\" must not be in the future" },
            { code: "DATES_CANT_BE_MORE_THAN_4_YEARS_AGO",
              title: "\"Inspection-Date\", \"Registration-Date\" and \"Issue-Date\" must not be more than 4 years ago" }],
         )
@@ -77,7 +77,7 @@ describe "Acceptance::LodgementRules", set_with_timecop: true do
               {
                 code: "DATES_CANT_BE_IN_FUTURE",
                 title:
-                  "Inspection-Date\", \"Registration-Date\", \"Issue-Date\", \"Effective-Date\", \"OR-Availability-Date\", \"Start-Date\" and \"OR-Assessment-Start-Date\" must not be in the future",
+                  "\"Inspection-Date\", \"Registration-Date\", \"Issue-Date\", \"Effective-Date\", \"OR-Availability-Date\", \"Start-Date\" and \"OR-Assessment-Start-Date\" must not be in the future",
               },
             ],
             meta: {
@@ -96,7 +96,7 @@ describe "Acceptance::LodgementRules", set_with_timecop: true do
 
     context "with a broken rule which cannot be over ridden" do
       it "rejects the assessment" do
-        xml_doc.at("DEC-Status").children = "2"
+        xml_doc.at("Technical-Information/Floor-Area").children = "-20"
 
         result =
           lodge_assessment(
@@ -115,7 +115,7 @@ describe "Acceptance::LodgementRules", set_with_timecop: true do
               {
                 code: "INVALID_REQUEST",
                 title:
-                  "Lodgement rule cannot be overridden: Asset rating only DECs with a \"DEC-Status\" of 2 are no longer valid",
+                  "Lodgement rule cannot be overridden: \"Floor-Area\" must be greater than 0",
               },
             ],
           },
@@ -124,8 +124,11 @@ describe "Acceptance::LodgementRules", set_with_timecop: true do
 
       context "with two broken rules including one which cannot be over ridden" do
         it "rejects the assessment and returns INVALID_REQUEST error" do
+          # DATES_CANT_BE_IN_FUTURE can not be overridden
           xml_doc.at("Registration-Date").children = Date.tomorrow.to_s
-          xml_doc.at("DEC-Status").children = "2"
+          # NOMINATED_DATE_TOO_LATE can be overridden
+          xml_doc.at("OR-Assessment-End-Date").children = '2020-05-01'
+          xml_doc.at("This-Assessment/Nominated-Date").children = "2020-09-01"
 
           result =
             lodge_assessment(
@@ -140,7 +143,7 @@ describe "Acceptance::LodgementRules", set_with_timecop: true do
 
           expect(JSON.parse(result.body, symbolize_names: true)[:errors]).to eq([
             { code: "INVALID_REQUEST",
-              title: "Lodgement rule cannot be overridden: Asset rating only DECs with a \"DEC-Status\" of 2 are no longer valid" },
+              title: "Lodgement rule cannot be overridden: \"Inspection-Date\", \"Registration-Date\", \"Issue-Date\", \"Effective-Date\", \"OR-Availability-Date\", \"Start-Date\" and \"OR-Assessment-Start-Date\" must not be in the future" },
           ])
         end
       end
