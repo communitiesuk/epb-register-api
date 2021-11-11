@@ -127,7 +127,7 @@ describe "Acceptance::LodgementRules", set_with_timecop: true do
           # DATES_CANT_BE_IN_FUTURE can not be overridden
           xml_doc.at("Registration-Date").children = Date.tomorrow.to_s
           # NOMINATED_DATE_TOO_LATE can be overridden
-          xml_doc.at("OR-Assessment-End-Date").children = '2020-05-01'
+          xml_doc.at("OR-Assessment-End-Date").children = "2020-05-01"
           xml_doc.at("This-Assessment/Nominated-Date").children = "2020-09-01"
 
           result =

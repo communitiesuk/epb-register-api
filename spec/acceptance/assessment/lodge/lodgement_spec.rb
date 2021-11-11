@@ -282,7 +282,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
         "0000-0000-0000-0000-0000",
       )
       expect(overidden_lodgement_event["rule_triggers"]).to eq(
-          '[{"code": "DATES_CANT_BE_MORE_THAN_4_YEARS_AGO", "title": "\\"Inspection-Date\\", \\"Registration-Date\\" and \\"Issue-Date\\" must not be more than 4 years ago"}]',
+        '[{"code": "DATES_CANT_BE_MORE_THAN_4_YEARS_AGO", "title": "\\"Inspection-Date\\", \\"Registration-Date\\" and \\"Issue-Date\\" must not be more than 4 years ago"}]',
       )
     end
 
