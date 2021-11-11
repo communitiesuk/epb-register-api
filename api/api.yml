@@ -33,6 +33,8 @@ tags:
     description: Endpoints used by the Green Deal register integration, including Renewable Heat Initiative
   - name: Reports
     description: Endpoints providing reports, i.e. specific data views of operational interest
+  - name: Kpi-Dashboard
+    description: Endpoints providing data for the KPI dashboard
 
 paths:
   /schemes:
@@ -1690,6 +1692,7 @@ paths:
       summary: >-
         Gets the statistics data used to create the KPI dashboard page for the front end. The JSON contains the assessment statistics per month per type
       description: Get statistics data for epcs
+      operationId: get-assessment-statistics-data
       security:
         - oauth:
             - 'statistics:fetch'
