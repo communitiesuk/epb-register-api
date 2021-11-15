@@ -60,5 +60,10 @@ describe Gateway::AssessmentStatisticsGateway do
       results = gateway.fetch_monthly_stats.sort_by { |h| [h["month"], h["assessment_type"]] }
       expect(results).to eq expected_results
     end
+
+    it "does not return the additional row - data saved in the current month" do
+      gateway.save(assessment_type: "RdSAP", assessments_count: 24, rating_average: 28, day_date: Time.now, transaction_type: 4)
+      expect(gateway.fetch_monthly_stats.length).to eq(4)
+    end
   end
 end

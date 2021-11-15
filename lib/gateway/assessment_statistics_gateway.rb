@@ -53,6 +53,7 @@ module Gateway
       sql = <<-SQL
               SELECT SUM(assessments_count) as num_assessments, assessment_type,  AVG(rating_average) as rating_average, to_char(day_date, 'YYYY-MM') as month
               FROM assessment_statistics a
+              WHERE to_char(day_date, 'YYYY-MM') != to_char(now(), 'YYYY-MM')
               GROUP BY to_char(day_date, 'YYYY-MM'), assessment_type
               ORDER BY to_char(day_date, 'YYYY-MM') desc;
 
