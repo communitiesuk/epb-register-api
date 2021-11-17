@@ -7,7 +7,11 @@ loader.setup
 
 environment = ENV["STAGE"]
 
-Sentry.init { |config| config.environment = environment }
+Sentry.init do |config|
+  config.environment = environment
+  config.capture_exception_frame_locals = true
+end
+
 use Sentry::Rack::CaptureExceptions
 
 run RegisterApiService
