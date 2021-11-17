@@ -10,7 +10,7 @@ source "https://rubygems.org" do
 
   group :worker do
     gem "redis", "~> 4.5.1"
-    gem "sidekiq", "~> 6.2.2"
+    gem "sidekiq", "~> 6.3.1"
     gem "sidekiq-cron", "~> 1.2.0"
   end
 
