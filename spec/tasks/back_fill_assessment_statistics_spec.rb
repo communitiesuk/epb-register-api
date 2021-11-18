@@ -20,7 +20,7 @@ describe "back full daily statistics rake" do
 
   context "when invoking the rake with correct argument " do
     it "calls the use case to export daily assessments 5 times" do
-      assessment_types = %w[SAP RdSAP CEPC DEC AC-CERT]
+      assessment_types = %w[SAP RdSAP CEPC DEC DEC-RR AC-CERT]
       back_fill_statistics.invoke(5)
       expect(save_daily_assessments_stats_use_case).to have_received(:execute).exactly(5).times
       expect(save_daily_assessments_stats_use_case).to have_received(:execute).with(date: (Time.now.to_date - 3).strftime("%F"), assessment_types: assessment_types).exactly(1).times

@@ -12,7 +12,7 @@ namespace :maintenance do
     number_days.to_i.times do |i|
       assessment_date = last_day - (i + 1).days
       begin
-        ApiFactory.save_daily_assessments_stats_use_case.execute(date: assessment_date.strftime("%F"), assessment_types: %w[SAP RdSAP CEPC DEC AC-CERT])
+        ApiFactory.save_daily_assessments_stats_use_case.execute(date: assessment_date.strftime("%F"), assessment_types: %w[SAP RdSAP CEPC DEC DEC-RR AC-CERT])
         days_saved += 1
       rescue Boundary::NoData
         pp "back_fill_statistics error - no data saved for #{assessment_date} "
