@@ -77,18 +77,16 @@ describe Gateway::AssessmentStatisticsGateway do
       gateway.save(assessment_type: "RdSAP", assessments_count: 5, rating_average: 50, day_date: Date.parse("04-09-2021"), transaction_type: 2, country: "Northern Ireland")
     end
 
-    it "returns the expected aggregate data for last month in England & Wales" do
-      results = gateway.fetch_monthly_stats_by_country("England & Wales").sort_by { |h| [h["month"], h["assessment_type"]] }
-      expect(results).to eq([{ "num_assessments" => 82, "rating_average" => 78.0, "month" => "2021-07", "assessment_type" => "SAP" },
-                             { "num_assessments" => 93, "rating_average" => 62.0, "month" => "2021-09", "assessment_type" => "RdSAP" }])
+    let(:expected_results) do
+      [{ "num_assessments" => 82, "rating_average" => 78.0, "month" => "2021-07", "assessment_type" => "SAP", "country" => "England & Wales" },
+       { "num_assessments" => 93, "rating_average" => 62.0, "month" => "2021-09", "assessment_type" => "RdSAP",  "country" => "England & Wales" },
+       { "num_assessments" => 5, "rating_average" => 50.0, "month" => "2021-09", "assessment_type" => "RdSAP",   "country" => "Northern Ireland" },
+       { "num_assessments" => 10, "rating_average" => 42.0, "month" => "2021-09", "assessment_type" => "SAP", "country" => "Northern Ireland" }]
     end
 
-    it "returns the expected aggregate data for last month in Northern Ireland" do
-      results = gateway.fetch_monthly_stats_by_country("Northern Ireland").sort_by { |h| [h["month"], h["assessment_type"]] }
-      expect(results).to eq([
-        { "num_assessments" => 5, "rating_average" => 50.0, "month" => "2021-09", "assessment_type" => "RdSAP" },
-        { "num_assessments" => 10, "rating_average" => 42.0, "month" => "2021-09", "assessment_type" => "SAP" },
-      ])
+    it "returns the expected aggregate data by country" do
+      results = gateway.fetch_monthly_stats_by_country.sort_by { |h| [h["country"], h["month"], h["assessment_type"]] }
+      expect(results).to eq(expected_results)
     end
   end
 end

@@ -67,25 +67,16 @@ module Gateway
       ActiveRecord::Base.connection.exec_query(sql)
     end
 
-    def fetch_monthly_stats_by_country(country)
+    def fetch_monthly_stats_by_country
       sql = <<-SQL
-              SELECT SUM(assessments_count) as num_assessments, assessment_type,  AVG(rating_average) as rating_average, to_char(day_date, 'YYYY-MM') as month
+              SELECT SUM(assessments_count) as num_assessments, assessment_type,  AVG(rating_average) as rating_average, to_char(day_date, 'YYYY-MM') as month, country
               FROM assessment_statistics a
-              WHERE to_char(day_date, 'YYYY-MM') != to_char(now(), 'YYYY-MM') and country = $1
+              WHERE to_char(day_date, 'YYYY-MM') != to_char(now(), 'YYYY-MM')
               GROUP BY to_char(day_date, 'YYYY-MM'), assessment_type, country
               ORDER BY to_char(day_date, 'YYYY-MM') desc;
-
       SQL
 
-      bindings = [
-        ActiveRecord::Relation::QueryAttribute.new(
-          "country",
-          country,
-          ActiveRecord::Type::String.new,
-        ),
-      ]
-
-      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
+      ActiveRecord::Base.connection.exec_query(sql)
     end
   end
 end
