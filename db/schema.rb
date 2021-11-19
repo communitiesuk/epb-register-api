@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_09_124947) do
+ActiveRecord::Schema.define(version: 2021_11_19_113727) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -37,7 +37,8 @@ ActiveRecord::Schema.define(version: 2021_11_09_124947) do
     t.float "rating_average"
     t.datetime "day_date", null: false
     t.integer "transaction_type"
-    t.index ["assessment_type", "day_date", "transaction_type"], name: "index_assessment_statistics_unique_group", unique: true
+    t.string "country"
+    t.index ["assessment_type", "day_date", "transaction_type", "country"], name: "index_assessment_statistics_unique_group", unique: true
     t.index ["assessments_count"], name: "index_assessment_statistics_on_assessments_count"
     t.index ["day_date"], name: "index_assessment_statistics_on_day_date"
     t.index ["rating_average"], name: "index_assessment_statistics_on_rating_average"

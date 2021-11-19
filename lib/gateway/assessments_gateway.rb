@@ -89,7 +89,8 @@ module Gateway
       ]
 
       sql = <<-SQL
-           SELECT assessment_id, type_of_assessment, ae.registered_by AS scheme_id, current_energy_efficiency_rating
+           SELECT assessment_id, type_of_assessment, ae.registered_by AS scheme_id, current_energy_efficiency_rating,
+             CASE WHEN a.postcode LIKE 'BT%' THEN 'Northern Ireland' ELSE 'England & Wales' END as country
              FROM assessments a
            JOIN assessors ae on a.scheme_assessor_id = ae.scheme_assessor_id
            WHERE to_char(created_at, 'YYYY-MM-DD') = $1 AND migrated IS NOT TRUE
