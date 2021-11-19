@@ -24,6 +24,7 @@ module UseCase
           transaction_type: stat[:transaction_type],
           assessments_count: stat[:assessments_count],
           rating_average: stat[:rating_average],
+          country: stat[:country],
         )
       rescue ActiveRecord::RecordNotUnique
         raise Boundary::NoData
@@ -35,16 +36,19 @@ module UseCase
     def format_stats_data(assessments:)
       result = []
 
-      group_by_type_and_transaction(assessments).each do |assessment_type, transaction_types|
+      group_data(assessments).each do |assessment_type, transaction_types|
         transaction_types.each do |transaction_type, assessments_with_type|
-          hash = {
-            assessment_type: assessment_type,
-            transaction_type: transaction_type,
-            assessments_count: assessments_with_type.size,
-            rating_average: average_rating(assessments_with_type),
-          }
+          assessments_with_type.each do |country, assessment|
+            hash = {
+              assessment_type: assessment_type,
+              transaction_type: transaction_type,
+              assessments_count: assessment.size,
+              rating_average: average_rating(assessment),
+              country: country,
+            }
 
-          result << hash
+            result << hash
+          end
         end
       end
 
@@ -64,9 +68,11 @@ module UseCase
       Presenter::Export::Statistics.new(wrapper).build
     end
 
-    def group_by_type_and_transaction(assessments)
+    def group_data(assessments)
       assessments.group_by { |assessment| assessment[:type_of_assessment] }.transform_values do |assessments_for_assessment_type|
-        assessments_for_assessment_type.group_by { |assessment| assessment[:transaction_type] }
+        assessments_for_assessment_type.group_by { |assessment| assessment[:transaction_type] }.transform_values do |assessments_for_country|
+          assessments_for_country.group_by { |assessment| assessment[:country] }
+        end
       end
     end
   end

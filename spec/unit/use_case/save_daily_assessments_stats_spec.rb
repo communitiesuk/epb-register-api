@@ -23,11 +23,11 @@ describe UseCase::SaveDailyAssessmentsStats do
       allow(statistics_gateway).to receive(:save)
       allow(assessments_gateway).to receive(:fetch_assessments_by_date).and_return(
         [
-          { "assessment_id" => "0000-0000-0000-0000", "type_of_assessment" => "RdSAP", "scheme_id": 1, "current_energy_efficiency_rating" => 50 },
-          { "assessment_id" => "0000-0000-0000-0001", "type_of_assessment" => "SAP", "scheme_id": 1, "current_energy_efficiency_rating" => 50 },
-          { "assessment_id" => "0000-0000-0000-0002", "type_of_assessment" => "SAP", "scheme_id": 2, "current_energy_efficiency_rating" => 30 },
-          { "assessment_id" => "0000-0000-0000-0003", "type_of_assessment" => "SAP", "scheme_id": 2, "current_energy_efficiency_rating" => 50  },
-          { "assessment_id" => "0000-0000-0000-0004", "type_of_assessment" => "SAP", "scheme_id": 2, "current_energy_efficiency_rating" => 89  },
+          { "assessment_id" => "0000-0000-0000-0000", "type_of_assessment" => "RdSAP", "scheme_id": 1, "current_energy_efficiency_rating" => 50, "country" => "England & Wales" },
+          { "assessment_id" => "0000-0000-0000-0001", "type_of_assessment" => "SAP", "scheme_id": 1, "current_energy_efficiency_rating" => 50, "country" => "England & Wales" },
+          { "assessment_id" => "0000-0000-0000-0002", "type_of_assessment" => "SAP", "scheme_id": 2, "current_energy_efficiency_rating" => 30, "country" => "England & Wales" },
+          { "assessment_id" => "0000-0000-0000-0003", "type_of_assessment" => "SAP", "scheme_id": 2, "current_energy_efficiency_rating" => 50, "country" => "England & Wales" },
+          { "assessment_id" => "0000-0000-0000-0004", "type_of_assessment" => "SAP", "scheme_id": 2, "current_energy_efficiency_rating" => 89, "country" => "England & Wales" },
         ],
       )
       rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
@@ -51,18 +51,21 @@ describe UseCase::SaveDailyAssessmentsStats do
             assessments_count: 1,
             rating_average: 50,
             transaction_type: "1",
+            country: "England & Wales",
           },
           {
             assessment_type: "SAP",
             assessments_count: 3,
             rating_average: 43,
             transaction_type: "1",
+            country: "England & Wales",
           },
           {
             assessment_type: "SAP",
             assessments_count: 1,
             rating_average: 89,
             transaction_type: "2",
+            country: "England & Wales",
           },
         ],
       )
@@ -86,8 +89,8 @@ describe UseCase::SaveDailyAssessmentsStats do
       allow(statistics_gateway).to receive(:save)
       allow(assessments_gateway).to receive(:fetch_assessments_by_date).and_return(
         [
-          { "assessment_id" => "0000-0000-0000-0000", "type_of_assessment" => "RdSAP", "scheme_id": 1, "current_energy_efficiency_rating" => 50  },
-          { "assessment_id" => "0000-0000-0000-0001", "type_of_assessment" => "AC-Report", "scheme_id": 1, "current_energy_efficiency_rating" => 0 },
+          { "assessment_id" => "0000-0000-0000-0000", "type_of_assessment" => "RdSAP", "scheme_id": 1, "current_energy_efficiency_rating" => 50, "country" => "England & Wales" },
+          { "assessment_id" => "0000-0000-0000-0001", "type_of_assessment" => "AC-Report", "scheme_id": 1, "current_energy_efficiency_rating" => 0, "country" => "England & Wales" },
         ],
       )
       rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
@@ -96,7 +99,7 @@ describe UseCase::SaveDailyAssessmentsStats do
       allow(assessments_xml_gateway).to receive(:fetch).with("0000-0000-0000-0001").and_return({ xml: ac_report_xml, schema_type: "CEPC-8.0.0" })
     end
 
-    it "calculates the average and groups them by assessment type, scheme id and transaction type" do
+    it "calculates the average and groups them by assessment type, country and transaction type" do
       expect(use_case.execute(date: "2021-10-25")).to eq(
         [
           {
@@ -104,12 +107,55 @@ describe UseCase::SaveDailyAssessmentsStats do
             assessments_count: 1,
             rating_average: 50,
             transaction_type: "1",
+            country: "England & Wales",
           },
           {
             assessment_type: "AC-Report",
             assessments_count: 1,
             rating_average: 0,
             transaction_type: nil,
+            country: "England & Wales",
+          },
+        ],
+      )
+
+      expect(statistics_gateway).to have_received(:save).exactly(2).times
+    end
+  end
+
+  context "when deriving the statistics for epc for both England and Northern Ireland" do
+    before do
+      allow(statistics_gateway).to receive(:save)
+      allow(assessments_gateway).to receive(:fetch_assessments_by_date).and_return(
+        [
+          { "assessment_id" => "0000-0000-0000-0000", "type_of_assessment" => "RdSAP",  "current_energy_efficiency_rating" => 50, "country" => "England & Wales"  },
+          { "assessment_id" => "0000-0000-0000-0001", "type_of_assessment" => "RdSAP",  "current_energy_efficiency_rating" => 60, "country" => "Northern Ireland" },
+          { "assessment_id" => "0000-0000-0000-0002", "type_of_assessment" => "RdSAP",  "current_energy_efficiency_rating" => 25, "country" => "Northern Ireland" },
+        ],
+      )
+      rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
+
+      allow(assessments_xml_gateway).to receive(:fetch).with("0000-0000-0000-0000").and_return({ xml: rdsap_xml, schema_type: "RdSAP-Schema-20.0.0" })
+      allow(assessments_xml_gateway).to receive(:fetch).with("0000-0000-0000-0001").and_return({  xml: rdsap_xml, schema_type: "RdSAP-Schema-NI-20.0.0" })
+      allow(assessments_xml_gateway).to receive(:fetch).with("0000-0000-0000-0002").and_return({  xml: rdsap_xml, schema_type: "RdSAP-Schema-NI-20.0.0" })
+    end
+
+    it "calculates the average and groups them by assessment type, country and transaction type" do
+      expect(use_case.execute(date: "2021-10-25")).to eq(
+        [
+          {
+            assessment_type: "RdSAP",
+            assessments_count: 1,
+            rating_average: 50,
+            transaction_type: "1",
+            country: "England & Wales",
+          },
+          {
+            assessment_type: "RdSAP",
+            assessments_count: 2,
+            rating_average: 42,
+            transaction_type: "1",
+            country: "Northern Ireland",
           },
         ],
       )
