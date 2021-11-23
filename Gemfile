@@ -25,7 +25,7 @@ source "https://rubygems.org" do
     gem "wisper-rspec", "~> 1.0", ">= 1.0.1"
   end
 
-  gem "aws-sdk-s3", "~> 1.106"
+  gem "aws-sdk-s3", "~> 1.107"
   gem "epb-auth-tools", "~> 1.0.8"
   gem "epb_view_models", "~> 1.0", "~> 1.0.14"
   gem "geocoder", "~> 1.7.0"
