@@ -9,7 +9,6 @@ source "https://rubygems.org" do
   end
 
   group :worker do
-    gem "redis", "~> 4.5.1"
     gem "sidekiq", "~> 6.3.1"
     gem "sidekiq-cron", "~> 1.2.0"
   end
@@ -36,6 +35,7 @@ source "https://rubygems.org" do
   gem "pg", "~> 1.2", ">= 1.2.3"
   gem "puma", "~> 5.5"
   gem "rake", "~> 13.0", ">= 13.0.6"
+  gem "redis", "~> 4.5.1"
   gem "rubocop-govuk", "~> 4.2"
   gem "rubocop-performance", require: false
   gem "rubyzip", "~> 2.3.2"
