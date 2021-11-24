@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_19_113727) do
+ActiveRecord::Schema.define(version: 2021_11_24_152645) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -150,6 +150,14 @@ ActiveRecord::Schema.define(version: 2021_11_19_113727) do
     t.index ["entity_id"], name: "index_audit_logs_on_entity_id"
     t.index ["event_type"], name: "index_audit_logs_on_event_type"
     t.index ["timestamp"], name: "index_audit_logs_on_timestamp"
+  end
+
+  create_table "customer_satisfaction", primary_key: "month", id: :datetime, force: :cascade do |t|
+    t.integer "very_satisfied", null: false
+    t.integer "satisfied", null: false
+    t.integer "neither", null: false
+    t.integer "dissatisfied", null: false
+    t.integer "very_dissatisfied", null: false
   end
 
   create_table "green_deal_assessments", id: false, force: :cascade do |t|
