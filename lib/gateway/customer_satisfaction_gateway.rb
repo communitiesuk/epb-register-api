@@ -47,7 +47,7 @@ module Gateway
 
     def fetch
       sql = <<-SQL
-         SELECT to_char(month, 'YYYY-MM') as month, very_satisfied, satisfied, neither, dissatisfied, very_dissatisfied
+         SELECT to_char(month, 'YYYY-MM') as month, very_satisfied, satisfied, neither as neither_satisfied_or_dissatisfied, dissatisfied, very_dissatisfied
           FROM customer_satisfaction
           ORDER BY month
       SQL

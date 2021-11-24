@@ -55,13 +55,14 @@ describe Gateway::CustomerSatisfactionGateway do
 
   describe "#fetch" do
     before do
-      gateway.upsert(Domain::CustomerSatisfaction.new(Time.new(2021, 9, 0o5), 111, 51, 3, 4, 5))
+      gateway.upsert(Domain::CustomerSatisfaction.new(Time.new(2021, 9, 0o5), 111, 51, 31, 4, 5))
       gateway.upsert(Domain::CustomerSatisfaction.new(Time.new(2021, 10, 0o5), 222, 52, 3, 4, 5))
     end
 
     it "returns the values inserted into the table" do
       expect(gateway.fetch.first["very_satisfied"]).to eq(111)
       expect(gateway.fetch.first["satisfied"]).to eq(51)
+      expect(gateway.fetch.first["neither_satisfied_or_dissatisfied"]).to eq(31)
       expect(gateway.fetch.last["very_satisfied"]).to eq(222)
       expect(gateway.fetch.last["satisfied"]).to eq(52)
     end
