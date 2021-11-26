@@ -11,7 +11,7 @@ module Controller
       use_case = UseCase::SaveCustomerSatisfaction.new(Gateway::CustomerSatisfactionGateway.new)
       object = JSON.parse(request.body.read, object_class: OpenStruct)
       use_case.execute(object)
-      json_api_response(code: 200, data: "Customer satisfaction has been saved")
+      json_api_response(code: 200, data: "Customer satisfaction has been saved for #{object.stats_date}")
     rescue StandardError => e
       case e
       when Boundary::InvalidDate, Boundary::ArgumentMissing, Boundary::Json::Error
