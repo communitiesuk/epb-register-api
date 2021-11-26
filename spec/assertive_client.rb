@@ -41,6 +41,7 @@ def assertive_put(
   scopes: [],
   should_authenticate: true
 )
+
   assertive_request(
     accepted_responses: accepted_responses,
     should_authenticate: should_authenticate,
