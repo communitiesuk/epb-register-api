@@ -1,5 +1,5 @@
 describe Events::Listener do
-  subject(:listener) { described_class.new(event_broadcaster) }
+  subject(:listener) { described_class.new(event_broadcaster, logger: Logger.new($stdout)) }
 
   let(:event_broadcaster) { instance_spy(Events::Broadcaster) }
 

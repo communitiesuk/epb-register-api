@@ -214,7 +214,7 @@ class ApiFactory
     return @event_broadcaster unless @event_broadcaster.nil?
 
     @event_broadcaster = Events::Broadcaster.new(logger: logger)
-    Events::Listener.new(@event_broadcaster).attach_listeners
+    Events::Listener.new(@event_broadcaster, logger: logger).attach_listeners
 
     @event_broadcaster
   end
