@@ -40,7 +40,7 @@ module Gateway
         redis_url = ENV["EPB_DATA_WAREHOUSE_QUEUES_URI"]
       else
         redis_instance_name = "dluhc-epb-redis-data-warehouse-#{ENV['STAGE']}"
-        redis_url = RedisConfigurationReader.read_configuration_url(redis_instance_name)
+        redis_url = RedisConfigurationReader.configuration_url(redis_instance_name)
       end
 
       @redis = self.class.redis_client_class.new(url: redis_url)
