@@ -1,8 +1,7 @@
 module Events
   class Listener
-    def initialize(event_broadcaster, logger:)
+    def initialize(event_broadcaster)
       @event_broadcaster = event_broadcaster
-      @logger = logger
     end
 
     def attach_listeners
@@ -20,11 +19,8 @@ module Events
 
     def attach_assessment_lodged
       @event_broadcaster.on :assessment_lodged do |**data|
-        @logger.error "listener responding to assessment_lodged event"
         if notify_data_warehouse_enabled?
-          @logger.error "notifying the data warehouse is enabled, send to data warehouse..."
           NotifyFactory.new_assessment_to_data_warehouse_use_case.execute(assessment_id: data[:assessment_id])
-          @logger.error "...done"
         end
         NotifyFactory.lodgement_to_audit_log(entity_id: data[:assessment_id])
       end
@@ -82,9 +78,7 @@ module Events
     end
 
     def notify_data_warehouse_enabled?
-      is_enabled = Helper::Toggles.enabled? "sync_to_data_warehouse"
-      @logger.error "sync_to_data_warehouse state is: #{is_enabled ? 'on' : 'off'}"
-      is_enabled
+      Helper::Toggles.enabled? "sync_to_data_warehouse"
     end
   end
 end
