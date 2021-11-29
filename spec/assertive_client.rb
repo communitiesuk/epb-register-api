@@ -666,6 +666,7 @@ def fetch_statistics_new(
   scopes:, accepted_responses: [200],
   authenticate: true,
   auth_data: {}
+
 )
 
   assertive_get(
