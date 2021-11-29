@@ -21,11 +21,11 @@ describe "Acceptance:SaveCustomerSatisfaction" do
       end
 
       it "returns a 200 correct status" do
-        put_customer_satisfaction(body: data, scopes: %w[admin:opt_out])
+        put_customer_satisfaction(body: data, scopes: %w[admin:upload_stats])
       end
 
       it "the send data is saved to the database" do
-        put_customer_satisfaction(body: data, scopes: %w[admin:opt_out])
+        put_customer_satisfaction(body: data, scopes: %w[admin:upload_stats])
         saved_data = ActiveRecord::Base.connection.exec_query("SELECT * FROM customer_satisfaction WHERE month ='2021-09-01'").first
         expect(saved_data["very_satisfied"]).to eq(1)
         expect(saved_data["satisfied"]).to eq(2)
@@ -40,7 +40,7 @@ describe "Acceptance:SaveCustomerSatisfaction" do
                  "neither" => 3,
                  "dissatisfied" => 4,
                  "very_dissatisfied" => 5 }
-        response = put_customer_satisfaction(body: data, scopes: %w[admin:opt_out], accepted_responses: [400])
+        response = put_customer_satisfaction(body: data, scopes: %w[admin:upload_stats], accepted_responses: [400])
         expect(response.status).to eq(400)
         expect(JSON.parse(response.body)["errors"]).to eq([{ "code" => "INVALID_REQUEST", "title" => "not a valid date" }])
       end
@@ -54,7 +54,7 @@ describe "Acceptance:SaveCustomerSatisfaction" do
                  "neither" => 3,
                  "dissatisfied" => 4,
                  "very_dissatisfied" => 5 }
-        response = put_customer_satisfaction(body: data, scopes: %w[admin:opt_out], accepted_responses: [400])
+        response = put_customer_satisfaction(body: data, scopes: %w[admin:upload_stats], accepted_responses: [400])
         expect(response.status).to eq(400)
         expect(JSON.parse(response.body)["errors"]).to eq([{ "code" => "INVALID_REQUEST", "title" => "A required argument is missing: satisfied" }])
       end

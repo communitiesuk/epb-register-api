@@ -7,7 +7,7 @@ module Controller
     #   json_api_response(data: report[:all])
     # end
 
-    put "/api/customer-satisfaction", auth_token_has_all: %w[admin:opt_out] do
+    put "/api/customer-satisfaction", auth_token_has_all: %w[admin:upload_stats] do
       use_case = UseCase::SaveCustomerSatisfaction.new(Gateway::CustomerSatisfactionGateway.new)
       object = JSON.parse(request.body.read, object_class: OpenStruct)
       use_case.execute(object)
