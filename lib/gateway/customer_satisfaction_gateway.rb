@@ -49,7 +49,7 @@ module Gateway
       sql = <<-SQL
          SELECT to_char(month, 'YYYY-MM') as month, very_satisfied, satisfied, neither, dissatisfied, very_dissatisfied
           FROM customer_satisfaction
-          ORDER BY month
+          ORDER BY month DESC
       SQL
 
       ActiveRecord::Base.connection.exec_query(sql)

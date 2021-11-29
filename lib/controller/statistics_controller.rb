@@ -9,8 +9,9 @@ module Controller
 
     get "/api/statistics/new",
         auth_token_has_all: %w[statistics:fetch] do
-      use_case = UseCase::FetchMonthlyAssessmentStats.new(Gateway::AssessmentStatisticsGateway.new)
-      report = use_case.execute
+      assessment_use_case = UseCase::FetchMonthlyAssessmentStats.new(Gateway::AssessmentStatisticsGateway.new)
+
+      report = assessment_use_case.execute
       json_api_response(data: report)
     end
   end
