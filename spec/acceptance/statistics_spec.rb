@@ -43,6 +43,10 @@ describe "Acceptance::AssessmentStatistics", set_with_timecop: true do
 
     ApiFactory.save_daily_assessments_stats_use_case
               .execute(date: Time.now.strftime("%F"), assessment_types: %w[SAP RdSAP CEPC DEC AC-CERT AC-REPORT])
+
+    customer_use_case  = UseCase::SaveCustomerSatisfaction.new(Gateway::CustomerSatisfactionGateway.new)
+    customer_use_case.execute( Domain::CustomerSatisfaction.new(Time.new(2021, 9, 0o5), 111, 51, 3, 4, 5))
+
   end
 
   context "when calling the statistics data end" do
@@ -84,23 +88,31 @@ describe "Acceptance::AssessmentStatistics", set_with_timecop: true do
         accepted_responses: [200],
         scopes: %w[statistics:fetch],
       )
-      expect(JSON.parse(response.body, symbolize_names: true)[:data][:all]).to eq([{ assessmentType: "RdSAP", month: Time.now.strftime("%Y-%m"), numAssessments: 3, ratingAverage: 50.0 }])
+      expect(JSON.parse(response.body, symbolize_names: true)[:data][:assessments][:all]).to eq([{ assessmentType: "RdSAP", month: Time.now.strftime("%Y-%m"), numAssessments: 3, ratingAverage: 50.0 }])
     end
 
-    it "produces a json object of the all aggregated data for England & wales" do
+    it "returns json that contains all the assessments aggregated data for England & wales" do
       response =   fetch_statistics_new(
         accepted_responses: [200],
         scopes: %w[statistics:fetch],
       )
-      expect(JSON.parse(response.body, symbolize_names: true)[:data][:englandWales]).to eq([{ assessmentType: "RdSAP", month: Time.now.strftime("%Y-%m"), numAssessments: 2, ratingAverage: 50.0, country: "England & Wales" }])
+      expect(JSON.parse(response.body, symbolize_names: true)[:data][:assessments][:englandWales]).to eq([{ assessmentType: "RdSAP", month: Time.now.strftime("%Y-%m"), numAssessments: 2, ratingAverage: 50.0, country: "England & Wales" }])
     end
 
-    it "produces a json object of the all aggregated data for Northern Ireland" do
+    it "returns json that  contains the assessments aggregated data for Northern Ireland" do
       response =   fetch_statistics_new(
         accepted_responses: [200],
         scopes: %w[statistics:fetch],
       )
-      expect(JSON.parse(response.body, symbolize_names: true)[:data][:northernIreland]).to eq([{ assessmentType: "RdSAP", month: Time.now.strftime("%Y-%m"), numAssessments: 1, ratingAverage: 50.0, country: "Northern Ireland" }])
+      expect(JSON.parse(response.body, symbolize_names: true)[:data][:assessments][:northernIreland]).to eq([{ assessmentType: "RdSAP", month: Time.now.strftime("%Y-%m"), numAssessments: 1, ratingAverage: 50.0, country: "Northern Ireland" }])
+    end
+
+    it "returns json that contains the customer satisfaction data" do
+      response =   fetch_statistics_new(
+        accepted_responses: [200],
+        scopes: %w[statistics:fetch],
+        )
+      expect(JSON.parse(response.body, symbolize_names: true)[:data][:customer]).to eq([{dissatisfied:4, month:"2021-09", neither:3, satisfied:51, veryDissatisfied:5, verySatisfied:111}])
     end
   end
 end
