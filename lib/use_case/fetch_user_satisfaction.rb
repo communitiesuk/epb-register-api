@@ -1,5 +1,5 @@
 module UseCase
-  class FetchCustomerSatisfaction
+  class FetchUserSatisfaction
     def initialize(gateway)
       @gateway = gateway
     end

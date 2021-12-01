@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_24_152645) do
+ActiveRecord::Schema.define(version: 2021_12_01_094303) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -152,14 +152,6 @@ ActiveRecord::Schema.define(version: 2021_11_24_152645) do
     t.index ["timestamp"], name: "index_audit_logs_on_timestamp"
   end
 
-  create_table "customer_satisfaction", primary_key: "month", id: :datetime, force: :cascade do |t|
-    t.integer "very_satisfied", null: false
-    t.integer "satisfied", null: false
-    t.integer "neither", null: false
-    t.integer "dissatisfied", null: false
-    t.integer "very_dissatisfied", null: false
-  end
-
   create_table "green_deal_assessments", id: false, force: :cascade do |t|
     t.string "green_deal_plan_id", null: false
     t.string "assessment_id", null: false
@@ -234,6 +226,14 @@ ActiveRecord::Schema.define(version: 2021_11_24_152645) do
     t.string "name"
     t.boolean "active", default: true
     t.index ["name"], name: "index_schemes_on_name", unique: true
+  end
+
+  create_table "user_satisfaction", primary_key: "month", id: :datetime, force: :cascade do |t|
+    t.integer "very_satisfied", null: false
+    t.integer "satisfied", null: false
+    t.integer "neither", null: false
+    t.integer "dissatisfied", null: false
+    t.integer "very_dissatisfied", null: false
   end
 
   add_foreign_key "assessments", "assessors", column: "scheme_assessor_id", primary_key: "scheme_assessor_id"

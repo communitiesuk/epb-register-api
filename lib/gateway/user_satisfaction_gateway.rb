@@ -1,8 +1,8 @@
 module Gateway
-  class CustomerSatisfactionGateway
-    def upsert(customer_satisfaction)
+  class UserSatisfactionGateway
+    def upsert(satisfaction_object)
       sql = <<-SQL
-       INSERT INTO customer_satisfaction(month, very_satisfied, satisfied, neither,dissatisfied,very_dissatisfied )
+       INSERT INTO user_satisfaction(month, very_satisfied, satisfied, neither,dissatisfied,very_dissatisfied )
        VALUES($1, $2, $3, $4, $5, $6)
         ON CONFLICT(month)
         DO UPDATE SET very_satisfied = $2, satisfied= $3, neither=$4, dissatisfied=$5, very_dissatisfied= $6
@@ -11,32 +11,32 @@ module Gateway
       bindings = [
         ActiveRecord::Relation::QueryAttribute.new(
           "month",
-          customer_satisfaction.stats_date,
+          satisfaction_object.stats_date,
           ActiveRecord::Type::DateTime.new,
         ),
         ActiveRecord::Relation::QueryAttribute.new(
           "very_satisfied",
-          customer_satisfaction.very_satisfied,
+          satisfaction_object.very_satisfied,
           ActiveRecord::Type::Integer.new,
         ),
         ActiveRecord::Relation::QueryAttribute.new(
           "satisfied",
-          customer_satisfaction.satisfied,
+          satisfaction_object.satisfied,
           ActiveRecord::Type::Integer.new,
         ),
         ActiveRecord::Relation::QueryAttribute.new(
           "neither",
-          customer_satisfaction.neither,
+          satisfaction_object.neither,
           ActiveRecord::Type::Integer.new,
         ),
         ActiveRecord::Relation::QueryAttribute.new(
           "dissatisfied",
-          customer_satisfaction.dissatisfied,
+          satisfaction_object.dissatisfied,
           ActiveRecord::Type::Integer.new,
         ),
         ActiveRecord::Relation::QueryAttribute.new(
           "very_dissatisfied",
-          customer_satisfaction.very_dissatisfied,
+          satisfaction_object.very_dissatisfied,
           ActiveRecord::Type::Integer.new,
         ),
 
@@ -48,7 +48,7 @@ module Gateway
     def fetch
       sql = <<-SQL
          SELECT to_char(month, 'YYYY-MM') as month, very_satisfied, satisfied, neither, dissatisfied, very_dissatisfied
-          FROM customer_satisfaction
+          FROM user_satisfaction
           ORDER BY month DESC
       SQL
 

@@ -1,5 +1,5 @@
 module Domain
-  class CustomerSatisfaction
+  class UserSatisfaction
     attr_reader :stats_date, :very_satisfied, :satisfied, :neither, :dissatisfied, :very_dissatisfied
 
     def initialize(stats_date, very_satisfied, satisfied, neither, dissatisfied, very_dissatisfied)

@@ -4602,24 +4602,24 @@ paths:
         '500':
           description: Server error
 
-  /customer-satisfaction:
+  /user-satisfaction:
     put:
       tags:
           - Update customer satisfaction
       summary: >-
-        Send customer satisfaction data for a month to be be used on KPI dashboard
-      description: Update customer satisfaction
-      operationId: put-customer-satisfaction
+        Send user satisfaction data for a month to be be used on KPI dashboard
+      description: Update user satisfaction
+      operationId: put-user-satisfaction
       security:
           - oauth:
               - 'admin:opt_out'
       requestBody:
-        description: Customer Satisfaction data
+        description: User Satisfaction data
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CustomerSatisfaction'
+              $ref: '#/components/schemas/UserSatisfaction'
 
       responses:
           '200':
@@ -4631,7 +4631,7 @@ paths:
                   properties:
                     data:
                       type: string
-                      example: "Customer satisfaction has been saved for 2021-12-01"
+                      example: "User satisfaction has been saved for 2021-12-01"
                     meta:
                       type: object
           '400':
@@ -5738,8 +5738,8 @@ components:
               type: string
               example: '432'
 
-    # Customer Satisfaction
-    CustomerSatisfaction:
+    # User Satisfaction
+    UserSatisfaction:
       type: object
       properties:
         stats_date:

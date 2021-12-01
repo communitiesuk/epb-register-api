@@ -1,12 +1,12 @@
-describe UseCase::SaveCustomerSatisfaction do
+describe UseCase::SaveUserSatisfaction do
   subject(:use_case) { described_class.new(gateway) }
 
   let(:gateway) do
-    instance_double(Gateway::CustomerSatisfactionGateway)
+    instance_double(Gateway::UserSatisfactionGateway)
   end
 
   let(:domain_object) do
-    Domain::CustomerSatisfaction.new(Time.new(2021, 9, 0o5), 755, 125, 51, 69, 81)
+    Domain::UserSatisfaction.new(Time.new(2021, 9, 0o5), 755, 125, 51, 69, 81)
   end
 
   before do
@@ -29,7 +29,7 @@ describe UseCase::SaveCustomerSatisfaction do
 
   context "when parsing a domain object from json" do
     let(:json) do
-      Domain::CustomerSatisfaction.new(Time.new(2021, 11, 23), 1, 2, 3, 4, 5).to_json
+      Domain::UserSatisfaction.new(Time.new(2021, 11, 23), 1, 2, 3, 4, 5).to_json
     end
 
     it "convert json back to object and passed to use case without error" do

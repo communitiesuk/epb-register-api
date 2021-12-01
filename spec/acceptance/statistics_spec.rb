@@ -44,8 +44,8 @@ describe "Acceptance::AssessmentStatistics", set_with_timecop: true do
     ApiFactory.save_daily_assessments_stats_use_case
               .execute(date: Time.now.strftime("%F"), assessment_types: %w[SAP RdSAP CEPC DEC AC-CERT AC-REPORT])
 
-    customer_use_case = UseCase::SaveCustomerSatisfaction.new(Gateway::CustomerSatisfactionGateway.new)
-    customer_use_case.execute(Domain::CustomerSatisfaction.new(Time.new(2021, 9, 0o5), 111, 51, 3, 4, 5))
+    customer_use_case = UseCase::SaveUserSatisfaction.new(Gateway::UserSatisfactionGateway.new)
+    customer_use_case.execute(Domain::UserSatisfaction.new(Time.new(2021, 9, 0o5), 111, 51, 3, 4, 5))
   end
 
   context "when calling the statistics data end" do
@@ -122,12 +122,12 @@ describe "Acceptance::AssessmentStatistics", set_with_timecop: true do
       expect(JSON.parse(response.body, symbolize_names: true)[:data][:northernIreland]).to eq([{ assessmentType: "RdSAP", month: Time.now.strftime("%Y-%m"), numAssessments: 1, ratingAverage: 50.0, country: "Northern Ireland" }])
     end
 
-    # # it "returns json that contains the customer satisfaction data" do
-    #   response = fetch_statistics_new(
-    #     accepted_responses: [200],
-    #     scopes: %w[statistics:fetch],
-    #   )
-    #   expect(JSON.parse(response.body, symbolize_names: true)[:data]).to eq([{ dissatisfied: 4, month: "2021-09", neither: 3, satisfied: 51, veryDissatisfied: 5, verySatisfied: 111 }])
-    # end
+    it "returns json that contains the user satisfaction data" do
+      response = fetch_statistics(
+        accepted_responses: [200],
+        scopes: %w[statistics:fetch],
+      )
+      expect(JSON.parse(response.body, symbolize_names: true)[:data][:user]).to eq([{ dissatisfied: 4, month: "2021-09", neither: 3, satisfied: 51, veryDissatisfied: 5, verySatisfied: 111 }])
+    end
   end
 end

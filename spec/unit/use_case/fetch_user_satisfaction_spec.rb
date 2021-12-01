@@ -1,9 +1,9 @@
-describe UseCase::FetchCustomerSatisfaction do
-  context "when extracting customer satisfaction data " do
+describe UseCase::FetchUserSatisfaction do
+  context "when extracting user satisfaction data " do
     subject(:use_case) { described_class.new(stats_gateway) }
 
     let(:stats_gateway)  do
-      instance_double(Gateway::CustomerSatisfactionGateway)
+      instance_double(Gateway::UserSatisfactionGateway)
     end
 
     let(:data) do
