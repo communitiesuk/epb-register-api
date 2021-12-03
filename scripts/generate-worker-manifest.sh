@@ -8,7 +8,7 @@ cat << EOF
 ---
 applications:
   - name: $APPLICATION_NAME
-    memory: 256M
+    memory: 512M
     instances: 1
     command: bundle exec sidekiq -r ./sidekiq/config.rb
     no-route: true
