@@ -1,15 +1,27 @@
 namespace :maintenance do
-  desc "Save statistics for yesterday"
-  task :daily_statistics do
-    yesterday = (Time.now.to_date - 1).strftime("%F")
+  desc "Save statistics for a date (defaults to yesterday)"
+  task :daily_statistics, %i[date] do |_, args|
+    date = args.date
+
+    if date
+      parsable = begin
+        Date.strptime(date, "%Y-%m-%d")
+      rescue StandardError
+        false
+      end
+      raise(ArgumentError) unless parsable
+    else
+      yesterday = (Time.now.to_date - 1).strftime("%F")
+      date = yesterday
+    end
 
     begin
       ApiFactory.save_daily_assessments_stats_use_case
-        .execute(date: yesterday, assessment_types: %w[SAP RdSAP CEPC DEC AC-CERT DEC-RR])
+        .execute(date: date, assessment_types: %w[SAP RdSAP CEPC DEC AC-CERT DEC-RR])
 
-      puts "Statistics for #{yesterday} saved"
+      puts "Statistics for #{date} saved"
     rescue Boundary::TerminableError
-      raise Boundary::NoData, yesterday
+      raise Boundary::NoData, date
     end
   end
 end
