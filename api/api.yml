@@ -127,6 +127,12 @@ paths:
                           example: >-
                             A scheme with this name already exists in the
                             register
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /schemes/{schemeId}:
     put:
@@ -139,6 +145,12 @@ paths:
           description: Update successful
         '404':
           description: Scheme not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service unavailable
           content:
             application/json:
               schema:
@@ -316,6 +328,12 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
         '422':
           description: Assessor data is invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service unavailable
           content:
             application/json:
               schema:
@@ -676,6 +694,12 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
         '500':
           description: Server error
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /assessments/{assessmentId}:
     get:
@@ -878,6 +902,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /assessments/{assessmentId}/address-id:
     put:
@@ -925,6 +955,12 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
         '404':
           description: Assessment not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service unavailable
           content:
             application/json:
               schema:
@@ -1057,6 +1093,12 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
         '500':
           description: Server error
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /reports/{schemeId}/assessors/status:
       get:
@@ -1429,6 +1471,12 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
         '500':
           description: Server error
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /greendeal/disclosure/plans/{planId}:
     put:
@@ -1490,6 +1538,12 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
         '500':
           description: Server error
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
     delete:
       tags:
         - Green Deal
@@ -1523,6 +1577,12 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
         '500':
           description: Server error
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /reports/assessments/region-and-type:
     get:
@@ -1740,6 +1800,12 @@ paths:
               application/json:
                 schema:
                   $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
 components:
   securitySchemes:
