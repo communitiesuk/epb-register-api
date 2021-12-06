@@ -28,6 +28,8 @@ module Controller
     end
 
     before do
+      raise ReadOnlyMode if !request.get? && Helper::Toggles.enabled?("register-api-read-only-mode")
+
       response.headers["Access-Control-Allow-Origin"] = "*"
       response.headers["Access-Control-Allow-Headers"] =
         "Content-Type, Cache-Control, Accept"
@@ -162,6 +164,11 @@ module Controller
     error Sinatra::NotFound do
       content_type :text
       error_response(404, "NOT_FOUND", "Method not found")
+    end
+
+    class ReadOnlyMode < RuntimeError; end
+    error Controller::BaseController::ReadOnlyMode do
+      error_response(503, "SERVICE_UNAVAILABLE", "The service is currently only accepting GET requests")
     end
   end
 end
