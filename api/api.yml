@@ -69,6 +69,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
     post:
       tags:
         - Manage Schemes
@@ -213,6 +219,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /schemes/{schemeId}/assessors/{schemeAssessorId}:
     get:
@@ -255,6 +267,12 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
         '404':
           description: Assessor not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service unavailable
           content:
             application/json:
               schema:
@@ -417,6 +435,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /search/addresses:
     get:
@@ -482,6 +506,12 @@ paths:
                 $ref: '#/components/schemas/AddressSearchResults'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service unavailable
           content:
             application/json:
               schema:
@@ -558,6 +588,12 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service unavailable
           content:
             application/json:
               schema:
@@ -756,6 +792,12 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
         '500':
           description: Server error
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /assessments/{assessmentId}/summary:
     get:
@@ -808,6 +850,12 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
         '500':
           description: Server error
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /assessments/{assessmentId}/meta-data:
     get:
@@ -850,6 +898,12 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
         '500':
           description: Server error
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /assessments/{assessmentId}/opt-out:
     put:
@@ -1018,6 +1072,12 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
         '500':
           description: Server error
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /assessments/{assessmentId}/status:
     post:
@@ -1155,6 +1215,12 @@ paths:
               application/json:
                 schema:
                   $ref: '#/components/schemas/ErrorResponse'
+          '503':
+            description: Service unavailable
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorResponse'
 
   /reports/assessors/lookup:
     get:
@@ -1208,6 +1274,12 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service unavailable
           content:
             application/json:
               schema:
@@ -1270,6 +1342,12 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
         '500':
           description: Server error
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /greendeal/assessments/{assessmentId}/xml:
     get:
@@ -1344,6 +1422,12 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
         '500':
           description: Server error
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /greendeal/rhi/assessments/{assessmentId}/latest:
     get:
@@ -1403,6 +1487,12 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
         '500':
           description: Server error
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /greendeal/disclosure/assessments/{assessmentId}/plans:
     post:
@@ -1624,6 +1714,12 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
         '500':
           description: Server error
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /reports/assessments/scheme-and-type:
     get:
@@ -1680,6 +1776,12 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
         '500':
           description: Server error
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /reports/assessments/scheme-and-type/rrn:
     get:
@@ -1736,6 +1838,12 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
         '500':
           description: Server error
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /statistics:
     get:
@@ -1765,6 +1873,12 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
         '500':
           description: Server error
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /user-satisfaction:
     put:

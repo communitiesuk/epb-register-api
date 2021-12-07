@@ -29,6 +29,7 @@ RSpec.describe "Read only mode" do
 
   context "when read only mode is ON" do
     before { Helper::Toggles.set_feature("register-api-read-only-mode", true) }
+
     after { Helper::Toggles.set_feature("register-api-read-only-mode", false) }
 
     let(:get_routes) { routes_to_test.select { |route| route[:verb] == "get" } }
