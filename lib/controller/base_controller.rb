@@ -28,6 +28,8 @@ module Controller
     end
 
     before do
+      raise MaintainceMode if request.path != "/healthcheck" && Helper::Toggles.enabled?("register-api-maintaince-mode")
+
       raise ReadOnlyMode if !request.get? && Helper::Toggles.enabled?("register-api-read-only-mode")
 
       response.headers["Access-Control-Allow-Origin"] = "*"
@@ -164,6 +166,11 @@ module Controller
     error Sinatra::NotFound do
       content_type :text
       error_response(404, "NOT_FOUND", "Method not found")
+    end
+
+    class MaintainceMode < RuntimeError; end
+    error Controller::BaseController::MaintainceMode do
+      error_response(503, "SERVICE_UNAVAILABLE", "The service is currently under maintaince")
     end
 
     class ReadOnlyMode < RuntimeError; end
