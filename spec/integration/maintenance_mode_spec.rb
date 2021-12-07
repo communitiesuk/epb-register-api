@@ -1,4 +1,4 @@
-RSpec.describe "Maintaince mode" do
+RSpec.describe "Maintenance mode" do
   include RSpecRegisterApiServiceMixin
 
   ignored_controllers = { BaseController: {} }.freeze
@@ -14,8 +14,8 @@ RSpec.describe "Maintaince mode" do
     end
   }.flatten.compact
 
-  context "when maintaince mode is OFF" do
-    before { Helper::Toggles.set_feature("register-api-maintaince-mode", false) }
+  context "when maintenance mode is OFF" do
+    before { Helper::Toggles.set_feature("register-api-maintenance-mode", false) }
 
     it "allows all requests" do
       routes_to_test.each do |route|
@@ -27,10 +27,10 @@ RSpec.describe "Maintaince mode" do
     end
   end
 
-  context "when maintaince mode is ON" do
-    before { Helper::Toggles.set_feature("register-api-maintaince-mode", true) }
+  context "when maintenance mode is ON" do
+    before { Helper::Toggles.set_feature("register-api-maintenance-mode", true) }
 
-    after { Helper::Toggles.set_feature("register-api-maintaince-mode", false) }
+    after { Helper::Toggles.set_feature("register-api-maintenance-mode", false) }
 
     it "allows request to the /healthcheck endpoint" do
       response = get "/healthcheck"
@@ -45,7 +45,7 @@ RSpec.describe "Maintaince mode" do
 
         expect(response.status).to be 503
         expect(JSON.parse(response.body, symbolize_names: true)[:errors]).to eq(
-          [{ code: "SERVICE_UNAVAILABLE", title: "The service is currently under maintaince" }],
+          [{ code: "SERVICE_UNAVAILABLE", title: "The service is currently under maintenance" }],
         )
       end
     end

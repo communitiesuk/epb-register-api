@@ -28,7 +28,7 @@ module Controller
     end
 
     before do
-      raise MaintainceMode if request.path != "/healthcheck" && Helper::Toggles.enabled?("register-api-maintaince-mode")
+      raise MaintenanceMode if request.path != "/healthcheck" && Helper::Toggles.enabled?("register-api-maintenance-mode")
 
       raise ReadOnlyMode if !request.get? && Helper::Toggles.enabled?("register-api-read-only-mode")
 
@@ -168,9 +168,9 @@ module Controller
       error_response(404, "NOT_FOUND", "Method not found")
     end
 
-    class MaintainceMode < RuntimeError; end
-    error Controller::BaseController::MaintainceMode do
-      error_response(503, "SERVICE_UNAVAILABLE", "The service is currently under maintaince")
+    class MaintenanceMode < RuntimeError; end
+    error Controller::BaseController::MaintenanceMode do
+      error_response(503, "SERVICE_UNAVAILABLE", "The service is currently under maintenance")
     end
 
     class ReadOnlyMode < RuntimeError; end
