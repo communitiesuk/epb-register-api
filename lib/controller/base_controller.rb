@@ -165,7 +165,7 @@ module Controller
 
     error Sinatra::NotFound do
       content_type :text
-      error_response(404, "NOT_FOUND", "Method not found")
+      error_response(404, "NOT_FOUND", "Not found")
     end
 
     class MaintenanceMode < RuntimeError; end

@@ -17,9 +17,9 @@ describe "Integration::Rackup" do
         expect(response.status).to eq(404)
       end
 
-      it "return a status of Method not found" do
+      it "returns a status of Not found" do
         json_response = JSON.parse(response.body, symbolize_names: true)
-        expect(json_response[:errors][0][:title]).to eq("Method not found")
+        expect(json_response[:errors][0][:title]).to eq("Not found")
       end
     end
 
