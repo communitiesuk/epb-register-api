@@ -27,6 +27,11 @@ generate-worker-manifest:
 	$(if ${PAAS_SPACE},,$(error Must specify PAAS_SPACE))
 	@scripts/generate-worker-manifest.sh ${DEPLOY_WORKER} ${PAAS_SPACE} > worker_manifest.yml
 
+.PHONY: generate-autoscaling-policy
+generate-autoscaling-policy: ## Generate policy for Cloud Foundry App Auto-Scaler
+	$(if ${PAAS_SPACE},,$(error Must specify PAAS_SPACE))
+	@scripts/generate-autoscaling-policy.sh ${PAAS_SPACE} > autoscaling-policy.json
+
 .PHONY: deploy-app
 deploy-app: ## Deploys the app to PaaS
 	$(call check_space)
@@ -47,6 +52,11 @@ deploy-app: ## Deploys the app to PaaS
 	cf set-env "${DEPLOY_APPNAME}" SENTRY_DSN "${SENTRY_DSN}"
 
 	cf push "${DEPLOY_APPNAME}" --strategy rolling
+
+	@if [ ${PAAS_SPACE} = "integration" ]; then\
+		@$(MAKE) generate-autoscaling-policy;\
+		cf attach-autoscaling-policy "${DEPLOY_APPNAME}" autoscaling-policy.json;\
+	fi
 
 .PHONY: deploy-worker
 deploy-worker:
