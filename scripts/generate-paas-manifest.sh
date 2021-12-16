@@ -22,5 +22,6 @@ applications:
     services:
       - mhclg-epb-db-$STAGE
       - dluhc-epb-redis-data-warehouse-$STAGE
+      - dluhc-scale-register-api-$STAGE
 
 EOF

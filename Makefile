@@ -54,9 +54,7 @@ deploy-app: ## Deploys the app to PaaS
 
 	cf push "${DEPLOY_APPNAME}" --strategy rolling
 
-	@if [ ${PAAS_SPACE} = "integration" ] || [ ${PAAS_SPACE} = "production" ]; then\
-		cf attach-autoscaling-policy "${DEPLOY_APPNAME}" autoscaling-policy.json;\
-	fi
+	cf attach-autoscaling-policy "${DEPLOY_APPNAME}" autoscaling-policy.json
 
 .PHONY: deploy-worker
 deploy-worker:
