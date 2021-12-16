@@ -212,7 +212,7 @@ GEM
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.1.0)
-    unleash (3.2.5)
+    unleash (4.0.0)
       murmurhash3 (~> 0.1.6)
     webmock (3.14.0)
       addressable (>= 2.8.0)
@@ -255,7 +255,7 @@ DEPENDENCIES
   sinatra-contrib!
   sinatra-cross_origin (~> 0.4.0)!
   timecop (~> 0.9.4)!
-  unleash (~> 3.2.4)!
+  unleash (~> 4.0.0)!
   webmock (~> 3.14)!
   wisper (~> 2.0, >= 2.0.1)!
   wisper-rspec (~> 1.0, >= 1.0.1)!
