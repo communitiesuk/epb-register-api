@@ -38,6 +38,7 @@ deploy-app: ## Deploys the app to PaaS
 	$(if ${DEPLOY_APPNAME},,$(error Must specify DEPLOY_APPNAME))
 
 	@$(MAKE) generate-manifest
+	@$(MAKE) generate-autoscaling-policy
 
 	cf apply-manifest -f manifest.yml
 
@@ -52,6 +53,10 @@ deploy-app: ## Deploys the app to PaaS
 	cf set-env "${DEPLOY_APPNAME}" SENTRY_DSN "${SENTRY_DSN}"
 
 	cf push "${DEPLOY_APPNAME}" --strategy rolling
+
+	@if [ ${PAAS_SPACE} = "integration" ] || [ ${PAAS_SPACE} = "production" ]; then\
+		cf attach-autoscaling-policy "${DEPLOY_APPNAME}" autoscaling-policy.json;\
+	fi
 
 .PHONY: deploy-worker
 deploy-worker:
