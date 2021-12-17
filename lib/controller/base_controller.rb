@@ -168,12 +168,14 @@ module Controller
       error_response(404, "NOT_FOUND", "Not found")
     end
 
-    class MaintenanceMode < RuntimeError; end
+    class ScheduledDowntimeError < RuntimeError; end
+
+    class MaintenanceMode < ScheduledDowntimeError; end
     error Controller::BaseController::MaintenanceMode do
       error_response(503, "SERVICE_UNAVAILABLE", "The service is currently under maintenance")
     end
 
-    class ReadOnlyMode < RuntimeError; end
+    class ReadOnlyMode < ScheduledDowntimeError; end
     error Controller::BaseController::ReadOnlyMode do
       error_response(503, "SERVICE_UNAVAILABLE", "The service is currently only accepting GET requests")
     end
