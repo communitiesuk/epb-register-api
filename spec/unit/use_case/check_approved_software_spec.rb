@@ -17,25 +17,56 @@ describe UseCase::CheckApprovedSoftware do
         allow(ENV).to receive(:[]).with("DOMESTIC_APPROVED_SOFTWARE").and_return(File.read("#{__dir__}/fixtures/domestic_software_list.json"))
       end
 
-      context "and the software in the XML is approved" do
+      context "when major version of the software in the XML is approved" do
         before do
           domestic_xml.at("Calculation-Software-Name").children = "Lodg-o"
-          domestic_xml.at("Calculation-Software-Version").children = "6.5"
         end
 
-        it "returns true" do
-          expect(use_case.execute(assessment_xml: domestic_xml, schema_name: "RdSAP-Schema-20.0.0")).to be true
+        version_formats = [
+          "4.06r0008",
+          "4.04r13",
+          "6.5",
+          "v94.0.1.5",
+          "6.05.082",
+          "9.94",
+          "Debug Mode",
+          "Version: 1.5.1.12",
+          "2.1.0.5",
+          "2.1.1.9",
+        ]
+
+        version_formats.each do |format|
+          it "returns true for #{format} format" do
+            domestic_xml.at("Calculation-Software-Version").children = format
+
+            expect(use_case.execute(assessment_xml: domestic_xml, schema_name: "RdSAP-Schema-20.0.0")).to be true
+          end
         end
       end
 
-      context "and the software in the XML has an approved name but not an approved version" do
+      context "when software in the XML has an approved name but not an approved major version" do
         before do
           domestic_xml.at("Calculation-Software-Name").children = "Lodg-o"
-          domestic_xml.at("Calculation-Software-Version").children = "5.1"
         end
 
-        it "returns false" do
-          expect(use_case.execute(assessment_xml: domestic_xml, schema_name: "RdSAP-Schema-20.0.0")).to be false
+        version_formats = [
+          "4.03r0008",
+          "4.03r13",
+          "6.4",
+          "v94.0.0.5",
+          "6.04.082",
+          "9.93",
+          "Version: 1.5.0.12",
+          "2.0.0.5",
+          "2.1.9.9",
+        ]
+
+        version_formats.each do |format|
+          it "returns false for #{format} format" do
+            domestic_xml.at("Calculation-Software-Version").children = format
+
+            expect(use_case.execute(assessment_xml: domestic_xml, schema_name: "RdSAP-Schema-20.0.0")).to be false
+          end
         end
       end
 

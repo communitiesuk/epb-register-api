@@ -58,7 +58,10 @@ module UseCase
     end
 
     def match?(name:, version:)
-      software.key?(name) && software[name].include?(version)
+      return false unless software.key?(name)
+
+      approved_major_versions = software[name].map { |approved_version| major_version(approved_version) }
+      approved_major_versions.include?(major_version(version))
     end
 
     def list_exists?
@@ -68,6 +71,14 @@ module UseCase
   private
 
     attr_reader :software
+
+    def major_version(version)
+      return version.split(".").tap(&:pop).join(".") unless version.count(".") <= 1
+
+      return version.split("r").first if version.include?("r")
+
+      version
+    end
   end
 
   # The non-domestic software list, if it exists, is assumed to be provided as a JSON string encoding a hash with the single key "software",
