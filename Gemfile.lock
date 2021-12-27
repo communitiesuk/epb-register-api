@@ -4,17 +4,16 @@ GEM
 GEM
   remote: https://rubygems.org/
   specs:
-    activemodel (6.1.4.1)
-      activesupport (= 6.1.4.1)
-    activerecord (6.1.4.1)
-      activemodel (= 6.1.4.1)
-      activesupport (= 6.1.4.1)
-    activesupport (6.1.4.1)
+    activemodel (7.0.0)
+      activesupport (= 7.0.0)
+    activerecord (7.0.0)
+      activemodel (= 7.0.0)
+      activesupport (= 7.0.0)
+    activesupport (7.0.0)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
-      zeitwerk (~> 2.3)
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
     ast (2.4.2)
@@ -107,7 +106,7 @@ GEM
       rake (~> 13.0)
     method_source (1.0.0)
     mini_portile2 (2.6.1)
-    minitest (5.14.4)
+    minitest (5.15.0)
     mock_redis (0.29.0)
       ruby2_keywords
     multi_json (1.15.0)
@@ -215,7 +214,7 @@ GEM
       rack (~> 2.2)
       rack-protection (= 2.1.0)
       tilt (~> 2.0)
-    sinatra-activerecord (2.0.23)
+    sinatra-activerecord (2.0.25)
       activerecord (>= 4.1)
       sinatra (>= 1.0)
     sinatra-contrib (2.1.0)
@@ -273,7 +272,7 @@ DEPENDENCIES
   sidekiq (~> 6.3.1)!
   sidekiq-cron (~> 1.2.0)!
   sinatra (~> 2.0, >= 2.0.7)!
-  sinatra-activerecord (~> 2.0.23)!
+  sinatra-activerecord (~> 2.0.25)!
   sinatra-contrib!
   sinatra-cross_origin (~> 0.4.0)!
   timecop (~> 0.9.4)!
