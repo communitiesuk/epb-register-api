@@ -36,7 +36,7 @@ module UseCase
     attr_reader :logger
   end
 
-  # The domestic software list, if it exists, is assumed to be provided as a JSON string encoding a hash with the single key "software",
+  # The domestic software list is provided as a JSON string encoding a hash with the single key "software",
   # which in turn contains a hash that has software names (as strings) as keys, with each entry containing a list of software versions
   # (not necessarily ordered).
   #
