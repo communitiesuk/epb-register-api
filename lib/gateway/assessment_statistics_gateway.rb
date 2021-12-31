@@ -1,5 +1,16 @@
 module Gateway
   class AssessmentStatisticsGateway
+    VALID_ASSESSMENT_TYPES = %w[
+      RdSAP
+      SAP
+      CEPC
+      CEPC-RR
+      DEC
+      DEC-RR
+      AC-CERT
+      AC-REPORT
+    ].freeze
+
     def save(assessments_count:, assessment_type:, rating_average:, day_date:, transaction_type:, country: "")
       insert_sql = <<-SQL
             INSERT INTO assessment_statistics(assessments_count, assessment_type, rating_average, day_date, transaction_type, country)
@@ -77,6 +88,44 @@ module Gateway
       SQL
 
       ActiveRecord::Base.connection.exec_query(sql)
+    end
+
+    def save_daily_stats(date:, assessment_types: nil)
+      sql = <<-SQL
+        INSERT INTO  assessment_statistics(assessments_count, assessment_type, rating_average, day_date, country)
+         SELECT COUNT(assessment_id),
+                type_of_assessment,
+                AVG(current_energy_efficiency_rating),
+                 CAST(to_char(created_at, 'YYYY-MM-DD') AS Date),
+                CASE WHEN a.postcode LIKE 'BT%' THEN 'Northern Ireland' ELSE 'England & Wales' END as country
+           FROM assessments a
+           WHERE to_char(created_at, 'YYYY-MM-DD') = $1 AND migrated IS NOT TRUE
+
+      SQL
+
+      bindings = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "date",
+          date,
+          ActiveRecord::Type::String.new,
+        ),
+      ]
+
+      if assessment_types.is_a?(Array)
+        invalid_types = assessment_types - VALID_ASSESSMENT_TYPES
+        raise StandardError, "Invalid types" unless invalid_types.empty?
+
+        list_of_types = assessment_types.map { |n| "'#{n}'" }
+        sql += <<~SQL_TYPE_OF_ASSESSMENT
+          AND type_of_assessment IN(#{list_of_types.join(',')})
+        SQL_TYPE_OF_ASSESSMENT
+      end
+
+      sql += <<~SQL_GROUP
+        GROUP BY to_char(created_at, 'YYYY-MM-DD'), type_of_assessment, country;
+      SQL_GROUP
+
+      ActiveRecord::Base.connection.exec_query(sql, "SQL", bindings)
     end
   end
 end

@@ -1,13 +1,10 @@
 describe "back full daily statistics rake" do
   let(:back_fill_statistics) { get_task("maintenance:back_fill_statistics") }
-  let(:assessments_gateway) { instance_double(Gateway::AssessmentsGateway) }
-  let(:assessments_xml_gateway) { instance_double(Gateway::AssessmentsXmlGateway) }
+
   let(:save_daily_assessments_stats_use_case) { instance_double(UseCase::SaveDailyAssessmentsStats) }
 
   before do
     allow($stdout).to receive(:puts)
-    allow(ApiFactory).to receive(:assessments_gateway).and_return(assessments_gateway)
-    allow(ApiFactory).to receive(:assessments_xml_gateway).and_return(assessments_xml_gateway)
     allow(ApiFactory).to receive(:save_daily_assessments_stats_use_case).and_return(save_daily_assessments_stats_use_case)
     allow(save_daily_assessments_stats_use_case).to receive(:execute)
   end

@@ -21,7 +21,6 @@ RSpec.describe "Read only mode" do
       routes_to_test.each do |route|
         controller = method(route[:verb].to_sym)
         response = controller.call(route[:path])
-
         expect(response.status).not_to be 503
       end
     end

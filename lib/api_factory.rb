@@ -139,9 +139,7 @@ class ApiFactory
 
   def self.save_daily_assessments_stats_use_case
     @save_daily_assessments_stats_use_case ||= UseCase::SaveDailyAssessmentsStats.new(
-      assessment_statistics_gateway: assessment_statistics_gateway,
-      assessments_gateway: assessments_gateway,
-      assessments_xml_gateway: assessments_xml_gateway,
+      assessment_statistics_gateway,
     )
   end
 
