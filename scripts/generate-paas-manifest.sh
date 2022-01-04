@@ -20,7 +20,7 @@ applications:
     health-check-type: http
     health-check-http-endpoint: /healthcheck
     services:
-      - mhclg-epb-db-$STAGE
+      - dluhc-epb-db-$STAGE
       - dluhc-epb-redis-data-warehouse-$STAGE
       - dluhc-scale-register-api-$STAGE
 
