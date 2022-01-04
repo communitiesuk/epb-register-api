@@ -4,6 +4,11 @@
 APPLICATION_NAME=$1  # e.g. dluhc-epb-worker-integration
 STAGE=$2 # i.e. [integration, staging, production]
 
+case "$STAGE" in
+ production) DATABASE="mhclg-epb-db-production" ;;
+ *) DATABASE="dluhc-epb-db-$STAGE" ;;
+esac
+
 cat << EOF
 ---
 applications:
@@ -17,5 +22,5 @@ applications:
     health-check-type: process
     services:
       - dluhc-epb-redis-sidekiq-$STAGE
-      - dluhc-epb-db-$STAGE
+      - $DATABASE
 EOF

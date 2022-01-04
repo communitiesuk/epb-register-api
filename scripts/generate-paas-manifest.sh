@@ -9,6 +9,11 @@ case "$STAGE" in
  *) MEMORY="1G" ;;
 esac
 
+case "$STAGE" in
+ production) DATABASE="mhclg-epb-db-production" ;;
+ *) DATABASE="dluhc-epb-db-$STAGE" ;;
+esac
+
 cat << EOF
 ---
 applications:
@@ -19,7 +24,7 @@ applications:
       - ruby_buildpack
     health-check-type: process
     services:
-      - dluhc-epb-db-$STAGE
+      - $DATABASE
       - dluhc-epb-redis-data-warehouse-$STAGE
       - dluhc-scale-register-api-$STAGE
 
