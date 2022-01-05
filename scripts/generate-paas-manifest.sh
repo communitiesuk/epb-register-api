@@ -22,7 +22,8 @@ applications:
     memory: $MEMORY
     buildpacks:
       - ruby_buildpack
-    health-check-type: process
+    health-check-type: http
+    health-check-http-endpoint: /healthcheck
     services:
       - $DATABASE
       - dluhc-epb-redis-data-warehouse-$STAGE
