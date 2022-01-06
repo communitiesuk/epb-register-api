@@ -1,6 +1,6 @@
 class CreateAssessors < ActiveRecord::Migration[6.0]
   def change
-    create_table :assessors, { id: false } do |t|
+    create_table :assessors, id: false do |t|
       t.string :first_name
       t.string :last_name
       t.string :middle_names

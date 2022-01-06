@@ -1,6 +1,6 @@
 class CreateAddressBase < ActiveRecord::Migration[6.0]
   def change
-    create_table :address_base, { id: false } do |t|
+    create_table :address_base, id: false do |t|
       t.string :uprn
       t.string :postcode, index: true
       t.string :address_line1

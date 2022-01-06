@@ -1,6 +1,6 @@
 class AddGdpFuelSavings < ActiveRecord::Migration[6.0]
   def change
-    create_table :gdp_fuel_savings, { id: false } do |t|
+    create_table :gdp_fuel_savings, id: false do |t|
       t.string :green_deal_plan_id
       t.integer :sequence
     end

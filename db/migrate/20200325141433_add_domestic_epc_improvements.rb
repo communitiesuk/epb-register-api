@@ -1,6 +1,6 @@
 class AddDomesticEpcImprovements < ActiveRecord::Migration[6.0]
   def change
-    create_table :domestic_epc_energy_improvements, { id: false } do |t|
+    create_table :domestic_epc_energy_improvements, id: false do |t|
       t.string :assessment_id
       t.integer :sequence
     end

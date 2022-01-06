@@ -1,6 +1,6 @@
 class CreateDomesticEpcs < ActiveRecord::Migration[6.0]
   def change
-    create_table :domestic_epcs, { id: false } do |t|
+    create_table :domestic_epcs, id: false do |t|
       t.string :certificate_id
       t.datetime :date_of_assessment
       t.datetime :date_of_certificate

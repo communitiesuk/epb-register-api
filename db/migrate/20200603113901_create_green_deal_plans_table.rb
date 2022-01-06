@@ -1,6 +1,6 @@
 class CreateGreenDealPlansTable < ActiveRecord::Migration[6.0]
   def change
-    create_table :green_deal_plans, { id: false } do |t|
+    create_table :green_deal_plans, id: false do |t|
       t.string :green_deal_plan_id
       t.datetime :start_date
       t.datetime :end_date
