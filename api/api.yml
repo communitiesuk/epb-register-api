@@ -1884,7 +1884,7 @@ paths:
     put:
       tags:
         - Update user satisfaction
-      summary: send user saitiscation data for a month to be be used on KPI dashboard
+      summary: send user satisfaction data for a month to be be used on KPI dashboard
       description: Update user satisfaction
       operationId: put-user-satisfaction
       security:
