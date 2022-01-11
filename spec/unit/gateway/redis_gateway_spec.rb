@@ -8,10 +8,17 @@ describe Gateway::RedisGateway do
   after { redis.flushdb }
 
   describe ".push_to_queue" do
-    it "can push assessment ids to an empty queue" do
+    it "can push multiple assessment IDs to an empty queue" do
       gateway.push_to_queue(:assessments, ids)
 
       expect(redis.lrange("assessments", 0, -1).reverse).to eq(ids)
+    end
+
+    it "can push a single assessment ID to an empty queue" do
+      id = "9999-6666-7777-8888-9999"
+      gateway.push_to_queue :assessments, id
+
+      expect(redis.lrange("assessments", 0, -1)).to eq [id]
     end
 
     it "raises an error for an invalid queue name" do
