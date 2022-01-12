@@ -31,7 +31,9 @@ namespace :oneoff do
       next
     end
 
-    count_assessments_to_export_sql = "SELECT COUNT(assessment_id) FROM assessments WHERE created_at BETWEEN $1 AND $2"
+    current_schemas = %w[CEPC-8.0.0 CEPC-NI-8.0.0 RdSAP-Schema-20.0.0 RdSAP-Schema-NI-20.0.0 SAP-Schema-18.0.0 SAP-Schema-NI-18.0.0]
+
+    count_assessments_to_export_sql = "SELECT COUNT(a.assessment_id) FROM assessments AS a INNER JOIN assessments_xml AS ax ON a.assessment_id=ax.assessment_id WHERE created_at BETWEEN $1 AND $2 AND schema_type IN (#{current_schemas.map { |s| "'#{s}'" }.join(', ')})"
     count_assessments_to_export_binds = [
       ActiveRecord::Relation::QueryAttribute.new(
         "from",
@@ -62,8 +64,6 @@ namespace :oneoff do
     puts "Exporting #{export_count} assessments out to the data warehouse queue..."
 
     start_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
-
-    current_schemas = %w[CEPC-8.0.0 CEPC-NI-8.0.0 RdSAP-Schema-20.0.0 RdSAP-Schema-NI-20.0.0 SAP-Schema-18.0.0 SAP-Schema-NI-18.0.0]
 
     raw_connection = ActiveRecord::Base.connection.raw_connection
     get_assessment_ids_sql = "SELECT a.assessment_id FROM assessments AS a INNER JOIN assessments_xml AS ax ON a.assessment_id=ax.assessment_id WHERE created_at BETWEEN '#{until_time.strftime('%Y-%m-%d %H:%M:%S')}' AND '#{rrn_created_at.strftime('%Y-%m-%d %H:%M:%S')}' AND schema_type IN (#{current_schemas.map { |s| "'#{s}'" }.join(', ')}) ORDER BY created_at DESC"
