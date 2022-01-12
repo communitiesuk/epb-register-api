@@ -5,4 +5,3 @@ RSpec.describe Worker::SavePreviousDayStatistics do
     expect { described_class.new.perform }.not_to raise_error
   end
 end
-
