@@ -23,16 +23,15 @@ describe UseCase::CheckApprovedSoftware do
         end
 
         version_formats = [
+          "4.06",
           "4.06r0008",
-          "4.04r13",
+          "6",
           "6.5",
-          "v94.0.1.5",
           "6.05.082",
-          "9.94",
-          "Debug Mode",
+          "v94",
+          "v94.0.1.5",
+          "Twelve",
           "Version: 1.5.1.12",
-          "2.1.0.5",
-          "2.1.1.9",
         ]
 
         version_formats.each do |format|
@@ -50,15 +49,16 @@ describe UseCase::CheckApprovedSoftware do
         end
 
         version_formats = [
-          "4.03r0008",
-          "4.03r13",
-          "6.4",
-          "v94.0.0.5",
-          "6.04.082",
-          "9.93",
-          "Version: 1.5.0.12",
-          "2.0.0.5",
-          "2.1.9.9",
+          "4.05",
+          "4.05r0008",
+          "5",
+          "5.5",
+          "5.05.082",
+          "v91",
+          "v91.0.1.5",
+          "Six",
+          "Version: 0.5.1.12",
+          "2.1.1.9",
         ]
 
         version_formats.each do |format|

@@ -36,13 +36,16 @@ module UseCase
     attr_reader :logger
   end
 
-  # The domestic software list is provided as a JSON string encoding a hash with the single key "software",
-  # which in turn contains a hash that has software names (as strings) as keys, with each entry containing a list of software versions
-  # (not necessarily ordered).
+  # The domestic software list is provided as a JSON string encoding a hash with
+  # the single key "software", which in turn contains a hash that has software
+  # names (as strings) as keys, with each entry containing a list of currently
+  # approved software major versions.
+  # A lodged XML with any version number *beginning with* one of the major
+  # version numbers listed is allowed.
   #
-  # example JSON string:
+  # Example JSON string:
   #
-  #   {"software":{"Acme Scheme Lodgerator":["1.23", "1.24"],"Lodg-o":["6.5","6.6","6.7"]}}
+  #   {"software":{"Acme Lodgerator":["1", "2"],"Lodg-o":["v6.7","v6.6"]}}
   #
   class DomesticSoftwareList
     def initialize(logger: nil)
@@ -60,8 +63,12 @@ module UseCase
     def match?(name:, version:)
       return false unless software.key?(name)
 
-      approved_major_versions = software[name].map { |approved_version| major_version(approved_version) }
-      approved_major_versions.include?(major_version(version))
+      software[name].each do |approved_major_version|
+        if version.start_with? approved_major_version
+          return true
+        end
+      end
+      false
     end
 
     def list_exists?
@@ -71,20 +78,16 @@ module UseCase
   private
 
     attr_reader :software
-
-    def major_version(version)
-      return version.split(".").tap(&:pop).join(".") unless version.count(".") <= 1
-
-      return version.split("r").first if version.include?("r")
-
-      version
-    end
   end
 
-  # The non-domestic software list, if it exists, is assumed to be provided as a JSON string encoding a hash with the single key "software",
-  # which in turn contains a list of known software identifiers (including versioning, with software names duplicated where necessary).
+  # The non-domestic software list is provided as a JSON string encoding a hash
+  # with the single key "software", which in turn contains a list of known
+  # software identifiers (including versioning, with software names duplicated
+  # where necessary).
+  # A lodged XML with any version number that *exactly matches* one of the
+  # software identifier strings listed is allowed.
   #
-  # example JSON string:
+  # Example JSON string:
   #
   #   {"software":["Bentley Lodgement Ace, V2.4","Sentinel, v4.6h","Xyzzy, Official, 2.0"]}
   #
