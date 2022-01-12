@@ -8,6 +8,7 @@ namespace :oneoff do
       puts "Could not parse a time from the until_time argument #{args[:until_time]}."
       next
     end
+    is_dry_run = ENV["dry_run"] != "false"
 
     get_rrn_time_sql = "SELECT created_at FROM assessments WHERE assessment_id=$1 AND created_at IS NOT NULL"
     get_rrn_binds = [
@@ -52,12 +53,15 @@ namespace :oneoff do
       next
     end
 
-    puts "OK to export #{export_count} assessments out to the data warehouse queues? (Y/N)"
-
-    unless $stdin.gets.chomp == "Y"
-      puts "Exiting without performing an export."
+    if is_dry_run
+      puts "#{export_count} assessments would be exported out to the data warehouse queue."
+      puts "To run this export, run this command again with a dry_run=false option declared."
       next
     end
+
+    puts "Exporting #{export_count} assessments out to the data warehouse queue..."
+
+    start_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
 
     current_schemas = %w[CEPC-8.0.0 CEPC-NI-8.0.0 RdSAP-Schema-20.0.0 RdSAP-Schema-NI-20.0.0 SAP-Schema-18.0.0 SAP-Schema-NI-18.0.0]
 
@@ -72,6 +76,8 @@ namespace :oneoff do
       queues.push_to_queue(:assessments, assessment_ids)
     end
 
-    puts "Pushed #{export_count} assessments to the data warehouse queue."
+    seconds_elapsed = Process.clock_gettime(Process::CLOCK_MONOTONIC) - start_time
+
+    puts "Pushed #{export_count} assessments out to the data warehouse queue in #{seconds_elapsed}s."
   end
 end
