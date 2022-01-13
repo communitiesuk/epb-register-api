@@ -1,7 +1,7 @@
 namespace :oneoff do
   desc "Export assessment IDs for date ranges towards data warehouse"
-  task :backfill_to_data_warehouse, [:from_rnn, :until_time] do |_, args|
-    from_rrn = args[:from_rnn]
+  task :backfill_to_data_warehouse, [:from_rrn, :until_time] do |_, args|
+    from_rrn = args[:from_rrn]
     begin
       until_time = Time.parse args[:until_time]
     rescue ArgumentError
