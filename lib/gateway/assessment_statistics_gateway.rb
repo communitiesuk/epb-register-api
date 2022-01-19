@@ -78,6 +78,26 @@ module Gateway
       ActiveRecord::Base.connection.exec_query(sql)
     end
 
+    def fetch_daily_stats_by_date(date)
+      sql = <<-SQL
+        SELECT assessment_type, SUM(assessments_count) as number_of_assessments, AVG(rating_average) as rating_average
+        FROM assessment_statistics a
+        WHERE day_date = $1
+        GROUP BY to_char(day_date, 'YYYY-MM-DD'), assessment_type
+        ORDER BY assessment_type DESC;
+      SQL
+
+      binds = [
+        ActiveRecord::Relation::QueryAttribute.new(
+          "day_date",
+          date,
+          ActiveRecord::Type::Date.new,
+        ),
+      ]
+
+      ActiveRecord::Base.connection.exec_query(sql, "SQL", binds).to_a
+    end
+
     def fetch_monthly_stats_by_country
       sql = <<-SQL
               SELECT SUM(assessments_count) as num_assessments, assessment_type,  AVG(rating_average) as rating_average, to_char(day_date, 'YYYY-MM') as month, country

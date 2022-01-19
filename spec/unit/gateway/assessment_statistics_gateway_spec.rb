@@ -69,6 +69,31 @@ describe Gateway::AssessmentStatisticsGateway do
     end
   end
 
+  describe "#fetch_daily_stats_by_date" do
+    before do
+      gateway.save(assessment_type: "SAP", assessments_count: 82, rating_average: 80, day_date:  Date.parse("04-07-2021"), transaction_type: 1, country: "England & Wales")
+      gateway.save(assessment_type: "SAP", assessments_count: 10, rating_average: 40, day_date:  Date.parse("04-07-2021"), transaction_type: 1, country: "Northern Ireland")
+      gateway.save(assessment_type: "RdSAP", assessments_count: 24, rating_average: 28, day_date: Date.parse("04-07-2021"), transaction_type: 4, country: "England & Wales")
+      gateway.save(assessment_type: "DEC", assessments_count: 5, rating_average: 0, day_date: Date.parse("04-07-2021"), transaction_type: nil, country: "England & Wales")
+      gateway.save(assessment_type: "AC-CERT", assessments_count: 14, rating_average: 0, day_date: Date.parse("04-07-2021"), transaction_type: nil, country: "England & Wales")
+    end
+
+    let(:expected_results) do
+      [
+        { "assessment_type" => "SAP", "number_of_assessments" => 92, "rating_average" => 60.0 },
+        { "assessment_type" => "RdSAP", "number_of_assessments" => 24, "rating_average" => 28.0 },
+        { "assessment_type" => "DEC", "number_of_assessments" => 5, "rating_average" => 0.0 },
+        { "assessment_type" => "AC-CERT", "number_of_assessments" => 14, "rating_average" => 0.0 },
+      ]
+    end
+
+    it "returns the expected aggregate data for a given date" do
+      results = gateway.fetch_daily_stats_by_date("2021-07-04")
+
+      expect(results).to eq(expected_results)
+    end
+  end
+
   describe "#fetch_monthly_stats_by_country" do
     before do
       gateway.save(assessment_type: "SAP", assessments_count: 82, rating_average: 78, day_date: Date.parse("04-07-2021"), transaction_type: 1, country: "England & Wales")
