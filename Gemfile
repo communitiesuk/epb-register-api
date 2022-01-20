@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ruby "2.7.3"
+ruby "2.7.5"
 
 source "https://rubygems.org" do
   group :development do
