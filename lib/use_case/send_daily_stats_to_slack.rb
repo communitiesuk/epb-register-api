@@ -23,7 +23,7 @@ module UseCase
       total_text = "The total of *#{total}* assessments were lodged yesterday of which: \n"
 
       assessment_breakdown_text = daily_stats.map do |assessment|
-        row = "  *#{assessment['number_of_assessments']}* #{assessment['assessment_type']}s"
+        row = "• *#{assessment['number_of_assessments']}* #{assessment['assessment_type']}s"
         row += " with an average rating of #{assessment['rating_average'].round(1)}" if ASSESSMENTS_WITH_AVERAGE_RATING.include?(assessment["assessment_type"])
         row
       end

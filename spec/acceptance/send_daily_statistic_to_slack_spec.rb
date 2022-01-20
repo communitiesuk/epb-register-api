@@ -21,10 +21,10 @@ describe "Sending daily statistics to Slack" do
       end
 
       message = "The total of *135* assessments were lodged yesterday of which: \n" \
-                "  *92* SAPs with an average rating of 60.0\n" \
-                "  *24* RdSAPs with an average rating of 28.0\n" \
-                "  *5* DECs\n" \
-                "  *14* AC-CERTs"
+                "• *92* SAPs with an average rating of 60.0\n" \
+                "• *24* RdSAPs with an average rating of 28.0\n" \
+                "• *5* DECs\n" \
+                "• *14* AC-CERTs"
       expect(Worker::SlackNotification).to have_received(:perform_async).with(message)
     end
   end
