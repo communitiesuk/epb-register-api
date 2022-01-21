@@ -59,25 +59,29 @@ GEM
       zeitwerk (~> 2.4.2)
     et-orbi (1.2.5)
       tzinfo
-    faraday (1.8.0)
+    faraday (1.9.3)
       faraday-em_http (~> 1.0)
       faraday-em_synchrony (~> 1.0)
       faraday-excon (~> 1.1)
-      faraday-httpclient (~> 1.0.1)
+      faraday-httpclient (~> 1.0)
+      faraday-multipart (~> 1.0)
       faraday-net_http (~> 1.0)
-      faraday-net_http_persistent (~> 1.1)
+      faraday-net_http_persistent (~> 1.0)
       faraday-patron (~> 1.0)
       faraday-rack (~> 1.0)
-      multipart-post (>= 1.2, < 3)
+      faraday-retry (~> 1.0)
       ruby2_keywords (>= 0.0.4)
     faraday-em_http (1.0.0)
     faraday-em_synchrony (1.0.0)
     faraday-excon (1.1.0)
     faraday-httpclient (1.0.1)
+    faraday-multipart (1.0.3)
+      multipart-post (>= 1.2, < 3)
     faraday-net_http (1.0.1)
     faraday-net_http_persistent (1.2.0)
     faraday-patron (1.0.0)
     faraday-rack (1.0.0)
+    faraday-retry (1.0.3)
     ffi (1.15.4)
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
@@ -95,8 +99,6 @@ GEM
     http-cookie (1.0.4)
       domain_name (~> 0.5)
     http-form_data (2.3.0)
-    i18n (1.8.10)
-      concurrent-ruby (~> 1.0)
     i18n (1.8.11)
     jmespath (1.4.0)
     json-schema (2.8.1)
@@ -196,13 +198,11 @@ GEM
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
-    sentry-ruby (4.8.1)
+    sentry-ruby (5.0.0)
       concurrent-ruby (~> 1.0, >= 1.0.2)
-      faraday (>= 1.0)
-      sentry-ruby-core (= 4.8.1)
-    sentry-ruby-core (4.8.1)
+      sentry-ruby-core (= 5.0.0)
+    sentry-ruby-core (5.0.0)
       concurrent-ruby
-      faraday
     sidekiq (6.3.1)
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
@@ -269,7 +269,7 @@ DEPENDENCIES
   rubocop-govuk (~> 4.2)!
   rubocop-performance!
   rubyzip (~> 2.3.2)!
-  sentry-ruby (~> 4.8)!
+  sentry-ruby (~> 5.0)!
   sidekiq (~> 6.3.1)!
   sidekiq-cron (~> 1.2.0)!
   sinatra (~> 2.0, >= 2.0.7)!
