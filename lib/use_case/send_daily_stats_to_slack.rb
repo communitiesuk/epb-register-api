@@ -1,5 +1,7 @@
 module UseCase
   class SendDailyStatsToSlack
+    include Sidekiq::Worker
+    
     ASSESSMENTS_WITH_AVERAGE_RATING = %w[SAP RdSAP CEPC].freeze
 
     def initialize(assessment_statistics_gateway:)
