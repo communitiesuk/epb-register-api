@@ -4,8 +4,8 @@ save_previous_day_statistics_job:
   name: "Save previous day statistics -- every day at 3 am"
   queue: default
 
-send_previous_day_statistics_to_slack_job:
+post_previous_day_statistics_to_slack_job:
   cron: "30 9 * * *"
-  class: "UseCase::SendDailyStatsToSlack"
-  name: "Send previous day statistics to Slack -- every day at 8 am"
+  class: "Worker::PostPreviousDayStatisticsToSlack"
+  name: "Send previous day statistics to Slack -- every day at 9:30 am"
   queue: default

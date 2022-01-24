@@ -15,9 +15,7 @@ describe "Sending daily statistics to Slack" do
 
     it "sends aslack notification with yesterdays assessment statistics" do
       Timecop.freeze(2022, 1, 18, 8, 0, 0) do
-        UseCase::SendDailyStatsToSlack.new(
-          assessment_statistics_gateway: assessment_statistics_gateway,
-        ).execute
+        Worker::PostPreviousDayStatisticsToSlack.new.perform
       end
 
       message = "The total of *135* assessments were lodged yesterday of which: \n" \

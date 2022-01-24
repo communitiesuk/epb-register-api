@@ -1,10 +1,8 @@
 module UseCase
-  class SendDailyStatsToSlack
-    include Sidekiq::Worker
-    
+  class FormatDailyStatsForSlack
     ASSESSMENTS_WITH_AVERAGE_RATING = %w[SAP RdSAP CEPC].freeze
 
-    def initialize(assessment_statistics_gateway:)
+    def initialize(assessment_statistics_gateway)
       @assessment_statistics_gateway = assessment_statistics_gateway
     end
 
@@ -13,9 +11,7 @@ module UseCase
       daily_stats = @assessment_statistics_gateway.fetch_daily_stats_by_date(yesterday)
 
       no_stats_message = "No stats for yesterday. Assessors were on hols :palm_tree: or our scheduled job didn't work :robot_face:"
-      message = daily_stats.empty? ? no_stats_message : format_message(daily_stats)
-
-      Worker::SlackNotification.perform_async(message)
+      daily_stats.empty? ? no_stats_message : format_message(daily_stats)
     end
 
   private

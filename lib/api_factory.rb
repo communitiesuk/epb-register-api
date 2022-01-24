@@ -143,6 +143,12 @@ class ApiFactory
     )
   end
 
+  def self.format_daily_stats_for_slack_use_case
+    @format_daily_stats_for_slack_use_case ||= UseCase::FormatDailyStatsForSlack.new(
+      assessment_statistics_gateway,
+    )
+  end
+
   def self.add_green_deal_plan_use_case
     @add_green_deal_plan_use_case ||=
       UseCase::AddGreenDealPlan.new(
