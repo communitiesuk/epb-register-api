@@ -18,8 +18,8 @@ GEM
       public_suffix (>= 2.0.2, < 5.0)
     ast (2.4.2)
     aws-eventstream (1.2.0)
-    aws-partitions (1.543.0)
-    aws-sdk-core (3.125.0)
+    aws-partitions (1.549.0)
+    aws-sdk-core (3.125.5)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.525.0)
       aws-sigv4 (~> 1.1)
@@ -27,7 +27,7 @@ GEM
     aws-sdk-kms (1.53.0)
       aws-sdk-core (~> 3, >= 3.125.0)
       aws-sigv4 (~> 1.1)
-    aws-sdk-s3 (1.110.0)
+    aws-sdk-s3 (1.111.3)
       aws-sdk-core (~> 3, >= 3.125.0)
       aws-sdk-kms (~> 1)
       aws-sigv4 (~> 1.4)
@@ -94,10 +94,8 @@ GEM
     http-cookie (1.0.4)
       domain_name (~> 0.5)
     http-form_data (2.3.0)
-    i18n (1.8.10)
-      concurrent-ruby (~> 1.0)
     i18n (1.8.11)
-    jmespath (1.4.0)
+    jmespath (1.5.0)
     json-schema (2.8.1)
       addressable (>= 2.4)
     jwt (2.3.0)
@@ -246,7 +244,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  aws-sdk-s3 (~> 1.110)!
+  aws-sdk-s3 (~> 1.111)!
   database_cleaner!
   debase!
   epb-auth-tools (~> 1.0.8)!
