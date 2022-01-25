@@ -2,7 +2,7 @@ describe NotifyFactory do
   let(:save_audit_event_use_case) { instance_spy(UseCase::SaveAuditEvent) }
 
   describe "notify to audit log" do
-    notifiers = described_class.methods.select { |method| method.ends_with?("to_audit_log") }
+    notifiers = described_class.methods.select { |method| method.end_with?("to_audit_log") }
 
     notifiers.each do |notifier_method|
       it "#{notifier_method} calls the save audit event use case" do
