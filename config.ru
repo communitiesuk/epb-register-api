@@ -1,3 +1,5 @@
+require "active_support"
+require "active_support/core_ext"
 require "sentry-ruby"
 require "zeitwerk"
 
