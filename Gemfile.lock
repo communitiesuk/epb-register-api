@@ -88,7 +88,7 @@ GEM
     fugit (1.5.2)
       et-orbi (~> 1.1, >= 1.1.8)
       raabro (~> 1.4)
-    geocoder (1.7.2)
+    geocoder (1.7.3)
     hashdiff (1.0.1)
     http (5.0.4)
       addressable (~> 2.8)
@@ -203,7 +203,7 @@ GEM
       sentry-ruby-core (= 5.0.1)
     sentry-ruby-core (5.0.1)
       concurrent-ruby
-    sidekiq (6.3.1)
+    sidekiq (6.4.0)
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
       redis (>= 4.2.0)
@@ -252,7 +252,7 @@ DEPENDENCIES
   debase!
   epb-auth-tools (~> 1.0.8)!
   epb_view_models (~> 1.0.14, ~> 1.0)!
-  geocoder (~> 1.7.2)!
+  geocoder (~> 1.7.3)!
   http!
   json-schema (~> 2.8)!
   mock_redis (~> 0.29.0)!
@@ -270,7 +270,7 @@ DEPENDENCIES
   rubocop-performance!
   rubyzip (~> 2.3.2)!
   sentry-ruby (~> 5.0)!
-  sidekiq (~> 6.3.1)!
+  sidekiq (~> 6.4.0)!
   sidekiq-cron (~> 1.2.0)!
   sinatra (~> 2.0, >= 2.0.7)!
   sinatra-activerecord (~> 2.0.25)!
