@@ -33,7 +33,7 @@ source "https://rubygems.org" do
   gem "namecase", "~> 2.0"
   gem "nokogiri", "~> 1.13.1"
   gem "ougai", "~> 2.0"
-  gem "pg", "~> 1.2", ">= 1.2.3"
+  gem "pg", "~> 1.3"
   gem "puma", "~> 5.5"
   gem "rake", "~> 13.0", ">= 13.0.6"
   gem "redis", "~> 4.5.1"
