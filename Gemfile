@@ -34,7 +34,7 @@ source "https://rubygems.org" do
   gem "nokogiri", "~> 1.13.1"
   gem "ougai", "~> 2.0"
   gem "pg", "~> 1.3"
-  gem "puma", "~> 5.5"
+  gem "puma", "~> 5.6"
   gem "rake", "~> 13.0", ">= 13.0.6"
   gem "redis", "~> 4.5.1"
   gem "rubocop-govuk", "~> 4.3"
