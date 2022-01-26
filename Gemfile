@@ -37,7 +37,7 @@ source "https://rubygems.org" do
   gem "puma", "~> 5.5"
   gem "rake", "~> 13.0", ">= 13.0.6"
   gem "redis", "~> 4.5.1"
-  gem "rubocop-govuk", "~> 4.2"
+  gem "rubocop-govuk", "~> 4.3"
   gem "rubocop-performance", require: false
   gem "rubyzip", "~> 2.3.2"
   gem "sentry-ruby", "~> 5.0"
