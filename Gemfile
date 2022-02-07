@@ -10,7 +10,7 @@ source "https://rubygems.org" do
 
   group :worker do
     gem "http"
-    gem "sidekiq", "~> 6.4.0"
+    gem "sidekiq", "~> 6.4.1"
     gem "sidekiq-cron", "~> 1.2.0"
   end
 
