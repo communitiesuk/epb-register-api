@@ -19,7 +19,7 @@ source "https://rubygems.org" do
     gem "mock_redis", "~> 0.29.0"
     gem "pry", "~> 0.14.1"
     gem "rack-test", "~> 1.1.0"
-    gem "rspec", "~>3.10"
+    gem "rspec", "~>3.11"
     gem "timecop", "~> 0.9.4"
     gem "webmock", "~> 3.14"
     gem "wisper-rspec", "~> 1.0", ">= 1.0.1"
