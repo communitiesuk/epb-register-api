@@ -50,8 +50,8 @@ GEM
     diff-lcs (1.5.0)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
-    epb-auth-tools (1.0.8)
-      jwt (~> 2.2)
+    epb-auth-tools (1.0.9)
+      jwt (~> 2.3)
       oauth2 (~> 1.4)
     epb_view_models (1.0.14)
       nokogiri (~> 1.11)
@@ -250,7 +250,7 @@ DEPENDENCIES
   aws-sdk-s3 (~> 1.112)!
   database_cleaner!
   debase!
-  epb-auth-tools (~> 1.0.8)!
+  epb-auth-tools (~> 1.0.9)!
   epb_view_models (~> 1.0.14, ~> 1.0)!
   geocoder (~> 1.7.3)!
   http!
