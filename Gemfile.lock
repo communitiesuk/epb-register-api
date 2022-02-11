@@ -198,10 +198,10 @@ GEM
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
-    sentry-ruby (5.0.2)
+    sentry-ruby (5.1.0)
       concurrent-ruby (~> 1.0, >= 1.0.2)
-      sentry-ruby-core (= 5.0.2)
-    sentry-ruby-core (5.0.2)
+      sentry-ruby-core (= 5.1.0)
+    sentry-ruby-core (5.1.0)
       concurrent-ruby
     sidekiq (6.4.1)
       connection_pool (>= 2.2.2)
@@ -269,7 +269,7 @@ DEPENDENCIES
   rubocop-govuk (~> 4.3)!
   rubocop-performance!
   rubyzip (~> 2.3.2)!
-  sentry-ruby (~> 5.0)!
+  sentry-ruby (~> 5.1)!
   sidekiq (~> 6.4.1)!
   sidekiq-cron (~> 1.2.0)!
   sinatra (~> 2.0, >= 2.0.7)!
