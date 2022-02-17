@@ -16,7 +16,7 @@ source "https://rubygems.org" do
 
   group :test do
     gem "database_cleaner"
-    gem "mock_redis", "~> 0.29.0"
+    gem "mock_redis", "~> 0.30.0"
     gem "pry", "~> 0.14.1"
     gem "rack-test", "~> 1.1.0"
     gem "rspec", "~>3.11"
