@@ -90,8 +90,8 @@ module UseCase
       # Generally, if there is a PAO number/range string, it should appear on the same line as the street
       if address_data_line[:PAO_START_NUMBER] != "" ||
           address_data_line[:PAO_START_SUFFIX] != "" ||
-          !address_data_line[:PAO_END_NUMBER] != "" ||
-          !address_data_line[:PAO_END_SUFFIX] != ""
+          address_data_line[:PAO_END_NUMBER] != "" ||
+          address_data_line[:PAO_END_SUFFIX] != ""
         pao =
           [
             [
