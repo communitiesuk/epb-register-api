@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_05_152327) do
-
+ActiveRecord::Schema[7.0].define(version: 2022_02_23_171518) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "plpgsql"
@@ -25,17 +24,32 @@ ActiveRecord::Schema.define(version: 2022_01_05_152327) do
     t.string "town"
     t.string "classification_code", limit: 6
     t.string "address_type", limit: 15
-    t.index ["address_line1"], name: "index_address_base_on_address_line1"
-    t.index ["address_line2"], name: "index_address_base_on_address_line2"
+  end
+
+  create_table "address_base_legacy", primary_key: "uprn", id: :string, force: :cascade do |t|
+    t.string "postcode"
+    t.string "address_line1"
+    t.string "address_line2"
+    t.string "address_line3"
+    t.string "address_line4"
+    t.string "town"
+    t.string "classification_code", limit: 6
+    t.string "address_type", limit: 15
     t.index ["postcode"], name: "index_address_base_on_postcode"
-    t.index ["town"], name: "index_address_base_on_town"
+  end
+
+  create_table "address_base_versions", id: false, force: :cascade do |t|
+    t.string "version_name", null: false
+    t.integer "version_number", null: false
+    t.datetime "created_at", null: false
+    t.index ["version_number"], name: "index_address_base_versions_on_version_number", unique: true
   end
 
   create_table "assessment_statistics", force: :cascade do |t|
     t.integer "assessments_count", null: false
     t.string "assessment_type", null: false
     t.float "rating_average"
-    t.datetime "day_date", null: false
+    t.datetime "day_date", precision: nil, null: false
     t.integer "transaction_type"
     t.string "country"
     t.index ["assessment_type", "day_date", "transaction_type", "country"], name: "index_assessment_statistics_unique_group", unique: true
@@ -45,12 +59,12 @@ ActiveRecord::Schema.define(version: 2022_01_05_152327) do
   end
 
   create_table "assessments", primary_key: "assessment_id", id: :string, force: :cascade do |t|
-    t.datetime "date_of_assessment"
-    t.datetime "date_registered"
+    t.datetime "date_of_assessment", precision: nil
+    t.datetime "date_registered", precision: nil
     t.string "type_of_assessment"
     t.integer "current_energy_efficiency_rating", default: 1, null: false
     t.string "postcode"
-    t.datetime "date_of_expiry", null: false
+    t.datetime "date_of_expiry", precision: nil, null: false
     t.string "address_line1"
     t.string "address_line2"
     t.string "address_line3"
@@ -60,9 +74,9 @@ ActiveRecord::Schema.define(version: 2022_01_05_152327) do
     t.boolean "opt_out", default: false
     t.string "address_id"
     t.boolean "migrated", default: false
-    t.datetime "cancelled_at"
-    t.datetime "not_for_issue_at"
-    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }
+    t.datetime "cancelled_at", precision: nil
+    t.datetime "not_for_issue_at", precision: nil
+    t.datetime "created_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }
     t.index "lower((address_line1)::text)", name: "index_assessments_on_address_line1"
     t.index "lower((address_line2)::text)", name: "index_assessments_on_address_line2"
     t.index "lower((address_line3)::text)", name: "index_assessments_on_address_line3"
@@ -95,7 +109,7 @@ ActiveRecord::Schema.define(version: 2022_01_05_152327) do
     t.string "first_name", null: false
     t.string "last_name", null: false
     t.string "middle_names"
-    t.datetime "date_of_birth", null: false
+    t.datetime "date_of_birth", precision: nil, null: false
     t.integer "registered_by", limit: 2, null: false
     t.string "telephone_number"
     t.string "email"
@@ -135,13 +149,13 @@ ActiveRecord::Schema.define(version: 2022_01_05_152327) do
     t.string "qualification_type"
     t.string "previous_status"
     t.string "new_status"
-    t.datetime "recorded_at"
+    t.datetime "recorded_at", precision: nil
     t.string "auth_client_id"
   end
 
   create_table "audit_logs", force: :cascade do |t|
     t.string "event_type", null: false
-    t.datetime "timestamp", default: -> { "now()" }, null: false
+    t.datetime "timestamp", precision: nil, default: -> { "now()" }, null: false
     t.string "entity_id", null: false
     t.string "entity_type", null: false
     t.jsonb "data"
@@ -169,15 +183,15 @@ ActiveRecord::Schema.define(version: 2022_01_05_152327) do
   end
 
   create_table "green_deal_plans", primary_key: "green_deal_plan_id", id: :string, force: :cascade do |t|
-    t.datetime "start_date"
-    t.datetime "end_date"
+    t.datetime "start_date", precision: nil
+    t.datetime "end_date", precision: nil
     t.string "provider_name"
     t.string "provider_telephone"
     t.string "provider_email"
     t.decimal "interest_rate"
     t.boolean "fixed_interest_rate"
     t.decimal "charge_uplift_amount"
-    t.datetime "charge_uplift_date"
+    t.datetime "charge_uplift_date", precision: nil
     t.boolean "cca_regulated"
     t.boolean "structure_changed"
     t.boolean "measures_removed"
@@ -193,7 +207,7 @@ ActiveRecord::Schema.define(version: 2022_01_05_152327) do
 
   create_table "open_data_logs", force: :cascade do |t|
     t.string "assessment_id", null: false
-    t.datetime "created_at", null: false
+    t.datetime "created_at", precision: nil, null: false
     t.integer "task_id", null: false
     t.string "report_type"
     t.index ["assessment_id"], name: "index_open_data_logs_on_assessment_id"
@@ -203,7 +217,7 @@ ActiveRecord::Schema.define(version: 2022_01_05_152327) do
   create_table "overidden_lodgement_events", id: false, force: :cascade do |t|
     t.string "assessment_id"
     t.jsonb "rule_triggers", default: []
-    t.datetime "created_at", precision: 6, null: false
+    t.datetime "created_at", null: false
   end
 
   create_table "postcode_geolocation", force: :cascade do |t|
@@ -226,7 +240,7 @@ ActiveRecord::Schema.define(version: 2022_01_05_152327) do
     t.index ["name"], name: "index_schemes_on_name", unique: true
   end
 
-  create_table "user_satisfaction", primary_key: "month", id: :datetime, force: :cascade do |t|
+  create_table "user_satisfaction", primary_key: "month", id: { type: :datetime, precision: nil }, force: :cascade do |t|
     t.integer "very_satisfied", null: false
     t.integer "satisfied", null: false
     t.integer "neither", null: false

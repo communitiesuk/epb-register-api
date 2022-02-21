@@ -51,6 +51,7 @@ deploy-app: ## Deploys the app to PaaS
 	cf set-env "${DEPLOY_APPNAME}" DOMESTIC_APPROVED_SOFTWARE "${subst ",\",${DOMESTIC_APPROVED_SOFTWARE}}"
 	cf set-env "${DEPLOY_APPNAME}" NON_DOMESTIC_APPROVED_SOFTWARE "${subst ",\",${NON_DOMESTIC_APPROVED_SOFTWARE}}"
 	cf set-env "${DEPLOY_APPNAME}" SENTRY_DSN "${SENTRY_DSN}"
+	cf set-env "${DEPLOY_APPNAME}" OS_DATA_HUB_API_KEY "${OS_DATA_HUB_API_KEY}"
 
 	cf push "${DEPLOY_APPNAME}" --strategy rolling
 
@@ -91,6 +92,10 @@ migrate-db-and-wait-for-success:
 .PHONY: test
 test:
 	@STAGE=test bundle exec rake spec
+
+.PHONY: js-test
+js-test:
+	@npm run test
 
 .PHONY: run
 run:

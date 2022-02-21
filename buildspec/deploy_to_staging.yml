@@ -19,6 +19,7 @@ env:
     JWT_ISSUER: "epbr-jwt-issuer-staging"
     JWT_SECRET: "epbr-jwt-secret-staging"
     SENTRY_DSN: "epbr-sentry-dsn-register-api"
+    OS_DATA_HUB_API_KEY: "epbr-ordnance-survey-downloads-api-key"
 
 phases:
   install:

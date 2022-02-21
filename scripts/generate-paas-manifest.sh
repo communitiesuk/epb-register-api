@@ -21,6 +21,7 @@ applications:
     command: null
     memory: $MEMORY
     buildpacks:
+      - nodejs_buildpack
       - ruby_buildpack
     health-check-type: http
     health-check-http-endpoint: /healthcheck

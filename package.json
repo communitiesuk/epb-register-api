@@ -1,0 +1,60 @@
+{
+  "name": "epb-register-api",
+  "version": "1.0.0",
+  "description": "Node scripts to support the Energy Performance of Buildings Register API application",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "fmt": "npx standard --fix",
+    "lint": "npx standard",
+    "test": "jest --forceExit",
+    "update-address-base": "node lib/tasks/maintenance/address-base.js -i -v",
+    "update-address-base-auto": "node lib/tasks/maintenance/address-base.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/communitiesuk/epb-register-api.git"
+  },
+  "author": "@communitiesuk/epb",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/communitiesuk/epb-register-api/issues"
+  },
+  "homepage": "https://github.com/communitiesuk/epb-register-api#readme",
+  "devDependencies": {
+    "fetch-mock-jest": "^1.5.1",
+    "jest": "^27.5.1",
+    "standard": "^16.0.4"
+  },
+  "standard": {
+    "globals": [
+      "afterAll",
+      "afterEach",
+      "beforeAll",
+      "beforeEach",
+      "describe",
+      "expect",
+      "it",
+      "jest",
+      "test"
+    ]
+  },
+  "dependencies": {
+    "async-memoize-one": "^1.1.0",
+    "commander": "^9.0.0",
+    "csv-stream": "^0.2.0",
+    "node-fetch": "^2.6.7",
+    "pg": "^8.7.3",
+    "pg-promise": "^10.11.1",
+    "request": "^2.88.2",
+    "unzipper": "kinolaev/node-unzipper#patch-1"
+  },
+  "jest": {
+    "setupFiles": [
+      "<rootDir>/spec/js/setUpEnv.js"
+    ],
+    "testRunner": "jest-jasmine2"
+  }
+}

@@ -9,3 +9,8 @@ post_previous_day_statistics_to_slack_job:
   class: "Worker::PostPreviousDayStatisticsToSlack"
   name: "Send previous day statistics to Slack -- every day at 9:30 am"
   queue: default
+
+update_address_base:
+  cron: "30 * * * *"
+  class: "Worker::UpdateAddressBase"
+  name: "Update AddressBase addressing data if an update is available"

@@ -2,6 +2,7 @@ version: 0.2
 
 runtime-versions:
   ruby: 2.7
+  nodejs: 14
 
 env:
   parameter-store:
@@ -13,6 +14,7 @@ phases:
   install:
     runtime-versions:
       ruby: 2.7
+      nodejs: 14
     commands:
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin 689681667086.dkr.ecr.eu-west-2.amazonaws.com
       - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2&
@@ -20,6 +22,7 @@ phases:
   pre_build:
     commands:
       - bundle install
+      - npm ci
       - docker run -d -p 5432:5432 --name postgres-test -e POSTGRES_PASSWORD=$DOCKER_POSTGRES_PASSWORD 689681667086.dkr.ecr.eu-west-2.amazonaws.com/codebuild-image-postgres:latest
       - until docker run --rm --link postgres-test:pg 689681667086.dkr.ecr.eu-west-2.amazonaws.com/codebuild-image-postgres:latest pg_isready -U postgres -h pg; do sleep 1; done
   build:
@@ -28,3 +31,4 @@ phases:
       - make setup-db
       - echo ">>>>>>>> RUNNING TESTS"
       - make test
+      - make js-test

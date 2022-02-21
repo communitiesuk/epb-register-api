@@ -18,6 +18,7 @@ applications:
     command: bundle exec sidekiq -r ./sidekiq/config.rb
     no-route: true
     buildpacks:
+      - nodejs_buildpack
       - ruby_buildpack
     health-check-type: process
     services:
