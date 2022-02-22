@@ -425,6 +425,24 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", set_with_timecop: true do
         end
       end
 
+      context "when town param includes non alphabetical characters" do
+        it "returns status 200" do
+          assertive_get_in_search_scope(
+            "/api/search/addresses?street=Other%20Street&town=:8",
+            accepted_responses: [200],
+          )
+        end
+      end
+
+      context "when street param includes non alphabetical characters" do
+        it "returns status 200" do
+          assertive_get_in_search_scope(
+            "/api/search/addresses?street=:8&town=Whitbury",
+            accepted_responses: [200],
+          )
+        end
+      end
+
       context "when an invalid address type is provided" do
         it "returns status 422" do
           assertive_get_in_search_scope(

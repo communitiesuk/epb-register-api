@@ -190,7 +190,7 @@ module Gateway
     end
 
     def search_by_street_and_town(street, town, address_type)
-      town_text_search = town.include?(" ") ? "PLAINTO_TSQUERY" : "TO_TSQUERY"
+      town_text_search = !town.match?(/[^a-zA-Z\d\s:]/) ? "PLAINTO_TSQUERY" : "TO_TSQUERY"
 
       ranking_sql = <<~SQL
         ,
