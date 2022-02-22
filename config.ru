@@ -19,6 +19,7 @@ Sentry.init do |config|
       event
     end
   end
+  config.send_default_pii = true
 end
 
 use Sentry::Rack::CaptureExceptions
