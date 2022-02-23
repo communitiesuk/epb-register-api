@@ -3,6 +3,53 @@ describe UseCase::SearchAddressesByStreetAndTown, set_with_timecop: true do
 
   subject(:use_case) { described_class.new }
 
+  context "when arguments include non token characters" do
+    before do
+      scheme_id = add_scheme_and_get_id
+      add_assessor(
+        scheme_id: scheme_id,
+        assessor_id: "SPEC000000",
+        body: AssessorStub.new.fetch_request_body(
+          non_domestic_nos3: "ACTIVE",
+          non_domestic_nos4: "ACTIVE",
+          non_domestic_nos5: "ACTIVE",
+          non_domestic_dec: "ACTIVE",
+          domestic_rd_sap: "ACTIVE",
+          domestic_sap: "ACTIVE",
+          non_domestic_sp3: "ACTIVE",
+          non_domestic_cc4: "ACTIVE",
+          gda: "ACTIVE",
+        ),
+      )
+
+      assessment = Nokogiri.XML Samples.xml "RdSAP-Schema-20.0.0"
+
+      lodge_assessment(
+        assessment_body: assessment.to_xml,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        ensure_uprns: false,
+      )
+
+      insert_into_address_base("000000000000", "A0 0AA", "1 Some Street", "", "Whitbury")
+    end
+
+    it "returns only one address for the relevant property" do
+      result = use_case.execute(street: "1 Some Street", town: "Whitbury:!")
+      expect(result.length).to eq(1)
+      expect(result.first.address_id).to eq("UPRN-000000000000")
+      expect(result.first.line1).to eq("1 Some Street")
+      expect(result.first.town).to eq("Whitbury")
+      expect(result.first.postcode).to eq("A0 0AA")
+    end
+
+    it "returns an error when the params are shorter than 2 after sanitising" do
+      expect { use_case.execute(street: "1 Some Street", town: "W:!") }.to raise_error(Boundary::Json::Error)
+    end
+  end
+
   context "when searching the same address in both the assessments and address_base tables" do
     before do
       scheme_id = add_scheme_and_get_id

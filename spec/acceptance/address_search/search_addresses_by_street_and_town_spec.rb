@@ -425,20 +425,34 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", set_with_timecop: true do
         end
       end
 
-      context "when town param includes non alphabetical characters" do
+      context "when town param includes non token characters" do
         it "returns status 200" do
           assertive_get_in_search_scope(
-            "/api/search/addresses?street=Other%20Street&town=:8",
+            "/api/search/addresses?street=Other%20Street&town=Ae():*!&",
             accepted_responses: [200],
+          )
+        end
+
+        it "returns status 422 if the sanitised town length is less than 2 characters" do
+          assertive_get_in_search_scope(
+            "/api/search/addresses?street=Other%20Street&town=A():*!",
+            accepted_responses: [422],
           )
         end
       end
 
-      context "when street param includes non alphabetical characters" do
+      context "when street param includes non token characters" do
         it "returns status 200" do
           assertive_get_in_search_scope(
-            "/api/search/addresses?street=:8&town=Whitbury",
+            "/api/search/addresses?street=Ae Street():*!&&town=Whitbury",
             accepted_responses: [200],
+          )
+        end
+
+        it "returns status 422 if the sanitised street length is less than 2 characters" do
+          assertive_get_in_search_scope(
+            "/api/search/addresses?street=S():*!&&town=Whitbury",
+            accepted_responses: [422],
           )
         end
       end
