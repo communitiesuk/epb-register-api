@@ -46,7 +46,10 @@ describe UseCase::SearchAddressesByStreetAndTown, set_with_timecop: true do
     end
 
     it "returns an error when the params are shorter than 2 after sanitising" do
-      expect { use_case.execute(street: "1 Some Street", town: "W:!") }.to raise_error(Boundary::Json::Error)
+      expect { use_case.execute(street: "1 Some Street", town: "W:!") }.to raise_error(
+        Boundary::Json::Error,
+        "Values must have minimum 2 alphanumeric characters",
+      )
     end
   end
 

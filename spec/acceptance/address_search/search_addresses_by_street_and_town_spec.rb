@@ -434,10 +434,11 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", set_with_timecop: true do
         end
 
         it "returns status 422 if the sanitised town length is less than 2 characters" do
-          assertive_get_in_search_scope(
+          response = JSON.parse(assertive_get_in_search_scope(
             "/api/search/addresses?street=Other%20Street&town=A():*!",
             accepted_responses: [422],
-          )
+          ).body)
+          expect(response["errors"][0]["title"]).to eq("Values must have minimum 2 alphanumeric characters")
         end
       end
 
@@ -450,10 +451,11 @@ describe "Acceptance::AddressSearch::ByStreetAndTown", set_with_timecop: true do
         end
 
         it "returns status 422 if the sanitised street length is less than 2 characters" do
-          assertive_get_in_search_scope(
+          response = JSON.parse(assertive_get_in_search_scope(
             "/api/search/addresses?street=S():*!&&town=Whitbury",
             accepted_responses: [422],
-          )
+          ).body)
+          expect(response["errors"][0]["title"]).to eq("Values must have minimum 2 alphanumeric characters")
         end
       end
 
