@@ -163,6 +163,17 @@ describe "Acceptance::AddressSearch::ByPostcode::AdditionalParams",
       end
     end
 
+    context "when buildingNameNumber param includes non token characters" do
+      it "returns the expected amount of addresses" do
+        response = JSON.parse(assertive_get_in_search_scope(
+          "/api/search/addresses?postcode=A0%200AA&buildingNameNumber=2():*!&",
+          accepted_responses: [200],
+        ).body, symbolize_names: true)
+
+        expect(response[:data][:addresses].length).to eq(7)
+      end
+    end
+
     describe "with a building number" do
       let(:response) do
         JSON.parse(

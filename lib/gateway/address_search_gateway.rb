@@ -8,18 +8,22 @@ module Gateway
     def search_by_postcode(postcode, building_name_number, address_type)
       postcode = Helper::ValidatePostcodeHelper.format_postcode(postcode)
 
-      ranking_sql = <<~SQL
-        ,
-        ((1 - TS_RANK_CD(
-          TO_TSVECTOR('english', LOWER(CONCAT_WS(' ', address_line1, address_line2, address_line3))),
-          TO_TSQUERY('english', LOWER($2))
-        )) * 100) AS matched_rank,
-        LEVENSHTEIN(
-          LOWER($2),
-          LOWER(CONCAT_WS(' ', address_line1, address_line2, address_line3)),
-          0, 1, 1
-        ) AS matched_difference
-      SQL
+      if building_name_number
+        building_name_number_text_search = [" ", "&"].any? { |char| building_name_number.include?(char) } ? "PLAINTO_TSQUERY" : "TO_TSQUERY"
+
+        ranking_sql = <<~SQL
+          ,
+          ((1 - TS_RANK_CD(
+            TO_TSVECTOR('english', LOWER(CONCAT_WS(' ', address_line1, address_line2, address_line3))),
+            #{building_name_number_text_search}('english', LOWER($2))
+          )) * 100) AS matched_rank,
+          LEVENSHTEIN(
+            LOWER($2),
+            LOWER(CONCAT_WS(' ', address_line1, address_line2, address_line3)),
+            0, 1, 1
+          ) AS matched_difference
+        SQL
+      end
 
       sql_assessments = <<~SQL
         SELECT aai.address_id,
