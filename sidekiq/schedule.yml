@@ -11,6 +11,6 @@ post_previous_day_statistics_to_slack_job:
   queue: default
 
 update_address_base:
-  cron: "0 * * * *"
+  cron: "30 0/2 * * *"
   class: "Worker::UpdateAddressBase"
   name: "Update AddressBase addressing data if an update is available"
