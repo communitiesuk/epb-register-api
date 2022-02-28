@@ -68,6 +68,10 @@ deploy-worker:
 
 	cf set-env "${DEPLOY_WORKER}" BUNDLE_WITHOUT "test"
 	cf set-env "${DEPLOY_WORKER}" STAGE "${PAAS_SPACE}"
+	cf set-env "${DEPLOY_WORKER}" EPB_UNLEASH_AUTH_TOKEN "${EPB_UNLEASH_AUTH_TOKEN}"
+	cf set-env "${DEPLOY_WORKER}" EPB_UNLEASH_URI "${EPB_UNLEASH_URI}"
+	cf set-env "${DEPLOY_WORKER}" SENTRY_DSN "${SENTRY_DSN}"
+	cf set-env "${DEPLOY_WORKER}" OS_DATA_HUB_API_KEY "${OS_DATA_HUB_API_KEY}"
 
 	cf push "${DEPLOY_WORKER}" -f worker_manifest.yml
 
