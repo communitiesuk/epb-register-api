@@ -10,7 +10,7 @@ module UseCase
       street = street.delete!("()|:*!") || street
       town = town.delete!("()|:*!") || town
 
-      raise Boundary::Json::Error, "Values must have minimum 2 alphanumeric characters" unless valid_sting_length?(street) && valid_sting_length?(town)
+      raise Boundary::Json::Error, "Values must have minimum 2 alphanumeric characters" unless valid_string_length?(street) && valid_string_length?(town)
 
       @address_search_gateway.search_by_street_and_town street,
                                                         town,
@@ -19,7 +19,7 @@ module UseCase
 
   private
 
-    def valid_sting_length?(param)
+    def valid_string_length?(param)
       param.length >= MIN_STRING_LENGTH
     end
   end
