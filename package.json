@@ -42,6 +42,8 @@
     ]
   },
   "dependencies": {
+    "@sentry/node": "^6.18.1",
+    "@sentry/tracing": "^6.18.1",
     "async-memoize-one": "^1.1.0",
     "commander": "^9.0.0",
     "csv-stream": "^0.2.0",
