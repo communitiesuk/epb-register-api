@@ -4,7 +4,7 @@ const truncateAddressBaseTables = async () => {
   const tables = [
     'address_base',
     'address_base_tmp',
-    'address_base_versions',
+    'address_base_versions'
   ]
   const client = await db()
   return Promise.all(tables.map(table => client.query(`TRUNCATE TABLE ${table}`)))
