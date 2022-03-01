@@ -11,7 +11,7 @@
     "lint": "npx standard",
     "test": "jest --forceExit",
     "update-address-base": "node lib/tasks/maintenance/address-base.js -i -v",
-    "update-address-base-auto": "node lib/tasks/maintenance/address-base.js"
+    "update-address-base-auto": "node lib/tasks/maintenance/address-base.js -v"
   },
   "repository": {
     "type": "git",
