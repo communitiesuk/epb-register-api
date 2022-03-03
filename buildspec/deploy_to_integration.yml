@@ -16,13 +16,12 @@ env:
     PAAS_ORG: "epbr-govpaas-orgname"
     EPB_UNLEASH_URI: "epbr-unleash-integration-uri"
     EPB_UNLEASH_AUTH_TOKEN: "epbr-unleash-integration-auth-token"
-    DOMESTIC_APPROVED_SOFTWARE: "epbr-software-versions-domestic"
-    NON_DOMESTIC_APPROVED_SOFTWARE: "epbr-software-versions-non-domestic"
-    OS_DATA_HUB_API_KEY: "epbr-ordnance-survey-downloads-api-key"
-
     JWT_ISSUER: "epbr-jwt-issuer-integration"
     JWT_SECRET: "epbr-jwt-secret-integration"
+    DOMESTIC_APPROVED_SOFTWARE: "epbr-software-versions-domestic"
+    NON_DOMESTIC_APPROVED_SOFTWARE: "epbr-software-versions-non-domestic"
     SENTRY_DSN: "epbr-sentry-dsn-register-api"
+    OS_DATA_HUB_API_KEY: "epbr-ordnance-survey-downloads-api-key"
 
 phases:
   install:

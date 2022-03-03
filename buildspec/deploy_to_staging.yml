@@ -18,6 +18,8 @@ env:
     EPB_UNLEASH_AUTH_TOKEN: "epbr-unleash-staging-auth-token"
     JWT_ISSUER: "epbr-jwt-issuer-staging"
     JWT_SECRET: "epbr-jwt-secret-staging"
+    DOMESTIC_APPROVED_SOFTWARE: "epbr-software-versions-domestic"
+    NON_DOMESTIC_APPROVED_SOFTWARE: "epbr-software-versions-non-domestic"
     SENTRY_DSN: "epbr-sentry-dsn-register-api"
     OS_DATA_HUB_API_KEY: "epbr-ordnance-survey-downloads-api-key"
 
