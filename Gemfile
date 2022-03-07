@@ -20,7 +20,7 @@ source "https://rubygems.org" do
     gem "pry", "~> 0.14.1"
     gem "rack-test", "~> 1.1.0"
     gem "rspec", "~>3.11"
-    gem "timecop", "~> 0.9.4"
+    gem "timecop", "~> 0.9.5"
     gem "webmock", "~> 3.14"
     gem "wisper-rspec", "~> 1.0", ">= 1.0.1"
   end
