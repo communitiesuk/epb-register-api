@@ -1,4 +1,8 @@
-const { setUpTempAddressTable, db, disconnectDb, insertAddressBaseBatch, storedVersion, writeVersion } = require('../../../lib/js/address_base_import/database')
+const {
+  createEmptyTempAddressTable, db, disconnectDb, insertAddressBaseBatch, storedVersion, writeVersion,
+  performUpdateBatch,
+  performDeleteBatch
+} = require('../../../lib/js/address_base_import/database')
 
 const truncateAddressBaseTables = async () => {
   const tables = [
@@ -19,7 +23,7 @@ beforeAll(() => {
 
 beforeEach(async () => {
   jest.resetModules()
-  await setUpTempAddressTable()
+  await createEmptyTempAddressTable()
   await truncateAddressBaseTables()
 })
 
@@ -49,6 +53,119 @@ describe('when inserting a batch of data', () => {
 
     expect(result.rows).toEqual(batch)
     done()
+  })
+})
+
+describe('when updating a batch of data', () => {
+  const batch = [
+    {
+      uprn: '12345678',
+      postcode: 'AB1 1AW',
+      address_line1: '6 House Lane',
+      address_line2: 'Anyvillage',
+      address_line3: null,
+      address_line4: null,
+      town: 'Anytown',
+      classification_code: 'RD06',
+      address_type: 'Delivery point'
+    },
+    {
+      uprn: '12345679',
+      postcode: 'AB1 1AW',
+      address_line1: '7 House Lane',
+      address_line2: 'Anyvillage',
+      address_line3: null,
+      address_line4: null,
+      town: 'Anytown',
+      classification_code: 'RD06',
+      address_type: 'Delivery point'
+    }
+  ]
+  const update = {
+    uprn: '12345679',
+    postcode: 'AB1 1AX', // changed postcode
+    address_line1: '7 House Lane',
+    address_line2: 'Anyvillage',
+    address_line3: null,
+    address_line4: null,
+    town: 'Anytown',
+    classification_code: 'RD06',
+    address_type: 'Delivery point'
+  }
+
+  beforeEach(async () => {
+    await insertAddressBaseBatch(batch)
+    await performUpdateBatch([update])
+  })
+
+  it('updates the correct row leaving the expected total numbers of rows', async () => {
+    const select = 'SELECT * FROM address_base_tmp'
+    const result = await (await db()).query(select)
+    expect(result.rows.length).toEqual(2)
+    expect(result.rows.find(row => row.uprn === '12345679').postcode).toEqual('AB1 1AX')
+  })
+
+  it('can be passed an empty set of updates to apply without erroring', async () => {
+    expect.assertions(1)
+    await performUpdateBatch([])
+    expect(true).toBe(true)
+  })
+})
+
+describe('when deleting a batch of data', () => {
+  const batch = [
+    {
+      uprn: '12345678',
+      postcode: 'AB1 1AW',
+      address_line1: '6 House Lane',
+      address_line2: 'Anyvillage',
+      address_line3: null,
+      address_line4: null,
+      town: 'Anytown',
+      classification_code: 'RD06',
+      address_type: 'Delivery point'
+    },
+    {
+      uprn: '12345679',
+      postcode: 'AB1 1AW',
+      address_line1: '7 House Lane',
+      address_line2: 'Anyvillage',
+      address_line3: null,
+      address_line4: null,
+      town: 'Anytown',
+      classification_code: 'RD06',
+      address_type: 'Delivery point'
+    },
+    {
+      uprn: '12345680',
+      postcode: 'AB1 1AW',
+      address_line1: '8 House Lane',
+      address_line2: 'Anyvillage',
+      address_line3: null,
+      address_line4: null,
+      town: 'Anytown',
+      classification_code: 'RD06',
+      address_type: 'Delivery point'
+    }
+  ]
+  const uprnToRemain = '12345679'
+
+  beforeEach(async () => {
+    await insertAddressBaseBatch(batch)
+    await performDeleteBatch(batch.filter(obj => obj.uprn !== uprnToRemain))
+  })
+
+  it('deletes the rows from the batch leaving other rows unaffected', async () => {
+    const select = 'SELECT * FROM address_base_tmp'
+    const result = await (await db()).query(select)
+    expect(result.rows.length).toEqual(1)
+    expect(result.rows[0].uprn).toEqual(uprnToRemain)
+  })
+
+  it('can be passed an empty set of deletes to apply without erroring', async () => {
+    expect.assertions(1)
+    await performDeleteBatch([])
+    expect(true).toBe(true)
   })
 })
 
