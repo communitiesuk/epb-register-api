@@ -31,7 +31,7 @@ namespace :oneoff do
       next
     end
 
-    target_schemas = args[:schema_type].split(',')
+    target_schemas = args[:schema_type].split(";")
 
     count_assessments_to_export_sql = "SELECT COUNT(a.assessment_id) FROM assessments AS a INNER JOIN assessments_xml AS ax ON a.assessment_id=ax.assessment_id WHERE date_registered BETWEEN $1 AND $2 AND schema_type IN (#{target_schemas.map { |s| "'#{s}'" }.join(', ')})"
     count_assessments_to_export_binds = [
