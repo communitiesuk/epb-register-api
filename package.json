@@ -10,8 +10,9 @@
     "fmt": "npx standard --fix",
     "lint": "npx standard",
     "test": "jest --forceExit",
-    "update-address-base": "node lib/tasks/maintenance/address-base.js -i -v",
-    "update-address-base-auto": "node lib/tasks/maintenance/address-base.js -v"
+    "update-address-base": "node lib/tasks/maintenance/address-base.js update -i -v",
+    "update-address-base-auto": "node lib/tasks/maintenance/address-base.js update -v",
+    "specify-address-base-version": "node lib/tasks/maintenance/address-base.js specify-version"
   },
   "repository": {
     "type": "git",
