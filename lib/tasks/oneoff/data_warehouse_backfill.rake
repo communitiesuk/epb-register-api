@@ -1,6 +1,6 @@
 namespace :oneoff do
   desc "Export assessment IDs for date ranges towards data warehouse"
-  task :backfill_to_data_warehouse, [:from_rrn, :until_time] do |_, args|
+  task :backfill_to_data_warehouse, [:from_rrn, :until_time, :schema_type] do |_, args|
     from_rrn = args[:from_rrn]
     begin
       until_time = Time.parse args[:until_time]
@@ -10,7 +10,7 @@ namespace :oneoff do
     end
     is_dry_run = ENV["dry_run"] != "false"
 
-    get_rrn_time_sql = "SELECT created_at FROM assessments WHERE assessment_id=$1 AND created_at IS NOT NULL"
+    get_rrn_time_sql = "SELECT date_registered FROM assessments WHERE assessment_id=$1"
     get_rrn_binds = [
       ActiveRecord::Relation::QueryAttribute.new(
         "assessment_id",
@@ -24,16 +24,16 @@ namespace :oneoff do
       next
     end
 
-    rrn_created_at = get_rrn_result.first["created_at"]
+    rrn_date_registered = get_rrn_result.first["date_registered"]
 
-    if rrn_created_at < until_time
-      puts "The RRN #{from_rrn} was created at #{rrn_created_at}, which is before the time given in the until_time argument."
+    if rrn_date_registered < until_time
+      puts "The RRN #{from_rrn} was registered #{rrn_date_registered}, which is before the time given in the until_time argument."
       next
     end
 
-    current_schemas = %w[CEPC-8.0.0 CEPC-NI-8.0.0 RdSAP-Schema-20.0.0 RdSAP-Schema-NI-20.0.0 SAP-Schema-18.0.0 SAP-Schema-NI-18.0.0]
+    target_schemas = args[:schema_type].split(',')
 
-    count_assessments_to_export_sql = "SELECT COUNT(a.assessment_id) FROM assessments AS a INNER JOIN assessments_xml AS ax ON a.assessment_id=ax.assessment_id WHERE created_at BETWEEN $1 AND $2 AND schema_type IN (#{current_schemas.map { |s| "'#{s}'" }.join(', ')})"
+    count_assessments_to_export_sql = "SELECT COUNT(a.assessment_id) FROM assessments AS a INNER JOIN assessments_xml AS ax ON a.assessment_id=ax.assessment_id WHERE date_registered BETWEEN $1 AND $2 AND schema_type IN (#{target_schemas.map { |s| "'#{s}'" }.join(', ')})"
     count_assessments_to_export_binds = [
       ActiveRecord::Relation::QueryAttribute.new(
         "from",
@@ -42,7 +42,7 @@ namespace :oneoff do
       ),
       ActiveRecord::Relation::QueryAttribute.new(
         "to",
-        rrn_created_at,
+        rrn_date_registered,
         ActiveRecord::Type::DateTime.new,
       ),
     ]
@@ -66,7 +66,7 @@ namespace :oneoff do
     start_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
 
     raw_connection = ActiveRecord::Base.connection.raw_connection
-    get_assessment_ids_sql = "SELECT a.assessment_id FROM assessments AS a INNER JOIN assessments_xml AS ax ON a.assessment_id=ax.assessment_id WHERE created_at BETWEEN '#{until_time.strftime('%Y-%m-%d %H:%M:%S')}' AND '#{rrn_created_at.strftime('%Y-%m-%d %H:%M:%S')}' AND schema_type IN (#{current_schemas.map { |s| "'#{s}'" }.join(', ')}) ORDER BY created_at DESC"
+    get_assessment_ids_sql = "SELECT a.assessment_id FROM assessments AS a INNER JOIN assessments_xml AS ax ON a.assessment_id=ax.assessment_id WHERE date_registered BETWEEN '#{until_time.strftime('%Y-%m-%d %H:%M:%S')}' AND '#{rrn_date_registered.strftime('%Y-%m-%d %H:%M:%S')}' AND schema_type IN (#{target_schemas.map { |s| "'#{s}'" }.join(', ')}) ORDER BY date_registered DESC"
     raw_connection.send_query get_assessment_ids_sql
     raw_connection.set_single_row_mode
 
