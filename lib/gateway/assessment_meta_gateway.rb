@@ -8,7 +8,9 @@ module Gateway
       SELECT
       a.type_of_assessment,
       a.opt_out,
-      a.created_at,
+      CASE WHEN a.migrated=true THEN NULL
+           ELSE a.created_at
+      END as created_at,
       a.cancelled_at,
       a.not_for_issue_at,
       x.schema_type,
