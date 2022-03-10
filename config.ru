@@ -26,7 +26,7 @@ Sentry.init do |config|
       next sampling_context[:parent_sampled]
     end
 
-    0.05
+    0.0001
   end
 end
 
