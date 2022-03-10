@@ -20,6 +20,14 @@ Sentry.init do |config|
     end
   end
   config.send_default_pii = true
+  config.traces_sampler = lambda do |sampling_context|
+    # if this is the continuation of a trace, just use that decision (rate controlled by the caller)
+    unless sampling_context[:parent_sampled].nil?
+      next sampling_context[:parent_sampled]
+    end
+
+    0.05
+  end
 end
 
 use Sentry::Rack::CaptureExceptions
