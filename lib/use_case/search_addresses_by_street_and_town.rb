@@ -7,8 +7,8 @@ module UseCase
     end
 
     def execute(street:, town:, address_type: nil)
-      street = street.delete!("()|:*!") || street
-      town = town.delete!("()|:*!") || town
+      street = street.delete!("()|:*!\\") || street
+      town = town.delete!("()|:*!\\") || town
 
       raise Boundary::Json::Error, "Values must have minimum 2 alphanumeric characters" unless valid_string_length?(street) && valid_string_length?(town)
 

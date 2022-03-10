@@ -37,7 +37,7 @@ describe UseCase::SearchAddressesByStreetAndTown, set_with_timecop: true do
     end
 
     it "returns only one address for the relevant property" do
-      result = use_case.execute(street: "1 Some Street", town: "Whitbury:!")
+      result = use_case.execute(street: "1 Some Street", town: "Whitbury:!\\")
       expect(result.length).to eq(1)
       expect(result.first.address_id).to eq("UPRN-000000000000")
       expect(result.first.line1).to eq("1 Some Street")

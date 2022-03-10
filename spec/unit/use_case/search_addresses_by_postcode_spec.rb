@@ -37,7 +37,7 @@ describe UseCase::SearchAddressesByPostcode, set_with_timecop: true do
     end
 
     it "returns only one address for the relevant property" do
-      result = use_case.execute(postcode: "A0 0AA", building_name_number: "1():*!&")
+      result = use_case.execute(postcode: "A0 0AA", building_name_number: "1():*!&\\")
 
       expect(result.length).to eq(1)
       expect(result.first.address_id).to eq("UPRN-000000000000")
