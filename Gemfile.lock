@@ -88,7 +88,7 @@ GEM
     fugit (1.5.2)
       et-orbi (~> 1.1, >= 1.1.8)
       raabro (~> 1.4)
-    geocoder (1.7.3)
+    geocoder (1.7.5)
     hashdiff (1.0.1)
     http (5.0.4)
       addressable (~> 2.8)
@@ -252,7 +252,7 @@ DEPENDENCIES
   debase!
   epb-auth-tools (~> 1.0.8)!
   epb_view_models (~> 1.0.14, ~> 1.0)!
-  geocoder (~> 1.7.3)!
+  geocoder (~> 1.7.5)!
   http!
   json-schema (~> 2.8)!
   mock_redis (~> 0.30.0)!
