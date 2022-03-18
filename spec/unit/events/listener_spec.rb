@@ -12,7 +12,6 @@ describe Events::Listener do
       assessment_lodged
       assessment_address_id_updated
       assessment_opt_out_status_changed
-      green_deal_plan_added
       green_deal_plan_updated
       green_deal_plan_deleted
       assessor_added

@@ -9,7 +9,6 @@ module Domain
         opt_in
         cancelled
         address_id_updated
-        green_deal_plan_added
         green_deal_plan_updated
         green_deal_plan_deleted
       ],
