@@ -294,3 +294,16 @@ RSpec.configure do |config|
 
   config.after(:all) { DatabaseCleaner.clean }
 end
+
+RSpec::Matchers.define(:json_contains_hash) do |kwargs|
+  match do |response|
+    begin
+      json_hash = JSON.parse(response, symbolize_names: true)
+    rescue JSON::ParserError
+      return false
+    end
+    return false unless json_hash.respond_to?(:to_a)
+
+    (kwargs.to_a - json_hash.to_a).empty?
+  end
+end

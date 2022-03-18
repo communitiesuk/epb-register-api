@@ -10,7 +10,7 @@ describe Gateway::GreenDealPlansGateway do
       )
       ActiveRecord::Base.connection.exec_query(
         "INSERT INTO assessments (assessment_id, scheme_assessor_id, date_of_expiry)
-        VALUES ('0000-0000-0000-0000-0000', 'TEST123456', '2070-01-05')",
+        VALUES ('0000-0000-0000-0000-0000', 'TEST123456', '2070-01-05'), ('0000-0000-0000-0000-0001', 'TEST123456', '2070-01-06')",
       )
       ActiveRecord::Base.connection.exec_query(
         "INSERT INTO green_deal_plans (green_deal_plan_id)
@@ -18,12 +18,12 @@ describe Gateway::GreenDealPlansGateway do
       )
       ActiveRecord::Base.connection.exec_query(
         "INSERT INTO green_deal_assessments (green_deal_plan_id, assessment_id)
-        VALUES ('ABC123456DEF', '0000-0000-0000-0000-0000')",
+        VALUES ('ABC123456DEF', '0000-0000-0000-0000-0000'), ('ABC123456DEF', '0000-0000-0000-0000-0001')",
       )
     end
 
-    it "returns the assessment id for the green deal plan" do
-      expect(gateway.fetch_assessment_id(plan_id: "ABC123456DEF")).to eq("0000-0000-0000-0000-0000")
+    it "returns all the assessment IDs for the green deal plan" do
+      expect(gateway.fetch_assessment_ids(plan_id: "ABC123456DEF")).to eq(%w[0000-0000-0000-0000-0000 0000-0000-0000-0000-0001])
     end
   end
 end

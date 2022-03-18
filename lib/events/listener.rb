@@ -54,13 +54,13 @@ module Events
 
     def attach_green_deal_plan_updated
       @event_broadcaster.on :green_deal_plan_updated do |**data|
-        NotifyFactory.green_deal_plan_updated_to_audit_log(entity_id: data[:assessment_id])
+        NotifyFactory.green_deal_plan_updated_to_audit_log(entity_id: data[:green_deal_plan_id], assessment_ids: data[:assessment_ids])
       end
     end
 
     def attach_green_deal_plan_deleted
       @event_broadcaster.on :green_deal_plan_deleted do |**data|
-        NotifyFactory.green_deal_plan_deleted_to_audit_log(entity_id: data[:assessment_id])
+        NotifyFactory.green_deal_plan_deleted_to_audit_log(entity_id: data[:green_deal_plan_id], assessment_ids: data[:assessment_ids])
       end
     end
 

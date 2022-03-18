@@ -39,21 +39,21 @@ class NotifyFactory
                                       ))
   end
 
-  def self.green_deal_plan_updated_to_audit_log(entity_id:)
+  def self.green_deal_plan_updated_to_audit_log(entity_id:, assessment_ids:)
     save_audit_event_use_case.execute(Domain::AuditEvent.new(
-                                        entity_type: :assessment,
+                                        entity_type: :green_deal_plan,
                                         event_type: :green_deal_plan_updated,
                                         entity_id: entity_id,
-                                        data: RequestModule.relevant_request_headers,
+                                        data: merge_hash_to_json(json: RequestModule.relevant_request_headers, hash: { assessment_ids: assessment_ids }),
                                       ))
   end
 
-  def self.green_deal_plan_deleted_to_audit_log(entity_id:)
+  def self.green_deal_plan_deleted_to_audit_log(entity_id:, assessment_ids:)
     save_audit_event_use_case.execute(Domain::AuditEvent.new(
-                                        entity_type: :assessment,
+                                        entity_type: :green_deal_plan,
                                         event_type: :green_deal_plan_deleted,
                                         entity_id: entity_id,
-                                        data: RequestModule.relevant_request_headers,
+                                        data: merge_hash_to_json(json: RequestModule.relevant_request_headers, hash: { assessment_ids: assessment_ids }),
                                       ))
   end
 
@@ -86,5 +86,9 @@ class NotifyFactory
     @save_audit_event_use_case ||= UseCase::SaveAuditEvent.new(Gateway::AuditLogsGateway.new)
   end
 
-  private_class_method :save_audit_event_use_case
+  def self.merge_hash_to_json(hash:, json:)
+    JSON.fast_generate(JSON.parse(json, symbolize_names: true).merge(hash))
+  end
+
+  private_class_method :save_audit_event_use_case, :merge_hash_to_json
 end

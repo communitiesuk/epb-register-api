@@ -9,10 +9,12 @@ module Domain
         opt_in
         cancelled
         address_id_updated
+      ],
+      assessor: [:added],
+      green_deal_plan: %i[
         green_deal_plan_updated
         green_deal_plan_deleted
       ],
-      assessor: [:added],
     }.freeze
 
     def initialize(event_type:, entity_id:, entity_type:, data: nil)

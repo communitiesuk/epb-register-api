@@ -111,13 +111,13 @@ module Gateway
       GreenDealPlan.connection.exec_query(sql)
     end
 
-    def fetch_assessment_id(plan_id:)
+    def fetch_assessment_ids(plan_id:)
       sql = <<-SQL
         SELECT assessment_id FROM green_deal_assessments
           WHERE green_deal_plan_id = #{ActiveRecord::Base.connection.quote(plan_id)}
       SQL
 
-      ActiveRecord::Base.connection.exec_query(sql).last["assessment_id"]
+      ActiveRecord::Base.connection.exec_query(sql).map { |row| row["assessment_id"] }
     end
 
     def validate_fuel_codes?(fuel_codes)

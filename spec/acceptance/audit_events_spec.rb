@@ -205,11 +205,12 @@ describe "Audit events", set_with_timecop: true do
       )
     end
 
-    it "saves the event to the audit log" do
+    it "saves the event to the audit log under a green deal plan" do
       expect(saved_data.last).to match a_hash_including(
-        { "entity_type" => "assessment",
-          "entity_id" => "0000-0000-0000-0000-0000",
-          "event_type" => "green_deal_plan_updated" },
+        { "entity_type" => "green_deal_plan",
+          "entity_id" => "ABC123456DEF",
+          "event_type" => "green_deal_plan_updated",
+          "data" => json_contains_hash(assessment_ids: %w[0000-0000-0000-0000-0000]) },
       )
     end
   end
@@ -223,9 +224,10 @@ describe "Audit events", set_with_timecop: true do
 
     it "saves the event to the audit log" do
       expect(saved_data.last).to match a_hash_including(
-        { "entity_type" => "assessment",
-          "entity_id" => "0000-0000-0000-0000-0000",
-          "event_type" => "green_deal_plan_deleted" },
+        { "entity_type" => "green_deal_plan",
+          "entity_id" => "ABC123456DEF",
+          "event_type" => "green_deal_plan_deleted",
+          "data" => json_contains_hash(assessment_ids: %w[0000-0000-0000-0000-0000]) },
       )
     end
   end
