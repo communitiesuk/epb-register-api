@@ -44,7 +44,7 @@ source "https://rubygems.org" do
   gem "sinatra", "~> 2.2"
   gem "sinatra-activerecord", "~> 2.0.25"
   gem "sinatra-cross_origin", "~> 0.4.0"
-  gem "unleash", "~> 4.1.0"
+  gem "unleash", "~> 4.2.0"
   gem "wisper", "~> 2.0", ">= 2.0.1"
   gem "zeitwerk", "~> 2.4.1"
 end
