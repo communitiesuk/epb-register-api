@@ -131,4 +131,7 @@ describe "Acceptance::AssessmentSummary", set_with_timecop: true do
       ).to eq "Hot water cylinder thermostat" # From Improvement-Summary
     end
   end
+
+  context ''
+
 end

@@ -83,6 +83,26 @@ describe Gateway::ExportNiGateway do
           override: true,
           schema_name: "CEPC-NI-8.0.0",
         )
+
+        non_domestic_xml_old = Nokogiri.XML Samples.xml("CEPC-7.1", "cepc")
+        non_domestic_assessment_id = non_domestic_xml_old.at("RRN")
+        non_domestic_assessment_id.children = "9000-0000-0000-0000-2110"
+        non_domestic_xml_postcode = non_domestic_xml_old.at("Postcode")
+        non_domestic_xml_postcode.children = "BT1 1SB"
+        uprn = non_domestic_xml_old.at("UPRN")
+        uprn.children = "000000000009"
+        address_line_one = non_domestic_xml_old.at("Address-Line-1")
+        address_line_one.children = 'NI house'
+
+        lodge_assessment(
+          assessment_body: non_domestic_xml_old.to_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          override: true,
+          schema_name: "CEPC-7.1",
+          )
       end
 
       let(:domestic_expectation) do
@@ -115,6 +135,19 @@ describe Gateway::ExportNiGateway do
 
       it "exports only commercial certificates that have a BT postcode and a NI schema" do
         expect(gateway.fetch_assessments(type_of_assessment: "CEPC")).to eq(commercial_expectation)
+      end
+
+
+      it "exports commercial certificates that have a BT postcode and any CEPC schema" do
+
+        cepc_7 = { "assessment_id" => "9000-0000-0000-0000-2110",
+                   "lodgement_date" => "2020-05-04",
+                   "lodgement_datetime" => "2021-02-22 00:00:00",
+                   "uprn" => nil,
+                   "opt_out" => false,
+                   "cancelled" => false }
+        commercial_expectation << cepc_7
+        expect(gateway.fetch_assessments(type_of_assessment: "CEPC", ni_schema_type: false).sort_by! { |k| k["assessment_id"] }).to eq(commercial_expectation)
       end
 
       context "when a certificate is opted out" do
