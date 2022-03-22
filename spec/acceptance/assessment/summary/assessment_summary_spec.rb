@@ -132,6 +132,5 @@ describe "Acceptance::AssessmentSummary", set_with_timecop: true do
     end
   end
 
-  context ''
-
+  context ""
 end

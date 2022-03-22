@@ -92,7 +92,7 @@ describe Gateway::ExportNiGateway do
         uprn = non_domestic_xml_old.at("UPRN")
         uprn.children = "000000000009"
         address_line_one = non_domestic_xml_old.at("Address-Line-1")
-        address_line_one.children = 'NI house'
+        address_line_one.children = "NI house"
 
         lodge_assessment(
           assessment_body: non_domestic_xml_old.to_xml,
@@ -102,7 +102,7 @@ describe Gateway::ExportNiGateway do
           },
           override: true,
           schema_name: "CEPC-7.1",
-          )
+        )
       end
 
       let(:domestic_expectation) do
@@ -137,9 +137,7 @@ describe Gateway::ExportNiGateway do
         expect(gateway.fetch_assessments(type_of_assessment: "CEPC")).to eq(commercial_expectation)
       end
 
-
       it "exports commercial certificates that have a BT postcode and any CEPC schema" do
-
         cepc_7 = { "assessment_id" => "9000-0000-0000-0000-2110",
                    "lodgement_date" => "2020-05-04",
                    "lodgement_datetime" => "2021-02-22 00:00:00",
