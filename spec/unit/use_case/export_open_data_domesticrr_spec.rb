@@ -73,6 +73,7 @@ describe UseCase::ExportOpenDataDomesticrr do
             scheme_ids: [scheme_id],
           },
           schema_name: "SAP-Schema-17.0",
+          migrated: true,
           override: true,
         )
 

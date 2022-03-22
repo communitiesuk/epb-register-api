@@ -42,6 +42,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment",
         scheme_ids: [scheme_id],
       },
       schema_name: xml_schema,
+      migrated: true,
     )
 
     if type == "RdSAP"

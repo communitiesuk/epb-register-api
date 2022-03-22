@@ -51,7 +51,7 @@ describe "Audit events", set_with_timecop: true do
     it "saves the decoded auth token from the request headers as JSON" do
       expect(JSON.parse(saved_data.last["data"])["auth_token"]["payload"]).to match a_hash_including(
         { "iss" => "test.issuer",
-          "scopes" => ["assessment:lodge"],
+          "scopes" => include("assessment:lodge"),
           "sub" => "test-subject",
           "sup" => { "scheme_ids" => [scheme_id] } },
       )

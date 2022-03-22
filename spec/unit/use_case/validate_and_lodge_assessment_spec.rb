@@ -32,7 +32,7 @@ describe UseCase::ValidateAndLodgeAssessment do
   end
 
   context "when validating an invalid schema name" do
-    it "raises the error SchemaNotAccepted" do
+    it "raises the error SchemaNotSupportedException" do
       expect {
         use_case.execute assessment_xml: valid_xml,
                          schema_name: "Non-existent-RdSAP-Schema-20.0.0",
@@ -92,6 +92,20 @@ describe UseCase::ValidateAndLodgeAssessment do
                            overidden: false
         }.not_to raise_error
       end
+    end
+  end
+
+  context "when validating assessment XML that is not from a latest version of a schema" do
+    let(:old_schema_xml) { Samples.xml "RdSAP-Schema-19.0" }
+
+    it "raises a SupersededSchemaException" do
+      expect {
+        use_case.execute assessment_xml: old_schema_xml,
+                         schema_name: "RdSAP-Schema-19.0",
+                         scheme_ids: "1",
+                         migrated: false,
+                         overidden: false
+      }.to raise_error UseCase::ValidateAndLodgeAssessment::SupersededSchemaException
     end
   end
 end

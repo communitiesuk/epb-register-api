@@ -10,6 +10,8 @@ module UseCase
 
     class SchemaNotSupportedException < StandardError; end
 
+    class SupersededSchemaException < SchemaNotSupportedException; end
+
     class RelatedReportError < StandardError; end
 
     class AddressIdsDoNotMatch < StandardError; end
@@ -105,6 +107,8 @@ module UseCase
               raise LodgementRulesException, validation_result
             end
           end
+        else
+          raise SupersededSchemaException
         end
       end
 

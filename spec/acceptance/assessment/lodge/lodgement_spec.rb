@@ -297,6 +297,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
         auth_data: {
           scheme_ids: [scheme_id],
         },
+        migrated: true,
         override: true,
         schema_name: "RdSAP-Schema-17.0",
       )
@@ -822,10 +823,26 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
       lodge_assessment(
         assessment_body: valid_rdsap_xml,
         accepted_responses: [403],
+        scopes: %w[assessment:lodge],
         auth_data: {
           scheme_ids: [scheme_id],
         },
-        migrated: "true",
+        migrated: true,
+      )
+    end
+  end
+
+  context "when lodging an assessment of a superseded schema version that is not marked migrated" do
+    it "rejects the assessment with a 400" do
+      superseded_version = "RdSAP-Schema-19.0"
+
+      lodge_assessment(
+        assessment_body: Samples.xml(superseded_version),
+        accepted_responses: [400],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        schema_name: superseded_version,
       )
     end
   end

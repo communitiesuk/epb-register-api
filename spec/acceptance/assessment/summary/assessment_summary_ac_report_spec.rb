@@ -65,5 +65,6 @@ def lodge_test_ac_report(scheme_id, schema_name, xml = nil)
       scheme_ids: [scheme_id],
     },
     schema_name: schema_name,
+    migrated: true,
   )
 end

@@ -193,6 +193,7 @@ describe "Acceptance::DECSummary", set_with_timecop: true do
           scheme_ids: [scheme_id],
         },
         schema_name: "CEPC-5.0",
+        migrated: true,
       )
 
       response =

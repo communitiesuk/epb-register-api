@@ -290,7 +290,7 @@ def lodge_assessment(
   accepted_responses: [201],
   authenticate: true,
   auth_data: nil,
-  scopes: %w[assessment:lodge],
+  scopes: %w[assessment:lodge migrate:assessment],
   json: false,
   schema_name: "RdSAP-Schema-20.0.0",
   headers: {},
