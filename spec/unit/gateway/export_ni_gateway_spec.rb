@@ -102,6 +102,7 @@ describe Gateway::ExportNiGateway do
           },
           override: true,
           schema_name: "CEPC-7.1",
+          migrated: true,
         )
       end
 
