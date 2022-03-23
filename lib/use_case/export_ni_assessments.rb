@@ -7,7 +7,9 @@ module UseCase
 
     def execute(type_of_assessment:, date_from: "1990-01-01", date_to: Time.now)
       assessments_array = []
+
       assessments = @ni_export_gateway.fetch_assessments(type_of_assessment: type_of_assessment, date_from: date_from, date_to: date_to)
+
       assessments.each do |assessment|
         xml_data = @xml_gateway.fetch(assessment["assessment_id"])
 
@@ -17,9 +19,8 @@ module UseCase
             xml_data[:schema_type],
             assessment["assessment_id"],
           )
-        view_model_data = view_model.to_hash_ni
+        view_model_data = type_of_assessment == %w[CEPC] ? view_model.to_hash : view_model.to_hash_ni
         combined_data = view_model_data.merge(assessment.symbolize_keys)
-
         assessments_array << combined_data
       end
       assessments_array
