@@ -34,23 +34,13 @@ module Gateway
         valid_type = %w[RdSAP SAP CEPC]
         invalid_types = type_of_assessment - valid_type
         raise StandardError, "Invalid types" unless invalid_types.empty?
-
-        list_of_types = type_of_assessment.map { |n| "'#{n}'" }
-        sql << <<~SQL_TYPE_OF_ASSESSMENT
-          AND type_of_assessment IN(#{list_of_types.join(',')})
-        SQL_TYPE_OF_ASSESSMENT
-      else
-        valid_types = %w[CEPC]
-        unless valid_types.include? type_of_assessment
-          raise StandardError, "Invalid types"
-        end
-
-        sql << <<~SQL_TYPE_OF_ASSESSMENT
-          AND type_of_assessment = '#{type_of_assessment}'
-        SQL_TYPE_OF_ASSESSMENT
       end
+      list_of_types = type_of_assessment.map { |n| "'#{n}'" }
+      sql << <<~SQL_TYPE_OF_ASSESSMENT
+        AND type_of_assessment IN(#{list_of_types.join(',')})
+      SQL_TYPE_OF_ASSESSMENT
 
-      if type_of_assessment != "CEPC"
+      unless type_of_assessment.include? "CEPC"
         sql << <<~SQL_TYPE_OF_ASSESSMENT
           AND ax.schema_type LIKE '%NI%'
         SQL_TYPE_OF_ASSESSMENT

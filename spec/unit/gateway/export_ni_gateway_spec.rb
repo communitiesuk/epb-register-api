@@ -143,7 +143,7 @@ describe Gateway::ExportNiGateway do
                    "cancelled" => false }
         commercial_expectation << cepc_7
 
-        expect(gateway.fetch_assessments(type_of_assessment: %(CEPC)).sort_by! { |k| k["assessment_id"] }).to eq(commercial_expectation)
+        expect(gateway.fetch_assessments(type_of_assessment: %w[CEPC]).sort_by! { |k| k["assessment_id"] }).to eq(commercial_expectation)
       end
 
       context "when a certificate is opted out" do
@@ -198,7 +198,7 @@ describe Gateway::ExportNiGateway do
         end
 
         let!(:commercial_results) do
-          gateway.fetch_assessments(type_of_assessment: %(CEPC))
+          gateway.fetch_assessments(type_of_assessment: %w[CEPC])
         end
 
         it "return true for the 1st row which was been opted out" do
