@@ -133,10 +133,6 @@ describe Gateway::ExportNiGateway do
         expect(gateway.fetch_assessments(type_of_assessment: %w[RdSAP SAP]).sort_by! { |k| k["assessment_id"] }).to eq(domestic_expectation)
       end
 
-      it "exports only commercial certificates that have a BT postcode and a NI schema" do
-        expect(gateway.fetch_assessments(type_of_assessment: "CEPC")).to eq(commercial_expectation)
-      end
-
       it "exports commercial certificates that have a BT postcode and any CEPC schema" do
         cepc_7 = { "assessment_id" => "9000-0000-0000-0000-2110",
                    "lodgement_date" => "2020-05-04",
@@ -145,7 +141,8 @@ describe Gateway::ExportNiGateway do
                    "opt_out" => false,
                    "cancelled" => false }
         commercial_expectation << cepc_7
-        expect(gateway.fetch_assessments(type_of_assessment: "CEPC", ni_schema_type: false).sort_by! { |k| k["assessment_id"] }).to eq(commercial_expectation)
+
+        expect(gateway.fetch_assessments(type_of_assessment: %(CEPC)).sort_by! { |k| k["assessment_id"] }).to eq(commercial_expectation)
       end
 
       context "when a certificate is opted out" do
@@ -200,7 +197,7 @@ describe Gateway::ExportNiGateway do
         end
 
         let!(:commercial_results) do
-          gateway.fetch_assessments(type_of_assessment: "CEPC")
+          gateway.fetch_assessments(type_of_assessment: %(CEPC))
         end
 
         it "return true for the 1st row which was been opted out" do

@@ -1,6 +1,6 @@
 module Gateway
   class ExportNiGateway
-    def fetch_assessments(type_of_assessment:, date_from: "1990-01-01", date_to: Time.now, ni_schema_type: true)
+    def fetch_assessments(type_of_assessment:, date_from: "1990-01-01", date_to: Time.now)
       sql = <<-SQL
       SELECT
       a.assessment_id,
@@ -50,7 +50,7 @@ module Gateway
         SQL_TYPE_OF_ASSESSMENT
       end
 
-      if ni_schema_type
+      if type_of_assessment != "CEPC"
         sql << <<~SQL_TYPE_OF_ASSESSMENT
           AND ax.schema_type LIKE '%NI%'
         SQL_TYPE_OF_ASSESSMENT
