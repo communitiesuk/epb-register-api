@@ -7,21 +7,21 @@ describe Gateway::ExportNiGateway do
     add_scheme_and_get_id
   end
 
+  before(:all) do
+    Timecop.freeze(2021, 2, 22, 0, 0, 0)
+  end
+
+  after(:all) do
+    Timecop.return
+  end
+
   context "when extracting Northern Ireland data for export " do
-    before(:all) do
-      Timecop.freeze(2021, 2, 22, 0, 0, 0)
-    end
-
-    after(:all) do
-      Timecop.return
-    end
-
     it "call the gateway without error" do
       expect { gateway }.not_to raise_error
     end
 
     describe ".fetch_assessments" do
-      before(:all) do
+      before do
         scheme_id = add_scheme_and_get_id
         add_super_assessor(scheme_id: scheme_id)
 
@@ -232,6 +232,49 @@ describe Gateway::ExportNiGateway do
           expect(gateway.fetch_assessments(type_of_assessment: %w[RdSAP SAP], date_from:  "1991-08-01", date_to: "2021-08-03").first["assessment_id"]).to eq("0000-0000-0000-0000-0000")
         end
       end
+    end
+  end
+
+  context "when extracting Northern Ireland recommendations" do
+    before do
+      scheme_id = add_scheme_and_get_id
+      add_super_assessor(scheme_id: scheme_id)
+
+      cepc_rr_xml = Nokogiri.XML Samples.xml("CEPC-NI-8.0.0", "cepc+rr")
+      cepc_rr_xml.xpath("//*[local-name() = 'RRN']").each_with_index do |node, index|
+        node.content = "1111-0000-0000-0000-000#{index}"
+      end
+
+      cepc_rr_xml.xpath("//*[local-name() = 'Related-RRN']").reverse.each_with_index do |node, index|
+        node.content = "1111-0000-0000-0000-000#{index}"
+      end
+
+      cepc_rr_xml.xpath("//*[local-name() = 'Postcode']").reverse_each { |node| node.content = "BT1 2TD" }
+      cepc_rr_xml.xpath("//*[local-name() = 'UPRN']").reverse_each { |node| node.content = "UPRN-000000000001" }
+
+      lodge_assessment(
+        assessment_body: cepc_rr_xml.to_xml,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        override: true,
+        schema_name: "CEPC-NI-8.0.0",
+        migrated: true,
+      )
+    end
+
+    let(:commercial_rr_expectation) do
+      [{ "assessment_id" => "1111-0000-0000-0000-0001",
+         "lodgement_date" => "2020-05-04",
+         "lodgement_datetime" => "2021-02-22 00:00:00",
+         "uprn" => "UPRN-000000000001",
+         "opt_out" => false,
+         "cancelled" => false }]
+    end
+
+    it "exports only domestic certificates that have a BT postcode and a NI schema" do
+      expect(gateway.fetch_assessments(type_of_assessment: %w[CEPC-RR]).sort_by! { |k| k["assessment_id"] }).to eq(commercial_rr_expectation)
     end
   end
 end
