@@ -58,7 +58,7 @@ class DevAssessmentsHelper
       xml_doc = update_xml(hash[:xml], type_of_assessment.downcase, id)
       data = { assessment_id: id,
                assessor_id: assessor_id,
-               raw_data: Helper::SanitizeXmlHelper.new.sanitize(xml_doc.to_s),
+               raw_data: xml_doc.to_s,
                date_of_registration: Time.now.utc - 3600 * 24,
                type_of_assessment: type_of_assessment,
                date_of_assessment: Time.now,
@@ -82,40 +82,32 @@ class DevAssessmentsHelper
     end
   end
 
-  def self.update_xml(xml_doc, type, id)
-    xml = xml_doc.remove_namespaces!
-    assessment_id_node = type == "cepc" ? xml.at("//*[local-name() = 'RRN']") : xml.at("RRN")
-    assessment_id_node.children = id
-    schema_node = xml_doc.at("//Certificate-Number")
-    schema_node.children = assessor_id
-    xml_doc
+  def self.update_xml(xml_doc, _type, id)
+    xml = xml_doc.to_s
+    # xml.sub!("0000-0000-0000-0000-0000", id)
+    xml.sub!("0000-0000-0000-0000-0000", id)
+    xml.sub!("SPEC000000", assessor_id)
+    Nokogiri.XML(xml)
   end
 
   def self.read_fixtures
     file_array = []
-    file_name =""
     schema_array.each do |schema|
       if schema.include?("CEPC")
         file_content = read_xml(schema, "cepc")
-        file_array << { xml: Nokogiri.XML(file_content), schema: schema }
-        elsif schema == "SAP-Schema-10.2"
+      elsif schema == "SAP-Schema-10.2"
         file_content = read_xml(schema, "rdsap")
-        file_array << { xml: Nokogiri.XML(file_content), schema: schema }
       elsif split_sap_versions.include?(schema)
         file_content = read_xml(schema, "rdsap")
         file_array << { xml: Nokogiri.XML(file_content), schema: schema }
         file_content = read_xml(schema, "sap")
-        file_array << { xml: Nokogiri.XML(file_content), schema: schema }
       else
         file_content = read_xml(schema, "epc")
-        file_array << { xml: Nokogiri.XML(file_content), schema: schema }
       end
-
-
+      file_array << { xml: Nokogiri.XML(file_content), schema: schema }
     end
     file_array + read_commercial_fixtures
   end
-
 
   def self.read_commercial_fixtures
     file_array = []
