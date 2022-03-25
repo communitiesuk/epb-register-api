@@ -12,7 +12,11 @@ end
 
 class DevAssessmentsHelper
   def self.schema_array
-    %w[CEPC-8.0.0 CEPC-NI-8.0.0 RdSAP-Schema-20.0.0 RdSAP-Schema-NI-20.0.0 SAP-Schema-18.0.0 SAP-Schema-NI-18.0.0]
+    %w[CEPC-8.0.0 CEPC-NI-8.0.0 RdSAP-Schema-20.0.0 RdSAP-Schema-NI-20.0.0 SAP-Schema-18.0.0 SAP-Schema-NI-18.0.0 SAP-Schema-16.3 SAP-Schema-13.0 SAP-Schema-10.2]
+  end
+
+  def self.split_sap_versions
+    %w[SAP-Schema-16.3 SAP-Schema-13.0]
   end
 
   def self.assessor_id
@@ -89,12 +93,29 @@ class DevAssessmentsHelper
 
   def self.read_fixtures
     file_array = []
+    file_name =""
     schema_array.each do |schema|
-      file_content = read_xml(schema, schema.include?("CEPC") ? "cepc" : "epc")
-      file_array << { xml: Nokogiri.XML(file_content), schema: schema }
+      if schema.include?("CEPC")
+        file_content = read_xml(schema, "cepc")
+        file_array << { xml: Nokogiri.XML(file_content), schema: schema }
+        elsif schema == "SAP-Schema-10.2"
+        file_content = read_xml(schema, "rdsap")
+        file_array << { xml: Nokogiri.XML(file_content), schema: schema }
+      elsif split_sap_versions.include?(schema)
+        file_content = read_xml(schema, "rdsap")
+        file_array << { xml: Nokogiri.XML(file_content), schema: schema }
+        file_content = read_xml(schema, "sap")
+        file_array << { xml: Nokogiri.XML(file_content), schema: schema }
+      else
+        file_content = read_xml(schema, "epc")
+        file_array << { xml: Nokogiri.XML(file_content), schema: schema }
+      end
+
+
     end
     file_array + read_commercial_fixtures
   end
+
 
   def self.read_commercial_fixtures
     file_array = []

@@ -36,7 +36,7 @@ describe "linked_dev_assessments rake" do
     end
 
     it "loads the seed data into the database" do
-      expect(exported_data.rows.length).to eq(12)
+      expect(exported_data.rows.length).to eq(17)
       first_result = exported_data.first
       expect(first_result["type_of_assessment"]).to eq("CEPC")
       expect(first_result["assessment_id"]).to eq("0000-0000-0000-0000-0001")
