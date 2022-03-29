@@ -42,7 +42,7 @@ describe "Integration::ToggleService" do
     end
 
     it "feature test-unknown-feature is active if given true default" do
-      expect(Helper::Toggles).to be_enabled("test-disabled-feature", default: true)
+      expect(Helper::Toggles).to be_enabled("test-unknown-feature", default: true)
     end
 
     context "when a block is passed" do
@@ -50,7 +50,7 @@ describe "Integration::ToggleService" do
 
       before do
         block_executed = false
-        Helper::Toggles.enabled?("test-disabled-feature") { block_executed = true }
+        Helper::Toggles.enabled?("test-unknown-feature") { block_executed = true }
       end
 
       it "does not execute the block" do
