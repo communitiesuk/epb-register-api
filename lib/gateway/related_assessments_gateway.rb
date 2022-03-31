@@ -30,18 +30,22 @@ module Gateway
 
       return [] if assessment_ids.empty?
 
+      # The ORDER BY here falls back to created_at for cases where registration
+      # date (and so date_of_expiry) are equal.
+      # NOTE: This is only reliable for unmigrated certificates
       sql = <<-SQL
         SELECT assessment_id,
                type_of_assessment AS assessment_type,
                date_of_expiry,
                date_registered,
+               created_at,
                opt_out
         FROM assessments
         WHERE assessment_id IN(#{assessment_ids.join(', ')}) AND
               opt_out = false AND
               not_for_issue_at IS NULL AND
               cancelled_at IS NULL
-        ORDER BY date_of_expiry DESC, assessment_id DESC
+        ORDER BY date_of_expiry DESC, created_at DESC, assessment_id DESC
       SQL
 
       results = ActiveRecord::Base.connection.exec_query(sql)

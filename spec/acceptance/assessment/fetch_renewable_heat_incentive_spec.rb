@@ -462,5 +462,80 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive",
         ).to eq "0000-0000-0000-0000-0002"
       end
     end
+
+    context "when multiple assessments exist with the same registered date" do
+      let(:scheme_id) { add_scheme_and_get_id }
+
+      let(:response) do
+        JSON.parse(
+          fetch_renewable_heat_incentive(assessment_id: "0000-0000-0000-0000-0001", accepted_responses: [200])
+            .body,
+          symbolize_names: true,
+          )
+      end
+
+      before do
+        add_assessor scheme_id: scheme_id,
+                     assessor_id: "SPEC000000",
+                     body: AssessorStub.new.fetch_request_body(
+                       domestic_rd_sap: "ACTIVE",
+                       domestic_sap: "ACTIVE",
+                       )
+        first_assessment = Nokogiri.XML(valid_sap_xml)
+        first_assessment.at("RRN").content = "0000-0000-0000-0000-0001"
+        first_assessment.at("UPRN").content = "RRN-0000-0000-0000-0000-0001"
+        first_assessment.at("Inspection-Date").content = "2020-10-04"
+        first_assessment.at("Completion-Date").content = "2020-10-04"
+        first_assessment.at("Registration-Date").content = "2020-10-04"
+        lodge_assessment assessment_body: first_assessment.to_xml,
+                         accepted_responses: [201],
+                         schema_name: "SAP-Schema-18.0.0",
+                         auth_data: {
+                           scheme_ids: [scheme_id],
+                         }
+
+        second_assessment = Nokogiri.XML(valid_rdsap_xml)
+        second_assessment.at("RRN").content = "0000-0000-0000-0000-0002"
+        second_assessment.at("UPRN").content = "RRN-0000-0000-0000-0000-0001"
+        second_assessment.at("Inspection-Date").content = "2020-10-04"
+        second_assessment.at("Completion-Date").content = "2020-10-04"
+        second_assessment.at("Registration-Date").content = "2020-10-04"
+        lodge_assessment assessment_body: second_assessment.to_xml,
+                         accepted_responses: [201],
+                         auth_data: {
+                           scheme_ids: [scheme_id],
+                         }
+
+        third_assessment = Nokogiri.XML(valid_rdsap_xml)
+        third_assessment.at("RRN").content = "0000-0000-0000-0000-0003"
+        third_assessment.at("UPRN").content = "RRN-0000-0000-0000-0000-0001"
+        third_assessment.at("Inspection-Date").content = "2020-10-04"
+        third_assessment.at("Completion-Date").content = "2020-10-04"
+        third_assessment.at("Registration-Date").content = "2020-10-04"
+        lodge_assessment assessment_body: third_assessment.to_xml,
+                         accepted_responses: [201],
+                         auth_data: {
+                           scheme_ids: [scheme_id],
+                         }
+
+        # Update created_at so that we expect 0000-0000-0000-0000-0002 to be
+        # the "latest"
+        ActiveRecord::Base.connection.exec_query(
+          "UPDATE assessments SET created_at = '2020-10-04 11:30:00'
+           WHERE assessment_id = '0000-0000-0000-0000-0001'")
+        ActiveRecord::Base.connection.exec_query(
+          "UPDATE assessments SET created_at = '2020-10-04 12:30:00'
+           WHERE assessment_id = '0000-0000-0000-0000-0003'")
+        ActiveRecord::Base.connection.exec_query(
+           "UPDATE assessments SET created_at = '2020-10-04 13:30:00'
+            WHERE assessment_id = '0000-0000-0000-0000-0002'")
+      end
+
+      it "returns the information for the assessment with latest created_at" do
+        expect(
+          response[:data][:assessment][:epcRrn],
+          ).to eq "0000-0000-0000-0000-0002"
+      end
+    end
   end
 end
