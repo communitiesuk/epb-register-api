@@ -150,6 +150,22 @@ describe "Audit events", set_with_timecop: true do
     end
   end
 
+  context "when a green deal plan is added" do
+    before do
+      add_green_deal_plan(assessment_id: "0000-0000-0000-0000-0000",
+                          body: GreenDealPlanStub.new.request_body)
+    end
+
+    it "saves the event to the audit log" do
+      expect(saved_data.last).to match a_hash_including(
+        { "entity_type" => "green_deal_plan",
+          "entity_id" => "ABC123456DEF",
+          "event_type" => "green_deal_plan_added",
+          "data" => json_contains_hash(assessment_id: "0000-0000-0000-0000-0000") },
+      )
+    end
+  end
+
   context "when a green deal plan is updated" do
     let(:updated_green_deal_plan_request_body) do
       {

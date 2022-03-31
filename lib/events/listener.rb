@@ -9,6 +9,7 @@ module Events
       attach_assessment_cancellation
       attach_assessment_address
       attach_assessment_status
+      attach_green_deal_plan_added
       attach_green_deal_plan_updated
       attach_green_deal_plan_deleted
       attach_assessor_added
@@ -49,6 +50,12 @@ module Events
           NotifyFactory.opt_out_status_update_to_data_warehouse_use_case.execute(assessment_id: data[:assessment_id])
         end
         NotifyFactory.opt_out_to_audit_log(entity_id: data[:assessment_id], is_opt_out: data[:new_status])
+      end
+    end
+
+    def attach_green_deal_plan_added
+      @event_broadcaster.on :green_deal_plan_added do |**data|
+        NotifyFactory.green_deal_plan_added_to_audit_log(entity_id: data[:green_deal_plan_id], assessment_id: data[:assessment_id])
       end
     end
 

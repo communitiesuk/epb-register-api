@@ -9,6 +9,8 @@ describe NotifyFactory do
         args = case notifier_method
                when :opt_out_to_audit_log
                  { entity_id: "0000-0000", is_opt_out: true }
+               when :green_deal_plan_added_to_audit_log
+                 { entity_id: "AB234234535", assessment_id: %w[0000-0000] }
                when :green_deal_plan_updated_to_audit_log, :green_deal_plan_deleted_to_audit_log
                  { entity_id: "AB234234535", assessment_ids: %w[0000-0000] }
                else

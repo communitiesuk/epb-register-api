@@ -12,6 +12,7 @@ module Domain
       ],
       assessor: [:added],
       green_deal_plan: %i[
+        green_deal_plan_added
         green_deal_plan_updated
         green_deal_plan_deleted
       ],
