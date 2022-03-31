@@ -471,7 +471,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive",
           fetch_renewable_heat_incentive(assessment_id: "0000-0000-0000-0000-0001", accepted_responses: [200])
             .body,
           symbolize_names: true,
-          )
+        )
       end
 
       before do
@@ -480,7 +480,7 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive",
                      body: AssessorStub.new.fetch_request_body(
                        domestic_rd_sap: "ACTIVE",
                        domestic_sap: "ACTIVE",
-                       )
+                     )
         first_assessment = Nokogiri.XML(valid_sap_xml)
         first_assessment.at("RRN").content = "0000-0000-0000-0000-0001"
         first_assessment.at("UPRN").content = "RRN-0000-0000-0000-0000-0001"
@@ -522,19 +522,22 @@ describe "Acceptance::Assessment::FetchRenewableHeatIncentive",
         # the "latest"
         ActiveRecord::Base.connection.exec_query(
           "UPDATE assessments SET created_at = '2020-10-04 11:30:00'
-           WHERE assessment_id = '0000-0000-0000-0000-0001'")
+           WHERE assessment_id = '0000-0000-0000-0000-0001'",
+        )
         ActiveRecord::Base.connection.exec_query(
           "UPDATE assessments SET created_at = '2020-10-04 12:30:00'
-           WHERE assessment_id = '0000-0000-0000-0000-0003'")
+           WHERE assessment_id = '0000-0000-0000-0000-0003'",
+        )
         ActiveRecord::Base.connection.exec_query(
-           "UPDATE assessments SET created_at = '2020-10-04 13:30:00'
-            WHERE assessment_id = '0000-0000-0000-0000-0002'")
+          "UPDATE assessments SET created_at = '2020-10-04 13:30:00'
+            WHERE assessment_id = '0000-0000-0000-0000-0002'",
+        )
       end
 
       it "returns the information for the assessment with latest created_at" do
         expect(
           response[:data][:assessment][:epcRrn],
-          ).to eq "0000-0000-0000-0000-0002"
+        ).to eq "0000-0000-0000-0000-0002"
       end
     end
   end
