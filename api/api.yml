@@ -4,9 +4,9 @@ info:
   title: Energy Performance of Buildings Register API
   description: Public API for EPBR integrations
   contact:
-    name: MHCLG Digital helpdesk (prefix email subject with "EPB")
-    email: mhclg.digital-services@communities.gov.uk
-  version: 1.0.0-rc4
+    name: DLUHC Digital helpdesk (prefix email subject with "EPB")
+    email: dluhc.digital-services@levellingup.gov.uk
+  version: 1.0.1
 
 servers:
   - url: 'https://api.epb-integration.digital.communities.gov.uk/api'
@@ -424,7 +424,7 @@ paths:
                   - $ref: '#/components/schemas/AssessorSearchByPostcodeResults'
                   - $ref: '#/components/schemas/AssessorBody'
         '400':
-          description: Invalid query
+          description: Invalid query - probably a missing parameter or disallowed combination of parameters
           content:
             application/json:
               schema:
@@ -1221,69 +1221,6 @@ paths:
               application/json:
                 schema:
                   $ref: '#/components/schemas/ErrorResponse'
-
-  /reports/assessors/lookup:
-    get:
-      tags:
-        - Manage Assessors
-        - Reports
-      summary: >-
-        Look up energy assessor records to check all scheme registrations
-      description: Look up scheme assessor entries for an individual
-      operationId: lookup-assessors-across-schemes
-      security:
-        - oauth:
-            - 'report:assessor:status'
-      parameters:
-        - in: query
-          name: firstName
-          required: true
-          description: The first name of the assessor
-          schema:
-            type: string
-            example: 'Richard'
-        - in: query
-          name: lastName
-          required: true
-          description: The last name of the assessor
-          schema:
-            type: string
-            example: 'James'
-        - in: query
-          name: dateOfBirth
-          required: true
-          description: The date of birth of the assessor
-          schema:
-            type: string
-            format: date
-            example: '1971-08-18'
-      responses:
-        '200':
-          description: >-
-            Assessor registration list successfully returned
-            (an empty list is returned if there are no matching assessors)
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AssessorSearchResults'
-        '400':
-          description: Bad request - probably a missing or badly formed parameter
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '503':
-          description: Service unavailable
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
 
   /greendeal/assessments/{assessmentId}:
     get:
