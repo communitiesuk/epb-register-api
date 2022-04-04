@@ -7,6 +7,11 @@ module UseCase
       class AssessmentGone < StandardError
       end
 
+      def initialize(search_gateway: nil, xml_gateway: nil)
+        @search_gateway = search_gateway || Gateway::AssessmentsSearchGateway.new
+        @xml_gateway = xml_gateway || Gateway::AssessmentsXmlGateway.new
+      end
+
       def lodged_values_from_xml(xml, schema_type, assessment_id)
         view_model =
           ViewModel::Factory.new.create(xml, schema_type, assessment_id)
@@ -20,8 +25,7 @@ module UseCase
       def execute(assessment_id)
         assessment_id = Helper::RrnHelper.normalise_rrn_format(assessment_id)
         assessment =
-          Gateway::AssessmentsSearchGateway
-            .new
+          @search_gateway
             .search_by_assessment_id(assessment_id, restrictive: false)
             .first
 
@@ -34,7 +38,7 @@ module UseCase
         end
 
         lodged_xml_document =
-          Gateway::AssessmentsXmlGateway.new.fetch assessment_id
+          @xml_gateway.fetch assessment_id
         raise NotFoundException unless lodged_xml_document
 
         lodged_values =
