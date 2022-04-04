@@ -2,8 +2,8 @@
 <RdSAP-Report xmlns="https://epbr.digital.communities.gov.uk/xsd/rdsap"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="https://epbr.digital.communities.gov.uk/xsd/rdsap ../RdSAP-Schema-20.0.0/RdSAP/Templates/RdSAP-Report.xsd">
-  <Calculation-Software-Name>RdSAP 4 U</Calculation-Software-Name>
-  <Calculation-Software-Version>2.0</Calculation-Software-Version>
+  <Calculation-Software-Name>Stroma FSAP 2012</Calculation-Software-Name>
+  <Calculation-Software-Version>Version: 1.0.52</Calculation-Software-Version>
   <User-Interface-Name>RdSAPwize</User-Interface-Name>
   <User-Interface-Version>UI-2.0</User-Interface-Version>
   <Schema-Version-Original>20.0.0</Schema-Version-Original>
