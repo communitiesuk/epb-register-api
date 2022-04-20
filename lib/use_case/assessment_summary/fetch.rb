@@ -73,6 +73,9 @@ module UseCase
         else
           summary_data
         end
+
+        # summary_data[:superseded_by] = summary_data[:related_assessments].length.positive? ? summary_data[:related_assessments].first.to_hash[:assessment_id] : nil
+        summary_data
       end
     end
   end

@@ -66,9 +66,12 @@ describe "Acceptance::AssessmentSummary", set_with_timecop: true do
     end
   end
 
-  context "when fetching a summar" do
-    it "Returns the summary for a URL without hyphens" do
-      scheme_id = add_scheme_and_get_id
+  context "when fetching a summary" do
+    let(:scheme_id) do
+      add_scheme_and_get_id
+    end
+
+    before do
       xml_file = Samples.xml "CEPC-8.0.0", "cepc+rr"
       assessor =
         AssessorStub.new.fetch_request_body(
@@ -86,8 +89,19 @@ describe "Acceptance::AssessmentSummary", set_with_timecop: true do
         },
         schema_name: "CEPC-8.0.0",
       )
+    end
 
+    it "Returns the summary for a URL without hyphens" do
       fetch_assessment_summary(id: "00000000000000000000").body
+    end
+
+    it "contains the superseded_by key regardless if there is one" do
+      response =
+        JSON.parse(
+          fetch_assessment_summary(id: "0000-0000-0000-0000-0000").body,
+          symbolize_names: true,
+        )
+      expect(response[:supersededBy]).to eq(nil)
     end
   end
 
@@ -131,6 +145,4 @@ describe "Acceptance::AssessmentSummary", set_with_timecop: true do
       ).to eq "Hot water cylinder thermostat" # From Improvement-Summary
     end
   end
-
-  context ""
 end
