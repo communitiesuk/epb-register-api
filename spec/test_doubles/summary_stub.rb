@@ -168,6 +168,7 @@ class SummaryStub
       address_id: nil,
       opt_out: nil,
       related_assessments: [],
-      green_deal_plan: [] }
+      green_deal_plan: [],
+      superseded_by: nil }
   end
 end
