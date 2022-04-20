@@ -37,7 +37,7 @@ gem "pg", "~> 1.3"
 gem "puma", "~> 5.6"
 gem "rake", "~> 13.0", ">= 13.0.6"
 gem "redis", "~> 4.6.0"
-gem "rubocop-govuk", "~> 4.3"
+gem "rubocop-govuk", "~> 4.4"
 gem "rubocop-performance", require: false
 gem "rubyzip", "~> 2.3.2"
 gem "sentry-ruby", "~> 5.2"
