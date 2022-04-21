@@ -64,10 +64,9 @@ describe "Audit events", set_with_timecop: true do
     end
 
     it "saves the event to the audit log" do
-      expect(saved_data.last).to match a_hash_including(
+      expect(saved_data.find { |event| event["event_type"] == "opt_out" }).to match a_hash_including(
         { "entity_type" => "assessment",
-          "entity_id" => "0000-0000-0000-0000-0000",
-          "event_type" => "opt_out" },
+          "entity_id" => "0000-0000-0000-0000-0000" },
       )
     end
   end
