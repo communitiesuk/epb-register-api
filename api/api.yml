@@ -2579,6 +2579,10 @@ components:
             - $ref: '#/components/schemas/Addendum'
           nullable: true
           description: Additional information about the property
+        supersededBy:
+          type: string
+          nullable: true
+          description: The RRN of the assessment that has superseded this one, if one exists
 
     EnergyAssessmentMetadata:
       type: object
