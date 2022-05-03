@@ -69,6 +69,9 @@ module UseCase
     private
 
       def superseded_by!(hash, related_assessments)
+        related_assessments.select! do |k, _v|
+          k.to_hash[:assessment_type] == hash[:type_of_assessment]
+        end
         hash[:superseded_by] = related_assessments.length.positive? && related_assessments.first.to_hash[:assessment_id] != hash[:assessment_id] ? related_assessments.first.to_hash[:assessment_id] : nil
       end
     end

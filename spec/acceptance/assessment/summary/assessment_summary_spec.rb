@@ -24,7 +24,7 @@ describe "Acceptance::AssessmentSummary", set_with_timecop: true do
   end
 
   context "when there is dual lodgement" do
-    it "Can give summaries for both documents in a CEPC+RR combo" do
+    before do
       scheme_id = add_scheme_and_get_id
       xml_file = Samples.xml "CEPC-8.0.0", "cepc+rr"
       assessor =
@@ -43,18 +43,23 @@ describe "Acceptance::AssessmentSummary", set_with_timecop: true do
         },
         schema_name: "CEPC-8.0.0",
       )
+    end
 
-      cepc_response =
-        JSON.parse(
-          fetch_assessment_summary(id: "0000-0000-0000-0000-0000").body,
-          symbolize_names: true,
-        )
-      cepc_rr_response =
-        JSON.parse(
-          fetch_assessment_summary(id: "0000-0000-0000-0000-0001").body,
-          symbolize_names: true,
-        )
+    let(:cepc_response) do
+      JSON.parse(
+        fetch_assessment_summary(id: "0000-0000-0000-0000-0000").body,
+        symbolize_names: true,
+      )
+    end
 
+    let(:cepc_rr_response) do
+      JSON.parse(
+        fetch_assessment_summary(id: "0000-0000-0000-0000-0001").body,
+        symbolize_names: true,
+      )
+    end
+
+    it "Can give summaries for both documents in a CEPC+RR combo" do
       expect(cepc_response[:data][:assessmentId]).to eq(
         "0000-0000-0000-0000-0000",
       )
@@ -63,6 +68,10 @@ describe "Acceptance::AssessmentSummary", set_with_timecop: true do
         "0000-0000-0000-0000-0001",
       )
       expect(cepc_rr_response[:data][:typeOfAssessment]).to eq("CEPC-RR")
+    end
+
+    it "does not have the RR as the superseded EPC " do
+      expect(cepc_response[:data][:supersededBy]).to eq(nil)
     end
   end
 
