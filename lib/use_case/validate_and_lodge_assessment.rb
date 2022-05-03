@@ -62,7 +62,7 @@ module UseCase
 
       xml_doc = as_parsed_document assessment_xml
 
-      Helper::Toggles.enabled? "validate-software" do
+      Helper::Toggles.enabled? "validate-software", default: (ENV["STAGE"] == "production") do
         raise SoftwareNotApprovedError unless migrated || software_is_approved?(
           assessment_xml_doc: xml_doc,
           schema_name: schema_name,
