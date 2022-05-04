@@ -195,6 +195,42 @@ describe "UseCase::AssessmentSummary::Fetch", set_with_timecop: true do
       expect(use_case.execute("0000-0000-0000-0000-0000")[:superseded_by]).to eq(nil)
     end
   end
+
+  context "when a SAP is superseded by an RdSAP" do
+    subject(:use_case) { UseCase::AssessmentSummary::Fetch.new }
+
+    let(:scheme_id) do
+      add_scheme_and_get_id
+    end
+
+    before do
+      add_super_assessor(scheme_id: scheme_id)
+      sap = Nokogiri.XML(Samples.xml("SAP-Schema-18.0.0"))
+
+      lodge_assessment(
+        assessment_body: sap.to_xml,
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        schema_name: "SAP-Schema-18.0.0",
+      )
+
+      rdsap = Nokogiri.XML(Samples.xml("RdSAP-Schema-20.0.0"))
+      rdsap.at("RRN").content = "9876-0000-0000-0000-1234"
+
+      lodge_assessment(
+        assessment_body: rdsap.to_xml,
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        schema_name: "RdSAP-Schema-20.0.0",
+      )
+    end
+
+    it "has has the RRN of the RdSap as the superseded value" do
+      expect(use_case.execute("0000-0000-0000-0000-0000")[:superseded_by]).to eq("9876-0000-0000-0000-1234")
+    end
+  end
 end
 
 def set_xml_date(epc_xml, date)

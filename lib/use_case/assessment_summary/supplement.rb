@@ -49,29 +49,33 @@ module UseCase
         related_assessments =
           Gateway::RelatedAssessmentsGateway.new.by_address_id hash[:address_id]
 
-        domestic_types = %w[RdSAP SAP]
-
+        filtered_by_types = filter_by_types(hash, related_assessments)
         other_assessments_without_self =
-          related_assessments.filter do |assessment|
+          filtered_by_types.filter do |assessment|
             related = assessment.to_hash
-
-            (
-              (
-                domestic_types.include?(related[:assessment_type]) &&
-                  domestic_types.include?(hash[:type_of_assessment])
-              ) || related[:assessment_type] == hash[:type_of_assessment]
-            ) && related[:assessment_id] != hash[:assessment_id]
+            related[:assessment_id] != hash[:assessment_id]
           end
-        superseded_by!(hash, related_assessments)
+        superseded_by!(hash, filtered_by_types)
         hash[:related_assessments] = other_assessments_without_self
       end
 
     private
 
-      def superseded_by!(hash, related_assessments)
-        related_assessments.select! do |k, _v|
-          k.to_hash[:assessment_type] == hash[:type_of_assessment]
+      def filter_by_types(hash, related_assessments)
+        domestic_types = %w[RdSAP SAP]
+
+        related_assessments.filter do |assessment|
+          related = assessment.to_hash
+          (
+            (
+              domestic_types.include?(related[:assessment_type]) &&
+                domestic_types.include?(hash[:type_of_assessment])
+            ) || related[:assessment_type] == hash[:type_of_assessment]
+          )
         end
+      end
+
+      def superseded_by!(hash, related_assessments)
         hash[:superseded_by] = related_assessments.length.positive? && related_assessments.first.to_hash[:assessment_id] != hash[:assessment_id] ? related_assessments.first.to_hash[:assessment_id] : nil
       end
     end
