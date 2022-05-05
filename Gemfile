@@ -11,7 +11,7 @@ end
 group :worker do
   gem "http"
   gem "sidekiq", "~> 6.4.2"
-  gem "sidekiq-cron", "~> 1.3.0"
+  gem "sidekiq-cron", "~> 1.4.0"
 end
 
 group :test do
