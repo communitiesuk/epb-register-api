@@ -45,6 +45,31 @@ describe UseCase::ValidateAndLodgeAssessment do
     end
   end
 
+  context "when lodging SAP-Schema 19 " do
+
+    it "allow  when feature flag is turned on" do
+      Helper::Toggles.set_feature("register-api-allow-sap-10", true)
+      expect {
+        use_case.execute assessment_xml: valid_xml,
+                         schema_name: "SAP-Schema-19.0.0",
+                         scheme_ids: "1",
+                         migrated: false,
+                         overidden: false
+      }.not_to raise_exception
+    end
+
+    it "does not allow when feature flag is turned off" do
+      Helper::Toggles.set_feature("register-api-allow-sap-10", false)
+      expect {
+        use_case.execute assessment_xml: valid_xml,
+                         schema_name: "SAP-Schema-19.0.0",
+                         scheme_ids: "1",
+                         migrated: false,
+                         overidden: false
+      }.to raise_exception(UseCase::ValidateAndLodgeAssessment::SchemaNotSupportedException)
+    end
+  end
+
   context "when validating without having been passed a schema name" do
     it "raises the error SchemaNotDefined" do
       expect {
