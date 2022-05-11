@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns="http://www.epcregister.com/xsd/sap" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	targetNamespace="http://www.epcregister.com/xsd/sap" elementFormDefault="qualified"
-	attributeFormDefault="unqualified" version="BRETEST-10.2">
+<xs:schema xmlns="https://epbr.digital.communities.gov.uk/xsd/sap"
+		   xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="https://epbr.digital.communities.gov.uk/xsd/sap" elementFormDefault="qualified"
+	attributeFormDefault="unqualified" version="19.0.0">
 	<xs:include schemaLocation="../UDT/SAP-Domains.xsd"/>
-	<xs:include schemaLocation="gement.xsd"/>
-	<xs:include schemaLocation=""/>
-	<xs:include schemaLocation="dData.xsd"/>
-	<xs:include schemaLocation="ate.xsd"/>
+	<xs:include schemaLocation="AssessorManagement.xsd"/>
+	<xs:include schemaLocation="Property.xsd"/>
+	<xs:include schemaLocation="SAP-CollectedData.xsd"/>
+	<xs:include schemaLocation="EPC-Certificate.xsd"/>
+	<xs:include schemaLocation="ExceptionList.xsd"/>
+	<xs:include schemaLocation="SAP-Compliance-Report.xsd"/>
+	<xs:include schemaLocation="ReportList.xsd"/>
 	<xs:element name="SAP-Report" type="Energy-Performance-Certificate"/>
 	<xs:complexType name="Energy-Performance-Certificate">
 		<xs:sequence>
@@ -50,7 +54,15 @@
 			<xs:element name="Report-Header" type="Report-Header"/>
 			<xs:element name="Energy-Assessment" type="Energy-Assessment"/>
 			<xs:element name="SAP10-Data" type="SAP10-Data"/>
-			<xs:element name="PDF" type="xs:base64Binary" minOccurs="0"/>
+      <xs:element name="PDF" type="xs:base64Binary" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>
+            DEPRECATED - DO NOT USE
+            This element is allowed for backwards-compatibility but any data sent here will
+            not be read, processed or stored by the register.
+          </xs:documentation>
+        </xs:annotation>
+      </xs:element>
 			<xs:element name="Insurance-Details" type="Insurance-Details" minOccurs="0"/>
 			<xs:element name="ExternalDefinitions-Revision-Number" type="xs:string">
 				<xs:annotation>

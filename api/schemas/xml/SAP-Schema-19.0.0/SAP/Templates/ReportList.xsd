@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns="http://www.epcregister.com/xsd/sap" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    targetNamespace="http://www.epcregister.com/xsd/sap" elementFormDefault="qualified"
-    attributeFormDefault="unqualified" version="BRETEST-10.2">
+<xs:schema xmlns="https://epbr.digital.communities.gov.uk/xsd/sap" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    targetNamespace="https://epbr.digital.communities.gov.uk/xsd/sap" elementFormDefault="qualified"
+    attributeFormDefault="unqualified" version="19.0.0">
     <xs:include schemaLocation="AssessorManagement.xsd"/>
     <xs:include schemaLocation="../UDT/EPC-Domains.xsd"/>
 
