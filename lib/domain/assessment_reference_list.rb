@@ -3,7 +3,7 @@ module Domain
     include Enumerable
 
     def initialize(*rrns)
-      @rrns = rrns
+      @rrns = rrns.sort
     end
 
     def each(&block)

@@ -22,4 +22,14 @@ describe Domain::AssessmentReferenceList do
       expect(list.references).to eq references
     end
   end
+
+  context "with two references provided in descending order" do
+    references = %w[0000-0000-0000-0000-0003 0000-0000-0000-0000-0002]
+
+    subject(:list) { described_class.new(*references) }
+
+    it "returns the references in a sorted order" do
+      expect(list.references).to eq references.sort
+    end
+  end
 end
