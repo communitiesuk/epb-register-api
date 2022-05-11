@@ -1225,7 +1225,7 @@ paths:
         summary: Search for assessments
         description: 'Search for an assessment by
                     EITHER
-                     - a postcode AND first line of address
+                     - a postcode AND building name/ number
                     OR
                      - an address ID (UPRN)
                     OR
@@ -1244,19 +1244,19 @@ paths:
               $ref: '#/components/schemas/AddressPostcode'
             example: 'FL23 4JA'
           - in: query
-            name: address_line1
-            description: The first line of the address of the property
+            name: building_name_or_number
+            description: The name or number for the building
             schema:
-              $ref: '#/components/schemas/AddressLine1'
+              $ref: '#/components/schemas/AddressBuildingNameOrNumber'
             example: '22 Acacia Avenue'
           - in: query
-            name: address_id
+            name: uprn
             description: The UPRN of the property being searched for
             schema:
-              $ref: '#/components/schemas/AddressId'
+              $ref: '#/components/schemas/AddressUprn'
             example: 'UPRN-000456789012'
           - in: query
-            name: assessment_id
+            name: rrn
             description: The RRN of the assessment being searched for
             schema:
               $ref: '#/components/schemas/AssessmentId'
@@ -2017,11 +2017,38 @@ components:
                     $ref: '#/components/schemas/AssessmentType'
 
     AddressId:
-      type: string
+      oneOf:
+        - $ref: '#/components/schemas/AddressUprn'
+        - $ref: '#/components/schemas/RrnReferenceAddressId'
+        - $ref: '#/components/schemas/AddressLprn'
       description: 'An identifier for an address, which is one of:
                     * An OS gazetteer UPRN (prefixed UPRN-)
                     * The reference number of the report this address appears on (prefixed RRN-)'
       example: 'UPRN-716375734512'
+
+    AddressUprn:
+      type: string
+      pattern: '^UPRN-\d{12}$'
+      description: "An OS gazetteer UPRN (prefixed UPRN-)"
+      example: 'UPRN-716375734512'
+
+    RrnReferenceAddressId:
+      type: string
+      pattern: '^RRN-\d{4}-\d{4}-\d{4}-\d{4}-\d{4}$'
+      description: "The reference number of the report this address appears on (prefixed RRN-)"
+      example: 'RRN-0000-0000-1111-2222-3333'
+
+    AddressLprn:
+      type: string
+      pattern: '^LPRN-\d{10}$'
+      description: "A property reference number as formerly used by Landmark"
+      example: 'LPRN-7876876234'
+
+    AddressBuildingNameOrNumber:
+      type: string
+      minLength: 1
+      example: "Shell House"
+      description: 'A street number ("42") or a building name ("Cromwell Building")'
 
     AddressLine1:
       type: string
@@ -2752,7 +2779,7 @@ components:
               type: array
               items:
                 type: string
-              example: [ "/api//bus/assessments/latest/search?assessment_id=9876-9876-9876-9876-9876", "/api//bus/assessments/latest/search?assessment_id=8765-8765-8765-8765-8765" ]
+              example: [ "/api/bus/assessments/latest/search?rrn=9876-9876-9876-9876-9876", "/api/bus/assessments/latest/search?rrn=8765-8765-8765-8765-8765" ]
 
     # Green Deal
     AssessmentGreenDealDetails:
