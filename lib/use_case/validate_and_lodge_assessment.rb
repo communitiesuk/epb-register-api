@@ -32,6 +32,7 @@ module UseCase
     class NotOverridableLodgementRuleError < StandardError; end
 
     LATEST_COMMERCIAL = %w[CEPC-8.0.0 CEPC-NI-8.0.0].freeze
+    LATEST_DOM_EW = %w[SAP-Schema-18.0.0 RdSAP-Schema-20.0.0].freeze
     LATEST_DOM_NI = %w[SAP-Schema-NI-18.0.0 RdSAP-Schema-NI-20.0.0].freeze
     NOT_OVERRIDABLE_LODGEMENT_RULES = %w[FLOOR_AREA_CANT_BE_LESS_THAN_ZERO DATES_CANT_BE_IN_FUTURE].freeze
 
@@ -72,11 +73,14 @@ module UseCase
 
       unless migrated
         wrapper = ViewModel::Factory.new.create(assessment_xml, schema_name, false)
-        if (
-             (
-               LATEST_COMMERCIAL + latest_dom_ew + LATEST_DOM_NI
-             ).include? schema_name
-           ) && !wrapper.nil?
+
+        schema_valid = if Helper::Toggles.enabled? "register-api-schema-version-to-param"
+                         UseCase::CheckSchemaVersion.new.execute(schema_name)
+                       else
+                         (LATEST_COMMERCIAL + LATEST_DOM_EW + LATEST_DOM_NI).include? schema_name
+                       end
+
+        if schema_valid && !wrapper.nil?
           rules =
             if LATEST_COMMERCIAL.include? schema_name
               LodgementRules::NonDomestic.new
@@ -109,6 +113,7 @@ module UseCase
         else
           raise SupersededSchemaException
         end
+
       end
 
       responses = []
@@ -190,16 +195,7 @@ module UseCase
     def as_parsed_document(xml)
       xml_doc = Nokogiri.XML xml
       xml_doc.remove_namespaces!
-
       xml_doc
-    end
-
-    def latest_dom_ew
-      schemes = %w[SAP-Schema-18.0.0 RdSAP-Schema-20.0.0]
-      if Helper::Toggles.enabled?("register-api-allow-sap-10")
-        schemes << "SAP-Schema-19.0.0"
-      end
-      schemes
     end
   end
 end
