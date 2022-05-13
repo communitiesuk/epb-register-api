@@ -5,8 +5,8 @@ module UseCase
     end
 
     def execute(schema_name)
-      valid_domestic_schemas = ENV["VALID_DOMESTIC_SCHEMAS"]
-      valid_non_domestic_schemas = ENV["VALID_NON_DOMESTIC_SCHEMAS"]
+      valid_domestic_schemas = ENV["VALID_DOMESTIC_SCHEMAS"]&.split(",")
+      valid_non_domestic_schemas = ENV["VALID_NON_DOMESTIC_SCHEMAS"]&.split(",")
       if valid_domestic_schemas.nil? && valid_non_domestic_schemas.nil?
         @logger.error("Both domestic and non domestic schemas are not present in the param store")
         return false

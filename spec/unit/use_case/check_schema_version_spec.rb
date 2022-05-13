@@ -6,8 +6,8 @@ describe UseCase::CheckSchemaVersion do
   before do
     allow(logger).to receive(:error)
     allow(ENV).to receive(:[])
-    allow(ENV).to receive(:[]).with("VALID_DOMESTIC_SCHEMAS").and_return(%w[SAP-Schema-19.0.0 SAP-Schema-18.0.0 RdSAP-Schema-NI-19.0])
-    allow(ENV).to receive(:[]).with("VALID_NON_DOMESTIC_SCHEMAS").and_return(%w[CEPC-8.0.0])
+    allow(ENV).to receive(:[]).with("VALID_DOMESTIC_SCHEMAS").and_return("SAP-Schema-19.0.0,SAP-Schema-18.0.0,RdSAP-Schema-NI-19.0")
+    allow(ENV).to receive(:[]).with("VALID_NON_DOMESTIC_SCHEMAS").and_return("CEPC-8.0.0")
   end
 
   it "can load the class" do
