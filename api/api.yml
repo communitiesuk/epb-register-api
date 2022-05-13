@@ -1275,7 +1275,7 @@ paths:
                         assessment:
                           $ref: '#/components/schemas/AssessmentBUSDetails'
           '300':
-            description: Multiple choices matched for the given query parameters
+            description: Multiple sets of BUS details were matched for the given query parameters. Response contains RRNs for which BUS details can be fetched individually.
             content:
               application/json:
                 schema:
@@ -1288,6 +1288,12 @@ paths:
                         * Badly formed address ID
                         * Badly formed assessment ID
                         * No valid query parameters'
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorResponse'
+          '401':
+            description: Unauthorized
             content:
               application/json:
                 schema:
@@ -2334,6 +2340,7 @@ components:
     # Assessments
     AssessmentId:
       type: string
+      pattern: '^\d{4}-\d{4}-\d{4}-\d{4}-\d{4}$'
       example: '0000-0000-0000-0000-0000'
 
     AssessmentStatus:
@@ -2737,12 +2744,17 @@ components:
         cavityWallInsulationRecommended:
           type: boolean
           example: false
+          nullable: true
+          description: "Whether cavity wall insulation was recommended as part of this assessment. NB. ensure type-checking of this value, as `null` (meaning information was not available, for example for CEPCs) is semantically different to `false` here."
         loftInsulationRecommended:
           type: boolean
           example: true
+          nullable: true
+          description: "Whether loft insulation was recommended as part of this assessment. NB. ensure type-checking of this value, as `null` (meaning information was not available, for example for CEPCs) is semantically different to `false` here."
         secondaryHeating:
           type: string
           example: 'Electric bar heater'
+          nullable: true
         address:
           type: object
           properties:
@@ -2768,6 +2780,7 @@ components:
         dwellingType:
           type: string
           example: 'Top-floor flat'
+          nullable: true
 
     MultipleBUSMatchesList:
       type: object
@@ -2778,8 +2791,8 @@ components:
             assessments:
               type: array
               items:
-                type: string
-              example: [ "/api/bus/assessments/latest/search?rrn=9876-9876-9876-9876-9876", "/api/bus/assessments/latest/search?rrn=8765-8765-8765-8765-8765" ]
+                $ref: '#/components/schemas/AssessmentId'
+              example: [ "9876-9876-9876-9876-9876", "8765-8765-8765-8765-8765" ]
 
     # Green Deal
     AssessmentGreenDealDetails:
