@@ -22,6 +22,8 @@ env:
     NON_DOMESTIC_APPROVED_SOFTWARE: "epbr-software-versions-non-domestic"
     SENTRY_DSN: "epbr-sentry-dsn-register-api"
     OS_DATA_HUB_API_KEY: "epbr-ordnance-survey-downloads-api-key"
+    VALID_DOMESTIC_SCHEMAS: "epbr-schema-versions-domestic-staging"
+    VALID_NON_DOMESTIC_SCHEMAS: "epbr-schema-versions-non-domestic-staging"
 
 phases:
   install:
