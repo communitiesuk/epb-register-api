@@ -535,6 +535,55 @@ def assessors_search_by_name(
   )
 end
 
+def bus_details_by_address(
+  postcode:,
+  building_name_or_number:,
+  scopes: %w[bus:assessment:search],
+  **assertive_kwargs
+)
+  assertive_get(
+    "/api/bus/assessments/latest/search?postcode=#{postcode}&buildingNameOrNumber=#{building_name_or_number}",
+    scopes: scopes,
+    **assertive_kwargs,
+  )
+end
+
+def bus_details_by_uprn(
+  uprn,
+  scopes: %w[bus:assessment:search],
+  **assertive_kwargs
+)
+  assertive_get(
+    "/api/bus/assessments/latest/search?uprn=#{uprn}",
+    scopes: scopes,
+    **assertive_kwargs,
+  )
+end
+
+def bus_details_by_rrn(
+  rrn,
+  scopes: %w[bus:assessment:search],
+  **assertive_kwargs
+)
+  assertive_get(
+    "/api/bus/assessments/latest/search?rrn=#{rrn}",
+    scopes: scopes,
+    **assertive_kwargs,
+  )
+end
+
+def bus_details_by_arbitrary_params(
+  params:,
+  scopes: %w[bus:assessment:search],
+  **assertive_kwargs
+)
+  assertive_get(
+    "/api/bus/assessments/latest/search?#{URI.encode_www_form(params)}",
+    scopes: scopes,
+    **assertive_kwargs,
+  )
+end
+
 def schemes_list(
   scopes: %w[scheme:list],
   **assertive_kwargs

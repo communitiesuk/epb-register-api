@@ -75,6 +75,56 @@ describe Helper::RegexHelper do
     end
   end
 
+  describe "validating UPRNs" do
+    let(:uprn_regex) { Regexp.new described_class::UPRN }
+
+    context "with valid UPRN" do
+      it "validates" do
+        expect(uprn_regex.match?("UPRN-012345678901")).to be true
+      end
+    end
+
+    context "with RRN based address ID" do
+      it "does not validate" do
+        expect(uprn_regex.match?("RRN-0000-1111-2222-3333-4444")).to be false
+      end
+    end
+
+    context "with a UPRN with too few digits" do
+      it "does not validate" do
+        expect(uprn_regex.match?("UPRN-01234567890")).to be false
+      end
+    end
+  end
+
+  describe "validating an RRN" do
+    let(:rrn_regex) { Regexp.new described_class::RRN }
+
+    context "with valid RRN" do
+      it "validates" do
+        expect(rrn_regex.match?("0000-1111-2222-3333-4444")).to be true
+      end
+    end
+
+    context "with RRN with no dashes" do
+      it "does not validate" do
+        expect(rrn_regex.match?("00001111222233334444")).to be false
+      end
+    end
+
+    context "with RRN with only four parts" do
+      it "does not validate" do
+        expect(rrn_regex.match?("0000-1111-2222-3333")).to be false
+      end
+    end
+
+    context "with RRN with six parts" do
+      it "does not validate" do
+        expect(rrn_regex.match?("0000-1111-2222-3333-4444-5555")).to be false
+      end
+    end
+  end
+
   describe "validating Green Deal Plan IDs" do
     let(:green_deal_plan_id_regex) { Regexp.new described_class::GREEN_DEAL_PLAN_ID }
 

@@ -53,6 +53,10 @@ class ApiFactory
     @assessment_statistics_gateway ||= Gateway::AssessmentStatisticsGateway.new
   end
 
+  def self.boiler_upgrade_scheme_gateway
+    @boiler_upgrade_scheme_gateway ||= Gateway::BoilerUpgradeSchemeGateway.new
+  end
+
   def self.assessments_export_use_case
     @assessments_export_use_case ||=
       UseCase::ExportAssessmentAttributes.new(
@@ -182,6 +186,21 @@ class ApiFactory
         assessors_status_events_gateway: assessors_status_events_gateway,
         event_broadcaster: event_broadcaster,
       )
+  end
+
+  def self.fetch_assessment_for_bus_use_case
+    @fetch_assessment_for_bus_use_case ||=
+      UseCase::FetchAssessmentForBus.new(bus_gateway: boiler_upgrade_scheme_gateway)
+  end
+
+  def self.find_assessments_for_bus_by_address_use_case
+    @find_assessments_for_bus_by_address_use_case ||=
+      UseCase::FindAssessmentsForBusByAddress.new(bus_gateway: boiler_upgrade_scheme_gateway)
+  end
+
+  def self.find_assessments_for_bus_by_uprn_use_case
+    @find_assessments_for_bus_by_uprn_use_case ||=
+      UseCase::FindAssessmentsForBusByUprn.new(bus_gateway: boiler_upgrade_scheme_gateway)
   end
 
   def self.storage_configuration_reader(bucket_name:, instance_name:)
