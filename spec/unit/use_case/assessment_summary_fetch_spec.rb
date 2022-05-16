@@ -238,14 +238,17 @@ describe "UseCase::AssessmentSummary::Fetch", set_with_timecop: true do
     let(:search_gateway) do
       instance_double(Gateway::AssessmentsSearchGateway)
     end
-    let!(:results) do
+
+    let(:results) do
       summary = use_case.execute("0000-0000-0000-0000-0000")
       summary[:assessor][:registered_by][:scheme_id] = "1"
       summary
     end
+
     let(:scheme_id) do
       add_scheme_and_get_id
     end
+
     let(:xml_data) do
       {
         xml: xml_fixture,
@@ -254,9 +257,11 @@ describe "UseCase::AssessmentSummary::Fetch", set_with_timecop: true do
         scheme_assessor_id: "SPEC000000",
       }
     end
+
     let(:xml_fixture) do
       Samples.xml "SAP-Schema-19.0.0"
     end
+
     let(:search_results) do
       [{
         "assessment_id" => "0000-0000-0000-0000-0000",
@@ -271,10 +276,10 @@ describe "UseCase::AssessmentSummary::Fetch", set_with_timecop: true do
 
     before do
       add_super_assessor(scheme_id: scheme_id)
-
       allow(search_gateway).to receive(:search_by_assessment_id).and_return(search_results)
       allow(xml_gateway).to receive(:fetch).and_return(xml_data)
     end
+
 
     SummaryStub.fetch_summary_sap_19("1").each do |key, value|
       it "#{key} matches the sap value: ''#{value}'' " do
