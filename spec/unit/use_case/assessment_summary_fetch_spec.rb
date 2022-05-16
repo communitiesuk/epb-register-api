@@ -50,7 +50,7 @@ describe "UseCase::AssessmentSummary::Fetch", set_with_timecop: true do
 
     it "can execute and return the expected hash" do
       results = use_case.execute("0000-0000-0000-0000-0001")
-      expect(results).to eq(SummaryStub.fetch_summary(scheme_id))
+      expect(results).to eq(SummaryStub.fetch_summary_rdsap(scheme_id: scheme_id))
     end
   end
 
@@ -229,6 +229,57 @@ describe "UseCase::AssessmentSummary::Fetch", set_with_timecop: true do
 
     it "has has the RRN of the RdSap as the superseded value" do
       expect(use_case.execute("0000-0000-0000-0000-0000")[:superseded_by]).to eq("9876-0000-0000-0000-1234")
+    end
+  end
+
+  context "when extracting summary assessment data for a SAP 19" do
+    subject(:use_case) { UseCase::AssessmentSummary::Fetch.new(search_gateway: search_gateway, xml_gateway: xml_gateway) }
+
+    let(:search_gateway) do
+      instance_double(Gateway::AssessmentsSearchGateway)
+    end
+    let!(:results) do
+      summary = use_case.execute("0000-0000-0000-0000-0000")
+      summary[:assessor][:registered_by][:scheme_id] = "1"
+      summary
+    end
+    let(:scheme_id) do
+      add_scheme_and_get_id
+    end
+    let(:xml_data) do
+      {
+        xml: xml_fixture,
+        schema_type: "SAP-Schema-19.0.0",
+        assessment_id: "0000-0000-0000-0000-0000",
+        scheme_assessor_id: "SPEC000000",
+      }
+    end
+    let(:xml_fixture) do
+      Samples.xml "SAP-Schema-19.0.0"
+    end
+    let(:search_results) do
+      [{
+        "assessment_id" => "0000-0000-0000-0000-0000",
+        "date_of_assessment" => "01-01-2021",
+        "type_of_assessment" => "SAP",
+      }]
+    end
+
+    let(:xml_gateway) do
+      instance_double(Gateway::AssessmentsXmlGateway)
+    end
+
+    before do
+      add_super_assessor(scheme_id: scheme_id)
+
+      allow(search_gateway).to receive(:search_by_assessment_id).and_return(search_results)
+      allow(xml_gateway).to receive(:fetch).and_return(xml_data)
+    end
+
+    SummaryStub.fetch_summary_sap_19("1").each do |key, value|
+      it "#{key} matches the sap value: ''#{value}'' " do
+        expect(results[key]).to eq(value)
+      end
     end
   end
 end

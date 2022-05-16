@@ -76,7 +76,7 @@
       </Floor>
       <Windows>
         <Description>High performance glazing</Description>
-        <Energy-Efficiency-Rating>5</Energy-Efficiency-Rating>
+        <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
         <Environmental-Efficiency-Rating>5</Environmental-Efficiency-Rating>
       </Windows>
       <Main-Heating>
@@ -90,7 +90,7 @@
         <Environmental-Efficiency-Rating>4</Environmental-Efficiency-Rating>
       </Main-Heating-Controls>
       <Secondary-Heating>
-        <Description>None</Description>
+        <Description>Electric heater</Description>
         <Energy-Efficiency-Rating>0</Energy-Efficiency-Rating>
         <Environmental-Efficiency-Rating>0</Environmental-Efficiency-Rating>
       </Secondary-Heating>
@@ -136,10 +136,13 @@
     </Energy-Use>
     <Renewable-Heat-Incentive>
       <RHI-New-Dwelling>
-        <Space-Heating>2666</Space-Heating>
-        <Water-Heating>2650</Water-Heating>
+        <Space-Heating>13120</Space-Heating>
+        <Water-Heating>2285</Water-Heating>
       </RHI-New-Dwelling>
     </Renewable-Heat-Incentive>
+    <Addendum>
+      <Stone-Walls>true</Stone-Walls>
+    </Addendum>
     <Suggested-Improvements>
       <Improvement>
         <Sequence>1</Sequence>
@@ -312,6 +315,7 @@
           </SAP-Thermal-Bridges>
           <Building-Part-Number>1</Building-Part-Number>
           <Construction-Age-Band>A</Construction-Age-Band>
+          <Construction-Year>1750</Construction-Year>
           <SAP-Floor-Dimensions>
             <SAP-Floor-Dimension>
               <Floor-Type>2</Floor-Type>
