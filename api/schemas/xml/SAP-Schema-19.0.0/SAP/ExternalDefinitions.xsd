@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns="EPC" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="EPC" attributeFormDefault="unqualified" version="EPC-1.4">
+<xs:schema
+  xmlns="EPC"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="EPC"
+  attributeFormDefault="unqualified"
+  version="EPC-1.4"
+>
 	<xs:annotation>
 		<xs:documentation>
-			This schema is used to provide 
+			This schema is used to provide
 				(a) the texts of recommendations on EPCs (by country)
 				(b) addenda that may appear on RdSAP EPCs (same for all countries)
 				(c) the options for Related Party Disclosure (same for all countries)
@@ -160,7 +166,7 @@
 		<xs:sequence>
 			<xs:element name="Display-Order" type="xs:positiveInteger">
 				<xs:annotation>
-					<xs:documentation>Number indicating the order in which the transaction types are to be presented to a software user.  
+					<xs:documentation>Number indicating the order in which the transaction types are to be presented to a software user.
 						These numbers might not be consecutive. The transaction types are to be shown with the lowest display number first through to the highest shown last</xs:documentation>
 				</xs:annotation>
 			</xs:element>

@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns="https://epbr.digital.communities.gov.uk/xsd/sap" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="https://epbr.digital.communities.gov.uk/xsd/sap" elementFormDefault="qualified" attributeFormDefault="unqualified" version="19.0.0">
+<xs:schema
+  xmlns="https://epbr.digital.communities.gov.uk/xsd/sap"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="https://epbr.digital.communities.gov.uk/xsd/sap"
+  elementFormDefault="qualified"
+  attributeFormDefault="unqualified"
+  version="19.0.0"
+>
 	<xs:include schemaLocation="../UDT/SAP-Domains.xsd"/>
 	<xs:include schemaLocation="../UDT/EPC-Domains.xsd"/>
 	<xs:element name="SAP-Deselected-Improvements" type="SAP-Deselected-Improvements"/>
@@ -203,12 +210,12 @@
 				<xs:annotation>
 					<xs:documentation>the community heating CO2 emission factor</xs:documentation>
 				</xs:annotation>
-			</xs:element>			
+			</xs:element>
 			<xs:element name="Community-Heating-Primary-Energy-Factor" type="xs:decimal" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>The community heating Primary Energy Factor</xs:documentation>
 				</xs:annotation>
-			</xs:element>				
+			</xs:element>
 			<xs:element name="Community-Heating-Use" type="SAP-CommunityHeatingUseCode">
 				<xs:annotation>
 					<xs:documentation>Specifies what kind of heating the community system is used for.</xs:documentation>
@@ -216,12 +223,12 @@
 			</xs:element>
 			<xs:element name="Is-Community-Heating-Cylinder-In-Dwelling" type="xs:boolean" default="false" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Community heating,  cylinder in dwelling? </xs:documentation>
+					<xs:documentation>Community heating, cylinder in dwelling? </xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Is-HIU-In-Dwelling" type="xs:boolean" default="false" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Community heating,  HIU in dwelling? </xs:documentation>
+					<xs:documentation>Community heating, HIU in dwelling? </xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="HIU-Index-Number" type="xs:positiveInteger" minOccurs="0">
@@ -411,7 +418,7 @@
 			</xs:element>
 			<xs:element name="Other-Flues-Count" type="Count">
 				<xs:annotation>
-					<xs:documentation>The number of Other Flues or chimneys in the Property.</xs:documentation> 
+					<xs:documentation>The number of Other Flues or chimneys in the Property.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Open-Chimneys-Count" type="Count">
@@ -423,7 +430,7 @@
 				<xs:annotation>
 					<xs:documentation>The number of Blocked Chimneys in the Property.</xs:documentation>
 				</xs:annotation>
-			</xs:element>			
+			</xs:element>
 			<xs:element name="Fans-Vents-Count" type="Count" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>For backward compatibility only, do not use.</xs:documentation>
@@ -493,7 +500,7 @@
 				<xs:annotation>
 					<xs:documentation>Mechanical ventilation Commissioning certificate number .</xs:documentation>
 				</xs:annotation>
-			</xs:element>			
+			</xs:element>
 			<xs:element name="Mechanical-Vent-Installation-Engineer" type="xs:string" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Mechanical ventilation installation engineer registration reference.</xs:documentation>
@@ -995,12 +1002,12 @@ For the purpose of calculating the overall Energy Assessment for the property de
 				<xs:annotation>
 					<xs:documentation>Secondary heating system commisioning certificate number.</xs:documentation>
 				</xs:annotation>
-			</xs:element>			
+			</xs:element>
 			<xs:element name="Secondary-Heating-Installation-Engineer" type="xs:string" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Secondary heating installation engineer registration reference.</xs:documentation>
 				</xs:annotation>
-			</xs:element>			
+			</xs:element>
 			<xs:element name="Secondary-Heating-Code" type="SAP-SpaceHeatingCode" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Type of secondary heating present in the property; only if required and if heating data source is SAP table.</xs:documentation>
@@ -1619,7 +1626,7 @@ Other systems NA.
 				<xs:annotation>
 					<xs:documentation>Solar heating certificate</xs:documentation>
 				</xs:annotation>
-			</xs:element>				
+			</xs:element>
 			<xs:element name="Solar-Panel-Aperture-Area" type="Measurement">
 				<xs:annotation>
 					<xs:documentation>Panel aperture area in square metres.</xs:documentation>
@@ -1702,7 +1709,7 @@ Other systems NA.
 			<xs:element name="WWHRS-Model1" type="xs:string" minOccurs="0"/>
 			<xs:element name="WWHRS-Efficiency2" type="xs:decimal" minOccurs="0"/>
 			<xs:element name="WWHRS-Manufacturer2" type="xs:string" minOccurs="0"/>
-			<xs:element name="WWHRS-Model2" type="xs:string" minOccurs="0"/>				
+			<xs:element name="WWHRS-Model2" type="xs:string" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:element name="Storage-WWHRS" type="Storage-WWHRS"/>
