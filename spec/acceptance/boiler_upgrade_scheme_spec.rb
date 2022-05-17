@@ -162,6 +162,20 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", set_with_t
 
         expect(response[:data]).to eq expected_rdsap_details
       end
+
+      context "with a building name and number that includes an unexpected character" do
+        it "returns the matching assessment BUS details in the expected format" do
+          response = JSON.parse(
+            bus_details_by_address(
+              postcode: "A0 0AA",
+              building_name_or_number: "1:",
+            ).body,
+            symbolize_names: true,
+          )
+
+          expect(response[:data]).to eq expected_rdsap_details
+        end
+      end
     end
 
     context "when there is one matching assessment to send BUS details for, but multiple for the same postcode" do

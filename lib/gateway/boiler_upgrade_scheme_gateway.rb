@@ -20,7 +20,7 @@ module Gateway
         sql: sql,
         binds: [
           string_attribute("postcode", Helper::ValidatePostcodeHelper.format_postcode(postcode)),
-          string_attribute("building_identifier", "#{building_identifier}%"),
+          string_attribute("building_identifier", "#{clean_building_identifier building_identifier}%"),
         ],
       )
     end
@@ -129,6 +129,10 @@ module Gateway
         value,
         ActiveRecord::Type::String.new,
       )
+    end
+
+    def clean_building_identifier(building_identifier)
+      building_identifier&.delete!("()|:*!\\") || building_identifier
     end
   end
 end
