@@ -19,7 +19,7 @@ module Gateway
       do_search(
         sql: sql,
         binds: [
-          string_attribute("postcode", postcode),
+          string_attribute("postcode", Helper::ValidatePostcodeHelper.format_postcode(postcode)),
           string_attribute("building_identifier", "#{building_identifier}%"),
         ],
       )

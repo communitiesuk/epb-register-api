@@ -146,6 +146,14 @@ describe Gateway::BoilerUpgradeSchemeGateway do
         expect(result.to_hash[:epc_rrn]).to eq "0000-0000-0000-0000-0001"
       end
     end
+
+    context "when performing a postcode and building identifier lookup with a postcode not canonically formed" do
+      it "returns the latest assessment as a details object" do
+        result = gateway.search_by_postcode_and_building_identifier postcode: "a00aa", building_identifier: "1"
+        expect(result).to be_a Domain::AssessmentBusDetails
+        expect(result.to_hash[:epc_rrn]).to eq "0000-0000-0000-0000-0001"
+      end
+    end
   end
 
   context "when expecting to find one SAP assessment" do
