@@ -49,7 +49,7 @@ module Controller
         if filters.key? :rrn
           [ApiFactory.fetch_assessment_for_bus_use_case, filters.slice(:rrn)]
         elsif filters.key? :postcode
-          [ApiFactory.find_assessments_for_bus_by_address_use_case, { postcode: params[:postcode], building_identifier: params[:building_name_or_number] }]
+          [ApiFactory.find_assessments_for_bus_by_address_use_case, { postcode: params[:postcode], building_identifier: params[:buildingNameOrNumber] }]
         elsif filters.key? :uprn
           [ApiFactory.find_assessments_for_bus_by_uprn_use_case, filters.slice(:uprn)]
         end

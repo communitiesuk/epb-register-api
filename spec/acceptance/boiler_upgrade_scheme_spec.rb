@@ -164,6 +164,46 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", set_with_t
       end
     end
 
+    context "when there is one matching assessment to send BUS details for, but multiple for the same postcode" do
+      before do
+        xml = Nokogiri.XML rdsap_xml.dup
+
+        lodge_assessment(
+          assessment_body: rdsap_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: "RdSAP-Schema-20.0.0",
+        )
+
+        xml.at("RRN").content = "2222-1111-2222-1111-2222"
+        xml.at("UPRN").content = "UPRN-012340123456"
+        xml.at_css("Property Address Address-Line-1").content = "20 Some Street"
+
+        lodge_assessment(
+          assessment_body: xml.to_s,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          schema_name: "RdSAP-Schema-20.0.0",
+        )
+      end
+
+      it "returns the matching assessment BUS details in the expected format" do
+        response = JSON.parse(
+          bus_details_by_address(
+            postcode: "A0 0AA",
+            building_name_or_number: "1",
+          ).body,
+          symbolize_names: true,
+        )
+
+        expect(response[:data]).to eq expected_rdsap_details
+      end
+    end
+
     context "when there are two matching assessments to send BUS details for" do
       before do
         lodge_assessment(
