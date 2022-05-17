@@ -1244,7 +1244,7 @@ paths:
               $ref: '#/components/schemas/AddressPostcode'
             example: 'FL23 4JA'
           - in: query
-            name: building_name_or_number
+            name: buildingNameOrNumber
             description: The name or number for the building
             schema:
               $ref: '#/components/schemas/AddressBuildingNameOrNumber'
