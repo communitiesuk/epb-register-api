@@ -12,8 +12,6 @@ module Gateway
             a.type_of_assessment AS report_type,
             a.date_of_expiry AS expiry_date
           FROM assessments AS a
-          INNER JOIN assessments_address_id AS aai
-          ON a.assessment_id = aai.assessment_id
           WHERE a.postcode = $1 AND (a.address_line1 LIKE $2 OR a.address_line2 LIKE $2)
           AND a.type_of_assessment IN ('RdSAP', 'SAP', 'CEPC')
       SQL
