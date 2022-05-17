@@ -1324,8 +1324,8 @@ paths:
   /improve-energy-efficiency/assessments/search:
     get:
       tags:
-        - Improve energy Efficiency
-      summary: Search for domestic EPCs by address for the Improve energy Efficiency service
+        - Improve Energy Efficiency
+      summary: Search for domestic EPCs by address for the Improve Energy Efficiency service
       description: 'Search for an assessment by postcode and optional building name/number.
                     If building name/number is supplied and no matches are found
                     or building name/number is not supplied
@@ -1398,8 +1398,8 @@ paths:
   /improve-energy-efficiency/assessments/{assessmentId}:
     get:
       tags:
-        - Improve energy Efficiency
-      summary: 'Get the Improve energy Efficiency details from the domestic EPC
+        - Improve Energy Efficiency
+      summary: 'Get the Improve Energy Efficiency details from the domestic EPC
                 with reference {assessmentId}'
       description: Get domestic EPC details for the supplied RRN
       operationId: get-assessment-improve-energy-efficiency
