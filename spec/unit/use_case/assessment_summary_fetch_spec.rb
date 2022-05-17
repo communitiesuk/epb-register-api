@@ -50,7 +50,7 @@ describe "UseCase::AssessmentSummary::Fetch", set_with_timecop: true do
 
     it "can execute and return the expected hash" do
       results = use_case.execute("0000-0000-0000-0000-0001")
-      expect(results).to eq(SummaryStub.fetch_summary_rdsap(scheme_id: scheme_id))
+      expect(results).to eq(SummaryStub.fetch_summary_rdsap(scheme_id))
     end
   end
 
@@ -240,9 +240,7 @@ describe "UseCase::AssessmentSummary::Fetch", set_with_timecop: true do
     end
 
     let(:results) do
-      summary = use_case.execute("0000-0000-0000-0000-0000")
-      summary[:assessor][:registered_by][:scheme_id] = "1"
-      summary
+      use_case.execute("0000-0000-0000-0000-0000")
     end
 
     let(:scheme_id) do
@@ -280,11 +278,8 @@ describe "UseCase::AssessmentSummary::Fetch", set_with_timecop: true do
       allow(xml_gateway).to receive(:fetch).and_return(xml_data)
     end
 
-
-    SummaryStub.fetch_summary_sap_19("1").each do |key, value|
-      it "#{key} matches the sap value: ''#{value}'' " do
-        expect(results[key]).to eq(value)
-      end
+    it "can execute and return the expected hash" do
+      expect(SummaryStub.fetch_summary_sap_19(scheme_id)).to eq(results)
     end
   end
 end
