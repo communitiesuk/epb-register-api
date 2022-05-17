@@ -6,7 +6,7 @@ info:
   contact:
     name: DLUHC Digital helpdesk (prefix email subject with "EPB")
     email: dluhc.digital-services@levellingup.gov.uk
-  version: 1.1.0
+  version: 1.2.0
 
 servers:
   - url: 'https://api.epb-integration.digital.communities.gov.uk/api'
@@ -29,6 +29,8 @@ tags:
     description: Endpoints used by the Green Deal register integration, including Renewable Heat Initiative
   - name: Boiler Upgrade Scheme
     description: Endpoints used by the Boiler Upgrade Scheme
+  - name: Improve Energy Efficiency
+    description: Endpoints used by the Improve Energy Efficiency service
   - name: Reports
     description: Endpoints providing reports, i.e. specific data views of operational interest
   - name: Service Performance
@@ -1157,73 +1159,73 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 
   /reports/{schemeId}/assessors/status:
-      get:
-        tags:
-          - Manage Assessors
-          - Reports
-        summary: >-
-          Report of assessors who were suspended and struck off on a particular
-          day filtered by matching a last name and date of birth to an assessor registered by the queuing scheme
-        description: Get report of assessors who were struck off on a particular day
-        operationId: get-assessor-status-report
-        security:
-          - oauth:
-              - 'report:assessor:status'
-        parameters:
-          - in: path
-            name: schemeId
-            required: true
-            description: The ID of the scheme being updated
-            schema:
-              type: integer
-          - in: query
-            name: date
-            required: true
-            description: The date of the report
-            schema:
-              type: string
-              format: date
-              example: '2020-01-30'
-        responses:
-          '200':
-            description: Report returned successfully
-            content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        assessorStatusEvents:
-                          type: array
-                          items:
-                            $ref: '#/components/schemas/AssessorQualificationChangeEvent'
-          '403':
-            description: Forbidden
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/ErrorResponse'
-          '404':
-            description: Report not found, likely because the date is in the future
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/ErrorResponse'
-          '503':
-            description: Service unavailable
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/ErrorResponse'
+    get:
+      tags:
+        - Manage Assessors
+        - Reports
+      summary: >-
+        Report of assessors who were suspended and struck off on a particular
+        day filtered by matching a last name and date of birth to an assessor registered by the queuing scheme
+      description: Get report of assessors who were struck off on a particular day
+      operationId: get-assessor-status-report
+      security:
+        - oauth:
+            - 'report:assessor:status'
+      parameters:
+        - in: path
+          name: schemeId
+          required: true
+          description: The ID of the scheme being updated
+          schema:
+            type: integer
+        - in: query
+          name: date
+          required: true
+          description: The date of the report
+          schema:
+            type: string
+            format: date
+            example: '2020-01-30'
+      responses:
+        '200':
+          description: Report returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      assessorStatusEvents:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/AssessorQualificationChangeEvent'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Report not found, likely because the date is in the future
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /bus/assessments/latest/search:
-      get:
-        tags:
-          - Boiler Upgrade Scheme
-        summary: Search for assessments exposing details for the Boiler Upgrade Scheme (BUS)
-        description: 'Search for an assessment by
+    get:
+      tags:
+        - Boiler Upgrade Scheme
+      summary: Search for assessments exposing details for the Boiler Upgrade Scheme (BUS)
+      description: 'Search for an assessment by
                     EITHER
                      - a postcode AND building name/ number
                     OR
@@ -1232,92 +1234,230 @@ paths:
                      - an assessment reference number (RRN)
                      in each case returning the BUS details of the most recent
                      Energy Performance Certificate (EPC) for the property'
-        operationId: bus-search-latest-assessments
-        security:
-          - oauth:
-              - 'bus:assessment:search'
-        parameters:
-          - in: query
-            name: postcode
-            description: The postcode of the address being searched for
-            schema:
-              $ref: '#/components/schemas/AddressPostcode'
-            example: 'FL23 4JA'
-          - in: query
-            name: buildingNameOrNumber
-            description: The name or number for the building
-            schema:
-              $ref: '#/components/schemas/AddressBuildingNameOrNumber'
-            example: '22 Acacia Avenue'
-          - in: query
-            name: uprn
-            description: The UPRN of the property being searched for
-            schema:
-              $ref: '#/components/schemas/AddressUprn'
-            example: 'UPRN-000456789012'
-          - in: query
-            name: rrn
-            description: The RRN of the assessment being searched for
-            schema:
-              $ref: '#/components/schemas/AssessmentId'
-            example: '1234-2345-3456-4567-6789'
-        responses:
-          '200':
-            description: BUS Energy Performance data
-            content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    data:
-                      type: object
-                      properties:
-                        assessment:
-                          $ref: '#/components/schemas/AssessmentBUSDetails'
-          '300':
-            description: Multiple sets of BUS details were matched for the given query parameters. Response contains RRNs for which BUS details can be fetched individually.
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/MultipleBUSMatchesList'
-          '400':
-            description: 'Badly formed request - error response message will contain the details.
+      operationId: bus-search-latest-assessments
+      security:
+        - oauth:
+            - 'bus:assessment:search'
+      parameters:
+        - in: query
+          name: postcode
+          description: The postcode of the address being searched for
+          schema:
+            $ref: '#/components/schemas/AddressPostcode'
+          example: 'FL23 4JA'
+        - in: query
+          name: buildingNameOrNumber
+          description: The name or number for the building
+          schema:
+            $ref: '#/components/schemas/AddressBuildingNameOrNumber'
+          example: '22 Acacia Avenue'
+        - in: query
+          name: uprn
+          description: The UPRN of the property being searched for
+          schema:
+            $ref: '#/components/schemas/AddressUprn'
+          example: 'UPRN-000456789012'
+        - in: query
+          name: rrn
+          description: The RRN of the assessment being searched for
+          schema:
+            $ref: '#/components/schemas/AssessmentId'
+          example: '1234-2345-3456-4567-6789'
+      responses:
+        '200':
+          description: BUS Energy Performance data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      assessment:
+                        $ref: '#/components/schemas/AssessmentBUSDetails'
+        '300':
+          description: Multiple sets of BUS details were matched for the given query parameters. Response contains RRNs for which BUS details can be fetched individually.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MultipleBUSMatchesList'
+        '400':
+          description: 'Badly formed request - error response message will contain the details.
                         This could be
                         * Bad combination of query parameters
                         * Invalid postcode
                         * Badly formed address ID
                         * Badly formed assessment ID
                         * No valid query parameters'
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/ErrorResponse'
-          '401':
-            description: Unauthorized
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/ErrorResponse'
-          '403':
-            description: Forbidden
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/ErrorResponse'
-          '404':
-            description: No matching EPCs found for the given query
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/ErrorResponse'
-          '500':
-            description: Server error
-          '503':
-            description: Service unavailable
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/ErrorResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: No matching EPCs found for the given query
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /improve-energy-efficiency/assessments/search:
+    get:
+      tags:
+        - Improve energy Efficiency
+      summary: Search for domestic EPCs by address for the Improve energy Efficiency service
+      description: 'Search for an assessment by postcode and optional building name/number.
+                    If building name/number is supplied and no matches are found
+                    or building name/number is not supplied
+                    then all domestic EPC matches for the postcode are returned'
+      operationId: get-assessments-improve-energy-efficiency
+      security:
+        - oauth:
+            - 'improve-energy-efficiency:assessment:search'
+      parameters:
+        - in: query
+          name: postcode
+          description: The postcode of the address being searched for
+          schema:
+            $ref: '#/components/schemas/AddressPostcode'
+          example: 'FL23 4JA'
+        - in: query
+          name: buildingNameOrNumber
+          description: The name or number for the building (optional)
+          schema:
+            $ref: '#/components/schemas/AddressBuildingNameOrNumber'
+          example: '22 Acacia Avenue'
+      responses:
+        '200':
+          description: Domestic EPC search results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      assessments:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/ImproveEnergyEfficiencySearchResult'
+        '400':
+          description: 'Bad request - most likely an invalid postcode'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: No matching EPCs found for the given query
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /improve-energy-efficiency/assessments/{assessmentId}:
+    get:
+      tags:
+        - Improve energy Efficiency
+      summary: 'Get the Improve energy Efficiency details from the domestic EPC
+                with reference {assessmentId}'
+      description: Get domestic EPC details for the supplied RRN
+      operationId: get-assessment-improve-energy-efficiency
+      security:
+        - oauth:
+            - 'improve-energy-efficiency:assessment:search'
+      parameters:
+        - in: path
+          name: assessmentId
+          required: true
+          description: 'The ID (RRN) of the assessment being requested'
+          schema:
+            $ref: '#/components/schemas/AssessmentId'
+      responses:
+        '200':
+          description: Domestic EPC data for the Improve Energy Efficiency service
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      assessment:
+                        $ref: '#/components/schemas/ImproveEnergyEfficiencyAssessmentDetails'
+        '400':
+          description: The assessmentId parameter is badly formatted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Domestic EPC with this RRN not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '410':
+          description: Gone - Domestic EPC with ID assessmentId exists but has been cancelled/marked not for issue
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /greendeal/assessments/{assessmentId}:
     get:
@@ -1882,7 +2022,7 @@ paths:
   /statistics:
     get:
       tags:
-          - Service Performance
+        - Service Performance
       summary: >-
         Fetch the statistics data displayed on the Service Performance page
       description: Get statistics data for EPCs
@@ -1943,11 +2083,11 @@ paths:
                   meta:
                     type: object
         '400':
-            description: Bad request
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/ErrorResponse'
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         '503':
           description: Service unavailable
           content:
@@ -1979,6 +2119,7 @@ components:
             'report:assessor:status': Get a report of changes to assessors status for a given date
             'greendeal:plans': Access all services necessary for the Green Deal register integration
             'bus:assessment:search': Carry out Boiler Upgrade Scheme search for latest EPC data
+            'improve-energy-efficiency:assessment:search': Carry out Improve Energy Efficiency search for latest domestic EPC data
 
   schemas:
     # Addresses
@@ -2793,6 +2934,73 @@ components:
               items:
                 $ref: '#/components/schemas/AssessmentId'
               example: [ "9876-9876-9876-9876-9876", "8765-8765-8765-8765-8765" ]
+
+    # ImproveEnergyEfficiency
+    ImproveEnergyEfficiencySearchResult:
+      type: object
+      properties:
+        epcRrn:
+          description: 'The RRN of the most recent domestic EPC for the property'
+          $ref: '#/components/schemas/AssessmentId'
+        addressLine1:
+          description: 'The first populated line of the property address'
+          $ref: '#/components/schemas/AddressLine1'
+        isExactMatch:
+          description: 'Whether this is an exact match for both postcode and building name/number'
+          type: boolean
+          example: true
+
+    ImproveEnergyEfficiencyAssessmentDetails:
+      type: object
+      properties:
+        typeOfAssessment:
+          type: string
+          enum: [ SAP, RdSAP ]
+        address:
+          $ref: '#/components/schemas/Address'
+        lodgementDate:
+          type: string
+          format: date
+          example: '2020-02-29'
+        isLatestAssessmentForAddress:
+          type: boolean
+          example: true
+        propertyType:
+          type: string
+          example: 'Mid-floor flat'
+        builtForm:
+          type: string
+          example: 'End-Terrace'
+        propertyAgeBand:
+          type: string
+          example: 'D'
+        wallsDescription:
+          type: array
+          items:
+            type: string
+          example: ["Solid brick, as built, no insulation", "Cavity wall, as built, insulated (assumed)"]
+        floorDescription:
+          type: array
+          items:
+            type: string
+          example: ["Suspended, no insulation (assumed)", "Solid, no insulation (assumed)"]
+        roofDescription:
+          type: array
+          items:
+            type: string
+          example: ["Pitched, 250 mm loft insulation", "Pitched, limited insulation (assumed)"]
+        windowsDescription:
+          type: array
+          items:
+            type: string
+          example: ["Fully double glazed"]
+        mainHeatingDescription:
+          description: Main heating description, falling back to main fuel if necessary
+          type: string
+          example: "Boiler and radiators, mains gas"
+        hasHotWaterCylinder:
+          type: boolean
+          example: true
 
     # Green Deal
     AssessmentGreenDealDetails:
