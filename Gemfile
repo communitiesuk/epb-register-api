@@ -28,7 +28,7 @@ end
 gem "aws-sdk-s3", "~> 1.114"
 gem "epb-auth-tools", "~> 1.0.8"
 gem "epb_view_models", "~> 1.0", "~> 1.0.16"
-gem "geocoder", "~> 1.7.5"
+gem "geocoder", "~> 1.8.0"
 gem "json-schema", "~> 3.0"
 gem "namecase", "~> 2.0"
 gem "nokogiri", "~> 1.13.6"
