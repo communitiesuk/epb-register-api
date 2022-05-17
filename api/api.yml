@@ -1222,7 +1222,7 @@ paths:
       get:
         tags:
           - Boiler Upgrade Scheme
-        summary: Search for assessments
+        summary: Search for assessments exposing details for the Boiler Upgrade Scheme (BUS)
         description: 'Search for an assessment by
                     EITHER
                      - a postcode AND building name/ number
