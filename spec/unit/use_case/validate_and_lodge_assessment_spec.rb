@@ -95,17 +95,17 @@ describe UseCase::ValidateAndLodgeAssessment do
     end
   end
 
-  context "when validating assessment XML that is not from a latest version of a schema" do
+  context "when validating assessment XML that is not from the current version of a schema" do
     let(:old_schema_xml) { Samples.xml "RdSAP-Schema-19.0" }
 
-    it "raises a SupersededSchemaException" do
+    it "raises a SchemaNotSupportedException" do
       expect {
         use_case.execute assessment_xml: old_schema_xml,
                          schema_name: "RdSAP-Schema-19.0",
                          scheme_ids: "1",
                          migrated: false,
                          overidden: false
-      }.to raise_error UseCase::ValidateAndLodgeAssessment::SupersededSchemaException
+      }.to raise_error UseCase::ValidateAndLodgeAssessment::SchemaNotSupportedException
     end
   end
 

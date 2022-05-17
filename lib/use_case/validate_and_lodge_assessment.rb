@@ -111,7 +111,7 @@ module UseCase
             end
           end
         else
-          raise SupersededSchemaException
+          raise SchemaNotSupportedException
         end
 
       end
