@@ -3,9 +3,10 @@ describe Gateway::BoilerUpgradeSchemeGateway do
 
   subject(:gateway) { described_class.new }
 
+  let(:scheme_id) { add_scheme_and_get_id }
+
   context "when expecting to find one RdSAP assessment" do
     before do
-      scheme_id = add_scheme_and_get_id
       add_super_assessor(scheme_id: scheme_id)
 
       rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
@@ -74,6 +75,25 @@ describe Gateway::BoilerUpgradeSchemeGateway do
 
       it "returns nil when no match" do
         expect(gateway.search_by_rrn("0000-1111-2222-3333-4444")).to be_nil
+      end
+
+      context "with a RRN that has been previously cancelled" do
+        before do
+          update_assessment_status(
+            assessment_id: "0000-0000-0000-0000-0000",
+            assessment_status_body: {
+              "status": "CANCELLED",
+            },
+            accepted_responses: [200],
+            auth_data: {
+              scheme_ids: [scheme_id],
+            },
+          )
+        end
+
+        it "returns nil" do
+          expect(gateway.search_by_rrn("0000-0000-0000-0000-0000")).to be_nil
+        end
       end
     end
   end

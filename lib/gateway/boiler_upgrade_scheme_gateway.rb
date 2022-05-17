@@ -89,6 +89,8 @@ module Gateway
         ).transform_values { |v| v || "" },
         dwelling_type: assessment_summary[:dwelling_type] || assessment_summary[:property_type],
       )
+    rescue UseCase::AssessmentSummary::Fetch::AssessmentUnavailable
+      nil
     end
 
     def do_search(sql:, binds:)

@@ -1,11 +1,9 @@
 module UseCase
   module AssessmentSummary
     class Fetch
-      class NotFoundException < StandardError
-      end
-
-      class AssessmentGone < StandardError
-      end
+      class AssessmentUnavailable < StandardError; end
+      class NotFoundException < AssessmentUnavailable; end
+      class AssessmentGone < AssessmentUnavailable; end
 
       def initialize(search_gateway: nil, xml_gateway: nil)
         @search_gateway = search_gateway || Gateway::AssessmentsSearchGateway.new
