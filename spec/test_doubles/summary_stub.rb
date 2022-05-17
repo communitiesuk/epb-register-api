@@ -311,7 +311,7 @@ class SummaryStub
       related_party_disclosure_text: nil,
       tenure: "1",
       transaction_type: "1",
-      total_floor_area: 1.6,
+      total_floor_area: 165.0,
       status: "ENTERED",
       environmental_impact_current: "94",
       environmental_impact_potential: "96",
