@@ -5,11 +5,12 @@ describe Gateway::BoilerUpgradeSchemeGateway do
 
   let(:scheme_id) { add_scheme_and_get_id }
 
+  let(:rdsap_xml) { Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0") }
+
   context "when expecting to find one RdSAP assessment" do
     before do
       add_super_assessor(scheme_id: scheme_id)
 
-      rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
       lodge_assessment(
         assessment_body: rdsap_xml.to_xml,
         accepted_responses: [201],
@@ -287,6 +288,64 @@ describe Gateway::BoilerUpgradeSchemeGateway do
     context "when searching by UPRN" do
       it "finds and returns the expected data when one match exists", aggregate_failures: true do
         result = gateway.search_by_uprn("UPRN-000000000001")
+
+        expect(result).to be_a(Domain::AssessmentBusDetails)
+        expect(result.to_hash).to eq expected_bus_details_hash
+      end
+    end
+  end
+
+  context "when performing a search by address where a target address has a lettered number street line like 2A" do
+    before do
+      xml = rdsap_xml.dup
+
+      xml.at_css("Report-Header RRN").content = "3333-4444-5555-6666-7777"
+      xml.at("UPRN").content = "UPRN-012222222333"
+      xml.at_css("Property Address Address-Line-1").content = "2A Street Lane"
+
+      add_super_assessor(scheme_id: scheme_id)
+
+      lodge_assessment(
+        assessment_body: xml.to_s,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        override: true,
+      )
+    end
+
+    expected_bus_details_hash = {
+      epc_rrn: "3333-4444-5555-6666-7777",
+      report_type: "RdSAP",
+      expiry_date: "2030-05-03",
+      cavity_wall_insulation_recommended: false,
+      loft_insulation_recommended: false,
+      secondary_heating: "Room heaters, electric",
+      address: {
+        address_id: "UPRN-012222222333",
+        address_line1: "2A Street Lane",
+        address_line2: "",
+        address_line3: "",
+        address_line4: "",
+        town: "Whitbury",
+        postcode: "A0 0AA",
+      },
+      dwelling_type: "Mid-terrace house",
+    }
+
+    context "when searching using correct original casing" do
+      it "returns the expected BUS details" do
+        result = gateway.search_by_postcode_and_building_identifier(postcode: "A0 0AA", building_identifier: "2A")
+
+        expect(result).to be_a(Domain::AssessmentBusDetails)
+        expect(result.to_hash).to eq expected_bus_details_hash
+      end
+    end
+
+    context "when searching using incorrect original casing" do
+      it "returns the expected BUS details regardless of casing" do
+        result = gateway.search_by_postcode_and_building_identifier(postcode: "A0 0AA", building_identifier: "2a")
 
         expect(result).to be_a(Domain::AssessmentBusDetails)
         expect(result.to_hash).to eq expected_bus_details_hash
