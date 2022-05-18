@@ -2995,10 +2995,13 @@ components:
             type: string
           example: ["Fully double glazed"]
         mainHeatingDescription:
-          description: Main heating description, falling back to main fuel if necessary
           type: string
           example: "Boiler and radiators, mains gas"
+        mainFuelType:
+          type: string
+          example: 'Natural Gas'
         hasHotWaterCylinder:
+          description: Whether a hot water is cylinder is present at the property. Key is omitted from response if not recorded by the assessor.
           type: boolean
           example: true
 
