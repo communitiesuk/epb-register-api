@@ -73,12 +73,7 @@ module UseCase
 
       unless migrated
         wrapper = ViewModel::Factory.new.create(assessment_xml, schema_name, false)
-
-        schema_valid = if Helper::Toggles.enabled? "register-api-schema-version-to-param"
-                         UseCase::CheckSchemaVersion.new.execute(schema_name)
-                       else
-                         (LATEST_COMMERCIAL + LATEST_DOM_EW + LATEST_DOM_NI).include? schema_name
-                       end
+        schema_valid = UseCase::CheckSchemaVersion.new.execute(schema_name)
 
         if schema_valid && !wrapper.nil?
           rules =

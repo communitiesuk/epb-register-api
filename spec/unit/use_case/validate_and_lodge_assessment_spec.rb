@@ -98,7 +98,12 @@ describe UseCase::ValidateAndLodgeAssessment do
   context "when validating assessment XML that is not from the current version of a schema" do
     let(:old_schema_xml) { Samples.xml "RdSAP-Schema-19.0" }
 
+    after do
+      Timecop.return
+    end
+
     it "raises a SchemaNotSupportedException" do
+      Timecop.freeze(2022, 0o5, 13, 0, 0, 0)
       expect {
         use_case.execute assessment_xml: old_schema_xml,
                          schema_name: "RdSAP-Schema-19.0",
@@ -109,21 +114,11 @@ describe UseCase::ValidateAndLodgeAssessment do
     end
   end
 
-  context "when feature toggle is enabled" do
+  context "when validating assessment XML that is from the current version of a schema" do
     let(:valid_xml) { Samples.xml "SAP-Schema-19.0.0" }
-    let(:logger) { instance_spy Logger }
-
-    before do
-      Helper::Toggles.set_feature("register-api-schema-version-to-param", true)
-      allow(logger).to receive(:error)
-      allow(ENV).to receive(:[])
-      allow(ENV).to receive(:[]).with("VALID_DOMESTIC_SCHEMAS").and_return("SAP-Schema-19.0.0,SAP-Schema-18.0.0,RdSAP-Schema-NI-19.0")
-      allow(ENV).to receive(:[]).with("VALID_NON_DOMESTIC_SCHEMAS").and_return("CEPC-8.0.0")
-    end
 
     after do
       Timecop.return
-      Helper::Toggles.set_feature("register-api-schema-version-to-param", false)
     end
 
     it "validates SAP Schema version 19 " do
@@ -147,51 +142,6 @@ describe UseCase::ValidateAndLodgeAssessment do
                          migrated: false,
                          overidden: false
       }.not_to raise_exception
-    end
-  end
-
-  context "when feature toggle is NOT enabled" do
-    let(:valid_xml) { Samples.xml "SAP-Schema-19.0.0" }
-    let(:logger) { instance_spy Logger }
-
-    before do
-      Helper::Toggles.set_feature("register-api-schema-version-to-param", false)
-      allow(logger).to receive(:error)
-    end
-
-    it "raise an exception for SAP 19" do
-      Timecop.freeze(2022, 0o5, 13, 0, 0, 0)
-      expect {
-        use_case.execute assessment_xml: valid_xml,
-                         schema_name: "SAP-Schema-19.0.0",
-                         scheme_ids: "1",
-                         migrated: false,
-                         overidden: false
-      }.to raise_exception(UseCase::ValidateAndLodgeAssessment::SchemaNotSupportedException)
-    end
-
-    it "validates SAP 18" do
-      Timecop.freeze(2021, 2, 22, 0, 0, 0)
-      valid_xml = Samples.xml "SAP-Schema-18.0.0"
-      expect {
-        use_case.execute assessment_xml: valid_xml,
-                         schema_name: "SAP-Schema-18.0.0",
-                         scheme_ids: "1",
-                         migrated: false,
-                         overidden: false
-      }.not_to raise_exception
-    end
-
-    it "does not validate SAP 17" do
-      Timecop.freeze(2021, 2, 22, 0, 0, 0)
-      valid_xml = Samples.xml "SAP-Schema-17.0"
-      expect {
-        use_case.execute assessment_xml: valid_xml,
-                         schema_name: "SAP-Schema-17.0",
-                         scheme_ids: "1",
-                         migrated: false,
-                         overidden: false
-      }.to raise_exception(UseCase::ValidateAndLodgeAssessment::SchemaNotSupportedException)
     end
   end
 end
