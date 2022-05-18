@@ -24,6 +24,7 @@ module Gateway
         WHERE assessment_id IN (
           SELECT assessment_id FROM assessments_address_id WHERE address_id = $1
         )
+        AND a.type_of_assessment IN ('RdSAP', 'SAP', 'CEPC')
       SQL
 
       do_search(
@@ -42,6 +43,7 @@ module Gateway
           date_of_expiry AS expiry_date
         FROM assessments
         WHERE assessment_id = $1
+        AND type_of_assessment IN ('RdSAP', 'SAP', 'CEPC')
       SQL
 
       do_search(
