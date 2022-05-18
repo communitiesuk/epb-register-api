@@ -301,7 +301,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
 
       xml.at_css("Report-Header RRN").content = "3333-4444-5555-6666-7777"
       xml.at("UPRN").content = "UPRN-012222222333"
-      xml.at_css("Property Address Address-Line-1").content = "2A Street Lane"
+      xml.at_css("Property Address Address-Line-1").content = "Flat 12A Street Lane"
 
       add_super_assessor(scheme_id: scheme_id)
 
@@ -324,7 +324,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
       secondary_heating: "Room heaters, electric",
       address: {
         address_id: "UPRN-012222222333",
-        address_line1: "2A Street Lane",
+        address_line1: "Flat 12A Street Lane",
         address_line2: "",
         address_line3: "",
         address_line4: "",
@@ -336,7 +336,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
 
     context "when searching using correct original casing" do
       it "returns the expected BUS details" do
-        result = gateway.search_by_postcode_and_building_identifier(postcode: "A0 0AA", building_identifier: "2A")
+        result = gateway.search_by_postcode_and_building_identifier(postcode: "A0 0AA", building_identifier: "12A")
 
         expect(result).to be_a(Domain::AssessmentBusDetails)
         expect(result.to_hash).to eq expected_bus_details_hash
@@ -345,7 +345,49 @@ describe Gateway::BoilerUpgradeSchemeGateway do
 
     context "when searching using incorrect original casing" do
       it "returns the expected BUS details regardless of casing" do
-        result = gateway.search_by_postcode_and_building_identifier(postcode: "A0 0AA", building_identifier: "2a")
+        result = gateway.search_by_postcode_and_building_identifier(postcode: "A0 0AA", building_identifier: "12a")
+
+        expect(result).to be_a(Domain::AssessmentBusDetails)
+        expect(result.to_hash).to eq expected_bus_details_hash
+      end
+    end
+
+    context "when searching using just the correct number" do
+      it "finds and returns the expected BUS details" do
+        result = gateway.search_by_postcode_and_building_identifier(postcode: "A0 0AA", building_identifier: "12")
+
+        expect(result).to be_a(Domain::AssessmentBusDetails)
+        expect(result.to_hash).to eq expected_bus_details_hash
+      end
+    end
+
+    context "when searching using part of the number" do
+      it "does not match BUS details for an address with the full number" do
+        result = gateway.search_by_postcode_and_building_identifier(postcode: "A0 0AA", building_identifier: "2")
+
+        expect(result).to be_nil
+      end
+    end
+
+    context "when searching using a number which is a numeric superset of an address's street line number" do
+      it "does not match BUS details for an address with the full number" do
+        result = gateway.search_by_postcode_and_building_identifier(postcode: "A0 0AA", building_identifier: "212")
+
+        expect(result).to be_nil
+      end
+    end
+
+    context "when searching using a number which is a numeric superset of an address's street line number in the middle of an address line" do
+      it "does not match BUS details for an address with the full number" do
+        result = gateway.search_by_postcode_and_building_identifier(postcode: "A0 0AA", building_identifier: "1")
+
+        expect(result).to be_nil
+      end
+    end
+
+    context "when searching using a building name that is part of a street line" do
+      it "finds and returns the expected BUS details" do
+        result = gateway.search_by_postcode_and_building_identifier(postcode: "A0 0AA", building_identifier: "12A STREET")
 
         expect(result).to be_a(Domain::AssessmentBusDetails)
         expect(result.to_hash).to eq expected_bus_details_hash

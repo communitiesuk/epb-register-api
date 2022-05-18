@@ -6,23 +6,12 @@ module Gateway
     ].freeze
 
     def search_by_postcode_and_building_identifier(postcode:, building_identifier:)
-      sql = <<-SQL
-        SELECT
-            a.assessment_id AS epc_rrn,
-            a.type_of_assessment AS report_type,
-            a.date_of_expiry AS expiry_date
-          FROM assessments AS a
-          WHERE a.postcode = $1 AND (a.address_line1 ILIKE $2 OR a.address_line2 ILIKE $2)
-          AND a.type_of_assessment IN ('RdSAP', 'SAP', 'CEPC')
-      SQL
-
-      do_search(
-        sql: sql,
-        binds: [
-          string_attribute("postcode", Helper::ValidatePostcodeHelper.format_postcode(postcode)),
-          string_attribute("building_identifier", "#{clean_building_identifier building_identifier}%"),
-        ],
-      )
+      identifier = clean_building_identifier building_identifier
+      if identifier.match?(/^\d+$/)
+        search_by_postcode_and_building_number postcode: postcode, building_number: identifier
+      else
+        search_by_postcode_and_building_name postcode: postcode, building_name: identifier
+      end
     end
 
     def search_by_uprn(uprn)
@@ -91,6 +80,59 @@ module Gateway
       )
     rescue UseCase::AssessmentSummary::Fetch::AssessmentUnavailable
       nil
+    end
+
+    def search_by_postcode_and_building_name(postcode:, building_name:)
+      sql = <<-SQL
+        SELECT
+            a.assessment_id AS epc_rrn,
+            a.type_of_assessment AS report_type,
+            a.date_of_expiry AS expiry_date
+          FROM assessments AS a
+          WHERE a.postcode = $1 AND (a.address_line1 ILIKE $2 OR a.address_line2 ILIKE $2)
+          AND a.type_of_assessment IN ('RdSAP', 'SAP', 'CEPC')
+      SQL
+
+      do_search(
+        sql: sql,
+        binds: [
+          string_attribute("postcode", Helper::ValidatePostcodeHelper.format_postcode(postcode)),
+          string_attribute("building_name", "%#{building_name}%"),
+        ],
+      )
+    end
+
+    def search_by_postcode_and_building_number(postcode:, building_number:)
+      sql = <<-SQL
+        SELECT
+            a.assessment_id AS epc_rrn,
+            a.type_of_assessment AS report_type,
+            a.date_of_expiry AS expiry_date
+          FROM assessments AS a
+          WHERE a.postcode = $1 AND
+            (
+              a.address_line1 ~ $2
+              OR a.address_line2 ~ $2
+              OR a.address_line1 ~ $3
+              OR a.address_line2 ~ $3
+              OR a.address_line1 ~ $4
+              OR a.address_line2 ~ $4
+              OR a.address_line1 = $5
+              OR a.address_line2 = $5
+            )
+          AND a.type_of_assessment IN ('RdSAP', 'SAP', 'CEPC')
+      SQL
+
+      do_search(
+        sql: sql,
+        binds: [
+          string_attribute("postcode", Helper::ValidatePostcodeHelper.format_postcode(postcode)),
+          string_attribute("number_in_middle", sprintf('\D+%s\D+', building_number)),
+          string_attribute("number_at_start", sprintf('^%s\D+', building_number)),
+          string_attribute("number_at_end", sprintf('\D+%s$', building_number)),
+          string_attribute("number_exact", building_number),
+        ],
+      )
     end
 
     def do_search(sql:, binds:)
