@@ -8,7 +8,7 @@ module UseCase
       valid_schemas.include?(schema_name)
     end
 
-    private
+  private
 
     def valid_schemas
       @valid_schemas ||= ValidSchemaList.new logger: @logger
@@ -29,7 +29,7 @@ module UseCase
       end
 
       def include?(schema_name)
-        return @valid_schemas.include?(schema_name)
+        @valid_schemas.include?(schema_name)
       end
     end
   end
