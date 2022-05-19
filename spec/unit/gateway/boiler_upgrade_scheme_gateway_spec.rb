@@ -300,7 +300,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
       xml = rdsap_xml.dup
 
       xml.at_css("Report-Header RRN").content = "3333-4444-5555-6666-7777"
-      xml.at("UPRN").content = "UPRN-012222222333"  # Not in AddressBase, so will be overridden to RRN-* identifier
+      xml.at("UPRN").content = "UPRN-000000000001"
       xml.at_css("Property Address Address-Line-1").content = "Flat 12A Street Lane"
 
       add_super_assessor(scheme_id: scheme_id)
@@ -323,7 +323,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
       loft_insulation_recommended: false,
       secondary_heating: "Room heaters, electric",
       address: {
-        address_id: "RRN-3333-4444-5555-6666-7777",
+        address_id: "UPRN-000000000001",
         address_line1: "Flat 12A Street Lane",
         address_line2: "",
         address_line3: "",
