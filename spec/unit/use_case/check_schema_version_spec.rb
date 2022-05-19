@@ -30,7 +30,7 @@ describe UseCase::CheckSchemaVersion do
     expect(use_case.execute("RdSAP-Schema-NI-19.0")).to eq(true)
   end
 
-  it "returns false when ENV is no available" do
+  it "returns false when ENV is not available" do
     allow(ENV).to receive(:[]).with("VALID_DOMESTIC_SCHEMAS").and_return(nil)
     allow(ENV).to receive(:[]).with("VALID_NON_DOMESTIC_SCHEMAS").and_return(nil)
     expect(use_case.execute("RdSAP-Schema-NI-19.0")).to eq(false)
@@ -41,5 +41,14 @@ describe UseCase::CheckSchemaVersion do
     allow(ENV).to receive(:[]).with("VALID_NON_DOMESTIC_SCHEMAS").and_return(nil)
     use_case.execute("RdSAP-Schema-NI-19.0")
     expect(logger).to have_received(:error)
+  end
+
+  it "strips any unintended whitespace from the lists of schemas" do
+    allow(ENV).to receive(:[]).with("VALID_DOMESTIC_SCHEMAS").and_return("SAP-Schema-19.0.0, SAP-Schema-18.0.0, RdSAP-Schema-NI-19.0")
+    allow(ENV).to receive(:[]).with("VALID_NON_DOMESTIC_SCHEMAS").and_return("CEPC-8.0.0, CEPC-NI-8.0.0")
+
+    expect(use_case.execute("SAP-Schema-18.0.0")).to eq(true)
+    expect(use_case.execute("RdSAP-Schema-NI-19.0")).to eq(true)
+    expect(use_case.execute("CEPC-NI-8.0.0")).to eq(true)
   end
 end
