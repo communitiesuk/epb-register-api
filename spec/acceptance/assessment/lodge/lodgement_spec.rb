@@ -304,7 +304,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
 
       response = get_assessment_summary("0000-0000-0000-0000-0001")
 
-      expect(response[:data][:addressId]).to eq("RRN-0000-0000-0000-0000-0001")
+      expect(response[:data][:address][:addressId]).to eq("RRN-0000-0000-0000-0000-0001")
     end
   end
 
@@ -483,12 +483,12 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
                   uprn_node: "UPRN-000000000001",
                 )
 
-              expect(response[:data][:addressId]).to eq("UPRN-000000000001")
+              expect(response[:data][:address][:addressId]).to eq("UPRN-000000000001")
             end
           end
 
           it "doesn't update the addressId if it's lodged with a correct default RRN-based addressId" do
-            expect(response[:data][:addressId]).to eq(
+            expect(response[:data][:address][:addressId]).to eq(
               "RRN-0000-0000-0000-0000-0001",
             )
           end
@@ -522,7 +522,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
                 uprn_node: "RRN-0000-0000-0000-0000-9999",
               )
 
-            expect(response[:data][:addressId]).to eq(
+            expect(response[:data][:address][:addressId]).to eq(
               "RRN-0000-0000-0000-0000-0001",
             )
           end
@@ -535,7 +535,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
                 ensure_uprns: false,
               )
 
-            expect(response[:data][:addressId]).to eq(
+            expect(response[:data][:address][:addressId]).to eq(
               "RRN-0000-0000-0000-0000-0001",
             )
           end
@@ -556,7 +556,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
                 uprn_node: "RRN-0000-0000-0000-0000-0001",
               )
 
-            expect(response[:data][:addressId]).to eq(
+            expect(response[:data][:address][:addressId]).to eq(
               "RRN-0000-0000-0000-0000-0000",
             )
           end
@@ -580,7 +580,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
                 uprn_node: "RRN-0000-0000-0000-0000-0000",
               )
 
-            expect(response[:data][:addressId]).to eq("UPRN-000000000001")
+            expect(response[:data][:address][:addressId]).to eq("UPRN-000000000001")
           end
         end
       end
@@ -599,10 +599,10 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
             second_assessment =
               get_assessment_summary("0000-0000-0000-0000-0000")
 
-            expect(first_assessment[:data][:addressId]).to eq(
+            expect(first_assessment[:data][:address][:addressId]).to eq(
               "RRN-0000-0000-0000-0000-0001",
             )
-            expect(second_assessment[:data][:addressId]).to eq(
+            expect(second_assessment[:data][:address][:addressId]).to eq(
               "RRN-0000-0000-0000-0000-0001",
             )
           end
@@ -618,10 +618,10 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
             second_assessment =
               get_assessment_summary("0000-0000-0000-0000-0009")
 
-            expect(first_assessment[:data][:addressId]).to eq(
+            expect(first_assessment[:data][:address][:addressId]).to eq(
               "UPRN-000000000001",
             )
-            expect(second_assessment[:data][:addressId]).to eq(
+            expect(second_assessment[:data][:address][:addressId]).to eq(
               "UPRN-000000000001",
             )
           end
@@ -660,10 +660,10 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
           it "updates the addressId to the default address id when RRN-based addressId doesn't correspond to an existing assessment id for CEPC+RR" do
             second_assessment =
               get_assessment_summary("0000-0000-0000-0000-0000")
-            expect(first_assessment[:data][:addressId]).to eq(
+            expect(first_assessment[:data][:address][:addressId]).to eq(
               "RRN-0000-0000-0000-0000-0001",
             )
-            expect(second_assessment[:data][:addressId]).to eq(
+            expect(second_assessment[:data][:address][:addressId]).to eq(
               "RRN-0000-0000-0000-0000-0001",
             )
           end
@@ -679,10 +679,10 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
             second_assessment =
               get_assessment_summary("0000-0000-0000-0000-0008")
 
-            expect(first_assessment[:data][:addressId]).to eq(
+            expect(first_assessment[:data][:address][:addressId]).to eq(
               "RRN-0000-0000-0000-0000-0009",
             )
-            expect(second_assessment[:data][:addressId]).to eq(
+            expect(second_assessment[:data][:address][:addressId]).to eq(
               "RRN-0000-0000-0000-0000-0009",
             )
           end
@@ -709,10 +709,10 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
             second_assessment =
               get_assessment_summary("0000-0000-0000-0000-0066")
 
-            expect(first_assessment[:data][:addressId]).to eq(
+            expect(first_assessment[:data][:address][:addressId]).to eq(
               "RRN-0000-0000-0000-0000-0011",
             )
-            expect(second_assessment[:data][:addressId]).to eq(
+            expect(second_assessment[:data][:address][:addressId]).to eq(
               "RRN-0000-0000-0000-0000-0011",
             )
           end
@@ -741,10 +741,10 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
             second_assessment =
               get_assessment_summary("0000-0000-0000-0000-4444")
 
-            expect(first_assessment[:data][:addressId]).to eq(
+            expect(first_assessment[:data][:address][:addressId]).to eq(
               "UPRN-000000000001",
             )
-            expect(second_assessment[:data][:addressId]).to eq(
+            expect(second_assessment[:data][:address][:addressId]).to eq(
               "UPRN-000000000001",
             )
           end

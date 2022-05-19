@@ -11,9 +11,11 @@ describe "UseCase::AssessmentSummary::Fetch", set_with_timecop: true do
     let(:search_gateway) do
       instance_double(Gateway::AssessmentsSearchGateway)
     end
-    let(:scheme_id) do
-      add_scheme_and_get_id
+
+    let(:xml_gateway) do
+      instance_double(Gateway::AssessmentsXmlGateway)
     end
+
     let(:xml_data) do
       {
         xml: xml_fixture,
@@ -31,10 +33,6 @@ describe "UseCase::AssessmentSummary::Fetch", set_with_timecop: true do
         "date_of_assessment" => "01-01-2021",
         "type_of_assessment" => "RdSAP",
       }]
-    end
-
-    let(:xml_gateway) do
-      instance_double(Gateway::AssessmentsXmlGateway)
     end
 
     before do
@@ -199,10 +197,6 @@ describe "UseCase::AssessmentSummary::Fetch", set_with_timecop: true do
   context "when a SAP is superseded by an RdSAP" do
     subject(:use_case) { UseCase::AssessmentSummary::Fetch.new }
 
-    let(:scheme_id) do
-      add_scheme_and_get_id
-    end
-
     before do
       add_super_assessor(scheme_id: scheme_id)
       sap = Nokogiri.XML(Samples.xml("SAP-Schema-18.0.0"))
@@ -239,12 +233,12 @@ describe "UseCase::AssessmentSummary::Fetch", set_with_timecop: true do
       instance_double(Gateway::AssessmentsSearchGateway)
     end
 
-    let(:results) do
-      use_case.execute("0000-0000-0000-0000-0000")
+    let(:xml_gateway) do
+      instance_double(Gateway::AssessmentsXmlGateway)
     end
 
-    let(:scheme_id) do
-      add_scheme_and_get_id
+    let(:results) do
+      use_case.execute("0000-0000-0000-0000-0000")
     end
 
     let(:xml_data) do
@@ -268,10 +262,6 @@ describe "UseCase::AssessmentSummary::Fetch", set_with_timecop: true do
       }]
     end
 
-    let(:xml_gateway) do
-      instance_double(Gateway::AssessmentsXmlGateway)
-    end
-
     before do
       add_super_assessor(scheme_id: scheme_id)
       allow(search_gateway).to receive(:search_by_assessment_id).and_return(search_results)
@@ -279,7 +269,7 @@ describe "UseCase::AssessmentSummary::Fetch", set_with_timecop: true do
     end
 
     it "can execute and return the expected hash" do
-      expect(SummaryStub.fetch_summary_sap_19(scheme_id)).to eq(results)
+      expect(results).to eq(SummaryStub.fetch_summary_sap_19(scheme_id))
     end
   end
 end

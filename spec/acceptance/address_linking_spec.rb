@@ -183,7 +183,7 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
           symbolize_names: true,
         )
 
-      expect(response[:data][:addressId]).to eq "UPRN-000073546793"
+      expect(response[:data][:address][:addressId]).to eq "UPRN-000073546793"
     end
 
     it "updates UPRN- identifier to the RRN- identifier that is assessment's own RRN" do
@@ -350,8 +350,8 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
           symbolize_names: true,
         )
 
-      expect(cepc_response[:data][:addressId]).to eq("UPRN-000073546793")
-      expect(cepc_rr_response[:data][:addressId]).to eq("UPRN-000073546793")
+      expect(cepc_response[:data][:address][:addressId]).to eq("UPRN-000073546793")
+      expect(cepc_rr_response[:data][:address][:addressId]).to eq("UPRN-000073546793")
     end
   end
 end

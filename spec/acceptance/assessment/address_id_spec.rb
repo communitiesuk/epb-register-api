@@ -37,7 +37,7 @@ describe "Acceptance::AssessmentAddressId", set_with_timecop: true do
           symbolize_names: true,
         )
 
-      expect(response[:data][:addressId]).to eq("RRN-0000-0000-0000-0000-0000")
+      expect(response[:data][:address][:addressId]).to eq("RRN-0000-0000-0000-0000-0000")
     end
 
     it "assign the same address ID to both assessments when when UPRN doesn't exist" do
@@ -65,8 +65,8 @@ describe "Acceptance::AssessmentAddressId", set_with_timecop: true do
           symbolize_names: true,
         )
 
-      expect(response1[:data][:addressId]).to eq("RRN-0000-0000-0000-0000-0000")
-      expect(response2[:data][:addressId]).to eq("RRN-0000-0000-0000-0000-0000")
+      expect(response1[:data][:address][:addressId]).to eq("RRN-0000-0000-0000-0000-0000")
+      expect(response2[:data][:address][:addressId]).to eq("RRN-0000-0000-0000-0000-0000")
     end
 
     it "successfully saves the UPRN when it exists" do
@@ -90,7 +90,7 @@ describe "Acceptance::AssessmentAddressId", set_with_timecop: true do
           symbolize_names: true,
         )
 
-      expect(response[:data][:addressId]).to eq("UPRN-000000000001")
+      expect(response[:data][:address][:addressId]).to eq("UPRN-000000000001")
     end
   end
 
@@ -121,8 +121,8 @@ describe "Acceptance::AssessmentAddressId", set_with_timecop: true do
           symbolize_names: true,
         )
 
-      expect(response1[:data][:addressId]).to eq("RRN-0000-0000-0000-0000-0000")
-      expect(response2[:data][:addressId]).to eq("RRN-0000-0000-0000-0000-0000")
+      expect(response1[:data][:address][:addressId]).to eq("RRN-0000-0000-0000-0000-0000")
+      expect(response2[:data][:address][:addressId]).to eq("RRN-0000-0000-0000-0000-0000")
     end
   end
 end

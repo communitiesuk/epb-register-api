@@ -12,7 +12,7 @@ class SummaryStub
       address_line4: "",
       town: "Whitbury",
       postcode: "A0 0AA",
-      address: { address_id: "UPRN-000000000000",
+      address: { address_id: nil,  # Set at lodgement, which this unit test doesn't exercise
                  address_line1: "1 Some Street",
                  address_line2: "",
                  address_line3: "",
@@ -165,7 +165,7 @@ class SummaryStub
       environmental_impact_current: "52",
       environmental_impact_potential: "74",
       addendum: { addendum_number: [1, 8], stone_walls: true, system_build: true },
-      address_id: nil,
+      address_id: nil,  # Set at lodgement, which this unit test doesn't exercise
       opt_out: nil,
       related_assessments: [],
       green_deal_plan: [],
@@ -179,7 +179,7 @@ class SummaryStub
       date_of_assessment: "2022-05-09",
       date_of_registration: "2022-05-09",
       date_registered: "2022-05-09",
-      address_id: nil,
+      address_id: nil,  # Set at lodgement, which this unit test doesn't exercise
       address_line1: "1 Some Street",
       address_line2: "Some Area",
       address_line3: "Some County",
@@ -187,7 +187,7 @@ class SummaryStub
       town: "Whitbury",
       postcode: "A0 0AA",
       address:
-         { address_id: "UPRN-0000000001",
+         { address_id: nil,  # Set at lodgement, which this unit test doesn't exercise
            address_line1: "1 Some Street",
            address_line2: "Some Area",
            address_line3: "Some County",

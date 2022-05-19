@@ -48,7 +48,7 @@ describe "LinkedAssessments" do
           fetch_assessment_summary(id: "0000-0000-0000-0000-0000").body,
           symbolize_names: true,
         )
-      expect(assessment[:data][:addressId]).to eq(
+      expect(assessment[:data][:address][:addressId]).to eq(
         "RRN-0000-0000-0000-0000-0000",
       )
     end
@@ -61,7 +61,7 @@ describe "LinkedAssessments" do
           fetch_assessment_summary(id: "0000-0000-0000-0000-0001").body,
           symbolize_names: true,
         )
-      expect(rr_assessment[:data][:addressId]).to eq(
+      expect(rr_assessment[:data][:address][:addressId]).to eq(
         "RRN-0000-0000-0000-0000-0000",
       )
     end
@@ -92,7 +92,7 @@ describe "LinkedAssessments" do
           fetch_assessment_summary(id: "0000-0000-0000-0000-0001").body,
           symbolize_names: true,
         )
-      expect(assessment[:data][:addressId]).to eq(
+      expect(assessment[:data][:address][:addressId]).to eq(
         "RRN-0000-0000-0000-0000-0001",
       )
     end
