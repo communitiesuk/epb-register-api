@@ -3,6 +3,10 @@
     "schema_path":
     "api/schemas/xml/SAP-Schema-19.0.0/SAP/Templates/SAP-Report.xsd"
   },
+  "SAP-Schema-18.0.0": {
+    "schema_path":
+    "api/schemas/xml/SAP-Schema-18.0.0/SAP/Templates/SAP-Report.xsd"
+  },
   "SAP-Schema-17.1": {
     "schema_path":
       "api/schemas/xml/SAP-Schema-17.1/SAP/Templates/SAP-Report.xsd"
@@ -62,6 +66,10 @@
   "SAP-Schema-10.2": {
     "schema_path":
     "api/schemas/xml/SAP-Schema-10.2/Messages/ConditionReportCreateRequest_1.xsd"
+  },
+  "SAP-Schema-NI-18.0.0": {
+    "schema_path":
+    "api/schemas/xml/SAP-Schema-NI-18.0.0/SAP/Templates/SAP-Report.xsd"
   },
   "SAP-Schema-NI-17.4": {
     "schema_path":
@@ -158,14 +166,6 @@
   "RdSAP-Schema-17.0": {
     "schema_path":
     "api/schemas/xml/RdSAP-Schema-17.0/RdSAP/Templates/RdSAP-Report.xsd"
-  },
-  "SAP-Schema-18.0.0": {
-    "schema_path":
-    "api/schemas/xml/SAP-Schema-18.0.0/SAP/Templates/SAP-Report.xsd"
-  },
-  "SAP-Schema-NI-18.0.0": {
-    "schema_path":
-    "api/schemas/xml/SAP-Schema-NI-18.0.0/SAP/Templates/SAP-Report.xsd"
   },
   "CEPC-8.0.0": {
     "schema_path": "api/schemas/xml/CEPC-8.0.0/Reports/CEPC-Reports.xsd"
