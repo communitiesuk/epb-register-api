@@ -29,8 +29,8 @@ tags:
     description: Endpoints used by the Green Deal register integration, including Renewable Heat Initiative
   - name: Boiler Upgrade Scheme
     description: Endpoints used by the Boiler Upgrade Scheme
-  - name: Improve Energy Efficiency
-    description: Endpoints used by the Improve Energy Efficiency service
+  - name: Home Energy Retrofit Advice
+    description: Endpoints used by the Home Energy Retrofit Advice service
   - name: Reports
     description: Endpoints providing reports, i.e. specific data views of operational interest
   - name: Service Performance
@@ -602,7 +602,7 @@ paths:
     get:
       tags:
         - Search
-        - Improve Energy Efficiency
+        - Home Energy Retrofit Advice
       summary: Search for domestic EPCs by address
       description: 'Search for an assessment by postcode and optional building name/number.
                     If building name/number is supplied and no matches are found
@@ -1396,17 +1396,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
-  /improve-energy-efficiency/assessments/{assessmentId}:
+  /retrofit-advice/assessments/{assessmentId}:
     get:
       tags:
-        - Improve Energy Efficiency
-      summary: 'Get the Improve Energy Efficiency details from the domestic EPC
+        - Home Energy Retrofit Advice
+      summary: 'Get the Home Energy Retrofit Advice details from the domestic EPC
                 with reference {assessmentId}'
       description: Get domestic EPC details for the supplied RRN
-      operationId: get-assessment-improve-energy-efficiency
+      operationId: get-assessment-retrofit-advice
       security:
         - oauth:
-            - 'improve-energy-efficiency:assessment:search'
+            - 'retrofit-advice:assessment:search'
       parameters:
         - in: path
           name: assessmentId
@@ -1416,7 +1416,7 @@ paths:
             $ref: '#/components/schemas/AssessmentId'
       responses:
         '200':
-          description: Domestic EPC data for the Improve Energy Efficiency service
+          description: Domestic EPC data for the Home Energy Retrofit Advice service
           content:
             application/json:
               schema:
@@ -1426,7 +1426,7 @@ paths:
                     type: object
                     properties:
                       assessment:
-                        $ref: '#/components/schemas/ImproveEnergyEfficiencyAssessmentDetails'
+                        $ref: '#/components/schemas/RetrofitAdviceAssessmentDetails'
         '400':
           description: The assessmentId parameter is badly formatted
           content:
@@ -2120,7 +2120,7 @@ components:
             'report:assessor:status': Get a report of changes to assessors status for a given date
             'greendeal:plans': Access all services necessary for the Green Deal register integration
             'bus:assessment:search': Carry out Boiler Upgrade Scheme search for latest EPC data
-            'improve-energy-efficiency:assessment:search': Carry out Improve Energy Efficiency search for latest domestic EPC data
+            'retrofit-advice:assessment:search': Carry out Home Energy Retrofit Advice search for latest domestic EPC data
 
   schemas:
     # Addresses
@@ -2565,6 +2565,20 @@ components:
           description: Date and time of lodgement in UTC timezone for assessments post September 2020
           example: '2020-09-19T09:00:00Z'
 
+    DomesticEPCsSearchResult:
+      type: object
+      properties:
+        epcRrn:
+          description: 'The RRN of the most recent domestic EPC for the property'
+          $ref: '#/components/schemas/AssessmentId'
+        addressLine1:
+          description: 'The first populated line of the property address'
+          $ref: '#/components/schemas/AddressLine1'
+        isExactMatch:
+          description: 'Whether this is an exact match for both postcode and building name/number'
+          type: boolean
+          example: true
+
     CommercialEnergyAssessmentSummary:
       $ref: '#/components/schemas/Empty'
 
@@ -2936,22 +2950,8 @@ components:
                 $ref: '#/components/schemas/AssessmentId'
               example: [ "9876-9876-9876-9876-9876", "8765-8765-8765-8765-8765" ]
 
-    # ImproveEnergyEfficiency
-    DomesticEPCsSearchResult:
-      type: object
-      properties:
-        epcRrn:
-          description: 'The RRN of the most recent domestic EPC for the property'
-          $ref: '#/components/schemas/AssessmentId'
-        addressLine1:
-          description: 'The first populated line of the property address'
-          $ref: '#/components/schemas/AddressLine1'
-        isExactMatch:
-          description: 'Whether this is an exact match for both postcode and building name/number'
-          type: boolean
-          example: true
-
-    ImproveEnergyEfficiencyAssessmentDetails:
+    # Home Energy Retrofit Advice
+    RetrofitAdviceAssessmentDetails:
       type: object
       properties:
         typeOfAssessment:
