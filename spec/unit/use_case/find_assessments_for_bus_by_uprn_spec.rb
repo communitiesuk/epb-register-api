@@ -25,7 +25,7 @@ describe UseCase::FindAssessmentsForBusByUprn do
   end
 
   context "when fetching BUS (Boiler Upgrade Scheme) details for a UPRN that has a relevant assessment associated" do
-    let(:uprn) { "UPRN-0000111122" }
+    let(:uprn) { "UPRN-000011112222" }
 
     before do
       allow(bus_gateway).to receive(:search_by_uprn).with(uprn).and_return existing_details
@@ -37,7 +37,7 @@ describe UseCase::FindAssessmentsForBusByUprn do
   end
 
   context "when fetching BUS (Boiler Upgrade Scheme) details for a UPRN that does not exist or has no relevant assessments associated" do
-    let(:uprn) { "UPRN-0000011111" }
+    let(:uprn) { "UPRN-000001111122" }
 
     before do
       allow(bus_gateway).to receive(:search_by_uprn).with(uprn).and_return nil
