@@ -6,7 +6,7 @@ info:
   contact:
     name: DLUHC Digital helpdesk (prefix email subject with "EPB")
     email: dluhc.digital-services@levellingup.gov.uk
-  version: 1.2.0
+  version: 1.2.1
 
 servers:
   - url: 'https://api.epb-integration.digital.communities.gov.uk/api'
@@ -591,6 +591,81 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /assessments/domestic-epcs/search:
+    get:
+      tags:
+        - Search
+        - Improve Energy Efficiency
+      summary: Search for domestic EPCs by address
+      description: 'Search for an assessment by postcode and optional building name/number.
+                    If building name/number is supplied and no matches are found
+                    or building name/number is not supplied
+                    then all domestic EPC matches for the postcode are returned'
+      operationId: search-domestic-epcs
+      security:
+        - oauth:
+            - 'assessment:domestic-epc:search'
+      parameters:
+        - in: query
+          name: postcode
+          description: The postcode of the address being searched for
+          schema:
+            $ref: '#/components/schemas/AddressPostcode'
+          example: 'FL23 4JA'
+        - in: query
+          name: buildingNameOrNumber
+          description: The name or number for the building (optional)
+          schema:
+            $ref: '#/components/schemas/AddressBuildingNameOrNumber'
+          example: '22 Acacia Avenue'
+      responses:
+        '200':
+          description: Domestic EPC search results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      assessments:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/DomesticEPCsSearchResult'
+        '400':
+          description: 'Bad request - most likely an invalid postcode'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: No matching EPCs found for the given query
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
         '503':
           description: Service unavailable
           content:
@@ -1290,80 +1365,6 @@ paths:
                         * Badly formed address ID
                         * Badly formed assessment ID
                         * No valid query parameters'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
-          description: No matching EPCs found for the given query
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '500':
-          description: Server error
-        '503':
-          description: Service unavailable
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-
-  /improve-energy-efficiency/assessments/search:
-    get:
-      tags:
-        - Improve Energy Efficiency
-      summary: Search for domestic EPCs by address for the Improve Energy Efficiency service
-      description: 'Search for an assessment by postcode and optional building name/number.
-                    If building name/number is supplied and no matches are found
-                    or building name/number is not supplied
-                    then all domestic EPC matches for the postcode are returned'
-      operationId: get-assessments-improve-energy-efficiency
-      security:
-        - oauth:
-            - 'improve-energy-efficiency:assessment:search'
-      parameters:
-        - in: query
-          name: postcode
-          description: The postcode of the address being searched for
-          schema:
-            $ref: '#/components/schemas/AddressPostcode'
-          example: 'FL23 4JA'
-        - in: query
-          name: buildingNameOrNumber
-          description: The name or number for the building (optional)
-          schema:
-            $ref: '#/components/schemas/AddressBuildingNameOrNumber'
-          example: '22 Acacia Avenue'
-      responses:
-        '200':
-          description: Domestic EPC search results
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                    properties:
-                      assessments:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/ImproveEnergyEfficiencySearchResult'
-        '400':
-          description: 'Bad request - most likely an invalid postcode'
           content:
             application/json:
               schema:
@@ -2936,7 +2937,7 @@ components:
               example: [ "9876-9876-9876-9876-9876", "8765-8765-8765-8765-8765" ]
 
     # ImproveEnergyEfficiency
-    ImproveEnergyEfficiencySearchResult:
+    DomesticEPCsSearchResult:
       type: object
       properties:
         epcRrn:
