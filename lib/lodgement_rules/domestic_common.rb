@@ -248,7 +248,6 @@ module LodgementRules
               Date.parse(method_or_nil(adapter, :date_of_completion)),
               # Completion-Date
             ]
-
             dates[0] <= dates[1]
           end,
       },
@@ -269,7 +268,6 @@ module LodgementRules
           end,
       },
     ].freeze
-
     def validate(xml_adaptor)
       errors = RULES.reject { |rule| rule[:test].call(xml_adaptor) }
 

@@ -20,6 +20,8 @@ module UseCase
 
     class SoftwareNotApprovedError < StandardError; end
 
+    class NiAssessmentInvalidPostcode < StandardError; end
+
     class LodgementRulesException < StandardError
       attr_reader :errors
 
@@ -70,6 +72,7 @@ module UseCase
       end
       raise RelatedReportError unless reports_refer_to_each_other?(xml_doc)
       raise AddressIdsDoNotMatch unless address_ids_match?(lodgement_data)
+      raise NiAssessmentInvalidPostcode unless ni_assessment_has_valid_postcode?(lodgement_data, schema_name)
 
       unless migrated
         wrapper = ViewModel::Factory.new.create(assessment_xml, schema_name, false)
@@ -185,6 +188,12 @@ module UseCase
 
     def extract_data_from_lodgement_xml(lodgement)
       lodgement.fetch_data
+    end
+
+    def ni_assessment_has_valid_postcode?(lodgement, schema_name)
+      return false if schema_name.include?("NI") && !lodgement[0][:address][:postcode].strip.upcase.starts_with?("BT")
+
+      true
     end
 
     def as_parsed_document(xml)

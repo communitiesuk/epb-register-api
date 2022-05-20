@@ -14,7 +14,9 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
   end
 
   let(:valid_rdsap_xml) { Samples.xml "RdSAP-Schema-20.0.0" }
+  let(:valid_rdsap_ni_xml) { Samples.xml "RdSAP-Schema-NI-20.0.0" }
   let(:valid_cepc_rr_xml) { Samples.xml "CEPC-8.0.0", "cepc+rr" }
+  let(:valid_cepc_ni_xml) { Samples.xml "CEPC-NI-8.0.0", "cepc" }
   let(:valid_dec_rr_xml) { Samples.xml "CEPC-8.0.0", "dec+rr" }
   let(:valid_ac_cert_report_xml) do
     Samples.xml "CEPC-8.0.0", "ac-cert+ac-report"
@@ -248,6 +250,28 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
         "Both parts of a dual lodgement must share the same address id.",
       )
     end
+
+    it "rejects an assessment with an NI RdSAP schema an not a BT postcode" do
+      register_assessor
+      xml = Nokogiri.XML valid_rdsap_ni_xml
+      xml.at("RRN").content = "9999-0000-0000-0000-0000"
+      xml.xpath("//*[local-name() = 'Postcode']").each { |node| node.content = "SW1 0AA" }
+      response =
+        JSON.parse(
+          lodge_assessment(
+            assessment_body: xml.to_xml,
+            accepted_responses: [400],
+            auth_data: {
+              scheme_ids: [scheme_id],
+            },
+            schema_name: "RdSAP-Schema-NI-20.0.0",
+          ).body,
+          migrated: false,
+          override: false,
+        )
+
+      expect(response["errors"][0]["title"]).to eq("Assessment with an NI Schema must have an BT postcode")
+    end
   end
 
   context "when lodging and overriding the rules" do
@@ -458,6 +482,18 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
           scheme_ids: [scheme_id],
         },
         schema_name: "CEPC-8.0.0",
+      )
+    end
+
+    it "accepts an assessment with an NI schema and a BT postcode" do
+      xml_doc = Nokogiri.XML(valid_cepc_ni_xml)
+      lodge_assessment(
+        assessment_body: xml_doc.to_xml,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        schema_name: "CEPC-NI-8.0.0",
       )
     end
 

@@ -205,6 +205,12 @@ module Controller
           "INVALID_REQUEST",
           "Lodgement rule cannot be overridden: #{e.message}",
         )
+      when UseCase::ValidateAndLodgeAssessment::NiAssessmentInvalidPostcode
+        error_response(
+          400,
+          "INVALID_REQUEST",
+          "Assessment with an NI Schema must have an BT postcode",
+        )
       when REXML::ParseException
         error_response(400, "INVALID_REQUEST", e.message)
       when UseCase::ValidateAndLodgeAssessment::LodgementRulesException

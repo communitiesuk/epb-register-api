@@ -144,4 +144,55 @@ describe UseCase::ValidateAndLodgeAssessment do
       }.not_to raise_exception
     end
   end
+
+  context "when validation an assessment is in Northern Ireland" do
+    let(:valid_xml) { Nokogiri.XML(Samples.xml("RdSAP-Schema-NI-20.0.0")) }
+
+    before do
+      Timecop.freeze(2021, 2, 22, 0, 0, 0)
+    end
+
+    after do
+      Timecop.return
+    end
+
+    it "accepts an NI assessment with a BT postcode regardless of case ", aggregate_failures: true do
+      expect {
+        use_case.execute assessment_xml: valid_xml.to_xml,
+                         schema_name: "RdSAP-Schema-NI-20.0.0",
+                         scheme_ids: "1",
+                         migrated: false,
+                         overidden: false
+      }.not_to raise_exception
+
+      valid_xml.xpath("//*[local-name() = 'Postcode']").each { |node| node.content = "bt10 0AA" }
+      expect {
+        use_case.execute assessment_xml: valid_xml.to_xml,
+                         schema_name: "RdSAP-Schema-NI-20.0.0",
+                         scheme_ids: "1",
+                         migrated: false,
+                         overidden: false
+      }.not_to raise_exception
+
+      valid_xml.xpath("//*[local-name() = 'Postcode']").each { |node| node.content = " bt9 1CC" }
+      expect {
+        use_case.execute assessment_xml: valid_xml.to_xml,
+                         schema_name: "RdSAP-Schema-NI-20.0.0",
+                         scheme_ids: "1",
+                         migrated: false,
+                         overidden: false
+      }.not_to raise_exception
+    end
+
+    it "raises an error when postcode is not in BT" do
+      valid_xml.xpath("//*[local-name() = 'Postcode']").each { |node| node.content = "SW1 0AA" }
+      expect {
+        use_case.execute assessment_xml: valid_xml.to_s,
+                         schema_name: "RdSAP-Schema-NI-20.0.0",
+                         scheme_ids: "1",
+                         migrated: false,
+                         overidden: false
+      }.to raise_exception UseCase::ValidateAndLodgeAssessment::NiAssessmentInvalidPostcode
+    end
+  end
 end
