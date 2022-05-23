@@ -145,8 +145,9 @@ describe UseCase::ValidateAndLodgeAssessment do
     end
   end
 
-  context "when validation an assessment is in Northern Ireland" do
-    let(:valid_xml) { Nokogiri.XML(Samples.xml("RdSAP-Schema-NI-20.0.0")) }
+  context "when validating Northern Ireland assessments" do
+    let(:rdsap_ni) { Nokogiri.XML(Samples.xml("RdSAP-Schema-NI-20.0.0")) }
+    let(:rdsap) { Nokogiri.XML(Samples.xml("RdSAP-Schema-20.0.0")) }
 
     before do
       Timecop.freeze(2021, 2, 22, 0, 0, 0)
@@ -156,27 +157,9 @@ describe UseCase::ValidateAndLodgeAssessment do
       Timecop.return
     end
 
-    it "accepts an NI assessment with a BT postcode regardless of case ", aggregate_failures: true do
+    it "accepts an NI schema with a BT postcode" do
       expect {
-        use_case.execute assessment_xml: valid_xml.to_xml,
-                         schema_name: "RdSAP-Schema-NI-20.0.0",
-                         scheme_ids: "1",
-                         migrated: false,
-                         overidden: false
-      }.not_to raise_exception
-
-      valid_xml.xpath("//*[local-name() = 'Postcode']").each { |node| node.content = "bt10 0AA" }
-      expect {
-        use_case.execute assessment_xml: valid_xml.to_xml,
-                         schema_name: "RdSAP-Schema-NI-20.0.0",
-                         scheme_ids: "1",
-                         migrated: false,
-                         overidden: false
-      }.not_to raise_exception
-
-      valid_xml.xpath("//*[local-name() = 'Postcode']").each { |node| node.content = " bt9 1CC" }
-      expect {
-        use_case.execute assessment_xml: valid_xml.to_xml,
+        use_case.execute assessment_xml: rdsap_ni.to_xml,
                          schema_name: "RdSAP-Schema-NI-20.0.0",
                          scheme_ids: "1",
                          migrated: false,
@@ -184,15 +167,28 @@ describe UseCase::ValidateAndLodgeAssessment do
       }.not_to raise_exception
     end
 
-    it "raises an error when postcode is not in BT" do
-      valid_xml.xpath("//*[local-name() = 'Postcode']").each { |node| node.content = "SW1 0AA" }
+    it "rejects an NI schema without a BT postcode" do
+      rdsap_ni.xpath("//*[local-name() = 'Postcode']").each { |node| node.content = "SW1 0AA" }
       expect {
-        use_case.execute assessment_xml: valid_xml.to_s,
+        use_case.execute assessment_xml: rdsap_ni.to_s,
                          schema_name: "RdSAP-Schema-NI-20.0.0",
                          scheme_ids: "1",
                          migrated: false,
                          overidden: false
-      }.to raise_exception UseCase::ValidateAndLodgeAssessment::NiAssessmentInvalidPostcode
+      }.to raise_exception UseCase::ValidateAndLodgeAssessment::LodgementRulesException, /must have a property postcode starting with BT/
     end
+
+    it "rejects a BT postcode without an NI Schema" do
+      rdsap.xpath("//*[local-name() = 'Postcode']").each { |node| node.content = "BT1 0AA" }
+      expect {
+        use_case.execute assessment_xml: rdsap.to_s,
+                         schema_name: "RdSAP-Schema-20.0.0",
+                         scheme_ids: "1",
+                         migrated: false,
+                         overidden: false
+      }.to raise_exception UseCase::ValidateAndLodgeAssessment::LodgementRulesException, /Northern Ireland postcode must be lodged with a NI Schema/
+    end
+
   end
+
 end

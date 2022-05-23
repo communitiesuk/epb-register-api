@@ -118,6 +118,7 @@ describe UseCase::ExportOpenDataCommercial, set_with_timecop: true do
           },
           override: true,
           schema_name: "CEPC-8.0.0",
+          migrated: true,
         )
 
         non_domestic_assessment_date.children = "2020-05-04"
@@ -132,6 +133,7 @@ describe UseCase::ExportOpenDataCommercial, set_with_timecop: true do
           },
           override: true,
           schema_name: "CEPC-8.0.0",
+          migrated: true,
         )
 
         non_domestic_assessment_date.children = "2020-05-04"
@@ -144,6 +146,7 @@ describe UseCase::ExportOpenDataCommercial, set_with_timecop: true do
           },
           override: true,
           schema_name: "CEPC-8.0.0",
+          migrated: true,
         )
 
         # Date too early so not exported
@@ -157,6 +160,7 @@ describe UseCase::ExportOpenDataCommercial, set_with_timecop: true do
           },
           override: true,
           schema_name: "CEPC-8.0.0",
+          migrated: true,
         )
 
         # add lodgement for Northern Ireland not to be export
@@ -171,6 +175,7 @@ describe UseCase::ExportOpenDataCommercial, set_with_timecop: true do
           },
           override: true,
           schema_name: "CEPC-8.0.0",
+          migrated: true,
         )
 
         # Domestic assessment not exported
@@ -184,6 +189,7 @@ describe UseCase::ExportOpenDataCommercial, set_with_timecop: true do
           },
           override: true,
           schema_name: "CEPC-8.0.0",
+          migrated: true,
         )
       end
 

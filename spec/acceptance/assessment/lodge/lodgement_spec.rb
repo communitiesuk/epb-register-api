@@ -217,7 +217,6 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
               scheme_ids: [scheme_id],
             },
             schema_name: "CEPC-8.0.0",
-            override: "true",
           ).body,
           symbolize_names: true,
         )
@@ -270,7 +269,29 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
           override: false,
         )
 
-      expect(response["errors"][0]["title"]).to eq("Assessment with a Northern Ireland schema must have a property postcode starting with BT")
+      expect(response["errors"]).to eq("Assessment with a Northern Ireland schema must have a property postcode starting with BT")
+    end
+
+    it "rejects an assessment with an a BT postcode and non NI schema" do
+      register_assessor
+      xml = Nokogiri.XML valid_rdsap_xml
+      xml.at("RRN").content = "9999-0000-0000-0000-0000"
+      xml.xpath("//*[local-name() = 'Postcode']").each { |node| node.content = "BT7 0AA" }
+      response =
+        JSON.parse(
+          lodge_assessment(
+            assessment_body: xml.to_xml,
+            accepted_responses: [400],
+            auth_data: {
+              scheme_ids: [scheme_id],
+            },
+            schema_name: "RdSAP-Schema-20.0.0",
+            ).body,
+          migrated: false,
+          override: false,
+          )
+
+      expect(response["errors"]).to eq("Assessment with a Northern Ireland postcode must be lodged with a NI Schema")
     end
   end
 

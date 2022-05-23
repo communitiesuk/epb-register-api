@@ -129,6 +129,7 @@ describe UseCase::ExportOpenDataCepcrr do
           },
           override: true,
           schema_name: "CEPC-8.0.0",
+          migrated: true,
         )
       end
 

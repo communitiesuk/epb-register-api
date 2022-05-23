@@ -72,7 +72,12 @@ module UseCase
       end
       raise RelatedReportError unless reports_refer_to_each_other?(xml_doc)
       raise AddressIdsDoNotMatch unless address_ids_match?(lodgement_data)
-      raise NiAssessmentInvalidPostcode unless ni_assessment_has_valid_postcode?(lodgement_data, schema_name)
+
+      begin
+         LodgementRules::NiCommon.new.validate(schema_name:schema_name, address: lodgement_data[0][:address], migrated: migrated)
+      rescue Boundary::InvalidNiAssessment => e
+        raise LodgementRulesException, e
+      end
 
       unless migrated
         wrapper = ViewModel::Factory.new.create(assessment_xml, schema_name, false)

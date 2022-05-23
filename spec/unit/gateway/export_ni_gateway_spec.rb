@@ -82,6 +82,7 @@ describe Gateway::ExportNiGateway do
           },
           override: true,
           schema_name: "CEPC-NI-8.0.0",
+          migrated: true,
         )
 
         non_domestic_xml_old = Nokogiri.XML Samples.xml("CEPC-7.1", "cepc")
