@@ -22,7 +22,7 @@ module UseCase
       def initialize(logger: nil)
         valid_domestic_schemas = ENV["VALID_DOMESTIC_SCHEMAS"]&.split(",") || []
         valid_non_domestic_schemas = ENV["VALID_NON_DOMESTIC_SCHEMAS"]&.split(",") || []
-        @valid_schemas = (valid_domestic_schemas + valid_non_domestic_schemas).map { |e| e.strip }
+        @valid_schemas = (valid_domestic_schemas + valid_non_domestic_schemas).map(&:strip)
         if @valid_schemas.empty?
           logger.error("No valid schemas! Are the VALID_*_SCHEMAS environment variables set?")
         end

@@ -286,10 +286,10 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
               scheme_ids: [scheme_id],
             },
             schema_name: "RdSAP-Schema-20.0.0",
-            ).body,
+          ).body,
           migrated: false,
           override: false,
-          )
+        )
 
       expect(response["errors"]).to eq("Assessment with a Northern Ireland postcode must be lodged with a NI Schema")
     end

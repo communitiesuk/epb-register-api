@@ -2,7 +2,7 @@ module Boundary
   class InvalidNiAssessment < Boundary::TerminableError
     def initialize(argument)
       super(<<~MSG.strip)
-          #{argument}
+        #{argument}
       MSG
     end
   end

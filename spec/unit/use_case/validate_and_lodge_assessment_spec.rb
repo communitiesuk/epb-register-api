@@ -186,9 +186,7 @@ describe UseCase::ValidateAndLodgeAssessment do
                          scheme_ids: "1",
                          migrated: false,
                          overidden: false
-      }.to raise_exception UseCase::ValidateAndLodgeAssessment::LodgementRulesException, /Northern Ireland postcode must be lodged with a NI Schema/
+      }.to raise_exception UseCase::ValidateAndLodgeAssessment::LodgementRulesException, /must be lodged with a NI Schema/
     end
-
   end
-
 end

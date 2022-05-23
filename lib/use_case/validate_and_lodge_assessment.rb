@@ -74,7 +74,7 @@ module UseCase
       raise AddressIdsDoNotMatch unless address_ids_match?(lodgement_data)
 
       begin
-         LodgementRules::NiCommon.new.validate(schema_name:schema_name, address: lodgement_data[0][:address], migrated: migrated)
+        LodgementRules::NiCommon.new.validate(schema_name: schema_name, address: lodgement_data[0][:address], migrated: migrated)
       rescue Boundary::InvalidNiAssessment => e
         raise LodgementRulesException, e
       end
