@@ -270,7 +270,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
           override: false,
         )
 
-      expect(response["errors"][0]["title"]).to eq("Assessment with an NI Schema must have an BT postcode")
+      expect(response["errors"][0]["title"]).to eq("Assessment with a Northern Ireland schema must have a property postcode starting with BT")
     end
   end
 
