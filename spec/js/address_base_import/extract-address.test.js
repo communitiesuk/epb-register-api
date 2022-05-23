@@ -640,3 +640,17 @@ test('it compacts all lines after line 4 onto one line separated by commas', () 
     address_type: 'Delivery Point'
   })
 })
+
+const nottsPondAsUpdate = [...nottsPond]
+nottsPondAsUpdate[2] = 'U'
+
+test('it does not exclude a data row if the row is passed as an update but it also not certifiable', () => {
+  expect(extractAddress(addressBaseEntryFromValues(nottsPondAsUpdate))).not.toBe(null)
+})
+
+const nottsPondAsDelete = [...nottsPond]
+nottsPondAsDelete[2] = 'D'
+
+test('it does not exclude a data row if the row is passed as a delete but it also not certifiable', () => {
+  expect(extractAddress(addressBaseEntryFromValues(nottsPondAsDelete))).not.toBe(null)
+})
