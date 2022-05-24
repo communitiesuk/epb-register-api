@@ -1,7 +1,5 @@
 module UseCase
   class FetchAssessmentForBus
-    class NotAvailableException < StandardError; end
-
     def initialize(bus_gateway:)
       @bus_gateway = bus_gateway
     end

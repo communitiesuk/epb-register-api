@@ -1,7 +1,5 @@
 module UseCase
   class FindAssessmentsForBusByUprn
-    class NotFoundException < StandardError; end
-
     def initialize(bus_gateway:)
       @bus_gateway = bus_gateway
     end
