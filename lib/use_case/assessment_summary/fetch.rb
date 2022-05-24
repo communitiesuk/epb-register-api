@@ -10,16 +10,6 @@ module UseCase
         @xml_gateway = xml_gateway || Gateway::AssessmentsXmlGateway.new
       end
 
-      def lodged_values_from_xml(xml, schema_type, assessment_id)
-        view_model =
-          ViewModel::Factory.new.create(xml, schema_type, assessment_id)
-        unless view_model
-          raise ArgumentError,
-                "Assessment summary unsupported for this assessment type"
-        end
-        view_model
-      end
-
       def execute(assessment_id)
         assessment_id = Helper::RrnHelper.normalise_rrn_format(assessment_id)
         assessment =
@@ -73,6 +63,18 @@ module UseCase
         else
           summary_data
         end
+      end
+
+    private
+
+      def lodged_values_from_xml(xml, schema_type, assessment_id)
+        view_model =
+          ViewModel::Factory.new.create(xml, schema_type, assessment_id)
+        unless view_model
+          raise ArgumentError,
+                "Assessment summary unsupported for this assessment type"
+        end
+        view_model
       end
     end
   end
