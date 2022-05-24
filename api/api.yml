@@ -2958,7 +2958,27 @@ components:
           type: string
           enum: [ SAP, RdSAP ]
         address:
-          $ref: '#/components/schemas/Address'
+          type: object
+          properties:
+            addressId:
+              $ref: '#/components/schemas/AddressId'
+            addressLine1:
+              type: string
+              example: '22 Acacia Avenue'
+            addressLine2:
+              type: string
+              example: ''
+            addressLine3:
+              type: string
+              example: ''
+            addressLine4:
+              type: string
+              example: ''
+            town:
+              type: string
+              example: 'Fulchester'
+            postcode:
+              $ref: '#/components/schemas/AddressPostcode'
         lodgementDate:
           type: string
           format: date
