@@ -1,5 +1,6 @@
 module Gateway
   module CommonAddressSearchGateway
+
     def search_by_postcode_and_building_number(postcode:, building_number:, assessment_types:)
       sql = <<-SQL
         SELECT
@@ -74,24 +75,6 @@ module Gateway
         sql: sql,
         binds: [
           string_attribute("uprn", uprn),
-        ],
-      )
-    end
-
-    def fetch_by_rrn(rrn)
-      sql = <<-SQL
-        SELECT
-          assessment_id AS epc_rrn,
-          type_of_assessment AS report_type,
-          date_of_expiry AS expiry_date
-        FROM assessments
-        WHERE assessment_id = $1
-      SQL
-
-      do_search(
-        sql: sql,
-        binds: [
-          string_attribute("rrn", rrn),
         ],
       )
     end

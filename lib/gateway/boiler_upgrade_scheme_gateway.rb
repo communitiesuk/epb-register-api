@@ -30,6 +30,24 @@ module Gateway
       fetch_by_rrn(rrn)
     end
 
+    def fetch_by_rrn(rrn)
+      sql = <<-SQL
+        SELECT
+          assessment_id AS epc_rrn,
+          type_of_assessment AS report_type,
+          date_of_expiry AS expiry_date
+        FROM assessments
+        WHERE assessment_id = $1
+      SQL
+
+      do_search(
+        sql: sql,
+        binds: [
+          string_attribute("rrn", rrn),
+        ],
+      )
+    end
+
   private
 
     def row_to_domain(row)
