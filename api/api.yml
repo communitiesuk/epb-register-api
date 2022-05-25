@@ -6,7 +6,7 @@ info:
   contact:
     name: DLUHC Digital helpdesk (prefix email subject with "EPB")
     email: dluhc.digital-services@levellingup.gov.uk
-  version: 1.2.1
+  version: 1.2.2
 
 servers:
   - url: 'https://api.epb-integration.digital.communities.gov.uk/api'
@@ -2145,6 +2145,27 @@ components:
         postcode:
           $ref: '#/components/schemas/AddressPostcode'
 
+    AddressStyle2:
+      type: object
+      properties:
+        addressLine1:
+          type: string
+          example: '22 Acacia Avenue'
+        addressLine2:
+          type: string
+          example: 'Upper Wellgood'
+        addressLine3:
+          type: string
+          example: ''
+        addressLine4:
+          type: string
+          example: ''
+        town:
+          type: string
+          example: 'Fulchester'
+        postcode:
+          $ref: '#/components/schemas/AddressPostcode'
+
     AddressDetail:
       allOf:
         - $ref: '#/components/schemas/Address'
@@ -2571,13 +2592,8 @@ components:
         epcRrn:
           description: 'The RRN of the most recent domestic EPC for the property'
           $ref: '#/components/schemas/AssessmentId'
-        addressLine1:
-          description: 'The first populated line of the property address'
-          $ref: '#/components/schemas/AddressLine1'
-        isExactMatch:
-          description: 'Whether this is an exact match for both postcode and building name/number'
-          type: boolean
-          example: true
+        address:
+          $ref: '#/components/schemas/AddressStyle2'
 
     CommercialEnergyAssessmentSummary:
       $ref: '#/components/schemas/Empty'
@@ -2958,27 +2974,7 @@ components:
           type: string
           enum: [ SAP, RdSAP ]
         address:
-          type: object
-          properties:
-            addressId:
-              $ref: '#/components/schemas/AddressId'
-            addressLine1:
-              type: string
-              example: '22 Acacia Avenue'
-            addressLine2:
-              type: string
-              example: ''
-            addressLine3:
-              type: string
-              example: ''
-            addressLine4:
-              type: string
-              example: ''
-            town:
-              type: string
-              example: 'Fulchester'
-            postcode:
-              $ref: '#/components/schemas/AddressPostcode'
+          $ref: '#/components/schemas/AddressStyle2'
         lodgementDate:
           type: string
           format: date
