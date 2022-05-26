@@ -394,4 +394,40 @@ describe Gateway::BoilerUpgradeSchemeGateway do
       end
     end
   end
+
+  context "when a certificate is cancelled" do
+    before do
+      add_super_assessor(scheme_id: scheme_id)
+
+      rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
+      do_lodgement = lambda {
+        lodge_assessment(
+          assessment_body: rdsap_xml.to_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          override: true,
+        )
+      }
+
+      do_lodgement.call
+      rdsap_xml.at("RRN").content = "0000-0000-0000-0000-0001"
+      rdsap_xml.xpath("//*[local-name() = 'Address-Line-1']").each { |node| node.content = "1 Yet Another Street" }
+      rdsap_xml.at("UPRN").content = "UPRN-000111222334"
+      do_lodgement.call
+
+      rdsap_xml.at("RRN").content = "0000-0000-0000-0000-0002"
+      rdsap_xml.xpath("//*[local-name() = 'Address-Line-1']").each { |node| node.content = "1 More Another Street" }
+      rdsap_xml.at("UPRN").content = "UPRN-000111222335"
+      do_lodgement.call
+
+      ActiveRecord::Base.connection.exec_query("UPDATE assessments SET cancelled_at = Now() WHERE assessment_id = '0000-0000-0000-0000-0000' ", "SQL")
+    end
+
+    it "only finds the 2 EPC that have not been cancelled" do
+      result = gateway.search_by_postcode_and_building_identifier(postcode: "A0 0AA", building_identifier: "1")
+      expect(result.count).to eq(2)
+    end
+  end
 end
