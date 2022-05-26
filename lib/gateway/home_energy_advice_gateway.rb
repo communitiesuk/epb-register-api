@@ -11,20 +11,27 @@ module Gateway
 
   private
 
-    def cte_sql_expression
+    def common_sql_expression
       <<-SQL
           WITH assessment_cte as(
             SELECT a.assessment_id,
                    a.address_line1,
+                   a.address_line2,
+                   a.address_line3,
+                   a.address_line4,
+                   a.town,
+                   a.postcode,
                   row_number() over (PARTITION BY aai.address_id ORDER BY date_of_expiry DESC, date_registered DESC, a.assessment_id DESC) rn
                   FROM assessments AS a
             JOIN assessments_address_id aai ON a.assessment_id = aai.assessment_id
             WHERE type_of_assessment IN ('SAP', 'RdSAP')
+            AND  a.opt_out = false AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL
+
       SQL
     end
 
     def fetch_by_postcode_and_building_number(postcode:, building_number:)
-      sql = cte_sql_expression
+      sql = common_sql_expression
       sql << <<-SQL
             AND
                   a.postcode = $1 AND
@@ -38,8 +45,7 @@ module Gateway
               OR a.address_line1 = $5
               OR a.address_line2 = $5
             ))
-            SELECT assessment_id,
-                   address_line1
+            SELECT *
             FROM assessment_cte
             WHERE rn =1
       SQL
@@ -57,11 +63,10 @@ module Gateway
     end
 
     def fetch_by_postcode_and_building_name(postcode:, building_name:)
-      sql = cte_sql_expression
+      sql = common_sql_expression
       sql << <<-SQL
           AND a.postcode = $1 AND (a.address_line1 ILIKE $2 OR a.address_line2 ILIKE $2))
-          SELECT assessment_id,
-                   address_line1
+          SELECT *
             FROM assessment_cte
             WHERE rn =1
       SQL
@@ -89,7 +94,19 @@ module Gateway
 
     def do_search(sql:, binds:)
       results = ActiveRecord::Base.connection.exec_query(sql, "SQL", binds)
-      results.map(&:symbolize_keys)
+      results.map { |result| row_to_domain(result) }
+    end
+
+    def row_to_domain(row)
+      Domain::HomeEnergyAdviceItem.new(
+        assessment_id: row["assessment_id"],
+        address_line1: row["address_line1"],
+        address_line2: row["address_line2"],
+        address_line3: row["address_line3"],
+        address_line4: row["address_line4"],
+        town: row["town"],
+        postcode: row["postcode"],
+      )
     end
   end
 end
