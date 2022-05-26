@@ -135,6 +135,12 @@ describe Gateway::HomeEnergyAdviceGateway do
       expect(result.sort_by(&:rrn).map(&:to_hash)).to eq(expected_result)
     end
 
+    it "has the assessments results in alpha order of address line 1" do
+      result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "1")
+      expect(result.length).to eq(2)
+      expect(result.map(&:to_hash).first[:address][:addressLine1]).to eq("1 Another Street")
+    end
+
     it "does not find a CEPC for that address" do
       result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "1 Commercial Street")
       expect(result).to eq([])

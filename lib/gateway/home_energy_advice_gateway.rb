@@ -21,7 +21,7 @@ module Gateway
                    a.address_line4,
                    a.town,
                    a.postcode,
-                  row_number() over (PARTITION BY aai.address_id ORDER BY date_of_expiry DESC, date_registered DESC, a.assessment_id DESC) rn
+                  row_number() over (PARTITION BY aai.address_id ORDER BY date_of_expiry DESC, created_at DESC, a.assessment_id DESC) rn
                   FROM assessments AS a
             JOIN assessments_address_id aai ON a.assessment_id = aai.assessment_id
             WHERE type_of_assessment IN ('SAP', 'RdSAP')
@@ -48,6 +48,7 @@ module Gateway
             SELECT *
             FROM assessment_cte
             WHERE rn =1
+            ORDER BY address_line1
       SQL
 
       do_search(
@@ -69,6 +70,7 @@ module Gateway
           SELECT *
             FROM assessment_cte
             WHERE rn =1
+             ORDER BY address_line1
       SQL
 
       do_search(
