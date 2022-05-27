@@ -1,5 +1,5 @@
 module Gateway
-  class HomeEnergyAdviceGateway
+  class DomesticEpcSearchGateway
     def fetch_by_address(postcode:, building_identifier:)
       identifier = clean_building_identifier building_identifier
       if identifier.match?(/^\d+$/)
@@ -103,7 +103,7 @@ module Gateway
     end
 
     def row_to_domain(row)
-      Domain::HomeEnergyAdviceItem.new(
+      Domain::DomesticEpcSearchResult.new(
         assessment_id: row["assessment_id"],
         address_line1: row["address_line1"],
         address_line2: row["address_line2"],

@@ -584,6 +584,31 @@ def bus_details_by_arbitrary_params(
   )
 end
 
+def find_domestic_epcs_by_arbitrary_params(
+  params:,
+  scopes: %w[domestic_epc:assessment:search],
+  **assertive_kwargs
+)
+  assertive_get(
+    "/api/assessments/domestic-epcs/search?#{URI.encode_www_form(params)}",
+    scopes: scopes,
+    **assertive_kwargs,
+  )
+end
+
+def find_domestic_epcs_by_address(
+  postcode:,
+  building_name_or_number:,
+  scopes: %w[domestic_epc:assessment:search],
+  **assertive_kwargs
+)
+  assertive_get(
+    "/api/assessments/domestic-epcs/search?postcode=#{postcode}&buildingNameOrNumber=#{building_name_or_number}",
+    scopes: scopes,
+    **assertive_kwargs,
+  )
+end
+
 def schemes_list(
   scopes: %w[scheme:list],
   **assertive_kwargs

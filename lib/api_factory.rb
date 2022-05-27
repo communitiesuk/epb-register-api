@@ -57,6 +57,10 @@ class ApiFactory
     @boiler_upgrade_scheme_gateway ||= Gateway::BoilerUpgradeSchemeGateway.new
   end
 
+  def self.domestic_epc_search_gateway
+    @domestic_epc_search_gateway ||= Gateway::DomesticEpcSearchGateway.new
+  end
+
   def self.assessments_export_use_case
     @assessments_export_use_case ||=
       UseCase::ExportAssessmentAttributes.new(
@@ -201,6 +205,11 @@ class ApiFactory
   def self.find_assessments_for_bus_by_uprn_use_case
     @find_assessments_for_bus_by_uprn_use_case ||=
       UseCase::FindAssessmentsForBusByUprn.new(bus_gateway: boiler_upgrade_scheme_gateway)
+  end
+
+  def self.find_domestic_epcs_by_address
+    @find_domestic_epcs_by_address ||=
+      UseCase::FindDomesticEpcByAddress.new(gateway: domestic_epc_search_gateway)
   end
 
   def self.storage_configuration_reader(bucket_name:, instance_name:)

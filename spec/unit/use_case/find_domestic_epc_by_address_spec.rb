@@ -1,7 +1,7 @@
-describe UseCase::FindAssessmentsForHeraByAddress do
-  subject(:use_case) { described_class.new(hera_gateway: gateway) }
+describe UseCase::FindDomesticEpcByAddress do
+  subject(:use_case) { described_class.new(gateway: gateway) }
 
-  let(:gateway) { instance_double(Gateway::HomeEnergyAdviceGateway) }
+  let(:gateway) { instance_double(Gateway::DomesticEpcSearchGateway) }
 
   it "can load the class and pass the gateway" do
     expect { use_case }.not_to raise_error
@@ -14,8 +14,8 @@ describe UseCase::FindAssessmentsForHeraByAddress do
 
     let(:results) do
       [
-        Domain::HomeEnergyAdviceItem.new(assessment_id: "0000-0000-0000-0000-9999",
-                                         address_line1: "1 Your Street", address_line2: "", address_line3: "", address_line4: "", postcode: "AB1 2CD", town: "London"),
+        Domain::DomesticEpcSearchResult.new(assessment_id: "0000-0000-0000-0000-9999",
+                                            address_line1: "1 Your Street", address_line2: "", address_line3: "", address_line4: "", postcode: "AB1 2CD", town: "London"),
       ]
     end
 
@@ -37,8 +37,8 @@ describe UseCase::FindAssessmentsForHeraByAddress do
 
     context "when fetching address where more than one relevant assessment exists" do
       let(:extra_address)  do
-        Domain::HomeEnergyAdviceItem.new(assessment_id: "0000-0000-0000-0000-1234",
-                                         address_line1: "1 My Street", address_line2: "", address_line3: "", address_line4: "", postcode: "AB1 2CD", town: "London")
+        Domain::DomesticEpcSearchResult.new(assessment_id: "0000-0000-0000-0000-1234",
+                                            address_line1: "1 My Street", address_line2: "", address_line3: "", address_line4: "", postcode: "AB1 2CD", town: "London")
       end
 
       let(:multiple_results) do
