@@ -147,6 +147,94 @@ describe Gateway::HomeEnergyAdviceGateway do
     end
   end
 
+  context "when performing a search by address where a target address has a lettered number street line like 2A" do
+    before do
+      xml = rdsap_xml.dup
+
+      xml.at_css("Report-Header RRN").content = "3333-4444-5555-6666-7777"
+      xml.at("UPRN").content = "UPRN-000000000001"
+      xml.at_css("Property Address Address-Line-1").content = "Flat 12A Street Lane"
+
+      add_super_assessor(scheme_id: scheme_id)
+
+      lodge_assessment(
+        assessment_body: xml.to_s,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        override: true,
+        )
+    end
+
+
+
+    let(:expected_result) do
+      {
+        epc_rrn: "3333-4444-5555-6666-7777",
+        address: {
+          addressLine1: "Flat 12A Street Lane", addressLine2: "", addressLine3: "", addressLine4: "", postcode: "A0 0AA", town: "Whitbury"
+        },
+      }
+    end
+
+    context "when searching using correct original casing" do
+      it "returns the expected BUS details" do
+        result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "12A")
+
+        expect(result.first).to be_a(Domain::HomeEnergyAdviceItem)
+        expect(result.first.to_hash).to eq expected_result
+      end
+    end
+
+    context "when searching using incorrect original casing" do
+      it "returns the expected BUS details regardless of casing" do
+        result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "12a")
+        expect(result.first.to_hash).to eq expected_result
+      end
+    end
+
+    context "when searching using just the correct number" do
+      it "finds and returns the expected results" do
+        result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "12")
+
+        expect(result.first).to be_a(Domain::HomeEnergyAdviceItem)
+        expect(result.length).to eq 1
+      end
+    end
+
+    context "when searching using part of the number" do
+      it "does not match an address with the full number" do
+        result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "2")
+
+        expect(result).to be_nil
+      end
+    end
+
+    context "when searching using a number which is a numeric superset of an address's street line number" do
+      it "does not match BUS details for an address with the full number" do
+        result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "212")
+
+        expect(result).to be_nil
+      end
+    end
+
+    context "when searching using a number which is a numeric superset of an address's street line number in the middle of an address line" do
+      it "does not match for an address with the full number" do
+        result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "1")
+        expect(result).to be_nil
+      end
+    end
+
+    context "when searching using a building name that is part of a street line" do
+      it "finds and returns the expected result" do
+        result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "12A STREET")
+        expect(result.first).to be_a(Domain::HomeEnergyAdviceItem)
+        expect(result.first.to_hash).to eq expected_result
+      end
+    end
+  end
+
   context "when an address has an empty address line 1" do
     before do
       lodge_assessment(

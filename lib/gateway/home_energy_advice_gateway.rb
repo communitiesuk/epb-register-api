@@ -96,7 +96,9 @@ module Gateway
 
     def do_search(sql:, binds:)
       results = ActiveRecord::Base.connection.exec_query(sql, "SQL", binds)
-      results.map { |result| row_to_domain(result) }
+      details_list = results.map { |result| row_to_domain(result) }
+      return nil if details_list.count == 0
+      details_list
     end
 
     def row_to_domain(row)

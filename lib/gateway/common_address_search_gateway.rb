@@ -1,6 +1,5 @@
 module Gateway
   module CommonAddressSearchGateway
-
     def search_by_postcode_and_building_number(postcode:, building_number:, assessment_types:)
       sql = <<-SQL
         SELECT
