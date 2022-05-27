@@ -38,4 +38,5 @@ class RegisterApiService < Controller::BaseController
   use Controller::AssessmentMetaController
   use Controller::StatisticsController
   use Controller::UserSatisfactionController
+  use Controller::DomesticEpcSearchController
 end

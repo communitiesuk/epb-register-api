@@ -1,4 +1,4 @@
-describe Gateway::HomeEnergyAdviceGateway do
+describe Gateway::DomesticEpcSearchGateway do
   include RSpecRegisterApiServiceMixin
   subject(:gateway) { described_class.new }
 
@@ -39,7 +39,7 @@ describe Gateway::HomeEnergyAdviceGateway do
     it "finds one record using the postcode and building number", aggregate_failures: true do
       result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "1")
       expect(result.length).to eq(1)
-      expect(result.first).to be_a(Domain::HomeEnergyAdviceItem)
+      expect(result.first).to be_a(Domain::DomesticEpcSearchResult)
       expect(result.first.to_hash).to eq(expected_result)
     end
 
@@ -180,7 +180,7 @@ describe Gateway::HomeEnergyAdviceGateway do
       it "returns the expected BUS details" do
         result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "12A")
 
-        expect(result.first).to be_a(Domain::HomeEnergyAdviceItem)
+        expect(result.first).to be_a(Domain::DomesticEpcSearchResult)
         expect(result.first.to_hash).to eq expected_result
       end
     end
@@ -196,7 +196,7 @@ describe Gateway::HomeEnergyAdviceGateway do
       it "finds and returns the expected results" do
         result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "12")
 
-        expect(result.first).to be_a(Domain::HomeEnergyAdviceItem)
+        expect(result.first).to be_a(Domain::DomesticEpcSearchResult)
         expect(result.length).to eq 1
       end
     end
@@ -227,7 +227,7 @@ describe Gateway::HomeEnergyAdviceGateway do
     context "when searching using a building name that is part of a street line" do
       it "finds and returns the expected result" do
         result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "12A STREET")
-        expect(result.first).to be_a(Domain::HomeEnergyAdviceItem)
+        expect(result.first).to be_a(Domain::DomesticEpcSearchResult)
         expect(result.first.to_hash).to eq expected_result
       end
     end

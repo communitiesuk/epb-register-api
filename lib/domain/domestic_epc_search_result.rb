@@ -1,5 +1,5 @@
 module Domain
-  class HomeEnergyAdviceItem
+  class DomesticEpcSearchResult
     def initialize(
       assessment_id:,
       address_line1:,
