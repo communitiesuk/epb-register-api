@@ -102,6 +102,10 @@ describe Gateway::DomesticEpcSearchGateway do
       rdsap_xml.at("UPRN").content = "UPRN-000111222333"
       do_lodgement.call
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 923c8672 (EPBR-2227 Added SAP to gateway tests)
       sap_xml.at("RRN").content = "8989-0000-0000-0000-9999"
       sap_xml.xpath("//*[local-name() = 'Address-Line-1']").each { |node| node.content = "1 Domestic Street" }
       sap_xml.at("UPRN").content = "UPRN-000111222335"
@@ -113,7 +117,11 @@ describe Gateway::DomesticEpcSearchGateway do
         },
         override: true,
         schema_name: "SAP-Schema-18.0.0",
+<<<<<<< HEAD
       )
+=======
+        )
+>>>>>>> 923c8672 (EPBR-2227 Added SAP to gateway tests)
 
       cepc_xml.at("//CEPC:RRN").content = "1000-0000-0000-0000-9999"
       cepc_xml.xpath("//*[local-name() = 'Address-Line-1']").each { |node| node.content = "1 Commercial Street" }
@@ -147,7 +155,12 @@ describe Gateway::DomesticEpcSearchGateway do
          address: {
            addressLine1: "1 Domestic Street", addressLine2: "Some Area", addressLine3: "Some County", addressLine4: nil, postcode: "A0 0AA", town: "Whitbury"
          },
+<<<<<<< HEAD
        }]
+=======
+       },
+      ]
+>>>>>>> 923c8672 (EPBR-2227 Added SAP to gateway tests)
     end
 
     it "finds the 3 domestic EPCs for that address" do
