@@ -143,7 +143,7 @@ describe Gateway::HomeEnergyAdviceGateway do
 
     it "does not find a CEPC for that address" do
       result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "1 Commercial Street")
-      expect(result).to eq([])
+      expect(result).to be_nil
     end
   end
 
@@ -164,10 +164,8 @@ describe Gateway::HomeEnergyAdviceGateway do
           scheme_ids: [scheme_id],
         },
         override: true,
-        )
+      )
     end
-
-
 
     let(:expected_result) do
       {
