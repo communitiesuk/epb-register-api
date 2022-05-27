@@ -8,6 +8,7 @@ describe Gateway::DomesticEpcSearchGateway do
   end
 
   let(:rdsap_xml) { Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0") }
+  let(:sap_xml) { Nokogiri.XML Samples.xml "SAP-Schema-18.0.0" }
   let(:cepc_xml) { Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc") }
 
   before do
@@ -83,7 +84,7 @@ describe Gateway::DomesticEpcSearchGateway do
     end
   end
 
-  context "when there is more than one result for the same search" do
+  context "when there is more than one assessment for the same address" do
     before do
       do_lodgement = lambda {
         lodge_assessment(
@@ -100,6 +101,20 @@ describe Gateway::DomesticEpcSearchGateway do
       rdsap_xml.xpath("//*[local-name() = 'Address-Line-1']").each { |node| node.content = "1 Another Street" }
       rdsap_xml.at("UPRN").content = "UPRN-000111222333"
       do_lodgement.call
+
+
+      sap_xml.at("RRN").content = "8989-0000-0000-0000-9999"
+      sap_xml.xpath("//*[local-name() = 'Address-Line-1']").each { |node| node.content = "1 Domestic Street" }
+      sap_xml.at("UPRN").content = "UPRN-000111222335"
+      lodge_assessment(
+        assessment_body: sap_xml.to_xml,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        override: true,
+        schema_name: "SAP-Schema-18.0.0",
+        )
 
       cepc_xml.at("//CEPC:RRN").content = "1000-0000-0000-0000-9999"
       cepc_xml.xpath("//*[local-name() = 'Address-Line-1']").each { |node| node.content = "1 Commercial Street" }
@@ -127,10 +142,17 @@ describe Gateway::DomesticEpcSearchGateway do
          address: {
            addressLine1: "1 Another Street", addressLine2: "", addressLine3: "", addressLine4: "", postcode: "A0 0AA", town: "Whitbury"
          },
-       }]
+       },
+       {
+         epc_rrn: "8989-0000-0000-0000-9999",
+         address: {
+           addressLine1: "1 Domestic Street", addressLine2: "Some Area", addressLine3: "Some County", addressLine4: nil, postcode: "A0 0AA", town: "Whitbury"
+         },
+       },
+      ]
     end
 
-    it "finds the 2 domestic EPCs for that address" do
+    it "finds the 3 domestic EPCs for that address" do
       result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "1")
       expect(result.sort_by(&:rrn).map(&:to_hash)).to eq(expected_result)
     end
