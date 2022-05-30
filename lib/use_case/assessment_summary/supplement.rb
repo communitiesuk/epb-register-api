@@ -50,13 +50,14 @@ module UseCase
           Gateway::RelatedAssessmentsGateway.new.by_address_id hash[:address_id]
 
         filtered_by_types = filter_by_types(hash, related_assessments)
-        other_assessments_without_self =
+        superseded_by!(hash, filtered_by_types)
+
+        other_assessments_without_self_or_opted_out =
           filtered_by_types.filter do |assessment|
             related = assessment.to_hash
-            related[:assessment_id] != hash[:assessment_id]
+            related[:assessment_id] != hash[:assessment_id] && related[:opt_out] == false
           end
-        superseded_by!(hash, filtered_by_types)
-        hash[:related_assessments] = other_assessments_without_self
+        hash[:related_assessments] = other_assessments_without_self_or_opted_out
       end
 
     private

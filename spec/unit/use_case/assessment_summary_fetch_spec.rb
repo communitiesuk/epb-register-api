@@ -112,7 +112,8 @@ describe "UseCase::AssessmentSummary::Fetch", set_with_timecop: true do
       expect(expected_result.first.to_hash).to eq({ assessment_expiry_date: "2031-06-20",
                                                     assessment_id: "0000-0000-0000-0000-0003",
                                                     assessment_status: "ENTERED",
-                                                    assessment_type: "RdSAP" })
+                                                    assessment_type: "RdSAP",
+                                                    opt_out: false })
     end
 
     it "has a superseded rrn that matches the 1st related assessment" do
@@ -223,6 +224,52 @@ describe "UseCase::AssessmentSummary::Fetch", set_with_timecop: true do
 
     it "has has the RRN of the RdSap as the superseded value" do
       expect(use_case.execute("0000-0000-0000-0000-0000")[:superseded_by]).to eq("9876-0000-0000-0000-1234")
+    end
+  end
+
+  context "when an EPC is superseded by an opted out certificate" do
+    subject(:use_case) { UseCase::AssessmentSummary::Fetch.new }
+
+    before do
+      add_super_assessor(scheme_id: scheme_id)
+      domestic_rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
+      domestic_rdsap_xml = set_xml_date(domestic_rdsap_xml, Time.now.prev_day(2).strftime("%Y-%m-%d"))
+      lodge_assessment(
+        assessment_body: domestic_rdsap_xml.to_xml,
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        schema_name: "RdSAP-Schema-20.0.0",
+      )
+      related_epc_one = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
+      related_epc_one.at("RRN").content = "0000-0000-0000-0000-0001"
+      related_epc_one = set_xml_date(related_epc_one, Time.now.prev_day(4).strftime("%Y-%m-%d"))
+      lodge_assessment(
+        assessment_body: related_epc_one.to_xml,
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        schema_name: "RdSAP-Schema-20.0.0",
+      )
+
+      related_epc_two = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
+      related_epc_two.at("RRN").content = "0000-0000-0000-0000-0002"
+      related_epc_two = set_xml_date(related_epc_two, Time.now.prev_day(5).strftime("%Y-%m-%d"))
+      lodge_assessment(
+        assessment_body: related_epc_two.to_xml,
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        schema_name: "RdSAP-Schema-20.0.0",
+      )
+
+      opt_out_assessment(assessment_id: "0000-0000-0000-0000-0000")
+      opt_out_assessment(assessment_id: "0000-0000-0000-0000-0001")
+    end
+
+    it "has has the RRN of the opted-out EPC as the superseded value" do
+      expect(use_case.execute("0000-0000-0000-0000-0001")[:superseded_by]).to eq("0000-0000-0000-0000-0000")
+      expect(use_case.execute("0000-0000-0000-0000-0002")[:superseded_by]).to eq("0000-0000-0000-0000-0000")
     end
   end
 

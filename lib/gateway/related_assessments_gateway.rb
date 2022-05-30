@@ -42,7 +42,6 @@ module Gateway
                opt_out
         FROM assessments
         WHERE assessment_id IN(#{assessment_ids.join(', ')}) AND
-              opt_out = false AND
               not_for_issue_at IS NULL AND
               cancelled_at IS NULL
         ORDER BY date_of_expiry DESC, created_at DESC, assessment_id DESC
@@ -58,6 +57,7 @@ module Gateway
             assessment_status: result["assessment_status"],
             assessment_type: result["assessment_type"],
             assessment_expiry_date: result["date_of_expiry"],
+            opt_out: result["opt_out"],
           )
         end
       output.compact
