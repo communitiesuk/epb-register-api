@@ -24,7 +24,7 @@ describe Gateway::HomeEnergyRetrofitAdviceGateway do
           scheme_ids: [scheme_id],
         },
         override: true,
-        )
+      )
 
       lodge_assessment(
         assessment_body: rdsap_ni_xml.to_xml,
@@ -34,7 +34,7 @@ describe Gateway::HomeEnergyRetrofitAdviceGateway do
         },
         schema_name: "RdSAP-Schema-NI-20.0.0",
         override: true,
-        )
+      )
 
       lodge_assessment(
         assessment_body: cepc_xml.to_xml,
@@ -44,7 +44,7 @@ describe Gateway::HomeEnergyRetrofitAdviceGateway do
         },
         schema_name: "CEPC-8.0.0",
         override: true,
-        )
+      )
     end
 
     context "when fetching by RRN" do
@@ -78,7 +78,7 @@ describe Gateway::HomeEnergyRetrofitAdviceGateway do
             auth_data: {
               scheme_ids: [scheme_id],
             },
-            )
+          )
         end
 
         it "returns nil" do
@@ -97,7 +97,7 @@ describe Gateway::HomeEnergyRetrofitAdviceGateway do
             auth_data: {
               scheme_ids: [scheme_id],
             },
-            )
+          )
         end
 
         it "returns nil" do

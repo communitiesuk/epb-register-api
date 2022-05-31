@@ -10,8 +10,8 @@ describe "fetching HERA (Home Energy Retrofit Advice) details from the API", set
       body: fetch_assessor_stub.fetch_request_body(
         domestic_rd_sap: "ACTIVE",
         domestic_sap: "ACTIVE",
-        ),
-      )
+      ),
+    )
 
     scheme_id
   end
@@ -30,7 +30,7 @@ describe "fetching HERA (Home Energy Retrofit Advice) details from the API", set
             addressLine3: "",
             addressLine4: "",
             town: "Whitbury",
-            postcode: "A0 0AA"
+            postcode: "A0 0AA",
           },
           "lodgementDate": "2020-02-29",
           "isLatestAssessmentForAddress": true,
@@ -39,24 +39,24 @@ describe "fetching HERA (Home Energy Retrofit Advice) details from the API", set
           "propertyAgeBand": "D",
           "wallsDescription": [
             "Solid brick, as built, no insulation",
-            "Cavity wall, as built, insulated (assumed)"
+            "Cavity wall, as built, insulated (assumed)",
           ],
           "floorDescription": [
             "Suspended, no insulation (assumed)",
-            "Solid, no insulation (assumed)"
+            "Solid, no insulation (assumed)",
           ],
           "roofDescription": [
             "Pitched, 250 mm loft insulation",
-            "Pitched, limited insulation (assumed)"
+            "Pitched, limited insulation (assumed)",
           ],
           "windowsDescription": [
-            "Fully double glazed"
+            "Fully double glazed",
           ],
           "mainHeatingDescription": "Boiler and radiators, mains gas",
           "mainFuelType": "Natural Gas",
-          "hasHotWaterCylinder": true
-        }
-      }
+          "hasHotWaterCylinder": true,
+        },
+      },
     }
   end
 
@@ -80,24 +80,24 @@ describe "fetching HERA (Home Energy Retrofit Advice) details from the API", set
           "propertyAgeBand": "D",
           "wallsDescription": [
             "Solid brick, as built, no insulation",
-            "Cavity wall, as built, insulated (assumed)"
+            "Cavity wall, as built, insulated (assumed)",
           ],
           "floorDescription": [
             "Suspended, no insulation (assumed)",
-            "Solid, no insulation (assumed)"
+            "Solid, no insulation (assumed)",
           ],
           "roofDescription": [
             "Pitched, 250 mm loft insulation",
-            "Pitched, limited insulation (assumed)"
+            "Pitched, limited insulation (assumed)",
           ],
           "windowsDescription": [
-            "Fully double glazed"
+            "Fully double glazed",
           ],
           "mainHeatingDescription": "Boiler and radiators, mains gas",
           "mainFuelType": "Natural Gas",
-          "hasHotWaterCylinder": true
-        }
-      }
+          "hasHotWaterCylinder": true,
+        },
+      },
     }
   end
 
@@ -111,14 +111,14 @@ describe "fetching HERA (Home Energy Retrofit Advice) details from the API", set
             scheme_ids: [scheme_id],
           },
           schema_name: "RdSAP-Schema-20.0.0",
-          )
+        )
       end
 
       xit "returns the matching assessment HERA details in the expected format" do
         response = JSON.parse(
           hera_details_by_rrn("0000-0000-0000-0000-0000").body,
           symbolize_names: true,
-          )
+        )
 
         expect(response[:data]).to eq expected_rdsap_details
       end
