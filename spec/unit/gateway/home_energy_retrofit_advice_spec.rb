@@ -11,6 +11,12 @@ describe Gateway::HomeEnergyRetrofitAdviceGateway do
     before do
       add_super_assessor(scheme_id: scheme_id)
 
+      rdsap_ni_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-NI-20.0.0")
+      rdsap_ni_xml.at("RRN").content = "0000-0000-0000-0000-0001"
+
+      cepc_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc")
+      cepc_xml.at("//CEPC:RRN").content = "0000-0000-0000-0000-0002"
+
       lodge_assessment(
         assessment_body: rdsap_xml.to_xml,
         accepted_responses: [201],
@@ -19,131 +25,46 @@ describe Gateway::HomeEnergyRetrofitAdviceGateway do
         },
         override: true,
         )
+
+      lodge_assessment(
+        assessment_body: rdsap_ni_xml.to_xml,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        schema_name: "RdSAP-Schema-NI-20.0.0",
+        override: true,
+        )
+
+      lodge_assessment(
+        assessment_body: cepc_xml.to_xml,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        schema_name: "CEPC-8.0.0",
+        override: true,
+        )
     end
 
-    expected_hera_details_hash = {
-      type_of_assessment: "SAP",
-      assessment_id: "0000-0000-0000-0000-0000",
-      date_of_registration: "2020-05-04",
-      address: {
-        address_line1: "1 Some Street",
-        address_line2: "Some Area",
-        address_line3: "Some County",
-        address_line4: nil,
-        town: "Whitbury",
-        postcode: "A0 0AA",
-      },
-      dwelling_type: "Mid-terrace house",
-      built_form: "1",
-      main_dwelling_construction_age_band_or_year: "1750",
-      property_summary: [
-        {
-          energy_efficiency_rating: 0,
-          environmental_efficiency_rating: 0,
-          name: "walls",
-          description: "Brick walls",
-        },
-        {
-          energy_efficiency_rating: 0,
-          environmental_efficiency_rating: 0,
-          name: "walls",
-          description: "Brick walls",
-        },
-        {
-          energy_efficiency_rating: 0,
-          environmental_efficiency_rating: 0,
-          name: "roof",
-          description: "Slate roof",
-        },
-        {
-          energy_efficiency_rating: 0,
-          environmental_efficiency_rating: 0,
-          name: "roof",
-          description: "slate roof",
-        },
-        {
-          energy_efficiency_rating: 0,
-          environmental_efficiency_rating: 0,
-          name: "floor",
-          description: "Tiled floor",
-        },
-        {
-          energy_efficiency_rating: 0,
-          environmental_efficiency_rating: 0,
-          name: "floor",
-          description: "Tiled floor",
-        },
-        {
-          energy_efficiency_rating: 0,
-          environmental_efficiency_rating: 0,
-          name: "windows",
-          description: "Glass window",
-        },
-        {
-          energy_efficiency_rating: 0,
-          environmental_efficiency_rating: 0,
-          name: "main_heating",
-          description: "Gas boiler",
-        },
-        {
-          energy_efficiency_rating: 0,
-          environmental_efficiency_rating: 0,
-          name: "main_heating",
-          description: "Gas boiler",
-        },
-        {
-          energy_efficiency_rating: 0,
-          environmental_efficiency_rating: 0,
-          name: "main_heating_controls",
-          description: "Thermostat",
-        },
-        {
-          energy_efficiency_rating: 0,
-          environmental_efficiency_rating: 0,
-          name: "main_heating_controls",
-          description: "Thermostat",
-        },
-        {
-          energy_efficiency_rating: 0,
-          environmental_efficiency_rating: 0,
-          name: "secondary_heating",
-          description: "Electric heater",
-        },
-        {
-          energy_efficiency_rating: 0,
-          environmental_efficiency_rating: 0,
-          name: "hot_water",
-          description: "Gas boiler",
-        },
-        {
-          energy_efficiency_rating: 0,
-          environmental_efficiency_rating: 0,
-          name: "lighting",
-          description: "Energy saving bulbs",
-        },
-        {
-          energy_efficiency_rating: 0,
-          environmental_efficiency_rating: 0,
-          name: "air_tightness",
-          description: "Draft Exclusion",
-        },
-      ],
-      main_heating_category: "1",
-      main_fuel_type: "36",
-      has_hot_water_cylinder: "true",
-    }
-
-
     context "when fetching by RRN" do
-      xit "finds and returns the expected data when one match exists", aggregate_failures: true do
+      it "finds and returns the expected data when one match exists", aggregate_failures: true do
         result = gateway.fetch_by_rrn("0000-0000-0000-0000-0000")
 
-        expect(result).to be_a(Domain::AssessmentHeraDetails)
-        expect(result.to_hash).to eq expected_hera_details_hash
+        expect(result["schema_type"]).to eq "RdSAP-Schema-20.0.0"
+        expect(Hash.from_xml(result["xml"])).to eq Hash.from_xml(rdsap_xml.to_s)
       end
 
-      xit "returns nil when no match" do
-        expect(gateway.search_by_rrn("0000-1111-2222-3333-4444")).to be_nil
+      it "does not find and return the expected data when the rrn is for a NI cert", aggregate_failures: true do
+        expect(gateway.fetch_by_rrn("0000-0000-0000-0000-0001")).to be_nil
+      end
+
+      it "does not find and return the expected data when the rrn is for a CEPC cert", aggregate_failures: true do
+        expect(gateway.fetch_by_rrn("0000-0000-0000-0000-0002")).to be_nil
+      end
+
+      it "returns nil when no match" do
+        expect(gateway.fetch_by_rrn("0000-1111-2222-3333-4444")).to be_nil
       end
 
       context "with a RRN that has been previously cancelled" do
@@ -161,7 +82,26 @@ describe Gateway::HomeEnergyRetrofitAdviceGateway do
         end
 
         it "returns nil" do
-          expect(gateway.search_by_rrn("0000-0000-0000-0000-0000")).to be_nil
+          expect(gateway.fetch_by_rrn("0000-0000-0000-0000-0000")).to be_nil
+        end
+      end
+
+      context "with a RRN that has been previously marked as not for issue" do
+        before do
+          update_assessment_status(
+            assessment_id: "0000-0000-0000-0000-0000",
+            assessment_status_body: {
+              "status": "NOT_FOR_ISSUE",
+            },
+            accepted_responses: [200],
+            auth_data: {
+              scheme_ids: [scheme_id],
+            },
+            )
+        end
+
+        it "returns nil" do
+          expect(gateway.fetch_by_rrn("0000-0000-0000-0000-0000")).to be_nil
         end
       end
     end
