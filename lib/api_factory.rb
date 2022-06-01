@@ -57,6 +57,10 @@ class ApiFactory
     @boiler_upgrade_scheme_gateway ||= Gateway::BoilerUpgradeSchemeGateway.new
   end
 
+  def self.home_energy_retrofit_advice_gateway
+    @home_energy_retrofit_advice_gateway ||= Gateway::HomeEnergyRetrofitAdviceGateway.new
+  end
+
   def self.domestic_epc_search_gateway
     @domestic_epc_search_gateway ||= Gateway::DomesticEpcSearchGateway.new
   end
@@ -205,6 +209,22 @@ class ApiFactory
   def self.find_assessments_for_bus_by_uprn_use_case
     @find_assessments_for_bus_by_uprn_use_case ||=
       UseCase::FindAssessmentsForBusByUprn.new(bus_gateway: boiler_upgrade_scheme_gateway)
+  end
+
+  def self.fetch_assessment_for_hera_use_case
+    @fetch_assessment_for_hera_use_case ||=
+      UseCase::FetchAssessmentForHera.new(
+        hera_gateway: home_energy_retrofit_advice_gateway,
+        summary_use_case: assessment_summary_fetch_use_case,
+      )
+  end
+
+  def self.assessment_summary_fetch_use_case
+    @assessment_summary_fetch_use_case ||=
+      UseCase::AssessmentSummary::Fetch.new(
+        search_gateway: assessments_search_gateway,
+        xml_gateway: assessments_xml_gateway,
+      )
   end
 
   def self.find_domestic_epcs_by_address

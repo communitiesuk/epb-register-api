@@ -39,4 +39,5 @@ class RegisterApiService < Controller::BaseController
   use Controller::StatisticsController
   use Controller::UserSatisfactionController
   use Controller::DomesticEpcSearchController
+  use Controller::HomeEnergyRetrofitAdviceController
 end

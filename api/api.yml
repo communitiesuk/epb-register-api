@@ -1445,12 +1445,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-        '410':
-          description: Gone - Domestic EPC with ID assessmentId exists but has been cancelled/marked not for issue
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
         '500':
           description: Server error
         '503':

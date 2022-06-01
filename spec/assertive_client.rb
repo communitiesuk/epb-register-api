@@ -584,6 +584,18 @@ def bus_details_by_arbitrary_params(
   )
 end
 
+def hera_details_by_rrn(
+  rrn,
+  scopes: %w[retrofit-advice:assessment:search],
+  **assertive_kwargs
+)
+  assertive_get(
+    "/api/retrofit-advice/assessments/#{rrn}",
+    scopes: scopes,
+    **assertive_kwargs,
+  )
+end
+
 def find_domestic_epcs_by_arbitrary_params(
   params:,
   scopes: %w[domestic_epc:assessment:search],
