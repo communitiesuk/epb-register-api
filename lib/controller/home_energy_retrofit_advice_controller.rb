@@ -12,7 +12,7 @@ module Controller
     }.freeze
 
     get "/api/retrofit-advice/assessments/:assessmentId",
-        auth_token_has_all: %w[retrofit-advice:assessment:search] do
+        auth_token_has_all: %w[retrofit-advice:assessment:fetch] do
       params_body SCHEMA
 
       details = ApiFactory.fetch_assessment_for_hera_use_case.execute(rrn: params[:assessmentId])

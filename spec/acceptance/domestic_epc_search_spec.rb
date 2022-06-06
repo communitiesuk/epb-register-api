@@ -14,7 +14,7 @@ describe "fetching domestic epc search results from the API", set_with_timecop: 
     end
 
     let(:scope) do
-      %w[domestic_epc:assessment:search]
+      %w[assessment:domestic-epc:search]
     end
 
     context "when performing a search with the right query parameters" do

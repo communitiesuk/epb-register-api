@@ -586,7 +586,7 @@ end
 
 def hera_details_by_rrn(
   rrn,
-  scopes: %w[retrofit-advice:assessment:search],
+  scopes: %w[retrofit-advice:assessment:fetch],
   **assertive_kwargs
 )
   assertive_get(
@@ -598,7 +598,7 @@ end
 
 def find_domestic_epcs_by_arbitrary_params(
   params:,
-  scopes: %w[domestic_epc:assessment:search],
+  scopes: %w[assessment:domestic-epc:search],
   **assertive_kwargs
 )
   assertive_get(
@@ -611,7 +611,7 @@ end
 def find_domestic_epcs_by_address(
   postcode:,
   building_name_or_number:,
-  scopes: %w[domestic_epc:assessment:search],
+  scopes: %w[assessment:domestic-epc:search],
   **assertive_kwargs
 )
   assertive_get(

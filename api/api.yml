@@ -1406,7 +1406,7 @@ paths:
       operationId: get-assessment-retrofit-advice
       security:
         - oauth:
-            - 'retrofit-advice:assessment:search'
+            - 'retrofit-advice:assessment:fetch'
       parameters:
         - in: path
           name: assessmentId
@@ -2114,7 +2114,7 @@ components:
             'report:assessor:status': Get a report of changes to assessors status for a given date
             'greendeal:plans': Access all services necessary for the Green Deal register integration
             'bus:assessment:search': Carry out Boiler Upgrade Scheme search for latest EPC data
-            'retrofit-advice:assessment:search': Carry out Home Energy Retrofit Advice search for latest domestic EPC data
+            'retrofit-advice:assessment:fetch': Carry out Home Energy Retrofit Advice search for latest domestic EPC data
 
   schemas:
     # Addresses
