@@ -596,26 +596,13 @@ def hera_details_by_rrn(
   )
 end
 
-def find_domestic_epcs_by_arbitrary_params(
+def find_domestic_epcs_with_params(
   params:,
   scopes: %w[assessment:domestic-epc:search],
   **assertive_kwargs
 )
   assertive_get(
     "/api/assessments/domestic-epcs/search?#{URI.encode_www_form(params)}",
-    scopes: scopes,
-    **assertive_kwargs,
-  )
-end
-
-def find_domestic_epcs_by_address(
-  postcode:,
-  building_name_or_number:,
-  scopes: %w[assessment:domestic-epc:search],
-  **assertive_kwargs
-)
-  assertive_get(
-    "/api/assessments/domestic-epcs/search?postcode=#{postcode}&buildingNameOrNumber=#{building_name_or_number}",
     scopes: scopes,
     **assertive_kwargs,
   )

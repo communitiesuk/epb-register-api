@@ -100,8 +100,8 @@ module Gateway
           WHERE 0=0
       SQL
 
-      sql << Helper::AddressSearchHelper.where_postcode_and_number_clause
-
+      sql << Helper::AddressSearchHelper.where_postcode_clause
+      sql << Helper::AddressSearchHelper.where_number_clause
       sql = add_type_filter(sql, assessment_types)
 
       do_search(
@@ -119,8 +119,8 @@ module Gateway
           FROM assessments AS a
           WHERE 0=0
       SQL
-      sql << Helper::AddressSearchHelper.where_postcode_and_name_clause
-
+      sql << Helper::AddressSearchHelper.where_postcode_clause
+      sql << Helper::AddressSearchHelper.where_name_clause
       sql = add_type_filter(sql, assessment_types)
 
       do_search(

@@ -1,9 +1,15 @@
 describe Helper::AddressSearchHelper do
-  describe "#where_postcode_and_number_clause" do
-    it "returns a string of a sql expression for filtering by postcode and building number" do
-      expect(described_class.where_postcode_and_number_clause).to be_a(String)
-      expect(described_class.where_postcode_and_number_clause.to_s.strip).to start_with("AND
-        a.postcode ")
+  describe "#where_postcode_clause" do
+    it "returns a string of a sql expression for filtering by postcode" do
+      expect(described_class.where_postcode_clause).to be_a(String)
+      expect(described_class.where_postcode_clause.to_s.strip).to start_with("AND a.postcode ")
+    end
+  end
+
+  describe "#where_number_clause" do
+    it "returns a string of a sql expression for filtering by building number" do
+      expect(described_class.where_number_clause).to be_a(String)
+      expect(described_class.where_number_clause.to_s.strip).to start_with("AND\n        (\n          a.address_line1")
     end
   end
 
@@ -17,7 +23,7 @@ describe Helper::AddressSearchHelper do
 
   describe "#where_postcode_and_name_clause" do
     it "returns a string of a sql expression for filtering by postcode and building name" do
-      expect(described_class.where_postcode_and_name_clause.to_s.strip).to eq "AND a.postcode = $1 AND (a.address_line1 ILIKE $2 OR a.address_line2 ILIKE $2)"
+      expect(described_class.where_name_clause.to_s.strip).to eq "AND (a.address_line1 ILIKE $2 OR a.address_line2 ILIKE $2)"
     end
   end
 
