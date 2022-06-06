@@ -2,7 +2,9 @@ module Gateway
   class DomesticEpcSearchGateway
     def fetch_by_address(postcode:, building_identifier:)
       identifier = Helper::AddressSearchHelper.clean_building_identifier building_identifier
-      if identifier.match?(/^\d+$/)
+      if !identifier
+        fetch_by_postcode postcode: postcode
+      elsif identifier.match?(/^\d+$/)
         fetch_by_postcode_and_building_number postcode: postcode, building_number: identifier
       else
         fetch_by_postcode_and_building_name postcode: postcode, building_name: identifier
@@ -30,9 +32,27 @@ module Gateway
       SQL
     end
 
+    def fetch_by_postcode(postcode:)
+      sql = common_sql_expression
+      sql << Helper::AddressSearchHelper.where_postcode_clause
+      sql << <<-SQL
+           )
+            SELECT *
+            FROM assessment_cte
+            WHERE rn =1
+            ORDER BY address_line1
+      SQL
+
+      do_search(
+        sql: sql,
+        binds: Helper::AddressSearchHelper.bind_postcode(postcode),
+      )
+    end
+
     def fetch_by_postcode_and_building_number(postcode:, building_number:)
       sql = common_sql_expression
-      sql << Helper::AddressSearchHelper.where_postcode_and_number_clause
+      sql << Helper::AddressSearchHelper.where_postcode_clause
+      sql << Helper::AddressSearchHelper.where_number_clause
       sql << <<-SQL
            )
             SELECT *
@@ -49,7 +69,8 @@ module Gateway
 
     def fetch_by_postcode_and_building_name(postcode:, building_name:)
       sql = common_sql_expression
-      sql << Helper::AddressSearchHelper.where_postcode_and_name_clause
+      sql << Helper::AddressSearchHelper.where_postcode_clause
+      sql << Helper::AddressSearchHelper.where_name_clause
       sql << <<-SQL
           )
           SELECT *

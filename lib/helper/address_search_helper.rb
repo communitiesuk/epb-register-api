@@ -1,9 +1,14 @@
 module Helper
   class AddressSearchHelper
-    def self.where_postcode_and_number_clause
+    def self.where_postcode_clause
+      <<-SQL
+      AND a.postcode = $1
+      SQL
+    end
+
+    def self.where_number_clause
       <<-SQL
         AND
-        a.postcode = $1 AND
         (
           a.address_line1 ~ $2
           OR a.address_line2 ~ $2
@@ -21,10 +26,16 @@ module Helper
       building_identifier&.delete!("()|:*!\\") || building_identifier
     end
 
-    def self.where_postcode_and_name_clause
+    def self.where_name_clause
       <<-SQL
-      AND a.postcode = $1 AND (a.address_line1 ILIKE $2 OR a.address_line2 ILIKE $2)
+      AND (a.address_line1 ILIKE $2 OR a.address_line2 ILIKE $2)
       SQL
+    end
+
+    def self.bind_postcode(postcode)
+      [
+        string_attribute("postcode", Helper::ValidatePostcodeHelper.format_postcode(postcode)),
+      ]
     end
 
     def self.bind_postcode_and_number(postcode, building_number)

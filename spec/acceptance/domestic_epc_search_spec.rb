@@ -17,7 +17,7 @@ describe "fetching domestic epc search results from the API", set_with_timecop: 
       %w[assessment:domestic-epc:search]
     end
 
-    context "when performing a search with the right query parameters" do
+    context "when performing a search with a postcode and buildingNameNumber" do
       let(:scheme_id) { add_scheme_and_get_id }
       let(:expected_results) do
         { assessments: [{ address: { addressLine1: "1 Some Street",
@@ -41,10 +41,10 @@ describe "fetching domestic epc search results from the API", set_with_timecop: 
         )
       end
 
-      it "returns the assessment by search using a postcode and building number" do
-        response = JSON.parse(find_domestic_epcs_by_address(
-          postcode: "A0 0AA",
-          building_name_or_number: "1",
+      it "returns the assessment by search using a postcode and exact building number" do
+        response = JSON.parse(find_domestic_epcs_with_params(
+          params: { postcode: "A0 0AA",
+                    buildingNameOrNumber: "1" },
           accepted_responses: [200],
         ).body,
                               symbolize_names: true)
@@ -53,9 +53,44 @@ describe "fetching domestic epc search results from the API", set_with_timecop: 
       end
 
       it "returns the assessment by search using a postcode and building name" do
-        response = JSON.parse(find_domestic_epcs_by_address(
-          postcode: "A0 0AA",
-          building_name_or_number: "1 Some ",
+        response = JSON.parse(find_domestic_epcs_with_params(
+          params: { postcode: "A0 0AA",
+                    buildingNameOrNumber: "1 Some"  },
+          accepted_responses: [200],
+        ).body,
+                              symbolize_names: true)
+
+        expect(response[:data]).to eq expected_results
+      end
+    end
+
+    context "when performing a search with a postcode only" do
+      let(:scheme_id) { add_scheme_and_get_id }
+      let(:expected_results) do
+        { assessments: [{ address: { addressLine1: "1 Some Street",
+                                     addressLine2: "",
+                                     addressLine3: "",
+                                     addressLine4: "",
+                                     postcode: "A0 0AA",
+                                     town: "Whitbury" },
+                          epcRrn: "0000-0000-0000-0000-0000" }] }
+      end
+
+      before do
+        add_super_assessor(scheme_id: scheme_id)
+        lodge_assessment(
+          assessment_body: rdsap_xml.to_xml,
+          accepted_responses: [201],
+          auth_data: {
+            scheme_ids: [scheme_id],
+          },
+          override: true,
+        )
+      end
+
+      it "returns the assessment by search using a postcode only" do
+        response = JSON.parse(find_domestic_epcs_with_params(
+          params: { postcode: "A0 0AA" },
           accepted_responses: [200],
         ).body,
                               symbolize_names: true)
@@ -67,7 +102,7 @@ describe "fetching domestic epc search results from the API", set_with_timecop: 
     context "when performing a search with no query parameters" do
       it "receives an appropriate error with a 400" do
         response = JSON.parse(
-          find_domestic_epcs_by_arbitrary_params(
+          find_domestic_epcs_with_params(
             params: {},
             accepted_responses: [400],
           ).body,
@@ -80,9 +115,9 @@ describe "fetching domestic epc search results from the API", set_with_timecop: 
 
     context "when passing the incorrect scopes" do
       it "returns a 403 UNAUTHORISED response" do
-        response = JSON.parse(find_domestic_epcs_by_address(
-          postcode: "A0 0AA",
-          building_name_or_number: "1",
+        response = JSON.parse(find_domestic_epcs_with_params(
+          params: { postcode: "A0 0AA",
+                    buildingNameOrNumber: "1 Some"  },
           accepted_responses: [403],
           scopes: %w[wrong:scope],
         ).body,
@@ -99,7 +134,7 @@ describe "fetching domestic epc search results from the API", set_with_timecop: 
 
       it "receives a 501 with an appropriate error" do
         response = JSON.parse(
-          find_domestic_epcs_by_arbitrary_params(
+          find_domestic_epcs_with_params(
             params: {},
             accepted_responses: [501],
           ).body,

@@ -4,7 +4,7 @@ module Controller
       oneOf: [
         {
           type: "object",
-          required: %w[postcode buildingNameOrNumber],
+          required: %w[postcode],
           properties: {
             postcode: {
               type: "string",
