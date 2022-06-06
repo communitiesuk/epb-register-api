@@ -1,7 +1,7 @@
 module Gateway
   class DomesticEpcSearchGateway
     def fetch_by_address(postcode:, building_identifier:)
-      identifier = clean_building_identifier building_identifier
+      identifier = Helper::AddressSearchHelper.clean_building_identifier building_identifier
       if identifier.match?(/^\d+$/)
         fetch_by_postcode_and_building_number postcode: postcode, building_number: identifier
       else
@@ -32,19 +32,9 @@ module Gateway
 
     def fetch_by_postcode_and_building_number(postcode:, building_number:)
       sql = common_sql_expression
+      sql << Helper::AddressSearchHelper.where_postcode_and_number_clause
       sql << <<-SQL
-            AND
-                  a.postcode = $1 AND
-            (
-              a.address_line1 ~ $2
-              OR a.address_line2 ~ $2
-              OR a.address_line1 ~ $3
-              OR a.address_line2 ~ $3
-              OR a.address_line1 ~ $4
-              OR a.address_line2 ~ $4
-              OR a.address_line1 = $5
-              OR a.address_line2 = $5
-            ))
+           )
             SELECT *
             FROM assessment_cte
             WHERE rn =1
@@ -53,20 +43,15 @@ module Gateway
 
       do_search(
         sql: sql,
-        binds: [
-          string_attribute("postcode", Helper::ValidatePostcodeHelper.format_postcode(postcode)),
-          string_attribute("number_in_middle", sprintf('\D+%s\D+', building_number)),
-          string_attribute("number_at_start", sprintf('^%s\D+', building_number)),
-          string_attribute("number_at_end", sprintf('\D+%s$', building_number)),
-          string_attribute("number_exact", building_number),
-        ],
+        binds: Helper::AddressSearchHelper.bind_postcode_and_number(postcode, building_number),
       )
     end
 
     def fetch_by_postcode_and_building_name(postcode:, building_name:)
       sql = common_sql_expression
+      sql << Helper::AddressSearchHelper.where_postcode_and_name_clause
       sql << <<-SQL
-          AND a.postcode = $1 AND (a.address_line1 ILIKE $2 OR a.address_line2 ILIKE $2))
+          )
           SELECT *
             FROM assessment_cte
             WHERE rn =1
@@ -75,22 +60,7 @@ module Gateway
 
       do_search(
         sql: sql,
-        binds: [
-          string_attribute("postcode", Helper::ValidatePostcodeHelper.format_postcode(postcode)),
-          string_attribute("building_name", "%#{building_name}%"),
-        ],
-      )
-    end
-
-    def clean_building_identifier(building_identifier)
-      building_identifier&.delete!("()|:*!\\") || building_identifier
-    end
-
-    def string_attribute(name, value)
-      ActiveRecord::Relation::QueryAttribute.new(
-        name,
-        value,
-        ActiveRecord::Type::String.new,
+        binds: Helper::AddressSearchHelper.bind_postcode_and_name(postcode, building_name),
       )
     end
 

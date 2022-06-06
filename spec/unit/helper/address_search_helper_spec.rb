@@ -17,7 +17,7 @@ describe Helper::AddressSearchHelper do
 
   describe "#where_postcode_and_name_clause" do
     it "returns a string of a sql expression for filtering by postcode and building name" do
-      expect(described_class.where_postcode_and_name_clause.to_s.strip).to eq "a.address_line1 ILIKE $2 OR a.address_line2 ILIKE $2"
+      expect(described_class.where_postcode_and_name_clause.to_s.strip).to eq "AND a.postcode = $1 AND (a.address_line1 ILIKE $2 OR a.address_line2 ILIKE $2)"
     end
   end
 

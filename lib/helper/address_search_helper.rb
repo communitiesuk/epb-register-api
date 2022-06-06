@@ -23,7 +23,7 @@ module Helper
 
     def self.where_postcode_and_name_clause
       <<-SQL
-        a.address_line1 ILIKE $2 OR a.address_line2 ILIKE $2
+      AND a.postcode = $1 AND (a.address_line1 ILIKE $2 OR a.address_line2 ILIKE $2)
       SQL
     end
 

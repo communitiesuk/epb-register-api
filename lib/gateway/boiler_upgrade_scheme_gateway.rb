@@ -12,7 +12,7 @@ module Gateway
     ].freeze
 
     def search_by_postcode_and_building_identifier(postcode:, building_identifier:)
-      identifier = clean_building_identifier building_identifier
+      identifier = Helper::AddressSearchHelper.clean_building_identifier building_identifier
       if identifier.match?(/^\d+$/)
         search_by_postcode_and_building_number postcode: postcode, building_number: identifier, assessment_types: ASSESSMENT_TYPES
       else
@@ -37,7 +37,7 @@ module Gateway
       do_search(
         sql: sql,
         binds: [
-          string_attribute("uprn", uprn),
+          Helper::AddressSearchHelper.string_attribute("uprn", uprn),
         ],
       )
     end
@@ -55,7 +55,7 @@ module Gateway
       do_search(
         sql: sql,
         binds: [
-          string_attribute("rrn", rrn),
+          Helper::AddressSearchHelper.string_attribute("rrn", rrn),
         ],
       )
     end
@@ -97,30 +97,16 @@ module Gateway
             a.type_of_assessment AS report_type,
             a.date_of_expiry AS expiry_date
           FROM assessments AS a
-          WHERE a.postcode = $1 AND
-            (
-              a.address_line1 ~ $2
-              OR a.address_line2 ~ $2
-              OR a.address_line1 ~ $3
-              OR a.address_line2 ~ $3
-              OR a.address_line1 ~ $4
-              OR a.address_line2 ~ $4
-              OR a.address_line1 = $5
-              OR a.address_line2 = $5
-            )
+          WHERE 0=0
       SQL
+
+      sql << Helper::AddressSearchHelper.where_postcode_and_number_clause
 
       sql = add_type_filter(sql, assessment_types)
 
       do_search(
         sql: sql,
-        binds: [
-          string_attribute("postcode", Helper::ValidatePostcodeHelper.format_postcode(postcode)),
-          string_attribute("number_in_middle", sprintf('\D+%s\D+', building_number)),
-          string_attribute("number_at_start", sprintf('^%s\D+', building_number)),
-          string_attribute("number_at_end", sprintf('\D+%s$', building_number)),
-          string_attribute("number_exact", building_number),
-        ],
+        binds: Helper::AddressSearchHelper.bind_postcode_and_number(postcode, building_number),
       )
     end
 
@@ -131,18 +117,15 @@ module Gateway
             a.type_of_assessment AS report_type,
             a.date_of_expiry AS expiry_date
           FROM assessments AS a
-          WHERE a.postcode = $1 AND (a.address_line1 ILIKE $2 OR a.address_line2 ILIKE $2)
-
+          WHERE 0=0
       SQL
+      sql << Helper::AddressSearchHelper.where_postcode_and_name_clause
 
       sql = add_type_filter(sql, assessment_types)
 
       do_search(
         sql: sql,
-        binds: [
-          string_attribute("postcode", Helper::ValidatePostcodeHelper.format_postcode(postcode)),
-          string_attribute("building_name", "%#{building_name}%"),
-        ],
+        binds: Helper::AddressSearchHelper.bind_postcode_and_name(postcode, building_name),
       )
     end
 
@@ -163,7 +146,7 @@ module Gateway
       do_search(
         sql: sql,
         binds: [
-          string_attribute("uprn", uprn),
+          Helper::AddressSearchHelper.string_attribute("uprn", uprn),
         ],
       )
     end
@@ -180,14 +163,6 @@ module Gateway
       else
         Domain::AssessmentReferenceList.new(*details_list.map(&:rrn))
       end
-    end
-
-    def string_attribute(name, value)
-      ActiveRecord::Relation::QueryAttribute.new(
-        name,
-        value,
-        ActiveRecord::Type::String.new,
-      )
     end
 
     def add_type_filter(sql, assessment_types)
@@ -213,10 +188,6 @@ module Gateway
       end
 
       summary[:recommended_improvements].any? { |improvement| improvement[:improvement_type] == type }
-    end
-
-    def clean_building_identifier(building_identifier)
-      building_identifier&.delete!("()|:*!\\") || building_identifier
     end
   end
 end
