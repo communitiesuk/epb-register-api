@@ -1,21 +1,17 @@
 module Controller
   class DomesticEpcSearchController < Controller::BaseController
     SEARCH_SCHEMA = {
-      oneOf: [
-        {
-          type: "object",
-          required: %w[postcode],
-          properties: {
-            postcode: {
-              type: "string",
-              pattern: Helper::RegexHelper::POSTCODE,
-            },
-            buildingNameOrNumber: {
-              type: "string",
-            },
-          },
+      type: "object",
+      required: %w[postcode],
+      properties: {
+        postcode: {
+          type: "string",
+          pattern: Helper::RegexHelper::POSTCODE,
         },
-      ],
+        buildingNameOrNumber: {
+          type: "string",
+        },
+      },
     }.freeze
 
     class NotImplementedError < StandardError; end
