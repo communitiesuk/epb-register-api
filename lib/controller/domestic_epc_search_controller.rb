@@ -28,7 +28,7 @@ module Controller
       execute_params = { postcode: params[:postcode], building_identifier: params[:buildingNameOrNumber] }
 
       result = use_case.execute(**execute_params)
-      raise Sinatra::NotFound if result.nil?
+      raise Sinatra::NotFound if result[:assessments].empty?
 
       status = 200
       data = result.to_hash

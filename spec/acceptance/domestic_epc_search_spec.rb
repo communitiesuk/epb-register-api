@@ -113,6 +113,23 @@ describe "fetching domestic epc search results from the API", set_with_timecop: 
       end
     end
 
+    context "when performing a search that does not match any domestic EPCs" do
+      it "returns a 404 with an appropriate response" do
+        response = JSON.parse(
+          find_domestic_epcs_with_params(
+            params: {
+              postcode: "AB1 2CD",
+              building_name_or_number: "42",
+            },
+            accepted_responses: [404],
+          ).body,
+          symbolize_names: true,
+        )
+
+        expect(response[:errors][0][:title]).to eq "No domestic assessments could be found for that query"
+      end
+    end
+
     context "when passing the incorrect scopes" do
       it "returns a 403 UNAUTHORISED response" do
         response = JSON.parse(find_domestic_epcs_with_params(

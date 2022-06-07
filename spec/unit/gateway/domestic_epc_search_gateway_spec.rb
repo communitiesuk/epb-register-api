@@ -163,7 +163,7 @@ describe Gateway::DomesticEpcSearchGateway do
 
     it "does not find a CEPC for that address" do
       result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "1 Commercial Street")
-      expect(result).to be_nil
+      expect(result).to eq []
     end
   end
 
@@ -225,7 +225,7 @@ describe Gateway::DomesticEpcSearchGateway do
       it "does not match an address with the full number" do
         result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "2")
 
-        expect(result).to be_nil
+        expect(result).to eq []
       end
     end
 
@@ -233,14 +233,14 @@ describe Gateway::DomesticEpcSearchGateway do
       it "does not match BUS details for an address with the full number" do
         result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "212")
 
-        expect(result).to be_nil
+        expect(result).to eq []
       end
     end
 
     context "when searching using a number which is a numeric superset of an address's street line number in the middle of an address line" do
       it "does not match for an address with the full number" do
         result = gateway.fetch_by_address(postcode: "A0 0AA", building_identifier: "1")
-        expect(result).to be_nil
+        expect(result).to eq []
       end
     end
 
