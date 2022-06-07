@@ -604,10 +604,9 @@ paths:
         - Search
         - Home Energy Retrofit Advice
       summary: Search for domestic EPCs by address
-      description: 'Search for an assessment by postcode and optional building name/number.
-                    If building name/number is supplied and no matches are found
-                    or building name/number is not supplied
-                    then all domestic EPC matches for the postcode are returned'
+      description: 'Search for an assessment by postcode and optional building
+                    name/number. If building name/number is not supplied then
+                    all domestic EPC matches for the postcode are returned'
       operationId: search-domestic-epcs
       security:
         - oauth:
