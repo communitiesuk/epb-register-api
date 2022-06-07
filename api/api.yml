@@ -2582,9 +2582,9 @@ components:
 
     DomesticEPCsSearchResult:
       type: object
+      description: 'A reference to the most recent domestic EPC for the address also referenced in the result'
       properties:
         epcRrn:
-          description: 'The RRN of the most recent domestic EPC for the property'
           $ref: '#/components/schemas/AssessmentId'
         address:
           $ref: '#/components/schemas/AddressStyle2'
