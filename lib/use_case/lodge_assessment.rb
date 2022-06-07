@@ -58,7 +58,7 @@ module UseCase
           date_of_assessment: data[:date_of_assessment],
           date_registered: data[:date_of_registration],
           date_of_expiry: data[:date_of_expiry],
-          assessor: assessor,
+          assessor:,
           current_energy_efficiency_rating:
             data[:current_energy_efficiency_rating].to_i,
           potential_energy_efficiency_rating:
@@ -71,7 +71,7 @@ module UseCase
           town: data[:address][:town],
           postcode: data[:address][:postcode],
           xml: data[:raw_data],
-          migrated: migrated,
+          migrated:,
           related_rrn: find_related_rrn(data),
         )
 
@@ -163,14 +163,14 @@ module UseCase
       source =
         get_assessments_address_id_source(
           lodged_address_id: assessment.address_id,
-          canonical_address_id: canonical_address_id,
+          canonical_address_id:,
         )
 
       @assessments_address_id_gateway.send_to_db(
         {
           assessment_id: assessment.assessment_id,
           address_id: canonical_address_id,
-          source: source,
+          source:,
         },
       )
     end

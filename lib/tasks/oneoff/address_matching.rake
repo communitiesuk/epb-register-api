@@ -53,12 +53,12 @@ namespace :oneoff do
 
             puts "[#{Time.now}] #{entry.name} was unzipped with a size of #{entry.size} bytes"
             csv_content = CSV.new(csv_io, headers: true)
-            AddressMatchingHelper.process_address_matching_csv csv_content, counter: counter
+            AddressMatchingHelper.process_address_matching_csv csv_content, counter:
           end
         end
       else
         csv_content = CSV.new(file_io, headers: true)
-        AddressMatchingHelper.process_address_matching_csv csv_content, counter: counter
+        AddressMatchingHelper.process_address_matching_csv csv_content, counter:
       end
 
       puts "[#{Time.now}] Finished processing CSV file, #{counter.processed} LPRNs processed"

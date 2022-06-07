@@ -31,7 +31,7 @@ module Gateway
         )
       Aws::S3::Client.new(
         region: storage_config.region_name,
-        credentials: credentials,
+        credentials:,
       )
     end
 

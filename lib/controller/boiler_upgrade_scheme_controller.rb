@@ -63,7 +63,7 @@ module Controller
                      when nil
                        raise Sinatra::NotFound
                      end
-      json_api_response(code: status, data: data)
+      json_api_response(code: status, data:)
     rescue StandardError => e
       case e
       when Sinatra::NotFound

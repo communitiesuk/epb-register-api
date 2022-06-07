@@ -6,7 +6,7 @@ module UseCase
 
     def execute(postcode:, building_identifier:)
       { assessments:
-          @gateway.fetch_by_address(postcode: postcode, building_identifier: building_identifier) }
+          @gateway.fetch_by_address(postcode:, building_identifier:) }
     end
   end
 end

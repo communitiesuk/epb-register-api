@@ -1,7 +1,7 @@
 describe UseCase::ExportNiAssessments do
   context "when exporting NI data call the use case for domestic epcs" do
     subject(:use_case) do
-      described_class.new(export_ni_gateway: ni_gateway, xml_gateway: xml_gateway)
+      described_class.new(export_ni_gateway: ni_gateway, xml_gateway:)
     end
 
     let(:ni_gateway) do

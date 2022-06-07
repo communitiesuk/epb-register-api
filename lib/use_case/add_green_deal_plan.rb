@@ -79,7 +79,7 @@ module UseCase
 
       @event_broadcaster.broadcast(:green_deal_plan_added,
                                    green_deal_plan_id: green_deal_plan.green_deal_plan_id,
-                                   assessment_id: assessment_id)
+                                   assessment_id:)
 
       @green_deal_plans_gateway.fetch(assessment_id).first
     end

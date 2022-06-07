@@ -84,7 +84,7 @@ def authenticate_and(request: nil, scopes: [], supplementary: {})
 end
 
 def authenticate_with_data(data: {}, scopes: [], &block)
-  authenticate_and(scopes: scopes, supplementary: data, &block)
+  authenticate_and(scopes:, supplementary: data, &block)
 end
 
 def get_valid_jwt(scopes = [], sup = {})
@@ -150,7 +150,7 @@ def truncate(postcode)
 end
 
 def add_uprns_to_address_base(*uprns)
-  uprns.each { |uprn| add_address_base(uprn: uprn) }
+  uprns.each { |uprn| add_address_base(uprn:) }
 end
 
 def add_address_base(uprn:)

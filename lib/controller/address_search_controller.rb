@@ -75,7 +75,7 @@ module Controller
                           addresses: results.map(&:to_hash),
                         },
                         meta: {
-                          filters: filters,
+                          filters:,
                         }
     rescue StandardError => e
       case e

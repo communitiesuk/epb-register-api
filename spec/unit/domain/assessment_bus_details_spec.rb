@@ -43,7 +43,7 @@ describe Domain::AssessmentBusDetails do
     }
   end
 
-  let(:domain) { described_class.new arguments }
+  let(:domain) { described_class.new(**arguments) }
 
   describe "#to_hash" do
     it "returns the expected data" do

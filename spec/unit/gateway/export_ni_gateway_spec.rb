@@ -23,7 +23,7 @@ describe Gateway::ExportNiGateway do
     describe ".fetch_assessments" do
       before do
         scheme_id = add_scheme_and_get_id
-        add_super_assessor(scheme_id: scheme_id)
+        add_super_assessor(scheme_id:)
 
         domestic_ni_sap_xml = Nokogiri.XML Samples.xml("SAP-Schema-NI-18.0.0")
 
@@ -239,7 +239,7 @@ describe Gateway::ExportNiGateway do
   context "when extracting Northern Ireland recommendations" do
     before do
       scheme_id = add_scheme_and_get_id
-      add_super_assessor(scheme_id: scheme_id)
+      add_super_assessor(scheme_id:)
 
       cepc_rr_xml = Nokogiri.XML Samples.xml("CEPC-NI-8.0.0", "cepc+rr")
       cepc_rr_xml.xpath("//*[local-name() = 'RRN']").each_with_index do |node, index|

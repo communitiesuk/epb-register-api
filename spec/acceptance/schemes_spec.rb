@@ -90,12 +90,12 @@ describe "Acceptance::Schemes" do
 
     it "rejects a message without the required keys" do
       scheme_id = add_scheme_and_get_id(name: "My old scheme name")
-      update_scheme(scheme_id: scheme_id, accepted_responses: [400])
+      update_scheme(scheme_id:, accepted_responses: [400])
     end
 
     it "changes all of the details of an existing scheme" do
       scheme_id = add_scheme_and_get_id(name: "My old scheme name")
-      update_scheme(scheme_id: scheme_id, body: { name: "My new scheme name", active: false })
+      update_scheme(scheme_id:, body: { name: "My new scheme name", active: false })
       schemes = JSON.parse(schemes_list.body)
       expect(schemes["data"]["schemes"][0]).to eq(
         {

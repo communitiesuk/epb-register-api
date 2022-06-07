@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-ruby "2.7.5"
+ruby "3.1.2"
 
 source "https://rubygems.org"
 group :development do
-  gem "debase"
+  gem "debase", "~> 0.2", ">= 0.2.5.beta2"
   gem "sinatra-contrib"
 end
 
@@ -46,5 +46,5 @@ gem "sinatra", "~> 2.2"
 gem "sinatra-activerecord", "~> 2.0.25"
 gem "sinatra-cross_origin", "~> 0.4.0"
 gem "unleash", "~> 4.2.0"
-gem "wisper", "~> 2.0", ">= 2.0.1"
+gem "wisper", "~> 2.0.1", git: "https://github.com/jstoks/wisper.git", branch: "ruby-3-compat-drop-2-6"
 gem "zeitwerk", "~> 2.4.1"

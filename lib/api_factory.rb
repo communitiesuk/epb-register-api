@@ -77,61 +77,61 @@ class ApiFactory
   def self.validate_and_lodge_assessment_use_case
     @validate_and_lodge_assessment_use_case ||=
       UseCase::ValidateAndLodgeAssessment.new(
-        lodge_assessment_use_case: lodge_assessment_use_case,
-        validate_assessment_use_case: validate_assessment_use_case,
-        check_assessor_belongs_to_scheme_use_case: check_assessor_belongs_to_scheme_use_case,
-        check_approved_software_use_case: check_approved_software_use_case,
+        lodge_assessment_use_case:,
+        validate_assessment_use_case:,
+        check_assessor_belongs_to_scheme_use_case:,
+        check_approved_software_use_case:,
       )
   end
 
   def self.check_assessor_belongs_to_scheme_use_case
     @check_assessor_belongs_to_scheme_use_case ||=
-      UseCase::CheckAssessorBelongsToScheme.new(assessors_gateway: assessors_gateway)
+      UseCase::CheckAssessorBelongsToScheme.new(assessors_gateway:)
   end
 
   def self.check_approved_software_use_case
-    @check_approved_software_use_case ||= UseCase::CheckApprovedSoftware.new logger: logger
+    @check_approved_software_use_case ||= UseCase::CheckApprovedSoftware.new logger:
   end
 
   def self.update_assessment_status_use_case
     @update_assessment_status_use_case ||= UseCase::UpdateAssessmentStatus.new(
-      assessments_gateway: assessments_gateway,
-      assessments_search_gateway: assessments_search_gateway,
-      assessors_gateway: assessors_gateway,
-      event_broadcaster: event_broadcaster,
+      assessments_gateway:,
+      assessments_search_gateway:,
+      assessors_gateway:,
+      event_broadcaster:,
     )
   end
 
   def self.opt_out_assessment_use_case
     @opt_out_assessment_use_case ||= UseCase::OptOutAssessment.new(
-      assessments_gateway: assessments_gateway,
-      assessments_search_gateway: assessments_search_gateway,
-      event_broadcaster: event_broadcaster,
+      assessments_gateway:,
+      assessments_search_gateway:,
+      event_broadcaster:,
     )
   end
 
   def self.update_assessment_address_id_use_case
     @update_assessment_address_id_use_case ||= UseCase::UpdateAssessmentAddressId.new(
       address_base_gateway: address_base_search_gateway,
-      assessments_address_id_gateway: assessments_address_id_gateway,
-      assessments_search_gateway: assessments_search_gateway,
-      assessments_gateway: assessments_gateway,
-      event_broadcaster: event_broadcaster,
+      assessments_address_id_gateway:,
+      assessments_search_gateway:,
+      assessments_gateway:,
+      event_broadcaster:,
     )
   end
 
   def self.lodge_assessment_use_case
     @lodge_assessment_use_case ||=
       UseCase::LodgeAssessment.new(
-        assessments_gateway: assessments_gateway,
-        assessments_search_gateway: assessments_search_gateway,
-        address_base_search_gateway: address_base_search_gateway,
-        assessors_gateway: assessors_gateway,
-        assessments_xml_gateway: assessments_xml_gateway,
-        assessments_address_id_gateway: assessments_address_id_gateway,
-        related_assessments_gateway: related_assessments_gateway,
-        green_deal_plans_gateway: green_deal_plans_gateway,
-        event_broadcaster: event_broadcaster,
+        assessments_gateway:,
+        assessments_search_gateway:,
+        address_base_search_gateway:,
+        assessors_gateway:,
+        assessments_xml_gateway:,
+        assessments_address_id_gateway:,
+        related_assessments_gateway:,
+        green_deal_plans_gateway:,
+        event_broadcaster:,
       )
   end
 
@@ -164,35 +164,35 @@ class ApiFactory
   def self.add_green_deal_plan_use_case
     @add_green_deal_plan_use_case ||=
       UseCase::AddGreenDealPlan.new(
-        assessments_search_gateway: assessments_search_gateway,
-        green_deal_plans_gateway: green_deal_plans_gateway,
-        event_broadcaster: event_broadcaster,
+        assessments_search_gateway:,
+        green_deal_plans_gateway:,
+        event_broadcaster:,
       )
   end
 
   def self.update_green_deal_plan_use_case
     @update_green_deal_plan_use_case ||=
       UseCase::UpdateGreenDealPlan.new(
-        green_deal_plans_gateway: green_deal_plans_gateway,
-        event_broadcaster: event_broadcaster,
+        green_deal_plans_gateway:,
+        event_broadcaster:,
       )
   end
 
   def self.delete_green_deal_plan_use_case
     @delete_green_deal_plan_use_case ||=
       UseCase::DeleteGreenDealPlan.new(
-        green_deal_plans_gateway: green_deal_plans_gateway,
-        event_broadcaster: event_broadcaster,
+        green_deal_plans_gateway:,
+        event_broadcaster:,
       )
   end
 
   def self.add_assessor_use_case
     @add_assessor_use_case ||=
       UseCase::AddAssessor.new(
-        schemes_gateway: schemes_gateway,
-        assessors_gateway: assessors_gateway,
-        assessors_status_events_gateway: assessors_status_events_gateway,
-        event_broadcaster: event_broadcaster,
+        schemes_gateway:,
+        assessors_gateway:,
+        assessors_status_events_gateway:,
+        event_broadcaster:,
       )
   end
 
@@ -234,8 +234,8 @@ class ApiFactory
 
   def self.storage_configuration_reader(bucket_name:, instance_name:)
     Gateway::StorageConfigurationReader.new(
-      bucket_name: bucket_name,
-      instance_name: instance_name,
+      bucket_name:,
+      instance_name:,
     )
   end
 
@@ -243,8 +243,8 @@ class ApiFactory
     Gateway::StorageGateway.new(
       storage_config:
         storage_configuration_reader(
-          bucket_name: bucket_name,
-          instance_name: instance_name,
+          bucket_name:,
+          instance_name:,
         ).get_configuration,
     )
   end
@@ -265,7 +265,7 @@ class ApiFactory
   def self.event_broadcaster
     return @event_broadcaster unless @event_broadcaster.nil?
 
-    @event_broadcaster = Events::Broadcaster.new(logger: logger)
+    @event_broadcaster = Events::Broadcaster.new(logger:)
     Events::Listener.new(@event_broadcaster).attach_listeners
 
     @event_broadcaster

@@ -11,13 +11,13 @@ module UseCase
     def execute(plan_id)
       raise NotFoundException unless @green_deal_plans_gateway.exists?(plan_id)
 
-      assessment_ids = @green_deal_plans_gateway.fetch_assessment_ids(plan_id: plan_id)
+      assessment_ids = @green_deal_plans_gateway.fetch_assessment_ids(plan_id:)
 
       @green_deal_plans_gateway.delete(plan_id)
 
       @event_broadcaster.broadcast(:green_deal_plan_deleted,
                                    green_deal_plan_id: plan_id,
-                                   assessment_ids: assessment_ids)
+                                   assessment_ids:)
       {}
     end
   end

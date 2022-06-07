@@ -71,7 +71,7 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
   context "when assessment exists" do
     before do
       scheme_id = add_scheme_and_get_id
-      add_super_assessor(scheme_id: scheme_id)
+      add_super_assessor(scheme_id:)
 
       lodge_assessment(
         assessment_body: Samples.xml("RdSAP-Schema-20.0.0"),
@@ -248,7 +248,7 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
   context "when two assessments exist" do
     before do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: AssessorStub.new.fetch_request_body(domestic_rd_sap: "ACTIVE"))
+      add_assessor(scheme_id:, assessor_id: "SPEC000000", body: AssessorStub.new.fetch_request_body(domestic_rd_sap: "ACTIVE"))
 
       lodge_assessment(
         assessment_body: Samples.xml("RdSAP-Schema-20.0.0"),
@@ -310,7 +310,7 @@ describe "Acceptance::AddressLinking", set_with_timecop: true do
   context "when updating the address ID linked to an assessment with a related report" do
     before do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: AssessorStub.new.fetch_request_body(non_domestic_nos3: "ACTIVE"))
+      add_assessor(scheme_id:, assessor_id: "SPEC000000", body: AssessorStub.new.fetch_request_body(non_domestic_nos3: "ACTIVE"))
 
       lodge_assessment(
         assessment_body: Samples.xml("CEPC-8.0.0", "cepc+rr"),

@@ -16,8 +16,8 @@ namespace :ad_hoc_data do
     puts "[#{Time.now}] #{exports.size} files to export"
 
     storage_gateway = ApiFactory.storage_gateway(
-      bucket_name: bucket_name,
-      instance_name: instance_name,
+      bucket_name:,
+      instance_name:,
     )
     exports.each do |export|
       filename = "export/#{export[:assessment_id]}.json"

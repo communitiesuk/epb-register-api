@@ -28,7 +28,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
     let(:scheme_id) { add_scheme_and_get_id }
     let(:doc) { Nokogiri.XML valid_rdsap_xml }
     let(:register_assessor) do
-      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body)
+      add_assessor(scheme_id:, assessor_id: "SPEC000000", body: valid_assessor_request_body)
     end
 
     it "rejects an assessment with a schema that does not exist" do
@@ -300,7 +300,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
     let(:cepc_xml_doc) { Nokogiri.XML(valid_cepc_rr_xml) }
 
     before do
-      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body)
+      add_assessor(scheme_id:, assessor_id: "SPEC000000", body: valid_assessor_request_body)
     end
 
     it "logs the events to the overidden_lodgement_events table" do
@@ -356,7 +356,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
 
   context "when lodging a valid assessment" do
     before do
-      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body)
+      add_assessor(scheme_id:, assessor_id: "SPEC000000", body: valid_assessor_request_body)
     end
 
     it "returns the correct response for RdSAP" do
@@ -914,7 +914,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
     end
 
     let(:register_assessor) do
-      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body)
+      add_assessor(scheme_id:, assessor_id: "SPEC000000", body: valid_assessor_request_body)
     end
 
     it "rejects the assessment with a 400" do
@@ -952,7 +952,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
 
     it "returns 403 if it is being lodged by the wrong scheme" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body)
+      add_assessor(scheme_id:, assessor_id: "SPEC000000", body: valid_assessor_request_body)
       different_scheme_id = add_scheme_and_get_id(name: "BADSCHEME")
 
       lodge_assessment(
@@ -976,7 +976,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
       auth_data: {
         scheme_ids: [scheme_id],
       },
-      ensure_uprns: ensure_uprns,
+      ensure_uprns:,
     )
 
     get_assessment_summary(rrn_node)
@@ -1006,7 +1006,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
         scheme_ids: [scheme_id],
       },
       schema_name: "CEPC-8.0.0",
-      ensure_uprns: ensure_uprns,
+      ensure_uprns:,
     )
 
     get_assessment_summary(rrn_node)

@@ -17,7 +17,7 @@ describe NotifyFactory do
                  { entity_id: "0000-0000" }
                end
 
-        expect { described_class.send(notifier_method, args) }.not_to raise_error
+        expect { described_class.send(notifier_method, **args) }.not_to raise_error
       end
     end
   end

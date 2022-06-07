@@ -9,7 +9,7 @@ describe Gateway::HomeEnergyRetrofitAdviceGateway do
 
   context "when expecting to find an RdSAP assessment" do
     before do
-      add_super_assessor(scheme_id: scheme_id)
+      add_super_assessor(scheme_id:)
 
       rdsap_ni_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-NI-20.0.0")
       rdsap_ni_xml.at("RRN").content = "0000-0000-0000-0000-0001"

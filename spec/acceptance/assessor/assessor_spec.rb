@@ -68,7 +68,7 @@ describe "Acceptance::Assessor" do
 
   context "when an assessor doesn't exist" do
     it "returns status 404" do
-      fetch_assessor(scheme_id: scheme_id, assessor_id: "SCHE2354246", accepted_responses: [404])
+      fetch_assessor(scheme_id:, assessor_id: "SCHE2354246", accepted_responses: [404])
     end
   end
 
@@ -76,26 +76,26 @@ describe "Acceptance::Assessor" do
     it "returns status 404" do
       second_scheme_id = add_scheme_and_get_id(name: "second scheme")
       add_assessor(scheme_id: second_scheme_id, assessor_id: "SCHE987654", body: valid_assessor_request)
-      fetch_assessor(scheme_id: scheme_id, assessor_id: "SCHE987654", accepted_responses: [404])
+      fetch_assessor(scheme_id:, assessor_id: "SCHE987654", accepted_responses: [404])
     end
   end
 
   context "when getting an assessor" do
     context "when the assessor exists on the correct scheme" do
       it "returns status 200 for a get" do
-        add_assessor(scheme_id: scheme_id, assessor_id: "SCHE423344", body: valid_assessor_request)
-        expect(fetch_assessor(scheme_id: scheme_id, assessor_id: "SCHE423344").status).to eq(200)
+        add_assessor(scheme_id:, assessor_id: "SCHE423344", body: valid_assessor_request)
+        expect(fetch_assessor(scheme_id:, assessor_id: "SCHE423344").status).to eq(200)
       end
 
       it "returns json" do
-        add_assessor(scheme_id: scheme_id, assessor_id: "SCHE423344", body: valid_assessor_request)
+        add_assessor(scheme_id:, assessor_id: "SCHE423344", body: valid_assessor_request)
         expect(
-          fetch_assessor(scheme_id: scheme_id, assessor_id: "SCHE423344").headers["Content-type"],
+          fetch_assessor(scheme_id:, assessor_id: "SCHE423344").headers["Content-type"],
         ).to eq("application/json")
       end
 
       it "returns the correct details for the assessor" do
-        add_assessor(scheme_id: scheme_id, assessor_id: "SCHE423344", body: valid_assessor_request)
+        add_assessor(scheme_id:, assessor_id: "SCHE423344", body: valid_assessor_request)
         expected_response =
           JSON.parse(
             {
@@ -130,17 +130,17 @@ describe "Acceptance::Assessor" do
               meta: {},
             }.to_json,
           )
-        response = JSON.parse(fetch_assessor(scheme_id: scheme_id, assessor_id: "SCHE423344").body)
+        response = JSON.parse(fetch_assessor(scheme_id:, assessor_id: "SCHE423344").body)
         expect(response).to eq(expected_response)
       end
 
       it "returns EPC domestic qualification as inactive by default" do
         add_assessor(
-          scheme_id: scheme_id,
+          scheme_id:,
           assessor_id: "SCHE423344",
           body: assessor_without_key(:qualifications),
         )
-        response = JSON.parse(fetch_assessor(scheme_id: scheme_id, assessor_id: "SCHE423344").body)
+        response = JSON.parse(fetch_assessor(scheme_id:, assessor_id: "SCHE423344").body)
         expect(response["data"]["qualifications"]["domesticRdSap"]).to eq(
           "INACTIVE",
         )
@@ -158,10 +158,10 @@ describe "Acceptance::Assessor" do
 
       it "rejects a request with the right scope but from the wrong scheme" do
         wrong_scheme_id = scheme_id + 10
-        add_assessor(scheme_id: scheme_id, assessor_id: "TEST123456", body: valid_assessor_request)
+        add_assessor(scheme_id:, assessor_id: "TEST123456", body: valid_assessor_request)
 
         fetch_assessor(
-          scheme_id: scheme_id,
+          scheme_id:,
           assessor_id: "test",
           accepted_responses: [403],
           auth_data: { scheme_ids: [wrong_scheme_id] },
@@ -204,7 +204,7 @@ describe "Acceptance::Assessor" do
     it "raises an error when incorrect params are provided" do
       response =
         JSON.parse(
-          fetch_assessor_current_status(first_name: "Some", last_name: "Person", scheme_id: scheme_id, accepted_responses: [400])
+          fetch_assessor_current_status(first_name: "Some", last_name: "Person", scheme_id:, accepted_responses: [400])
             .body,
         )
       expect(response["errors"].first["title"]).to eq("Must specify first name, last name and a valid date of birth when searching")
@@ -217,7 +217,7 @@ describe "Acceptance::Assessor" do
             first_name: "Some",
             last_name: "Person",
             date_of_birth: "not_a_date",
-            scheme_id: scheme_id,
+            scheme_id:,
             accepted_responses: [400],
           ).body,
         )
@@ -233,7 +233,7 @@ describe "Acceptance::Assessor" do
             first_name: "Some",
             last_name: "Person",
             date_of_birth: "1991-02-25",
-            scheme_id: scheme_id,
+            scheme_id:,
             accepted_responses: [403],
             scopes: %w[assessor:search],
           ).body,
@@ -242,22 +242,22 @@ describe "Acceptance::Assessor" do
     end
 
     it "returns an empty array when there are no matching assessors" do
-      add_assessor(scheme_id: scheme_id, assessor_id: "SCHE423344", body: valid_assessor_request)
+      add_assessor(scheme_id:, assessor_id: "SCHE423344", body: valid_assessor_request)
       response =
         JSON.parse(fetch_assessor_current_status(
           first_name: "Flitwick",
           last_name: "Person",
           date_of_birth: "1991-02-25",
-          scheme_id: scheme_id,
+          scheme_id:,
         ).body)
       expect(response["data"]).to eq([])
     end
 
     it "returns the correct details for the specific assessor matching all three params" do
-      add_assessor(scheme_id: scheme_id, assessor_id: "SCHE423344", body: valid_assessor_request)
+      add_assessor(scheme_id:, assessor_id: "SCHE423344", body: valid_assessor_request)
       request_body = valid_assessor_request.dup
       request_body[:firstName] = "Stan"
-      add_assessor(scheme_id: scheme_id, assessor_id: "SCHE423444", body: request_body)
+      add_assessor(scheme_id:, assessor_id: "SCHE423444", body: request_body)
       expected_response =
         JSON.parse({ data: [assessor_response], meta: {} }.to_json)
 
@@ -267,17 +267,17 @@ describe "Acceptance::Assessor" do
             first_name: "Some",
             last_name: "Person",
             date_of_birth: "1991-02-25",
-            scheme_id: scheme_id,
+            scheme_id:,
           ).body,
         )
       expect(response).to eq(expected_response)
     end
 
     it "returns the correct details when given names with different capitalization" do
-      add_assessor(scheme_id: scheme_id, assessor_id: "SCHE423344", body: valid_assessor_request)
+      add_assessor(scheme_id:, assessor_id: "SCHE423344", body: valid_assessor_request)
       request_body = valid_assessor_request.dup
       request_body[:firstName] = "Stan"
-      add_assessor(scheme_id: scheme_id, assessor_id: "SCHE423444", body: request_body)
+      add_assessor(scheme_id:, assessor_id: "SCHE423444", body: request_body)
       expected_response =
         JSON.parse({ data: [assessor_response], meta: {} }.to_json)
 
@@ -287,23 +287,23 @@ describe "Acceptance::Assessor" do
             first_name: "sOmE",
             last_name: "pErSoN",
             date_of_birth: "1991-02-25",
-            scheme_id: scheme_id,
+            scheme_id:,
           ).body,
         )
       expect(response).to eq(expected_response)
     end
 
     it "returns the correct details when given partial names" do
-      add_assessor(scheme_id: scheme_id, assessor_id: "SCHE423344", body: valid_assessor_request)
+      add_assessor(scheme_id:, assessor_id: "SCHE423344", body: valid_assessor_request)
       request_body = valid_assessor_request.dup
       request_body[:firstName] = "Stan"
-      add_assessor(scheme_id: scheme_id, assessor_id: "SCHE423444", body: request_body)
+      add_assessor(scheme_id:, assessor_id: "SCHE423444", body: request_body)
       expected_response =
         JSON.parse({ data: [assessor_response], meta: {} }.to_json)
 
       response =
         JSON.parse(
-          fetch_assessor_current_status(first_name: "sO", last_name: "pErS", date_of_birth: "1991-02-25", scheme_id: scheme_id)
+          fetch_assessor_current_status(first_name: "sO", last_name: "pErS", date_of_birth: "1991-02-25", scheme_id:)
             .body,
         )
       expect(response).to eq(expected_response)
@@ -335,7 +335,7 @@ describe "Acceptance::Assessor" do
       it "rejects a request that is from the wrong scheme but has the right scope" do
         wrong_scheme_id = scheme_id + 10
         add_assessor(
-          scheme_id: scheme_id,
+          scheme_id:,
           assessor_id: "TEST",
           body: valid_assessor_request,
           accepted_responses: [403],
@@ -348,14 +348,14 @@ describe "Acceptance::Assessor" do
     context "with all fields valid" do
       it "returns 201 created" do
         assessor_response =
-          add_assessor(scheme_id: scheme_id, assessor_id: "SCHE554433", body: valid_assessor_request)
+          add_assessor(scheme_id:, assessor_id: "SCHE554433", body: valid_assessor_request)
 
         expect(assessor_response.status).to eq(201)
       end
 
       it "returns JSON" do
         assessor_response =
-          add_assessor(scheme_id: scheme_id, assessor_id: "SCHE554433", body: valid_assessor_request)
+          add_assessor(scheme_id:, assessor_id: "SCHE554433", body: valid_assessor_request)
 
         expect(assessor_response.headers["Content-type"]).to eq(
           "application/json",
@@ -365,7 +365,7 @@ describe "Acceptance::Assessor" do
       it "returns assessor details with scheme details" do
         assessor_response =
           JSON.parse(
-            add_assessor(scheme_id: scheme_id, assessor_id: "SCHE554433", body: valid_assessor_request).body,
+            add_assessor(scheme_id:, assessor_id: "SCHE554433", body: valid_assessor_request).body,
           )[
             "data"
           ]
@@ -413,7 +413,7 @@ describe "Acceptance::Assessor" do
       it "returns 201 created" do
         assessor_response =
           add_assessor(
-            scheme_id: scheme_id,
+            scheme_id:,
             assessor_id: "SCHE554433",
             body: assessor_without_key(:middleNames),
           )
@@ -425,7 +425,7 @@ describe "Acceptance::Assessor" do
         assessor_response =
           JSON.parse(
             add_assessor(
-              scheme_id: scheme_id,
+              scheme_id:,
               assessor_id: "SCHE554433",
               body: assessor_without_key(:middleNames),
             ).body,
@@ -483,7 +483,7 @@ describe "Acceptance::Assessor" do
 
       it "rejects requests with invalid assessor ID" do
         add_assessor(
-          scheme_id: scheme_id,
+          scheme_id:,
           assessor_id: "i_am_a_bad_assessor_id",
           body: valid_assessor_request.dup,
           accepted_responses: [422],
@@ -492,7 +492,7 @@ describe "Acceptance::Assessor" do
 
       it "rejects requests without firstname" do
         add_assessor(
-          scheme_id: scheme_id,
+          scheme_id:,
           assessor_id: "SCHE554433",
           body: assessor_without_key(:firstName),
           accepted_responses: [422],
@@ -501,7 +501,7 @@ describe "Acceptance::Assessor" do
 
       it "rejects requests without last name" do
         add_assessor(
-          scheme_id: scheme_id,
+          scheme_id:,
           assessor_id: "SCHE554433",
           body: assessor_without_key(:lastName),
           accepted_responses: [422],
@@ -510,7 +510,7 @@ describe "Acceptance::Assessor" do
 
       it "rejects requests without date of birth" do
         add_assessor(
-          scheme_id: scheme_id,
+          scheme_id:,
           assessor_id: "SCHE554433",
           body: assessor_without_key(:dateOfBirth),
           accepted_responses: [422],
@@ -520,37 +520,37 @@ describe "Acceptance::Assessor" do
       it "rejects requests with invalid date of birth" do
         invalid_body = valid_assessor_request.dup
         invalid_body[:dateOfBirth] = "02/28/1987"
-        add_assessor(scheme_id: scheme_id, assessor_id: "SCHE554433", body: invalid_body, accepted_responses: [422])
+        add_assessor(scheme_id:, assessor_id: "SCHE554433", body: invalid_body, accepted_responses: [422])
       end
 
       it "rejects requests with invalid first name" do
         invalid_body = valid_assessor_request.dup
         invalid_body[:firstName] = 1_000
-        add_assessor(scheme_id: scheme_id, assessor_id: "SCHE554433", body: invalid_body, accepted_responses: [422])
+        add_assessor(scheme_id:, assessor_id: "SCHE554433", body: invalid_body, accepted_responses: [422])
       end
 
       it "rejects requests with invalid last name" do
         invalid_body = valid_assessor_request.dup
         invalid_body[:lastName] = false
-        add_assessor(scheme_id: scheme_id, assessor_id: "SCHE554433", body: invalid_body, accepted_responses: [422])
+        add_assessor(scheme_id:, assessor_id: "SCHE554433", body: invalid_body, accepted_responses: [422])
       end
 
       it "rejects requests with invalid middle names" do
         invalid_body = valid_assessor_request.dup
         invalid_body[:middleNames] = %w[adsfasd]
-        add_assessor(scheme_id: scheme_id, assessor_id: "SCHE554433", body: invalid_body, accepted_responses: [422])
+        add_assessor(scheme_id:, assessor_id: "SCHE554433", body: invalid_body, accepted_responses: [422])
       end
 
       it "rejects an assessor qualification that isnt a valid status" do
         invalid_body = valid_assessor_request.dup
         invalid_body[:qualifications] = { domesticRdSap: "horse" }
-        add_assessor(scheme_id: scheme_id, assessor_id: "SCHE554433", body: invalid_body, accepted_responses: [422])
+        add_assessor(scheme_id:, assessor_id: "SCHE554433", body: invalid_body, accepted_responses: [422])
       end
 
       it "rejects a search results comparison postcode that isnt a string" do
         invalid_body = valid_assessor_request.dup
         invalid_body[:searchResultsComparisonPostcode] = 25
-        add_assessor(scheme_id: scheme_id, assessor_id: "SCHE554433", body: invalid_body, accepted_responses: [422])
+        add_assessor(scheme_id:, assessor_id: "SCHE554433", body: invalid_body, accepted_responses: [422])
       end
     end
 
@@ -582,7 +582,7 @@ describe "Acceptance::Assessor" do
                      body: valid_assessor_request
 
         fetch_assessor_response =
-          fetch_assessor(scheme_id: scheme_id, assessor_id: escaped_assessor_scheme_id)
+          fetch_assessor(scheme_id:, assessor_id: escaped_assessor_scheme_id)
 
         expect(fetch_assessor_response.status).to eq 200
       end
@@ -593,20 +593,20 @@ describe "Acceptance::Assessor" do
     context "with valid fields" do
       it "returns 200 on the update" do
         assessor = valid_assessor_request
-        add_assessor(scheme_id: scheme_id, assessor_id: "ASSR000999", body: assessor)
+        add_assessor(scheme_id:, assessor_id: "ASSR000999", body: assessor)
         assessor[:firstName] = "Janine"
-        second_response = add_assessor(scheme_id: scheme_id, assessor_id: "ASSR000999", body: assessor)
+        second_response = add_assessor(scheme_id:, assessor_id: "ASSR000999", body: assessor)
         expect(second_response.status).to eq(200)
       end
 
       it "replaces a previous assessors details successfully" do
         assessor = valid_assessor_request
-        add_assessor(scheme_id: scheme_id, assessor_id: "ASSR000999", body: assessor)
+        add_assessor(scheme_id:, assessor_id: "ASSR000999", body: assessor)
 
         assessor[:firstName] = "Janine"
-        add_assessor(scheme_id: scheme_id, assessor_id: "ASSR000999", body: assessor)
+        add_assessor(scheme_id:, assessor_id: "ASSR000999", body: assessor)
 
-        response = fetch_assessor(scheme_id: scheme_id, assessor_id: "ASSR000999")
+        response = fetch_assessor(scheme_id:, assessor_id: "ASSR000999")
 
         expected_response = valid_assessor_request
         expected_response[:registeredBy] = {
@@ -625,7 +625,7 @@ describe "Acceptance::Assessor" do
       it "rejects the assessor" do
         invalid_request_body = valid_assessor_request
         invalid_request_body[:contactDetails][:email] = "54"
-        add_assessor(scheme_id: scheme_id, assessor_id: "SCHE554433", body: invalid_request_body, accepted_responses: [422])
+        add_assessor(scheme_id:, assessor_id: "SCHE554433", body: invalid_request_body, accepted_responses: [422])
       end
     end
 
@@ -634,9 +634,9 @@ describe "Acceptance::Assessor" do
         request_body = valid_assessor_request
         request_body[:contactDetails][:email] = "mar@ten.com"
 
-        add_assessor(scheme_id: scheme_id, assessor_id: "ASSR000999", body: request_body).body
+        add_assessor(scheme_id:, assessor_id: "ASSR000999", body: request_body).body
 
-        response_body = fetch_assessor(scheme_id: scheme_id, assessor_id: "ASSR000999").body
+        response_body = fetch_assessor(scheme_id:, assessor_id: "ASSR000999").body
         json_response = JSON.parse(response_body)
 
         expect(json_response["data"]["contactDetails"]["email"]).to eq(
@@ -649,7 +649,7 @@ describe "Acceptance::Assessor" do
       it "returns error 400" do
         request_body = valid_assessor_request
         request_body[:contactDetails][:telephoneNumber] = "0" * 257
-        add_assessor(scheme_id: scheme_id, assessor_id: "SCHE554433", body: request_body, accepted_responses: [422])
+        add_assessor(scheme_id:, assessor_id: "SCHE554433", body: request_body, accepted_responses: [422])
       end
     end
 
@@ -660,9 +660,9 @@ describe "Acceptance::Assessor" do
         request_body = valid_assessor_request
         request_body[:contactDetails][:telephoneNumber] = valid_telephone
 
-        add_assessor(scheme_id: scheme_id, assessor_id: "ASSR000999", body: request_body)
+        add_assessor(scheme_id:, assessor_id: "ASSR000999", body: request_body)
 
-        response_body = fetch_assessor(scheme_id: scheme_id, assessor_id: "ASSR000999").body
+        response_body = fetch_assessor(scheme_id:, assessor_id: "ASSR000999").body
 
         json_response = JSON.parse(response_body)
 

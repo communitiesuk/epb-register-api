@@ -54,7 +54,7 @@ module Helper
       begin
         JSON::Validator.validate!(schema, json) if schema
       rescue JSON::Schema::ValidationError => e
-        raise Boundary::Json::ValidationError.new(e.message, failed_properties: extract_failed_properties(schema: schema, json: json))
+        raise Boundary::Json::ValidationError.new(e.message, failed_properties: extract_failed_properties(schema:, json:))
       end
 
       json.deep_transform_keys { |k| k.to_s.underscore.to_sym }

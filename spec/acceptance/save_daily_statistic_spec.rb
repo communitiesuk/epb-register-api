@@ -9,7 +9,7 @@ describe "Perform end to end test of exporting and saving assessments as statist
       Timecop.freeze(2021, 6, 21, 12, 0, 0) do
         scheme_id = add_scheme_and_get_id
         domestic_rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
-        add_super_assessor(scheme_id: scheme_id)
+        add_super_assessor(scheme_id:)
         lodge_assessment(
           assessment_body: domestic_rdsap_xml.to_xml,
           accepted_responses: [201],

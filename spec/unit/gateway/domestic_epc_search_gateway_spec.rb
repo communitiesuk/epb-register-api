@@ -12,7 +12,7 @@ describe Gateway::DomesticEpcSearchGateway do
   let(:cepc_xml) { Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc") }
 
   before do
-    add_super_assessor(scheme_id: scheme_id)
+    add_super_assessor(scheme_id:)
   end
 
   context "when expecting to find one RdSAP assessment" do
@@ -175,7 +175,7 @@ describe Gateway::DomesticEpcSearchGateway do
       xml.at("UPRN").content = "UPRN-000000000001"
       xml.at_css("Property Address Address-Line-1").content = "Flat 12A Street Lane"
 
-      add_super_assessor(scheme_id: scheme_id)
+      add_super_assessor(scheme_id:)
 
       lodge_assessment(
         assessment_body: xml.to_s,
@@ -279,7 +279,7 @@ describe Gateway::DomesticEpcSearchGateway do
 
   context "when a certificate is not valid" do
     before do
-      add_super_assessor(scheme_id: scheme_id)
+      add_super_assessor(scheme_id:)
 
       rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
       do_lodgement = lambda {

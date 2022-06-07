@@ -5,8 +5,8 @@ describe UseCase::UpdateAssessmentStatus do
 
   subject(:use_case) do
     described_class.new(
-      assessments_gateway: assessments_gateway,
-      assessments_search_gateway: assessments_search_gateway,
+      assessments_gateway:,
+      assessments_search_gateway:,
       assessors_gateway: Gateway::AssessorsGateway.new,
       event_broadcaster: Events::Broadcaster.new,
     )
@@ -32,10 +32,10 @@ describe UseCase::UpdateAssessmentStatus do
 
   before(:all) do
     scheme_id = add_scheme_and_get_id
-    add_super_assessor(scheme_id: scheme_id)
+    add_super_assessor(scheme_id:)
     cepc_schema = "CEPC-8.0.0".freeze
     cepc_xml = Nokogiri.XML Samples.xml(cepc_schema, "cepc+rr")
-    call_lodge_assessment(scheme_id: scheme_id, schema_name: cepc_schema, xml_document: cepc_xml)
+    call_lodge_assessment(scheme_id:, schema_name: cepc_schema, xml_document: cepc_xml)
   end
 
   context "when calling update_statuses" do

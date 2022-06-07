@@ -19,7 +19,7 @@ describe "Acceptance::AssessmentAddressId", set_with_timecop: true do
 
     it "falls back to the RRN for the address_id when UPRN doesn't exist" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body)
+      add_assessor(scheme_id:, assessor_id: "SPEC000000", body: valid_assessor_request_body)
 
       lodge_assessment(
         assessment_body: cepc_xml_doc.to_xml,
@@ -42,7 +42,7 @@ describe "Acceptance::AssessmentAddressId", set_with_timecop: true do
 
     it "assign the same address ID to both assessments when when UPRN doesn't exist" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body)
+      add_assessor(scheme_id:, assessor_id: "SPEC000000", body: valid_assessor_request_body)
 
       lodge_assessment(
         assessment_body: cepc_xml_doc.to_xml,
@@ -71,7 +71,7 @@ describe "Acceptance::AssessmentAddressId", set_with_timecop: true do
 
     it "successfully saves the UPRN when it exists" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body)
+      add_assessor(scheme_id:, assessor_id: "SPEC000000", body: valid_assessor_request_body)
 
       cepc_xml_doc.at("//CEPC:UPRN").children = "UPRN-000000000001"
 
@@ -99,7 +99,7 @@ describe "Acceptance::AssessmentAddressId", set_with_timecop: true do
 
     it "assign the same address ID to both assessments when when UPRN doesn't exist" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body)
+      add_assessor(scheme_id:, assessor_id: "SPEC000000", body: valid_assessor_request_body)
 
       lodge_assessment(
         assessment_body: aircon_xml_doc.to_xml,

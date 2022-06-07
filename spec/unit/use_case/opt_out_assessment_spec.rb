@@ -4,7 +4,7 @@ describe UseCase::OptOutAssessment do
   subject(:use_case) do
     described_class.new(
       assessments_gateway: Gateway::AssessmentsGateway.new,
-      assessments_search_gateway: assessments_search_gateway,
+      assessments_search_gateway:,
       event_broadcaster: Events::Broadcaster.new,
     )
   end
@@ -26,10 +26,10 @@ describe UseCase::OptOutAssessment do
 
   before(:all) do
     scheme_id = add_scheme_and_get_id
-    add_super_assessor(scheme_id: scheme_id)
+    add_super_assessor(scheme_id:)
     cepc_schema = "CEPC-8.0.0".freeze
     cepc_xml = Nokogiri.XML Samples.xml(cepc_schema, "cepc+rr")
-    call_lodge_assessment(scheme_id: scheme_id, schema_name: cepc_schema, xml_document: cepc_xml)
+    call_lodge_assessment(scheme_id:, schema_name: cepc_schema, xml_document: cepc_xml)
   end
 
   context "when not having performed an update" do

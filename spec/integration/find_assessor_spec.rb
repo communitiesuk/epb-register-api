@@ -75,7 +75,7 @@ describe "Integration::FilterAndOrderAssessorsByPostcode" do
       scheme_id = authenticate_and { add_scheme_and_get_id }
 
       authenticate_and do
-        add_assessor(scheme_id: scheme_id, assessor_id: "SCHE423322", body: valid_assessor_request_body)
+        add_assessor(scheme_id:, assessor_id: "SCHE423322", body: valid_assessor_request_body)
       end
 
       populate_postcode_geolocation

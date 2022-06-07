@@ -1,10 +1,10 @@
 describe UseCase::ValidateAndLodgeAssessment do
   subject(:use_case) do
     described_class.new(
-      validate_assessment_use_case: validate_assessment_use_case,
+      validate_assessment_use_case:,
       lodge_assessment_use_case: instance_spy(UseCase::LodgeAssessment),
-      check_assessor_belongs_to_scheme_use_case: check_assessor_belongs_to_scheme_use_case,
-      check_approved_software_use_case: check_approved_software_use_case,
+      check_assessor_belongs_to_scheme_use_case:,
+      check_approved_software_use_case:,
     )
   end
 

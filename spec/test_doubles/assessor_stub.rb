@@ -29,7 +29,7 @@ class AssessorStub
         domesticSap: domestic_sap,
         nonDomesticSp3: non_domestic_sp3,
         nonDomesticCc4: non_domestic_cc4,
-        gda: gda,
+        gda:,
       },
       contactDetails: {
         telephoneNumber: "010199991010101",

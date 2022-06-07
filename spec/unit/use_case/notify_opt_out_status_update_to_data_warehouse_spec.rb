@@ -1,5 +1,5 @@
 describe UseCase::NotifyOptOutStatusUpdateToDataWarehouse do
-  subject(:use_case) { described_class.new(redis_gateway: redis_gateway) }
+  subject(:use_case) { described_class.new(redis_gateway:) }
 
   let(:redis_gateway) { instance_spy(Gateway::RedisGateway) }
 
@@ -8,7 +8,7 @@ describe UseCase::NotifyOptOutStatusUpdateToDataWarehouse do
   describe "#execute" do
     describe "happy paths" do
       before do
-        use_case.execute(assessment_id: assessment_id)
+        use_case.execute(assessment_id:)
       end
 
       it "calls down to the redis gateway to push to the queue" do
@@ -22,7 +22,7 @@ describe UseCase::NotifyOptOutStatusUpdateToDataWarehouse do
       end
 
       it "raises a could not complete error" do
-        expect { use_case.execute(assessment_id: assessment_id) }.to raise_error(UseCase::NotifyOptOutStatusUpdateToDataWarehouse::CouldNotCompleteError)
+        expect { use_case.execute(assessment_id:) }.to raise_error(UseCase::NotifyOptOutStatusUpdateToDataWarehouse::CouldNotCompleteError)
       end
     end
   end

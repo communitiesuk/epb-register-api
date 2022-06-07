@@ -42,7 +42,7 @@ describe Domain::AssessmentSearchResult do
   end
 
   describe ".to_hash" do
-    let(:domain) { described_class.new(arguments) }
+    let(:domain) { described_class.new(**arguments) }
 
     it "returns the expected data" do
       expect(domain.to_hash).to eq(expected_data)
@@ -63,7 +63,7 @@ describe Domain::AssessmentSearchResult do
     it "returns nil if created_at doesn't exist for lodgements prior to September 2020" do
       args_without_created_at = arguments
       args_without_created_at[:created_at] = nil
-      domain = described_class.new(args_without_created_at)
+      domain = described_class.new(**args_without_created_at)
 
       expect(domain.to_hash[:created_at]).to eq(nil)
     end

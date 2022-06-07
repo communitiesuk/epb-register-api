@@ -1,12 +1,19 @@
+GIT
+  remote: https://github.com/jstoks/wisper.git
+  revision: 1e7bb54b64a15db93fcae0d19ffcc5fdd2667158
+  branch: ruby-3-compat-drop-2-6
+  specs:
+    wisper (2.0.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
-    activemodel (7.0.2.3)
-      activesupport (= 7.0.2.3)
-    activerecord (7.0.2.3)
-      activemodel (= 7.0.2.3)
-      activesupport (= 7.0.2.3)
-    activesupport (7.0.2.3)
+    activemodel (7.0.3)
+      activesupport (= 7.0.3)
+    activerecord (7.0.3)
+      activemodel (= 7.0.3)
+      activesupport (= 7.0.3)
+    activesupport (7.0.3)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
@@ -15,13 +22,13 @@ GEM
       public_suffix (>= 2.0.2, < 5.0)
     ast (2.4.2)
     aws-eventstream (1.2.0)
-    aws-partitions (1.583.0)
-    aws-sdk-core (3.130.2)
+    aws-partitions (1.596.0)
+    aws-sdk-core (3.131.1)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.525.0)
       aws-sigv4 (~> 1.1)
-      jmespath (~> 1.0)
-    aws-sdk-kms (1.56.0)
+      jmespath (~> 1, >= 1.6.1)
+    aws-sdk-kms (1.57.0)
       aws-sdk-core (~> 3, >= 3.127.0)
       aws-sigv4 (~> 1.1)
     aws-sdk-s3 (1.114.0)
@@ -41,9 +48,9 @@ GEM
       activerecord (>= 5.a)
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
-    debase (0.2.4.1)
-      debase-ruby_core_source (>= 0.10.2)
-    debase-ruby_core_source (0.10.15)
+    debase (0.2.5.beta2)
+      debase-ruby_core_source (>= 0.10.12)
+    debase-ruby_core_source (0.10.16)
     diff-lcs (1.5.0)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
@@ -55,10 +62,10 @@ GEM
       zeitwerk (~> 2.4.2)
     et-orbi (1.2.7)
       tzinfo
-    faraday (2.2.0)
+    faraday (2.3.0)
       faraday-net_http (~> 2.0)
       ruby2_keywords (>= 0.0.4)
-    faraday-net_http (2.0.1)
+    faraday-net_http (2.0.3)
     ffi (1.15.5)
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
@@ -73,7 +80,7 @@ GEM
       http-cookie (~> 1.0)
       http-form_data (~> 2.2)
       llhttp-ffi (~> 0.4.0)
-    http-cookie (1.0.4)
+    http-cookie (1.0.5)
       domain_name (~> 0.5)
     http-form_data (2.3.0)
     i18n (1.10.0)
@@ -81,7 +88,7 @@ GEM
     jmespath (1.6.1)
     json-schema (3.0.0)
       addressable (>= 2.8)
-    jwt (2.3.0)
+    jwt (2.4.0)
     llhttp-ffi (0.4.0)
       ffi-compiler (~> 1.0)
       rake (~> 13.0)
@@ -106,7 +113,7 @@ GEM
       multi_json (~> 1.3)
       multi_xml (~> 0.5)
       rack (>= 1.2, < 3)
-    oj (3.13.11)
+    oj (3.13.14)
     ougai (2.0.0)
       oj (~> 3.10)
     parallel (1.22.1)
@@ -208,7 +215,7 @@ GEM
       concurrent-ruby (~> 1.0)
     unf (0.1.4)
       unf_ext
-    unf_ext (0.0.8.1)
+    unf_ext (0.0.8.2)
     unicode-display_width (2.1.0)
     unleash (4.2.1)
       murmurhash3 (~> 0.1.6)
@@ -216,7 +223,6 @@ GEM
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
-    wisper (2.0.1)
     wisper-rspec (1.1.0)
     zeitwerk (2.4.2)
 
@@ -226,7 +232,7 @@ PLATFORMS
 DEPENDENCIES
   aws-sdk-s3 (~> 1.114)
   database_cleaner
-  debase
+  debase (~> 0.2, >= 0.2.5.beta2)
   epb-auth-tools (~> 1.0.8)
   epb_view_models (~> 1.0.18, ~> 1.0)
   geocoder (~> 1.8.0)
@@ -257,12 +263,12 @@ DEPENDENCIES
   timecop (~> 0.9.5)
   unleash (~> 4.2.0)
   webmock (~> 3.14)
-  wisper (~> 2.0, >= 2.0.1)
+  wisper (~> 2.0.1)!
   wisper-rspec (~> 1.0, >= 1.0.1)
   zeitwerk (~> 2.4.1)
 
 RUBY VERSION
-   ruby 2.7.5p203
+   ruby 3.1.2p20
 
 BUNDLED WITH
-   2.2.32
+   2.3.15

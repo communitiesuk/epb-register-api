@@ -28,7 +28,7 @@ module Controller
 
       status = 200
       data = result.to_hash
-      json_api_response(code: status, data: data)
+      json_api_response(code: status, data:)
     rescue StandardError => e
       case e
       when Sinatra::NotFound

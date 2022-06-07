@@ -393,7 +393,7 @@ module Gateway
             end
 
           {
-            address_id: address_id,
+            address_id:,
             address_line1: results[entries.first]["address_line1"],
             address_line2: results[entries.first]["address_line2"],
             address_line3: results[entries.first]["address_line3"],

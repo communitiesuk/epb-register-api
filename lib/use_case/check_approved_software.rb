@@ -18,11 +18,11 @@ module UseCase
   private
 
     def domestic_software
-      @domestic_software ||= DomesticSoftwareList.new logger: logger
+      @domestic_software ||= DomesticSoftwareList.new logger:
     end
 
     def non_domestic_software
-      @non_domestic_software ||= NonDomesticSoftwareList.new logger: logger
+      @non_domestic_software ||= NonDomesticSoftwareList.new logger:
     end
 
     def domestic_schemas

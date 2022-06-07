@@ -14,13 +14,13 @@ describe Gateway::RelatedAssessmentsGateway do
 
     before(:all) do
       scheme_id = add_scheme_and_get_id
-      add_super_assessor(scheme_id: scheme_id)
+      add_super_assessor(scheme_id:)
       schema = "RdSAP-Schema-20.0.0"
       xml = Nokogiri.XML Samples.xml(schema)
       address_id = xml.at("UPRN").children.to_s
       related_assessment_ids.each do |assessment_id|
         xml.at("RRN").children = assessment_id
-        call_lodge_assessment scheme_id: scheme_id, schema_name: schema, xml_document: xml
+        call_lodge_assessment scheme_id:, schema_name: schema, xml_document: xml
       end
     end
 

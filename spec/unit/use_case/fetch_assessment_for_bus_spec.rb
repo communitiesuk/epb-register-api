@@ -1,5 +1,5 @@
 describe UseCase::FetchAssessmentForBus do
-  subject(:use_case) { described_class.new(bus_gateway: bus_gateway) }
+  subject(:use_case) { described_class.new(bus_gateway:) }
 
   let(:bus_gateway) { instance_double(Gateway::BoilerUpgradeSchemeGateway) }
 
@@ -55,7 +55,7 @@ describe UseCase::FetchAssessmentForBus do
     end
 
     it "returns an assessment bus details object from the gateway" do
-      expect(use_case.execute(rrn: rrn)).to eq existing_details
+      expect(use_case.execute(rrn:)).to eq existing_details
     end
   end
 
@@ -67,7 +67,7 @@ describe UseCase::FetchAssessmentForBus do
     end
 
     it "returns nil" do
-      expect(use_case.execute(rrn: rrn)).to be_nil
+      expect(use_case.execute(rrn:)).to be_nil
     end
   end
 end

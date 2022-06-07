@@ -136,7 +136,7 @@ describe "Acceptance::SearchForAssessor" do
       add_postcodes("SE1 7EZ")
       scheme_id = add_scheme_and_get_id
       add_assessor(
-        scheme_id: scheme_id,
+        scheme_id:,
         assessor_id: "ASSR999999",
         body: valid_assessor_with_contact_request_body,
       )
@@ -153,7 +153,7 @@ describe "Acceptance::SearchForAssessor" do
       scheme_id = add_scheme_and_get_id
 
       add_assessor(
-        scheme_id: scheme_id,
+        scheme_id:,
         assessor_id: "ASSR999999",
         body: valid_assessor_with_contact_request_body,
       )
@@ -205,7 +205,7 @@ describe "Acceptance::SearchForAssessor" do
       assessor = valid_assessor_with_contact_request_body
       assessor[:searchResultsComparisonPostcode] = "NE8 2BH"
       add_assessor(
-        scheme_id: scheme_id,
+        scheme_id:,
         assessor_id: "ASSR999999",
         body: valid_assessor_with_contact_request_body,
       )
@@ -226,7 +226,7 @@ describe "Acceptance::SearchForAssessor" do
       assessor = valid_assessor_with_contact_request_body
       assessor[:searchResultsComparisonPostcode] = "SW8 5BN"
       add_assessor(
-        scheme_id: scheme_id,
+        scheme_id:,
         assessor_id: "ASSR999999",
         body: valid_assessor_with_contact_request_body,
       )
@@ -247,7 +247,7 @@ describe "Acceptance::SearchForAssessor" do
       assessor = valid_assessor_with_contact_request_body
       assessor[:qualifications][:domesticRdSap] = "INACTIVE"
       add_assessor(
-        scheme_id: scheme_id,
+        scheme_id:,
         assessor_id: "ASSR999999",
         body: valid_assessor_with_contact_request_body,
       )
@@ -267,14 +267,14 @@ describe "Acceptance::SearchForAssessor" do
       assessor[:qualifications][:domesticRdSap] = "INACTIVE"
 
       add_assessor(
-        scheme_id: scheme_id,
+        scheme_id:,
         assessor_id: "ASSR999999",
         body: valid_assessor_with_contact_request_body,
       )
       assessor[:qualifications][:domesticRdSap] = "ACTIVE"
 
       add_assessor(
-        scheme_id: scheme_id,
+        scheme_id:,
         assessor_id: "ASSR999999",
         body: valid_assessor_with_contact_request_body,
       )
@@ -294,14 +294,14 @@ describe "Acceptance::SearchForAssessor" do
       assessor[:qualifications][:domesticRdSap] = "ACTIVE"
 
       add_assessor(
-        scheme_id: scheme_id,
+        scheme_id:,
         assessor_id: "ASSR999999",
         body: valid_assessor_with_contact_request_body,
       )
 
       assessor[:qualifications][:domesticRdSap] = "INACTIVE"
       add_assessor(
-        scheme_id: scheme_id,
+        scheme_id:,
         assessor_id: "ASSR999999",
         body: valid_assessor_with_contact_request_body,
       )
@@ -322,7 +322,7 @@ describe "Acceptance::SearchForAssessor" do
         assessor = valid_assessor_with_contact_request_body
         assessor[:searchResultsComparisonPostcode] = "SE1 5BN"
         add_assessor(
-          scheme_id: scheme_id,
+          scheme_id:,
           assessor_id: "ASSR999999",
           body: valid_assessor_with_contact_request_body,
         )
@@ -342,7 +342,7 @@ describe "Acceptance::SearchForAssessor" do
         assessor = valid_assessor_with_contact_request_body
         assessor[:searchResultsComparisonPostcode] = "SE1 5BN"
         add_assessor(
-          scheme_id: scheme_id,
+          scheme_id:,
           assessor_id: "ASSR999999",
           body: valid_assessor_with_contact_request_body,
         )
@@ -362,12 +362,12 @@ describe "Acceptance::SearchForAssessor" do
         sap_assessor = valid_assessor_with_contact_request_body.dup
         sap_assessor[:qualifications][:domesticSap] = "ACTIVE"
         sap_assessor[:qualifications][:domesticRdSap] = "INACTIVE"
-        add_assessor(scheme_id: scheme_id, assessor_id: "SAP_123456", body: sap_assessor)
+        add_assessor(scheme_id:, assessor_id: "SAP_123456", body: sap_assessor)
 
         rdsap_assessor = valid_assessor_with_contact_request_body.dup
         rdsap_assessor[:qualifications][:domesticSap] = "INACTIVE"
         rdsap_assessor[:qualifications][:domesticRdSap] = "ACTIVE"
-        add_assessor(scheme_id: scheme_id, assessor_id: "RDS_654321", body: rdsap_assessor)
+        add_assessor(scheme_id:, assessor_id: "RDS_654321", body: rdsap_assessor)
 
         response = assessors_search(postcode: "SE17EZ", qualification: "domesticSap")
         response_json = JSON.parse(response.body)
@@ -391,11 +391,11 @@ describe "Acceptance::SearchForAssessor" do
         assessor = valid_assessor_with_contact_request_body
         assessor[:qualifications][:domesticRdSap] = "INACTIVE"
         assessor[:qualifications][:nonDomesticSp3] = "ACTIVE"
-        add_assessor(scheme_id: scheme_id, assessor_id: "AC__123456", body: assessor)
+        add_assessor(scheme_id:, assessor_id: "AC__123456", body: assessor)
 
         assessor[:qualifications][:domesticRdSap] = "ACTIVE"
         assessor[:qualifications][:nonDomesticSp3] = "INACTIVE"
-        add_assessor(scheme_id: scheme_id, assessor_id: "RDS_654321", body: assessor)
+        add_assessor(scheme_id:, assessor_id: "RDS_654321", body: assessor)
 
         response = assessors_search(postcode: "SE17EZ", qualification: "nonDomesticSp3")
         response_json = JSON.parse(response.body)
@@ -419,12 +419,12 @@ describe "Acceptance::SearchForAssessor" do
         dec_assessor = valid_assessor_with_contact_request_body.dup
         dec_assessor[:qualifications][:nonDomesticDec] = "ACTIVE"
         dec_assessor[:qualifications][:domesticRdSap] = "INACTIVE"
-        add_assessor(scheme_id: scheme_id, assessor_id: "DEC_123456", body: dec_assessor)
+        add_assessor(scheme_id:, assessor_id: "DEC_123456", body: dec_assessor)
 
         rdsap_assessor = valid_assessor_with_contact_request_body.dup
         rdsap_assessor[:qualifications][:nonDomesticDec] = "INACTIVE"
         rdsap_assessor[:qualifications][:domesticRdSap] = "ACTIVE"
-        add_assessor(scheme_id: scheme_id, assessor_id: "RDS_654321", body: rdsap_assessor)
+        add_assessor(scheme_id:, assessor_id: "RDS_654321", body: rdsap_assessor)
 
         response = assessors_search(postcode: "SE17EZ", qualification: "nonDomesticDec")
         response_json = JSON.parse(response.body)
@@ -448,12 +448,12 @@ describe "Acceptance::SearchForAssessor" do
         nos3_assessor = valid_assessor_with_contact_request_body.dup
         nos3_assessor[:qualifications][:nonDomesticNos3] = "ACTIVE"
         nos3_assessor[:qualifications][:domesticRdSap] = "INACTIVE"
-        add_assessor(scheme_id: scheme_id, assessor_id: "NOS_123456", body: nos3_assessor)
+        add_assessor(scheme_id:, assessor_id: "NOS_123456", body: nos3_assessor)
 
         rdsap_assessor = valid_assessor_with_contact_request_body.dup
         rdsap_assessor[:qualifications][:nonDomesticNos3] = "INACTIVE"
         rdsap_assessor[:qualifications][:domesticRdSap] = "ACTIVE"
-        add_assessor(scheme_id: scheme_id, assessor_id: "RDS_654321", body: rdsap_assessor)
+        add_assessor(scheme_id:, assessor_id: "RDS_654321", body: rdsap_assessor)
 
         response = assessors_search(postcode: "SE17EZ", qualification: "nonDomesticNos3")
         response_json = JSON.parse(response.body)
@@ -477,12 +477,12 @@ describe "Acceptance::SearchForAssessor" do
         nos4_assessor = valid_assessor_with_contact_request_body.dup
         nos4_assessor[:qualifications][:nonDomesticNos4] = "ACTIVE"
         nos4_assessor[:qualifications][:domesticRdSap] = "INACTIVE"
-        add_assessor(scheme_id: scheme_id, assessor_id: "NOS_123456", body: nos4_assessor)
+        add_assessor(scheme_id:, assessor_id: "NOS_123456", body: nos4_assessor)
 
         rdsap_assessor = valid_assessor_with_contact_request_body.dup
         rdsap_assessor[:qualifications][:nonDomesticNos4] = "INACTIVE"
         rdsap_assessor[:qualifications][:domesticRdSap] = "ACTIVE"
-        add_assessor(scheme_id: scheme_id, assessor_id: "RDS_654321", body: rdsap_assessor)
+        add_assessor(scheme_id:, assessor_id: "RDS_654321", body: rdsap_assessor)
 
         response = assessors_search(postcode: "SE17EZ", qualification: "nonDomesticNos4")
         response_json = JSON.parse(response.body)
@@ -506,12 +506,12 @@ describe "Acceptance::SearchForAssessor" do
         nos5_assessor = valid_assessor_with_contact_request_body.dup
         nos5_assessor[:qualifications][:nonDomesticNos5] = "ACTIVE"
         nos5_assessor[:qualifications][:domesticRdSap] = "INACTIVE"
-        add_assessor(scheme_id: scheme_id, assessor_id: "NOS_123456", body: nos5_assessor)
+        add_assessor(scheme_id:, assessor_id: "NOS_123456", body: nos5_assessor)
 
         rdsap_assessor = valid_assessor_with_contact_request_body.dup
         rdsap_assessor[:qualifications][:nonDomesticNos5] = "INACTIVE"
         rdsap_assessor[:qualifications][:domesticRdSap] = "ACTIVE"
-        add_assessor(scheme_id: scheme_id, assessor_id: "RDS_654321", body: rdsap_assessor)
+        add_assessor(scheme_id:, assessor_id: "RDS_654321", body: rdsap_assessor)
 
         response = assessors_search(postcode: "SE17EZ", qualification: "nonDomesticNos5")
         response_json = JSON.parse(response.body)
@@ -535,11 +535,11 @@ describe "Acceptance::SearchForAssessor" do
         assessor = valid_assessor_with_contact_request_body
         assessor[:qualifications][:nonDomesticSp3] = "ACTIVE"
         assessor[:qualifications][:nonDomesticCc4] = "INACTIVE"
-        add_assessor(scheme_id: scheme_id, assessor_id: "AIR_123456", body: assessor)
+        add_assessor(scheme_id:, assessor_id: "AIR_123456", body: assessor)
 
         assessor[:qualifications][:nonDomesticSp3] = "INACTIVE"
         assessor[:qualifications][:nonDomesticCc4] = "ACTIVE"
-        add_assessor(scheme_id: scheme_id, assessor_id: "COMP654321", body: assessor)
+        add_assessor(scheme_id:, assessor_id: "COMP654321", body: assessor)
 
         response = assessors_search(postcode: "SE17EZ", qualification: "nonDomesticSp3,nonDomesticCc4")
         response_json = JSON.parse(response.body)
@@ -558,11 +558,11 @@ describe "Acceptance::SearchForAssessor" do
       add_postcodes("SE1 7EZ")
       scheme_id = add_scheme_and_get_id
       add_assessor(
-        scheme_id: scheme_id,
+        scheme_id:,
         assessor_id: "ASSR999999",
         body: valid_assessor_with_contact_request_body,
       )
-      update_scheme(scheme_id: scheme_id, body: { name: "Old scheme", active: false })
+      update_scheme(scheme_id:, body: { name: "Old scheme", active: false })
       response = assessors_search(postcode: "SE1 7EZ", qualification: "domesticRdSap")
       response_json = JSON.parse(response.body)
       expect(response_json["data"]["assessors"].size).to eq(0)

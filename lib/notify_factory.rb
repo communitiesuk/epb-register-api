@@ -7,7 +7,7 @@ class NotifyFactory
     save_audit_event_use_case.execute(Domain::AuditEvent.new(
                                         entity_type: :assessment,
                                         event_type: :lodgement,
-                                        entity_id: entity_id,
+                                        entity_id:,
                                         data: RequestModule.relevant_request_headers,
                                       ))
   end
@@ -16,7 +16,7 @@ class NotifyFactory
     save_audit_event_use_case.execute(Domain::AuditEvent.new(
                                         entity_type: :assessment,
                                         event_type: is_opt_out ? :opt_out : :opt_in,
-                                        entity_id: entity_id,
+                                        entity_id:,
                                         data: RequestModule.relevant_request_headers,
                                       ))
   end
@@ -25,7 +25,7 @@ class NotifyFactory
     save_audit_event_use_case.execute(Domain::AuditEvent.new(
                                         entity_type: :assessment,
                                         event_type: :cancelled,
-                                        entity_id: entity_id,
+                                        entity_id:,
                                         data: RequestModule.relevant_request_headers,
                                       ))
   end
@@ -34,7 +34,7 @@ class NotifyFactory
     save_audit_event_use_case.execute(Domain::AuditEvent.new(
                                         entity_type: :assessment,
                                         event_type: :address_id_updated,
-                                        entity_id: entity_id,
+                                        entity_id:,
                                         data: RequestModule.relevant_request_headers,
                                       ))
   end
@@ -43,8 +43,8 @@ class NotifyFactory
     save_audit_event_use_case.execute(Domain::AuditEvent.new(
                                         entity_type: :green_deal_plan,
                                         event_type: :green_deal_plan_added,
-                                        entity_id: entity_id,
-                                        data: merge_hash_to_json(json: RequestModule.relevant_request_headers, hash: { assessment_id: assessment_id }),
+                                        entity_id:,
+                                        data: merge_hash_to_json(json: RequestModule.relevant_request_headers, hash: { assessment_id: }),
                                       ))
   end
 
@@ -52,8 +52,8 @@ class NotifyFactory
     save_audit_event_use_case.execute(Domain::AuditEvent.new(
                                         entity_type: :green_deal_plan,
                                         event_type: :green_deal_plan_updated,
-                                        entity_id: entity_id,
-                                        data: merge_hash_to_json(json: RequestModule.relevant_request_headers, hash: { assessment_ids: assessment_ids }),
+                                        entity_id:,
+                                        data: merge_hash_to_json(json: RequestModule.relevant_request_headers, hash: { assessment_ids: }),
                                       ))
   end
 
@@ -61,8 +61,8 @@ class NotifyFactory
     save_audit_event_use_case.execute(Domain::AuditEvent.new(
                                         entity_type: :green_deal_plan,
                                         event_type: :green_deal_plan_deleted,
-                                        entity_id: entity_id,
-                                        data: merge_hash_to_json(json: RequestModule.relevant_request_headers, hash: { assessment_ids: assessment_ids }),
+                                        entity_id:,
+                                        data: merge_hash_to_json(json: RequestModule.relevant_request_headers, hash: { assessment_ids: }),
                                       ))
   end
 
@@ -70,7 +70,7 @@ class NotifyFactory
     save_audit_event_use_case.execute(Domain::AuditEvent.new(
                                         entity_type: :assessor,
                                         event_type: :added,
-                                        entity_id: entity_id,
+                                        entity_id:,
                                         data: RequestModule.relevant_request_headers,
                                       ))
   end

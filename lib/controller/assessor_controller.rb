@@ -337,7 +337,7 @@ module Controller
         ApiFactory.add_assessor_use_case.execute(
           Boundary::AssessorRequest.new(
             body: assessor_details,
-            scheme_assessor_id: scheme_assessor_id,
+            scheme_assessor_id:,
             registered_by_id: scheme_id,
           ),
           env[:auth_token].sub,

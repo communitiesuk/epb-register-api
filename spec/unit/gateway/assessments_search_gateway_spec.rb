@@ -5,7 +5,7 @@ describe Gateway::AssessmentsSearchGateway do
 
   before do
     scheme_id = add_scheme_and_get_id
-    add_super_assessor(scheme_id: scheme_id)
+    add_super_assessor(scheme_id:)
 
     domestic_rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
     lodge_assessment(

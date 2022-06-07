@@ -6,7 +6,7 @@ describe "UseCase::AssessmentSummary::Fetch", set_with_timecop: true do
   end
 
   context "when extracting summary assessment data for a single certificate" do
-    subject(:use_case) { UseCase::AssessmentSummary::Fetch.new(search_gateway: search_gateway, xml_gateway: xml_gateway) }
+    subject(:use_case) { UseCase::AssessmentSummary::Fetch.new(search_gateway:, xml_gateway:) }
 
     let(:search_gateway) do
       instance_double(Gateway::AssessmentsSearchGateway)
@@ -36,7 +36,7 @@ describe "UseCase::AssessmentSummary::Fetch", set_with_timecop: true do
     end
 
     before do
-      add_super_assessor(scheme_id: scheme_id)
+      add_super_assessor(scheme_id:)
 
       allow(search_gateway).to receive(:search_by_assessment_id).and_return(search_results)
       allow(xml_gateway).to receive(:fetch).and_return(xml_data)
@@ -60,7 +60,7 @@ describe "UseCase::AssessmentSummary::Fetch", set_with_timecop: true do
     end
 
     before do
-      add_super_assessor(scheme_id: scheme_id)
+      add_super_assessor(scheme_id:)
       domestic_rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
       domestic_rdsap_xml = set_xml_date(domestic_rdsap_xml, Time.now.prev_day(2).strftime("%Y-%m-%d"))
       lodge_assessment(
@@ -157,7 +157,7 @@ describe "UseCase::AssessmentSummary::Fetch", set_with_timecop: true do
     subject(:use_case) { UseCase::AssessmentSummary::Fetch.new }
 
     before do
-      add_super_assessor(scheme_id: scheme_id)
+      add_super_assessor(scheme_id:)
       domestic_rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
       domestic_rdsap_xml = set_xml_date(domestic_rdsap_xml, Time.now.prev_day(1).strftime("%Y-%m-%d"))
       lodge_assessment(
@@ -199,7 +199,7 @@ describe "UseCase::AssessmentSummary::Fetch", set_with_timecop: true do
     subject(:use_case) { UseCase::AssessmentSummary::Fetch.new }
 
     before do
-      add_super_assessor(scheme_id: scheme_id)
+      add_super_assessor(scheme_id:)
       sap = Nokogiri.XML(Samples.xml("SAP-Schema-18.0.0"))
 
       lodge_assessment(
@@ -231,7 +231,7 @@ describe "UseCase::AssessmentSummary::Fetch", set_with_timecop: true do
     subject(:use_case) { UseCase::AssessmentSummary::Fetch.new }
 
     before do
-      add_super_assessor(scheme_id: scheme_id)
+      add_super_assessor(scheme_id:)
       domestic_rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
       domestic_rdsap_xml = set_xml_date(domestic_rdsap_xml, Time.now.prev_day(2).strftime("%Y-%m-%d"))
       lodge_assessment(
@@ -274,7 +274,7 @@ describe "UseCase::AssessmentSummary::Fetch", set_with_timecop: true do
   end
 
   context "when extracting summary assessment data for a SAP 19" do
-    subject(:use_case) { UseCase::AssessmentSummary::Fetch.new(search_gateway: search_gateway, xml_gateway: xml_gateway) }
+    subject(:use_case) { UseCase::AssessmentSummary::Fetch.new(search_gateway:, xml_gateway:) }
 
     let(:search_gateway) do
       instance_double(Gateway::AssessmentsSearchGateway)
@@ -310,7 +310,7 @@ describe "UseCase::AssessmentSummary::Fetch", set_with_timecop: true do
     end
 
     before do
-      add_super_assessor(scheme_id: scheme_id)
+      add_super_assessor(scheme_id:)
       allow(search_gateway).to receive(:search_by_assessment_id).and_return(search_results)
       allow(xml_gateway).to receive(:fetch).and_return(xml_data)
     end

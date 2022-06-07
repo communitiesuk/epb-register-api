@@ -57,10 +57,10 @@ class DevAssessmentsHelper
       end
       xml_doc = update_xml(hash[:xml], type_of_assessment.downcase, id)
       data = { assessment_id: id,
-               assessor_id: assessor_id,
+               assessor_id:,
                raw_data: xml_doc.to_s,
                date_of_registration: Time.now.utc - 3600 * 24,
-               type_of_assessment: type_of_assessment,
+               type_of_assessment:,
                date_of_assessment: Time.now,
                date_of_expiry: Time.now + 10.years,
                current_energy_efficiency_rating: 1,
@@ -99,12 +99,12 @@ class DevAssessmentsHelper
         file_content = read_xml(schema, "rdsap")
       elsif split_sap_versions.include?(schema)
         file_content = read_xml(schema, "rdsap")
-        file_array << { xml: Nokogiri.XML(file_content), schema: schema }
+        file_array << { xml: Nokogiri.XML(file_content), schema: }
         file_content = read_xml(schema, "sap")
       else
         file_content = read_xml(schema, "epc")
       end
-      file_array << { xml: Nokogiri.XML(file_content), schema: schema }
+      file_array << { xml: Nokogiri.XML(file_content), schema: }
     end
     file_array + read_commercial_fixtures
   end

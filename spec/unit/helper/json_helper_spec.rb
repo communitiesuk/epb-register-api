@@ -26,12 +26,12 @@ describe Helper::JsonHelper do
 
     it "throws an error when validation doesnt match type" do
       schema = { type: "object", required: "firstName" }
-      expect { helper.convert_to_ruby_hash("4", schema: schema) }.to raise_error Boundary::Json::ValidationError
+      expect { helper.convert_to_ruby_hash("4", schema:) }.to raise_error Boundary::Json::ValidationError
     end
 
     it "throws an error exposing failed properties when a property constraint fails" do
       schema = { type: "object", required: %w[enum], properties: { enum: { type: "string", enum: %w[THIS THAT] } } }
-      expect { helper.convert_to_ruby_hash('{"enum":"ANOTHER"}', schema: schema) }.to raise_error do |error|
+      expect { helper.convert_to_ruby_hash('{"enum":"ANOTHER"}', schema:) }.to raise_error do |error|
         expect(error.failed_properties).to eq %w[enum]
       end
     end
@@ -96,11 +96,11 @@ describe Helper::JsonHelper do
       let(:json_both_fail) { '{"postcode":"A0","other":""}' }
 
       it "extracts the failed property when just the postcode fails" do
-        expect(helper.extract_failed_properties(schema: schema, json: json_just_postcode)).to eq %w[postcode]
+        expect(helper.extract_failed_properties(schema:, json: json_just_postcode)).to eq %w[postcode]
       end
 
       it "extracts both properties when two fail" do
-        expect(helper.extract_failed_properties(schema: schema, json: json_both_fail).sort).to eq %w[other postcode]
+        expect(helper.extract_failed_properties(schema:, json: json_both_fail).sort).to eq %w[other postcode]
       end
     end
   end

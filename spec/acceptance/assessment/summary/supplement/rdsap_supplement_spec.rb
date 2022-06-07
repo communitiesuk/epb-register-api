@@ -20,7 +20,7 @@ describe "Acceptance::AssessmentSummary::Supplement::RdSAP",
         domestic_rd_sap: "ACTIVE",
         domestic_sap: "ACTIVE",
       )
-    add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: assessor)
+    add_assessor(scheme_id:, assessor_id: "SPEC000000", body: assessor)
 
     # DATA SETUP:
     # 0000 = RdSAP with address ID UPRN-000000000000

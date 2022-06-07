@@ -80,7 +80,7 @@ describe "Acceptance::AddressSearch", set_with_timecop: true do
       end
 
       before do
-        add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: VALID_ASSESSOR_REQUEST_BODY)
+        add_assessor(scheme_id:, assessor_id: "SPEC000000", body: VALID_ASSESSOR_REQUEST_BODY)
 
         lodge_assessment(
           assessment_body: Samples.xml("RdSAP-Schema-20.0.0"),

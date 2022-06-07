@@ -39,8 +39,8 @@ describe "JsonExport" do
 
     it "initialises the storage gateway with task parameters" do
       expect(ApiFactory).to receive(:storage_gateway).with(
-        bucket_name: bucket_name,
-        instance_name: instance_name,
+        bucket_name:,
+        instance_name:,
       )
       expect { task.invoke }.not_to raise_error
     end

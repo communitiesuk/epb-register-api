@@ -12,7 +12,6 @@ class HttpStub
       "https://test-bucket.s3.eu-west-2.amazonaws.com/#{key}",
     ).to_return status: code,
                 body:
-                                                                                                   body
   end
 
   def self.s3_put_csv(file_name)
@@ -138,12 +137,12 @@ class HttpStub
         "http://test-register/api/assessments/#{assessment_id}/status",
       )
       .with(
-        body: JSON.generate(status: status),
+        body: JSON.generate(status:),
         headers: {
           "Authorization" => "Bearer #{OAUTH_TOKEN}",
         },
       ).to_return status: 200,
-                  body: JSON.generate(status: status),
+                  body: JSON.generate(status:),
                   headers: {
                     "Content-Type" => "application/json",
                   }
@@ -158,7 +157,7 @@ class HttpStub
         "http://test-register/api/assessments/#{assessment_id}/status",
       )
       .with(
-        body: JSON.generate(status: status),
+        body: JSON.generate(status:),
         headers: {
           "Authorization" => "Bearer #{OAUTH_TOKEN}",
         },

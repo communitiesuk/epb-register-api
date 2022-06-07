@@ -71,7 +71,7 @@ describe UseCase::ExportOpenDataCepcrr do
         rr_minus_cepc_xml_id = rr_minus_cepc_xml.at("//CEPC:RRN")
 
         add_assessor(
-          scheme_id: scheme_id,
+          scheme_id:,
           assessor_id: "SPEC000000",
           body: AssessorStub.new.fetch_request_body(
             non_domestic_nos3: "ACTIVE",

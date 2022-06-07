@@ -1,5 +1,5 @@
 describe UseCase::CheckSchemaVersion do
-  subject(:use_case) { described_class.new(logger: logger) }
+  subject(:use_case) { described_class.new(logger:) }
 
   let(:logger) { instance_spy Logger }
 

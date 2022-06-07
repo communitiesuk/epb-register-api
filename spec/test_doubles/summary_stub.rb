@@ -21,7 +21,7 @@ class SummaryStub
                  postcode: "A0 0AA" },
       assessor: { first_name: "Someone",
                   last_name: "Person",
-                  registered_by: { name: "test scheme", scheme_id: scheme_id },
+                  registered_by: { name: "test scheme", scheme_id: },
                   scheme_assessor_id: "SPEC000000",
                   contact_details: { email: "a@b.c", telephone_number: "0555 497 2848" },
                   search_results_comparison_postcode: "",
@@ -197,7 +197,7 @@ class SummaryStub
       assessor:
        { first_name: "Someone",
          last_name: "Person",
-         registered_by: { name: "test scheme", scheme_id: scheme_id },
+         registered_by: { name: "test scheme", scheme_id: },
          scheme_assessor_id: "SPEC000000",
          contact_details: { email: "a@b.c", telephone_number: "111222333" },
          search_results_comparison_postcode: "",

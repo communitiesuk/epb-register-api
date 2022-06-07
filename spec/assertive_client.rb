@@ -23,9 +23,9 @@ def assertive_request(
   response =
     if should_authenticate
       if auth_data
-        authenticate_with_data(scopes: scopes, data: auth_data, &block)
+        authenticate_with_data(scopes:, data: auth_data, &block)
       else
-        authenticate_with_data(scopes: scopes, &block)
+        authenticate_with_data(scopes:, &block)
       end
     else
       yield
@@ -43,28 +43,28 @@ def assertive_put(
 )
 
   assertive_request(
-    accepted_responses: accepted_responses,
-    should_authenticate: should_authenticate,
-    auth_data: auth_data,
-    scopes: scopes,
+    accepted_responses:,
+    should_authenticate:,
+    auth_data:,
+    scopes:,
   ) { put(path, body.to_json) }
 end
 
 def assertive_delete(path, accepted_responses:, should_authenticate:, auth_data:, scopes:)
   assertive_request(
-    accepted_responses: accepted_responses,
-    should_authenticate: should_authenticate,
-    auth_data: auth_data,
-    scopes: scopes,
+    accepted_responses:,
+    should_authenticate:,
+    auth_data:,
+    scopes:,
   ) { delete(path) }
 end
 
 def assertive_get(path, scopes: [], accepted_responses: [200], should_authenticate: true, auth_data: {})
   assertive_request(
-    accepted_responses: accepted_responses,
-    should_authenticate: should_authenticate,
-    auth_data: auth_data,
-    scopes: scopes,
+    accepted_responses:,
+    should_authenticate:,
+    auth_data:,
+    scopes:,
   ) { get(path) }
 end
 
@@ -79,10 +79,10 @@ def assertive_post(
 )
   body = body.to_json if json
   assertive_request(
-    accepted_responses: accepted_responses,
-    should_authenticate: should_authenticate,
-    auth_data: auth_data,
-    scopes: scopes,
+    accepted_responses:,
+    should_authenticate:,
+    auth_data:,
+    scopes:,
   ) { post(path, body) }
 end
 
@@ -93,7 +93,7 @@ def fetch_assessors(
 )
   assertive_get(
     "/api/schemes/#{scheme_id}/assessors",
-    scopes: scopes,
+    scopes:,
     **assertive_client_kwargs,
   )
 end
@@ -108,8 +108,8 @@ def fetch_assessor(
   auth_data ||= { 'scheme_ids': [scheme_id] }
   assertive_get(
     "/api/schemes/#{scheme_id}/assessors/#{assessor_id}",
-    auth_data: auth_data,
-    scopes: scopes,
+    auth_data:,
+    scopes:,
     **assertive_kwargs,
   )
 end
@@ -128,8 +128,8 @@ def fetch_assessor_current_status(
   assertive_get(
     "/api/assessors?firstName=#{first_name}&lastName=#{last_name}" +
       date_of_birth_param,
-    scopes: scopes,
-    auth_data: auth_data,
+    scopes:,
+    auth_data:,
     **assertive_kwargs,
   )
 end
@@ -144,8 +144,8 @@ def fetch_assessors_updated_status(
   auth_data ||= { 'scheme_ids': [scheme_id] }
   assertive_get(
     "/api/reports/#{scheme_id}/assessors/status?date=" + date,
-    auth_data: auth_data,
-    scopes: scopes,
+    auth_data:,
+    scopes:,
     **assertive_kwargs,
   )
 end
@@ -162,10 +162,10 @@ def add_assessor(
   auth_data ||= { 'scheme_ids': [scheme_id] }
   assertive_put(
     "/api/schemes/#{scheme_id}/assessors/#{assessor_id}",
-    body: body,
-    accepted_responses: accepted_responses,
-    auth_data: auth_data,
-    scopes: scopes,
+    body:,
+    accepted_responses:,
+    auth_data:,
+    scopes:,
     **assertive_kwargs,
   )
 end
@@ -178,9 +178,9 @@ def add_scheme(
 )
   assertive_post(
     "/api/schemes",
-    body: { name: name, active: true },
-    accepted_responses: accepted_responses,
-    scopes: scopes,
+    body: { name:, active: true },
+    accepted_responses:,
+    scopes:,
     **assertive_kwargs,
   )
 end
@@ -194,9 +194,9 @@ def update_scheme(
 )
   assertive_put(
     "/api/schemes/#{scheme_id}",
-    body: body,
-    accepted_responses: accepted_responses,
-    scopes: scopes,
+    body:,
+    accepted_responses:,
+    scopes:,
     **assertive_kwargs,
   )
 end
@@ -211,11 +211,11 @@ def add_green_deal_plan(
 )
   assertive_post(
     "/api/greendeal/disclosure/assessments/#{assessment_id}/plans",
-    body: body,
-    accepted_responses: accepted_responses,
+    body:,
+    accepted_responses:,
     should_authenticate: authenticate,
-    auth_data: auth_data,
-    scopes: scopes,
+    auth_data:,
+    scopes:,
   )
 end
 
@@ -229,11 +229,11 @@ def update_green_deal_plan(
 )
   assertive_put(
     "/api/greendeal/disclosure/plans/#{plan_id}",
-    body: body,
-    accepted_responses: accepted_responses,
+    body:,
+    accepted_responses:,
     should_authenticate: authenticate,
-    auth_data: auth_data,
-    scopes: scopes,
+    auth_data:,
+    scopes:,
   )
 end
 
@@ -246,10 +246,10 @@ def delete_green_deal_plan(
 )
   assertive_delete(
     "/api/greendeal/disclosure/plans/#{plan_id}",
-    accepted_responses: accepted_responses,
+    accepted_responses:,
     should_authenticate: authenticate,
-    auth_data: auth_data,
-    scopes: scopes,
+    auth_data:,
+    scopes:,
   )
 end
 
@@ -262,10 +262,10 @@ def fetch_green_deal_assessment_xml(
 )
   assertive_get(
     "/api/greendeal/assessments/#{assessment_id}/xml",
-    accepted_responses: accepted_responses,
+    accepted_responses:,
     should_authenticate: authenticate,
-    auth_data: auth_data,
-    scopes: scopes,
+    auth_data:,
+    scopes:,
   )
 end
 
@@ -278,10 +278,10 @@ def fetch_green_deal_assessment(
 )
   assertive_get(
     "/api/greendeal/assessments/#{assessment_id}",
-    accepted_responses: accepted_responses,
+    accepted_responses:,
     should_authenticate: authenticate,
-    auth_data: auth_data,
-    scopes: scopes,
+    auth_data:,
+    scopes:,
   )
 end
 
@@ -319,11 +319,11 @@ def lodge_assessment(
   assertive_post(
     path,
     body: assessment_body,
-    accepted_responses: accepted_responses,
+    accepted_responses:,
     should_authenticate: authenticate,
-    auth_data: auth_data,
-    scopes: scopes,
-    json: json,
+    auth_data:,
+    scopes:,
+    json:,
   )
 end
 
@@ -341,10 +341,10 @@ def update_assessment_status(
   assertive_post(
     path,
     body: assessment_status_body,
-    accepted_responses: accepted_responses,
+    accepted_responses:,
     should_authenticate: authenticate,
-    auth_data: auth_data,
-    scopes: scopes,
+    auth_data:,
+    scopes:,
     json: true,
   )
 end
@@ -355,9 +355,9 @@ def add_scheme_and_get_id(
   should_authenticate: true
 )
   JSON.parse(add_scheme(
-    name: name,
-    accepted_responses: accepted_responses,
-    should_authenticate: should_authenticate,
+    name:,
+    accepted_responses:,
+    should_authenticate:,
   ).body)["data"]["schemeId"]
 end
 
@@ -365,14 +365,14 @@ def add_scheme_then_assessor(body:, accepted_responses: [200, 201])
   add_assessor(
     scheme_id: add_scheme_and_get_id,
     assessor_id: "ACME123456",
-    body: body,
-    accepted_responses: accepted_responses,
+    body:,
+    accepted_responses:,
   )
 end
 
 def add_super_assessor(scheme_id:)
   add_assessor(
-    scheme_id: scheme_id,
+    scheme_id:,
     assessor_id: "SPEC000000",
     body: AssessorStub.new.fetch_request_body(
       non_domestic_nos3: "ACTIVE",
@@ -397,9 +397,9 @@ def call_lodge_assessment(scheme_id:, schema_name:, xml_document:, migrated: nil
     },
     scopes: %w[assessment:lodge migrate:assessment],
     override: true,
-    schema_name: schema_name,
-    migrated: migrated,
-    ensure_uprns: ensure_uprns,
+    schema_name:,
+    migrated:,
+    ensure_uprns:,
   )
 end
 
@@ -413,7 +413,7 @@ def fetch_renewable_heat_incentive(
 
   assertive_get(
     "api/greendeal/rhi/assessments/#{assessment_id}/latest",
-    scopes: scopes,
+    scopes:,
     **assertive_kwargs,
   )
 end
@@ -428,7 +428,7 @@ def fetch_assessment(
 
   assertive_get(
     "api/assessments/#{id}",
-    scopes: scopes,
+    scopes:,
     **assertive_kwargs,
   )
 end
@@ -440,7 +440,7 @@ def fetch_assessment_summary(
 )
   assertive_get(
     "api/assessments/#{id}/summary",
-    scopes: scopes,
+    scopes:,
     **assertive_kwargs,
   )
 end
@@ -452,7 +452,7 @@ def fetch_dec_summary(
 )
   assertive_get(
     "api/dec_summary/#{assessment_id}",
-    scopes: scopes,
+    scopes:,
     **assertive_kwargs,
   )
 end
@@ -472,7 +472,7 @@ def assessments_search_by_postcode(
 
   assertive_get(
     path,
-    scopes: scopes,
+    scopes:,
     **assertive_kwargs,
   )
 end
@@ -484,7 +484,7 @@ def domestic_assessments_search_by_assessment_id(
 )
   assertive_get(
     "/api/assessments/search?assessment_id=#{assessment_id}",
-    scopes: scopes,
+    scopes:,
     **assertive_kwargs,
   )
 end
@@ -504,7 +504,7 @@ def assessments_search_by_street_name_and_town(
 
   assertive_get(
     path,
-    scopes: scopes,
+    scopes:,
     **assertive_kwargs,
   )
 end
@@ -517,7 +517,7 @@ def assessors_search(
 )
   assertive_get(
     "/api/assessors?postcode=#{postcode}&qualification=#{qualification}",
-    scopes: scopes,
+    scopes:,
     **assertive_kwargs,
   )
 end
@@ -530,7 +530,7 @@ def assessors_search_by_name(
 )
   assertive_get(
     "/api/assessors?name=#{name}&qualificationType=#{qualification_type}",
-    scopes: scopes,
+    scopes:,
     **assertive_kwargs,
   )
 end
@@ -543,7 +543,7 @@ def bus_details_by_address(
 )
   assertive_get(
     "/api/bus/assessments/latest/search?postcode=#{postcode}&buildingNameOrNumber=#{building_name_or_number}",
-    scopes: scopes,
+    scopes:,
     **assertive_kwargs,
   )
 end
@@ -555,7 +555,7 @@ def bus_details_by_uprn(
 )
   assertive_get(
     "/api/bus/assessments/latest/search?uprn=#{uprn}",
-    scopes: scopes,
+    scopes:,
     **assertive_kwargs,
   )
 end
@@ -567,7 +567,7 @@ def bus_details_by_rrn(
 )
   assertive_get(
     "/api/bus/assessments/latest/search?rrn=#{rrn}",
-    scopes: scopes,
+    scopes:,
     **assertive_kwargs,
   )
 end
@@ -579,7 +579,7 @@ def bus_details_by_arbitrary_params(
 )
   assertive_get(
     "/api/bus/assessments/latest/search?#{URI.encode_www_form(params)}",
-    scopes: scopes,
+    scopes:,
     **assertive_kwargs,
   )
 end
@@ -591,7 +591,7 @@ def hera_details_by_rrn(
 )
   assertive_get(
     "/api/retrofit-advice/assessments/#{rrn}",
-    scopes: scopes,
+    scopes:,
     **assertive_kwargs,
   )
 end
@@ -603,7 +603,7 @@ def find_domestic_epcs_with_params(
 )
   assertive_get(
     "/api/assessments/domestic-epcs/search?#{URI.encode_www_form(params)}",
-    scopes: scopes,
+    scopes:,
     **assertive_kwargs,
   )
 end
@@ -614,7 +614,7 @@ def schemes_list(
 )
   assertive_get(
     "/api/schemes",
-    scopes: scopes,
+    scopes:,
     **assertive_kwargs,
   )
 end
@@ -626,7 +626,7 @@ def address_search_by_id(
 )
   assertive_get(
     "/api/search/addresses?addressId=#{address_id}",
-    scopes: scopes,
+    scopes:,
     **assertive_kwargs,
   )
 end
@@ -638,7 +638,7 @@ def address_search_by_postcode(
 )
   assertive_get(
     "/api/search/addresses?postcode=#{postcode}",
-    scopes: scopes,
+    scopes:,
     **assertive_kwargs,
   )
 end
@@ -666,10 +666,10 @@ def get_assessment_report(
 
   assertive_get(
     url,
-    accepted_responses: accepted_responses,
+    accepted_responses:,
     should_authenticate: authenticate,
-    auth_data: auth_data,
-    scopes: scopes,
+    auth_data:,
+    scopes:,
   )
 end
 
@@ -682,7 +682,7 @@ def opt_out_assessment(
   assertive_put(
     "/api/assessments/#{assessment_id}/opt-out",
     body: { "optOut": opt_out },
-    scopes: scopes,
+    scopes:,
     accepted_responses: [200],
     **assertive_kwargs,
   )
@@ -698,8 +698,8 @@ def update_assessment_address_id(
   assertive_put(
     "/api/assessments/#{assessment_id}/address-id",
     body: { "addressId": new_address_id },
-    accepted_responses: accepted_responses,
-    scopes: scopes,
+    accepted_responses:,
+    scopes:,
     **assertive_kwargs,
   )
 end
@@ -713,10 +713,10 @@ def fetch_assessment_meta_data(
 
   assertive_get(
     "/api/assessments/#{assessment_id}/meta-data",
-    accepted_responses: accepted_responses,
+    accepted_responses:,
     should_authenticate: authenticate,
-    auth_data: auth_data,
-    scopes: scopes,
+    auth_data:,
+    scopes:,
   )
 end
 
@@ -728,10 +728,10 @@ def fetch_statistics(
 
   assertive_get(
     "/api/statistics",
-    accepted_responses: accepted_responses,
+    accepted_responses:,
     should_authenticate: authenticate,
-    auth_data: auth_data,
-    scopes: scopes,
+    auth_data:,
+    scopes:,
   )
 end
 
@@ -744,10 +744,10 @@ def fetch_statistics_new(
 
   assertive_get(
     "/api/statistics/new",
-    accepted_responses: accepted_responses,
+    accepted_responses:,
     should_authenticate: authenticate,
-    auth_data: auth_data,
-    scopes: scopes,
+    auth_data:,
+    scopes:,
   )
 end
 
@@ -755,6 +755,6 @@ def assertive_get_in_search_scope(path, accepted_responses: [200])
   assertive_get(
     path,
     scopes: %w[address:search],
-    accepted_responses: accepted_responses,
+    accepted_responses:,
   )
 end

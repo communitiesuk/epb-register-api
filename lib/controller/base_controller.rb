@@ -75,15 +75,15 @@ module Controller
     end
 
     def xml_request_body(schema)
-      @xml_helper.convert_to_hash(request.body.read.to_s, schema: schema)
+      @xml_helper.convert_to_hash(request.body.read.to_s, schema:)
     end
 
     def params_body(schema)
-      @json_helper.convert_to_ruby_hash(params.to_json, schema: schema)
+      @json_helper.convert_to_ruby_hash(params.to_json, schema:)
     end
 
     def request_body(schema)
-      @json_helper.convert_to_ruby_hash(request.body.read.to_s, schema: schema)
+      @json_helper.convert_to_ruby_hash(request.body.read.to_s, schema:)
     end
 
     def relevant_request_headers(request)
@@ -112,7 +112,7 @@ module Controller
         data[burrow_key] = meta.delete(data_key)
       end
 
-      json_response({ data: data, meta: meta }, code)
+      json_response({ data:, meta: }, code)
     end
 
     def xml_response(xml, code = 200)
@@ -125,7 +125,7 @@ module Controller
     end
 
     def error_response(response_code, error_code, title)
-      json_response({ errors: [{ code: error_code, title: title }] }, response_code)
+      json_response({ errors: [{ code: error_code, title: }] }, response_code)
     end
 
     def server_error(exception)
@@ -134,7 +134,7 @@ module Controller
       message =
         exception.methods.include?(:message) ? exception.message : exception
 
-      error = { type: exception.class.name, message: message }
+      error = { type: exception.class.name, message: }
 
       if exception.methods.include? :backtrace
         error[:backtrace] = exception.backtrace
@@ -156,7 +156,7 @@ module Controller
     end
 
     def forbidden(error_code, title, code = 403)
-      halt json_response({ errors: [{ code: error_code, title: title }] }, code)
+      halt json_response({ errors: [{ code: error_code, title: }] }, code)
     end
 
     def boolean_parameter_true?(key)

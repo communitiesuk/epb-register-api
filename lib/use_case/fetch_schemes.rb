@@ -6,7 +6,7 @@ module UseCase
 
     def execute
       schemes = @gateway.all
-      { schemes: schemes }
+      { schemes: }
     end
   end
 end

@@ -56,7 +56,7 @@ describe "Acceptance::Reports::GetAssessmentRRNsBySchemeNameAndType" do
     before do
       Timecop.freeze(2021, 6, 21, 10)
 
-      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body)
+      add_assessor(scheme_id:, assessor_id: "SPEC000000", body: valid_assessor_request_body)
 
       doc = Nokogiri.XML valid_rdsap_xml
       doc.at("RRN").content = "0000-0000-0000-0000-0000"

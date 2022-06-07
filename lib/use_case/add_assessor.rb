@@ -1,6 +1,6 @@
 module UseCase
   class AddAssessor
-    ASSESSOR_ID_REGEX = /[A-Z\/_]{4}[0-9]{6}/.freeze
+    ASSESSOR_ID_REGEX = /[A-Z\/_]{4}[0-9]{6}/
 
     class SchemeNotFoundException < StandardError
     end
@@ -108,7 +108,7 @@ module UseCase
               qualification_type: qualification,
               previous_status: status,
               new_status: new_qualifications[qualification],
-              auth_client_id: auth_client_id,
+              auth_client_id:,
             ),
           )
         end
@@ -117,7 +117,7 @@ module UseCase
                                      assessor_id: assessor.scheme_assessor_id)
       end
 
-      { assessor_was_newly_created: existing_assessor.nil?, assessor: assessor }
+      { assessor_was_newly_created: existing_assessor.nil?, assessor: }
     end
   end
 end

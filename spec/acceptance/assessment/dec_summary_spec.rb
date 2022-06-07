@@ -5,7 +5,7 @@ describe "Acceptance::DECSummary", set_with_timecop: true do
   let(:scheme_id) do
     scheme_id = add_scheme_and_get_id
     add_assessor(
-      scheme_id: scheme_id,
+      scheme_id:,
       assessor_id: "SPEC000000",
       body: fetch_assessor_stub.fetch_request_body(
         non_domestic_dec: "ACTIVE",

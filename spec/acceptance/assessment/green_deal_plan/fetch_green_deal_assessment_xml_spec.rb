@@ -19,7 +19,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessmentXml",
     end
 
     assessor = AssessorStub.new.fetch_request_body(**assessor_qualifications)
-    add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: assessor)
+    add_assessor(scheme_id:, assessor_id: "SPEC000000", body: assessor)
 
     lodge_assessment(
       assessment_body: xml,

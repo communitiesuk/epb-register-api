@@ -5,7 +5,7 @@ describe "AddressMatching" do
 
   before(:all) do
     scheme_id = add_scheme_and_get_id
-    add_super_assessor(scheme_id: scheme_id)
+    add_super_assessor(scheme_id:)
 
     rdsap_schema = "RdSAP-Schema-19.0".freeze
     sap_schema = "SAP-Schema-17.0".freeze
@@ -18,8 +18,8 @@ describe "AddressMatching" do
     sap_xml.at("RRN").children = "0000-0000-0000-0000-0002"
     sap_xml.at("UPRN").children = "0000000001"
 
-    call_lodge_assessment(scheme_id: scheme_id, schema_name: rdsap_schema, xml_document: rdsap_xml, migrated: true)
-    call_lodge_assessment(scheme_id: scheme_id, schema_name: sap_schema, xml_document: sap_xml, migrated: true)
+    call_lodge_assessment(scheme_id:, schema_name: rdsap_schema, xml_document: rdsap_xml, migrated: true)
+    call_lodge_assessment(scheme_id:, schema_name: sap_schema, xml_document: sap_xml, migrated: true)
 
     HttpStub.enable_webmock
   end

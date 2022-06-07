@@ -19,7 +19,7 @@ module UseCase
 
       loose_match = false
 
-      response = @assessor_gateway.search_by(name: name, qualification_type: qualification_type, max_response_size: 0)
+      response = @assessor_gateway.search_by(name:, qualification_type:, max_response_size: 0)
 
       if response.size <= max_response_size
         excluded = []
@@ -29,8 +29,8 @@ module UseCase
 
         second_response =
           @assessor_gateway.search_by(
-            name: name,
-            qualification_type: qualification_type,
+            name:,
+            qualification_type:,
             max_response_size: 0,
             loose_match: true,
             exclude: excluded,
@@ -45,7 +45,7 @@ module UseCase
         end
       end
 
-      { data: response, search_name: name, loose_match: loose_match }
+      { data: response, search_name: name, loose_match: }
     end
   end
 end

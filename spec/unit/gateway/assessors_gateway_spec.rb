@@ -22,7 +22,7 @@ describe Gateway::AssessorsGateway do
                         non_domestic_nos4: "INACTIVE",
                         non_domestic_nos5: "INACTIVE",
                         non_domestic_sp3: "INACTIVE" },
-      registered_by: { name: "test scheme", scheme_id: scheme_id },
+      registered_by: { name: "test scheme", scheme_id: },
       scheme_assessor_id: "ASSR999999",
       search_results_comparison_postcode: "",
     }
@@ -45,7 +45,7 @@ describe Gateway::AssessorsGateway do
                         non_domestic_nos4: "ACTIVE",
                         non_domestic_nos5: "ACTIVE",
                         non_domestic_sp3: "INACTIVE" },
-      registered_by: { name: "test scheme", scheme_id: scheme_id },
+      registered_by: { name: "test scheme", scheme_id: },
       scheme_assessor_id: "ASSR000000",
       search_results_comparison_postcode: "",
     }
@@ -68,7 +68,7 @@ describe Gateway::AssessorsGateway do
                         non_domestic_nos4: "INACTIVE",
                         non_domestic_nos5: "INACTIVE",
                         non_domestic_sp3: "INACTIVE" },
-      registered_by: { name: "test scheme", scheme_id: scheme_id },
+      registered_by: { name: "test scheme", scheme_id: },
       scheme_assessor_id: "ASSR888888",
       search_results_comparison_postcode: "",
     }
@@ -78,7 +78,7 @@ describe Gateway::AssessorsGateway do
     before(:all) do
       scheme_id = add_scheme_and_get_id
       add_assessor(
-        scheme_id: scheme_id,
+        scheme_id:,
         assessor_id: "ASSR999999",
         body: AssessorStub.new.fetch_request_body(
           domestic_rd_sap: "ACTIVE",
@@ -93,7 +93,7 @@ describe Gateway::AssessorsGateway do
         ),
       )
       add_assessor(
-        scheme_id: scheme_id,
+        scheme_id:,
         assessor_id: "ASSR000000",
         body: AssessorStub.new.fetch_request_body(
           domestic_rd_sap: "INACTIVE",
@@ -129,7 +129,7 @@ describe Gateway::AssessorsGateway do
 
       it "does not return assessors with only active green deal plan qualifications in both searches" do
         add_assessor(
-          scheme_id: scheme_id,
+          scheme_id:,
           assessor_id: "ASSR888888",
           body: AssessorStub.new.fetch_request_body(
             domestic_rd_sap: "INACTIVE",

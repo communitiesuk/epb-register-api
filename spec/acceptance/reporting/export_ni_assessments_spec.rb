@@ -4,7 +4,7 @@ describe "Acceptance::Reports::ExportNIAssessments" do
   context "when exporting the exporting the domestic data to a csv before the rake is called" do
     let(:ni_gateway) { instance_double(Gateway::ExportNiGateway) }
     let(:xml_gateway) { instance_double(Gateway::AssessmentsXmlGateway) }
-    let(:use_case) { UseCase::ExportNiAssessments.new(export_ni_gateway: ni_gateway, xml_gateway: xml_gateway) }
+    let(:use_case) { UseCase::ExportNiAssessments.new(export_ni_gateway: ni_gateway, xml_gateway:) }
 
     let(:csv_data) do
       Helper::ExportHelper.to_csv(
@@ -57,7 +57,7 @@ describe "Acceptance::Reports::ExportNIAssessments" do
   context "when exporting the exporting the commercial data to a csv before the rake is called" do
     let(:ni_gateway) { instance_double(Gateway::ExportNiGateway) }
     let(:xml_gateway) { instance_double(Gateway::AssessmentsXmlGateway) }
-    let(:use_case) { UseCase::ExportNiAssessments.new(export_ni_gateway: ni_gateway, xml_gateway: xml_gateway) }
+    let(:use_case) { UseCase::ExportNiAssessments.new(export_ni_gateway: ni_gateway, xml_gateway:) }
 
     let(:csv_data) do
       Helper::ExportHelper.to_csv(

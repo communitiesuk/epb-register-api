@@ -5,12 +5,12 @@ describe "LinkedAssessments" do
 
   before(:all) do
     scheme_id = add_scheme_and_get_id
-    add_super_assessor(scheme_id: scheme_id)
+    add_super_assessor(scheme_id:)
 
     cepc_schema = "CEPC-8.0.0".freeze
 
     cepc_xml = Nokogiri.XML Samples.xml(cepc_schema, "cepc+rr")
-    call_lodge_assessment(scheme_id: scheme_id, schema_name: cepc_schema, xml_document: cepc_xml, ensure_uprns: false)
+    call_lodge_assessment(scheme_id:, schema_name: cepc_schema, xml_document: cepc_xml, ensure_uprns: false)
   end
 
   context "when the task runs without any address ID mismatch" do

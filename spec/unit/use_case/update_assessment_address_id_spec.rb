@@ -1,10 +1,10 @@
 describe UseCase::UpdateAssessmentAddressId do
   subject(:use_case) do
     described_class.new(
-      address_base_gateway: address_base_gateway,
-      assessments_address_id_gateway: assessments_address_id_gateway,
-      assessments_search_gateway: assessments_search_gateway,
-      assessments_gateway: assessments_gateway,
+      address_base_gateway:,
+      assessments_address_id_gateway:,
+      assessments_search_gateway:,
+      assessments_gateway:,
       event_broadcaster: Events::Broadcaster.new,
     )
   end
@@ -17,7 +17,7 @@ describe UseCase::UpdateAssessmentAddressId do
   before do
     allow(assessments_gateway).to receive(:get_linked_assessment_id).and_return(nil)
 
-    allow(assessments_search_gateway).to receive(:search_by_assessment_id).and_return([Domain::AssessmentSearchResult.new({ assessment_id: "2000-0000-0000-0000-0001" })])
+    allow(assessments_search_gateway).to receive(:search_by_assessment_id).and_return([Domain::AssessmentSearchResult.new(assessment_id: "2000-0000-0000-0000-0001")])
 
     allow(address_base_gateway).to receive(:check_uprn_exists).and_return(true)
 

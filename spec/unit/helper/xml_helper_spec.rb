@@ -10,13 +10,13 @@ describe Helper::XmlHelper do
 
   context "when validating valid xml" do
     it "load a valid xml file" do
-      response = helper.convert_to_hash(xml, schema: schema)
+      response = helper.convert_to_hash(xml, schema:)
 
       expect(response).to be_a Hash
     end
 
     it "returns the correct ruby hash" do
-      response = helper.convert_to_hash(xml, schema: schema)
+      response = helper.convert_to_hash(xml, schema:)
 
       expected_response = {
         shiporder: {
@@ -50,7 +50,7 @@ describe Helper::XmlHelper do
   context "when validating invalid xml" do
     it "raises an error" do
       expect {
-        helper.convert_to_hash(invalid_xml, schema: schema)
+        helper.convert_to_hash(invalid_xml, schema:)
       }.to raise_error instance_of Helper::InvalidXml
     end
   end

@@ -5,7 +5,7 @@ describe "fetching HERA (Home Energy Retrofit Advice) details from the API", set
   let(:scheme_id) do
     scheme_id = add_scheme_and_get_id
     add_assessor(
-      scheme_id: scheme_id,
+      scheme_id:,
       assessor_id: "SPEC000000",
       body: fetch_assessor_stub.fetch_request_body(
         domestic_rd_sap: "ACTIVE",

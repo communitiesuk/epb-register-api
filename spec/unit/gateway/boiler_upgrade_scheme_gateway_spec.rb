@@ -9,7 +9,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
 
   context "when expecting to find one RdSAP assessment" do
     before do
-      add_super_assessor(scheme_id: scheme_id)
+      add_super_assessor(scheme_id:)
 
       lodge_assessment(
         assessment_body: rdsap_xml.to_xml,
@@ -102,7 +102,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
   context "when expecting to find two RdSAP assessments" do
     before do
       scheme_id = add_scheme_and_get_id
-      add_super_assessor(scheme_id: scheme_id)
+      add_super_assessor(scheme_id:)
 
       rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
       do_lodgement = lambda {
@@ -137,7 +137,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
   context "when there are multiple RdSAP certificates for the same address" do
     before do
       scheme_id = add_scheme_and_get_id
-      add_super_assessor(scheme_id: scheme_id)
+      add_super_assessor(scheme_id:)
 
       rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
       do_lodgement = lambda {
@@ -188,7 +188,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
   context "when expecting to find one SAP assessment" do
     before do
       scheme_id = add_scheme_and_get_id
-      add_super_assessor(scheme_id: scheme_id)
+      add_super_assessor(scheme_id:)
 
       sap_xml = Nokogiri.XML Samples.xml("SAP-Schema-18.0.0")
       lodge_assessment(
@@ -243,7 +243,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
   context "when expecting to find one CEPC" do
     before do
       scheme_id = add_scheme_and_get_id
-      add_super_assessor(scheme_id: scheme_id)
+      add_super_assessor(scheme_id:)
 
       cepc_xml = Nokogiri.XML Samples.xml("CEPC-8.0.0", "cepc")
       lodge_assessment(
@@ -303,7 +303,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
       xml.at("UPRN").content = "UPRN-000000000001"
       xml.at_css("Property Address Address-Line-1").content = "Flat 12A Street Lane"
 
-      add_super_assessor(scheme_id: scheme_id)
+      add_super_assessor(scheme_id:)
 
       lodge_assessment(
         assessment_body: xml.to_s,
@@ -397,7 +397,7 @@ describe Gateway::BoilerUpgradeSchemeGateway do
 
   context "when a certificate is cancelled" do
     before do
-      add_super_assessor(scheme_id: scheme_id)
+      add_super_assessor(scheme_id:)
 
       rdsap_xml = Nokogiri.XML Samples.xml("RdSAP-Schema-20.0.0")
       do_lodgement = lambda {

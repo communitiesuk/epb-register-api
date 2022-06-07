@@ -136,7 +136,7 @@ module Gateway
     end
 
     def fetch(scheme_assessor_id)
-      assessor = Assessor.find_by(scheme_assessor_id: scheme_assessor_id)
+      assessor = Assessor.find_by(scheme_assessor_id:)
       assessor ? row_to_assessor_domain(assessor) : nil
     end
 

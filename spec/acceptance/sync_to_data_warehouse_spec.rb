@@ -69,7 +69,7 @@ describe "syncing to data warehouse on various assessment data changes", set_wit
                          scheme_ids: [scheme_id],
                        },
                        schema_name: "SAP-Schema-18.0.0"
-      opt_out_assessment assessment_id: assessment_id,
+      opt_out_assessment assessment_id:,
                          opt_out: true
     end
 
@@ -104,8 +104,8 @@ describe "syncing to data warehouse on various assessment data changes", set_wit
                          scheme_ids: [scheme_id],
                        },
                        schema_name: "SAP-Schema-18.0.0"
-      update_assessment_address_id assessment_id: assessment_id,
-                                   new_address_id: new_address_id
+      update_assessment_address_id assessment_id:,
+                                   new_address_id:
     end
 
     it "pushes the assessment ID to the assessments queue through the gateway" do
@@ -135,7 +135,7 @@ describe "syncing to data warehouse on various assessment data changes", set_wit
                          scheme_ids: [scheme_id],
                        },
                        schema_name: "SAP-Schema-18.0.0"
-      update_assessment_status assessment_id: assessment_id,
+      update_assessment_status assessment_id:,
                                assessment_status_body: {
                                  status: "CANCELLED",
                                },

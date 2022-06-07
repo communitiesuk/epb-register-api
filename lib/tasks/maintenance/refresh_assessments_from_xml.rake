@@ -91,7 +91,7 @@ namespace :maintenance do
               {
                 assessment_id: assessment["assessment_id"],
                 schema_type: assessment["schema_type"],
-                value: value,
+                value:,
               },
             )
           end

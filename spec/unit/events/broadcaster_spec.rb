@@ -1,5 +1,5 @@
 describe Events::Broadcaster do
-  subject(:broadcaster) { described_class.new(logger: logger) }
+  subject(:broadcaster) { described_class.new(logger:) }
 
   let(:logger) { instance_spy(Logger) }
 

@@ -4,7 +4,7 @@ describe "Audit events", set_with_timecop: true do
   before do
     Events::Broadcaster.enable!
 
-    add_super_assessor(scheme_id: scheme_id)
+    add_super_assessor(scheme_id:)
     lodge_assessment(
       assessment_body: Samples.xml("RdSAP-Schema-20.0.0"),
       accepted_responses: [201],

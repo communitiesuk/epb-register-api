@@ -4,9 +4,9 @@ describe "Acceptance:SaveUserSatisfaction" do
   def put_user_satisfaction(body:,
                             scopes:, accepted_responses: [200, 201])
     assertive_put("api/user-satisfaction",
-                  body: body,
-                  scopes: scopes,
-                  accepted_responses: accepted_responses)
+                  body:,
+                  scopes:,
+                  accepted_responses:)
   end
 
   describe "put /api/user-satisfaction/ " do

@@ -101,7 +101,7 @@ module Events
       @logger = logger || Logger.new($stdout)
     end
 
-    def broadcast(event, *args)
+    def broadcast(event, *args, **kwargs)
       super if self.class.enabled? && accepts?(event)
     rescue StandardError => e
       logger.error "Event broadcaster caught #{e.class} from a listener: #{e.message}"

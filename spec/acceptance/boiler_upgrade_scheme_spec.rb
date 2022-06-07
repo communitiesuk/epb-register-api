@@ -5,7 +5,7 @@ describe "fetching BUS (Boiler Upgrade Scheme) details from the API", set_with_t
   let(:scheme_id) do
     scheme_id = add_scheme_and_get_id
     add_assessor(
-      scheme_id: scheme_id,
+      scheme_id:,
       assessor_id: "SPEC000000",
       body: fetch_assessor_stub.fetch_request_body(
         non_domestic_dec: "ACTIVE",

@@ -39,7 +39,7 @@ describe "Acceptance::AssessmentSummary::Supplement::CEPC_RR",
   before(:all) do
     scheme_id = add_scheme_and_get_id
     assessor = AssessorStub.new.fetch_request_body(non_domestic_nos3: "ACTIVE")
-    add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: assessor)
+    add_assessor(scheme_id:, assessor_id: "SPEC000000", body: assessor)
   end
 
   context "when getting the related party disclosure" do

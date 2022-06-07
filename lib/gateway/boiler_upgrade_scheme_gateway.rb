@@ -16,7 +16,7 @@ module Gateway
       if identifier.match?(/^\d+$/)
         search_by_postcode_and_building_number postcode: postcode, building_number: identifier, assessment_types: ASSESSMENT_TYPES
       else
-        search_by_postcode_and_building_name postcode: postcode, building_name: identifier, assessment_types: ASSESSMENT_TYPES
+        search_by_postcode_and_building_name postcode:, building_name: identifier, assessment_types: ASSESSMENT_TYPES
       end
     end
 
@@ -35,7 +35,7 @@ module Gateway
       sql = add_type_filter(sql, ASSESSMENT_TYPES)
 
       do_search(
-        sql: sql,
+        sql:,
         binds: [
           Helper::AddressSearchHelper.string_attribute("uprn", uprn),
         ],
@@ -53,7 +53,7 @@ module Gateway
       SQL
 
       do_search(
-        sql: sql,
+        sql:,
         binds: [
           Helper::AddressSearchHelper.string_attribute("rrn", rrn),
         ],
@@ -105,7 +105,7 @@ module Gateway
       sql = add_type_filter(sql, assessment_types)
 
       do_search(
-        sql: sql,
+        sql:,
         binds: Helper::AddressSearchHelper.bind_postcode_and_number(postcode, building_number),
       )
     end
@@ -124,7 +124,7 @@ module Gateway
       sql = add_type_filter(sql, assessment_types)
 
       do_search(
-        sql: sql,
+        sql:,
         binds: Helper::AddressSearchHelper.bind_postcode_and_name(postcode, building_name),
       )
     end
@@ -144,7 +144,7 @@ module Gateway
       sql = add_type_filter(sql, assessment_types)
 
       do_search(
-        sql: sql,
+        sql:,
         binds: [
           Helper::AddressSearchHelper.string_attribute("uprn", uprn),
         ],

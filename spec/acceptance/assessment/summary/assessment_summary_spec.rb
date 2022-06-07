@@ -33,7 +33,7 @@ describe "Acceptance::AssessmentSummary", set_with_timecop: true do
           non_domestic_nos4: "ACTIVE",
           non_domestic_nos5: "ACTIVE",
         )
-      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: assessor)
+      add_assessor(scheme_id:, assessor_id: "SPEC000000", body: assessor)
       cepc_and_rr = Nokogiri.XML(xml_file)
 
       lodge_assessment(
@@ -88,7 +88,7 @@ describe "Acceptance::AssessmentSummary", set_with_timecop: true do
           non_domestic_nos4: "ACTIVE",
           non_domestic_nos5: "ACTIVE",
         )
-      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: assessor)
+      add_assessor(scheme_id:, assessor_id: "SPEC000000", body: assessor)
       cepc_and_rr = Nokogiri.XML(xml_file)
 
       lodge_assessment(
@@ -122,7 +122,7 @@ describe "Acceptance::AssessmentSummary", set_with_timecop: true do
           domestic_rd_sap: "ACTIVE",
           domestic_sap: "ACTIVE",
         )
-      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: assessor)
+      add_assessor(scheme_id:, assessor_id: "SPEC000000", body: assessor)
       lodge_assessment(
         assessment_body:
           Samples.xml(

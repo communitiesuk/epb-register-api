@@ -10,7 +10,7 @@ module Domain
       postcode:
     )
       @epc_rrn = assessment_id
-      @address = { addressLine1: address_line1, addressLine2: address_line2, addressLine3: address_line3, addressLine4: address_line4, town: town, postcode: postcode }
+      @address = { addressLine1: address_line1, addressLine2: address_line2, addressLine3: address_line3, addressLine4: address_line4, town:, postcode: }
     end
 
     def to_hash

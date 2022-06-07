@@ -47,7 +47,7 @@ describe "Acceptance::Assessment::GreenDealPlan:FetchGreenDealAssessment",
 
     if type == "RdSAP"
       add_green_deal_plan(
-        assessment_id: assessment_id,
+        assessment_id:,
         body: GreenDealPlanStub.new.request_body(green_deal_plan_id),
       )
     end

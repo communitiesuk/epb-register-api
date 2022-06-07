@@ -16,7 +16,7 @@ namespace :maintenance do
     end
 
     ApiFactory.save_daily_assessments_stats_use_case
-      .execute(date: date, assessment_types: %w[SAP RdSAP CEPC DEC AC-CERT DEC-RR])
+      .execute(date:, assessment_types: %w[SAP RdSAP CEPC DEC AC-CERT DEC-RR])
 
     puts "Statistics for #{date} saved"
   end

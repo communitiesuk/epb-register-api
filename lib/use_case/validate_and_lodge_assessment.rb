@@ -82,7 +82,7 @@ module UseCase
       Helper::Toggles.enabled? "validate-software", default: (ENV["STAGE"] == "production") do
         raise SoftwareNotApprovedError unless migrated || software_is_approved?(
           assessment_xml_doc: xml_doc,
-          schema_name: schema_name,
+          schema_name:,
         )
       end
       raise RelatedReportError unless reports_refer_to_each_other?(xml_doc)
@@ -91,7 +91,7 @@ module UseCase
       ensure_sap_data_version_valid assessment_xml_doc: xml_doc, schema_name: schema_name
 
       begin
-        LodgementRules::NiCommon.new.validate(schema_name: schema_name, address: lodgement_data[0][:address], migrated: migrated)
+        LodgementRules::NiCommon.new.validate(schema_name:, address: lodgement_data[0][:address], migrated:)
       rescue Boundary::InvalidNiAssessment => e
         raise LodgementRulesException, e
       end
@@ -196,7 +196,7 @@ module UseCase
 
     def software_is_approved?(assessment_xml_doc:, schema_name:)
       @check_approved_software_use_case.execute assessment_xml: assessment_xml_doc,
-                                                schema_name: schema_name
+                                                schema_name:
     end
 
     def ensure_lodgement_xml_valid(xml, schema_name)
@@ -216,7 +216,7 @@ module UseCase
         next if allowed_versions.include?(version_value)
 
         raise InvalidSapDataVersionError.new(
-          schema_name: schema_name,
+          schema_name:,
           failed_node: node,
           invalid_version_value: version_value,
         )

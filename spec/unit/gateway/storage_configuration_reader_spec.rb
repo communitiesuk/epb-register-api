@@ -7,7 +7,7 @@ describe Gateway::StorageConfigurationReader do
   before { allow(ENV).to receive(:[]).and_return(nil) }
 
   context "when VCAP_SERVICES is present and we provide a GOV.UK PaaS S3 instance name" do
-    subject(:storage_configuration) { described_class.new(instance_name: instance_name) }
+    subject(:storage_configuration) { described_class.new(instance_name:) }
 
     before do
       allow(ENV).to receive(:[])
@@ -31,7 +31,7 @@ describe Gateway::StorageConfigurationReader do
   end
 
   context "when VCAP_SERVICES is not present and we provide a GOV.UK PaaS S3 instance name" do
-    subject(:storage_configuration) { described_class.new(instance_name: instance_name) }
+    subject(:storage_configuration) { described_class.new(instance_name:) }
 
     it "we get back an exception" do
       expect { storage_configuration.get_configuration }.to raise_error(

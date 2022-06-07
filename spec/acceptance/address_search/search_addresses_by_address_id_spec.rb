@@ -36,7 +36,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference",
     end
 
     before do
-      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: VALID_ASSESSOR_REQUEST_BODY)
+      add_assessor(scheme_id:, assessor_id: "SPEC000000", body: VALID_ASSESSOR_REQUEST_BODY)
 
       lodge_placeholder_assessment(
         scheme_id,
@@ -224,7 +224,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference",
       ActiveRecord::Base.connection.exec_query(
         "INSERT INTO address_base (uprn, address_line1, postcode, town) VALUES ('1', '1 Some Street', 'A0 0AA', 'Whitbury')",
       )
-      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: VALID_ASSESSOR_REQUEST_BODY)
+      add_assessor(scheme_id:, assessor_id: "SPEC000000", body: VALID_ASSESSOR_REQUEST_BODY)
     end
 
     it "returns the address" do
@@ -304,7 +304,7 @@ describe "Acceptance::AddressSearch::ByBuildingReference",
       address_id.children = "RRN-0000-0000-0000-0000-0000"
 
       add_assessor(
-        scheme_id: scheme_id,
+        scheme_id:,
         assessor_id: "SPEC000000",
         body: AssessorStub.new.fetch_request_body(
           non_domestic_nos3: "ACTIVE",

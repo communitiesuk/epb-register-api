@@ -33,7 +33,7 @@ module UseCase
           linked.nil?
 
         assessments_invoicing << {
-          rrn: rrn,
+          rrn:,
           scheme_name: scheme,
           type_of_assessment: type,
           related_rrn: linked,

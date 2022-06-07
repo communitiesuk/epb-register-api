@@ -5,7 +5,7 @@ module UseCase
     end
 
     def execute(date:, assessment_types: nil)
-      @assessment_statistics_gateway.save_daily_stats(date: date, assessment_types: assessment_types)
+      @assessment_statistics_gateway.save_daily_stats(date:, assessment_types:)
     end
   end
 end

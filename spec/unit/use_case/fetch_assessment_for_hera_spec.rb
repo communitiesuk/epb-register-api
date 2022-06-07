@@ -1,5 +1,5 @@
 describe UseCase::FetchAssessmentForHera do
-  subject(:use_case) { described_class.new(hera_gateway: hera_gateway, summary_use_case: summary_use_case) }
+  subject(:use_case) { described_class.new(hera_gateway:, summary_use_case:) }
 
   let(:hera_gateway) { instance_double Gateway::HomeEnergyRetrofitAdviceGateway }
 
@@ -66,7 +66,7 @@ describe UseCase::FetchAssessmentForHera do
       end
 
       it "returns a domain object containing the expected HERA details", aggregate_failures: true do
-        details = use_case.execute(rrn: rrn)
+        details = use_case.execute(rrn:)
         expect(details).to be_a Domain::AssessmentHeraDetails
         expect(details.to_hash).to eq expected_latest
       end
@@ -80,7 +80,7 @@ describe UseCase::FetchAssessmentForHera do
       end
 
       it "returns a domain object containing the expected HERA details", aggregate_failures: true do
-        details = use_case.execute(rrn: rrn)
+        details = use_case.execute(rrn:)
         expect(details).to be_a Domain::AssessmentHeraDetails
         expect(details.to_hash).to eq expected_not_latest
       end
@@ -138,7 +138,7 @@ describe UseCase::FetchAssessmentForHera do
     }
 
     it "returns a domain object containing the expected HERA details", aggregate_failures: true do
-      details = use_case.execute(rrn: rrn)
+      details = use_case.execute(rrn:)
       expect(details).to be_a Domain::AssessmentHeraDetails
       expect(details.to_hash).to eq expected
     end
@@ -152,7 +152,7 @@ describe UseCase::FetchAssessmentForHera do
     end
 
     it "returns nil" do
-      expect(use_case.execute(rrn: rrn)).to be_nil
+      expect(use_case.execute(rrn:)).to be_nil
     end
   end
 end

@@ -10,7 +10,7 @@ describe "Acceptance::AssessmentSummary::Supplement::AC_REPORT",
         non_domestic_sp3: "ACTIVE",
         non_domestic_cc4: "ACTIVE",
       )
-    add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: assessor)
+    add_assessor(scheme_id:, assessor_id: "SPEC000000", body: assessor)
 
     lodge_ac_report(Samples.xml("CEPC-8.0.0", "ac-cert+ac-report"), scheme_id)
     JSON.parse(

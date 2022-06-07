@@ -1,6 +1,6 @@
 describe UseCase::NotifyNewAssessmentToDataWarehouse do
   describe "#execute" do
-    subject(:use_case) { described_class.new(redis_gateway: redis_gateway) }
+    subject(:use_case) { described_class.new(redis_gateway:) }
 
     let(:redis_gateway) { instance_spy(Gateway::RedisGateway) }
 
@@ -9,7 +9,7 @@ describe UseCase::NotifyNewAssessmentToDataWarehouse do
     describe "happy paths" do
       before do
         allow(redis_gateway).to receive(:push_to_queue)
-        use_case.execute(assessment_id: assessment_id)
+        use_case.execute(assessment_id:)
       end
 
       it "calls down to the redis gateway to push to the queue" do
@@ -23,7 +23,7 @@ describe UseCase::NotifyNewAssessmentToDataWarehouse do
       end
 
       it "raises a could not complete error" do
-        expect { use_case.execute(assessment_id: assessment_id) }.to raise_error UseCase::NotifyNewAssessmentToDataWarehouse::CouldNotCompleteError
+        expect { use_case.execute(assessment_id:) }.to raise_error UseCase::NotifyNewAssessmentToDataWarehouse::CouldNotCompleteError
       end
     end
   end

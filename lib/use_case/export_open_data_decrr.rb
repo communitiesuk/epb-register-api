@@ -48,7 +48,7 @@ module UseCase
                   Helper::RrnHelper.hash_rrn(
                     assessment["linked_assessment_id"],
                   ),
-                recommendation_item: recommendation_item,
+                recommendation_item:,
               },
             )
           recommendation_item += 1

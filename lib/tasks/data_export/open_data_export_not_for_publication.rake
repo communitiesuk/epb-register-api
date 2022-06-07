@@ -18,7 +18,7 @@ namespace :open_data do
 
     csv_data = Helper::ExportHelper.to_csv(data)
     OpenDataExportHelper.transmit_not_for_publication_file data: csv_data,
-                                                           type_of_export: type_of_export,
+                                                           type_of_export:,
                                                            env: ENV
 
   rescue Boundary::RecoverableError => e

@@ -1,5 +1,5 @@
 describe UseCase::FindDomesticEpcByAddress do
-  subject(:use_case) { described_class.new(gateway: gateway) }
+  subject(:use_case) { described_class.new(gateway:) }
 
   let(:gateway) { instance_double(Gateway::DomesticEpcSearchGateway) }
 
@@ -26,12 +26,12 @@ describe UseCase::FindDomesticEpcByAddress do
     context "when fetching address where one relevant assessment exists" do
       before do
         allow(gateway).to receive(:fetch_by_address)
-                                .with(postcode: postcode, building_identifier: building_identifier)
+                                .with(postcode:, building_identifier:)
                                 .and_return(results)
       end
 
       it "returns the assessment result hash" do
-        expect(use_case.execute(postcode: postcode, building_identifier: building_identifier)).to eq expected_details
+        expect(use_case.execute(postcode:, building_identifier:)).to eq expected_details
       end
     end
 
@@ -51,12 +51,12 @@ describe UseCase::FindDomesticEpcByAddress do
 
       before do
         allow(gateway).to receive(:fetch_by_address)
-                            .with(postcode: postcode, building_identifier: building_identifier)
+                            .with(postcode:, building_identifier:)
                             .and_return(multiple_results)
       end
 
       it "returns the assessment result hash with both elements" do
-        expect(use_case.execute(postcode: postcode, building_identifier: building_identifier)).to eq expected_multiple_details
+        expect(use_case.execute(postcode:, building_identifier:)).to eq expected_multiple_details
       end
     end
   end

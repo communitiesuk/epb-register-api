@@ -30,7 +30,7 @@ describe "fetching domestic epc search results from the API", set_with_timecop: 
       end
 
       before do
-        add_super_assessor(scheme_id: scheme_id)
+        add_super_assessor(scheme_id:)
         lodge_assessment(
           assessment_body: rdsap_xml.to_xml,
           accepted_responses: [201],
@@ -77,7 +77,7 @@ describe "fetching domestic epc search results from the API", set_with_timecop: 
       end
 
       before do
-        add_super_assessor(scheme_id: scheme_id)
+        add_super_assessor(scheme_id:)
         lodge_assessment(
           assessment_body: rdsap_xml.to_xml,
           accepted_responses: [201],

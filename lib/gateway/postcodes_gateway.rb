@@ -1,7 +1,7 @@
 module Gateway
   class PostcodesGateway
     def fetch(postcode)
-      response = db_response(postcode: postcode)
+      response = db_response(postcode:)
       result = []
 
       output(response, result)

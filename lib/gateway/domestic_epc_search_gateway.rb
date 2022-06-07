@@ -7,7 +7,7 @@ module Gateway
       elsif identifier.match?(/^\d+$/)
         fetch_by_postcode_and_building_number postcode: postcode, building_number: identifier
       else
-        fetch_by_postcode_and_building_name postcode: postcode, building_name: identifier
+        fetch_by_postcode_and_building_name postcode:, building_name: identifier
       end
     end
 
@@ -44,7 +44,7 @@ module Gateway
       SQL
 
       do_search(
-        sql: sql,
+        sql:,
         binds: Helper::AddressSearchHelper.bind_postcode(postcode),
       )
     end
@@ -62,7 +62,7 @@ module Gateway
       SQL
 
       do_search(
-        sql: sql,
+        sql:,
         binds: Helper::AddressSearchHelper.bind_postcode_and_number(postcode, building_number),
       )
     end
@@ -80,7 +80,7 @@ module Gateway
       SQL
 
       do_search(
-        sql: sql,
+        sql:,
         binds: Helper::AddressSearchHelper.bind_postcode_and_name(postcode, building_name),
       )
     end

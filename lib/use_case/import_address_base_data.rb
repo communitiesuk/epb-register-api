@@ -139,10 +139,10 @@ module UseCase
       lines.pop if lines[-1] == town
 
       ImportedAddress.new(
-        uprn: uprn,
-        postcode: postcode,
-        lines: lines,
-        town: town,
+        uprn:,
+        postcode:,
+        lines:,
+        town:,
       )
     end
 
@@ -179,10 +179,10 @@ module UseCase
       town = address_data_line[:POST_TOWN]
 
       ImportedAddress.new(
-        uprn: uprn,
-        postcode: postcode,
-        lines: lines,
-        town: town,
+        uprn:,
+        postcode:,
+        lines:,
+        town:,
       )
     end
 

@@ -10,7 +10,7 @@ describe "Acceptance::OptOut", set_with_timecop: true do
   context "when opting out an assessment" do
     it "removes them from the certificate search" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body)
+      add_assessor(scheme_id:, assessor_id: "SPEC000000", body: valid_assessor_request_body)
 
       lodge_assessment(
         assessment_body: valid_rdsap_xml,
@@ -41,7 +41,7 @@ describe "Acceptance::OptOut", set_with_timecop: true do
 
     it "shows as opted out in the assessment summary JSON" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body)
+      add_assessor(scheme_id:, assessor_id: "SPEC000000", body: valid_assessor_request_body)
       lodge_assessment(
         assessment_body: valid_rdsap_xml,
         accepted_responses: [201],
@@ -69,7 +69,7 @@ describe "Acceptance::OptOut", set_with_timecop: true do
           non_domestic_nos4: "ACTIVE",
           non_domestic_nos5: "ACTIVE",
         )
-      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: assessor)
+      add_assessor(scheme_id:, assessor_id: "SPEC000000", body: assessor)
       cepc_and_rr = Nokogiri.XML(xml_file)
 
       lodge_assessment(
@@ -95,7 +95,7 @@ describe "Acceptance::OptOut", set_with_timecop: true do
   context "when opting in an assessment" do
     it "adds them to the certificate search" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body)
+      add_assessor(scheme_id:, assessor_id: "SPEC000000", body: valid_assessor_request_body)
 
       lodge_assessment(
         assessment_body: valid_rdsap_xml,
@@ -136,7 +136,7 @@ describe "Acceptance::OptOut", set_with_timecop: true do
 
     it "shows as opted in in the assessment summary JSON" do
       scheme_id = add_scheme_and_get_id
-      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body)
+      add_assessor(scheme_id:, assessor_id: "SPEC000000", body: valid_assessor_request_body)
       lodge_assessment(
         assessment_body: valid_rdsap_xml,
         accepted_responses: [201],

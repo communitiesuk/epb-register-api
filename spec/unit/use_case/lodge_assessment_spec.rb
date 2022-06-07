@@ -1,11 +1,11 @@
 describe UseCase::LodgeAssessment do
   subject(:use_case) do
     described_class.new(
-      assessments_gateway: assessments_gateway,
+      assessments_gateway:,
       assessments_search_gateway: instance_double(Gateway::AssessmentsSearchGateway),
       address_base_search_gateway: instance_spy(Gateway::AddressBaseSearchGateway),
-      assessors_gateway: assessors_gateway,
-      assessments_xml_gateway: assessments_xml_gateway,
+      assessors_gateway:,
+      assessments_xml_gateway:,
       assessments_address_id_gateway: instance_spy(Gateway::AssessmentsAddressIdGateway),
       related_assessments_gateway: instance_double(Gateway::RelatedAssessmentsGateway),
       green_deal_plans_gateway: instance_double(Gateway::GreenDealPlansGateway),

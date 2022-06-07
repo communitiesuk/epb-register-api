@@ -48,7 +48,7 @@ module UseCase
       assessments_ids.each do |id|
         @event_broadcaster.broadcast :assessment_address_id_updated,
                                      assessment_id: id,
-                                     new_address_id: new_address_id
+                                     new_address_id:
       end
     end
 

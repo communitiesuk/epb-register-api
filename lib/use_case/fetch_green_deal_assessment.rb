@@ -61,7 +61,7 @@ module UseCase
       {
         type_of_assessment: type,
         address: {
-          source: source,
+          source:,
           line1: assessment_view.address_line1,
           line2: assessment_view.address_line2,
           line3: assessment_view.address_line3,
@@ -78,7 +78,7 @@ module UseCase
         inspection_date: assessment_view.date_of_assessment,
         lodgement_date: assessment_view.date_of_registration,
         is_latest_assessment_for_address: latest_assessment_flag,
-        status: status,
+        status:,
         main_fuel_type: assessment_view.main_fuel_type,
         secondary_fuel_type: assessment_view.secondary_fuel_type,
         water_heating_fuel: assessment_view.water_heating_fuel,

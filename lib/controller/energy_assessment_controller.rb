@@ -61,7 +61,7 @@ module Controller
         false,
         {
           event_type: :lodgement_attempt,
-          correlation_id: correlation_id,
+          correlation_id:,
           client_id: env[:auth_token].sub,
           request_body: sanitised_xml.slice(0..logit_char_limit),
           request_headers: headers,
@@ -85,8 +85,8 @@ module Controller
         validate_and_lodge_assessment.execute(
           assessment_xml: sanitised_xml,
           schema_name: xml_schema_type,
-          scheme_ids: scheme_ids,
-          migrated: migrated,
+          scheme_ids:,
+          migrated:,
           overidden: overridden,
         )
 
@@ -96,7 +96,7 @@ module Controller
           {
             event_type: :lodgement_successful,
             client_id: env[:auth_token].sub,
-            correlation_id: correlation_id,
+            correlation_id:,
             assessment_id: result.get(:assessment_id),
             schema: xml_schema_type,
           },
@@ -148,7 +148,7 @@ module Controller
         false,
         {
           event_type: :lodgement_failed,
-          correlation_id: correlation_id,
+          correlation_id:,
           client_id: env[:auth_token]&.sub,
           error_message: e.to_s,
           schema: xml_schema_type.nil? ? "Schema not defined" : xml_schema_type,

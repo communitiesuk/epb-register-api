@@ -31,7 +31,7 @@ end
 def lodge_assessor
   scheme_id = add_scheme_and_get_id
   add_assessor(
-    scheme_id: scheme_id,
+    scheme_id:,
     assessor_id: "SPEC000000",
     body: AssessorStub.new.fetch_request_body(
       non_domestic_nos3: "ACTIVE",

@@ -57,7 +57,7 @@ module UseCase
   private
 
     def assessment_ids_for_gdp(plan_id)
-      @green_deal_plans_gateway.fetch_assessment_ids(plan_id: plan_id)
+      @green_deal_plans_gateway.fetch_assessment_ids(plan_id:)
     end
   end
 end
