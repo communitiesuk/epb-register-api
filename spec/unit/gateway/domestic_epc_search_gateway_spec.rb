@@ -145,7 +145,7 @@ describe Gateway::DomesticEpcSearchGateway do
        {
          epc_rrn: "8989-0000-0000-0000-9999",
          address: {
-           addressLine1: "1 Domestic Street", addressLine2: "Some Area", addressLine3: "Some County", addressLine4: nil, postcode: "A0 0AA", town: "Whitbury"
+           addressLine1: "1 Domestic Street", addressLine2: "Some Area", addressLine3: "Some County", addressLine4: "", postcode: "A0 0AA", town: "Whitbury"
          },
        }]
     end
