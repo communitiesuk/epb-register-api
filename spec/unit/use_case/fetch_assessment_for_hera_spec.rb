@@ -29,8 +29,8 @@ describe UseCase::FetchAssessmentForHera do
       lodgement_date: "2020-05-04",
       is_latest_assessment_for_address: false,
       property_type: "Mid-terrace house",
-      built_form: "2",
-      property_age_band: "K",
+      built_form: "Semi-Detached",
+      property_age_band: "2007-2011",
       walls_description: [
         "Solid brick, as built, no insulation (assumed)",
         "Cavity wall, as built, insulated (assumed)",
@@ -46,8 +46,8 @@ describe UseCase::FetchAssessmentForHera do
       windows_description: [
         "Fully double glazed",
       ],
-      main_heating_description: "2",
-      main_fuel_type: "26",
+      main_heating_description: "boiler with radiators or underfloor heating",
+      main_fuel_type: "mains gas (not community)",
       has_hot_water_cylinder: false,
     }
 
@@ -115,7 +115,7 @@ describe UseCase::FetchAssessmentForHera do
       lodgement_date: "2020-05-04",
       is_latest_assessment_for_address: true,
       property_type: "Mid-terrace house",
-      built_form: "1",
+      built_form: "Detached",
       property_age_band: "1750",
       walls_description: [
         "Brick walls",
@@ -132,8 +132,8 @@ describe UseCase::FetchAssessmentForHera do
       windows_description: [
         "Glass window",
       ],
-      main_heating_description: "5",
-      main_fuel_type: "36",
+      main_heating_description: "heat pump with warm air distribution",
+      main_fuel_type: "Electricity: electricity sold to grid",
       has_hot_water_cylinder: true,
     }
 

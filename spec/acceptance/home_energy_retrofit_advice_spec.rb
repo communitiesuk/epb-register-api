@@ -34,8 +34,8 @@ describe "fetching HERA (Home Energy Retrofit Advice) details from the API", set
         "lodgementDate": "2020-05-04",
         "isLatestAssessmentForAddress": true,
         "propertyType": "Mid-terrace house",
-        "builtForm": "2",
-        "propertyAgeBand": "K",
+        "builtForm": "Semi-Detached",
+        "propertyAgeBand": "2007-2011",
         "wallsDescription": [
           "Solid brick, as built, no insulation (assumed)",
           "Cavity wall, as built, insulated (assumed)",
@@ -51,8 +51,8 @@ describe "fetching HERA (Home Energy Retrofit Advice) details from the API", set
         "windowsDescription": [
           "Fully double glazed",
         ],
-        "mainHeatingDescription": "2",
-        "mainFuelType": "26",
+        "mainHeatingDescription": "boiler with radiators or underfloor heating",
+        "mainFuelType": "mains gas (not community)",
         "hasHotWaterCylinder": false,
       },
     }
@@ -73,7 +73,7 @@ describe "fetching HERA (Home Energy Retrofit Advice) details from the API", set
         "lodgementDate": "2020-05-04",
         "isLatestAssessmentForAddress": true,
         "propertyType": "Mid-terrace house",
-        "builtForm": "1",
+        "builtForm": "Detached",
         "propertyAgeBand": "1750",
         "wallsDescription": [
           "Brick walls",
@@ -90,8 +90,8 @@ describe "fetching HERA (Home Energy Retrofit Advice) details from the API", set
         "windowsDescription": [
           "Glass window",
         ],
-        "mainHeatingDescription": "5",
-        "mainFuelType": "36",
+        "mainHeatingDescription": "heat pump with warm air distribution",
+        "mainFuelType": "Electricity: electricity sold to grid",
         "hasHotWaterCylinder": true,
       },
     }

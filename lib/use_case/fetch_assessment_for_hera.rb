@@ -17,7 +17,7 @@ module UseCase
                                         is_latest_assessment_for_address: !assessment_summary[:superseded_by],
                                         property_type: hera_from_view_model[:dwelling_type],
                                         built_form: hera_from_view_model[:built_form],
-                                        property_age_band: hera_from_view_model[:main_dwelling_construction_age_band_or_year],
+                                        property_age_band: strip_england_and_wales_prefix(hera_from_view_model[:main_dwelling_construction_age_band_or_year]),
                                         walls_description: pluck_property_summary_descriptions(hera_hash: hera_from_view_model, feature_type: "wall"),
                                         floor_description: pluck_property_summary_descriptions(hera_hash: hera_from_view_model, feature_type: "floor"),
                                         roof_description: pluck_property_summary_descriptions(hera_hash: hera_from_view_model, feature_type: "roof"),
@@ -40,6 +40,13 @@ module UseCase
       hera_hash[:property_summary]
         .select { |feature| [feature_type, "#{feature_type}s"].include?(feature[:name]) } # descriptions in property summary can be called "wall" or "walls", or "window" or "windows" depending on whether SAP or RdSAP due to slight schema divergence here
         .map { |feature| feature[:description] }
+    end
+
+    def strip_england_and_wales_prefix(age_band)
+      england_and_wales_prefix = "England and Wales: "
+      return age_band unless age_band.start_with? england_and_wales_prefix
+
+      age_band[england_and_wales_prefix.length..]
     end
   end
 end

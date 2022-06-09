@@ -2983,35 +2983,42 @@ components:
         builtForm:
           type: string
           example: 'End-Terrace'
+          description: 'A description of the built form of the property as per the known descriptions for the SAP-BuiltFormCode node type in SAP/RdSAP schemas.'
         propertyAgeBand:
           type: string
-          example: 'D'
+          example: '2007-2011'
         wallsDescription:
           type: array
           items:
             type: string
           example: ["Solid brick, as built, no insulation", "Cavity wall, as built, insulated (assumed)"]
+          description: "A list of free text descriptions associated with wall property features as documented in the assessment."
         floorDescription:
           type: array
           items:
             type: string
           example: ["Suspended, no insulation (assumed)", "Solid, no insulation (assumed)"]
+          description: "A list of free text descriptions associated with floor property features as documented in the assessment."
         roofDescription:
           type: array
           items:
             type: string
           example: ["Pitched, 250 mm loft insulation", "Pitched, limited insulation (assumed)"]
+          description: "A list of free text descriptions associated with roof property features as documented in the assessment."
         windowsDescription:
           type: array
           items:
             type: string
           example: ["Fully double glazed"]
+          description: "A list of free text descriptions associated with window property features as documented in the assessment."
         mainHeatingDescription:
           type: string
           example: "Boiler and radiators, mains gas"
+          description: "A description of the main heating for the property as per the known descriptions for the SAP-MainHeatingCategoryCode node type in SAP/RdSAP schemas."
         mainFuelType:
           type: string
           example: 'Natural Gas'
+          description: "A description of the main fuel type for the property as per the known descriptions for the HeatingFuelTypeCode node type in SAP/RdSAP schemas."
         hasHotWaterCylinder:
           description: Whether a hot water is cylinder is present at the property. Key is omitted from response if not recorded by the assessor.
           type: boolean
