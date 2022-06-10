@@ -184,7 +184,7 @@ GEM
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
       redis (>= 4.2.0)
-    sidekiq-cron (1.5.0)
+    sidekiq-cron (1.5.1)
       fugit (~> 1)
       sidekiq (>= 4.2.1)
     sinatra (2.2.0)
@@ -249,7 +249,7 @@ DEPENDENCIES
   rubyzip (~> 2.3.2)
   sentry-ruby (~> 5.3)
   sidekiq (~> 6.5.0)
-  sidekiq-cron (~> 1.5.0)
+  sidekiq-cron (~> 1.5.1)
   sinatra (~> 2.2)
   sinatra-activerecord (~> 2.0.25)
   sinatra-contrib
