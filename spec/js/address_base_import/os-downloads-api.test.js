@@ -72,7 +72,7 @@ describe('when checking which newer versions of the AddressBase data are availab
             createdOn: '2022-01-27',
             reason: 'UPDATE',
             supplyType: 'Full',
-            productVersion: 'E93 May 2022 Update',
+            productVersion: 'E93 May 2022 Update\t', // test we handle erroneous whitespace!
             format: 'CSV'
           },
           {
@@ -118,7 +118,7 @@ describe('when checking which newer versions of the AddressBase data are availab
             createdOn: '2022-01-27',
             reason: 'UPDATE',
             supplyType: 'Change Only Update',
-            productVersion: 'E90 January 2022 Update',
+            productVersion: 'E90 January 2022 Update\t', // test we handle erroneous whitespace!
             format: 'CSV'
           },
           {
