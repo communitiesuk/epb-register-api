@@ -320,7 +320,7 @@
         <CEPC:Property-Type>B1 Offices and Workshop businesses</CEPC:Property-Type>
       </CEPC:Property-Details>
       <CEPC:Calculation-Details>
-        <CEPC:Calculation-Tool>CEPC Compute v0.2</CEPC:Calculation-Tool>
+        <CEPC:Calculation-Tool>CEPC Compute v0.2; SBEM, v4.1.h.0</CEPC:Calculation-Tool>
       </CEPC:Calculation-Details>
     </CEPC:Report-Header>
     <CEPC:Formatted-Report>ZGVmYXVsdA==</CEPC:Formatted-Report>

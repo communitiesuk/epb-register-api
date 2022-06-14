@@ -1,8 +1,10 @@
 describe LodgementRules::NonDomestic, set_with_timecop: true do
-  def assert_errors(key, value, expected_errors)
+  def assert_errors(xml_updates, expected_errors)
     docs_under_test.each do |doc|
       xml_doc = doc[:xml_doc]
-      xml_doc.at(key).children = value
+      xml_updates.each do |key, value|
+        xml_doc.at(key).children = value
+      end
 
       wrapper =
         ViewModel::Factory.new.create(xml_doc.to_xml, doc[:schema_name], false)
@@ -59,31 +61,31 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
       end
 
       it "returns an error if the inspection date is in the future" do
-        assert_errors("Inspection-Date", Date.tomorrow.to_s, [error])
+        assert_errors([["Inspection-Date", Date.tomorrow.to_s]], [error])
       end
 
       it "returns an error if the registration date is in the future" do
-        assert_errors("Registration-Date", Date.tomorrow.to_s, [error])
+        assert_errors([["Registration-Date", Date.tomorrow.to_s]], [error])
       end
 
       it "returns an error if the issue date is in the future" do
-        assert_errors("Effective-Date", Date.tomorrow.to_s, [error])
+        assert_errors([["Effective-Date", Date.tomorrow.to_s]], [error])
       end
 
       it "returns an error if the effective date is in the future" do
-        assert_errors("Issue-Date", Date.tomorrow.to_s, [error])
+        assert_errors([["Issue-Date", Date.tomorrow.to_s]], [error])
       end
 
       it "returns an error if the OR availability date is in the future" do
-        assert_errors("OR-Availability-Date", Date.tomorrow.to_s, [error])
+        assert_errors([["OR-Availability-Date", Date.tomorrow.to_s]], [error])
       end
 
       it "returns an error if the OR assessment start date is in the future" do
-        assert_errors("OR-Assessment-Start-Date", Date.tomorrow.to_s, [error])
+        assert_errors([["OR-Assessment-Start-Date", Date.tomorrow.to_s]], [error])
       end
 
       it "returns an error if the consumption type start date is in the future" do
-        assert_errors("Anthracite/Start-Date", Date.tomorrow.to_s, [error])
+        assert_errors([["Anthracite/Start-Date", Date.tomorrow.to_s]], [error])
       end
     end
 
@@ -98,17 +100,17 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
 
       it "returns an error if the inspection date is more than four years ago" do
         four_years_and_a_day_ago = (Date.today << 12 * 4) - 1
-        assert_errors("Inspection-Date", four_years_and_a_day_ago.to_s, [error])
+        assert_errors([["Inspection-Date", four_years_and_a_day_ago.to_s]], [error])
       end
 
       it "returns an error if the registration date is more than four years ago" do
         four_years_and_a_day_ago = (Date.today << 12 * 4) - 1
-        assert_errors("Registration-Date", four_years_and_a_day_ago.to_s, [error])
+        assert_errors([["Registration-Date", four_years_and_a_day_ago.to_s]], [error])
       end
 
       it "returns an error if the issue date is more than four years ago" do
         four_years_and_a_day_ago = (Date.today << 12 * 4) - 1
-        assert_errors("Issue-Date", four_years_and_a_day_ago.to_s, [error])
+        assert_errors([["Issue-Date", four_years_and_a_day_ago.to_s]], [error])
       end
     end
 
@@ -121,19 +123,19 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
       end
 
       it "returns an error if technical information / floor area is less than zero" do
-        assert_errors("Technical-Information/Floor-Area", "-1", [error])
+        assert_errors([["Technical-Information/Floor-Area", "-1"]], [error])
       end
 
       it "returns an error if technical information / floor area is zero" do
-        assert_errors("Technical-Information/Floor-Area", "0", [error])
+        assert_errors([["Technical-Information/Floor-Area", "0"]], [error])
       end
 
       it "does not returns an error if technical information / floor area is just above 0" do
-        assert_errors("Technical-Information/Floor-Area", "0.00001", [])
+        assert_errors([["Technical-Information/Floor-Area", "0.00001"]], [])
       end
 
       it "does not return an error if the floor area is not in the technical information section" do
-        assert_errors("Benchmark/Floor-Area", "0", [])
+        assert_errors([["Benchmark/Floor-Area", "0"]], [])
       end
     end
 
@@ -146,19 +148,19 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
       end
 
       it "returns an error if SER is minus one" do
-        assert_errors("SER", "-1.01", [error])
+        assert_errors([["SER", "-1.01"]], [error])
       end
 
       it "returns an error if BER is minus one" do
-        assert_errors("BER", "-1.01", [error])
+        assert_errors([["BER", "-1.01"]], [error])
       end
 
       it "returns an error if TER is minus one" do
-        assert_errors("TER", "-1.01", [error])
+        assert_errors([["TER", "-1.01"]], [error])
       end
 
       it "returns an error if TYR is minus one" do
-        assert_errors("TYR", "-1.01", [error])
+        assert_errors([["TYR", "-1.01"]], [error])
       end
     end
 
@@ -171,7 +173,7 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
       end
 
       it "returns an error if Transaction-Type is 7" do
-        assert_errors("Transaction-Type", "7", [error])
+        assert_errors([%w[Transaction-Type 7]], [error])
       end
     end
 
@@ -184,7 +186,7 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
       end
 
       it "returns an error if EPC-Related-Party-Disclosure is 13" do
-        assert_errors("EPC-Related-Party-Disclosure", "13", [error])
+        assert_errors([%w[EPC-Related-Party-Disclosure 13]], [error])
       end
     end
 
@@ -197,7 +199,72 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
       end
 
       it "returns an error if Energy-Type is 4" do
-        assert_errors("Energy-Type", "4", [error])
+        assert_errors([%w[Energy-Type 4]], [error])
+      end
+    end
+
+    context "when the SBEM version is wrong for the region" do
+      let(:error) do
+        {
+          "code": "WRONG_SBEM_VERSION_FOR_REGION",
+          "title": "Correct versions are: Northern Ireland - SBEM 4.1, Wales - SBEM 5.6, England - SBEM 6.1",
+        }.freeze
+      end
+
+      it "returns no error if the address is NI and SBEM version is 4" do
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v4.1.h, SBEM, v4.1.h.0"], ["Postcode", "BT7 8KK"]], [])
+      end
+
+      it "returns an error if the address is NI and SBEM version is 5" do
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "BT7 8KK"]], [error])
+      end
+
+      it "returns an error if the address is NI and SBEM version is 6" do
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b.0, SBEM, v6.1.b.0"], ["Postcode", "BT7 8KK"]], [error])
+      end
+
+      it "returns an error if the address is Wales and SBEM version is 4" do
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v4.1.h, SBEM, v4.1.h.0"], ["Postcode", "CF23 9XX"]], [error])
+      end
+
+      it "returns no error if the address is Wales and SBEM version is 5" do
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "CF23 9XX"]], [])
+      end
+
+      it "returns an error if the address is Wales and SBEM version is 6" do
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.b.0"], ["Postcode", "CF23 9XX"]], [error])
+      end
+
+      it "returns an error if the address is England and SBEM version is 4" do
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v4.1.h, SBEM, v4.1.h.0"], ["Postcode", "SW11 9XX"]], [error])
+      end
+
+      it "returns an error if the address is England and SBEM version is 5 and the Transaction-Type is not 3" do
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "SW11 9XX"], %w[Transaction-Type 1]], [error])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "SW11 9XX"], %w[Transaction-Type 2]], [error])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "SW11 9XX"], %w[Transaction-Type 3]], [])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "SW11 9XX"], %w[Transaction-Type 4]], [error])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "SW11 9XX"], %w[Transaction-Type 5]], [error])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "SW11 9XX"], %w[Transaction-Type 6]], [error])
+      end
+
+      it "returns no error if the address is England and SBEM version is 6" do
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.b.0"], ["Postcode", "SW11 9XX"]], [])
+      end
+
+      it "does not return an error if the address is in a cross-border postcode and SBEM version is 5 or 6" do
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 1]], [])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 2]], [])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 3]], [])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 4]], [])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 5]], [])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 6]], [])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.b.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 1]], [])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.b.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 2]], [])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.b.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 3]], [])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.b.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 4]], [])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.b.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 5]], [])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.b.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 6]], [])
       end
     end
   end
@@ -237,7 +304,7 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
       end
 
       it "returns an error if the reason type is 7" do
-        assert_errors("Reason-Type", "7", [error])
+        assert_errors([%w[Reason-Type 7]], [error])
       end
     end
 
@@ -250,7 +317,7 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
       end
 
       it "returns an error if the dec related party disclosure is 8" do
-        assert_errors("DEC-Related-Party-Disclosure", "8", [error])
+        assert_errors([%w[DEC-Related-Party-Disclosure 8]], [error])
       end
     end
 
@@ -264,7 +331,7 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
       end
 
       it "returns an error if the nominated date is more than three months after the or-assessment-end-date" do
-        assert_errors("OR-Assessment-End-Date", "2019-09-30", [error])
+        assert_errors([%w[OR-Assessment-End-Date 2019-09-30]], [error])
       end
     end
   end

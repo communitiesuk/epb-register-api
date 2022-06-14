@@ -37,7 +37,7 @@
         <CEPC:Is-Heritage-Site>N</CEPC:Is-Heritage-Site>
       </CEPC:Property-Details>
       <CEPC:Calculation-Details>
-        <CEPC:Calculation-Tool>Calculation-Tool1</CEPC:Calculation-Tool>
+        <CEPC:Calculation-Tool>Calculation-Tool1; SBEM, v4.1.h.0</CEPC:Calculation-Tool>
       </CEPC:Calculation-Details>
     </CEPC:Report-Header>
     <CEPC:Summary-Of-Performance>
@@ -308,12 +308,12 @@
         <CEPC:Property-Address>
           <CEPC:Address-Line-1>2 Lonely Street</CEPC:Address-Line-1>
           <CEPC:Post-Town>Post-Town0</CEPC:Post-Town>
-          <CEPC:Postcode>A0 0AA</CEPC:Postcode>
+          <CEPC:Postcode>BT1 0AA</CEPC:Postcode>
         </CEPC:Property-Address>
         <CEPC:Property-Type>Property-Type0</CEPC:Property-Type>
       </CEPC:Property-Details>
       <CEPC:Calculation-Details>
-        <CEPC:Calculation-Tool>Calculation-Tool0</CEPC:Calculation-Tool>
+        <CEPC:Calculation-Tool>Calculation-Tool1; SBEM, v4.1.h.0</CEPC:Calculation-Tool>
       </CEPC:Calculation-Details>
     </CEPC:Report-Header>
     <CEPC:Formatted-Report>ZGVmYXVsdA==</CEPC:Formatted-Report>

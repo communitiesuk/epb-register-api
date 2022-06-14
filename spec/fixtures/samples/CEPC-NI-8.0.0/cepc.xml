@@ -39,7 +39,7 @@
         <Is-Heritage-Site>N</Is-Heritage-Site>
       </Property-Details>
       <Calculation-Details>
-        <Calculation-Tool>CEPC Compute v0.2</Calculation-Tool>
+        <Calculation-Tool>CEPC Compute v0.2; SBEM, v4.1.h.0</Calculation-Tool>
       </Calculation-Details>
     </Report-Header>
     <Formatted-Report>ZGVmYXVsdA==</Formatted-Report>
