@@ -145,6 +145,116 @@ describe UseCase::ValidateAndLodgeAssessment do
     end
   end
 
+  context "when validating that SAP-Version and SAP-Data-Version nodes are correct for version of SAP schema" do
+    before do
+      allow(Helper::Toggles).to receive(:enabled?)
+      allow(Helper::Toggles).to receive(:enabled?).with("register-api-validate-sap-data-version").and_return(true)
+      allow(Helper::Toggles).to receive(:enabled?).with("register-api-validate-sap-data-version").and_yield
+    end
+
+    context "when passed a non-SAP assessment" do
+      it "validates it" do
+        expect {
+          use_case.execute assessment_xml: valid_xml,
+                           schema_name: "RdSAP-Schema-20.0.0",
+                           scheme_ids: "1",
+                           migrated: true,
+                           overidden: false
+        }.not_to raise_error
+      end
+    end
+
+    context "when passed a SAP assessment with an invalid SAP-Version node" do
+      let(:bad_sap_version_xml) do
+        xml = Nokogiri.XML Samples.xml("SAP-Schema-19.0.0")
+        xml.at("SAP-Version").content = "9.90"
+
+        xml.to_s
+      end
+
+      it "raises an invalid SAP data version error" do
+        expect {
+          use_case.execute assessment_xml: bad_sap_version_xml,
+                           schema_name: "SAP-Schema-19.0.0",
+                           scheme_ids: "1",
+                           migrated: true,
+                           overidden: false
+        }.to raise_error described_class::InvalidSapDataVersionError
+      end
+    end
+
+    context "when passed a SAP assessment with a valid SAP-Version node" do
+      let(:good_sap_version_xml) do
+        xml = Nokogiri.XML Samples.xml("SAP-Schema-19.0.0")
+        xml.at("SAP-Version").content = "10.2"
+
+        xml.to_s
+      end
+
+      it "validates it" do
+        expect {
+          use_case.execute assessment_xml: good_sap_version_xml,
+                           schema_name: "SAP-Schema-19.0.0",
+                           scheme_ids: "1",
+                           migrated: true,
+                           overidden: false
+        }.not_to raise_error
+      end
+    end
+
+    context "when passed a SAP assessment with an invalid SAP-Data-Version node" do
+      let(:bad_sap_data_version_xml) do
+        xml = Nokogiri.XML Samples.xml("SAP-Schema-19.0.0")
+        xml.at("SAP-Data-Version").content = "9.80"
+
+        xml.to_s
+      end
+
+      it "raises an invalid SAP data version error" do
+        expect {
+          use_case.execute assessment_xml: bad_sap_data_version_xml,
+                           schema_name: "SAP-Schema-19.0.0",
+                           scheme_ids: "1",
+                           migrated: true,
+                           overidden: false
+        }.to raise_error described_class::InvalidSapDataVersionError
+      end
+    end
+
+    context "when passed a SAP assessment with a valid SAP-Data-Version node" do
+      let(:good_sap_data_version_xml) do
+        xml = Nokogiri.XML Samples.xml("SAP-Schema-19.0.0")
+        xml.at("SAP-Data-Version").content = "10.2"
+
+        xml.to_s
+      end
+
+      it "validates it" do
+        expect {
+          use_case.execute assessment_xml: good_sap_data_version_xml,
+                           schema_name: "SAP-Schema-19.0.0",
+                           scheme_ids: "1",
+                           migrated: true,
+                           overidden: false
+        }.not_to raise_error
+      end
+    end
+
+    context "when passed a SAP assessment with a schema not included within the validation list" do
+      let(:unvalidated_sap_xml) { Samples.xml("SAP-Schema-17.0") }
+
+      it "validates it" do
+        expect {
+          use_case.execute assessment_xml: unvalidated_sap_xml,
+                           schema_name: "SAP-Schema-17.0",
+                           scheme_ids: "1",
+                           migrated: true,
+                           overidden: false
+        }.not_to raise_error
+      end
+    end
+  end
+
   context "when validating Northern Ireland assessments" do
     let(:rdsap_ni) { Nokogiri.XML(Samples.xml("RdSAP-Schema-NI-20.0.0")) }
     let(:rdsap) { Nokogiri.XML(Samples.xml("RdSAP-Schema-20.0.0")) }

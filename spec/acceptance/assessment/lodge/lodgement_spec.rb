@@ -6,6 +6,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
   let(:valid_assessor_request_body) do
     AssessorStub.new.fetch_request_body(
       domestic_rd_sap: "ACTIVE",
+      domestic_sap: "ACTIVE",
       non_domestic_nos3: "ACTIVE",
       non_domestic_dec: "ACTIVE",
       non_domestic_cc4: "ACTIVE",
@@ -22,6 +23,12 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
     Samples.xml "CEPC-8.0.0", "ac-cert+ac-report"
   end
   let(:scheme_id) { add_scheme_and_get_id }
+
+  before do
+    allow(Helper::Toggles).to receive(:enabled?)
+    allow(Helper::Toggles).to receive(:enabled?).with("register-api-validate-sap-data-version").and_return(true)
+    allow(Helper::Toggles).to receive(:enabled?).with("register-api-validate-sap-data-version").and_yield
+  end
 
   context "when rejecting lodgements" do
     let(:scheme_id) { add_scheme_and_get_id }
@@ -900,6 +907,31 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
           scheme_ids: [scheme_id],
         },
         schema_name: superseded_version,
+      )
+    end
+  end
+
+  context "when lodging an assessment for SAP-Schema-19.0.0 which has an invalid SAP data version" do
+    let(:bad_sap_1800_data_version_xml) do
+      xml = Nokogiri.XML Samples.xml("SAP-Schema-19.0.0")
+      xml.at("SAP-Data-Version").content = "9.90"
+
+      xml.to_s
+    end
+
+    let(:register_assessor) do
+      add_assessor(scheme_id: scheme_id, assessor_id: "SPEC000000", body: valid_assessor_request_body)
+    end
+
+    it "rejects the assessment with a 400" do
+      register_assessor
+      lodge_assessment(
+        assessment_body: bad_sap_1800_data_version_xml,
+        accepted_responses: [400],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        schema_name: "SAP-Schema-19.0.0",
       )
     end
   end

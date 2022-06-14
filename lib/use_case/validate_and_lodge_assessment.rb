@@ -22,6 +22,17 @@ module UseCase
 
     class NiAssessmentInvalidPostcode < StandardError; end
 
+    class InvalidSapDataVersionError < StandardError
+      attr_reader :schema_name, :failed_node, :invalid_version_value
+
+      def initialize(schema_name:, failed_node:, invalid_version_value:)
+        @schema_name = schema_name
+        @failed_node = failed_node
+        @invalid_version_value = invalid_version_value
+        super("The node #{failed_node} has an invalid version #{invalid_version_value} for the schema #{schema_name}")
+      end
+    end
+
     class LodgementRulesException < StandardError
       attr_reader :errors
 
@@ -37,6 +48,10 @@ module UseCase
     LATEST_DOM_EW = %w[SAP-Schema-18.0.0 RdSAP-Schema-20.0.0].freeze
     LATEST_DOM_NI = %w[SAP-Schema-NI-18.0.0 RdSAP-Schema-NI-20.0.0].freeze
     NOT_OVERRIDABLE_LODGEMENT_RULES = %w[FLOOR_AREA_CANT_BE_LESS_THAN_ZERO DATES_CANT_BE_IN_FUTURE].freeze
+    VALID_SAP_DATA_VERSIONS = { "SAP-Schema-19.0.0" => {
+      "SAP-Version" => %w[10.2],
+      "SAP-Data-Version" => %w[10.2],
+    } }.freeze
 
     def initialize(
       validate_assessment_use_case:,
@@ -72,6 +87,10 @@ module UseCase
       end
       raise RelatedReportError unless reports_refer_to_each_other?(xml_doc)
       raise AddressIdsDoNotMatch unless address_ids_match?(lodgement_data)
+
+      Helper::Toggles.enabled? "register-api-validate-sap-data-version" do
+        ensure_sap_data_version_valid assessment_xml_doc: xml_doc, schema_name: schema_name
+      end
 
       begin
         LodgementRules::NiCommon.new.validate(schema_name: schema_name, address: lodgement_data[0][:address], migrated: migrated)
@@ -188,6 +207,21 @@ module UseCase
         Helper::SchemaListHelper.new(schema_name).schema_path,
       )
         raise ValidationErrorException
+      end
+    end
+
+    def ensure_sap_data_version_valid(assessment_xml_doc:, schema_name:)
+      return unless schema_name.start_with?("SAP") && VALID_SAP_DATA_VERSIONS.key?(schema_name)
+
+      VALID_SAP_DATA_VERSIONS[schema_name].each do |node, allowed_versions|
+        version_value = assessment_xml_doc.at(node).content
+        next if allowed_versions.include?(version_value)
+
+        raise InvalidSapDataVersionError.new(
+          schema_name: schema_name,
+          failed_node: node,
+          invalid_version_value: version_value,
+        )
       end
     end
 

@@ -268,6 +268,7 @@ module LodgementRules
           end,
       },
     ].freeze
+
     def validate(xml_adaptor)
       errors = RULES.reject { |rule| rule[:test].call(xml_adaptor) }
 
