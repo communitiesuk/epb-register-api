@@ -146,12 +146,6 @@ describe UseCase::ValidateAndLodgeAssessment do
   end
 
   context "when validating that SAP-Version and SAP-Data-Version nodes are correct for version of SAP schema" do
-    before do
-      allow(Helper::Toggles).to receive(:enabled?)
-      allow(Helper::Toggles).to receive(:enabled?).with("register-api-validate-sap-data-version").and_return(true)
-      allow(Helper::Toggles).to receive(:enabled?).with("register-api-validate-sap-data-version").and_yield
-    end
-
     context "when passed a non-SAP assessment" do
       it "validates it" do
         expect {

@@ -24,12 +24,6 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
   end
   let(:scheme_id) { add_scheme_and_get_id }
 
-  before do
-    allow(Helper::Toggles).to receive(:enabled?)
-    allow(Helper::Toggles).to receive(:enabled?).with("register-api-validate-sap-data-version").and_return(true)
-    allow(Helper::Toggles).to receive(:enabled?).with("register-api-validate-sap-data-version").and_yield
-  end
-
   context "when rejecting lodgements" do
     let(:scheme_id) { add_scheme_and_get_id }
     let(:doc) { Nokogiri.XML valid_rdsap_xml }

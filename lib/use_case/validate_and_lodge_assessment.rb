@@ -88,9 +88,7 @@ module UseCase
       raise RelatedReportError unless reports_refer_to_each_other?(xml_doc)
       raise AddressIdsDoNotMatch unless address_ids_match?(lodgement_data)
 
-      Helper::Toggles.enabled? "register-api-validate-sap-data-version" do
-        ensure_sap_data_version_valid assessment_xml_doc: xml_doc, schema_name: schema_name
-      end
+      ensure_sap_data_version_valid assessment_xml_doc: xml_doc, schema_name: schema_name
 
       begin
         LodgementRules::NiCommon.new.validate(schema_name: schema_name, address: lodgement_data[0][:address], migrated: migrated)
