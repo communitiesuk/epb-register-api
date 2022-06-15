@@ -32,6 +32,20 @@ describe Events::Broadcaster do
     end
   end
 
+  context "when an event is broadcast with data" do
+    event_data = []
+
+    before do
+      broadcaster.on(:something_with_data_happened) { |**data| event_data << data }
+    end
+
+    it "passes the event data through to the listener" do
+      data = { entity_id: "42" }
+      broadcaster.broadcast(:something_with_data_happened, **data)
+      expect(event_data).to eq [data]
+    end
+  end
+
   context "when broadcasting is disabled" do
     around do |test|
       described_class.disable!
