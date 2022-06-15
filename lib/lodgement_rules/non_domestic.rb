@@ -6,7 +6,7 @@ module LodgementRules
       nil
     end
 
-    CURRENT_SBEM_VERSIONS = { england: "SBEM, v6.1.b.0", northern_ireland: "SBEM, v4.1.h.0", wales: "SBEM, v5.6.b.0" }.freeze
+    CURRENT_SBEM_VERSIONS = { england: "SBEM, v6.1.b", northern_ireland: "SBEM, v4.1.h", wales: "SBEM, v5.6.b" }.freeze
 
     WALES_ONLY_POSTCODE_PREFIXES = %w[CF
                                       SA
