@@ -33,7 +33,7 @@ namespace :oneoff do
 
     target_schemas = args[:schema_type].split(";")
 
-    count_assessments_to_export_sql = "SELECT COUNT(a.assessment_id) FROM assessments AS a INNER JOIN assessments_xml AS ax ON a.assessment_id=ax.assessment_id WHERE date_registered BETWEEN $1 AND $2 AND schema_type IN (#{target_schemas.map { |s| "'#{s}'" }.join(', ')})"
+    count_assessments_to_export_sql = "SELECT COUNT(a.assessment_id) FROM assessments AS a INNER JOIN assessments_xml AS ax ON a.assessment_id=ax.assessment_id WHERE date_registered BETWEEN $1 AND $2 AND schema_type IN (#{target_schemas.map { |s| "'#{s}'" }.join(', ')}) AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL"
     count_assessments_to_export_binds = [
       ActiveRecord::Relation::QueryAttribute.new(
         "from",
@@ -66,7 +66,7 @@ namespace :oneoff do
     start_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
 
     raw_connection = ActiveRecord::Base.connection.raw_connection
-    get_assessment_ids_sql = "SELECT a.assessment_id FROM assessments AS a INNER JOIN assessments_xml AS ax ON a.assessment_id=ax.assessment_id WHERE date_registered BETWEEN '#{until_time.strftime('%Y-%m-%d %H:%M:%S')}' AND '#{rrn_date_registered.strftime('%Y-%m-%d %H:%M:%S')}' AND schema_type IN (#{target_schemas.map { |s| "'#{s}'" }.join(', ')}) ORDER BY date_registered DESC"
+    get_assessment_ids_sql = "SELECT a.assessment_id FROM assessments AS a INNER JOIN assessments_xml AS ax ON a.assessment_id=ax.assessment_id WHERE date_registered BETWEEN '#{until_time.strftime('%Y-%m-%d %H:%M:%S')}' AND '#{rrn_date_registered.strftime('%Y-%m-%d %H:%M:%S')}' AND schema_type IN (#{target_schemas.map { |s| "'#{s}'" }.join(', ')}) AND a.cancelled_at IS NULL AND a.not_for_issue_at IS NULL ORDER BY date_registered DESC"
     raw_connection.send_query get_assessment_ids_sql
     raw_connection.set_single_row_mode
 
