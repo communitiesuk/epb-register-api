@@ -18,7 +18,7 @@ group :test do
   gem "database_cleaner"
   gem "mock_redis", "~> 0.32.0"
   gem "pry", "~> 0.14.1"
-  gem "rack-test", "~> 1.1.0"
+  gem "rack-test", "~> 2.0.0"
   gem "rspec", "~>3.11"
   gem "timecop", "~> 0.9.5"
   gem "webmock", "~> 3.14"
