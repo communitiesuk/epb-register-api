@@ -7,8 +7,7 @@ module Gateway
       output(response, result)
 
       if result.empty?
-        outcode_array = postcode.split(" ")
-        outcode = outcode_array[0]
+        outcode = postcode.split(" ")[0]
         response =
           db_response(
             code: "outcode",

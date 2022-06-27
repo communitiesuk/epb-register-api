@@ -8,9 +8,9 @@ module LodgementRules
 
     CURRENT_SBEM_VERSIONS = { england: "SBEM, v6.1.b", northern_ireland: "SBEM, v4.1.h", wales: "SBEM, v5.6.b" }.freeze
 
-    WALES_ONLY_POSTCODE_PREFIXES = %w[CF
-                                      SA
-                                      CH5
+    WALES_ONLY_POSTCODE_PREFIXES = %w[CF SA].freeze
+
+    WALES_ONLY_POSTCODE_OUTCODES = %w[CH5
                                       CH6
                                       CH7
                                       CH8
@@ -64,7 +64,7 @@ module LodgementRules
                                       SY24
                                       SY25].freeze
 
-    CROSS_BORDER_ENGLAND_AND_WALES_POSTCODE_PREFIXES =
+    CROSS_BORDER_ENGLAND_AND_WALES_POSTCODE_OUTCODES =
       %w[CH1
          CH4
          HR2
@@ -223,6 +223,7 @@ module LodgementRules
             report_type = method_or_nil(adapter, :report_type)
             if %w[3 4].include? report_type # This is a CEPC or CEPC-RR
               postcode = method_or_nil(adapter, :postcode)
+              outcode = postcode.split(" ")[0]
               calc_tool = method_or_nil(adapter, :calculation_tool)
               building_level = method_or_nil(adapter, :building_level)
               if %w[3 4].include? building_level # Check SBEM software version for these
@@ -230,9 +231,9 @@ module LodgementRules
                   return false
                 elsif (calc_tool.include? CURRENT_SBEM_VERSIONS[:northern_ireland]) && !(postcode.start_with? "BT")
                   return false
-                elsif postcode.start_with?(*WALES_ONLY_POSTCODE_PREFIXES) && !(calc_tool.include? CURRENT_SBEM_VERSIONS[:wales])
+                elsif (postcode.start_with?(*WALES_ONLY_POSTCODE_PREFIXES) || (WALES_ONLY_POSTCODE_OUTCODES.include? outcode)) && !(calc_tool.include? CURRENT_SBEM_VERSIONS[:wales])
                   return false
-                elsif (calc_tool.include? CURRENT_SBEM_VERSIONS[:wales]) && !postcode.start_with?(*WALES_ONLY_POSTCODE_PREFIXES, *CROSS_BORDER_ENGLAND_AND_WALES_POSTCODE_PREFIXES)
+                elsif (calc_tool.include? CURRENT_SBEM_VERSIONS[:wales]) && !postcode.start_with?(*WALES_ONLY_POSTCODE_PREFIXES) && !(WALES_ONLY_POSTCODE_OUTCODES.include? outcode) && !(CROSS_BORDER_ENGLAND_AND_WALES_POSTCODE_OUTCODES.include? outcode)
                   transaction_type = method_or_nil(adapter, :transaction_type)
                   return false unless transaction_type == "3"
                 end

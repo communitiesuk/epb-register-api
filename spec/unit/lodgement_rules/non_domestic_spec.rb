@@ -266,6 +266,10 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
         assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.b.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 5]], [])
         assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.b.0"], ["Postcode", "LL11 9XX"], %w[Transaction-Type 6]], [])
       end
+
+      it "recognizes that CH66 is in England, not in Welsh CH6 (i.e. matches full outcode, not just prefix)" do
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.b.0"], ["Postcode", "CH66 3RA"]], [])
+      end
     end
   end
 
