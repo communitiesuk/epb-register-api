@@ -8,7 +8,7 @@ module LodgementRules
 
     CURRENT_SBEM_VERSIONS = { england: "SBEM, v6.1.b", northern_ireland: "SBEM, v4.1.h", wales: "SBEM, v5.6.b" }.freeze
 
-    WALES_ONLY_POSTCODE_PREFIXES = %w[CF SA].freeze
+    WALES_ONLY_POSTCODE_PREFIXES = %w[CF SA LL3 LL4 LL5 LL6 LL7].freeze
 
     WALES_ONLY_POSTCODE_OUTCODES = %w[CH5
                                       CH6
@@ -34,11 +34,6 @@ module LodgementRules
                                       LL27
                                       LL28
                                       LL29
-                                      LL3
-                                      LL4
-                                      LL5
-                                      LL6
-                                      LL7
                                       NP4
                                       NP8
                                       NP10
