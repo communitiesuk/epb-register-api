@@ -128,7 +128,7 @@ GEM
       nio4r (~> 2.0)
     raabro (1.4.0)
     racc (1.6.0)
-    rack (2.2.3.1)
+    rack (2.2.4)
     rack-protection (2.2.0)
       rack
     rack-test (2.0.2)
@@ -191,7 +191,7 @@ GEM
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
       redis (>= 4.2.0)
-    sidekiq-cron (1.5.1)
+    sidekiq-cron (1.6.0)
       fugit (~> 1)
       sidekiq (>= 4.2.1)
     sinatra (2.2.0)
@@ -255,7 +255,7 @@ DEPENDENCIES
   rubyzip (~> 2.3.2)
   sentry-ruby (~> 5.3)
   sidekiq (~> 6.5.1)
-  sidekiq-cron (~> 1.5.1)
+  sidekiq-cron (~> 1.6.0)
   sinatra (~> 2.2)
   sinatra-activerecord (~> 2.0.25)
   sinatra-contrib
