@@ -36,7 +36,7 @@ gem "ougai", "~> 2.0"
 gem "pg", "~> 1.4"
 gem "puma", "~> 5.6"
 gem "rake", "~> 13.0", ">= 13.0.6"
-gem "redis", "~> 4.7.0"
+gem "redis", "~> 4.7.1"
 gem "rubocop", "~> 1.30.1"
 gem "rubocop-govuk", "~> 4.5"
 gem "rubocop-performance", require: false
