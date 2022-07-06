@@ -57,7 +57,7 @@ GEM
     epb-auth-tools (1.0.9)
       jwt (~> 2.3)
       oauth2 (~> 1.4)
-    epb_view_models (1.0.18)
+    epb_view_models (1.0.19)
       nokogiri (~> 1.11)
       zeitwerk (~> 2.4.2)
     et-orbi (1.2.7)
@@ -234,7 +234,7 @@ DEPENDENCIES
   database_cleaner
   debase (~> 0.2, >= 0.2.5.beta2)
   epb-auth-tools (~> 1.0.8)
-  epb_view_models (~> 1.0.18, ~> 1.0)
+  epb_view_models (~> 1.0.19, ~> 1.0)
   geocoder (~> 1.8.0)
   http
   json-schema (~> 3.0)
