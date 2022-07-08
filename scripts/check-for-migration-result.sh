@@ -10,9 +10,10 @@ do
 done
 
 echo "Migration result is ${STATE}"
-if [[ ${STATE} = "SUCCEEDED" ]] 
+if [[ ${STATE} = "SUCCEEDED" ]]
 then
 	exit 0
 else
 	exit 1
 fi
+

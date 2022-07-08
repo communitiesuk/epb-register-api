@@ -144,6 +144,51 @@ describe UseCase::FetchAssessmentForHera do
     end
   end
 
+  context "when an RRN matches a older SAP assessment for which HERA details can be provided" do
+    rrn = "5555-6666-7777-8888-9999"
+
+    sap_xml = Samples.xml "SAP-Schema-10.2", "rdsap"
+    before do
+      allow(hera_gateway).to receive(:fetch_by_rrn).with(rrn).and_return({
+        "xml" => sap_xml,
+        "schema_type" => "SAP-Schema-10.2",
+      })
+      allow(summary_use_case).to receive(:execute).with(rrn).and_return({
+        superseded_by: nil,
+      })
+    end
+
+    expected = {
+      address:
+        { address_line1: "1 Some Street",
+          address_line2: "Some Area",
+          address_line3: "Some County",
+          address_line4: "",
+          town: "Whitbury",
+          postcode: "A0 0AA" },
+      built_form: "Detached",
+      floor_description: ["Tiled floor", "Tiled floor"],
+      has_hot_water_cylinder: false,
+      is_latest_assessment_for_address: true,
+      lodgement_date: "2020-05-04",
+      main_fuel_type: "electricity",
+      main_heating_description: nil,
+      property_age_band: nil,
+      property_type: nil,
+      roof_description: ["Slate roof", "slate roof"],
+      type_of_assessment: "RdSAP",
+      walls_description: ["Brick walls", "Brick walls"],
+      windows_description: ["Glass window"],
+
+    }
+
+    it "returns a domain object containing the expected HERA details", aggregate_failures: true do
+      details = use_case.execute(rrn:)
+      expect(details).to be_a Domain::AssessmentHeraDetails
+      expect(details.to_hash).to eq expected
+    end
+  end
+
   context "when an RRN does not match an assessment for which HERA details can be provided" do
     rrn = "5555-5555-5555-5555-5555"
 

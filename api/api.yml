@@ -2987,6 +2987,7 @@ components:
         propertyAgeBand:
           type: string
           example: '2007-2011'
+          nullable: true
         wallsDescription:
           type: array
           items:

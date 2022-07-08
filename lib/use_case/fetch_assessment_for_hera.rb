@@ -43,6 +43,8 @@ module UseCase
     end
 
     def strip_england_and_wales_prefix(age_band)
+      return nil if age_band.nil?
+
       england_and_wales_prefix = "England and Wales: "
       return age_band unless age_band.start_with? england_and_wales_prefix
 

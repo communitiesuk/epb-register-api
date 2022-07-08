@@ -206,7 +206,7 @@
           <Solar-Water-Heating>N</Solar-Water-Heating>
           <SAP-Building-Parts>
             <SAP-Building-Part>
-              <Identifier>Main Dwelling</Identifier>
+              <Identifier>Main</Identifier>
               <Wall-Construction>1</Wall-Construction>
               <Wall-Insulation-Type>4</Wall-Insulation-Type>
               <Roof-Construction>2</Roof-Construction>
