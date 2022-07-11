@@ -228,11 +228,11 @@ describe LodgementRules::NonDomestic, set_with_timecop: true do
       end
 
       it "returns no error if the address is Wales and SBEM version is 5" do
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "CF23 9XX"]], [])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v5.6.b, SBEM, v5.6.b.0"], ["Postcode", "LL68 9XX"]], [])
       end
 
       it "returns an error if the address is Wales and SBEM version is 6" do
-        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.b.0"], ["Postcode", "CF23 9XX"]], [error])
+        assert_errors([["Calculation-Tool", "CLG, iSBEM, v6.1.b, SBEM, v6.1.b.0"], ["Postcode", "LL55 9XX"]], [error])
       end
 
       it "returns an error if the address is England and SBEM version is 4" do
