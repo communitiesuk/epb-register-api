@@ -121,7 +121,3 @@ setup-hooks:
 .PHONY: cf-check-api-db-migration-task
 cf-check-api-db-migration-task: ## Get the status for the last migrate-db task
 	@cf curl /v3/apps/`cf app --guid ${DEPLOY_APPNAME}`/tasks?order_by=-created_at | jq -r ".resources[0].state"
-
-.PHONY: run-backup-database-offline
-run-backup-database-offline:
-	@scripts/backup-database-offline.sh ${APP_NAME} ${BUCKET_NAME}
