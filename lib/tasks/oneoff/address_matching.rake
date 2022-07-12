@@ -116,7 +116,8 @@ namespace :oneoff do
         next if !last_updated_id.nil? && (assessment["assessment_id"] <= last_updated_id)
 
         assessment_id = assessment["assessment_id"]
-        assessment_xml = db.exec_query("SELECT xml, schema_type FROM assessments_xml WHERE assessment_id = '#{assessment_id}'").first
+        assessment_id_query_attr = ActiveRecord::Relation::QueryAttribute.new("assessment_id", assessment_id, ActiveRecord::Type::String.new)
+        assessment_xml = db.exec_query("SELECT xml, schema_type FROM assessments_xml WHERE assessment_id = $1", "SQL", [assessment_id_query_attr]).first
         if assessment_xml.nil?
           puts "[#{Time.now}] Could not read XML, skipping #{assessment_id}"
         else
@@ -147,7 +148,7 @@ namespace :oneoff do
           address_line4 = wrapper_hash[:address][:address_line4]&.strip || ""
 
           matching_assessment = db.exec_query("SELECT assessment_id, address_line1, address_line2, address_line3, address_line4 " \
-            "FROM assessments WHERE assessment_id = '#{assessment_id}'").first
+            "FROM assessments WHERE assessment_id = $1", "SQL", [assessment_id_query_attr]).first
 
           prev_address_line1 = matching_assessment["address_line1"] || ""
           prev_address_line2 = matching_assessment["address_line2"] || ""
