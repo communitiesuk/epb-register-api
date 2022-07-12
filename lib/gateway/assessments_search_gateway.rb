@@ -126,7 +126,6 @@ module Gateway
 
     def search_by_assessment_id(
       assessment_id,
-      assessment_type = [],
       restrictive: true
     )
       sql = ASSESSMENT_SEARCH_INDEX_SELECT + <<-SQL
@@ -138,14 +137,6 @@ module Gateway
       if restrictive
         sql += " AND a.cancelled_at IS NULL"
         sql += " AND a.not_for_issue_at IS NULL"
-      end
-
-      unless assessment_type.empty?
-        ins = []
-        assessment_type.each do |type|
-          ins.push(ActiveRecord::Base.connection.quote(type))
-        end
-        sql += " AND a.type_of_assessment IN(#{ins.join(', ')})"
       end
 
       result = Assessment.connection.exec_query(sql)
