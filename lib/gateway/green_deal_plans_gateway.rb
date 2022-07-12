@@ -81,10 +81,20 @@ module Gateway
         INNER JOIN
           green_deal_plans b ON a.green_deal_plan_id = b.green_deal_plan_id
         WHERE
-          assessment_id = #{ActiveRecord::Base.connection.quote(assessment_id)}
+          assessment_id = $1
         ORDER BY b.green_deal_plan_id
       SQL
-      response = GreenDealPlan.connection.exec_query(sql)
+      response = GreenDealPlan.connection.exec_query(
+        sql,
+        "SQL",
+        [
+          ActiveRecord::Relation::QueryAttribute.new(
+            "assessment_id",
+            assessment_id,
+            ActiveRecord::Type::String.new,
+          ),
+        ],
+      )
       result = []
 
       response.each do |row|
@@ -104,20 +114,38 @@ module Gateway
 
     def delete(plan_id)
       sql =
-        "DELETE FROM green_deal_plans WHERE green_deal_plan_id = #{
-          ActiveRecord::Base.connection.quote(plan_id)
-        }"
+        "DELETE FROM green_deal_plans WHERE green_deal_plan_id = $1"
 
-      GreenDealPlan.connection.exec_query(sql)
+      GreenDealPlan.connection.exec_query(
+        sql,
+        "SQL",
+        [
+          ActiveRecord::Relation::QueryAttribute.new(
+            "plan_id",
+            plan_id,
+            ActiveRecord::Type::String.new,
+          ),
+        ],
+      )
     end
 
     def fetch_assessment_ids(plan_id:)
       sql = <<-SQL
         SELECT assessment_id FROM green_deal_assessments
-          WHERE green_deal_plan_id = #{ActiveRecord::Base.connection.quote(plan_id)}
+          WHERE green_deal_plan_id = $1
       SQL
 
-      ActiveRecord::Base.connection.exec_query(sql).map { |row| row["assessment_id"] }
+      ActiveRecord::Base.connection.exec_query(
+        sql,
+        "SQL",
+        [
+          ActiveRecord::Relation::QueryAttribute.new(
+            "plan_id",
+            plan_id,
+            ActiveRecord::Type::String.new,
+          ),
+        ],
+      ).map { |row| row["assessment_id"] }
     end
 
     def validate_fuel_codes?(fuel_codes)
