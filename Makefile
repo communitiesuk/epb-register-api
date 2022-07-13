@@ -74,6 +74,7 @@ deploy-worker:
 	cf set-env "${DEPLOY_WORKER}" EPB_UNLEASH_URI "${EPB_UNLEASH_URI}"
 	cf set-env "${DEPLOY_WORKER}" SENTRY_DSN "${SENTRY_DSN}"
 	cf set-env "${DEPLOY_WORKER}" OS_DATA_HUB_API_KEY "${OS_DATA_HUB_API_KEY}"
+	cf set-env "${DEPLOY_WORKER}" EPB_TEAM_SLACK_URL "${EPB_TEAM_SLACK_URL}"
 
 	cf push "${DEPLOY_WORKER}" -f worker_manifest.yml
 
