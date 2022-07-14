@@ -217,7 +217,7 @@ GEM
       unf_ext
     unf_ext (0.0.8.2)
     unicode-display_width (2.2.0)
-    unleash (4.2.1)
+    unleash (4.3.0)
       murmurhash3 (~> 0.1.6)
     webmock (3.14.0)
       addressable (>= 2.8.0)
@@ -261,7 +261,7 @@ DEPENDENCIES
   sinatra-contrib
   sinatra-cross_origin (~> 0.4.0)
   timecop (~> 0.9.5)
-  unleash (~> 4.2.0)
+  unleash (~> 4.3.0)
   webmock (~> 3.14)
   wisper (~> 2.0.1)!
   wisper-rspec (~> 1.0, >= 1.0.1)
