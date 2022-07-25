@@ -174,6 +174,16 @@ describe "Acceptance::AddressSearch::ByPostcode::AdditionalParams",
       end
     end
 
+    context "when postcode has a space" do
+      it "removes the whitespace from a postcode" do
+        response = JSON.parse(assertive_get_in_search_scope(
+          "/api/search/addresses?postcode= A00AA",
+          accepted_responses: [200],
+        ).body, symbolize_names: true)
+        expect(response[:data][:addresses].length).to eq(7)
+      end
+    end
+
     describe "with a building number" do
       let(:response) do
         JSON.parse(

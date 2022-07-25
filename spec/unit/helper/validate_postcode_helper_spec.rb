@@ -3,6 +3,14 @@ describe Helper::ValidatePostcodeHelper do
     it "adds a space and capitalises the postcode" do
       expect(described_class.format_postcode("sw1A2aa")).to eq("SW1A 2AA")
     end
+
+    it "removes whitespace before the postcode" do
+      expect(described_class.format_postcode(" SW1A 2AA")).to eq("SW1A 2AA")
+    end
+
+    it "removes whitespace after the postcode" do
+      expect(described_class.format_postcode("SW1A 2AA ")).to eq("SW1A 2AA")
+    end
   end
 
   describe ".valid_postcode?" do
