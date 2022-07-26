@@ -152,7 +152,6 @@ describe "Searching for an assessor by name" do
       domestic_qualifications = { "domesticRdSap" => "ACTIVE", "domesticSap" => "ACTIVE", "gda" => "INACTIVE", "nonDomesticCc4" => "INACTIVE", "nonDomesticDec" => "INACTIVE", "nonDomesticNos3" => "INACTIVE", "nonDomesticNos4" => "INACTIVE", "nonDomesticNos5" => "INACTIVE", "nonDomesticSp3" => "INACTIVE" }
       search_response = assessors_search_by_name("Per%20Some", qualification_type: "domestic")
       response = JSON.parse(search_response.body)
-
       expect(response["data"]["assessors"].size).to eq(1)
       expect(response["data"]["assessors"].first["qualifications"]).to eq(domestic_qualifications)
     end

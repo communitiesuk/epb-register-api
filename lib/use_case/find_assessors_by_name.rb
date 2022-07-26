@@ -3,9 +3,9 @@ module UseCase
     class OnlyFirstNameGiven < StandardError
     end
 
-    def initialize
-      @assessor_gateway = Gateway::AssessorsGateway.new
-      @schemes_gateway = Gateway::SchemesGateway.new
+    def initialize(assessor_gateway:, schemes_gateway:)
+      @assessor_gateway = assessor_gateway || Gateway::AssessorsGateway.new
+      @schemes_gateway = schemes_gateway || Gateway::SchemesGateway.new
     end
 
     def execute(name, qualification_type = nil, max_response_size = 20)
@@ -19,7 +19,7 @@ module UseCase
 
       loose_match = false
 
-      response = @assessor_gateway.search_by(name:, qualification_type:, max_response_size: 0)
+      response = @assessor_gateway.search_by(name:, qualification_type:)
 
       if response.size <= max_response_size
         excluded = []
@@ -31,7 +31,6 @@ module UseCase
           @assessor_gateway.search_by(
             name:,
             qualification_type:,
-            max_response_size: 0,
             loose_match: true,
             exclude: excluded,
           )

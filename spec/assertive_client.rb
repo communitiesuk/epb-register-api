@@ -361,10 +361,10 @@ def add_scheme_and_get_id(
   ).body)["data"]["schemeId"]
 end
 
-def add_scheme_then_assessor(body:, accepted_responses: [200, 201])
+def add_scheme_then_assessor(body:, accepted_responses: [200, 201], assessor_id: "ACME123456")
   add_assessor(
     scheme_id: add_scheme_and_get_id,
-    assessor_id: "ACME123456",
+    assessor_id:,
     body:,
     accepted_responses:,
   )

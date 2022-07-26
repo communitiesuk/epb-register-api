@@ -151,7 +151,8 @@ module Controller
     end
 
     def search_by_name(name, qualification_type)
-      result = UseCase::FindAssessorsByName.new.execute(name, qualification_type)
+      use_case = UseCase::FindAssessorsByName.new(assessor_gateway: Gateway::AssessorsGateway.new, schemes_gateway: Gateway::SchemesGateway.new)
+      result = use_case.execute(name, qualification_type)
 
       result[:data] = assessor_list_results_filter(result)
       json_api_response(code: 200, data: result, burrow_key: :assessors)

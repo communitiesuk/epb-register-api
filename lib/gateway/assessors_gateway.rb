@@ -222,7 +222,6 @@ module Gateway
     def search_by(
       name: "",
       qualification_type: "",
-      max_response_size: 20,
       loose_match: false,
       exclude: []
     )
@@ -298,9 +297,6 @@ module Gateway
           AND CONCAT(first_name, ' ', last_name) ILIKE $1
         SQL
 
-        if max_response_size.positive?
-          sql << "LIMIT #{max_response_size + 1}"
-        end
       end
 
       response = Assessor.connection.exec_query sql, "SQL", binds
