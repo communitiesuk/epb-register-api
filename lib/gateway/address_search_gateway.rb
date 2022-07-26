@@ -9,7 +9,7 @@ module Gateway
       postcode = Helper::ValidatePostcodeHelper.format_postcode(postcode)
 
       if building_name_number
-        building_name_number_text_search = [" ", "&"].any? { |char| building_name_number.include?(char) } ? "PLAINTO_TSQUERY" : "TO_TSQUERY"
+        building_name_number_text_search = [" ", "&", "'"].any? { |char| building_name_number.include?(char) } ? "PLAINTO_TSQUERY" : "TO_TSQUERY"
 
         ranking_sql = <<~SQL
           ,

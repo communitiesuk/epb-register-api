@@ -36,14 +36,22 @@ describe UseCase::SearchAddressesByPostcode, set_with_timecop: true do
       insert_into_address_base("000000000000", "A0 0AA", "1 Some Street", "", "Whitbury")
     end
 
-    it "returns only one address for the relevant property" do
-      result = use_case.execute(postcode: "A0 0AA", building_name_number: "1():*!&\\")
+    context "when searching with a buildingNameNumber string prefixed by a valid, existing street number" do
+      it "returns only one address for the relevant property" do
+        result = use_case.execute(postcode: "A0 0AA", building_name_number: "1():*!&\\")
 
-      expect(result.length).to eq(1)
-      expect(result.first.address_id).to eq("UPRN-000000000000")
-      expect(result.first.line1).to eq("1 Some Street")
-      expect(result.first.town).to eq("Whitbury")
-      expect(result.first.postcode).to eq("A0 0AA")
+        expect(result.length).to eq(1)
+        expect(result.first.address_id).to eq("UPRN-000000000000")
+        expect(result.first.line1).to eq("1 Some Street")
+        expect(result.first.town).to eq("Whitbury")
+        expect(result.first.postcode).to eq("A0 0AA")
+      end
+    end
+
+    context "when searching with a buildingNameNumber containing just a single quote" do
+      it "does not error" do
+        expect { use_case.execute(postcode: "A0 0AA", building_name_number: "'") }.not_to raise_error
+      end
     end
   end
 end
