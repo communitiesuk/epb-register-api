@@ -25,6 +25,7 @@ applications:
       - ruby_buildpack
     health-check-type: http
     health-check-http-endpoint: /healthcheck
+    health-check-invocation-timeout: 2
     services:
       - $DATABASE
       - dluhc-epb-redis-data-warehouse-$STAGE
