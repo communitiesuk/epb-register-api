@@ -7,13 +7,13 @@ require_relative "./postcode_helper"
 namespace :maintenance do
   desc "Clean up temporary tables following postcode data update"
   task :import_postcode_cleanup do
-    delete_use_case=UseCase::DeleteGeolocationTables.new(Gateway::PostcodeGeolocationGateway.new)
+    delete_use_case = UseCase::DeleteGeolocationTables.new(Gateway::PostcodeGeolocationGateway.new)
     delete_use_case.execute
   end
 
   desc "Import postcode geolocation data"
   task :import_postcode, %i[file_name] do |_, args|
-    delete_use_case=UseCase::DeleteGeolocationTables.new(Gateway::PostcodeGeolocationGateway.new)
+    delete_use_case = UseCase::DeleteGeolocationTables.new(Gateway::PostcodeGeolocationGateway.new)
     delete_use_case.execute
 
     file_name = args.file_name
@@ -31,7 +31,7 @@ namespace :maintenance do
 
           puts "[#{Time.now}] #{entry.name} was unzipped with a size of #{entry.size} bytes"
           postcode_csv = CSV.new(csv_io, headers: true)
-          PostcodeHelper.rake(postcode_csv)
+          PostcodeHelper.process_postcode_csv(postcode_csv)
         end
       end
     else
