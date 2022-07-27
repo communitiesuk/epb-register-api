@@ -33,7 +33,20 @@ describe UseCase::SearchAddressesByPostcode, set_with_timecop: true do
         ensure_uprns: false,
       )
 
+      second_asessment = assessment
+      second_asessment.at("RRN").children = "0000-0000-0000-0000-0001"
+
+      lodge_assessment(
+        assessment_body: second_asessment.to_xml,
+        accepted_responses: [201],
+        auth_data: {
+          scheme_ids: [scheme_id],
+        },
+        ensure_uprns: false,
+      )
+
       insert_into_address_base("000000000000", "A0 0AA", "1 Some Street", "", "Whitbury")
+      insert_into_address_base("000000000001", "S1 0AA", "31 Barry's Street", "", "London")
     end
 
     context "when searching with a buildingNameNumber string prefixed by a valid, existing street number" do
@@ -51,6 +64,13 @@ describe UseCase::SearchAddressesByPostcode, set_with_timecop: true do
     context "when searching with a buildingNameNumber containing just a single quote" do
       it "does not error" do
         expect { use_case.execute(postcode: "A0 0AA", building_name_number: "'") }.not_to raise_error
+      end
+    end
+
+    context "when the address already contains an apostrophe" do
+      it "returns only one address for the relevant property" do
+        result = use_case.execute(postcode: "S1 0AA", building_name_number: "Barry's Street")
+        expect(result.length).to eq(1)
       end
     end
   end
