@@ -239,6 +239,15 @@ class ApiFactory
     )
   end
 
+  def self.delete_geolocation_tables
+    @delete_geolocation_tables ||=
+      UseCase::DeleteGeolocationTables.new.call(geolocation_gateway)
+  end
+
+  def self.geolocation_gateway
+    @geolocation_gateway ||= Gateway::PostcodeGeolocationGateway.new
+  end
+
   def self.storage_gateway(bucket_name:, instance_name:)
     Gateway::StorageGateway.new(
       storage_config:

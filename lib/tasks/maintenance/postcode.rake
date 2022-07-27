@@ -7,19 +7,15 @@ require_relative "./postcode_helper"
 namespace :maintenance do
   desc "Clean up temporary tables following postcode data update"
   task :import_postcode_cleanup do
-    db = ActiveRecord::Base.connection
-
-    db.drop_table :postcode_geolocation_tmp, if_exists: true
-    db.drop_table :postcode_geolocation_legacy, if_exists: true
-    puts "[#{Time.now}] Dropped postcode_geolocation_tmp / postcode_geolocation_legacy tables"
-
-    db.drop_table :postcode_outcode_geolocations_tmp, if_exists: true
-    db.drop_table :postcode_outcode_geolocations_legacy, if_exists: true
-    puts "[#{Time.now}] Dropped postcode_outcode_geolocations_tmp / postcode_outcode_geolocations_legacy tables"
+    delete_use_case=UseCase::DeleteGeolocationTables.new(Gateway::PostcodeGeolocationGateway.new)
+    delete_use_case.execute
   end
 
   desc "Import postcode geolocation data"
   task :import_postcode, %i[file_name] do |_, args|
+    delete_use_case=UseCase::DeleteGeolocationTables.new(Gateway::PostcodeGeolocationGateway.new)
+    delete_use_case.execute
+
     file_name = args.file_name
 
     PostcodeHelper.check_task_requirements file_name: file_name,
@@ -35,7 +31,7 @@ namespace :maintenance do
 
           puts "[#{Time.now}] #{entry.name} was unzipped with a size of #{entry.size} bytes"
           postcode_csv = CSV.new(csv_io, headers: true)
-          PostcodeHelper.process_postcode_csv(postcode_csv)
+          PostcodeHelper.rake(postcode_csv)
         end
       end
     else
