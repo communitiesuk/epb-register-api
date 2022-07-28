@@ -11,6 +11,14 @@ describe Helper::ValidatePostcodeHelper do
     it "removes whitespace after the postcode" do
       expect(described_class.format_postcode("SW1A 2AA ")).to eq("SW1A 2AA")
     end
+
+    it "normalises whitespace within postcode" do
+      expect(described_class.format_postcode(" SW1A   2AA ")).to eq("SW1A 2AA")
+    end
+
+    it "doesn't throw IndexError if stripped postcode is too short" do
+      expect(described_class.format_postcode("  k  k  ")).to eq("KK")
+    end
   end
 
   describe ".valid_postcode?" do
