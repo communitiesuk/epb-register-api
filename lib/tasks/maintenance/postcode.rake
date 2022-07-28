@@ -13,8 +13,11 @@ namespace :maintenance do
 
   desc "Import postcode geolocation data"
   task :import_postcode, %i[file_name] do |_, args|
-    delete_use_case = UseCase::DeleteGeolocationTables.new(Gateway::PostcodeGeolocationGateway.new)
+    postcode_gateway = Gateway::PostcodeGeolocationGateway.new
+    delete_use_case = UseCase::DeleteGeolocationTables.new(postcode_gateway)
     delete_use_case.execute
+
+    process_use_case = UseCase::ProcessPostcodeCsv.new(postcode_gateway)
 
     file_name = args.file_name
 
@@ -31,13 +34,13 @@ namespace :maintenance do
 
           puts "[#{Time.now}] #{entry.name} was unzipped with a size of #{entry.size} bytes"
           postcode_csv = CSV.new(csv_io, headers: true)
-          PostcodeHelper.process_postcode_csv(postcode_csv)
+          process_use_case.execute(postcode_csv)
         end
       end
     else
       puts "[#{Time.now}] Reading postcodes CSV file: #{file_name}"
       postcode_csv = CSV.new(file_io, headers: true)
-      PostcodeHelper.process_postcode_csv(postcode_csv)
+      process_use_case.execute(postcode_csv)
     end
   end
 end
