@@ -1,13 +1,9 @@
 describe UseCase::FindAssessorsByName do
-  subject(:use_case) { described_class.new(assessor_gateway:, schemes_gateway: scheme_gateway) }
+  subject(:use_case) { described_class.new(assessor_gateway:) }
 
   context "when there are more than 20 assessors of the same name" do
     let(:assessor_gateway) do
       instance_double(Gateway::AssessorsGateway)
-    end
-
-    let(:scheme_gateway) do
-      instance_double(Gateway::SchemesGateway)
     end
 
     let(:assessor_data) do
@@ -37,7 +33,6 @@ describe UseCase::FindAssessorsByName do
         data << assessor_data
       end
       allow(assessor_gateway).to receive(:search_by).and_return(data)
-      allow(scheme_gateway).to receive(:all).and_return([{ scheme_id: 1, name: "Stroma Certification Ltd" }])
     end
 
     it "returns more than 20 rows " do

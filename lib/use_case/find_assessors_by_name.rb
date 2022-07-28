@@ -3,19 +3,12 @@ module UseCase
     class OnlyFirstNameGiven < StandardError
     end
 
-    def initialize(assessor_gateway:, schemes_gateway:)
+    def initialize(assessor_gateway:)
       @assessor_gateway = assessor_gateway || Gateway::AssessorsGateway.new
-      @schemes_gateway = schemes_gateway || Gateway::SchemesGateway.new
     end
 
     def execute(name, qualification_type = nil, max_response_size = 20)
       raise OnlyFirstNameGiven if name.split.size < 2
-
-      schemes = []
-
-      @schemes_gateway.all.each do |scheme|
-        schemes[scheme[:scheme_id].to_i] = scheme
-      end
 
       loose_match = false
 

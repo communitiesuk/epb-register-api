@@ -151,7 +151,7 @@ module Controller
     end
 
     def search_by_name(name, qualification_type)
-      use_case = UseCase::FindAssessorsByName.new(assessor_gateway: Gateway::AssessorsGateway.new, schemes_gateway: Gateway::SchemesGateway.new)
+      use_case = UseCase::FindAssessorsByName.new(assessor_gateway: Gateway::AssessorsGateway.new)
       result = use_case.execute(name, qualification_type)
 
       result[:data] = assessor_list_results_filter(result)
