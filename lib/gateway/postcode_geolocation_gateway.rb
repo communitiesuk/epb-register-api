@@ -5,6 +5,7 @@ module Gateway
     end
 
     def clean_up
+      @db.drop_table :postcode_geolocation_tmp, if_exists: true
       @db.drop_table :postcode_geolocation_legacy, if_exists: true
       puts "[#{Time.now}] Dropped postcode_geolocation_tmp / postcode_geolocation_legacy tables"
 
