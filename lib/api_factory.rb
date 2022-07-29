@@ -161,6 +161,16 @@ class ApiFactory
     )
   end
 
+  def self.import_green_deal_fuel_price_use_case
+    @import_green_deal_fuel_price_use_case ||= UseCase::ImportGreenDealFuelPrice.new(
+      green_deal_fuel_price_gateway,
+    )
+  end
+
+  def self.green_deal_fuel_price_gateway
+    @green_deal_fuel_price_gateway ||= Gateway::GreenDealFuelPriceGateway.new
+  end
+
   def self.add_green_deal_plan_use_case
     @add_green_deal_plan_use_case ||=
       UseCase::AddGreenDealPlan.new(

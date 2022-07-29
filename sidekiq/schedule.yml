@@ -14,3 +14,9 @@ update_address_base:
   cron: "15 3 * * *"
   class: "Worker::UpdateAddressBase"
   name: "Update AddressBase addressing data if an update is available"
+
+import_green_deal_fuel_price_data:
+  cron: "0 02 * * *"
+    class: "Worker::ImportGreenDealFuelPriceData"
+    name: "Import green deal fuel data provided by the www.boilers.org.uk"
+
