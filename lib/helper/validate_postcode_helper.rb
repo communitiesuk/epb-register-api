@@ -1,7 +1,7 @@
 module Helper
   class ValidatePostcodeHelper
     def self.format_postcode(postcode)
-      postcode.gsub!(/[[:space:]]/, '')
+      postcode.gsub!(/[[:space:]]/, "")
       postcode.insert(-4, " ") unless postcode.length < 3
       postcode.upcase
     end
