@@ -21,7 +21,7 @@ describe UseCase::ImportGreenDealFuelPrice do
         expect(gateway).to have_received(:bulk_insert).with(price_data).exactly(1).times
       end
 
-      it "converts the download data into the expected array" do
+      it "converts the download data into the expected array", aggregate_failures: true do
         file_data = File.open("spec/fixtures/fuel_price_data.dat.txt")
 
         stub_request(:get, "http://www.boilers.org.uk/data1/pcdf2012.dat")
@@ -35,6 +35,7 @@ describe UseCase::ImportGreenDealFuelPrice do
           )
         .to_return(status: 200, body: file_data, headers: {})
         expect { use_case.execute }.not_to raise_error
+        expect(gateway).to have_received(:bulk_insert).exactly(1).times
       end
     end
 
@@ -49,7 +50,7 @@ describe UseCase::ImportGreenDealFuelPrice do
         WebMock.disable!
       end
 
-      it "calls the exec that raises a custom error and returns before call the gateway" do
+      it "calls the exec that raises a custom error and returns before call the gateway",  aggregate_failures: true do
         expect { use_case.execute }.to raise_error(UseCase::ImportGreenDealFuelPrice::NoDataException)
         expect(gateway).to have_received(:bulk_insert).exactly(0).times
       end
@@ -61,7 +62,7 @@ describe UseCase::ImportGreenDealFuelPrice do
         allow(gateway).to receive(:bulk_insert)
       end
 
-      it "calls the exec that raises a custom error and returns before call the gateway" do
+      it "calls the exec that raises a custom error and returns before call the gateway",  aggregate_failures: true do
         expect { use_case.execute }.to raise_error(UseCase::ImportGreenDealFuelPrice::NoDataException)
         expect(gateway).to have_received(:bulk_insert).exactly(0).times
       end

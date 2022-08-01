@@ -16,7 +16,8 @@ update_address_base:
   name: "Update AddressBase addressing data if an update is available"
 
 import_green_deal_fuel_price_data:
-  cron: "0 02 * * *"
-    class: "Worker::ImportGreenDealFuelPriceData"
-    name: "Import green deal fuel data provided by the www.boilers.org.uk"
+  cron: "13 2 2 * *"
+  class: "Worker::ImportGreenDealFuelPriceData"
+  name: "Import green deal fuel data provided by the www.boilers.org.uk - 2nd day of each month at 02:13ma am"
+  queue: default
 
