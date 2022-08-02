@@ -21,7 +21,7 @@ group :test do
   gem "rack-test", "~> 2.0.2"
   gem "rspec", "~>3.11"
   gem "timecop", "~> 0.9.5"
-  gem "webmock", "~> 3.14"
+  gem "webmock", "~> 3.16"
   gem "wisper-rspec", "~> 1.0", ">= 1.0.1"
 end
 
