@@ -38,7 +38,7 @@ describe UseCase::ValidateAndLodgeAssessment do
                          schema_name: "Non-existent-RdSAP-Schema-20.0.0",
                          scheme_ids: "1",
                          migrated: false,
-                         overidden: false
+                         overridden: false
       }.to raise_exception(
         UseCase::ValidateAndLodgeAssessment::SchemaNotSupportedException,
       )
@@ -52,7 +52,7 @@ describe UseCase::ValidateAndLodgeAssessment do
                          schema_name: nil,
                          scheme_ids: "1",
                          migrated: false,
-                         overidden: false
+                         overridden: false
       }.to raise_exception(
         UseCase::ValidateAndLodgeAssessment::SchemaNotDefined,
       )
@@ -78,7 +78,7 @@ describe UseCase::ValidateAndLodgeAssessment do
                          schema_name: "RdSAP-Schema-20.0.0",
                          scheme_ids: "1",
                          migrated: false,
-                         overidden: false
+                         overridden: false
       }.to raise_exception UseCase::ValidateAndLodgeAssessment::SoftwareNotApprovedError
     end
 
@@ -89,7 +89,7 @@ describe UseCase::ValidateAndLodgeAssessment do
                            schema_name: "RdSAP-Schema-20.0.0",
                            scheme_ids: "1",
                            migrated: true,
-                           overidden: false
+                           overridden: false
         }.not_to raise_error
       end
     end
@@ -109,7 +109,7 @@ describe UseCase::ValidateAndLodgeAssessment do
                          schema_name: "RdSAP-Schema-19.0",
                          scheme_ids: "1",
                          migrated: false,
-                         overidden: false
+                         overridden: false
       }.to raise_error UseCase::ValidateAndLodgeAssessment::SchemaNotSupportedException
     end
   end
@@ -128,7 +128,7 @@ describe UseCase::ValidateAndLodgeAssessment do
                          schema_name: "SAP-Schema-19.0.0",
                          scheme_ids: "1",
                          migrated: false,
-                         overidden: false
+                         overridden: false
       }.not_to raise_exception
     end
 
@@ -140,7 +140,7 @@ describe UseCase::ValidateAndLodgeAssessment do
                          schema_name: "SAP-Schema-18.0.0",
                          scheme_ids: "1",
                          migrated: false,
-                         overidden: false
+                         overridden: false
       }.not_to raise_exception
     end
   end
@@ -153,7 +153,7 @@ describe UseCase::ValidateAndLodgeAssessment do
                            schema_name: "RdSAP-Schema-20.0.0",
                            scheme_ids: "1",
                            migrated: true,
-                           overidden: false
+                           overridden: false
         }.not_to raise_error
       end
     end
@@ -172,7 +172,7 @@ describe UseCase::ValidateAndLodgeAssessment do
                            schema_name: "SAP-Schema-19.0.0",
                            scheme_ids: "1",
                            migrated: true,
-                           overidden: false
+                           overridden: false
         }.to raise_error described_class::InvalidSapDataVersionError
       end
     end
@@ -191,7 +191,7 @@ describe UseCase::ValidateAndLodgeAssessment do
                            schema_name: "SAP-Schema-19.0.0",
                            scheme_ids: "1",
                            migrated: true,
-                           overidden: false
+                           overridden: false
         }.not_to raise_error
       end
     end
@@ -210,7 +210,7 @@ describe UseCase::ValidateAndLodgeAssessment do
                            schema_name: "SAP-Schema-19.0.0",
                            scheme_ids: "1",
                            migrated: true,
-                           overidden: false
+                           overridden: false
         }.to raise_error described_class::InvalidSapDataVersionError
       end
     end
@@ -229,7 +229,7 @@ describe UseCase::ValidateAndLodgeAssessment do
                            schema_name: "SAP-Schema-19.0.0",
                            scheme_ids: "1",
                            migrated: true,
-                           overidden: false
+                           overridden: false
         }.not_to raise_error
       end
     end
@@ -243,7 +243,7 @@ describe UseCase::ValidateAndLodgeAssessment do
                            schema_name: "SAP-Schema-17.0",
                            scheme_ids: "1",
                            migrated: true,
-                           overidden: false
+                           overridden: false
         }.not_to raise_error
       end
     end
@@ -267,7 +267,7 @@ describe UseCase::ValidateAndLodgeAssessment do
                          schema_name: "RdSAP-Schema-NI-20.0.0",
                          scheme_ids: "1",
                          migrated: false,
-                         overidden: false
+                         overridden: false
       }.not_to raise_exception
     end
 
@@ -278,7 +278,7 @@ describe UseCase::ValidateAndLodgeAssessment do
                          schema_name: "RdSAP-Schema-NI-20.0.0",
                          scheme_ids: "1",
                          migrated: false,
-                         overidden: false
+                         overridden: false
       }.to raise_exception UseCase::ValidateAndLodgeAssessment::LodgementRulesException, /must have a property postcode starting with BT/
     end
 
@@ -289,7 +289,7 @@ describe UseCase::ValidateAndLodgeAssessment do
                          schema_name: "RdSAP-Schema-20.0.0",
                          scheme_ids: "1",
                          migrated: false,
-                         overidden: false
+                         overridden: false
       }.to raise_exception UseCase::ValidateAndLodgeAssessment::LodgementRulesException, /must be lodged with a NI Schema/
     end
   end

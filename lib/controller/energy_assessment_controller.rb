@@ -87,7 +87,7 @@ module Controller
           schema_name: xml_schema_type,
           scheme_ids:,
           migrated:,
-          overidden: overridden,
+          overridden:,
         )
 
       results.each do |result|

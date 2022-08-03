@@ -303,7 +303,7 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
       add_assessor(scheme_id:, assessor_id: "SPEC000000", body: valid_assessor_request_body)
     end
 
-    it "logs the events to the overidden_lodgement_events table" do
+    it "logs the events to the overridden_lodgement_events table" do
       cepc_xml_doc.at("//CEPC:Registration-Date").children = "2006-05-04"
 
       lodge_assessment(
@@ -316,18 +316,18 @@ describe "Acceptance::Assessment::Lodge", set_with_timecop: true do
         override: "true",
       )
 
-      overidden_lodgement_event =
+      overridden_lodgement_event =
         ActiveRecord::Base
           .connection
           .execute(
-            "SELECT * FROM overidden_lodgement_events WHERE assessment_id = '0000-0000-0000-0000-0000'",
+            "SELECT * FROM overridden_lodgement_events WHERE assessment_id = '0000-0000-0000-0000-0000'",
           )
           .first
 
-      expect(overidden_lodgement_event["assessment_id"]).to eq(
+      expect(overridden_lodgement_event["assessment_id"]).to eq(
         "0000-0000-0000-0000-0000",
       )
-      expect(overidden_lodgement_event["rule_triggers"]).to eq(
+      expect(overridden_lodgement_event["rule_triggers"]).to eq(
         '[{"code": "DATES_CANT_BE_MORE_THAN_4_YEARS_AGO", "title": "\\"Inspection-Date\\", \\"Registration-Date\\" and \\"Issue-Date\\" must not be more than 4 years ago"}]',
       )
     end

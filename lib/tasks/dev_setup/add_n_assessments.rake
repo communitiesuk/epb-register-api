@@ -28,7 +28,7 @@ namespace :dev_data do
                        schema_name: "SAP-Schema-18.0.0",
                        scheme_ids: 1.upto(17),
                        migrated: false,
-                       overidden: false
+                       overridden: false
     end
 
     puts "#{count} assessments written with final assessment ID: #{cursor}"

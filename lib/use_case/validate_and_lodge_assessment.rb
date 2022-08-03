@@ -2,7 +2,7 @@
 
 module UseCase
   class ValidateAndLodgeAssessment
-    class OveriddenLodgementEvent < ActiveRecord::Base; end
+    class OverriddenLodgementEvent < ActiveRecord::Base; end
 
     class ValidationErrorException < StandardError; end
 
@@ -65,7 +65,7 @@ module UseCase
       @check_approved_software_use_case = check_approved_software_use_case
     end
 
-    def execute(assessment_xml:, schema_name:, scheme_ids:, migrated:, overidden:)
+    def execute(assessment_xml:, schema_name:, scheme_ids:, migrated:, overridden:)
       raise SchemaNotDefined unless schema_name
 
       unless Helper::SchemaListHelper.new(schema_name).schema_exists?
@@ -111,7 +111,7 @@ module UseCase
           validation_result = rules.validate(wrapper.get_view_model)
 
           unless validation_result.empty?
-            if overidden
+            if overridden
               validation_result_codes = validation_result.map { |result| result[:code] }
 
               unless (validation_result_codes & NOT_OVERRIDABLE_LODGEMENT_RULES).empty?
@@ -121,7 +121,7 @@ module UseCase
               end
 
               lodgement_data.each do |lodgement|
-                Gateway::OverridenLodgmentEventsGateway.new.add(
+                Gateway::OverriddenLodgmentEventsGateway.new.add(
                   lodgement[:assessment_id],
                   validation_result,
                 )
