@@ -1,4 +1,4 @@
-class CreateAssessmentStatisitcs < ActiveRecord::Migration[6.1]
+class CreateAssessmentStatistics < ActiveRecord::Migration[6.1]
   def change
     create_table :assessment_statistics, primary_key: nil do |t|
       t.integer :assessments_count, null: false
