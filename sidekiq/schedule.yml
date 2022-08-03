@@ -18,6 +18,6 @@ update_address_base:
 import_green_deal_fuel_price_data:
   cron: "13 2 2 * *"
   class: "Worker::ImportGreenDealFuelPriceData"
-  name: "Import green deal fuel data provided by the www.boilers.org.uk - 2nd day of each month at 02:13ma am"
+  name: "Import green deal fuel data provided by www.boilers.org.uk - 2nd day of each month at 02:13am"
   queue: default
 
