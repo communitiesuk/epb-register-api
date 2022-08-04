@@ -33,6 +33,12 @@ describe Gateway::AddressBaseHelper do
       expect(described_class.title_case_line(line)).to eq expected
     end
 
+    it "is passed a line with a street name Macaulay" do
+      line = "42 MACAULAY ROAD"
+      expected = "42 Macaulay Road"
+      expect(described_class.title_case_line(line)).to eq expected
+    end
+
     it "is passed a line with a street name containing de la" do
       line = "3 CUL DE SAC"
       expected = "3 Cul De Sac"
